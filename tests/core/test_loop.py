@@ -6823,7 +6823,7 @@ def test_loop_writes_unified_task_specification_bundle_to_manifest():
         "policies.candidate_language"
     )
     assert fields["objective_metrics"]["primary_metric"] == "score"
-    assert "task_spec_needs_score_path_provenance_resolution" in (
+    assert "task_spec_needs_score_path_causal_attribution" in (
         task_spec["unsupported_or_incomplete"]
     )
 
@@ -6938,6 +6938,84 @@ def test_runtime_history_reports_task_spec_artifact_resolution():
     assert {issue["code"] for issue in validation["issues"]} >= {
         "claim_ready_overclaim",
         "task_spec_parity_overclaim",
+    }
+
+
+def test_task_spec_artifact_resolution_links_embedded_score_fields():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(code):\n"
+        "    return {'score': 0.0, 'is_valid': False}\n"
+    )
+    problem.initial_programs = [
+        "def transform(value):\n"
+        "    # EVOLVE-BLOCK-START scoring_rule\n"
+        "    return value\n"
+        "    # EVOLVE-BLOCK-END\n\n"
+        "def evaluate(eval_inputs):\n"
+        "    return {'score': transform(eval_inputs['score']), 'is_valid': True}\n"
+    ]
+
+    evolve(
+        problem,
+        Config(
+            max_generations=0,
+            log_dir=tmpdir,
+            problem_name="t",
+            eval_stages=[
+                {
+                    "name": "candidate_eval",
+                    "mode": "embedded_evaluate",
+                    "eval_inputs": {"score": 0.7},
+                }
+            ],
+        ),
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["task_spec_artifact_resolution_report"]
+
+    assert report["validation"]["ok"] is True
+    assert validate_task_spec_artifact_resolution_report(report)["ok"] is True
+    assert report["claim_readiness"]["score_field_to_candidate_path_links"] is True
+    assert report["claim_readiness"]["embedded_only_problem_definition"] is True
+    assert "score_field_to_candidate_path_links" not in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    assert "embedded_only_problem_definitions" not in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+
+    by_field = {record["field"]: record for record in report["field_resolutions"]}
+    objective = by_field["objective_metrics"]
+    assert "score_field_to_evolved_block_mapping" not in objective["unresolved_gap"]
+    assert "score_field_to_evolved_block_causal_attribution" in (
+        objective["unresolved_gap"]
+    )
+    summary = objective["reference_summary"]
+    assert summary["score_field_link_count"] == 1
+    assert summary["score_field_links_truncated"] is False
+    assert len(summary["score_field_links"]) == 1
+    link = summary["score_field_links"][0]
+    assert link["metric_name"] == "score"
+    assert link["candidate_primary_file"] == "main.py"
+    assert link["causal_attribution_claimed"] is False
+    assert link["evolved_block_candidate_count"] == 1
+    assert link["evolved_block_candidates"][0]["name"] == "scoring_rule"
+
+    edited = copy.deepcopy(report)
+    edited_objective = next(
+        record
+        for record in edited["field_resolutions"]
+        if record["field"] == "objective_metrics"
+    )
+    edited_objective["reference_summary"]["score_field_links"][0][
+        "causal_attribution_claimed"
+    ] = True
+    validation = validate_task_spec_artifact_resolution_report(edited)
+    assert validation["ok"] is False
+    assert "task_spec_score_field_causality_overclaim" in {
+        issue["code"] for issue in validation["issues"]
     }
 
 

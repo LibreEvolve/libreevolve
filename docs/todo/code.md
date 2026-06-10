@@ -197,12 +197,14 @@ Primary evidence:
     `libreevolve.task_spec_artifact_resolution_report.v1`, validating each
     task-spec field's manifest paths and linking fields to concrete runtime
     artifact paths such as history, failure history, prompt history, LLM calls,
-    controller-budget events, evaluator artifacts, and best exports.
+    controller-budget events, evaluator artifacts, best exports, and embedded
+    score-field candidate-path links when candidate-owned evaluation ran. These
+    links remain non-causal provenance.
   - Required result: finish evolvable component span references, score-field
-    links from evaluator results to candidate/evolved-block paths,
-    standalone task-spec report examples, and deeper validation that every
-    referenced id resolves to exact prompt/evaluator/candidate/history records
-    rather than only field-level artifact paths.
+    causal attribution, standalone task-spec report examples, and deeper
+    validation that every referenced id resolves to exact
+    prompt/evaluator/candidate/history records rather than only field-level
+    artifact paths.
 
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.

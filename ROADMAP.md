@@ -119,7 +119,9 @@ LibreEvolve has:
   `runtime.history.task_spec_artifact_resolution_report`, validating
   task-spec manifest paths and linking each field to candidate-history,
   prompt-history, LLM-call, controller-budget, evaluator-artifact, and
-  best-export evidence while leaving evolvable-span and score-link parity open
+  best-export evidence, plus embedded score-field candidate-path links when
+  available, while leaving evolvable-span, causal score attribution, and
+  standalone task-spec parity open
 - runtime initial-program idea provenance reports under
   `runtime.history.initial_program_idea_provenance_report`, linking optional
   seed idea-origin metadata and seed variant ids from `problem.seed_sources` to

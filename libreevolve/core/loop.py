@@ -10230,6 +10230,19 @@ def _task_spec_artifact_resolution_report(
         for artifact in record["runtime_artifact_resolutions"]
         if artifact.get("present") is True
     )
+    score_field_link_count = len(_task_spec_score_field_links(programs))
+    embedded_only_problem_definition = _embedded_only_problem_definition_ready(
+        startup_manifest
+    )
+    remaining_gap = [
+        "evolvable_component_span_ids",
+        "standalone_task_spec_report_examples",
+        "deep_id_resolution_into_prompt_evaluator_candidate_history",
+    ]
+    if score_field_link_count == 0:
+        remaining_gap.insert(1, "score_field_to_candidate_path_links")
+    if not embedded_only_problem_definition:
+        remaining_gap.insert(1, "embedded_only_problem_definitions")
     report = {
         "schema": "libreevolve.task_spec_artifact_resolution_report.v1",
         "source": "startup_task_specification_and_runtime_artifacts",
@@ -10261,14 +10274,10 @@ def _task_spec_artifact_resolution_report(
             "runtime_artifact_cross_links": artifact_link_count > 0,
             "artifact_links_all_present": artifact_link_count > 0
             and artifact_link_count == artifact_present_count,
+            "score_field_to_candidate_path_links": score_field_link_count > 0,
+            "embedded_only_problem_definition": embedded_only_problem_definition,
             "full_alphaevolve_task_spec_parity": False,
-            "remaining_gap": [
-                "evolvable_component_span_ids",
-                "score_field_to_candidate_path_links",
-                "embedded_only_problem_definitions",
-                "standalone_task_spec_report_examples",
-                "deep_id_resolution_into_prompt_evaluator_candidate_history",
-            ],
+            "remaining_gap": remaining_gap,
         },
     }
     report["validation"] = validate_task_spec_artifact_resolution_report(report)
@@ -10304,7 +10313,7 @@ def _task_spec_field_resolution(
             paper_metric_contract,
         ),
         "resolution_status": "partial_runtime_cross_link",
-        "unresolved_gap": _task_spec_field_gap(name),
+        "unresolved_gap": _task_spec_field_gap(name, programs),
     }
     if all(path.get("resolved") is True for path in record["manifest_path_resolutions"]):
         if runtime_artifacts:
@@ -10519,25 +10528,76 @@ def _task_spec_reference_summary(
             "program_count": len(programs),
         }
     if name == "objective_metrics":
+        score_field_links = _task_spec_score_field_links(programs)
         return {
             "primary_metric": field.get("primary_metric"),
             "metric_count": field.get("metric_count"),
             "paper_metric_count": paper_metric_contract.get("paper_metric_count"),
             "paper_metric_names": paper_metric_contract.get("paper_metric_names", []),
+            "score_field_link_policy": (
+                "runtime_embedded_score_field_candidate_paths_not_causal_attribution"
+            ),
+            "score_field_link_count": len(score_field_links),
+            "score_field_links": score_field_links[:50],
+            "score_field_links_truncated": len(score_field_links) > 50,
         }
     return {}
 
 
-def _task_spec_field_gap(field_name: str) -> list[str]:
+def _task_spec_score_field_links(programs: list[Program]) -> list[dict]:
+    links: list[dict] = []
+    for program in programs:
+        if not _program_has_embedded_evaluation(program):
+            continue
+        metric_names = _embedded_entrypoint_metric_names(program.metrics)
+        for link in _embedded_score_field_links(program, metric_names):
+            record = copy.deepcopy(link)
+            record["program_id"] = program.id
+            record["generation"] = program.generation
+            links.append(record)
+    return links
+
+
+def _program_has_embedded_evaluation(program: Program) -> bool:
+    evaluation = program.evaluation if isinstance(program.evaluation, Mapping) else {}
+    metadata = (
+        evaluation.get("metadata")
+        if isinstance(evaluation.get("metadata"), Mapping)
+        else {}
+    )
+    if metadata.get("evaluator_mode") == "embedded_evaluate":
+        return True
+    configured = metadata.get("configured_stage_results")
+    if not isinstance(configured, list):
+        return False
+    for stage in configured:
+        if not isinstance(stage, Mapping):
+            continue
+        stage_metadata = (
+            stage.get("metadata")
+            if isinstance(stage.get("metadata"), Mapping)
+            else {}
+        )
+        if stage_metadata.get("evaluator_mode") == "embedded_evaluate":
+            return True
+    return False
+
+
+def _task_spec_field_gap(field_name: str, programs: list[Program]) -> list[str]:
+    score_field_links_present = bool(_task_spec_score_field_links(programs))
     common = {
         "initial_programs": [
             "evolvable_component_span_ids",
             "seed_idea_variant_result_tables",
         ],
-        "evaluation_code": [
-            "score_field_to_candidate_path_links",
-            "embedded_only_problem_definitions",
-        ],
+        "evaluation_code": (
+            ["embedded_only_problem_definitions"]
+            if score_field_links_present
+            else [
+                "score_field_to_candidate_path_links",
+                "embedded_only_problem_definitions",
+            ]
+        ),
         "prompt_template_and_config": [
             "prompt_template_to_rendered_prompt_lineage",
             "standalone_task_spec_report_examples",
@@ -10558,10 +10618,17 @@ def _task_spec_field_gap(field_name: str) -> list[str]:
             "problem_defined_candidate_abstraction_hooks",
             "arbitrary_language_build_runner_specs",
         ],
-        "objective_metrics": [
-            "cross_run_metric_contract_diff",
-            "score_field_to_evolved_block_mapping",
-        ],
+        "objective_metrics": (
+            [
+                "cross_run_metric_contract_diff",
+                "score_field_to_evolved_block_causal_attribution",
+            ]
+            if score_field_links_present
+            else [
+                "cross_run_metric_contract_diff",
+                "score_field_to_evolved_block_mapping",
+            ]
+        ),
     }
     return common.get(field_name, ["deep_runtime_artifact_resolution"])
 
@@ -10680,6 +10747,11 @@ def validate_task_spec_artifact_resolution_report(report: object) -> dict:
                 issues.append({"code": "invalid_artifact_present", "message": "artifact present must be boolean"})
         if not isinstance(field.get("reference_summary"), Mapping):
             issues.append({"code": "invalid_reference_summary", "message": "reference_summary must be an object"})
+        elif field.get("field") == "objective_metrics":
+            _validate_task_spec_score_field_links(
+                field["reference_summary"],
+                issues,
+            )
         gaps = field.get("unresolved_gap")
         if not isinstance(gaps, list) or not all(isinstance(gap, str) and gap for gap in gaps):
             issues.append({"code": "invalid_unresolved_gap", "message": "unresolved_gap must be a list of labels"})
@@ -10717,6 +10789,43 @@ def validate_task_spec_artifact_resolution_report(report: object) -> dict:
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _validate_task_spec_score_field_links(
+    summary: Mapping[str, object],
+    issues: list[dict],
+) -> None:
+    links = summary.get("score_field_links")
+    if not isinstance(links, list):
+        issues.append({"code": "invalid_task_spec_score_field_links", "message": "objective score_field_links must be a list"})
+        links = []
+    count = summary.get("score_field_link_count")
+    if not isinstance(count, int) or isinstance(count, bool) or count < 0:
+        issues.append({"code": "invalid_task_spec_score_field_link_count", "message": "score_field_link_count must be a non-negative integer"})
+    elif count < len(links):
+        issues.append({"code": "task_spec_score_field_link_count_mismatch", "message": "score_field_link_count must cover retained links"})
+    if summary.get("score_field_links_truncated") not in {True, False}:
+        issues.append({"code": "invalid_task_spec_score_field_links_truncated", "message": "score_field_links_truncated must be boolean"})
+    for link in links:
+        if not isinstance(link, Mapping):
+            issues.append({"code": "invalid_task_spec_score_field_link", "message": "score field link records must be objects"})
+            continue
+        if not isinstance(link.get("program_id"), str) or not link.get("program_id"):
+            issues.append({"code": "invalid_task_spec_score_field_program", "message": "score field link program_id is invalid"})
+        if link.get("link_policy") != "candidate_path_candidates_not_causal_attribution":
+            issues.append({"code": "invalid_task_spec_score_field_policy", "message": "score field link policy is invalid"})
+        if link.get("causal_attribution_claimed") is not False:
+            issues.append({"code": "task_spec_score_field_causality_overclaim", "message": "task spec score field links must not claim causal attribution"})
+        if not isinstance(link.get("metric_name"), str) or not link.get("metric_name"):
+            issues.append({"code": "invalid_task_spec_score_field_metric", "message": "score field link metric_name is invalid"})
+        if not _is_sha256_hex(link.get("candidate_primary_file_sha256")):
+            issues.append({"code": "invalid_task_spec_score_field_primary_hash", "message": "score field link primary file hash is invalid"})
+        blocks = link.get("evolved_block_candidates")
+        if not isinstance(blocks, list):
+            issues.append({"code": "invalid_task_spec_score_field_blocks", "message": "score field link evolved_block_candidates must be a list"})
+            blocks = []
+        if link.get("evolved_block_candidate_count") != len(blocks):
+            issues.append({"code": "task_spec_score_field_block_count_mismatch", "message": "score field block count must match candidates"})
 
 
 def _validate_report_count(

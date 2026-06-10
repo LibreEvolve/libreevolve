@@ -3766,6 +3766,9 @@ keeps the local side explicit: no larger-target matrix scaling attempts,
 measured GPU memory profiles, OOM diagnostics, reduced-seed tradeoffs, or
 attempted-versus-excluded target policies have been recorded yet, and those
 fields are required before local scaling-frontier claims.
+`appendix_a_matrix_local_resource_frontier_from_attempts()` can build an
+`attempts_recorded` boundary from supplied local attempt diagnostics, but no
+checked local larger-target attempt corpus is emitted yet.
 The paper-manifest validator also checks the shipped example-scope registry,
 keeping `hello_world`, `sorting`, `workspace_math`, `matrix_multiplication`,
 and `circle_packing` marked as smoke-only rather than AlphaEvolve-comparable

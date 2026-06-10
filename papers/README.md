@@ -1249,6 +1249,9 @@ Implemented:
   the fields required for measured GPU memory, OOM artifacts, reduced-seed
   tradeoffs, and exclusion rationale; it does not provide those local attempts
   or artifacts.
+  `appendix_a_matrix_local_resource_frontier_from_attempts()` can build an
+  `attempts_recorded` boundary from supplied local attempt diagnostics, but no
+  checked local larger-target attempt corpus is emitted yet.
   `write_strassen_2x2_publication_bundle()` provides one checked Strassen
   baseline for `mm_2x2x2` with canonical algorithm, certificate, notebook,
   report, and artifact inventory files. Those files are now pinned under

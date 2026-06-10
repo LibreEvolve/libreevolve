@@ -578,6 +578,46 @@ def appendix_a_matrix_local_resource_frontier_record() -> dict[str, Any]:
     }
 
 
+def appendix_a_matrix_local_resource_frontier_from_attempts(
+    local_attempts: list[dict[str, Any]],
+    *,
+    excluded_target_policy_status: str = "defined",
+    excluded_target_policy_boundary: str | None = None,
+) -> dict[str, Any]:
+    """Build a recorded local resource-frontier boundary from attempts."""
+    boundary = appendix_a_matrix_local_resource_frontier_record()
+    policy_boundary = (
+        excluded_target_policy_boundary
+        if excluded_target_policy_boundary is not None
+        else (
+            "No local larger-target matrix scaling attempts are excluded from "
+            "the declared local attempt policy; recorded attempts are limited "
+            "to the supplied rows."
+        )
+    )
+    boundary.update(
+        {
+            "local_frontier_status": "attempts_recorded",
+            "local_attempts": copy.deepcopy(local_attempts),
+            "excluded_target_policy": {
+                "status": excluded_target_policy_status,
+                "boundary": policy_boundary,
+            },
+            "claim_boundary": (
+                "Recorded local attempts preserve larger-target matrix "
+                "resource-frontier diagnostics for the supplied rows; this "
+                "does not claim LibreEvolve reproduced AlphaEvolve's full "
+                "Appendix A OOM/resource frontier."
+            ),
+        }
+    )
+    report = validate_appendix_a_matrix_local_resource_frontier(boundary)
+    if not report.ok:
+        messages = "; ".join(issue.message for issue in report.issues)
+        raise ValueError(f"local matrix resource-frontier boundary is invalid: {messages}")
+    return boundary
+
+
 def appendix_a_matrix_subset_scope_record(
     path: str | Path = REGISTRY_PATH,
 ) -> dict[str, Any]:

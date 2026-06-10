@@ -818,6 +818,9 @@ is not yet an AlphaEvolve reproduction.
   future attempted target sizes, measured GPU memory, OOM artifacts,
   reduced-seed tradeoffs, and exclusion rationale. Actual local scaling runs
   remain open.
+  `appendix_a_matrix_local_resource_frontier_from_attempts()` builds an
+  `attempts_recorded` boundary from supplied local attempt diagnostics without
+  claiming the full paper frontier has been reproduced.
 - Keep matrix starting-algorithm wording scoped to boundary validation rather
   than emitted Section 3.1 provenance:
   `libreevolve.matrix_baseline_component_runtime_boundary.v1` now validates

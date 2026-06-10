@@ -19,6 +19,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     appendix_a_matrix_curation_record,
     appendix_a_matrix_excluded_target_curation_boundary_from_records,
     appendix_a_matrix_excluded_target_curation_boundary_record,
+    appendix_a_matrix_local_resource_frontier_from_attempts,
     appendix_a_matrix_local_resource_frontier_record,
     appendix_a_matrix_resource_frontier_record,
     appendix_a_matrix_row_note_artifact_boundary_from_records,
@@ -528,6 +529,49 @@ def test_appendix_a_matrix_local_resource_frontier_rejects_attempts_under_absenc
 
     assert report.ok is False
     assert "unexpected_local_attempts" in {issue.code for issue in report.issues}
+
+
+def _local_resource_attempt() -> dict:
+    return {
+        "attempt_id": "larger_mm_probe",
+        "target_id": "mm_6x6x6",
+        "dimensions": [6, 6, 6],
+        "seed_count": 10,
+        "accelerator_profile": "local_cpu_only",
+        "gpu_memory_bytes": 0,
+        "resource_status": "resource_exhausted",
+        "oom_or_exhaustion_diagnostics": "fixture diagnostic",
+        "reduced_seed_policy": "used 10 seeds instead of the paper's 1000-seed setup",
+        "artifact_paths": ["runs/matrix/frontier.json"],
+        "artifact_sha256": ["0" * 64],
+    }
+
+
+def test_appendix_a_matrix_local_resource_frontier_accepts_recorded_attempts():
+    record = appendix_a_matrix_local_resource_frontier_from_attempts(
+        [_local_resource_attempt()]
+    )
+
+    report = validate_appendix_a_matrix_local_resource_frontier(record)
+
+    assert report.ok is True
+    assert record["local_frontier_status"] == "attempts_recorded"
+    assert report.attempted_scope_count == 1
+    assert report.local_artifact_count == 1
+    assert record["excluded_target_policy"]["status"] == "defined"
+    assert report.issues == []
+
+
+def test_appendix_a_matrix_local_resource_frontier_builder_rejects_invalid_attempts():
+    attempt = _local_resource_attempt()
+    attempt["target_id"] = "not-a-target"
+    attempt["artifact_sha256"] = ["not-a-digest"]
+
+    with pytest.raises(
+        ValueError,
+        match="local matrix resource-frontier boundary is invalid",
+    ):
+        appendix_a_matrix_local_resource_frontier_from_attempts([attempt])
 
 
 def test_appendix_a_matrix_local_resource_frontier_rejects_invalid_recorded_attempts():

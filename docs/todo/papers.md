@@ -3282,6 +3282,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     claimed: target identities, dimensions, seed counts, accelerator/GPU
     memory, OOM diagnostics, reduced-seed policy, artifacts, and
     attempted-versus-excluded target policy.
+    `appendix_a_matrix_local_resource_frontier_from_attempts()` can build an
+    `attempts_recorded` boundary from supplied local attempt diagnostics, but
+    no paper-facing larger-target attempt corpus is emitted yet.
   - Required result: add local paper/report evidence from attempted larger
     matrix targets, measured accelerator/memory profile, resource exhaustion or
     OOM diagnostics, reduced-seed tradeoffs if used, and explicit

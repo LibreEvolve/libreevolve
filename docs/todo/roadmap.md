@@ -2444,6 +2444,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     for attempted-target rows, measured GPU memory/resource diagnostics,
     seed-count tradeoff records, artifacts, and target inclusion/exclusion
     policy beyond the reported suite.
+    `appendix_a_matrix_local_resource_frontier_from_attempts()` can build an
+    `attempts_recorded` boundary from supplied local attempt diagnostics, but
+    roadmap wording still treats real larger-target attempts as missing.
   - Required result: when local matrix scaling/resource-frontier report fields
     are backed by actual local attempts, update ROADMAP, README, papers index,
     and code/paper TODOs together so roadmap text distinguishes AlphaEvolve

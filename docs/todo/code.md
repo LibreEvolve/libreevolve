@@ -3225,6 +3225,9 @@ Primary evidence:
     future target-size attempts, measured accelerator/GPU memory profile, OOM
     diagnostics, reduced-seed policy, artifacts, and attempted-versus-excluded
     target policy.
+    `appendix_a_matrix_local_resource_frontier_from_attempts()` builds an
+    `attempts_recorded` boundary from supplied local attempt diagnostics, but
+    actual larger-target attempts and emitted artifacts remain missing.
   - Required result: add local matrix benchmark report fields and validators
     backed by actual target-size scaling attempts, measured accelerator/GPU
     memory profile, OOM or resource-exhaustion diagnostics, reduced-seed

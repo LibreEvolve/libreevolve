@@ -2798,20 +2798,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep Appendix B.8 roadmap wording scoped until squared-ratio convention
+- [x] Keep Appendix B.8 roadmap wording scoped until squared-ratio convention
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.8 reports min max/min-distance
     point-set results for 16 points in two dimensions and 14 points in three
     dimensions. The published values `12.889266112` and `4.165849767` are
     squared-ratio values, not direct max/min distance ratios.
-  - Current evidence: roadmap/README/paper-index wording can cite the broad
-    Appendix B per-result metric/value gap, but it does not require B.8-specific
-    convention labels that keep raw squared values, square-root-derived ratios,
-    dimensions, point counts, coordinate artifacts, and comparison units
-    separate.
-  - Required result: when Appendix B.8 metric-convention metadata and
-    validators land, update ROADMAP, README, papers index, and code/paper TODOs
-    so roadmap claims cannot compare or quote B.8 values in the wrong unit.
+  - Status: ROADMAP now states that B.8 registry evidence validates raw squared
+    values, square-root-derived ratios, point counts, dimensions, prior squared
+    bounds, Figure 12 panel labels, and comparison policy, while leaving
+    coordinate payloads and all-pairs distance certificates open.
+  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
+    passes.
 
 - [ ] Keep Appendix B.8 roadmap wording scoped until point-set distance
       certificates exist.
@@ -2819,11 +2817,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     max/min-distance point-set witnesses: 16 points in 2D with squared ratio
     `12.889266112` improving prior `12.890`, and 14 points in 3D with squared
     ratio `4.165849767` improving prior `4.168`.
-  - Current evidence: roadmap/README/paper-index wording can cite broad
-    Appendix B per-result gaps and the B.8 squared-ratio convention gap, but
-    it does not require B.8-specific coordinate payloads, exact point-count and
-    dimension validation, all-pairs min/max distance certificates, recomputed
-    squared ratios, prior-best comparisons, or Figure 12 panel linkage.
+  - Current evidence: roadmap/README/paper-index wording now cites B.8
+    convention metadata with point counts, dimensions, prior squared bounds,
+    and Figure 12 panel linkage. It still does not require coordinate payloads,
+    all-pairs min/max distance certificates, or recomputed squared ratios from
+    coordinates.
   - Required result: when Appendix B.8 witness validators land, update ROADMAP,
     README, papers index, and code/paper TODOs together so roadmap claims
     separate convention-safe quoting from actual reproduced point-set

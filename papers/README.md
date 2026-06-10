@@ -85,7 +85,12 @@ labels for `B.1. First autocorrelation inequality (C1)`,
 `autocorrelation_bounds_k*` ids. It also validates B.1-B.3 step-function
 summary metadata: interval counts `600`, `50`, and `400`, the common
 `[-1/4, 1/4]` domain, non-negative versus signed function policy, proof
-direction, previous bound/source, and reported bound. Appendix B says reported construction data and verification code
+direction, previous bound/source, and reported bound. For B.8 max/min-distance
+point sets, the registry now preserves the paper's squared-ratio convention:
+16 points in 2D report squared value `12.889266112` with derived ratio
+`3.590162407468`, and 14 points in 3D report squared value `4.165849767` with
+derived ratio `2.041041343775`; both are compared against prior squared bounds
+from `[29]`. Appendix B says reported construction data and verification code
 appear in an accompanying Google Colab; this registry is not that
 Colab-equivalent evidence surface and does not yet store construction-data
 exports or runnable verifier-code artifacts.

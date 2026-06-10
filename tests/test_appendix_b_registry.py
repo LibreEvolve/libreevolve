@@ -1,6 +1,7 @@
 import json
 
 from libreevolve.problems.benchmarks.appendix_b_registry import (
+    EXPECTED_B8_METRIC_CONVENTIONS,
     EXPECTED_AUTOCORRELATION_LABELS,
     EXPECTED_AUTOCORRELATION_STEP_EVIDENCE,
     EXPECTED_FAMILY_IDS,
@@ -37,6 +38,8 @@ def test_appendix_b_registry_enumerates_all_alphaevolve_families():
         evidence = autocorrelation[family_id]["step_function_evidence"]
         for field, expected_value in EXPECTED_AUTOCORRELATION_STEP_EVIDENCE[family_id].items():
             assert evidence[field] == expected_value
+    b8 = next(family for family in data["families"] if family["id"] == "max_min_distance_point_sets")
+    assert b8["metric_convention_evidence"] == list(EXPECTED_B8_METRIC_CONVENTIONS)
 
 
 def test_appendix_b_registry_requires_advertised_fixtures_to_exist(tmp_path):
@@ -131,3 +134,39 @@ def test_appendix_b_registry_requires_autocorrelation_step_evidence_object(tmp_p
     assert report.ok is False
     assert [issue.code for issue in report.issues] == ["missing_step_function_evidence"]
     assert report.issues[0].family_id == "autocorrelation_bounds_k5"
+
+
+def test_appendix_b_registry_requires_b8_metric_convention_rows(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    b8 = next(family for family in data["families"] if family["id"] == "max_min_distance_point_sets")
+    first = b8["metric_convention_evidence"][0]
+    first["reported_value_convention"] = "direct_ratio"
+    first["derived_ratio"] = 12.889266112
+    first["prior_best_value"] = 12.0
+    b8["metric_convention_evidence"][1]["dimension"] = 4
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_b8_reported_value_convention" in codes
+    assert "invalid_b8_derived_ratio" in codes
+    assert "invalid_b8_derived_ratio_math" in codes
+    assert "invalid_b8_improvement_direction" in codes
+    assert "invalid_b8_dimension" in codes
+
+
+def test_appendix_b_registry_requires_b8_metric_convention_list(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    b8 = next(family for family in data["families"] if family["id"] == "max_min_distance_point_sets")
+    del b8["metric_convention_evidence"]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+
+    assert report.ok is False
+    assert [issue.code for issue in report.issues] == ["missing_b8_metric_convention_evidence"]
+    assert report.issues[0].family_id == "max_min_distance_point_sets"

@@ -645,6 +645,11 @@ is not yet an AlphaEvolve reproduction.
   interval counts, common domain, sign policy, bound direction, previous
   bound/source, and reported bound for C1-C3, but not the actual step-function
   payloads or recomputation certificates.
+- Keep Appendix B.8 distance-ratio claims scoped to metric convention evidence
+  until point-set certificates land: the registry now validates the squared
+  raw values, square-root-derived ratios, point counts, dimensions, prior
+  squared bounds, Figure 12 panel labels, and comparison policy, but not the
+  coordinate payloads or all-pairs distance certificates.
 - Keep paper artifact-role attribution separate from artifact availability:
   `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
   AlphaEvolve PDF contribution records for figure creators and companion

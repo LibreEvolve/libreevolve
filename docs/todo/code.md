@@ -2550,24 +2550,24 @@ Primary evidence:
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Add Appendix B.8 max/min-distance squared-ratio convention provenance.
+- [x] Add Appendix B.8 max/min-distance squared-ratio convention provenance.
   - Spec evidence: AlphaEvolve Appendix B.8 reports point-set constructions for
     minimizing the ratio between maximum and minimum pairwise distances, but the
     displayed values use a squared-ratio convention: 16 points in 2D report
     `12.889266112`, and 14 points in 3D report `4.165849767`, corresponding to
     square-root ratios for the geometric objective.
-  - Current evidence: the broad Appendix B per-result TODO requires metric
-    formulas, units, bound semantics, values, and coordinate payloads. No
-    code/report schema separately records whether the paper value is the ratio,
-    squared ratio, or transformed objective value, so generated reports could
-    quote the raw numbers as direct distance ratios or compare them against
-    baselines in the wrong unit.
-  - Required result: add Appendix B.8-specific metric-convention fields and
-    validators: raw paper value, reported-value convention
-    (`squared_max_min_ratio`), derived ratio transform, dimension/point-count
-    parameter rows, comparison-unit policy, source section/caption linkage, and
-    README/ROADMAP wording that labels both the squared value and the geometric
-    square-root ratio unambiguously.
+  - Status: `alphaevolve_appendix_b.json` now records B.8
+    `metric_convention_evidence` rows for the 16-point 2D and 14-point 3D
+    constructions. Each row validates source section, Figure 12 panel, point
+    count, dimension, metric name, `squared_max_min_ratio` convention, raw
+    reported squared value, square-root transform, derived ratio, prior squared
+    bound/source, comparison-unit policy, and explicit missing coordinate-
+    artifact status. `appendix_b_registry.py` rejects missing B.8 convention
+    rows, wrong conventions, derived-ratio drift, bad dimensions, and
+    non-improving squared values. README, ROADMAP, and the paper index now
+    distinguish raw squared values from derived geometric ratios.
+  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
+    passes.
 
 - [ ] Add Appendix B.8 point-set distance-certificate provenance.
   - Spec evidence: AlphaEvolve Appendix B.8 and Figure 12 report two concrete
@@ -2576,13 +2576,13 @@ Primary evidence:
     the best known squared bound `12.890`, and 14 points in three dimensions
     with squared ratio `4.165849767`, improving the best known squared bound
     `4.168`.
-  - Current evidence: the B.8 convention TODO above prevents quoting squared
-    values as direct ratios, and the broad Appendix B per-result TODO asks for
-    coordinate payloads in general. No code/report schema separately forces
-    B.8 witness validation: exact point count, dimension, coordinate payload
-    hash, finite-coordinate checks, all-pairs minimum and maximum distance
-    certificates, recomputed squared ratio, prior value/source comparison, or
-    Figure 12 left/right panel linkage.
+  - Current evidence: the B.8 convention metadata now prevents quoting squared
+    values as direct ratios and records point count, dimension, prior squared
+    bound/source, and Figure 12 panel linkage. The broad Appendix B per-result
+    TODO asks for coordinate payloads in general, but no code/report schema
+    separately forces B.8 witness validation: coordinate payload hash,
+    finite-coordinate checks, all-pairs minimum and maximum distance
+    certificates, or recomputed squared ratio from coordinates.
   - Required result: add Appendix B.8 witness rows and validators that record
     point-set artifact hashes, `n`, dimension, pairwise-distance certificate
     hashes, recomputed min distance, max distance, squared ratio and derived

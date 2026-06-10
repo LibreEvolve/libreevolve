@@ -2504,23 +2504,23 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Track Appendix B.8 squared-ratio convention evidence.
+- [x] Track Appendix B.8 squared-ratio convention evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.8 gives point-set
     constructions for minimizing the ratio of maximum to minimum pairwise
     distances. The values shown for 16 points in 2D and 14 points in 3D are
     `12.889266112` and `4.165849767`, respectively, under the paper's squared
     ratio reporting convention rather than direct square-root distance ratios.
-  - Current gap: paper-facing Appendix B TODOs require normalized result rows,
-    metric formulas, units or bound semantics, and coordinate payloads, but they
-    do not force B.8 reports to preserve the raw paper convention separately
-    from the geometric ratio interpretation. A generated paper summary could
-    therefore compare `12.889266112` as a direct max/min distance ratio instead
-    of as a squared value.
-  - Required result: add B.8 evidence fields for raw reported value,
-    convention label, square-root-derived ratio, point count, dimension,
-    coordinate artifact linkage, comparison-unit policy, and source location;
-    update README/ROADMAP wording so claims about Appendix B.8 name the
-    squared-ratio convention explicitly.
+  - Status: the Appendix B registry now records B.8 metric-convention evidence
+    for both paper rows: 16 points in 2D and 14 points in 3D. Each row preserves
+    the raw squared reported value, `squared_max_min_ratio` convention,
+    square-root-derived ratio, point count, dimension, prior squared bound,
+    source section, Figure 12 panel, comparison-unit policy, and explicit
+    missing coordinate-artifact status. Registry validation rejects missing
+    rows, convention drift, derived-ratio drift, and non-improving squared
+    values. README, ROADMAP, and the paper index now name the squared-ratio
+    convention explicitly.
+  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
+    passes.
 
 - [ ] Track Appendix B.8 point-set distance-certificate evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.8 and Figure 12
@@ -2528,13 +2528,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     squared ratio `12.889266112`, improving the best known squared bound
     `12.890`, and 14 points in 3D with squared ratio `4.165849767`, improving
     the best known squared bound `4.168`.
-  - Current gap: paper-facing Appendix B TODOs require broad normalized result
-    rows, coordinate payloads, Figure 12 provenance, and the B.8
-    squared-ratio convention. They do not require B.8 reports to prove the
-    actual coordinate witnesses: exact point count and dimension, finite
-    coordinate payload hash, all-pairs minimum/maximum distance certificate,
-    recomputed squared ratio and derived geometric ratio, prior value/source
-    comparison, or left/right Figure 12 panel linkage.
+  - Current gap: paper-facing Appendix B TODOs now preserve the B.8
+    squared-ratio convention, point count, dimension, prior value/source, and
+    left/right Figure 12 panel linkage. They still do not require B.8 reports
+    to prove the actual coordinate witnesses: finite coordinate payload hash,
+    all-pairs minimum/maximum distance certificate, or recomputed squared ratio
+    from coordinates.
   - Required result: add paper/report evidence for Appendix B.8 witness rows:
     result id, `n`, dimension, coordinate artifact hash, pairwise-distance
     certificate hash, recomputed min and max distances, squared-ratio value,

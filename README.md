@@ -3589,6 +3589,12 @@ metadata from the paper: interval counts `600`/`50`/`400`, common domain
 `[-1/4, 1/4]`, non-negative versus signed function policy, upper/lower-bound
 direction, previous bound/source, and reported bound. The actual step-function
 payloads and recomputation certificates remain absent. It is also not a
+complete B.8 point-set certificate surface: the registry now preserves the
+squared-ratio convention for Appendix B.8, including raw squared values
+`12.889266112` and `4.165849767`, their square-root-derived geometric ratios,
+point counts, dimensions, prior squared bounds, and comparison policy. It does
+not yet store the coordinate payloads or all-pairs distance certificates for
+those witnesses. It is also not a
 Section 3.2 aggregate outcome ledger: LibreEvolve does not yet enumerate the
 paper's over-50 mathematical problem instances, branch taxonomy, previous-best
 references, matched/improved/failed statuses, or aggregate percentages for

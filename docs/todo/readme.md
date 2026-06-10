@@ -1700,22 +1700,19 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README Appendix B.8 ratio wording scoped until squared-ratio
+- [x] Keep README Appendix B.8 ratio wording scoped until squared-ratio
       convention provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.8 reports constructions for the
     max/min pairwise-distance ratio, but the numerical values `12.889266112`
     for 16 points in 2D and `4.165849767` for 14 points in 3D are reported
     under a squared-ratio convention, with the geometric ratio obtained by a
     square-root transform.
-  - Current evidence: README can point to broad Appendix B per-result
-    metric/value provenance gaps, but it does not separately warn that B.8
-    needs raw-value versus transformed-ratio labels before quoting those
-    numbers.
-  - Required result: when Appendix B.8 convention metadata lands, update
-    README, ROADMAP, papers index, and code/paper TODOs together so README
-    labels raw squared values, derived square-root ratios, point counts,
-    dimensions, coordinate artifacts, and comparison units without conflating
-    squared and unsquared objectives.
+  - Status: README now states that Appendix B.8 registry evidence preserves the
+    raw squared values, square-root-derived ratios, point counts, dimensions,
+    prior squared bounds, and comparison policy, while leaving coordinate
+    payloads and all-pairs distance certificates open.
+  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
+    passes.
 
 - [ ] Keep README Appendix B.8 witness wording scoped until distance
       certificates exist.
@@ -1724,12 +1721,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     versus the prior squared bound `12.890`, and 14 points in three dimensions
     achieving squared ratio `4.165849767` versus the prior squared bound
     `4.168`.
-  - Current evidence: README can point to broad Appendix B metric/value gaps
-    and the B.8 squared-ratio convention gap, but it does not separately warn
-    that B.8 needs coordinate payloads, exact point-count/dimension checks,
-    all-pairs min/max distance recomputation, prior-bound comparisons, and
-    Figure 12 panel links before claiming the point-set witnesses are
-    reproduced.
+  - Current evidence: README now points to B.8 squared-ratio convention
+    metadata with point counts, dimensions, prior squared bounds, and Figure 12
+    panel linkage. It still warns that coordinate payloads and all-pairs
+    min/max distance recomputation remain open.
   - Required result: when Appendix B.8 distance-certificate metadata lands,
     update README, ROADMAP, papers index, and code/paper TODOs together so
     README distinguishes raw convention metadata from validated point-set

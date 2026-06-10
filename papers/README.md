@@ -1506,6 +1506,10 @@ Implemented:
   validates required future artifact fields for panel ids/order/pages, line
   spans, source-diff excerpts, rendered images, OCR text, panel-set artifacts,
   artifact paths/hashes, and nested Figure 9 exhibit metadata.
+  `figure9_matrix_diff_artifact_boundary_from_exhibit()` can build emitted
+  artifacts from Figure 9 exhibit metadata and validates nested panel linkage,
+  but local report exports still do not render or check in those panel
+  artifacts.
 - `libreevolve/problems/benchmarks/paper_artifact_roles.py`: AlphaEvolve paper
   artifact-role attribution and linkage-boundary contract, but concrete
   rendered figure and notebook artifacts are not yet linked. It validates the

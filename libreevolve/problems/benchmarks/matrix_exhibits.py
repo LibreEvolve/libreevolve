@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import copy
+import hashlib
 import json
 import re
 from dataclasses import dataclass
@@ -254,6 +256,91 @@ def figure9_matrix_diff_artifact_boundary_record() -> dict[str, Any]:
             "panel images, OCR text, or source-diff artifacts for Figures 9a-9c."
         ),
     }
+
+
+def figure9_matrix_diff_artifact_boundary_from_exhibit(
+    exhibit: dict[str, Any],
+    *,
+    artifact_paths_by_panel_id: dict[str, list[str]] | None = None,
+    artifact_sha256_by_panel_id: dict[str, str] | None = None,
+) -> dict[str, Any]:
+    """Build emitted Figure 9 panel artifacts from exhibit metadata."""
+    exhibit_record = copy.deepcopy(exhibit)
+    exhibit_report = validate_figure9_matrix_diff_exhibit(exhibit_record)
+    if not exhibit_report.ok:
+        messages = "; ".join(issue.message for issue in exhibit_report.issues)
+        raise ValueError(f"Figure 9 matrix-diff exhibit is invalid: {messages}")
+    source_links = exhibit_record.get("source_links", {})
+    assert isinstance(source_links, dict)
+    artifacts: list[dict[str, Any]] = []
+    panels = exhibit_record.get("panels", [])
+    assert isinstance(panels, list)
+    for panel in panels:
+        assert isinstance(panel, dict)
+        panel_id = panel["panel_id"]
+        paths = (
+            artifact_paths_by_panel_id.get(panel_id)
+            if artifact_paths_by_panel_id is not None
+            else None
+        )
+        artifact_paths = (
+            copy.deepcopy(paths)
+            if paths is not None
+            else [
+                f"figures/{panel_id}_diff.txt",
+                f"figures/{panel_id}.png",
+                f"figures/{panel_id}_ocr.txt",
+            ]
+        )
+        artifact_payload = {
+            "exhibit_id": exhibit_record["exhibit_id"],
+            "panel_id": panel_id,
+            "panel_order": panel["panel_order"],
+            "source_pdf_page": panel["source_pdf_page"],
+            "code_line_span": copy.deepcopy(panel["code_line_span"]),
+            "source_diff_excerpt": copy.deepcopy(panel["source_diff_excerpt"]),
+            "rendered_image_artifact": copy.deepcopy(
+                panel["rendered_image_artifact"]
+            ),
+            "rendered_text_artifact": copy.deepcopy(
+                panel["rendered_text_artifact"]
+            ),
+            "rendered_panel_set": copy.deepcopy(
+                source_links["rendered_panel_set"]
+            ),
+            "ocr_text_artifact": copy.deepcopy(source_links["ocr_text"]),
+            "artifact_paths": artifact_paths,
+            "figure9_matrix_diff_exhibit": copy.deepcopy(exhibit_record),
+        }
+        artifact_hash = (
+            artifact_sha256_by_panel_id.get(panel_id)
+            if artifact_sha256_by_panel_id is not None
+            else None
+        )
+        artifact_payload["artifact_sha256"] = (
+            artifact_hash
+            if artifact_hash is not None
+            else _stable_json_sha256(artifact_payload)
+        )
+        artifacts.append(artifact_payload)
+    boundary = figure9_matrix_diff_artifact_boundary_record()
+    boundary.update(
+        {
+            "artifact_status": "emitted",
+            "emitted_artifacts": artifacts,
+            "claim_boundary": (
+                "Emitted artifacts preserve Figure 9a-9c matrix-diff panel "
+                "metadata and link each panel back to validated exhibit "
+                "evidence; this still does not claim local report/export code "
+                "emits those artifacts."
+            ),
+        }
+    )
+    boundary_report = validate_figure9_matrix_diff_artifact_boundary(boundary)
+    if not boundary_report.ok:
+        messages = "; ".join(issue.message for issue in boundary_report.issues)
+        raise ValueError(f"Figure 9 artifact boundary is invalid: {messages}")
+    return boundary
 
 
 def validate_figure4_matrix_discovery_exhibit(
@@ -921,6 +1008,38 @@ def _validate_figure9_artifact_record(
         Figure9MatrixDiffExhibitIssue(f"invalid_nested_exhibit_{issue.code}", issue.message)
         for issue in exhibit_report.issues
     )
+    nested = artifact.get("figure9_matrix_diff_exhibit")
+    nested_panels = nested.get("panels") if isinstance(nested, dict) else None
+    if isinstance(nested_panels, list) and panel_id in EXPECTED_PANEL_ORDER:
+        matching_panels = [
+            panel
+            for panel in nested_panels
+            if isinstance(panel, dict) and panel.get("panel_id") == panel_id
+        ]
+        if not matching_panels:
+            issues.append(
+                Figure9MatrixDiffExhibitIssue(
+                    "missing_nested_artifact_panel",
+                    "figure9_matrix_diff_exhibit must include the artifact panel_id",
+                )
+            )
+        else:
+            nested_panel = matching_panels[0]
+            for field in (
+                "panel_order",
+                "source_pdf_page",
+                "code_line_span",
+                "source_diff_excerpt",
+                "rendered_image_artifact",
+                "rendered_text_artifact",
+            ):
+                if artifact.get(field) != nested_panel.get(field):
+                    issues.append(
+                        Figure9MatrixDiffExhibitIssue(
+                            f"invalid_artifact_nested_{field}",
+                            f"artifact {field} must match its nested Figure 9 panel evidence",
+                        )
+                    )
 
 
 def _validate_figure9_artifact_paths(
@@ -945,6 +1064,16 @@ def _validate_figure9_artifact_paths(
         if path in seen:
             issues.append(Figure9MatrixDiffExhibitIssue("duplicate_artifact_path", "artifact_paths entries must be unique"))
         seen.add(path)
+
+
+def _stable_json_sha256(value: object) -> str:
+    payload = json.dumps(
+        value,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+    ).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
 
 
 def _validate_rank_table_artifact_required_fields(

@@ -1005,6 +1005,10 @@ is not yet an AlphaEvolve reproduction.
   required future fields for panel ids/order/pages, code line spans,
   source-diff excerpts, rendered panel images, OCR text, aggregate panel-set
   artifacts, artifact paths/hashes, and nested Figure 9 exhibit metadata.
+  `figure9_matrix_diff_artifact_boundary_from_exhibit()` builds emitted panel
+  artifacts from validated Figure 9 exhibit metadata and validation checks
+  nested panel linkage. Rendered appendix panel artifacts are still not
+  emitted or checked in automatically.
 - Keep Figure 4 matrix-discovery exhibit claims scoped to declared exhibit
   validation: `libreevolve.alphaevolve_figure4_matrix_discovery_exhibit.v1`
   now validates the main-text exhibit id, page 11, caption linkage,

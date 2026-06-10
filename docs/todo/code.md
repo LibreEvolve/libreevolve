@@ -3307,10 +3307,13 @@ Primary evidence:
     evidence. It validates declared exhibit metadata only.
     `libreevolve.alphaevolve_figure9_matrix_diff_artifact_boundary.v1` now
     validates the current `not_emitted_by_local_report_export` boundary and
-    required future fields for panel ids/order/pages, line spans, source-diff
+    emitted fields for panel ids/order/pages, line spans, source-diff
     excerpts, rendered panel images, OCR text, aggregate panel-set artifacts,
-    artifact paths/hashes, and nested Figure 9 exhibit metadata. No local
-    generator emits or checks in the rendered/OCR/source-diff panel artifacts.
+    artifact paths/hashes, and nested Figure 9 exhibit metadata.
+    `figure9_matrix_diff_artifact_boundary_from_exhibit()` builds emitted
+    artifacts from validated Figure 9 exhibit metadata and checks nested panel
+    linkage. No local generator emits or checks in the rendered/OCR/source-diff
+    panel artifacts.
   - Required result: emit or commit the actual Figure 9 panel artifacts with
     source PDF excerpt hashes, rendered image/OCR text hashes, source/diff line
     span artifacts, and links to the corresponding matrix result, sweep-space,

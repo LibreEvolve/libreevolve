@@ -3357,9 +3357,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     notebook/source evidence.
     `libreevolve.alphaevolve_figure9_matrix_diff_artifact_boundary.v1` now
     validates the current `not_emitted_by_local_report_export` boundary and
-    required future panel, source-diff, rendered image, OCR, aggregate panel,
-    artifact path/hash, and nested exhibit fields. It does not render or
-    commit those appendix panel artifacts.
+    emitted panel, source-diff, rendered image, OCR, aggregate panel, artifact
+    path/hash, and nested exhibit fields.
+    `figure9_matrix_diff_artifact_boundary_from_exhibit()` builds emitted
+    artifacts from validated Figure 9 exhibit metadata and checks nested panel
+    linkage, but it does not render or commit those appendix panel artifacts.
   - Required result: add concrete paper-facing Figure 9 panel artifacts for
     each panel, including source PDF/source-diff excerpts, rendered visual/text
     artifacts, hashes, target/result-row linkage, sweep-field linkage,

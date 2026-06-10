@@ -1,5 +1,7 @@
 import json
 
+import pytest
+
 from libreevolve.problems.benchmarks.matrix_exhibits import (
     FIGURE4_MATRIX_DISCOVERY_ARTIFACT_BOUNDARY_SCHEMA,
     FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA,
@@ -8,6 +10,7 @@ from libreevolve.problems.benchmarks.matrix_exhibits import (
     MATRIX_RANK_TABLE_ARTIFACT_BOUNDARY_SCHEMA,
     MATRIX_RANK_TABLE_EXHIBIT_SCHEMA,
     figure4_matrix_discovery_artifact_boundary_record,
+    figure9_matrix_diff_artifact_boundary_from_exhibit,
     figure9_matrix_diff_artifact_boundary_record,
     matrix_rank_table_artifact_boundary_record,
     render_figure4_matrix_discovery_artifact_boundary_summary,
@@ -628,19 +631,41 @@ def test_figure9_matrix_diff_artifact_boundary_requires_emitted_artifacts():
 
 
 def test_figure9_matrix_diff_artifact_boundary_accepts_emitted_panel_artifacts():
-    boundary = figure9_matrix_diff_artifact_boundary_record()
-    boundary["artifact_status"] = "emitted"
-    boundary["emitted_artifacts"] = [
-        _figure9_artifact("figure9a"),
-        _figure9_artifact("figure9b"),
-        _figure9_artifact("figure9c"),
-    ]
+    boundary = figure9_matrix_diff_artifact_boundary_from_exhibit(
+        _valid_exhibit(),
+        artifact_sha256_by_panel_id={
+            "figure9a": "a" * 64,
+            "figure9b": "b" * 64,
+            "figure9c": "c" * 64,
+        },
+    )
 
     validation = validate_figure9_matrix_diff_artifact_boundary(boundary)
 
+    artifacts = {
+        artifact["panel_id"]: artifact for artifact in boundary["emitted_artifacts"]
+    }
     assert validation.ok is True
     assert validation.emitted_artifact_count == 3
     assert validation.issues == []
+    assert artifacts["figure9a"]["panel_order"] == 1
+    assert artifacts["figure9b"]["source_pdf_page"] == 36
+    assert artifacts["figure9c"]["artifact_paths"] == [
+        "figures/figure9c_diff.txt",
+        "figures/figure9c.png",
+        "figures/figure9c_ocr.txt",
+    ]
+    assert artifacts["figure9a"]["artifact_sha256"] == "a" * 64
+    assert artifacts["figure9b"]["artifact_sha256"] == "b" * 64
+    assert artifacts["figure9c"]["artifact_sha256"] == "c" * 64
+
+
+def test_figure9_matrix_diff_artifact_boundary_builder_rejects_invalid_exhibit():
+    exhibit = _valid_exhibit()
+    exhibit["panels"] = exhibit["panels"][:2]
+
+    with pytest.raises(ValueError, match="Figure 9 matrix-diff exhibit is invalid"):
+        figure9_matrix_diff_artifact_boundary_from_exhibit(exhibit)
 
 
 def test_figure9_matrix_diff_artifact_boundary_rejects_invalid_nested_artifact():
@@ -659,6 +684,33 @@ def test_figure9_matrix_diff_artifact_boundary_rejects_invalid_nested_artifact()
     assert "invalid_artifact_panel_order" in codes
     assert "invalid_artifact_path" in codes
     assert "invalid_nested_exhibit_missing_panel" in codes
+
+
+def test_figure9_matrix_diff_artifact_boundary_rejects_nested_panel_mismatch():
+    boundary = figure9_matrix_diff_artifact_boundary_from_exhibit(
+        _valid_exhibit(),
+        artifact_sha256_by_panel_id={
+            "figure9a": "a" * 64,
+            "figure9b": "b" * 64,
+            "figure9c": "c" * 64,
+        },
+    )
+    artifact = next(
+        item for item in boundary["emitted_artifacts"] if item["panel_id"] == "figure9b"
+    )
+    nested_panel = next(
+        panel
+        for panel in artifact["figure9_matrix_diff_exhibit"]["panels"]
+        if panel["panel_id"] == "figure9b"
+    )
+    nested_panel["code_line_span"]["start"] = 999
+
+    validation = validate_figure9_matrix_diff_artifact_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_nested_exhibit_invalid_line_span" in codes
+    assert "invalid_artifact_nested_code_line_span" in codes
 
 
 def test_render_figure9_matrix_diff_artifact_boundary_summary_reports_shape():

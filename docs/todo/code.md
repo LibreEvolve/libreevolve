@@ -3156,9 +3156,11 @@ Primary evidence:
     concurrent work is mentioned. This is built-in metadata only:
     `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`
     now validates the current `not_emitted_by_local_report_export` state and
-    required future emitted-artifact fields, but matrix reports, table
-    exhibits, and generated artifacts do not emit or consume the row-note
-    caveat.
+    emitted-artifact fields.
+    `appendix_a_matrix_row_note_artifact_boundary_from_records()` builds
+    emitted artifacts from validated row-note evidence and validates nested
+    row-note linkage, but matrix reports, table exhibits, and generated
+    artifacts do not emit or consume the row-note caveat.
   - Required result: wire Appendix A table/report artifact generation to emit
     row-level note provenance: note type, cited reference id, note text/source
     location, affected target id, relationship to AlphaEvolve's result

@@ -1231,6 +1231,9 @@ Implemented:
   validates required future emitted-artifact fields for note identity,
   target/rank/reference values, source text, caveat flags, nested row-note
   evidence, artifact paths, and hashes.
+  `appendix_a_matrix_row_note_artifact_boundary_from_records()` can build
+  emitted artifacts from row-note evidence and validates nested linkage, but
+  local report/table exports still do not emit those caveat artifacts.
   `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1` records the
   paper-source larger-target boundary for sizes beyond `<5,5,5>`, 1000 random
   seeds, single-GPU evaluators, frequent OOM, and further-optimization need.

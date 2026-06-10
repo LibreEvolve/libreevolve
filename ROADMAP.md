@@ -1059,6 +1059,10 @@ is not yet an AlphaEvolve reproduction.
   required future emitted-artifact fields for note identity, target/rank/
   reference values, source text, caveat flags, nested row-note evidence,
   artifact paths, and hashes.
+  `appendix_a_matrix_row_note_artifact_boundary_from_records()` builds emitted
+  artifacts from validated row-note evidence and validation checks nested
+  evidence linkage. Runtime reports and rendered table artifacts still need to
+  emit that row-note caveat automatically.
 - Keep Table 2/Table 3 matrix-rank claims scoped to declared exhibit evidence:
   `libreevolve.alphaevolve_matrix_rank_table_exhibit.v1` now validates stable
   table ids, selected/full-table membership, row ordering, rank values, outcome

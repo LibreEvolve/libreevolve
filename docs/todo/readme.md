@@ -799,7 +799,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     row-note caveat yet.
     `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`
     now documents and validates that README-scoped absence boundary plus
-    required future emitted-artifact fields.
+    emitted-artifact fields. README also documents the builder from row-note
+    evidence and nested-linkage validation, but no report/table exporter emits
+    the caveat automatically.
   - Required result: when Appendix A row-note artifacts land, update README,
     ROADMAP, papers index, and code/paper TODOs together so README
     distinguishes stored rank/outcome values from paper-faithful result-note

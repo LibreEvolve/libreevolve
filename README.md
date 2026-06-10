@@ -3742,6 +3742,10 @@ validates the current `not_emitted_by_local_report_export` state and required
 future emitted-artifact fields for note id/type, target/rank/reference values,
 source table/page/text, exclusive-priority caveat flags, nested row-note
 evidence, artifact paths, and hashes.
+`appendix_a_matrix_row_note_artifact_boundary_from_records()` builds emitted
+artifacts from validated row-note evidence, generates safe artifact refs, and
+validation checks that artifact fields match their nested row-note evidence.
+Local table exports and matrix reports still do not emit this caveat artifact.
 Appendix A matrix resource-frontier provenance uses
 `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1`; the built-in
 record preserves the paper's page 34 statement that sizes beyond `<5,5,5>`

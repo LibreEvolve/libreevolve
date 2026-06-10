@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import re
 from dataclasses import dataclass
@@ -742,6 +743,74 @@ def appendix_a_matrix_row_note_artifact_boundary_record() -> dict[str, Any]:
             "mm_4x5x6 concurrent-work caveat artifact."
         ),
     }
+
+
+def appendix_a_matrix_row_note_artifact_boundary_from_records(
+    recordset: dict[str, Any] | None = None,
+    *,
+    artifact_paths_by_note_id: dict[str, list[str]] | None = None,
+    artifact_sha256_by_note_id: dict[str, str] | None = None,
+) -> dict[str, Any]:
+    """Build an emitted row-note artifact boundary from row-note evidence."""
+    row_note_evidence = (
+        appendix_a_matrix_row_note_records()
+        if recordset is None
+        else copy.deepcopy(recordset)
+    )
+    note_report = validate_appendix_a_matrix_row_notes(row_note_evidence)
+    if not note_report.ok:
+        messages = "; ".join(issue.message for issue in note_report.issues)
+        raise ValueError(f"row-note evidence is invalid: {messages}")
+    artifacts: list[dict[str, Any]] = []
+    notes = row_note_evidence.get("row_notes", [])
+    assert isinstance(notes, list)
+    for note in notes:
+        assert isinstance(note, dict)
+        note_id = note["note_id"]
+        target_id = note["target_id"]
+        paths = (
+            artifact_paths_by_note_id.get(note_id)
+            if artifact_paths_by_note_id is not None
+            else None
+        )
+        artifact_paths = (
+            copy.deepcopy(paths)
+            if paths is not None
+            else [f"tables/{target_id}_row_note.json"]
+        )
+        artifact_payload = {
+            **copy.deepcopy(note),
+            "row_note_evidence": copy.deepcopy(row_note_evidence),
+            "artifact_paths": artifact_paths,
+        }
+        artifact_hash = (
+            artifact_sha256_by_note_id.get(note_id)
+            if artifact_sha256_by_note_id is not None
+            else None
+        )
+        artifact_payload["artifact_sha256"] = (
+            artifact_hash
+            if artifact_hash is not None
+            else _stable_json_sha256(artifact_payload)
+        )
+        artifacts.append(artifact_payload)
+    boundary = appendix_a_matrix_row_note_artifact_boundary_record()
+    boundary.update(
+        {
+            "artifact_status": "emitted",
+            "emitted_artifacts": artifacts,
+            "claim_boundary": (
+                "Emitted artifacts preserve Appendix A matrix row-note caveats "
+                "and link each artifact back to validated row-note evidence; "
+                "this still does not claim local report/export code emits them."
+            ),
+        }
+    )
+    boundary_report = validate_appendix_a_matrix_row_note_artifact_boundary(boundary)
+    if not boundary_report.ok:
+        messages = "; ".join(issue.message for issue in boundary_report.issues)
+        raise ValueError(f"row-note artifact boundary is invalid: {messages}")
+    return boundary
 
 
 def validate_appendix_a_matrix_row_notes(
@@ -2160,6 +2229,56 @@ def _validate_row_note_artifact_record(
         MatrixRowNoteIssue(f"invalid_nested_row_note_{issue.code}", issue.message, issue.note_id)
         for issue in row_note_report.issues
     )
+    nested = artifact.get("row_note_evidence")
+    nested_notes = nested.get("row_notes") if isinstance(nested, dict) else None
+    if isinstance(nested_notes, list) and safe_id is not None:
+        matching_notes = [
+            note
+            for note in nested_notes
+            if isinstance(note, dict) and note.get("note_id") == safe_id
+        ]
+        if not matching_notes:
+            issues.append(
+                MatrixRowNoteIssue(
+                    "missing_nested_artifact_row_note",
+                    "row_note_evidence must include the artifact note_id",
+                    safe_id,
+                )
+            )
+        else:
+            nested_note = matching_notes[0]
+            for field in (
+                "note_type",
+                "target_id",
+                "dimensions",
+                "alphaevolve_rank",
+                "concurrent_rank",
+                "cited_reference_id",
+                "relationship_to_alphaevolve",
+                "source_table",
+                "source_pdf_page",
+                "note_text",
+                "exclusive_priority_claim_safe",
+                "docs_caveat",
+            ):
+                if artifact.get(field) != nested_note.get(field):
+                    issues.append(
+                        MatrixRowNoteIssue(
+                            f"invalid_artifact_nested_{field}",
+                            f"artifact {field} must match its nested row-note evidence",
+                            safe_id,
+                        )
+                    )
+
+
+def _stable_json_sha256(value: object) -> str:
+    payload = json.dumps(
+        value,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+    ).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
 
 
 def _validate_row_note_artifact_paths(

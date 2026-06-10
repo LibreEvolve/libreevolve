@@ -2377,7 +2377,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     emitted report/table artifact carries that row-note caveat yet.
     `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`
     now documents and validates that roadmap-scoped absence boundary plus
-    required future emitted-artifact fields.
+    emitted-artifact fields. The row-note artifact builder can create emitted
+    records from validated row-note evidence and checks nested linkage, but
+    report/table exports still do not emit them automatically.
   - Required result: when Appendix A row-note artifacts land, update ROADMAP,
     README, papers index, and code/paper TODOs together so roadmap text
     distinguishes rank/outcome registry coverage from paper-faithful

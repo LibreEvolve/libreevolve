@@ -1,5 +1,7 @@
 import json
 
+import pytest
+
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     BASELINE_CITATION_BOUNDARY_SCHEMA,
     CURATION_SCHEMA,
@@ -18,6 +20,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     appendix_a_matrix_excluded_target_curation_boundary_record,
     appendix_a_matrix_local_resource_frontier_record,
     appendix_a_matrix_resource_frontier_record,
+    appendix_a_matrix_row_note_artifact_boundary_from_records,
     appendix_a_matrix_row_note_artifact_boundary_record,
     appendix_a_matrix_row_note_records,
     appendix_a_matrix_subset_scope_artifact_boundary_record,
@@ -922,24 +925,34 @@ def test_appendix_a_matrix_row_note_artifact_boundary_requires_emitted_records()
 
 
 def test_appendix_a_matrix_row_note_artifact_boundary_accepts_emitted_record():
-    boundary = {
-        "schema": ROW_NOTE_ARTIFACT_BOUNDARY_SCHEMA,
-        "row_note_schema": ROW_NOTE_SCHEMA,
-        "source_paper_id": "2506.13131",
-        "target_suite": TARGET_SUITE,
-        "artifact_status": "emitted",
-        "local_export_scope": "matrix_row_note_report_export",
-        "required_artifact_fields": list(appendix_a_matrix_row_note_artifact_boundary_record()["required_artifact_fields"]),
-        "emitted_artifacts": [_row_note_artifact()],
-        "claim_boundary": "Local export emitted row-note artifacts.",
-    }
+    boundary = appendix_a_matrix_row_note_artifact_boundary_from_records(
+        artifact_sha256_by_note_id={
+            "concurrent_work_rank90_mm_4x5x6": "b" * 64,
+        }
+    )
 
     report = validate_appendix_a_matrix_row_note_artifact_boundary(boundary)
 
+    artifact = boundary["emitted_artifacts"][0]
+    assert boundary["schema"] == ROW_NOTE_ARTIFACT_BOUNDARY_SCHEMA
+    assert boundary["row_note_schema"] == ROW_NOTE_SCHEMA
     assert report.ok is True
     assert report.artifact_status == "emitted"
     assert report.emitted_artifact_count == 1
     assert report.issues == []
+    assert artifact["note_id"] == "concurrent_work_rank90_mm_4x5x6"
+    assert artifact["target_id"] == "mm_4x5x6"
+    assert artifact["cited_reference_id"] == "49"
+    assert artifact["artifact_paths"] == ["tables/mm_4x5x6_row_note.json"]
+    assert artifact["artifact_sha256"] == "b" * 64
+
+
+def test_appendix_a_matrix_row_note_artifact_boundary_builder_rejects_invalid_evidence():
+    record = appendix_a_matrix_row_note_records()
+    record["row_notes"] = []
+
+    with pytest.raises(ValueError, match="row-note evidence is invalid"):
+        appendix_a_matrix_row_note_artifact_boundary_from_records(record)
 
 
 def test_appendix_a_matrix_row_note_artifact_boundary_rejects_invalid_nested_note():
@@ -958,6 +971,23 @@ def test_appendix_a_matrix_row_note_artifact_boundary_rejects_invalid_nested_not
     assert "invalid_artifact_path" in codes
     assert "invalid_artifact_sha256" in codes
     assert "invalid_nested_row_note_invalid_row_notes" in codes
+
+
+def test_appendix_a_matrix_row_note_artifact_boundary_rejects_nested_link_mismatch():
+    boundary = appendix_a_matrix_row_note_artifact_boundary_from_records(
+        artifact_sha256_by_note_id={
+            "concurrent_work_rank90_mm_4x5x6": "b" * 64,
+        }
+    )
+    artifact = boundary["emitted_artifacts"][0]
+    artifact["row_note_evidence"]["row_notes"][0]["target_id"] = "mm_4x4x4"
+
+    report = validate_appendix_a_matrix_row_note_artifact_boundary(boundary)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_nested_row_note_invalid_note_target_id" in codes
+    assert "invalid_artifact_nested_target_id" in codes
 
 
 def test_appendix_a_matrix_row_note_artifact_boundary_summary_renders_counts():

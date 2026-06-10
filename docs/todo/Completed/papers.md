@@ -10911,3 +10911,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     artifact inventory, publication-bundle refs, artifact paths, and hashes.
     The paper-manifest gate validates this boundary.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Populate paper author-metadata evidence for equal contributors and
+      correspondence roles.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` page 1 defines the
+    equal-contribution marker, page 22 names the equal-contribution group and
+    begins the Contributions section, and page 23 records manuscript writers,
+    paper-input contributors, and corresponding authors.
+  - Status: `libreevolve/problems/examples/matrix_multiplication/paper_authors.yaml`
+    now provides reviewed representative author-metadata records with source
+    page/section locators, title-page marker linkage, contact/privacy policy,
+    and review status. `papers/README.md` now states that this example's
+    zero-generation manifest is claim-ready for paper-author metadata parity.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

@@ -409,8 +409,10 @@ source-page locators, title-page marker linkage, contact/privacy policy, and
 review/signoff state. These publication metadata records are separate from
 technical implementation provenance, acknowledgement roles, title-page
 affiliation metadata, package/project metadata, and local validation evidence;
-populated reviewed records are still needed before making paper-facing author
-metadata parity claims.
+the `matrix_multiplication` example now provides a reviewed
+`paper_authors.yaml` fixture for AlphaEvolve pages 1, 22, and 23, and its
+zero-generation manifest report is claim-ready for paper-author metadata
+parity.
 
 AlphaEvolve title-page affiliation note: LibreEvolve now has optional
 `title_page.yaml` / `Problem.title_page_metadata` records plus

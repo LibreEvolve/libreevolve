@@ -16141,3 +16141,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused matrix-result and paper-manifest tests cover the
     absence boundary, full-suite generated fixture, invalid nested evidence,
     summary rendering, and manifest hook.
+
+- [x] Populate paper author-metadata provenance for equal contributors and
+      correspondence roles.
+  - Spec evidence: AlphaEvolve PDF page 1 defines the equal-contribution
+    marker, page 22 names the equal-contribution group and begins the
+    Contributions section, and page 23 records manuscript writers,
+    paper-input contributors, and corresponding authors.
+  - Status: `libreevolve/problems/examples/matrix_multiplication/paper_authors.yaml`
+    now provides reviewed representative publication-author metadata with
+    source page/section locators, title-page marker linkage, contact-policy
+    boundaries, and review status. A manifest regression proves the real
+    fixture reaches `runtime.history.paper_author_metadata_report` as
+    claim-ready for `alphaevolve_publication_author_metadata_parity`.
+  - Verification: `py -3.12 -m pytest
+    tests/core/test_loop.py::test_matrix_example_paper_author_fixture_is_claim_ready
+    --tb=short` passes.

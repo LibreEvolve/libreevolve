@@ -1,0 +1,46 @@
+records:
+  - record_id: alphaevolve-equal-contributors
+    contributor_label: AlphaEvolve equal-contribution author group
+    role_category: equal_contributor
+    scope_type: publication
+    scope_label: Title page and Author information equal-contribution group
+    source_page: 22
+    source_section: Author information
+    title_page_marker: star
+    contact_policy: no_contact_recorded
+    notes: Page 1 defines the star marker as equal contributions; page 22 names the equal-contribution authors.
+  - record_id: alphaevolve-manuscript-writers
+    contributor_label: AlphaEvolve manuscript-writing contributor group
+    role_category: manuscript_writer
+    scope_type: manuscript
+    scope_label: Contributions section paper writing group
+    source_page: 23
+    source_section: Contributions
+    contact_policy: no_contact_recorded
+    notes: Page 23 records the contributors who wrote the paper and separately lists contributors who supplied input.
+  - record_id: alphaevolve-paper-input
+    contributor_label: AlphaEvolve paper-input contributor group
+    role_category: paper_input
+    scope_type: paper_input
+    scope_label: Contributions section paper input group
+    source_page: 23
+    source_section: Contributions
+    contact_policy: no_contact_recorded
+    notes: Page 23 distinguishes paper-input contributors from manuscript writers and system/application contribution roles.
+  - record_id: alphaevolve-corresponding-authors
+    contributor_label: AlphaEvolve corresponding author group
+    role_category: corresponding_author
+    scope_type: correspondence
+    scope_label: Author information corresponding authors
+    source_page: 23
+    source_section: Author information
+    contact_policy: public_contact_available_in_source
+    notes: Page 23 lists the corresponding authors; contact details remain source-bound and are not copied into this fixture.
+privacy_policy:
+  contact: redacted_contact
+  notes: Contact details are not copied into the fixture; records only state whether public contact is available in the source.
+review:
+  status: publication_metadata_reviewed
+  reviewer_labels:
+    - local AlphaEvolve PDF metadata review
+  notes: Reviewed against papers/2506.13131__AlphaEvolve.pdf pages 1, 22, and 23.

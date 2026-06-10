@@ -2234,6 +2234,10 @@ contributors, manuscript writers, paper-input contributors, and corresponding
 authors separate from implementation authorship, acknowledgement roles,
 title-page affiliation metadata, package/project metadata, and technical
 validation evidence.
+The `matrix_multiplication` example now includes a reviewed
+`paper_authors.yaml` fixture linked to AlphaEvolve PDF pages 1, 22, and 23;
+its zero-generation manifest report is claim-ready for the publication-author
+metadata boundary.
 Problem fixtures can also optionally add `title_page.yaml` or
 `title_page.yml`; direct callers can set `Problem.title_page_metadata`. The
 manifest normalizes this to `problem.title_page_metadata` with fixed marker

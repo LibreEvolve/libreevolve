@@ -8350,3 +8350,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     target tensor, algorithm, certificate, notebook, and per-seed report
     generation open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document populated publication-author metadata in ROADMAP.
+  - Spec evidence: AlphaEvolve PDF pages 1, 22, and 23 separate
+    equal-contributor, manuscript-writing, paper-input, and correspondence
+    roles from implementation and application roles.
+  - Status: ROADMAP now records that the `matrix_multiplication` example has a
+    reviewed AlphaEvolve pages 1/22/23 publication-author fixture and a
+    manifest regression for the claim-ready publication-author metadata
+    boundary.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

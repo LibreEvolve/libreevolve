@@ -10936,3 +10936,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     the current `not_generated_locally` state, and lists required future fields
     for one generated artifact record per registered Appendix A target.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document populated publication-author metadata in README.
+  - Spec evidence: AlphaEvolve PDF pages 1, 22, and 23 provide the
+    equal-contribution marker, equal-contributor group, manuscript-writing
+    contributors, paper-input contributors, and corresponding authors.
+  - Status: README now states that the `matrix_multiplication` example carries
+    a reviewed `paper_authors.yaml` fixture and that its zero-generation
+    manifest report is claim-ready for the publication-author metadata
+    boundary, while keeping title-page affiliation, acknowledgement, package,
+    and technical-validation boundaries separate.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

@@ -394,35 +394,6 @@ Primary evidence:
     from treating the schema alone as AlphaEvolve-style paper-process
     acknowledgement evidence.
 
-- [ ] Populate paper author-metadata provenance for equal contributors and
-      correspondence roles.
-  - Spec evidence: AlphaEvolve's Author information section names equal
-    contributors, identifies manuscript-writing contributors and paper-input
-    contributors in the Contributions section, and lists corresponding
-    authors. The title page also defines the equal-contribution marker, while
-    the Contributions text separates paper writing/input from implementation
-    and application work. These author metadata claims are distinct from
-    technical system contributions, figure/Colab artifact authorship,
-    title-page affiliation, and acknowledgement review/support roles.
-  - Current evidence: LibreEvolve TODOs track core system-development roles,
-    paper-artifact creator/assembler roles, acknowledgement-role provenance,
-    and now optional `paper_authors.yaml` / direct
-    `Problem.paper_author_metadata`. Code validates fixed publication-author
-    role categories, scope types, contact/privacy policies, and review-status
-    vocabularies, persists normalized `problem.paper_author_metadata`, and
-    emits `runtime.history.paper_author_metadata_report` with readiness checks
-    for equal-contributor, manuscript-writer, paper-input, and
-    corresponding-author records, source page/section locators, title-page
-    marker linkage, contact policy, and publication-metadata review or owner
-    signoff. Runtime/package provenance still records PEP 621 and installed
-    distribution metadata as separate package/source facts. Existing fixtures
-    have not yet been populated with real publication-author metadata records.
-  - Required result: populate representative fixtures with reviewed
-    paper-author metadata, link records to source page/section and title-page
-    marker evidence, add paper-facing examples or certification rows, and keep
-    docs from treating the schema alone as AlphaEvolve-style publication-author
-    metadata evidence.
-
 - [ ] Populate AlphaEvolve title-page affiliation and footnote provenance.
   - Spec evidence: page 1 of `2506.13131__AlphaEvolve.pdf` presents the author
     list followed by `Google DeepMind1`, and the title-page footnotes state

@@ -406,28 +406,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     those roles without implying the schema alone proves AlphaEvolve-style
     paper-process acknowledgement evidence.
 
-- [ ] Keep README paper-author wording scoped until populated publication-author
-      metadata exists.
-  - Spec evidence: AlphaEvolve's Author information and Contributions sections
-    separately record equal contributors, manuscript writers, paper-input
-    contributors, and corresponding authors. The local PDF text places the
-    equal-contribution marker on page 1, Author information and Contributions
-    on page 22, and corresponding authors on page 23.
-  - Current evidence: README can describe local project status, source papers,
-    paper-artifact roles, acknowledgement-role gaps, contribution-role gaps,
-    package/project metadata provenance, optional `paper_authors.yaml` /
-    `Problem.paper_author_metadata`, normalized `problem.paper_author_metadata`,
-    and `runtime.history.paper_author_metadata_report`. It distinguishes
-    publication-author metadata from technical implementation authorship,
-    artifact creation, title-page affiliation, domain validation, package
-    metadata, and acknowledgement review/support roles. Existing fixtures do
-    not yet carry real reviewed publication-author metadata records.
-  - Required result: when representative fixtures are populated with reviewed
-    paper-author metadata and paper-facing evidence, update README, ROADMAP,
-    papers index, and code/paper TODOs together so README can describe those
-    roles without implying the schema alone proves AlphaEvolve-style
-    publication-author metadata evidence.
-
 - [ ] Keep README source-affiliation wording scoped until title-page
       affiliation metadata is populated.
   - Spec evidence: page 1 of the AlphaEvolve PDF gives the title-page

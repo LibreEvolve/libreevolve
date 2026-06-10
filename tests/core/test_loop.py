@@ -7379,6 +7379,45 @@ def test_loaded_paper_author_metadata_reaches_manifest_and_report():
     ] is True
 
 
+def test_matrix_example_paper_author_fixture_is_claim_ready():
+    repo_root = Path(__file__).resolve().parents[2]
+    problem = load_problem(
+        repo_root
+        / "libreevolve"
+        / "problems"
+        / "examples"
+        / "matrix_multiplication"
+    )
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(
+        problem,
+        Config(max_generations=0, log_dir=tmpdir, problem_name="matrix_fixture"),
+    )
+
+    manifest = json.loads(
+        (Path(tmpdir) / "matrix_fixture" / "manifest.json").read_text()
+    )
+    metadata = manifest["problem"]["paper_author_metadata"]
+    assert metadata["schema"] == "libreevolve.paper_author_metadata.v1"
+    assert metadata["status"] == "provided"
+    assert {record["role_category"] for record in metadata["records"]} == {
+        "equal_contributor",
+        "manuscript_writer",
+        "paper_input",
+        "corresponding_author",
+    }
+
+    report = manifest["runtime"]["history"]["paper_author_metadata_report"]
+    assert validate_paper_author_metadata_report(report)["ok"] is True
+    assert report["claim_ready"] is True
+    assert report["claim_readiness"][
+        "alphaevolve_publication_author_metadata_parity"
+    ] is True
+    assert report["source_pages"] == [22, 23]
+    assert report["records_with_contact_policy"] == 4
+
+
 def test_paper_author_metadata_report_marks_missing_metadata_boundary():
     tmpdir = tempfile.mkdtemp()
 

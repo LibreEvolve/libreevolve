@@ -10231,14 +10231,16 @@ def _task_spec_artifact_resolution_report(
         if artifact.get("present") is True
     )
     score_field_link_count = len(_task_spec_score_field_links(programs))
+    evolvable_component_span_count = len(_task_spec_evolvable_component_spans(programs))
     embedded_only_problem_definition = _embedded_only_problem_definition_ready(
         startup_manifest
     )
     remaining_gap = [
-        "evolvable_component_span_ids",
         "standalone_task_spec_report_examples",
         "deep_id_resolution_into_prompt_evaluator_candidate_history",
     ]
+    if evolvable_component_span_count == 0:
+        remaining_gap.insert(0, "evolvable_component_span_ids")
     if score_field_link_count == 0:
         remaining_gap.insert(1, "score_field_to_candidate_path_links")
     if not embedded_only_problem_definition:
@@ -10274,6 +10276,7 @@ def _task_spec_artifact_resolution_report(
             "runtime_artifact_cross_links": artifact_link_count > 0,
             "artifact_links_all_present": artifact_link_count > 0
             and artifact_link_count == artifact_present_count,
+            "evolvable_component_span_ids": evolvable_component_span_count > 0,
             "score_field_to_candidate_path_links": score_field_link_count > 0,
             "embedded_only_problem_definition": embedded_only_problem_definition,
             "full_alphaevolve_task_spec_parity": False,
@@ -10467,6 +10470,7 @@ def _task_spec_reference_summary(
     paper_metric_contract: Mapping[str, object],
 ) -> dict:
     if name == "initial_programs":
+        spans = _task_spec_evolvable_component_spans(programs)
         return {
             "startup_reference_count": int(field.get("count", 0))
             if isinstance(field.get("count"), int)
@@ -10475,6 +10479,9 @@ def _task_spec_reference_summary(
             "seed_program_ids": [
                 program.id for program in programs if program.generation == 0
             ][:50],
+            "evolvable_component_span_count": len(spans),
+            "evolvable_component_spans": spans[:50],
+            "evolvable_component_spans_truncated": len(spans) > 50,
         }
     if name == "evaluation_code":
         return {
@@ -10558,6 +10565,27 @@ def _task_spec_score_field_links(programs: list[Program]) -> list[dict]:
     return links
 
 
+def _task_spec_evolvable_component_spans(programs: list[Program]) -> list[dict]:
+    spans: list[dict] = []
+    for program in programs:
+        if program.generation != 0:
+            continue
+        workspace = program.workspace()
+        for path, content in sorted(workspace.files.items()):
+            if not path.endswith(".py"):
+                continue
+            marker_error = validate_evolve_blocks(content)
+            if marker_error is not None:
+                continue
+            for index, block in enumerate(extract_evolve_blocks(content)):
+                record = _embedded_block_candidate_record(path, content, block, index)
+                record["program_id"] = program.id
+                record["generation"] = program.generation
+                record["span_role"] = "initial_program_evolvable_component"
+                spans.append(record)
+    return spans
+
+
 def _program_has_embedded_evaluation(program: Program) -> bool:
     evaluation = program.evaluation if isinstance(program.evaluation, Mapping) else {}
     metadata = (
@@ -10585,11 +10613,16 @@ def _program_has_embedded_evaluation(program: Program) -> bool:
 
 def _task_spec_field_gap(field_name: str, programs: list[Program]) -> list[str]:
     score_field_links_present = bool(_task_spec_score_field_links(programs))
+    evolvable_spans_present = bool(_task_spec_evolvable_component_spans(programs))
     common = {
-        "initial_programs": [
-            "evolvable_component_span_ids",
-            "seed_idea_variant_result_tables",
-        ],
+        "initial_programs": (
+            ["seed_idea_variant_result_tables"]
+            if evolvable_spans_present
+            else [
+                "evolvable_component_span_ids",
+                "seed_idea_variant_result_tables",
+            ]
+        ),
         "evaluation_code": (
             ["embedded_only_problem_definitions"]
             if score_field_links_present
@@ -10747,6 +10780,11 @@ def validate_task_spec_artifact_resolution_report(report: object) -> dict:
                 issues.append({"code": "invalid_artifact_present", "message": "artifact present must be boolean"})
         if not isinstance(field.get("reference_summary"), Mapping):
             issues.append({"code": "invalid_reference_summary", "message": "reference_summary must be an object"})
+        elif field.get("field") == "initial_programs":
+            _validate_task_spec_evolvable_component_spans(
+                field["reference_summary"],
+                issues,
+            )
         elif field.get("field") == "objective_metrics":
             _validate_task_spec_score_field_links(
                 field["reference_summary"],
@@ -10789,6 +10827,37 @@ def validate_task_spec_artifact_resolution_report(report: object) -> dict:
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _validate_task_spec_evolvable_component_spans(
+    summary: Mapping[str, object],
+    issues: list[dict],
+) -> None:
+    spans = summary.get("evolvable_component_spans")
+    if not isinstance(spans, list):
+        issues.append({"code": "invalid_task_spec_evolvable_component_spans", "message": "initial evolvable_component_spans must be a list"})
+        spans = []
+    count = summary.get("evolvable_component_span_count")
+    if not isinstance(count, int) or isinstance(count, bool) or count < 0:
+        issues.append({"code": "invalid_task_spec_evolvable_component_span_count", "message": "evolvable_component_span_count must be a non-negative integer"})
+    elif count < len(spans):
+        issues.append({"code": "task_spec_evolvable_component_span_count_mismatch", "message": "evolvable_component_span_count must cover retained spans"})
+    if summary.get("evolvable_component_spans_truncated") not in {True, False}:
+        issues.append({"code": "invalid_task_spec_evolvable_component_spans_truncated", "message": "evolvable_component_spans_truncated must be boolean"})
+    for span in spans:
+        if not isinstance(span, Mapping):
+            issues.append({"code": "invalid_task_spec_evolvable_component_span", "message": "evolvable component span records must be objects"})
+            continue
+        if span.get("span_role") != "initial_program_evolvable_component":
+            issues.append({"code": "invalid_task_spec_evolvable_component_span_role", "message": "evolvable component span role is invalid"})
+        if not isinstance(span.get("program_id"), str) or not span.get("program_id"):
+            issues.append({"code": "invalid_task_spec_evolvable_component_program", "message": "evolvable component program_id is invalid"})
+        if not isinstance(span.get("path"), str) or not span.get("path"):
+            issues.append({"code": "invalid_task_spec_evolvable_component_path", "message": "evolvable component path is invalid"})
+        if not isinstance(span.get("span_id"), str) or len(span.get("span_id", "")) != 24:
+            issues.append({"code": "invalid_task_spec_evolvable_component_span_id", "message": "evolvable component span_id is invalid"})
+        if not _is_sha256_hex(span.get("content_sha256")):
+            issues.append({"code": "invalid_task_spec_evolvable_component_hash", "message": "evolvable component content hash is invalid"})
 
 
 def _validate_task_spec_score_field_links(

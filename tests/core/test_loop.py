@@ -6872,6 +6872,7 @@ def test_runtime_history_reports_task_spec_artifact_resolution():
     assert report["claim_ready"] is False
     assert report["claim_readiness"]["startup_bundle_validated"] is True
     assert report["claim_readiness"]["manifest_paths_resolved"] is True
+    assert report["claim_readiness"]["evolvable_component_span_ids"] is False
     assert report["claim_readiness"]["full_alphaevolve_task_spec_parity"] is False
 
     by_field = {record["field"]: record for record in report["field_resolutions"]}
@@ -6898,6 +6899,8 @@ def test_runtime_history_reports_task_spec_artifact_resolution():
     assert initial["reference_summary"]["seed_program_ids"][0].startswith(
         "candidate-seed-0-"
     )
+    assert initial["reference_summary"]["evolvable_component_span_count"] == 0
+    assert "evolvable_component_span_ids" in initial["unresolved_gap"]
     evaluator = by_field["evaluation_code"]
     assert evaluator["reference_summary"]["entrypoint_count"] == 1
     assert evaluator["reference_summary"]["evaluated_program_count"] == 2
@@ -6977,6 +6980,7 @@ def test_task_spec_artifact_resolution_links_embedded_score_fields():
 
     assert report["validation"]["ok"] is True
     assert validate_task_spec_artifact_resolution_report(report)["ok"] is True
+    assert report["claim_readiness"]["evolvable_component_span_ids"] is True
     assert report["claim_readiness"]["score_field_to_candidate_path_links"] is True
     assert report["claim_readiness"]["embedded_only_problem_definition"] is True
     assert "score_field_to_candidate_path_links" not in (
@@ -6985,8 +6989,22 @@ def test_task_spec_artifact_resolution_links_embedded_score_fields():
     assert "embedded_only_problem_definitions" not in (
         report["claim_readiness"]["remaining_gap"]
     )
+    assert "evolvable_component_span_ids" not in (
+        report["claim_readiness"]["remaining_gap"]
+    )
 
     by_field = {record["field"]: record for record in report["field_resolutions"]}
+    initial = by_field["initial_programs"]
+    assert "evolvable_component_span_ids" not in initial["unresolved_gap"]
+    initial_summary = initial["reference_summary"]
+    assert initial_summary["evolvable_component_span_count"] == 1
+    assert initial_summary["evolvable_component_spans_truncated"] is False
+    span = initial_summary["evolvable_component_spans"][0]
+    assert span["path"] == "main.py"
+    assert span["name"] == "scoring_rule"
+    assert span["span_role"] == "initial_program_evolvable_component"
+    assert len(span["span_id"]) == 24
+    assert len(span["content_sha256"]) == 64
     objective = by_field["objective_metrics"]
     assert "score_field_to_evolved_block_mapping" not in objective["unresolved_gap"]
     assert "score_field_to_evolved_block_causal_attribution" in (
@@ -7004,6 +7022,14 @@ def test_task_spec_artifact_resolution_links_embedded_score_fields():
     assert link["evolved_block_candidates"][0]["name"] == "scoring_rule"
 
     edited = copy.deepcopy(report)
+    edited_initial = next(
+        record
+        for record in edited["field_resolutions"]
+        if record["field"] == "initial_programs"
+    )
+    edited_initial["reference_summary"]["evolvable_component_spans"][0][
+        "span_role"
+    ] = "overclaim"
     edited_objective = next(
         record
         for record in edited["field_resolutions"]
@@ -7014,9 +7040,9 @@ def test_task_spec_artifact_resolution_links_embedded_score_fields():
     ] = True
     validation = validate_task_spec_artifact_resolution_report(edited)
     assert validation["ok"] is False
-    assert "task_spec_score_field_causality_overclaim" in {
-        issue["code"] for issue in validation["issues"]
-    }
+    issue_codes = {issue["code"] for issue in validation["issues"]}
+    assert "task_spec_score_field_causality_overclaim" in issue_codes
+    assert "invalid_task_spec_evolvable_component_span_role" in issue_codes
 
 
 def test_loaded_problem_formulation_metadata_reaches_manifest_and_report():

@@ -1267,8 +1267,9 @@ Implemented:
   matrix-result refs, artifact paths, and artifact hashes.
   `matrix_cascade_run_runtime_boundary_from_matrix_result()` can build emitted
   records from declared seed rows plus per-seed stage traces, with final-stage
-  linkage checks. Local matrix runners still do not emit these traces
-  automatically. `libreevolve.matrix_near_integrality_evidence.v1` now
+  linkage checks and aggregate best-rank/hit-fraction recomputation. Local
+  matrix runners still do not emit these traces automatically.
+  `libreevolve.matrix_near_integrality_evidence.v1` now
   validates declared search-time evidence that candidates were instructed to
   produce near-integral decompositions, rounded to integer or half-integer
   coefficients, and linked to exactness certificates as in AlphaEvolve Section

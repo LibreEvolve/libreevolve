@@ -699,11 +699,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     current `not_emitted_by_local_runner` boundary and emitted repeated-seed
     matrix cascade traces. README also documents
     `matrix_cascade_run_runtime_boundary_from_matrix_result()` for building
-    emitted records from seed rows plus per-seed stage traces. It does not
-    document an executed matrix benchmark runner that automatically emits
-    target/seed-level cascade traces, pruning or early-stop reasons, and
-    aggregation evidence linking executed cascades to the reported hit
-    fraction.
+    emitted records from seed rows plus per-seed stage traces, including
+    aggregate best-rank/hit-fraction recomputation. It does not document an
+    executed matrix benchmark runner that automatically emits target/seed-level
+    cascade traces or pruning/early-stop reasons.
   - Required result: when matrix cascade-run evidence lands, update README,
     ROADMAP, papers index, and code/paper TODOs together so README
     distinguishes post-hoc per-seed report validation from AlphaEvolve

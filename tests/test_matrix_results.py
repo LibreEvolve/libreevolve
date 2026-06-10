@@ -223,6 +223,22 @@ def _valid_cascade_run_record() -> dict:
     }
 
 
+def _valid_stage_traces_by_seed(report: dict) -> dict[int, list[dict]]:
+    return {
+        row["seed"]: [
+            {
+                "stage_label": "rank_smoke",
+                "threshold": 50,
+                "rank": row["rank"],
+                "exact": True,
+                "candidate_id": f"candidate_{row['seed']}",
+                "stop_reason": "accepted_final_candidate",
+            }
+        ]
+        for row in report["seed_results"]
+    }
+
+
 def test_matrix_result_report_validates_alphaevolve_publication_contract():
     report = _valid_report()
 
@@ -356,32 +372,25 @@ def test_matrix_cascade_run_runtime_boundary_requires_emitted_records():
 
 
 def test_matrix_cascade_run_runtime_boundary_accepts_emitted_trace():
-    boundary = matrix_cascade_run_runtime_boundary_record()
-    boundary["runtime_emission_status"] = "emitted"
-    boundary["emitted_records"] = [_valid_cascade_run_record()]
+    report = _valid_report()
+    boundary = matrix_cascade_run_runtime_boundary_from_matrix_result(
+        run_id="run_001",
+        cascade_id="matrix_rank_cascade",
+        cascade_version="v1",
+        matrix_result_report=report,
+        matrix_result_ref="matrix/mm_4x4x4/result.json",
+        stage_traces_by_seed=_valid_stage_traces_by_seed(report),
+    )
 
     validation = validate_matrix_cascade_run_runtime_boundary(boundary)
 
     assert validation.ok is True
-    assert validation.emitted_record_count == 1
+    assert validation.emitted_record_count == 4
     assert validation.issues == []
 
 
 def test_matrix_cascade_run_runtime_boundary_builds_emitted_records_from_result():
     report = _valid_report()
-    stage_traces_by_seed = {
-        row["seed"]: [
-            {
-                "stage_label": "rank_smoke",
-                "threshold": 50,
-                "rank": row["rank"],
-                "exact": True,
-                "candidate_id": f"candidate_{row['seed']}",
-                "stop_reason": "accepted_final_candidate",
-            }
-        ]
-        for row in report["seed_results"]
-    }
 
     boundary = matrix_cascade_run_runtime_boundary_from_matrix_result(
         run_id="run_001",
@@ -389,7 +398,7 @@ def test_matrix_cascade_run_runtime_boundary_builds_emitted_records_from_result(
         cascade_version="v1",
         matrix_result_report=report,
         matrix_result_ref="matrix/mm_4x4x4/result.json",
-        stage_traces_by_seed=stage_traces_by_seed,
+        stage_traces_by_seed=_valid_stage_traces_by_seed(report),
     )
 
     validation = validate_matrix_cascade_run_runtime_boundary(boundary)
@@ -423,6 +432,37 @@ def test_matrix_cascade_run_runtime_boundary_builder_requires_seed_traces():
             matrix_result_ref="matrix/mm_4x4x4/result.json",
             stage_traces_by_seed={},
         )
+
+
+def test_matrix_cascade_run_runtime_boundary_rejects_incomplete_seed_coverage():
+    boundary = matrix_cascade_run_runtime_boundary_record()
+    boundary["runtime_emission_status"] = "emitted"
+    boundary["emitted_records"] = [_valid_cascade_run_record()]
+
+    validation = validate_matrix_cascade_run_runtime_boundary(boundary)
+
+    assert validation.ok is False
+    codes = {issue.code for issue in validation.issues}
+    assert "runtime_group_0_matrix_result_seed_coverage_mismatch" in codes
+
+
+def test_matrix_cascade_run_runtime_boundary_rejects_mixed_embedded_reports():
+    report = _valid_report()
+    boundary = matrix_cascade_run_runtime_boundary_from_matrix_result(
+        run_id="run_001",
+        cascade_id="matrix_rank_cascade",
+        cascade_version="v1",
+        matrix_result_report=report,
+        matrix_result_ref="matrix/mm_4x4x4/result.json",
+        stage_traces_by_seed=_valid_stage_traces_by_seed(report),
+    )
+    boundary["emitted_records"][1]["matrix_result_report"]["coefficient_domain"] = "integer"
+
+    validation = validate_matrix_cascade_run_runtime_boundary(boundary)
+
+    assert validation.ok is False
+    codes = {issue.code for issue in validation.issues}
+    assert "runtime_group_0_matrix_result_report_mismatch" in codes
 
 
 def test_matrix_cascade_run_runtime_boundary_rejects_invalid_trace_and_report():

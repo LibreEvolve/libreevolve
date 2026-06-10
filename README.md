@@ -3614,8 +3614,9 @@ records from a matrix result report plus per-seed stage traces, linking
 run/target/seed ids, cascade ids and versions, stage traces with
 threshold/rank/exactness/stop diagnostics, accepted final rank, candidate and
 matrix-result refs, artifact paths, and artifact hashes. Validation checks that
-the final stage rank/candidate and seed row match. Local matrix benchmark
-runners still do not automatically emit those traces.
+the final stage rank/candidate and seed row match, and it recomputes best-rank,
+hit-count, and hit-fraction aggregates from the emitted seed records. Local
+matrix benchmark runners still do not automatically emit those traces.
 Matrix search-time near-integrality evidence uses
 `libreevolve.matrix_near_integrality_evidence.v1`; it validates declared
 prompt-instruction provenance for near-integral matrix tensor decompositions,

@@ -3025,15 +3025,15 @@ Primary evidence:
     accepted final ranks, candidate/result refs, artifact paths, and hashes.
     `matrix_cascade_run_runtime_boundary_from_matrix_result()` builds emitted
     records from matrix result seed rows plus per-seed stage traces and
-    validates final-stage rank/candidate linkage. No matrix benchmark runner
-    yet emits the cascade configuration used for each matrix target/seed,
-    early-stop or pruning decisions, candidate lineage through cascade stages,
-    or aggregation evidence for the published best-rank hit fraction.
+    validates final-stage rank/candidate linkage plus best-rank, hit-count,
+    and hit-fraction aggregation from emitted records. No matrix benchmark
+    runner yet emits the cascade configuration used for each matrix
+    target/seed, early-stop or pruning decisions, or candidate lineage through
+    cascade stages.
   - Required result: connect actual matrix benchmark execution to these records
-    and add aggregation checks tying all seed-level cascade traces to the
-    matrix result report. Keep this separate from generic cascade semantics and
-    from hand-authored matrix reports until actual Section 3.1-style runs emit
-    the evidence.
+    so actual Section 3.1-style runs emit the evidence rather than relying on
+    hand-authored matrix reports plus separately supplied stage traces. Keep
+    this separate from generic cascade semantics.
 
 - [ ] Add best-known-rank citation provenance for Appendix A matrix baselines.
   - Spec evidence: AlphaEvolve Table 2 reports matrix targets with a

@@ -4212,6 +4212,7 @@ def _validate_matrix_cascade_run_runtime_records(
                     index,
                     issues,
                 )
+    _validate_matrix_cascade_run_aggregation(records, issues)
 
 
 def _cascade_run_text_field(
@@ -4402,6 +4403,130 @@ def _validate_matrix_cascade_seed_result_match(
             "matrix_result_report seed_results must include the cascade-run seed",
         )
     )
+
+
+def _validate_matrix_cascade_run_aggregation(
+    records: list[object],
+    issues: list[MatrixResultIssue],
+) -> None:
+    groups: dict[tuple[str, str, str], list[tuple[int, dict[str, Any]]]] = {}
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            continue
+        run_id = record.get("run_id")
+        target_id = record.get("target_id")
+        matrix_result_ref = record.get("matrix_result_ref")
+        if not (
+            isinstance(run_id, str)
+            and run_id.strip()
+            and isinstance(target_id, str)
+            and target_id.strip()
+            and isinstance(matrix_result_ref, str)
+            and matrix_result_ref.strip()
+        ):
+            continue
+        groups.setdefault((run_id, target_id, matrix_result_ref), []).append(
+            (index, record)
+        )
+    for group_index, records_for_group in enumerate(groups.values()):
+        reference_report = records_for_group[0][1].get("matrix_result_report")
+        reference_validation = validate_matrix_result_report(reference_report)
+        if not reference_validation.ok or not isinstance(reference_report, dict):
+            continue
+        reference_report_sha = _stable_json_sha256(reference_report)
+        seed_results = reference_report.get("seed_results")
+        if not isinstance(seed_results, list) or not seed_results:
+            continue
+        expected_seed_to_rank: dict[int, int] = {}
+        for seed_result in seed_results:
+            if not isinstance(seed_result, dict):
+                continue
+            seed = seed_result.get("seed")
+            rank = seed_result.get("rank")
+            if (
+                isinstance(seed, int)
+                and not isinstance(seed, bool)
+                and isinstance(rank, int)
+                and not isinstance(rank, bool)
+                and rank > 0
+            ):
+                expected_seed_to_rank[seed] = rank
+        observed_seed_to_rank: dict[int, int] = {}
+        for record_index, record in records_for_group:
+            nested = record.get("matrix_result_report")
+            if (
+                isinstance(nested, dict)
+                and _stable_json_sha256(nested) != reference_report_sha
+            ):
+                issues.append(
+                    MatrixResultIssue(
+                        f"runtime_group_{group_index}_matrix_result_report_mismatch",
+                        "all emitted records for one run/target/result ref must embed the same matrix_result_report",
+                    )
+                )
+            seed = record.get("seed")
+            rank = record.get("accepted_final_rank")
+            if (
+                isinstance(seed, int)
+                and not isinstance(seed, bool)
+                and isinstance(rank, int)
+                and not isinstance(rank, bool)
+                and rank > 0
+            ):
+                observed_seed_to_rank[seed] = rank
+            else:
+                issues.append(
+                    MatrixResultIssue(
+                        f"runtime_record_{record_index}_invalid_aggregation_fields",
+                        "emitted records need integer seed and positive accepted_final_rank for aggregation checks",
+                    )
+                )
+        if set(observed_seed_to_rank) != set(expected_seed_to_rank):
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_group_{group_index}_matrix_result_seed_coverage_mismatch",
+                    "emitted cascade records must cover exactly the matrix_result_report seed_results",
+                )
+            )
+            continue
+        if not observed_seed_to_rank:
+            continue
+        computed_best_rank = min(observed_seed_to_rank.values())
+        computed_hit_count = sum(
+            1 for rank in observed_seed_to_rank.values() if rank == computed_best_rank
+        )
+        computed_hit_fraction = computed_hit_count / len(observed_seed_to_rank)
+        if reference_report.get("best_rank") != computed_best_rank:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_group_{group_index}_matrix_result_best_rank_mismatch",
+                    "matrix_result_report best_rank must be computed from emitted cascade records",
+                )
+            )
+        if reference_report.get("hit_count") != computed_hit_count:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_group_{group_index}_matrix_result_hit_count_mismatch",
+                    "matrix_result_report hit_count must be computed from emitted cascade records",
+                )
+            )
+        hit_fraction = reference_report.get("hit_fraction")
+        if not (
+            isinstance(hit_fraction, (int, float))
+            and not isinstance(hit_fraction, bool)
+            and math.isclose(
+                float(hit_fraction),
+                computed_hit_fraction,
+                rel_tol=0.0,
+                abs_tol=1e-12,
+            )
+        ):
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_group_{group_index}_matrix_result_hit_fraction_mismatch",
+                    "matrix_result_report hit_fraction must be computed from emitted cascade records",
+                )
+            )
 
 
 def _lookup_seed_mapping(

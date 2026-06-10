@@ -829,8 +829,9 @@ is not yet an AlphaEvolve reproduction.
   candidate and matrix-result refs, artifact paths, and artifact hashes.
   `matrix_cascade_run_runtime_boundary_from_matrix_result()` builds emitted
   records from matrix result seed rows plus per-seed stage traces and validates
-  final-stage/result-row linkage. Local benchmark runners still need to emit
-  those AlphaEvolve Section 3.1-style matrix cascade traces automatically.
+  final-stage/result-row linkage plus best-rank, hit-count, and hit-fraction
+  aggregation from emitted seed records. Local benchmark runners still need to
+  emit those AlphaEvolve Section 3.1-style matrix cascade traces automatically.
 - Keep matrix near-integrality wording scoped to evidence validation rather
   than executed search parity: `libreevolve.matrix_near_integrality_evidence.v1`
   now validates declared prompt instructions, integer/half-integer nearest

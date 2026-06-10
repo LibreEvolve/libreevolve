@@ -3023,14 +3023,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     artifact-path, and hash fields.
     `matrix_cascade_run_runtime_boundary_from_matrix_result()` builds one
     emitted record per seed row from per-seed stage traces and checks final
-    stage/result-row linkage. It does not yet require local matrix runners to
-    preserve emitted matrix-specific executed cascade traces or aggregation
-    evidence linking those traces to the published Table 2/Appendix A rank and
+    stage/result-row linkage plus best-rank/hit-fraction aggregation. It does
+    not yet require local matrix runners to preserve emitted matrix-specific
+    executed cascade traces behind the published Table 2/Appendix A rank and
     hit-fraction rows.
   - Required result: connect actual matrix runners to emitted cascade records
     before treating per-seed matrix result reports as AlphaEvolve Section 3.1
-    search evidence, including summary validation that the reported best-rank
-    and hit fraction are computed from executed cascade traces.
+    search evidence.
 
 - [ ] Track Table 2/Table 3 matrix-rank table exhibit provenance as paper
       evidence.

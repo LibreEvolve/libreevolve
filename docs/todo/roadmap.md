@@ -2245,10 +2245,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     matrix cascade traces. It also points to
     `matrix_cascade_run_runtime_boundary_from_matrix_result()`, which builds
     emitted records from seed rows plus per-seed stage traces and checks final
-    stage/result-row linkage. It does not yet require local matrix benchmark
-    runners to emit matrix-specific execution traces, pruning or early-stop
-    reasons, target/seed lineage, and aggregation from executed traces into
-    best-rank hit fractions.
+    stage/result-row linkage plus best-rank/hit-fraction aggregation. It does
+    not yet require local matrix benchmark runners to emit matrix-specific
+    execution traces, pruning or early-stop reasons, or target/seed lineage.
   - Required result: when matrix cascade-run provenance lands, update ROADMAP,
     README, papers index, and code/paper TODOs together so roadmap text
     distinguishes declared per-seed report validation from executed

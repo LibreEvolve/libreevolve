@@ -640,6 +640,11 @@ is not yet an AlphaEvolve reproduction.
 - Keep Appendix B.1-B.3 public labels tied to paper terminology: the registry
   now validates exact paper-facing labels for `B.1`/`C1`, `B.2`/`C2`, and
   `B.3`/`C3`, while treating `autocorrelation_bounds_k*` as internal ids only.
+- Keep Appendix B.1-B.3 step-function evidence scoped to summary metadata
+  until construction payloads land: the registry now validates the paper's
+  interval counts, common domain, sign policy, bound direction, previous
+  bound/source, and reported bound for C1-C3, but not the actual step-function
+  payloads or recomputation certificates.
 - Keep paper artifact-role attribution separate from artifact availability:
   `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
   AlphaEvolve PDF contribution records for figure creators and companion

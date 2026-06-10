@@ -82,7 +82,10 @@ metadata. For B.1-B.3 autocorrelation, the registry now stores paper-facing
 labels for `B.1. First autocorrelation inequality (C1)`,
 `B.2. Second autocorrelation inequality (C2)`, and
 `B.3. Third autocorrelation inequality (C3)` separately from internal
-`autocorrelation_bounds_k*` ids. Appendix B says reported construction data and verification code
+`autocorrelation_bounds_k*` ids. It also validates B.1-B.3 step-function
+summary metadata: interval counts `600`, `50`, and `400`, the common
+`[-1/4, 1/4]` domain, non-negative versus signed function policy, proof
+direction, previous bound/source, and reported bound. Appendix B says reported construction data and verification code
 appear in an accompanying Google Colab; this registry is not that
 Colab-equivalent evidence surface and does not yet store construction-data
 exports or runnable verifier-code artifacts.

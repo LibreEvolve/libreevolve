@@ -14,6 +14,20 @@
         "internal_family_id": "autocorrelation_bounds_k3",
         "internal_label_policy": "internal_id_only_not_paper_label"
       },
+      "step_function_evidence": {
+        "source_section_id": "B.1",
+        "constant_id": "C1",
+        "domain": "[-1/4, 1/4]",
+        "interval_count": 600,
+        "interval_spacing": "equally_spaced",
+        "function_sign_policy": "non_negative",
+        "bound_direction": "upper_bound",
+        "previous_bound": 1.5098,
+        "previous_bound_source": "[70]",
+        "reported_bound": 1.5053,
+        "reported_bound_relation": "C1 <= 1.5053",
+        "construction_payload_status": "not_recorded_locally"
+      },
       "status": "planned",
       "objective": {"metric": "bound_quality", "direction": "maximize"},
       "target_baseline": {"status": "paper_result_required", "value": null},
@@ -34,6 +48,20 @@
         "internal_family_id": "autocorrelation_bounds_k4",
         "internal_label_policy": "internal_id_only_not_paper_label"
       },
+      "step_function_evidence": {
+        "source_section_id": "B.2",
+        "constant_id": "C2",
+        "domain": "[-1/4, 1/4]",
+        "interval_count": 50,
+        "interval_spacing": "equally_spaced",
+        "function_sign_policy": "non_negative",
+        "bound_direction": "lower_bound",
+        "previous_bound": 0.88922,
+        "previous_bound_source": "[70]",
+        "reported_bound": 0.8962,
+        "reported_bound_relation": "0.8962 <= C2",
+        "construction_payload_status": "not_recorded_locally"
+      },
       "status": "planned",
       "objective": {"metric": "bound_quality", "direction": "maximize"},
       "target_baseline": {"status": "paper_result_required", "value": null},
@@ -53,6 +81,20 @@
         "display_label": "B.3. Third autocorrelation inequality (C3)",
         "internal_family_id": "autocorrelation_bounds_k5",
         "internal_label_policy": "internal_id_only_not_paper_label"
+      },
+      "step_function_evidence": {
+        "source_section_id": "B.3",
+        "constant_id": "C3",
+        "domain": "[-1/4, 1/4]",
+        "interval_count": 400,
+        "interval_spacing": "equally_spaced",
+        "function_sign_policy": "signed_real",
+        "bound_direction": "upper_bound",
+        "previous_bound": 1.45810,
+        "previous_bound_source": "[104, page 75]",
+        "reported_bound": 1.4557,
+        "reported_bound_relation": "C3 <= 1.4557",
+        "construction_payload_status": "not_recorded_locally"
       },
       "status": "planned",
       "objective": {"metric": "bound_quality", "direction": "maximize"},

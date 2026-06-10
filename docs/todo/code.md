@@ -2516,18 +2516,20 @@ Primary evidence:
     `0.8962 <= C2`, and B.3 uses `400` equally-spaced intervals to improve
     the upper bound to `C3 <= 1.4557`.
   - Current evidence: the broad Appendix B per-result TODO names
-    autocorrelation constants and step-function construction payloads, but no
-    code/report schema separately records the three B.1-B.3 result ids,
-    interval counts, common domain, sign/non-negativity policy, inequality
-    direction, prior bounds, step values, or recomputed constants. A generated
-    report could flatten the three claims into one generic autocorrelation
-    family row and lose which construction proves which bound direction.
+    autocorrelation constants and step-function construction payloads.
+    `alphaevolve_appendix_b.json` now records validated B.1-B.3
+    `step_function_evidence` summaries: source section, constant id,
+    `[-1/4, 1/4]` domain, interval counts `600`/`50`/`400`, equal spacing,
+    non-negative versus signed function policy, upper/lower-bound direction,
+    previous bound/source, reported bound, and
+    `construction_payload_status: not_recorded_locally`. The registry
+    validator rejects missing summaries and drifted domain, interval,
+    sign-policy, or reported-bound fields. It still does not record the actual
+    step-function value payload hash, verifier artifact, or recomputed bound.
   - Required result: add Appendix B.1-B.3-specific result rows and validators
-    for interval count, domain, step-function value payload hash,
-    non-negative-versus-signed function policy, metric formula id,
-    upper/lower-bound direction, previous-best value/source, recomputed bound,
-    source section linkage, and README/ROADMAP wording that distinguishes the
-    three autocorrelation witnesses from aggregate Appendix B coverage.
+    for step-function value payload hash, metric formula id, verifier artifact,
+    recomputed bound, and README/ROADMAP wording that distinguishes the three
+    autocorrelation witnesses from aggregate Appendix B coverage.
 
 - [x] Add paper-facing Appendix B.1-B.3 autocorrelation label provenance.
   - Spec evidence: AlphaEvolve Appendix B headings are `B.1. First

@@ -3584,7 +3584,11 @@ separately from internal ids: `B.1. First autocorrelation inequality (C1)`,
 `B.2. Second autocorrelation inequality (C2)`, and
 `B.3. Third autocorrelation inequality (C3)`, while marking the
 `autocorrelation_bounds_k*` ids as internal implementation identifiers rather
-than AlphaEvolve terminology. It is also not a
+than AlphaEvolve terminology. It also validates B.1-B.3 step-function summary
+metadata from the paper: interval counts `600`/`50`/`400`, common domain
+`[-1/4, 1/4]`, non-negative versus signed function policy, upper/lower-bound
+direction, previous bound/source, and reported bound. The actual step-function
+payloads and recomputation certificates remain absent. It is also not a
 Section 3.2 aggregate outcome ledger: LibreEvolve does not yet enumerate the
 paper's over-50 mathematical problem instances, branch taxonomy, previous-best
 references, matched/improved/failed statuses, or aggregate percentages for

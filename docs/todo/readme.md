@@ -1675,15 +1675,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     intervals on `[-1/4, 1/4]` for `C1 <= 1.5053`, `50` intervals on the same
     domain for `0.8962 <= C2`, and `400` intervals on the same domain for
     `C3 <= 1.4557`.
-  - Current evidence: README can point to broad Appendix B per-result
-    metric/value and step-function payload gaps, but it does not separately
-    warn that the three autocorrelation results need distinct interval-count,
-    sign-policy, direction, prior-bound, and recomputation evidence.
+  - Current evidence: README now says the Appendix B registry validates
+    B.1-B.3 step-function summary metadata: interval counts, common domain,
+    sign policy, bound direction, previous bound/source, and reported bound.
+    It still warns that the actual step-function payloads and recomputation
+    certificates remain absent.
   - Required result: when Appendix B.1-B.3 autocorrelation metadata lands,
     update README, ROADMAP, papers index, and code/paper TODOs together so
-    README names the three constants, interval counts, bound directions,
-    prior/current values, step-function payload hashes, and source links
-    without merging them into one generic autocorrelation claim.
+    README names the three constants, step-function payload hashes, verifier
+    artifacts, and recomputed values without merging them into one generic
+    autocorrelation claim.
 
 - [x] Keep README Appendix B.1-B.3 labels scoped until paper-heading
       provenance exists.

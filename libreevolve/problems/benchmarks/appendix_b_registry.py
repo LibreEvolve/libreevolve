@@ -47,6 +47,50 @@ EXPECTED_AUTOCORRELATION_LABELS = {
         "internal_label_policy": "internal_id_only_not_paper_label",
     },
 }
+EXPECTED_AUTOCORRELATION_STEP_EVIDENCE = {
+    "autocorrelation_bounds_k3": {
+        "source_section_id": "B.1",
+        "constant_id": "C1",
+        "domain": "[-1/4, 1/4]",
+        "interval_count": 600,
+        "interval_spacing": "equally_spaced",
+        "function_sign_policy": "non_negative",
+        "bound_direction": "upper_bound",
+        "previous_bound": 1.5098,
+        "previous_bound_source": "[70]",
+        "reported_bound": 1.5053,
+        "reported_bound_relation": "C1 <= 1.5053",
+        "construction_payload_status": "not_recorded_locally",
+    },
+    "autocorrelation_bounds_k4": {
+        "source_section_id": "B.2",
+        "constant_id": "C2",
+        "domain": "[-1/4, 1/4]",
+        "interval_count": 50,
+        "interval_spacing": "equally_spaced",
+        "function_sign_policy": "non_negative",
+        "bound_direction": "lower_bound",
+        "previous_bound": 0.88922,
+        "previous_bound_source": "[70]",
+        "reported_bound": 0.8962,
+        "reported_bound_relation": "0.8962 <= C2",
+        "construction_payload_status": "not_recorded_locally",
+    },
+    "autocorrelation_bounds_k5": {
+        "source_section_id": "B.3",
+        "constant_id": "C3",
+        "domain": "[-1/4, 1/4]",
+        "interval_count": 400,
+        "interval_spacing": "equally_spaced",
+        "function_sign_policy": "signed_real",
+        "bound_direction": "upper_bound",
+        "previous_bound": 1.45810,
+        "previous_bound_source": "[104, page 75]",
+        "reported_bound": 1.4557,
+        "reported_bound_relation": "C3 <= 1.4557",
+        "construction_payload_status": "not_recorded_locally",
+    },
+}
 STATUSES = frozenset({"implemented", "implemented_smoke", "planned", "background_only", "out_of_scope"})
 DIRECTIONS = frozenset({"maximize", "minimize", "satisfy", "prove"})
 _ID_RE = re.compile(r"[a-z][a-z0-9_]{1,79}")
@@ -141,6 +185,7 @@ def _validate_family(
         issues.append(AppendixBRegistryIssue("invalid_family_id", "family id must be snake_case", family_id))
     _require_text(family, "name", family_id, issues)
     _validate_autocorrelation_paper_label(family, family_id, issues)
+    _validate_autocorrelation_step_evidence(family, family_id, issues)
     status = family.get("status")
     if status not in STATUSES:
         issues.append(AppendixBRegistryIssue("invalid_status", "invalid implementation status", family_id))
@@ -197,6 +242,33 @@ def _validate_autocorrelation_paper_label(
         issues.append(AppendixBRegistryIssue("paper_label_name_mismatch", "family name must use the paper-facing B.1-B.3 display label", family_id))
     if isinstance(family.get("name"), str) and re.search(r"\bk\s*=", family["name"]):
         issues.append(AppendixBRegistryIssue("paper_label_uses_internal_k_label", "family name must not expose internal k-number labels as paper terminology", family_id))
+
+
+def _validate_autocorrelation_step_evidence(
+    family: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    expected = EXPECTED_AUTOCORRELATION_STEP_EVIDENCE.get(family_id)
+    if expected is None:
+        return
+    evidence = family.get("step_function_evidence")
+    if not isinstance(evidence, dict):
+        issues.append(AppendixBRegistryIssue("missing_step_function_evidence", "B.1-B.3 autocorrelation rows require step_function_evidence metadata", family_id))
+        return
+    for field, expected_value in expected.items():
+        actual = evidence.get(field)
+        if isinstance(expected_value, float):
+            if isinstance(actual, bool) or not isinstance(actual, (int, float)) or float(actual) != expected_value:
+                issues.append(AppendixBRegistryIssue(f"invalid_step_function_{field}", f"step_function_evidence.{field} must match the AlphaEvolve Appendix B value", family_id))
+        elif actual != expected_value:
+            issues.append(AppendixBRegistryIssue(f"invalid_step_function_{field}", f"step_function_evidence.{field} must match the AlphaEvolve Appendix B value", family_id))
+    label = family.get("paper_label")
+    if isinstance(label, dict):
+        if evidence.get("source_section_id") != label.get("source_section_id"):
+            issues.append(AppendixBRegistryIssue("step_function_label_section_mismatch", "step_function_evidence source section must match paper_label", family_id))
+        if evidence.get("constant_id") != label.get("constant_id"):
+            issues.append(AppendixBRegistryIssue("step_function_label_constant_mismatch", "step_function_evidence constant id must match paper_label", family_id))
 
 
 def _family_id(family: object, index: int) -> str:

@@ -2,6 +2,7 @@ import json
 
 from libreevolve.problems.benchmarks.appendix_b_registry import (
     EXPECTED_AUTOCORRELATION_LABELS,
+    EXPECTED_AUTOCORRELATION_STEP_EVIDENCE,
     EXPECTED_FAMILY_IDS,
     REGISTRY_PATH,
     validate_appendix_b_registry,
@@ -33,6 +34,9 @@ def test_appendix_b_registry_enumerates_all_alphaevolve_families():
         assert autocorrelation[family_id]["paper_label"]["internal_label_policy"] == (
             "internal_id_only_not_paper_label"
         )
+        evidence = autocorrelation[family_id]["step_function_evidence"]
+        for field, expected_value in EXPECTED_AUTOCORRELATION_STEP_EVIDENCE[family_id].items():
+            assert evidence[field] == expected_value
 
 
 def test_appendix_b_registry_requires_advertised_fixtures_to_exist(tmp_path):
@@ -94,3 +98,36 @@ def test_appendix_b_registry_requires_autocorrelation_label_object(tmp_path):
     assert report.ok is False
     assert [issue.code for issue in report.issues] == ["missing_paper_label"]
     assert report.issues[0].family_id == "autocorrelation_bounds_k4"
+
+
+def test_appendix_b_registry_requires_autocorrelation_step_evidence(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    first = data["families"][0]
+    first["step_function_evidence"]["interval_count"] = 50
+    first["step_function_evidence"]["domain"] = "[0, 1]"
+    first["step_function_evidence"]["function_sign_policy"] = "signed_real"
+    first["step_function_evidence"]["reported_bound"] = 1.6
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_step_function_interval_count" in codes
+    assert "invalid_step_function_domain" in codes
+    assert "invalid_step_function_function_sign_policy" in codes
+    assert "invalid_step_function_reported_bound" in codes
+
+
+def test_appendix_b_registry_requires_autocorrelation_step_evidence_object(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    del data["families"][2]["step_function_evidence"]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+
+    assert report.ok is False
+    assert [issue.code for issue in report.issues] == ["missing_step_function_evidence"]
+    assert report.issues[0].family_id == "autocorrelation_bounds_k5"

@@ -2772,15 +2772,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     equally-spaced intervals on `[-1/4, 1/4]` for `C1 <= 1.5053`, `50`
     intervals on the same domain for `0.8962 <= C2`, and `400` intervals on
     the same domain for `C3 <= 1.4557`.
-  - Current evidence: roadmap/README/paper-index wording can cite the broad
-    Appendix B per-result metric/value gap, but it does not require B.1-B.3-
-    specific interval counts, function sign policies, step-function payload
-    hashes, prior bounds, bound directions, or recomputation evidence.
+  - Current evidence: roadmap/README/paper-index wording now cites validated
+    B.1-B.3 step-function summary metadata in the Appendix B registry:
+    interval counts, common domain, sign policy, previous bound/source, bound
+    direction, reported bound, and explicit missing construction-payload
+    status. It still does not require step-function payload hashes, verifier
+    artifacts, or recomputation evidence.
   - Required result: when Appendix B.1-B.3 autocorrelation metadata and
     validators land, update ROADMAP, README, papers index, and code/paper
-    TODOs so roadmap claims distinguish the three constants, interval counts,
-    domain, prior/current values, proof direction, payload hashes, and source
-    links from aggregate Appendix B coverage.
+    TODOs so roadmap claims distinguish payload hashes, verifier artifacts,
+    and recomputed values from aggregate Appendix B coverage.
 
 - [x] Keep Appendix B.1-B.3 roadmap wording scoped until paper-heading label
       provenance exists.

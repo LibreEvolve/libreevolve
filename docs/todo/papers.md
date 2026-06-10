@@ -2474,16 +2474,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     same domain proving `0.8962 <= C2`, and a `400`-interval step function on
     the same domain proving `C3 <= 1.4557`.
   - Current gap: paper-facing Appendix B TODOs require normalized result rows
-    and step-function payloads in general, but they do not force B.1-B.3
-    reports to retain the interval counts, non-negative versus signed function
-    assumptions, prior bounds, upper/lower-bound direction, or individual
-    recomputation evidence for each of the three autocorrelation witnesses.
+    and step-function payloads in general. The Appendix B registry now retains
+    B.1-B.3 summary evidence for source section, constant id, `[-1/4, 1/4]`
+    domain, interval counts `600`/`50`/`400`, equal spacing, non-negative
+    versus signed function assumptions, prior bound/source, upper/lower-bound
+    direction, reported bound, and an explicit `not_recorded_locally`
+    construction-payload status. It still does not retain the actual
+    step-function payload hash, verifier artifact, or individual recomputation
+    evidence for each autocorrelation witness.
   - Required result: add paper/report evidence for Appendix B.1-B.3 rows:
-    result id, constant id, metric formula id, domain, interval count,
-    step-function payload hash, sign policy, prior bound and source,
-    reported/recomputed value, bound direction, source section linkage, and
-    README/ROADMAP text that keeps the three autocorrelation claims distinct
-    from broad Appendix B family coverage.
+    result id, metric formula id, step-function payload hash, verifier
+    artifact, reported/recomputed value, and README/ROADMAP text that keeps
+    the three autocorrelation claims distinct from broad Appendix B family
+    coverage.
 
 - [x] Track Appendix B.1-B.3 paper-heading and constant-label evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B names the three

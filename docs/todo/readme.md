@@ -495,15 +495,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     cites `runtime.history.task_spec_artifact_resolution_report`, which
     validates task-spec manifest paths and cross-links each field to runtime
     artifact paths for candidate history, prompt history, LLM calls,
-    controller-budget events, evaluator artifacts, and best exports. README
-    should still not imply full AlphaEvolve task-spec parity because evolvable
-    component spans, embedded-only problem formats, score-field-to-block
-    links, standalone report examples, and per-id record resolution remain
-    incomplete.
-  - Required result: when evolvable spans, embedded-only problem definitions,
-    score linkage to candidate/evolved-block paths, standalone report examples,
-    and per-id prompt/evaluator/candidate/history resolution land, update
-    README, ROADMAP, papers index, and code/paper TODOs together.
+    controller-budget events, evaluator artifacts, best exports, initial
+    evolvable component spans when markers are present, embedded score-field
+    candidate-path links when candidate-owned evaluation ran, and the hashed
+    standalone `task_specification.json` run artifact. README should still not
+    imply full AlphaEvolve task-spec parity because score-field causal
+    attribution, paper-facing standalone examples, and per-id record resolution
+    remain incomplete.
+  - Required result: when score-field causal attribution, paper-facing
+    standalone examples, and per-id prompt/evaluator/candidate/history
+    resolution land, update README, ROADMAP, papers index, and code/paper TODOs
+    together.
 
 - [ ] Keep README install and CLI wording scoped to editable/local use versus
   release-artifact verification.

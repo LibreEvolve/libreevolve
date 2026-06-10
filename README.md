@@ -2178,17 +2178,20 @@ evaluator stages, prompt template/config metadata, backend choices, optional
 background context, optional human problem-formulation metadata, candidate
 representation, and objective metrics. The bundle records field statuses,
 manifest paths, ids/hashes/counts, explicit remaining gaps, a deterministic
-`task_spec_id`, and embedded validation; it is not yet a standalone task-spec
-file with full evolvable-span and score-link evidence.
+`task_spec_id`, and embedded validation. The same bundle is also written as
+the standalone run artifact `task_specification.json`; it is not yet a
+user-authored standalone problem-spec file with full causal score-link
+evidence.
 Completed manifests additionally include
 `runtime.history.task_spec_artifact_resolution_report`, which validates those
 task-spec manifest paths and cross-links each field to runtime evidence such as
 candidate history, prompt history, LLM calls, controller-budget events,
-evaluator artifacts, best exports, initial evolvable component span ids when
-markers are present, and embedded score-field candidate-path links when
-candidate-owned evaluation ran. This is still partial evidence: causal
-score-field attribution, standalone task-spec examples, and deeper per-id
-history resolution remain open.
+evaluator artifacts, best exports, the standalone `task_specification.json`
+artifact, initial evolvable component span ids when markers are present, and
+embedded score-field candidate-path links when candidate-owned evaluation ran.
+This is still partial evidence: causal score-field attribution, paper-facing
+standalone task-spec examples, and deeper per-id history resolution remain
+open.
 Problem fixtures can optionally add `formulation.yaml` or `formulation.yml`;
 direct callers can set `Problem.formulation_metadata`. The manifest normalizes
 this to `problem.formulation_metadata` with fixed vocabularies for problem

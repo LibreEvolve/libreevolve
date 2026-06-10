@@ -600,15 +600,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `runtime.history.task_spec_artifact_resolution_report`, which validates
     task-spec manifest paths and links each field to runtime artifact paths for
     candidate history, prompt history, LLM calls, controller-budget events,
-    evaluator artifacts, and best exports. It is still a manifest-derived
-    partial artifact, not a standalone AlphaEvolve task specification with full
-    evolvable-span, embedded-only definition, per-id record, and score-link
-    evidence.
-  - Required result: when evolvable component spans, embedded-only problem
-    definitions, score linkage from evaluator outputs to candidate/evolved-
-    block paths, standalone examples, and per-id prompt/evaluator/candidate/
-    history resolution land, update ROADMAP, README, papers index, and
-    code/paper TODOs together.
+    evaluator artifacts, best exports, initial evolvable component spans when
+    markers are present, embedded score-field candidate-path links when
+    candidate-owned evaluation ran, and a hashed standalone
+    `task_specification.json` run artifact. It is still a partial artifact, not
+    full AlphaEvolve task-spec parity with causal score attribution,
+    paper-facing standalone examples, and deep per-id record evidence.
+  - Required result: when score-field causal attribution, paper-facing
+    standalone examples, and per-id prompt/evaluator/candidate/history
+    resolution land, update ROADMAP, README, papers index, and code/paper TODOs
+    together.
 
 ## Missing Roadmap Items
 

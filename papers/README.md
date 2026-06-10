@@ -517,14 +517,16 @@ initial programs, evaluator code or embedded evaluator stages, prompt
 template/config metadata, backend choices, optional background context,
 candidate representation, and objective metrics to manifest evidence. It
 records a deterministic `task_spec_id`, validation, and unsupported/incomplete
-labels. Completed manifests now also include
+labels. The same validated bundle is emitted as the standalone run artifact
+`task_specification.json`. Completed manifests now also include
 `runtime.history.task_spec_artifact_resolution_report`, which validates the
 task-spec manifest paths and links each task-spec field to runtime artifact
 evidence such as candidate history, prompt history, LLM calls, controller
 budget events, evaluator artifacts, best exports, initial evolvable component
 span ids when markers are present, and embedded score-field candidate-path
-links when candidate-owned evaluation ran. Standalone task-spec examples,
-causal score attribution, and deeper per-id history resolution remain open.
+links when candidate-owned evaluation ran. Paper-facing standalone task-spec
+examples, causal score attribution, and deeper per-id history resolution remain
+open.
 
 AlphaEvolve candidate-abstraction note: completed manifests now include
 `runtime.history.candidate_abstraction_choice_report` with schema

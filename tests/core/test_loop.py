@@ -6787,10 +6787,15 @@ def test_loop_writes_unified_task_specification_bundle_to_manifest():
         )
 
     build.assert_not_called()
-    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
     task_spec = manifest["task_specification"]
+    standalone_task_spec = json.loads(
+        (run_dir / "task_specification.json").read_text(encoding="utf-8")
+    )
 
     assert task_spec["schema"] == "libreevolve.alphaevolve_task_specification_bundle.v1"
+    assert standalone_task_spec == task_spec
     assert task_spec["status"] == "partial_alphaevolve_task_specification"
     assert task_spec["validation"]["ok"] is True
     assert validate_task_specification_bundle(task_spec)["ok"] is True
@@ -6861,6 +6866,12 @@ def test_runtime_history_reports_task_spec_artifact_resolution():
     assert report["schema"] == "libreevolve.task_spec_artifact_resolution_report.v1"
     assert report["task_spec_id"] == task_spec["task_spec_id"]
     assert report["task_spec_validation_ok"] is True
+    assert report["standalone_task_spec_artifact"]["path"] == "task_specification.json"
+    assert report["standalone_task_spec_artifact"]["role"] == (
+        "standalone_task_specification"
+    )
+    assert report["standalone_task_spec_artifact"]["present"] is True
+    assert len(report["standalone_task_spec_artifact"]["sha256"]) == 64
     assert report["validation"]["ok"] is True
     assert validate_task_spec_artifact_resolution_report(report)["ok"] is True
     assert report["field_count"] == 8
@@ -6872,8 +6883,12 @@ def test_runtime_history_reports_task_spec_artifact_resolution():
     assert report["claim_ready"] is False
     assert report["claim_readiness"]["startup_bundle_validated"] is True
     assert report["claim_readiness"]["manifest_paths_resolved"] is True
+    assert report["claim_readiness"]["standalone_task_spec_artifact"] is True
     assert report["claim_readiness"]["evolvable_component_span_ids"] is False
     assert report["claim_readiness"]["full_alphaevolve_task_spec_parity"] is False
+    assert "standalone_task_spec_report_examples" not in (
+        report["claim_readiness"]["remaining_gap"]
+    )
 
     by_field = {record["field"]: record for record in report["field_resolutions"]}
     assert set(by_field) == {
@@ -6936,10 +6951,14 @@ def test_runtime_history_reports_task_spec_artifact_resolution():
     edited = copy.deepcopy(report)
     edited["claim_ready"] = True
     edited["claim_readiness"]["full_alphaevolve_task_spec_parity"] = True
+    edited["standalone_task_spec_artifact"]["present"] = False
+    edited["claim_readiness"]["standalone_task_spec_artifact"] = False
     validation = validate_task_spec_artifact_resolution_report(edited)
     assert validation["ok"] is False
     assert {issue["code"] for issue in validation["issues"]} >= {
         "claim_ready_overclaim",
+        "missing_standalone_task_spec_artifact",
+        "standalone_task_spec_artifact_not_ready",
         "task_spec_parity_overclaim",
     }
 

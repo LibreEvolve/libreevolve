@@ -33,8 +33,9 @@ background context, optional human problem-formulation metadata, candidate
 representation, and objective metrics. The bundle records field statuses,
 manifest paths, ids/hashes/counts, explicit
 unsupported/incomplete labels, a deterministic `task_spec_id`, and embedded
-validation. It is partial AlphaEvolve task-spec evidence, not a standalone
-problem definition or full proof of evolvable-span and score-link parity.
+validation. The same bundle is also emitted as `task_specification.json`.
+It is partial AlphaEvolve task-spec evidence, not a user-authored standalone
+problem definition or full proof of causal score-link parity.
 Completed runtime manifests also include
 `runtime.history.task_spec_artifact_resolution_report` with schema
 `libreevolve.task_spec_artifact_resolution_report.v1`. This report consumes the
@@ -42,10 +43,10 @@ startup task-spec bundle, validates that each field's manifest paths resolve,
 and links task-spec fields to concrete runtime artifact paths such as
 `manifest.json`, `history.jsonl`, `failure_history.jsonl`, `prompt_history.jsonl`,
 `llm_calls.jsonl`, `controller_budget_events.jsonl`, `evaluator_artifacts`,
-`best.py`, and `best_workspace`. It records per-field reference summaries,
-program counts, manifest-path resolution counts, artifact-link/presence counts,
-and `claim_ready: false` gaps for evolvable span ids, score-field-to-candidate
-path links, embedded-only task definitions, standalone report examples, and
+`best.py`, `best_workspace`, and the standalone `task_specification.json`.
+It records per-field reference summaries, program counts, manifest-path
+resolution counts, artifact-link/presence counts, and `claim_ready: false`
+gaps for paper-facing standalone examples, causal score-field attribution, and
 deeper id resolution into prompt/evaluator/candidate history.
 Completed manifests also include
 `runtime.history.initial_program_idea_provenance_report` with schema
@@ -276,6 +277,7 @@ For a run named `hello_world`:
 runs/
 └── hello_world/
     ├── manifest.json
+    ├── task_specification.json
     ├── history.jsonl
     ├── failure_history.jsonl
     ├── archive_events.jsonl          # Migration placement events when migration runs

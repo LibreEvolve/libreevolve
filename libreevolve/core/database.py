@@ -62,6 +62,7 @@ from libreevolve.population.sampling import validate_exclude_ids, validate_sampl
 from libreevolve.problems.loader import _normalize_metric_schema
 
 RUN_ARTIFACT_NAMES = {
+    "task_specification.json",
     "history.jsonl",
     "history_invalid.jsonl",
     "failure_history.jsonl",
@@ -506,6 +507,7 @@ class ProgramDatabase:
         )
         self._llm_call_quarantine = run_dir / "llm_calls_invalid.jsonl"
         self._manifest = run_dir / "manifest.json"
+        self._task_specification_artifact = run_dir / "task_specification.json"
         self._manifest_quarantine = run_dir / "manifest_invalid.jsonl"
         self._startup_manifest = startup_manifest
         self._quarantine_snapshot_retention_mode = (
@@ -1214,6 +1216,13 @@ class ProgramDatabase:
 
     def _write_manifest(self, manifest: dict) -> None:
         strict_json_dump(manifest, self._manifest, indent=2)
+        task_specification = manifest.get("task_specification")
+        if isinstance(task_specification, dict):
+            strict_json_dump(
+                task_specification,
+                self._task_specification_artifact,
+                indent=2,
+            )
 
     def update_manifest_runtime(self, runtime: dict) -> None:
         manifest = self._read_current_manifest_or_recover()
@@ -7589,7 +7598,7 @@ def _task_specification_bundle(manifest: Mapping[str, object]) -> dict:
             },
         },
         "unsupported_or_incomplete": [
-            "unified_task_spec_bundle_is_manifest_evidence_not_standalone_problem_file",
+            "task_spec_bundle_is_run_artifact_not_standalone_problem_file",
             "task_spec_needs_score_path_causal_attribution",
             "arbitrary_language_build_runner_task_specs_unsupported",
             "problem_defined_candidate_abstraction_hooks_unsupported",

@@ -114,14 +114,16 @@ LibreEvolve has:
 - manifest-visible `libreevolve.alphaevolve_task_specification_bundle.v1`
   records that cross-link startup inputs such as seeds, evaluators, prompts,
   backends, context, candidate policy, and metrics into a partial task-spec
-  bundle with validation and explicit remaining gaps
+  bundle with validation and explicit remaining gaps, with the same bundle
+  emitted as `task_specification.json`
 - runtime task-spec artifact-resolution reports under
   `runtime.history.task_spec_artifact_resolution_report`, validating
   task-spec manifest paths and linking each field to candidate-history,
   prompt-history, LLM-call, controller-budget, evaluator-artifact, and
   best-export evidence, plus initial evolvable-span ids and embedded
   score-field candidate-path links when available, while leaving causal score
-  attribution and standalone task-spec parity open
+  attribution, paper-facing standalone examples, and deep per-id resolution
+  open
 - runtime initial-program idea provenance reports under
   `runtime.history.initial_program_idea_provenance_report`, linking optional
   seed idea-origin metadata and seed variant ids from `problem.seed_sources` to

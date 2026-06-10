@@ -10235,10 +10235,17 @@ def _task_spec_artifact_resolution_report(
     embedded_only_problem_definition = _embedded_only_problem_definition_ready(
         startup_manifest
     )
+    standalone_artifact = _task_spec_artifact_record(
+        run_dir,
+        "task_specification.json",
+        "standalone_task_specification",
+    )
+    standalone_artifact_present = standalone_artifact.get("present") is True
     remaining_gap = [
-        "standalone_task_spec_report_examples",
         "deep_id_resolution_into_prompt_evaluator_candidate_history",
     ]
+    if not standalone_artifact_present:
+        remaining_gap.insert(0, "standalone_task_spec_report_examples")
     if evolvable_component_span_count == 0:
         remaining_gap.insert(0, "evolvable_component_span_ids")
     if score_field_link_count == 0:
@@ -10255,6 +10262,7 @@ def _task_spec_artifact_resolution_report(
             if isinstance(task_spec.get("validation"), Mapping)
             else False
         ),
+        "standalone_task_spec_artifact": standalone_artifact,
         "field_count": len(field_resolutions),
         "field_resolutions": field_resolutions,
         "manifest_path_count": manifest_path_count,
@@ -10273,6 +10281,7 @@ def _task_spec_artifact_resolution_report(
             ),
             "manifest_paths_resolved": manifest_path_count > 0
             and manifest_path_count == manifest_path_resolved_count,
+            "standalone_task_spec_artifact": standalone_artifact_present,
             "runtime_artifact_cross_links": artifact_link_count > 0,
             "artifact_links_all_present": artifact_link_count > 0
             and artifact_link_count == artifact_present_count,
@@ -10685,6 +10694,7 @@ def validate_task_spec_artifact_resolution_report(report: object) -> dict:
         "task_spec_schema",
         "task_spec_id",
         "task_spec_validation_ok",
+        "standalone_task_spec_artifact",
         "field_count",
         "field_resolutions",
         "manifest_path_count",
@@ -10715,6 +10725,20 @@ def validate_task_spec_artifact_resolution_report(report: object) -> dict:
         issues.append({"code": "invalid_task_spec_id", "message": "task_spec_id must be a sha256 hex id"})
     if report.get("task_spec_validation_ok") is not True:
         issues.append({"code": "invalid_task_spec_validation", "message": "startup task-spec validation must be ok"})
+    standalone_artifact = report.get("standalone_task_spec_artifact")
+    if not isinstance(standalone_artifact, Mapping):
+        issues.append({"code": "invalid_standalone_task_spec_artifact", "message": "standalone_task_spec_artifact must be an object"})
+    else:
+        if standalone_artifact.get("path") != "task_specification.json":
+            issues.append({"code": "invalid_standalone_task_spec_artifact_path", "message": "standalone task-spec artifact must use task_specification.json"})
+        if standalone_artifact.get("role") != "standalone_task_specification":
+            issues.append({"code": "invalid_standalone_task_spec_artifact_role", "message": "standalone task-spec artifact role is invalid"})
+        if standalone_artifact.get("present") is not True:
+            issues.append({"code": "missing_standalone_task_spec_artifact", "message": "standalone task-spec artifact must be present"})
+        if not isinstance(standalone_artifact.get("kind"), str) or not standalone_artifact.get("kind"):
+            issues.append({"code": "invalid_standalone_task_spec_artifact_kind", "message": "standalone task-spec artifact kind must be recorded"})
+        if not _is_sha256_hex(standalone_artifact.get("sha256")):
+            issues.append({"code": "invalid_standalone_task_spec_artifact_hash", "message": "standalone task-spec artifact must have a sha256 hash"})
     fields = report.get("field_resolutions")
     if not isinstance(fields, list):
         issues.append({"code": "invalid_field_resolutions", "message": "field_resolutions must be a list"})
@@ -10818,6 +10842,8 @@ def validate_task_spec_artifact_resolution_report(report: object) -> dict:
     if not isinstance(readiness, Mapping):
         issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
     else:
+        if readiness.get("standalone_task_spec_artifact") is not True:
+            issues.append({"code": "standalone_task_spec_artifact_not_ready", "message": "standalone task-spec artifact readiness must be true"})
         if readiness.get("full_alphaevolve_task_spec_parity") is not False:
             issues.append({"code": "task_spec_parity_overclaim", "message": "full AlphaEvolve task-spec parity must remain false"})
     if report.get("claim_ready") is not False:
@@ -11169,6 +11195,7 @@ def _process_rendered_artifact_placeholder(figure_id: str) -> dict:
 def _process_exhibit_artifact_evidence(run_dir: Path) -> list[dict]:
     artifact_roles = {
         "manifest.json": ["run_manifest", "task_specification", "runtime_history"],
+        "task_specification.json": ["standalone_task_specification"],
         "history.jsonl": ["candidate_history", "database_add", "evaluation_results"],
         "failure_history.jsonl": ["rejected_candidates", "diff_or_evaluation_failures"],
         "archive_events.jsonl": ["program_database_archive_events"],

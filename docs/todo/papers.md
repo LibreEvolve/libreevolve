@@ -277,17 +277,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     `runtime.history.task_spec_artifact_resolution_report`, validating the
     task-spec manifest paths and linking each field to runtime artifact paths
     for candidate history, prompt history, LLM calls, controller-budget events,
-    evaluator artifacts, and best exports.
-  - Current gap: paper-facing evidence still lacks evolvable component spans,
-    standalone task-spec report examples, embedded-only problem definitions,
-    score-field links to candidate/evolved-block paths, and deep validation
-    that every id resolves to exact prompt/evaluator/candidate/history records
-    rather than field-level artifact links.
-  - Required result: finish paper-facing task-spec reports with evolvable-span
-    ids, evaluator score-field linkage, embedded-only task definitions,
-    per-id record resolution, and README/ROADMAP wording that treats the
-    current bundle plus artifact-resolution report as partial AlphaEvolve
-    task-spec evidence rather than full parity.
+    evaluator artifacts, best exports, initial evolvable component spans when
+    markers are present, embedded score-field candidate-path links when
+    candidate-owned evaluation ran, and the hashed standalone
+    `task_specification.json` run artifact.
+  - Current gap: paper-facing evidence still lacks standalone task-spec
+    examples, causal score-field attribution from evaluator outputs to
+    candidate/evolved-block paths, and deep validation that every id resolves to
+    exact prompt/evaluator/candidate/history records rather than field-level
+    artifact links.
+  - Required result: finish paper-facing task-spec examples, causal evaluator
+    score-field linkage, per-id record resolution, and README/ROADMAP wording
+    that treats the current bundle plus artifact-resolution report as partial
+    AlphaEvolve task-spec evidence rather than full parity.
 
 - [ ] Independent per-role LLM scheduler state and reward policy.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.6.

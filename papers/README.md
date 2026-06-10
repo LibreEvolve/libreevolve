@@ -1203,6 +1203,10 @@ Implemented:
   cited reference id, source table/page, source artifact path/hash,
   applicability caveats, field/characteristic scope, and report-visible
   baseline-source refs.
+  `appendix_a_matrix_baseline_citation_boundary_from_citations()` can build a
+  recorded boundary from supplied citation rows and validates registry/source
+  linkage, but the paper-facing per-target citation corpus is still not
+  emitted locally.
   `libreevolve.alphaevolve_matrix_subset_scope.v1` records the paper-facing
   matrix subset boundary between `appendix_a_full` (`54` rows: `38` matched,
   `14` surpassed, `2` fell behind), `main_text_mnp_le_5` (`20` rows: `17`

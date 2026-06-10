@@ -12,6 +12,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     SUBSET_SCOPE_ARTIFACT_BOUNDARY_SCHEMA,
     SUBSET_SCOPE_SCHEMA,
     TARGET_SUITE,
+    appendix_a_matrix_baseline_citation_boundary_from_citations,
     appendix_a_matrix_baseline_citation_boundary_record,
     appendix_a_matrix_curation_record,
     appendix_a_matrix_excluded_target_curation_boundary_record,
@@ -355,23 +356,22 @@ def test_appendix_a_matrix_baseline_citation_boundary_requires_all_targets_when_
 
 
 def test_appendix_a_matrix_baseline_citation_boundary_accepts_recorded_rows():
-    boundary = {
-        "schema": BASELINE_CITATION_BOUNDARY_SCHEMA,
-        "registry_schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1",
-        "source_paper_id": "2506.13131",
-        "target_suite": TARGET_SUITE,
-        "citation_status": "recorded",
-        "required_citation_fields": list(appendix_a_matrix_baseline_citation_boundary_record()["required_citation_fields"]),
-        "baseline_citations": [_baseline_citation(target) for target in matrix_target_records()],
-        "claim_boundary": "Local metadata records baseline citations.",
-    }
+    citations = [_baseline_citation(target) for target in matrix_target_records()]
+    boundary = appendix_a_matrix_baseline_citation_boundary_from_citations(citations)
 
     report = validate_appendix_a_matrix_baseline_citation_boundary(boundary)
 
+    assert boundary["schema"] == BASELINE_CITATION_BOUNDARY_SCHEMA
+    assert boundary["target_suite"] == TARGET_SUITE
     assert report.ok is True
     assert report.citation_status == "recorded"
     assert report.citation_count == EXPECTED_TARGET_COUNT
     assert report.issues == []
+    assert boundary["baseline_citations"][0]["target_id"] == matrix_target_records()[0]["id"]
+    assert (
+        boundary["baseline_citations"][0]["report_baseline_source_ref"]
+        == f"baseline:{matrix_target_records()[0]['id']}:ref95"
+    )
 
 
 def test_appendix_a_matrix_baseline_citation_boundary_rejects_invalid_citation_fields():
@@ -397,6 +397,24 @@ def test_appendix_a_matrix_baseline_citation_boundary_rejects_invalid_citation_f
     assert "invalid_source_artifact_path" in codes
     assert "invalid_source_artifact_sha256" in codes
     assert "missing_applicability_caveats" in codes
+
+
+def test_appendix_a_matrix_baseline_citation_boundary_rejects_source_ref_mismatch():
+    target = matrix_target_records()[0]
+    boundary = appendix_a_matrix_baseline_citation_boundary_record()
+    boundary["citation_status"] = "recorded"
+    citation = _baseline_citation(target)
+    citation["report_baseline_source_ref"] = "baseline:wrong-target:ref94"
+    boundary["baseline_citations"] = [
+        citation,
+        *[_baseline_citation(row) for row in matrix_target_records()[1:]],
+    ]
+
+    report = validate_appendix_a_matrix_baseline_citation_boundary(boundary)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_report_baseline_source_ref" in codes
 
 
 def test_appendix_a_matrix_baseline_citation_boundary_summary_renders_counts():

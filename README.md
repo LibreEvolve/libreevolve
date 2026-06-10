@@ -3564,7 +3564,12 @@ validates the current `not_recorded_locally` state for per-target
 best-known-rank citations and records required future fields for target id,
 dimensions, best-known rank, cited reference id, source table/page, source
 artifact path/hash, applicability caveats, field/characteristic scope, and
-report-visible baseline-source refs.
+report-visible baseline-source refs. The helper
+`appendix_a_matrix_baseline_citation_boundary_from_citations()` builds a
+recorded boundary from supplied citation rows and validates that dimensions,
+ranks, target ids, and report-visible refs link back to the Appendix A
+registry and cited reference ids. Local metadata still does not include the
+actual per-target citation corpus.
 The same validator checks
 `libreevolve/problems/benchmarks/alphaevolve_appendix_b.json` when present.
 That registry enumerates the thirteen AlphaEvolve Appendix B constructive-math

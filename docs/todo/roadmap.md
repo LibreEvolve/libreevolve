@@ -2226,7 +2226,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     source digests, or report-visible baseline-source metadata.
     `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`
     now documents and validates that roadmap-scoped absence boundary plus
-    required future per-target citation fields.
+    recorded per-target citation fields.
+    `appendix_a_matrix_baseline_citation_boundary_from_citations()` can build
+    recorded boundaries from supplied rows and validates registry/source-ref
+    linkage, but real per-target citation metadata is still not emitted.
   - Required result: when best-known-rank citation provenance lands, update
     ROADMAP, README, papers index, and code/paper TODOs so roadmap text
     distinguishes rank-value registry coverage from traceable prior-baseline

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import json
 import re
 from dataclasses import dataclass
@@ -413,6 +414,28 @@ def appendix_a_matrix_baseline_citation_boundary_record() -> dict[str, Any]:
             "source behind each best-known rank."
         ),
     }
+
+
+def appendix_a_matrix_baseline_citation_boundary_from_citations(
+    citations: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Build a recorded Appendix A baseline-citation boundary."""
+    boundary = appendix_a_matrix_baseline_citation_boundary_record()
+    boundary.update(
+        {
+            "citation_status": "recorded",
+            "baseline_citations": copy.deepcopy(citations),
+            "claim_boundary": (
+                "Recorded metadata links each Appendix A matrix target to the "
+                "cited prior-work source behind its best-known-rank baseline."
+            ),
+        }
+    )
+    report = validate_appendix_a_matrix_baseline_citation_boundary(boundary)
+    if not report.ok:
+        messages = "; ".join(issue.message for issue in report.issues)
+        raise ValueError(f"baseline citation boundary is invalid: {messages}")
+    return boundary
 
 
 def validate_appendix_a_matrix_baseline_citation_boundary(
@@ -1482,6 +1505,20 @@ def _validate_baseline_citation_records(
         for field in ("applicability_caveats", "finite_field_or_characteristic_scope", "report_baseline_source_ref"):
             if not isinstance(citation.get(field), str) or not citation[field].strip():
                 issues.append(MatrixTargetIssue(f"missing_{field}", f"{field} is required", safe_id))
+        report_ref = citation.get("report_baseline_source_ref")
+        if (
+            isinstance(report_ref, str)
+            and isinstance(reference_id, str)
+            and reference_id.isdigit()
+            and (safe_id not in report_ref or f"ref{reference_id}" not in report_ref)
+        ):
+            issues.append(
+                MatrixTargetIssue(
+                    "invalid_report_baseline_source_ref",
+                    "report_baseline_source_ref must include the target id and cited reference id",
+                    safe_id,
+                )
+            )
         _validate_baseline_citation_artifact_path(citation.get("source_artifact_path"), safe_id, issues)
         source_hash = citation.get("source_artifact_sha256")
         if not isinstance(source_hash, str) or _SHA256_RE.fullmatch(source_hash) is None:

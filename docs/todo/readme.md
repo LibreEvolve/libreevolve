@@ -681,7 +681,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     caveat, source digest, or report-visible baseline-source field.
     `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`
     now documents and validates that README-scoped absence boundary plus
-    required future per-target citation fields.
+    recorded per-target citation fields. README also documents the builder for
+    supplied citation rows and registry/source-ref linkage, but not a real
+    emitted citation corpus.
   - Required result: when Appendix A best-known-rank citation provenance lands,
     update README, ROADMAP, papers index, and code/paper TODOs together so
     README distinguishes stored best-known rank values from traceable cited

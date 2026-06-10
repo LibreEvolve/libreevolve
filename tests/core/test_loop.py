@@ -3424,7 +3424,7 @@ x=2
     assert score_report["history_join_count"] == 1
     assert score_report["evaluator_result_join_count"] == 1
     assert score_report["omitted_or_truncated_score_record_count"] == 0
-    assert score_report["score_field_record_count"] == 2
+    assert score_report["score_field_record_count"] == 3
     assert score_report["omitted_or_truncated_score_field_count"] == 0
     assert score_report["cross_run_prompt_score_table_record_count"] == 1
     assert score_report["cross_run_prompt_score_table"]["exists"] is True
@@ -3441,6 +3441,7 @@ x=2
         score_report["claim_readiness"]["score_omission_and_truncation_policy"]
         is True
     )
+    assert score_report["claim_readiness"]["average_score_formula_parity"] is True
     assert score_report["claim_readiness"]["cross_run_prompt_score_table"] is True
     assert (
         score_report["claim_readiness"][
@@ -3458,11 +3459,18 @@ x=2
     assert score_row["prompt_visible"] is True
     assert score_row["displayed_aggregate_formula"] == "program.fitness"
     assert score_row["displayed_aggregate_score"] == 1.0
+    assert score_row["displayed_average_score_formula"] == "program.fitness"
+    assert score_row["displayed_average_score"] == 1.0
+    assert score_row["displayed_average_score_text"] == "average_score=1.0000"
     assert score_row["raw_metrics"]["score"] == 1.0
     assert score_row["metric_names"] == ["score"]
     display_fields = {
         field["field_id"]: field for field in score_row["score_display"]["fields"]
     }
+    assert display_fields["average_score"]["prompt_visible"] is True
+    assert display_fields["average_score"]["display_text"] == (
+        score_row["displayed_average_score_text"]
+    )
     assert display_fields["aggregate_score"]["prompt_visible"] is True
     assert display_fields["metric:score"]["prompt_visible"] is True
     assert display_fields["metric:score"]["display_text"] == "score=1"
@@ -3486,7 +3494,12 @@ x=2
     assert score_table_row["score_role"] == "target"
     assert score_table_row["score_program_id"] == record["parent_id"]
     assert score_table_row["displayed_aggregate_formula"] == "program.fitness"
+    assert score_table_row["displayed_average_score_formula"] == "program.fitness"
+    assert score_table_row["displayed_average_score_text"] == (
+        "average_score=1.0000"
+    )
     assert score_table_row["score_display"]["visible_fields"] == [
+        "average_score",
         "aggregate_score",
         "metric:score",
     ]
@@ -3503,6 +3516,16 @@ x=2
     validation = validate_prompt_prior_score_provenance_report(edited_score_report)
     assert validation["ok"] is False
     assert "invalid_score_formula" in {
+        issue["code"] for issue in validation["issues"]
+    }
+
+    edited_score_report = copy.deepcopy(score_report)
+    edited_score_report["records"][0]["score_records"][0][
+        "displayed_average_score_formula"
+    ] = "claimed_average_score"
+    validation = validate_prompt_prior_score_provenance_report(edited_score_report)
+    assert validation["ok"] is False
+    assert "invalid_average_score_formula" in {
         issue["code"] for issue in validation["issues"]
     }
 
@@ -3645,7 +3668,7 @@ x=2
 
     assert report["validation"]["ok"] is True
     assert validate_prompt_prior_score_provenance_report(report)["ok"] is True
-    assert report["score_field_record_count"] == 4
+    assert report["score_field_record_count"] == 5
     assert report["omitted_or_truncated_score_field_count"] == 2
     assert (
         report["claim_readiness"]["score_omission_and_truncation_policy"]
@@ -3659,6 +3682,7 @@ x=2
     fields = {
         field["field_id"]: field for field in score_row["score_display"]["fields"]
     }
+    assert fields["average_score"]["prompt_visible"] is True
     assert fields["aggregate_score"]["prompt_visible"] is True
     assert fields["metric:score"]["prompt_visible"] is True
     assert fields["metric:latency"]["prompt_visible"] is True

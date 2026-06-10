@@ -618,23 +618,24 @@ Primary evidence:
     `stdout`, `stderr`, and `error` under the active prompt context policy,
     plus stage-summary IO display attribution for rendered stage
     stdout/stderr/error fields, and score-display field visibility for
-    aggregate and metric fields, including prompt-context metric selection,
-    cap-driven truncation, and suppressed metric reasons.
+    aggregate, `average_score`, and metric fields, including prompt-context
+    metric selection, cap-driven truncation, and suppressed metric reasons.
+    Score records expose `displayed_average_score`, its display text/hash, and
+    the explicit formula/policy that aliases normalized `program.fitness`.
     Completed runs also export `prompt_prior_score_table.jsonl` cross-run rows
-    with prompt ids, score-source ids, displayed scores, metric maps,
-    history/evaluator row joins, score-display visibility summaries,
-    execution-output visibility summaries, and stage-summary IO visibility
-    summaries.
+    with prompt ids, score-source ids, displayed aggregate and `average_score`
+    values, metric maps, history/evaluator row joins, score-display visibility
+    summaries, execution-output visibility summaries, and stage-summary IO
+    visibility summaries.
     Validators reject mismatched score formulas, malformed joins, malformed
-    score-display records, malformed execution-output display records,
-    malformed stage-summary IO records, and malformed table export metadata.
+    average-score formula/text/hash records, malformed score-display records,
+    malformed execution-output display records, malformed stage-summary IO
+    records, and malformed table export metadata.
   - Remaining gap: prompt-score provenance still does not prove complete
-    global feedback-section truncation policy or exact AlphaEvolve
-    `average_score` formula parity.
-  - Required result: add feedback-section truncation policy and `average_score`
-    display/formula parity or an explicit substitution policy before treating
-    prompt metric headers as full AlphaEvolve-style rendered
-    evaluation-result provenance.
+    global feedback-section truncation policy.
+  - Required result: add feedback-section truncation policy before treating
+    prompt metric headers as full AlphaEvolve-style rendered evaluation-result
+    provenance.
 
 - [ ] Add explicit-context source-role provenance for AlphaEvolve prompt
       context.

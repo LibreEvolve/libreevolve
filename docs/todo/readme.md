@@ -645,12 +645,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     score records to program ids, source hashes, finite metrics, history rows,
     evaluator-result rows, and top-level prompt-feedback execution-output
     display attribution plus stage-summary IO display attribution. README can
-    also cite score-display visibility records for aggregate/metric fields and
-    `prompt_prior_score_table.jsonl` cross-run rows for flattened prompt-score
-    exports.
+    also cite score-display visibility records for aggregate/average-score/
+    metric fields and `prompt_prior_score_table.jsonl` cross-run rows for
+    flattened prompt-score exports.
   - Required result: keep README scoped until global feedback-section
-    truncation policy, exact `average_score` formula parity or an explicit
-    substitution policy distinguish current prompt metric rendering from full
+    truncation policy distinguishes current prompt metric rendering from full
     AlphaEvolve-style rendered evaluation results.
 
 - [ ] Keep README ablation-report wording aligned with current LLM budget

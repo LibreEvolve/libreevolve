@@ -17973,6 +17973,7 @@ def _prompt_prior_score_provenance_report(
             "inspiration_score_source": "selected_inspiration_program_fitness_and_metrics_rendered_in_inspiration_headers",
             "history_join_policy": "candidate_ids_joined_to_history_jsonl_or_failure_history_jsonl_and_evaluator_results_jsonl",
             "displayed_aggregate_policy": "stored_program_fitness_as_prompt_visible_normalized_fitness",
+            "average_score_policy": "alphaevolve_average_score_display_alias_for_stored_program_fitness",
             "raw_metric_policy": "finite_non_boolean_program_metrics",
             "score_display_policy": "aggregate_and_metric_field_visibility_records_from_prompt_context_policy_and_prompt_section_budget",
             "execution_result_source": "evaluation_stdout_stderr_error_fields_rendered_by_parent_feedback_or_inspiration_feedback",
@@ -17993,6 +17994,7 @@ def _prompt_prior_score_provenance_report(
             "prompt_visible_score_rows": score_record_count > 0
             and omitted_or_truncated_count == 0,
             "score_omission_and_truncation_policy": score_record_count > 0,
+            "average_score_formula_parity": score_record_count > 0,
             "execution_result_text_display_attribution": (
                 execution_result_count > 0
                 and execution_result_evaluator_join_count == execution_result_count
@@ -18005,7 +18007,6 @@ def _prompt_prior_score_provenance_report(
             "full_alphaevolve_rendered_evaluation_result_provenance": False,
             "remaining_gap": [
                 "feedback_section_global_truncation_policy",
-                "average_score_formula_parity",
             ],
         },
     }
@@ -18076,6 +18077,15 @@ def _prompt_prior_score_table_rows(
                     ),
                     "displayed_aggregate_formula": score.get(
                         "displayed_aggregate_formula"
+                    ),
+                    "displayed_average_score": score.get(
+                        "displayed_average_score"
+                    ),
+                    "displayed_average_score_formula": score.get(
+                        "displayed_average_score_formula"
+                    ),
+                    "displayed_average_score_text": score.get(
+                        "displayed_average_score_text"
                     ),
                     "metric_names": list(score.get("metric_names", []))
                     if isinstance(score.get("metric_names"), list)
@@ -18398,6 +18408,7 @@ def _prompt_prior_score_record(
         and math.isfinite(value)
     }
     aggregate = _finite_json_number(source_program.fitness)
+    average_score_text = _prompt_prior_average_score_display_text(aggregate)
     return {
         "role": role,
         "ordinal": ordinal,
@@ -18410,6 +18421,17 @@ def _prompt_prior_score_record(
         "source_hash": _workspace_sha256(source_program.workspace()),
         "displayed_aggregate_score": aggregate,
         "displayed_aggregate_formula": "program.fitness",
+        "displayed_average_score": aggregate,
+        "displayed_average_score_formula": "program.fitness",
+        "displayed_average_score_text": average_score_text,
+        "displayed_average_score_sha256": (
+            hashlib.sha256(average_score_text.encode("utf-8")).hexdigest()
+            if average_score_text is not None
+            else None
+        ),
+        "displayed_average_score_policy": (
+            "alphaevolve_average_score_alias_for_normalized_program_fitness"
+        ),
         "raw_metrics": metrics,
         "metric_names": sorted(metrics),
         "score_display": _prompt_prior_score_display_record(
@@ -18459,6 +18481,13 @@ def _missing_prompt_prior_score_record(
         "source_hash": None,
         "displayed_aggregate_score": None,
         "displayed_aggregate_formula": "program.fitness",
+        "displayed_average_score": None,
+        "displayed_average_score_formula": "program.fitness",
+        "displayed_average_score_text": None,
+        "displayed_average_score_sha256": None,
+        "displayed_average_score_policy": (
+            "alphaevolve_average_score_alias_for_normalized_program_fitness"
+        ),
         "raw_metrics": {},
         "metric_names": [],
         "score_display": {
@@ -18543,7 +18572,23 @@ def _prompt_prior_score_display_record(
         prompt_visible=prompt_visible,
         prompt_diagnostics=prompt_diagnostics,
     )
+    average_score_text = _prompt_prior_average_score_display_text(aggregate)
     fields = [
+        _prompt_prior_score_field_record(
+            "average_score",
+            display_label="average_score",
+            raw_value=aggregate,
+            raw_text=average_score_text,
+            prompt_visible=aggregate_surface["visible"] and aggregate is not None,
+            prompt_visibility_source=aggregate_surface["source"],
+            omission_reason=(
+                None
+                if aggregate_surface["visible"] and aggregate is not None
+                else aggregate_surface["omission_reason"]
+                or "average_score_not_finite"
+            ),
+            cap_chars=None,
+        ),
         _prompt_prior_score_field_record(
             "aggregate_score",
             display_label="fitness",
@@ -18608,6 +18653,12 @@ def _prompt_prior_score_display_record(
         "omitted_or_truncated_field_count": omitted_or_truncated,
         "fields": fields,
     }
+
+
+def _prompt_prior_average_score_display_text(value: object) -> str | None:
+    if value is None:
+        return None
+    return f"average_score={float(value):.4f}"
 
 
 def _prompt_prior_metric_selection(
@@ -19513,6 +19564,34 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
                 issues.append({"code": "invalid_score_formula", "message": f"record {record_index} score {score_index} formula is invalid"})
             if score.get("displayed_aggregate_score") is not None and not isinstance(score.get("displayed_aggregate_score"), (int, float)):
                 issues.append({"code": "invalid_displayed_score", "message": f"record {record_index} score {score_index} displayed score must be numeric or null"})
+            if score.get("displayed_average_score_formula") != "program.fitness":
+                issues.append({"code": "invalid_average_score_formula", "message": f"record {record_index} score {score_index} average_score formula is invalid"})
+            if score.get("displayed_average_score") != score.get("displayed_aggregate_score"):
+                issues.append({"code": "average_score_mismatch", "message": f"record {record_index} score {score_index} average_score must match displayed aggregate score"})
+            average_text = score.get("displayed_average_score_text")
+            average_hash = score.get("displayed_average_score_sha256")
+            if score.get("displayed_average_score") is None:
+                if average_text is not None or average_hash is not None:
+                    issues.append({"code": "invalid_null_average_score_display", "message": f"record {record_index} score {score_index} null average_score must not have display text or hash"})
+            else:
+                expected_average_text = _prompt_prior_average_score_display_text(
+                    score.get("displayed_average_score")
+                )
+                if average_text != expected_average_text:
+                    issues.append({"code": "average_score_text_mismatch", "message": f"record {record_index} score {score_index} average_score text is invalid"})
+                if (
+                    not _is_sha256_hex(average_hash)
+                    or average_hash
+                    != hashlib.sha256(
+                        str(average_text).encode("utf-8")
+                    ).hexdigest()
+                ):
+                    issues.append({"code": "invalid_average_score_hash", "message": f"record {record_index} score {score_index} average_score hash is invalid"})
+            if (
+                score.get("displayed_average_score_policy")
+                != "alphaevolve_average_score_alias_for_normalized_program_fitness"
+            ):
+                issues.append({"code": "invalid_average_score_policy", "message": f"record {record_index} score {score_index} average_score policy is invalid"})
             metrics = score.get("raw_metrics")
             if not isinstance(metrics, Mapping):
                 issues.append({"code": "invalid_raw_metrics", "message": f"record {record_index} score {score_index} raw_metrics must be an object"})
@@ -19852,6 +19931,7 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
             "evaluator_rows_joined",
             "prompt_visible_score_rows",
             "score_omission_and_truncation_policy",
+            "average_score_formula_parity",
             "execution_result_text_display_attribution",
             "stage_summary_io_display_attribution",
             "cross_run_prompt_score_table",

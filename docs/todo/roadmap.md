@@ -917,11 +917,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     records that join prompt-visible score rows to history and evaluator-result
     rows, plus top-level prompt-feedback execution-output display attribution
     plus stage-summary IO display attribution, score-display visibility records
-    for aggregate/metric fields, and
+    for aggregate/average-score/metric fields, and
     `prompt_prior_score_table.jsonl` cross-run rows.
   - Required result: keep ROADMAP wording scoped until global feedback-section
-    truncation policy, exact `average_score` formula parity or an explicit
-    substitution policy support AlphaEvolve-style rendered evaluation-result
+    truncation policy supports AlphaEvolve-style rendered evaluation-result
     evidence tied to prompt calls and evaluator history.
 
 - [ ] Keep paper-inspired roadmap labels scoped to implemented behavior.

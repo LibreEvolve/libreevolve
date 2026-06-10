@@ -8251,3 +8251,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     to the current `not_emitted_by_local_report_export` state, and keeps real
     rendered/source/OCR table artifact emission open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the matrix subset-scope artifact boundary in ROADMAP.
+  - Spec evidence: roadmap matrix wording needs to distinguish declared named
+    subset validation from actual report/export emission of `appendix_a_full`,
+    `main_text_mnp_le_5`, and `table_2_selected` subset-scope artifacts.
+  - Status: ROADMAP now names
+    `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1`, scopes
+    it to the current `not_emitted_by_local_report_export` state, and keeps
+    real subset-scope artifact emission open.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

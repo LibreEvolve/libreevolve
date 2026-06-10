@@ -1089,6 +1089,11 @@ Implemented:
   inclusion predicates, target ids, outcome counts, out-of-scope rows, and
   Table 2/Table 3 source linkage, but no local report/export emits those
   subset-scope records yet.
+  `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1` records
+  the current `not_emitted_by_local_report_export` boundary and validates
+  required future emitted-artifact fields for subset identity, inclusion
+  predicates, source linkage, counts, fell-behind/out-of-scope ids, nested
+  subset-scope evidence, artifact paths, and hashes.
   `libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1` records the
   Appendix A Table 3 concurrent-work note for `mm_4x5x6`: reference `[49]`
   also found a rank-90 algorithm for `<4, 5, 6>`, independently matching

@@ -15986,3 +15986,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused matrix-exhibit and paper-manifest tests cover the
     absence boundary, emitted-artifact validation, invalid nested evidence, and
     manifest hook.
+
+- [x] Add a matrix subset-scope artifact-emission boundary contract.
+  - Spec evidence: AlphaEvolve Table 2 scopes the all-matched-or-surpassed
+    statement to `m, n, p <= 5`, while Appendix A Table 3 is a broader
+    54-target table with two fell-behind rows outside that main-text subset.
+  - Status: `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1`
+    now validates the current `not_emitted_by_local_report_export` state,
+    rejects false emitted claims without subset artifacts, validates nested
+    subset-scope evidence, and records required future fields for subset ids,
+    inclusion predicates, source table/page/phrase linkage, row and outcome
+    counts, fell-behind and out-of-scope ids, artifact paths, and artifact
+    hashes. Local report/export code still does not emit those subset-scope
+    artifacts.
+  - Verification: focused Appendix A registry and paper-manifest tests cover
+    the absence boundary, emitted-artifact validation, invalid nested evidence,
+    and manifest hook.

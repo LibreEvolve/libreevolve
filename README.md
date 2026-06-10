@@ -3490,7 +3490,12 @@ surpassed, `0` fell behind). It validates inclusion predicates, exact target
 ids, outcome counts, out-of-scope rows, and Table 2/Table 3 source linkage so
 the main-text all-matched-or-surpassed claim is not confused with the full
 Appendix A aggregate. It is subset metadata only; local reports and rendered
-table artifacts still do not emit these scope records.
+table artifacts still do not emit these scope records. The companion artifact
+boundary `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1`
+validates the current `not_emitted_by_local_report_export` state and required
+future emitted-artifact fields for subset ids, inclusion predicates, source
+table/page/phrase linkage, row and outcome counts, fell-behind and
+out-of-scope ids, nested subset-scope evidence, artifact paths, and hashes.
 Appendix A matrix row-note evidence uses
 `libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1`; the built-in record
 preserves the Table 3 note that concurrent work `[49]` also found a rank-90

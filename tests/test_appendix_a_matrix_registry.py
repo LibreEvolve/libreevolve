@@ -6,12 +6,14 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     LOCAL_RESOURCE_FRONTIER_SCHEMA,
     RESOURCE_FRONTIER_SCHEMA,
     ROW_NOTE_SCHEMA,
+    SUBSET_SCOPE_ARTIFACT_BOUNDARY_SCHEMA,
     SUBSET_SCOPE_SCHEMA,
     TARGET_SUITE,
     appendix_a_matrix_curation_record,
     appendix_a_matrix_local_resource_frontier_record,
     appendix_a_matrix_resource_frontier_record,
     appendix_a_matrix_row_note_records,
+    appendix_a_matrix_subset_scope_artifact_boundary_record,
     appendix_a_matrix_subset_scope_record,
     matrix_target_by_id,
     matrix_target_records,
@@ -20,12 +22,14 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     render_appendix_a_matrix_resource_frontier_summary,
     render_appendix_a_matrix_registry_summary,
     render_appendix_a_matrix_row_note_summary,
+    render_appendix_a_matrix_subset_scope_artifact_boundary_summary,
     render_appendix_a_matrix_subset_scope_summary,
     validate_appendix_a_matrix_curation,
     validate_appendix_a_matrix_local_resource_frontier,
     validate_appendix_a_matrix_resource_frontier,
     validate_appendix_a_matrix_registry,
     validate_appendix_a_matrix_row_notes,
+    validate_appendix_a_matrix_subset_scope_artifact_boundary,
     validate_appendix_a_matrix_subset_scope,
 )
 
@@ -309,6 +313,25 @@ def _subset_by_id(record: dict, subset_id: str) -> dict:
     return next(subset for subset in record["subsets"] if subset["subset_id"] == subset_id)
 
 
+def _subset_scope_artifact(subset_id: str = "main_text_mnp_le_5") -> dict:
+    evidence = appendix_a_matrix_subset_scope_record()
+    subset = _subset_by_id(evidence, subset_id)
+    return {
+        "subset_scope_id": subset_id,
+        "source_table": subset["source_table"],
+        "source_pdf_page": subset["source_pdf_page"],
+        "source_phrase": subset["source_phrase"],
+        "inclusion_predicate": subset["inclusion_predicate"],
+        "row_count": subset["row_count"],
+        "outcome_counts": dict(subset["outcome_counts"]),
+        "out_of_scope_target_ids": list(subset["out_of_scope_target_ids"]),
+        "fell_behind_target_ids": list(subset["fell_behind_target_ids"]),
+        "subset_scope_evidence": evidence,
+        "artifact_paths": [f"tables/{subset_id}_subset_scope.json"],
+        "artifact_sha256": "a" * 64,
+    }
+
+
 def test_appendix_a_matrix_subset_scope_validates_table2_and_full_table_boundaries():
     record = appendix_a_matrix_subset_scope_record()
     report = validate_appendix_a_matrix_subset_scope(record)
@@ -397,6 +420,92 @@ def test_appendix_a_matrix_subset_scope_summary_renders_counts():
     assert "| main_text_target_count | 20 |" in summary
     assert "| full_table_target_count | 54 |" in summary
     assert "| full_table_fell_behind_count | 2 |" in summary
+
+
+def test_appendix_a_matrix_subset_scope_artifact_boundary_accepts_current_absence():
+    report = validate_appendix_a_matrix_subset_scope_artifact_boundary()
+
+    assert report.ok is True
+    assert report.artifact_status == "not_emitted_by_local_report_export"
+    assert report.emitted_artifact_count == 0
+    assert report.required_field_count == 12
+    assert report.issues == []
+
+
+def test_appendix_a_matrix_subset_scope_artifact_boundary_rejects_absence_with_artifacts():
+    boundary = appendix_a_matrix_subset_scope_artifact_boundary_record()
+    boundary["emitted_artifacts"] = [_subset_scope_artifact()]
+    boundary["claim_boundary"] = "Artifacts exist."
+
+    report = validate_appendix_a_matrix_subset_scope_artifact_boundary(boundary)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "unexpected_emitted_artifacts" in codes
+    assert "missing_claim_boundary" in codes
+
+
+def test_appendix_a_matrix_subset_scope_artifact_boundary_requires_emitted_records():
+    boundary = appendix_a_matrix_subset_scope_artifact_boundary_record()
+    boundary["artifact_status"] = "emitted"
+
+    report = validate_appendix_a_matrix_subset_scope_artifact_boundary(boundary)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "missing_subset_scope_artifacts" in codes
+
+
+def test_appendix_a_matrix_subset_scope_artifact_boundary_accepts_emitted_records():
+    boundary = {
+        "schema": SUBSET_SCOPE_ARTIFACT_BOUNDARY_SCHEMA,
+        "subset_scope_schema": SUBSET_SCOPE_SCHEMA,
+        "source_paper_id": "2506.13131",
+        "target_suite": TARGET_SUITE,
+        "artifact_status": "emitted",
+        "local_export_scope": "matrix_subset_scope_report_export",
+        "required_artifact_fields": list(appendix_a_matrix_subset_scope_artifact_boundary_record()["required_artifact_fields"]),
+        "emitted_artifacts": [
+            _subset_scope_artifact("appendix_a_full"),
+            _subset_scope_artifact("main_text_mnp_le_5"),
+            _subset_scope_artifact("table_2_selected"),
+        ],
+        "claim_boundary": "Local export emitted subset-scope artifacts.",
+    }
+
+    report = validate_appendix_a_matrix_subset_scope_artifact_boundary(boundary)
+
+    assert report.ok is True
+    assert report.artifact_status == "emitted"
+    assert report.emitted_artifact_count == 3
+    assert report.issues == []
+
+
+def test_appendix_a_matrix_subset_scope_artifact_boundary_rejects_invalid_nested_scope():
+    boundary = appendix_a_matrix_subset_scope_artifact_boundary_record()
+    boundary["artifact_status"] = "emitted"
+    artifact = _subset_scope_artifact()
+    artifact["artifact_paths"] = ["tables/subset.json", "../escape.json"]
+    artifact["artifact_sha256"] = "not-a-digest"
+    artifact["subset_scope_evidence"]["subsets"] = []
+    boundary["emitted_artifacts"] = [artifact]
+
+    report = validate_appendix_a_matrix_subset_scope_artifact_boundary(boundary)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_artifact_path" in codes
+    assert "invalid_artifact_sha256" in codes
+    assert "invalid_nested_subset_scope_invalid_subsets" in codes
+
+
+def test_appendix_a_matrix_subset_scope_artifact_boundary_summary_renders_counts():
+    summary = render_appendix_a_matrix_subset_scope_artifact_boundary_summary()
+
+    assert "AlphaEvolve matrix subset-scope artifact boundary" in summary
+    assert "| schema_status | ok |" in summary
+    assert "| artifact_status | not_emitted_by_local_report_export |" in summary
+    assert "| emitted_artifact_count | 0 |" in summary
 
 
 def test_appendix_a_matrix_row_notes_validate_concurrent_work_caveat():

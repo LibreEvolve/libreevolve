@@ -2466,6 +2466,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `main_text_mnp_le_5`, and `table_2_selected` membership, counts,
     out-of-scope rows, and Table 2/Table 3 source linkage. Runtime reports and
     rendered table artifacts still do not emit those subset-scope records.
+    `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1` now
+    documents and validates that roadmap-scoped absence boundary plus required
+    future emitted-artifact fields.
   - Required result: when matrix subset-scope artifacts land, update ROADMAP,
     README, papers index, and code/paper TODOs with named target subsets,
     inclusion predicates, row counts, outcome counts, out-of-scope row ids,

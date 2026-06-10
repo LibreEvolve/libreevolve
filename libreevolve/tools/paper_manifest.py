@@ -31,10 +31,12 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     appendix_a_matrix_curation_record,
     appendix_a_matrix_local_resource_frontier_record,
     appendix_a_matrix_resource_frontier_record,
+    appendix_a_matrix_subset_scope_artifact_boundary_record,
     validate_appendix_a_matrix_curation,
     validate_appendix_a_matrix_local_resource_frontier,
     validate_appendix_a_matrix_resource_frontier,
     validate_appendix_a_matrix_registry,
+    validate_appendix_a_matrix_subset_scope_artifact_boundary,
 )
 from libreevolve.problems.benchmarks.appendix_b_registry import (
     REGISTRY_PATH as APPENDIX_B_REGISTRY_PATH,
@@ -596,6 +598,17 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
             _safe_manifest_label(issue.attempt_id) if issue.attempt_id else None,
         )
         for issue in local_resource_frontier_report.issues
+    )
+    subset_scope_artifact_report = validate_appendix_a_matrix_subset_scope_artifact_boundary(
+        appendix_a_matrix_subset_scope_artifact_boundary_record()
+    )
+    issues.extend(
+        PaperManifestIssue(
+            f"appendix_a_subset_scope_artifact_{issue.code}",
+            issue.message,
+            _safe_manifest_label(issue.subset_id) if issue.subset_id else None,
+        )
+        for issue in subset_scope_artifact_report.issues
     )
     near_integrality_runtime_report = validate_matrix_near_integrality_runtime_boundary(
         matrix_near_integrality_runtime_boundary_record()

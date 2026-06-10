@@ -3252,7 +3252,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     statement. It validates inclusion predicates, row counts, outcome counts,
     out-of-scope row ids, and source-caption/table linkage. No emitted paper
     artifact or rendered table export currently carries this subset-scope
-    record.
+    record. `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1`
+    now validates that absence boundary and required future emitted-artifact
+    fields for subset identity, inclusion predicates, source linkage, counts,
+    fell-behind/out-of-scope ids, nested subset evidence, paths, and hashes.
   - Required result: emit paper-facing subset-scope artifacts for named target
     sets such as `main_text_mnp_le_5`, `table_2_selected`, and
     `appendix_a_full`, including inclusion predicates, row counts, outcome

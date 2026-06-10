@@ -10778,3 +10778,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     nested matrix-rank table exhibit evidence. The paper-manifest gate
     validates this boundary with the Appendix A matrix checks.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Track matrix subset-scope artifact-emission absence separately from
+      declared subset validation.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 scopes the
+    all-matched-or-surpassed statement to `m, n, p <= 5`, while Appendix A
+    Table 3 is the full 54-target matrix table with two fell-behind rows.
+  - Status: `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1`
+    now records the current `not_emitted_by_local_report_export` boundary and
+    validates required future emitted-artifact fields for subset identity,
+    inclusion predicates, source linkage, row/outcome counts, fell-behind and
+    out-of-scope ids, nested subset-scope evidence, artifact paths, and hashes.
+    The paper-manifest gate validates this boundary with the Appendix A matrix
+    checks.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

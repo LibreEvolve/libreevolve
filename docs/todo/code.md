@@ -3326,8 +3326,10 @@ Primary evidence:
     source-caption/table linkage. It preserves that the `m,n,p <= 5` subset has
     `20` rows with `0` fell behind while the full Appendix A table has `54`
     rows with `2` fell behind (`mm_4x4x9` and `mm_6x6x6`). This is still
-    built-in metadata only; local matrix reports, table exhibits, and run
-    artifacts do not emit or consume the subset-scope record.
+    built-in metadata only; `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1`
+    now validates the current `not_emitted_by_local_report_export` state and
+    required future emitted-artifact fields, but local matrix reports, table
+    exhibits, and run artifacts do not emit or consume the subset-scope record.
   - Required result: wire matrix report/table-exhibit generation to emit and
     commit subset-scope artifacts for `main_text_mnp_le_5`, `table_2_selected`,
     and `appendix_a_full`, with source-caption linkage and docs validation so

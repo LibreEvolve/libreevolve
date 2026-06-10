@@ -14,11 +14,28 @@ CURATION_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_curation.v1"
 RESOURCE_FRONTIER_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1"
 LOCAL_RESOURCE_FRONTIER_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1"
 SUBSET_SCOPE_SCHEMA = "libreevolve.alphaevolve_matrix_subset_scope.v1"
+SUBSET_SCOPE_ARTIFACT_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1"
 ROW_NOTE_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1"
 TARGET_SUITE = "alphaevolve_appendix_a"
 EXPECTED_TARGET_COUNT = 54
 OUTCOMES = frozenset({"matched", "surpassed", "fell_behind"})
+SUBSET_SCOPE_ARTIFACT_STATUSES = frozenset({"not_emitted_by_local_report_export", "emitted"})
+SUBSET_SCOPE_ARTIFACT_REQUIRED_FIELDS = (
+    "subset_scope_id",
+    "source_table",
+    "source_pdf_page",
+    "source_phrase",
+    "inclusion_predicate",
+    "row_count",
+    "outcome_counts",
+    "out_of_scope_target_ids",
+    "fell_behind_target_ids",
+    "subset_scope_evidence",
+    "artifact_paths",
+    "artifact_sha256",
+)
 _ID_RE = re.compile(r"mm_[1-9][0-9]*x[1-9][0-9]*x[1-9][0-9]*")
+_SHA256_RE = re.compile(r"[0-9a-f]{64}")
 TABLE_2_SELECTED_TARGET_IDS = (
     "mm_2x4x5",
     "mm_2x4x7",
@@ -101,6 +118,15 @@ class MatrixSubsetScopeReport:
     main_text_target_count: int
     full_table_target_count: int
     full_table_fell_behind_count: int
+    issues: list[MatrixSubsetScopeIssue]
+
+
+@dataclass(frozen=True)
+class MatrixSubsetScopeArtifactBoundaryReport:
+    ok: bool
+    artifact_status: str | None
+    emitted_artifact_count: int
+    required_field_count: int
     issues: list[MatrixSubsetScopeIssue]
 
 
@@ -321,6 +347,24 @@ def appendix_a_matrix_subset_scope_record(
     }
 
 
+def appendix_a_matrix_subset_scope_artifact_boundary_record() -> dict[str, Any]:
+    return {
+        "schema": SUBSET_SCOPE_ARTIFACT_BOUNDARY_SCHEMA,
+        "subset_scope_schema": SUBSET_SCOPE_SCHEMA,
+        "source_paper_id": "2506.13131",
+        "target_suite": TARGET_SUITE,
+        "artifact_status": "not_emitted_by_local_report_export",
+        "local_export_scope": "matrix_subset_scope_report_export",
+        "required_artifact_fields": list(SUBSET_SCOPE_ARTIFACT_REQUIRED_FIELDS),
+        "emitted_artifacts": [],
+        "claim_boundary": (
+            "This is a matrix subset-scope artifact availability boundary. "
+            "It does not claim local report/export code emits named "
+            "Appendix A, Table 2, or m,n,p <= 5 subset-scope artifacts."
+        ),
+    }
+
+
 def validate_appendix_a_matrix_subset_scope(
     recordset: object | str | Path | None = None,
 ) -> MatrixSubsetScopeReport:
@@ -344,6 +388,56 @@ def validate_appendix_a_matrix_subset_scope(
         main_text_target_count=int(main_text.get("row_count", 0)),
         full_table_target_count=int(full_table.get("row_count", 0)),
         full_table_fell_behind_count=int(full_table.get("fell_behind_count", 0)),
+        issues=issues,
+    )
+
+
+def validate_appendix_a_matrix_subset_scope_artifact_boundary(
+    boundary: object | str | Path | None = None,
+) -> MatrixSubsetScopeArtifactBoundaryReport:
+    if boundary is None:
+        boundary = appendix_a_matrix_subset_scope_artifact_boundary_record()
+    data, read_issues = _load_subset_scope_artifact_boundary(boundary)
+    if read_issues:
+        return MatrixSubsetScopeArtifactBoundaryReport(False, None, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[MatrixSubsetScopeIssue] = []
+    if data.get("schema") != SUBSET_SCOPE_ARTIFACT_BOUNDARY_SCHEMA:
+        issues.append(MatrixSubsetScopeIssue("invalid_schema", "unsupported matrix subset-scope artifact boundary schema"))
+    if data.get("subset_scope_schema") != SUBSET_SCOPE_SCHEMA:
+        issues.append(MatrixSubsetScopeIssue("invalid_subset_scope_schema", "subset_scope_schema must identify matrix subset-scope evidence"))
+    if data.get("source_paper_id") != "2506.13131":
+        issues.append(MatrixSubsetScopeIssue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("target_suite") != TARGET_SUITE:
+        issues.append(MatrixSubsetScopeIssue("invalid_target_suite", "target_suite must be alphaevolve_appendix_a"))
+    status = data.get("artifact_status")
+    if status not in SUBSET_SCOPE_ARTIFACT_STATUSES:
+        issues.append(MatrixSubsetScopeIssue("invalid_artifact_status", "artifact_status must be a known matrix subset-scope artifact status"))
+    if not isinstance(data.get("local_export_scope"), str) or not data["local_export_scope"].strip():
+        issues.append(MatrixSubsetScopeIssue("missing_local_export_scope", "local_export_scope is required"))
+    required_field_count = _validate_subset_scope_artifact_required_fields(data.get("required_artifact_fields"), issues)
+    artifacts = data.get("emitted_artifacts")
+    if not isinstance(artifacts, list):
+        issues.append(MatrixSubsetScopeIssue("invalid_emitted_artifacts", "emitted_artifacts must be a list"))
+        artifact_count = 0
+    else:
+        artifact_count = len(artifacts)
+        if status == "not_emitted_by_local_report_export":
+            if artifacts:
+                issues.append(MatrixSubsetScopeIssue("unexpected_emitted_artifacts", "absence boundary must not include emitted subset-scope artifacts"))
+            claim_boundary = data.get("claim_boundary")
+            if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary:
+                issues.append(MatrixSubsetScopeIssue("missing_claim_boundary", "absence boundary must state that it does not claim local subset-scope artifact emission"))
+        elif status == "emitted":
+            if not artifacts:
+                issues.append(MatrixSubsetScopeIssue("missing_subset_scope_artifacts", "emitted status requires matrix subset-scope artifact records"))
+            for artifact in artifacts:
+                _validate_subset_scope_artifact_record(artifact, issues)
+    return MatrixSubsetScopeArtifactBoundaryReport(
+        ok=not issues,
+        artifact_status=status if isinstance(status, str) else None,
+        emitted_artifact_count=artifact_count,
+        required_field_count=required_field_count,
         issues=issues,
     )
 
@@ -657,6 +751,31 @@ def render_appendix_a_matrix_subset_scope_summary(
     return "\n".join(lines)
 
 
+def render_appendix_a_matrix_subset_scope_artifact_boundary_summary(
+    boundary: object | str | Path | None = None,
+) -> str:
+    report = validate_appendix_a_matrix_subset_scope_artifact_boundary(boundary)
+    status = "ok" if report.ok else "invalid"
+    lines = [
+        "AlphaEvolve matrix subset-scope artifact boundary",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| artifact_status | {report.artifact_status or '<unknown>'} |",
+        f"| emitted_artifact_count | {report.emitted_artifact_count} |",
+        f"| required_field_count | {report.required_field_count} |",
+    ]
+    if report.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(
+            f"- {issue.code}: {issue.message}"
+            + (f" ({issue.subset_id})" if issue.subset_id else "")
+            for issue in report.issues
+        )
+    return "\n".join(lines)
+
+
 def render_appendix_a_matrix_row_note_summary(
     recordset: object | str | Path | None = None,
 ) -> str:
@@ -744,6 +863,24 @@ def _load_subset_scope_recordset(
         if isinstance(loaded, dict):
             return loaded, []
     return None, [MatrixSubsetScopeIssue("invalid_shape", "subset-scope recordset must be a JSON object")]
+
+
+def _load_subset_scope_artifact_boundary(
+    boundary: object | str | Path,
+) -> tuple[dict[str, Any] | None, list[MatrixSubsetScopeIssue]]:
+    if isinstance(boundary, dict):
+        return dict(boundary), []
+    if isinstance(boundary, (str, Path)):
+        path = Path(boundary)
+        try:
+            loaded = json.loads(path.read_text(encoding="utf-8"))
+        except OSError as exc:
+            return None, [MatrixSubsetScopeIssue("read_error", f"failed to read subset-scope artifact boundary: {exc}")]
+        except json.JSONDecodeError as exc:
+            return None, [MatrixSubsetScopeIssue("invalid_json", f"invalid subset-scope artifact boundary JSON: {exc.msg}")]
+        if isinstance(loaded, dict):
+            return loaded, []
+    return None, [MatrixSubsetScopeIssue("invalid_shape", "subset-scope artifact boundary must be a JSON object")]
 
 
 def _load_row_note_recordset(
@@ -1014,6 +1151,87 @@ def _validate_subset_scope_records(
     for subset_id in sorted(set(expected) - seen):
         issues.append(MatrixSubsetScopeIssue("missing_subset", "required matrix subset-scope record is missing", subset_id))
     return reports
+
+
+def _validate_subset_scope_artifact_required_fields(
+    value: object,
+    issues: list[MatrixSubsetScopeIssue],
+) -> int:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixSubsetScopeIssue("invalid_required_artifact_fields", "required_artifact_fields must be a non-empty list"))
+        return 0
+    seen: set[str] = set()
+    for field in value:
+        if not isinstance(field, str) or not field.strip():
+            issues.append(MatrixSubsetScopeIssue("invalid_required_artifact_field", "required artifact field names must be non-empty strings"))
+            continue
+        if field in seen:
+            issues.append(MatrixSubsetScopeIssue("duplicate_required_artifact_field", "required_artifact_fields must be unique"))
+        seen.add(field)
+    if set(SUBSET_SCOPE_ARTIFACT_REQUIRED_FIELDS) - seen:
+        issues.append(MatrixSubsetScopeIssue("missing_required_artifact_field", "required_artifact_fields must include all matrix subset-scope artifact fields"))
+    return len(value)
+
+
+def _validate_subset_scope_artifact_record(
+    artifact: object,
+    issues: list[MatrixSubsetScopeIssue],
+) -> None:
+    if not isinstance(artifact, dict):
+        issues.append(MatrixSubsetScopeIssue("invalid_subset_scope_artifact", "emitted subset-scope artifact records must be objects"))
+        return
+    subset_id = artifact.get("subset_scope_id")
+    safe_id = subset_id if isinstance(subset_id, str) else None
+    expected = _expected_subset_scope_records().get(safe_id or "")
+    if expected is None:
+        issues.append(MatrixSubsetScopeIssue("invalid_subset_scope_id", "subset_scope_id must identify a required matrix subset scope", safe_id))
+    else:
+        for field in (
+            "source_table",
+            "source_pdf_page",
+            "source_phrase",
+            "inclusion_predicate",
+            "row_count",
+            "outcome_counts",
+            "out_of_scope_target_ids",
+            "fell_behind_target_ids",
+        ):
+            if artifact.get(field) != expected[field]:
+                issues.append(MatrixSubsetScopeIssue(f"invalid_artifact_{field}", f"artifact {field} must match subset-scope evidence", safe_id))
+    _validate_subset_scope_artifact_paths(artifact.get("artifact_paths"), safe_id, issues)
+    artifact_hash = artifact.get("artifact_sha256")
+    if not isinstance(artifact_hash, str) or _SHA256_RE.fullmatch(artifact_hash) is None:
+        issues.append(MatrixSubsetScopeIssue("invalid_artifact_sha256", "artifact_sha256 must be a lowercase SHA-256 hex digest", safe_id))
+    subset_report = validate_appendix_a_matrix_subset_scope(artifact.get("subset_scope_evidence"))
+    issues.extend(
+        MatrixSubsetScopeIssue(f"invalid_nested_subset_scope_{issue.code}", issue.message, issue.subset_id)
+        for issue in subset_report.issues
+    )
+
+
+def _validate_subset_scope_artifact_paths(
+    value: object,
+    subset_id: str | None,
+    issues: list[MatrixSubsetScopeIssue],
+) -> None:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixSubsetScopeIssue("invalid_artifact_paths", "artifact_paths must be a non-empty list", subset_id))
+        return
+    seen: set[str] = set()
+    for path in value:
+        path_obj = Path(path) if isinstance(path, str) else None
+        if (
+            path_obj is None
+            or not path
+            or path_obj.is_absolute()
+            or path.startswith(("/", "\\"))
+            or ".." in path_obj.parts
+        ):
+            issues.append(MatrixSubsetScopeIssue("invalid_artifact_path", "artifact_paths entries must be safe relative paths", subset_id))
+            continue
+        if path in seen:
+            issues.append(MatrixSubsetScopeIssue("duplicate_artifact_path", "artifact_paths entries must be unique", subset_id))
+        seen.add(path)
 
 
 def _expected_subset_scope_records() -> dict[str, dict[str, Any]]:

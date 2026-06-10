@@ -10822,3 +10822,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     locations, rendered table files, OCR text, source excerpts, artifact
     paths/hashes, and nested matrix-rank table exhibit evidence.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the matrix subset-scope artifact boundary in README.
+  - Spec evidence: README matrix wording needs to separate declared named
+    subset validation from actual local report/export emission of
+    subset-scope artifacts for `appendix_a_full`, `main_text_mnp_le_5`, and
+    `table_2_selected`.
+  - Status: README now names
+    `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1`, scopes
+    it to the current `not_emitted_by_local_report_export` state, and lists
+    required future emitted-artifact fields for subset ids, inclusion
+    predicates, source linkage, counts, fell-behind/out-of-scope ids, nested
+    subset evidence, artifact paths, and hashes.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

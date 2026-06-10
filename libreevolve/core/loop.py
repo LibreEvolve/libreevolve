@@ -5336,7 +5336,10 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 db.startup_manifest_snapshot(),
             )
         ),
-        "evaluation_cascade_report": _evaluation_cascade_report(programs),
+        "evaluation_cascade_report": _evaluation_cascade_report(
+            programs,
+            db.startup_manifest_snapshot(),
+        ),
         "evaluator_workload_report": _evaluator_workload_report(programs),
         "automated_evaluator_scope_report": (
             _automated_evaluator_scope_report(
@@ -12876,8 +12879,25 @@ def _validate_process_evidence_paths(value: object, issues: list[dict], owner: s
         issues.append({"code": "invalid_process_evidence_paths", "message": f"{owner} evidence_paths must be non-empty text"})
 
 
-def _evaluation_cascade_report(programs: list[Program]) -> dict:
+def _evaluation_cascade_report(
+    programs: list[Program],
+    startup_manifest: Mapping[str, object] | None = None,
+) -> dict:
     stages: dict[str, dict] = {}
+    problem = (
+        startup_manifest.get("problem")
+        if isinstance(startup_manifest, Mapping)
+        and isinstance(startup_manifest.get("problem"), Mapping)
+        else {}
+    )
+    evaluator_sources = (
+        problem.get("evaluator_sources")
+        if isinstance(problem.get("evaluator_sources"), list)
+        else []
+    )
+    source_by_stage = _evaluator_source_by_stage(evaluator_sources)
+    candidate_stage_records: list[dict] = []
+    candidate_stage_records_limit = 200
     configured_candidate_count = 0
     main_test_exposure_count = 0
     stop_reasons: dict[str, int] = {}
@@ -12895,11 +12915,21 @@ def _evaluation_cascade_report(programs: list[Program]) -> dict:
             if not isinstance(raw_stage, dict):
                 continue
             name = str(raw_stage.get("name", f"stage_{stage_index}"))
+            raw_stage_index = raw_stage.get("stage_index", stage_index)
+            source = (
+                source_by_stage.get((raw_stage_index, name), {})
+                if isinstance(raw_stage_index, int)
+                and not isinstance(raw_stage_index, bool)
+                else {}
+            )
             stage = stages.setdefault(
-                name,
+                f"{raw_stage_index}:{name}",
                 {
                     "name": name,
-                    "stage_index": raw_stage.get("stage_index", stage_index),
+                    "stage_id": f"{raw_stage_index}:{name}",
+                    "stage_index": raw_stage_index,
+                    "source": _evaluator_oracle_source_ref(source),
+                    "difficulty_or_scale": {"status": "not_declared"},
                     "entered": 0,
                     "passed": 0,
                     "failed": 0,
@@ -12944,6 +12974,18 @@ def _evaluation_cascade_report(programs: list[Program]) -> dict:
             elapsed = raw_stage.get("elapsed_sec")
             if isinstance(elapsed, (int, float)) and not isinstance(elapsed, bool):
                 stage["elapsed_sec"] += float(elapsed)
+            if len(candidate_stage_records) < candidate_stage_records_limit:
+                candidate_stage_records.append(
+                    _cascade_candidate_stage_record(
+                        program,
+                        raw_stage,
+                        stage_index,
+                        name,
+                        raw_stage_index,
+                        accounting,
+                        source,
+                    )
+                )
         if isinstance(stopped_at, str):
             stop_reasons.setdefault(f"stopped_at:{stopped_at}", 0)
             stop_reasons[f"stopped_at:{stopped_at}"] += 1
@@ -12957,6 +12999,46 @@ def _evaluation_cascade_report(programs: list[Program]) -> dict:
         "configured_candidate_count": configured_candidate_count,
         "stage_count": len(ordered_stages),
         "stages": ordered_stages,
+        "candidate_stage_records_limit": candidate_stage_records_limit,
+        "candidate_stage_records_truncated": sum(
+            stage["candidate_count"] for stage in ordered_stages
+        )
+        > len(candidate_stage_records),
+        "candidate_stage_record_count": sum(
+            stage["candidate_count"] for stage in ordered_stages
+        ),
+        "candidate_stage_records": candidate_stage_records,
+        "denominator_policy": {
+            "schema": "libreevolve.evaluation_cascade_denominator_policy.v1",
+            "configured_candidate_denominator": (
+                "history_programs_with_evaluation_metadata_configured_stage_results"
+            ),
+            "stage_entry_denominator": "per_stage_configured_stage_result_records",
+            "main_test_exposure_denominator": (
+                "candidates_whose_final_configured_stage_record_passed"
+            ),
+            "early_prune_denominator": (
+                "configured_candidate_count_minus_main_test_exposure_count"
+            ),
+            "seed_sample_denominator_status": (
+                "runtime_accounting_only_not_matrix_benchmark_seed_policy"
+            ),
+            "counterfactual_cost_savings_status": "not_emitted",
+            "paper_claim_ready": False,
+        },
+        "source_identity_summary": {
+            "configured_stage_source_count": sum(
+                1
+                for source in evaluator_sources
+                if isinstance(source, Mapping) and source.get("role") == "stage"
+            ),
+            "reported_stage_count": len(ordered_stages),
+            "missing_stage_source_count": sum(
+                1
+                for stage in ordered_stages
+                if stage.get("source") == {"status": "not_available"}
+            ),
+        },
         "main_test_exposure_count": main_test_exposure_count,
         "early_prune_count": max(0, configured_candidate_count - main_test_exposure_count),
         "stop_reasons": dict(sorted(stop_reasons.items())),
@@ -12970,13 +13052,70 @@ def _evaluation_cascade_report(programs: list[Program]) -> dict:
             "remaining_gap": [
                 "stage_difficulty_or_scale_labels",
                 "evaluator_test_set_hashes",
-                "main_test_denominator_policy",
+                "benchmark_seed_sample_denominator_policy",
                 "cost_savings_counterfactual",
             ],
         },
     }
     report["validation"] = validate_evaluation_cascade_report(report)
     return report
+
+
+def _cascade_candidate_stage_record(
+    program: Program,
+    raw_stage: Mapping[str, object],
+    stage_record_index: int,
+    stage_name: str,
+    stage_index: object,
+    accounting: Mapping[str, object],
+    source: Mapping[str, object],
+) -> dict:
+    fitness = _finite_json_number(raw_stage.get("fitness"))
+    elapsed = _finite_json_number(raw_stage.get("elapsed_sec"))
+    metrics = raw_stage.get("metrics")
+    metric_names = (
+        sorted(name for name in metrics if isinstance(name, str))
+        if isinstance(metrics, Mapping)
+        else []
+    )
+    stop_reason = raw_stage.get("stop_reason") or raw_stage.get("error")
+    return {
+        "program_id": program.id,
+        "generation": program.generation,
+        "candidate_type": _program_candidate_type(program),
+        "stage_name": stage_name,
+        "stage_index": stage_index,
+        "stage_record_index": stage_record_index,
+        "history_path": "history.jsonl",
+        "metadata_path": (
+            f"evaluation.metadata.configured_stage_results[{stage_record_index}]"
+        ),
+        "stage_result_id": f"{program.id}:{stage_record_index}:{stage_name}",
+        "passed": raw_stage.get("passed") is True,
+        "local_valid": (
+            raw_stage.get("local_valid")
+            if isinstance(raw_stage.get("local_valid"), bool)
+            else None
+        ),
+        "threshold_passed": (
+            raw_stage.get("threshold_passed")
+            if isinstance(raw_stage.get("threshold_passed"), bool)
+            else None
+        ),
+        "stop_reason": str(stop_reason) if stop_reason is not None else None,
+        "fitness": fitness,
+        "metric_names": metric_names,
+        "elapsed_sec": round(elapsed, 9) if elapsed is not None else None,
+        "accounting": {
+            "configured_stage_samples": int(
+                accounting.get("configured_stage_samples", 0)
+            ),
+            "retry_attempts": int(accounting.get("retry_attempts", 0)),
+            "subprocess_attempts": int(accounting.get("subprocess_attempts", 0)),
+            "timeout_count": int(accounting.get("timeout_count", 0)),
+        },
+        "source": _evaluator_oracle_source_ref(source),
+    }
 
 
 def _paper_evaluator_metric_contract_report(
@@ -26625,6 +26764,12 @@ def validate_evaluation_cascade_report(report: object) -> dict:
         "configured_candidate_count",
         "stage_count",
         "stages",
+        "candidate_stage_records_limit",
+        "candidate_stage_records_truncated",
+        "candidate_stage_record_count",
+        "candidate_stage_records",
+        "denominator_policy",
+        "source_identity_summary",
         "main_test_exposure_count",
         "early_prune_count",
         "stop_reasons",
@@ -26660,6 +26805,59 @@ def validate_evaluation_cascade_report(report: object) -> dict:
             and stage["candidate_count"] != stage["passed"] + stage["failed"]
         ):
             issues.append({"code": "stage_count_inconsistent", "message": f"stage {index} counts must balance"})
+        if not isinstance(stage.get("source"), dict):
+            issues.append({"code": "invalid_stage_source", "message": f"stage {index} source must be an object"})
+        if not isinstance(stage.get("difficulty_or_scale"), dict):
+            issues.append({"code": "invalid_stage_difficulty", "message": f"stage {index} difficulty_or_scale must be an object"})
+    candidate_stage_records = report.get("candidate_stage_records")
+    if not isinstance(candidate_stage_records, list):
+        issues.append({"code": "invalid_candidate_stage_records", "message": "candidate_stage_records must be a list"})
+        candidate_stage_records = []
+    record_count = report.get("candidate_stage_record_count")
+    record_limit = report.get("candidate_stage_records_limit")
+    records_truncated = report.get("candidate_stage_records_truncated")
+    if not isinstance(record_count, int) or isinstance(record_count, bool) or record_count < 0:
+        issues.append({"code": "invalid_candidate_stage_record_count", "message": "candidate_stage_record_count must be a non-negative integer"})
+    if not isinstance(record_limit, int) or isinstance(record_limit, bool) or record_limit < 0:
+        issues.append({"code": "invalid_candidate_stage_records_limit", "message": "candidate_stage_records_limit must be a non-negative integer"})
+    if not isinstance(records_truncated, bool):
+        issues.append({"code": "invalid_candidate_stage_records_truncated", "message": "candidate_stage_records_truncated must be a boolean"})
+    if (
+        isinstance(record_count, int)
+        and not isinstance(record_count, bool)
+        and isinstance(records_truncated, bool)
+    ):
+        if records_truncated is False and len(candidate_stage_records) != record_count:
+            issues.append({"code": "candidate_stage_record_count_mismatch", "message": "untruncated candidate_stage_records length must match count"})
+        if records_truncated is True and len(candidate_stage_records) > record_count:
+            issues.append({"code": "candidate_stage_record_count_mismatch", "message": "truncated candidate_stage_records cannot exceed count"})
+    for index, record in enumerate(candidate_stage_records):
+        if not isinstance(record, dict):
+            issues.append({"code": "invalid_candidate_stage_record", "message": "candidate stage records must be objects"})
+            continue
+        for key in (
+            "program_id",
+            "stage_name",
+            "history_path",
+            "metadata_path",
+            "stage_result_id",
+        ):
+            if not isinstance(record.get(key), str) or not record.get(key):
+                issues.append({"code": "invalid_candidate_stage_record_field", "message": f"candidate stage record {index} {key} must be non-empty text"})
+        if not isinstance(record.get("accounting"), dict):
+            issues.append({"code": "invalid_candidate_stage_accounting", "message": f"candidate stage record {index} accounting must be an object"})
+        if not isinstance(record.get("source"), dict):
+            issues.append({"code": "invalid_candidate_stage_source", "message": f"candidate stage record {index} source must be an object"})
+    denominator_policy = report.get("denominator_policy")
+    if not isinstance(denominator_policy, dict):
+        issues.append({"code": "invalid_denominator_policy", "message": "denominator_policy must be an object"})
+    else:
+        if denominator_policy.get("schema") != "libreevolve.evaluation_cascade_denominator_policy.v1":
+            issues.append({"code": "invalid_denominator_policy_schema", "message": "denominator_policy schema is unsupported"})
+        if denominator_policy.get("paper_claim_ready") is not False:
+            issues.append({"code": "cascade_denominator_overclaim", "message": "denominator policy must not claim paper readiness"})
+    if not isinstance(report.get("source_identity_summary"), dict):
+        issues.append({"code": "invalid_source_identity_summary", "message": "source_identity_summary must be an object"})
     configured = report.get("configured_candidate_count")
     exposure = report.get("main_test_exposure_count")
     early = report.get("early_prune_count")

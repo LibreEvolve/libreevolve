@@ -62,12 +62,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     candidate counts, pass/fail/threshold-fail counts, failure reasons,
     sample/retry/subprocess/timeout totals, elapsed seconds, promotion rates,
     main-test exposure, early-prune counts, and explicit `claim_ready: false`
-    limitations. README should still not imply AlphaEvolve cascade-efficiency
-    parity because stage difficulty/scale labels, evaluator/test-set hashes,
-    denominator policy, and cost-savings counterfactuals remain incomplete.
+    limitations. The README can also mention bounded candidate-stage
+    `history.jsonl` cross-links and runtime denominator-policy boundaries.
+    README should still not imply AlphaEvolve cascade-efficiency parity because
+    stage difficulty/scale labels, evaluator/test-set hashes, benchmark
+    seed/sample policy, and cost-savings counterfactuals remain incomplete.
   - Required result: update README, ROADMAP, papers index, and code/paper TODOs
-    with the partial cascade report and the remaining difficulty, denominator,
-    test-set, cost, and artifact-linkage gaps.
+    with the partial cascade report and the remaining difficulty, benchmark
+    denominator, test-set, and cost gaps.
 
 - [ ] Keep README backtracking wording scoped until explicit controller
       backtracking policies exist.

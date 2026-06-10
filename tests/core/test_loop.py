@@ -5435,12 +5435,25 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
     assert report["main_test_exposure_count"] == 1
     assert report["early_prune_count"] == 1
     assert report["claim_ready"] is False
+    assert report["candidate_stage_record_count"] == 3
+    assert report["candidate_stage_records_truncated"] is False
+    assert len(report["candidate_stage_records"]) == 3
+    assert report["denominator_policy"]["paper_claim_ready"] is False
+    assert report["denominator_policy"]["main_test_exposure_denominator"] == (
+        "candidates_whose_final_configured_stage_record_passed"
+    )
     assert "stage_difficulty_or_scale_labels" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    assert "benchmark_seed_sample_denominator_policy" in (
         report["claim_readiness"]["remaining_gap"]
     )
 
     smoke, main = report["stages"]
     assert smoke["name"] == "smoke"
+    assert smoke["stage_id"] == "0:smoke"
+    assert smoke["difficulty_or_scale"] == {"status": "not_declared"}
+    assert isinstance(smoke["source"], dict)
     assert smoke["candidate_count"] == 2
     assert smoke["passed"] == 1
     assert smoke["failed"] == 1
@@ -5452,6 +5465,35 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
     assert main["candidate_count"] == 1
     assert main["passed"] == 1
     assert main["failed"] == 0
+
+    stage_records = report["candidate_stage_records"]
+    assert [record["history_path"] for record in stage_records] == [
+        "history.jsonl",
+        "history.jsonl",
+        "history.jsonl",
+    ]
+    assert [record["metadata_path"] for record in stage_records].count(
+        "evaluation.metadata.configured_stage_results[0]"
+    ) == 2
+    assert [record["metadata_path"] for record in stage_records].count(
+        "evaluation.metadata.configured_stage_results[1]"
+    ) == 1
+    assert [record["stage_name"] for record in stage_records].count("smoke") == 2
+    assert [record["stage_name"] for record in stage_records].count("main") == 1
+    assert all(isinstance(record["source"], dict) for record in stage_records)
+    assert all(
+        record["accounting"]["configured_stage_samples"] == 1
+        for record in stage_records
+    )
+
+    overclaimed = copy.deepcopy(report)
+    overclaimed["denominator_policy"]["paper_claim_ready"] = True
+    validation = validate_evaluation_cascade_report(overclaimed)
+    assert validation["ok"] is False
+    assert any(
+        issue["code"] == "cascade_denominator_overclaim"
+        for issue in validation["issues"]
+    )
 
 
 def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():

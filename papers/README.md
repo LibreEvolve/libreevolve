@@ -489,10 +489,12 @@ AlphaEvolve cascade-report note: completed manifests now include
 `libreevolve.evaluation_cascade_report.v1`. The report aggregates configured
 stage promotion and attrition counts, threshold failures, failure reasons,
 sample/retry/subprocess/timeout totals, elapsed seconds, promotion rates,
-main-test exposure, early-prune counts, and explicit `claim_ready: false`
-limitations. Stage difficulty/test-set identities, denominator policy, and
-cost-savings evidence remain open before claiming AlphaEvolve cascade
-efficiency or hypothesis-testing parity.
+main-test exposure, early-prune counts, bounded candidate-stage cross-links to
+`history.jsonl`, evaluator source refs when available, denominator-policy
+boundaries, and explicit `claim_ready: false` limitations. Stage difficulty/
+test-set identities, benchmark seed/sample policy, and cost-savings evidence
+remain open before claiming AlphaEvolve cascade efficiency or
+hypothesis-testing parity.
 
 AlphaEvolve embedded-evaluator note: configured stages can now opt into
 `mode: embedded_evaluate`, which imports the materialized candidate primary

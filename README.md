@@ -2484,8 +2484,11 @@ Completed manifests summarize configured-stage promotion and attrition under
 candidate-local `configured_stage_results` into stage candidate counts,
 pass/fail/threshold-fail counts, failure reasons, sample/retry/subprocess/
 timeout totals, elapsed seconds, promotion rates, main-test exposure, and
-early-prune counts. It also records `claim_ready: false` until stage
-difficulty/scale labels, evaluator test-set hashes, denominator policy, and
+early-prune counts. It also records bounded candidate-stage cross-links back
+to `history.jsonl`, a denominator policy that defines the runtime candidate,
+stage-entry, main-test exposure, and early-prune populations, evaluator source
+refs when available, and `claim_ready: false` until stage difficulty/scale
+labels, evaluator test-set hashes, benchmark seed/sample policy, and
 cost-savings evidence are added.
 Completed manifests also include
 `runtime.history.automated_evaluator_scope_report`, which records the current

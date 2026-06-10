@@ -113,12 +113,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     candidate count, per-stage entry/pass/fail/threshold-fail counts, failure
     reasons, sample/retry/subprocess/timeout totals, elapsed seconds, promotion
     rates, main-test exposure, early-prune counts, and explicit
-    `claim_ready: false` limitations.
+    `claim_ready: false` limitations. ROADMAP can also cite bounded
+    candidate-stage `history.jsonl` cross-links and runtime denominator-policy
+    boundaries.
   - Required result: update ROADMAP, README, papers index, and code/paper TODOs
     with the partial report and remaining work for stage difficulty/scale
-    labels, evaluator/test-set hashes, seed/sample denominator policy,
-    main-test denominator definitions, cost-savings evidence, and exact
-    candidate-evaluation cross-links.
+    labels, evaluator/test-set hashes, benchmark seed/sample policy, and
+    cost-savings evidence.
 
 - [ ] Extend evaluator-entrypoint roadmap wording from opt-in embedded support
       to full Figure 3 parity.

@@ -1315,14 +1315,16 @@ Primary evidence:
     counts, failure reasons, sample/retry/subprocess/timeout counts, elapsed
     seconds, promotion rate, bounded candidate ids, main-test exposure count,
     early-prune count, stop reasons, and an explicit `claim_ready: false`
-    readiness record. Tests cover a two-stage run where one candidate reaches
-    the final stage and another is pruned at smoke.
+    readiness record. It now emits bounded `candidate_stage_records` with
+    `history.jsonl` metadata paths, per-stage accounting, evaluator source refs
+    when available, and a denominator policy for runtime candidate,
+    stage-entry, main-test exposure, and early-prune populations. Validation
+    rejects denominator overclaims. Tests cover a two-stage run where one
+    candidate reaches the final stage and another is pruned at smoke.
   - Required result: finish difficulty/scale labels, evaluator/test-set hashes,
-    seed/sample denominator definitions, main-test denominator policy,
-    counterfactual cost-savings evidence, and stronger cross-links from stage
-    summaries to exact candidate evaluation records before claiming
-    AlphaEvolve-style evaluation-cascade efficiency or hypothesis-testing
-    evidence.
+    benchmark seed/sample policy beyond runtime accounting, and counterfactual
+    cost-savings evidence before claiming AlphaEvolve-style evaluation-cascade
+    efficiency or hypothesis-testing evidence.
 
 - [ ] Add evaluator workload provenance for inner search and ML-training tasks.
   - Spec evidence: AlphaEvolve Section 2.1 says the evaluator can be simple,

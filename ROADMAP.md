@@ -48,8 +48,9 @@ LibreEvolve has:
   mappings, artifact cross-links, and explicit gaps for rendered diagram
   hashes, exact diagram text, and full process parity
 - runtime cascade summaries that aggregate configured-stage promotion,
-  attrition, threshold failures, work counters, and explicit claim-readiness
-  limitations under `runtime.history.evaluation_cascade_report`
+  attrition, threshold failures, work counters, bounded candidate-stage
+  history cross-links, denominator-policy boundaries, and explicit
+  claim-readiness limitations under `runtime.history.evaluation_cascade_report`
 - evaluator-workload declarations for configured stages, including
   `simple_check`, `inner_search`, `ml_training`, and `custom` classifications,
   validated dataset/budget/checkpoint/score-field metadata, validator-visible

@@ -76,16 +76,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     configured candidate count, per-stage entry/pass/fail/threshold-fail
     counts, failure reasons, sample/retry/subprocess/timeout totals, elapsed
     seconds, promotion rates, main-test exposure, early-prune counts, and
-    claim-readiness limitations.
+    claim-readiness limitations. It now also records bounded
+    `candidate_stage_records` with `history.jsonl` metadata paths, evaluator
+    source refs when available, a denominator policy for runtime candidate,
+    stage-entry, main-test exposure, and early-prune populations, and explicit
+    denominator overclaim validation.
   - Current gap: paper-facing evidence still lacks stage difficulty or scale
-    rationale, evaluator/test-set identities, seed/sample denominator policy,
-    main-test denominator definitions, counterfactual cost/wall-clock savings,
-    and exact candidate-evaluation cross-links. The report therefore remains
+    rationale, evaluator/test-set identities, benchmark seed/sample policy,
+    and counterfactual cost/wall-clock savings. The report therefore remains
     `claim_ready: false` for AlphaEvolve cascade-efficiency claims.
   - Required result: finish cascade-report artifacts and validators with stage
-    ids, source hashes, difficulty/test-set metadata, random-seed/sample
-    coverage, denominator definitions, cost summaries, and claim-readiness
-    checks.
+    difficulty/test-set metadata, random-seed/sample coverage beyond the
+    runtime denominator policy, cost summaries, and claim-readiness checks.
 
 - [ ] Track explicit controller backtracking policy beyond observed redirect
       evidence.

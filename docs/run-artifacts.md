@@ -175,8 +175,10 @@ The `libreevolve.evaluation_cascade_report.v1` summary is rebuilt from
 candidate history `configured_stage_results` and records stage entry/pass/fail
 counts, threshold failures, failure reasons, sample/retry/subprocess/timeout
 totals, elapsed seconds, promotion rates, main-test exposure, early-prune
-counts, stop reasons, and `claim_ready: false` limitations for missing
-difficulty/test-set/denominator/cost evidence.
+counts, stop reasons, bounded candidate-stage records with `history.jsonl`
+metadata paths, evaluator source refs when available, denominator-policy
+boundaries, and `claim_ready: false` limitations for missing difficulty/
+test-set, benchmark seed/sample, and cost evidence.
 Completed manifests also include
 `runtime.history.existing_codebase_integration_report` with schema
 `libreevolve.existing_codebase_integration_report.v1`. This report scans

@@ -17881,6 +17881,18 @@ def _prompt_prior_score_provenance_report(
         for score in record["score_records"]
         if score.get("prompt_visible") is not True
     )
+    score_field_record_count = sum(
+        score.get("score_display", {}).get("field_record_count", 0)
+        for record in records
+        for score in record["score_records"]
+        if isinstance(score.get("score_display"), Mapping)
+    )
+    omitted_or_truncated_score_field_count = sum(
+        score.get("score_display", {}).get("omitted_or_truncated_field_count", 0)
+        for record in records
+        for score in record["score_records"]
+        if isinstance(score.get("score_display"), Mapping)
+    )
     execution_result_count = sum(
         1
         for record in records
@@ -17933,6 +17945,10 @@ def _prompt_prior_score_provenance_report(
         "history_join_count": history_join_count,
         "evaluator_result_join_count": evaluator_join_count,
         "omitted_or_truncated_score_record_count": omitted_or_truncated_count,
+        "score_field_record_count": score_field_record_count,
+        "omitted_or_truncated_score_field_count": (
+            omitted_or_truncated_score_field_count
+        ),
         "execution_result_record_count": execution_result_count,
         "prompt_visible_execution_result_record_count": (
             prompt_visible_execution_result_count
@@ -17958,6 +17974,7 @@ def _prompt_prior_score_provenance_report(
             "history_join_policy": "candidate_ids_joined_to_history_jsonl_or_failure_history_jsonl_and_evaluator_results_jsonl",
             "displayed_aggregate_policy": "stored_program_fitness_as_prompt_visible_normalized_fitness",
             "raw_metric_policy": "finite_non_boolean_program_metrics",
+            "score_display_policy": "aggregate_and_metric_field_visibility_records_from_prompt_context_policy_and_prompt_section_budget",
             "execution_result_source": "evaluation_stdout_stderr_error_fields_rendered_by_parent_feedback_or_inspiration_feedback",
             "execution_result_field_policy": "prompt_context_policy_execution_output_fields_and_caps_with_redacted_bounded_previews",
             "stage_summary_io_source": "evaluation_stage_stdout_stderr_error_fields_rendered_by_stage_summary_io",
@@ -17975,6 +17992,7 @@ def _prompt_prior_score_provenance_report(
             and evaluator_join_count == score_record_count,
             "prompt_visible_score_rows": score_record_count > 0
             and omitted_or_truncated_count == 0,
+            "score_omission_and_truncation_policy": score_record_count > 0,
             "execution_result_text_display_attribution": (
                 execution_result_count > 0
                 and execution_result_evaluator_join_count == execution_result_count
@@ -17986,7 +18004,6 @@ def _prompt_prior_score_provenance_report(
             "cross_run_prompt_score_table": table_export["record_count"] > 0,
             "full_alphaevolve_rendered_evaluation_result_provenance": False,
             "remaining_gap": [
-                "score_omission_and_truncation_policy",
                 "feedback_section_global_truncation_policy",
                 "average_score_formula_parity",
             ],
@@ -18028,6 +18045,11 @@ def _prompt_prior_score_table_rows(
                 if isinstance(score.get("stage_summary_io_display"), Mapping)
                 else {}
             )
+            score_display = (
+                score.get("score_display")
+                if isinstance(score.get("score_display"), Mapping)
+                else {}
+            )
             rows.append(
                 {
                     "schema": "libreevolve.prompt_prior_score_table_row.v1",
@@ -18061,6 +18083,9 @@ def _prompt_prior_score_table_rows(
                     "raw_metrics": dict(score.get("raw_metrics", {}))
                     if isinstance(score.get("raw_metrics"), Mapping)
                     else {},
+                    "score_display": _prompt_prior_score_table_score_display(
+                        score_display
+                    ),
                     "history_join": _prompt_prior_score_table_history_join(score),
                     "evaluator_result": _prompt_prior_score_table_evaluator_join(
                         score
@@ -18129,6 +18154,39 @@ def _prompt_prior_score_table_evaluator_join(score: Mapping[str, object]) -> dic
             if isinstance(evaluator_result, Mapping)
             else None
         ),
+    }
+
+
+def _prompt_prior_score_table_score_display(display: Mapping[str, object]) -> dict:
+    fields = (
+        display.get("fields")
+        if isinstance(display.get("fields"), list)
+        else []
+    )
+    return {
+        "prompt_visible": display.get("prompt_visible") is True,
+        "field_record_count": display.get("field_record_count"),
+        "omitted_or_truncated_field_count": display.get(
+            "omitted_or_truncated_field_count"
+        ),
+        "visible_fields": [
+            field.get("field_id")
+            for field in fields
+            if isinstance(field, Mapping) and field.get("prompt_visible") is True
+        ],
+        "omitted_fields": [
+            {
+                "field_id": field.get("field_id"),
+                "omission_reason": field.get("omission_reason"),
+            }
+            for field in fields
+            if isinstance(field, Mapping) and field.get("prompt_visible") is False
+        ],
+        "truncated_fields": [
+            field.get("field_id")
+            for field in fields
+            if isinstance(field, Mapping) and field.get("truncated") is True
+        ],
     }
 
 
@@ -18354,6 +18412,14 @@ def _prompt_prior_score_record(
         "displayed_aggregate_formula": "program.fitness",
         "raw_metrics": metrics,
         "metric_names": sorted(metrics),
+        "score_display": _prompt_prior_score_display_record(
+            source_program,
+            role=role,
+            prompt_visible=prompt_visible,
+            prompt_diagnostics=prompt_diagnostics,
+            metrics=metrics,
+            aggregate=aggregate,
+        ),
         "history_joined": isinstance(history_row, Mapping),
         "history_row": dict(history_row) if isinstance(history_row, Mapping) else None,
         "evaluator_result_joined": isinstance(evaluator_row, Mapping),
@@ -18395,6 +18461,15 @@ def _missing_prompt_prior_score_record(
         "displayed_aggregate_formula": "program.fitness",
         "raw_metrics": {},
         "metric_names": [],
+        "score_display": {
+            "schema": "libreevolve.prompt_prior_score_display.v1",
+            "source": "missing_prompt_prior_program",
+            "role": role,
+            "prompt_visible": False,
+            "field_record_count": 0,
+            "omitted_or_truncated_field_count": 0,
+            "fields": [],
+        },
         "history_joined": False,
         "history_row": None,
         "evaluator_result_joined": False,
@@ -18429,6 +18504,237 @@ def _missing_prompt_prior_score_record(
             "evaluator_result": None,
         },
     }
+
+
+def _prompt_prior_score_display_record(
+    source_program: Program,
+    *,
+    role: str,
+    prompt_visible: bool,
+    prompt_diagnostics: Mapping[str, object],
+    metrics: Mapping[str, object],
+    aggregate: float | None,
+) -> dict:
+    policy = (
+        prompt_diagnostics.get("prompt_context_policy")
+        if isinstance(prompt_diagnostics.get("prompt_context_policy"), Mapping)
+        else {}
+    )
+    metric_names = sorted(name for name in metrics if isinstance(name, str))
+    metric_selection = _prompt_prior_metric_selection(role, policy, metric_names)
+    metric_caps = (
+        _prompt_prior_policy_int_mapping(
+            policy,
+            "parent_metrics_max_chars_by_name",
+            allowed=set(metric_names) | set(metric_selection["configured_names"]),
+        )
+        if role == "target"
+        else {}
+    )
+    aggregate_surface = _prompt_prior_score_surface_status(
+        role,
+        "aggregate",
+        prompt_visible=prompt_visible,
+        prompt_diagnostics=prompt_diagnostics,
+    )
+    metric_surface = _prompt_prior_score_surface_status(
+        role,
+        "metrics",
+        prompt_visible=prompt_visible,
+        prompt_diagnostics=prompt_diagnostics,
+    )
+    fields = [
+        _prompt_prior_score_field_record(
+            "aggregate_score",
+            display_label="fitness",
+            raw_value=aggregate,
+            raw_text=None if aggregate is None else f"{float(aggregate):.4f}",
+            prompt_visible=aggregate_surface["visible"] and aggregate is not None,
+            prompt_visibility_source=aggregate_surface["source"],
+            omission_reason=(
+                None
+                if aggregate_surface["visible"] and aggregate is not None
+                else aggregate_surface["omission_reason"]
+                or "aggregate_score_not_finite"
+            ),
+            cap_chars=None,
+        )
+    ]
+    for metric_name in metric_names:
+        selected = metric_name in metric_selection["selected_names"]
+        cap = metric_caps.get(metric_name)
+        raw_text = _prompt_prior_metric_display_text(metric_name, metrics[metric_name])
+        visible = (
+            metric_surface["visible"]
+            and selected
+            and cap != 0
+            and bool(raw_text)
+        )
+        omission_reason = None
+        if not visible:
+            if metric_surface["visible"] is not True:
+                omission_reason = metric_surface["omission_reason"]
+            elif not selected:
+                omission_reason = metric_selection["omission_reason"]
+            elif cap == 0:
+                omission_reason = "metric_suppressed_by_parent_metrics_cap"
+            else:
+                omission_reason = "metric_display_text_empty"
+        fields.append(
+            _prompt_prior_score_field_record(
+                f"metric:{metric_name}",
+                display_label=metric_name,
+                raw_value=metrics[metric_name],
+                raw_text=raw_text,
+                prompt_visible=visible,
+                prompt_visibility_source=metric_surface["source"],
+                omission_reason=omission_reason,
+                cap_chars=cap,
+            )
+        )
+    omitted_or_truncated = sum(
+        1
+        for field in fields
+        if field["prompt_visible"] is not True or field["truncated"] is True
+    )
+    return {
+        "schema": "libreevolve.prompt_prior_score_display.v1",
+        "source": "prompt_context_policy_parent_score_parent_metrics_and_inspiration_headers",
+        "role": role,
+        "prompt_visible": any(field["prompt_visible"] is True for field in fields),
+        "metric_selection_policy": metric_selection,
+        "metric_caps": metric_caps,
+        "field_record_count": len(fields),
+        "omitted_or_truncated_field_count": omitted_or_truncated,
+        "fields": fields,
+    }
+
+
+def _prompt_prior_metric_selection(
+    role: str,
+    policy: Mapping[str, object],
+    metric_names: list[str],
+) -> dict:
+    if role != "target":
+        return {
+            "source": "inspiration_headers_render_all_available_metric_names",
+            "configured_names": [],
+            "selected_names": list(metric_names),
+            "omitted_names": [],
+            "omission_reason": None,
+        }
+    configured = policy.get("parent_metric_names")
+    if not isinstance(configured, list):
+        return {
+            "source": "default_all_parent_metric_names",
+            "configured_names": [],
+            "selected_names": list(metric_names),
+            "omitted_names": [],
+            "omission_reason": None,
+        }
+    configured_names = [name for name in configured if isinstance(name, str)]
+    selected = [name for name in metric_names if name in set(configured_names)]
+    omitted = [name for name in metric_names if name not in set(configured_names)]
+    return {
+        "source": "prompt_context_policy.parent_metric_names",
+        "configured_names": configured_names,
+        "selected_names": selected,
+        "omitted_names": omitted,
+        "omission_reason": "metric_not_selected_by_parent_metric_names",
+    }
+
+
+def _prompt_prior_score_surface_status(
+    role: str,
+    field_group: str,
+    *,
+    prompt_visible: bool,
+    prompt_diagnostics: Mapping[str, object],
+) -> dict:
+    policy = (
+        prompt_diagnostics.get("prompt_context_policy")
+        if isinstance(prompt_diagnostics.get("prompt_context_policy"), Mapping)
+        else {}
+    )
+    disabled = set(_prompt_prior_policy_list(policy, "disabled_sections", default=[]))
+    if role == "target":
+        section_name = "parent_score" if field_group == "aggregate" else "parent_metrics"
+        source = f"{section_name}_template_field"
+    else:
+        section_name = "inspirations"
+        source = "inspiration_header_fitness_and_metrics"
+    if not prompt_visible:
+        return {
+            "visible": False,
+            "source": source,
+            "omission_reason": "score_source_not_prompt_visible",
+        }
+    if section_name in disabled:
+        return {
+            "visible": False,
+            "source": source,
+            "omission_reason": f"{section_name}_disabled_by_prompt_context_policy",
+        }
+    if not _prompt_prior_section_budget_has_rendered(
+        prompt_diagnostics,
+        section_name,
+    ):
+        return {
+            "visible": False,
+            "source": source,
+            "omission_reason": f"{section_name}_not_rendered_by_prompt_template",
+        }
+    return {"visible": True, "source": source, "omission_reason": None}
+
+
+def _prompt_prior_score_field_record(
+    field_id: str,
+    *,
+    display_label: str,
+    raw_value: object,
+    raw_text: str | None,
+    prompt_visible: bool,
+    prompt_visibility_source: str,
+    omission_reason: str | None,
+    cap_chars: int | None,
+) -> dict:
+    display_text = None
+    display_sha256 = None
+    truncated = False
+    if raw_text is not None and prompt_visible:
+        display_text = raw_text
+        if isinstance(cap_chars, int) and not isinstance(cap_chars, bool):
+            truncated = len(display_text) > cap_chars
+            display_text = _prompt_execution_output_truncate(display_text, cap_chars)
+        display_sha256 = hashlib.sha256(
+            display_text.encode("utf-8", errors="replace")
+        ).hexdigest()
+    return {
+        "field_id": field_id,
+        "display_label": display_label,
+        "raw_value": raw_value,
+        "raw_text_sha256": hashlib.sha256(
+            str(raw_text).encode("utf-8", errors="replace")
+        ).hexdigest()
+        if raw_text is not None
+        else None,
+        "cap_chars": cap_chars,
+        "prompt_visible": prompt_visible,
+        "prompt_visibility_source": prompt_visibility_source,
+        "omission_reason": omission_reason,
+        "truncated": truncated,
+        "display_text": display_text,
+        "display_chars": len(display_text) if display_text is not None else 0,
+        "display_sha256": display_sha256,
+    }
+
+
+def _prompt_prior_metric_display_text(name: str, value: object) -> str:
+    if isinstance(value, float):
+        value_text = f"{value:g}"
+    else:
+        value_text = str(value)
+    return f"{name}={value_text}"
 
 
 def _prompt_prior_execution_result_display_record(
@@ -19124,6 +19430,8 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
         "history_join_count",
         "evaluator_result_join_count",
         "omitted_or_truncated_score_record_count",
+        "score_field_record_count",
+        "omitted_or_truncated_score_field_count",
         "execution_result_record_count",
         "prompt_visible_execution_result_record_count",
         "execution_result_evaluator_join_count",
@@ -19159,6 +19467,8 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
     history_join_count = 0
     evaluator_join_count = 0
     omitted_count = 0
+    score_field_count = 0
+    omitted_or_truncated_score_field_count = 0
     execution_result_count = 0
     prompt_visible_execution_result_count = 0
     execution_result_evaluator_join_count = 0
@@ -19214,6 +19524,46 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
                     issues.append({"code": "invalid_metric_value", "message": f"record {record_index} score {score_index} metric value is invalid"})
             if score.get("metric_names") != sorted(metrics):
                 issues.append({"code": "metric_names_mismatch", "message": f"record {record_index} score {score_index} metric_names must match raw_metrics"})
+            score_display = score.get("score_display")
+            if not isinstance(score_display, Mapping):
+                issues.append({"code": "invalid_score_display", "message": f"record {record_index} score {score_index} score_display must be an object"})
+            else:
+                if score_display.get("schema") != "libreevolve.prompt_prior_score_display.v1":
+                    issues.append({"code": "invalid_score_display_schema", "message": f"record {record_index} score {score_index} score_display schema is unsupported"})
+                fields = score_display.get("fields")
+                if not isinstance(fields, list):
+                    issues.append({"code": "invalid_score_display_fields", "message": f"record {record_index} score {score_index} score_display.fields must be a list"})
+                    fields = []
+                score_field_count += len(fields)
+                observed_omitted_or_truncated = 0
+                for field_index, field in enumerate(fields):
+                    if not isinstance(field, Mapping):
+                        issues.append({"code": "invalid_score_display_field", "message": f"record {record_index} score {score_index} display field {field_index} must be an object"})
+                        continue
+                    if not isinstance(field.get("field_id"), str) or not field.get("field_id"):
+                        issues.append({"code": "invalid_score_display_field_id", "message": f"record {record_index} score {score_index} display field id is invalid"})
+                    if field.get("prompt_visible") is True:
+                        if not isinstance(field.get("display_text"), str):
+                            issues.append({"code": "missing_score_display_text", "message": f"record {record_index} score {score_index} visible score field needs display text"})
+                        if not _is_sha256_hex(field.get("display_sha256")):
+                            issues.append({"code": "invalid_score_display_hash", "message": f"record {record_index} score {score_index} visible score field needs display hash"})
+                        if field.get("omission_reason") is not None:
+                            issues.append({"code": "visible_score_field_has_omission", "message": f"record {record_index} score {score_index} visible score field must not have omission reason"})
+                    elif field.get("prompt_visible") is False:
+                        observed_omitted_or_truncated += 1
+                        if not isinstance(field.get("omission_reason"), str) or not field.get("omission_reason"):
+                            issues.append({"code": "missing_score_field_omission", "message": f"record {record_index} score {score_index} omitted score field needs reason"})
+                    else:
+                        issues.append({"code": "invalid_score_field_prompt_visible", "message": f"record {record_index} score {score_index} score field prompt_visible must be boolean"})
+                    if field.get("truncated") is True:
+                        observed_omitted_or_truncated += 1
+                    elif field.get("truncated") is not False:
+                        issues.append({"code": "invalid_score_field_truncated", "message": f"record {record_index} score {score_index} score field truncated must be boolean"})
+                omitted_or_truncated_score_field_count += observed_omitted_or_truncated
+                if score_display.get("field_record_count") != len(fields):
+                    issues.append({"code": "score_display_field_count_mismatch", "message": f"record {record_index} score {score_index} score display field count is invalid"})
+                if score_display.get("omitted_or_truncated_field_count") != observed_omitted_or_truncated:
+                    issues.append({"code": "score_display_omitted_count_mismatch", "message": f"record {record_index} score {score_index} score display omitted/truncated count is invalid"})
             if score.get("prompt_visible") is True:
                 if score.get("omission_reason") is not None:
                     issues.append({"code": "visible_score_has_omission", "message": f"record {record_index} score {score_index} visible score must not have omission reason"})
@@ -19387,6 +19737,20 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
     )
     _validate_prompt_prior_report_count(
         report,
+        "score_field_record_count",
+        score_field_count,
+        truncated,
+        issues,
+    )
+    _validate_prompt_prior_report_count(
+        report,
+        "omitted_or_truncated_score_field_count",
+        omitted_or_truncated_score_field_count,
+        truncated,
+        issues,
+    )
+    _validate_prompt_prior_report_count(
+        report,
         "execution_result_record_count",
         execution_result_count,
         truncated,
@@ -19487,6 +19851,7 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
             "history_rows_joined",
             "evaluator_rows_joined",
             "prompt_visible_score_rows",
+            "score_omission_and_truncation_policy",
             "execution_result_text_display_attribution",
             "stage_summary_io_display_attribution",
             "cross_run_prompt_score_table",

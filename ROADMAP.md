@@ -132,9 +132,11 @@ LibreEvolve has:
   source workspace hashes, finite metric values, displayed aggregate score
   formula, history/failure-history rows, evaluator-result rows, and top-level
   prompt-feedback execution-output display attribution, stage-summary IO
-  display attribution, plus `prompt_prior_score_table.jsonl` cross-run rows,
-  while leaving score omission/truncation policy, global feedback-section
-  truncation policy, and exact `average_score` parity open
+  display attribution, score-display field visibility for aggregate and metric
+  fields including prompt-context selection/cap omission and truncation
+  reasons, plus `prompt_prior_score_table.jsonl` cross-run rows, while leaving
+  global feedback-section truncation policy and exact `average_score` parity
+  open
 - runtime initial-program idea provenance reports under
   `runtime.history.initial_program_idea_provenance_report`, linking optional
   seed idea-origin metadata and seed variant ids from `problem.seed_sources` to

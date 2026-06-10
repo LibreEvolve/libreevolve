@@ -3424,6 +3424,8 @@ x=2
     assert score_report["history_join_count"] == 1
     assert score_report["evaluator_result_join_count"] == 1
     assert score_report["omitted_or_truncated_score_record_count"] == 0
+    assert score_report["score_field_record_count"] == 2
+    assert score_report["omitted_or_truncated_score_field_count"] == 0
     assert score_report["cross_run_prompt_score_table_record_count"] == 1
     assert score_report["cross_run_prompt_score_table"]["exists"] is True
     assert score_report["cross_run_prompt_score_table"]["record_count"] == 1
@@ -3435,6 +3437,10 @@ x=2
     assert score_report["claim_readiness"]["history_rows_joined"] is True
     assert score_report["claim_readiness"]["evaluator_rows_joined"] is True
     assert score_report["claim_readiness"]["prompt_visible_score_rows"] is True
+    assert (
+        score_report["claim_readiness"]["score_omission_and_truncation_policy"]
+        is True
+    )
     assert score_report["claim_readiness"]["cross_run_prompt_score_table"] is True
     assert (
         score_report["claim_readiness"][
@@ -3454,6 +3460,12 @@ x=2
     assert score_row["displayed_aggregate_score"] == 1.0
     assert score_row["raw_metrics"]["score"] == 1.0
     assert score_row["metric_names"] == ["score"]
+    display_fields = {
+        field["field_id"]: field for field in score_row["score_display"]["fields"]
+    }
+    assert display_fields["aggregate_score"]["prompt_visible"] is True
+    assert display_fields["metric:score"]["prompt_visible"] is True
+    assert display_fields["metric:score"]["display_text"] == "score=1"
     assert score_row["history_joined"] is True
     assert score_row["history_row"]["stream"] == "history.jsonl"
     assert score_row["history_row"]["line_number"] == 1
@@ -3474,6 +3486,10 @@ x=2
     assert score_table_row["score_role"] == "target"
     assert score_table_row["score_program_id"] == record["parent_id"]
     assert score_table_row["displayed_aggregate_formula"] == "program.fitness"
+    assert score_table_row["score_display"]["visible_fields"] == [
+        "aggregate_score",
+        "metric:score",
+    ]
     assert score_table_row["history_join"]["line_number"] == 1
     assert score_table_row["evaluator_result"]["line_number"] == 1
     assert manifest["runtime"]["artifacts"]["prompt_prior_score_table.jsonl"][
@@ -3575,6 +3591,101 @@ x=2
     validation = validate_prompt_prior_score_provenance_report(edited_report)
     assert validation["ok"] is False
     assert "missing_execution_result_display_text" in {
+        issue["code"] for issue in validation["issues"]
+    }
+
+
+def test_runtime_history_reports_prompt_prior_score_display_omission_policy():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(c):\n"
+        "    return {'score': 1.0, 'latency': 123.456, 'size': 7.0, 'is_valid': True}\n"
+    )
+    problem.metrics = [
+        {"name": "score", "primary": True, "bounds": [0.0, 1.0]},
+        {"name": "latency", "primary": False, "bounds": [0.0, 200.0]},
+        {"name": "size", "primary": False, "bounds": [0.0, 10.0]},
+    ]
+    prompt_db = PromptDatabase(Path(tmpdir) / "prompts", templates=[DEFAULT_TEMPLATE])
+    parent_prompt = prompt_db.select()
+    prompt_db.mutate(
+        parent_prompt.id,
+        parent_prompt.template,
+        generation=1,
+        context_policy={
+            "parent_metric_names": ["score", "latency", "size"],
+            "parent_metrics_max_chars_by_name": {"latency": 8, "size": 0},
+        },
+    )
+    prompt_db.record_result(parent_prompt.id, 0.0)
+    problem.context_policy = {
+        "parent_metric_names": ["score", "latency", "size"],
+        "parent_metrics_max_chars_by_name": {"latency": 8, "size": 0},
+    }
+    response = """<<<SEARCH
+x=1
+===
+x=2
+>>>REPLACE"""
+
+    with (
+        patch("libreevolve.core.loop.build_llm", return_value=_llm(response)),
+        patch("libreevolve.core.loop.PromptDatabase", return_value=prompt_db),
+    ):
+        evolve(
+            problem,
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"][
+        "prompt_prior_score_provenance_report"
+    ]
+
+    assert report["validation"]["ok"] is True
+    assert validate_prompt_prior_score_provenance_report(report)["ok"] is True
+    assert report["score_field_record_count"] == 4
+    assert report["omitted_or_truncated_score_field_count"] == 2
+    assert (
+        report["claim_readiness"]["score_omission_and_truncation_policy"]
+        is True
+    )
+    assert "score_omission_and_truncation_policy" not in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+
+    score_row = report["records"][0]["score_records"][0]
+    fields = {
+        field["field_id"]: field for field in score_row["score_display"]["fields"]
+    }
+    assert fields["aggregate_score"]["prompt_visible"] is True
+    assert fields["metric:score"]["prompt_visible"] is True
+    assert fields["metric:latency"]["prompt_visible"] is True
+    assert fields["metric:latency"]["truncated"] is True
+    assert fields["metric:size"]["prompt_visible"] is False
+    assert fields["metric:size"]["omission_reason"] == (
+        "metric_suppressed_by_parent_metrics_cap"
+    )
+
+    table_row = json.loads(
+        (run_dir / "prompt_prior_score_table.jsonl").read_text(encoding="utf-8")
+    )
+    assert "metric:latency" in table_row["score_display"]["truncated_fields"]
+    assert table_row["score_display"]["omitted_fields"] == [
+        {
+            "field_id": "metric:size",
+            "omission_reason": "metric_suppressed_by_parent_metrics_cap",
+        }
+    ]
+
+    edited_report = copy.deepcopy(report)
+    edited_report["records"][0]["score_records"][0]["score_display"]["fields"][0][
+        "display_text"
+    ] = None
+    validation = validate_prompt_prior_score_provenance_report(edited_report)
+    assert validation["ok"] is False
+    assert "missing_score_display_text" in {
         issue["code"] for issue in validation["issues"]
     }
 

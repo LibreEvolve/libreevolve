@@ -3253,6 +3253,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     `p`-cutoff relations, symmetry-equivalence status, local attempt/resource
     frontier refs, artifact paths, and hashes. The paper-manifest gate
     validates this boundary.
+    `appendix_a_matrix_excluded_target_curation_boundary_from_records()` builds
+    a recorded boundary from supplied excluded-target justifications and a
+    declared coverage scope, but no paper-facing broad excluded-target
+    justification corpus is emitted yet.
   - Required result: add paper-facing excluded-target justifications for
     non-equivalent matrix sizes outside the reported suite. Keep this separate
     from construction artifacts and from larger-target resource-frontier/OOM

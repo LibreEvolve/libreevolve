@@ -2206,8 +2206,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     unspecified `p` cutoff. Roadmap now also points to
     `libreevolve.alphaevolve_appendix_a_matrix_excluded_target_curation_boundary.v1`,
     which validates the current `not_recorded_locally` boundary and required
-    future excluded-target justification fields. It does not justify every
-    possible excluded non-equivalent target outside the reported suite.
+    future excluded-target justification fields.
+    `appendix_a_matrix_excluded_target_curation_boundary_from_records()` can
+    build a recorded boundary for supplied excluded-target justifications over
+    a declared scope. It does not justify every possible excluded
+    non-equivalent target outside the reported suite.
   - Required result: when excluded-target justification metadata lands, update
     ROADMAP, README, papers index, and code/paper TODOs so roadmap text
     distinguishes reported-suite curation provenance from exhaustive

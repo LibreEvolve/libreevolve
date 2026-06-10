@@ -3195,8 +3195,11 @@ Primary evidence:
     future fields for excluded non-equivalent target ids, dimensions,
     exclusion class/reason, source basis, rough-rule and `p`-cutoff relations,
     symmetry-equivalence status, local attempt/resource-frontier refs,
-    artifact paths, and hashes. It does not emit the actual excluded-target
-    justification records.
+    artifact paths, and hashes.
+    `appendix_a_matrix_excluded_target_curation_boundary_from_records()` builds
+    a recorded boundary from supplied excluded-target justifications and a
+    declared coverage scope. The actual broad excluded-target justification
+    records are still not emitted.
   - Required result: add explicit justifications for excluded non-equivalent
     targets outside the reported suite and keep this distinct from target
     tensor/decomposition artifacts and from larger-target resource-frontier/OOM

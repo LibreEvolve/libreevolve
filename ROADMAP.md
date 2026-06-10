@@ -795,7 +795,10 @@ is not yet an AlphaEvolve reproduction.
   future fields for excluded target ids, dimensions, exclusion class/reason,
   source basis, rough-rule and `p`-cutoff relations, symmetry-equivalence
   status, local attempt/resource-frontier refs, artifact paths, and hashes.
-  Explicit non-equivalent excluded-target justifications remain open.
+  `appendix_a_matrix_excluded_target_curation_boundary_from_records()` builds
+  recorded boundaries from supplied excluded-target justifications over a
+  declared scope. Explicit broad non-equivalent excluded-target justifications
+  remain open.
 - Keep Appendix A best-known-rank citation claims scoped:
   `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`
   now validates the current `not_recorded_locally` boundary and required

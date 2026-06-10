@@ -348,6 +348,37 @@ def appendix_a_matrix_excluded_target_curation_boundary_record() -> dict[str, An
     }
 
 
+def appendix_a_matrix_excluded_target_curation_boundary_from_records(
+    excluded_targets: list[dict[str, Any]],
+    *,
+    coverage_status: str = "partial_with_scope",
+    coverage_scope: str,
+) -> dict[str, Any]:
+    """Build a recorded excluded-target curation boundary."""
+    boundary = appendix_a_matrix_excluded_target_curation_boundary_record()
+    boundary.update(
+        {
+            "curation_status": "recorded",
+            "excluded_non_equivalent_targets": copy.deepcopy(excluded_targets),
+            "coverage_policy": {
+                "status": coverage_status,
+                "scope": coverage_scope,
+            },
+            "claim_boundary": (
+                "Recorded metadata justifies excluded non-equivalent Appendix "
+                "A matrix targets for the declared coverage scope; this does "
+                "not claim local metadata exhaustively covers every possible "
+                "larger matrix target unless coverage_policy says so."
+            ),
+        }
+    )
+    report = validate_appendix_a_matrix_excluded_target_curation_boundary(boundary)
+    if not report.ok:
+        messages = "; ".join(issue.message for issue in report.issues)
+        raise ValueError(f"excluded-target curation boundary is invalid: {messages}")
+    return boundary
+
+
 def validate_appendix_a_matrix_excluded_target_curation_boundary(
     boundary: object | str | Path | None = None,
 ) -> MatrixExcludedTargetCurationBoundaryReport:

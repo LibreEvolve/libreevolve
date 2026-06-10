@@ -1197,6 +1197,10 @@ Implemented:
   excluded target ids, dimensions, exclusion class/reason, source basis,
   rough-rule and `p`-cutoff relations, symmetry-equivalence status, local
   attempt/resource-frontier refs, artifact paths, and hashes.
+  `appendix_a_matrix_excluded_target_curation_boundary_from_records()` can
+  build a recorded boundary from supplied excluded-target justifications and a
+  declared coverage scope, but no broad excluded-target justification corpus is
+  emitted yet.
   `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`
   records the current `not_recorded_locally` boundary for per-target
   best-known-rank citation provenance and validates required future fields for

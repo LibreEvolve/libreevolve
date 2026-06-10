@@ -17,6 +17,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     appendix_a_matrix_baseline_citation_boundary_from_citations,
     appendix_a_matrix_baseline_citation_boundary_record,
     appendix_a_matrix_curation_record,
+    appendix_a_matrix_excluded_target_curation_boundary_from_records,
     appendix_a_matrix_excluded_target_curation_boundary_record,
     appendix_a_matrix_local_resource_frontier_record,
     appendix_a_matrix_resource_frontier_record,
@@ -244,22 +245,10 @@ def test_appendix_a_matrix_excluded_target_curation_boundary_requires_records_wh
 
 
 def test_appendix_a_matrix_excluded_target_curation_boundary_accepts_recorded_rows():
-    boundary = {
-        "schema": EXCLUDED_TARGET_CURATION_BOUNDARY_SCHEMA,
-        "curation_schema": CURATION_SCHEMA,
-        "source_paper_id": "2506.13131",
-        "source_section": "AlphaEvolve Appendix A",
-        "source_pdf_page": 34,
-        "target_suite": TARGET_SUITE,
-        "curation_status": "recorded",
-        "required_excluded_target_fields": list(appendix_a_matrix_excluded_target_curation_boundary_record()["required_excluded_target_fields"]),
-        "excluded_non_equivalent_targets": [_excluded_target()],
-        "coverage_policy": {
-            "status": "partial_with_scope",
-            "scope": "fixture coverage for one non-equivalent target outside the reported table",
-        },
-        "claim_boundary": "Local metadata records excluded target justifications for the declared scope.",
-    }
+    boundary = appendix_a_matrix_excluded_target_curation_boundary_from_records(
+        [_excluded_target()],
+        coverage_scope="fixture coverage for one non-equivalent target outside the reported table",
+    )
 
     report = validate_appendix_a_matrix_excluded_target_curation_boundary(boundary)
 
@@ -267,6 +256,23 @@ def test_appendix_a_matrix_excluded_target_curation_boundary_accepts_recorded_ro
     assert report.curation_status == "recorded"
     assert report.excluded_target_count == 1
     assert report.issues == []
+    assert boundary["coverage_policy"]["status"] == "partial_with_scope"
+    assert boundary["excluded_non_equivalent_targets"][0]["excluded_target_id"] == "mm_6x6x7"
+
+
+def test_appendix_a_matrix_excluded_target_curation_boundary_builder_rejects_invalid_records():
+    target = _excluded_target()
+    target["excluded_target_id"] = "mm_2x4x5"
+    target["dimensions"] = [5, 4, 2]
+
+    with pytest.raises(
+        ValueError,
+        match="excluded-target curation boundary is invalid",
+    ):
+        appendix_a_matrix_excluded_target_curation_boundary_from_records(
+            [target],
+            coverage_scope="invalid fixture coverage",
+        )
 
 
 def test_appendix_a_matrix_excluded_target_curation_boundary_rejects_invalid_rows():

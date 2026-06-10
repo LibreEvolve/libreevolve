@@ -2167,6 +2167,52 @@ def test_configured_stage_hypothesis_test_rejects_noisy_samples():
         shutil.rmtree(d)
 
 
+def test_configured_stage_hypothesis_test_can_stop_samples_early():
+    p, d = _problem(
+        "def evaluate(code, workspace, stage): return {'score': stage['seed'], 'is_valid': True}"
+    )
+    try:
+        result = CascadeEvaluator(
+            p,
+            stages=[
+                {
+                    "name": "stat_gate",
+                    "samples": 5,
+                    "seeds": [0.9, 0.92, 0.94, 0.1, 0.1],
+                    "hypothesis_test": {
+                        "type": "one_sided_lower_confidence_bound",
+                        "metric": "score",
+                        "min": 0.8,
+                        "confidence": 0.8,
+                        "min_samples": 3,
+                        "sequential_stopping": True,
+                    },
+                }
+            ],
+        ).evaluate("x=1", None)
+
+        assert result.is_valid is True
+        assert result.metadata["sample_count"] == 3
+        assert result.metadata["planned_sample_count"] == 5
+        decision = result.metadata["hypothesis_test_sequential_stopping"]
+        assert decision["stopped_early"] is True
+        assert decision["evaluated_samples"] == 3
+        assert decision["planned_samples"] == 5
+        stage = result.metadata["configured_stage_results"][0]
+        hypothesis = stage["hypothesis_test_result"]
+        assert hypothesis["passed"] is True
+        assert hypothesis["sequential_stopping"] is True
+        assert hypothesis["sequential_stop"] == {
+            "enabled": True,
+            "stopped_early": True,
+            "stop_reason": "hypothesis_test_passed_after_min_samples",
+            "evaluated_samples": 3,
+            "planned_samples": 5,
+        }
+    finally:
+        shutil.rmtree(d)
+
+
 def test_configured_stage_metric_aggregation_can_use_worst_minimized_metric():
     metrics = [
         {"name": "runtime", "primary": True, "bounds": [0.0, 10.0], "direction": "minimize"},

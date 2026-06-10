@@ -1448,17 +1448,18 @@ Primary evidence:
     confidence, min_samples}`; the evaluator retains per-sample observations,
     confidence-bound and p-value evidence, and rejects noisy repeated-sample
     candidates with `hypothesis_test_not_met` when the lower bound is below
-    `min`.
+    `min`. `sequential_stopping: true` stops planned samples early once that
+    test passes after `min_samples`, and manifests record evaluated versus
+    planned sample counts.
   - Remaining gap: this is one normal-approximation repeated-sample gate, not
     full AlphaEvolve Section 2.4 hypothesis testing. Broader statistical test
-    families, sequential-test stopping rules, false-promotion/false-rejection
-    budgets, benchmark-calibrated thresholds, and matrix/tensor repeated-seed
-    promotion fixtures remain absent.
+    families, calibrated false-promotion/false-rejection budgets,
+    benchmark-calibrated thresholds, and matrix/tensor repeated-seed promotion
+    fixtures remain absent.
   - Required result: extend cascade promotion beyond the current lower-bound
-    gate with richer statistical test configuration, sequential stopping
-    diagnostics, false-promotion/false-rejection budgets, and benchmark tests
-    showing noisy repeated-seed candidates are promoted or rejected by
-    calibrated hypothesis-testing rules.
+    gate with richer statistical test configuration, false-promotion/
+    false-rejection budgets, and benchmark tests showing noisy repeated-seed
+    candidates are promoted or rejected by calibrated hypothesis-testing rules.
 
 - [ ] Add qualitative LLM-feedback criterion provenance.
   - Spec evidence: AlphaEvolve Section 2.4 says LLM-generated feedback can

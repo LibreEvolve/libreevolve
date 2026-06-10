@@ -2189,8 +2189,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     configured sample/seed counts, and the supported opt-in
     `one_sided_lower_confidence_bound` gate with retained observations,
     confidence-bound evidence, p-values, and `hypothesis_test_not_met`
-    rejection. README still states that sequential stopping and calibrated
-    false-promotion/false-rejection budgets are absent.
+    rejection. README also documents optional sequential stopping after
+    `min_samples`. Calibrated false-promotion/false-rejection budgets remain
+    absent.
   - Required result: when richer statistical cascade promotion execution lands,
     update README, ROADMAP, papers index, and code/paper TODOs so README
     distinguishes the current lower-confidence-bound gate from complete

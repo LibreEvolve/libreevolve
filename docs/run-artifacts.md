@@ -188,9 +188,10 @@ entry/pass/fail/sample/promotion-rate summaries, records configured sample and
 seed counts, and identifies whether promotion used fixed threshold/artifact
 checks or an opt-in `one_sided_lower_confidence_bound` hypothesis test. For
 configured tests, candidate-stage records retain numeric observations, the
-lower confidence bound, and p-value evidence. Its validation still fails
-unsupported sequential-stopping, false-promotion/false-rejection-budget, paper
-readiness, or AlphaEvolve Section 2.4 parity claims.
+lower confidence bound, p-value evidence, and sequential-stop counts when
+enabled. Its validation still fails unsupported false-promotion/
+false-rejection-budget, paper readiness, or AlphaEvolve Section 2.4 parity
+claims.
 Completed manifests also include
 `runtime.history.existing_codebase_integration_report` with schema
 `libreevolve.existing_codebase_integration_report.v1`. This report scans
@@ -2432,12 +2433,15 @@ local stage row can still show `passed: true` because the validator subprocess
 itself returned valid output.
 For multi-sample stages, `hypothesis_test` can configure
 `type: one_sided_lower_confidence_bound` with `metric`, `min`, `confidence`,
-and `min_samples`. The selected aggregate stage is rejected with
+`min_samples`, and optional `sequential_stopping`. The selected aggregate stage is rejected with
 `hypothesis_test_not_met` when retained per-sample observations do not put the
 one-sided lower confidence bound above `min`; the persisted
 `hypothesis_test_result` records observations, mean, sample standard deviation,
 standard error, lower bound, confidence interval metadata, p-value, and pass
-reason.
+reason. With `sequential_stopping: true`, the stage stops planned sample
+execution early once the test passes after `min_samples`, and
+`hypothesis_test_result.sequential_stop` records evaluated versus planned
+sample counts.
 Configured stages can set `role` to `small_scale_filter`,
 `intermediate_filter`, or `main_test`. The manifest policy report stores
 `stage_role`, `configured_role`, the order-derived `inferred_role`, and

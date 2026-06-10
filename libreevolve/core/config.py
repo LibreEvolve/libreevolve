@@ -1233,7 +1233,7 @@ def _validate_stage_hypothesis_test(
     unsupported = _unsupported_mapping_keys(
         label,
         value,
-        {"type", "metric", "min", "confidence", "min_samples"},
+        {"type", "metric", "min", "confidence", "min_samples", "sequential_stopping"},
     )
     if unsupported:
         raise ConfigError(f"{label} has unsupported fields {unsupported}")
@@ -1264,6 +1264,8 @@ def _validate_stage_hypothesis_test(
     _require_int(f"{label}.samples", samples, minimum=1)
     if int(samples) < int(min_samples):
         raise ConfigError(f"{label}.samples must be >= min_samples")
+    if "sequential_stopping" in value:
+        _require_bool(f"{label}.sequential_stopping", value["sequential_stopping"])
 
 
 def _validate_metric_aggregation(label: str, value: object) -> None:

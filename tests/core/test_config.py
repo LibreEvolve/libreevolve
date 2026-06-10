@@ -677,6 +677,18 @@ def test_accepts_maximum_llm_call_attempt_cap():
         (
             {
                 "name": "gate",
+                "samples": 2,
+                "hypothesis_test": {
+                    "type": "one_sided_lower_confidence_bound",
+                    "min": 0.5,
+                    "sequential_stopping": "yes",
+                },
+            },
+            "sequential_stopping",
+        ),
+        (
+            {
+                "name": "gate",
                 "hypothesis_test": {
                     "type": "one_sided_lower_confidence_bound",
                     "min": 0.5,
@@ -796,6 +808,7 @@ def test_accepts_eval_stage_hypothesis_test_config():
                     "min": 0.6,
                     "confidence": 0.9,
                     "min_samples": 3,
+                    "sequential_stopping": True,
                 },
             }
         ]
@@ -803,6 +816,7 @@ def test_accepts_eval_stage_hypothesis_test_config():
 
     assert config.eval_stages[0]["hypothesis_test"]["metric"] == "score"
     assert config.eval_stages[0]["hypothesis_test"]["confidence"] == 0.9
+    assert config.eval_stages[0]["hypothesis_test"]["sequential_stopping"] is True
     assert config.eval_stages[0]["role"] == "small_scale_filter"
 
 

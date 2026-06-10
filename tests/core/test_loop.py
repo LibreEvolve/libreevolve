@@ -5606,6 +5606,7 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
         "confidence_interval_count": 0,
         "p_value_count": 0,
         "sequential_stopping": False,
+        "sequential_stop_count": 0,
         "false_promotion_budget": None,
         "false_rejection_budget": None,
     }
@@ -5644,7 +5645,7 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
         "policy_paper_claim_ready_overclaim",
         "alphaevolve_hypothesis_testing_overclaim",
         "promotion_source_overclaim",
-        "sequential_stopping_overclaim",
+        "policy_sequential_stopping_supported_mismatch",
     }.issubset({issue["code"] for issue in policy_validation["issues"]})
 
 
@@ -5690,6 +5691,8 @@ def test_runtime_history_reports_configured_cascade_hypothesis_test_gate():
         "failed": 0,
         "confidence_interval_count": 1,
         "p_value_count": 1,
+        "sequential_stopping_configured": False,
+        "sequential_stop_count": 0,
     }
     stage_record = cascade["candidate_stage_records"][0]
     hypothesis_result = stage_record["hypothesis_test_result"]
@@ -5724,6 +5727,63 @@ def test_runtime_history_reports_configured_cascade_hypothesis_test_gate():
     assert policy["statistical_test"]["test_count"] == 1
     assert policy["statistical_test"]["passed"] == 1
     assert policy["statistical_test"]["p_value_count"] == 1
+
+
+def test_runtime_history_reports_hypothesis_test_sequential_stopping():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(code, workspace, stage):\n"
+        "    return {'score': stage['seed'], 'is_valid': True}\n"
+    )
+
+    evolve(
+        problem,
+        Config(
+            max_generations=0,
+            log_dir=tmpdir,
+            problem_name="t",
+            eval_stages=[
+                {
+                    "name": "stat_gate",
+                    "role": "small_scale_filter",
+                    "samples": 5,
+                    "seeds": [0.9, 0.92, 0.94, 0.1, 0.1],
+                    "hypothesis_test": {
+                        "type": "one_sided_lower_confidence_bound",
+                        "metric": "score",
+                        "min": 0.8,
+                        "confidence": 0.8,
+                        "min_samples": 3,
+                        "sequential_stopping": True,
+                    },
+                },
+            ],
+        ),
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    cascade = manifest["runtime"]["history"]["evaluation_cascade_report"]
+    stage = cascade["stages"][0]
+    assert stage["sample_count"] == 3
+    assert stage["hypothesis_test"]["sequential_stopping_configured"] is True
+    assert stage["hypothesis_test"]["sequential_stop_count"] == 1
+    stage_record = cascade["candidate_stage_records"][0]
+    assert stage_record["accounting"]["configured_stage_samples"] == 3
+    assert stage_record["hypothesis_test_result"]["sequential_stop"] == {
+        "enabled": True,
+        "stopped_early": True,
+        "stop_reason": "hypothesis_test_passed_after_min_samples",
+        "evaluated_samples": 3,
+        "planned_samples": 5,
+    }
+
+    report = manifest["runtime"]["history"]["cascade_hypothesis_test_policy_report"]
+    assert report["validation"]["ok"] is True
+    assert report["current_policy"]["sequential_stopping_supported"] is True
+    assert report["claim_readiness"]["sequential_stopping_diagnostics"] is True
+    policy = report["stage_policies"][0]
+    assert policy["statistical_test"]["sequential_stopping"] is True
+    assert policy["statistical_test"]["sequential_stop_count"] == 1
 
 
 def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():

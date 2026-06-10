@@ -1076,8 +1076,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     configured or fallback-inferred small-scale/main-test roles, deterministic
     threshold/artifact promotion, and configured
     `one_sided_lower_confidence_bound` gates with retained observations,
-    confidence-bound evidence, and p-values. Sequential
-    stopping and calibrated false-promotion/false-rejection budgets remain
+    confidence-bound evidence, p-values, and optional sequential early-stop
+    diagnostics. Calibrated false-promotion/false-rejection budgets remain
     roadmap work.
   - Required result: when richer statistical hypothesis-test cascade execution
     lands, update ROADMAP, README, papers index, and code/paper TODO entries

@@ -707,6 +707,7 @@ class CascadeEvaluator:
         retries = int(stage.get("retries", 0))
         artifact_policy = self._artifact_policy(stage)
         results: list[EvaluationResult] = []
+        sequential_stop_decision: dict | None = None
         for sample_index in range(samples):
             sample_deadline = _StageDeadline.from_config(stage.get("max_sample_seconds"))
             seed = seeds[sample_index] if sample_index < len(seeds) else None
@@ -766,9 +767,69 @@ class CascadeEvaluator:
             results.append(result)
             if result.error == "stage_budget_exhausted":
                 break
+            sequential_stop = self._hypothesis_test_sequential_stop(
+                stage_name,
+                results,
+                validate_path,
+                stage,
+                planned_samples=samples,
+            )
+            if sequential_stop is not None:
+                sequential_stop_decision = sequential_stop
+                break
         if len(results) == 1:
             return results[0]
-        return self._aggregate_sample_results(stage_name, results, validate_path, stage)
+        aggregate = self._aggregate_sample_results(stage_name, results, validate_path, stage)
+        if sequential_stop_decision is not None:
+            aggregate.metadata["hypothesis_test_sequential_stopping"] = (
+                sequential_stop_decision
+            )
+        return aggregate
+
+    def _hypothesis_test_sequential_stop(
+        self,
+        stage_name: str,
+        results: list["EvaluationResult"],
+        validate_path: Path | None,
+        stage: dict,
+        *,
+        planned_samples: int,
+    ) -> dict | None:
+        hypothesis_test = stage.get("hypothesis_test")
+        if (
+            not isinstance(hypothesis_test, dict)
+            or hypothesis_test.get("sequential_stopping") is not True
+        ):
+            return None
+        min_samples = int(hypothesis_test.get("min_samples", 2))
+        if len(results) < min_samples or len(results) >= planned_samples:
+            return None
+        partial = self._aggregate_sample_results(
+            stage_name,
+            results,
+            validate_path,
+            stage,
+        )
+        hypothesis_result = _stage_hypothesis_test_result(
+            partial,
+            hypothesis_test,
+        )
+        decision = {
+            "enabled": True,
+            "stopped_early": partial.is_valid and hypothesis_result["passed"],
+            "stop_reason": (
+                "hypothesis_test_passed_after_min_samples"
+                if partial.is_valid and hypothesis_result["passed"]
+                else None
+            ),
+            "evaluated_samples": len(results),
+            "planned_samples": planned_samples,
+            "min_samples": min_samples,
+            "hypothesis_test_result": hypothesis_result,
+        }
+        if decision["stopped_early"]:
+            return decision
+        return None
 
     def _run_sample_with_retries(
         self,
@@ -1510,6 +1571,7 @@ class CascadeEvaluator:
         metadata = {
             "stage": stage_name,
             "sample_count": len(results),
+            "planned_sample_count": int(stage.get("samples", len(results))),
             "metric_aggregation": aggregation_policy,
             "samples": [r.to_dict() for r in results],
             "diagnostic_output": {
@@ -4005,8 +4067,12 @@ def _stage_hypothesis_test_result(
     threshold = float(hypothesis_test["min"])
     confidence = float(hypothesis_test.get("confidence", 0.95))
     min_samples = int(hypothesis_test.get("min_samples", 2))
+    sequential_stopping = hypothesis_test.get("sequential_stopping") is True
     observations = _hypothesis_test_observations(result, metric)
     values = [item["value"] for item in observations]
+    sequential_decision = result.metadata.get("hypothesis_test_sequential_stopping")
+    if not isinstance(sequential_decision, dict):
+        sequential_decision = None
     record: dict = {
         "configured": True,
         "test_name": "one_sided_lower_confidence_bound",
@@ -4016,6 +4082,24 @@ def _stage_hypothesis_test_result(
         "min_samples": min_samples,
         "sample_count": len(values),
         "observations": observations,
+        "sequential_stopping": sequential_stopping,
+        "sequential_stop": (
+            {
+                "enabled": True,
+                "stopped_early": sequential_decision.get("stopped_early") is True,
+                "stop_reason": sequential_decision.get("stop_reason"),
+                "evaluated_samples": sequential_decision.get("evaluated_samples"),
+                "planned_samples": sequential_decision.get("planned_samples"),
+            }
+            if sequential_decision is not None
+            else {
+                "enabled": sequential_stopping,
+                "stopped_early": False,
+                "stop_reason": None,
+                "evaluated_samples": len(values),
+                "planned_samples": result.metadata.get("planned_sample_count"),
+            }
+        ),
         "passed": False,
     }
     if len(values) < min_samples:

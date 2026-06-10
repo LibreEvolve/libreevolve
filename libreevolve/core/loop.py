@@ -12974,6 +12974,8 @@ def _evaluation_cascade_report(
                         "failed": 0,
                         "confidence_interval_count": 0,
                         "p_value_count": 0,
+                        "sequential_stopping_configured": False,
+                        "sequential_stop_count": 0,
                     },
                 },
             )
@@ -13006,6 +13008,14 @@ def _evaluation_cascade_report(
                     stage["hypothesis_test"]["confidence_interval_count"] += 1
                 if isinstance(hypothesis_test_result.get("p_value"), (int, float)) and not isinstance(hypothesis_test_result.get("p_value"), bool):
                     stage["hypothesis_test"]["p_value_count"] += 1
+                if hypothesis_test_result.get("sequential_stopping") is True:
+                    stage["hypothesis_test"]["sequential_stopping_configured"] = True
+                sequential_stop = hypothesis_test_result.get("sequential_stop")
+                if (
+                    isinstance(sequential_stop, Mapping)
+                    and sequential_stop.get("stopped_early") is True
+                ):
+                    stage["hypothesis_test"]["sequential_stop_count"] += 1
             accounting = evaluation_accounting(raw_stage)
             stage["sample_count"] += int(accounting.get("configured_stage_samples", 0))
             stage["retry_attempts"] += int(accounting.get("retry_attempts", 0))
@@ -13137,6 +13147,10 @@ def _cascade_hypothesis_test_policy_report(
         stage.get("statistical_test", {}).get("p_value_count", 0) > 0
         for stage in stage_policies
     )
+    sequential_stopping_configured = any(
+        stage.get("statistical_test", {}).get("sequential_stopping") is True
+        for stage in stage_policies
+    )
     explicit_roles_configured = bool(stage_policies) and all(
         stage.get("role_source") == "configured" for stage in stage_policies
     )
@@ -13163,7 +13177,7 @@ def _cascade_hypothesis_test_policy_report(
             "statistical_hypothesis_tests_supported": statistical_test_configured,
             "confidence_intervals_supported": confidence_records,
             "p_values_supported": p_value_records,
-            "sequential_stopping_supported": False,
+            "sequential_stopping_supported": sequential_stopping_configured,
             "false_promotion_budget_supported": False,
             "false_rejection_budget_supported": False,
             "per_sample_observation_retention": (
@@ -13182,7 +13196,7 @@ def _cascade_hypothesis_test_policy_report(
             "fixed_threshold_promotion_evidence": True,
             "statistical_test_configuration": statistical_test_configured,
             "confidence_or_p_value_records": confidence_records or p_value_records,
-            "sequential_stopping_diagnostics": False,
+            "sequential_stopping_diagnostics": sequential_stopping_configured,
             "false_promotion_false_rejection_budgets": False,
             "remaining_gap": [
                 "statistical_test_configuration",
@@ -13300,7 +13314,12 @@ def _cascade_hypothesis_stage_policy(
                 "confidence_interval_count", 0
             ),
             "p_value_count": observed_hypothesis_test.get("p_value_count", 0),
-            "sequential_stopping": False,
+            "sequential_stopping": hypothesis_test.get("sequential_stopping") is True
+            if statistical_configured
+            else False,
+            "sequential_stop_count": observed_hypothesis_test.get(
+                "sequential_stop_count", 0
+            ),
             "false_promotion_budget": None,
             "false_rejection_budget": None,
         },
@@ -27831,11 +27850,23 @@ def validate_cascade_hypothesis_test_policy_report(report: object) -> dict:
                     "message": "statistical test pass/fail counts must balance",
                 }
             )
-        if statistical_test.get("sequential_stopping") is not False:
+        if statistical_test.get("sequential_stopping") not in {False, True}:
             issues.append(
                 {
-                    "code": "sequential_stopping_overclaim",
-                    "message": "current cascade stages must not claim sequential stopping",
+                    "code": "invalid_sequential_stopping",
+                    "message": "statistical_test.sequential_stopping must be boolean",
+                }
+            )
+        sequential_stop_count = statistical_test.get("sequential_stop_count", 0)
+        if (
+            not isinstance(sequential_stop_count, int)
+            or isinstance(sequential_stop_count, bool)
+            or sequential_stop_count < 0
+        ):
+            issues.append(
+                {
+                    "code": "invalid_sequential_stop_count",
+                    "message": "statistical_test.sequential_stop_count must be non-negative integer",
                 }
             )
     current_policy = report.get("current_policy")
@@ -27888,10 +27919,17 @@ def validate_cascade_hypothesis_test_policy_report(report: object) -> dict:
             and stage["statistical_test"].get("p_value_count", 0) > 0
             for stage in stage_policies
         )
+        any_sequential_stopping = any(
+            isinstance(stage, dict)
+            and isinstance(stage.get("statistical_test"), dict)
+            and stage["statistical_test"].get("sequential_stopping") is True
+            for stage in stage_policies
+        )
         expected_bool_fields = {
             "statistical_hypothesis_tests_supported": any_statistical_test,
             "confidence_intervals_supported": any_confidence_records,
             "p_values_supported": any_p_value_records,
+            "sequential_stopping_supported": any_sequential_stopping,
         }
         for field, expected in expected_bool_fields.items():
             if current_policy.get(field) is not expected:
@@ -27902,7 +27940,6 @@ def validate_cascade_hypothesis_test_policy_report(report: object) -> dict:
                     }
                 )
         false_fields = {
-            "sequential_stopping_supported": "policy_sequential_stopping_overclaim",
             "false_promotion_budget_supported": "policy_false_promotion_budget_overclaim",
             "false_rejection_budget_supported": "policy_false_rejection_budget_overclaim",
             "paper_claim_ready": "policy_paper_claim_ready_overclaim",

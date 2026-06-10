@@ -520,7 +520,7 @@ or fallback-inferred small-scale-filter/intermediate/main-test roles, links
 current promotion counts and sample/seed configuration, and validates that
 current promotion is either deterministic thresholds/artifact checks or the configured
 `one_sided_lower_confidence_bound` repeated-sample gate. Configured gates retain
-confidence-bound and p-value evidence. Sequential stopping, calibrated
+confidence-bound, p-value, and optional sequential-stop evidence. Calibrated
 false-promotion/false-rejection budgets, richer test families, and full
 AlphaEvolve Section 2.4 hypothesis-testing parity remain open.
 
@@ -1407,9 +1407,9 @@ Implemented:
   validates the current promotion boundary. Stages can now opt into
   `one_sided_lower_confidence_bound` promotion tests that apply confidence-bound
   and p-value evidence to repeated samples. They are still not complete
-  AlphaEvolve Section 2.4 hypothesis-testing cascades: sequential stopping,
-  calibrated false-promotion/false-rejection budgets, and broader statistical
-  test policies remain open.
+  AlphaEvolve Section 2.4 hypothesis-testing cascades: calibrated
+  false-promotion/false-rejection budgets and broader statistical test policies
+  remain open.
 - `libreevolve/problems/benchmarks/ablation_results.py`: equal-budget
   ablation-result report contract. It validates the AlphaEvolve Figure 8
   full-system baseline plus the five component ablations, declared targets,

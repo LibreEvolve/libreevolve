@@ -2520,8 +2520,10 @@ configured sample and seed counts. Stages may opt into
 `hypothesis_test: {type: one_sided_lower_confidence_bound, metric, min,
 confidence, min_samples}` to require a repeated-sample lower confidence bound
 before promotion; the report then records confidence-bound and p-value
-evidence. Sequential stopping, false-promotion/false-rejection budgets, and
-full AlphaEvolve Section 2.4 hypothesis-testing readiness remain false.
+evidence. With `sequential_stopping: true`, the stage can stop planned samples
+early once the test passes after `min_samples`. False-promotion/false-rejection
+budgets and full AlphaEvolve Section 2.4 hypothesis-testing readiness remain
+false.
 Completed manifests also include
 `runtime.history.automated_evaluator_scope_report`, which records the current
 AlphaEvolve scope boundary: candidate admission is owned by deterministic
@@ -2580,12 +2582,13 @@ after threshold-aware retries are exhausted, while the underlying local stage
 row can still show that its validator subprocess passed.
 Multi-sample stages can additionally set
 `hypothesis_test: {type: one_sided_lower_confidence_bound, metric, min,
-confidence, min_samples}`. The evaluator retains numeric per-sample
-observations for `fitness` or a metric, computes a normal-approximation
-one-sided lower confidence bound and p-value, and rejects the stage with
-`hypothesis_test_not_met` when the lower bound is below `min`. This is an
-opt-in statistical promotion gate, not a sequential test or calibrated
-false-promotion budget.
+confidence, min_samples, sequential_stopping}`. The evaluator retains numeric
+per-sample observations for `fitness` or a metric, computes a
+normal-approximation one-sided lower confidence bound and p-value, and rejects
+the stage with `hypothesis_test_not_met` when the lower bound is below `min`.
+When `sequential_stopping` is true, evaluation stops early after `min_samples`
+once the lower-bound test passes. This is an opt-in statistical promotion gate,
+not a calibrated false-promotion budget.
 Stages can declare `role: small_scale_filter`, `role: intermediate_filter`, or
 `role: main_test`; completed manifests preserve both the configured role and
 the fallback order-inferred role in the cascade policy report.

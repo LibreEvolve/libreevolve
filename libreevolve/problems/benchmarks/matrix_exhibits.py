@@ -220,6 +220,85 @@ def matrix_rank_table_artifact_boundary_record() -> dict[str, Any]:
     }
 
 
+def matrix_rank_table_artifact_boundary_from_exhibit(
+    exhibit: dict[str, Any],
+    *,
+    artifact_paths_by_table_id: dict[str, list[str]] | None = None,
+    artifact_sha256_by_table_id: dict[str, str] | None = None,
+) -> dict[str, Any]:
+    """Build emitted Table 2/Table 3 artifacts from exhibit metadata."""
+    exhibit_record = copy.deepcopy(exhibit)
+    exhibit_report = validate_matrix_rank_table_exhibit(exhibit_record)
+    if not exhibit_report.ok:
+        messages = "; ".join(issue.message for issue in exhibit_report.issues)
+        raise ValueError(f"matrix-rank table exhibit is invalid: {messages}")
+    artifacts: list[dict[str, Any]] = []
+    tables = exhibit_record.get("tables", [])
+    assert isinstance(tables, list)
+    for table in tables:
+        assert isinstance(table, dict)
+        table_id = table["table_id"]
+        source_links = table["source_links"]
+        assert isinstance(source_links, dict)
+        paths = (
+            artifact_paths_by_table_id.get(table_id)
+            if artifact_paths_by_table_id is not None
+            else None
+        )
+        artifact_paths = (
+            copy.deepcopy(paths)
+            if paths is not None
+            else [
+                f"tables/{table_id}_source.txt",
+                f"tables/{table_id}.png",
+                f"tables/{table_id}_ocr.txt",
+            ]
+        )
+        artifact_payload = {
+            "table_id": table_id,
+            "source_table": table["source_table"],
+            "source_pdf_page": table["source_pdf_page"],
+            "source_caption_ref": table["source_caption_ref"],
+            "row_count": table["row_count"],
+            "source_pdf_excerpt": copy.deepcopy(source_links["source_pdf_excerpt"]),
+            "rendered_table_artifact": copy.deepcopy(
+                source_links["rendered_table_artifact"]
+            ),
+            "ocr_text_artifact": copy.deepcopy(source_links["ocr_text_artifact"]),
+            "artifact_paths": artifact_paths,
+            "matrix_rank_table_exhibit": copy.deepcopy(exhibit_record),
+        }
+        artifact_hash = (
+            artifact_sha256_by_table_id.get(table_id)
+            if artifact_sha256_by_table_id is not None
+            else None
+        )
+        artifact_payload["artifact_sha256"] = (
+            artifact_hash
+            if artifact_hash is not None
+            else _stable_json_sha256(artifact_payload)
+        )
+        artifacts.append(artifact_payload)
+    boundary = matrix_rank_table_artifact_boundary_record()
+    boundary.update(
+        {
+            "artifact_status": "emitted",
+            "emitted_artifacts": artifacts,
+            "claim_boundary": (
+                "Emitted artifacts preserve Table 2/Table 3 matrix-rank "
+                "exhibit metadata and link each table back to validated "
+                "evidence; this still does not claim local report/export code "
+                "emits those artifacts."
+            ),
+        }
+    )
+    boundary_report = validate_matrix_rank_table_artifact_boundary(boundary)
+    if not boundary_report.ok:
+        messages = "; ".join(issue.message for issue in boundary_report.issues)
+        raise ValueError(f"matrix-rank table artifact boundary is invalid: {messages}")
+    return boundary
+
+
 def figure4_matrix_discovery_artifact_boundary_record() -> dict[str, Any]:
     return {
         "schema": FIGURE4_MATRIX_DISCOVERY_ARTIFACT_BOUNDARY_SCHEMA,
@@ -1256,6 +1335,57 @@ def _validate_rank_table_artifact_record(
         MatrixRankTableExhibitIssue(f"invalid_nested_exhibit_{issue.code}", issue.message)
         for issue in exhibit_report.issues
     )
+    nested_exhibit = artifact.get("matrix_rank_table_exhibit")
+    if isinstance(nested_exhibit, dict) and isinstance(table_id, str):
+        nested_table = _find_nested_rank_table(nested_exhibit, table_id)
+        if nested_table is None:
+            issues.append(
+                MatrixRankTableExhibitIssue(
+                    "missing_artifact_nested_table",
+                    "artifact table_id must exist in nested matrix-rank table exhibit",
+                )
+            )
+        else:
+            for field in (
+                "source_table",
+                "source_pdf_page",
+                "source_caption_ref",
+                "row_count",
+            ):
+                if artifact.get(field) != nested_table.get(field):
+                    issues.append(
+                        MatrixRankTableExhibitIssue(
+                            f"invalid_artifact_nested_{field}",
+                            f"artifact {field} must match nested table evidence",
+                        )
+                    )
+            source_links = nested_table.get("source_links")
+            if isinstance(source_links, dict):
+                for artifact_field, nested_field in (
+                    ("source_pdf_excerpt", "source_pdf_excerpt"),
+                    ("rendered_table_artifact", "rendered_table_artifact"),
+                    ("ocr_text_artifact", "ocr_text_artifact"),
+                ):
+                    if artifact.get(artifact_field) != source_links.get(nested_field):
+                        issues.append(
+                            MatrixRankTableExhibitIssue(
+                                f"invalid_artifact_nested_{artifact_field}",
+                                f"artifact {artifact_field} must match nested table source links",
+                            )
+                        )
+
+
+def _find_nested_rank_table(
+    exhibit: dict[str, Any],
+    table_id: str,
+) -> dict[str, Any] | None:
+    tables = exhibit.get("tables")
+    if not isinstance(tables, list):
+        return None
+    for table in tables:
+        if isinstance(table, dict) and table.get("table_id") == table_id:
+            return table
+    return None
 
 
 def _validate_rank_table_artifact_paths(

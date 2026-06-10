@@ -3108,9 +3108,11 @@ Primary evidence:
     row-to-registry/report/Colab mappings. This is still a schema contract:
     `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1` now
     validates the current `not_emitted_by_local_report_export` state and
-    required future emitted-artifact fields, but matrix reports, table
-    exporters, and local runs do not render or emit those source/table/OCR
-    artifacts.
+    required future emitted-artifact fields.
+    `matrix_rank_table_artifact_boundary_from_exhibit()` builds emitted table
+    artifacts from validated Table 2/Table 3 exhibit metadata and validation
+    checks nested table linkage, but matrix reports, table exporters, and local
+    runs do not render or emit those source/table/OCR artifacts.
   - Required result: wire matrix-rank table exhibit metadata into report/export
     generation with stable table ids, row ids/order, selected/full-table
     membership, source/caption locations, best-known and AlphaEvolve rank

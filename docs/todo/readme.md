@@ -727,6 +727,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1` now
     documents and validates that README-scoped absence boundary plus required
     future emitted-artifact fields.
+    `matrix_rank_table_artifact_boundary_from_exhibit()` builds emitted table
+    artifacts from validated Table 2/Table 3 exhibit metadata and validation
+    checks nested table linkage, while README still keeps local report/export
+    emission marked missing.
   - Required result: when Table 2/Table 3 matrix-rank table exhibit artifacts
     land, update README, ROADMAP, papers index, and code/paper TODOs together
     so README distinguishes reproduced paper-table exhibits from general

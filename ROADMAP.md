@@ -1085,7 +1085,10 @@ is not yet an AlphaEvolve reproduction.
   the current `not_emitted_by_local_report_export` boundary and required
   future emitted-artifact fields for table identity, source locations,
   rendered/OCR/source files, artifact paths/hashes, and nested table-exhibit
-  evidence.
+  evidence. `matrix_rank_table_artifact_boundary_from_exhibit()` builds emitted
+  Table 2/Table 3 artifact records from validated exhibit metadata and
+  validation checks nested table linkage. Runtime reports still do not render
+  or emit those table artifacts.
 
 ### 10. Operational maturity
 

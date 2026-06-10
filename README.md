@@ -3972,6 +3972,11 @@ validates the current `not_emitted_by_local_report_export` state and required
 future emitted-artifact fields for table ids, source page/caption locations,
 rendered table files, OCR text, source excerpts, artifact paths/hashes, and
 nested matrix-rank table exhibit evidence.
+`matrix_rank_table_artifact_boundary_from_exhibit()` can build emitted Table 2
+and Appendix A Table 3 artifact records from validated exhibit metadata, and
+the artifact validator checks that top-level table artifacts still match the
+nested table exhibit they cite. Local report/export code still does not render
+or check in those table/OCR/source artifacts.
 `write_strassen_2x2_publication_bundle()` emits the checked-in Strassen bundle
 under
 `libreevolve/problems/benchmarks/artifacts/strassen_2x2_publication_bundle/`

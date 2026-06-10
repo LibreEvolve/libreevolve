@@ -3052,6 +3052,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     validates that absence boundary and required future emitted-artifact
     fields for rendered table, OCR, source-excerpt, path/hash, and nested
     exhibit evidence.
+    `matrix_rank_table_artifact_boundary_from_exhibit()` builds emitted table
+    artifact records from validated Table 2/Table 3 exhibit metadata and
+    validation checks nested table linkage, but no paper-facing table export
+    emits or checks in those files yet.
   - Required result: emit paper-facing table exhibit records for Table 2 and
     Appendix A Table 3: source PDF page/caption locations, table ids, row
     ids/order, selected/full-table membership, rank values, outcome classes and

@@ -2273,6 +2273,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1` now
     documents and validates that roadmap-scoped absence boundary plus required
     future emitted-artifact fields.
+    `matrix_rank_table_artifact_boundary_from_exhibit()` builds emitted table
+    artifacts from validated Table 2/Table 3 exhibit metadata and validation
+    checks nested table linkage, while roadmap wording still marks local
+    report/export artifact emission incomplete.
   - Required result: when Table 2/Table 3 matrix-rank table exhibit artifacts
     land, update ROADMAP, README, papers index, and code/paper TODOs together
     so roadmap wording distinguishes reproduced paper-table exhibits from

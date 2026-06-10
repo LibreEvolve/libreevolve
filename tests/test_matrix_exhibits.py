@@ -13,6 +13,7 @@ from libreevolve.problems.benchmarks.matrix_exhibits import (
     figure4_matrix_discovery_artifact_boundary_record,
     figure9_matrix_diff_artifact_boundary_from_exhibit,
     figure9_matrix_diff_artifact_boundary_record,
+    matrix_rank_table_artifact_boundary_from_exhibit,
     matrix_rank_table_artifact_boundary_record,
     render_figure4_matrix_discovery_artifact_boundary_summary,
     render_figure4_matrix_discovery_exhibit_summary,
@@ -896,24 +897,39 @@ def test_matrix_rank_table_artifact_boundary_requires_emitted_artifacts():
 
 
 def test_matrix_rank_table_artifact_boundary_accepts_emitted_artifact_record():
-    boundary = {
-        "schema": MATRIX_RANK_TABLE_ARTIFACT_BOUNDARY_SCHEMA,
-        "exhibit_schema": MATRIX_RANK_TABLE_EXHIBIT_SCHEMA,
-        "source_paper_id": "2506.13131",
-        "target_suite": "alphaevolve_appendix_a",
-        "artifact_status": "emitted",
-        "local_export_scope": "matrix_rank_table_report_export",
-        "required_artifact_fields": list(matrix_rank_table_artifact_boundary_record()["required_artifact_fields"]),
-        "emitted_artifacts": [_rank_table_artifact(), _rank_table_artifact("appendix_a_table3_matrix_rank_full")],
-        "claim_boundary": "Local export emitted rendered table artifacts.",
-    }
+    boundary = matrix_rank_table_artifact_boundary_from_exhibit(
+        _valid_rank_table_exhibit(),
+        artifact_sha256_by_table_id={
+            "table2_matrix_rank_selected": "a" * 64,
+            "appendix_a_table3_matrix_rank_full": "b" * 64,
+        },
+    )
 
     validation = validate_matrix_rank_table_artifact_boundary(boundary)
 
+    artifacts = {
+        artifact["table_id"]: artifact for artifact in boundary["emitted_artifacts"]
+    }
     assert validation.ok is True
     assert validation.artifact_status == "emitted"
     assert validation.emitted_artifact_count == 2
     assert validation.issues == []
+    assert artifacts["table2_matrix_rank_selected"]["source_table"] == "Table 2"
+    assert artifacts["table2_matrix_rank_selected"]["source_pdf_page"] == 9
+    assert artifacts["table2_matrix_rank_selected"]["row_count"] == 16
+    assert artifacts["table2_matrix_rank_selected"]["artifact_sha256"] == "a" * 64
+    assert artifacts["appendix_a_table3_matrix_rank_full"]["source_table"] == "Appendix A Table 3"
+    assert artifacts["appendix_a_table3_matrix_rank_full"]["source_pdf_page"] == 34
+    assert artifacts["appendix_a_table3_matrix_rank_full"]["row_count"] == 54
+    assert artifacts["appendix_a_table3_matrix_rank_full"]["artifact_sha256"] == "b" * 64
+
+
+def test_matrix_rank_table_artifact_boundary_builder_rejects_invalid_exhibit():
+    exhibit = _valid_rank_table_exhibit()
+    exhibit["tables"][0]["row_count"] = 15
+
+    with pytest.raises(ValueError, match="matrix-rank table exhibit is invalid"):
+        matrix_rank_table_artifact_boundary_from_exhibit(exhibit)
 
 
 def test_matrix_rank_table_artifact_boundary_rejects_invalid_nested_exhibit():
@@ -930,6 +946,36 @@ def test_matrix_rank_table_artifact_boundary_rejects_invalid_nested_exhibit():
     assert validation.ok is False
     assert "invalid_artifact_path" in codes
     assert "invalid_nested_exhibit_invalid_tables" in codes
+
+
+def test_matrix_rank_table_artifact_boundary_rejects_nested_table_mismatch():
+    boundary = matrix_rank_table_artifact_boundary_from_exhibit(
+        _valid_rank_table_exhibit(),
+        artifact_sha256_by_table_id={
+            "table2_matrix_rank_selected": "a" * 64,
+            "appendix_a_table3_matrix_rank_full": "b" * 64,
+        },
+    )
+    artifact = next(
+        item
+        for item in boundary["emitted_artifacts"]
+        if item["table_id"] == "table2_matrix_rank_selected"
+    )
+    nested_table = next(
+        table
+        for table in artifact["matrix_rank_table_exhibit"]["tables"]
+        if table["table_id"] == "table2_matrix_rank_selected"
+    )
+    nested_table["source_links"]["rendered_table_artifact"]["path"] = "tables/changed.png"
+    nested_table["row_count"] = 17
+
+    validation = validate_matrix_rank_table_artifact_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_nested_exhibit_invalid_row_count" in codes
+    assert "invalid_artifact_nested_row_count" in codes
+    assert "invalid_artifact_nested_rendered_table_artifact" in codes
 
 
 def test_render_matrix_rank_table_artifact_boundary_summary_reports_shape():

@@ -1352,6 +1352,10 @@ Implemented:
   validates required future emitted-artifact fields for table identity, source
   locations, rendered/OCR/source files, artifact paths/hashes, and nested
   table-exhibit evidence.
+  `matrix_rank_table_artifact_boundary_from_exhibit()` can build emitted table
+  artifacts from validated Table 2/Table 3 exhibit metadata and validates
+  nested table linkage, but no local report/export emits or checks in the
+  rendered table/OCR/source files yet.
   `libreevolve.matrix_sweep_space_evidence.v1`
   now validates declared Figure 9-style sweep provenance for the evolved
   `sweep` function, user-provided `hyper` library identity, hyperparameter

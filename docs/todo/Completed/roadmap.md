@@ -4,6 +4,28 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Keep candidate-language roadmap scope aligned with the Python-primary
+      policy boundary.
+  - Spec evidence: AlphaEvolve tasks can define language/build/evaluator
+    contracts over codebases and task-specific solution representations, so
+    roadmap wording should keep the current manifest-visible boundary separate
+    from real non-Python or build-system runner support.
+  - Status: ROADMAP current state now lists
+    `runtime.history.candidate_language_runner_contract_report` alongside
+    `libreevolve.candidate_language_policy.v1`. It records the current Python
+    subprocess validator runner, non-Python text files as workspace-only/no-runner
+    members, unsupported arbitrary-language and build-system runner contracts,
+    unsupported task-abstraction hooks, and exact remaining gaps before
+    AlphaEvolve-grade language/build parity. The near-term item now asks to
+    extend the checked contracts into actual non-Python language runners rather
+    than implying they already exist.
+  - Verification: `py -3.12 -m pytest
+    tests/core/test_loop.py::test_runtime_history_reports_candidate_language_runner_contracts
+    tests/core/test_loop.py::test_runtime_history_reports_candidate_abstraction_choice
+    -q` passed.
+  - Remaining gap: none for roadmap scoping; actual non-Python/build-system
+    runner implementation remains active in code/paper TODOs.
+
 - [x] Keep roadmap backlog-integrity wording scoped until stale absence prose
       is detected inside TODO bodies.
   - Spec evidence: ROADMAP planning depends on active TODO entries as a

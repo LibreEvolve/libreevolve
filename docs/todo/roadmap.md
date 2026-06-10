@@ -229,27 +229,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     artifact runners land, update the roadmap, README, papers index, and
     code/paper TODO entries together.
 
-- [ ] Keep candidate-language roadmap scope aligned with the Python-primary
-      policy boundary.
-  - Spec evidence: AlphaEvolve tasks can define language/build/evaluator
-    contracts over codebases and task-specific solution representations, so
-    roadmap wording should keep the current manifest-visible boundary separate
-    from real non-Python or build-system runner support.
-  - Current evidence: `ROADMAP.md` current state now lists manifest-visible
-    `libreevolve.candidate_language_policy.v1` records declaring the current
-    Python-primary text-workspace boundary and unsupported arbitrary-language
-    and build-system runners. Its near-term workspace section asks to extend
-    that policy into real language/runner declarations, add problem-defined
-    candidate abstraction hooks, add language-aware evolve-block marker
-    grammars, and preserve topology diagnostics as language/build-runner edge
-    cases are introduced.
-  - Required result: when configured language runners, build-system runner
-    contracts, language-aware marker grammars, or problem-defined candidate
-    abstraction hooks land, update the roadmap, README, papers index, and
-    code/paper TODO entries together so roadmap wording neither underclaims
-    the current honest Python-primary policy record nor overclaims
-    AlphaEvolve-grade arbitrary-language/codebase support.
-
 - [ ] Extend evolve-block integration roadmap wording beyond runtime
       minimal-marker evidence.
   - Spec evidence: AlphaEvolve Section 2.1 says special comment markers let the

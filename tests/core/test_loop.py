@@ -48,6 +48,7 @@ from libreevolve.core.loop import (
     validate_evaluator_workload_report,
     validate_alphaevolve_process_exhibit_report,
     validate_candidate_abstraction_choice_report,
+    validate_candidate_language_runner_contract_report,
     validate_collaborator_feedback_provenance_report,
     validate_initial_program_idea_provenance_report,
     validate_initial_program_validity_report,
@@ -5659,6 +5660,91 @@ def test_runtime_history_reports_candidate_abstraction_choice():
         "claim_ready_overclaim",
         "abstraction_selection_fidelity_overclaim",
         "equal_budget_comparison_ready_overclaim",
+    }
+
+
+def test_runtime_history_reports_candidate_language_runner_contracts():
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(_problem(), Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"][
+        "candidate_language_runner_contract_report"
+    ]
+
+    assert report["schema"] == (
+        "libreevolve.candidate_language_runner_contract_report.v1"
+    )
+    assert report["validation"]["ok"] is True
+    assert validate_candidate_language_runner_contract_report(report)["ok"] is True
+    assert report["selected_policy"]["manifest_path"] == "policies.candidate_language"
+    assert report["selected_policy"]["policy"] == "python_primary_text_workspace_v1"
+    assert report["selected_policy"]["primary_language"] == "python"
+    assert report["selected_policy"]["language_runner_ready"] is False
+    assert report["selected_policy"]["policy_validation"]["ok"] is True
+
+    runners = {item["language"]: item for item in report["configured_language_runners"]}
+    assert set(runners) == {"python", "non_python_text", "arbitrary_language"}
+    assert runners["python"]["status"] == "supported_current_primary"
+    assert runners["python"]["marker_grammar"] == "python_hash_evolve_block_markers"
+    assert runners["python"]["runner_contract"] == (
+        "python_subprocess_validator_entrypoint"
+    )
+    assert runners["non_python_text"]["status"] == "workspace_member_only_no_runner"
+    assert runners["non_python_text"]["marker_grammar"] == (
+        "unsupported_fail_closed_marker_like_declarations"
+    )
+    assert runners["non_python_text"]["runner_contract"] == "unsupported"
+    assert runners["arbitrary_language"]["runner_contract"] == "unsupported"
+    assert runners["arbitrary_language"]["build_contract"] == "unsupported"
+
+    build_contracts = report["build_system_runner_contracts"]
+    assert build_contracts["status"] == "unsupported"
+    assert build_contracts["declared_build_files"] == []
+    assert build_contracts["build_runner"] == "unsupported"
+    assert build_contracts["package_install_runner"] == "unsupported"
+    assert build_contracts["compiled_artifact_capture"] == "unsupported"
+
+    hooks = report["task_candidate_abstraction_hooks"]
+    assert hooks["status"] == "unsupported"
+    assert hooks["serializer_hook"] == "unsupported"
+    assert hooks["materializer_hook"] == "unsupported"
+    assert hooks["runner_hook"] == "unsupported"
+    assert hooks["scorer_output_adapter"] == "python_validator_json_metrics_only"
+
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["python_runner_contract_recorded"] is True
+    assert report["claim_readiness"]["non_python_language_runners_configured"] is False
+    assert report["claim_readiness"]["language_aware_marker_grammars_configured"] is False
+    assert report["claim_readiness"]["build_system_runner_contracts_configured"] is False
+    assert report["claim_readiness"]["task_candidate_abstraction_hooks_configured"] is False
+    assert report["claim_readiness"]["alphaevolve_language_runner_parity"] is False
+    assert report["alphaevolve_contract_gap"]["required_before_parity_claim"] == (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    assert "configured_non_python_language_runners" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+
+    edited = copy.deepcopy(report)
+    edited["claim_ready"] = True
+    edited["selected_policy"]["language_runner_ready"] = True
+    edited["configured_language_runners"][1]["runner_contract"] = "supported"
+    edited["configured_language_runners"][2]["build_contract"] = "supported"
+    edited["build_system_runner_contracts"]["build_runner"] = "supported"
+    edited["task_candidate_abstraction_hooks"]["serializer_hook"] = "supported"
+    edited["claim_readiness"]["alphaevolve_language_runner_parity"] = True
+    validation = validate_candidate_language_runner_contract_report(edited)
+    assert validation["ok"] is False
+    assert {issue["code"] for issue in validation["issues"]} >= {
+        "claim_ready_overclaim",
+        "language_runner_ready_overclaim",
+        "non_python_text_runner_overclaim",
+        "arbitrary_language_build_overclaim",
+        "build_runner_overclaim",
+        "serializer_hook_overclaim",
+        "alphaevolve_language_runner_parity_overclaim",
     }
 
 

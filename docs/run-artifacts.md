@@ -864,6 +864,14 @@ Python-primary bounded text-workspace representation, typed static-member
 support, fail-closed non-Python marker handling, Python subprocess validator
 runner boundary, and explicit unsupported status for arbitrary-language
 runners, build-system runners, and problem-defined solution abstractions.
+Completed manifests include
+`runtime.history.candidate_language_runner_contract_report` with schema
+`libreevolve.candidate_language_runner_contract_report.v1`. The report records
+the selected startup policy, the current Python subprocess validator runner
+contract, non-Python text members as workspace-only/no-runner records,
+unsupported arbitrary-language and build-system runner contracts, unsupported
+task candidate-abstraction hooks, and the exact contract gaps that must close
+before AlphaEvolve-style arbitrary-language/codebase parity can be claimed.
 For runs that can perform mutation LLM calls, backend client construction is
 preflighted before overwrite cleanup in the core runtime. The CLI also checks
 OpenAI and Anthropic credentials as non-blank after trimming. Seed-only runs

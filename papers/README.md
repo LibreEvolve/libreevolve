@@ -547,6 +547,15 @@ bespoke-search-algorithm, and paired solution/search alternatives, and keeps
 Problem-level abstraction rationale, symmetry/structure assumptions,
 problem-defined abstraction hooks, paired representations, and equal-budget
 benchmark comparisons across alternative formulations remain open.
+Completed manifests also include
+`runtime.history.candidate_language_runner_contract_report` with schema
+`libreevolve.candidate_language_runner_contract_report.v1`. This report records
+the current Python subprocess validator runner contract, non-Python text files
+as workspace-only/no-runner members, unsupported arbitrary-language and
+build-system runner contracts, unsupported task candidate-abstraction hooks,
+and the remaining contract gaps for configured non-Python runners,
+language-aware evolve-block grammars, build-system runners, task-defined
+abstraction hooks, and runner environment/artifact provenance.
 
 AlphaEvolve rendered-evaluation-result prompt note: completed manifests now
 include `runtime.history.prompt_prior_score_provenance_report`, which links

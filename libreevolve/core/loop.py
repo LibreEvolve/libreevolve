@@ -5304,6 +5304,11 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 programs,
             )
         ),
+        "candidate_language_runner_contract_report": (
+            _candidate_language_runner_contract_report(
+                db.startup_manifest_snapshot()
+            )
+        ),
         "marker_spelling_provenance_report": (
             _marker_spelling_provenance_report(run_dir)
         ),
@@ -9662,6 +9667,356 @@ def _candidate_abstraction_choice_report(
     }
     report["validation"] = validate_candidate_abstraction_choice_report(report)
     return report
+
+
+def _candidate_language_runner_contract_report(
+    startup_manifest: Mapping[str, object],
+) -> dict:
+    policies = (
+        startup_manifest.get("policies")
+        if isinstance(startup_manifest.get("policies"), Mapping)
+        else {}
+    )
+    candidate_policy = (
+        policies.get("candidate_language")
+        if isinstance(policies.get("candidate_language"), Mapping)
+        else {}
+    )
+    policy_validation = validate_candidate_language_policy(candidate_policy)
+    report = {
+        "schema": "libreevolve.candidate_language_runner_contract_report.v1",
+        "source": "candidate_language_policy_and_runtime_workspace_contracts",
+        "selected_policy": {
+            "manifest_path": "policies.candidate_language",
+            "policy": candidate_policy.get("policy"),
+            "candidate_representation": candidate_policy.get(
+                "candidate_representation"
+            ),
+            "primary_language": candidate_policy.get("primary_language"),
+            "language_runner_ready": candidate_policy.get("language_runner_ready"),
+            "policy_validation": policy_validation,
+        },
+        "configured_language_runners": [
+            {
+                "language": "python",
+                "status": "supported_current_primary",
+                "candidate_role": "primary_text_workspace_language",
+                "marker_grammar": "python_hash_evolve_block_markers",
+                "runner_contract": "python_subprocess_validator_entrypoint",
+                "build_contract": "not_required_for_default_validator",
+                "artifact_boundary": "best_py_and_best_workspace_exports",
+            },
+            {
+                "language": "non_python_text",
+                "status": "workspace_member_only_no_runner",
+                "candidate_role": "unmarked_supporting_text_member",
+                "marker_grammar": "unsupported_fail_closed_marker_like_declarations",
+                "runner_contract": "unsupported",
+                "build_contract": "unsupported",
+                "artifact_boundary": "workspace_file_only",
+            },
+            {
+                "language": "arbitrary_language",
+                "status": "unsupported",
+                "candidate_role": "not_configured",
+                "marker_grammar": "unsupported",
+                "runner_contract": "unsupported",
+                "build_contract": "unsupported",
+                "artifact_boundary": "not_configured",
+            },
+        ],
+        "build_system_runner_contracts": {
+            "status": "unsupported",
+            "declared_build_files": [],
+            "build_runner": "unsupported",
+            "package_install_runner": "unsupported",
+            "compiled_artifact_capture": "unsupported",
+            "accelerator_or_hardware_contract": "unsupported",
+        },
+        "task_candidate_abstraction_hooks": {
+            "status": "unsupported",
+            "problem_declared_candidate_type": "not_configured",
+            "serializer_hook": "unsupported",
+            "materializer_hook": "unsupported",
+            "runner_hook": "unsupported",
+            "scorer_output_adapter": "python_validator_json_metrics_only",
+        },
+        "alphaevolve_contract_gap": {
+            "paper_sections": ["2.1", "2.2"],
+            "required_before_parity_claim": [
+                "configured_non_python_language_runners",
+                "language_aware_evolve_block_marker_grammars",
+                "build_system_runner_contracts",
+                "task_defined_candidate_abstraction_hooks",
+                "runner_artifact_and_environment_provenance",
+            ],
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "selected_policy_validated": policy_validation.get("ok") is True,
+            "python_runner_contract_recorded": True,
+            "non_python_language_runners_configured": False,
+            "language_aware_marker_grammars_configured": False,
+            "build_system_runner_contracts_configured": False,
+            "task_candidate_abstraction_hooks_configured": False,
+            "alphaevolve_language_runner_parity": False,
+            "remaining_gap": [
+                "configured_non_python_language_runners",
+                "language_aware_evolve_block_marker_grammars",
+                "build_system_runner_contracts",
+                "task_defined_candidate_abstraction_hooks",
+                "runner_artifact_and_environment_provenance",
+            ],
+        },
+    }
+    report["validation"] = validate_candidate_language_runner_contract_report(report)
+    return report
+
+
+def validate_candidate_language_runner_contract_report(report: object) -> dict:
+    issues: list[dict] = []
+    schema = "libreevolve.candidate_language_runner_contract_report.v1"
+    if not isinstance(report, dict):
+        return {
+            "schema": schema,
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "candidate language runner contract report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "selected_policy",
+        "configured_language_runners",
+        "build_system_runner_contracts",
+        "task_candidate_abstraction_hooks",
+        "alphaevolve_contract_gap",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": (
+                    "candidate language runner report missing fields: "
+                    f"{sorted(missing)}"
+                ),
+            }
+        )
+    if report.get("schema") != schema:
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "unsupported candidate language runner report schema",
+            }
+        )
+    if report.get("source") != "candidate_language_policy_and_runtime_workspace_contracts":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "unsupported candidate language runner report source",
+            }
+        )
+    selected = report.get("selected_policy")
+    if not isinstance(selected, Mapping):
+        issues.append(
+            {
+                "code": "invalid_selected_policy",
+                "message": "selected_policy must be an object",
+            }
+        )
+    else:
+        if selected.get("policy") != "python_primary_text_workspace_v1":
+            issues.append(
+                {
+                    "code": "invalid_candidate_policy",
+                    "message": "selected policy must remain the Python-primary boundary",
+                }
+            )
+        if selected.get("primary_language") != "python":
+            issues.append(
+                {
+                    "code": "invalid_primary_language",
+                    "message": "primary language must remain python",
+                }
+            )
+        if selected.get("language_runner_ready") is not False:
+            issues.append(
+                {
+                    "code": "language_runner_ready_overclaim",
+                    "message": "language_runner_ready must remain false",
+                }
+            )
+        validation = selected.get("policy_validation")
+        if not isinstance(validation, Mapping) or validation.get("ok") is not True:
+            issues.append(
+                {
+                    "code": "candidate_policy_validation_failed",
+                    "message": "selected candidate-language policy must validate",
+                }
+            )
+    runners = report.get("configured_language_runners")
+    if not isinstance(runners, list) or not runners:
+        issues.append(
+            {
+                "code": "invalid_language_runner_records",
+                "message": "configured_language_runners must be a non-empty list",
+            }
+        )
+        runners = []
+    else:
+        by_language = {
+            item.get("language"): item
+            for item in runners
+            if isinstance(item, Mapping)
+        }
+        for language in ("python", "non_python_text", "arbitrary_language"):
+            if language not in by_language:
+                issues.append(
+                    {
+                        "code": "missing_language_runner_record",
+                        "message": f"missing runner record for {language}",
+                    }
+                )
+        python_record = by_language.get("python", {})
+        if python_record.get("status") != "supported_current_primary":
+            issues.append(
+                {
+                    "code": "invalid_python_runner_status",
+                    "message": "python runner must be the only supported current primary",
+                }
+            )
+        for language in ("non_python_text", "arbitrary_language"):
+            record = by_language.get(language, {})
+            if record.get("runner_contract") != "unsupported":
+                issues.append(
+                    {
+                        "code": f"{language}_runner_overclaim",
+                        "message": f"{language} runner contract must remain unsupported",
+                    }
+                )
+            if record.get("build_contract") != "unsupported":
+                issues.append(
+                    {
+                        "code": f"{language}_build_overclaim",
+                        "message": f"{language} build contract must remain unsupported",
+                    }
+                )
+    build_contracts = report.get("build_system_runner_contracts")
+    if not isinstance(build_contracts, Mapping):
+        issues.append(
+            {
+                "code": "invalid_build_system_runner_contracts",
+                "message": "build_system_runner_contracts must be an object",
+            }
+        )
+    else:
+        for field in (
+            "status",
+            "build_runner",
+            "package_install_runner",
+            "compiled_artifact_capture",
+            "accelerator_or_hardware_contract",
+        ):
+            if build_contracts.get(field) != "unsupported":
+                issues.append(
+                    {
+                        "code": f"{field}_overclaim",
+                        "message": f"{field} must remain unsupported",
+                    }
+                )
+        if build_contracts.get("declared_build_files") != []:
+            issues.append(
+                {
+                    "code": "declared_build_files_overclaim",
+                    "message": "declared build files must remain empty",
+                }
+            )
+    hooks = report.get("task_candidate_abstraction_hooks")
+    if not isinstance(hooks, Mapping):
+        issues.append(
+            {
+                "code": "invalid_task_candidate_abstraction_hooks",
+                "message": "task_candidate_abstraction_hooks must be an object",
+            }
+        )
+    else:
+        for field in ("status", "serializer_hook", "materializer_hook", "runner_hook"):
+            if hooks.get(field) != "unsupported":
+                issues.append(
+                    {
+                        "code": f"{field}_overclaim",
+                        "message": f"{field} must remain unsupported",
+                    }
+                )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+    else:
+        for field in (
+            "non_python_language_runners_configured",
+            "language_aware_marker_grammars_configured",
+            "build_system_runner_contracts_configured",
+            "task_candidate_abstraction_hooks_configured",
+            "alphaevolve_language_runner_parity",
+        ):
+            if readiness.get(field) is not False:
+                issues.append(
+                    {
+                        "code": f"{field}_overclaim",
+                        "message": f"{field} must remain false",
+                    }
+                )
+        remaining_gap = readiness.get("remaining_gap")
+        if not isinstance(remaining_gap, list) or not remaining_gap:
+            issues.append(
+                {
+                    "code": "missing_remaining_gap",
+                    "message": "remaining_gap must list incomplete runner contracts",
+                }
+            )
+    gap = report.get("alphaevolve_contract_gap")
+    if not isinstance(gap, Mapping):
+        issues.append(
+            {
+                "code": "invalid_alphaevolve_contract_gap",
+                "message": "alphaevolve_contract_gap must be an object",
+            }
+        )
+    elif gap.get("required_before_parity_claim") != (
+        report.get("claim_readiness", {}).get("remaining_gap")
+        if isinstance(report.get("claim_readiness"), Mapping)
+        else None
+    ):
+        issues.append(
+            {
+                "code": "contract_gap_readiness_mismatch",
+                "message": "contract gap list must match readiness remaining_gap",
+            }
+        )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "claim_ready_overclaim",
+                "message": "runner contract report must not claim AlphaEvolve parity",
+            }
+        )
+    return {
+        "schema": schema,
+        "ok": not issues,
+        "issues": issues,
+    }
 
 
 def _candidate_abstraction_runtime_record(program: Program) -> dict:

@@ -4,6 +4,27 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README candidate-language wording scoped to the Python-primary
+      boundary record versus real language/build runners.
+  - Spec evidence: AlphaEvolve tasks can define program artifacts and evaluator
+    interfaces over codebases and task-specific solution representations, so
+    README wording should distinguish the current Python-primary file-set
+    boundary from full arbitrary-language, build-system, or problem-defined
+    candidate abstractions.
+  - Status: README now cites both startup `policies.candidate_language` and
+    completed-runtime `runtime.history.candidate_language_runner_contract_report`.
+    It states that Python is the only supported primary language runner,
+    non-Python text files are workspace-only/no-runner members with fail-closed
+    marker-like syntax, arbitrary-language and build-system runners are
+    unsupported, and AlphaEvolve-grade language/build/environment/task
+    abstraction contracts remain open.
+  - Verification: `py -3.12 -m pytest
+    tests/core/test_loop.py::test_runtime_history_reports_candidate_language_runner_contracts
+    tests/core/test_loop.py::test_runtime_history_reports_candidate_abstraction_choice
+    -q` passed.
+  - Remaining gap: none for README scoping; actual non-Python/build-system
+    runner implementation remains active in code/paper TODOs.
+
 - [x] Keep README backlog-integrity wording scoped until stale source-specific
       absence prose is validated.
   - Spec evidence: README should describe the paper cache and TODO ledgers as

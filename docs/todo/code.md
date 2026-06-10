@@ -33,7 +33,14 @@ Primary evidence:
     arbitrary-language runners, build-system runners, and problem-defined
     solution abstractions. `validate_candidate_language_policy()` rejects
     overclaims that those runner surfaces are supported or language-runner
-    ready.
+    ready. Completed manifests now also include
+    `runtime.history.candidate_language_runner_contract_report` with schema
+    `libreevolve.candidate_language_runner_contract_report.v1`, recording the
+    selected startup policy, the current Python subprocess validator runner,
+    non-Python text members as workspace-only/no-runner records, unsupported
+    arbitrary-language and build-system runner contracts, unsupported task
+    candidate-abstraction hooks, and the exact remaining gaps before
+    AlphaEvolve-style language/build parity.
   - Required result: add configured candidate language/runner declarations,
     language-aware evolve-block grammars, build-system runner contracts, and
     problem-defined candidate abstraction hooks before claiming non-Python or

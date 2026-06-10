@@ -213,6 +213,12 @@ LibreEvolve has:
 - manifest-visible `libreevolve.candidate_language_policy.v1` records that
   declare the current Python-primary text-workspace boundary and explicitly
   mark arbitrary-language/build-system runners as unsupported
+- runtime candidate-language runner contract reports under
+  `runtime.history.candidate_language_runner_contract_report`, recording the
+  current Python subprocess validator runner, non-Python text files as
+  workspace-only/no-runner members, unsupported arbitrary-language and
+  build-system runner contracts, unsupported task-abstraction hooks, and exact
+  remaining gaps before AlphaEvolve-grade language/build parity
 - runtime candidate-abstraction choice reports under
   `runtime.history.candidate_abstraction_choice_report`, recording the current
   code-file-set selection, policy/runner linkage, runtime workspace shape,
@@ -234,8 +240,8 @@ is not yet an AlphaEvolve reproduction.
 
 ### 1. Finish candidate workspace fidelity
 
-- Extend the current Python-primary candidate-language policy into actual
-  language/runner declarations when non-Python candidates become supported.
+- Extend the checked candidate-language runner contracts into actual
+  non-Python language runners when non-Python candidates become supported.
 - Add problem-defined candidate abstraction hooks if LibreEvolve should move
   beyond the documented code-file-set divergence from AlphaEvolve's flexible
   solution-abstraction API.

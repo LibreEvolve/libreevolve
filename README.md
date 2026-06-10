@@ -1525,7 +1525,12 @@ Startup manifests include `policies.candidate_language` with schema
 `libreevolve.candidate_language_policy.v1`, which declares this
 Python-primary text-workspace boundary, fail-closed non-Python marker handling,
 typed static-member support, and unsupported arbitrary-language/build-system
-runner surfaces.
+runner surfaces. Completed manifests also include
+`runtime.history.candidate_language_runner_contract_report`, a checked
+negative-boundary report that records the current Python runner contract,
+lists non-Python text and arbitrary-language runner/build contracts as
+unsupported, and keeps language-aware marker grammars, build-system runners,
+and problem-defined candidate abstraction hooks as explicit remaining gaps.
 
 For workspace candidates, MAP-Elites defaults to performance, complexity, and
 adaptive TF-IDF char-ngram diversity descriptors. Complexity and diversity use a
@@ -2326,6 +2331,13 @@ abstraction-selection claim: abstraction rationale, symmetry/structure
 assumptions, problem-defined abstraction hooks, paired representations, and
 equal-budget comparisons across direct, constructor, and search-algorithm
 formulations remain open.
+Completed manifests also include
+`runtime.history.candidate_language_runner_contract_report`, which keeps this
+candidate-language boundary tied to checked runtime evidence: Python is the
+only supported primary language runner, non-Python text files remain
+workspace-only members with fail-closed marker-like syntax, arbitrary-language
+and build-system runners are unsupported, and AlphaEvolve-grade language,
+build, environment, and task-abstraction contracts remain open.
 
 **validate.py** must define `evaluate(code: str) -> dict`,
 `evaluate(code: str, workspace_path: str) -> dict`, or

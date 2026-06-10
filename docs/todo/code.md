@@ -3172,30 +3172,8 @@ Primary evidence:
     discovered exact algorithms, certificates, and notebook/export files across
     the registered target suite and adding target-suite curation provenance,
     not validating Appendix A registry integrity, validating declared artifact
-    inventory, validating the checked bundle wrapper, or emitting the one
-    checked Strassen baseline once those files exist.
-
-- [ ] Pin the generated Strassen baseline bundle as a checkout-verifiable
-      paper artifact.
-  - Spec evidence: AlphaEvolve-style paper evidence should leave durable,
-    inspectable artifacts for published algorithms, certificates, and notebook
-    exports, not only a helper that can generate them during tests.
-  - Current evidence: `write_strassen_2x2_publication_bundle()` in
-    `libreevolve.problems.benchmarks.matrix_results` writes
-    `matrix/mm_2x2x2/algorithm.json`, `certificate.json`,
-    `reproduce.ipynb`, `report.json`, and artifact-inventory records under a
-    caller-provided root, and `tests/test_matrix_results.py` validates those
-    files in a temporary directory. The current checkout has no committed
-    `matrix/mm_2x2x2/` artifact files, and the routine
-    `libreevolve.tools.paper_manifest` command does not regenerate, hash-check,
-    or validate the helper-produced baseline bundle.
-  - Required result: add a stable checked-in or generated-and-pinned
-    Strassen baseline artifact target with declared output paths, expected
-    hashes/byte counts, command provenance, and CI/paper-manifest validation
-    that proves a fresh checkout can reproduce or verify the exact algorithm,
-    certificate, notebook, report, and inventory files. Keep this distinct
-    from the full Appendix A discovery gap: the scope is durable evidence for
-    the one registered baseline helper, not claiming suite-wide discovery.
+    inventory, validating the checked bundle wrapper, or validating the one
+    pinned checked Strassen baseline.
 
 - [ ] Record matrix baseline-component provenance for Section 3.1 starts.
   - Spec evidence: AlphaEvolve Section 3.1 says the matrix-decomposition

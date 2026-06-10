@@ -10845,3 +10845,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     hashes. The paper-manifest gate validates this boundary with the Appendix
     A matrix checks.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Preserve the Strassen baseline bundle as pinned paper evidence.
+  - Paper evidence: AlphaEvolve's matrix section and Appendix A publish exact
+    matrix-multiplication algorithms and companion artifacts as auditable
+    result evidence; local baseline helpers need durable artifact files to be
+    paper-index evidence.
+  - Status: the `mm_2x2x2` Strassen baseline bundle is pinned under
+    `libreevolve/problems/benchmarks/artifacts/strassen_2x2_publication_bundle/`
+    with algorithm, certificate, notebook, report, and inventory files.
+    `validate_strassen_2x2_publication_bundle()` and the paper-manifest gate
+    validate hashes and regeneration parity while keeping scope limited to the
+    one known baseline.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

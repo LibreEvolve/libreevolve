@@ -118,6 +118,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     matrix_scalar_field_runtime_boundary_record,
     matrix_sweep_space_runtime_boundary_record,
     matrix_tensor_rank_runtime_boundary_record,
+    validate_strassen_2x2_publication_bundle,
     validate_matrix_baseline_component_runtime_boundary,
     validate_matrix_cascade_run_runtime_boundary,
     validate_matrix_headline_historicity_runtime_boundary,
@@ -639,6 +640,14 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
             _safe_manifest_label(issue.note_id) if issue.note_id else None,
         )
         for issue in row_note_artifact_report.issues
+    )
+    strassen_bundle_report = validate_strassen_2x2_publication_bundle()
+    issues.extend(
+        PaperManifestIssue(
+            f"matrix_strassen_bundle_{issue.code}",
+            issue.message,
+        )
+        for issue in strassen_bundle_report.issues
     )
     baseline_component_runtime_report = validate_matrix_baseline_component_runtime_boundary(
         matrix_baseline_component_runtime_boundary_record()

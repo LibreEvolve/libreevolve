@@ -8299,3 +8299,11 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     the current `not_emitted_by_local_runner` state, and keeps real baseline
     component record emission open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the pinned Strassen baseline bundle in ROADMAP.
+  - Spec evidence: roadmap matrix wording needs to distinguish helper/test
+    coverage from durable checkout-visible paper evidence.
+  - Status: ROADMAP now points to the checked-in `mm_2x2x2` Strassen bundle,
+    names `validate_strassen_2x2_publication_bundle()`, and keeps the claim
+    scoped to one baseline rather than Appendix A suite discovery.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

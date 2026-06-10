@@ -771,6 +771,14 @@ is not yet an AlphaEvolve reproduction.
   exactness-certificate refs, matrix-result refs, artifact paths, and artifact
   hashes. Local benchmark runners still need to emit those
   target-tensor/certificate and footnote-caveat artifacts.
+- Keep Strassen baseline claims scoped to one pinned baseline artifact:
+  `validate_strassen_2x2_publication_bundle()` now validates the checked-in
+  `mm_2x2x2` Strassen bundle under
+  `libreevolve/problems/benchmarks/artifacts/strassen_2x2_publication_bundle/`,
+  including report/inventory file hashes and regeneration parity against fresh
+  `write_strassen_2x2_publication_bundle()` output. This remains baseline
+  evidence only; Appendix A suite-wide discovered decompositions, certificates,
+  and notebook exports remain open.
 - Keep matrix sweep-space wording scoped to evidence validation rather than
   executed Figure 9 workflow parity: `libreevolve.matrix_sweep_space_evidence.v1`
   now validates declared `sweep` function identity, user-provided `hyper`

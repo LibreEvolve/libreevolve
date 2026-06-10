@@ -1314,6 +1314,45 @@ def test_validate_paper_manifest_checks_matrix_baseline_component_runtime_bounda
     assert "matrix_baseline_component_runtime_missing_runtime_baseline_component_records" in codes
 
 
+def test_validate_paper_manifest_checks_pinned_strassen_bundle(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        json.dumps(
+            {
+                "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1",
+                "source_paper_id": "2506.13131",
+                "target_suite": "alphaevolve_appendix_a",
+                "targets": [],
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(
+        paper_manifest,
+        "validate_strassen_2x2_publication_bundle",
+        lambda: SimpleNamespace(
+            issues=[
+                SimpleNamespace(
+                    code="strassen_regeneration_hash_mismatch",
+                    message="pinned Strassen artifact does not match regenerated output",
+                )
+            ]
+        ),
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "matrix_strassen_bundle_strassen_regeneration_hash_mismatch" in codes
+
+
 def test_validate_paper_manifest_checks_matrix_near_integrality_runtime_boundary(
     monkeypatch,
     tmp_path,

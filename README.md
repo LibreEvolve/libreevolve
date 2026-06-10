@@ -3751,14 +3751,18 @@ validates the current `not_emitted_by_local_report_export` state and required
 future emitted-artifact fields for table ids, source page/caption locations,
 rendered table files, OCR text, source excerpts, artifact paths/hashes, and
 nested matrix-rank table exhibit evidence.
-`write_strassen_2x2_publication_bundle()` helper emits a concrete checked
-Strassen bundle for the registered `mm_2x2x2` target, including canonical
-algorithm, certificate, notebook, report, and artifact-inventory files with a
-1.0 per-seed rank-hit fraction. Each generated artifact carries a companion
+`write_strassen_2x2_publication_bundle()` emits the checked-in Strassen bundle
+under
+`libreevolve/problems/benchmarks/artifacts/strassen_2x2_publication_bundle/`
+for the registered `mm_2x2x2` target, including canonical algorithm,
+certificate, notebook, report, and artifact-inventory files with a 1.0 per-seed
+rank-hit fraction. `validate_strassen_2x2_publication_bundle()` and the paper
+manifest validate the pinned report/inventory hashes and regeneration parity
+against fresh helper output. Each generated artifact carries a companion
 artifact-rights row that states no companion material was copied and keeps local
 project terms separate from companion repository terms. This is a reproducible
-baseline artifact, not evidence that LibreEvolve has discovered or exported
-the full Appendix A target suite.
+baseline artifact, not evidence that LibreEvolve has discovered or exported the
+full Appendix A target suite.
 LibreEvolve still does not emit local Appendix A matrix scaling-frontier runs:
 larger target attempts, measured accelerator/GPU memory profiles, OOM or
 resource-exhaustion artifacts, reduced-seed tradeoffs, and target-exclusion

@@ -1121,10 +1121,13 @@ Implemented:
   or artifacts.
   `write_strassen_2x2_publication_bundle()` provides one checked Strassen
   baseline for `mm_2x2x2` with canonical algorithm, certificate, notebook,
-  report, and artifact inventory files. It still does not provide discovered
-  tensor-decomposition algorithms, certificates, or notebook exports across the
-  full Appendix A target suite. It also validates matrix result metadata after
-  the report exists.
+  report, and artifact inventory files. Those files are now pinned under
+  `libreevolve/problems/benchmarks/artifacts/strassen_2x2_publication_bundle/`;
+  `validate_strassen_2x2_publication_bundle()` and the paper-manifest gate
+  verify the report/inventory hashes and regeneration parity against fresh
+  helper output. This still does not provide discovered tensor-decomposition
+  algorithms, certificates, or notebook exports across the full Appendix A
+  target suite.
   `libreevolve.matrix_baseline_component_runtime_boundary.v1` now records the
   current `not_emitted_by_local_runner` boundary for Section 3.1-style
   starting-algorithm provenance and required future emitted fields for

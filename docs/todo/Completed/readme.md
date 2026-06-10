@@ -10882,3 +10882,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     generation-0 metrics, mutation lineage, result refs, artifact paths, and
     hashes.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the pinned Strassen baseline bundle in README.
+  - Spec evidence: README-facing paper evidence should distinguish helper-only
+    generation from durable artifact files that a reader can inspect or
+    reproduce from a fresh checkout.
+  - Status: README now points to
+    `libreevolve/problems/benchmarks/artifacts/strassen_2x2_publication_bundle/`,
+    names `validate_strassen_2x2_publication_bundle()`, and states that the
+    paper manifest validates report/inventory hashes and regeneration parity
+    while keeping the claim scoped to one baseline.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

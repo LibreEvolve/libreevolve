@@ -16062,3 +16062,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused matrix-result and paper-manifest tests cover the
     absence boundary, emitted-record validation, invalid component metadata,
     and manifest hook.
+
+- [x] Pin the generated Strassen baseline bundle as checkout-verifiable paper
+      evidence.
+  - Spec evidence: AlphaEvolve-style paper evidence should leave durable,
+    inspectable artifacts for published algorithms, certificates, and notebook
+    exports, not only a helper that can generate them during tests.
+  - Status: the checked Strassen `mm_2x2x2` bundle is now pinned under
+    `libreevolve/problems/benchmarks/artifacts/strassen_2x2_publication_bundle/`
+    with `algorithm.json`, `certificate.json`, `reproduce.ipynb`,
+    `report.json`, and `inventory.json`. `validate_strassen_2x2_publication_bundle()`
+    validates report/inventory file hashes and regeneration parity against
+    fresh `write_strassen_2x2_publication_bundle()` output, and
+    `libreevolve.tools.paper_manifest` checks the bundle.
+  - Verification: focused matrix-result and paper-manifest tests cover the
+    pinned bundle, tamper/regeneration drift, persisted inventory file, and
+    manifest hook.

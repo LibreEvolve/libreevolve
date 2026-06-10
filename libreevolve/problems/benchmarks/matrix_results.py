@@ -4,6 +4,7 @@ import json
 import hashlib
 import math
 import re
+import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -34,6 +35,19 @@ MATRIX_TENSOR_RANK_SCHEMA = "libreevolve.matrix_tensor_rank_evidence.v1"
 MATRIX_TENSOR_RANK_RUNTIME_SCHEMA = "libreevolve.matrix_tensor_rank_runtime_boundary.v1"
 MATRIX_HEADLINE_HISTORICITY_SCHEMA = "libreevolve.matrix_headline_historicity_evidence.v1"
 MATRIX_HEADLINE_HISTORICITY_RUNTIME_SCHEMA = "libreevolve.matrix_headline_historicity_runtime_boundary.v1"
+STRASSEN_2X2_PUBLICATION_BUNDLE_ROOT = (
+    Path(__file__).resolve().parent
+    / "artifacts"
+    / "strassen_2x2_publication_bundle"
+)
+STRASSEN_2X2_PUBLICATION_BUNDLE_SEEDS = (0, 1, 2, 3)
+STRASSEN_2X2_PUBLICATION_BUNDLE_FILES = (
+    "matrix/mm_2x2x2/algorithm.json",
+    "matrix/mm_2x2x2/certificate.json",
+    "matrix/mm_2x2x2/reproduce.ipynb",
+    "matrix/mm_2x2x2/report.json",
+    "matrix/mm_2x2x2/inventory.json",
+)
 COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer", "rational", "float"})
 PUBLICATION_COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer"})
 EXACTNESS_STATUSES = frozenset({"verified", "failed", "not_checked"})
@@ -776,6 +790,7 @@ def validate_matrix_publication_bundle(
         root = Path(artifact_root)
     if root is not None:
         _validate_bundle_report_file(data, root, issues)
+        _validate_bundle_inventory_file(data, root, issues)
     elif not isinstance(report_path, str) or not report_path:
         issues.append(
             MatrixResultIssue(
@@ -1923,6 +1938,8 @@ def write_strassen_2x2_publication_bundle(
     report_path = base / "report.json"
     report_sha, report_bytes = _write_canonical_json(report_path, report)
     inventory = matrix_result_artifact_inventory(report, root)
+    inventory_path = base / "inventory.json"
+    inventory_sha, inventory_bytes = _write_canonical_json(inventory_path, inventory)
     return {
         "schema": MATRIX_PUBLICATION_BUNDLE_SCHEMA,
         "target_suite": APPENDIX_A_TARGET_SUITE,
@@ -1932,8 +1949,80 @@ def write_strassen_2x2_publication_bundle(
         "report_sha256": report_sha,
         "report_bytes": report_bytes,
         "report": report,
+        "inventory_path": "matrix/mm_2x2x2/inventory.json",
+        "inventory_sha256": inventory_sha,
+        "inventory_bytes": inventory_bytes,
         "inventory": inventory,
     }
+
+
+def strassen_2x2_publication_bundle_record(
+    artifact_root: str | Path | None = None,
+) -> dict[str, Any]:
+    """Return the checked-in Strassen 2x2 publication bundle metadata."""
+    root = Path(artifact_root) if artifact_root is not None else STRASSEN_2X2_PUBLICATION_BUNDLE_ROOT
+    report_path = Path("matrix/mm_2x2x2/report.json")
+    inventory_path = Path("matrix/mm_2x2x2/inventory.json")
+    report_file = root / report_path
+    inventory_file = root / inventory_path
+    report_data, _ = _load_report(report_file)
+    inventory_data, _ = _load_report(inventory_file)
+    report_sha, report_bytes = _file_digest_and_size(report_file)
+    inventory_sha, inventory_bytes = _file_digest_and_size(inventory_file)
+    return {
+        "schema": MATRIX_PUBLICATION_BUNDLE_SCHEMA,
+        "target_suite": APPENDIX_A_TARGET_SUITE,
+        "target_id": _STRASSEN_TARGET_ID,
+        "artifact_root": str(root),
+        "report_path": str(report_path).replace("\\", "/"),
+        "report_sha256": report_sha,
+        "report_bytes": report_bytes,
+        "report": report_data or {},
+        "inventory_path": str(inventory_path).replace("\\", "/"),
+        "inventory_sha256": inventory_sha,
+        "inventory_bytes": inventory_bytes,
+        "inventory": inventory_data or {},
+        "generation_command": (
+            "py -3.12 -c \"from libreevolve.problems.benchmarks.matrix_results "
+            "import write_strassen_2x2_publication_bundle; "
+            "write_strassen_2x2_publication_bundle('libreevolve/problems/benchmarks/"
+            "artifacts/strassen_2x2_publication_bundle')\""
+        ),
+        "generation_seeds": list(STRASSEN_2X2_PUBLICATION_BUNDLE_SEEDS),
+    }
+
+
+def validate_strassen_2x2_publication_bundle(
+    artifact_root: str | Path | None = None,
+) -> MatrixPublicationBundleValidation:
+    """Validate the checked-in Strassen 2x2 publication bundle and regeneration parity."""
+    root = Path(artifact_root) if artifact_root is not None else STRASSEN_2X2_PUBLICATION_BUNDLE_ROOT
+    bundle = strassen_2x2_publication_bundle_record(root)
+    validation = validate_matrix_publication_bundle(bundle)
+    issues = list(validation.issues)
+    if bundle.get("target_id") != _STRASSEN_TARGET_ID:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_strassen_target_id",
+                "Strassen publication bundle must target mm_2x2x2",
+            )
+        )
+    if bundle.get("generation_seeds") != list(STRASSEN_2X2_PUBLICATION_BUNDLE_SEEDS):
+        issues.append(
+            MatrixResultIssue(
+                "invalid_strassen_generation_seeds",
+                "Strassen publication bundle must use pinned generation seeds",
+            )
+        )
+    _validate_strassen_regeneration_parity(root, issues)
+    return MatrixPublicationBundleValidation(
+        ok=not issues,
+        target_id=validation.target_id,
+        report_ok=validation.report_ok,
+        inventory_ok=validation.inventory_ok,
+        alphaevolve_comparable=validation.alphaevolve_comparable,
+        issues=issues,
+    )
 
 
 def _validate_bundle_seeds(seeds: object) -> list[int]:
@@ -2061,6 +2150,14 @@ def _write_canonical_json(path: Path, payload: dict[str, Any]) -> tuple[str, int
     raw = json.dumps(payload, sort_keys=True, indent=2).encode("utf-8")
     raw += b"\n"
     path.write_bytes(raw)
+    return hashlib.sha256(raw).hexdigest(), len(raw)
+
+
+def _file_digest_and_size(path: Path) -> tuple[str, int]:
+    try:
+        raw = path.read_bytes()
+    except OSError:
+        return "", 0
     return hashlib.sha256(raw).hexdigest(), len(raw)
 
 
@@ -4153,6 +4250,167 @@ def _validate_bundle_report_file(
                 "report_path JSON must match the embedded report",
             )
         )
+
+
+def _validate_bundle_inventory_file(
+    data: dict[str, Any],
+    root: Path,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if not any(field in data for field in ("inventory_path", "inventory_sha256", "inventory_bytes")):
+        return
+    inventory_path = _safe_relative_path(data.get("inventory_path"))
+    if inventory_path is None:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_inventory_path",
+                "inventory_path must be a safe relative path",
+            )
+        )
+        return
+    try:
+        resolved_root = root.resolve()
+        resolved_path = (resolved_root / inventory_path).resolve(strict=False)
+    except OSError:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_inventory_path",
+                "inventory_path must be resolvable under artifact_root",
+            )
+        )
+        return
+    if not resolved_path.is_relative_to(resolved_root):
+        issues.append(
+            MatrixResultIssue(
+                "inventory_path_outside_root",
+                "inventory_path must stay under artifact_root",
+            )
+        )
+        return
+    if not resolved_path.exists():
+        issues.append(
+            MatrixResultIssue(
+                "missing_inventory_file",
+                "inventory_path must point to an existing inventory file",
+            )
+        )
+        return
+    if not resolved_path.is_file():
+        issues.append(
+            MatrixResultIssue(
+                "inventory_path_not_file",
+                "inventory_path must point to a file",
+            )
+        )
+        return
+    try:
+        raw = resolved_path.read_bytes()
+    except OSError as exc:
+        issues.append(
+            MatrixResultIssue(
+                "inventory_read_error",
+                f"failed to read inventory_path: {exc}",
+            )
+        )
+        return
+
+    expected_sha = data.get("inventory_sha256")
+    actual_sha = hashlib.sha256(raw).hexdigest()
+    if not isinstance(expected_sha, str) or _SHA256_RE.fullmatch(expected_sha) is None:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_inventory_hash",
+                "inventory_sha256 must be a lowercase SHA-256 hex digest",
+            )
+        )
+    elif actual_sha != expected_sha:
+        issues.append(
+            MatrixResultIssue(
+                "inventory_hash_mismatch",
+                "inventory_sha256 must match the inventory_path file",
+            )
+        )
+
+    expected_bytes = data.get("inventory_bytes")
+    actual_bytes = len(raw)
+    if (
+        isinstance(expected_bytes, bool)
+        or not isinstance(expected_bytes, int)
+        or expected_bytes <= 0
+    ):
+        issues.append(
+            MatrixResultIssue(
+                "invalid_inventory_bytes",
+                "inventory_bytes must be a positive integer",
+            )
+        )
+    elif actual_bytes != expected_bytes:
+        issues.append(
+            MatrixResultIssue(
+                "inventory_bytes_mismatch",
+                "inventory_bytes must match the inventory_path file",
+            )
+        )
+
+    try:
+        file_inventory = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        issues.append(
+            MatrixResultIssue(
+                "invalid_inventory_file_json",
+                "inventory_path must contain a JSON object matching the embedded inventory",
+            )
+        )
+        return
+    if file_inventory != data.get("inventory"):
+        issues.append(
+            MatrixResultIssue(
+                "inventory_file_mismatch",
+                "inventory_path JSON must match the embedded inventory",
+            )
+        )
+
+
+def _validate_strassen_regeneration_parity(
+    root: Path,
+    issues: list[MatrixResultIssue],
+) -> None:
+    with tempfile.TemporaryDirectory() as tmp:
+        generated_root = Path(tmp) / root.name
+        write_strassen_2x2_publication_bundle(
+            generated_root,
+            seeds=STRASSEN_2X2_PUBLICATION_BUNDLE_SEEDS,
+        )
+        for relative in STRASSEN_2X2_PUBLICATION_BUNDLE_FILES:
+            pinned_path = root / relative
+            generated_path = generated_root / relative
+            try:
+                pinned_raw = pinned_path.read_bytes()
+            except OSError:
+                issues.append(
+                    MatrixResultIssue(
+                        "missing_strassen_pinned_artifact",
+                        f"pinned Strassen artifact is missing: {relative}",
+                    )
+                )
+                continue
+            try:
+                generated_raw = generated_path.read_bytes()
+            except OSError:
+                issues.append(
+                    MatrixResultIssue(
+                        "missing_strassen_generated_artifact",
+                        f"generated Strassen artifact is missing: {relative}",
+                    )
+                )
+                continue
+            if hashlib.sha256(pinned_raw).hexdigest() != hashlib.sha256(generated_raw).hexdigest():
+                issues.append(
+                    MatrixResultIssue(
+                        "strassen_regeneration_hash_mismatch",
+                        f"pinned Strassen artifact does not match regenerated output: {relative}",
+                    )
+                )
 
 
 def _validate_matrix_publication_inventory(

@@ -1,5 +1,6 @@
 import hashlib
 import json
+import shutil
 
 import pytest
 
@@ -23,6 +24,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_SWEEP_SPACE_RUNTIME_SCHEMA,
     MATRIX_TENSOR_RANK_SCHEMA,
     MATRIX_TENSOR_RANK_RUNTIME_SCHEMA,
+    STRASSEN_2X2_PUBLICATION_BUNDLE_ROOT,
     matrix_baseline_component_runtime_boundary_record,
     matrix_cascade_run_runtime_boundary_record,
     matrix_headline_historicity_runtime_boundary_record,
@@ -44,6 +46,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     render_matrix_sweep_space_runtime_boundary_summary,
     render_matrix_tensor_rank_summary,
     render_matrix_tensor_rank_runtime_boundary_summary,
+    strassen_2x2_publication_bundle_record,
     validate_matrix_baseline_component_runtime_boundary,
     validate_matrix_cascade_run_runtime_boundary,
     validate_matrix_headline_historicity_evidence,
@@ -58,6 +61,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     validate_matrix_sweep_space_runtime_boundary,
     validate_matrix_tensor_rank_evidence,
     validate_matrix_tensor_rank_runtime_boundary,
+    validate_strassen_2x2_publication_bundle,
     write_strassen_2x2_publication_bundle,
 )
 
@@ -655,6 +659,9 @@ def test_strassen_2x2_publication_bundle_writes_valid_artifacts(tmp_path):
     assert certificate["algorithm_sha256"] == report["artifacts"][0]["sha256"]
     report_path = tmp_path / bundle["report_path"]
     assert report_path.exists()
+    inventory_path = tmp_path / bundle["inventory_path"]
+    assert inventory_path.exists()
+    assert json.loads(inventory_path.read_text(encoding="utf-8")) == inventory
 
 
 def test_strassen_2x2_publication_bundle_validator_rejects_tampering(tmp_path):
@@ -679,6 +686,36 @@ def test_strassen_2x2_publication_bundle_validator_rejects_tampering(tmp_path):
     assert "inventory_not_ok" in codes
     assert "inventory_missing_count_mismatch" in codes
     assert "inventory_missing_count_nonzero" in codes
+
+
+def test_pinned_strassen_2x2_publication_bundle_validates_checked_in_artifacts():
+    bundle = strassen_2x2_publication_bundle_record()
+
+    validation = validate_strassen_2x2_publication_bundle()
+
+    assert STRASSEN_2X2_PUBLICATION_BUNDLE_ROOT.exists()
+    assert bundle["target_id"] == "mm_2x2x2"
+    assert bundle["generation_seeds"] == [0, 1, 2, 3]
+    assert validation.ok is True
+    assert validation.report_ok is True
+    assert validation.inventory_ok is True
+    assert validation.alphaevolve_comparable is True
+    assert validation.issues == []
+
+
+def test_pinned_strassen_2x2_publication_bundle_detects_artifact_drift(tmp_path):
+    copied_root = tmp_path / STRASSEN_2X2_PUBLICATION_BUNDLE_ROOT.name
+    shutil.copytree(STRASSEN_2X2_PUBLICATION_BUNDLE_ROOT, copied_root)
+    (copied_root / "matrix" / "mm_2x2x2" / "algorithm.json").write_text(
+        "{}\n",
+        encoding="utf-8",
+    )
+
+    validation = validate_strassen_2x2_publication_bundle(copied_root)
+
+    assert validation.ok is False
+    codes = {issue.code for issue in validation.issues}
+    assert "strassen_regeneration_hash_mismatch" in codes
 
 
 def test_matrix_publication_bundle_rejects_inventory_source_rights_drift(tmp_path):

@@ -823,12 +823,14 @@ is not yet an AlphaEvolve reproduction.
   baseline component records.
 - Keep matrix repeated-seed wording scoped to result reports versus executed
   cascade traces: `libreevolve.matrix_cascade_run_runtime_boundary.v1` now
-  validates the current `not_emitted_by_local_runner` boundary and required
-  future emitted-record fields for run/target/seed ids, cascade ids and
-  versions, stage traces with threshold/rank/exactness/stop diagnostics,
-  accepted final rank, candidate and matrix-result refs, artifact paths, and
-  artifact hashes. Local benchmark runners still need to emit those
-  AlphaEvolve Section 3.1-style matrix cascade traces.
+  validates the current `not_emitted_by_local_runner` boundary and emitted
+  per-seed records for run/target/seed ids, cascade ids and versions, stage
+  traces with threshold/rank/exactness/stop diagnostics, accepted final rank,
+  candidate and matrix-result refs, artifact paths, and artifact hashes.
+  `matrix_cascade_run_runtime_boundary_from_matrix_result()` builds emitted
+  records from matrix result seed rows plus per-seed stage traces and validates
+  final-stage/result-row linkage. Local benchmark runners still need to emit
+  those AlphaEvolve Section 3.1-style matrix cascade traces automatically.
 - Keep matrix near-integrality wording scoped to evidence validation rather
   than executed search parity: `libreevolve.matrix_near_integrality_evidence.v1`
   now validates declared prompt instructions, integer/half-integer nearest

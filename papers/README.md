@@ -1260,13 +1260,15 @@ Implemented:
   lineage, matrix-result refs, artifact paths, and artifact hashes. It does
   not yet provide emitted baseline component records for local matrix runs.
   `libreevolve.matrix_cascade_run_runtime_boundary.v1` now
-  records the current `not_emitted_by_local_runner` boundary for Section
-  3.1-style repeated-seed matrix cascade traces and required future emitted
-  fields for run/target/seed ids, cascade ids and versions, stage traces with
+  records the current `not_emitted_by_local_runner` boundary and validates
+  emitted Section 3.1-style repeated-seed matrix cascade traces for
+  run/target/seed ids, cascade ids and versions, stage traces with
   threshold/rank/exactness/stop diagnostics, accepted final rank, candidate and
-  matrix-result refs, artifact paths, and artifact hashes. It does not yet
-  provide emitted matrix cascade traces behind the declared per-seed result
-  rows. `libreevolve.matrix_near_integrality_evidence.v1` now
+  matrix-result refs, artifact paths, and artifact hashes.
+  `matrix_cascade_run_runtime_boundary_from_matrix_result()` can build emitted
+  records from declared seed rows plus per-seed stage traces, with final-stage
+  linkage checks. Local matrix runners still do not emit these traces
+  automatically. `libreevolve.matrix_near_integrality_evidence.v1` now
   validates declared search-time evidence that candidates were instructed to
   produce near-integral decompositions, rounded to integer or half-integer
   coefficients, and linked to exactness certificates as in AlphaEvolve Section

@@ -5,6 +5,7 @@ import hashlib
 import math
 import re
 import tempfile
+import copy
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -805,6 +806,118 @@ def matrix_cascade_run_runtime_boundary_record() -> dict[str, Any]:
             "cascade traces behind per-seed rank reports."
         ),
     }
+
+
+def matrix_cascade_run_runtime_boundary_from_matrix_result(
+    *,
+    run_id: str,
+    cascade_id: str,
+    cascade_version: str,
+    matrix_result_report: dict[str, Any],
+    matrix_result_ref: str,
+    stage_traces_by_seed: dict[int | str, list[dict[str, Any]]],
+    artifact_paths_by_seed: dict[int | str, list[str]] | None = None,
+    artifact_sha256_by_seed: dict[int | str, str] | None = None,
+) -> dict[str, Any]:
+    """Build emitted matrix cascade-run records from per-seed result rows."""
+    validation = validate_matrix_result_report(matrix_result_report)
+    if not validation.ok:
+        messages = "; ".join(issue.message for issue in validation.issues)
+        raise ValueError(f"matrix_result_report is invalid: {messages}")
+    seed_results = matrix_result_report.get("seed_results")
+    if not isinstance(seed_results, list) or not seed_results:
+        raise ValueError("matrix_result_report.seed_results must be non-empty")
+    target_id = matrix_result_report.get("target_id")
+    if not isinstance(target_id, str) or not target_id.strip():
+        raise ValueError("matrix_result_report.target_id must be non-empty")
+    records: list[dict[str, Any]] = []
+    for seed_result in seed_results:
+        if not isinstance(seed_result, dict):
+            raise ValueError("matrix_result_report.seed_results entries must be objects")
+        seed = seed_result.get("seed")
+        rank = seed_result.get("rank")
+        if isinstance(seed, bool) or not isinstance(seed, int):
+            raise ValueError("matrix_result_report seed rows must include integer seed")
+        if isinstance(rank, bool) or not isinstance(rank, int) or rank <= 0:
+            raise ValueError("matrix_result_report seed rows must include positive rank")
+        stage_traces = _lookup_seed_mapping(
+            stage_traces_by_seed,
+            seed,
+            field_name="stage_traces_by_seed",
+        )
+        if not isinstance(stage_traces, list) or not stage_traces:
+            raise ValueError(f"stage_traces_by_seed[{seed}] must be a non-empty list")
+        final_stage = stage_traces[-1]
+        if not isinstance(final_stage, dict):
+            raise ValueError(f"stage_traces_by_seed[{seed}] final entry must be an object")
+        final_candidate_id = final_stage.get("candidate_id")
+        if not isinstance(final_candidate_id, str) or not final_candidate_id.strip():
+            raise ValueError(
+                f"stage_traces_by_seed[{seed}] final entry must include candidate_id"
+            )
+        stop_reason = final_stage.get("stop_reason")
+        if not isinstance(stop_reason, str) or not stop_reason.strip():
+            raise ValueError(
+                f"stage_traces_by_seed[{seed}] final entry must include stop_reason"
+            )
+        artifact_paths = (
+            _lookup_seed_mapping(
+                artifact_paths_by_seed,
+                seed,
+                field_name="artifact_paths_by_seed",
+            )
+            if artifact_paths_by_seed is not None
+            else [f"matrix/{target_id}/cascade_seed_{seed}.json"]
+        )
+        artifact_sha256 = (
+            _lookup_seed_mapping(
+                artifact_sha256_by_seed,
+                seed,
+                field_name="artifact_sha256_by_seed",
+            )
+            if artifact_sha256_by_seed is not None
+            else _stable_json_sha256(
+                {
+                    "run_id": run_id,
+                    "target_id": target_id,
+                    "seed": seed,
+                    "cascade_id": cascade_id,
+                    "cascade_version": cascade_version,
+                    "stage_traces": stage_traces,
+                    "rank": rank,
+                }
+            )
+        )
+        records.append(
+            {
+                "run_id": run_id,
+                "target_id": target_id,
+                "seed": seed,
+                "cascade_id": cascade_id,
+                "cascade_version": cascade_version,
+                "stage_traces": copy.deepcopy(stage_traces),
+                "accepted_final_rank": rank,
+                "stop_reason": stop_reason,
+                "final_candidate_id": final_candidate_id,
+                "matrix_result_ref": matrix_result_ref,
+                "matrix_result_report": copy.deepcopy(matrix_result_report),
+                "artifact_paths": copy.deepcopy(artifact_paths),
+                "artifact_sha256": artifact_sha256,
+            }
+        )
+    boundary = matrix_cascade_run_runtime_boundary_record()
+    boundary.update(
+        {
+            "runtime_emission_status": "emitted",
+            "emitted_records": records,
+            "claim_boundary": (
+                "Emitted records are per-seed matrix cascade traces linked to "
+                "matrix_result_report seed rows; this still does not claim full "
+                "AlphaEvolve Section 3.1 scale or state-of-the-art discovery."
+            ),
+        }
+    )
+    return boundary
 
 
 def validate_matrix_cascade_run_runtime_boundary(
@@ -4062,7 +4175,13 @@ def _validate_matrix_cascade_run_runtime_records(
                 )
             else:
                 seen.add(key)
-        _validate_matrix_cascade_stage_traces(record.get("stage_traces"), index, issues)
+        _validate_matrix_cascade_stage_traces(
+            record.get("stage_traces"),
+            index,
+            issues,
+            accepted_final_rank=accepted_final_rank,
+            final_candidate_id=record.get("final_candidate_id"),
+        )
         _validate_runtime_artifact_paths(record.get("artifact_paths"), "cascade_run", index, issues)
         _validate_runtime_artifact_sha(record.get("artifact_sha256"), "cascade_run", index, issues)
 
@@ -4153,6 +4272,9 @@ def _validate_matrix_cascade_stage_traces(
     value: object,
     index: int,
     issues: list[MatrixResultIssue],
+    *,
+    accepted_final_rank: int | None,
+    final_candidate_id: object,
 ) -> None:
     if not isinstance(value, list) or not value:
         issues.append(
@@ -4163,6 +4285,7 @@ def _validate_matrix_cascade_stage_traces(
         )
         return
     seen_labels: set[str] = set()
+    last_stage: dict[str, Any] | None = None
     for stage_index, stage in enumerate(value):
         if not isinstance(stage, dict):
             issues.append(
@@ -4172,6 +4295,7 @@ def _validate_matrix_cascade_stage_traces(
                 )
             )
             continue
+        last_stage = stage
         label = stage.get("stage_label")
         if not isinstance(label, str) or not label.strip():
             issues.append(
@@ -4221,6 +4345,32 @@ def _validate_matrix_cascade_stage_traces(
                     "stage exact flag must be boolean",
                 )
             )
+    if last_stage is None:
+        return
+    if (
+        accepted_final_rank is not None
+        and isinstance(last_stage.get("rank"), int)
+        and not isinstance(last_stage.get("rank"), bool)
+        and last_stage.get("rank") != accepted_final_rank
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{index}_final_stage_rank_mismatch",
+                "final stage rank must match accepted_final_rank",
+            )
+        )
+    if (
+        isinstance(final_candidate_id, str)
+        and final_candidate_id.strip()
+        and isinstance(last_stage.get("candidate_id"), str)
+        and last_stage.get("candidate_id") != final_candidate_id
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{index}_final_stage_candidate_mismatch",
+                "final stage candidate_id must match final_candidate_id",
+            )
+        )
 
 
 def _validate_matrix_cascade_seed_result_match(
@@ -4252,6 +4402,27 @@ def _validate_matrix_cascade_seed_result_match(
             "matrix_result_report seed_results must include the cascade-run seed",
         )
     )
+
+
+def _lookup_seed_mapping(
+    mapping: dict[int | str, Any] | None,
+    seed: int,
+    *,
+    field_name: str,
+) -> Any:
+    if not isinstance(mapping, dict):
+        raise ValueError(f"{field_name} must be a mapping")
+    if seed in mapping:
+        return mapping[seed]
+    seed_key = str(seed)
+    if seed_key in mapping:
+        return mapping[seed_key]
+    raise ValueError(f"{field_name} missing seed {seed}")
+
+
+def _stable_json_sha256(value: object) -> str:
+    raw = json.dumps(value, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(raw).hexdigest()
 
 
 def _validate_runtime_artifact_paths(

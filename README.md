@@ -3607,13 +3607,15 @@ matrix-result refs, artifact paths, and artifact hashes. Local matrix benchmark
 runners still do not emit those baseline component records.
 Matrix cascade-run provenance uses
 `libreevolve.matrix_cascade_run_runtime_boundary.v1`; it validates the current
-`not_emitted_by_local_runner` state for AlphaEvolve Section 3.1-style
-repeated-seed matrix cascade traces and the required future emitted-record
-fields for run/target/seed ids, cascade ids and versions, stage traces with
+`not_emitted_by_local_runner` state and can also validate emitted AlphaEvolve
+Section 3.1-style repeated-seed matrix cascade traces. The helper
+`matrix_cascade_run_runtime_boundary_from_matrix_result()` builds emitted
+records from a matrix result report plus per-seed stage traces, linking
+run/target/seed ids, cascade ids and versions, stage traces with
 threshold/rank/exactness/stop diagnostics, accepted final rank, candidate and
-matrix-result refs, artifact paths, and artifact hashes. This keeps declared
-per-seed report validation separate from executed matrix cascade evidence until
-local matrix benchmark runners emit those traces.
+matrix-result refs, artifact paths, and artifact hashes. Validation checks that
+the final stage rank/candidate and seed row match. Local matrix benchmark
+runners still do not automatically emit those traces.
 Matrix search-time near-integrality evidence uses
 `libreevolve.matrix_near_integrality_evidence.v1`; it validates declared
 prompt-instruction provenance for near-integral matrix tensor decompositions,

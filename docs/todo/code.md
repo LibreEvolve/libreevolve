@@ -3019,21 +3019,21 @@ Primary evidence:
   - Current evidence: generic evaluator cascades can run staged validators,
     and `libreevolve.matrix_result_report.v1` can validate declared per-seed
     rank rows after a report exists.
-    `libreevolve.matrix_cascade_run_runtime_boundary.v1` now validates the
-    current `not_emitted_by_local_runner` boundary and required future fields
-    for run/target/seed ids, cascade ids/versions, stage traces, accepted
-    final ranks, candidate/result refs, artifact paths, and hashes. No matrix
-    benchmark runner yet emits the cascade configuration used for each matrix
-    target/seed, per-stage rank and exactness diagnostics, early-stop or
-    pruning decisions, candidate lineage through cascade stages, or aggregation
-    evidence for the published best-rank hit fraction.
-  - Required result: add matrix benchmark execution records and validators for
-    target id, seed id, cascade id/version, stage labels and thresholds,
-    per-stage candidate rank/exactness/certificate status, stop reason,
-    accepted final rank, and aggregation checks tying all seed-level cascade
-    traces to the matrix result report. Keep this separate from generic
-    cascade semantics and from hand-authored matrix reports until actual
-    Section 3.1-style runs emit the evidence.
+    `libreevolve.matrix_cascade_run_runtime_boundary.v1` now validates both
+    the current `not_emitted_by_local_runner` boundary and emitted per-seed
+    trace records for run/target/seed ids, cascade ids/versions, stage traces,
+    accepted final ranks, candidate/result refs, artifact paths, and hashes.
+    `matrix_cascade_run_runtime_boundary_from_matrix_result()` builds emitted
+    records from matrix result seed rows plus per-seed stage traces and
+    validates final-stage rank/candidate linkage. No matrix benchmark runner
+    yet emits the cascade configuration used for each matrix target/seed,
+    early-stop or pruning decisions, candidate lineage through cascade stages,
+    or aggregation evidence for the published best-rank hit fraction.
+  - Required result: connect actual matrix benchmark execution to these records
+    and add aggregation checks tying all seed-level cascade traces to the
+    matrix result report. Keep this separate from generic cascade semantics and
+    from hand-authored matrix reports until actual Section 3.1-style runs emit
+    the evidence.
 
 - [ ] Add best-known-rank citation provenance for Appendix A matrix baselines.
   - Spec evidence: AlphaEvolve Table 2 reports matrix targets with a

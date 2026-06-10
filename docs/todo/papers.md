@@ -3018,20 +3018,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     seed rows and aggregate hit fractions, while generic cascade TODOs track
     cascade semantics.
     `libreevolve.matrix_cascade_run_runtime_boundary.v1` now validates the
-    current `not_emitted_by_local_runner` boundary and required future
-    target/seed, cascade, stage-trace, final-rank, candidate/result reference,
-    artifact-path, and hash fields. It does not preserve emitted
-    matrix-specific executed cascade traces: target/seed ids, cascade
-    configuration, stage thresholds, per-stage ranks and exactness diagnostics,
-    pruning or early-stop reasons, final accepted rank, or aggregation evidence
-    linking those traces to the published Table 2/Appendix A rank and
+    current `not_emitted_by_local_runner` boundary and emitted target/seed,
+    cascade, stage-trace, final-rank, candidate/result reference,
+    artifact-path, and hash fields.
+    `matrix_cascade_run_runtime_boundary_from_matrix_result()` builds one
+    emitted record per seed row from per-seed stage traces and checks final
+    stage/result-row linkage. It does not yet require local matrix runners to
+    preserve emitted matrix-specific executed cascade traces or aggregation
+    evidence linking those traces to the published Table 2/Appendix A rank and
     hit-fraction rows.
-  - Required result: add paper/report evidence for matrix cascade runs before
-    treating per-seed matrix result reports as AlphaEvolve Section 3.1 search
-    evidence: one trace per target/seed, stage-level diagnostics and stop
-    reasons, candidate/result artifact links, and summary validation that the
-    reported best-rank and hit fraction are computed from those executed
-    cascade traces.
+  - Required result: connect actual matrix runners to emitted cascade records
+    before treating per-seed matrix result reports as AlphaEvolve Section 3.1
+    search evidence, including summary validation that the reported best-rank
+    and hit fraction are computed from executed cascade traces.
 
 - [ ] Track Table 2/Table 3 matrix-rank table exhibit provenance as paper
       evidence.

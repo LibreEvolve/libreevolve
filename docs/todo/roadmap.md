@@ -2241,10 +2241,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     evaluator cascades and declared matrix result reports with per-seed rank
     rows and hit-fraction checks. It now also points to
     `libreevolve.matrix_cascade_run_runtime_boundary.v1`, which validates the
-    current `not_emitted_by_local_runner` boundary and required future fields
-    for repeated-seed matrix cascade traces. It does not yet require emitted
-    matrix-specific execution traces showing the cascade configuration, stage
-    thresholds, per-stage rank/exactness diagnostics, pruning or early-stop
+    current `not_emitted_by_local_runner` boundary and emitted repeated-seed
+    matrix cascade traces. It also points to
+    `matrix_cascade_run_runtime_boundary_from_matrix_result()`, which builds
+    emitted records from seed rows plus per-seed stage traces and checks final
+    stage/result-row linkage. It does not yet require local matrix benchmark
+    runners to emit matrix-specific execution traces, pruning or early-stop
     reasons, target/seed lineage, and aggregation from executed traces into
     best-rank hit fractions.
   - Required result: when matrix cascade-run provenance lands, update ROADMAP,

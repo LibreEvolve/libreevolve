@@ -31,6 +31,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_TENSOR_RANK_RUNTIME_SCHEMA,
     STRASSEN_2X2_PUBLICATION_BUNDLE_ROOT,
     matrix_baseline_component_runtime_boundary_record,
+    matrix_cascade_run_runtime_boundary_from_matrix_result,
     matrix_cascade_run_runtime_boundary_record,
     matrix_headline_historicity_runtime_boundary_record,
     matrix_near_integrality_runtime_boundary_record,
@@ -366,6 +367,64 @@ def test_matrix_cascade_run_runtime_boundary_accepts_emitted_trace():
     assert validation.issues == []
 
 
+def test_matrix_cascade_run_runtime_boundary_builds_emitted_records_from_result():
+    report = _valid_report()
+    stage_traces_by_seed = {
+        row["seed"]: [
+            {
+                "stage_label": "rank_smoke",
+                "threshold": 50,
+                "rank": row["rank"],
+                "exact": True,
+                "candidate_id": f"candidate_{row['seed']}",
+                "stop_reason": "accepted_final_candidate",
+            }
+        ]
+        for row in report["seed_results"]
+    }
+
+    boundary = matrix_cascade_run_runtime_boundary_from_matrix_result(
+        run_id="run_001",
+        cascade_id="matrix_rank_cascade",
+        cascade_version="v1",
+        matrix_result_report=report,
+        matrix_result_ref="matrix/mm_4x4x4/result.json",
+        stage_traces_by_seed=stage_traces_by_seed,
+    )
+
+    validation = validate_matrix_cascade_run_runtime_boundary(boundary)
+
+    assert boundary["runtime_emission_status"] == "emitted"
+    assert validation.ok is True
+    assert validation.emitted_record_count == report["seed_count"]
+    assert {record["seed"] for record in boundary["emitted_records"]} == {
+        row["seed"] for row in report["seed_results"]
+    }
+    assert all(
+        record["accepted_final_rank"]
+        == next(
+            row["rank"]
+            for row in report["seed_results"]
+            if row["seed"] == record["seed"]
+        )
+        for record in boundary["emitted_records"]
+    )
+
+
+def test_matrix_cascade_run_runtime_boundary_builder_requires_seed_traces():
+    report = _valid_report()
+
+    with pytest.raises(ValueError, match="missing seed 100"):
+        matrix_cascade_run_runtime_boundary_from_matrix_result(
+            run_id="run_001",
+            cascade_id="matrix_rank_cascade",
+            cascade_version="v1",
+            matrix_result_report=report,
+            matrix_result_ref="matrix/mm_4x4x4/result.json",
+            stage_traces_by_seed={},
+        )
+
+
 def test_matrix_cascade_run_runtime_boundary_rejects_invalid_trace_and_report():
     boundary = matrix_cascade_run_runtime_boundary_record()
     boundary["runtime_emission_status"] = "emitted"
@@ -396,6 +455,22 @@ def test_matrix_cascade_run_runtime_boundary_rejects_seed_rank_mismatch():
     assert validation.ok is False
     codes = {issue.code for issue in validation.issues}
     assert "runtime_record_0_matrix_result_seed_rank_mismatch" in codes
+
+
+def test_matrix_cascade_run_runtime_boundary_rejects_final_stage_mismatch():
+    boundary = matrix_cascade_run_runtime_boundary_record()
+    boundary["runtime_emission_status"] = "emitted"
+    record = _valid_cascade_run_record()
+    record["stage_traces"][0]["rank"] = 48
+    record["stage_traces"][0]["candidate_id"] = "other_candidate"
+    boundary["emitted_records"] = [record]
+
+    validation = validate_matrix_cascade_run_runtime_boundary(boundary)
+
+    assert validation.ok is False
+    codes = {issue.code for issue in validation.issues}
+    assert "runtime_record_0_final_stage_rank_mismatch" in codes
+    assert "runtime_record_0_final_stage_candidate_mismatch" in codes
 
 
 def test_render_matrix_cascade_run_runtime_boundary_summary_reports_shape():

@@ -16031,3 +16031,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused Appendix A registry and paper-manifest tests cover
     the absence boundary, recorded-citation validation, invalid citation
     fields, and manifest hook.
+
+- [x] Add a matrix cascade-run runtime boundary contract.
+  - Spec evidence: AlphaEvolve Section 3.1 reports matrix experiments run over
+    multiple random seeds using the evaluation cascade, then publishes best
+    rank and hit-fraction rows.
+  - Status: `libreevolve.matrix_cascade_run_runtime_boundary.v1` now validates
+    the current `not_emitted_by_local_runner` state, rejects false emitted
+    claims without cascade traces, validates emitted trace shape and nested
+    matrix result reports, and records required future fields for run/target/
+    seed ids, cascade ids and versions, stage traces, accepted final rank,
+    stop reason, final candidate id, matrix-result refs, artifact paths, and
+    artifact hashes. Local matrix benchmark runners still do not emit those
+    Section 3.1-style cascade traces.
+  - Verification: focused matrix-result and paper-manifest tests cover the
+    absence boundary, emitted-trace validation, nested report validation, and
+    manifest hook.

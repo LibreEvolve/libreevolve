@@ -3225,12 +3225,15 @@ Primary evidence:
     reached that rank.
   - Current evidence: generic evaluator cascades can run staged validators,
     and `libreevolve.matrix_result_report.v1` can validate declared per-seed
-    rank rows after a report exists. There is no matrix benchmark runner or
-    report provenance that records the cascade configuration used for each
-    matrix target/seed, per-stage rank and exactness diagnostics, early-stop
-    or pruning decisions, candidate lineage through cascade stages, or how the
-    executed cascade traces aggregate into the published best-rank hit
-    fraction.
+    rank rows after a report exists.
+    `libreevolve.matrix_cascade_run_runtime_boundary.v1` now validates the
+    current `not_emitted_by_local_runner` boundary and required future fields
+    for run/target/seed ids, cascade ids/versions, stage traces, accepted
+    final ranks, candidate/result refs, artifact paths, and hashes. No matrix
+    benchmark runner yet emits the cascade configuration used for each matrix
+    target/seed, per-stage rank and exactness diagnostics, early-stop or
+    pruning decisions, candidate lineage through cascade stages, or aggregation
+    evidence for the published best-rank hit fraction.
   - Required result: add matrix benchmark execution records and validators for
     target id, seed id, cascade id/version, stage labels and thresholds,
     per-stage candidate rank/exactness/certificate status, stop reason,

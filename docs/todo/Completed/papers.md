@@ -10819,3 +10819,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     paper-manifest gate validates this boundary with the Appendix A matrix
     checks.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Track matrix cascade-run runtime absence separately from declared
+      per-seed result rows.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 reports matrix
+    experiments run over multiple random seeds using the evaluation cascade,
+    with best rank and hit-fraction rows.
+  - Status: `libreevolve.matrix_cascade_run_runtime_boundary.v1` now records
+    the current `not_emitted_by_local_runner` boundary and validates required
+    future emitted fields for run/target/seed ids, cascade ids and versions,
+    stage traces, final rank, candidate/result refs, artifact paths, and
+    hashes. The paper-manifest gate validates this boundary with the Appendix
+    A matrix checks.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

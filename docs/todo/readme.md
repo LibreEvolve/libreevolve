@@ -901,7 +901,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     rank and the fraction of seeds that reached it.
   - Current evidence: README documents the matrix report contract's declared
     per-seed rows, best-rank consistency checks, and hit-fraction validation,
-    plus generic cascade support elsewhere. It does not document an executed
+    plus generic cascade support elsewhere. It now also documents
+    `libreevolve.matrix_cascade_run_runtime_boundary.v1`, which validates the
+    current `not_emitted_by_local_runner` boundary and required future fields
+    for repeated-seed matrix cascade traces. It does not document an executed
     matrix benchmark runner that emits target/seed-level cascade traces, stage
     thresholds, per-stage rank/exactness diagnostics, pruning or early-stop
     reasons, and aggregation evidence linking executed cascades to the

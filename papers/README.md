@@ -1124,7 +1124,14 @@ Implemented:
   report, and artifact inventory files. It still does not provide discovered
   tensor-decomposition algorithms, certificates, or notebook exports across the
   full Appendix A target suite. It also validates matrix result metadata after
-  the report exists. `libreevolve.matrix_near_integrality_evidence.v1` now
+  the report exists. `libreevolve.matrix_cascade_run_runtime_boundary.v1` now
+  records the current `not_emitted_by_local_runner` boundary for Section
+  3.1-style repeated-seed matrix cascade traces and required future emitted
+  fields for run/target/seed ids, cascade ids and versions, stage traces with
+  threshold/rank/exactness/stop diagnostics, accepted final rank, candidate and
+  matrix-result refs, artifact paths, and artifact hashes. It does not yet
+  provide emitted matrix cascade traces behind the declared per-seed result
+  rows. `libreevolve.matrix_near_integrality_evidence.v1` now
   validates declared search-time evidence that candidates were instructed to
   produce near-integral decompositions, rounded to integer or half-integer
   coefficients, and linked to exactness certificates as in AlphaEvolve Section

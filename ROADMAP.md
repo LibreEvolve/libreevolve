@@ -717,6 +717,14 @@ is not yet an AlphaEvolve reproduction.
   future attempted target sizes, measured GPU memory, OOM artifacts,
   reduced-seed tradeoffs, and exclusion rationale. Actual local scaling runs
   remain open.
+- Keep matrix repeated-seed wording scoped to result reports versus executed
+  cascade traces: `libreevolve.matrix_cascade_run_runtime_boundary.v1` now
+  validates the current `not_emitted_by_local_runner` boundary and required
+  future emitted-record fields for run/target/seed ids, cascade ids and
+  versions, stage traces with threshold/rank/exactness/stop diagnostics,
+  accepted final rank, candidate and matrix-result refs, artifact paths, and
+  artifact hashes. Local benchmark runners still need to emit those
+  AlphaEvolve Section 3.1-style matrix cascade traces.
 - Keep matrix near-integrality wording scoped to evidence validation rather
   than executed search parity: `libreevolve.matrix_near_integrality_evidence.v1`
   now validates declared prompt instructions, integer/half-integer nearest

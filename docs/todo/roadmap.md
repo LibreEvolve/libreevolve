@@ -2425,11 +2425,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     reported as the best rank and the fraction of seeds that achieved it.
   - Current evidence: roadmap/README/paper-index status can point to generic
     evaluator cascades and declared matrix result reports with per-seed rank
-    rows and hit-fraction checks. It does not yet require matrix-specific
-    execution traces showing the cascade configuration, stage thresholds,
-    per-stage rank/exactness diagnostics, pruning or early-stop reasons,
-    target/seed lineage, and aggregation from executed traces into best-rank
-    hit fractions.
+    rows and hit-fraction checks. It now also points to
+    `libreevolve.matrix_cascade_run_runtime_boundary.v1`, which validates the
+    current `not_emitted_by_local_runner` boundary and required future fields
+    for repeated-seed matrix cascade traces. It does not yet require emitted
+    matrix-specific execution traces showing the cascade configuration, stage
+    thresholds, per-stage rank/exactness diagnostics, pruning or early-stop
+    reasons, target/seed lineage, and aggregation from executed traces into
+    best-rank hit fractions.
   - Required result: when matrix cascade-run provenance lands, update ROADMAP,
     README, papers index, and code/paper TODOs together so roadmap text
     distinguishes declared per-seed report validation from executed

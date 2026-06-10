@@ -3204,11 +3204,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     that reached it.
   - Current gap: the paper-facing matrix report contract validates declared
     seed rows and aggregate hit fractions, while generic cascade TODOs track
-    cascade semantics. It does not preserve matrix-specific executed cascade
-    traces: target/seed ids, cascade configuration, stage thresholds,
-    per-stage ranks and exactness diagnostics, pruning or early-stop reasons,
-    final accepted rank, or aggregation evidence linking those traces to the
-    published Table 2/Appendix A rank and hit-fraction rows.
+    cascade semantics.
+    `libreevolve.matrix_cascade_run_runtime_boundary.v1` now validates the
+    current `not_emitted_by_local_runner` boundary and required future
+    target/seed, cascade, stage-trace, final-rank, candidate/result reference,
+    artifact-path, and hash fields. It does not preserve emitted
+    matrix-specific executed cascade traces: target/seed ids, cascade
+    configuration, stage thresholds, per-stage ranks and exactness diagnostics,
+    pruning or early-stop reasons, final accepted rank, or aggregation evidence
+    linking those traces to the published Table 2/Appendix A rank and
+    hit-fraction rows.
   - Required result: add paper/report evidence for matrix cascade runs before
     treating per-seed matrix result reports as AlphaEvolve Section 3.1 search
     evidence: one trace per target/seed, stage-level diagnostics and stop

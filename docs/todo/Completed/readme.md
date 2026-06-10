@@ -10858,3 +10858,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     source artifact path/hash, applicability caveats, field/characteristic
     scope, and report-visible baseline-source refs.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the matrix cascade-run runtime boundary in README.
+  - Spec evidence: README matrix wording needs to distinguish declared
+    per-seed result-report validation from executed AlphaEvolve Section
+    3.1-style repeated-seed cascade traces.
+  - Status: README now names
+    `libreevolve.matrix_cascade_run_runtime_boundary.v1`, scopes it to the
+    current `not_emitted_by_local_runner` state, and lists required future
+    emitted-record fields for run/target/seed ids, cascade ids and versions,
+    stage traces, accepted final rank, candidate/result refs, artifact paths,
+    and hashes.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

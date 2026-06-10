@@ -22,6 +22,7 @@ from libreevolve.problems.benchmarks.companion_sources import (
 MATRIX_RESULT_SCHEMA = "libreevolve.matrix_result_report.v1"
 MATRIX_ARTIFACT_INVENTORY_SCHEMA = "libreevolve.matrix_result_artifact_inventory.v1"
 MATRIX_PUBLICATION_BUNDLE_SCHEMA = "libreevolve.matrix_publication_bundle.v1"
+MATRIX_CASCADE_RUN_RUNTIME_SCHEMA = "libreevolve.matrix_cascade_run_runtime_boundary.v1"
 MATRIX_NEAR_INTEGRALITY_SCHEMA = "libreevolve.matrix_near_integrality_evidence.v1"
 MATRIX_NEAR_INTEGRALITY_RUNTIME_SCHEMA = "libreevolve.matrix_near_integrality_runtime_boundary.v1"
 MATRIX_SWEEP_SPACE_SCHEMA = "libreevolve.matrix_sweep_space_evidence.v1"
@@ -36,6 +37,22 @@ COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer", "rational", "float"}
 PUBLICATION_COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer"})
 EXACTNESS_STATUSES = frozenset({"verified", "failed", "not_checked"})
 ARTIFACT_KINDS = frozenset({"algorithm", "certificate", "summary", "notebook"})
+MATRIX_CASCADE_RUN_RUNTIME_STATUSES = frozenset({"not_emitted_by_local_runner", "emitted"})
+MATRIX_CASCADE_RUN_RUNTIME_REQUIRED_FIELDS = (
+    "run_id",
+    "target_id",
+    "seed",
+    "cascade_id",
+    "cascade_version",
+    "stage_traces",
+    "accepted_final_rank",
+    "stop_reason",
+    "final_candidate_id",
+    "matrix_result_ref",
+    "matrix_result_report",
+    "artifact_paths",
+    "artifact_sha256",
+)
 NEAR_INTEGRAL_ROUNDING_DOMAINS = frozenset({"integer", "half_integer"})
 SWEEP_SOURCE_FIGURES = frozenset({"Figures 9a-9c"})
 SWEEP_DISTRIBUTIONS = frozenset({"uniform", "log_uniform", "choice"})
@@ -260,6 +277,15 @@ class MatrixPublicationBundleValidation:
 
 
 @dataclass(frozen=True)
+class MatrixCascadeRunRuntimeValidation:
+    ok: bool
+    runtime_emission_status: str | None
+    emitted_record_count: int
+    required_field_count: int
+    issues: list[MatrixResultIssue]
+
+
+@dataclass(frozen=True)
 class MatrixNearIntegralityValidation:
     ok: bool
     target_id: str | None
@@ -428,6 +454,119 @@ def validate_matrix_result_report(report: object | str | Path) -> MatrixResultVa
         seed_count=seed_count or 0,
         best_rank=best_rank,
         hit_fraction=hit_fraction,
+        issues=issues,
+    )
+
+
+def matrix_cascade_run_runtime_boundary_record() -> dict[str, Any]:
+    return {
+        "schema": MATRIX_CASCADE_RUN_RUNTIME_SCHEMA,
+        "target_suite": APPENDIX_A_TARGET_SUITE,
+        "result_schema": MATRIX_RESULT_SCHEMA,
+        "runtime_emission_status": "not_emitted_by_local_runner",
+        "local_runner_scope": "matrix_benchmark_runner",
+        "required_emission_fields": list(MATRIX_CASCADE_RUN_RUNTIME_REQUIRED_FIELDS),
+        "emitted_records": [],
+        "claim_boundary": (
+            "This is a matrix cascade-run absence/readiness boundary. It does "
+            "not claim local matrix runners emit AlphaEvolve Section 3.1 executed "
+            "cascade traces behind per-seed rank reports."
+        ),
+    }
+
+
+def validate_matrix_cascade_run_runtime_boundary(
+    boundary: object | str | Path | None = None,
+) -> MatrixCascadeRunRuntimeValidation:
+    """Validate whether matrix runners emit executed cascade traces for result rows."""
+    data, read_issues = _load_report(
+        matrix_cascade_run_runtime_boundary_record() if boundary is None else boundary
+    )
+    if read_issues:
+        return MatrixCascadeRunRuntimeValidation(False, None, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[MatrixResultIssue] = []
+    if data.get("schema") != MATRIX_CASCADE_RUN_RUNTIME_SCHEMA:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_schema",
+                "unsupported matrix cascade-run runtime boundary schema",
+            )
+        )
+    if data.get("target_suite") != APPENDIX_A_TARGET_SUITE:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_target_suite",
+                "runtime boundary must target AlphaEvolve Appendix A",
+            )
+        )
+    if data.get("result_schema") != MATRIX_RESULT_SCHEMA:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_result_schema",
+                "runtime boundary must reference the matrix result report schema",
+            )
+        )
+    status = data.get("runtime_emission_status")
+    if status not in MATRIX_CASCADE_RUN_RUNTIME_STATUSES:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_runtime_emission_status",
+                "runtime_emission_status must be not_emitted_by_local_runner or emitted",
+            )
+        )
+        status = None
+    if not isinstance(data.get("local_runner_scope"), str) or not data["local_runner_scope"].strip():
+        issues.append(
+            MatrixResultIssue(
+                "missing_local_runner_scope",
+                "local_runner_scope must identify the local runner surface",
+            )
+        )
+    required_field_count = _validate_matrix_cascade_run_runtime_required_fields(
+        data.get("required_emission_fields"),
+        issues,
+    )
+    emitted_records = data.get("emitted_records")
+    if not isinstance(emitted_records, list):
+        issues.append(
+            MatrixResultIssue(
+                "invalid_emitted_records",
+                "emitted_records must be a list",
+            )
+        )
+        emitted_records = []
+    emitted_record_count = len(emitted_records)
+    if status == "not_emitted_by_local_runner":
+        if emitted_records:
+            issues.append(
+                MatrixResultIssue(
+                    "unexpected_runtime_cascade_run_records",
+                    "not_emitted_by_local_runner status must not include emitted records",
+                )
+            )
+        claim_boundary = data.get("claim_boundary")
+        if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary.lower():
+            issues.append(
+                MatrixResultIssue(
+                    "missing_absence_claim_boundary",
+                    "absence boundary must explicitly say it does not claim runtime emission",
+                )
+            )
+    elif status == "emitted":
+        if not emitted_records:
+            issues.append(
+                MatrixResultIssue(
+                    "missing_runtime_cascade_run_records",
+                    "emitted status requires at least one emitted record",
+                )
+            )
+        _validate_matrix_cascade_run_runtime_records(emitted_records, issues)
+    return MatrixCascadeRunRuntimeValidation(
+        ok=not issues,
+        runtime_emission_status=status if isinstance(status, str) else None,
+        emitted_record_count=emitted_record_count,
+        required_field_count=required_field_count,
         issues=issues,
     )
 
@@ -1471,6 +1610,27 @@ def render_matrix_sweep_space_runtime_boundary_summary(
     status = "ok" if validation.ok else "invalid"
     lines = [
         "Matrix sweep-space runtime boundary",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| runtime_emission_status | {validation.runtime_emission_status or '<unknown>'} |",
+        f"| emitted_record_count | {validation.emitted_record_count} |",
+        f"| required_field_count | {validation.required_field_count} |",
+    ]
+    if validation.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(f"- {issue.code}: {issue.message}" for issue in validation.issues)
+    return "\n".join(lines)
+
+
+def render_matrix_cascade_run_runtime_boundary_summary(
+    boundary: dict[str, Any] | None = None,
+) -> str:
+    validation = validate_matrix_cascade_run_runtime_boundary(boundary)
+    status = "ok" if validation.ok else "invalid"
+    lines = [
+        "Matrix cascade-run runtime boundary",
         "",
         "| Field | Value |",
         "|---|---|",
@@ -2934,6 +3094,338 @@ def _runtime_record_text(
         )
         return None
     return value
+
+
+def _validate_matrix_cascade_run_runtime_required_fields(
+    value: object,
+    issues: list[MatrixResultIssue],
+) -> int:
+    if not isinstance(value, list) or not value:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_required_emission_fields",
+                "required_emission_fields must be a non-empty list",
+            )
+        )
+        return 0
+    fields: list[str] = []
+    seen: set[str] = set()
+    for item in value:
+        if not isinstance(item, str) or not item.strip():
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_required_emission_field",
+                    "required_emission_fields entries must be non-empty strings",
+                )
+            )
+            continue
+        if item in seen:
+            issues.append(
+                MatrixResultIssue(
+                    "duplicate_required_emission_field",
+                    "required_emission_fields entries must be unique",
+                )
+            )
+            continue
+        seen.add(item)
+        fields.append(item)
+    missing = sorted(set(MATRIX_CASCADE_RUN_RUNTIME_REQUIRED_FIELDS) - set(fields))
+    if missing:
+        issues.append(
+            MatrixResultIssue(
+                "missing_required_emission_field",
+                "required_emission_fields must include run, target, seed, cascade, stage, result, artifact, and hash fields",
+            )
+        )
+    return len(fields)
+
+
+def _validate_matrix_cascade_run_runtime_records(
+    records: list[object],
+    issues: list[MatrixResultIssue],
+) -> None:
+    seen: set[tuple[str, str, int]] = set()
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_runtime_cascade_run_record",
+                    "emitted cascade-run records must be objects",
+                )
+            )
+            continue
+        run_id = _cascade_run_text_field(record, "run_id", index, issues)
+        target_id = _cascade_run_text_field(record, "target_id", index, issues)
+        _cascade_run_text_field(record, "cascade_id", index, issues)
+        _cascade_run_text_field(record, "cascade_version", index, issues)
+        _cascade_run_text_field(record, "stop_reason", index, issues)
+        _cascade_run_text_field(record, "final_candidate_id", index, issues)
+        _cascade_run_text_field(record, "matrix_result_ref", index, issues)
+        seed = _cascade_run_int_field(record, "seed", index, issues)
+        accepted_final_rank = _cascade_run_positive_int_field(
+            record,
+            "accepted_final_rank",
+            index,
+            issues,
+        )
+        if target_id is not None and matrix_target_by_id(target_id) is None:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_unknown_target_id",
+                    "target_id is not in the AlphaEvolve Appendix A matrix registry",
+                )
+            )
+        if run_id is not None and target_id is not None and seed is not None:
+            key = (run_id, target_id, seed)
+            if key in seen:
+                issues.append(
+                    MatrixResultIssue(
+                        f"runtime_record_{index}_duplicate_cascade_run",
+                        "run_id, target_id, and seed must uniquely identify emitted cascade runs",
+                    )
+                )
+            else:
+                seen.add(key)
+        _validate_matrix_cascade_stage_traces(record.get("stage_traces"), index, issues)
+        _validate_runtime_artifact_paths(record.get("artifact_paths"), "cascade_run", index, issues)
+        _validate_runtime_artifact_sha(record.get("artifact_sha256"), "cascade_run", index, issues)
+
+        nested = record.get("matrix_result_report")
+        nested_validation = validate_matrix_result_report(nested)
+        if not nested_validation.ok:
+            issues.extend(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_matrix_result_{issue.code}",
+                    issue.message,
+                )
+                for issue in nested_validation.issues
+            )
+            continue
+        if isinstance(nested, dict):
+            if target_id is not None and nested.get("target_id") != target_id:
+                issues.append(
+                    MatrixResultIssue(
+                        f"runtime_record_{index}_matrix_result_target_mismatch",
+                        "matrix_result_report target_id must match the cascade-run target_id",
+                    )
+                )
+            if accepted_final_rank is not None:
+                _validate_matrix_cascade_seed_result_match(
+                    nested,
+                    seed,
+                    accepted_final_rank,
+                    index,
+                    issues,
+                )
+
+
+def _cascade_run_text_field(
+    record: dict[str, Any],
+    field: str,
+    index: int,
+    issues: list[MatrixResultIssue],
+) -> str | None:
+    value = record.get(field)
+    if not isinstance(value, str) or not value.strip():
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{index}_missing_{field}",
+                f"emitted cascade-run records must include {field}",
+            )
+        )
+        return None
+    return value
+
+
+def _cascade_run_int_field(
+    record: dict[str, Any],
+    field: str,
+    index: int,
+    issues: list[MatrixResultIssue],
+) -> int | None:
+    value = record.get(field)
+    if isinstance(value, bool) or not isinstance(value, int):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{index}_invalid_{field}",
+                f"emitted cascade-run records must include integer {field}",
+            )
+        )
+        return None
+    return value
+
+
+def _cascade_run_positive_int_field(
+    record: dict[str, Any],
+    field: str,
+    index: int,
+    issues: list[MatrixResultIssue],
+) -> int | None:
+    value = _cascade_run_int_field(record, field, index, issues)
+    if value is not None and value <= 0:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{index}_invalid_{field}",
+                f"emitted cascade-run records must include positive {field}",
+            )
+        )
+        return None
+    return value
+
+
+def _validate_matrix_cascade_stage_traces(
+    value: object,
+    index: int,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if not isinstance(value, list) or not value:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{index}_invalid_stage_traces",
+                "stage_traces must be a non-empty list",
+            )
+        )
+        return
+    seen_labels: set[str] = set()
+    for stage_index, stage in enumerate(value):
+        if not isinstance(stage, dict):
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_invalid_stage_trace",
+                    "stage_traces entries must be objects",
+                )
+            )
+            continue
+        label = stage.get("stage_label")
+        if not isinstance(label, str) or not label.strip():
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_stage_{stage_index}_missing_stage_label",
+                    "stage trace must include stage_label",
+                )
+            )
+        elif label in seen_labels:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_stage_{stage_index}_duplicate_stage_label",
+                    "stage_label values must be unique within a cascade run",
+                )
+            )
+        else:
+            seen_labels.add(label)
+        for field in ("candidate_id", "stop_reason"):
+            value_text = stage.get(field)
+            if not isinstance(value_text, str) or not value_text.strip():
+                issues.append(
+                    MatrixResultIssue(
+                        f"runtime_record_{index}_stage_{stage_index}_missing_{field}",
+                        f"stage trace must include {field}",
+                    )
+                )
+        threshold = stage.get("threshold")
+        if isinstance(threshold, bool) or not isinstance(threshold, (int, float)) or not math.isfinite(float(threshold)):
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_stage_{stage_index}_invalid_threshold",
+                    "stage threshold must be a finite number",
+                )
+            )
+        rank = stage.get("rank")
+        if isinstance(rank, bool) or not isinstance(rank, int) or rank <= 0:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_stage_{stage_index}_invalid_rank",
+                    "stage rank must be a positive integer",
+                )
+            )
+        if not isinstance(stage.get("exact"), bool):
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_stage_{stage_index}_invalid_exact",
+                    "stage exact flag must be boolean",
+                )
+            )
+
+
+def _validate_matrix_cascade_seed_result_match(
+    report: dict[str, Any],
+    seed: int | None,
+    accepted_final_rank: int,
+    index: int,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if seed is None:
+        return
+    seed_results = report.get("seed_results")
+    if not isinstance(seed_results, list):
+        return
+    for seed_result in seed_results:
+        if not isinstance(seed_result, dict) or seed_result.get("seed") != seed:
+            continue
+        if seed_result.get("rank") != accepted_final_rank:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_matrix_result_seed_rank_mismatch",
+                    "accepted_final_rank must match the matching seed result rank",
+                )
+            )
+        return
+    issues.append(
+        MatrixResultIssue(
+            f"runtime_record_{index}_matrix_result_missing_seed",
+            "matrix_result_report seed_results must include the cascade-run seed",
+        )
+    )
+
+
+def _validate_runtime_artifact_paths(
+    value: object,
+    label: str,
+    index: int,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if not isinstance(value, list) or not value:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{index}_invalid_{label}_artifact_paths",
+                "artifact_paths must be a non-empty list",
+            )
+        )
+        return
+    seen: set[str] = set()
+    for path in value:
+        if not isinstance(path, str) or _safe_relative_path(path) is None:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_invalid_{label}_artifact_path",
+                    "artifact_paths entries must be safe relative paths",
+                )
+            )
+            continue
+        if path in seen:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_duplicate_{label}_artifact_path",
+                    "artifact_paths entries must be unique",
+                )
+            )
+        else:
+            seen.add(path)
+
+
+def _validate_runtime_artifact_sha(
+    value: object,
+    label: str,
+    index: int,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if not isinstance(value, str) or _SHA256_RE.fullmatch(value) is None:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{index}_invalid_{label}_artifact_hash",
+                "artifact_sha256 must be a lowercase SHA-256 hex digest",
+            )
+        )
 
 
 def _validate_coefficient_pairs(

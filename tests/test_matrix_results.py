@@ -9,6 +9,7 @@ from libreevolve.problems.benchmarks.companion_sources import (
 )
 from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_ARTIFACT_INVENTORY_SCHEMA,
+    MATRIX_CASCADE_RUN_RUNTIME_SCHEMA,
     MATRIX_HEADLINE_HISTORICITY_SCHEMA,
     MATRIX_HEADLINE_HISTORICITY_RUNTIME_SCHEMA,
     MATRIX_NEAR_INTEGRALITY_SCHEMA,
@@ -21,12 +22,14 @@ from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_SWEEP_SPACE_RUNTIME_SCHEMA,
     MATRIX_TENSOR_RANK_SCHEMA,
     MATRIX_TENSOR_RANK_RUNTIME_SCHEMA,
+    matrix_cascade_run_runtime_boundary_record,
     matrix_headline_historicity_runtime_boundary_record,
     matrix_near_integrality_runtime_boundary_record,
     matrix_result_artifact_inventory,
     matrix_scalar_field_runtime_boundary_record,
     matrix_sweep_space_runtime_boundary_record,
     matrix_tensor_rank_runtime_boundary_record,
+    render_matrix_cascade_run_runtime_boundary_summary,
     render_matrix_headline_historicity_summary,
     render_matrix_headline_historicity_runtime_boundary_summary,
     render_matrix_near_integrality_summary,
@@ -38,6 +41,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     render_matrix_sweep_space_runtime_boundary_summary,
     render_matrix_tensor_rank_summary,
     render_matrix_tensor_rank_runtime_boundary_summary,
+    validate_matrix_cascade_run_runtime_boundary,
     validate_matrix_headline_historicity_evidence,
     validate_matrix_headline_historicity_runtime_boundary,
     validate_matrix_near_integrality_evidence,
@@ -114,6 +118,33 @@ def _valid_report() -> dict:
     }
 
 
+def _valid_cascade_run_record() -> dict:
+    return {
+        "run_id": "run_001",
+        "target_id": "mm_4x4x4",
+        "seed": 100,
+        "cascade_id": "matrix_rank_cascade",
+        "cascade_version": "v1",
+        "stage_traces": [
+            {
+                "stage_label": "rank_smoke",
+                "threshold": 49,
+                "rank": 47,
+                "exact": True,
+                "candidate_id": "candidate_001",
+                "stop_reason": "passed",
+            }
+        ],
+        "accepted_final_rank": 47,
+        "stop_reason": "accepted_final_candidate",
+        "final_candidate_id": "candidate_001",
+        "matrix_result_ref": "matrix/mm_4x4x4/result.json",
+        "matrix_result_report": _valid_report(),
+        "artifact_paths": ["matrix/mm_4x4x4/cascade_trace.json"],
+        "artifact_sha256": "d" * 64,
+    }
+
+
 def test_matrix_result_report_validates_alphaevolve_publication_contract():
     report = _valid_report()
 
@@ -136,6 +167,92 @@ def test_matrix_result_report_loads_json_file(tmp_path):
 
     assert validation.ok is True
     assert validation.target_id == "mm_4x4x4"
+
+
+def test_matrix_cascade_run_runtime_boundary_accepts_current_absence():
+    boundary = matrix_cascade_run_runtime_boundary_record()
+
+    validation = validate_matrix_cascade_run_runtime_boundary(boundary)
+
+    assert boundary["schema"] == MATRIX_CASCADE_RUN_RUNTIME_SCHEMA
+    assert validation.ok is True
+    assert validation.runtime_emission_status == "not_emitted_by_local_runner"
+    assert validation.emitted_record_count == 0
+    assert validation.required_field_count == 13
+
+
+def test_matrix_cascade_run_runtime_boundary_rejects_absence_with_records():
+    boundary = matrix_cascade_run_runtime_boundary_record()
+    boundary["emitted_records"] = [_valid_cascade_run_record()]
+
+    validation = validate_matrix_cascade_run_runtime_boundary(boundary)
+
+    assert validation.ok is False
+    codes = {issue.code for issue in validation.issues}
+    assert "unexpected_runtime_cascade_run_records" in codes
+
+
+def test_matrix_cascade_run_runtime_boundary_requires_emitted_records():
+    boundary = matrix_cascade_run_runtime_boundary_record()
+    boundary["runtime_emission_status"] = "emitted"
+
+    validation = validate_matrix_cascade_run_runtime_boundary(boundary)
+
+    assert validation.ok is False
+    codes = {issue.code for issue in validation.issues}
+    assert "missing_runtime_cascade_run_records" in codes
+
+
+def test_matrix_cascade_run_runtime_boundary_accepts_emitted_trace():
+    boundary = matrix_cascade_run_runtime_boundary_record()
+    boundary["runtime_emission_status"] = "emitted"
+    boundary["emitted_records"] = [_valid_cascade_run_record()]
+
+    validation = validate_matrix_cascade_run_runtime_boundary(boundary)
+
+    assert validation.ok is True
+    assert validation.emitted_record_count == 1
+    assert validation.issues == []
+
+
+def test_matrix_cascade_run_runtime_boundary_rejects_invalid_trace_and_report():
+    boundary = matrix_cascade_run_runtime_boundary_record()
+    boundary["runtime_emission_status"] = "emitted"
+    record = _valid_cascade_run_record()
+    record["stage_traces"][0]["threshold"] = "high"
+    record["artifact_paths"] = ["../escape.json"]
+    record["matrix_result_report"]["schema"] = "wrong"
+    boundary["emitted_records"] = [record]
+
+    validation = validate_matrix_cascade_run_runtime_boundary(boundary)
+
+    assert validation.ok is False
+    codes = {issue.code for issue in validation.issues}
+    assert "runtime_record_0_stage_0_invalid_threshold" in codes
+    assert "runtime_record_0_invalid_cascade_run_artifact_path" in codes
+    assert "runtime_record_0_matrix_result_invalid_schema" in codes
+
+
+def test_matrix_cascade_run_runtime_boundary_rejects_seed_rank_mismatch():
+    boundary = matrix_cascade_run_runtime_boundary_record()
+    boundary["runtime_emission_status"] = "emitted"
+    record = _valid_cascade_run_record()
+    record["accepted_final_rank"] = 48
+    boundary["emitted_records"] = [record]
+
+    validation = validate_matrix_cascade_run_runtime_boundary(boundary)
+
+    assert validation.ok is False
+    codes = {issue.code for issue in validation.issues}
+    assert "runtime_record_0_matrix_result_seed_rank_mismatch" in codes
+
+
+def test_render_matrix_cascade_run_runtime_boundary_summary_reports_shape():
+    summary = render_matrix_cascade_run_runtime_boundary_summary()
+
+    assert "Matrix cascade-run runtime boundary" in summary
+    assert "runtime_emission_status" in summary
+    assert "required_field_count" in summary
 
 
 def test_matrix_result_artifact_inventory_verifies_declared_files(tmp_path):

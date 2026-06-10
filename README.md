@@ -3420,6 +3420,15 @@ rank or hit fraction does not match the per-seed rank records. Reports must expl
 reports are valid only when that flag is false. AlphaEvolve-comparable matrix
 claims require integer or half-integer coefficients, verified exactness, exact
 per-seed results, and algorithm/certificate/notebook artifacts.
+Matrix cascade-run provenance uses
+`libreevolve.matrix_cascade_run_runtime_boundary.v1`; it validates the current
+`not_emitted_by_local_runner` state for AlphaEvolve Section 3.1-style
+repeated-seed matrix cascade traces and the required future emitted-record
+fields for run/target/seed ids, cascade ids and versions, stage traces with
+threshold/rank/exactness/stop diagnostics, accepted final rank, candidate and
+matrix-result refs, artifact paths, and artifact hashes. This keeps declared
+per-seed report validation separate from executed matrix cascade evidence until
+local matrix benchmark runners emit those traces.
 Matrix search-time near-integrality evidence uses
 `libreevolve.matrix_near_integrality_evidence.v1`; it validates declared
 prompt-instruction provenance for near-integral matrix tensor decompositions,

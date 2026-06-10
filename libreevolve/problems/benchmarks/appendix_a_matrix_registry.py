@@ -16,6 +16,7 @@ LOCAL_RESOURCE_FRONTIER_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_loca
 SUBSET_SCOPE_SCHEMA = "libreevolve.alphaevolve_matrix_subset_scope.v1"
 SUBSET_SCOPE_ARTIFACT_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1"
 ROW_NOTE_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1"
+ROW_NOTE_ARTIFACT_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1"
 TARGET_SUITE = "alphaevolve_appendix_a"
 EXPECTED_TARGET_COUNT = 54
 OUTCOMES = frozenset({"matched", "surpassed", "fell_behind"})
@@ -31,6 +32,25 @@ SUBSET_SCOPE_ARTIFACT_REQUIRED_FIELDS = (
     "out_of_scope_target_ids",
     "fell_behind_target_ids",
     "subset_scope_evidence",
+    "artifact_paths",
+    "artifact_sha256",
+)
+ROW_NOTE_ARTIFACT_STATUSES = frozenset({"not_emitted_by_local_report_export", "emitted"})
+ROW_NOTE_ARTIFACT_REQUIRED_FIELDS = (
+    "note_id",
+    "note_type",
+    "target_id",
+    "dimensions",
+    "alphaevolve_rank",
+    "concurrent_rank",
+    "cited_reference_id",
+    "relationship_to_alphaevolve",
+    "source_table",
+    "source_pdf_page",
+    "note_text",
+    "exclusive_priority_claim_safe",
+    "docs_caveat",
+    "row_note_evidence",
     "artifact_paths",
     "artifact_sha256",
 )
@@ -143,6 +163,15 @@ class MatrixRowNoteReport:
     note_count: int
     concurrent_work_note_count: int
     affected_target_count: int
+    issues: list[MatrixRowNoteIssue]
+
+
+@dataclass(frozen=True)
+class MatrixRowNoteArtifactBoundaryReport:
+    ok: bool
+    artifact_status: str | None
+    emitted_artifact_count: int
+    required_field_count: int
     issues: list[MatrixRowNoteIssue]
 
 
@@ -472,6 +501,24 @@ def appendix_a_matrix_row_note_records(
     }
 
 
+def appendix_a_matrix_row_note_artifact_boundary_record() -> dict[str, Any]:
+    return {
+        "schema": ROW_NOTE_ARTIFACT_BOUNDARY_SCHEMA,
+        "row_note_schema": ROW_NOTE_SCHEMA,
+        "source_paper_id": "2506.13131",
+        "target_suite": TARGET_SUITE,
+        "artifact_status": "not_emitted_by_local_report_export",
+        "local_export_scope": "matrix_row_note_report_export",
+        "required_artifact_fields": list(ROW_NOTE_ARTIFACT_REQUIRED_FIELDS),
+        "emitted_artifacts": [],
+        "claim_boundary": (
+            "This is an Appendix A matrix row-note artifact availability "
+            "boundary. It does not claim local report/export code emits the "
+            "mm_4x5x6 concurrent-work caveat artifact."
+        ),
+    }
+
+
 def validate_appendix_a_matrix_row_notes(
     recordset: object | str | Path | None = None,
 ) -> MatrixRowNoteReport:
@@ -496,6 +543,56 @@ def validate_appendix_a_matrix_row_notes(
         note_count=note_count,
         concurrent_work_note_count=concurrent_count,
         affected_target_count=affected_count,
+        issues=issues,
+    )
+
+
+def validate_appendix_a_matrix_row_note_artifact_boundary(
+    boundary: object | str | Path | None = None,
+) -> MatrixRowNoteArtifactBoundaryReport:
+    if boundary is None:
+        boundary = appendix_a_matrix_row_note_artifact_boundary_record()
+    data, read_issues = _load_row_note_artifact_boundary(boundary)
+    if read_issues:
+        return MatrixRowNoteArtifactBoundaryReport(False, None, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[MatrixRowNoteIssue] = []
+    if data.get("schema") != ROW_NOTE_ARTIFACT_BOUNDARY_SCHEMA:
+        issues.append(MatrixRowNoteIssue("invalid_schema", "unsupported Appendix A matrix row-note artifact boundary schema"))
+    if data.get("row_note_schema") != ROW_NOTE_SCHEMA:
+        issues.append(MatrixRowNoteIssue("invalid_row_note_schema", "row_note_schema must identify Appendix A matrix row-note evidence"))
+    if data.get("source_paper_id") != "2506.13131":
+        issues.append(MatrixRowNoteIssue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("target_suite") != TARGET_SUITE:
+        issues.append(MatrixRowNoteIssue("invalid_target_suite", "target_suite must be alphaevolve_appendix_a"))
+    status = data.get("artifact_status")
+    if status not in ROW_NOTE_ARTIFACT_STATUSES:
+        issues.append(MatrixRowNoteIssue("invalid_artifact_status", "artifact_status must be a known matrix row-note artifact status"))
+    if not isinstance(data.get("local_export_scope"), str) or not data["local_export_scope"].strip():
+        issues.append(MatrixRowNoteIssue("missing_local_export_scope", "local_export_scope is required"))
+    required_field_count = _validate_row_note_artifact_required_fields(data.get("required_artifact_fields"), issues)
+    artifacts = data.get("emitted_artifacts")
+    if not isinstance(artifacts, list):
+        issues.append(MatrixRowNoteIssue("invalid_emitted_artifacts", "emitted_artifacts must be a list"))
+        artifact_count = 0
+    else:
+        artifact_count = len(artifacts)
+        if status == "not_emitted_by_local_report_export":
+            if artifacts:
+                issues.append(MatrixRowNoteIssue("unexpected_emitted_artifacts", "absence boundary must not include emitted row-note artifacts"))
+            claim_boundary = data.get("claim_boundary")
+            if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary:
+                issues.append(MatrixRowNoteIssue("missing_claim_boundary", "absence boundary must state that it does not claim local row-note artifact emission"))
+        elif status == "emitted":
+            if not artifacts:
+                issues.append(MatrixRowNoteIssue("missing_row_note_artifacts", "emitted status requires Appendix A matrix row-note artifact records"))
+            for artifact in artifacts:
+                _validate_row_note_artifact_record(artifact, issues)
+    return MatrixRowNoteArtifactBoundaryReport(
+        ok=not issues,
+        artifact_status=status if isinstance(status, str) else None,
+        emitted_artifact_count=artifact_count,
+        required_field_count=required_field_count,
         issues=issues,
     )
 
@@ -801,6 +898,31 @@ def render_appendix_a_matrix_row_note_summary(
     return "\n".join(lines)
 
 
+def render_appendix_a_matrix_row_note_artifact_boundary_summary(
+    boundary: object | str | Path | None = None,
+) -> str:
+    report = validate_appendix_a_matrix_row_note_artifact_boundary(boundary)
+    status = "ok" if report.ok else "invalid"
+    lines = [
+        "AlphaEvolve Appendix A matrix row-note artifact boundary",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| artifact_status | {report.artifact_status or '<unknown>'} |",
+        f"| emitted_artifact_count | {report.emitted_artifact_count} |",
+        f"| required_field_count | {report.required_field_count} |",
+    ]
+    if report.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(
+            f"- {issue.code}: {issue.message}"
+            + (f" ({issue.note_id})" if issue.note_id else "")
+            for issue in report.issues
+        )
+    return "\n".join(lines)
+
+
 def _load_registry(path: str | Path) -> dict[str, Any]:
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
@@ -901,6 +1023,24 @@ def _load_row_note_recordset(
         if isinstance(loaded, dict):
             return loaded, []
     return None, [MatrixRowNoteIssue("invalid_shape", "row-note recordset must be a JSON object")]
+
+
+def _load_row_note_artifact_boundary(
+    boundary: object | str | Path,
+) -> tuple[dict[str, Any] | None, list[MatrixRowNoteIssue]]:
+    if isinstance(boundary, dict):
+        return dict(boundary), []
+    if isinstance(boundary, (str, Path)):
+        path = Path(boundary)
+        try:
+            loaded = json.loads(path.read_text(encoding="utf-8"))
+        except OSError as exc:
+            return None, [MatrixRowNoteIssue("read_error", f"failed to read row-note artifact boundary: {exc}")]
+        except json.JSONDecodeError as exc:
+            return None, [MatrixRowNoteIssue("invalid_json", f"invalid row-note artifact boundary JSON: {exc.msg}")]
+        if isinstance(loaded, dict):
+            return loaded, []
+    return None, [MatrixRowNoteIssue("invalid_shape", "row-note artifact boundary must be a JSON object")]
 
 
 def _target_id(target: object, index: int) -> str:
@@ -1417,6 +1557,89 @@ def _validate_concurrent_work_row_note(
         lowered = docs_caveat.lower()
         if "exclusive" not in lowered or "concurrent work [49]" not in docs_caveat:
             issues.append(MatrixRowNoteIssue("missing_exclusive_priority_caveat", "docs caveat must warn against exclusive priority claims and cite concurrent work [49]", note_id))
+
+
+def _validate_row_note_artifact_required_fields(
+    value: object,
+    issues: list[MatrixRowNoteIssue],
+) -> int:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixRowNoteIssue("invalid_required_artifact_fields", "required_artifact_fields must be a non-empty list"))
+        return 0
+    seen: set[str] = set()
+    for field in value:
+        if not isinstance(field, str) or not field.strip():
+            issues.append(MatrixRowNoteIssue("invalid_required_artifact_field", "required artifact field names must be non-empty strings"))
+            continue
+        if field in seen:
+            issues.append(MatrixRowNoteIssue("duplicate_required_artifact_field", "required_artifact_fields must be unique"))
+        seen.add(field)
+    if set(ROW_NOTE_ARTIFACT_REQUIRED_FIELDS) - seen:
+        issues.append(MatrixRowNoteIssue("missing_required_artifact_field", "required_artifact_fields must include all matrix row-note artifact fields"))
+    return len(value)
+
+
+def _validate_row_note_artifact_record(
+    artifact: object,
+    issues: list[MatrixRowNoteIssue],
+) -> None:
+    if not isinstance(artifact, dict):
+        issues.append(MatrixRowNoteIssue("invalid_row_note_artifact", "emitted row-note artifact records must be objects"))
+        return
+    note_id = artifact.get("note_id")
+    safe_id = note_id if isinstance(note_id, str) else None
+    expected = appendix_a_matrix_row_note_records()["row_notes"][0]
+    for field in (
+        "note_id",
+        "note_type",
+        "target_id",
+        "dimensions",
+        "alphaevolve_rank",
+        "concurrent_rank",
+        "cited_reference_id",
+        "relationship_to_alphaevolve",
+        "source_table",
+        "source_pdf_page",
+        "note_text",
+        "exclusive_priority_claim_safe",
+        "docs_caveat",
+    ):
+        if artifact.get(field) != expected[field]:
+            issues.append(MatrixRowNoteIssue(f"invalid_artifact_{field}", f"artifact {field} must match row-note evidence", safe_id))
+    _validate_row_note_artifact_paths(artifact.get("artifact_paths"), safe_id, issues)
+    artifact_hash = artifact.get("artifact_sha256")
+    if not isinstance(artifact_hash, str) or _SHA256_RE.fullmatch(artifact_hash) is None:
+        issues.append(MatrixRowNoteIssue("invalid_artifact_sha256", "artifact_sha256 must be a lowercase SHA-256 hex digest", safe_id))
+    row_note_report = validate_appendix_a_matrix_row_notes(artifact.get("row_note_evidence"))
+    issues.extend(
+        MatrixRowNoteIssue(f"invalid_nested_row_note_{issue.code}", issue.message, issue.note_id)
+        for issue in row_note_report.issues
+    )
+
+
+def _validate_row_note_artifact_paths(
+    value: object,
+    note_id: str | None,
+    issues: list[MatrixRowNoteIssue],
+) -> None:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixRowNoteIssue("invalid_artifact_paths", "artifact_paths must be a non-empty list", note_id))
+        return
+    seen: set[str] = set()
+    for path in value:
+        path_obj = Path(path) if isinstance(path, str) else None
+        if (
+            path_obj is None
+            or not path
+            or path_obj.is_absolute()
+            or path.startswith(("/", "\\"))
+            or ".." in path_obj.parts
+        ):
+            issues.append(MatrixRowNoteIssue("invalid_artifact_path", "artifact_paths entries must be safe relative paths", note_id))
+            continue
+        if path in seen:
+            issues.append(MatrixRowNoteIssue("duplicate_artifact_path", "artifact_paths entries must be unique", note_id))
+        seen.add(path)
 
 
 def _validate_frontier_observations(

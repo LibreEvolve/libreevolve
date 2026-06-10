@@ -2543,6 +2543,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `mm_4x5x6`. It records that reference `[49]` also found a rank-90
     algorithm for `<4, 5, 6>`, independently matching AlphaEvolve's rank. No
     emitted report/table artifact carries that row-note caveat yet.
+    `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`
+    now documents and validates that roadmap-scoped absence boundary plus
+    required future emitted-artifact fields.
   - Required result: when Appendix A row-note artifacts land, update ROADMAP,
     README, papers index, and code/paper TODOs together so roadmap text
     distinguishes rank/outcome registry coverage from paper-faithful

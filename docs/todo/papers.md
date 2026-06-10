@@ -3302,7 +3302,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     `mm_4x5x6`. It records that reference `[49]` also found a rank-90
     algorithm for `<4, 5, 6>`, independently matching AlphaEvolve's rank. No
     emitted paper artifact or rendered table export currently carries this
-    row-note caveat.
+    row-note caveat. `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`
+    now validates that absence boundary and required future emitted-artifact
+    fields for note identity, target/rank/reference values, source text,
+    caveat flags, nested row-note evidence, paths, and hashes.
   - Required result: emit paper-facing row-note metadata for Appendix A matrix
     targets: affected target id, note type, cited reference id, note text/source
     location, relationship to the AlphaEvolve result, and validation that

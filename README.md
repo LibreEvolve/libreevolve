@@ -3504,7 +3504,12 @@ row. It validates the target, dimensions, AlphaEvolve rank, concurrent rank,
 reference id, source page/table, note text, relationship, and a docs caveat
 that marks exclusive-priority claims unsafe unless the concurrent work is
 mentioned. It is row-note metadata only; local table exports and matrix reports
-still do not emit this caveat artifact.
+still do not emit this caveat artifact. The companion artifact boundary
+`libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`
+validates the current `not_emitted_by_local_report_export` state and required
+future emitted-artifact fields for note id/type, target/rank/reference values,
+source table/page/text, exclusive-priority caveat flags, nested row-note
+evidence, artifact paths, and hashes.
 Appendix A matrix resource-frontier provenance uses
 `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1`; the built-in
 record preserves the paper's page 34 statement that sizes beyond `<5,5,5>`

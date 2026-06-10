@@ -10792,3 +10792,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     The paper-manifest gate validates this boundary with the Appendix A matrix
     checks.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Track Appendix A matrix row-note artifact-emission absence separately
+      from declared row-note validation.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A Table 3 includes
+    the `mm_4x5x6` concurrent-work note that reference `[49]` also found a
+    rank-90 algorithm for `<4, 5, 6>`.
+  - Status: `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`
+    now records the current `not_emitted_by_local_report_export` boundary and
+    validates required future emitted-artifact fields for note identity,
+    target/rank/reference values, source text, caveat flags, nested row-note
+    evidence, artifact paths, and hashes. The paper-manifest gate validates
+    this boundary with the Appendix A matrix checks.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

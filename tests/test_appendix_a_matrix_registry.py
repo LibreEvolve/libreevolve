@@ -4,6 +4,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     CURATION_SCHEMA,
     EXPECTED_TARGET_COUNT,
     LOCAL_RESOURCE_FRONTIER_SCHEMA,
+    ROW_NOTE_ARTIFACT_BOUNDARY_SCHEMA,
     RESOURCE_FRONTIER_SCHEMA,
     ROW_NOTE_SCHEMA,
     SUBSET_SCOPE_ARTIFACT_BOUNDARY_SCHEMA,
@@ -12,6 +13,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     appendix_a_matrix_curation_record,
     appendix_a_matrix_local_resource_frontier_record,
     appendix_a_matrix_resource_frontier_record,
+    appendix_a_matrix_row_note_artifact_boundary_record,
     appendix_a_matrix_row_note_records,
     appendix_a_matrix_subset_scope_artifact_boundary_record,
     appendix_a_matrix_subset_scope_record,
@@ -21,6 +23,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     render_appendix_a_matrix_local_resource_frontier_summary,
     render_appendix_a_matrix_resource_frontier_summary,
     render_appendix_a_matrix_registry_summary,
+    render_appendix_a_matrix_row_note_artifact_boundary_summary,
     render_appendix_a_matrix_row_note_summary,
     render_appendix_a_matrix_subset_scope_artifact_boundary_summary,
     render_appendix_a_matrix_subset_scope_summary,
@@ -28,6 +31,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     validate_appendix_a_matrix_local_resource_frontier,
     validate_appendix_a_matrix_resource_frontier,
     validate_appendix_a_matrix_registry,
+    validate_appendix_a_matrix_row_note_artifact_boundary,
     validate_appendix_a_matrix_row_notes,
     validate_appendix_a_matrix_subset_scope_artifact_boundary,
     validate_appendix_a_matrix_subset_scope,
@@ -332,6 +336,29 @@ def _subset_scope_artifact(subset_id: str = "main_text_mnp_le_5") -> dict:
     }
 
 
+def _row_note_artifact() -> dict:
+    evidence = appendix_a_matrix_row_note_records()
+    note = evidence["row_notes"][0]
+    return {
+        "note_id": note["note_id"],
+        "note_type": note["note_type"],
+        "target_id": note["target_id"],
+        "dimensions": list(note["dimensions"]),
+        "alphaevolve_rank": note["alphaevolve_rank"],
+        "concurrent_rank": note["concurrent_rank"],
+        "cited_reference_id": note["cited_reference_id"],
+        "relationship_to_alphaevolve": note["relationship_to_alphaevolve"],
+        "source_table": note["source_table"],
+        "source_pdf_page": note["source_pdf_page"],
+        "note_text": note["note_text"],
+        "exclusive_priority_claim_safe": note["exclusive_priority_claim_safe"],
+        "docs_caveat": note["docs_caveat"],
+        "row_note_evidence": evidence,
+        "artifact_paths": ["tables/mm_4x5x6_row_note.json"],
+        "artifact_sha256": "b" * 64,
+    }
+
+
 def test_appendix_a_matrix_subset_scope_validates_table2_and_full_table_boundaries():
     record = appendix_a_matrix_subset_scope_record()
     report = validate_appendix_a_matrix_subset_scope(record)
@@ -589,3 +616,85 @@ def test_appendix_a_matrix_row_note_summary_renders_counts():
     assert "| note_count | 1 |" in summary
     assert "| concurrent_work_note_count | 1 |" in summary
     assert "| affected_target_count | 1 |" in summary
+
+
+def test_appendix_a_matrix_row_note_artifact_boundary_accepts_current_absence():
+    report = validate_appendix_a_matrix_row_note_artifact_boundary()
+
+    assert report.ok is True
+    assert report.artifact_status == "not_emitted_by_local_report_export"
+    assert report.emitted_artifact_count == 0
+    assert report.required_field_count == 16
+    assert report.issues == []
+
+
+def test_appendix_a_matrix_row_note_artifact_boundary_rejects_absence_with_artifacts():
+    boundary = appendix_a_matrix_row_note_artifact_boundary_record()
+    boundary["emitted_artifacts"] = [_row_note_artifact()]
+    boundary["claim_boundary"] = "Artifacts exist."
+
+    report = validate_appendix_a_matrix_row_note_artifact_boundary(boundary)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "unexpected_emitted_artifacts" in codes
+    assert "missing_claim_boundary" in codes
+
+
+def test_appendix_a_matrix_row_note_artifact_boundary_requires_emitted_records():
+    boundary = appendix_a_matrix_row_note_artifact_boundary_record()
+    boundary["artifact_status"] = "emitted"
+
+    report = validate_appendix_a_matrix_row_note_artifact_boundary(boundary)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "missing_row_note_artifacts" in codes
+
+
+def test_appendix_a_matrix_row_note_artifact_boundary_accepts_emitted_record():
+    boundary = {
+        "schema": ROW_NOTE_ARTIFACT_BOUNDARY_SCHEMA,
+        "row_note_schema": ROW_NOTE_SCHEMA,
+        "source_paper_id": "2506.13131",
+        "target_suite": TARGET_SUITE,
+        "artifact_status": "emitted",
+        "local_export_scope": "matrix_row_note_report_export",
+        "required_artifact_fields": list(appendix_a_matrix_row_note_artifact_boundary_record()["required_artifact_fields"]),
+        "emitted_artifacts": [_row_note_artifact()],
+        "claim_boundary": "Local export emitted row-note artifacts.",
+    }
+
+    report = validate_appendix_a_matrix_row_note_artifact_boundary(boundary)
+
+    assert report.ok is True
+    assert report.artifact_status == "emitted"
+    assert report.emitted_artifact_count == 1
+    assert report.issues == []
+
+
+def test_appendix_a_matrix_row_note_artifact_boundary_rejects_invalid_nested_note():
+    boundary = appendix_a_matrix_row_note_artifact_boundary_record()
+    boundary["artifact_status"] = "emitted"
+    artifact = _row_note_artifact()
+    artifact["artifact_paths"] = ["tables/row_note.json", "../escape.json"]
+    artifact["artifact_sha256"] = "not-a-digest"
+    artifact["row_note_evidence"]["row_notes"] = []
+    boundary["emitted_artifacts"] = [artifact]
+
+    report = validate_appendix_a_matrix_row_note_artifact_boundary(boundary)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_artifact_path" in codes
+    assert "invalid_artifact_sha256" in codes
+    assert "invalid_nested_row_note_invalid_row_notes" in codes
+
+
+def test_appendix_a_matrix_row_note_artifact_boundary_summary_renders_counts():
+    summary = render_appendix_a_matrix_row_note_artifact_boundary_summary()
+
+    assert "AlphaEvolve Appendix A matrix row-note artifact boundary" in summary
+    assert "| schema_status | ok |" in summary
+    assert "| artifact_status | not_emitted_by_local_report_export |" in summary
+    assert "| emitted_artifact_count | 0 |" in summary

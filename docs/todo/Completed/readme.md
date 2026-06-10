@@ -10835,3 +10835,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     predicates, source linkage, counts, fell-behind/out-of-scope ids, nested
     subset evidence, artifact paths, and hashes.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the Appendix A matrix row-note artifact boundary in README.
+  - Spec evidence: README matrix wording needs to separate declared
+    `mm_4x5x6` concurrent-work caveat validation from actual local
+    report/export emission of row-note artifacts.
+  - Status: README now names
+    `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`,
+    scopes it to the current `not_emitted_by_local_report_export` state, and
+    lists required future emitted-artifact fields for note identity, target/
+    rank/reference values, source text, caveat flags, nested row-note evidence,
+    artifact paths, and hashes.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

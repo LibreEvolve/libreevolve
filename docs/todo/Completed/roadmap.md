@@ -8261,3 +8261,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     it to the current `not_emitted_by_local_report_export` state, and keeps
     real subset-scope artifact emission open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the Appendix A matrix row-note artifact boundary in ROADMAP.
+  - Spec evidence: roadmap matrix wording needs to distinguish declared
+    `mm_4x5x6` concurrent-work caveat validation from actual report/export
+    emission of row-note artifacts.
+  - Status: ROADMAP now names
+    `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`,
+    scopes it to the current `not_emitted_by_local_report_export` state, and
+    keeps real row-note caveat artifact emission open.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

@@ -16002,3 +16002,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused Appendix A registry and paper-manifest tests cover
     the absence boundary, emitted-artifact validation, invalid nested evidence,
     and manifest hook.
+
+- [x] Add an Appendix A matrix row-note artifact-emission boundary contract.
+  - Spec evidence: AlphaEvolve Appendix A Table 3 includes the `mm_4x5x6`
+    concurrent-work caveat that reference `[49]` also found a rank-90
+    algorithm for `<4, 5, 6>`, independently matching AlphaEvolve's rank.
+  - Status: `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`
+    now validates the current `not_emitted_by_local_report_export` state,
+    rejects false emitted claims without row-note artifacts, validates nested
+    row-note evidence, and records required future fields for note identity,
+    target/rank/reference values, source table/page/text, exclusive-priority
+    caveat flags, artifact paths, and artifact hashes. Local report/export
+    code still does not emit the row-note caveat artifact.
+  - Verification: focused Appendix A registry and paper-manifest tests cover
+    the absence boundary, emitted-artifact validation, invalid nested evidence,
+    and manifest hook.

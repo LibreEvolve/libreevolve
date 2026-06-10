@@ -881,6 +881,11 @@ is not yet an AlphaEvolve reproduction.
   algorithm for `<4, 5, 6>`, including source page/table, rank relationship,
   and a non-exclusive-priority docs caveat. Runtime reports and rendered table
   artifacts still do not emit that row-note caveat.
+  `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`
+  now records the current `not_emitted_by_local_report_export` boundary and
+  required future emitted-artifact fields for note identity, target/rank/
+  reference values, source text, caveat flags, nested row-note evidence,
+  artifact paths, and hashes.
 - Keep Table 2/Table 3 matrix-rank claims scoped to declared exhibit evidence:
   `libreevolve.alphaevolve_matrix_rank_table_exhibit.v1` now validates stable
   table ids, selected/full-table membership, row ordering, rank values, outcome

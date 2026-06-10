@@ -993,6 +993,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `[49]` also found a rank-90 algorithm for `<4, 5, 6>`, independently
     matching AlphaEvolve's rank. No emitted report/table artifact carries that
     row-note caveat yet.
+    `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`
+    now documents and validates that README-scoped absence boundary plus
+    required future emitted-artifact fields.
   - Required result: when Appendix A row-note artifacts land, update README,
     ROADMAP, papers index, and code/paper TODOs together so README
     distinguishes stored rank/outcome values from paper-faithful result-note

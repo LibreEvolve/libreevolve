@@ -1581,8 +1581,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     metric thresholds, samples, explicit seeds, retries, stage/sample budgets,
     and prompt-visible diagnostics. Completed manifests now include
     `runtime.history.cascade_hypothesis_test_policy_report` with schema
-    `libreevolve.cascade_hypothesis_test_policy_report.v1`, inferred
-    small-scale-filter/intermediate/main-test roles, observed
+    `libreevolve.cascade_hypothesis_test_policy_report.v1`, configured or
+    fallback-inferred small-scale-filter/intermediate/main-test roles, observed
     entry/pass/fail/sample/promotion summaries, configured sample/seed counts,
     and validation that current promotion remains deterministic
     threshold/artifact checking unless an opt-in
@@ -1592,8 +1592,7 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current gap: paper-facing evidence now includes one repeated-sample
     statistical gate, but still lacks broader hypothesis-test policies,
     sequential stopping rules, false-promotion/false-rejection budgets,
-    benchmark-calibrated thresholds, and explicit authored small-scale/main-test
-    role declarations.
+    benchmark-calibrated thresholds, and repeated-seed benchmark fixtures.
   - Required result: add paper-facing evidence for richer statistical cascade
     promotion decisions, including test-family parameters, sequential stopping
     diagnostics, calibrated error budgets, and benchmark promotion/rejection

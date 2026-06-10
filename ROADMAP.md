@@ -58,8 +58,8 @@ LibreEvolve has:
   history cross-links, denominator-policy boundaries, and explicit
   claim-readiness limitations under `runtime.history.evaluation_cascade_report`
 - cascade hypothesis-test boundary reports under
-  `runtime.history.cascade_hypothesis_test_policy_report`, naming inferred
-  small-scale-filter/main-test roles, deterministic threshold/artifact
+  `runtime.history.cascade_hypothesis_test_policy_report`, naming configured
+  or fallback-inferred small-scale-filter/main-test roles, deterministic threshold/artifact
   promotion, and opt-in `one_sided_lower_confidence_bound` repeated-sample
   gates with confidence-bound and p-value evidence
 - evaluator-workload declarations for configured stages, including

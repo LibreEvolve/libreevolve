@@ -2512,10 +2512,11 @@ labels, evaluator test-set hashes, benchmark seed/sample policy, and
 cost-savings evidence are added.
 Completed manifests also include
 `runtime.history.cascade_hypothesis_test_policy_report`, which records the
-current cascade promotion-policy boundary. It infers small-scale-filter,
-intermediate-filter, and main-test roles from configured stage order, links
-those stages to observed promotion/attrition counts, and records configured
-sample and seed counts. Stages may opt into
+current cascade promotion-policy boundary. `eval_stages[].role` can declare
+`small_scale_filter`, `intermediate_filter`, or `main_test`; otherwise the
+report infers that role from configured stage order for compatibility. The
+report links those stages to observed promotion/attrition counts and records
+configured sample and seed counts. Stages may opt into
 `hypothesis_test: {type: one_sided_lower_confidence_bound, metric, min,
 confidence, min_samples}` to require a repeated-sample lower confidence bound
 before promotion; the report then records confidence-bound and p-value
@@ -2585,6 +2586,9 @@ one-sided lower confidence bound and p-value, and rejects the stage with
 `hypothesis_test_not_met` when the lower bound is below `min`. This is an
 opt-in statistical promotion gate, not a sequential test or calibrated
 false-promotion budget.
+Stages can declare `role: small_scale_filter`, `role: intermediate_filter`, or
+`role: main_test`; completed manifests preserve both the configured role and
+the fallback order-inferred role in the cascade policy report.
 Configured stages can also require evaluator evidence directly:
 `require_program_output: true` requires a retained `outputs` or
 `program_output` payload, and `min_artifacts` requires at least that many copied

@@ -515,10 +515,10 @@ boundaries, and explicit `claim_ready: false` limitations. Stage difficulty/
 test-set identities, benchmark seed/sample policy, and cost-savings evidence
 remain open before claiming AlphaEvolve cascade efficiency or
 hypothesis-testing parity. Completed manifests also include
-`runtime.history.cascade_hypothesis_test_policy_report`, which names inferred
-small-scale-filter/intermediate/main-test roles from stage order, links current
-promotion counts and sample/seed configuration, and validates that current
-promotion is either deterministic thresholds/artifact checks or the configured
+`runtime.history.cascade_hypothesis_test_policy_report`, which names configured
+or fallback-inferred small-scale-filter/intermediate/main-test roles, links
+current promotion counts and sample/seed configuration, and validates that
+current promotion is either deterministic thresholds/artifact checks or the configured
 `one_sided_lower_confidence_bound` repeated-sample gate. Configured gates retain
 confidence-bound and p-value evidence. Sequential stopping, calibrated
 false-promotion/false-rejection budgets, richer test families, and full
@@ -1403,8 +1403,8 @@ Implemented:
   stages support deterministic scalar and metric thresholds, samples, explicit
   seeds, retries, and stage/sample budgets. Completed manifests include
   `runtime.history.cascade_hypothesis_test_policy_report`, which records
-  inferred small-scale-filter/main-test roles and validates the current
-  promotion boundary. Stages can now opt into
+  configured or fallback-inferred small-scale-filter/main-test roles and
+  validates the current promotion boundary. Stages can now opt into
   `one_sided_lower_confidence_bound` promotion tests that apply confidence-bound
   and p-value evidence to repeated samples. They are still not complete
   AlphaEvolve Section 2.4 hypothesis-testing cascades: sequential stopping,

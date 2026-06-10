@@ -2185,7 +2185,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     samples, retries, thresholds, stage/sample budgets, and prompt-visible
     diagnostics. README now also documents
     `runtime.history.cascade_hypothesis_test_policy_report`, which records
-    inferred small-scale/main-test roles, observed promotion counts,
+    configured or fallback-inferred small-scale/main-test roles, observed promotion counts,
     configured sample/seed counts, and the supported opt-in
     `one_sided_lower_confidence_bound` gate with retained observations,
     confidence-bound evidence, p-values, and `hypothesis_test_not_met`

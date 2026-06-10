@@ -182,7 +182,8 @@ test-set, benchmark seed/sample, and cost evidence.
 Completed manifests also include
 `runtime.history.cascade_hypothesis_test_policy_report` with schema
 `libreevolve.cascade_hypothesis_test_policy_report.v1`. It derives current
-stage roles from configured cascade order, links each stage to observed
+stage roles from `eval_stages[].role` when configured, falling back to stage
+order inference for compatibility. It links each stage to observed
 entry/pass/fail/sample/promotion-rate summaries, records configured sample and
 seed counts, and identifies whether promotion used fixed threshold/artifact
 checks or an opt-in `one_sided_lower_confidence_bound` hypothesis test. For
@@ -2437,6 +2438,10 @@ one-sided lower confidence bound above `min`; the persisted
 `hypothesis_test_result` records observations, mean, sample standard deviation,
 standard error, lower bound, confidence interval metadata, p-value, and pass
 reason.
+Configured stages can set `role` to `small_scale_filter`,
+`intermediate_filter`, or `main_test`. The manifest policy report stores
+`stage_role`, `configured_role`, the order-derived `inferred_role`, and
+`role_source` so role evidence is explicit when supplied.
 Configured stages can also require evaluator evidence. `require_program_output`
 adds an artifact/output check that passes only when `program_outputs.value` is
 retained rather than missing or omitted, and `min_artifacts` checks the count of

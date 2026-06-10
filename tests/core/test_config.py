@@ -703,6 +703,8 @@ def test_accepts_maximum_llm_call_attempt_cap():
         ({"name": "gate\napi_key=sk-proj_secret_1234567890"}, "manifest-safe stage label"),  # pragma: allowlist secret
         ({"name": "gate\u202e"}, "safe stage label"),
         ({"name": "gate\u200d"}, "safe stage label"),
+        ({"name": "gate", "role": "filter"}, "role"),
+        ({"name": "gate", "role": "small scale"}, "role"),
         ({"validate_path": Path("validate.py")}, "validate_path"),
         ({"validate_path": ""}, "validate_path"),
         ({"mode": "unsupported"}, "mode"),
@@ -786,6 +788,7 @@ def test_accepts_eval_stage_hypothesis_test_config():
         eval_stages=[
             {
                 "name": "stat_gate",
+                "role": "small_scale_filter",
                 "samples": 3,
                 "hypothesis_test": {
                     "type": "one_sided_lower_confidence_bound",
@@ -800,6 +803,7 @@ def test_accepts_eval_stage_hypothesis_test_config():
 
     assert config.eval_stages[0]["hypothesis_test"]["metric"] == "score"
     assert config.eval_stages[0]["hypothesis_test"]["confidence"] == 0.9
+    assert config.eval_stages[0]["role"] == "small_scale_filter"
 
 
 def test_accepts_configured_evaluator_stdin_text():

@@ -950,6 +950,7 @@ def _validate_eval_stages(stages: object) -> None:
             raise ConfigError(f"{label} must be a mapping")
         unsupported = _unsupported_mapping_keys(label, stage, {
             "name",
+            "role",
             "mode",
             "validate_path",
             "eval_inputs",
@@ -999,6 +1000,12 @@ def _validate_eval_stages(stages: object) -> None:
                     raise ConfigError(f"{label}.name is reserved for a built-in eval stage: {name!r}")
                 raise ConfigError(f"{label}.name duplicates an earlier eval stage: {name!r}")
             stage_names.add(name)
+        if "role" in stage:
+            _require_enum(
+                f"{label}.role",
+                stage["role"],
+                {"small_scale_filter", "intermediate_filter", "main_test"},
+            )
         if "validate_path" in stage:
             _require_string(f"{label}.validate_path", stage["validate_path"])
         if "eval_inputs" in stage:

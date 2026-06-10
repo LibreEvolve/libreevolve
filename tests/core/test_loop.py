@@ -5456,8 +5456,12 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
                 log_dir=tmpdir,
                 problem_name="t",
                 eval_stages=[
-                    {"name": "smoke", "min_score": 0.5},
-                    {"name": "main", "min_score": 0.5},
+                    {
+                        "name": "smoke",
+                        "role": "small_scale_filter",
+                        "min_score": 0.5,
+                    },
+                    {"name": "main", "role": "main_test", "min_score": 0.5},
                 ],
             ),
         )
@@ -5572,7 +5576,10 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
     )
     smoke_policy, main_policy = hypothesis_policy["stage_policies"]
     assert smoke_policy["stage_id"] == "0:smoke"
+    assert smoke_policy["stage_role"] == "small_scale_filter"
+    assert smoke_policy["configured_role"] == "small_scale_filter"
     assert smoke_policy["inferred_role"] == "small_scale_filter"
+    assert smoke_policy["role_source"] == "configured"
     assert smoke_policy["promotion_decision_source"] == (
         "fixed_threshold_and_artifact_checks"
     )
@@ -5603,7 +5610,14 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
         "false_rejection_budget": None,
     }
     assert main_policy["stage_id"] == "1:main"
+    assert main_policy["stage_role"] == "main_test"
+    assert main_policy["configured_role"] == "main_test"
     assert main_policy["inferred_role"] == "main_test"
+    assert main_policy["role_source"] == "configured"
+    assert (
+        hypothesis_policy["claim_readiness"]["explicit_stage_roles_configured"]
+        is True
+    )
 
     overclaimed_policy = copy.deepcopy(hypothesis_policy)
     overclaimed_policy["claim_ready"] = True
@@ -5650,6 +5664,7 @@ def test_runtime_history_reports_configured_cascade_hypothesis_test_gate():
             eval_stages=[
                 {
                     "name": "stat_gate",
+                    "role": "small_scale_filter",
                     "samples": 3,
                     "seeds": [0.8, 0.85, 0.9],
                     "min_score": 0.7,
@@ -5698,6 +5713,9 @@ def test_runtime_history_reports_configured_cascade_hypothesis_test_gate():
     assert report["claim_readiness"]["confidence_or_p_value_records"] is True
 
     policy = report["stage_policies"][0]
+    assert policy["stage_role"] == "small_scale_filter"
+    assert policy["configured_role"] == "small_scale_filter"
+    assert policy["role_source"] == "configured"
     assert policy["promotion_decision_source"] == "statistical_hypothesis_test"
     assert policy["statistical_test"]["configured"] is True
     assert policy["statistical_test"]["test_name"] == (

@@ -13137,6 +13137,9 @@ def _cascade_hypothesis_test_policy_report(
         stage.get("statistical_test", {}).get("p_value_count", 0) > 0
         for stage in stage_policies
     )
+    explicit_roles_configured = bool(stage_policies) and all(
+        stage.get("role_source") == "configured" for stage in stage_policies
+    )
     observed_stage_count = (
         cascade_report.get("stage_count")
         if isinstance(cascade_report.get("stage_count"), int)
@@ -13175,6 +13178,7 @@ def _cascade_hypothesis_test_policy_report(
             "alphaevolve_section_2_4_hypothesis_testing": False,
             "small_scale_filter_roles_named": bool(stage_policies),
             "main_test_role_named": bool(stage_policies),
+            "explicit_stage_roles_configured": explicit_roles_configured,
             "fixed_threshold_promotion_evidence": True,
             "statistical_test_configuration": statistical_test_configured,
             "confidence_or_p_value_records": confidence_records or p_value_records,
@@ -13206,6 +13210,10 @@ def _cascade_hypothesis_stage_policy(
     role = "main_test" if index == stage_count - 1 else "small_scale_filter"
     if stage_count > 2 and 0 < index < stage_count - 1:
         role = "intermediate_filter"
+    configured_role = (
+        stage.get("role") if isinstance(stage.get("role"), str) else None
+    )
+    stage_role = configured_role or role
     samples = stage.get("samples", 1)
     configured_samples = (
         samples
@@ -13233,7 +13241,14 @@ def _cascade_hypothesis_stage_policy(
         "stage_id": stage_id,
         "stage_index": index,
         "stage_name": name,
+        "stage_role": stage_role,
+        "configured_role": configured_role,
         "inferred_role": role,
+        "role_source": (
+            "configured"
+            if configured_role is not None
+            else "inferred_from_stage_order"
+        ),
         "promotion_decision_source": (
             "statistical_hypothesis_test"
             if statistical_configured
@@ -27694,7 +27709,14 @@ def validate_cascade_hypothesis_test_policy_report(report: object) -> dict:
                 }
             )
             continue
-        for key in ("stage_id", "stage_name", "inferred_role", "promotion_decision_source"):
+        for key in (
+            "stage_id",
+            "stage_name",
+            "stage_role",
+            "inferred_role",
+            "role_source",
+            "promotion_decision_source",
+        ):
             if not isinstance(stage.get(key), str) or not stage.get(key):
                 issues.append(
                     {
@@ -27702,15 +27724,54 @@ def validate_cascade_hypothesis_test_policy_report(report: object) -> dict:
                         "message": f"stage policy {index} {key} must be non-empty text",
                     }
                 )
-        if stage.get("inferred_role") not in {
+        allowed_stage_roles = {
             "small_scale_filter",
             "intermediate_filter",
             "main_test",
-        }:
+        }
+        if stage.get("inferred_role") not in allowed_stage_roles:
             issues.append(
                 {
                     "code": "invalid_stage_role",
                     "message": f"stage policy {index} inferred_role is unsupported",
+                }
+            )
+        if stage.get("stage_role") not in allowed_stage_roles:
+            issues.append(
+                {
+                    "code": "invalid_stage_role",
+                    "message": f"stage policy {index} stage_role is unsupported",
+                }
+            )
+        configured_role = stage.get("configured_role")
+        if configured_role is not None and configured_role not in allowed_stage_roles:
+            issues.append(
+                {
+                    "code": "invalid_configured_stage_role",
+                    "message": f"stage policy {index} configured_role is unsupported",
+                }
+            )
+        role_source = stage.get("role_source")
+        if role_source not in {"configured", "inferred_from_stage_order"}:
+            issues.append(
+                {
+                    "code": "invalid_stage_role_source",
+                    "message": f"stage policy {index} role_source is unsupported",
+                }
+            )
+        elif role_source == "configured":
+            if configured_role != stage.get("stage_role"):
+                issues.append(
+                    {
+                        "code": "configured_stage_role_mismatch",
+                        "message": "configured role must match stage_role",
+                    }
+                )
+        elif configured_role is not None:
+            issues.append(
+                {
+                    "code": "configured_stage_role_source_mismatch",
+                    "message": "configured_role requires configured role_source",
                 }
             )
         statistical_test = stage.get("statistical_test")

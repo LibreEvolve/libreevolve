@@ -2819,7 +2819,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     ratio `4.165849767` improving prior `4.168`.
   - Current evidence: roadmap/README/paper-index wording now cites B.8
     convention metadata with point counts, dimensions, prior squared bounds,
-    and Figure 12 panel linkage. It still does not require coordinate payloads,
+    and Figure 12 panel linkage. It also cites a
+    `witness_certificate_boundary` listing the required future coordinate and
+    distance-certificate fields while keeping both witnesses
+    `not_recorded_locally`. It still does not include coordinate payloads,
     all-pairs min/max distance certificates, or recomputed squared ratios from
     coordinates.
   - Required result: when Appendix B.8 witness validators land, update ROADMAP,

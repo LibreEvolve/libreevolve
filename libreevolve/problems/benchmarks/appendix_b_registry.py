@@ -128,6 +128,21 @@ EXPECTED_B8_METRIC_CONVENTIONS = (
         "coordinate_artifact_status": "not_recorded_locally",
     },
 )
+EXPECTED_B8_WITNESS_REQUIRED_FIELDS = (
+    "result_id",
+    "point_count",
+    "dimension",
+    "coordinate_artifact_path",
+    "coordinate_artifact_sha256",
+    "coordinate_payload_schema",
+    "distance_certificate_path",
+    "distance_certificate_sha256",
+    "minimum_pairwise_distance",
+    "maximum_pairwise_distance",
+    "recomputed_squared_ratio",
+    "figure_panel_id",
+)
+EXPECTED_B8_WITNESS_IDS = ("b8_16_points_2d", "b8_14_points_3d")
 STATUSES = frozenset({"implemented", "implemented_smoke", "planned", "background_only", "out_of_scope"})
 DIRECTIONS = frozenset({"maximize", "minimize", "satisfy", "prove"})
 _ID_RE = re.compile(r"[a-z][a-z0-9_]{1,79}")
@@ -224,6 +239,7 @@ def _validate_family(
     _validate_autocorrelation_paper_label(family, family_id, issues)
     _validate_autocorrelation_step_evidence(family, family_id, issues)
     _validate_b8_metric_conventions(family, family_id, issues)
+    _validate_b8_witness_boundary(family, family_id, issues)
     status = family.get("status")
     if status not in STATUSES:
         issues.append(AppendixBRegistryIssue("invalid_status", "invalid implementation status", family_id))
@@ -359,6 +375,51 @@ def _validate_b8_metric_conventions(
             and float(raw) >= float(prior)
         ):
             issues.append(AppendixBRegistryIssue("invalid_b8_improvement_direction", "B.8 raw reported squared value must improve on the prior squared value", family_id))
+
+
+def _validate_b8_witness_boundary(
+    family: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    if family_id != "max_min_distance_point_sets":
+        return
+    boundary = family.get("witness_certificate_boundary")
+    if not isinstance(boundary, dict):
+        issues.append(AppendixBRegistryIssue("missing_b8_witness_boundary", "B.8 requires witness_certificate_boundary", family_id))
+        return
+    if boundary.get("status") != "not_recorded_locally":
+        issues.append(AppendixBRegistryIssue("invalid_b8_witness_boundary_status", "B.8 witness boundary must remain not_recorded_locally until coordinate and certificate artifacts exist", family_id))
+    required = boundary.get("required_witness_fields")
+    if required != list(EXPECTED_B8_WITNESS_REQUIRED_FIELDS):
+        issues.append(AppendixBRegistryIssue("invalid_b8_witness_required_fields", "B.8 witness boundary must enumerate required future coordinate and distance-certificate fields", family_id))
+    missing = boundary.get("missing_witnesses")
+    if not isinstance(missing, list):
+        issues.append(AppendixBRegistryIssue("invalid_b8_missing_witnesses", "B.8 missing_witnesses must be a list", family_id))
+        return
+    if len(missing) != len(EXPECTED_B8_WITNESS_IDS):
+        issues.append(AppendixBRegistryIssue("invalid_b8_missing_witness_count", "B.8 must track both missing point-set witnesses", family_id))
+    seen: set[str] = set()
+    for witness in missing:
+        if not isinstance(witness, dict):
+            issues.append(AppendixBRegistryIssue("invalid_b8_missing_witness", "B.8 missing witness rows must be objects", family_id))
+            continue
+        result_id = witness.get("result_id")
+        if result_id not in EXPECTED_B8_WITNESS_IDS:
+            issues.append(AppendixBRegistryIssue("invalid_b8_missing_witness_id", "B.8 missing witness result_id must match a convention row", family_id))
+        elif isinstance(result_id, str):
+            if result_id in seen:
+                issues.append(AppendixBRegistryIssue("duplicate_b8_missing_witness_id", "B.8 missing witness ids must be unique", family_id))
+            seen.add(result_id)
+        for field in ("coordinate_artifact_status", "distance_certificate_status", "recomputed_ratio_status"):
+            if witness.get(field) != "not_recorded_locally":
+                issues.append(AppendixBRegistryIssue(f"invalid_b8_{field}", f"B.8 {field} must be not_recorded_locally in the absence boundary", family_id))
+        claim_boundary = witness.get("claim_boundary")
+        if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary:
+            issues.append(AppendixBRegistryIssue("missing_b8_witness_claim_boundary", "B.8 missing witness rows must state that local coordinate/certificate evidence is not claimed", family_id))
+    for result_id in EXPECTED_B8_WITNESS_IDS:
+        if result_id not in seen:
+            issues.append(AppendixBRegistryIssue("missing_b8_witness_id", "B.8 witness boundary must include each convention result id", family_id))
 
 
 def _family_id(family: object, index: int) -> str:

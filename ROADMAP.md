@@ -649,7 +649,9 @@ is not yet an AlphaEvolve reproduction.
   until point-set certificates land: the registry now validates the squared
   raw values, square-root-derived ratios, point counts, dimensions, prior
   squared bounds, Figure 12 panel labels, and comparison policy, but not the
-  coordinate payloads or all-pairs distance certificates.
+  coordinate payloads or all-pairs distance certificates. A
+  `witness_certificate_boundary` now records the required future witness fields
+  and keeps both B.8 witnesses explicitly `not_recorded_locally`.
 - Keep paper artifact-role attribution separate from artifact availability:
   `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
   AlphaEvolve PDF contribution records for figure creators and companion

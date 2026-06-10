@@ -2,6 +2,8 @@ import json
 
 from libreevolve.problems.benchmarks.appendix_b_registry import (
     EXPECTED_B8_METRIC_CONVENTIONS,
+    EXPECTED_B8_WITNESS_IDS,
+    EXPECTED_B8_WITNESS_REQUIRED_FIELDS,
     EXPECTED_AUTOCORRELATION_LABELS,
     EXPECTED_AUTOCORRELATION_STEP_EVIDENCE,
     EXPECTED_FAMILY_IDS,
@@ -40,6 +42,10 @@ def test_appendix_b_registry_enumerates_all_alphaevolve_families():
             assert evidence[field] == expected_value
     b8 = next(family for family in data["families"] if family["id"] == "max_min_distance_point_sets")
     assert b8["metric_convention_evidence"] == list(EXPECTED_B8_METRIC_CONVENTIONS)
+    boundary = b8["witness_certificate_boundary"]
+    assert boundary["status"] == "not_recorded_locally"
+    assert boundary["required_witness_fields"] == list(EXPECTED_B8_WITNESS_REQUIRED_FIELDS)
+    assert [row["result_id"] for row in boundary["missing_witnesses"]] == list(EXPECTED_B8_WITNESS_IDS)
 
 
 def test_appendix_b_registry_requires_advertised_fixtures_to_exist(tmp_path):
@@ -170,3 +176,42 @@ def test_appendix_b_registry_requires_b8_metric_convention_list(tmp_path):
     assert report.ok is False
     assert [issue.code for issue in report.issues] == ["missing_b8_metric_convention_evidence"]
     assert report.issues[0].family_id == "max_min_distance_point_sets"
+
+
+def test_appendix_b_registry_requires_b8_witness_boundary(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    b8 = next(family for family in data["families"] if family["id"] == "max_min_distance_point_sets")
+    del b8["witness_certificate_boundary"]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+
+    assert report.ok is False
+    assert [issue.code for issue in report.issues] == ["missing_b8_witness_boundary"]
+    assert report.issues[0].family_id == "max_min_distance_point_sets"
+
+
+def test_appendix_b_registry_rejects_b8_witness_boundary_overclaim(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    b8 = next(family for family in data["families"] if family["id"] == "max_min_distance_point_sets")
+    boundary = b8["witness_certificate_boundary"]
+    boundary["status"] = "recorded"
+    boundary["required_witness_fields"] = ["result_id"]
+    first = boundary["missing_witnesses"][0]
+    first["coordinate_artifact_status"] = "recorded"
+    first["claim_boundary"] = "Coordinates exist."
+    boundary["missing_witnesses"] = boundary["missing_witnesses"][:1]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_b8_witness_boundary_status" in codes
+    assert "invalid_b8_witness_required_fields" in codes
+    assert "invalid_b8_missing_witness_count" in codes
+    assert "invalid_b8_coordinate_artifact_status" in codes
+    assert "missing_b8_witness_claim_boundary" in codes
+    assert "missing_b8_witness_id" in codes

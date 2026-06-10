@@ -2578,18 +2578,17 @@ Primary evidence:
     `4.168`.
   - Current evidence: the B.8 convention metadata now prevents quoting squared
     values as direct ratios and records point count, dimension, prior squared
-    bound/source, and Figure 12 panel linkage. The broad Appendix B per-result
-    TODO asks for coordinate payloads in general, but no code/report schema
-    separately forces B.8 witness validation: coordinate payload hash,
-    finite-coordinate checks, all-pairs minimum and maximum distance
-    certificates, or recomputed squared ratio from coordinates.
+    bound/source, and Figure 12 panel linkage. The B.8
+    `witness_certificate_boundary` now lists the required future witness
+    fields, including coordinate artifact path/hash, coordinate payload schema,
+    distance-certificate path/hash, min/max pairwise distances, recomputed
+    squared ratio, and figure panel id, while marking both witnesses
+    `not_recorded_locally`. It still does not provide the coordinate payloads,
+    finite-coordinate checks, all-pairs minimum/maximum distance certificates,
+    or recomputed squared ratio from coordinates.
   - Required result: add Appendix B.8 witness rows and validators that record
-    point-set artifact hashes, `n`, dimension, pairwise-distance certificate
-    hashes, recomputed min distance, max distance, squared ratio and derived
-    ratio, prior best value/source, improvement direction, source
-    section/caption location, Figure 12 panel id, and docs that distinguish
-    distance-certificate evidence from the separate squared-ratio convention
-    metadata.
+    real point-set artifact hashes, pairwise-distance certificate hashes,
+    recomputed min distance, max distance, and squared ratio from coordinates.
 
 - [ ] Add Appendix B.5 minimum-overlap step-function provenance.
   - Spec evidence: AlphaEvolve Appendix B.5 improves the Erdos minimum-overlap

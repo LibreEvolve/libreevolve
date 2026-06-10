@@ -196,6 +196,39 @@
           "coordinate_artifact_status": "not_recorded_locally"
         }
       ],
+      "witness_certificate_boundary": {
+        "status": "not_recorded_locally",
+        "required_witness_fields": [
+          "result_id",
+          "point_count",
+          "dimension",
+          "coordinate_artifact_path",
+          "coordinate_artifact_sha256",
+          "coordinate_payload_schema",
+          "distance_certificate_path",
+          "distance_certificate_sha256",
+          "minimum_pairwise_distance",
+          "maximum_pairwise_distance",
+          "recomputed_squared_ratio",
+          "figure_panel_id"
+        ],
+        "missing_witnesses": [
+          {
+            "result_id": "b8_16_points_2d",
+            "coordinate_artifact_status": "not_recorded_locally",
+            "distance_certificate_status": "not_recorded_locally",
+            "recomputed_ratio_status": "not_recorded_locally",
+            "claim_boundary": "The registry records the paper's squared-ratio convention but does not claim local coordinates or all-pairs distance certificates for the 16-point 2D witness."
+          },
+          {
+            "result_id": "b8_14_points_3d",
+            "coordinate_artifact_status": "not_recorded_locally",
+            "distance_certificate_status": "not_recorded_locally",
+            "recomputed_ratio_status": "not_recorded_locally",
+            "claim_boundary": "The registry records the paper's squared-ratio convention but does not claim local coordinates or all-pairs distance certificates for the 14-point 3D witness."
+          }
+        ]
+      },
       "artifact_schema": {"construction": "point_coordinate_set", "certificate": "distance_matrix_certificate"},
       "certification": "geometric_feasibility",
       "rationale": "No local point-set validator exists yet.",

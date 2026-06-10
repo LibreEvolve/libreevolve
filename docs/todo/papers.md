@@ -2530,17 +2530,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     the best known squared bound `4.168`.
   - Current gap: paper-facing Appendix B TODOs now preserve the B.8
     squared-ratio convention, point count, dimension, prior value/source, and
-    left/right Figure 12 panel linkage. They still do not require B.8 reports
-    to prove the actual coordinate witnesses: finite coordinate payload hash,
-    all-pairs minimum/maximum distance certificate, or recomputed squared ratio
-    from coordinates.
+    left/right Figure 12 panel linkage. A validated
+    `witness_certificate_boundary` now records required future fields for
+    coordinate artifacts, distance certificates, min/max distances, recomputed
+    ratio, and figure panel ids while keeping both witnesses explicitly
+    `not_recorded_locally`. The registry still does not prove the actual
+    coordinate witnesses: finite coordinate payload hash, all-pairs
+    minimum/maximum distance certificate, or recomputed squared ratio from
+    coordinates.
   - Required result: add paper/report evidence for Appendix B.8 witness rows:
-    result id, `n`, dimension, coordinate artifact hash, pairwise-distance
-    certificate hash, recomputed min and max distances, squared-ratio value,
-    square-root-derived ratio, prior best value/source, improvement direction,
-    Figure 12 panel id, source section/caption location, and README/ROADMAP
-    wording that separates witness-certification evidence from metric-unit
-    convention evidence.
+    coordinate artifact hash, pairwise-distance certificate hash, recomputed
+    min and max distances, and squared ratio from coordinates.
 
 - [ ] Track Appendix B.5 minimum-overlap step-function evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.5 reports that

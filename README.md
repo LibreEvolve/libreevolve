@@ -3594,7 +3594,10 @@ squared-ratio convention for Appendix B.8, including raw squared values
 `12.889266112` and `4.165849767`, their square-root-derived geometric ratios,
 point counts, dimensions, prior squared bounds, and comparison policy. It does
 not yet store the coordinate payloads or all-pairs distance certificates for
-those witnesses. It is also not a
+those witnesses; a validated `witness_certificate_boundary` now records the
+required future coordinate-artifact, distance-certificate, min/max-distance,
+recomputed-ratio, and Figure-panel fields while keeping both witnesses marked
+`not_recorded_locally`. It is also not a
 Section 3.2 aggregate outcome ledger: LibreEvolve does not yet enumerate the
 paper's over-50 mathematical problem instances, branch taxonomy, previous-best
 references, matched/improved/failed statuses, or aggregate percentages for

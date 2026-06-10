@@ -23,6 +23,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     appendix_a_matrix_row_note_artifact_boundary_from_records,
     appendix_a_matrix_row_note_artifact_boundary_record,
     appendix_a_matrix_row_note_records,
+    appendix_a_matrix_subset_scope_artifact_boundary_from_records,
     appendix_a_matrix_subset_scope_artifact_boundary_record,
     appendix_a_matrix_subset_scope_record,
     matrix_target_by_id,
@@ -756,28 +757,43 @@ def test_appendix_a_matrix_subset_scope_artifact_boundary_requires_emitted_recor
 
 
 def test_appendix_a_matrix_subset_scope_artifact_boundary_accepts_emitted_records():
-    boundary = {
-        "schema": SUBSET_SCOPE_ARTIFACT_BOUNDARY_SCHEMA,
-        "subset_scope_schema": SUBSET_SCOPE_SCHEMA,
-        "source_paper_id": "2506.13131",
-        "target_suite": TARGET_SUITE,
-        "artifact_status": "emitted",
-        "local_export_scope": "matrix_subset_scope_report_export",
-        "required_artifact_fields": list(appendix_a_matrix_subset_scope_artifact_boundary_record()["required_artifact_fields"]),
-        "emitted_artifacts": [
-            _subset_scope_artifact("appendix_a_full"),
-            _subset_scope_artifact("main_text_mnp_le_5"),
-            _subset_scope_artifact("table_2_selected"),
-        ],
-        "claim_boundary": "Local export emitted subset-scope artifacts.",
-    }
+    boundary = appendix_a_matrix_subset_scope_artifact_boundary_from_records(
+        artifact_sha256_by_subset_id={
+            "appendix_a_full": "a" * 64,
+            "main_text_mnp_le_5": "b" * 64,
+            "table_2_selected": "c" * 64,
+        }
+    )
 
     report = validate_appendix_a_matrix_subset_scope_artifact_boundary(boundary)
 
+    artifacts = {
+        artifact["subset_scope_id"]: artifact
+        for artifact in boundary["emitted_artifacts"]
+    }
+    assert boundary["schema"] == SUBSET_SCOPE_ARTIFACT_BOUNDARY_SCHEMA
+    assert boundary["subset_scope_schema"] == SUBSET_SCOPE_SCHEMA
     assert report.ok is True
     assert report.artifact_status == "emitted"
     assert report.emitted_artifact_count == 3
     assert report.issues == []
+    assert set(artifacts) == {
+        "appendix_a_full",
+        "main_text_mnp_le_5",
+        "table_2_selected",
+    }
+    assert artifacts["main_text_mnp_le_5"]["row_count"] == 20
+    assert artifacts["appendix_a_full"]["artifact_sha256"] == "a" * 64
+    assert artifacts["main_text_mnp_le_5"]["artifact_sha256"] == "b" * 64
+    assert artifacts["table_2_selected"]["artifact_sha256"] == "c" * 64
+
+
+def test_appendix_a_matrix_subset_scope_artifact_boundary_builder_rejects_invalid_evidence():
+    record = appendix_a_matrix_subset_scope_record()
+    record["subsets"] = []
+
+    with pytest.raises(ValueError, match="subset-scope evidence is invalid"):
+        appendix_a_matrix_subset_scope_artifact_boundary_from_records(record)
 
 
 def test_appendix_a_matrix_subset_scope_artifact_boundary_rejects_invalid_nested_scope():
@@ -796,6 +812,34 @@ def test_appendix_a_matrix_subset_scope_artifact_boundary_rejects_invalid_nested
     assert "invalid_artifact_path" in codes
     assert "invalid_artifact_sha256" in codes
     assert "invalid_nested_subset_scope_invalid_subsets" in codes
+
+
+def test_appendix_a_matrix_subset_scope_artifact_boundary_rejects_nested_link_mismatch():
+    boundary = appendix_a_matrix_subset_scope_artifact_boundary_from_records(
+        artifact_sha256_by_subset_id={
+            "appendix_a_full": "a" * 64,
+            "main_text_mnp_le_5": "b" * 64,
+            "table_2_selected": "c" * 64,
+        }
+    )
+    artifact = next(
+        item
+        for item in boundary["emitted_artifacts"]
+        if item["subset_scope_id"] == "main_text_mnp_le_5"
+    )
+    nested = next(
+        item
+        for item in artifact["subset_scope_evidence"]["subsets"]
+        if item["subset_id"] == "main_text_mnp_le_5"
+    )
+    nested["row_count"] = 999
+
+    report = validate_appendix_a_matrix_subset_scope_artifact_boundary(boundary)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_nested_subset_scope_invalid_row_count" in codes
+    assert "invalid_artifact_nested_row_count" in codes
 
 
 def test_appendix_a_matrix_subset_scope_artifact_boundary_summary_renders_counts():

@@ -746,8 +746,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     all-matched-or-surpassed `m,n,p <= 5` main-text claim, but no emitted
     report/table artifact carries that subset-scope evidence yet.
     `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1` now
-    documents and validates that README-scoped absence boundary plus required
-    future emitted-artifact fields.
+    documents and validates that README-scoped absence boundary plus
+    emitted-artifact fields. README also documents the builder from subset
+    evidence and nested-linkage validation, but no report/table exporter emits
+    the records automatically.
   - Required result: when matrix subset-scope artifacts land, update README,
     ROADMAP, papers index, and code/paper TODOs with named target subsets,
     inclusion predicates, row counts, outcome counts, out-of-scope row ids,

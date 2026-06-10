@@ -1220,6 +1220,9 @@ Implemented:
   required future emitted-artifact fields for subset identity, inclusion
   predicates, source linkage, counts, fell-behind/out-of-scope ids, nested
   subset-scope evidence, artifact paths, and hashes.
+  `appendix_a_matrix_subset_scope_artifact_boundary_from_records()` can build
+  emitted artifacts from subset evidence and validates nested linkage, but
+  local report/table exports still do not emit those subset records.
   `libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1` records the
   Appendix A Table 3 concurrent-work note for `mm_4x5x6`: reference `[49]`
   also found a rank-90 algorithm for `<4, 5, 6>`, independently matching

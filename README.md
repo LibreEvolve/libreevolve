@@ -3728,6 +3728,10 @@ validates the current `not_emitted_by_local_report_export` state and required
 future emitted-artifact fields for subset ids, inclusion predicates, source
 table/page/phrase linkage, row and outcome counts, fell-behind and
 out-of-scope ids, nested subset-scope evidence, artifact paths, and hashes.
+`appendix_a_matrix_subset_scope_artifact_boundary_from_records()` builds
+emitted artifacts from validated subset-scope evidence and validation checks
+that artifact rows match their nested subset evidence. Local reports and
+rendered table artifacts still do not emit these scope records automatically.
 Appendix A matrix row-note evidence uses
 `libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1`; the built-in record
 preserves the Table 3 note that concurrent work `[49]` also found a rank-90

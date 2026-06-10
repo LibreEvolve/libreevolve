@@ -1048,6 +1048,10 @@ is not yet an AlphaEvolve reproduction.
   required future emitted-artifact fields for subset identity, inclusion
   predicates, source linkage, counts, fell-behind/out-of-scope ids, nested
   subset-scope evidence, artifact paths, and hashes.
+  `appendix_a_matrix_subset_scope_artifact_boundary_from_records()` builds
+  emitted artifacts from validated subset-scope evidence and validation checks
+  nested evidence linkage. Runtime reports and rendered table artifacts still
+  need to emit those subset-scope records automatically.
 - Keep Appendix A matrix row-note claims scoped to declared evidence:
   `libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1` now validates the
   `mm_4x5x6` concurrent-work note that reference `[49]` also found a rank-90

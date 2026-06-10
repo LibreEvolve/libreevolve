@@ -620,6 +620,87 @@ def appendix_a_matrix_subset_scope_artifact_boundary_record() -> dict[str, Any]:
     }
 
 
+def appendix_a_matrix_subset_scope_artifact_boundary_from_records(
+    recordset: dict[str, Any] | None = None,
+    *,
+    artifact_paths_by_subset_id: dict[str, list[str]] | None = None,
+    artifact_sha256_by_subset_id: dict[str, str] | None = None,
+) -> dict[str, Any]:
+    """Build emitted subset-scope artifacts from validated subset evidence."""
+    subset_scope_evidence = (
+        appendix_a_matrix_subset_scope_record()
+        if recordset is None
+        else copy.deepcopy(recordset)
+    )
+    subset_report = validate_appendix_a_matrix_subset_scope(subset_scope_evidence)
+    if not subset_report.ok:
+        messages = "; ".join(issue.message for issue in subset_report.issues)
+        raise ValueError(f"subset-scope evidence is invalid: {messages}")
+    artifacts: list[dict[str, Any]] = []
+    subsets = subset_scope_evidence.get("subsets", [])
+    assert isinstance(subsets, list)
+    for subset in subsets:
+        assert isinstance(subset, dict)
+        subset_id = subset["subset_id"]
+        paths = (
+            artifact_paths_by_subset_id.get(subset_id)
+            if artifact_paths_by_subset_id is not None
+            else None
+        )
+        artifact_paths = (
+            copy.deepcopy(paths)
+            if paths is not None
+            else [f"tables/{subset_id}_subset_scope.json"]
+        )
+        artifact_payload = {
+            "subset_scope_id": subset_id,
+            "source_table": subset["source_table"],
+            "source_pdf_page": subset["source_pdf_page"],
+            "source_phrase": subset["source_phrase"],
+            "inclusion_predicate": subset["inclusion_predicate"],
+            "row_count": subset["row_count"],
+            "outcome_counts": copy.deepcopy(subset["outcome_counts"]),
+            "out_of_scope_target_ids": copy.deepcopy(
+                subset["out_of_scope_target_ids"]
+            ),
+            "fell_behind_target_ids": copy.deepcopy(
+                subset["fell_behind_target_ids"]
+            ),
+            "subset_scope_evidence": copy.deepcopy(subset_scope_evidence),
+            "artifact_paths": artifact_paths,
+        }
+        artifact_hash = (
+            artifact_sha256_by_subset_id.get(subset_id)
+            if artifact_sha256_by_subset_id is not None
+            else None
+        )
+        artifact_payload["artifact_sha256"] = (
+            artifact_hash
+            if artifact_hash is not None
+            else _stable_json_sha256(artifact_payload)
+        )
+        artifacts.append(artifact_payload)
+    boundary = appendix_a_matrix_subset_scope_artifact_boundary_record()
+    boundary.update(
+        {
+            "artifact_status": "emitted",
+            "emitted_artifacts": artifacts,
+            "claim_boundary": (
+                "Emitted artifacts preserve Appendix A, Table 2, and "
+                "m,n,p <= 5 matrix subset-scope evidence; this still does "
+                "not claim local report/export code emits them."
+            ),
+        }
+    )
+    boundary_report = validate_appendix_a_matrix_subset_scope_artifact_boundary(
+        boundary
+    )
+    if not boundary_report.ok:
+        messages = "; ".join(issue.message for issue in boundary_report.issues)
+        raise ValueError(f"subset-scope artifact boundary is invalid: {messages}")
+    return boundary
+
+
 def validate_appendix_a_matrix_subset_scope(
     recordset: object | str | Path | None = None,
 ) -> MatrixSubsetScopeReport:
@@ -1961,6 +2042,42 @@ def _validate_subset_scope_artifact_record(
         MatrixSubsetScopeIssue(f"invalid_nested_subset_scope_{issue.code}", issue.message, issue.subset_id)
         for issue in subset_report.issues
     )
+    nested = artifact.get("subset_scope_evidence")
+    nested_subsets = nested.get("subsets") if isinstance(nested, dict) else None
+    if isinstance(nested_subsets, list) and safe_id is not None:
+        matching_subsets = [
+            subset
+            for subset in nested_subsets
+            if isinstance(subset, dict) and subset.get("subset_id") == safe_id
+        ]
+        if not matching_subsets:
+            issues.append(
+                MatrixSubsetScopeIssue(
+                    "missing_nested_artifact_subset",
+                    "subset_scope_evidence must include the artifact subset_scope_id",
+                    safe_id,
+                )
+            )
+        else:
+            nested_subset = matching_subsets[0]
+            for field in (
+                "source_table",
+                "source_pdf_page",
+                "source_phrase",
+                "inclusion_predicate",
+                "row_count",
+                "outcome_counts",
+                "out_of_scope_target_ids",
+                "fell_behind_target_ids",
+            ):
+                if artifact.get(field) != nested_subset.get(field):
+                    issues.append(
+                        MatrixSubsetScopeIssue(
+                            f"invalid_artifact_nested_{field}",
+                            f"artifact {field} must match its nested subset-scope evidence",
+                            safe_id,
+                        )
+                    )
 
 
 def _validate_subset_scope_artifact_paths(

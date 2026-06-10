@@ -3460,8 +3460,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     sweep-space declarations, user-provided hyper-library identity, sampled
     configuration records, per-sweep losses/ranks, selected winner identity,
     and linkage from selected sweep configurations to final decomposition and
-    exactness-certificate artifacts. Local matrix benchmark runners still do
-    not emit those records from candidate-produced search programs.
+    exactness-certificate artifacts.
+    `libreevolve.matrix_sweep_space_runtime_boundary.v1` now validates the
+    current `not_emitted_by_local_runner` boundary and required future
+    emitted-record fields for search-program refs, sweep function identity,
+    hyper-library and hyperparameter declarations, sampled configurations,
+    winning configuration, certificate/decomposition refs, matrix-result refs,
+    artifact paths, and artifact hashes. Local matrix benchmark runners still
+    do not emit those records from candidate-produced search programs.
   - Required result: add paper-facing emitted matrix benchmark artifacts for
     evolved sweep functions, hyperparameter range provenance, sampled sweep
     ids, per-sweep/per-seed outcomes, and final certificate linkage before

@@ -8221,3 +8221,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     current `not_emitted_by_local_runner` state, and keeps real local
     tensor-rank artifact emission open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the matrix sweep-space runtime boundary in ROADMAP.
+  - Spec evidence: roadmap matrix wording needs to distinguish declared
+    sweep-space schema validation from actual local-run artifacts for
+    Figure 9-style evolved sweep programs.
+  - Status: ROADMAP now names
+    `libreevolve.matrix_sweep_space_runtime_boundary.v1`, scopes it to the
+    current `not_emitted_by_local_runner` state, and keeps real local
+    sweep-space artifact emission open.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

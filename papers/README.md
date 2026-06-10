@@ -1162,6 +1162,12 @@ Implemented:
   linkage from selected sweep configurations to final decomposition and
   exactness-certificate artifacts. No local matrix benchmark runner emits
   those sweep-space records yet.
+  `libreevolve.matrix_sweep_space_runtime_boundary.v1` now records the current
+  `not_emitted_by_local_runner` boundary and required future emitted-record
+  fields for search-program refs, sweep function identity, hyper-library and
+  hyperparameter declarations, sampled configurations, winning configuration,
+  certificate/decomposition refs, matrix-result refs, artifact paths, and
+  artifact hashes.
   It also does not yet emit local Appendix A resource-frontier runs for larger
   targets: attempted sizes beyond the table, reduced-seed policies if any,
   measured accelerator/GPU memory profile, OOM/resource-exhaustion diagnostics,

@@ -10735,3 +10735,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     artifact hashes. The paper-manifest gate validates this boundary with the
     Appendix A matrix checks.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Track matrix sweep-space runtime-emission absence separately from
+      declared evidence validation.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figures 9a-9c show the
+    matrix program evolving a `sweep()` function with user-provided
+    `hyper.uniform(...)` ranges and sampled sweep outcomes.
+  - Status: `libreevolve.matrix_sweep_space_runtime_boundary.v1` now records
+    the current `not_emitted_by_local_runner` boundary and validates required
+    future emitted-record fields for search-program refs, sweep function
+    identity, hyper-library and hyperparameter declarations, sampled
+    configurations, winning configuration, certificate/decomposition refs,
+    matrix-result refs, artifact paths, and artifact hashes. The
+    paper-manifest gate validates this boundary with the Appendix A matrix
+    checks.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

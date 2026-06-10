@@ -752,8 +752,14 @@ is not yet an AlphaEvolve reproduction.
   now validates declared `sweep` function identity, user-provided `hyper`
   library provenance, hyperparameter ranges, sampled configuration rows with
   losses/ranks, winning configuration identity, and final decomposition plus
-  exactness-certificate links. Local benchmark runners still need to emit
-  those records during matrix search.
+  exactness-certificate links.
+  `libreevolve.matrix_sweep_space_runtime_boundary.v1` now validates the
+  current `not_emitted_by_local_runner` boundary and required future
+  emitted-record fields for search-program refs, sweep function identity,
+  hyper-library and hyperparameter declarations, sampled configurations,
+  winning configuration, certificate/decomposition refs, matrix-result refs,
+  artifact paths, and artifact hashes. Local benchmark runners still need to
+  emit those records during matrix search.
 - Connect real compiler/hardware/kernel/scheduling fixtures to
   `libreevolve.systems_result_report.v1`, with separate optimization,
   held-out/generalization, and reference-correctness gates plus artifacts that

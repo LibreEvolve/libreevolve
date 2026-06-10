@@ -10785,3 +10785,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     exactness-certificate refs, matrix-result refs, artifact paths, and
     artifact hashes.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the matrix sweep-space runtime boundary in README.
+  - Spec evidence: README matrix wording needs to separate declared
+    sweep-space evidence validation from actual local runner emission for
+    Figure 9-style `sweep()` program provenance.
+  - Status: README now names
+    `libreevolve.matrix_sweep_space_runtime_boundary.v1`, scopes it to the
+    current `not_emitted_by_local_runner` state, and lists required future
+    emitted-record fields for search-program refs, sweep function identity,
+    hyper-library and hyperparameter declarations, sampled configurations,
+    winning configuration, certificate/decomposition refs, matrix-result refs,
+    artifact paths, and artifact hashes.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

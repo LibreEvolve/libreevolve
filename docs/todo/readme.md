@@ -1062,7 +1062,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `libreevolve.matrix_sweep_space_evidence.v1` as a declared-evidence
     validator for candidate-produced sweep spaces, sampled configuration ids,
     per-sweep outcomes, selected winner identity, and final
-    decomposition/exactness-certificate links. It also states that local matrix
+    decomposition/exactness-certificate links. It now also documents
+    `libreevolve.matrix_sweep_space_runtime_boundary.v1` as the current
+    `not_emitted_by_local_runner` boundary plus required future emitted-record
+    fields for search-program refs, sweep function identity, hyper-library and
+    hyperparameter declarations, sampled configurations, winning
+    configuration, certificate/decomposition refs, matrix-result refs,
+    artifact paths, and artifact hashes. It also states that local matrix
     benchmark runners still do not emit those records.
   - Required result: when matrix runners emit sweep-space provenance, update
     README, ROADMAP, papers index, and matching TODOs so README can distinguish

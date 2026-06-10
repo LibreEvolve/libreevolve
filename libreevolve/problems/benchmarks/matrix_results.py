@@ -25,6 +25,7 @@ MATRIX_PUBLICATION_BUNDLE_SCHEMA = "libreevolve.matrix_publication_bundle.v1"
 MATRIX_NEAR_INTEGRALITY_SCHEMA = "libreevolve.matrix_near_integrality_evidence.v1"
 MATRIX_NEAR_INTEGRALITY_RUNTIME_SCHEMA = "libreevolve.matrix_near_integrality_runtime_boundary.v1"
 MATRIX_SWEEP_SPACE_SCHEMA = "libreevolve.matrix_sweep_space_evidence.v1"
+MATRIX_SWEEP_SPACE_RUNTIME_SCHEMA = "libreevolve.matrix_sweep_space_runtime_boundary.v1"
 MATRIX_SCALAR_FIELD_SCHEMA = "libreevolve.matrix_scalar_field_evidence.v1"
 MATRIX_SCALAR_FIELD_RUNTIME_SCHEMA = "libreevolve.matrix_scalar_field_runtime_boundary.v1"
 MATRIX_TENSOR_RANK_SCHEMA = "libreevolve.matrix_tensor_rank_evidence.v1"
@@ -72,6 +73,26 @@ MATRIX_NEAR_INTEGRALITY_RUNTIME_REQUIRED_FIELDS = (
     "rounded_coefficients",
     "max_abs_rounding_error",
     "exactness_certificate_ref",
+    "matrix_result_ref",
+    "artifact_paths",
+    "artifact_sha256",
+)
+MATRIX_SWEEP_SPACE_RUNTIME_STATUSES = frozenset(
+    {"not_emitted_by_local_runner", "emitted"}
+)
+MATRIX_SWEEP_SPACE_RUNTIME_REQUIRED_FIELDS = (
+    "run_id",
+    "candidate_id",
+    "target_id",
+    "seed",
+    "search_program_ref",
+    "sweep_function_name",
+    "hyper_library",
+    "hyperparameters",
+    "sampled_configurations",
+    "winning_configuration_id",
+    "exactness_certificate_ref",
+    "final_decomposition_ref",
     "matrix_result_ref",
     "artifact_paths",
     "artifact_sha256",
@@ -242,6 +263,15 @@ class MatrixSweepSpaceValidation:
     target_id: str | None
     hyperparameter_count: int
     sampled_configuration_count: int
+    issues: list[MatrixResultIssue]
+
+
+@dataclass(frozen=True)
+class MatrixSweepSpaceRuntimeValidation:
+    ok: bool
+    runtime_emission_status: str | None
+    emitted_record_count: int
+    required_field_count: int
     issues: list[MatrixResultIssue]
 
 
@@ -672,6 +702,118 @@ def validate_matrix_sweep_space_evidence(
         target_id=target_id,
         hyperparameter_count=len(hyperparameter_names),
         sampled_configuration_count=sampled_count,
+        issues=issues,
+    )
+
+
+def matrix_sweep_space_runtime_boundary_record() -> dict[str, Any]:
+    return {
+        "schema": MATRIX_SWEEP_SPACE_RUNTIME_SCHEMA,
+        "target_suite": APPENDIX_A_TARGET_SUITE,
+        "evidence_schema": MATRIX_SWEEP_SPACE_SCHEMA,
+        "runtime_emission_status": "not_emitted_by_local_runner",
+        "local_runner_scope": "matrix_benchmark_runner",
+        "required_emission_fields": list(MATRIX_SWEEP_SPACE_RUNTIME_REQUIRED_FIELDS),
+        "emitted_records": [],
+        "claim_boundary": (
+            "This is a runtime-emission absence/readiness boundary. It does not "
+            "claim local matrix runners emit AlphaEvolve Figure 9 sweep-space evidence."
+        ),
+    }
+
+
+def validate_matrix_sweep_space_runtime_boundary(
+    boundary: object | str | Path | None = None,
+) -> MatrixSweepSpaceRuntimeValidation:
+    """Validate whether local matrix runners emit sweep-space evidence records."""
+    data, read_issues = _load_report(
+        matrix_sweep_space_runtime_boundary_record() if boundary is None else boundary
+    )
+    if read_issues:
+        return MatrixSweepSpaceRuntimeValidation(False, None, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[MatrixResultIssue] = []
+    if data.get("schema") != MATRIX_SWEEP_SPACE_RUNTIME_SCHEMA:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_schema",
+                "unsupported matrix sweep-space runtime boundary schema",
+            )
+        )
+    if data.get("target_suite") != APPENDIX_A_TARGET_SUITE:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_target_suite",
+                "runtime boundary must target AlphaEvolve Appendix A",
+            )
+        )
+    if data.get("evidence_schema") != MATRIX_SWEEP_SPACE_SCHEMA:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_evidence_schema",
+                "runtime boundary must reference the matrix sweep-space evidence schema",
+            )
+        )
+    status = data.get("runtime_emission_status")
+    if status not in MATRIX_SWEEP_SPACE_RUNTIME_STATUSES:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_runtime_emission_status",
+                "runtime_emission_status must be not_emitted_by_local_runner or emitted",
+            )
+        )
+        status = None
+    if not isinstance(data.get("local_runner_scope"), str) or not data["local_runner_scope"].strip():
+        issues.append(
+            MatrixResultIssue(
+                "missing_local_runner_scope",
+                "local_runner_scope must identify the local runner surface",
+            )
+        )
+    required_field_count = _validate_sweep_space_runtime_required_fields(
+        data.get("required_emission_fields"),
+        issues,
+    )
+    emitted_records = data.get("emitted_records")
+    if not isinstance(emitted_records, list):
+        issues.append(
+            MatrixResultIssue(
+                "invalid_emitted_records",
+                "emitted_records must be a list",
+            )
+        )
+        emitted_records = []
+    emitted_record_count = len(emitted_records)
+    if status == "not_emitted_by_local_runner":
+        if emitted_records:
+            issues.append(
+                MatrixResultIssue(
+                    "unexpected_runtime_sweep_space_records",
+                    "not_emitted_by_local_runner status must not include emitted records",
+                )
+            )
+        claim_boundary = data.get("claim_boundary")
+        if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary.lower():
+            issues.append(
+                MatrixResultIssue(
+                    "missing_absence_claim_boundary",
+                    "absence boundary must explicitly say it does not claim runtime emission",
+                )
+            )
+    elif status == "emitted":
+        if not emitted_records:
+            issues.append(
+                MatrixResultIssue(
+                    "missing_runtime_sweep_space_records",
+                    "emitted status requires at least one emitted record",
+                )
+            )
+        _validate_sweep_space_runtime_records(emitted_records, issues)
+    return MatrixSweepSpaceRuntimeValidation(
+        ok=not issues,
+        runtime_emission_status=status if isinstance(status, str) else None,
+        emitted_record_count=emitted_record_count,
+        required_field_count=required_field_count,
         issues=issues,
     )
 
@@ -1153,6 +1295,27 @@ def render_matrix_sweep_space_summary(evidence: dict[str, Any]) -> str:
         f"| target_id | {validation.target_id or '<unknown>'} |",
         f"| hyperparameter_count | {validation.hyperparameter_count} |",
         f"| sampled_configuration_count | {validation.sampled_configuration_count} |",
+    ]
+    if validation.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(f"- {issue.code}: {issue.message}" for issue in validation.issues)
+    return "\n".join(lines)
+
+
+def render_matrix_sweep_space_runtime_boundary_summary(
+    boundary: dict[str, Any] | None = None,
+) -> str:
+    validation = validate_matrix_sweep_space_runtime_boundary(boundary)
+    status = "ok" if validation.ok else "invalid"
+    lines = [
+        "Matrix sweep-space runtime boundary",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| runtime_emission_status | {validation.runtime_emission_status or '<unknown>'} |",
+        f"| emitted_record_count | {validation.emitted_record_count} |",
+        f"| required_field_count | {validation.required_field_count} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -2212,6 +2375,90 @@ def _validate_sweep_configurations(
         elif winning_configuration_id not in selected_ids:
             issues.append(MatrixResultIssue("winning_configuration_not_selected", "winning_configuration_id must refer to a selected configuration"))
     return len(value)
+
+
+def _validate_sweep_space_runtime_required_fields(
+    value: object,
+    issues: list[MatrixResultIssue],
+) -> int:
+    if not isinstance(value, list) or not value:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_required_emission_fields",
+                "required_emission_fields must be a non-empty list",
+            )
+        )
+        return 0
+    fields: list[str] = []
+    seen: set[str] = set()
+    for item in value:
+        if not isinstance(item, str) or not item.strip():
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_required_emission_field",
+                    "required_emission_fields entries must be non-empty strings",
+                )
+            )
+            continue
+        if item in seen:
+            issues.append(
+                MatrixResultIssue(
+                    "duplicate_required_emission_field",
+                    "required_emission_fields entries must be unique",
+                )
+            )
+            continue
+        seen.add(item)
+        fields.append(item)
+    missing = sorted(set(MATRIX_SWEEP_SPACE_RUNTIME_REQUIRED_FIELDS) - set(fields))
+    if missing:
+        issues.append(
+            MatrixResultIssue(
+                "missing_required_emission_field",
+                "required_emission_fields must include search program, hyperparameter, sampled configuration, certificate, result, artifact, and hash fields",
+            )
+        )
+    return len(fields)
+
+
+def _validate_sweep_space_runtime_records(
+    records: list[object],
+    issues: list[MatrixResultIssue],
+) -> None:
+    seen: set[tuple[str, str]] = set()
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_runtime_sweep_space_record",
+                    "emitted sweep-space records must be objects",
+                )
+            )
+            continue
+        run_id = _runtime_record_text(record, "run_id", issues)
+        candidate_id = _runtime_record_text(record, "candidate_id", issues)
+        _runtime_record_text(record, "matrix_result_ref", issues)
+        if run_id is not None and candidate_id is not None:
+            key = (run_id, candidate_id)
+            if key in seen:
+                issues.append(
+                    MatrixResultIssue(
+                        "duplicate_runtime_sweep_space_record",
+                        "run_id and candidate_id must uniquely identify emitted records",
+                    )
+                )
+            else:
+                seen.add(key)
+        nested = record.get("sweep_space_evidence")
+        nested_validation = validate_matrix_sweep_space_evidence(nested)
+        if not nested_validation.ok:
+            issues.extend(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_sweep_space_{issue.code}",
+                    issue.message,
+                )
+                for issue in nested_validation.issues
+            )
 
 
 def _validate_sweep_configuration_values(

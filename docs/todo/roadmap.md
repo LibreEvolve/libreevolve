@@ -2599,8 +2599,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     validator for `sweep` identity, user-provided `hyper` library provenance,
     hyperparameter ranges, sampled sweep configuration records, per-sweep
     outcomes, selected winner identity, and final
-    decomposition/exactness-certificate links. Local matrix benchmark runners
-    still do not emit those records.
+    decomposition/exactness-certificate links.
+    `libreevolve.matrix_sweep_space_runtime_boundary.v1` now validates the
+    current `not_emitted_by_local_runner` boundary and required future
+    emitted-record fields for search-program refs, sweep function identity,
+    hyper-library and hyperparameter declarations, sampled configurations,
+    winning configuration, certificate/decomposition refs, matrix-result refs,
+    artifact paths, and artifact hashes. Local matrix benchmark runners still
+    do not emit those records.
   - Required result: when matrix benchmark runners persist evolved sweep
     functions, hyperparameter ranges, sampled configuration ids, per-sweep
     diagnostics, and certificate linkage, update ROADMAP, README, papers

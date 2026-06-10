@@ -3430,9 +3430,14 @@ Primary evidence:
     validates declared sweep provenance for `sweep` function identity,
     user-provided `hyper` library identity, hyperparameter ranges, sampled
     configurations, per-sweep losses/ranks, selected winner identity, and
-    final decomposition/exactness-certificate links. Local matrix benchmark
-    runners still do not emit those records from candidate-produced search
-    programs.
+    final decomposition/exactness-certificate links.
+    `libreevolve.matrix_sweep_space_runtime_boundary.v1` now validates the
+    current `not_emitted_by_local_runner` boundary and required future
+    emitted-record fields for search-program refs, sweep function identity,
+    hyper-library and hyperparameter declarations, sampled configurations,
+    winning configuration, certificate/decomposition refs, matrix-result refs,
+    artifact paths, and artifact hashes. Local matrix benchmark runners still
+    do not emit those records from candidate-produced search programs.
   - Required result: add matrix benchmark prompt/evaluator hooks and emitted
     run artifacts for evolved sweep functions, hyperparameter-range
     declarations, sampled configuration ids, per-sweep losses/ranks/exactness

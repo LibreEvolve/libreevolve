@@ -595,19 +595,21 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Partial status: LibreEvolve renders current-parent metrics and inspiration
     fitness/metric summaries in mutation prompts, including declared metric
     role, direction, bounds, normalization, and range diagnostics where a
-    problem manifest defines them.
-  - Current gap: paper/status records do not yet preserve a prompt-call-linked
-    score-summary record proving that each prompt-visible prior/current
-    program's displayed metric values and aggregate fitness came from the
-    persisted evaluator result, how the displayed aggregate maps to the paper's
-    score-summary semantics, or why any execution result or score field was
-    omitted/truncated.
-  - Required result: add paper-facing rendered-evaluation-result score records
-    with prompt id/call id, program role, candidate/history id, source hash,
-    raw and normalized metric values, aggregate formula/display label,
-    evaluator output/artifact linkage, omission/truncation policy, and claim
-    checks before treating prompt metric headers as AlphaEvolve-style rendered
-    evaluation-result evidence.
+    problem manifest defines them. Completed manifests now include
+    `runtime.history.prompt_prior_score_provenance_report`, which links
+    generated mutation prompts to target-parent and selected-inspiration score
+    records with prompt ids/hashes, program roles, source workspace hashes,
+    finite raw metrics, displayed aggregate formula (`program.fitness`),
+    history/failure-history row joins, and evaluator-result row joins.
+  - Current gap: paper/status records still do not preserve execution-result
+    text display attribution, complete score omission/truncation policy, exact
+    AlphaEvolve `average_score` formula parity, or cross-run prompt-score table
+    exports.
+  - Required result: add execution-output display attribution,
+    omission/truncation records, `average_score` display/formula parity or an
+    explicit substitution policy, cross-run prompt-score exports, and claim
+    checks before treating prompt metric headers as full AlphaEvolve-style
+    rendered evaluation-result evidence.
 
 - [ ] Populate early-user and collaborator feedback provenance as paper
       evidence.

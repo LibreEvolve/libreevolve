@@ -1153,9 +1153,17 @@ role, direction, bounds, normalized value, out-of-range status, and separate
 validity status. Prompt-visible parent and inspiration fitness values are
 rendered as finite normalized scores when possible, and as typed invalid
 markers such as `<invalid_fitness:nan>` for malformed restored or direct
-records. Prompt history can still store raw seed code, explicit context files,
-plugin context, and candidate code. Keep those inputs free of secrets unless
-you are comfortable sending and persisting that content.
+records. Completed manifests include
+`runtime.history.prompt_prior_score_provenance_report`, which links generated
+mutation prompts to target-parent and selected-inspiration score records with
+prompt ids/hashes, program roles, source workspace hashes, raw finite metrics,
+the displayed aggregate formula (`program.fitness`), history/failure-history
+row joins, and `evaluator_results.jsonl` row joins. It remains
+`claim_ready: false` until execution-result text display, score omission/
+truncation policy, `average_score` formula parity, and cross-run prompt-score
+table export are implemented. Prompt history can still store raw seed code,
+explicit context files, plugin context, and candidate code. Keep those inputs
+free of secrets unless you are comfortable sending and persisting that content.
 Accepted `failure_history.jsonl` rows are also bounded diagnostic records, not
 sanitized logs: mutation snippets, seed snippets, evaluator summaries, changed
 paths, and error strings can still contain raw model/provider/user text.

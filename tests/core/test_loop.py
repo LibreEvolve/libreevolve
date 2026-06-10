@@ -71,6 +71,7 @@ from libreevolve.core.loop import (
     validate_mutation_consistency_report,
     validate_prompt_example_copy_report,
     validate_prompt_current_binding_report,
+    validate_prompt_prior_score_provenance_report,
     validate_natural_language_preamble_report,
     validate_proposal_diversity_report,
     validate_proposal_score_report,
@@ -3406,6 +3407,62 @@ x=2
     assert binding["match_records"][0]["normalized_span"] is not None
     assert record["evaluation_link"]["is_valid"] is True
     assert record["admission_link"]["admitted"] is True
+
+    score_report = manifest["runtime"]["history"][
+        "prompt_prior_score_provenance_report"
+    ]
+    assert score_report["schema"] == (
+        "libreevolve.prompt_prior_score_provenance_report.v1"
+    )
+    assert score_report["validation"]["ok"] is True
+    assert validate_prompt_prior_score_provenance_report(score_report)["ok"] is True
+    assert score_report["generated_candidate_count"] == 1
+    assert score_report["prompt_record_count"] == 1
+    assert score_report["score_record_count"] == 1
+    assert score_report["target_score_record_count"] == 1
+    assert score_report["inspiration_score_record_count"] == 0
+    assert score_report["history_join_count"] == 1
+    assert score_report["evaluator_result_join_count"] == 1
+    assert score_report["omitted_or_truncated_score_record_count"] == 0
+    assert score_report["claim_ready"] is False
+    assert score_report["claim_readiness"]["target_scores_joined"] is True
+    assert score_report["claim_readiness"]["history_rows_joined"] is True
+    assert score_report["claim_readiness"]["evaluator_rows_joined"] is True
+    assert score_report["claim_readiness"]["prompt_visible_score_rows"] is True
+    assert (
+        score_report["claim_readiness"][
+            "full_alphaevolve_rendered_evaluation_result_provenance"
+        ]
+        is False
+    )
+    score_prompt = score_report["records"][0]
+    assert score_prompt["candidate_id"] == record["candidate_id"]
+    assert score_prompt["prompt_program_id"] == record["prompt_program_id"]
+    assert score_prompt["prompt_sha256"] == record["prompt_sha256"]
+    score_row = score_prompt["score_records"][0]
+    assert score_row["role"] == "target"
+    assert score_row["program_id"] == record["parent_id"]
+    assert score_row["prompt_visible"] is True
+    assert score_row["displayed_aggregate_formula"] == "program.fitness"
+    assert score_row["displayed_aggregate_score"] == 1.0
+    assert score_row["raw_metrics"]["score"] == 1.0
+    assert score_row["metric_names"] == ["score"]
+    assert score_row["history_joined"] is True
+    assert score_row["history_row"]["stream"] == "history.jsonl"
+    assert score_row["history_row"]["line_number"] == 1
+    assert score_row["evaluator_result_joined"] is True
+    assert score_row["evaluator_result"]["stream"] == "evaluator_results.jsonl"
+    assert score_row["evaluator_result"]["line_number"] == 1
+
+    edited_score_report = copy.deepcopy(score_report)
+    edited_score_report["records"][0]["score_records"][0][
+        "displayed_aggregate_formula"
+    ] = "claimed_average_score"
+    validation = validate_prompt_prior_score_provenance_report(edited_score_report)
+    assert validation["ok"] is False
+    assert "invalid_score_formula" in {
+        issue["code"] for issue in validation["issues"]
+    }
 
 
 def test_runtime_history_reports_prompt_current_binding_for_evolve_block_span():

@@ -545,6 +545,16 @@ Problem-level abstraction rationale, symmetry/structure assumptions,
 problem-defined abstraction hooks, paired representations, and equal-budget
 benchmark comparisons across alternative formulations remain open.
 
+AlphaEvolve rendered-evaluation-result prompt note: completed manifests now
+include `runtime.history.prompt_prior_score_provenance_report`, which links
+generated mutation prompts to target-parent and selected-inspiration score
+records. It records prompt ids/hashes, program roles, source workspace hashes,
+raw finite metrics, displayed aggregate score formula, history/failure-history
+row joins, and evaluator-result row joins. It remains `claim_ready: false`
+because execution-result text display attribution, score omission/truncation
+policy, exact `average_score` formula parity, and cross-run prompt-score table
+exports remain open.
+
 AlphaEvolve existing-codebase integration note: completed manifests now include
 `runtime.history.existing_codebase_integration_report` with schema
 `libreevolve.existing_codebase_integration_report.v1`. The report inventories

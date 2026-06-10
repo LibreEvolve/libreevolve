@@ -632,24 +632,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     AlphaEvolve-style stochastic-formatting evidence with prompt/call-linked
     probability records.
 
-- [ ] Keep README rendered-evaluation-result wording scoped until prompt
-      prior-score provenance exists.
+- [ ] Keep README rendered-evaluation-result wording scoped beyond prompt
+      prior-score provenance.
   - Spec evidence: AlphaEvolve Section 2.2 says rendered evaluation results
     include the program, execution result, and scores assigned by `evaluate`;
     Figure 3(c) shows prior programs with named score headers such as
     `average_score` before code.
   - Current evidence: README can accurately describe parent metrics,
     inspiration fitness/metrics, prompt history ids, selected
-    parent/inspiration metadata, and metric normalization annotations. It does
-    not yet document a paper-facing record that proves each prompt-visible
-    prior/current program's displayed scores and aggregate fitness are linked
-    to evaluator history, persisted outputs/artifacts, and explicit
-    omission/truncation reasons.
-  - Required result: when prompt prior-score provenance lands, update README,
-    ROADMAP, papers index, and code/paper TODO entries together so README
-    distinguishes current prompt metric rendering from AlphaEvolve-style
-    rendered evaluation results with prompt/call-linked score, output, and
-    aggregate-score semantics.
+    parent/inspiration metadata, metric normalization annotations, and
+    `runtime.history.prompt_prior_score_provenance_report`, which links prompt
+    score records to program ids, source hashes, finite metrics, history rows,
+    and evaluator-result rows.
+  - Required result: keep README scoped until execution-output display
+    attribution, score omission/truncation records, exact `average_score`
+    formula parity or an explicit substitution policy, and cross-run
+    prompt-score table exports distinguish current prompt metric rendering from
+    full AlphaEvolve-style rendered evaluation results.
 
 - [ ] Keep README ablation-report wording aligned with current LLM budget
   stops.

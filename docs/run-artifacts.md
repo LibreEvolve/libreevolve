@@ -1815,6 +1815,17 @@ as finite normalized scores when possible and typed invalid markers such as
 `<invalid_fitness:nan>` for malformed restored/direct records. The general
 rendered-prompt history can still persist raw seed code, plugin context,
 candidate code, and critique content.
+Completed manifests also include
+`runtime.history.prompt_prior_score_provenance_report` with schema
+`libreevolve.prompt_prior_score_provenance_report.v1`. This report links
+generated mutation prompts to target-parent and selected-inspiration score
+records, preserving prompt ids/hashes, program roles, source workspace hashes,
+finite raw metric values, displayed aggregate formula (`program.fitness`),
+`history.jsonl` / `failure_history.jsonl` row joins, and
+`evaluator_results.jsonl` row joins. It is prompt-score provenance, not full
+AlphaEvolve rendered-evaluation-result parity: execution-result text display
+attribution, score omission/truncation policy, exact `average_score` formula
+parity, and cross-run prompt-score table exports remain open.
 LLM feedback workspace prompts use the shared versioned secret-pattern grammar
 before provider calls. Prompt history and quarantine streams still contain
 some fixed-policy retention surfaces. Feedback provider outputs are retained according to

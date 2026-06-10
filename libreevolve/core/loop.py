@@ -5344,6 +5344,12 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
             run_dir,
             db.startup_manifest_snapshot(),
         ),
+        "prompt_prior_score_provenance_report": (
+            _prompt_prior_score_provenance_report(
+                programs,
+                run_dir,
+            )
+        ),
         "natural_language_preamble_report": _natural_language_preamble_report(programs),
         "proposal_diversity_report": _proposal_diversity_report(programs),
         "proposal_score_report": _proposal_score_report(programs),
@@ -17743,6 +17749,524 @@ def validate_prompt_current_binding_report(report: object) -> dict:
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _prompt_prior_score_provenance_report(
+    programs: list[Program],
+    run_dir: Path,
+) -> dict:
+    program_by_id = {program.id: program for program in programs}
+    history_indexes = _prompt_current_history_join_indexes(run_dir)
+    generated = [
+        program for program in programs if _prompt_current_binding_is_generated(program)
+    ]
+    records = [
+        _prompt_prior_score_provenance_record(
+            program,
+            program_by_id,
+            history_indexes,
+        )
+        for program in generated
+    ]
+    score_record_count = sum(len(record["score_records"]) for record in records)
+    target_score_count = sum(
+        1
+        for record in records
+        for score in record["score_records"]
+        if score.get("role") == "target"
+    )
+    inspiration_score_count = sum(
+        1
+        for record in records
+        for score in record["score_records"]
+        if score.get("role") == "inspiration"
+    )
+    evaluator_join_count = sum(
+        1
+        for record in records
+        for score in record["score_records"]
+        if score.get("evaluator_result_joined") is True
+    )
+    history_join_count = sum(
+        1
+        for record in records
+        for score in record["score_records"]
+        if score.get("history_joined") is True
+    )
+    omitted_or_truncated_count = sum(
+        1
+        for record in records
+        for score in record["score_records"]
+        if score.get("prompt_visible") is not True
+    )
+    report = {
+        "schema": "libreevolve.prompt_prior_score_provenance_report.v1",
+        "source": "runtime_history_prompt_diagnostics_parent_and_inspiration_selection",
+        "generated_candidate_count": len(generated),
+        "prompt_record_count": len(records),
+        "score_record_count": score_record_count,
+        "target_score_record_count": target_score_count,
+        "inspiration_score_record_count": inspiration_score_count,
+        "history_join_count": history_join_count,
+        "evaluator_result_join_count": evaluator_join_count,
+        "omitted_or_truncated_score_record_count": omitted_or_truncated_count,
+        "records": records[:50],
+        "records_limit": 50,
+        "records_truncated": len(records) > 50,
+        "score_policy": {
+            "target_score_source": "parent_program_fitness_rendered_as_parent_score",
+            "target_metric_source": "parent_program_metrics_rendered_as_parent_metrics",
+            "inspiration_score_source": "selected_inspiration_program_fitness_and_metrics_rendered_in_inspiration_headers",
+            "history_join_policy": "candidate_ids_joined_to_history_jsonl_or_failure_history_jsonl_and_evaluator_results_jsonl",
+            "displayed_aggregate_policy": "stored_program_fitness_as_prompt_visible_normalized_fitness",
+            "raw_metric_policy": "finite_non_boolean_program_metrics",
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "target_scores_joined": target_score_count > 0
+            and target_score_count == len(records),
+            "history_rows_joined": score_record_count > 0
+            and history_join_count == score_record_count,
+            "evaluator_rows_joined": score_record_count > 0
+            and evaluator_join_count == score_record_count,
+            "prompt_visible_score_rows": score_record_count > 0
+            and omitted_or_truncated_count == 0,
+            "full_alphaevolve_rendered_evaluation_result_provenance": False,
+            "remaining_gap": [
+                "execution_result_text_display_attribution",
+                "score_omission_and_truncation_policy",
+                "average_score_formula_parity",
+                "cross_run_prompt_score_table_export",
+            ],
+        },
+    }
+    report["validation"] = validate_prompt_prior_score_provenance_report(report)
+    return report
+
+
+def _prompt_prior_score_provenance_record(
+    program: Program,
+    program_by_id: Mapping[str, Program],
+    history_indexes: Mapping[str, object],
+) -> dict:
+    metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
+    prompt_diagnostics = (
+        metadata.get("prompt_diagnostics")
+        if isinstance(metadata.get("prompt_diagnostics"), Mapping)
+        else {}
+    )
+    inspiration_selection = (
+        metadata.get("inspiration_selection")
+        if isinstance(metadata.get("inspiration_selection"), Mapping)
+        else {}
+    )
+    prompt_program_id = metadata.get("prompt_program_id")
+    selected_inspiration_ids = [
+        item
+        for item in inspiration_selection.get("selected_program_ids", [])
+        if isinstance(item, str)
+    ]
+    score_records: list[dict] = []
+    parent = (
+        program_by_id.get(program.parent_id)
+        if isinstance(program.parent_id, str)
+        else None
+    )
+    if parent is not None:
+        score_records.append(
+            _prompt_prior_score_record(
+                parent,
+                role="target",
+                prompt_visible=True,
+                prompt_visibility_source="parent_score_and_parent_metrics_template_fields",
+                history_indexes=history_indexes,
+                ordinal=0,
+            )
+        )
+    for ordinal, inspiration_id in enumerate(selected_inspiration_ids, start=1):
+        inspiration = program_by_id.get(inspiration_id)
+        if inspiration is None:
+            score_records.append(
+                _missing_prompt_prior_score_record(
+                    inspiration_id,
+                    role="inspiration",
+                    ordinal=ordinal,
+                )
+            )
+            continue
+        score_records.append(
+            _prompt_prior_score_record(
+                inspiration,
+                role="inspiration",
+                prompt_visible=_inspiration_prompt_visible(
+                    prompt_diagnostics,
+                    ordinal - 1,
+                    len(selected_inspiration_ids),
+                ),
+                prompt_visibility_source="prompt_diagnostics.inspiration_policy",
+                history_indexes=history_indexes,
+                ordinal=ordinal,
+            )
+        )
+    return {
+        "candidate_id": program.id,
+        "candidate_status": _prompt_prior_candidate_status(program),
+        "generation": program.generation,
+        "prompt_program_id": prompt_program_id if isinstance(prompt_program_id, str) else None,
+        "prompt_sha256": prompt_diagnostics.get("prompt_sha256"),
+        "prompt_sha256_scope": prompt_diagnostics.get("prompt_sha256_scope"),
+        "parent_id": program.parent_id,
+        "selected_inspiration_ids": selected_inspiration_ids[:50],
+        "selected_inspiration_ids_truncated": len(selected_inspiration_ids) > 50,
+        "score_records": score_records[:51],
+        "score_records_truncated": len(score_records) > 51,
+    }
+
+
+def _prompt_prior_score_record(
+    source_program: Program,
+    *,
+    role: str,
+    prompt_visible: bool,
+    prompt_visibility_source: str,
+    history_indexes: Mapping[str, object],
+    ordinal: int,
+) -> dict:
+    history_row = _prompt_prior_history_row(source_program.id, history_indexes)
+    evaluator_row = _prompt_prior_evaluator_row(source_program.id, history_indexes)
+    metrics = {
+        str(name): _paper_metric_table_number(value)
+        for name, value in sorted(source_program.metrics.items())
+        if isinstance(name, str)
+        and isinstance(value, (int, float))
+        and not isinstance(value, bool)
+        and math.isfinite(value)
+    }
+    aggregate = _finite_json_number(source_program.fitness)
+    return {
+        "role": role,
+        "ordinal": ordinal,
+        "program_id": source_program.id,
+        "candidate_type": _program_candidate_type(source_program),
+        "generation": source_program.generation,
+        "prompt_visible": prompt_visible,
+        "prompt_visibility_source": prompt_visibility_source,
+        "omission_reason": None if prompt_visible else "not_rendered_by_prompt_policy",
+        "source_hash": _workspace_sha256(source_program.workspace()),
+        "displayed_aggregate_score": aggregate,
+        "displayed_aggregate_formula": "program.fitness",
+        "raw_metrics": metrics,
+        "metric_names": sorted(metrics),
+        "history_joined": isinstance(history_row, Mapping),
+        "history_row": dict(history_row) if isinstance(history_row, Mapping) else None,
+        "evaluator_result_joined": isinstance(evaluator_row, Mapping),
+        "evaluator_result": dict(evaluator_row) if isinstance(evaluator_row, Mapping) else None,
+    }
+
+
+def _missing_prompt_prior_score_record(
+    program_id: str,
+    *,
+    role: str,
+    ordinal: int,
+) -> dict:
+    return {
+        "role": role,
+        "ordinal": ordinal,
+        "program_id": program_id,
+        "candidate_type": None,
+        "generation": None,
+        "prompt_visible": False,
+        "prompt_visibility_source": "prompt_selection_metadata_missing_program",
+        "omission_reason": "selected_program_not_found_in_runtime_history",
+        "source_hash": None,
+        "displayed_aggregate_score": None,
+        "displayed_aggregate_formula": "program.fitness",
+        "raw_metrics": {},
+        "metric_names": [],
+        "history_joined": False,
+        "history_row": None,
+        "evaluator_result_joined": False,
+        "evaluator_result": None,
+    }
+
+
+def _prompt_prior_history_row(
+    program_id: str,
+    history_indexes: Mapping[str, object],
+) -> Mapping[str, object] | None:
+    candidate_history_by_id = history_indexes.get("candidate_history_by_id")
+    if isinstance(candidate_history_by_id, Mapping):
+        row = candidate_history_by_id.get(program_id)
+        if isinstance(row, Mapping):
+            return row
+    candidate_failure_history_by_id = history_indexes.get(
+        "candidate_failure_history_by_id"
+    )
+    if isinstance(candidate_failure_history_by_id, Mapping):
+        row = candidate_failure_history_by_id.get(program_id)
+        if isinstance(row, Mapping):
+            return row
+    return None
+
+
+def _prompt_prior_evaluator_row(
+    program_id: str,
+    history_indexes: Mapping[str, object],
+) -> Mapping[str, object] | None:
+    evaluator_result_by_candidate_id = history_indexes.get(
+        "evaluator_result_by_candidate_id"
+    )
+    if isinstance(evaluator_result_by_candidate_id, Mapping):
+        row = evaluator_result_by_candidate_id.get(program_id)
+        if isinstance(row, Mapping):
+            return row
+    return None
+
+
+def _inspiration_prompt_visible(
+    prompt_diagnostics: Mapping[str, object],
+    index: int,
+    selected_count: int,
+) -> bool:
+    inspiration_policy = (
+        prompt_diagnostics.get("inspiration_policy")
+        if isinstance(prompt_diagnostics.get("inspiration_policy"), Mapping)
+        else {}
+    )
+    if inspiration_policy.get("rendered_count_source") == "disabled_section":
+        return False
+    rendered_count = inspiration_policy.get("rendered_count")
+    if isinstance(rendered_count, int) and not isinstance(rendered_count, bool):
+        return index < max(0, rendered_count)
+    return selected_count > 0
+
+
+def _prompt_prior_candidate_status(program: Program) -> str:
+    metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
+    admission = (
+        metadata.get("archive_admission")
+        if isinstance(metadata.get("archive_admission"), Mapping)
+        else {}
+    )
+    if admission.get("admitted") is True:
+        return "accepted_history"
+    if metadata.get("candidate_status") == "llm_mutation_failed":
+        return "llm_mutation_failed"
+    return "rejected_history"
+
+
+def validate_prompt_prior_score_provenance_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.prompt_prior_score_provenance_report.v1",
+            "ok": False,
+            "issues": [
+                {"code": "invalid_shape", "message": "prompt prior-score report must be an object"}
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "generated_candidate_count",
+        "prompt_record_count",
+        "score_record_count",
+        "target_score_record_count",
+        "inspiration_score_record_count",
+        "history_join_count",
+        "evaluator_result_join_count",
+        "omitted_or_truncated_score_record_count",
+        "records",
+        "records_limit",
+        "records_truncated",
+        "score_policy",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append({"code": "missing_fields", "message": f"prompt prior-score report missing fields: {sorted(missing)}"})
+    if report.get("schema") != "libreevolve.prompt_prior_score_provenance_report.v1":
+        issues.append({"code": "invalid_schema", "message": "prompt prior-score report schema is unsupported"})
+    if (
+        report.get("source")
+        != "runtime_history_prompt_diagnostics_parent_and_inspiration_selection"
+    ):
+        issues.append({"code": "invalid_source", "message": "prompt prior-score report source is unsupported"})
+    records = report.get("records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_records", "message": "records must be a list"})
+        records = []
+    score_record_count = 0
+    target_score_count = 0
+    inspiration_score_count = 0
+    history_join_count = 0
+    evaluator_join_count = 0
+    omitted_count = 0
+    for record_index, record in enumerate(records):
+        if not isinstance(record, Mapping):
+            issues.append({"code": "invalid_record", "message": f"record {record_index} must be an object"})
+            continue
+        if not isinstance(record.get("candidate_id"), str) or not record.get("candidate_id"):
+            issues.append({"code": "invalid_candidate_id", "message": f"record {record_index} candidate_id is invalid"})
+        if record.get("candidate_status") not in {
+            "accepted_history",
+            "rejected_history",
+            "llm_mutation_failed",
+        }:
+            issues.append({"code": "invalid_candidate_status", "message": f"record {record_index} candidate_status is invalid"})
+        if record.get("prompt_sha256") is not None and not _is_sha256_hex(record.get("prompt_sha256")):
+            issues.append({"code": "invalid_prompt_hash", "message": f"record {record_index} prompt hash is invalid"})
+        scores = record.get("score_records")
+        if not isinstance(scores, list):
+            issues.append({"code": "invalid_score_records", "message": f"record {record_index} score_records must be a list"})
+            scores = []
+        for score_index, score in enumerate(scores):
+            if not isinstance(score, Mapping):
+                issues.append({"code": "invalid_score_record", "message": f"record {record_index} score {score_index} must be an object"})
+                continue
+            score_record_count += 1
+            role = score.get("role")
+            if role == "target":
+                target_score_count += 1
+            elif role == "inspiration":
+                inspiration_score_count += 1
+            else:
+                issues.append({"code": "invalid_score_role", "message": f"record {record_index} score {score_index} role is invalid"})
+            if not isinstance(score.get("program_id"), str) or not score.get("program_id"):
+                issues.append({"code": "invalid_score_program", "message": f"record {record_index} score {score_index} program_id is invalid"})
+            if score.get("source_hash") is not None and not _is_sha256_hex(score.get("source_hash")):
+                issues.append({"code": "invalid_score_source_hash", "message": f"record {record_index} score {score_index} source hash is invalid"})
+            if score.get("displayed_aggregate_formula") != "program.fitness":
+                issues.append({"code": "invalid_score_formula", "message": f"record {record_index} score {score_index} formula is invalid"})
+            if score.get("displayed_aggregate_score") is not None and not isinstance(score.get("displayed_aggregate_score"), (int, float)):
+                issues.append({"code": "invalid_displayed_score", "message": f"record {record_index} score {score_index} displayed score must be numeric or null"})
+            metrics = score.get("raw_metrics")
+            if not isinstance(metrics, Mapping):
+                issues.append({"code": "invalid_raw_metrics", "message": f"record {record_index} score {score_index} raw_metrics must be an object"})
+                metrics = {}
+            for metric_name, value in metrics.items():
+                if not isinstance(metric_name, str) or not metric_name:
+                    issues.append({"code": "invalid_metric_name", "message": f"record {record_index} score {score_index} metric name is invalid"})
+                if value is not None and not isinstance(value, (int, float)):
+                    issues.append({"code": "invalid_metric_value", "message": f"record {record_index} score {score_index} metric value is invalid"})
+            if score.get("metric_names") != sorted(metrics):
+                issues.append({"code": "metric_names_mismatch", "message": f"record {record_index} score {score_index} metric_names must match raw_metrics"})
+            if score.get("prompt_visible") is True:
+                if score.get("omission_reason") is not None:
+                    issues.append({"code": "visible_score_has_omission", "message": f"record {record_index} score {score_index} visible score must not have omission reason"})
+            elif score.get("prompt_visible") is False:
+                omitted_count += 1
+                if not isinstance(score.get("omission_reason"), str) or not score.get("omission_reason"):
+                    issues.append({"code": "missing_score_omission_reason", "message": f"record {record_index} score {score_index} omitted score needs reason"})
+            else:
+                issues.append({"code": "invalid_prompt_visible", "message": f"record {record_index} score {score_index} prompt_visible must be boolean"})
+            if score.get("history_joined") is True:
+                history_join_count += 1
+                if not isinstance(score.get("history_row"), Mapping):
+                    issues.append({"code": "invalid_history_row", "message": f"record {record_index} score {score_index} history_row must be an object"})
+            elif score.get("history_joined") is not False:
+                issues.append({"code": "invalid_history_join_flag", "message": f"record {record_index} score {score_index} history_joined must be boolean"})
+            if score.get("evaluator_result_joined") is True:
+                evaluator_join_count += 1
+                evaluator_result = score.get("evaluator_result")
+                if not isinstance(evaluator_result, Mapping):
+                    issues.append({"code": "invalid_evaluator_result", "message": f"record {record_index} score {score_index} evaluator_result must be an object"})
+                elif evaluator_result.get("stream") != "evaluator_results.jsonl":
+                    issues.append({"code": "invalid_evaluator_stream", "message": f"record {record_index} score {score_index} evaluator stream is invalid"})
+            elif score.get("evaluator_result_joined") is not False:
+                issues.append({"code": "invalid_evaluator_join_flag", "message": f"record {record_index} score {score_index} evaluator_result_joined must be boolean"})
+    truncated = report.get("records_truncated") is True
+    _validate_prompt_prior_report_count(
+        report,
+        "prompt_record_count",
+        len(records),
+        truncated,
+        issues,
+    )
+    _validate_prompt_prior_report_count(
+        report,
+        "score_record_count",
+        score_record_count,
+        truncated,
+        issues,
+    )
+    _validate_prompt_prior_report_count(
+        report,
+        "target_score_record_count",
+        target_score_count,
+        truncated,
+        issues,
+    )
+    _validate_prompt_prior_report_count(
+        report,
+        "inspiration_score_record_count",
+        inspiration_score_count,
+        truncated,
+        issues,
+    )
+    _validate_prompt_prior_report_count(
+        report,
+        "history_join_count",
+        history_join_count,
+        truncated,
+        issues,
+    )
+    _validate_prompt_prior_report_count(
+        report,
+        "evaluator_result_join_count",
+        evaluator_join_count,
+        truncated,
+        issues,
+    )
+    _validate_prompt_prior_report_count(
+        report,
+        "omitted_or_truncated_score_record_count",
+        omitted_count,
+        truncated,
+        issues,
+    )
+    if not isinstance(report.get("score_policy"), Mapping):
+        issues.append({"code": "invalid_score_policy", "message": "score_policy must be an object"})
+    if report.get("claim_ready") is not False:
+        issues.append({"code": "claim_ready_overclaim", "message": "prompt prior-score report must not claim full AlphaEvolve provenance"})
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
+    else:
+        for field in (
+            "target_scores_joined",
+            "history_rows_joined",
+            "evaluator_rows_joined",
+            "prompt_visible_score_rows",
+        ):
+            if readiness.get(field) not in {True, False}:
+                issues.append({"code": f"invalid_{field}", "message": f"claim_readiness.{field} must be boolean"})
+        if readiness.get("full_alphaevolve_rendered_evaluation_result_provenance") is not False:
+            issues.append({"code": "rendered_evaluation_result_overclaim", "message": "full rendered-evaluation provenance must remain false"})
+    return {
+        "schema": "libreevolve.prompt_prior_score_provenance_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _validate_prompt_prior_report_count(
+    report: Mapping[str, object],
+    field: str,
+    observed_retained: int,
+    truncated: bool,
+    issues: list[dict],
+) -> None:
+    value = report.get(field)
+    if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+        issues.append({"code": f"invalid_{field}", "message": f"{field} must be a non-negative integer"})
+    elif truncated:
+        if value < observed_retained:
+            issues.append({"code": f"{field}_mismatch", "message": f"{field} must cover retained report records"})
+    elif value != observed_retained:
+        issues.append({"code": f"{field}_mismatch", "message": f"{field} does not match report records"})
 
 
 def _evaluator_oracle_registry_report(

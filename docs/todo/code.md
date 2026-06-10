@@ -606,22 +606,24 @@ Primary evidence:
   - Current evidence: `PromptSampler` renders parent metrics through
     `{parent_metrics}` and inspiration headers with finite fitness plus
     declared metric entries, including role/direction/bounds/normalization
-    annotations. Prompt histories and generated-program metadata can identify
+    annotations. Prompt histories and generated-program metadata identify
     selected parents, inspirations, prompt ids, and prompt context policy.
-  - Remaining gap: there is no paper-facing prompt-score record or validator
-    proving that each prompt-visible prior/current program score header
-    matches a specific evaluator/history row, that displayed scalar fitness
-    maps to the paper's score-summary semantics, or that omitted/truncated
-    execution outputs and score fields are explicitly attributed per prior
-    solution.
-  - Required result: add prompt prior-score records keyed by prompt call id,
-    program role (`target`, `inspiration`, etc.), candidate/history id, source
-    hash, raw metric names and values, normalized/maximized values, displayed
-    aggregate score formula, evaluator-output/artifact linkage, omission or
-    truncation reason, and validators/tests that fail when rendered prompt
-    score summaries diverge from persisted evaluation history. Update README,
-    ROADMAP, and papers index wording so current metric rendering is not
-    mistaken for AlphaEvolve-style rendered-evaluation-result provenance.
+    Completed manifests now include
+    `runtime.history.prompt_prior_score_provenance_report`, which links
+    generated mutation prompts to target-parent and selected-inspiration score
+    records with prompt ids/hashes, program roles, source workspace hashes,
+    finite raw metrics, displayed aggregate formula (`program.fitness`),
+    history/failure-history row joins, and `evaluator_results.jsonl` row joins.
+    Validators reject mismatched score formulas and malformed joins.
+  - Remaining gap: prompt-score provenance still does not prove execution-result
+    text display attribution, complete score omission/truncation policy, exact
+    AlphaEvolve `average_score` formula parity, or cross-run prompt-score table
+    exports.
+  - Required result: add execution-output display attribution, score
+    omission/truncation records, `average_score` display/formula parity or an
+    explicit substitution policy, and a cross-run prompt-score table export
+    before treating prompt metric headers as full AlphaEvolve-style rendered
+    evaluation-result provenance.
 
 - [ ] Add explicit-context source-role provenance for AlphaEvolve prompt
       context.

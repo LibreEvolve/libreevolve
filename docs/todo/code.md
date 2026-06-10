@@ -2611,7 +2611,7 @@ Primary evidence:
     linkage, and README/ROADMAP wording that distinguishes B.5 minimum-overlap
     evidence from aggregate Appendix B coverage.
 
-- [ ] Add Appendix B.5 original-formulation and equivalence provenance.
+- [x] Add Appendix B.5 original-formulation and equivalence provenance.
   - Spec evidence: AlphaEvolve Appendix B.5 defines `C5` as the largest
     constant such that
     `sup_{x in [-2,2]} integral_{-1}^1 f(t) g(x+t) dt >= C5` for all
@@ -2619,19 +2619,19 @@ Primary evidence:
     `integral f = 1`, extending `f` and `g` by zero outside `[-1,1]`. It then
     states, citing `[40]`, that this constant equals the infimum over
     normalized step functions `h` on `[0,2]`.
-  - Current evidence: the B.5 step-function TODO records the reduced `h`
-    formulation, but no code/report schema separately records the original
-    paired-function domain, complement constraint, zero-extension convention,
-    supremum-over-shifts statement, `[40]` equivalence reference, or the
-    mapping from the source Erdos problem to the step-function construction.
-    A report could validate the Figure 10 `h` payload while losing the problem
-    statement that makes it an Erdos minimum-overlap bound.
-  - Required result: add Appendix B.5 formulation metadata and validators for
-    `f,g` domain/value bounds, `f+g=1`, `integral f=1`, zero-extension policy,
-    `sup_{x in [-2,2]}` objective, `[40]` equivalence citation, transformation
-    link to the `[0,2]` step-function row, and README/ROADMAP wording that
-    distinguishes source-problem provenance from construction-payload
-    provenance.
+  - Status: `alphaevolve_appendix_b.json` now records B.5
+    `source_formulation_evidence`: `f,g` domain/value bounds,
+    non-negativity, `f + g = 1`, `integral f = 1`, zero-extension policy,
+    `sup_{x in [-2,2]}` objective, known lower/upper bounds and source,
+    `[40]` equivalence citation, normalized `[0,2]` step-function reduction,
+    reduced integral/objective expressions, mapping to the Figure 10
+    step-function evidence, and explicit missing construction-payload status.
+    `appendix_b_registry.py` validates these fields and now enforces the B.5
+    artifact schema as `normalized_step_function` plus
+    `integral_and_shift_overlap_certificate` instead of the previous finite-set
+    placeholder.
+  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
+    passes.
 
 - [ ] Add Appendix B.6 finite-set witness provenance.
   - Spec evidence: AlphaEvolve Appendix B.6 improves the sums-and-differences

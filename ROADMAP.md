@@ -652,6 +652,11 @@ is not yet an AlphaEvolve reproduction.
   coordinate payloads or all-pairs distance certificates. A
   `witness_certificate_boundary` now records the required future witness fields
   and keeps both B.8 witnesses explicitly `not_recorded_locally`.
+- Keep Appendix B.5 source-problem and construction evidence separated: the
+  registry now validates the original paired-function Erdős formulation,
+  zero-extension convention, shift-supremum objective, known bounds, `[40]`
+  equivalence, and mapping to the normalized `[0,2]` step-function row; the
+  Figure 10 step-function payload and recomputation certificate remain open.
 - Keep paper artifact-role attribution separate from artifact availability:
   `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
   AlphaEvolve PDF contribution records for figure creators and companion

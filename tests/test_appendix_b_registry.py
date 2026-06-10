@@ -1,6 +1,7 @@
 import json
 
 from libreevolve.problems.benchmarks.appendix_b_registry import (
+    EXPECTED_B5_SOURCE_FORMULATION,
     EXPECTED_B8_METRIC_CONVENTIONS,
     EXPECTED_B8_WITNESS_IDS,
     EXPECTED_B8_WITNESS_REQUIRED_FIELDS,
@@ -46,6 +47,12 @@ def test_appendix_b_registry_enumerates_all_alphaevolve_families():
     assert boundary["status"] == "not_recorded_locally"
     assert boundary["required_witness_fields"] == list(EXPECTED_B8_WITNESS_REQUIRED_FIELDS)
     assert [row["result_id"] for row in boundary["missing_witnesses"]] == list(EXPECTED_B8_WITNESS_IDS)
+    b5 = next(family for family in data["families"] if family["id"] == "erdos_minimum_overlap")
+    assert b5["source_formulation_evidence"] == EXPECTED_B5_SOURCE_FORMULATION
+    assert b5["artifact_schema"] == {
+        "construction": "normalized_step_function",
+        "certificate": "integral_and_shift_overlap_certificate",
+    }
 
 
 def test_appendix_b_registry_requires_advertised_fixtures_to_exist(tmp_path):
@@ -215,3 +222,41 @@ def test_appendix_b_registry_rejects_b8_witness_boundary_overclaim(tmp_path):
     assert "invalid_b8_coordinate_artifact_status" in codes
     assert "missing_b8_witness_claim_boundary" in codes
     assert "missing_b8_witness_id" in codes
+
+
+def test_appendix_b_registry_requires_b5_source_formulation(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    b5 = next(family for family in data["families"] if family["id"] == "erdos_minimum_overlap")
+    evidence = b5["source_formulation_evidence"]
+    evidence["function_pair_domain"] = "[0, 1]"
+    evidence["known_lower_bound"] = 0.4
+    evidence["reduced_step_function_domain"] = "[-1, 1]"
+    b5["artifact_schema"]["construction"] = "finite_set_construction"
+    b5["artifact_schema"]["certificate"] = "exact_overlap_verification"
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_b5_function_pair_domain" in codes
+    assert "invalid_b5_known_lower_bound" in codes
+    assert "invalid_b5_reduced_step_function_domain" in codes
+    assert "invalid_b5_bound_order" in codes
+    assert "invalid_b5_artifact_construction" in codes
+    assert "invalid_b5_artifact_certificate" in codes
+
+
+def test_appendix_b_registry_requires_b5_source_formulation_object(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    b5 = next(family for family in data["families"] if family["id"] == "erdos_minimum_overlap")
+    del b5["source_formulation_evidence"]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+
+    assert report.ok is False
+    assert [issue.code for issue in report.issues] == ["missing_b5_source_formulation"]
+    assert report.issues[0].family_id == "erdos_minimum_overlap"

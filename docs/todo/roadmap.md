@@ -2848,21 +2848,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     prior/current bounds, Figure 10 link, payload hash, and source location
     from aggregate Appendix B coverage.
 
-- [ ] Keep Appendix B.5 roadmap wording scoped until source-formulation
+- [x] Keep Appendix B.5 roadmap wording scoped until source-formulation
       equivalence exists.
   - Spec evidence: AlphaEvolve Appendix B.5 first defines `C5` through
     non-negative `f,g: [-1,1] -> [0,1]` with `f + g = 1`,
     `integral f = 1`, zero extension outside `[-1,1]`, and
     `sup_{x in [-2,2]} integral_{-1}^1 f(t) g(x+t) dt`. It then cites `[40]`
     for equality with the normalized step-function infimum on `[0,2]`.
-  - Current evidence: roadmap/README/paper-index wording can cite the B.5
-    step-function construction gap, but it does not separately require the
-    source Erdos formulation, zero-extension convention, complement and
-    normalization constraints, supremum domain, or `[40]` equivalence evidence.
-  - Required result: when B.5 formulation/equivalence metadata lands, update
-    ROADMAP, README, papers index, and code/paper TODOs so roadmap claims
-    distinguish source-problem scope and reduction evidence from Figure 10
-    construction-payload validation.
+  - Status: ROADMAP now states that the Appendix B registry validates the B.5
+    source Erdős formulation, zero-extension convention, shift-supremum
+    objective, known bounds, `[40]` equivalence, and mapping to the normalized
+    `[0,2]` step-function row, while leaving the Figure 10 construction payload
+    and recomputation certificate open.
+  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
+    passes.
 
 - [ ] Keep Appendix B.6 roadmap wording scoped until finite-set witness
       provenance exists.

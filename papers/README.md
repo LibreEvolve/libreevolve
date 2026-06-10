@@ -93,6 +93,11 @@ derived ratio `2.041041343775`; both are compared against prior squared bounds
 from `[29]`. Its `witness_certificate_boundary` records the future coordinate
 artifact and distance-certificate fields required before local witness proof
 can be claimed, while both B.8 witnesses remain `not_recorded_locally`.
+For B.5 Erdős minimum overlap, the registry now records the source
+paired-function formulation, zero-extension convention, shift-supremum
+objective, known lower/upper bounds, `[40]` equivalence, and mapping to the
+normalized `[0,2]` step-function formulation, while the Figure 10 construction
+payload remains absent.
 Appendix B says reported construction data and verification code
 appear in an accompanying Google Colab; this registry is not that
 Colab-equivalent evidence surface and does not yet store construction-data

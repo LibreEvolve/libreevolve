@@ -143,6 +143,31 @@ EXPECTED_B8_WITNESS_REQUIRED_FIELDS = (
     "figure_panel_id",
 )
 EXPECTED_B8_WITNESS_IDS = ("b8_16_points_2d", "b8_14_points_3d")
+EXPECTED_B5_SOURCE_FORMULATION = {
+    "source_section_id": "B.5",
+    "constant_id": "C5",
+    "source_problem_name": "Erdos minimum overlap problem",
+    "function_pair_domain": "[-1, 1]",
+    "function_pair_range": "[0, 1]",
+    "function_pair_non_negative": True,
+    "complement_constraint": "f + g = 1 on [-1, 1]",
+    "integral_constraint": "integral f = 1",
+    "zero_extension": "extend f and g by zero outside [-1, 1]",
+    "objective_domain": "x in [-2, 2]",
+    "objective_expression": "sup_x integral_{-1}^1 f(t) g(x + t) dt",
+    "bound_direction": "lower_bound_for_all_admissible_f_g",
+    "known_lower_bound": 0.379005,
+    "known_upper_bound": 0.380927,
+    "lower_bound_source": "[107]",
+    "equivalence_source": "[40]",
+    "reduced_step_function_domain": "[0, 2]",
+    "reduced_step_function_range": "[0, 1]",
+    "reduced_integral_constraint": "integral_0^2 h(x) dx = 1",
+    "reduced_objective_expression": "max_k integral h(x) * (1 - h(x + k)) dx",
+    "reduced_objective_direction": "infimum",
+    "mapping_to_step_function_evidence": "figure10_minimum_overlap_step_function",
+    "construction_payload_status": "not_recorded_locally",
+}
 STATUSES = frozenset({"implemented", "implemented_smoke", "planned", "background_only", "out_of_scope"})
 DIRECTIONS = frozenset({"maximize", "minimize", "satisfy", "prove"})
 _ID_RE = re.compile(r"[a-z][a-z0-9_]{1,79}")
@@ -240,6 +265,7 @@ def _validate_family(
     _validate_autocorrelation_step_evidence(family, family_id, issues)
     _validate_b8_metric_conventions(family, family_id, issues)
     _validate_b8_witness_boundary(family, family_id, issues)
+    _validate_b5_source_formulation(family, family_id, issues)
     status = family.get("status")
     if status not in STATUSES:
         issues.append(AppendixBRegistryIssue("invalid_status", "invalid implementation status", family_id))
@@ -259,6 +285,7 @@ def _validate_family(
     else:
         _require_text(artifact_schema, "construction", family_id, issues)
         _require_text(artifact_schema, "certificate", family_id, issues)
+        _validate_b5_artifact_schema(artifact_schema, family_id, issues)
     _require_text(family, "certification", family_id, issues)
     _require_text(family, "rationale", family_id, issues)
     citations = family.get("paper_citations")
@@ -420,6 +447,49 @@ def _validate_b8_witness_boundary(
     for result_id in EXPECTED_B8_WITNESS_IDS:
         if result_id not in seen:
             issues.append(AppendixBRegistryIssue("missing_b8_witness_id", "B.8 witness boundary must include each convention result id", family_id))
+
+
+def _validate_b5_source_formulation(
+    family: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    if family_id != "erdos_minimum_overlap":
+        return
+    evidence = family.get("source_formulation_evidence")
+    if not isinstance(evidence, dict):
+        issues.append(AppendixBRegistryIssue("missing_b5_source_formulation", "B.5 requires source_formulation_evidence", family_id))
+        return
+    for field, expected_value in EXPECTED_B5_SOURCE_FORMULATION.items():
+        actual = evidence.get(field)
+        if isinstance(expected_value, float):
+            if isinstance(actual, bool) or not isinstance(actual, (int, float)) or not math.isclose(float(actual), expected_value, rel_tol=0.0, abs_tol=1e-12):
+                issues.append(AppendixBRegistryIssue(f"invalid_b5_{field}", f"B.5 {field} must match the AlphaEvolve source formulation evidence", family_id))
+        elif actual != expected_value:
+            issues.append(AppendixBRegistryIssue(f"invalid_b5_{field}", f"B.5 {field} must match the AlphaEvolve source formulation evidence", family_id))
+    lower = evidence.get("known_lower_bound")
+    upper = evidence.get("known_upper_bound")
+    if (
+        isinstance(lower, (int, float))
+        and not isinstance(lower, bool)
+        and isinstance(upper, (int, float))
+        and not isinstance(upper, bool)
+        and float(lower) >= float(upper)
+    ):
+        issues.append(AppendixBRegistryIssue("invalid_b5_bound_order", "B.5 lower bound must be below the upper bound", family_id))
+
+
+def _validate_b5_artifact_schema(
+    artifact_schema: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    if family_id != "erdos_minimum_overlap":
+        return
+    if artifact_schema.get("construction") != "normalized_step_function":
+        issues.append(AppendixBRegistryIssue("invalid_b5_artifact_construction", "B.5 construction schema must be normalized_step_function", family_id))
+    if artifact_schema.get("certificate") != "integral_and_shift_overlap_certificate":
+        issues.append(AppendixBRegistryIssue("invalid_b5_artifact_certificate", "B.5 certificate schema must cover integral and shift-overlap verification", family_id))
 
 
 def _family_id(family: object, index: int) -> str:

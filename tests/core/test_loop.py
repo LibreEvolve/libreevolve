@@ -7551,6 +7551,47 @@ def test_loaded_title_page_metadata_reaches_manifest_and_report():
     ] is True
 
 
+def test_matrix_example_title_page_fixture_is_claim_ready():
+    repo_root = Path(__file__).resolve().parents[2]
+    problem = load_problem(
+        repo_root
+        / "libreevolve"
+        / "problems"
+        / "examples"
+        / "matrix_multiplication"
+    )
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(
+        problem,
+        Config(max_generations=0, log_dir=tmpdir, problem_name="matrix_title_page"),
+    )
+
+    manifest = json.loads(
+        (Path(tmpdir) / "matrix_title_page" / "manifest.json").read_text()
+    )
+    metadata = manifest["problem"]["title_page_metadata"]
+    assert metadata["schema"] == "libreevolve.title_page_metadata.v1"
+    assert metadata["status"] == "provided"
+    assert metadata["affiliation"]["organization"] == "Google DeepMind"
+    assert metadata["rights_linkage"]["record_id"] == "2506.13131"
+
+    report = manifest["runtime"]["history"]["title_page_affiliation_report"]
+    assert validate_title_page_affiliation_report(report)["ok"] is True
+    assert report["claim_ready"] is True
+    assert report["affiliation_organization"] == "Google DeepMind"
+    assert report["footnote_kind_counts"] == {
+        "affiliation": 1,
+        "equal_contribution": 1,
+    }
+    assert report["author_marker_mapping_count"] == 1
+    assert report["rights_linkage_status"] == "source_rights_record_referenced"
+    assert report["source_pages"] == [1]
+    assert report["claim_readiness"][
+        "alphaevolve_title_page_affiliation_parity"
+    ] is True
+
+
 def test_title_page_affiliation_report_marks_missing_metadata_boundary():
     tmpdir = tempfile.mkdtemp()
 

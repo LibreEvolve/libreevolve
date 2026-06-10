@@ -16157,3 +16157,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: `py -3.12 -m pytest
     tests/core/test_loop.py::test_matrix_example_paper_author_fixture_is_claim_ready
     --tb=short` passes.
+
+- [x] Populate AlphaEvolve title-page affiliation and footnote provenance.
+  - Spec evidence: AlphaEvolve PDF page 1 presents the `Google DeepMind1`
+    source affiliation, the affiliation footnote, the equal-contribution
+    footnote, and the source-paper rights line.
+  - Status: `libreevolve/problems/examples/matrix_multiplication/title_page.yaml`
+    now provides reviewed title-page metadata with affiliation text, footnote
+    markers, author-marker mapping, source-rights linkage to
+    `papers/source_rights.json`, privacy policy, and review status. A manifest
+    regression proves the real fixture reaches
+    `runtime.history.title_page_affiliation_report` as claim-ready for
+    `alphaevolve_title_page_affiliation_parity`.
+  - Verification: `py -3.12 -m pytest
+    tests/core/test_loop.py::test_matrix_example_title_page_fixture_is_claim_ready
+    --tb=short` passes.

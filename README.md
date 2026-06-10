@@ -2248,8 +2248,10 @@ manifests include `runtime.history.title_page_affiliation_report`, which keeps
 source-paper affiliation and equal-contribution footnotes separate from
 LibreEvolve's local project affiliation, endorsement, MIT license,
 publication-author metadata, source-rights metadata, and technical capability
-evidence. Populated reviewed fixture records are still needed before treating
-this schema/report surface as AlphaEvolve title-page parity evidence.
+evidence. The `matrix_multiplication` example now includes a reviewed
+`title_page.yaml` fixture linked to AlphaEvolve PDF page 1 and
+`papers/source_rights.json`; its zero-generation manifest report is
+claim-ready for the title-page affiliation and footnote boundary.
 Problem fixtures can also optionally add `system_contributions.yaml` or
 `system_contributions.yml`; direct callers can set
 `Problem.system_contribution_metadata`. The manifest normalizes this to

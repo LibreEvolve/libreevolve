@@ -10924,3 +10924,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     and review status. `papers/README.md` now states that this example's
     zero-generation manifest is claim-ready for paper-author metadata parity.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Populate AlphaEvolve title-page affiliation and footnote evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` page 1 lists the
+    source-paper affiliation line, the affiliation footnote, the
+    equal-contribution footnote, and the source-paper rights line.
+  - Status: `libreevolve/problems/examples/matrix_multiplication/title_page.yaml`
+    now provides reviewed title-page records with source page locators,
+    footnote markers, author-marker mapping, source-rights linkage,
+    privacy/redaction policy, and review status. `papers/README.md` now states
+    that this example's zero-generation manifest is claim-ready for
+    title-page affiliation and footnote parity.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

@@ -10947,3 +10947,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     boundary, while keeping title-page affiliation, acknowledgement, package,
     and technical-validation boundaries separate.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document populated title-page affiliation metadata in README.
+  - Spec evidence: AlphaEvolve PDF page 1 provides the source-paper
+    affiliation line, affiliation footnote, equal-contribution footnote, and
+    rights statement.
+  - Status: README now states that the `matrix_multiplication` example carries
+    a reviewed `title_page.yaml` fixture linked to AlphaEvolve PDF page 1 and
+    `papers/source_rights.json`, and that its zero-generation manifest report
+    is claim-ready for the title-page affiliation and footnote boundary.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

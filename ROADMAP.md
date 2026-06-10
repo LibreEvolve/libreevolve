@@ -163,7 +163,9 @@ LibreEvolve has:
   and summarized by `runtime.history.title_page_affiliation_report` for
   source-paper affiliation text, footnote marker definitions, author-marker
   mappings, source-rights linkage, privacy/redaction policy, and
-  review/signoff readiness
+  review/signoff readiness; the `matrix_multiplication` example carries a
+  reviewed AlphaEvolve page 1 fixture linked to `papers/source_rights.json`
+  and a manifest regression for the claim-ready title-page boundary
 - optional system-contribution metadata under `system_contributions.yaml` or
   direct `Problem.system_contribution_metadata`, normalized into
   `problem.system_contribution_metadata` and summarized by

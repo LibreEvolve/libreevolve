@@ -1,0 +1,32 @@
+affiliation:
+  organization: Google DeepMind
+  marker_id: affiliation-1
+  source_page: 1
+  source_section: AlphaEvolve title page
+footnotes:
+  - marker_id: affiliation-1
+    kind: affiliation
+    text: See Acknowledgments and Author information section.
+    source_page: 1
+    source_section: Title page footnotes
+  - marker_id: star
+    kind: equal_contribution
+    text: Equal contributions.
+    source_page: 1
+    source_section: Title page footnotes
+author_markers:
+  - author_label: AlphaEvolve equal-contribution author group
+    marker_id: star
+    source_page: 1
+rights_linkage:
+  status: source_rights_record_referenced
+  record_id: "2506.13131"
+  source_page: 1
+privacy_policy:
+  redaction: public_source_text
+  notes: Title-page affiliation, footnotes, and rights text are public source-paper text; no contact details are copied here.
+review:
+  status: title_page_metadata_reviewed
+  reviewer_labels:
+    - local AlphaEvolve PDF title-page review
+  notes: Reviewed against papers/2506.13131__AlphaEvolve.pdf page 1 and papers/source_rights.json.

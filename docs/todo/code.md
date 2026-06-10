@@ -394,27 +394,6 @@ Primary evidence:
     from treating the schema alone as AlphaEvolve-style paper-process
     acknowledgement evidence.
 
-- [ ] Populate AlphaEvolve title-page affiliation and footnote provenance.
-  - Spec evidence: page 1 of `2506.13131__AlphaEvolve.pdf` presents the author
-    list followed by `Google DeepMind1`, and the title-page footnotes state
-    `1See Acknowledgments and Author information section.` and `*Equal
-    contributions.` The same title page also contains `© 2025 Google
-    DeepMind. All rights reserved`, which is source-paper rights evidence, not
-    local project licensing or endorsement.
-  - Current evidence: LibreEvolve now accepts optional `title_page.yaml` /
-    direct `Problem.title_page_metadata`, normalizes
-    `problem.title_page_metadata`, and emits
-    `runtime.history.title_page_affiliation_report` with readiness checks for
-    affiliation text, footnote markers, author-marker mappings,
-    source-rights linkage, privacy/redaction policy, and review/signoff.
-    Existing fixtures have not yet been populated with real reviewed
-    title-page records or paper-facing certification rows.
-  - Required result: populate representative fixtures with reviewed
-    title-page affiliation records, link them to source page/span evidence and
-    source-rights rows, add paper-facing examples or certification rows, and
-    keep docs from treating the schema alone as AlphaEvolve-style title-page
-    affiliation or footnote parity evidence.
-
 - [ ] Populate core system-development contribution provenance.
   - Spec evidence: AlphaEvolve's Contributions section attributes the initial
     system design/implementation, project vision and problem scoping, first

@@ -479,27 +479,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     neither underclaims the new metadata/report surface nor overclaims
     AlphaEvolve-style acknowledgement-role evidence.
 
-- [ ] Keep source-affiliation roadmap wording scoped until title-page
-      affiliation metadata is populated.
-  - Spec evidence: page 1 of the AlphaEvolve PDF gives the title-page
-    affiliation line `Google DeepMind1` plus footnotes `1See Acknowledgments
-    and Author information section.` and `*Equal contributions.` It also
-    carries the source-paper rights line `© 2025 Google DeepMind. All rights
-    reserved`, which is related but separate source-rights evidence.
-  - Current evidence: ROADMAP and README now document optional
-    `title_page.yaml` / `Problem.title_page_metadata`, normalized
-    `problem.title_page_metadata`, and
-    `runtime.history.title_page_affiliation_report` for source affiliation,
-    footnote markers, author-marker mappings, source-rights linkage,
-    privacy/redaction policy, and review/signoff readiness. The schema/report
-    surface is implemented, but representative fixtures still lack real
-    reviewed title-page records.
-  - Required result: when representative fixtures carry reviewed title-page
-    affiliation evidence and paper-facing certification rows, update ROADMAP,
-    README, papers index, and code/paper TODOs together so roadmap wording
-    neither underclaims the metadata/report surface nor overclaims
-    AlphaEvolve-style title-page affiliation parity.
-
 - [ ] Keep system-development roadmap wording scoped until contribution-role
       provenance is populated.
   - Spec evidence: AlphaEvolve's Contributions section attributes core system

@@ -406,26 +406,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     those roles without implying the schema alone proves AlphaEvolve-style
     paper-process acknowledgement evidence.
 
-- [ ] Keep README source-affiliation wording scoped until title-page
-      affiliation metadata is populated.
-  - Spec evidence: page 1 of the AlphaEvolve PDF gives the title-page
-    affiliation line `Google DeepMind1` and footnotes `1See Acknowledgments and
-    Author information section.` and `*Equal contributions.` The same page
-    includes `© 2025 Google DeepMind. All rights reserved`, which is a
-    source-paper rights statement distinct from LibreEvolve's MIT license.
-  - Current evidence: README now documents optional `title_page.yaml` /
-    `Problem.title_page_metadata`, normalized `problem.title_page_metadata`,
-    and `runtime.history.title_page_affiliation_report` as a source-paper
-    affiliation and footnote boundary. It still states LibreEvolve is
-    independent and not affiliated with or endorsed by Google DeepMind.
-    Existing fixtures do not yet carry real reviewed title-page affiliation
-    records.
-  - Required result: when representative fixtures are populated with reviewed
-    title-page affiliation and footnote evidence, update README, ROADMAP,
-    papers index, and code/paper TODOs together so README can describe those
-    facts without implying the schema alone proves AlphaEvolve-style
-    title-page parity.
-
 - [ ] Keep README system-development provenance scoped until contribution-role
       evidence is populated.
   - Spec evidence: AlphaEvolve's Contributions section separately attributes

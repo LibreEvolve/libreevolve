@@ -8360,3 +8360,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     manifest regression for the claim-ready publication-author metadata
     boundary.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document populated title-page affiliation metadata in ROADMAP.
+  - Spec evidence: AlphaEvolve PDF page 1 separates source-paper affiliation,
+    footnote markers, equal-contribution marker, and source-paper rights from
+    local project affiliation or endorsement.
+  - Status: ROADMAP now records that the `matrix_multiplication` example has a
+    reviewed AlphaEvolve page 1 title-page fixture linked to
+    `papers/source_rights.json` and a manifest regression for the claim-ready
+    title-page boundary.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

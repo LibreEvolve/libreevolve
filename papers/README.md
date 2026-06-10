@@ -421,8 +421,10 @@ text, footnote marker definitions, author-marker mappings, source-page
 locators, source-rights linkage, privacy/redaction policy, and review/signoff
 state. These records are source-publication facts, not local affiliation,
 endorsement, licensing, publication-author, or technical capability evidence;
-populated reviewed records are still needed before making title-page
-affiliation or footnote parity claims.
+the `matrix_multiplication` example now provides a reviewed `title_page.yaml`
+fixture for AlphaEvolve page 1, links it to `papers/source_rights.json`, and
+its zero-generation manifest report is claim-ready for title-page affiliation
+and footnote parity.
 
 AlphaEvolve system-contribution note: LibreEvolve now has optional
 `system_contributions.yaml` / `Problem.system_contribution_metadata` records
@@ -1017,7 +1019,7 @@ report, artifact, or evidence work from missing source-specific TODO coverage.
 
 | ID | Active gap evidence | Completed evidence |
 |---|---|---|
-| 2506.13131 | `docs/todo/code.md`; `docs/todo/papers.md` | `docs/todo/Completed/code.md`; `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/roadmap.md` |
+| 2506.13131 | `docs/todo/papers.md` | `docs/todo/Completed/code.md`; `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/roadmap.md` |
 | 1504.04909 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
 | auer-cesa-bianchi-fischer-2002 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
 | 2511.17592 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |

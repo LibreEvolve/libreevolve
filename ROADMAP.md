@@ -870,12 +870,16 @@ is not yet an AlphaEvolve reproduction.
   applicability, target-tensor and exactness-certificate links, and source-note
   caveats for non-tensor multiplication algorithms.
   `libreevolve.matrix_tensor_rank_runtime_boundary.v1` now validates the
-  current `not_emitted_by_local_runner` boundary and required future
-  emitted-record fields for algorithm kind, rank, recursive applicability,
-  certificate scope, tensor-identity status, target-tensor refs,
+  current `not_emitted_by_local_runner` boundary and emitted records for
+  run/target/candidate ids, seeds, algorithm kind, rank, recursive
+  applicability, certificate scope, tensor-identity status, target-tensor refs,
   exactness-certificate refs, matrix-result refs, artifact paths, and artifact
-  hashes. Local benchmark runners still need to emit those
-  target-tensor/certificate and footnote-caveat artifacts.
+  hashes. `matrix_tensor_rank_runtime_boundary_from_evidence()` builds an
+  emitted runtime row from validated tensor-rank evidence and validation links
+  it back to the nested target, rank claim, recursive-applicability,
+  tensor-identity, target-tensor, and certificate evidence. Local benchmark
+  runners still need to emit those target-tensor/certificate and
+  footnote-caveat artifacts.
 - Keep Strassen baseline claims scoped to one pinned baseline artifact:
   `validate_strassen_2x2_publication_bundle()` now validates the checked-in
   `mm_2x2x2` Strassen bundle under

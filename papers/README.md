@@ -1302,11 +1302,15 @@ Implemented:
   scope, recursive applicability, target-tensor links, exactness-certificate
   links, and source-note caveats for non-recursive algorithms.
   `libreevolve.matrix_tensor_rank_runtime_boundary.v1` now records the current
-  `not_emitted_by_local_runner` boundary and required future emitted-record
-  fields for algorithm kind, rank, recursive applicability, certificate scope,
-  tensor-identity status, target-tensor refs, exactness-certificate refs,
-  matrix-result refs, artifact paths, and artifact hashes, but no local matrix
-  benchmark runner emits those target-tensor/certificate artifacts yet.
+  `not_emitted_by_local_runner` boundary and validates emitted records for
+  run/target/candidate ids, seeds, algorithm kind, rank, recursive
+  applicability, certificate scope, tensor-identity status, target-tensor refs,
+  exactness-certificate refs, matrix-result refs, artifact paths, and artifact
+  hashes. `matrix_tensor_rank_runtime_boundary_from_evidence()` builds a
+  runtime row from validated tensor-rank evidence and checks linkage back to
+  nested target, rank claim, recursive-applicability, tensor-identity,
+  target-tensor, and certificate evidence, but no local matrix benchmark
+  runner emits those target-tensor/certificate artifacts yet.
   `libreevolve.matrix_headline_historicity_evidence.v1` validates declared
   provenance for the `mm_4x4x4` complex rank-48 headline, including
   characteristic-zero scope, 56-year first-below-49 wording flags, recursive

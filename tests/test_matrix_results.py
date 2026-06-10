@@ -42,6 +42,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     matrix_suite_publication_artifact_boundary_record,
     matrix_sweep_space_runtime_boundary_from_evidence,
     matrix_sweep_space_runtime_boundary_record,
+    matrix_tensor_rank_runtime_boundary_from_evidence,
     matrix_tensor_rank_runtime_boundary_record,
     render_matrix_baseline_component_runtime_boundary_summary,
     render_matrix_cascade_run_runtime_boundary_summary,
@@ -2055,22 +2056,102 @@ def test_matrix_tensor_rank_runtime_boundary_requires_emitted_records():
 
 
 def test_matrix_tensor_rank_runtime_boundary_accepts_emitted_evidence():
-    boundary = matrix_tensor_rank_runtime_boundary_record()
-    boundary["runtime_emission_status"] = "emitted"
-    boundary["emitted_records"] = [
-        {
-            "run_id": "run_001",
-            "candidate_id": "candidate_001",
-            "matrix_result_ref": "matrix/mm_4x4x4/report.json",
-            "tensor_rank_evidence": _valid_tensor_rank_evidence(),
-        }
-    ]
+    boundary = matrix_tensor_rank_runtime_boundary_from_evidence(
+        run_id="run_001",
+        candidate_id="candidate_001",
+        seed=17,
+        matrix_result_ref="matrix/mm_4x4x4/report.json",
+        tensor_rank_evidence=_valid_tensor_rank_evidence(),
+    )
 
     validation = validate_matrix_tensor_rank_runtime_boundary(boundary)
 
     assert validation.ok is True
     assert validation.runtime_emission_status == "emitted"
     assert validation.emitted_record_count == 1
+    record = boundary["emitted_records"][0]
+    assert record["target_id"] == "mm_4x4x4"
+    assert record["seed"] == 17
+    assert record["claim_id"] == "alphaevolve_mm_4x4x4_rank48"
+    assert record["algorithm_kind"] == "matrix_multiplication_tensor_decomposition"
+    assert record["rank"] == 48
+    assert record["recursive_applicable"] is True
+    assert record["certificate_scope"] == "matrix_multiplication_tensor_identity"
+    assert record["tensor_identity_verified"] is True
+    assert record["target_tensor_ref"] == "tensors/mm_4x4x4.json"
+    assert record["exactness_certificate_ref"] == "certificates/mm_4x4x4_tensor_identity.json"
+
+
+def test_matrix_tensor_rank_runtime_boundary_builder_rejects_invalid_evidence():
+    evidence = _valid_tensor_rank_evidence()
+    evidence["rank_claims"][0]["target_tensor_ref"] = ""
+
+    with pytest.raises(ValueError, match="tensor_rank_evidence is invalid"):
+        matrix_tensor_rank_runtime_boundary_from_evidence(
+            run_id="run_001",
+            candidate_id="candidate_001",
+            seed=17,
+            matrix_result_ref="matrix/mm_4x4x4/report.json",
+            tensor_rank_evidence=evidence,
+        )
+
+
+def test_matrix_tensor_rank_runtime_boundary_rejects_linkage_mismatch():
+    boundary = matrix_tensor_rank_runtime_boundary_from_evidence(
+        run_id="run_001",
+        candidate_id="candidate_001",
+        seed=17,
+        matrix_result_ref="matrix/mm_4x4x4/report.json",
+        tensor_rank_evidence=_valid_tensor_rank_evidence(),
+    )
+    record = boundary["emitted_records"][0]
+    record["target_id"] = "mm_5x5x5"
+    record["algorithm_kind"] = "non_tensor_multiplication_algorithm"
+    record["rank"] = 49
+    record["recursive_applicable"] = False
+    record["certificate_scope"] = "functional_multiplication_only"
+    record["tensor_identity_verified"] = False
+    record["target_tensor_ref"] = "tensors/other.json"
+    record["exactness_certificate_ref"] = "certificates/other.json"
+
+    validation = validate_matrix_tensor_rank_runtime_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "runtime_record_0_tensor_rank_target_mismatch" in codes
+    assert "runtime_record_0_tensor_rank_algorithm_kind_mismatch" in codes
+    assert "runtime_record_0_tensor_rank_rank_mismatch" in codes
+    assert "runtime_record_0_tensor_rank_recursive_mismatch" in codes
+    assert "runtime_record_0_tensor_rank_certificate_scope_mismatch" in codes
+    assert "runtime_record_0_tensor_rank_identity_mismatch" in codes
+    assert "runtime_record_0_tensor_rank_target_tensor_mismatch" in codes
+    assert "runtime_record_0_tensor_rank_certificate_mismatch" in codes
+
+
+def test_matrix_tensor_rank_runtime_boundary_rejects_missing_required_record_fields():
+    boundary = matrix_tensor_rank_runtime_boundary_from_evidence(
+        run_id="run_001",
+        candidate_id="candidate_001",
+        seed=17,
+        matrix_result_ref="matrix/mm_4x4x4/report.json",
+        tensor_rank_evidence=_valid_tensor_rank_evidence(),
+    )
+    record = boundary["emitted_records"][0]
+    del record["artifact_paths"]
+    record["seed"] = "17"
+    record["recursive_applicable"] = "yes"
+    record["tensor_identity_verified"] = "yes"
+    record["artifact_sha256"] = "not-a-sha"
+
+    validation = validate_matrix_tensor_rank_runtime_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_runtime_record_seed" in codes
+    assert "invalid_runtime_record_recursive_applicable" in codes
+    assert "invalid_runtime_record_tensor_identity_verified" in codes
+    assert "runtime_record_0_invalid_tensor_rank_artifact_paths" in codes
+    assert "runtime_record_0_invalid_tensor_rank_artifact_hash" in codes
 
 
 def test_matrix_tensor_rank_runtime_boundary_rejects_invalid_nested_evidence():

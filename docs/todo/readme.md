@@ -1015,11 +1015,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     that separate tensor-rank evidence from non-recursive multiplication
     algorithms. It also documents
     `libreevolve.matrix_tensor_rank_runtime_boundary.v1` as the current
-    `not_emitted_by_local_runner` boundary plus required future emitted-record
-    fields for algorithm kind, rank, recursive applicability, certificate
-    scope, tensor-identity status, target-tensor refs, exactness-certificate
-    refs, matrix-result refs, artifact paths, and artifact hashes. It also
-    states that target-tensor/certificate artifacts are not emitted.
+    `not_emitted_by_local_runner` boundary plus emitted-record validation for
+    run/target/candidate ids, seeds, algorithm kind, rank, recursive
+    applicability, certificate scope, tensor-identity status, target-tensor
+    refs, exactness-certificate refs, matrix-result refs, artifact paths, and
+    artifact hashes. It also documents the builder that turns validated
+    tensor-rank evidence into a linked runtime row and states that
+    target-tensor/certificate artifacts are not emitted.
   - Required result: when matrix reports or companion artifacts capture
     tensor-rank applicability and recursive-use caveats, update README,
     ROADMAP, papers index, and code/paper TODO entries together so README

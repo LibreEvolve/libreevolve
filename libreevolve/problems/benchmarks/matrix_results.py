@@ -1937,6 +1937,102 @@ def matrix_tensor_rank_runtime_boundary_record() -> dict[str, Any]:
     }
 
 
+def matrix_tensor_rank_runtime_boundary_from_evidence(
+    *,
+    run_id: str,
+    candidate_id: str,
+    seed: int,
+    matrix_result_ref: str,
+    tensor_rank_evidence: dict[str, Any],
+    claim_id: str | None = None,
+    artifact_paths: list[str] | None = None,
+    artifact_sha256: str | None = None,
+) -> dict[str, Any]:
+    """Build an emitted tensor-rank runtime record from validated evidence."""
+    validation = validate_matrix_tensor_rank_evidence(tensor_rank_evidence)
+    if not validation.ok:
+        messages = "; ".join(issue.message for issue in validation.issues)
+        raise ValueError(f"tensor_rank_evidence is invalid: {messages}")
+    target_id = tensor_rank_evidence.get("target_id")
+    if not isinstance(target_id, str) or not target_id.strip():
+        raise ValueError("tensor_rank_evidence.target_id must be non-empty")
+    if not isinstance(run_id, str) or not run_id.strip():
+        raise ValueError("run_id must be non-empty")
+    if not isinstance(candidate_id, str) or not candidate_id.strip():
+        raise ValueError("candidate_id must be non-empty")
+    if isinstance(seed, bool) or not isinstance(seed, int):
+        raise ValueError("seed must be an integer")
+    if not isinstance(matrix_result_ref, str) or not matrix_result_ref.strip():
+        raise ValueError("matrix_result_ref must be non-empty")
+    claim = _selected_tensor_rank_claim(tensor_rank_evidence, claim_id)
+    selected_claim_id = claim.get("claim_id")
+    paths = (
+        artifact_paths
+        if artifact_paths is not None
+        else [f"matrix/{target_id}/tensor_rank_{candidate_id}_{selected_claim_id}.json"]
+    )
+    target_tensor_ref = claim.get("target_tensor_ref", "not_applicable_non_tensor_algorithm")
+    exactness_certificate_ref = claim.get(
+        "exactness_certificate_ref",
+        "not_applicable_non_tensor_algorithm",
+    )
+    digest = (
+        artifact_sha256
+        if artifact_sha256 is not None
+        else _stable_json_sha256(
+            {
+                "run_id": run_id,
+                "candidate_id": candidate_id,
+                "target_id": target_id,
+                "seed": seed,
+                "claim_id": selected_claim_id,
+                "algorithm_kind": claim.get("algorithm_kind"),
+                "rank": claim.get("rank"),
+                "recursive_applicable": claim.get("recursive_applicable"),
+                "target_tensor_ref": target_tensor_ref,
+                "exactness_certificate_ref": exactness_certificate_ref,
+                "matrix_result_ref": matrix_result_ref,
+            }
+        )
+    )
+    boundary = matrix_tensor_rank_runtime_boundary_record()
+    boundary.update(
+        {
+            "runtime_emission_status": "emitted",
+            "emitted_records": [
+                {
+                    "run_id": run_id,
+                    "candidate_id": candidate_id,
+                    "target_id": target_id,
+                    "seed": seed,
+                    "claim_id": selected_claim_id,
+                    "algorithm_kind": claim.get("algorithm_kind"),
+                    "rank": claim.get("rank"),
+                    "recursive_applicable": claim.get("recursive_applicable"),
+                    "certificate_scope": claim.get("certificate_scope"),
+                    "tensor_identity_verified": claim.get(
+                        "tensor_identity_verified",
+                        False,
+                    ),
+                    "target_tensor_ref": target_tensor_ref,
+                    "exactness_certificate_ref": exactness_certificate_ref,
+                    "matrix_result_ref": matrix_result_ref,
+                    "artifact_paths": copy.deepcopy(paths),
+                    "artifact_sha256": digest,
+                    "tensor_rank_evidence": copy.deepcopy(tensor_rank_evidence),
+                }
+            ],
+            "claim_boundary": (
+                "Emitted records link matrix candidates to tensor-rank, "
+                "recursive-applicability, tensor-identity, and certificate "
+                "evidence; this still does not claim local runners automatically "
+                "emit those records."
+            ),
+        }
+    )
+    return boundary
+
+
 def validate_matrix_tensor_rank_runtime_boundary(
     boundary: object | str | Path | None = None,
 ) -> MatrixTensorRankRuntimeValidation:
@@ -3256,7 +3352,59 @@ def _validate_tensor_rank_runtime_records(
             continue
         run_id = _runtime_record_text(record, "run_id", issues)
         candidate_id = _runtime_record_text(record, "candidate_id", issues)
+        target_id = _runtime_record_text(record, "target_id", issues)
+        seed = _runtime_record_int(record, "seed", issues)
+        claim_id = record.get("claim_id")
+        if claim_id is not None and (
+            not isinstance(claim_id, str) or not claim_id.strip()
+        ):
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_runtime_record_claim_id",
+                    "emitted runtime tensor-rank records must include a non-empty claim_id when present",
+                )
+            )
+            claim_id = None
+        algorithm_kind = _runtime_record_text(record, "algorithm_kind", issues)
+        rank = _runtime_record_int(record, "rank", issues)
+        recursive_applicable = record.get("recursive_applicable")
+        if not isinstance(recursive_applicable, bool):
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_runtime_record_recursive_applicable",
+                    "emitted runtime tensor-rank records must include boolean recursive_applicable",
+                )
+            )
+            recursive_applicable = None
+        certificate_scope = _runtime_record_text(record, "certificate_scope", issues)
+        tensor_identity_verified = record.get("tensor_identity_verified")
+        if not isinstance(tensor_identity_verified, bool):
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_runtime_record_tensor_identity_verified",
+                    "emitted runtime tensor-rank records must include boolean tensor_identity_verified",
+                )
+            )
+            tensor_identity_verified = None
+        target_tensor_ref = _runtime_record_text(record, "target_tensor_ref", issues)
+        exactness_certificate_ref = _runtime_record_text(
+            record,
+            "exactness_certificate_ref",
+            issues,
+        )
         _runtime_record_text(record, "matrix_result_ref", issues)
+        _validate_runtime_artifact_paths(
+            record.get("artifact_paths"),
+            "tensor_rank",
+            index,
+            issues,
+        )
+        _validate_runtime_artifact_sha(
+            record.get("artifact_sha256"),
+            "tensor_rank",
+            index,
+            issues,
+        )
         if run_id is not None and candidate_id is not None:
             key = (run_id, candidate_id)
             if key in seen:
@@ -3278,6 +3426,151 @@ def _validate_tensor_rank_runtime_records(
                 )
                 for issue in nested_validation.issues
             )
+        elif isinstance(nested, dict):
+            _validate_tensor_rank_runtime_record_linkage(
+                record_index=index,
+                nested=nested,
+                target_id=target_id,
+                claim_id=claim_id if isinstance(claim_id, str) else None,
+                algorithm_kind=algorithm_kind,
+                rank=rank,
+                recursive_applicable=recursive_applicable,
+                certificate_scope=certificate_scope,
+                tensor_identity_verified=tensor_identity_verified,
+                target_tensor_ref=target_tensor_ref,
+                exactness_certificate_ref=exactness_certificate_ref,
+                issues=issues,
+            )
+
+
+def _validate_tensor_rank_runtime_record_linkage(
+    *,
+    record_index: int,
+    nested: dict[str, Any],
+    target_id: str | None,
+    claim_id: str | None,
+    algorithm_kind: str | None,
+    rank: int | None,
+    recursive_applicable: bool | None,
+    certificate_scope: str | None,
+    tensor_identity_verified: bool | None,
+    target_tensor_ref: str | None,
+    exactness_certificate_ref: str | None,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if target_id is not None and nested.get("target_id") != target_id:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_tensor_rank_target_mismatch",
+                "runtime target_id must match nested tensor-rank evidence",
+            )
+        )
+    claim = _matching_tensor_rank_claim(nested, claim_id=claim_id)
+    if claim is None:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_tensor_rank_missing_claim",
+                "runtime tensor-rank record must identify a nested rank claim",
+            )
+        )
+        return
+    if algorithm_kind is not None and claim.get("algorithm_kind") != algorithm_kind:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_tensor_rank_algorithm_kind_mismatch",
+                "runtime algorithm_kind must match nested tensor-rank evidence",
+            )
+        )
+    if rank is not None and claim.get("rank") != rank:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_tensor_rank_rank_mismatch",
+                "runtime rank must match nested tensor-rank evidence",
+            )
+        )
+    if (
+        recursive_applicable is not None
+        and claim.get("recursive_applicable") != recursive_applicable
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_tensor_rank_recursive_mismatch",
+                "runtime recursive_applicable must match nested tensor-rank evidence",
+            )
+        )
+    if certificate_scope is not None and claim.get("certificate_scope") != certificate_scope:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_tensor_rank_certificate_scope_mismatch",
+                "runtime certificate_scope must match nested tensor-rank evidence",
+            )
+        )
+    if (
+        tensor_identity_verified is not None
+        and bool(claim.get("tensor_identity_verified", False))
+        != tensor_identity_verified
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_tensor_rank_identity_mismatch",
+                "runtime tensor_identity_verified must match nested tensor-rank evidence",
+            )
+        )
+    if claim.get("algorithm_kind") != "matrix_multiplication_tensor_decomposition":
+        return
+    if target_tensor_ref is not None and claim.get("target_tensor_ref") != target_tensor_ref:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_tensor_rank_target_tensor_mismatch",
+                "runtime target_tensor_ref must match nested tensor-rank evidence",
+            )
+        )
+    if (
+        exactness_certificate_ref is not None
+        and claim.get("exactness_certificate_ref") != exactness_certificate_ref
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_tensor_rank_certificate_mismatch",
+                "runtime exactness_certificate_ref must match nested tensor-rank evidence",
+            )
+        )
+
+
+def _selected_tensor_rank_claim(
+    evidence: dict[str, Any],
+    claim_id: str | None,
+) -> dict[str, Any]:
+    claims = evidence.get("rank_claims")
+    if not isinstance(claims, list) or not claims:
+        raise ValueError("rank_claims must be a non-empty list")
+    if claim_id is None:
+        claim = claims[0]
+        if isinstance(claim, dict):
+            return claim
+        raise ValueError("rank_claims entries must be objects")
+    for claim in claims:
+        if isinstance(claim, dict) and claim.get("claim_id") == claim_id:
+            return claim
+    raise ValueError(f"rank_claims does not include claim_id {claim_id!r}")
+
+
+def _matching_tensor_rank_claim(
+    evidence: dict[str, Any],
+    *,
+    claim_id: str | None,
+) -> dict[str, Any] | None:
+    claims = evidence.get("rank_claims")
+    if not isinstance(claims, list):
+        return None
+    if claim_id is not None:
+        for claim in claims:
+            if isinstance(claim, dict) and claim.get("claim_id") == claim_id:
+                return claim
+        return None
+    if len(claims) == 1 and isinstance(claims[0], dict):
+        return claims[0]
+    return None
 
 
 def _validate_tensor_decomposition_rank_claim(

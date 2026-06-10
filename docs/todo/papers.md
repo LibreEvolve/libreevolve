@@ -3451,11 +3451,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     applicable, whether the certificate proves the target tensor identity, and
     source-note caveats for comparisons against non-tensor or finite-field-only
     prior algorithms. `libreevolve.matrix_tensor_rank_runtime_boundary.v1` now
-    validates the current `not_emitted_by_local_runner` boundary and required
-    future emitted-record fields for algorithm kind, rank, recursive
-    applicability, certificate scope, tensor-identity status, target-tensor
-    refs, exactness-certificate refs, matrix-result refs, artifact paths, and
-    artifact hashes. It does not emit target-tensor/certificate artifacts.
+    validates the current `not_emitted_by_local_runner` boundary and emitted
+    records for run/target/candidate ids, seeds, algorithm kind, rank,
+    recursive applicability, certificate scope, tensor-identity status,
+    target-tensor refs, exactness-certificate refs, matrix-result refs,
+    artifact paths, and artifact hashes.
+    `matrix_tensor_rank_runtime_boundary_from_evidence()` builds a runtime row
+    from validated tensor-rank evidence and validation checks linkage to nested
+    target, rank claim, recursive-applicability, tensor-identity, target-tensor,
+    and certificate evidence. It does not emit target-tensor/certificate
+    artifacts.
   - Required result: add concrete paper-facing artifacts for matrix rank
     claims: algorithm kind, tensor-decomposition certificate scope, recursive
     applicability, source note/page or footnote locator, target tensor identity

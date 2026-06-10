@@ -4210,6 +4210,9 @@ Primary evidence:
     color/style/shading metadata, source caption reference, rendered plot
     artifact path/hash, and links from the plotted visual to ablation report,
     raw seed trace, and curve-summary artifacts.
+    `figure8_exhibit_from_ablation_report()` now builds the two-panel exhibit
+    from a validated equal-budget ablation report plus declared rendered/source
+    artifacts, rejecting invalid reports and missing curve/raw trace links.
   - Required result: add emitted Figure 8 exhibit records and rendered visual
     artifacts from real ablation benchmark scripts, with source PDF/caption
     page location, concrete report/raw-trace/curve artifact hashes, rendering

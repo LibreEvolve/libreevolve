@@ -1001,8 +1001,10 @@ is not yet an AlphaEvolve reproduction.
   comparable compute-budget fractions, target-metric identity, direction,
   normalization, and per-target mean/std aggregation, while the Figure 8
   exhibit schema validates panel ids, exact paper legend labels, axis/style
-  metadata, rendered artifact hashes, and report/raw-trace links. No real
-  runner produces those reports or rendered exhibit artifacts yet.
+  metadata, rendered artifact hashes, and report/raw-trace links.
+  `figure8_exhibit_from_ablation_report()` can derive the two-panel exhibit
+  from a validated equal-budget report plus declared artifacts. No real runner
+  produces those reports or rendered exhibit artifacts yet.
 - Keep Appendix A Figure 9 matrix-diff exhibit claims scoped to declared
   exhibit validation: `libreevolve.alphaevolve_figure9_matrix_diff_exhibit.v1`
   now validates Figure 9a/9b/9c panel ids, pages 35-37, Figure 4 caption

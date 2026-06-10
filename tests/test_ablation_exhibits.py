@@ -1,10 +1,17 @@
 import json
+import math
 
+from libreevolve.problems.benchmarks.ablation_registry import EXPECTED_VARIANT_IDS
 from libreevolve.problems.benchmarks.ablation_exhibits import (
     EXPECTED_LEGEND_LABELS,
     FIGURE8_EXHIBIT_SCHEMA,
+    figure8_exhibit_from_ablation_report,
     render_figure8_exhibit_summary,
     validate_figure8_exhibit,
+)
+from libreevolve.problems.benchmarks.ablation_results import (
+    ABLATION_RESULT_SCHEMA,
+    REQUIRED_BUDGET_FRACTIONS,
 )
 
 
@@ -50,6 +57,88 @@ def _panel(panel_id: str, target_family: str) -> dict:
     }
 
 
+def _record(variant_id: str, target_id: str, seed: int, fraction: float) -> dict:
+    return {
+        "variant_id": variant_id,
+        "target_id": target_id,
+        "seed": seed,
+        "budget_fraction": fraction,
+        "score": float(seed) + fraction,
+        "consumed_budget": {
+            "unit": "evaluations",
+            "consumed": fraction * 100,
+            "limit": 100,
+        },
+        "component_assertions": [
+            {"field": "variant_config", "passed": True},
+        ],
+    }
+
+
+def _valid_report() -> dict:
+    targets = [
+        {
+            "target_id": "matrix_mm_2x2",
+            "target_family": "matrix_tensor_decomposition",
+            "description": "Small matrix target for Figure 8 exhibit tests.",
+            "target_metric": {
+                "name": "normalized_rank_improvement",
+                "direction": "higher_is_better",
+                "normalization": "per_target_baseline_delta",
+            },
+        },
+        {
+            "target_id": "kissing_n8",
+            "target_family": "kissing_number_sphere_packing",
+            "description": "Small kissing-number target for Figure 8 exhibit tests.",
+            "target_metric": {
+                "name": "normalized_lower_bound_improvement",
+                "direction": "higher_is_better",
+                "normalization": "per_target_baseline_delta",
+            },
+        },
+    ]
+    records = []
+    curve_summaries = []
+    for target in targets:
+        target_id = target["target_id"]
+        for variant_id in EXPECTED_VARIANT_IDS:
+            for seed in (101, 102, 103):
+                for fraction in REQUIRED_BUDGET_FRACTIONS:
+                    records.append(_record(variant_id, target_id, seed, fraction))
+            for fraction in REQUIRED_BUDGET_FRACTIONS:
+                scores = [float(seed) + fraction for seed in (101, 102, 103)]
+                mean = sum(scores) / len(scores)
+                std = math.sqrt(sum((score - mean) ** 2 for score in scores) / len(scores))
+                curve_summaries.append(
+                    {
+                        "variant_id": variant_id,
+                        "target_id": target_id,
+                        "budget_fraction": fraction,
+                        "mean_score": mean,
+                        "std_score": std,
+                        "seed_count": 3,
+                    }
+                )
+    return {
+        "schema": ABLATION_RESULT_SCHEMA,
+        "budget_axis": "fraction_of_equal_compute_budget",
+        "targets": targets,
+        "records": records,
+        "curve_summaries": curve_summaries,
+        "artifacts": [
+            {
+                "kind": "curve_summary",
+                **_artifact("ablations/figure8/curve_summary.json"),
+            },
+            {
+                "kind": "raw_records",
+                **_artifact("ablations/figure8/raw_records.jsonl", "b"),
+            },
+        ],
+    }
+
+
 def _valid_exhibit() -> dict:
     return {
         "schema": FIGURE8_EXHIBIT_SCHEMA,
@@ -77,6 +166,65 @@ def test_validate_figure8_exhibit_accepts_paper_visual_metadata():
     assert validation.panel_count == 2
     assert validation.series_count == 12
     assert validation.issues == []
+
+
+def test_figure8_exhibit_builder_links_valid_ablation_report_artifacts():
+    exhibit = figure8_exhibit_from_ablation_report(
+        _valid_report(),
+        rendered_artifact=_artifact("figures/figure8_ablation_curves.png", "c"),
+        ablation_report_artifact=_artifact("reports/figure8_ablation_report.json", "d"),
+        source_caption_ref="AlphaEvolve Figure 8 caption, page 15",
+        rendering_parameters={"renderer": "matplotlib", "std_band": "filled"},
+        run_links=[{"run_id": "figure8-fixture"}],
+    )
+
+    validation = validate_figure8_exhibit(exhibit)
+
+    assert validation.ok is True
+    assert exhibit["source_links"]["curve_summary"]["path"] == "ablations/figure8/curve_summary.json"
+    assert exhibit["source_links"]["raw_seed_traces"]["path"] == "ablations/figure8/raw_records.jsonl"
+    assert exhibit["source_links"]["ablation_report"]["path"] == "reports/figure8_ablation_report.json"
+    assert exhibit["panels"][0]["target_ids"] == ["matrix_mm_2x2"]
+    assert exhibit["panels"][1]["target_ids"] == ["kissing_n8"]
+    assert exhibit["panels"][0]["series"][0]["curve_summary_ref"] == "curve_summary:matrix_tensor_decomposition:full_system"
+    assert exhibit["rendering_parameters"]["renderer"] == "matplotlib"
+    assert exhibit["run_links"] == [{"run_id": "figure8-fixture"}]
+
+
+def test_figure8_exhibit_builder_rejects_invalid_report():
+    report = _valid_report()
+    report["records"] = []
+
+    try:
+        figure8_exhibit_from_ablation_report(
+            report,
+            rendered_artifact=_artifact("figures/figure8_ablation_curves.png", "c"),
+            ablation_report_artifact=_artifact("reports/figure8_ablation_report.json", "d"),
+        )
+    except ValueError as exc:
+        message = str(exc)
+    else:
+        raise AssertionError("builder should reject invalid ablation reports")
+
+    assert "ablation report is invalid" in message
+
+
+def test_figure8_exhibit_builder_requires_raw_trace_artifact():
+    report = _valid_report()
+    report["artifacts"] = [artifact for artifact in report["artifacts"] if artifact.get("kind") != "raw_records"]
+
+    try:
+        figure8_exhibit_from_ablation_report(
+            report,
+            rendered_artifact=_artifact("figures/figure8_ablation_curves.png", "c"),
+            ablation_report_artifact=_artifact("reports/figure8_ablation_report.json", "d"),
+        )
+    except ValueError as exc:
+        message = str(exc)
+    else:
+        raise AssertionError("builder should require raw_records artifacts")
+
+    assert "raw_records artifact" in message
 
 
 def test_validate_figure8_exhibit_loads_json_file(tmp_path):

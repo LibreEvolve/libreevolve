@@ -1490,8 +1490,11 @@ Implemented:
   matrix and kissing-number panel ids, target-family mappings, exact paper
   legend labels including `Full method`, axis metadata, standard-deviation band
   style declarations, rendered artifact hashes, and links to ablation report,
-  curve-summary, and raw-seed-trace artifacts. It does not render plots or
-  prove that benchmark scripts emitted those artifacts.
+  curve-summary, and raw-seed-trace artifacts.
+  `figure8_exhibit_from_ablation_report()` builds that two-panel exhibit from
+  a validated equal-budget ablation report plus declared rendered/source
+  artifacts. It does not render plots or prove that benchmark scripts emitted
+  those artifacts.
 - `libreevolve/problems/benchmarks/matrix_exhibits.py`: AlphaEvolve main-text
   Figure 4 matrix-discovery metadata contract. It validates the main-text
   exhibit id, paper page 11, caption linkage, 15-mutation caption count,

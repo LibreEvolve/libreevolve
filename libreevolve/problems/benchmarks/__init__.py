@@ -2,6 +2,7 @@
 
 from libreevolve.problems.benchmarks.ablation_exhibits import (
     FIGURE8_EXHIBIT_SCHEMA,
+    figure8_exhibit_from_ablation_report,
     render_figure8_exhibit_summary,
     validate_figure8_exhibit,
 )
@@ -329,6 +330,7 @@ __all__ = [
     "certification_artifact_inventory",
     "example_benchmark_scope_records",
     "figure4_matrix_discovery_artifact_boundary_from_exhibit",
+    "figure8_exhibit_from_ablation_report",
     "figure4_matrix_discovery_artifact_boundary_record",
     "figure9_matrix_diff_artifact_boundary_from_exhibit",
     "figure9_matrix_diff_artifact_boundary_record",

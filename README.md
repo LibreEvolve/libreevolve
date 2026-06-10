@@ -4144,8 +4144,10 @@ Figure 8 visual exhibit metadata uses
 id, two panel ids, matrix/kissing target-family mapping, exact paper legend
 labels such as `Full method`, axis metadata, std-band style declarations,
 rendered artifact hashes, and links to report/curve/raw-trace artifacts. It
-does not render a plot or prove that benchmark scripts emitted the linked
-artifacts.
+also exposes `figure8_exhibit_from_ablation_report()` to build the two-panel
+exhibit from a validated equal-budget ablation report plus declared rendered
+and source artifacts. It does not render a plot or prove that benchmark scripts
+emitted the linked artifacts.
 Figure 4 matrix-discovery exhibit metadata uses
 `libreevolve.alphaevolve_figure4_matrix_discovery_exhibit.v1`; it validates
 the main-text Figure 4 exhibit id, paper page 11, caption linkage, 15-mutation

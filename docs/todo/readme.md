@@ -637,7 +637,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     IDs, panel definitions, series-to-variant legend mappings, exact paper
     legend labels such as `Full method`, axis/scale metadata,
     color/style/shading parameters, rendered plot artifact hashes, and links
-    from plotted visuals to report/curve/raw-trace artifacts.
+    from plotted visuals to report/curve/raw-trace artifacts. The
+    `figure8_exhibit_from_ablation_report()` builder now derives that two-panel
+    exhibit from a validated equal-budget report plus declared rendered/source
+    artifacts, while still leaving actual plot emission and real run proof open.
   - Required result: when generated Figure 8 exhibit records and rendered
     artifacts land, update README, ROADMAP, papers index, and matching TODOs so
     README distinguishes validated exhibit metadata from reproduced

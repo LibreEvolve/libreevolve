@@ -2,12 +2,13 @@ from __future__ import annotations
 
 import json
 import re
+import copy
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
 from .ablation_registry import EXPECTED_VARIANT_IDS
-from .ablation_results import FIGURE8_TARGET_FAMILIES
+from .ablation_results import FIGURE8_TARGET_FAMILIES, validate_ablation_result_report
 
 
 FIGURE8_EXHIBIT_SCHEMA = "libreevolve.alphaevolve_figure8_exhibit.v1"
@@ -22,6 +23,14 @@ EXPECTED_LEGEND_LABELS = {
     "no_meta_prompt_evolution": "No meta prompt evolution",
     "no_full_file_evolution": "No full-file evolution",
     "small_base_llm_only": "Small base LLM only",
+}
+EXPECTED_SERIES_COLORS = {
+    "full_system": "#1f77b4",
+    "no_evolution": "#ff7f0e",
+    "no_context_in_prompt": "#2ca02c",
+    "no_meta_prompt_evolution": "#d62728",
+    "no_full_file_evolution": "#9467bd",
+    "small_base_llm_only": "#8c564b",
 }
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
 
@@ -38,6 +47,63 @@ class Figure8ExhibitValidation:
     panel_count: int
     series_count: int
     issues: list[Figure8ExhibitIssue]
+
+
+def figure8_exhibit_from_ablation_report(
+    report: object | str | Path,
+    *,
+    rendered_artifact: dict[str, Any],
+    ablation_report_artifact: dict[str, Any],
+    source_caption_ref: str = "AlphaEvolve Figure 8 caption",
+    rendering_parameters: dict[str, Any] | None = None,
+    run_links: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    """Build a Figure 8 exhibit record from a validated ablation report."""
+    report_validation = validate_ablation_result_report(report)
+    if not report_validation.ok:
+        messages = "; ".join(issue.message for issue in report_validation.issues)
+        raise ValueError(f"ablation report is invalid: {messages}")
+    data = _load_valid_report_data(report)
+    curve_artifact = _artifact_with_kind(data, "curve_summary")
+    raw_artifact = _artifact_with_kind(data, "raw_records")
+    if curve_artifact is None:
+        raise ValueError("ablation report must declare a curve_summary artifact")
+    if raw_artifact is None:
+        raise ValueError("ablation report must declare a raw_records artifact")
+    panels = [
+        _panel_from_report(data, panel_id)
+        for panel_id in EXPECTED_PANEL_IDS
+    ]
+    exhibit: dict[str, Any] = {
+        "schema": FIGURE8_EXHIBIT_SCHEMA,
+        "exhibit_id": EXPECTED_EXHIBIT_ID,
+        "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "source_figure": EXPECTED_SOURCE_FIGURE,
+        "source_caption_ref": source_caption_ref,
+        "rendered_artifact": copy.deepcopy(rendered_artifact),
+        "source_links": {
+            "ablation_report": copy.deepcopy(ablation_report_artifact),
+            "curve_summary": _artifact_link(curve_artifact),
+            "raw_seed_traces": _artifact_link(raw_artifact),
+        },
+        "ablation_report_schema": data.get("schema"),
+        "budget_axis": data.get("budget_axis"),
+        "rendering_parameters": copy.deepcopy(
+            rendering_parameters
+            if rendering_parameters is not None
+            else {
+                "curve_source": "report.curve_summaries",
+                "std_band_source": "curve_summary.std_score",
+            }
+        ),
+        "run_links": copy.deepcopy(run_links or []),
+        "panels": panels,
+    }
+    validation = validate_figure8_exhibit(exhibit)
+    if not validation.ok:
+        messages = "; ".join(issue.message for issue in validation.issues)
+        raise ValueError(f"Figure 8 exhibit is invalid: {messages}")
+    return exhibit
 
 
 def validate_figure8_exhibit(exhibit: object | str | Path) -> Figure8ExhibitValidation:
@@ -101,6 +167,67 @@ def _load_exhibit(exhibit: object | str | Path) -> tuple[dict[str, Any] | None, 
         if isinstance(loaded, dict):
             return loaded, []
     return None, [Figure8ExhibitIssue("invalid_shape", "Figure 8 exhibit must be a JSON object")]
+
+
+def _load_valid_report_data(report: object | str | Path) -> dict[str, Any]:
+    if isinstance(report, dict):
+        return copy.deepcopy(report)
+    path = Path(report)
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _artifact_with_kind(report: dict[str, Any], kind: str) -> dict[str, Any] | None:
+    artifacts = report.get("artifacts")
+    if not isinstance(artifacts, list):
+        return None
+    for artifact in artifacts:
+        if isinstance(artifact, dict) and artifact.get("kind") == kind:
+            return artifact
+    return None
+
+
+def _artifact_link(artifact: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "path": artifact.get("path"),
+        "sha256": artifact.get("sha256"),
+        "bytes": artifact.get("bytes"),
+    }
+
+
+def _panel_from_report(report: dict[str, Any], panel_id: str) -> dict[str, Any]:
+    target_ids = [
+        target["target_id"]
+        for target in report.get("targets", [])
+        if isinstance(target, dict) and target.get("target_family") == panel_id
+    ]
+    return {
+        "panel_id": panel_id,
+        "target_family": panel_id,
+        "target_ids": sorted(target_ids),
+        "x_axis": {
+            "label": "Fraction of compute budget",
+            "scale": "linear",
+            "unit": "fraction",
+        },
+        "y_axis": {
+            "label": "Aggregated target metric",
+            "direction": "higher_is_better",
+            "normalization": "per_target_family_mean",
+        },
+        "series": [
+            {
+                "variant_id": variant_id,
+                "legend_label": EXPECTED_LEGEND_LABELS[variant_id],
+                "curve_summary_ref": f"curve_summary:{panel_id}:{variant_id}",
+                "raw_seed_trace_ref": f"raw_seed_trace:{panel_id}:{variant_id}",
+                "style": {
+                    "color": EXPECTED_SERIES_COLORS[variant_id],
+                    "std_band": True,
+                },
+            }
+            for variant_id in EXPECTED_VARIANT_IDS
+        ],
+    }
 
 
 def _validate_panels(value: object, issues: list[Figure8ExhibitIssue]) -> tuple[int, int]:

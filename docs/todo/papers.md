@@ -937,8 +937,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     paper legend labels including `Full method`, axis labels/scales,
     color/style/shading metadata, source caption references, rendered plot
     artifact hashes, and links from plotted curves to report, raw seed trace,
-    and curve-summary artifacts. It does not render a plot, verify named files
-    exist, or prove the linked artifacts came from real ablation runs.
+    and curve-summary artifacts. `figure8_exhibit_from_ablation_report()` now
+    builds the two-panel exhibit from a validated equal-budget ablation report
+    plus declared rendered/source artifacts, rejecting invalid reports and
+    missing curve/raw trace links. It does not render a plot, verify named
+    files exist, or prove the linked artifacts came from real ablation runs.
   - Required result: emit Figure 8 exhibit records and rendered visual artifacts
     from runnable matrix/kissing ablation scripts, with source PDF page/caption
     location, concrete report/raw-trace/curve artifact hashes, rendering

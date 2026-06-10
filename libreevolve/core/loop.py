@@ -13307,6 +13307,17 @@ def _cascade_hypothesis_stage_policy(
         else {}
     )
     statistical_configured = bool(hypothesis_test)
+    test_name = hypothesis_test.get("type") if statistical_configured else None
+    false_promotion_calibration_method = (
+        "one_sided_wilson_confidence_level"
+        if test_name == "binomial_success_rate"
+        else "one_sided_confidence_level"
+    )
+    false_rejection_calibration_method = (
+        "exact_binomial_min_effect_size"
+        if test_name == "binomial_success_rate"
+        else "normal_approximation_min_effect_size"
+    )
     return {
         "stage_id": stage_id,
         "stage_index": index,
@@ -13352,11 +13363,17 @@ def _cascade_hypothesis_stage_policy(
         },
         "statistical_test": {
             "configured": statistical_configured,
-            "test_name": hypothesis_test.get("type") if statistical_configured else None,
+            "test_name": test_name,
             "metric": hypothesis_test.get("metric", "fitness")
             if statistical_configured
             else None,
             "min": hypothesis_test.get("min") if statistical_configured else None,
+            "min_success_rate": hypothesis_test.get("min_success_rate")
+            if statistical_configured
+            else None,
+            "success_threshold": hypothesis_test.get("success_threshold")
+            if statistical_configured
+            else None,
             "confidence": hypothesis_test.get("confidence", 0.95)
             if statistical_configured
             else None,
@@ -13391,7 +13408,7 @@ def _cascade_hypothesis_stage_policy(
                     "observed_count": observed_hypothesis_test.get(
                         "false_promotion_budget_count", 0
                     ),
-                    "calibration_method": "one_sided_confidence_level",
+                    "calibration_method": false_promotion_calibration_method,
                 }
                 if statistical_configured
                 and "max_false_promotion_rate" in error_budget
@@ -13404,7 +13421,7 @@ def _cascade_hypothesis_stage_policy(
                     "observed_count": observed_hypothesis_test.get(
                         "false_rejection_budget_count", 0
                     ),
-                    "calibration_method": "normal_approximation_min_effect_size",
+                    "calibration_method": false_rejection_calibration_method,
                 }
                 if statistical_configured
                 and "max_false_rejection_rate" in error_budget

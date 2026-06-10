@@ -1078,8 +1078,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `one_sided_lower_confidence_bound` gates with retained observations,
     confidence-bound evidence, p-values, and optional sequential early-stop
     diagnostics. ROADMAP also records configured normal-approximation
-    false-promotion/false-rejection budget evidence. Broader statistical test
-    families and benchmark-calibrated thresholds remain roadmap work.
+    false-promotion/false-rejection budget evidence and
+    `binomial_success_rate` Wilson-bound repeated-seed gates.
+    Benchmark-calibrated thresholds and matrix/tensor fixtures remain roadmap
+    work.
   - Required result: when richer statistical hypothesis-test cascade execution
     lands, update ROADMAP, README, papers index, and code/paper TODO entries
     together so roadmap wording neither underclaims current lower-confidence

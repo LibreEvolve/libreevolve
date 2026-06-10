@@ -1453,15 +1453,17 @@ Primary evidence:
     planned sample counts. `hypothesis_test.error_budget` can declare
     false-promotion and false-rejection budgets; reports retain the
     confidence-derived false-promotion bound and normal-approximation
-    false-rejection estimate for a declared minimum effect size.
-  - Remaining gap: this is one normal-approximation repeated-sample gate, not
-    full AlphaEvolve Section 2.4 hypothesis testing. Broader statistical test
-    families, benchmark-calibrated thresholds, and matrix/tensor repeated-seed
-    promotion fixtures remain absent.
-  - Required result: extend cascade promotion beyond the current lower-bound
-    gate with richer statistical test configuration and benchmark tests
-    showing noisy repeated-seed candidates are promoted or rejected by
-    calibrated hypothesis-testing rules.
+    false-rejection estimate for a declared minimum effect size. Eval stages
+    can also use `type: binomial_success_rate` with success thresholds,
+    minimum success rates, Wilson lower-bound confidence evidence, exact
+    binomial p-values, and exact-binomial false-rejection budget estimates for
+    repeated-seed pass/fail decisions.
+  - Remaining gap: these are configured lower-bound and binomial repeated-
+    sample gates, not full AlphaEvolve Section 2.4 hypothesis testing.
+    Benchmark-calibrated thresholds and matrix/tensor repeated-seed promotion
+    fixtures remain absent.
+  - Required result: add benchmark tests showing noisy repeated-seed candidates
+    are promoted or rejected by calibrated hypothesis-testing rules.
 
 - [ ] Add qualitative LLM-feedback criterion provenance.
   - Spec evidence: AlphaEvolve Section 2.4 says LLM-generated feedback can

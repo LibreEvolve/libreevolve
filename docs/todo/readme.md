@@ -2191,7 +2191,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     confidence-bound evidence, p-values, and `hypothesis_test_not_met`
     rejection. README also documents optional sequential stopping after
     `min_samples` plus optional normal-approximation `error_budget` evidence
-    for configured false-promotion and false-rejection rates.
+    for configured false-promotion and false-rejection rates. README now also
+    documents `binomial_success_rate` gates for Wilson-bound repeated-seed
+    pass/fail evidence.
   - Required result: when richer statistical cascade promotion execution lands,
     update README, ROADMAP, papers index, and code/paper TODOs so README
     distinguishes the current lower-confidence-bound gate from complete

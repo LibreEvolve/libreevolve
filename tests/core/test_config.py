@@ -691,6 +691,68 @@ def test_accepts_maximum_llm_call_attempt_cap():
                 "name": "gate",
                 "samples": 2,
                 "hypothesis_test": {
+                    "type": "binomial_success_rate",
+                    "min": 0.5,
+                    "min_success_rate": 0.5,
+                    "success_threshold": 0.5,
+                },
+            },
+            "unsupported for binomial_success_rate",
+        ),
+        (
+            {
+                "name": "gate",
+                "samples": 2,
+                "hypothesis_test": {
+                    "type": "one_sided_lower_confidence_bound",
+                    "min": 0.5,
+                    "min_success_rate": 0.5,
+                },
+            },
+            "unsupported fields",
+        ),
+        (
+            {
+                "name": "gate",
+                "samples": 2,
+                "hypothesis_test": {
+                    "type": "binomial_success_rate",
+                    "metric": "score",
+                    "success_threshold": 0.5,
+                },
+            },
+            "min_success_rate",
+        ),
+        (
+            {
+                "name": "gate",
+                "samples": 2,
+                "hypothesis_test": {
+                    "type": "binomial_success_rate",
+                    "metric": "score",
+                    "min_success_rate": 0.0,
+                    "success_threshold": 0.5,
+                },
+            },
+            "min_success_rate",
+        ),
+        (
+            {
+                "name": "gate",
+                "samples": 2,
+                "hypothesis_test": {
+                    "type": "binomial_success_rate",
+                    "metric": "score",
+                    "min_success_rate": 0.5,
+                },
+            },
+            "success_threshold",
+        ),
+        (
+            {
+                "name": "gate",
+                "samples": 2,
+                "hypothesis_test": {
                     "type": "one_sided_lower_confidence_bound",
                     "min": 0.5,
                     "error_budget": [],
@@ -880,6 +942,36 @@ def test_accepts_eval_stage_hypothesis_test_config():
         "min_effect_size": 0.05,
     }
     assert config.eval_stages[0]["role"] == "small_scale_filter"
+
+
+def test_accepts_eval_stage_binomial_hypothesis_test_config():
+    config = Config(
+        eval_stages=[
+            {
+                "name": "success_gate",
+                "role": "small_scale_filter",
+                "samples": 5,
+                "hypothesis_test": {
+                    "type": "binomial_success_rate",
+                    "metric": "score",
+                    "success_threshold": 0.5,
+                    "min_success_rate": 0.5,
+                    "confidence": 0.8,
+                    "min_samples": 5,
+                    "error_budget": {
+                        "max_false_promotion_rate": 0.25,
+                        "max_false_rejection_rate": 0.1,
+                        "min_effect_size": 0.4,
+                    },
+                },
+            }
+        ]
+    )
+
+    hypothesis = config.eval_stages[0]["hypothesis_test"]
+    assert hypothesis["type"] == "binomial_success_rate"
+    assert hypothesis["success_threshold"] == 0.5
+    assert hypothesis["min_success_rate"] == 0.5
 
 
 def test_accepts_configured_evaluator_stdin_text():

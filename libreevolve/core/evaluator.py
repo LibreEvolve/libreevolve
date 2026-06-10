@@ -4063,6 +4063,16 @@ def _stage_hypothesis_test_result(
             "passed": True,
             "test_name": None,
         }
+    test_name = str(hypothesis_test.get("type", "one_sided_lower_confidence_bound"))
+    if test_name == "binomial_success_rate":
+        return _stage_binomial_success_rate_result(result, hypothesis_test)
+    return _stage_lower_confidence_bound_result(result, hypothesis_test)
+
+
+def _stage_lower_confidence_bound_result(
+    result: "EvaluationResult",
+    hypothesis_test: dict,
+) -> dict:
     metric = str(hypothesis_test.get("metric", "fitness"))
     threshold = float(hypothesis_test["min"])
     confidence = float(hypothesis_test.get("confidence", 0.95))
@@ -4149,6 +4159,108 @@ def _stage_hypothesis_test_result(
         record["reason"] = error_budget_result["reason"]
     if not record["passed"]:
         record.setdefault("reason", "lower_confidence_bound_below_min")
+    return record
+
+
+def _stage_binomial_success_rate_result(
+    result: "EvaluationResult",
+    hypothesis_test: dict,
+) -> dict:
+    metric = str(hypothesis_test.get("metric", "is_valid"))
+    min_success_rate = float(hypothesis_test["min_success_rate"])
+    success_threshold = hypothesis_test.get("success_threshold")
+    confidence = float(hypothesis_test.get("confidence", 0.95))
+    min_samples = int(hypothesis_test.get("min_samples", 2))
+    sequential_stopping = hypothesis_test.get("sequential_stopping") is True
+    observations = _hypothesis_test_success_observations(
+        result,
+        metric,
+        success_threshold=float(success_threshold)
+        if isinstance(success_threshold, (int, float))
+        and not isinstance(success_threshold, bool)
+        else None,
+    )
+    sequential_decision = result.metadata.get("hypothesis_test_sequential_stopping")
+    if not isinstance(sequential_decision, dict):
+        sequential_decision = None
+    success_count = sum(1 for item in observations if item["success"])
+    sample_count = len(observations)
+    record: dict = {
+        "configured": True,
+        "test_name": "binomial_success_rate",
+        "metric": metric,
+        "success_threshold": (
+            float(success_threshold)
+            if isinstance(success_threshold, (int, float))
+            and not isinstance(success_threshold, bool)
+            else None
+        ),
+        "min_success_rate": min_success_rate,
+        "confidence": confidence,
+        "min_samples": min_samples,
+        "sample_count": sample_count,
+        "success_count": success_count,
+        "failure_count": sample_count - success_count,
+        "observations": observations,
+        "sequential_stopping": sequential_stopping,
+        "sequential_stop": (
+            {
+                "enabled": True,
+                "stopped_early": sequential_decision.get("stopped_early") is True,
+                "stop_reason": sequential_decision.get("stop_reason"),
+                "evaluated_samples": sequential_decision.get("evaluated_samples"),
+                "planned_samples": sequential_decision.get("planned_samples"),
+            }
+            if sequential_decision is not None
+            else {
+                "enabled": sequential_stopping,
+                "stopped_early": False,
+                "stop_reason": None,
+                "evaluated_samples": sample_count,
+                "planned_samples": result.metadata.get("planned_sample_count"),
+            }
+        ),
+        "passed": False,
+    }
+    if sample_count < min_samples:
+        record["reason"] = "insufficient_samples"
+        return record
+
+    success_rate = success_count / sample_count
+    z = NormalDist().inv_cdf(confidence)
+    lower_bound = _wilson_lower_bound(success_count, sample_count, z)
+    p_value = _binomial_tail_at_least(
+        successes=success_count,
+        trials=sample_count,
+        probability=min_success_rate,
+    )
+    record.update(
+        {
+            "success_rate": success_rate,
+            "z_critical": z,
+            "lower_bound": lower_bound,
+            "confidence_interval": {
+                "kind": "one_sided_wilson_lower",
+                "lower": lower_bound,
+                "upper": None,
+            },
+            "p_value": p_value,
+            "passed": lower_bound >= min_success_rate,
+        }
+    )
+    error_budget_result = _stage_binomial_error_budget_result(
+        hypothesis_test,
+        confidence=confidence,
+        min_success_rate=min_success_rate,
+        sample_count=sample_count,
+        z_critical=z,
+    )
+    record["error_budget"] = error_budget_result
+    if record["passed"] and not error_budget_result["passed"]:
+        record["passed"] = False
+        record["reason"] = error_budget_result["reason"]
+    if not record["passed"]:
+        record.setdefault("reason", "success_rate_lower_bound_below_min")
     return record
 
 
@@ -4242,6 +4354,99 @@ def _stage_hypothesis_error_budget_result(
     }
 
 
+def _stage_binomial_error_budget_result(
+    hypothesis_test: dict,
+    *,
+    confidence: float,
+    min_success_rate: float,
+    sample_count: int,
+    z_critical: float,
+) -> dict:
+    error_budget = hypothesis_test.get("error_budget")
+    if not isinstance(error_budget, dict):
+        return {
+            "configured": False,
+            "passed": True,
+            "calibration_method": None,
+            "false_promotion": None,
+            "false_rejection": None,
+        }
+    max_false_promotion_rate = error_budget.get("max_false_promotion_rate")
+    passed = True
+    reason: str | None = None
+    if isinstance(max_false_promotion_rate, (int, float)) and not isinstance(
+        max_false_promotion_rate, bool
+    ):
+        approximate_rate = max(0.0, 1.0 - confidence)
+        false_promotion = {
+            "configured": True,
+            "max_rate": float(max_false_promotion_rate),
+            "estimated_rate": approximate_rate,
+            "passed": approximate_rate <= float(max_false_promotion_rate) + 1e-12,
+            "basis": "one_sided_wilson_confidence_level",
+        }
+        if false_promotion["passed"] is False:
+            passed = False
+            reason = "false_promotion_budget_not_met"
+    else:
+        false_promotion = {
+            "configured": False,
+            "max_rate": None,
+            "estimated_rate": None,
+            "passed": True,
+            "basis": None,
+        }
+
+    max_false_rejection_rate = error_budget.get("max_false_rejection_rate")
+    min_effect_size = error_budget.get("min_effect_size")
+    if (
+        isinstance(max_false_rejection_rate, (int, float))
+        and not isinstance(max_false_rejection_rate, bool)
+        and isinstance(min_effect_size, (int, float))
+        and not isinstance(min_effect_size, bool)
+    ):
+        alternative_rate = min(1.0, min_success_rate + float(min_effect_size))
+        required_successes = _minimum_wilson_successes_for_rate(
+            trials=sample_count,
+            min_success_rate=min_success_rate,
+            z_critical=z_critical,
+        )
+        estimated_rate = _binomial_cdf_at_most(
+            successes=required_successes - 1,
+            trials=sample_count,
+            probability=alternative_rate,
+        )
+        false_rejection = {
+            "configured": True,
+            "max_rate": float(max_false_rejection_rate),
+            "estimated_rate": estimated_rate,
+            "passed": estimated_rate <= float(max_false_rejection_rate) + 1e-12,
+            "basis": "exact_binomial_min_effect_size",
+            "min_effect_size": float(min_effect_size),
+        }
+        if false_rejection["passed"] is False:
+            passed = False
+            reason = reason or "false_rejection_budget_not_met"
+    else:
+        false_rejection = {
+            "configured": False,
+            "max_rate": None,
+            "estimated_rate": None,
+            "passed": True,
+            "basis": None,
+            "min_effect_size": None,
+        }
+
+    return {
+        "configured": True,
+        "passed": passed,
+        "reason": reason,
+        "calibration_method": "binomial_wilson_success_rate",
+        "false_promotion": false_promotion,
+        "false_rejection": false_rejection,
+    }
+
+
 def _hypothesis_test_observations(
     result: "EvaluationResult",
     metric: str,
@@ -4264,6 +4469,117 @@ def _hypothesis_test_observations(
         ):
             observations.append({"sample_index": index, "value": float(value)})
     return observations
+
+
+def _hypothesis_test_success_observations(
+    result: "EvaluationResult",
+    metric: str,
+    *,
+    success_threshold: float | None,
+) -> list[dict]:
+    samples = result.metadata.get("samples")
+    raw_samples = samples if isinstance(samples, list) else [result.to_dict()]
+    observations: list[dict] = []
+    for index, sample in enumerate(raw_samples):
+        if not isinstance(sample, dict):
+            continue
+        if metric == "fitness":
+            value = sample.get("fitness")
+        elif metric == "is_valid":
+            value = sample.get("is_valid")
+        else:
+            metrics = sample.get("metrics")
+            value = metrics.get(metric) if isinstance(metrics, dict) else None
+        if isinstance(value, bool):
+            success = value
+            comparable_value: bool | float = value
+        elif (
+            success_threshold is not None
+            and isinstance(value, (int, float))
+            and not isinstance(value, bool)
+            and math.isfinite(float(value))
+        ):
+            comparable_value = float(value)
+            success = comparable_value >= success_threshold
+        else:
+            continue
+        observations.append(
+            {
+                "sample_index": index,
+                "value": comparable_value,
+                "success": success,
+            }
+        )
+    return observations
+
+
+def _wilson_lower_bound(successes: int, trials: int, z_critical: float) -> float:
+    if trials <= 0:
+        return 0.0
+    phat = successes / trials
+    z2 = z_critical * z_critical
+    denominator = 1.0 + (z2 / trials)
+    center = (phat + (z2 / (2.0 * trials))) / denominator
+    margin = (
+        z_critical
+        * math.sqrt((phat * (1.0 - phat) / trials) + (z2 / (4.0 * trials * trials)))
+        / denominator
+    )
+    return max(0.0, center - margin)
+
+
+def _minimum_wilson_successes_for_rate(
+    *,
+    trials: int,
+    min_success_rate: float,
+    z_critical: float,
+) -> int:
+    for successes in range(trials + 1):
+        if _wilson_lower_bound(successes, trials, z_critical) >= min_success_rate:
+            return successes
+    return trials + 1
+
+
+def _binomial_tail_at_least(
+    *,
+    successes: int,
+    trials: int,
+    probability: float,
+) -> float:
+    if successes <= 0:
+        return 1.0
+    if successes > trials:
+        return 0.0
+    return min(
+        1.0,
+        sum(
+            math.comb(trials, index)
+            * (probability**index)
+            * ((1.0 - probability) ** (trials - index))
+            for index in range(successes, trials + 1)
+        ),
+    )
+
+
+def _binomial_cdf_at_most(
+    *,
+    successes: int,
+    trials: int,
+    probability: float,
+) -> float:
+    if successes < 0:
+        return 0.0
+    if successes >= trials:
+        return 1.0
+    return min(
+        1.0,
+        sum(
+            math.comb(trials, index)
+            * (probability**index)
+            * ((1.0 - probability) ** (trials - index))
+            for index in range(0, successes + 1)
+        ),
+    )
 
 
 def _normalized_metric_thresholds(metric_thresholds: object) -> dict[str, dict]:

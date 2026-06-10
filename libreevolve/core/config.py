@@ -1237,6 +1237,8 @@ def _validate_stage_hypothesis_test(
             "type",
             "metric",
             "min",
+            "min_success_rate",
+            "success_threshold",
             "confidence",
             "min_samples",
             "sequential_stopping",
@@ -1245,23 +1247,55 @@ def _validate_stage_hypothesis_test(
     )
     if unsupported:
         raise ConfigError(f"{label} has unsupported fields {unsupported}")
-    if value.get("type") != "one_sided_lower_confidence_bound":
+    test_type = value.get("type")
+    if test_type not in {
+        "one_sided_lower_confidence_bound",
+        "binomial_success_rate",
+    }:
         raise ConfigError(
-            f"{label}.type must be 'one_sided_lower_confidence_bound'"
+            f"{label}.type must be 'one_sided_lower_confidence_bound' or 'binomial_success_rate'"
+        )
+    if test_type == "one_sided_lower_confidence_bound":
+        family_unsupported = sorted(
+            key for key in ("min_success_rate", "success_threshold") if key in value
+        )
+        if family_unsupported:
+            raise ConfigError(
+                f"{label} has unsupported fields for one_sided_lower_confidence_bound {family_unsupported}"
+            )
+    if test_type == "binomial_success_rate" and "min" in value:
+        raise ConfigError(
+            f"{label}.min is unsupported for binomial_success_rate; use success_threshold and min_success_rate"
         )
     metric = value.get("metric", "fitness")
-    if metric != "fitness":
+    if metric not in {"fitness", "is_valid"}:
         if not isinstance(metric, str):
             raise ConfigError(f"{label}.metric must be a string")
         try:
             validate_program_metrics({metric: 0.0})
         except ValueError as exc:
             raise ConfigError(
-                f"{label}.metric must be 'fitness' or a manifest-safe metric name"
+                f"{label}.metric must be 'fitness', 'is_valid', or a manifest-safe metric name"
             ) from exc
-    if "min" not in value:
+    if test_type == "one_sided_lower_confidence_bound" and "min" not in value:
         raise ConfigError(f"{label}.min is required")
-    _require_number(f"{label}.min", value["min"])
+    if "min" in value:
+        _require_number(f"{label}.min", value["min"])
+    if test_type == "binomial_success_rate":
+        if "min_success_rate" not in value:
+            raise ConfigError(f"{label}.min_success_rate is required")
+        min_success_rate = _require_number(
+            f"{label}.min_success_rate",
+            value["min_success_rate"],
+        )
+        if min_success_rate <= 0.0 or min_success_rate > 1.0:
+            raise ConfigError(f"{label}.min_success_rate must be > 0 and <= 1")
+        if "success_threshold" in value:
+            _require_number(f"{label}.success_threshold", value["success_threshold"])
+        elif metric != "is_valid":
+            raise ConfigError(
+                f"{label}.success_threshold is required unless metric is 'is_valid'"
+            )
     confidence = _require_number(f"{label}.confidence", value.get("confidence", 0.95))
     if confidence <= 0.5 or confidence >= 1.0:
         raise ConfigError(f"{label}.confidence must be > 0.5 and < 1.0")

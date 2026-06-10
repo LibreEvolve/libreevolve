@@ -2231,6 +2231,94 @@ def test_configured_stage_hypothesis_test_can_stop_samples_early():
         shutil.rmtree(d)
 
 
+def test_configured_stage_binomial_hypothesis_test_can_promote_success_rate():
+    p, d = _problem(
+        "def evaluate(code, workspace, stage): return {'score': stage['seed'], 'is_valid': True}"
+    )
+    try:
+        result = CascadeEvaluator(
+            p,
+            stages=[
+                {
+                    "name": "success_gate",
+                    "samples": 5,
+                    "seeds": [1.0, 1.0, 1.0, 1.0, 0.0],
+                    "hypothesis_test": {
+                        "type": "binomial_success_rate",
+                        "metric": "score",
+                        "success_threshold": 0.5,
+                        "min_success_rate": 0.5,
+                        "confidence": 0.8,
+                        "min_samples": 5,
+                        "error_budget": {
+                            "max_false_promotion_rate": 0.25,
+                            "max_false_rejection_rate": 0.1,
+                            "min_effect_size": 0.4,
+                        },
+                    },
+                }
+            ],
+        ).evaluate("x=1", None)
+
+        assert result.is_valid is True
+        stage = result.metadata["configured_stage_results"][0]
+        hypothesis = stage["hypothesis_test_result"]
+        assert hypothesis["test_name"] == "binomial_success_rate"
+        assert hypothesis["passed"] is True
+        assert hypothesis["success_count"] == 4
+        assert hypothesis["failure_count"] == 1
+        assert hypothesis["success_rate"] == 0.8
+        assert hypothesis["lower_bound"] >= 0.5
+        assert hypothesis["confidence_interval"]["kind"] == "one_sided_wilson_lower"
+        assert 0.0 <= hypothesis["p_value"] <= 1.0
+        assert hypothesis["error_budget"]["configured"] is True
+        assert hypothesis["error_budget"]["passed"] is True
+        assert hypothesis["error_budget"]["false_promotion"]["basis"] == (
+            "one_sided_wilson_confidence_level"
+        )
+        assert hypothesis["error_budget"]["false_rejection"]["basis"] == (
+            "exact_binomial_min_effect_size"
+        )
+    finally:
+        shutil.rmtree(d)
+
+
+def test_configured_stage_binomial_hypothesis_test_rejects_low_success_rate():
+    p, d = _problem(
+        "def evaluate(code, workspace, stage): return {'score': stage['seed'], 'is_valid': True}"
+    )
+    try:
+        result = CascadeEvaluator(
+            p,
+            stages=[
+                {
+                    "name": "success_gate",
+                    "samples": 5,
+                    "seeds": [1.0, 1.0, 0.0, 0.0, 0.0],
+                    "hypothesis_test": {
+                        "type": "binomial_success_rate",
+                        "metric": "score",
+                        "success_threshold": 0.5,
+                        "min_success_rate": 0.5,
+                        "confidence": 0.8,
+                        "min_samples": 5,
+                    },
+                }
+            ],
+        ).evaluate("x=1", None)
+
+        assert result.is_valid is False
+        assert result.error == "hypothesis_test_not_met"
+        stage = result.metadata["configured_stage_results"][0]
+        hypothesis = stage["hypothesis_test_result"]
+        assert hypothesis["passed"] is False
+        assert hypothesis["success_count"] == 2
+        assert hypothesis["reason"] == "success_rate_lower_bound_below_min"
+        assert hypothesis["lower_bound"] < 0.5
+    finally:
+        shutil.rmtree(d)
+
+
 def test_configured_stage_metric_aggregation_can_use_worst_minimized_metric():
     metrics = [
         {"name": "runtime", "primary": True, "bounds": [0.0, 10.0], "direction": "minimize"},

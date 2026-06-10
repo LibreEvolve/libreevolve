@@ -5598,6 +5598,8 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
         "test_name": None,
         "metric": None,
         "min": None,
+        "min_success_rate": None,
+        "success_threshold": None,
         "confidence": None,
         "min_samples": None,
         "test_count": 0,
@@ -5820,6 +5822,91 @@ def test_runtime_history_reports_hypothesis_test_sequential_stopping():
     policy = report["stage_policies"][0]
     assert policy["statistical_test"]["sequential_stopping"] is True
     assert policy["statistical_test"]["sequential_stop_count"] == 1
+
+
+def test_runtime_history_reports_binomial_hypothesis_test_gate():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(code, workspace, stage):\n"
+        "    return {'score': stage['seed'], 'is_valid': True}\n"
+    )
+
+    evolve(
+        problem,
+        Config(
+            max_generations=0,
+            log_dir=tmpdir,
+            problem_name="t",
+            eval_stages=[
+                {
+                    "name": "success_gate",
+                    "role": "small_scale_filter",
+                    "samples": 5,
+                    "seeds": [1.0, 1.0, 1.0, 1.0, 0.0],
+                    "hypothesis_test": {
+                        "type": "binomial_success_rate",
+                        "metric": "score",
+                        "success_threshold": 0.5,
+                        "min_success_rate": 0.5,
+                        "confidence": 0.8,
+                        "min_samples": 5,
+                        "error_budget": {
+                            "max_false_promotion_rate": 0.25,
+                            "max_false_rejection_rate": 0.1,
+                            "min_effect_size": 0.4,
+                        },
+                    },
+                },
+            ],
+        ),
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    cascade = manifest["runtime"]["history"]["evaluation_cascade_report"]
+    stage = cascade["stages"][0]
+    assert stage["hypothesis_test"] == {
+        "configured": True,
+        "test_count": 1,
+        "passed": 1,
+        "failed": 0,
+        "confidence_interval_count": 1,
+        "p_value_count": 1,
+        "sequential_stopping_configured": False,
+        "sequential_stop_count": 0,
+        "error_budget_configured": True,
+        "error_budget_passed": 1,
+        "error_budget_failed": 0,
+        "false_promotion_budget_count": 1,
+        "false_rejection_budget_count": 1,
+    }
+    stage_record = cascade["candidate_stage_records"][0]
+    hypothesis_result = stage_record["hypothesis_test_result"]
+    assert hypothesis_result["test_name"] == "binomial_success_rate"
+    assert hypothesis_result["success_count"] == 4
+    assert hypothesis_result["failure_count"] == 1
+    assert hypothesis_result["confidence_interval"]["kind"] == "one_sided_wilson_lower"
+    assert hypothesis_result["error_budget"]["calibration_method"] == (
+        "binomial_wilson_success_rate"
+    )
+
+    report = manifest["runtime"]["history"]["cascade_hypothesis_test_policy_report"]
+    assert report["validation"]["ok"] is True
+    assert validate_cascade_hypothesis_test_policy_report(report)["ok"] is True
+    policy = report["stage_policies"][0]
+    assert policy["statistical_test"]["test_name"] == "binomial_success_rate"
+    assert policy["statistical_test"]["min_success_rate"] == 0.5
+    assert policy["statistical_test"]["success_threshold"] == 0.5
+    assert policy["statistical_test"]["false_promotion_budget"] == {
+        "max_rate": 0.25,
+        "observed_count": 1,
+        "calibration_method": "one_sided_wilson_confidence_level",
+    }
+    assert policy["statistical_test"]["false_rejection_budget"] == {
+        "max_rate": 0.1,
+        "min_effect_size": 0.4,
+        "observed_count": 1,
+        "calibration_method": "exact_binomial_min_effect_size",
+    }
 
 
 def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():

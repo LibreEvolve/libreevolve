@@ -62,7 +62,9 @@ LibreEvolve has:
   or fallback-inferred small-scale-filter/main-test roles, deterministic threshold/artifact
   promotion, and opt-in `one_sided_lower_confidence_bound` repeated-sample
   gates with confidence-bound, p-value, sequential early-stop, and
-  configured false-promotion/false-rejection budget evidence
+  configured false-promotion/false-rejection budget evidence, plus
+  `binomial_success_rate` repeated-seed success-rate gates with Wilson
+  lower-bound evidence
 - evaluator-workload declarations for configured stages, including
   `simple_check`, `inner_search`, `ml_training`, and `custom` classifications,
   validated dataset/budget/checkpoint/score-field metadata, validator-visible
@@ -386,8 +388,9 @@ is not yet an AlphaEvolve reproduction.
   prompt-history row audits for hard-to-code properties such as simplicity.
 - Add broader statistical hypothesis-test promotion policies for cascades,
   extending the current `one_sided_lower_confidence_bound` plus
-  normal-approximation error-budget support into additional test families,
-  benchmark-calibrated thresholds, and repeated-seed fixtures.
+  normal-approximation error-budget support and `binomial_success_rate`
+  Wilson-bound gates into benchmark-calibrated thresholds and repeated-seed
+  matrix/tensor fixtures.
 - Extend the evaluator/oracle registry beyond the current arbitration-policy
   matrix and local post-evaluator disagreement outcomes into independent
   reference/statistical oracles, benchmark sufficiency evidence, and

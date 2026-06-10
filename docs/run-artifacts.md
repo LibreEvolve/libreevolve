@@ -190,9 +190,11 @@ checks or an opt-in `one_sided_lower_confidence_bound` hypothesis test. For
 configured tests, candidate-stage records retain numeric observations, the
 lower confidence bound, p-value evidence, and sequential-stop counts when
 enabled. Configured `error_budget` records expose confidence-level
-false-promotion and normal-approximation false-rejection budget evidence. Its
-validation still fails unsupported paper readiness or AlphaEvolve Section 2.4
-parity claims.
+false-promotion and normal-approximation false-rejection budget evidence.
+`binomial_success_rate` tests retain repeated-seed success/failure counts,
+Wilson lower-bound confidence evidence, exact binomial p-values, and
+exact-binomial false-rejection budget estimates. Its validation still fails
+unsupported paper readiness or AlphaEvolve Section 2.4 parity claims.
 Completed manifests also include
 `runtime.history.existing_codebase_integration_report` with schema
 `libreevolve.existing_codebase_integration_report.v1`. This report scans
@@ -2447,6 +2449,11 @@ sample counts. With
 min_effect_size}`, `hypothesis_test_result.error_budget` records the
 confidence-derived false-promotion rate and normal-approximation
 false-rejection estimate for the declared minimum effect size.
+For pass/fail repeated-seed evidence, `type: binomial_success_rate` uses
+`metric`, `success_threshold`, `min_success_rate`, `confidence`, `min_samples`,
+and optional `sequential_stopping` / `error_budget`. The result records
+success/failure counts, success rate, a one-sided Wilson lower bound, exact
+binomial tail p-value, and exact-binomial false-rejection budget evidence.
 Configured stages can set `role` to `small_scale_filter`,
 `intermediate_filter`, or `main_test`. The manifest policy report stores
 `stage_role`, `configured_role`, the order-derived `inferred_role`, and

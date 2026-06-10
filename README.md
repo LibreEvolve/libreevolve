@@ -2525,8 +2525,10 @@ early once the test passes after `min_samples`. Tests may also declare
 `error_budget: {max_false_promotion_rate, max_false_rejection_rate,
 min_effect_size}`; LibreEvolve reports the confidence-level false-promotion
 bound and a normal-approximation false-rejection estimate for the declared
-minimum effect size. Broader test families, benchmark-calibrated thresholds,
-and full AlphaEvolve Section 2.4 hypothesis-testing readiness remain false.
+minimum effect size. A second `binomial_success_rate` family supports
+pass/fail repeated-seed gates with Wilson lower-bound confidence evidence.
+Benchmark-calibrated thresholds and full AlphaEvolve Section 2.4
+hypothesis-testing readiness remain false.
 Completed manifests also include
 `runtime.history.automated_evaluator_scope_report`, which records the current
 AlphaEvolve scope boundary: candidate admission is owned by deterministic
@@ -2596,6 +2598,14 @@ once the lower-bound test passes. `error_budget` can declare
 whether the confidence-derived false-promotion rate and approximate
 false-rejection rate meet those configured budgets. This is still an opt-in
 normal-approximation gate, not full AlphaEvolve cascade parity.
+For pass/fail repeated-seed evidence, stages can instead set
+`hypothesis_test: {type: binomial_success_rate, metric, success_threshold,
+min_success_rate, confidence, min_samples, sequential_stopping, error_budget}`.
+Numeric metrics succeed when they are at least `success_threshold`; `is_valid`
+can be used directly as a boolean success metric. The persisted result records
+success/failure counts, success rate, Wilson one-sided lower confidence bound,
+exact binomial tail p-value, and exact-binomial false-rejection budget evidence
+when configured.
 Stages can declare `role: small_scale_filter`, `role: intermediate_filter`, or
 `role: main_test`; completed manifests preserve both the configured role and
 the fallback order-inferred role in the cascade policy report.

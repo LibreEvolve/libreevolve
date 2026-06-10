@@ -1590,15 +1590,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     retain per-sample observations, confidence-bound evidence, p-values, and
     promotion/rejection linkage. `sequential_stopping: true` records early
     sample-stop diagnostics once the lower-bound gate passes after
-    `min_samples`.
+    `min_samples`. Configured `error_budget` fields record confidence-derived
+    false-promotion and normal-approximation false-rejection budget evidence.
   - Current gap: paper-facing evidence now includes one repeated-sample
     statistical gate, but still lacks broader hypothesis-test policies,
-    false-promotion/false-rejection budgets, benchmark-calibrated thresholds,
-    and repeated-seed benchmark fixtures.
+    benchmark-calibrated thresholds, and repeated-seed benchmark fixtures.
   - Required result: add paper-facing evidence for richer statistical cascade
-    promotion decisions, including test-family parameters, calibrated error
-    budgets, and benchmark promotion/rejection linkage from small-scale filters
-    to main test cases.
+    promotion decisions, including test-family parameters and benchmark
+    promotion/rejection linkage from small-scale filters to main test cases.
 
 - [ ] Track qualitative LLM-feedback criterion provenance.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.

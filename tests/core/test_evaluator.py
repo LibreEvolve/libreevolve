@@ -2105,6 +2105,11 @@ def test_configured_stage_hypothesis_test_can_promote_repeated_samples():
                         "min": 0.7,
                         "confidence": 0.8,
                         "min_samples": 3,
+                        "error_budget": {
+                            "max_false_promotion_rate": 0.25,
+                            "max_false_rejection_rate": 0.05,
+                            "min_effect_size": 0.2,
+                        },
                     },
                 }
             ],
@@ -2125,6 +2130,19 @@ def test_configured_stage_hypothesis_test_can_promote_repeated_samples():
         assert hypothesis["lower_bound"] >= 0.7
         assert 0.0 <= hypothesis["p_value"] <= 1.0
         assert hypothesis["confidence_interval"]["kind"] == "one_sided_lower"
+        assert hypothesis["error_budget"]["configured"] is True
+        assert hypothesis["error_budget"]["passed"] is True
+        assert hypothesis["error_budget"]["false_promotion"] == {
+            "configured": True,
+            "max_rate": 0.25,
+            "estimated_rate": pytest.approx(0.2),
+            "passed": True,
+            "basis": "one_sided_confidence_level",
+        }
+        assert hypothesis["error_budget"]["false_rejection"]["configured"] is True
+        assert hypothesis["error_budget"]["false_rejection"]["passed"] is True
+        assert hypothesis["error_budget"]["false_rejection"]["max_rate"] == 0.05
+        assert hypothesis["error_budget"]["false_rejection"]["min_effect_size"] == 0.2
     finally:
         shutil.rmtree(d)
 

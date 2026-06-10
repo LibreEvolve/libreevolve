@@ -4137,9 +4137,109 @@ def _stage_hypothesis_test_result(
             "passed": lower_bound >= threshold,
         }
     )
+    error_budget_result = _stage_hypothesis_error_budget_result(
+        hypothesis_test,
+        confidence=confidence,
+        z_critical=z,
+        standard_error=standard_error,
+    )
+    record["error_budget"] = error_budget_result
+    if record["passed"] and not error_budget_result["passed"]:
+        record["passed"] = False
+        record["reason"] = error_budget_result["reason"]
     if not record["passed"]:
-        record["reason"] = "lower_confidence_bound_below_min"
+        record.setdefault("reason", "lower_confidence_bound_below_min")
     return record
+
+
+def _stage_hypothesis_error_budget_result(
+    hypothesis_test: dict,
+    *,
+    confidence: float,
+    z_critical: float,
+    standard_error: float,
+) -> dict:
+    error_budget = hypothesis_test.get("error_budget")
+    if not isinstance(error_budget, dict):
+        return {
+            "configured": False,
+            "passed": True,
+            "calibration_method": None,
+            "false_promotion": None,
+            "false_rejection": None,
+        }
+    max_false_promotion_rate = error_budget.get("max_false_promotion_rate")
+    false_promotion: dict | None = None
+    passed = True
+    reason: str | None = None
+    if isinstance(max_false_promotion_rate, (int, float)) and not isinstance(
+        max_false_promotion_rate, bool
+    ):
+        approximate_rate = max(0.0, 1.0 - confidence)
+        false_promotion = {
+            "configured": True,
+            "max_rate": float(max_false_promotion_rate),
+            "estimated_rate": approximate_rate,
+            "passed": approximate_rate <= float(max_false_promotion_rate) + 1e-12,
+            "basis": "one_sided_confidence_level",
+        }
+        if false_promotion["passed"] is False:
+            passed = False
+            reason = "false_promotion_budget_not_met"
+    else:
+        false_promotion = {
+            "configured": False,
+            "max_rate": None,
+            "estimated_rate": None,
+            "passed": True,
+            "basis": None,
+        }
+
+    max_false_rejection_rate = error_budget.get("max_false_rejection_rate")
+    min_effect_size = error_budget.get("min_effect_size")
+    false_rejection: dict | None = None
+    if (
+        isinstance(max_false_rejection_rate, (int, float))
+        and not isinstance(max_false_rejection_rate, bool)
+        and isinstance(min_effect_size, (int, float))
+        and not isinstance(min_effect_size, bool)
+    ):
+        if standard_error == 0.0:
+            approximate_rate = 0.0
+        else:
+            approximate_rate = NormalDist().cdf(
+                z_critical - (float(min_effect_size) / standard_error)
+            )
+        false_rejection = {
+            "configured": True,
+            "max_rate": float(max_false_rejection_rate),
+            "estimated_rate": approximate_rate,
+            "passed": approximate_rate
+            <= float(max_false_rejection_rate) + 1e-12,
+            "basis": "normal_approximation_min_effect_size",
+            "min_effect_size": float(min_effect_size),
+        }
+        if false_rejection["passed"] is False:
+            passed = False
+            reason = reason or "false_rejection_budget_not_met"
+    else:
+        false_rejection = {
+            "configured": False,
+            "max_rate": None,
+            "estimated_rate": None,
+            "passed": True,
+            "basis": None,
+            "min_effect_size": None,
+        }
+
+    return {
+        "configured": True,
+        "passed": passed,
+        "reason": reason,
+        "calibration_method": "normal_approximation_one_sided_lcb",
+        "false_promotion": false_promotion,
+        "false_rejection": false_rejection,
+    }
 
 
 def _hypothesis_test_observations(

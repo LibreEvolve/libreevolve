@@ -1077,8 +1077,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     threshold/artifact promotion, and configured
     `one_sided_lower_confidence_bound` gates with retained observations,
     confidence-bound evidence, p-values, and optional sequential early-stop
-    diagnostics. Calibrated false-promotion/false-rejection budgets remain
-    roadmap work.
+    diagnostics. ROADMAP also records configured normal-approximation
+    false-promotion/false-rejection budget evidence. Broader statistical test
+    families and benchmark-calibrated thresholds remain roadmap work.
   - Required result: when richer statistical hypothesis-test cascade execution
     lands, update ROADMAP, README, papers index, and code/paper TODO entries
     together so roadmap wording neither underclaims current lower-confidence

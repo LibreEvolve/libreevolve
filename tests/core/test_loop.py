@@ -5607,6 +5607,9 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
         "p_value_count": 0,
         "sequential_stopping": False,
         "sequential_stop_count": 0,
+        "error_budget_configured": False,
+        "error_budget_passed": 0,
+        "error_budget_failed": 0,
         "false_promotion_budget": None,
         "false_rejection_budget": None,
     }
@@ -5675,6 +5678,11 @@ def test_runtime_history_reports_configured_cascade_hypothesis_test_gate():
                         "min": 0.7,
                         "confidence": 0.8,
                         "min_samples": 3,
+                        "error_budget": {
+                            "max_false_promotion_rate": 0.25,
+                            "max_false_rejection_rate": 0.05,
+                            "min_effect_size": 0.2,
+                        },
                     },
                 },
             ],
@@ -5693,6 +5701,11 @@ def test_runtime_history_reports_configured_cascade_hypothesis_test_gate():
         "p_value_count": 1,
         "sequential_stopping_configured": False,
         "sequential_stop_count": 0,
+        "error_budget_configured": True,
+        "error_budget_passed": 1,
+        "error_budget_failed": 0,
+        "false_promotion_budget_count": 1,
+        "false_rejection_budget_count": 1,
     }
     stage_record = cascade["candidate_stage_records"][0]
     hypothesis_result = stage_record["hypothesis_test_result"]
@@ -5700,6 +5713,9 @@ def test_runtime_history_reports_configured_cascade_hypothesis_test_gate():
     assert hypothesis_result["passed"] is True
     assert hypothesis_result["sample_count"] == 3
     assert hypothesis_result["lower_bound"] >= 0.7
+    assert hypothesis_result["error_budget"]["passed"] is True
+    assert hypothesis_result["error_budget"]["false_promotion"]["estimated_rate"] == pytest.approx(0.2)
+    assert hypothesis_result["error_budget"]["false_rejection"]["passed"] is True
 
     report = manifest["runtime"]["history"]["cascade_hypothesis_test_policy_report"]
     assert report["validation"]["ok"] is True
@@ -5710,10 +5726,16 @@ def test_runtime_history_reports_configured_cascade_hypothesis_test_gate():
     assert report["current_policy"]["statistical_hypothesis_tests_supported"] is True
     assert report["current_policy"]["confidence_intervals_supported"] is True
     assert report["current_policy"]["p_values_supported"] is True
+    assert report["current_policy"]["false_promotion_budget_supported"] is True
+    assert report["current_policy"]["false_rejection_budget_supported"] is True
     assert report["current_policy"]["paper_claim_ready"] is False
     assert report["claim_ready"] is False
     assert report["claim_readiness"]["statistical_test_configuration"] is True
     assert report["claim_readiness"]["confidence_or_p_value_records"] is True
+    assert (
+        report["claim_readiness"]["false_promotion_false_rejection_budgets"]
+        is True
+    )
 
     policy = report["stage_policies"][0]
     assert policy["stage_role"] == "small_scale_filter"
@@ -5727,6 +5749,20 @@ def test_runtime_history_reports_configured_cascade_hypothesis_test_gate():
     assert policy["statistical_test"]["test_count"] == 1
     assert policy["statistical_test"]["passed"] == 1
     assert policy["statistical_test"]["p_value_count"] == 1
+    assert policy["statistical_test"]["error_budget_configured"] is True
+    assert policy["statistical_test"]["error_budget_passed"] == 1
+    assert policy["statistical_test"]["error_budget_failed"] == 0
+    assert policy["statistical_test"]["false_promotion_budget"] == {
+        "max_rate": 0.25,
+        "observed_count": 1,
+        "calibration_method": "one_sided_confidence_level",
+    }
+    assert policy["statistical_test"]["false_rejection_budget"] == {
+        "max_rate": 0.05,
+        "min_effect_size": 0.2,
+        "observed_count": 1,
+        "calibration_method": "normal_approximation_min_effect_size",
+    }
 
 
 def test_runtime_history_reports_hypothesis_test_sequential_stopping():

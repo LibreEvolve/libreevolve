@@ -1233,7 +1233,15 @@ def _validate_stage_hypothesis_test(
     unsupported = _unsupported_mapping_keys(
         label,
         value,
-        {"type", "metric", "min", "confidence", "min_samples", "sequential_stopping"},
+        {
+            "type",
+            "metric",
+            "min",
+            "confidence",
+            "min_samples",
+            "sequential_stopping",
+            "error_budget",
+        },
     )
     if unsupported:
         raise ConfigError(f"{label} has unsupported fields {unsupported}")
@@ -1266,6 +1274,66 @@ def _validate_stage_hypothesis_test(
         raise ConfigError(f"{label}.samples must be >= min_samples")
     if "sequential_stopping" in value:
         _require_bool(f"{label}.sequential_stopping", value["sequential_stopping"])
+    if "error_budget" in value:
+        _validate_stage_hypothesis_error_budget(
+            f"{label}.error_budget",
+            value["error_budget"],
+            confidence=confidence,
+        )
+
+
+def _validate_stage_hypothesis_error_budget(
+    label: str,
+    value: object,
+    *,
+    confidence: float,
+) -> None:
+    if not isinstance(value, dict):
+        raise ConfigError(f"{label} must be a mapping")
+    unsupported = _unsupported_mapping_keys(
+        label,
+        value,
+        {"max_false_promotion_rate", "max_false_rejection_rate", "min_effect_size"},
+    )
+    if unsupported:
+        raise ConfigError(f"{label} has unsupported fields {unsupported}")
+    if not value:
+        raise ConfigError(f"{label} must define at least one budget")
+    max_false_promotion_rate = value.get("max_false_promotion_rate")
+    if max_false_promotion_rate is not None:
+        max_false_promotion_rate = _require_number(
+            f"{label}.max_false_promotion_rate",
+            max_false_promotion_rate,
+        )
+        if max_false_promotion_rate <= 0.0 or max_false_promotion_rate >= 0.5:
+            raise ConfigError(
+                f"{label}.max_false_promotion_rate must be > 0 and < 0.5"
+            )
+        if (1.0 - confidence) > max_false_promotion_rate + 1e-12:
+            raise ConfigError(
+                f"{label}.max_false_promotion_rate must be >= 1 - confidence"
+            )
+    max_false_rejection_rate = value.get("max_false_rejection_rate")
+    if max_false_rejection_rate is not None:
+        max_false_rejection_rate = _require_number(
+            f"{label}.max_false_rejection_rate",
+            max_false_rejection_rate,
+        )
+        if max_false_rejection_rate <= 0.0 or max_false_rejection_rate >= 1.0:
+            raise ConfigError(
+                f"{label}.max_false_rejection_rate must be > 0 and < 1"
+            )
+        if "min_effect_size" not in value:
+            raise ConfigError(
+                f"{label}.min_effect_size is required when max_false_rejection_rate is set"
+            )
+    if "min_effect_size" in value:
+        min_effect_size = _require_number(
+            f"{label}.min_effect_size",
+            value["min_effect_size"],
+        )
+        if min_effect_size <= 0.0:
+            raise ConfigError(f"{label}.min_effect_size must be > 0")
 
 
 def _validate_metric_aggregation(label: str, value: object) -> None:

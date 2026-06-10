@@ -12976,6 +12976,11 @@ def _evaluation_cascade_report(
                         "p_value_count": 0,
                         "sequential_stopping_configured": False,
                         "sequential_stop_count": 0,
+                        "error_budget_configured": False,
+                        "error_budget_passed": 0,
+                        "error_budget_failed": 0,
+                        "false_promotion_budget_count": 0,
+                        "false_rejection_budget_count": 0,
                     },
                 },
             )
@@ -13016,6 +13021,32 @@ def _evaluation_cascade_report(
                     and sequential_stop.get("stopped_early") is True
                 ):
                     stage["hypothesis_test"]["sequential_stop_count"] += 1
+                error_budget = hypothesis_test_result.get("error_budget")
+                if (
+                    isinstance(error_budget, Mapping)
+                    and error_budget.get("configured") is True
+                ):
+                    stage["hypothesis_test"]["error_budget_configured"] = True
+                    if error_budget.get("passed") is True:
+                        stage["hypothesis_test"]["error_budget_passed"] += 1
+                    else:
+                        stage["hypothesis_test"]["error_budget_failed"] += 1
+                    false_promotion = error_budget.get("false_promotion")
+                    if (
+                        isinstance(false_promotion, Mapping)
+                        and false_promotion.get("configured") is True
+                    ):
+                        stage["hypothesis_test"][
+                            "false_promotion_budget_count"
+                        ] += 1
+                    false_rejection = error_budget.get("false_rejection")
+                    if (
+                        isinstance(false_rejection, Mapping)
+                        and false_rejection.get("configured") is True
+                    ):
+                        stage["hypothesis_test"][
+                            "false_rejection_budget_count"
+                        ] += 1
             accounting = evaluation_accounting(raw_stage)
             stage["sample_count"] += int(accounting.get("configured_stage_samples", 0))
             stage["retry_attempts"] += int(accounting.get("retry_attempts", 0))
@@ -13151,6 +13182,16 @@ def _cascade_hypothesis_test_policy_report(
         stage.get("statistical_test", {}).get("sequential_stopping") is True
         for stage in stage_policies
     )
+    false_promotion_budget_configured = any(
+        stage.get("statistical_test", {}).get("false_promotion_budget")
+        is not None
+        for stage in stage_policies
+    )
+    false_rejection_budget_configured = any(
+        stage.get("statistical_test", {}).get("false_rejection_budget")
+        is not None
+        for stage in stage_policies
+    )
     explicit_roles_configured = bool(stage_policies) and all(
         stage.get("role_source") == "configured" for stage in stage_policies
     )
@@ -13178,8 +13219,8 @@ def _cascade_hypothesis_test_policy_report(
             "confidence_intervals_supported": confidence_records,
             "p_values_supported": p_value_records,
             "sequential_stopping_supported": sequential_stopping_configured,
-            "false_promotion_budget_supported": False,
-            "false_rejection_budget_supported": False,
+            "false_promotion_budget_supported": false_promotion_budget_configured,
+            "false_rejection_budget_supported": false_rejection_budget_configured,
             "per_sample_observation_retention": (
                 "hypothesis_test_observations_when_configured"
                 if statistical_test_configured
@@ -13197,15 +13238,25 @@ def _cascade_hypothesis_test_policy_report(
             "statistical_test_configuration": statistical_test_configured,
             "confidence_or_p_value_records": confidence_records or p_value_records,
             "sequential_stopping_diagnostics": sequential_stopping_configured,
-            "false_promotion_false_rejection_budgets": False,
+            "false_promotion_false_rejection_budgets": (
+                false_promotion_budget_configured
+                and false_rejection_budget_configured
+            ),
             "remaining_gap": [
                 "statistical_test_configuration",
                 "retained_per_sample_observations",
                 "confidence_interval_or_p_value_records",
                 "sequential_stopping_rule",
-                "false_promotion_false_rejection_budget",
                 "noisy_repeated_seed_promotion_tests",
-            ],
+            ]
+            + (
+                []
+                if (
+                    false_promotion_budget_configured
+                    and false_rejection_budget_configured
+                )
+                else ["false_promotion_false_rejection_budget"]
+            ),
         },
     }
     report["validation"] = validate_cascade_hypothesis_test_policy_report(report)
@@ -13243,6 +13294,11 @@ def _cascade_hypothesis_stage_policy(
     hypothesis_test = (
         stage.get("hypothesis_test")
         if isinstance(stage.get("hypothesis_test"), Mapping)
+        else {}
+    )
+    error_budget = (
+        hypothesis_test.get("error_budget")
+        if isinstance(hypothesis_test.get("error_budget"), Mapping)
         else {}
     )
     observed_hypothesis_test = (
@@ -13320,8 +13376,40 @@ def _cascade_hypothesis_stage_policy(
             "sequential_stop_count": observed_hypothesis_test.get(
                 "sequential_stop_count", 0
             ),
-            "false_promotion_budget": None,
-            "false_rejection_budget": None,
+            "error_budget_configured": bool(error_budget)
+            if statistical_configured
+            else False,
+            "error_budget_passed": observed_hypothesis_test.get(
+                "error_budget_passed", 0
+            ),
+            "error_budget_failed": observed_hypothesis_test.get(
+                "error_budget_failed", 0
+            ),
+            "false_promotion_budget": (
+                {
+                    "max_rate": error_budget.get("max_false_promotion_rate"),
+                    "observed_count": observed_hypothesis_test.get(
+                        "false_promotion_budget_count", 0
+                    ),
+                    "calibration_method": "one_sided_confidence_level",
+                }
+                if statistical_configured
+                and "max_false_promotion_rate" in error_budget
+                else None
+            ),
+            "false_rejection_budget": (
+                {
+                    "max_rate": error_budget.get("max_false_rejection_rate"),
+                    "min_effect_size": error_budget.get("min_effect_size"),
+                    "observed_count": observed_hypothesis_test.get(
+                        "false_rejection_budget_count", 0
+                    ),
+                    "calibration_method": "normal_approximation_min_effect_size",
+                }
+                if statistical_configured
+                and "max_false_rejection_rate" in error_budget
+                else None
+            ),
         },
         "claim_ready": False,
     }
@@ -27869,6 +27957,104 @@ def validate_cascade_hypothesis_test_policy_report(report: object) -> dict:
                     "message": "statistical_test.sequential_stop_count must be non-negative integer",
                 }
             )
+        if statistical_test.get("error_budget_configured") not in {False, True}:
+            issues.append(
+                {
+                    "code": "invalid_error_budget_configured",
+                    "message": "statistical_test.error_budget_configured must be boolean",
+                }
+            )
+        for count_field in ("error_budget_passed", "error_budget_failed"):
+            value = statistical_test.get(count_field, 0)
+            if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+                issues.append(
+                    {
+                        "code": "invalid_error_budget_count",
+                        "message": f"statistical_test.{count_field} must be non-negative integer",
+                    }
+                )
+        false_promotion_budget = statistical_test.get("false_promotion_budget")
+        if false_promotion_budget is not None:
+            if not isinstance(false_promotion_budget, dict):
+                issues.append(
+                    {
+                        "code": "invalid_false_promotion_budget",
+                        "message": "statistical_test.false_promotion_budget must be null or an object",
+                    }
+                )
+            else:
+                max_rate = false_promotion_budget.get("max_rate")
+                observed_count = false_promotion_budget.get("observed_count")
+                if (
+                    not isinstance(max_rate, (int, float))
+                    or isinstance(max_rate, bool)
+                    or max_rate <= 0
+                    or max_rate >= 0.5
+                ):
+                    issues.append(
+                        {
+                            "code": "invalid_false_promotion_budget_rate",
+                            "message": "false_promotion_budget.max_rate must be > 0 and < 0.5",
+                        }
+                    )
+                if (
+                    not isinstance(observed_count, int)
+                    or isinstance(observed_count, bool)
+                    or observed_count < 0
+                ):
+                    issues.append(
+                        {
+                            "code": "invalid_false_promotion_budget_count",
+                            "message": "false_promotion_budget.observed_count must be non-negative integer",
+                        }
+                    )
+        false_rejection_budget = statistical_test.get("false_rejection_budget")
+        if false_rejection_budget is not None:
+            if not isinstance(false_rejection_budget, dict):
+                issues.append(
+                    {
+                        "code": "invalid_false_rejection_budget",
+                        "message": "statistical_test.false_rejection_budget must be null or an object",
+                    }
+                )
+            else:
+                max_rate = false_rejection_budget.get("max_rate")
+                min_effect_size = false_rejection_budget.get("min_effect_size")
+                observed_count = false_rejection_budget.get("observed_count")
+                if (
+                    not isinstance(max_rate, (int, float))
+                    or isinstance(max_rate, bool)
+                    or max_rate <= 0
+                    or max_rate >= 1
+                ):
+                    issues.append(
+                        {
+                            "code": "invalid_false_rejection_budget_rate",
+                            "message": "false_rejection_budget.max_rate must be > 0 and < 1",
+                        }
+                    )
+                if (
+                    not isinstance(min_effect_size, (int, float))
+                    or isinstance(min_effect_size, bool)
+                    or min_effect_size <= 0
+                ):
+                    issues.append(
+                        {
+                            "code": "invalid_false_rejection_effect_size",
+                            "message": "false_rejection_budget.min_effect_size must be > 0",
+                        }
+                    )
+                if (
+                    not isinstance(observed_count, int)
+                    or isinstance(observed_count, bool)
+                    or observed_count < 0
+                ):
+                    issues.append(
+                        {
+                            "code": "invalid_false_rejection_budget_count",
+                            "message": "false_rejection_budget.observed_count must be non-negative integer",
+                        }
+                    )
     current_policy = report.get("current_policy")
     if not isinstance(current_policy, dict):
         issues.append(
@@ -27925,11 +28111,29 @@ def validate_cascade_hypothesis_test_policy_report(report: object) -> dict:
             and stage["statistical_test"].get("sequential_stopping") is True
             for stage in stage_policies
         )
+        any_false_promotion_budget = any(
+            isinstance(stage, dict)
+            and isinstance(stage.get("statistical_test"), dict)
+            and isinstance(
+                stage["statistical_test"].get("false_promotion_budget"), dict
+            )
+            for stage in stage_policies
+        )
+        any_false_rejection_budget = any(
+            isinstance(stage, dict)
+            and isinstance(stage.get("statistical_test"), dict)
+            and isinstance(
+                stage["statistical_test"].get("false_rejection_budget"), dict
+            )
+            for stage in stage_policies
+        )
         expected_bool_fields = {
             "statistical_hypothesis_tests_supported": any_statistical_test,
             "confidence_intervals_supported": any_confidence_records,
             "p_values_supported": any_p_value_records,
             "sequential_stopping_supported": any_sequential_stopping,
+            "false_promotion_budget_supported": any_false_promotion_budget,
+            "false_rejection_budget_supported": any_false_rejection_budget,
         }
         for field, expected in expected_bool_fields.items():
             if current_policy.get(field) is not expected:
@@ -27940,8 +28144,6 @@ def validate_cascade_hypothesis_test_policy_report(report: object) -> dict:
                     }
                 )
         false_fields = {
-            "false_promotion_budget_supported": "policy_false_promotion_budget_overclaim",
-            "false_rejection_budget_supported": "policy_false_rejection_budget_overclaim",
             "paper_claim_ready": "policy_paper_claim_ready_overclaim",
         }
         for field, code in false_fields.items():

@@ -526,22 +526,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     comparable results for alternative abstractions before claiming
     AlphaEvolve-style abstraction-selection evidence.
 
-- [ ] Track explicit-context source roles for prompt sampling.
-  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.2 lists explicit
-    prompt context as fixed human-written instructions, equations, code
-    snippets, and relevant literature such as PDF files.
-  - Current gap: paper/status records and prompt diagnostics can show which
-    local files were selected, hashed, extracted, truncated, ranked, or omitted
-    before prompt rendering. They do not preserve a paper-facing role for each
-    explicit-context source, so docs could conflate generic local file
-    ingestion, background retrieval, plugin context, and task-specific
-    problem-formulation evidence.
-  - Required result: add paper-facing explicit-context records with source
-    role, problem/topic linkage, source location, prompt-inclusion/omission
-    status, content hash/redaction policy, and wording that distinguishes
-    AlphaEvolve-style typed problem context from generic context-file loading
-    or retrieval-augmented background evidence.
-
 - [ ] Track primary-prompt instruction and target-solution evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.2 says the
     primary prompt includes previously discovered solutions sampled from the

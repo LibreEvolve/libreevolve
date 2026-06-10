@@ -5313,6 +5313,11 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 programs,
             )
         ),
+        "explicit_context_source_role_report": (
+            _explicit_context_source_role_report(
+                db.startup_manifest_snapshot()
+            )
+        ),
         "alphaevolve_process_exhibit_report": (
             _alphaevolve_process_exhibit_report(run_dir, programs)
         ),
@@ -10206,6 +10211,339 @@ def validate_existing_codebase_integration_report(report: object) -> dict:
         "ok": not issues,
         "issues": issues,
     }
+
+
+_EXPLICIT_CONTEXT_SOURCE_ROLES = {
+    "human_instruction",
+    "equation",
+    "code_snippet",
+    "literature_pdf",
+    "background_reference",
+}
+
+
+def _explicit_context_source_role_report(
+    startup_manifest: Mapping[str, object],
+) -> dict:
+    problem = (
+        startup_manifest.get("problem")
+        if isinstance(startup_manifest.get("problem"), Mapping)
+        else {}
+    )
+    context_sources = (
+        problem.get("context_sources")
+        if isinstance(problem.get("context_sources"), list)
+        else []
+    )
+    context_policy = (
+        problem.get("context_policy")
+        if isinstance(problem.get("context_policy"), Mapping)
+        else {}
+    )
+    configured_roles = (
+        context_policy.get("source_roles")
+        if isinstance(context_policy.get("source_roles"), Mapping)
+        else {}
+    )
+    selection = (
+        context_policy.get("source_selection")
+        if isinstance(context_policy.get("source_selection"), Mapping)
+        else {}
+    )
+    omitted_sources = (
+        selection.get("omitted_sources")
+        if isinstance(selection.get("omitted_sources"), list)
+        else []
+    )
+    skipped_sources = (
+        context_policy.get("skipped")
+        if isinstance(context_policy.get("skipped"), list)
+        else []
+    )
+    records: list[dict] = []
+    for source in context_sources:
+        if isinstance(source, Mapping):
+            records.append(
+                _explicit_context_source_role_record(
+                    source,
+                    prompt_inclusion_decision="included_in_startup_prompt_context",
+                    configured_roles=configured_roles,
+                )
+            )
+    for source in omitted_sources:
+        if isinstance(source, Mapping):
+            records.append(
+                _explicit_context_source_role_record(
+                    source,
+                    prompt_inclusion_decision="omitted_by_context_source_selection",
+                    configured_roles=configured_roles,
+                )
+            )
+    for source in skipped_sources:
+        if isinstance(source, Mapping):
+            records.append(
+                _explicit_context_source_role_record(
+                    source,
+                    prompt_inclusion_decision="omitted_before_prompt_context",
+                    configured_roles=configured_roles,
+                )
+            )
+    known_paths = {
+        record["path"]
+        for record in records
+        if isinstance(record.get("path"), str)
+    }
+    unmatched_role_paths = sorted(
+        path
+        for path in configured_roles
+        if isinstance(path, str) and path not in known_paths
+    )
+    classified_count = sum(
+        1 for record in records if record.get("source_role_status") == "classified"
+    )
+    unclassified_count = sum(
+        1 for record in records if record.get("source_role_status") == "unclassified"
+    )
+    included_records = [
+        record
+        for record in records
+        if record.get("prompt_inclusion_decision") == "included_in_startup_prompt_context"
+    ]
+    included_classified_count = sum(
+        1
+        for record in included_records
+        if record.get("source_role_status") == "classified"
+    )
+    remaining_gap = []
+    if not records:
+        remaining_gap.append("no_explicit_context_sources")
+    if not included_records:
+        remaining_gap.append("no_prompt_included_explicit_context")
+    if unclassified_count:
+        remaining_gap.append("unclassified_context_sources")
+    if unmatched_role_paths:
+        remaining_gap.append("configured_source_roles_without_matching_context_source")
+    if len(included_records) != included_classified_count:
+        remaining_gap.append("prompt_included_context_not_fully_role_classified")
+    report = {
+        "schema": "libreevolve.explicit_context_source_role_report.v1",
+        "source": "startup_manifest_context_sources_and_context_policy_source_roles",
+        "context_present": context_policy.get("present") is True,
+        "record_count": len(records),
+        "classified_count": classified_count,
+        "unclassified_count": unclassified_count,
+        "included_record_count": len(included_records),
+        "included_classified_count": included_classified_count,
+        "configured_source_role_count": len(configured_roles),
+        "unmatched_source_role_paths": unmatched_role_paths,
+        "records": records,
+        "role_allowlist": sorted(_EXPLICIT_CONTEXT_SOURCE_ROLES),
+        "hash_policy": {
+            "content_hash": "sha256_raw_source_bytes_when_available",
+            "role_metadata_hash": "covered_by_context_manifest_sha256",
+            "redaction": "redact_sensitive_text_on_paths_errors_and_role_text",
+            "retained_source_text": False,
+        },
+        "claim_ready": not remaining_gap,
+        "claim_readiness": {
+            "source_roles_configured": len(configured_roles) > 0,
+            "all_records_role_classified": bool(records) and unclassified_count == 0,
+            "prompt_included_records_role_classified": (
+                bool(included_records)
+                and len(included_records) == included_classified_count
+            ),
+            "source_locations_recorded": all(
+                _explicit_context_role_has_location(record)
+                for record in records
+                if record.get("source_role_status") == "classified"
+            ),
+            "prompt_inclusion_decisions_recorded": all(
+                isinstance(record.get("prompt_inclusion_decision"), str)
+                for record in records
+            ),
+            "hash_and_redaction_policy_recorded": True,
+            "remaining_gap": remaining_gap,
+        },
+    }
+    report["validation"] = validate_explicit_context_source_role_report(report)
+    return report
+
+
+def _explicit_context_source_role_record(
+    source: Mapping[str, object],
+    *,
+    prompt_inclusion_decision: str,
+    configured_roles: Mapping[str, object],
+) -> dict:
+    path = source.get("path") if isinstance(source.get("path"), str) else None
+    role_metadata = (
+        source.get("source_role")
+        if isinstance(source.get("source_role"), Mapping)
+        else configured_roles.get(path)
+        if path is not None
+        else None
+    )
+    role_record = dict(role_metadata) if isinstance(role_metadata, Mapping) else None
+    status = "classified" if role_record else "unclassified"
+    record = {
+        "path": path,
+        "source_type": source.get("source_type"),
+        "sha256": source.get("sha256"),
+        "hash_scope": "raw_source_bytes" if _is_sha256_hex(source.get("sha256")) else None,
+        "extraction_status": source.get("extraction_status"),
+        "chars_rendered": source.get("chars_rendered"),
+        "prompt_inclusion_decision": prompt_inclusion_decision,
+        "source_role_status": status,
+        "source_role": role_record,
+        "problem_linkage": {
+            "topic": role_record.get("topic") if role_record else None,
+            "task_description_link": "problem_task_description",
+        },
+        "source_location": _explicit_context_source_location(role_record),
+        "redaction_policy": "role_metadata_paths_and_errors_redacted_before_manifest",
+    }
+    for field in (
+        "excerpt_start",
+        "excerpt_end",
+        "excerpt_spans",
+        "excerpt_pages",
+        "excerpt_page_spans",
+        "reason",
+    ):
+        if field in source:
+            record[field] = source.get(field)
+    return record
+
+
+def _explicit_context_source_location(role_record: Mapping[str, object] | None) -> dict:
+    if not isinstance(role_record, Mapping):
+        return {
+            "section": None,
+            "page": None,
+            "pages": None,
+            "span": None,
+            "location_recorded": False,
+        }
+    location = {
+        "section": role_record.get("section"),
+        "page": role_record.get("page"),
+        "pages": role_record.get("pages"),
+        "span": role_record.get("span"),
+    }
+    location["location_recorded"] = any(value is not None for value in location.values())
+    return location
+
+
+def _explicit_context_role_has_location(record: Mapping[str, object]) -> bool:
+    location = record.get("source_location")
+    return isinstance(location, Mapping) and location.get("location_recorded") is True
+
+
+def validate_explicit_context_source_role_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.explicit_context_source_role_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "explicit-context source-role report must be an object",
+                }
+            ],
+        }
+    if report.get("schema") != "libreevolve.explicit_context_source_role_report.v1":
+        issues.append({"code": "invalid_schema", "message": "unsupported explicit-context source-role report schema"})
+    if report.get("source") != "startup_manifest_context_sources_and_context_policy_source_roles":
+        issues.append({"code": "invalid_source", "message": "unsupported explicit-context source-role source"})
+    records = report.get("records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_records", "message": "records must be a list"})
+        records = []
+    _validate_report_count(report, "record_count", len(records), issues)
+    classified_count = 0
+    unclassified_count = 0
+    included_count = 0
+    included_classified_count = 0
+    for index, record in enumerate(records):
+        if not isinstance(record, Mapping):
+            issues.append({"code": "invalid_record", "message": f"record {index} must be an object"})
+            continue
+        if not isinstance(record.get("path"), str) or not record.get("path"):
+            issues.append({"code": "invalid_context_source_path", "message": f"record {index} path must be non-empty text"})
+        sha256 = record.get("sha256")
+        if sha256 is not None and not _is_sha256_hex(sha256):
+            issues.append({"code": "invalid_context_source_hash", "message": f"record {index} sha256 must be null or sha256 hex"})
+        decision = record.get("prompt_inclusion_decision")
+        if decision not in {
+            "included_in_startup_prompt_context",
+            "omitted_by_context_source_selection",
+            "omitted_before_prompt_context",
+        }:
+            issues.append({"code": "invalid_prompt_inclusion_decision", "message": f"record {index} prompt inclusion decision is unsupported"})
+        if decision == "included_in_startup_prompt_context":
+            included_count += 1
+        status = record.get("source_role_status")
+        role = record.get("source_role")
+        if status == "classified":
+            classified_count += 1
+            if decision == "included_in_startup_prompt_context":
+                included_classified_count += 1
+            _validate_explicit_context_source_role(index, role, issues)
+            if not _explicit_context_role_has_location(record):
+                issues.append({"code": "missing_source_location", "message": f"classified record {index} must include source location"})
+        elif status == "unclassified":
+            unclassified_count += 1
+            if role is not None:
+                issues.append({"code": "unclassified_record_has_role", "message": f"unclassified record {index} must not carry source_role"})
+        else:
+            issues.append({"code": "invalid_source_role_status", "message": f"record {index} source_role_status must be classified or unclassified"})
+    _validate_report_count(report, "classified_count", classified_count, issues)
+    _validate_report_count(report, "unclassified_count", unclassified_count, issues)
+    _validate_report_count(report, "included_record_count", included_count, issues)
+    _validate_report_count(
+        report,
+        "included_classified_count",
+        included_classified_count,
+        issues,
+    )
+    role_allowlist = report.get("role_allowlist")
+    if role_allowlist != sorted(_EXPLICIT_CONTEXT_SOURCE_ROLES):
+        issues.append({"code": "invalid_role_allowlist", "message": "role allowlist must match explicit-context role enum"})
+    hash_policy = report.get("hash_policy")
+    if not isinstance(hash_policy, Mapping):
+        issues.append({"code": "invalid_hash_policy", "message": "hash_policy must be an object"})
+    elif hash_policy.get("retained_source_text") is not False:
+        issues.append({"code": "source_text_retention_overclaim", "message": "explicit-context source-role report must not retain source text"})
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
+    elif not isinstance(readiness.get("remaining_gap"), list):
+        issues.append({"code": "invalid_remaining_gap", "message": "remaining_gap must be a list"})
+    if report.get("claim_ready") not in {True, False}:
+        issues.append({"code": "invalid_claim_ready", "message": "claim_ready must be boolean"})
+    return {
+        "schema": "libreevolve.explicit_context_source_role_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _validate_explicit_context_source_role(
+    index: int,
+    role: object,
+    issues: list[dict],
+) -> None:
+    if not isinstance(role, Mapping):
+        issues.append({"code": "invalid_source_role", "message": f"classified record {index} source_role must be an object"})
+        return
+    if role.get("role") not in _EXPLICIT_CONTEXT_SOURCE_ROLES:
+        issues.append({"code": "invalid_source_role_name", "message": f"classified record {index} role is unsupported"})
+    topic = role.get("topic")
+    if not isinstance(topic, str) or not topic:
+        issues.append({"code": "invalid_source_role_topic", "message": f"classified record {index} topic must be non-empty text"})
+    if not any(role.get(field) is not None for field in ("section", "page", "pages", "span")):
+        issues.append({"code": "missing_source_role_location", "message": f"classified record {index} must include section, page, pages, or span"})
 
 
 def _task_spec_artifact_resolution_report(

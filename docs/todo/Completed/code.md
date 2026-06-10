@@ -16228,3 +16228,25 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     tests/core/test_loop.py::test_runtime_history_reports_prompt_prior_stage_summary_io_display
     tests/core/test_loop.py::test_runtime_history_reports_prompt_prior_feedback_section_policy
     -q` passes.
+
+- [x] Add explicit-context source-role provenance for AlphaEvolve prompt
+      context.
+  - Spec evidence: AlphaEvolve Section 2.2 says users can tailor the primary
+    evolution prompt with explicit context about the problem, including fixed
+    human-written instructions, equations, code snippets, and relevant
+    literature such as PDF files.
+  - Status: `context.yaml` now accepts validated `source_roles` records keyed
+    by context-relative source path. Each record must declare one of
+    `human_instruction`, `equation`, `code_snippet`, `literature_pdf`, or
+    `background_reference`, a non-empty topic linkage, and at least one source
+    locator from `section`, `page`, `pages`, or `span`. Loader metadata carries
+    source roles onto selected context sources and typed source-selection
+    records, prompt headers expose the role/topic when available, and
+    `runtime.history.explicit_context_source_role_report` records
+    prompt-inclusion decisions, source locations, hash scope, redaction policy,
+    role counts, and claim-readiness gaps.
+  - Verification: `py -3.12 -m pytest
+    tests/core/test_loader.py::test_context_manifest_records_source_roles
+    tests/core/test_loader.py::test_context_manifest_rejects_invalid_source_roles
+    tests/core/test_loop.py::test_runtime_history_reports_explicit_context_source_roles
+    -q` passes.

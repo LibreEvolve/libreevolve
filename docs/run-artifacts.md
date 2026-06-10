@@ -738,6 +738,20 @@ context.
 For valid `.txt`, `.md`, and `.py` context, `chars_original` and
 `chars_rendered` describe the decoded UTF-8 text without trimming
 leading/trailing whitespace.
+Context manifests may include `source_roles` records keyed by selected
+context-relative path. Role metadata is validated against the
+`human_instruction`, `equation`, `code_snippet`, `literature_pdf`, and
+`background_reference` enum, requires a non-empty task/topic linkage, and
+requires at least one source locator (`section`, `page`, `pages`, or `span`).
+Typed sources carry `source_role` metadata in `problem.context_sources`, typed
+source-selection records, and prompt context headers.
+`runtime.history.explicit_context_source_role_report` has schema
+`libreevolve.explicit_context_source_role_report.v1` and records each context
+source path, role status, topic linkage, source location, startup prompt
+inclusion/omission decision, source hash scope, and report-level redaction
+policy. Its validator keeps claim readiness false when prompt-included context
+is unclassified, a configured role does not match any observed context source,
+or no explicit context exists.
 
 Reusing an existing run directory is intentionally not treated as resume.
 Before a run starts, LibreEvolve checks the target run directory for known run

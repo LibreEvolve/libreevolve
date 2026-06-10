@@ -60,6 +60,12 @@ LibreEvolve has:
   `runtime.history.paper_evaluator_metric_contract`, separating evaluator
   scalar metrics from local validity/output/feedback fields and recording raw,
   maximized, and normalized score evidence
+- explicit-context source-role reports under
+  `runtime.history.explicit_context_source_role_report`, backed by validated
+  `context.yaml` `source_roles` metadata for human instructions, equations,
+  code snippets, literature PDFs, and background references, including task
+  topic linkage, source location, startup prompt inclusion/omission decision,
+  and hash/redaction policy
 - single-run paper metric table exports under
   `runtime.history.paper_metric_table_export`, with stable metric/program rows,
   raw/maximized/normalized value columns, display precision policy, excluded

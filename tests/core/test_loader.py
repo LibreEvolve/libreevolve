@@ -687,6 +687,84 @@ def test_reads_nested_context_files_with_manifest_selection():
         assert len(skipped["ignored.txt"]["sha256"]) == 64
 
 
+def test_context_manifest_records_source_roles():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        context = d / "context"
+        context.mkdir()
+        (context / "notes.md").write_text("use this constraint", encoding="utf-8")
+        (context / "formula.md").write_text("score = x + y", encoding="utf-8")
+        (context / "context.yaml").write_text(
+            yaml.dump(
+                {
+                    "source_roles": {
+                        "notes.md": {
+                            "role": "human_instruction",
+                            "topic": "local constraints",
+                            "section": "operator notes",
+                        },
+                        "formula.md": {
+                            "role": "equation",
+                            "topic": "objective formula",
+                            "span": "full file",
+                        },
+                    }
+                }
+            ),
+            encoding="utf-8",
+        )
+
+        p = load_problem(d)
+
+        notes = next(s for s in p.context_sources if s["path"] == "notes.md")
+        assert notes["source_role_status"] == "classified"
+        assert notes["source_role"] == {
+            "role": "human_instruction",
+            "topic": "local constraints",
+            "section": "operator notes",
+        }
+        assert p.context_policy["source_role_count"] == 2
+        assert p.context_policy["source_roles"]["formula.md"]["role"] == "equation"
+        selected = {
+            item["path"]: item
+            for item in p.context_policy["source_selection"]["selected_sources"]
+        }
+        assert selected["notes.md"]["source_role_status"] == "classified"
+        assert selected["notes.md"]["source_role"]["topic"] == "local constraints"
+
+
+@pytest.mark.parametrize(
+    "source_role,expected",
+    [
+        (
+            {"role": "memo", "topic": "x", "section": "notes"},
+            r"source_roles\['notes\.md'\]\.role must be one of",
+        ),
+        (
+            {"role": "human_instruction", "section": "notes"},
+            r"source_roles\['notes\.md'\]\.topic must be a non-empty string",
+        ),
+        (
+            {"role": "human_instruction", "topic": "x"},
+            r"must include at least one source locator",
+        ),
+    ],
+)
+def test_context_manifest_rejects_invalid_source_roles(source_role, expected):
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        context = d / "context"
+        context.mkdir()
+        (context / "notes.md").write_text("notes", encoding="utf-8")
+        (context / "context.yaml").write_text(
+            yaml.dump({"source_roles": {"notes.md": source_role}}),
+            encoding="utf-8",
+        )
+
+        with pytest.raises(ValueError, match=expected):
+            load_problem(d)
+
+
 def test_context_policy_hash_changes_when_excluded_file_changes():
     with tempfile.TemporaryDirectory() as t:
         d = _make(t)

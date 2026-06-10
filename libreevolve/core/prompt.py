@@ -7180,12 +7180,25 @@ def _render_context_header(name: str, source: dict | None) -> str:
     status = _short(source.get("extraction_status", "unknown"), max_chars=80) or "unknown"
     page_reference = _format_page_reference(source)
     pages = f", pages={page_reference}" if page_reference else ""
+    role_reference = _context_source_role_reference(source)
+    role = f", role={role_reference}" if role_reference else ""
     chars = _nonnegative_int_text(source.get("chars_original"))
     return (
         f"--- CONTEXT SOURCE: {name_text} "
         f"(sha256={sha}, chars={chars}, "
-        f"excerpt={span}{pages}, status={status}) ---"
+        f"excerpt={span}{pages}{role}, status={status}) ---"
     )
+
+
+def _context_source_role_reference(source: dict) -> str:
+    role = source.get("source_role")
+    if not isinstance(role, Mapping):
+        return ""
+    role_name = _short(role.get("role"), max_chars=80)
+    topic = _short(role.get("topic"), max_chars=120)
+    if role_name and topic:
+        return f"{role_name}:{topic}"
+    return role_name
 
 
 def _context_sha_text(value: object) -> str:

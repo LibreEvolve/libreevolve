@@ -13,6 +13,7 @@ from datetime import datetime
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 import pytest
+import yaml
 from libreevolve.core.candidate import CandidateWorkspace
 from libreevolve.core.budget import (
     RunBudget,
@@ -53,6 +54,7 @@ from libreevolve.core.loop import (
     validate_initial_pool_divergence_report,
     validate_problem_formulation_provenance_report,
     validate_existing_codebase_integration_report,
+    validate_explicit_context_source_role_report,
     validate_marker_spelling_provenance_report,
     validate_task_spec_artifact_resolution_report,
     validate_evaluator_oracle_registry,
@@ -7221,6 +7223,88 @@ def test_loop_persists_loader_context_limit_policy_to_manifest():
     assert policy["skipped_record_count"] == 1
     assert policy["skipped_records_truncated"] is True
     assert policy["skipped_records_omitted"] == 1
+
+
+def test_runtime_history_reports_explicit_context_source_roles():
+    tmpdir = tempfile.mkdtemp()
+    problem_dir = Path(tempfile.mkdtemp())
+    (problem_dir / "task_description.txt").write_text(
+        "optimize a formula with local instructions",
+        encoding="utf-8",
+    )
+    (problem_dir / "metrics.yaml").write_text(
+        "metrics:\n"
+        "  - name: score\n"
+        "    direction: maximize\n"
+        "    primary: true\n"
+        "    bounds: [0.0, 1.0]\n",
+        encoding="utf-8",
+    )
+    (problem_dir / "validate.py").write_text(
+        "def evaluate(c): return {'score': 1.0, 'is_valid': True}\n",
+        encoding="utf-8",
+    )
+    seeds = problem_dir / "initial_programs"
+    seeds.mkdir()
+    (seeds / "seed.py").write_text("x = 1\n", encoding="utf-8")
+    context = problem_dir / "context"
+    context.mkdir()
+    (context / "instructions.md").write_text("always keep x positive", encoding="utf-8")
+    (context / "formula.md").write_text("score = x * 2", encoding="utf-8")
+    (context / "context.yaml").write_text(
+        yaml.dump(
+            {
+                "source_roles": {
+                    "instructions.md": {
+                        "role": "human_instruction",
+                        "topic": "search constraints",
+                        "section": "operator notes",
+                    },
+                    "formula.md": {
+                        "role": "equation",
+                        "topic": "objective formula",
+                        "span": "full file",
+                    },
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+    problem = load_problem(problem_dir)
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()) as build:
+        evolve(problem, Config(max_generations=0, log_dir=tmpdir, problem_name="ctx"))
+
+    build.assert_not_called()
+    manifest = json.loads((Path(tmpdir) / "ctx" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["explicit_context_source_role_report"]
+
+    assert report["schema"] == "libreevolve.explicit_context_source_role_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_explicit_context_source_role_report(report)["ok"] is True
+    assert report["classified_count"] == 2
+    assert report["unclassified_count"] == 0
+    assert report["included_record_count"] == 2
+    assert report["included_classified_count"] == 2
+    assert report["claim_ready"] is True
+    records = {record["path"]: record for record in report["records"]}
+    assert records["instructions.md"]["source_role"]["role"] == "human_instruction"
+    assert records["instructions.md"]["problem_linkage"]["topic"] == "search constraints"
+    assert records["instructions.md"]["source_location"]["section"] == "operator notes"
+    assert records["formula.md"]["source_role"]["role"] == "equation"
+    assert records["formula.md"]["source_location"]["span"] == "full file"
+    assert records["formula.md"]["prompt_inclusion_decision"] == (
+        "included_in_startup_prompt_context"
+    )
+    assert report["hash_policy"]["retained_source_text"] is False
+
+    edited = copy.deepcopy(report)
+    edited["records"][0]["source_role"]["role"] = "retrieval_blob"
+    validation = validate_explicit_context_source_role_report(edited)
+    assert validation["ok"] is False
+    assert "invalid_source_role_name" in {
+        issue["code"] for issue in validation["issues"]
+    }
 
 
 def test_loop_writes_objective_schema_to_manifest():

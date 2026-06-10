@@ -10979,3 +10979,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: prompt prior-score runtime tests validate the report schema,
     score display, `average_score`, execution-output, stage-summary IO, and
     feedback-section policy records.
+
+- [x] Track explicit-context source roles for prompt sampling.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.2 lists explicit
+    prompt context as fixed human-written instructions, equations, code
+    snippets, and relevant literature such as PDF files.
+  - Status: paper-facing docs now distinguish typed AlphaEvolve-style explicit
+    context from generic local context-file ingestion. `context.yaml`
+    `source_roles` metadata records source role, task/topic linkage, source
+    location, and manifest-backed role provenance; startup manifests expose
+    `runtime.history.explicit_context_source_role_report` with prompt
+    inclusion/omission decisions, content hash scope, redaction policy,
+    classified/unclassified counts, and claim-readiness checks.
+  - Verification: loader and runtime report tests validate role parsing,
+    invalid-role rejection, runtime report schema, role/location records, and
+    validator rejection of unsupported role names.

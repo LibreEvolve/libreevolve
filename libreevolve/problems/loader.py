@@ -46,6 +46,13 @@ _SYSTEM_CONTRIBUTION_METADATA_NAMES = (
 _CONTEXT_EXPLICIT_FAILURE_POLICIES = {"error", "warn"}
 _CONTEXT_EXCERPT_POLICIES = {"head", "head_tail", "term_ranked"}
 _CONTEXT_SOURCE_SELECTION_POLICIES = {"path_order", "term_ranked"}
+_CONTEXT_SOURCE_ROLES = {
+    "human_instruction",
+    "equation",
+    "code_snippet",
+    "literature_pdf",
+    "background_reference",
+}
 _METRIC_NAME_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*){0,7}")
 
 @dataclass
@@ -1208,6 +1215,13 @@ def _load_context_files(
             max_pdf_pages=max_pdf_pages,
             max_pdf_chars=max_pdf_chars,
         )
+        role_metadata = manifest["source_roles"].get(rel)
+        if role_metadata is not None:
+            metadata["source_role"] = dict(role_metadata)
+            metadata["source_role_status"] = "classified"
+        else:
+            metadata["source_role"] = None
+            metadata["source_role_status"] = "unclassified"
         if metadata.get("extraction_status") != "ok":
             diagnostic = _context_extraction_diagnostic(metadata)
             matched_include_patterns = _matched_context_include_patterns(
@@ -1262,6 +1276,7 @@ def _load_context_files(
         include_patterns=include_patterns,
         on_explicit_context_failure=manifest["on_explicit_context_failure"],
         explicit_context_failures=explicit_context_failures,
+        source_roles=manifest["source_roles"],
     )
     if (
         explicit_context_failures
@@ -1335,6 +1350,7 @@ def _load_context_manifest(context_dir: Path) -> dict:
         "excerpt_policy",
         "source_selection_policy",
         "max_selected_context_sources",
+        "source_roles",
     }
     unsupported = sorted(set(raw) - supported_fields)
     if unsupported:
@@ -1428,6 +1444,10 @@ def _load_context_manifest(context_dir: Path) -> dict:
         "max_context_provenance_chars",
         _MAX_CONTEXT_PROVENANCE_CHARS,
     )
+    source_roles = _validate_context_source_roles(
+        context_dir,
+        raw.get("source_roles", {}),
+    )
     return {
         "manifest": manifest_record,
         "include": include,
@@ -1445,6 +1465,7 @@ def _load_context_manifest(context_dir: Path) -> dict:
         "on_explicit_context_failure": on_explicit_context_failure,
         "source_selection_policy": source_selection_policy,
         "max_selected_context_sources": max_selected_context_sources,
+        "source_roles": source_roles,
     }
 
 
@@ -1466,6 +1487,139 @@ def _optional_positive_context_int(
     if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
         raise ValueError(f"{context_dir}: {field} must be a positive integer or null")
     return value
+
+
+def _validate_context_source_roles(context_dir: Path, value: object) -> dict[str, dict]:
+    if value is None:
+        return {}
+    if not isinstance(value, dict):
+        raise ValueError(f"{context_dir}: source_roles must be a mapping")
+    normalized: dict[str, dict] = {}
+    for raw_path, raw_metadata in value.items():
+        if not isinstance(raw_path, str):
+            raise ValueError(f"{context_dir}: source_roles keys must be strings")
+        _validate_context_manifest_source_role_path(context_dir, raw_path)
+        path = _context_display_path(raw_path)
+        if path in normalized:
+            raise ValueError(
+                f"{context_dir}: duplicate source_roles path after Unicode "
+                f"normalization: {raw_path!r}"
+            )
+        if not isinstance(raw_metadata, dict):
+            raise ValueError(
+                f"{context_dir}: source_roles[{raw_path!r}] must be a mapping"
+            )
+        if not all(isinstance(key, str) for key in raw_metadata):
+            raise ValueError(
+                f"{context_dir}: source_roles[{raw_path!r}] keys must be strings"
+            )
+        unsupported = sorted(
+            set(raw_metadata)
+            - {"role", "topic", "section", "page", "pages", "span", "notes"}
+        )
+        if unsupported:
+            raise ValueError(
+                f"{context_dir}: source_roles[{raw_path!r}] has unsupported "
+                f"fields {unsupported}"
+            )
+        role = raw_metadata.get("role")
+        if not isinstance(role, str) or role not in _CONTEXT_SOURCE_ROLES:
+            raise ValueError(
+                f"{context_dir}: source_roles[{raw_path!r}].role must be one of "
+                f"{sorted(_CONTEXT_SOURCE_ROLES)}"
+            )
+        topic = _validate_context_role_text(
+            context_dir,
+            raw_path,
+            raw_metadata.get("topic"),
+            "topic",
+            required=True,
+        )
+        record = {
+            "role": role,
+            "topic": topic,
+        }
+        for field in ("section", "span", "notes"):
+            if field in raw_metadata:
+                record[field] = _validate_context_role_text(
+                    context_dir,
+                    raw_path,
+                    raw_metadata[field],
+                    field,
+                    required=False,
+                )
+        if "page" in raw_metadata:
+            page = raw_metadata["page"]
+            if isinstance(page, bool) or not isinstance(page, int) or page <= 0:
+                raise ValueError(
+                    f"{context_dir}: source_roles[{raw_path!r}].page must be a "
+                    "positive integer"
+                )
+            record["page"] = page
+        if "pages" in raw_metadata:
+            pages = raw_metadata["pages"]
+            if (
+                not isinstance(pages, list)
+                or not pages
+                or any(isinstance(page, bool) or not isinstance(page, int) or page <= 0 for page in pages)
+            ):
+                raise ValueError(
+                    f"{context_dir}: source_roles[{raw_path!r}].pages must be a "
+                    "non-empty list of positive integers"
+                )
+            record["pages"] = list(pages)
+        if not any(field in record for field in ("section", "page", "pages", "span")):
+            raise ValueError(
+                f"{context_dir}: source_roles[{raw_path!r}] must include at "
+                "least one source locator: section, page, pages, or span"
+            )
+        normalized[path] = record
+    return normalized
+
+
+def _validate_context_manifest_source_role_path(context_dir: Path, path: str) -> None:
+    if _unsafe_context_pattern(path):
+        raise ValueError(
+            f"{context_dir}: source_roles path must be a safe problem-relative "
+            f"context path: {path!r}"
+        )
+    if any(char in path for char in "*?[]"):
+        raise ValueError(
+            f"{context_dir}: source_roles path must name one context source, "
+            f"not a glob pattern: {path!r}"
+        )
+
+
+def _validate_context_role_text(
+    context_dir: Path,
+    path: str,
+    value: object,
+    field: str,
+    *,
+    required: bool,
+) -> str:
+    if not isinstance(value, str) or not value.strip():
+        qualifier = "a non-empty string" if required else "a non-empty string when provided"
+        raise ValueError(
+            f"{context_dir}: source_roles[{path!r}].{field} must be {qualifier}"
+        )
+    redacted = redact_sensitive_text(value.strip())
+    if redacted != value.strip():
+        raise ValueError(
+            f"{context_dir}: source_roles[{path!r}].{field} must not look "
+            "secret-like"
+        )
+    if len(redacted) > 500:
+        raise ValueError(
+            f"{context_dir}: source_roles[{path!r}].{field} must be at most "
+            "500 characters"
+        )
+    if any(ord(char) < 32 or ord(char) == 127 or unicodedata.category(char) == "Cf" for char in redacted):
+        raise ValueError(
+            f"{context_dir}: source_roles[{path!r}].{field} must not contain "
+            "unsafe control characters"
+        )
+    return redacted
 
 
 def _validate_context_patterns(context_dir: Path, field: str, patterns: list[str]) -> None:
@@ -1656,10 +1810,12 @@ def _context_policy(
     include_patterns: list[dict] | None = None,
     on_explicit_context_failure: str = "error",
     explicit_context_failures: list[dict] | None = None,
+    source_roles: dict[str, dict] | None = None,
 ) -> dict:
     skipped = skipped or _ContextSkippedDiagnostics(max_skipped_diagnostics)
     include_patterns = include_patterns or []
     explicit_context_failures = explicit_context_failures or []
+    source_roles = source_roles or {}
     policy = {
         "present": present,
         "supported_extensions": sorted(_CONTEXT_EXTENSIONS),
@@ -1687,6 +1843,8 @@ def _context_policy(
         "on_explicit_context_failure": on_explicit_context_failure,
         "explicit_context_failure_count": len(explicit_context_failures),
         "explicit_context_failures": list(explicit_context_failures),
+        "source_roles": dict(sorted(source_roles.items())),
+        "source_role_count": len(source_roles),
         "selected_count": selected_count,
         "usable_selected_count": selected_count,
         "skipped_count": skipped.total_count,
@@ -1757,6 +1915,8 @@ def _select_context_source_records(
             "sha256": metadata.get("sha256"),
             "chars_rendered": metadata.get("chars_rendered", len(rendered)),
             "excerpt_policy": metadata.get("excerpt_policy"),
+            "source_role": metadata.get("source_role"),
+            "source_role_status": metadata.get("source_role_status", "unclassified"),
             "score": score,
             "original_index": index,
         })
@@ -1826,6 +1986,12 @@ def _context_source_selection_record(
         "excerpt_policy": candidate["excerpt_policy"],
         "score": candidate["score"],
     }
+    if candidate.get("source_role") is not None:
+        record["source_role"] = candidate.get("source_role")
+        record["source_role_status"] = candidate.get(
+            "source_role_status",
+            "classified",
+        )
     if rank is not None:
         record["rank"] = rank
     if reason is not None:

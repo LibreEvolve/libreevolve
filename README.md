@@ -2169,6 +2169,15 @@ Context policy `include_patterns[].matches` counts supported files that matched
 an include pattern before hidden, exclude, stat, and resource filters;
 `selected_matches` counts files from that pattern that were actually selected
 for prompt context.
+Context manifests may also declare AlphaEvolve-style source roles under
+`source_roles`, keyed by context-relative path. Each role record must include
+one of `human_instruction`, `equation`, `code_snippet`, `literature_pdf`, or
+`background_reference`, a non-empty `topic`, and at least one source locator
+from `section`, `page`, `pages`, or `span`. Loaded context-source metadata,
+source-selection records for typed sources, prompt-visible context headers, and
+`runtime.history.explicit_context_source_role_report` then preserve the role,
+topic linkage, location, prompt inclusion/omission decision, hash scope, and
+redaction policy without retaining source text in the report.
 Context manifests can bound ingestion separately from prompt excerpts with
 `max_bytes_per_source`, `max_total_bytes`, `max_pdf_pages`, `max_pdf_chars`,
 `max_context_entries`, `max_context_depth`, `max_skipped_diagnostics`, and

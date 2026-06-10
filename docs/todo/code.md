@@ -597,29 +597,6 @@ Primary evidence:
     implemented weighted markers from AlphaEvolve-style stochastic-formatting
     evidence.
 
-- [ ] Add explicit-context source-role provenance for AlphaEvolve prompt
-      context.
-  - Spec evidence: AlphaEvolve Section 2.2 says users can tailor the primary
-    evolution prompt with explicit context about the problem, including fixed
-    human-written instructions, equations, code snippets, and relevant
-    literature such as PDF files.
-  - Current evidence: LibreEvolve can load and render local `.txt`, `.md`,
-    `.py`, and `.pdf` context files with include/exclude rules, hashes,
-    extraction spans, deterministic ordering/filtering, truncation, hidden
-    context policy, and prompt-visible diagnostics. Those mechanics prove that
-    bytes entered the prompt, but they do not classify why each source is
-    relevant to the task or whether it is serving as human instruction,
-    equation/formula context, code-snippet context, literature evidence, or
-    another explicit-context role.
-  - Required result: add context-source role metadata and validators for
-    AlphaEvolve-style explicit context: source role
-    (`human_instruction`, `equation`, `code_snippet`, `literature_pdf`,
-    `background_reference`, or equivalent), problem/topic linkage, source
-    section/page/span when applicable, prompt-inclusion decision, hash/redaction
-    policy, and docs checks that distinguish local file-ingestion provenance
-    from paper-facing evidence that explicit problem context was typed and
-    intentionally supplied.
-
 - [ ] Complete provider-token prompt section fitting beyond mutation prompts
       and async/pending-work budget composition.
   - Spec evidence: AlphaEvolve prompt sampling supports long contexts and

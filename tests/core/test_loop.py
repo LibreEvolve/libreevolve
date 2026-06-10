@@ -6872,6 +6872,17 @@ def test_runtime_history_reports_task_spec_artifact_resolution():
     )
     assert report["standalone_task_spec_artifact"]["present"] is True
     assert len(report["standalone_task_spec_artifact"]["sha256"]) == 64
+    deep_id = report["deep_id_resolution"]
+    assert deep_id["schema"] == "libreevolve.task_spec_deep_id_resolution.v1"
+    assert deep_id["program_count"] == 2
+    assert deep_id["record_count"] == 2
+    assert deep_id["candidate_history_join_count"] == 2
+    assert deep_id["generated_prompt_record_count"] == 1
+    assert deep_id["prompt_history_add_join_count"] == 1
+    assert deep_id["prompt_history_score_join_count"] == 1
+    assert deep_id["claim_readiness"]["candidate_history_rows_joined"] is True
+    assert deep_id["claim_readiness"]["prompt_history_rows_joined"] is True
+    assert deep_id["claim_readiness"]["evaluator_row_ids_resolved"] is False
     assert report["validation"]["ok"] is True
     assert validate_task_spec_artifact_resolution_report(report)["ok"] is True
     assert report["field_count"] == 8
@@ -6884,8 +6895,16 @@ def test_runtime_history_reports_task_spec_artifact_resolution():
     assert report["claim_readiness"]["startup_bundle_validated"] is True
     assert report["claim_readiness"]["manifest_paths_resolved"] is True
     assert report["claim_readiness"]["standalone_task_spec_artifact"] is True
+    assert report["claim_readiness"]["candidate_history_rows_joined"] is True
+    assert report["claim_readiness"]["prompt_history_rows_joined"] is True
     assert report["claim_readiness"]["evolvable_component_span_ids"] is False
     assert report["claim_readiness"]["full_alphaevolve_task_spec_parity"] is False
+    assert "deep_id_resolution_into_prompt_evaluator_candidate_history" not in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    assert "deep_evaluator_score_causality_resolution" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
     assert "standalone_task_spec_report_examples" not in (
         report["claim_readiness"]["remaining_gap"]
     )
@@ -6947,18 +6966,35 @@ def test_runtime_history_reports_task_spec_artifact_resolution():
             "value_count": 10,
         }
     ]
+    generated_deep_record = [
+        record
+        for record in deep_id["records"]
+        if record["candidate_type"] == "generated"
+    ][0]
+    assert generated_deep_record["history_join"]["candidate_history"]["stream"] == (
+        "history.jsonl"
+    )
+    assert generated_deep_record["history_join"]["prompt_history"]["add_line_number"] == 1
+    assert generated_deep_record["history_join"]["prompt_history"]["score_line_number"] == 2
+    assert generated_deep_record["evaluation_link"]["row_policy"] == (
+        "evaluation_payload_is_embedded_in_joined_candidate_history_record"
+    )
 
     edited = copy.deepcopy(report)
     edited["claim_ready"] = True
     edited["claim_readiness"]["full_alphaevolve_task_spec_parity"] = True
     edited["standalone_task_spec_artifact"]["present"] = False
     edited["claim_readiness"]["standalone_task_spec_artifact"] = False
+    edited["deep_id_resolution"]["claim_ready"] = True
+    edited["deep_id_resolution"]["claim_readiness"]["evaluator_row_ids_resolved"] = True
     validation = validate_task_spec_artifact_resolution_report(edited)
     assert validation["ok"] is False
     assert {issue["code"] for issue in validation["issues"]} >= {
         "claim_ready_overclaim",
         "missing_standalone_task_spec_artifact",
         "standalone_task_spec_artifact_not_ready",
+        "task_spec_deep_id_claim_overclaim",
+        "task_spec_deep_id_evaluator_overclaim",
         "task_spec_parity_overclaim",
     }
 

@@ -121,9 +121,9 @@ LibreEvolve has:
   task-spec manifest paths and linking each field to candidate-history,
   prompt-history, LLM-call, controller-budget, evaluator-artifact, and
   best-export evidence, plus initial evolvable-span ids and embedded
-  score-field candidate-path links when available, while leaving causal score
-  attribution, paper-facing standalone examples, and deep per-id resolution
-  open
+  score-field candidate-path links when available, plus bounded candidate and
+  prompt JSONL row joins, while leaving causal score attribution, independent
+  evaluator row ids, and paper-facing standalone examples open
 - runtime initial-program idea provenance reports under
   `runtime.history.initial_program_idea_provenance_report`, linking optional
   seed idea-origin metadata and seed variant ids from `problem.seed_sources` to

@@ -45,9 +45,12 @@ and links task-spec fields to concrete runtime artifact paths such as
 `llm_calls.jsonl`, `controller_budget_events.jsonl`, `evaluator_artifacts`,
 `best.py`, `best_workspace`, and the standalone `task_specification.json`.
 It records per-field reference summaries, program counts, manifest-path
-resolution counts, artifact-link/presence counts, and `claim_ready: false`
-gaps for paper-facing standalone examples, causal score-field attribution, and
-deeper id resolution into prompt/evaluator/candidate history.
+resolution counts, artifact-link/presence counts, and bounded
+`deep_id_resolution` records that join candidate ids to `history.jsonl` /
+`failure_history.jsonl` rows and generated prompt ids to `prompt_history.jsonl`
+add/score rows. Its `claim_ready: false` gaps still cover paper-facing
+standalone examples, causal score-field attribution, and independent evaluator
+row ids.
 Completed manifests also include
 `runtime.history.initial_program_idea_provenance_report` with schema
 `libreevolve.initial_program_idea_provenance_report.v1`. This report reads

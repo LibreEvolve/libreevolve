@@ -498,14 +498,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     controller-budget events, evaluator artifacts, best exports, initial
     evolvable component spans when markers are present, embedded score-field
     candidate-path links when candidate-owned evaluation ran, and the hashed
-    standalone `task_specification.json` run artifact. README should still not
-    imply full AlphaEvolve task-spec parity because score-field causal
-    attribution, paper-facing standalone examples, and per-id record resolution
-    remain incomplete.
+    standalone `task_specification.json` run artifact. It also documents
+    bounded candidate and prompt JSONL row joins. README should still not imply
+    full AlphaEvolve task-spec parity because score-field causal attribution,
+    independent evaluator row ids, and paper-facing standalone examples remain
+    incomplete.
   - Required result: when score-field causal attribution, paper-facing
-    standalone examples, and per-id prompt/evaluator/candidate/history
-    resolution land, update README, ROADMAP, papers index, and code/paper TODOs
-    together.
+    standalone examples, and independent evaluator-row id resolution land,
+    update README, ROADMAP, papers index, and code/paper TODOs together.
 
 - [ ] Keep README install and CLI wording scoped to editable/local use versus
   release-artifact verification.

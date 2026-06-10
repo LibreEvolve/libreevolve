@@ -10241,9 +10241,14 @@ def _task_spec_artifact_resolution_report(
         "standalone_task_specification",
     )
     standalone_artifact_present = standalone_artifact.get("present") is True
+    deep_id_resolution = _task_spec_deep_id_resolution(run_dir, programs)
     remaining_gap = [
-        "deep_id_resolution_into_prompt_evaluator_candidate_history",
+        "deep_evaluator_score_causality_resolution",
     ]
+    if deep_id_resolution["claim_readiness"]["candidate_history_rows_joined"] is not True:
+        remaining_gap.insert(0, "candidate_id_to_history_row_resolution")
+    if deep_id_resolution["claim_readiness"]["prompt_history_rows_joined"] is not True:
+        remaining_gap.insert(0, "prompt_id_to_prompt_history_row_resolution")
     if not standalone_artifact_present:
         remaining_gap.insert(0, "standalone_task_spec_report_examples")
     if evolvable_component_span_count == 0:
@@ -10263,6 +10268,7 @@ def _task_spec_artifact_resolution_report(
             else False
         ),
         "standalone_task_spec_artifact": standalone_artifact,
+        "deep_id_resolution": deep_id_resolution,
         "field_count": len(field_resolutions),
         "field_resolutions": field_resolutions,
         "manifest_path_count": manifest_path_count,
@@ -10282,6 +10288,12 @@ def _task_spec_artifact_resolution_report(
             "manifest_paths_resolved": manifest_path_count > 0
             and manifest_path_count == manifest_path_resolved_count,
             "standalone_task_spec_artifact": standalone_artifact_present,
+            "candidate_history_rows_joined": deep_id_resolution["claim_readiness"][
+                "candidate_history_rows_joined"
+            ],
+            "prompt_history_rows_joined": deep_id_resolution["claim_readiness"][
+                "prompt_history_rows_joined"
+            ],
             "runtime_artifact_cross_links": artifact_link_count > 0,
             "artifact_links_all_present": artifact_link_count > 0
             and artifact_link_count == artifact_present_count,
@@ -10294,6 +10306,105 @@ def _task_spec_artifact_resolution_report(
     }
     report["validation"] = validate_task_spec_artifact_resolution_report(report)
     return report
+
+
+def _task_spec_deep_id_resolution(run_dir: Path, programs: list[Program]) -> dict:
+    history_indexes = _prompt_current_history_join_indexes(run_dir)
+    records = [
+        _task_spec_deep_id_record(program, history_indexes)
+        for program in programs[:50]
+    ]
+    generated_records = [
+        record for record in records if record.get("candidate_type") == "generated"
+    ]
+    candidate_history_join_count = sum(
+        1 for record in records if record["history_join"]["candidate_history_joined"]
+    )
+    prompt_add_join_count = sum(
+        1
+        for record in generated_records
+        if record["history_join"]["prompt_history_add_joined"]
+    )
+    prompt_score_join_count = sum(
+        1
+        for record in generated_records
+        if record["history_join"]["prompt_history_score_joined"]
+    )
+    generated_prompt_record_count = sum(
+        1
+        for record in generated_records
+        if isinstance(record.get("prompt_program_id"), str)
+        and bool(record.get("prompt_program_id"))
+    )
+    report = {
+        "schema": "libreevolve.task_spec_deep_id_resolution.v1",
+        "source": "history_jsonl_failure_history_jsonl_prompt_history_jsonl_row_indexes",
+        "program_count": len(programs),
+        "record_count": len(records),
+        "records_limit": 50,
+        "records_truncated": len(programs) > 50,
+        "candidate_history_join_count": candidate_history_join_count,
+        "generated_prompt_record_count": generated_prompt_record_count,
+        "prompt_history_add_join_count": prompt_add_join_count,
+        "prompt_history_score_join_count": prompt_score_join_count,
+        "records": records,
+        "join_policy": {
+            "candidate_history": "candidate_id_to_history_jsonl_id_or_failure_history_jsonl_program_id",
+            "prompt_history": "prompt_program_id_to_prompt_history_add_and_candidate_id_to_prompt_history_score_metadata_last_program_id",
+            "evaluator_history": "program_evaluation_embedded_in_candidate_history_rows_not_independent_evaluator_row_id",
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "candidate_history_rows_joined": (
+                len(programs) > 0 and candidate_history_join_count == len(records)
+            ),
+            "prompt_history_rows_joined": (
+                generated_prompt_record_count > 0
+                and prompt_add_join_count == generated_prompt_record_count
+                and prompt_score_join_count == generated_prompt_record_count
+            ),
+            "evaluator_row_ids_resolved": False,
+            "full_alphaevolve_task_spec_id_resolution": False,
+        },
+    }
+    return report
+
+
+def _task_spec_deep_id_record(
+    program: Program,
+    history_indexes: Mapping[str, object],
+) -> dict:
+    metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
+    prompt_program_id = metadata.get("prompt_program_id")
+    history_join = _prompt_current_history_join_record(
+        program.id,
+        prompt_program_id,
+        history_indexes,
+    )
+    evaluation = program.evaluation if isinstance(program.evaluation, Mapping) else {}
+    eval_metadata = (
+        evaluation.get("metadata")
+        if isinstance(evaluation.get("metadata"), Mapping)
+        else {}
+    )
+    return {
+        "candidate_id": program.id,
+        "candidate_type": metadata.get("candidate_type"),
+        "generation": program.generation,
+        "parent_id": program.parent_id,
+        "prompt_program_id": prompt_program_id if isinstance(prompt_program_id, str) else None,
+        "history_join": history_join,
+        "evaluation_link": {
+            "is_valid": evaluation.get("is_valid"),
+            "score": _finite_json_number(program.fitness),
+            "metadata_present": bool(eval_metadata),
+            "evaluator_mode": eval_metadata.get("evaluator_mode"),
+            "configured_stage_count": len(eval_metadata.get("configured_stage_results", []))
+            if isinstance(eval_metadata.get("configured_stage_results"), list)
+            else 0,
+            "row_policy": "evaluation_payload_is_embedded_in_joined_candidate_history_record",
+        },
+    }
 
 
 def _task_spec_field_resolution(
@@ -10695,6 +10806,7 @@ def validate_task_spec_artifact_resolution_report(report: object) -> dict:
         "task_spec_id",
         "task_spec_validation_ok",
         "standalone_task_spec_artifact",
+        "deep_id_resolution",
         "field_count",
         "field_resolutions",
         "manifest_path_count",
@@ -10739,6 +10851,11 @@ def validate_task_spec_artifact_resolution_report(report: object) -> dict:
             issues.append({"code": "invalid_standalone_task_spec_artifact_kind", "message": "standalone task-spec artifact kind must be recorded"})
         if not _is_sha256_hex(standalone_artifact.get("sha256")):
             issues.append({"code": "invalid_standalone_task_spec_artifact_hash", "message": "standalone task-spec artifact must have a sha256 hash"})
+    deep_id_resolution = report.get("deep_id_resolution")
+    if not isinstance(deep_id_resolution, Mapping):
+        issues.append({"code": "invalid_task_spec_deep_id_resolution", "message": "deep_id_resolution must be an object"})
+    else:
+        _validate_task_spec_deep_id_resolution(deep_id_resolution, issues)
     fields = report.get("field_resolutions")
     if not isinstance(fields, list):
         issues.append({"code": "invalid_field_resolutions", "message": "field_resolutions must be a list"})
@@ -10844,6 +10961,10 @@ def validate_task_spec_artifact_resolution_report(report: object) -> dict:
     else:
         if readiness.get("standalone_task_spec_artifact") is not True:
             issues.append({"code": "standalone_task_spec_artifact_not_ready", "message": "standalone task-spec artifact readiness must be true"})
+        if readiness.get("candidate_history_rows_joined") not in {True, False}:
+            issues.append({"code": "invalid_task_spec_candidate_history_readiness", "message": "candidate history row readiness must be boolean"})
+        if readiness.get("prompt_history_rows_joined") not in {True, False}:
+            issues.append({"code": "invalid_task_spec_prompt_history_readiness", "message": "prompt history row readiness must be boolean"})
         if readiness.get("full_alphaevolve_task_spec_parity") is not False:
             issues.append({"code": "task_spec_parity_overclaim", "message": "full AlphaEvolve task-spec parity must remain false"})
     if report.get("claim_ready") is not False:
@@ -10853,6 +10974,90 @@ def validate_task_spec_artifact_resolution_report(report: object) -> dict:
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _validate_task_spec_deep_id_resolution(
+    report: Mapping[str, object],
+    issues: list[dict],
+) -> None:
+    if report.get("schema") != "libreevolve.task_spec_deep_id_resolution.v1":
+        issues.append({"code": "invalid_task_spec_deep_id_schema", "message": "deep id resolution schema is unsupported"})
+    if report.get("source") != "history_jsonl_failure_history_jsonl_prompt_history_jsonl_row_indexes":
+        issues.append({"code": "invalid_task_spec_deep_id_source", "message": "deep id resolution source is unsupported"})
+    records = report.get("records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_task_spec_deep_id_records", "message": "deep id resolution records must be a list"})
+        records = []
+    _validate_report_count(report, "record_count", len(records), issues)
+    candidate_history_join_count = 0
+    generated_prompt_record_count = 0
+    prompt_history_add_join_count = 0
+    prompt_history_score_join_count = 0
+    for index, record in enumerate(records):
+        if not isinstance(record, Mapping):
+            issues.append({"code": "invalid_task_spec_deep_id_record", "message": f"deep id record {index} must be an object"})
+            continue
+        if not isinstance(record.get("candidate_id"), str) or not record.get("candidate_id"):
+            issues.append({"code": "invalid_task_spec_deep_id_candidate", "message": f"deep id record {index} candidate_id is invalid"})
+        if not isinstance(record.get("generation"), int) or isinstance(record.get("generation"), bool):
+            issues.append({"code": "invalid_task_spec_deep_id_generation", "message": f"deep id record {index} generation is invalid"})
+        history_join = record.get("history_join")
+        if not isinstance(history_join, Mapping):
+            issues.append({"code": "invalid_task_spec_deep_id_history_join", "message": f"deep id record {index} history_join must be an object"})
+            continue
+        if history_join.get("candidate_history_joined") is True:
+            candidate_history_join_count += 1
+        elif history_join.get("candidate_failure_history") is None:
+            issues.append({"code": "task_spec_candidate_history_join_missing", "message": f"deep id record {index} must join candidate history or failure history"})
+        if record.get("candidate_type") == "generated" and isinstance(record.get("prompt_program_id"), str):
+            generated_prompt_record_count += 1
+            if history_join.get("prompt_history_add_joined") is True:
+                prompt_history_add_join_count += 1
+            if history_join.get("prompt_history_score_joined") is True:
+                prompt_history_score_join_count += 1
+        evaluation_link = record.get("evaluation_link")
+        if not isinstance(evaluation_link, Mapping):
+            issues.append({"code": "invalid_task_spec_deep_id_evaluation_link", "message": f"deep id record {index} evaluation_link must be an object"})
+        elif evaluation_link.get("row_policy") != "evaluation_payload_is_embedded_in_joined_candidate_history_record":
+            issues.append({"code": "invalid_task_spec_deep_id_evaluation_policy", "message": f"deep id record {index} evaluation policy is invalid"})
+    _validate_report_count(
+        report,
+        "candidate_history_join_count",
+        candidate_history_join_count,
+        issues,
+    )
+    _validate_report_count(
+        report,
+        "generated_prompt_record_count",
+        generated_prompt_record_count,
+        issues,
+    )
+    _validate_report_count(
+        report,
+        "prompt_history_add_join_count",
+        prompt_history_add_join_count,
+        issues,
+    )
+    _validate_report_count(
+        report,
+        "prompt_history_score_join_count",
+        prompt_history_score_join_count,
+        issues,
+    )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append({"code": "invalid_task_spec_deep_id_readiness", "message": "deep id claim_readiness must be an object"})
+    else:
+        if readiness.get("candidate_history_rows_joined") not in {True, False}:
+            issues.append({"code": "invalid_task_spec_deep_id_candidate_readiness", "message": "candidate history row readiness must be boolean"})
+        if readiness.get("prompt_history_rows_joined") not in {True, False}:
+            issues.append({"code": "invalid_task_spec_deep_id_prompt_readiness", "message": "prompt history readiness must be boolean"})
+        if readiness.get("evaluator_row_ids_resolved") is not False:
+            issues.append({"code": "task_spec_deep_id_evaluator_overclaim", "message": "evaluator row id resolution must remain false"})
+        if readiness.get("full_alphaevolve_task_spec_id_resolution") is not False:
+            issues.append({"code": "task_spec_deep_id_parity_overclaim", "message": "full task-spec id resolution must remain false"})
+    if report.get("claim_ready") is not False:
+        issues.append({"code": "task_spec_deep_id_claim_overclaim", "message": "deep id resolution must not claim full readiness"})
 
 
 def _validate_task_spec_evolvable_component_spans(

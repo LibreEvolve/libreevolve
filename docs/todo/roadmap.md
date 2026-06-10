@@ -603,13 +603,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     evaluator artifacts, best exports, initial evolvable component spans when
     markers are present, embedded score-field candidate-path links when
     candidate-owned evaluation ran, and a hashed standalone
-    `task_specification.json` run artifact. It is still a partial artifact, not
-    full AlphaEvolve task-spec parity with causal score attribution,
-    paper-facing standalone examples, and deep per-id record evidence.
+    `task_specification.json` run artifact. It also includes bounded candidate
+    and prompt JSONL row joins. It is still a partial artifact, not full
+    AlphaEvolve task-spec parity with causal score attribution, independent
+    evaluator row ids, and paper-facing standalone examples.
   - Required result: when score-field causal attribution, paper-facing
-    standalone examples, and per-id prompt/evaluator/candidate/history
-    resolution land, update ROADMAP, README, papers index, and code/paper TODOs
-    together.
+    standalone examples, and independent evaluator-row id resolution land,
+    update ROADMAP, README, papers index, and code/paper TODOs together.
 
 ## Missing Roadmap Items
 

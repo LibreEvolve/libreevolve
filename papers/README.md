@@ -1287,12 +1287,15 @@ Implemented:
   exact coefficient representation, finite-field caveats, and certificate scope
   for exact real/complex applicability.
   `libreevolve.matrix_scalar_field_runtime_boundary.v1` now records the
-  current `not_emitted_by_local_runner` boundary and required future
-  emitted-record fields for scalar field, characteristic, applicability,
-  coefficient representation, algorithm refs, certificate refs, matrix-result
-  refs, artifact paths, and artifact hashes, but no local matrix benchmark
-  runner emits exact complex decomposition/certificate artifacts for those
-  claims yet.
+  current `not_emitted_by_local_runner` boundary and validates emitted records
+  for run/target/candidate ids, seeds, scalar field, characteristic,
+  applicability, coefficient representation, algorithm refs, certificate refs,
+  matrix-result refs, artifact paths, and artifact hashes.
+  `matrix_scalar_field_runtime_boundary_from_evidence()` builds a runtime row
+  from validated scalar-field evidence and checks linkage back to nested
+  target, field claim, applicability, coefficient representation, algorithm,
+  and certificate evidence, but no local matrix benchmark runner emits exact
+  complex decomposition/certificate artifacts for those claims yet.
   `libreevolve.matrix_tensor_rank_evidence.v1` now validates declared rank
   claims that distinguish matrix-multiplication tensor decompositions from
   non-tensor multiplication algorithms, including tensor-identity certificate

@@ -2520,12 +2520,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     complex coefficient representation, characteristic, finite-field caveats,
     and certificate scope for real-versus-complex applicability.
     `libreevolve.matrix_scalar_field_runtime_boundary.v1` now validates the
-    current `not_emitted_by_local_runner` boundary and required future
-    emitted-record fields for scalar field, characteristic, applicability,
-    coefficient representation, algorithm refs, certificate refs,
-    matrix-result refs, artifact paths, and artifact hashes. Current matrix
-    runners still do not emit exact complex decomposition/certificate artifacts
-    for those claims.
+    current `not_emitted_by_local_runner` boundary and emitted records for
+    run/target/candidate ids, seeds, scalar field, characteristic,
+    applicability, coefficient representation, algorithm refs, certificate
+    refs, matrix-result refs, artifact paths, and artifact hashes.
+    `matrix_scalar_field_runtime_boundary_from_evidence()` builds a runtime row
+    from validated scalar-field evidence and validation checks linkage to
+    nested target, field claim, applicability, coefficient representation,
+    algorithm, and certificate evidence. Current matrix runners still do not
+    emit exact complex decomposition/certificate artifacts for those claims.
   - Required result: when matrix reports emit scalar-field/domain declarations
     and certificate evidence for complex-valued and characteristic-specific
     claims, update roadmap, README, papers index, and code/paper TODO entries

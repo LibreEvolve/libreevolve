@@ -987,12 +987,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     characteristic/applicability claims, paper complex target caveats, and
     certificate scope for real-versus-complex multiplication. It also
     documents `libreevolve.matrix_scalar_field_runtime_boundary.v1` as the
-    current `not_emitted_by_local_runner` boundary plus required future
-    emitted-record fields for scalar field, characteristic, applicability,
-    coefficient representation, algorithm refs, certificate refs,
-    matrix-result refs, artifact paths, and artifact hashes. It also states
-    that local runners do not emit exact complex decomposition/certificate
-    artifacts.
+    current `not_emitted_by_local_runner` boundary plus emitted-record
+    validation for run/target/candidate ids, seeds, scalar field,
+    characteristic, applicability, coefficient representation, algorithm refs,
+    certificate refs, matrix-result refs, artifact paths, and artifact hashes.
+    It also documents the builder that turns validated scalar-field evidence
+    into a linked runtime row and states that local runners do not emit exact
+    complex decomposition/certificate artifacts.
   - Required result: when matrix reports and certificates emit scalar field,
     complex coefficient data, characteristic, and applicability artifacts,
     update README, ROADMAP, papers index, and code/paper TODO entries together

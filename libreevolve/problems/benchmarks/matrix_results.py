@@ -1696,6 +1696,99 @@ def matrix_scalar_field_runtime_boundary_record() -> dict[str, Any]:
     }
 
 
+def matrix_scalar_field_runtime_boundary_from_evidence(
+    *,
+    run_id: str,
+    candidate_id: str,
+    seed: int,
+    matrix_result_ref: str,
+    scalar_field_evidence: dict[str, Any],
+    claim_id: str | None = None,
+    artifact_paths: list[str] | None = None,
+    artifact_sha256: str | None = None,
+) -> dict[str, Any]:
+    """Build an emitted scalar-field runtime record from validated evidence."""
+    validation = validate_matrix_scalar_field_evidence(scalar_field_evidence)
+    if not validation.ok:
+        messages = "; ".join(issue.message for issue in validation.issues)
+        raise ValueError(f"scalar_field_evidence is invalid: {messages}")
+    target_id = scalar_field_evidence.get("target_id")
+    if not isinstance(target_id, str) or not target_id.strip():
+        raise ValueError("scalar_field_evidence.target_id must be non-empty")
+    if not isinstance(run_id, str) or not run_id.strip():
+        raise ValueError("run_id must be non-empty")
+    if not isinstance(candidate_id, str) or not candidate_id.strip():
+        raise ValueError("candidate_id must be non-empty")
+    if isinstance(seed, bool) or not isinstance(seed, int):
+        raise ValueError("seed must be an integer")
+    if not isinstance(matrix_result_ref, str) or not matrix_result_ref.strip():
+        raise ValueError("matrix_result_ref must be non-empty")
+    claim = _selected_scalar_field_claim(scalar_field_evidence, claim_id)
+    selected_claim_id = claim.get("claim_id")
+    paths = (
+        artifact_paths
+        if artifact_paths is not None
+        else [
+            "matrix/"
+            f"{target_id}/scalar_field_{candidate_id}_{selected_claim_id}.json"
+        ]
+    )
+    digest = (
+        artifact_sha256
+        if artifact_sha256 is not None
+        else _stable_json_sha256(
+            {
+                "run_id": run_id,
+                "candidate_id": candidate_id,
+                "target_id": target_id,
+                "seed": seed,
+                "claim_id": selected_claim_id,
+                "scalar_field": claim.get("scalar_field"),
+                "characteristic": claim.get("characteristic"),
+                "algorithm_ref": claim.get("algorithm_ref"),
+                "certificate_ref": claim.get("certificate_ref"),
+                "matrix_result_ref": matrix_result_ref,
+            }
+        )
+    )
+    boundary = matrix_scalar_field_runtime_boundary_record()
+    boundary.update(
+        {
+            "runtime_emission_status": "emitted",
+            "emitted_records": [
+                {
+                    "run_id": run_id,
+                    "candidate_id": candidate_id,
+                    "target_id": target_id,
+                    "seed": seed,
+                    "claim_id": selected_claim_id,
+                    "scalar_field": claim.get("scalar_field"),
+                    "characteristic": claim.get("characteristic"),
+                    "applicability": copy.deepcopy(claim.get("applicability")),
+                    "coefficient_representation": copy.deepcopy(
+                        claim.get("coefficient_representation")
+                    ),
+                    "algorithm_ref": claim.get("algorithm_ref"),
+                    "certificate_ref": claim.get("certificate_ref"),
+                    "matrix_result_ref": matrix_result_ref,
+                    "artifact_paths": copy.deepcopy(paths),
+                    "artifact_sha256": digest,
+                    "scalar_field_evidence": copy.deepcopy(
+                        scalar_field_evidence
+                    ),
+                }
+            ],
+            "claim_boundary": (
+                "Emitted records link matrix candidates to scalar-field, "
+                "characteristic, applicability, coefficient-domain, and "
+                "certificate evidence; this still does not claim local runners "
+                "automatically emit those records."
+            ),
+        }
+    )
+    return boundary
+
+
 def validate_matrix_scalar_field_runtime_boundary(
     boundary: object | str | Path | None = None,
 ) -> MatrixScalarFieldRuntimeValidation:
@@ -3338,7 +3431,58 @@ def _validate_scalar_field_runtime_records(
             continue
         run_id = _runtime_record_text(record, "run_id", issues)
         candidate_id = _runtime_record_text(record, "candidate_id", issues)
+        target_id = _runtime_record_text(record, "target_id", issues)
+        seed = _runtime_record_int(record, "seed", issues)
+        claim_id = record.get("claim_id")
+        if claim_id is not None and (
+            not isinstance(claim_id, str) or not claim_id.strip()
+        ):
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_runtime_record_claim_id",
+                    "emitted runtime scalar-field records must include a non-empty claim_id when present",
+                )
+            )
+            claim_id = None
+        scalar_field = _runtime_record_text(record, "scalar_field", issues)
+        characteristic = _runtime_record_text(record, "characteristic", issues)
+        applicability = record.get("applicability")
+        if (
+            not isinstance(applicability, list)
+            or not applicability
+            or not all(isinstance(item, str) for item in applicability)
+        ):
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_runtime_record_applicability",
+                    "emitted runtime scalar-field records must include non-empty applicability",
+                )
+            )
+            applicability = None
+        coefficient_representation = record.get("coefficient_representation")
+        if not isinstance(coefficient_representation, dict):
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_runtime_record_coefficient_representation",
+                    "emitted runtime scalar-field records must include coefficient_representation",
+                )
+            )
+            coefficient_representation = None
+        algorithm_ref = _runtime_record_text(record, "algorithm_ref", issues)
+        certificate_ref = _runtime_record_text(record, "certificate_ref", issues)
         _runtime_record_text(record, "matrix_result_ref", issues)
+        _validate_runtime_artifact_paths(
+            record.get("artifact_paths"),
+            "scalar_field",
+            index,
+            issues,
+        )
+        _validate_runtime_artifact_sha(
+            record.get("artifact_sha256"),
+            "scalar_field",
+            index,
+            issues,
+        )
         if run_id is not None and candidate_id is not None:
             key = (run_id, candidate_id)
             if key in seen:
@@ -3360,6 +3504,161 @@ def _validate_scalar_field_runtime_records(
                 )
                 for issue in nested_validation.issues
             )
+        elif isinstance(nested, dict):
+            _validate_scalar_field_runtime_record_linkage(
+                record_index=index,
+                nested=nested,
+                target_id=target_id,
+                claim_id=claim_id if isinstance(claim_id, str) else None,
+                scalar_field=scalar_field,
+                characteristic=characteristic,
+                applicability=applicability,
+                coefficient_representation=coefficient_representation,
+                algorithm_ref=algorithm_ref,
+                certificate_ref=certificate_ref,
+                issues=issues,
+            )
+
+
+def _validate_scalar_field_runtime_record_linkage(
+    *,
+    record_index: int,
+    nested: dict[str, Any],
+    target_id: str | None,
+    claim_id: str | None,
+    scalar_field: str | None,
+    characteristic: str | None,
+    applicability: list[Any] | None,
+    coefficient_representation: dict[str, Any] | None,
+    algorithm_ref: str | None,
+    certificate_ref: str | None,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if target_id is not None and nested.get("target_id") != target_id:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_scalar_field_target_mismatch",
+                "runtime target_id must match nested scalar-field evidence",
+            )
+        )
+    claim = _matching_scalar_field_claim(
+        nested,
+        claim_id=claim_id,
+        algorithm_ref=algorithm_ref,
+        certificate_ref=certificate_ref,
+    )
+    if claim is None:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_scalar_field_missing_claim",
+                "runtime scalar-field record must identify a nested field claim",
+            )
+        )
+        return
+    if scalar_field is not None and claim.get("scalar_field") != scalar_field:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_scalar_field_field_mismatch",
+                "runtime scalar_field must match nested scalar-field evidence",
+            )
+        )
+    if characteristic is not None and claim.get("characteristic") != characteristic:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_scalar_field_characteristic_mismatch",
+                "runtime characteristic must match nested scalar-field evidence",
+            )
+        )
+    if applicability is not None and not _string_set_equal(
+        claim.get("applicability"),
+        applicability,
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_scalar_field_applicability_mismatch",
+                "runtime applicability must match nested scalar-field evidence",
+            )
+        )
+    if (
+        coefficient_representation is not None
+        and claim.get("coefficient_representation") != coefficient_representation
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_scalar_field_representation_mismatch",
+                "runtime coefficient_representation must match nested scalar-field evidence",
+            )
+        )
+    if algorithm_ref is not None and claim.get("algorithm_ref") != algorithm_ref:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_scalar_field_algorithm_mismatch",
+                "runtime algorithm_ref must match nested scalar-field evidence",
+            )
+        )
+    if certificate_ref is not None and claim.get("certificate_ref") != certificate_ref:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_scalar_field_certificate_mismatch",
+                "runtime certificate_ref must match nested scalar-field evidence",
+            )
+        )
+
+
+def _selected_scalar_field_claim(
+    evidence: dict[str, Any],
+    claim_id: str | None,
+) -> dict[str, Any]:
+    claims = evidence.get("field_claims")
+    if not isinstance(claims, list) or not claims:
+        raise ValueError("field_claims must be a non-empty list")
+    if claim_id is None:
+        claim = claims[0]
+        if isinstance(claim, dict):
+            return claim
+        raise ValueError("field_claims entries must be objects")
+    for claim in claims:
+        if isinstance(claim, dict) and claim.get("claim_id") == claim_id:
+            return claim
+    raise ValueError(f"field_claims does not include claim_id {claim_id!r}")
+
+
+def _matching_scalar_field_claim(
+    evidence: dict[str, Any],
+    *,
+    claim_id: str | None,
+    algorithm_ref: str | None,
+    certificate_ref: str | None,
+) -> dict[str, Any] | None:
+    claims = evidence.get("field_claims")
+    if not isinstance(claims, list):
+        return None
+    if claim_id is not None:
+        for claim in claims:
+            if isinstance(claim, dict) and claim.get("claim_id") == claim_id:
+                return claim
+        return None
+    if len(claims) == 1 and isinstance(claims[0], dict):
+        return claims[0]
+    for claim in claims:
+        if not isinstance(claim, dict):
+            continue
+        if (
+            algorithm_ref is not None
+            and certificate_ref is not None
+            and claim.get("algorithm_ref") == algorithm_ref
+            and claim.get("certificate_ref") == certificate_ref
+        ):
+            return claim
+    return None
+
+
+def _string_set_equal(left: object, right: object) -> bool:
+    if not isinstance(left, list) or not isinstance(right, list):
+        return False
+    if not all(isinstance(item, str) for item in left + right):
+        return False
+    return set(left) == set(right)
 
 
 def _validate_scalar_field_applicability(

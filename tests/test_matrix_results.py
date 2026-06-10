@@ -37,6 +37,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     matrix_near_integrality_runtime_boundary_from_evidence,
     matrix_near_integrality_runtime_boundary_record,
     matrix_result_artifact_inventory,
+    matrix_scalar_field_runtime_boundary_from_evidence,
     matrix_scalar_field_runtime_boundary_record,
     matrix_suite_publication_artifact_boundary_record,
     matrix_sweep_space_runtime_boundary_from_evidence,
@@ -1754,22 +1755,98 @@ def test_matrix_scalar_field_runtime_boundary_requires_emitted_records():
 
 
 def test_matrix_scalar_field_runtime_boundary_accepts_emitted_evidence():
-    boundary = matrix_scalar_field_runtime_boundary_record()
-    boundary["runtime_emission_status"] = "emitted"
-    boundary["emitted_records"] = [
-        {
-            "run_id": "run_001",
-            "candidate_id": "candidate_001",
-            "matrix_result_ref": "matrix/mm_4x4x4/report.json",
-            "scalar_field_evidence": _valid_scalar_field_evidence(),
-        }
-    ]
+    boundary = matrix_scalar_field_runtime_boundary_from_evidence(
+        run_id="run_001",
+        candidate_id="candidate_001",
+        seed=13,
+        matrix_result_ref="matrix/mm_4x4x4/report.json",
+        scalar_field_evidence=_valid_scalar_field_evidence(),
+    )
 
     validation = validate_matrix_scalar_field_runtime_boundary(boundary)
 
     assert validation.ok is True
     assert validation.runtime_emission_status == "emitted"
     assert validation.emitted_record_count == 1
+    record = boundary["emitted_records"][0]
+    assert record["target_id"] == "mm_4x4x4"
+    assert record["seed"] == 13
+    assert record["claim_id"] == "complex_characteristic_zero"
+    assert record["scalar_field"] == "complex"
+    assert record["characteristic"] == "zero"
+    assert record["applicability"] == ["complex_matrices", "real_matrices"]
+    assert record["algorithm_ref"] == "algorithms/mm_4x4x4_complex.json"
+    assert record["certificate_ref"] == "certificates/mm_4x4x4_complex.json"
+
+
+def test_matrix_scalar_field_runtime_boundary_builder_rejects_invalid_evidence():
+    evidence = _valid_scalar_field_evidence()
+    evidence["field_claims"][0]["certificate_ref"] = ""
+
+    with pytest.raises(ValueError, match="scalar_field_evidence is invalid"):
+        matrix_scalar_field_runtime_boundary_from_evidence(
+            run_id="run_001",
+            candidate_id="candidate_001",
+            seed=13,
+            matrix_result_ref="matrix/mm_4x4x4/report.json",
+            scalar_field_evidence=evidence,
+        )
+
+
+def test_matrix_scalar_field_runtime_boundary_rejects_linkage_mismatch():
+    boundary = matrix_scalar_field_runtime_boundary_from_evidence(
+        run_id="run_001",
+        candidate_id="candidate_001",
+        seed=13,
+        matrix_result_ref="matrix/mm_4x4x4/report.json",
+        scalar_field_evidence=_valid_scalar_field_evidence(),
+    )
+    record = boundary["emitted_records"][0]
+    record["target_id"] = "mm_5x5x5"
+    record["scalar_field"] = "real"
+    record["characteristic"] = "positive"
+    record["applicability"] = ["finite_field_matrices"]
+    record["coefficient_representation"]["representation"] = "integer"
+    record["algorithm_ref"] = "algorithms/other.json"
+    record["certificate_ref"] = "certificates/other.json"
+
+    validation = validate_matrix_scalar_field_runtime_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "runtime_record_0_scalar_field_target_mismatch" in codes
+    assert "runtime_record_0_scalar_field_field_mismatch" in codes
+    assert "runtime_record_0_scalar_field_characteristic_mismatch" in codes
+    assert "runtime_record_0_scalar_field_applicability_mismatch" in codes
+    assert "runtime_record_0_scalar_field_representation_mismatch" in codes
+    assert "runtime_record_0_scalar_field_algorithm_mismatch" in codes
+    assert "runtime_record_0_scalar_field_certificate_mismatch" in codes
+
+
+def test_matrix_scalar_field_runtime_boundary_rejects_missing_required_record_fields():
+    boundary = matrix_scalar_field_runtime_boundary_from_evidence(
+        run_id="run_001",
+        candidate_id="candidate_001",
+        seed=13,
+        matrix_result_ref="matrix/mm_4x4x4/report.json",
+        scalar_field_evidence=_valid_scalar_field_evidence(),
+    )
+    record = boundary["emitted_records"][0]
+    del record["artifact_paths"]
+    record["seed"] = "13"
+    record["applicability"] = []
+    record["coefficient_representation"] = "complex"
+    record["artifact_sha256"] = "not-a-sha"
+
+    validation = validate_matrix_scalar_field_runtime_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_runtime_record_seed" in codes
+    assert "invalid_runtime_record_applicability" in codes
+    assert "invalid_runtime_record_coefficient_representation" in codes
+    assert "runtime_record_0_invalid_scalar_field_artifact_paths" in codes
+    assert "runtime_record_0_invalid_scalar_field_artifact_hash" in codes
 
 
 def test_matrix_scalar_field_runtime_boundary_rejects_invalid_nested_evidence():

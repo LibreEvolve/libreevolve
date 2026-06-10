@@ -3360,12 +3360,15 @@ Primary evidence:
     finite-field caveats, paper complex target ids, and certificate scope for
     real and complex matrix multiplication applicability.
     `libreevolve.matrix_scalar_field_runtime_boundary.v1` now validates the
-    current `not_emitted_by_local_runner` boundary and required future
-    emitted-record fields for scalar field, characteristic, applicability,
-    coefficient representation, algorithm refs, certificate refs,
-    matrix-result refs, artifact paths, and artifact hashes. It validates
-    declared metadata only; no local benchmark runner emits exact complex
-    decomposition/certificate artifacts tied to those claims.
+    current `not_emitted_by_local_runner` boundary and emitted records for
+    run/target/candidate ids, seeds, scalar field, characteristic,
+    applicability, coefficient representation, algorithm refs, certificate
+    refs, matrix-result refs, artifact paths, and artifact hashes.
+    `matrix_scalar_field_runtime_boundary_from_evidence()` builds a runtime row
+    from validated scalar-field evidence and validation checks linkage to
+    nested target, field claim, applicability, coefficient representation,
+    algorithm, and certificate evidence. No local benchmark runner emits exact
+    complex decomposition/certificate artifacts tied to those claims.
   - Required result: emit or commit matrix benchmark/report artifacts with
     exact complex-coefficient data, scalar-field/domain declarations,
     characteristic/applicability claims, and verifier evidence tying each

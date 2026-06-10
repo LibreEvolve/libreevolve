@@ -3645,10 +3645,14 @@ and `mm_4x4x8`, and certificate scope. It validates emitted evidence after a
 run records it; local matrix benchmark runners still do not emit exact complex
 decomposition/certificate artifacts for those claims. The companion runtime
 boundary `libreevolve.matrix_scalar_field_runtime_boundary.v1` validates the
-current `not_emitted_by_local_runner` state and the required future
-emitted-record fields for scalar field, characteristic, applicability,
+current `not_emitted_by_local_runner` state and emitted records for
+run/target/candidate ids, seeds, scalar field, characteristic, applicability,
 coefficient representation, algorithm refs, certificate refs, matrix-result
-refs, artifact paths, and artifact hashes.
+refs, artifact paths, and artifact hashes. The helper
+`matrix_scalar_field_runtime_boundary_from_evidence()` builds an emitted
+runtime row from validated scalar-field evidence and validation links every row
+back to its nested target, field claim, applicability, coefficient
+representation, algorithm, and certificate evidence.
 Matrix tensor-rank evidence uses
 `libreevolve.matrix_tensor_rank_evidence.v1`; it validates declared rank
 claims that distinguish matrix-multiplication tensor decompositions from

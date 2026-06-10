@@ -37,8 +37,9 @@ LibreEvolve has:
 - embedded evaluator entrypoint reports under
   `runtime.history.embedded_evaluator_entrypoint_report`, summarizing executed
   candidate-owned `evaluate(eval_inputs)` stages, eval-input provenance,
-  dependency scope, metric names, embedded-only problem loading via all-
-  `embedded_evaluate` `config.yaml` stages, and remaining Figure 3 parity gaps
+  dependency scope, metric names, per-metric candidate path/block-span link
+  candidates, embedded-only problem loading via all-`embedded_evaluate`
+  `config.yaml` stages, and remaining Figure 3 parity gaps
 - AlphaEvolve Figure 1/Figure 2 process-exhibit reports under
   `runtime.history.alphaevolve_process_exhibit_report`, preserving stable
   figure IDs, node/edge-to-component mappings, Figure 2 pseudocode-step

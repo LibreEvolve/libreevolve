@@ -17553,7 +17553,7 @@ def _embedded_evaluator_entrypoint_report(
     )
     remaining_gap = [
         "skeleton_to_evolved_block_invocation_trace",
-        "score_field_to_evolved_code_path_mapping",
+        "score_field_to_evolved_code_path_causal_attribution",
         "stronger_callable_isolation_or_build_policy",
     ]
     if not embedded_only_problem_definition:
@@ -17580,7 +17580,10 @@ def _embedded_evaluator_entrypoint_report(
         "claim_readiness": {
             "candidate_owned_evaluate_entrypoint": bool(records),
             "embedded_only_problem_definition": embedded_only_problem_definition,
-            "evolved_block_to_score_path_mapping": False,
+            "evolved_block_to_score_path_mapping": any(
+                _embedded_entrypoint_record_has_block_links(record)
+                for record in records
+            ),
             "remaining_gap": remaining_gap,
         },
     }
@@ -17625,6 +17628,11 @@ def _embedded_entrypoint_record(
         if isinstance(metadata.get("evaluator_dependency_policy"), Mapping)
         else {}
     )
+    metric_names = _embedded_entrypoint_metric_names(
+        stage_result.get("metrics")
+        if isinstance(stage_result, Mapping)
+        else program.metrics
+    )
     record = {
         "program_id": program.id,
         "generation": program.generation,
@@ -17655,11 +17663,8 @@ def _embedded_entrypoint_record(
         "score": _paper_metric_table_number(
             stage_result.get("score") if isinstance(stage_result, Mapping) else program.fitness
         ),
-        "metric_names": _embedded_entrypoint_metric_names(
-            stage_result.get("metrics")
-            if isinstance(stage_result, Mapping)
-            else program.metrics
-        ),
+        "metric_names": metric_names,
+        "score_field_links": _embedded_score_field_links(program, metric_names),
         "validator_boundary": "temporary_local_subprocess",
         "raw_eval_inputs_retained": (
             candidate.get("eval_inputs", {}).get("retained")
@@ -17668,6 +17673,85 @@ def _embedded_entrypoint_record(
         ),
     }
     return {key: value for key, value in record.items() if value is not None}
+
+
+def _embedded_entrypoint_record_has_block_links(record: Mapping[str, object]) -> bool:
+    links = record.get("score_field_links")
+    if not isinstance(links, list):
+        return False
+    for link in links:
+        if not isinstance(link, Mapping):
+            continue
+        blocks = link.get("evolved_block_candidates")
+        if isinstance(blocks, list) and blocks:
+            return True
+    return False
+
+
+def _embedded_score_field_links(
+    program: Program,
+    metric_names: list[str],
+) -> list[dict]:
+    if not metric_names:
+        return []
+    workspace = program.workspace()
+    block_candidates = _embedded_workspace_block_candidates(workspace)
+    primary_file = workspace.primary_file
+    primary_file_sha256 = hashlib.sha256(
+        workspace.files[primary_file].encode("utf-8")
+    ).hexdigest()
+    return [
+        {
+            "metric_name": metric_name,
+            "link_policy": "candidate_path_candidates_not_causal_attribution",
+            "candidate_primary_file": primary_file,
+            "candidate_primary_file_sha256": primary_file_sha256,
+            "candidate_path_scope": "materialized_candidate_workspace",
+            "evolved_block_candidates": copy.deepcopy(block_candidates),
+            "evolved_block_candidate_count": len(block_candidates),
+            "causal_attribution_claimed": False,
+        }
+        for metric_name in metric_names
+    ]
+
+
+def _embedded_workspace_block_candidates(workspace: CandidateWorkspace) -> list[dict]:
+    records: list[dict] = []
+    for path, content in sorted(workspace.files.items()):
+        if not path.endswith(".py"):
+            continue
+        marker_error = validate_evolve_blocks(content)
+        if marker_error is not None:
+            continue
+        for index, block in enumerate(extract_evolve_blocks(content)):
+            records.append(_embedded_block_candidate_record(path, content, block, index))
+    return records[:50]
+
+
+def _embedded_block_candidate_record(
+    path: str,
+    content: str,
+    block: object,
+    index: int,
+) -> dict:
+    name = getattr(block, "name", "") or f"block_{index}"
+    span_key = f"{path}:{name}:{index}:{getattr(block, 'start', 0)}:{getattr(block, 'end', 0)}"
+    block_content = getattr(block, "content", "")
+    return {
+        "path": path,
+        "span_id": hashlib.sha256(span_key.encode("utf-8")).hexdigest()[:24],
+        "name": name,
+        "index": index,
+        "content_start_line": _line_number_for_offset(
+            content,
+            getattr(block, "content_start", 0),
+        ),
+        "content_end_line": _line_number_for_offset(
+            content,
+            getattr(block, "content_end", 0),
+        ),
+        "content_sha256": hashlib.sha256(block_content.encode("utf-8")).hexdigest(),
+    }
 
 
 def _embedded_entrypoint_metric_names(metrics: object) -> list[str]:
@@ -17767,6 +17851,7 @@ def validate_embedded_evaluator_entrypoint_report(report: object) -> dict:
             issues.append({"code": "invalid_dependency_policy", "message": f"record {index} dependency policy is invalid"})
         if not isinstance(record.get("metric_names"), list):
             issues.append({"code": "invalid_metric_names", "message": f"record {index} metric_names must be a list"})
+        _validate_embedded_score_field_links(record, index, issues)
     if report.get("records_truncated") is not True:
         if report.get("embedded_entrypoint_count") != len(records):
             issues.append({"code": "invalid_entrypoint_count", "message": "embedded_entrypoint_count must match records when not truncated"})
@@ -17789,6 +17874,58 @@ def validate_embedded_evaluator_entrypoint_report(report: object) -> dict:
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _validate_embedded_score_field_links(
+    record: Mapping[str, object],
+    index: int,
+    issues: list[dict],
+) -> None:
+    metric_names = record.get("metric_names")
+    links = record.get("score_field_links")
+    if not isinstance(metric_names, list) or not all(
+        isinstance(item, str) for item in metric_names
+    ):
+        metric_names = []
+    if not isinstance(links, list):
+        issues.append({"code": "invalid_score_field_links", "message": f"record {index} score_field_links must be a list"})
+        return
+    linked_names: list[str] = []
+    for link in links:
+        if not isinstance(link, Mapping):
+            issues.append({"code": "invalid_score_field_link", "message": f"record {index} score_field_links entries must be objects"})
+            continue
+        metric_name = link.get("metric_name")
+        if not isinstance(metric_name, str):
+            issues.append({"code": "invalid_score_field_metric", "message": f"record {index} score field link metric_name is invalid"})
+        else:
+            linked_names.append(metric_name)
+        if link.get("link_policy") != "candidate_path_candidates_not_causal_attribution":
+            issues.append({"code": "invalid_score_field_link_policy", "message": f"record {index} score field link policy is invalid"})
+        if link.get("causal_attribution_claimed") is not False:
+            issues.append({"code": "score_field_causality_overclaim", "message": f"record {index} score field links must not claim causal attribution"})
+        if not isinstance(link.get("candidate_primary_file"), str):
+            issues.append({"code": "invalid_score_field_primary_file", "message": f"record {index} score field link primary file is invalid"})
+        if not _is_sha256_hex(link.get("candidate_primary_file_sha256")):
+            issues.append({"code": "invalid_score_field_primary_hash", "message": f"record {index} score field link primary file hash is invalid"})
+        blocks = link.get("evolved_block_candidates")
+        if not isinstance(blocks, list):
+            issues.append({"code": "invalid_score_field_blocks", "message": f"record {index} score field evolved_block_candidates must be a list"})
+            blocks = []
+        if link.get("evolved_block_candidate_count") != len(blocks):
+            issues.append({"code": "invalid_score_field_block_count", "message": f"record {index} score field block count must match candidates"})
+        for block in blocks:
+            if not isinstance(block, Mapping):
+                issues.append({"code": "invalid_score_field_block", "message": f"record {index} score field block candidates must be objects"})
+                continue
+            if not isinstance(block.get("path"), str):
+                issues.append({"code": "invalid_score_field_block_path", "message": f"record {index} score field block path is invalid"})
+            if not isinstance(block.get("span_id"), str) or len(block.get("span_id", "")) != 24:
+                issues.append({"code": "invalid_score_field_block_span", "message": f"record {index} score field block span_id is invalid"})
+            if not _is_sha256_hex(block.get("content_sha256")):
+                issues.append({"code": "invalid_score_field_block_hash", "message": f"record {index} score field block content hash is invalid"})
+    if sorted(linked_names) != sorted(metric_names):
+        issues.append({"code": "score_field_link_metric_mismatch", "message": f"record {index} score field links must cover metric_names"})
 
 
 def validate_evaluator_oracle_registry(report: object) -> dict:

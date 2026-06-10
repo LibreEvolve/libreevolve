@@ -7590,7 +7590,7 @@ def _task_specification_bundle(manifest: Mapping[str, object]) -> dict:
         },
         "unsupported_or_incomplete": [
             "unified_task_spec_bundle_is_manifest_evidence_not_standalone_problem_file",
-            "embedded_only_problem_definitions_need_score_path_provenance",
+            "task_spec_needs_score_path_provenance_resolution",
             "arbitrary_language_build_runner_task_specs_unsupported",
             "problem_defined_candidate_abstraction_hooks_unsupported",
             "skeleton_to_evolved_block_score_linkage_not_yet_reported",

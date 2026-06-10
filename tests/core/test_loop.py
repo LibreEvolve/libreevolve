@@ -5239,8 +5239,12 @@ def test_runtime_history_reports_embedded_evaluator_entrypoint():
         "    return {'score': 0.0, 'is_valid': False}\n"
     )
     problem.initial_programs = [
+        "def transform(value):\n"
+        "    # EVOLVE-BLOCK-START scoring_rule\n"
+        "    return value\n"
+        "    # EVOLVE-BLOCK-END\n\n"
         "def evaluate(eval_inputs):\n"
-        "    return {'score': eval_inputs['score'], 'is_valid': True}\n"
+        "    return {'score': transform(eval_inputs['score']), 'is_valid': True}\n"
     ]
 
     evolve(
@@ -5275,7 +5279,11 @@ def test_runtime_history_reports_embedded_evaluator_entrypoint():
     assert report["claim_ready"] is False
     assert report["claim_readiness"]["candidate_owned_evaluate_entrypoint"] is True
     assert report["claim_readiness"]["embedded_only_problem_definition"] is True
+    assert report["claim_readiness"]["evolved_block_to_score_path_mapping"] is True
     assert "load_problem_without_external_validate_py" not in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    assert "score_field_to_evolved_code_path_causal_attribution" in (
         report["claim_readiness"]["remaining_gap"]
     )
 
@@ -5292,6 +5300,29 @@ def test_runtime_history_reports_embedded_evaluator_entrypoint():
     )
     assert record["raw_eval_inputs_retained"] is False
     assert record["metric_names"] == ["score"]
+    assert len(record["score_field_links"]) == 1
+    score_link = record["score_field_links"][0]
+    assert score_link["metric_name"] == "score"
+    assert score_link["link_policy"] == (
+        "candidate_path_candidates_not_causal_attribution"
+    )
+    assert score_link["candidate_primary_file"] == "main.py"
+    assert len(score_link["candidate_primary_file_sha256"]) == 64
+    assert score_link["causal_attribution_claimed"] is False
+    assert score_link["evolved_block_candidate_count"] == 1
+    block_link = score_link["evolved_block_candidates"][0]
+    assert block_link["path"] == "main.py"
+    assert block_link["name"] == "scoring_rule"
+    assert len(block_link["span_id"]) == 24
+    assert len(block_link["content_sha256"]) == 64
+
+    edited = copy.deepcopy(report)
+    edited["records"][0]["score_field_links"][0]["causal_attribution_claimed"] = True
+    validation = validate_embedded_evaluator_entrypoint_report(edited)
+    assert validation["ok"] is False
+    assert "score_field_causality_overclaim" in {
+        issue["code"] for issue in validation["issues"]
+    }
 
 
 def test_runtime_history_reports_execution_filtered_proposal_lifecycle():
@@ -6792,7 +6823,7 @@ def test_loop_writes_unified_task_specification_bundle_to_manifest():
         "policies.candidate_language"
     )
     assert fields["objective_metrics"]["primary_metric"] == "score"
-    assert "embedded_only_problem_definitions_need_score_path_provenance" in (
+    assert "task_spec_needs_score_path_provenance_resolution" in (
         task_spec["unsupported_or_incomplete"]
     )
 

@@ -2185,9 +2185,9 @@ Completed manifests additionally include
 task-spec manifest paths and cross-links each field to runtime evidence such as
 candidate history, prompt history, LLM calls, controller-budget events,
 evaluator artifacts, and best exports. This is still partial evidence:
-evolvable component span ids, score-field-to-candidate-path links,
-standalone task-spec examples, and deeper per-id history resolution remain
-open.
+evolvable component span ids, task-spec-level score-field-to-candidate-path
+links, standalone task-spec examples, and deeper per-id history resolution
+remain open.
 Problem fixtures can optionally add `formulation.yaml` or `formulation.yml`;
 direct callers can set `Problem.formulation_metadata`. The manifest normalizes
 this to `problem.formulation_metadata` with fixed vocabularies for problem
@@ -2368,7 +2368,9 @@ eval-input type/size/SHA-256 provenance without retaining the raw input object.
 Completed manifests summarize executed embedded stages under
 `runtime.history.embedded_evaluator_entrypoint_report`, including program/stage
 ids, entrypoint, callable, signature, eval-input provenance, dependency scope,
-metric names, and remaining Figure 3 parity gaps.
+metric names, per-metric candidate path/block-span link candidates, and
+remaining Figure 3 parity gaps. These score-field links are provenance
+candidates, not causal attribution claims.
 Embedded-only problems may omit `validate.py` when `config.yaml` declares a
 non-empty stage list where every stage uses `mode: embedded_evaluate`.
 Mixed/default/external-validator problems still require `validate.py`.

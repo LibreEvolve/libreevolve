@@ -1023,6 +1023,10 @@ is not yet an AlphaEvolve reproduction.
   highlighted excerpts, paper text excerpt, region renders, source-diff
   artifacts, accepted 15-mutation lineage, artifact paths/hashes, and nested
   Figure 4 exhibit metadata.
+  `figure4_matrix_discovery_artifact_boundary_from_exhibit()` builds emitted
+  artifacts from validated Figure 4 exhibit metadata plus supplied accepted
+  mutation lineage and validation checks nested exhibit linkage. Rendered
+  Figure 4 artifacts and accepted-mutation lineage records remain open.
 - Keep matrix headline historicity claims scoped to declared evidence:
   `libreevolve.matrix_headline_historicity_evidence.v1` now validates the
   `mm_4x4x4` complex rank-48 headline against dimensions, rank, 48 scalar

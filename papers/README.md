@@ -1493,6 +1493,10 @@ Implemented:
   image, left diff outline, highlighted excerpts, paper text excerpt, region
   renders, source-diff artifacts, accepted 15-mutation lineage, artifact
   paths/hashes, and nested Figure 4 exhibit metadata.
+  `figure4_matrix_discovery_artifact_boundary_from_exhibit()` can build emitted
+  artifacts from Figure 4 exhibit metadata plus supplied accepted-mutation
+  lineage and validates nested exhibit linkage, but local report exports still
+  do not render or check in those artifacts.
 - `libreevolve/problems/benchmarks/matrix_exhibits.py`: AlphaEvolve Appendix A
   Figure 9a-9c magnified matrix-diff metadata contract. It validates the three
   panel ids, paper pages 35-37, Figure 4 caption linkage, `mm_4x4x4` rank-48

@@ -3391,9 +3391,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     artifacts.
     `libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1`
     now validates the current `not_emitted_by_local_report_export` boundary
-    and required future fields for rendered/source artifacts, accepted
+    and emitted fields for rendered/source artifacts, accepted
     15-mutation lineage, artifact paths/hashes, and nested Figure 4 metadata.
-    It does not render or commit those Figure 4 artifacts, and it does not
+    `figure4_matrix_discovery_artifact_boundary_from_exhibit()` builds emitted
+    artifacts from validated Figure 4 exhibit metadata plus supplied accepted
+    mutation lineage and checks nested exhibit linkage. It does not render or
+    commit those Figure 4 artifacts, and it does not
     prove the accepted 15-mutation sequence.
   - Required result: add concrete paper-facing Figure 4 rendered/source-diff
     artifacts and accepted-mutation lineage records with component labels,

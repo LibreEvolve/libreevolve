@@ -9,6 +9,7 @@ from libreevolve.problems.benchmarks.matrix_exhibits import (
     FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA,
     MATRIX_RANK_TABLE_ARTIFACT_BOUNDARY_SCHEMA,
     MATRIX_RANK_TABLE_EXHIBIT_SCHEMA,
+    figure4_matrix_discovery_artifact_boundary_from_exhibit,
     figure4_matrix_discovery_artifact_boundary_record,
     figure9_matrix_diff_artifact_boundary_from_exhibit,
     figure9_matrix_diff_artifact_boundary_record,
@@ -483,15 +484,38 @@ def test_figure4_matrix_discovery_artifact_boundary_requires_emitted_artifacts()
 
 
 def test_figure4_matrix_discovery_artifact_boundary_accepts_emitted_artifacts():
-    boundary = figure4_matrix_discovery_artifact_boundary_record()
-    boundary["artifact_status"] = "emitted"
-    boundary["emitted_artifacts"] = [_figure4_artifact()]
+    boundary = figure4_matrix_discovery_artifact_boundary_from_exhibit(
+        _valid_figure4_exhibit(),
+        accepted_mutation_lineage=_figure4_artifact()["accepted_mutation_lineage"],
+        artifact_sha256="a" * 64,
+    )
 
     validation = validate_figure4_matrix_discovery_artifact_boundary(boundary)
 
+    artifact = boundary["emitted_artifacts"][0]
     assert validation.ok is True
     assert validation.emitted_artifact_count == 1
     assert validation.issues == []
+    assert artifact["exhibit_id"] == "figure4_matrix_discovery"
+    assert artifact["source_pdf_page"] == 11
+    assert artifact["mutation_count"] == 15
+    assert artifact["artifact_sha256"] == "a" * 64
+    assert len(artifact["rendered_region_artifacts"]) == 4
+    assert len(artifact["source_diff_artifacts"]) == 4
+
+
+def test_figure4_matrix_discovery_artifact_boundary_builder_rejects_invalid_exhibit():
+    exhibit = _valid_figure4_exhibit()
+    exhibit["mutation_count"] = 14
+
+    with pytest.raises(
+        ValueError,
+        match="Figure 4 matrix-discovery exhibit is invalid",
+    ):
+        figure4_matrix_discovery_artifact_boundary_from_exhibit(
+            exhibit,
+            accepted_mutation_lineage=_figure4_artifact()["accepted_mutation_lineage"],
+        )
 
 
 def test_figure4_matrix_discovery_artifact_boundary_rejects_invalid_lineage_and_nested_exhibit():
@@ -510,6 +534,28 @@ def test_figure4_matrix_discovery_artifact_boundary_rejects_invalid_lineage_and_
     assert "invalid_accepted_mutation_count" in codes
     assert "invalid_artifact_path" in codes
     assert "invalid_nested_exhibit_invalid_mutation_count" in codes
+
+
+def test_figure4_matrix_discovery_artifact_boundary_rejects_nested_source_mismatch():
+    boundary = figure4_matrix_discovery_artifact_boundary_from_exhibit(
+        _valid_figure4_exhibit(),
+        accepted_mutation_lineage=_figure4_artifact()["accepted_mutation_lineage"],
+        artifact_sha256="a" * 64,
+    )
+    artifact = boundary["emitted_artifacts"][0]
+    artifact["figure4_matrix_discovery_exhibit"]["source_links"][
+        "rendered_figure"
+    ]["path"] = "figures/changed_figure4.png"
+    artifact["figure4_matrix_discovery_exhibit"]["highlight_regions"][0][
+        "rendered_region_artifact"
+    ]["path"] = "figures/changed_region.png"
+
+    validation = validate_figure4_matrix_discovery_artifact_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_artifact_nested_rendered_figure" in codes
+    assert "invalid_artifact_nested_rendered_region_artifacts" in codes
 
 
 def test_render_figure4_matrix_discovery_artifact_boundary_summary_reports_shape():

@@ -4147,6 +4147,11 @@ future artifact/lineage fields for the rendered Figure 4 image, left diff
 outline, highlighted excerpts, paper text excerpt, region renders, source-diff
 artifacts, accepted 15-mutation lineage, artifact paths/hashes, and nested
 Figure 4 exhibit metadata.
+`figure4_matrix_discovery_artifact_boundary_from_exhibit()` builds emitted
+artifact records from validated Figure 4 exhibit metadata plus supplied
+accepted-mutation lineage, and validation checks that artifact fields match
+their nested exhibit evidence. Local report exports still do not render or
+check in those Figure 4 artifacts or mutation-lineage records.
 Appendix A Figure 9 matrix-diff exhibit metadata uses
 `libreevolve.alphaevolve_figure9_matrix_diff_exhibit.v1`; it validates the
 three magnified Figure 9a/9b/9c panel ids, paper pages 35-37, Figure 4

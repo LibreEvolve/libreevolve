@@ -239,6 +239,77 @@ def figure4_matrix_discovery_artifact_boundary_record() -> dict[str, Any]:
     }
 
 
+def figure4_matrix_discovery_artifact_boundary_from_exhibit(
+    exhibit: dict[str, Any],
+    *,
+    accepted_mutation_lineage: list[dict[str, Any]],
+    artifact_paths: list[str] | None = None,
+    artifact_sha256: str | None = None,
+) -> dict[str, Any]:
+    """Build emitted Figure 4 artifacts from exhibit metadata and lineage."""
+    exhibit_record = copy.deepcopy(exhibit)
+    exhibit_report = validate_figure4_matrix_discovery_exhibit(exhibit_record)
+    if not exhibit_report.ok:
+        messages = "; ".join(issue.message for issue in exhibit_report.issues)
+        raise ValueError(f"Figure 4 matrix-discovery exhibit is invalid: {messages}")
+    source_links = exhibit_record.get("source_links", {})
+    assert isinstance(source_links, dict)
+    highlight_regions = exhibit_record.get("highlight_regions", [])
+    assert isinstance(highlight_regions, list)
+    paths = (
+        copy.deepcopy(artifact_paths)
+        if artifact_paths is not None
+        else [
+            "figures/figure4_matrix_discovery.png",
+            "figures/figure4_left_diff_outline.png",
+            "figures/figure4_caption_excerpt.txt",
+            "figures/figure4_mutation_lineage.json",
+        ]
+    )
+    artifact = {
+        "exhibit_id": exhibit_record["exhibit_id"],
+        "source_pdf_page": exhibit_record["source_pdf_page"],
+        "mutation_count": exhibit_record["mutation_count"],
+        "rendered_figure": copy.deepcopy(source_links["rendered_figure"]),
+        "left_diff_outline": copy.deepcopy(source_links["left_diff_outline"]),
+        "highlighted_excerpts": copy.deepcopy(source_links["highlighted_excerpts"]),
+        "paper_text_excerpt": copy.deepcopy(source_links["paper_text_excerpt"]),
+        "rendered_region_artifacts": [
+            copy.deepcopy(region["rendered_region_artifact"])
+            for region in highlight_regions
+            if isinstance(region, dict)
+        ],
+        "source_diff_artifacts": [
+            copy.deepcopy(region["source_diff_excerpt"])
+            for region in highlight_regions
+            if isinstance(region, dict)
+        ],
+        "accepted_mutation_lineage": copy.deepcopy(accepted_mutation_lineage),
+        "artifact_paths": paths,
+        "figure4_matrix_discovery_exhibit": copy.deepcopy(exhibit_record),
+    }
+    artifact["artifact_sha256"] = (
+        artifact_sha256 if artifact_sha256 is not None else _stable_json_sha256(artifact)
+    )
+    boundary = figure4_matrix_discovery_artifact_boundary_record()
+    boundary.update(
+        {
+            "artifact_status": "emitted",
+            "emitted_artifacts": [artifact],
+            "claim_boundary": (
+                "Emitted artifacts preserve Figure 4 matrix-discovery exhibit "
+                "metadata and supplied accepted-mutation lineage; this still "
+                "does not claim local report/export code emits those artifacts."
+            ),
+        }
+    )
+    boundary_report = validate_figure4_matrix_discovery_artifact_boundary(boundary)
+    if not boundary_report.ok:
+        messages = "; ".join(issue.message for issue in boundary_report.issues)
+        raise ValueError(f"Figure 4 artifact boundary is invalid: {messages}")
+    return boundary
+
+
 def figure9_matrix_diff_artifact_boundary_record() -> dict[str, Any]:
     return {
         "schema": FIGURE9_MATRIX_DIFF_ARTIFACT_BOUNDARY_SCHEMA,
@@ -860,6 +931,63 @@ def _validate_figure4_artifact_record(
         Figure4MatrixDiscoveryExhibitIssue(f"invalid_nested_exhibit_{issue.code}", issue.message)
         for issue in exhibit_report.issues
     )
+    nested = artifact.get("figure4_matrix_discovery_exhibit")
+    if isinstance(nested, dict):
+        if artifact.get("source_pdf_page") != nested.get("source_pdf_page"):
+            issues.append(
+                Figure4MatrixDiscoveryExhibitIssue(
+                    "invalid_artifact_nested_source_pdf_page",
+                    "artifact source_pdf_page must match nested Figure 4 exhibit",
+                )
+            )
+        if artifact.get("mutation_count") != nested.get("mutation_count"):
+            issues.append(
+                Figure4MatrixDiscoveryExhibitIssue(
+                    "invalid_artifact_nested_mutation_count",
+                    "artifact mutation_count must match nested Figure 4 exhibit",
+                )
+            )
+        source_links = nested.get("source_links")
+        if isinstance(source_links, dict):
+            for artifact_field, nested_field in (
+                ("rendered_figure", "rendered_figure"),
+                ("left_diff_outline", "left_diff_outline"),
+                ("highlighted_excerpts", "highlighted_excerpts"),
+                ("paper_text_excerpt", "paper_text_excerpt"),
+            ):
+                if artifact.get(artifact_field) != source_links.get(nested_field):
+                    issues.append(
+                        Figure4MatrixDiscoveryExhibitIssue(
+                            f"invalid_artifact_nested_{artifact_field}",
+                            f"artifact {artifact_field} must match nested Figure 4 source links",
+                        )
+                    )
+        regions = nested.get("highlight_regions")
+        if isinstance(regions, list):
+            expected_rendered = [
+                region.get("rendered_region_artifact")
+                for region in regions
+                if isinstance(region, dict)
+            ]
+            expected_sources = [
+                region.get("source_diff_excerpt")
+                for region in regions
+                if isinstance(region, dict)
+            ]
+            if artifact.get("rendered_region_artifacts") != expected_rendered:
+                issues.append(
+                    Figure4MatrixDiscoveryExhibitIssue(
+                        "invalid_artifact_nested_rendered_region_artifacts",
+                        "artifact rendered_region_artifacts must match nested Figure 4 regions",
+                    )
+                )
+            if artifact.get("source_diff_artifacts") != expected_sources:
+                issues.append(
+                    Figure4MatrixDiscoveryExhibitIssue(
+                        "invalid_artifact_nested_source_diff_artifacts",
+                        "artifact source_diff_artifacts must match nested Figure 4 regions",
+                    )
+                )
 
 
 def _validate_figure4_artifact_list(

@@ -952,9 +952,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     links from the displayed exhibit to Figure 9, matrix reports,
     certificates, notebooks, and paper-source evidence. It now also documents
     `libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1`
-    as the current `not_emitted_by_local_report_export` boundary and required
-    future Figure 4 artifact/lineage fields. It also states that rendered/
-    source artifacts and accepted-mutation lineage are not emitted.
+    as the current `not_emitted_by_local_report_export` boundary and emitted
+    Figure 4 artifact/lineage fields. It also documents the builder from
+    Figure 4 exhibit metadata plus supplied accepted-mutation lineage and
+    nested-linkage validation, while still stating that rendered/source
+    artifacts and accepted-mutation lineage are not emitted.
   - Required result: when Figure 4 rendered/source artifacts and accepted
     mutation-lineage records land, update README, ROADMAP, papers index, and
     matching TODOs so README distinguishes reproduced main-text matrix exhibit

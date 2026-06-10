@@ -916,12 +916,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     prompt history ids, and `runtime.history.prompt_prior_score_provenance_report`
     records that join prompt-visible score rows to history and evaluator-result
     rows, plus top-level prompt-feedback execution-output display attribution
-    and `prompt_prior_score_table.jsonl` cross-run rows.
+    plus stage-summary IO display attribution and
+    `prompt_prior_score_table.jsonl` cross-run rows.
   - Required result: keep ROADMAP wording scoped until score omission/truncation
-    records, stage-summary IO display attribution, global feedback-section
-    truncation policy, exact `average_score` formula parity or an explicit
-    substitution policy support AlphaEvolve-style rendered evaluation-result
-    evidence tied to prompt calls and evaluator history.
+    records, global feedback-section truncation policy, exact `average_score`
+    formula parity or an explicit substitution policy support AlphaEvolve-style
+    rendered evaluation-result evidence tied to prompt calls and evaluator
+    history.
 
 - [ ] Keep paper-inspired roadmap labels scoped to implemented behavior.
   - Spec evidence: roadmap references to paper-inspired systems should remain

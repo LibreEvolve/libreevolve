@@ -3579,6 +3579,96 @@ x=2
     }
 
 
+def test_runtime_history_reports_prompt_prior_stage_summary_io_display():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "print('stage stdout visible')\n"
+        "def evaluate(c): return {'score':1.0,'is_valid':True}"
+    )
+    problem.context_policy = {
+        "feedback_sections": ["stage_summary"],
+        "stage_summary_fields": ["name", "io"],
+        "execution_output_fields": ["stdout"],
+        "execution_output_max_chars_by_field": {"stdout": 80},
+    }
+    response = """<<<SEARCH
+x=1
+===
+x=2
+>>>REPLACE"""
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm(response)):
+        evolve(
+            problem,
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"][
+        "prompt_prior_score_provenance_report"
+    ]
+
+    assert report["validation"]["ok"] is True
+    assert validate_prompt_prior_score_provenance_report(report)["ok"] is True
+    assert report["stage_summary_io_record_count"] == 1
+    assert report["prompt_visible_stage_summary_io_record_count"] == 1
+    assert report["stage_summary_io_evaluator_join_count"] == 1
+    assert report["claim_readiness"]["stage_summary_io_display_attribution"] is True
+    assert "stage_summary_io_display_attribution" not in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+
+    score_row = report["records"][0]["score_records"][0]
+    display = score_row["stage_summary_io_display"]
+    assert display["schema"] == (
+        "libreevolve.prompt_prior_stage_summary_io_display.v1"
+    )
+    assert display["prompt_visible"] is True
+    assert display["has_source_stage_io"] is True
+    assert display["visible_stage_count"] == 1
+    assert display["evaluator_result"]["stream"] == "evaluator_results.jsonl"
+    assert display["evaluator_result"]["stage_summary_io"]["stage_record_count"] >= 1
+    stage = next(
+        stage for stage in display["stage_records"] if stage["prompt_visible"] is True
+    )
+    assert stage["prompt_visible"] is True
+    assert stage["prompt_visible_fields"] == ["stdout"]
+    assert "stage stdout visible" in stage["stage_io_display_text"]
+    assert stage["stage_io_display_sha256"]
+
+    table_row = json.loads(
+        (run_dir / "prompt_prior_score_table.jsonl").read_text(encoding="utf-8")
+    )
+    assert table_row["stage_summary_io"]["prompt_visible"] is True
+    assert table_row["stage_summary_io"]["visible_stage_count"] == 1
+    visible_table_stage = next(
+        stage
+        for stage in table_row["stage_summary_io"]["stage_records"]
+        if stage["prompt_visible"] is True
+    )
+    assert visible_table_stage[
+        "stage_io_display_sha256"
+    ] == stage["stage_io_display_sha256"]
+
+    edited_report = copy.deepcopy(report)
+    edited_stages = edited_report["records"][0]["score_records"][0][
+        "stage_summary_io_display"
+    ]["stage_records"]
+    next(stage for stage in edited_stages if stage["prompt_visible"] is True)[
+        "stage_io_display_text"
+    ] = None
+    validation = validate_prompt_prior_score_provenance_report(edited_report)
+    assert validation["ok"] is False
+    assert "missing_stage_summary_io_display_text" in {
+        issue["code"] for issue in validation["issues"]
+    }
+
+
 def test_runtime_history_reports_prompt_current_binding_for_evolve_block_span():
     tmpdir = tempfile.mkdtemp()
     problem = _problem()

@@ -165,6 +165,8 @@ _MAX_CRITIQUE_RETAINED_PROMPT_CHARS = 6000
 _MAX_CRITIQUE_RETAINED_MUTATION_CHARS = 4000
 _PROMPT_EXECUTION_OUTPUT_FIELDS = ("stdout", "stderr", "error")
 _PROMPT_EXECUTION_OUTPUT_DEFAULT_FIELD_CHARS = 400
+_PROMPT_STAGE_SUMMARY_FIELDS = ("name", "status", "score", "error", "io", "checks")
+_PROMPT_STAGE_SUMMARY_MAX_ITEMS = 3
 META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA = (
     "libreevolve.meta_prompt_context_policy_capabilities.v1"
 )
@@ -10401,6 +10403,7 @@ def _evaluator_result_record(program: Program, index: int) -> dict:
         if isinstance(metadata.get("llm_feedback"), list)
         else 0,
         "execution_output": _evaluator_result_execution_output_record(evaluation),
+        "stage_summary_io": _evaluator_result_stage_summary_io_record(evaluation),
         "source_policy": "derived_from_program_evaluation_payload",
     }
     error = evaluation.get("error")
@@ -10433,6 +10436,47 @@ def _evaluator_result_execution_output_record(evaluation: Mapping[str, object]) 
         "default_max_chars": _PROMPT_EXECUTION_OUTPUT_DEFAULT_FIELD_CHARS,
         "present_fields": present_fields,
         "field_records": fields,
+    }
+
+
+def _evaluator_result_stage_summary_io_record(evaluation: Mapping[str, object]) -> dict:
+    stages = evaluation.get("stages")
+    stage_records = []
+    if isinstance(stages, list):
+        for stage_index, stage in enumerate(stages[-_PROMPT_STAGE_SUMMARY_MAX_ITEMS:]):
+            if not isinstance(stage, Mapping):
+                continue
+            fields = {
+                field: _prompt_execution_output_field_record(
+                    stage.get(field),
+                    field=field,
+                    selected=True,
+                    prompt_visible=True,
+                    field_cap_chars=_PROMPT_EXECUTION_OUTPUT_DEFAULT_FIELD_CHARS,
+                    omission_reason=None,
+                )
+                for field in _PROMPT_EXECUTION_OUTPUT_FIELDS
+            }
+            present_fields = [
+                field
+                for field, record in fields.items()
+                if record["raw_present"]
+            ]
+            stage_records.append(
+                {
+                    "stage_index": stage_index,
+                    "stage_name": stage.get("name"),
+                    "present_fields": present_fields,
+                    "field_records": fields,
+                }
+            )
+    return {
+        "schema": "libreevolve.evaluator_result_stage_summary_io.v1",
+        "source": "evaluation_stages_stdout_stderr_error_fields",
+        "field_policy": "last_prompt_visible_stage_records_with_redacted_bounded_previews",
+        "default_max_chars": _PROMPT_EXECUTION_OUTPUT_DEFAULT_FIELD_CHARS,
+        "stage_record_count": len(stage_records),
+        "stage_records": stage_records,
     }
 
 
@@ -16818,6 +16862,7 @@ def _prompt_current_history_join_indexes(run_dir: Path) -> dict:
                     "score": record.get("score"),
                     "evaluator_mode": record.get("evaluator_mode"),
                     "execution_output": record.get("execution_output"),
+                    "stage_summary_io": record.get("stage_summary_io"),
                 }
 
     prompt_path = run_dir / "prompt_history.jsonl"
@@ -17856,6 +17901,27 @@ def _prompt_prior_score_provenance_report(
         if score.get("execution_result_display", {}).get("evaluator_result_joined")
         is True
     )
+    stage_summary_io_count = sum(
+        1
+        for record in records
+        for score in record["score_records"]
+        if score.get("stage_summary_io_display", {}).get("has_source_stage_io")
+        is True
+    )
+    prompt_visible_stage_summary_io_count = sum(
+        1
+        for record in records
+        for score in record["score_records"]
+        if score.get("stage_summary_io_display", {}).get("prompt_visible") is True
+    )
+    stage_summary_io_evaluator_join_count = sum(
+        1
+        for record in records
+        for score in record["score_records"]
+        if score.get("stage_summary_io_display", {}).get("has_source_stage_io") is True
+        and score.get("stage_summary_io_display", {}).get("evaluator_result_joined")
+        is True
+    )
     report = {
         "schema": "libreevolve.prompt_prior_score_provenance_report.v1",
         "source": "runtime_history_prompt_diagnostics_parent_and_inspiration_selection",
@@ -17874,6 +17940,13 @@ def _prompt_prior_score_provenance_report(
         "execution_result_evaluator_join_count": (
             execution_result_evaluator_join_count
         ),
+        "stage_summary_io_record_count": stage_summary_io_count,
+        "prompt_visible_stage_summary_io_record_count": (
+            prompt_visible_stage_summary_io_count
+        ),
+        "stage_summary_io_evaluator_join_count": (
+            stage_summary_io_evaluator_join_count
+        ),
         "cross_run_prompt_score_table_record_count": table_export["record_count"],
         "records": records[:50],
         "records_limit": 50,
@@ -17887,6 +17960,8 @@ def _prompt_prior_score_provenance_report(
             "raw_metric_policy": "finite_non_boolean_program_metrics",
             "execution_result_source": "evaluation_stdout_stderr_error_fields_rendered_by_parent_feedback_or_inspiration_feedback",
             "execution_result_field_policy": "prompt_context_policy_execution_output_fields_and_caps_with_redacted_bounded_previews",
+            "stage_summary_io_source": "evaluation_stage_stdout_stderr_error_fields_rendered_by_stage_summary_io",
+            "stage_summary_io_policy": "prompt_context_policy_stage_summary_fields_io_and_execution_output_fields_with_caps",
             "cross_run_table_policy": "stable_jsonl_rows_with_run_id_problem_prompt_candidate_score_source_metric_and_runtime_join_fields",
         },
         "cross_run_prompt_score_table": table_export,
@@ -17904,11 +17979,14 @@ def _prompt_prior_score_provenance_report(
                 execution_result_count > 0
                 and execution_result_evaluator_join_count == execution_result_count
             ),
+            "stage_summary_io_display_attribution": (
+                stage_summary_io_count > 0
+                and stage_summary_io_evaluator_join_count == stage_summary_io_count
+            ),
             "cross_run_prompt_score_table": table_export["record_count"] > 0,
             "full_alphaevolve_rendered_evaluation_result_provenance": False,
             "remaining_gap": [
                 "score_omission_and_truncation_policy",
-                "stage_summary_io_display_attribution",
                 "feedback_section_global_truncation_policy",
                 "average_score_formula_parity",
             ],
@@ -17943,6 +18021,11 @@ def _prompt_prior_score_table_rows(
             execution_display = (
                 score.get("execution_result_display")
                 if isinstance(score.get("execution_result_display"), Mapping)
+                else {}
+            )
+            stage_summary_io = (
+                score.get("stage_summary_io_display")
+                if isinstance(score.get("stage_summary_io_display"), Mapping)
                 else {}
             )
             rows.append(
@@ -17985,6 +18068,11 @@ def _prompt_prior_score_table_rows(
                     "execution_result": (
                         _prompt_prior_score_table_execution_result(
                             execution_display
+                        )
+                    ),
+                    "stage_summary_io": (
+                        _prompt_prior_score_table_stage_summary_io(
+                            stage_summary_io
                         )
                     ),
                 }
@@ -18082,6 +18170,39 @@ def _prompt_prior_score_table_execution_result(display: Mapping[str, object]) ->
         "visible_field_display_sha256": visible_field_hashes,
         "omitted_fields": omitted_fields,
         "omission_reason": display.get("omission_reason"),
+        "evaluator_result_joined": display.get("evaluator_result_joined") is True,
+    }
+
+
+def _prompt_prior_score_table_stage_summary_io(display: Mapping[str, object]) -> dict:
+    stage_records = (
+        display.get("stage_records")
+        if isinstance(display.get("stage_records"), list)
+        else []
+    )
+    visible_stage_summaries = []
+    for stage in stage_records:
+        if not isinstance(stage, Mapping):
+            continue
+        visible_stage_summaries.append(
+            {
+                "stage_index": stage.get("stage_index"),
+                "stage_name": stage.get("stage_name"),
+                "prompt_visible": stage.get("prompt_visible") is True,
+                "prompt_visible_fields": list(stage.get("prompt_visible_fields", []))
+                if isinstance(stage.get("prompt_visible_fields"), list)
+                else [],
+                "stage_io_display_sha256": stage.get("stage_io_display_sha256"),
+                "omission_reason": stage.get("omission_reason"),
+            }
+        )
+    return {
+        "has_source_stage_io": display.get("has_source_stage_io") is True,
+        "prompt_visible": display.get("prompt_visible") is True,
+        "source_stage_count": display.get("source_stage_count"),
+        "rendered_stage_count": display.get("rendered_stage_count"),
+        "visible_stage_count": display.get("visible_stage_count"),
+        "stage_records": visible_stage_summaries,
         "evaluator_result_joined": display.get("evaluator_result_joined") is True,
     }
 
@@ -18244,6 +18365,13 @@ def _prompt_prior_score_record(
             prompt_diagnostics=prompt_diagnostics,
             evaluator_row=evaluator_row,
         ),
+        "stage_summary_io_display": _prompt_prior_stage_summary_io_display_record(
+            source_program,
+            role=role,
+            prompt_visible=prompt_visible,
+            prompt_diagnostics=prompt_diagnostics,
+            evaluator_row=evaluator_row,
+        ),
     }
 
 
@@ -18285,6 +18413,21 @@ def _missing_prompt_prior_score_record(
             "evaluator_result_joined": False,
             "evaluator_result": None,
         },
+        "stage_summary_io_display": {
+            "schema": "libreevolve.prompt_prior_stage_summary_io_display.v1",
+            "source": "missing_prompt_prior_program",
+            "role": role,
+            "prompt_visible": False,
+            "prompt_visibility_source": "prompt_selection_metadata_missing_program",
+            "omission_reason": "selected_program_not_found_in_runtime_history",
+            "has_source_stage_io": False,
+            "source_stage_count": 0,
+            "rendered_stage_count": 0,
+            "visible_stage_count": 0,
+            "stage_records": [],
+            "evaluator_result_joined": False,
+            "evaluator_result": None,
+        },
     }
 
 
@@ -18314,6 +18457,7 @@ def _prompt_prior_execution_result_display_record(
     field_caps = _prompt_prior_policy_int_mapping(
         policy,
         "execution_output_max_chars_by_field",
+        allowed=set(_PROMPT_EXECUTION_OUTPUT_FIELDS),
     )
     surface = _prompt_prior_feedback_surface_status(
         role,
@@ -18396,6 +18540,198 @@ def _prompt_prior_execution_result_display_record(
     }
 
 
+def _prompt_prior_stage_summary_io_display_record(
+    source_program: Program,
+    *,
+    role: str,
+    prompt_visible: bool,
+    prompt_diagnostics: Mapping[str, object],
+    evaluator_row: Mapping[str, object] | None,
+) -> dict:
+    evaluation = (
+        source_program.evaluation
+        if isinstance(source_program.evaluation, Mapping)
+        else {}
+    )
+    policy = (
+        prompt_diagnostics.get("prompt_context_policy")
+        if isinstance(prompt_diagnostics.get("prompt_context_policy"), Mapping)
+        else {}
+    )
+    selected_fields = _prompt_prior_policy_list(
+        policy,
+        "execution_output_fields",
+        default=list(_PROMPT_EXECUTION_OUTPUT_FIELDS),
+    )
+    output_field_caps = _prompt_prior_policy_int_mapping(
+        policy,
+        "execution_output_max_chars_by_field",
+        allowed=set(_PROMPT_EXECUTION_OUTPUT_FIELDS),
+    )
+    stage_fields = _prompt_prior_policy_list(
+        policy,
+        "stage_summary_fields",
+        default=list(_PROMPT_STAGE_SUMMARY_FIELDS),
+    )
+    stage_caps = _prompt_prior_policy_int_mapping(
+        policy,
+        "stage_summary_max_chars_by_field",
+        allowed=set(_PROMPT_STAGE_SUMMARY_FIELDS),
+    )
+    surface = _prompt_prior_stage_summary_surface_status(
+        role,
+        prompt_visible=prompt_visible,
+        prompt_diagnostics=prompt_diagnostics,
+        stage_fields=stage_fields,
+    )
+    stages = evaluation.get("stages") if isinstance(evaluation, Mapping) else None
+    source_stages = [stage for stage in stages if isinstance(stage, Mapping)] if isinstance(stages, list) else []
+    rendered_stages = source_stages[-_PROMPT_STAGE_SUMMARY_MAX_ITEMS:]
+    stage_records = [
+        _prompt_prior_stage_summary_io_stage_record(
+            stage,
+            stage_index=max(0, len(source_stages) - len(rendered_stages)) + index,
+            selected_fields=selected_fields,
+            output_field_caps=output_field_caps,
+            stage_io_cap=stage_caps.get("io"),
+            surface=surface,
+        )
+        for index, stage in enumerate(rendered_stages)
+    ]
+    source_stage_io_count = sum(
+        1 for stage in stage_records if stage["has_source_stage_io"] is True
+    )
+    visible_stage_count = sum(
+        1 for stage in stage_records if stage["prompt_visible"] is True
+    )
+    display_omission_reason = surface["omission_reason"]
+    if visible_stage_count == 0 and display_omission_reason is None:
+        display_omission_reason = "no_selected_stage_summary_io_fields_rendered"
+    return {
+        "schema": "libreevolve.prompt_prior_stage_summary_io_display.v1",
+        "source": "evaluation_stage_stdout_stderr_error_fields",
+        "role": role,
+        "prompt_visible": visible_stage_count > 0,
+        "prompt_visibility_source": surface["source"],
+        "omission_reason": None if visible_stage_count > 0 else display_omission_reason,
+        "has_source_stage_io": source_stage_io_count > 0,
+        "source_stage_count": len(source_stages),
+        "rendered_stage_count": len(rendered_stages),
+        "visible_stage_count": visible_stage_count,
+        "selected_fields": selected_fields,
+        "stage_summary_fields": stage_fields,
+        "execution_output_field_caps": output_field_caps,
+        "stage_summary_field_caps": stage_caps,
+        "stage_records": stage_records,
+        "evaluator_result_joined": isinstance(evaluator_row, Mapping),
+        "evaluator_result": (
+            dict(evaluator_row) if isinstance(evaluator_row, Mapping) else None
+        ),
+    }
+
+
+def _prompt_prior_stage_summary_io_stage_record(
+    stage: Mapping[str, object],
+    *,
+    stage_index: int,
+    selected_fields: list[str],
+    output_field_caps: Mapping[str, int],
+    stage_io_cap: int | None,
+    surface: Mapping[str, object],
+) -> dict:
+    visible_stdout = _prompt_execution_output_field_visible(
+        stage,
+        "stdout",
+        selected_fields=selected_fields,
+        field_caps=output_field_caps,
+        surface_visible=surface["visible"],
+    )
+    visible_stderr = _prompt_execution_output_field_visible(
+        stage,
+        "stderr",
+        selected_fields=selected_fields,
+        field_caps=output_field_caps,
+        surface_visible=surface["visible"],
+    )
+    stdout_or_stderr_visible = visible_stdout or visible_stderr
+    field_records = []
+    for field in _PROMPT_EXECUTION_OUTPUT_FIELDS:
+        field_visible = _prompt_execution_output_field_visible(
+            stage,
+            field,
+            selected_fields=selected_fields,
+            field_caps=output_field_caps,
+            surface_visible=surface["visible"],
+            suppress_error=field == "error" and stdout_or_stderr_visible,
+        )
+        field_records.append(
+            _prompt_execution_output_field_record(
+                stage.get(field),
+                field=field,
+                selected=field in selected_fields,
+                prompt_visible=field_visible,
+                field_cap_chars=output_field_caps.get(field),
+                omission_reason=_prompt_execution_output_omission_reason(
+                    stage.get(field),
+                    field,
+                    selected_fields=selected_fields,
+                    field_caps=output_field_caps,
+                    surface=surface,
+                    suppress_error=field == "error" and stdout_or_stderr_visible,
+                ),
+            )
+        )
+    visible_fields = [
+        record["field"]
+        for record in field_records
+        if record["prompt_visible"] is True
+    ]
+    stage_io_text = _prompt_stage_io_display_text(field_records)
+    stage_io_raw_chars = len(stage_io_text)
+    stage_io_truncated = False
+    if stage_io_text and isinstance(stage_io_cap, int) and not isinstance(stage_io_cap, bool):
+        stage_io_truncated = len(stage_io_text) > stage_io_cap
+        stage_io_text = _prompt_execution_output_truncate(stage_io_text, stage_io_cap)
+    stage_io_sha256 = (
+        hashlib.sha256(stage_io_text.encode("utf-8", errors="replace")).hexdigest()
+        if stage_io_text
+        else None
+    )
+    omission_reason = None
+    if not visible_fields:
+        reason = surface.get("omission_reason")
+        omission_reason = (
+            str(reason)
+            if isinstance(reason, str) and reason
+            else "no_selected_stage_summary_io_fields_rendered"
+        )
+    return {
+        "stage_index": stage_index,
+        "stage_name": stage.get("name"),
+        "has_source_stage_io": any(record["raw_present"] for record in field_records),
+        "prompt_visible": bool(visible_fields),
+        "prompt_visible_fields": visible_fields,
+        "omission_reason": omission_reason,
+        "field_records": field_records,
+        "stage_io_display_text": stage_io_text if visible_fields else None,
+        "stage_io_display_chars": len(stage_io_text) if visible_fields else 0,
+        "stage_io_raw_chars": stage_io_raw_chars,
+        "stage_io_truncated": stage_io_truncated,
+        "stage_io_display_sha256": stage_io_sha256 if visible_fields else None,
+    }
+
+
+def _prompt_stage_io_display_text(field_records: list[dict]) -> str:
+    lines = []
+    for field in field_records:
+        if field.get("prompt_visible") is not True:
+            continue
+        display = field.get("display_text")
+        if isinstance(display, str) and display:
+            lines.append(f"  {field.get('field')}={display}")
+    return "\n".join(lines)
+
+
 def _prompt_prior_feedback_surface_status(
     role: str,
     *,
@@ -18447,6 +18783,77 @@ def _prompt_prior_feedback_surface_status(
             "visible": False,
             "source": source,
             "omission_reason": "execution_output_feedback_section_disabled",
+        }
+    if not _prompt_prior_section_budget_has_rendered(
+        prompt_diagnostics,
+        section_name,
+    ):
+        return {
+            "visible": False,
+            "source": source,
+            "omission_reason": f"{section_name}_not_rendered_by_prompt_template",
+        }
+    return {"visible": True, "source": source, "omission_reason": None}
+
+
+def _prompt_prior_stage_summary_surface_status(
+    role: str,
+    *,
+    prompt_visible: bool,
+    prompt_diagnostics: Mapping[str, object],
+    stage_fields: list[str],
+) -> dict:
+    policy = (
+        prompt_diagnostics.get("prompt_context_policy")
+        if isinstance(prompt_diagnostics.get("prompt_context_policy"), Mapping)
+        else {}
+    )
+    disabled = set(_prompt_prior_policy_list(policy, "disabled_sections", default=[]))
+    feedback_sections = set(
+        _prompt_prior_policy_list(
+            policy,
+            "feedback_sections",
+            default=[
+                "proposal",
+                "stage_summary",
+                "execution_output",
+                "sample_retry_diagnostics",
+                "validator_artifacts",
+                "validator_diagnostics",
+                "program_outputs",
+                "llm_grader_feedback",
+            ],
+        )
+    )
+    section_name = "parent_feedback" if role == "target" else "inspirations"
+    source = (
+        "parent_feedback_stage_summary_io"
+        if role == "target"
+        else "inspiration_feedback_stage_summary_io"
+    )
+    if not prompt_visible:
+        return {
+            "visible": False,
+            "source": source,
+            "omission_reason": "score_source_not_prompt_visible",
+        }
+    if section_name in disabled:
+        return {
+            "visible": False,
+            "source": source,
+            "omission_reason": f"{section_name}_disabled_by_prompt_context_policy",
+        }
+    if "stage_summary" not in feedback_sections:
+        return {
+            "visible": False,
+            "source": source,
+            "omission_reason": "stage_summary_feedback_section_disabled",
+        }
+    if "io" not in stage_fields:
+        return {
+            "visible": False,
+            "source": source,
+            "omission_reason": "stage_summary_io_field_not_selected",
         }
     if not _prompt_prior_section_budget_has_rendered(
         prompt_diagnostics,
@@ -18614,6 +19021,8 @@ def _prompt_prior_policy_list(
 def _prompt_prior_policy_int_mapping(
     policy: Mapping[str, object],
     field: str,
+    *,
+    allowed: set[str],
 ) -> dict[str, int]:
     value = policy.get(field)
     if not isinstance(value, Mapping):
@@ -18622,7 +19031,7 @@ def _prompt_prior_policy_int_mapping(
         str(key): item
         for key, item in value.items()
         if isinstance(key, str)
-        and key in _PROMPT_EXECUTION_OUTPUT_FIELDS
+        and key in allowed
         and isinstance(item, int)
         and not isinstance(item, bool)
         and item >= 0
@@ -18718,6 +19127,9 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
         "execution_result_record_count",
         "prompt_visible_execution_result_record_count",
         "execution_result_evaluator_join_count",
+        "stage_summary_io_record_count",
+        "prompt_visible_stage_summary_io_record_count",
+        "stage_summary_io_evaluator_join_count",
         "cross_run_prompt_score_table_record_count",
         "records",
         "records_limit",
@@ -18750,6 +19162,9 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
     execution_result_count = 0
     prompt_visible_execution_result_count = 0
     execution_result_evaluator_join_count = 0
+    stage_summary_io_count = 0
+    prompt_visible_stage_summary_io_count = 0
+    stage_summary_io_evaluator_join_count = 0
     for record_index, record in enumerate(records):
         if not isinstance(record, Mapping):
             issues.append({"code": "invalid_record", "message": f"record {record_index} must be an object"})
@@ -18871,6 +19286,55 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
                         issues.append({"code": "invalid_execution_field_prompt_visible", "message": f"record {record_index} score {score_index} execution field prompt_visible must be boolean"})
                 if execution_display.get("prompt_visible_fields") != visible_fields:
                     issues.append({"code": "execution_result_visible_fields_mismatch", "message": f"record {record_index} score {score_index} visible execution fields do not match field records"})
+            stage_display = score.get("stage_summary_io_display")
+            if not isinstance(stage_display, Mapping):
+                issues.append({"code": "invalid_stage_summary_io_display", "message": f"record {record_index} score {score_index} stage_summary_io_display must be an object"})
+            else:
+                if stage_display.get("schema") != "libreevolve.prompt_prior_stage_summary_io_display.v1":
+                    issues.append({"code": "invalid_stage_summary_io_schema", "message": f"record {record_index} score {score_index} stage-summary IO schema is unsupported"})
+                if stage_display.get("has_source_stage_io") is True:
+                    stage_summary_io_count += 1
+                    if stage_display.get("evaluator_result_joined") is True:
+                        stage_summary_io_evaluator_join_count += 1
+                elif stage_display.get("has_source_stage_io") is not False:
+                    issues.append({"code": "invalid_stage_summary_io_source_flag", "message": f"record {record_index} score {score_index} stage-summary IO source flag must be boolean"})
+                if stage_display.get("prompt_visible") is True:
+                    prompt_visible_stage_summary_io_count += 1
+                elif stage_display.get("prompt_visible") is not False:
+                    issues.append({"code": "invalid_stage_summary_io_prompt_visible", "message": f"record {record_index} score {score_index} stage-summary IO prompt_visible must be boolean"})
+                if stage_display.get("evaluator_result_joined") is True:
+                    stage_evaluator = stage_display.get("evaluator_result")
+                    if not isinstance(stage_evaluator, Mapping):
+                        issues.append({"code": "invalid_stage_summary_io_evaluator_row", "message": f"record {record_index} score {score_index} stage-summary IO evaluator row must be an object"})
+                    elif stage_evaluator.get("stream") != "evaluator_results.jsonl":
+                        issues.append({"code": "invalid_stage_summary_io_evaluator_stream", "message": f"record {record_index} score {score_index} stage-summary IO evaluator stream is invalid"})
+                elif stage_display.get("evaluator_result_joined") is not False:
+                    issues.append({"code": "invalid_stage_summary_io_evaluator_join", "message": f"record {record_index} score {score_index} stage-summary IO evaluator join flag must be boolean"})
+                stage_records = stage_display.get("stage_records")
+                if not isinstance(stage_records, list):
+                    issues.append({"code": "invalid_stage_summary_io_stage_records", "message": f"record {record_index} score {score_index} stage_records must be a list"})
+                    stage_records = []
+                visible_stage_count = 0
+                for stage_index, stage_record in enumerate(stage_records):
+                    if not isinstance(stage_record, Mapping):
+                        issues.append({"code": "invalid_stage_summary_io_stage_record", "message": f"record {record_index} score {score_index} stage {stage_index} must be an object"})
+                        continue
+                    if stage_record.get("prompt_visible") is True:
+                        visible_stage_count += 1
+                        if not isinstance(stage_record.get("stage_io_display_text"), str):
+                            issues.append({"code": "missing_stage_summary_io_display_text", "message": f"record {record_index} score {score_index} visible stage-summary IO needs display text"})
+                        if not _is_sha256_hex(stage_record.get("stage_io_display_sha256")):
+                            issues.append({"code": "invalid_stage_summary_io_display_hash", "message": f"record {record_index} score {score_index} visible stage-summary IO needs display hash"})
+                        if stage_record.get("omission_reason") is not None:
+                            issues.append({"code": "visible_stage_summary_io_has_omission", "message": f"record {record_index} score {score_index} visible stage-summary IO must not have omission reason"})
+                    elif stage_record.get("prompt_visible") is False:
+                        if not isinstance(stage_record.get("omission_reason"), str) or not stage_record.get("omission_reason"):
+                            issues.append({"code": "missing_stage_summary_io_omission", "message": f"record {record_index} score {score_index} omitted stage-summary IO needs reason"})
+                    else:
+                        issues.append({"code": "invalid_stage_summary_io_stage_visible", "message": f"record {record_index} score {score_index} stage-summary IO prompt_visible must be boolean"})
+                if isinstance(stage_display.get("visible_stage_count"), int) and not isinstance(stage_display.get("visible_stage_count"), bool):
+                    if stage_display.get("visible_stage_count") != visible_stage_count:
+                        issues.append({"code": "stage_summary_io_visible_count_mismatch", "message": f"record {record_index} score {score_index} visible stage count does not match stage records"})
     truncated = report.get("records_truncated") is True
     _validate_prompt_prior_report_count(
         report,
@@ -18942,6 +19406,27 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
         truncated,
         issues,
     )
+    _validate_prompt_prior_report_count(
+        report,
+        "stage_summary_io_record_count",
+        stage_summary_io_count,
+        truncated,
+        issues,
+    )
+    _validate_prompt_prior_report_count(
+        report,
+        "prompt_visible_stage_summary_io_record_count",
+        prompt_visible_stage_summary_io_count,
+        truncated,
+        issues,
+    )
+    _validate_prompt_prior_report_count(
+        report,
+        "stage_summary_io_evaluator_join_count",
+        stage_summary_io_evaluator_join_count,
+        truncated,
+        issues,
+    )
     table_record_count = report.get("cross_run_prompt_score_table_record_count")
     if (
         not isinstance(table_record_count, int)
@@ -19003,6 +19488,7 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
             "evaluator_rows_joined",
             "prompt_visible_score_rows",
             "execution_result_text_display_attribution",
+            "stage_summary_io_display_attribution",
             "cross_run_prompt_score_table",
         ):
             if readiness.get(field) not in {True, False}:

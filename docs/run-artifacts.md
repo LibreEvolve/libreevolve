@@ -1827,14 +1827,15 @@ finite raw metric values, displayed aggregate formula (`program.fitness`),
 `history.jsonl` / `failure_history.jsonl` row joins, and
 `evaluator_results.jsonl` row joins. It also records top-level prompt-feedback
 execution-output display attribution for `stdout`, `stderr`, and `error`
-under the active prompt context policy. Completed runs also export
+under the active prompt context policy plus stage-summary IO display
+attribution for rendered stage stdout/stderr/error fields. Completed runs also export
 `prompt_prior_score_table.jsonl`, a flattened cross-run table with prompt ids,
 score-source ids, displayed scores, raw metric maps, history/evaluator row
-joins, and execution-output visibility summaries. It is prompt-score
+joins, execution-output visibility summaries, and stage-summary IO summaries.
+It is prompt-score
 provenance, not full AlphaEvolve rendered-evaluation-result parity: score
-omission/truncation policy, stage-summary IO display attribution, global
-feedback-section truncation policy, and exact `average_score` formula parity
-remain open.
+omission/truncation policy, global feedback-section truncation policy, and
+exact `average_score` formula parity remain open.
 LLM feedback workspace prompts use the shared versioned secret-pattern grammar
 before provider calls. Prompt history and quarantine streams still contain
 some fixed-policy retention surfaces. Feedback provider outputs are retained according to

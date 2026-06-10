@@ -184,11 +184,12 @@ Completed manifests also include
 `libreevolve.cascade_hypothesis_test_policy_report.v1`. It derives current
 stage roles from configured cascade order, links each stage to observed
 entry/pass/fail/sample/promotion-rate summaries, records configured sample and
-seed counts, and states that the current promotion mechanism is deterministic
-threshold and artifact checks. Its validation fails if the report claims
-statistical tests, confidence intervals, p-values, sequential stopping,
-false-promotion/false-rejection budgets, paper readiness, or AlphaEvolve
-Section 2.4 hypothesis-testing parity.
+seed counts, and identifies whether promotion used fixed threshold/artifact
+checks or an opt-in `one_sided_lower_confidence_bound` hypothesis test. For
+configured tests, candidate-stage records retain numeric observations, the
+lower confidence bound, and p-value evidence. Its validation still fails
+unsupported sequential-stopping, false-promotion/false-rejection-budget, paper
+readiness, or AlphaEvolve Section 2.4 parity claims.
 Completed manifests also include
 `runtime.history.existing_codebase_integration_report` with schema
 `libreevolve.existing_codebase_integration_report.v1`. This report scans
@@ -2428,6 +2429,14 @@ averaged raw metrics remain high. If a stage passes locally but fails
 with `stage_threshold_not_met` after threshold-aware retries are exhausted; the
 local stage row can still show `passed: true` because the validator subprocess
 itself returned valid output.
+For multi-sample stages, `hypothesis_test` can configure
+`type: one_sided_lower_confidence_bound` with `metric`, `min`, `confidence`,
+and `min_samples`. The selected aggregate stage is rejected with
+`hypothesis_test_not_met` when retained per-sample observations do not put the
+one-sided lower confidence bound above `min`; the persisted
+`hypothesis_test_result` records observations, mean, sample standard deviation,
+standard error, lower bound, confidence interval metadata, p-value, and pass
+reason.
 Configured stages can also require evaluator evidence. `require_program_output`
 adds an artifact/output check that passes only when `program_outputs.value` is
 retained rather than missing or omitted, and `min_artifacts` checks the count of

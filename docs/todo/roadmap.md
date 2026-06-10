@@ -1073,14 +1073,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     evaluation cascades. Current code and tests cover deterministic threshold
     gates, per-seed samples, and budget diagnostics. ROADMAP now also lists
     `runtime.history.cascade_hypothesis_test_policy_report`, which records
-    inferred small-scale/main-test roles and validates that current promotion
-    is deterministic threshold/artifact checking rather than statistical
-    confidence, p-value, sequential-test, or false-promotion-budgeted gating.
-  - Required result: when statistical hypothesis-test cascade execution and
-    noisy repeated-seed validation land, update ROADMAP, README, papers index,
-    and code/paper TODO entries together so roadmap wording neither underclaims
-    current staged validators nor overclaims AlphaEvolve-style
-    hypothesis-testing cascades.
+    inferred small-scale/main-test roles, deterministic threshold/artifact
+    promotion, and configured `one_sided_lower_confidence_bound` gates with
+    retained observations, confidence-bound evidence, and p-values. Sequential
+    stopping and calibrated false-promotion/false-rejection budgets remain
+    roadmap work.
+  - Required result: when richer statistical hypothesis-test cascade execution
+    lands, update ROADMAP, README, papers index, and code/paper TODO entries
+    together so roadmap wording neither underclaims current lower-confidence
+    gates nor overclaims complete AlphaEvolve-style hypothesis-testing
+    cascades.
 
 - [ ] Keep mutation-response roadmap wording scoped beyond bounded
       natural-language preamble capture.

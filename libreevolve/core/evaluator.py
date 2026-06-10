@@ -9,6 +9,7 @@ import signal
 import subprocess
 import time
 import unicodedata
+from statistics import NormalDist
 from ctypes import wintypes
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -631,7 +632,15 @@ class CascadeEvaluator:
                 stage,
             )
             threshold_passed = threshold_result["passed"]
-            passed = result.is_valid and threshold_passed
+            hypothesis_test_result = _stage_hypothesis_test_result(
+                result,
+                stage.get("hypothesis_test"),
+            )
+            passed = (
+                result.is_valid
+                and threshold_passed
+                and hypothesis_test_result["passed"]
+            )
             configured_stage_results.append(
                 _configured_stage_result_record(
                     name=name,
@@ -640,11 +649,17 @@ class CascadeEvaluator:
                     min_score=min_score,
                     threshold_passed=threshold_passed,
                     threshold_result=threshold_result,
+                    hypothesis_test_result=hypothesis_test_result,
                     passed=passed,
                 )
             )
             if not passed:
-                stop_reason = result.error or "stage_threshold_not_met"
+                stop_reason = result.error or (
+                    "hypothesis_test_not_met"
+                    if hypothesis_test_result["configured"]
+                    and not hypothesis_test_result["passed"]
+                    else "stage_threshold_not_met"
+                )
                 configured_stage_results[-1]["stop_reason"] = stop_reason
                 return EvaluationResult(
                     fitness=result.fitness,
@@ -3899,6 +3914,7 @@ def _configured_stage_result_record(
     min_score: object,
     threshold_passed: bool,
     threshold_result: dict,
+    hypothesis_test_result: dict,
     passed: bool,
 ) -> dict:
     return {
@@ -3911,6 +3927,7 @@ def _configured_stage_result_record(
         "threshold_result": threshold_result,
         "metric_thresholds": threshold_result["metric_thresholds"],
         "artifact_output_checks": threshold_result["artifact_output_checks"],
+        "hypothesis_test_result": hypothesis_test_result,
         "fitness": result.fitness,
         "metrics": dict(result.metrics),
         "stdout": result.stdout,
@@ -3972,6 +3989,97 @@ def _stage_threshold_result(
         else checks[: len(_normalized_metric_thresholds(metric_thresholds))],
         "artifact_output_checks": artifact_checks,
     }
+
+
+def _stage_hypothesis_test_result(
+    result: "EvaluationResult",
+    hypothesis_test: object,
+) -> dict:
+    if not isinstance(hypothesis_test, dict):
+        return {
+            "configured": False,
+            "passed": True,
+            "test_name": None,
+        }
+    metric = str(hypothesis_test.get("metric", "fitness"))
+    threshold = float(hypothesis_test["min"])
+    confidence = float(hypothesis_test.get("confidence", 0.95))
+    min_samples = int(hypothesis_test.get("min_samples", 2))
+    observations = _hypothesis_test_observations(result, metric)
+    values = [item["value"] for item in observations]
+    record: dict = {
+        "configured": True,
+        "test_name": "one_sided_lower_confidence_bound",
+        "metric": metric,
+        "min": threshold,
+        "confidence": confidence,
+        "min_samples": min_samples,
+        "sample_count": len(values),
+        "observations": observations,
+        "passed": False,
+    }
+    if len(values) < min_samples:
+        record["reason"] = "insufficient_samples"
+        return record
+    mean = sum(values) / len(values)
+    if len(values) > 1:
+        variance = sum((value - mean) ** 2 for value in values) / (len(values) - 1)
+        sample_stddev = math.sqrt(max(0.0, variance))
+    else:
+        sample_stddev = 0.0
+    standard_error = sample_stddev / math.sqrt(len(values))
+    z = NormalDist().inv_cdf(confidence)
+    lower_bound = mean - z * standard_error
+    if standard_error == 0.0:
+        z_score = None
+        p_value = 0.0 if mean >= threshold else 1.0
+    else:
+        z_score = (mean - threshold) / standard_error
+        p_value = 1.0 - NormalDist().cdf(z_score)
+    record.update(
+        {
+            "mean": mean,
+            "sample_stddev": sample_stddev,
+            "standard_error": standard_error,
+            "z_critical": z,
+            "lower_bound": lower_bound,
+            "confidence_interval": {
+                "kind": "one_sided_lower",
+                "lower": lower_bound,
+                "upper": None,
+            },
+            "z_score": z_score,
+            "p_value": p_value,
+            "passed": lower_bound >= threshold,
+        }
+    )
+    if not record["passed"]:
+        record["reason"] = "lower_confidence_bound_below_min"
+    return record
+
+
+def _hypothesis_test_observations(
+    result: "EvaluationResult",
+    metric: str,
+) -> list[dict]:
+    samples = result.metadata.get("samples")
+    raw_samples = samples if isinstance(samples, list) else [result.to_dict()]
+    observations: list[dict] = []
+    for index, sample in enumerate(raw_samples):
+        if not isinstance(sample, dict):
+            continue
+        if metric == "fitness":
+            value = sample.get("fitness")
+        else:
+            metrics = sample.get("metrics")
+            value = metrics.get(metric) if isinstance(metrics, dict) else None
+        if (
+            isinstance(value, (int, float))
+            and not isinstance(value, bool)
+            and math.isfinite(float(value))
+        ):
+            observations.append({"sample_index": index, "value": float(value)})
+    return observations
 
 
 def _normalized_metric_thresholds(metric_thresholds: object) -> dict[str, dict]:

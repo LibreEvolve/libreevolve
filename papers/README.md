@@ -518,9 +518,11 @@ hypothesis-testing parity. Completed manifests also include
 `runtime.history.cascade_hypothesis_test_policy_report`, which names inferred
 small-scale-filter/intermediate/main-test roles from stage order, links current
 promotion counts and sample/seed configuration, and validates that current
-promotion is still deterministic thresholds/artifact checks rather than
-statistical tests, confidence intervals, p-values, sequential stopping, or
-false-promotion/false-rejection-budgeted hypothesis testing.
+promotion is either deterministic thresholds/artifact checks or the configured
+`one_sided_lower_confidence_bound` repeated-sample gate. Configured gates retain
+confidence-bound and p-value evidence. Sequential stopping, calibrated
+false-promotion/false-rejection budgets, richer test families, and full
+AlphaEvolve Section 2.4 hypothesis-testing parity remain open.
 
 AlphaEvolve embedded-evaluator note: configured stages can now opt into
 `mode: embedded_evaluate`, which imports the materialized candidate primary
@@ -1402,10 +1404,12 @@ Implemented:
   seeds, retries, and stage/sample budgets. Completed manifests include
   `runtime.history.cascade_hypothesis_test_policy_report`, which records
   inferred small-scale-filter/main-test roles and validates the current
-  deterministic threshold boundary. They are not yet AlphaEvolve Section 2.4
-  hypothesis-testing cascades: no runtime policy applies statistical test
-  parameters, confidence intervals, p-values, sequential stopping, or
-  false-promotion/false-rejection budgets to promotion decisions.
+  promotion boundary. Stages can now opt into
+  `one_sided_lower_confidence_bound` promotion tests that apply confidence-bound
+  and p-value evidence to repeated samples. They are still not complete
+  AlphaEvolve Section 2.4 hypothesis-testing cascades: sequential stopping,
+  calibrated false-promotion/false-rejection budgets, and broader statistical
+  test policies remain open.
 - `libreevolve/problems/benchmarks/ablation_results.py`: equal-budget
   ablation-result report contract. It validates the AlphaEvolve Figure 8
   full-system baseline plus the five component ablations, declared targets,

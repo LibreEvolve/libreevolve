@@ -2086,6 +2086,87 @@ def test_configured_stage_metric_aggregation_can_use_worst_primary_metric():
         shutil.rmtree(d)
 
 
+def test_configured_stage_hypothesis_test_can_promote_repeated_samples():
+    p, d = _problem(
+        "def evaluate(code, workspace, stage): return {'score': stage['seed'], 'is_valid': True}"
+    )
+    try:
+        result = CascadeEvaluator(
+            p,
+            stages=[
+                {
+                    "name": "stat_gate",
+                    "samples": 3,
+                    "seeds": [0.8, 0.85, 0.9],
+                    "min_score": 0.7,
+                    "hypothesis_test": {
+                        "type": "one_sided_lower_confidence_bound",
+                        "metric": "score",
+                        "min": 0.7,
+                        "confidence": 0.8,
+                        "min_samples": 3,
+                    },
+                }
+            ],
+        ).evaluate("x=1", None)
+
+        assert result.is_valid is True
+        stage = result.metadata["configured_stage_results"][0]
+        hypothesis = stage["hypothesis_test_result"]
+        assert stage["passed"] is True
+        assert hypothesis["configured"] is True
+        assert hypothesis["test_name"] == "one_sided_lower_confidence_bound"
+        assert hypothesis["sample_count"] == 3
+        assert hypothesis["observations"] == [
+            {"sample_index": 0, "value": 0.8},
+            {"sample_index": 1, "value": 0.85},
+            {"sample_index": 2, "value": 0.9},
+        ]
+        assert hypothesis["lower_bound"] >= 0.7
+        assert 0.0 <= hypothesis["p_value"] <= 1.0
+        assert hypothesis["confidence_interval"]["kind"] == "one_sided_lower"
+    finally:
+        shutil.rmtree(d)
+
+
+def test_configured_stage_hypothesis_test_rejects_noisy_samples():
+    p, d = _problem(
+        "def evaluate(code, workspace, stage): return {'score': stage['seed'], 'is_valid': True}"
+    )
+    try:
+        result = CascadeEvaluator(
+            p,
+            stages=[
+                {
+                    "name": "stat_gate",
+                    "samples": 3,
+                    "seeds": [0.6, 0.8, 1.0],
+                    "min_score": 0.5,
+                    "hypothesis_test": {
+                        "type": "one_sided_lower_confidence_bound",
+                        "metric": "score",
+                        "min": 0.7,
+                        "confidence": 0.95,
+                        "min_samples": 3,
+                    },
+                }
+            ],
+        ).evaluate("x=1", None)
+
+        assert result.is_valid is False
+        assert result.error == "hypothesis_test_not_met"
+        stage = result.metadata["configured_stage_results"][0]
+        hypothesis = stage["hypothesis_test_result"]
+        assert stage["threshold_passed"] is True
+        assert stage["passed"] is False
+        assert hypothesis["passed"] is False
+        assert hypothesis["reason"] == "lower_confidence_bound_below_min"
+        assert hypothesis["mean"] == pytest.approx(0.8)
+        assert hypothesis["lower_bound"] < 0.7
+    finally:
+        shutil.rmtree(d)
+
+
 def test_configured_stage_metric_aggregation_can_use_worst_minimized_metric():
     metrics = [
         {"name": "runtime", "primary": True, "bounds": [0.0, 10.0], "direction": "minimize"},

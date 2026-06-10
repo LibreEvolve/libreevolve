@@ -619,6 +619,71 @@ def test_accepts_maximum_llm_call_attempt_cap():
         ({"metric_thresholds": {"score": {"median": 0.5}}}, "unsupported"),
         ({"metric_thresholds": {"score": {"min": "high"}}}, "score.min"),
         ({"metric_thresholds": {"score": {"min": 2.0, "max": 1.0}}}, "min must be <= max"),
+        ({"name": "gate", "hypothesis_test": []}, "hypothesis_test"),
+        (
+            {
+                "name": "gate",
+                "samples": 2,
+                "hypothesis_test": {"type": "welch_t_test", "min": 0.5},
+            },
+            "type",
+        ),
+        (
+            {
+                "name": "gate",
+                "samples": 2,
+                "hypothesis_test": {
+                    "type": "one_sided_lower_confidence_bound",
+                },
+            },
+            "min is required",
+        ),
+        (
+            {
+                "name": "gate",
+                "samples": 2,
+                "hypothesis_test": {
+                    "type": "one_sided_lower_confidence_bound",
+                    "min": 0.5,
+                    "confidence": 1.0,
+                },
+            },
+            "confidence",
+        ),
+        (
+            {
+                "name": "gate",
+                "samples": 2,
+                "hypothesis_test": {
+                    "type": "one_sided_lower_confidence_bound",
+                    "min": 0.5,
+                    "min_samples": 1,
+                },
+            },
+            "min_samples",
+        ),
+        (
+            {
+                "name": "gate",
+                "samples": 2,
+                "hypothesis_test": {
+                    "type": "one_sided_lower_confidence_bound",
+                    "min": 0.5,
+                    "min_samples": 3,
+                },
+            },
+            "samples must be >= min_samples",
+        ),
+        (
+            {
+                "name": "gate",
+                "hypothesis_test": {
+                    "type": "one_sided_lower_confidence_bound",
+                    "min": 0.5,
+                },
+            },
+            "samples must be configured",
+        ),
         ({"min_artifacts": -1}, "min_artifacts"),
         ({"min_artifacts": True}, "min_artifacts"),
         ({"require_program_output": "yes"}, "require_program_output"),
@@ -714,6 +779,27 @@ def test_accepts_maximum_eval_stage_retry_cap():
     config = Config(eval_stages=[{"name": "retry_cap", "retries": 10}])
 
     assert config.eval_stages[0]["retries"] == 10
+
+
+def test_accepts_eval_stage_hypothesis_test_config():
+    config = Config(
+        eval_stages=[
+            {
+                "name": "stat_gate",
+                "samples": 3,
+                "hypothesis_test": {
+                    "type": "one_sided_lower_confidence_bound",
+                    "metric": "score",
+                    "min": 0.6,
+                    "confidence": 0.9,
+                    "min_samples": 3,
+                },
+            }
+        ]
+    )
+
+    assert config.eval_stages[0]["hypothesis_test"]["metric"] == "score"
+    assert config.eval_stages[0]["hypothesis_test"]["confidence"] == 0.9
 
 
 def test_accepts_configured_evaluator_stdin_text():

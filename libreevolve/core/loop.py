@@ -12967,6 +12967,14 @@ def _evaluation_cascade_report(
                         "metric_thresholds": raw_stage.get("metric_thresholds", []),
                         "artifact_output_checks": raw_stage.get("artifact_output_checks", []),
                     },
+                    "hypothesis_test": {
+                        "configured": False,
+                        "test_count": 0,
+                        "passed": 0,
+                        "failed": 0,
+                        "confidence_interval_count": 0,
+                        "p_value_count": 0,
+                    },
                 },
             )
             stage["entered"] += 1
@@ -12986,6 +12994,18 @@ def _evaluation_cascade_report(
                 stage["threshold_failed"] += 1
             if raw_stage.get("local_valid") is False:
                 stage["local_invalid"] += 1
+            hypothesis_test_result = raw_stage.get("hypothesis_test_result")
+            if isinstance(hypothesis_test_result, Mapping) and hypothesis_test_result.get("configured") is True:
+                stage["hypothesis_test"]["configured"] = True
+                stage["hypothesis_test"]["test_count"] += 1
+                if hypothesis_test_result.get("passed") is True:
+                    stage["hypothesis_test"]["passed"] += 1
+                else:
+                    stage["hypothesis_test"]["failed"] += 1
+                if isinstance(hypothesis_test_result.get("confidence_interval"), Mapping):
+                    stage["hypothesis_test"]["confidence_interval_count"] += 1
+                if isinstance(hypothesis_test_result.get("p_value"), (int, float)) and not isinstance(hypothesis_test_result.get("p_value"), bool):
+                    stage["hypothesis_test"]["p_value_count"] += 1
             accounting = evaluation_accounting(raw_stage)
             stage["sample_count"] += int(accounting.get("configured_stage_samples", 0))
             stage["retry_attempts"] += int(accounting.get("retry_attempts", 0))
@@ -13105,6 +13125,18 @@ def _cascade_hypothesis_test_policy_report(
         for index, stage in enumerate(eval_stages)
         if isinstance(stage, Mapping)
     ]
+    statistical_test_configured = any(
+        stage.get("statistical_test", {}).get("configured") is True
+        for stage in stage_policies
+    )
+    confidence_records = any(
+        stage.get("statistical_test", {}).get("confidence_interval_count", 0) > 0
+        for stage in stage_policies
+    )
+    p_value_records = any(
+        stage.get("statistical_test", {}).get("p_value_count", 0) > 0
+        for stage in stage_policies
+    )
     observed_stage_count = (
         cascade_report.get("stage_count")
         if isinstance(cascade_report.get("stage_count"), int)
@@ -13120,15 +13152,21 @@ def _cascade_hypothesis_test_policy_report(
         "stage_policies": stage_policies,
         "current_policy": {
             "schema": "libreevolve.cascade_promotion_policy_boundary.v1",
-            "promotion_mechanism": "deterministic_threshold_and_artifact_checks",
-            "statistical_hypothesis_tests_supported": False,
-            "confidence_intervals_supported": False,
-            "p_values_supported": False,
+            "promotion_mechanism": (
+                "configured_statistical_gate_after_threshold_checks"
+                if statistical_test_configured
+                else "deterministic_threshold_and_artifact_checks"
+            ),
+            "statistical_hypothesis_tests_supported": statistical_test_configured,
+            "confidence_intervals_supported": confidence_records,
+            "p_values_supported": p_value_records,
             "sequential_stopping_supported": False,
             "false_promotion_budget_supported": False,
             "false_rejection_budget_supported": False,
             "per_sample_observation_retention": (
-                "stage_accounting_and_candidate_stage_summary_only"
+                "hypothesis_test_observations_when_configured"
+                if statistical_test_configured
+                else "stage_accounting_and_candidate_stage_summary_only"
             ),
             "paper_claim_ready": False,
         },
@@ -13138,8 +13176,8 @@ def _cascade_hypothesis_test_policy_report(
             "small_scale_filter_roles_named": bool(stage_policies),
             "main_test_role_named": bool(stage_policies),
             "fixed_threshold_promotion_evidence": True,
-            "statistical_test_configuration": False,
-            "confidence_or_p_value_records": False,
+            "statistical_test_configuration": statistical_test_configured,
+            "confidence_or_p_value_records": confidence_records or p_value_records,
             "sequential_stopping_diagnostics": False,
             "false_promotion_false_rejection_budgets": False,
             "remaining_gap": [
@@ -13180,12 +13218,27 @@ def _cascade_hypothesis_stage_policy(
         if isinstance(seeds, list)
         else 0
     )
+    hypothesis_test = (
+        stage.get("hypothesis_test")
+        if isinstance(stage.get("hypothesis_test"), Mapping)
+        else {}
+    )
+    observed_hypothesis_test = (
+        observed.get("hypothesis_test")
+        if isinstance(observed.get("hypothesis_test"), Mapping)
+        else {}
+    )
+    statistical_configured = bool(hypothesis_test)
     return {
         "stage_id": stage_id,
         "stage_index": index,
         "stage_name": name,
         "inferred_role": role,
-        "promotion_decision_source": "fixed_threshold_and_artifact_checks",
+        "promotion_decision_source": (
+            "statistical_hypothesis_test"
+            if statistical_configured
+            else "fixed_threshold_and_artifact_checks"
+        ),
         "thresholds": {
             "fitness": stage.get("min_score"),
             "metric_thresholds_configured": isinstance(stage.get("metric_thresholds"), Mapping),
@@ -13213,10 +13266,25 @@ def _cascade_hypothesis_stage_policy(
             "promotion_rate": observed.get("promotion_rate"),
         },
         "statistical_test": {
-            "configured": False,
-            "test_name": None,
-            "confidence_interval": None,
-            "p_value": None,
+            "configured": statistical_configured,
+            "test_name": hypothesis_test.get("type") if statistical_configured else None,
+            "metric": hypothesis_test.get("metric", "fitness")
+            if statistical_configured
+            else None,
+            "min": hypothesis_test.get("min") if statistical_configured else None,
+            "confidence": hypothesis_test.get("confidence", 0.95)
+            if statistical_configured
+            else None,
+            "min_samples": hypothesis_test.get("min_samples", 2)
+            if statistical_configured
+            else None,
+            "test_count": observed_hypothesis_test.get("test_count", 0),
+            "passed": observed_hypothesis_test.get("passed", 0),
+            "failed": observed_hypothesis_test.get("failed", 0),
+            "confidence_interval_count": observed_hypothesis_test.get(
+                "confidence_interval_count", 0
+            ),
+            "p_value_count": observed_hypothesis_test.get("p_value_count", 0),
             "sequential_stopping": False,
             "false_promotion_budget": None,
             "false_rejection_budget": None,
@@ -13265,6 +13333,11 @@ def _cascade_candidate_stage_record(
             raw_stage.get("threshold_passed")
             if isinstance(raw_stage.get("threshold_passed"), bool)
             else None
+        ),
+        "hypothesis_test_result": (
+            copy.deepcopy(raw_stage.get("hypothesis_test_result"))
+            if isinstance(raw_stage.get("hypothesis_test_result"), Mapping)
+            else {"configured": False, "passed": True, "test_name": None}
         ),
         "stop_reason": str(stop_reason) if stop_reason is not None else None,
         "fitness": fitness,
@@ -27640,14 +27713,26 @@ def validate_cascade_hypothesis_test_policy_report(report: object) -> dict:
                     "message": f"stage policy {index} inferred_role is unsupported",
                 }
             )
-        if stage.get("promotion_decision_source") != "fixed_threshold_and_artifact_checks":
+        statistical_test = stage.get("statistical_test")
+        statistical_configured = (
+            isinstance(statistical_test, dict)
+            and statistical_test.get("configured") is True
+        )
+        expected_promotion_source = (
+            "statistical_hypothesis_test"
+            if statistical_configured
+            else "fixed_threshold_and_artifact_checks"
+        )
+        if stage.get("promotion_decision_source") != expected_promotion_source:
             issues.append(
                 {
                     "code": "promotion_source_overclaim",
-                    "message": "current cascade promotion source must remain fixed-threshold",
+                    "message": (
+                        "cascade promotion source must match configured "
+                        "hypothesis-test evidence"
+                    ),
                 }
             )
-        statistical_test = stage.get("statistical_test")
         if not isinstance(statistical_test, dict):
             issues.append(
                 {
@@ -27656,25 +27741,33 @@ def validate_cascade_hypothesis_test_policy_report(report: object) -> dict:
                 }
             )
             continue
-        if statistical_test.get("configured") is not False:
+        if statistical_test.get("configured") not in {False, True}:
             issues.append(
                 {
-                    "code": "statistical_test_overclaim",
-                    "message": "current cascade stages must not claim statistical tests",
+                    "code": "invalid_statistical_test_configured",
+                    "message": "statistical_test.configured must be boolean",
                 }
             )
-        if statistical_test.get("confidence_interval") is not None:
+        for count_field in ("test_count", "passed", "failed"):
+            value = statistical_test.get(count_field, 0)
+            if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+                issues.append(
+                    {
+                        "code": "invalid_statistical_test_count",
+                        "message": f"statistical_test.{count_field} must be non-negative integer",
+                    }
+                )
+        if (
+            isinstance(statistical_test.get("test_count"), int)
+            and isinstance(statistical_test.get("passed"), int)
+            and isinstance(statistical_test.get("failed"), int)
+            and statistical_test["test_count"]
+            != statistical_test["passed"] + statistical_test["failed"]
+        ):
             issues.append(
                 {
-                    "code": "confidence_interval_overclaim",
-                    "message": "current cascade stages must not claim confidence intervals",
-                }
-            )
-        if statistical_test.get("p_value") is not None:
-            issues.append(
-                {
-                    "code": "p_value_overclaim",
-                    "message": "current cascade stages must not claim p-values",
+                    "code": "statistical_test_count_inconsistent",
+                    "message": "statistical test pass/fail counts must balance",
                 }
             )
         if statistical_test.get("sequential_stopping") is not False:
@@ -27703,10 +27796,51 @@ def validate_cascade_hypothesis_test_policy_report(report: object) -> dict:
                     "message": "current policy schema is unsupported",
                 }
             )
+        any_statistical_test = any(
+            isinstance(stage, dict)
+            and isinstance(stage.get("statistical_test"), dict)
+            and stage["statistical_test"].get("configured") is True
+            for stage in stage_policies
+        )
+        any_confidence_records = any(
+            isinstance(stage, dict)
+            and isinstance(stage.get("statistical_test"), dict)
+            and isinstance(
+                stage["statistical_test"].get("confidence_interval_count", 0),
+                int,
+            )
+            and not isinstance(
+                stage["statistical_test"].get("confidence_interval_count", 0),
+                bool,
+            )
+            and stage["statistical_test"].get("confidence_interval_count", 0) > 0
+            for stage in stage_policies
+        )
+        any_p_value_records = any(
+            isinstance(stage, dict)
+            and isinstance(stage.get("statistical_test"), dict)
+            and isinstance(stage["statistical_test"].get("p_value_count", 0), int)
+            and not isinstance(
+                stage["statistical_test"].get("p_value_count", 0),
+                bool,
+            )
+            and stage["statistical_test"].get("p_value_count", 0) > 0
+            for stage in stage_policies
+        )
+        expected_bool_fields = {
+            "statistical_hypothesis_tests_supported": any_statistical_test,
+            "confidence_intervals_supported": any_confidence_records,
+            "p_values_supported": any_p_value_records,
+        }
+        for field, expected in expected_bool_fields.items():
+            if current_policy.get(field) is not expected:
+                issues.append(
+                    {
+                        "code": f"policy_{field}_mismatch",
+                        "message": f"current_policy.{field} must match stage evidence",
+                    }
+                )
         false_fields = {
-            "statistical_hypothesis_tests_supported": "policy_statistical_test_overclaim",
-            "confidence_intervals_supported": "policy_confidence_interval_overclaim",
-            "p_values_supported": "policy_p_value_overclaim",
             "sequential_stopping_supported": "policy_sequential_stopping_overclaim",
             "false_promotion_budget_supported": "policy_false_promotion_budget_overclaim",
             "false_rejection_budget_supported": "policy_false_rejection_budget_overclaim",

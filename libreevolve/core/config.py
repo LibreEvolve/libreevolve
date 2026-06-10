@@ -959,6 +959,7 @@ def _validate_eval_stages(stages: object) -> None:
             "min_score",
             "metric_aggregation",
             "metric_thresholds",
+            "hypothesis_test",
             "min_artifacts",
             "program_output_checks",
             "require_program_output",
@@ -1020,6 +1021,12 @@ def _validate_eval_stages(stages: object) -> None:
             _validate_metric_aggregation(f"{label}.metric_aggregation", stage["metric_aggregation"])
         if "metric_thresholds" in stage:
             _validate_metric_thresholds(f"{label}.metric_thresholds", stage["metric_thresholds"])
+        if "hypothesis_test" in stage:
+            _validate_stage_hypothesis_test(
+                f"{label}.hypothesis_test",
+                stage["hypothesis_test"],
+                stage.get("samples"),
+            )
         if "min_artifacts" in stage:
             _require_int(f"{label}.min_artifacts", stage["min_artifacts"], minimum=0)
         if "require_program_output" in stage:
@@ -1207,6 +1214,49 @@ def _validate_metric_thresholds(label: str, value: object) -> None:
             _require_number(f"{metric_label}.max", spec["max"])
         if "min" in spec and "max" in spec and float(spec["min"]) > float(spec["max"]):
             raise ConfigError(f"{metric_label}.min must be <= max")
+
+
+def _validate_stage_hypothesis_test(
+    label: str,
+    value: object,
+    samples: object,
+) -> None:
+    if not isinstance(value, dict):
+        raise ConfigError(f"{label} must be a mapping")
+    unsupported = _unsupported_mapping_keys(
+        label,
+        value,
+        {"type", "metric", "min", "confidence", "min_samples"},
+    )
+    if unsupported:
+        raise ConfigError(f"{label} has unsupported fields {unsupported}")
+    if value.get("type") != "one_sided_lower_confidence_bound":
+        raise ConfigError(
+            f"{label}.type must be 'one_sided_lower_confidence_bound'"
+        )
+    metric = value.get("metric", "fitness")
+    if metric != "fitness":
+        if not isinstance(metric, str):
+            raise ConfigError(f"{label}.metric must be a string")
+        try:
+            validate_program_metrics({metric: 0.0})
+        except ValueError as exc:
+            raise ConfigError(
+                f"{label}.metric must be 'fitness' or a manifest-safe metric name"
+            ) from exc
+    if "min" not in value:
+        raise ConfigError(f"{label}.min is required")
+    _require_number(f"{label}.min", value["min"])
+    confidence = _require_number(f"{label}.confidence", value.get("confidence", 0.95))
+    if confidence <= 0.5 or confidence >= 1.0:
+        raise ConfigError(f"{label}.confidence must be > 0.5 and < 1.0")
+    min_samples = value.get("min_samples", 2)
+    _require_int(f"{label}.min_samples", min_samples, minimum=2)
+    if samples is None:
+        raise ConfigError(f"{label}.samples must be configured")
+    _require_int(f"{label}.samples", samples, minimum=1)
+    if int(samples) < int(min_samples):
+        raise ConfigError(f"{label}.samples must be >= min_samples")
 
 
 def _validate_metric_aggregation(label: str, value: object) -> None:

@@ -5589,8 +5589,15 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
     assert smoke_policy["statistical_test"] == {
         "configured": False,
         "test_name": None,
-        "confidence_interval": None,
-        "p_value": None,
+        "metric": None,
+        "min": None,
+        "confidence": None,
+        "min_samples": None,
+        "test_count": 0,
+        "passed": 0,
+        "failed": 0,
+        "confidence_interval_count": 0,
+        "p_value_count": 0,
         "sequential_stopping": False,
         "false_promotion_budget": None,
         "false_rejection_budget": None,
@@ -5609,8 +5616,6 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
     overclaimed_policy["stage_policies"][0]["promotion_decision_source"] = (
         "welch_t_test"
     )
-    overclaimed_policy["stage_policies"][0]["statistical_test"]["configured"] = True
-    overclaimed_policy["stage_policies"][0]["statistical_test"]["p_value"] = 0.01
     overclaimed_policy["stage_policies"][0]["statistical_test"][
         "sequential_stopping"
     ] = True
@@ -5620,15 +5625,87 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
     assert policy_validation["ok"] is False
     assert {
         "claim_ready_overclaim",
-        "policy_statistical_test_overclaim",
-        "policy_p_value_overclaim",
+        "policy_statistical_hypothesis_tests_supported_mismatch",
+        "policy_p_values_supported_mismatch",
         "policy_paper_claim_ready_overclaim",
         "alphaevolve_hypothesis_testing_overclaim",
         "promotion_source_overclaim",
-        "statistical_test_overclaim",
-        "p_value_overclaim",
         "sequential_stopping_overclaim",
     }.issubset({issue["code"] for issue in policy_validation["issues"]})
+
+
+def test_runtime_history_reports_configured_cascade_hypothesis_test_gate():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(code, workspace, stage):\n"
+        "    return {'score': stage['seed'], 'is_valid': True}\n"
+    )
+
+    evolve(
+        problem,
+        Config(
+            max_generations=0,
+            log_dir=tmpdir,
+            problem_name="t",
+            eval_stages=[
+                {
+                    "name": "stat_gate",
+                    "samples": 3,
+                    "seeds": [0.8, 0.85, 0.9],
+                    "min_score": 0.7,
+                    "hypothesis_test": {
+                        "type": "one_sided_lower_confidence_bound",
+                        "metric": "score",
+                        "min": 0.7,
+                        "confidence": 0.8,
+                        "min_samples": 3,
+                    },
+                },
+            ],
+        ),
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    cascade = manifest["runtime"]["history"]["evaluation_cascade_report"]
+    stage = cascade["stages"][0]
+    assert stage["hypothesis_test"] == {
+        "configured": True,
+        "test_count": 1,
+        "passed": 1,
+        "failed": 0,
+        "confidence_interval_count": 1,
+        "p_value_count": 1,
+    }
+    stage_record = cascade["candidate_stage_records"][0]
+    hypothesis_result = stage_record["hypothesis_test_result"]
+    assert hypothesis_result["configured"] is True
+    assert hypothesis_result["passed"] is True
+    assert hypothesis_result["sample_count"] == 3
+    assert hypothesis_result["lower_bound"] >= 0.7
+
+    report = manifest["runtime"]["history"]["cascade_hypothesis_test_policy_report"]
+    assert report["validation"]["ok"] is True
+    assert validate_cascade_hypothesis_test_policy_report(report)["ok"] is True
+    assert report["current_policy"]["promotion_mechanism"] == (
+        "configured_statistical_gate_after_threshold_checks"
+    )
+    assert report["current_policy"]["statistical_hypothesis_tests_supported"] is True
+    assert report["current_policy"]["confidence_intervals_supported"] is True
+    assert report["current_policy"]["p_values_supported"] is True
+    assert report["current_policy"]["paper_claim_ready"] is False
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["statistical_test_configuration"] is True
+    assert report["claim_readiness"]["confidence_or_p_value_records"] is True
+
+    policy = report["stage_policies"][0]
+    assert policy["promotion_decision_source"] == "statistical_hypothesis_test"
+    assert policy["statistical_test"]["configured"] is True
+    assert policy["statistical_test"]["test_name"] == (
+        "one_sided_lower_confidence_bound"
+    )
+    assert policy["statistical_test"]["test_count"] == 1
+    assert policy["statistical_test"]["passed"] == 1
+    assert policy["statistical_test"]["p_value_count"] == 1
 
 
 def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():

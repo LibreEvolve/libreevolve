@@ -1440,22 +1440,24 @@ Primary evidence:
     `small_scale_filter`, `intermediate_filter`, and `main_test` roles from
     configured stage order, links observed entry/pass/fail/sample/promotion
     counts from `runtime.history.evaluation_cascade_report`, records configured
-    sample and seed counts, and validates that current promotion remains
-    deterministic threshold/artifact checking. The validator rejects
-    statistical-test, confidence-interval, p-value, sequential-stopping,
-    false-promotion/false-rejection-budget, and claim-ready overclaims.
-  - Remaining gap: no runtime policy uses statistical test parameters,
-    retained per-sample observations, confidence or p-value evidence,
-    sequential-test stopping rules, or false-promotion/false-rejection budgets
-    to decide promotion. The stage role labels are inferred boundary evidence,
-    not proof that a noisy repeated-seed sample set was statistically
-    promising.
-  - Required result: add a cascade promotion policy with explicit stage roles
-    (`small_scale_filter`, `main_test`, etc.), statistical test configuration,
-    retained per-sample observations, confidence or p-value records,
-    sequential stopping diagnostics, and tests/report validation showing noisy
-    repeated-seed candidates are promoted or rejected by a hypothesis-testing
-    rule rather than only by fixed scalar thresholds.
+    sample and seed counts, and identifies deterministic threshold/artifact
+    checking versus configured statistical gates. Eval stages can now opt into
+    `hypothesis_test: {type: one_sided_lower_confidence_bound, metric, min,
+    confidence, min_samples}`; the evaluator retains per-sample observations,
+    confidence-bound and p-value evidence, and rejects noisy repeated-sample
+    candidates with `hypothesis_test_not_met` when the lower bound is below
+    `min`.
+  - Remaining gap: this is one normal-approximation repeated-sample gate, not
+    full AlphaEvolve Section 2.4 hypothesis testing. Broader statistical test
+    families, explicit human-authored stage roles, sequential-test stopping
+    rules, false-promotion/false-rejection budgets, benchmark-calibrated
+    thresholds, and matrix/tensor repeated-seed promotion fixtures remain
+    absent.
+  - Required result: extend cascade promotion beyond the current lower-bound
+    gate with explicit stage roles, richer statistical test configuration,
+    sequential stopping diagnostics, false-promotion/false-rejection budgets,
+    and benchmark tests showing noisy repeated-seed candidates are promoted or
+    rejected by calibrated hypothesis-testing rules.
 
 - [ ] Add qualitative LLM-feedback criterion provenance.
   - Spec evidence: AlphaEvolve Section 2.4 says LLM-generated feedback can

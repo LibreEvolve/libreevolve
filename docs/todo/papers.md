@@ -1585,16 +1585,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     small-scale-filter/intermediate/main-test roles, observed
     entry/pass/fail/sample/promotion summaries, configured sample/seed counts,
     and validation that current promotion remains deterministic
-    threshold/artifact checking.
-  - Current gap: paper-facing evidence now names the current role boundary but
-    still does not implement statistical hypothesis-test policies, confidence
-    intervals, p-values, sequential stopping rules, or false-promotion/
-    false-rejection budgets. Current cascades can be accurate threshold gates
-    without proving AlphaEvolve-style hypothesis-testing promotion semantics.
-  - Required result: add report/schema evidence for statistical cascade
-    promotion decisions, including per-sample observations, test parameters,
-    confidence or p-value outputs, sequential stopping diagnostics, and
-    promotion/rejection linkage from small-scale filters to main test cases.
+    threshold/artifact checking unless an opt-in
+    `one_sided_lower_confidence_bound` gate is configured. Configured gates
+    retain per-sample observations, confidence-bound evidence, p-values, and
+    promotion/rejection linkage.
+  - Current gap: paper-facing evidence now includes one repeated-sample
+    statistical gate, but still lacks broader hypothesis-test policies,
+    sequential stopping rules, false-promotion/false-rejection budgets,
+    benchmark-calibrated thresholds, and explicit authored small-scale/main-test
+    role declarations.
+  - Required result: add paper-facing evidence for richer statistical cascade
+    promotion decisions, including test-family parameters, sequential stopping
+    diagnostics, calibrated error budgets, and benchmark promotion/rejection
+    linkage from small-scale filters to main test cases.
 
 - [ ] Track qualitative LLM-feedback criterion provenance.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.

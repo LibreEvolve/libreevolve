@@ -2514,11 +2514,13 @@ Completed manifests also include
 `runtime.history.cascade_hypothesis_test_policy_report`, which records the
 current cascade promotion-policy boundary. It infers small-scale-filter,
 intermediate-filter, and main-test roles from configured stage order, links
-those stages to observed promotion/attrition counts, records configured sample
-and seed counts, and explicitly marks current promotion as deterministic
-threshold/artifact checks. Its validator keeps statistical tests, confidence
-intervals, p-values, sequential stopping, false-promotion/false-rejection
-budgets, and AlphaEvolve Section 2.4 hypothesis-testing readiness false.
+those stages to observed promotion/attrition counts, and records configured
+sample and seed counts. Stages may opt into
+`hypothesis_test: {type: one_sided_lower_confidence_bound, metric, min,
+confidence, min_samples}` to require a repeated-sample lower confidence bound
+before promotion; the report then records confidence-bound and p-value
+evidence. Sequential stopping, false-promotion/false-rejection budgets, and
+full AlphaEvolve Section 2.4 hypothesis-testing readiness remain false.
 Completed manifests also include
 `runtime.history.automated_evaluator_scope_report`, which records the current
 AlphaEvolve scope boundary: candidate admission is owned by deterministic
@@ -2575,6 +2577,14 @@ averaged raw metrics remain high. A `min_score` or `metric_thresholds` failure
 likewise marks the top-level result invalid with `stage_threshold_not_met`
 after threshold-aware retries are exhausted, while the underlying local stage
 row can still show that its validator subprocess passed.
+Multi-sample stages can additionally set
+`hypothesis_test: {type: one_sided_lower_confidence_bound, metric, min,
+confidence, min_samples}`. The evaluator retains numeric per-sample
+observations for `fitness` or a metric, computes a normal-approximation
+one-sided lower confidence bound and p-value, and rejects the stage with
+`hypothesis_test_not_met` when the lower bound is below `min`. This is an
+opt-in statistical promotion gate, not a sequential test or calibrated
+false-promotion budget.
 Configured stages can also require evaluator evidence directly:
 `require_program_output: true` requires a retained `outputs` or
 `program_output` payload, and `min_artifacts` requires at least that many copied

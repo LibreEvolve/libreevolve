@@ -1133,8 +1133,13 @@ Implemented:
   claims that distinguish matrix-multiplication tensor decompositions from
   non-tensor multiplication algorithms, including tensor-identity certificate
   scope, recursive applicability, target-tensor links, exactness-certificate
-  links, and source-note caveats for non-recursive algorithms, but no local
-  matrix benchmark runner emits those target-tensor/certificate artifacts yet.
+  links, and source-note caveats for non-recursive algorithms.
+  `libreevolve.matrix_tensor_rank_runtime_boundary.v1` now records the current
+  `not_emitted_by_local_runner` boundary and required future emitted-record
+  fields for algorithm kind, rank, recursive applicability, certificate scope,
+  tensor-identity status, target-tensor refs, exactness-certificate refs,
+  matrix-result refs, artifact paths, and artifact hashes, but no local matrix
+  benchmark runner emits those target-tensor/certificate artifacts yet.
   `libreevolve.matrix_headline_historicity_evidence.v1` validates declared
   provenance for the `mm_4x4x4` complex rank-48 headline, including
   characteristic-zero scope, 56-year first-below-49 wording flags, recursive

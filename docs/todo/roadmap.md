@@ -2686,7 +2686,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     validates algorithm-kind metadata, tensor-decomposition certificate scope,
     recursive applicability, target-tensor/certificate links, and
     footnote/source-note provenance for rank comparisons against non-tensor or
-    non-recursive algorithms. It does not emit those artifacts.
+    non-recursive algorithms. `libreevolve.matrix_tensor_rank_runtime_boundary.v1`
+    now validates the current `not_emitted_by_local_runner` boundary and
+    required future emitted-record fields for algorithm kind, rank, recursive
+    applicability, certificate scope, tensor-identity status, target-tensor
+    refs, exactness-certificate refs, matrix-result refs, artifact paths, and
+    artifact hashes. It does not emit those artifacts.
   - Required result: when matrix reports or companion artifacts capture
     tensor-rank applicability and recursive-use caveats, update ROADMAP,
     README, papers index, and code/paper TODO entries together so roadmap text

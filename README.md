@@ -3450,7 +3450,13 @@ scope, recursive applicability, target-tensor links, exactness-certificate
 links, and source-note caveats for algorithms that cannot be applied
 recursively. It validates emitted evidence after a run records it; local matrix
 benchmark runners still do not emit target-tensor/certificate artifacts or
-footnote-level non-tensor caveat records for those claims.
+footnote-level non-tensor caveat records for those claims. The companion
+runtime boundary `libreevolve.matrix_tensor_rank_runtime_boundary.v1` validates
+the current `not_emitted_by_local_runner` state and the required future
+emitted-record fields for algorithm kind, rank, recursive applicability,
+certificate scope, tensor-identity status, target-tensor refs,
+exactness-certificate refs, matrix-result refs, artifact paths, and artifact
+hashes.
 Matrix sweep-space evidence uses
 `libreevolve.matrix_sweep_space_evidence.v1`; it validates declared Figure
 9-style search-program provenance for the `sweep` function, user-provided

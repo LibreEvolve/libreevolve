@@ -10772,3 +10772,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     coefficient representation, algorithm refs, certificate refs,
     matrix-result refs, artifact paths, and artifact hashes.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the matrix tensor-rank runtime boundary in README.
+  - Spec evidence: README matrix wording needs to separate declared
+    tensor-rank evidence validation from actual local runner emission for
+    recursive-applicability and non-tensor caveat claims.
+  - Status: README now names
+    `libreevolve.matrix_tensor_rank_runtime_boundary.v1`, scopes it to the
+    current `not_emitted_by_local_runner` state, and lists required future
+    emitted-record fields for algorithm kind, rank, recursive applicability,
+    certificate scope, tensor-identity status, target-tensor refs,
+    exactness-certificate refs, matrix-result refs, artifact paths, and
+    artifact hashes.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

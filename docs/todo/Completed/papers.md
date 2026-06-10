@@ -10721,3 +10721,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     paper-manifest gate validates this boundary with the Appendix A matrix
     checks.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Track matrix tensor-rank runtime-emission absence separately from
+      declared evidence validation.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 frames matrix
+    results as low-rank tensor decompositions and footnote 3 distinguishes
+    non-recursive multiplication algorithms from matrix tensor decompositions.
+  - Status: `libreevolve.matrix_tensor_rank_runtime_boundary.v1` now records
+    the current `not_emitted_by_local_runner` boundary and validates required
+    future emitted-record fields for algorithm kind, rank, recursive
+    applicability, certificate scope, tensor-identity status, target-tensor
+    refs, exactness-certificate refs, matrix-result refs, artifact paths, and
+    artifact hashes. The paper-manifest gate validates this boundary with the
+    Appendix A matrix checks.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

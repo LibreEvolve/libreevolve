@@ -18,9 +18,11 @@ from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_SCALAR_FIELD_RUNTIME_SCHEMA,
     MATRIX_SWEEP_SPACE_SCHEMA,
     MATRIX_TENSOR_RANK_SCHEMA,
+    MATRIX_TENSOR_RANK_RUNTIME_SCHEMA,
     matrix_near_integrality_runtime_boundary_record,
     matrix_result_artifact_inventory,
     matrix_scalar_field_runtime_boundary_record,
+    matrix_tensor_rank_runtime_boundary_record,
     render_matrix_headline_historicity_summary,
     render_matrix_near_integrality_summary,
     render_matrix_near_integrality_runtime_boundary_summary,
@@ -29,6 +31,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     render_matrix_scalar_field_runtime_boundary_summary,
     render_matrix_sweep_space_summary,
     render_matrix_tensor_rank_summary,
+    render_matrix_tensor_rank_runtime_boundary_summary,
     validate_matrix_headline_historicity_evidence,
     validate_matrix_near_integrality_evidence,
     validate_matrix_near_integrality_runtime_boundary,
@@ -38,6 +41,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     validate_matrix_scalar_field_runtime_boundary,
     validate_matrix_sweep_space_evidence,
     validate_matrix_tensor_rank_evidence,
+    validate_matrix_tensor_rank_runtime_boundary,
     write_strassen_2x2_publication_bundle,
 )
 
@@ -1121,6 +1125,100 @@ def test_render_matrix_tensor_rank_summary_reports_shape():
     assert "| claim_count | 1 |" in summary
     assert "| tensor_decomposition_count | 1 |" in summary
     assert "| recursive_applicable_count | 1 |" in summary
+
+
+def test_matrix_tensor_rank_runtime_boundary_accepts_current_absence():
+    boundary = matrix_tensor_rank_runtime_boundary_record()
+
+    validation = validate_matrix_tensor_rank_runtime_boundary(boundary)
+
+    assert boundary["schema"] == MATRIX_TENSOR_RANK_RUNTIME_SCHEMA
+    assert validation.ok is True
+    assert validation.runtime_emission_status == "not_emitted_by_local_runner"
+    assert validation.emitted_record_count == 0
+    assert validation.required_field_count == 14
+    assert "algorithm_kind" in boundary["required_emission_fields"]
+    assert "target_tensor_ref" in boundary["required_emission_fields"]
+    assert "exactness_certificate_ref" in boundary["required_emission_fields"]
+
+
+def test_matrix_tensor_rank_runtime_boundary_rejects_absence_with_records():
+    boundary = matrix_tensor_rank_runtime_boundary_record()
+    boundary["emitted_records"] = [
+        {
+            "run_id": "run_001",
+            "candidate_id": "candidate_001",
+            "matrix_result_ref": "matrix/mm_4x4x4/report.json",
+            "tensor_rank_evidence": _valid_tensor_rank_evidence(),
+        }
+    ]
+
+    validation = validate_matrix_tensor_rank_runtime_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "unexpected_runtime_tensor_rank_records" in codes
+
+
+def test_matrix_tensor_rank_runtime_boundary_requires_emitted_records():
+    boundary = matrix_tensor_rank_runtime_boundary_record()
+    boundary["runtime_emission_status"] = "emitted"
+
+    validation = validate_matrix_tensor_rank_runtime_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "missing_runtime_tensor_rank_records" in codes
+
+
+def test_matrix_tensor_rank_runtime_boundary_accepts_emitted_evidence():
+    boundary = matrix_tensor_rank_runtime_boundary_record()
+    boundary["runtime_emission_status"] = "emitted"
+    boundary["emitted_records"] = [
+        {
+            "run_id": "run_001",
+            "candidate_id": "candidate_001",
+            "matrix_result_ref": "matrix/mm_4x4x4/report.json",
+            "tensor_rank_evidence": _valid_tensor_rank_evidence(),
+        }
+    ]
+
+    validation = validate_matrix_tensor_rank_runtime_boundary(boundary)
+
+    assert validation.ok is True
+    assert validation.runtime_emission_status == "emitted"
+    assert validation.emitted_record_count == 1
+
+
+def test_matrix_tensor_rank_runtime_boundary_rejects_invalid_nested_evidence():
+    boundary = matrix_tensor_rank_runtime_boundary_record()
+    boundary["runtime_emission_status"] = "emitted"
+    nested = _valid_tensor_rank_evidence()
+    nested["rank_claims"][0]["recursive_applicable"] = False
+    boundary["emitted_records"] = [
+        {
+            "run_id": "run_001",
+            "candidate_id": "candidate_001",
+            "matrix_result_ref": "matrix/mm_4x4x4/report.json",
+            "tensor_rank_evidence": nested,
+        }
+    ]
+
+    validation = validate_matrix_tensor_rank_runtime_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "runtime_record_0_tensor_rank_missing_recursive_applicability" in codes
+
+
+def test_render_matrix_tensor_rank_runtime_boundary_summary_reports_shape():
+    summary = render_matrix_tensor_rank_runtime_boundary_summary()
+
+    assert "Matrix tensor-rank runtime boundary" in summary
+    assert "| schema_status | ok |" in summary
+    assert "| runtime_emission_status | not_emitted_by_local_runner |" in summary
+    assert "| emitted_record_count | 0 |" in summary
+    assert "| required_field_count | 14 |" in summary
 
 
 def _valid_headline_historicity_evidence() -> dict:

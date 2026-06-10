@@ -8211,3 +8211,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     current `not_emitted_by_local_runner` state, and keeps real local
     scalar-field artifact emission open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the matrix tensor-rank runtime boundary in ROADMAP.
+  - Spec evidence: roadmap matrix wording needs to distinguish tensor-rank
+    schema validation from actual local-run artifacts for recursive tensor
+    decompositions and non-recursive multiplication caveats.
+  - Status: ROADMAP now names
+    `libreevolve.matrix_tensor_rank_runtime_boundary.v1`, scopes it to the
+    current `not_emitted_by_local_runner` state, and keeps real local
+    tensor-rank artifact emission open.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

@@ -739,9 +739,14 @@ is not yet an AlphaEvolve reproduction.
   emitted tensor-rank parity: `libreevolve.matrix_tensor_rank_evidence.v1` now
   validates algorithm kind, tensor-identity certificate scope, recursive
   applicability, target-tensor and exactness-certificate links, and source-note
-  caveats for non-tensor multiplication algorithms. Local benchmark runners
-  still need to emit those target-tensor/certificate and footnote-caveat
-  artifacts.
+  caveats for non-tensor multiplication algorithms.
+  `libreevolve.matrix_tensor_rank_runtime_boundary.v1` now validates the
+  current `not_emitted_by_local_runner` boundary and required future
+  emitted-record fields for algorithm kind, rank, recursive applicability,
+  certificate scope, tensor-identity status, target-tensor refs,
+  exactness-certificate refs, matrix-result refs, artifact paths, and artifact
+  hashes. Local benchmark runners still need to emit those
+  target-tensor/certificate and footnote-caveat artifacts.
 - Keep matrix sweep-space wording scoped to evidence validation rather than
   executed Figure 9 workflow parity: `libreevolve.matrix_sweep_space_evidence.v1`
   now validates declared `sweep` function identity, user-provided `hyper`

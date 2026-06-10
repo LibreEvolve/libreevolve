@@ -15922,3 +15922,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused matrix-result and paper-manifest tests cover the
     absence boundary, emitted-record validation, invalid nested evidence, and
     manifest hook.
+
+- [x] Add a matrix tensor-rank runtime-emission boundary contract.
+  - Spec evidence: AlphaEvolve Section 3.1 frames matrix improvements as
+    low-rank tensor decompositions while footnote 3 distinguishes
+    non-recursive multiplication algorithms from matrix tensor decompositions.
+  - Status: `libreevolve.matrix_tensor_rank_runtime_boundary.v1` now validates
+    the current `not_emitted_by_local_runner` state, rejects false emitted
+    claims without nested tensor-rank evidence, and records required future
+    fields for algorithm kind, rank, recursive applicability, certificate
+    scope, tensor-identity status, target-tensor refs, exactness-certificate
+    refs, matrix-result refs, artifact paths, and artifact hashes. Local
+    matrix runners still do not emit target-tensor/certificate or footnote
+    caveat records.
+  - Verification: focused matrix-result and paper-manifest tests cover the
+    absence boundary, emitted-record validation, invalid nested evidence, and
+    manifest hook.

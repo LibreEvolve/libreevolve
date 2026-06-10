@@ -1175,8 +1175,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     algorithm-kind metadata, tensor-decomposition certificate scope, recursive
     applicability, target-tensor/certificate links, and footnote-level caveats
     that separate tensor-rank evidence from non-recursive multiplication
-    algorithms. It also states that target-tensor/certificate artifacts are not
-    emitted.
+    algorithms. It also documents
+    `libreevolve.matrix_tensor_rank_runtime_boundary.v1` as the current
+    `not_emitted_by_local_runner` boundary plus required future emitted-record
+    fields for algorithm kind, rank, recursive applicability, certificate
+    scope, tensor-identity status, target-tensor refs, exactness-certificate
+    refs, matrix-result refs, artifact paths, and artifact hashes. It also
+    states that target-tensor/certificate artifacts are not emitted.
   - Required result: when matrix reports or companion artifacts capture
     tensor-rank applicability and recursive-use caveats, update README,
     ROADMAP, papers index, and code/paper TODO entries together so README

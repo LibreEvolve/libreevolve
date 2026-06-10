@@ -3600,7 +3600,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     multiplication algorithm, whether the construction is recursively
     applicable, whether the certificate proves the target tensor identity, and
     source-note caveats for comparisons against non-tensor or finite-field-only
-    prior algorithms. It does not emit target-tensor/certificate artifacts.
+    prior algorithms. `libreevolve.matrix_tensor_rank_runtime_boundary.v1` now
+    validates the current `not_emitted_by_local_runner` boundary and required
+    future emitted-record fields for algorithm kind, rank, recursive
+    applicability, certificate scope, tensor-identity status, target-tensor
+    refs, exactness-certificate refs, matrix-result refs, artifact paths, and
+    artifact hashes. It does not emit target-tensor/certificate artifacts.
   - Required result: add concrete paper-facing artifacts for matrix rank
     claims: algorithm kind, tensor-decomposition certificate scope, recursive
     applicability, source note/page or footnote locator, target tensor identity

@@ -3542,9 +3542,15 @@ Primary evidence:
     algorithm kind, tensor-decomposition certificate scope, recursive
     applicability, target-tensor links, exactness-certificate links, and
     source-note provenance for non-tensor algorithms that are not comparable to
-    recursive tensor-rank claims. It validates declared metadata only; local
-    matrix runners do not emit target-tensor/certificate artifacts or
-    footnote-level non-tensor caveat records.
+    recursive tensor-rank claims.
+    `libreevolve.matrix_tensor_rank_runtime_boundary.v1` now validates the
+    current `not_emitted_by_local_runner` boundary and required future
+    emitted-record fields for algorithm kind, rank, recursive applicability,
+    certificate scope, tensor-identity status, target-tensor refs,
+    exactness-certificate refs, matrix-result refs, artifact paths, and
+    artifact hashes. It validates declared metadata only; local matrix runners
+    do not emit target-tensor/certificate artifacts or footnote-level
+    non-tensor caveat records.
   - Required result: emit or commit matrix report companion artifacts with
     algorithm kind, tensor-decomposition certificate scope, recursive
     applicability, target tensor identity evidence, field/characteristic

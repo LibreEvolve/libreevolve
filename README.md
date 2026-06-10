@@ -3578,7 +3578,13 @@ example only, and requires unimplemented families to carry explicit objective,
 target/baseline, construction-artifact, certification, rationale, and citation
 coverage. It is a coverage ledger, not the paper's accompanying-Colab evidence:
 it does not yet export the reported construction data or runnable verification
-code needed to reproduce Appendix B construction claims. It is also not a
+code needed to reproduce Appendix B construction claims. For the first three
+autocorrelation rows, the registry now preserves paper-facing labels
+separately from internal ids: `B.1. First autocorrelation inequality (C1)`,
+`B.2. Second autocorrelation inequality (C2)`, and
+`B.3. Third autocorrelation inequality (C3)`, while marking the
+`autocorrelation_bounds_k*` ids as internal implementation identifiers rather
+than AlphaEvolve terminology. It is also not a
 Section 3.2 aggregate outcome ledger: LibreEvolve does not yet enumerate the
 paper's over-50 mathematical problem instances, branch taxonomy, previous-best
 references, matched/improved/failed statuses, or aggregate percentages for

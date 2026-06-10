@@ -5,7 +5,15 @@
   "families": [
     {
       "id": "autocorrelation_bounds_k3",
-      "name": "Autocorrelation inequality, k=3",
+      "name": "B.1. First autocorrelation inequality (C1)",
+      "paper_label": {
+        "source_section_id": "B.1",
+        "paper_heading": "First autocorrelation inequality",
+        "constant_id": "C1",
+        "display_label": "B.1. First autocorrelation inequality (C1)",
+        "internal_family_id": "autocorrelation_bounds_k3",
+        "internal_label_policy": "internal_id_only_not_paper_label"
+      },
       "status": "planned",
       "objective": {"metric": "bound_quality", "direction": "maximize"},
       "target_baseline": {"status": "paper_result_required", "value": null},
@@ -17,7 +25,15 @@
     },
     {
       "id": "autocorrelation_bounds_k4",
-      "name": "Autocorrelation inequality, k=4",
+      "name": "B.2. Second autocorrelation inequality (C2)",
+      "paper_label": {
+        "source_section_id": "B.2",
+        "paper_heading": "Second autocorrelation inequality",
+        "constant_id": "C2",
+        "display_label": "B.2. Second autocorrelation inequality (C2)",
+        "internal_family_id": "autocorrelation_bounds_k4",
+        "internal_label_policy": "internal_id_only_not_paper_label"
+      },
       "status": "planned",
       "objective": {"metric": "bound_quality", "direction": "maximize"},
       "target_baseline": {"status": "paper_result_required", "value": null},
@@ -29,7 +45,15 @@
     },
     {
       "id": "autocorrelation_bounds_k5",
-      "name": "Autocorrelation inequality, k=5",
+      "name": "B.3. Third autocorrelation inequality (C3)",
+      "paper_label": {
+        "source_section_id": "B.3",
+        "paper_heading": "Third autocorrelation inequality",
+        "constant_id": "C3",
+        "display_label": "B.3. Third autocorrelation inequality (C3)",
+        "internal_family_id": "autocorrelation_bounds_k5",
+        "internal_label_policy": "internal_id_only_not_paper_label"
+      },
       "status": "planned",
       "objective": {"metric": "bound_quality", "direction": "maximize"},
       "target_baseline": {"status": "paper_result_required", "value": null},

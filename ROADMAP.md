@@ -637,6 +637,9 @@ is not yet an AlphaEvolve reproduction.
   superseded/current status, update note, attribution, and verifier/Colab
   artifact linkage for revised results such as the uncertainty-inequality
   bound.
+- Keep Appendix B.1-B.3 public labels tied to paper terminology: the registry
+  now validates exact paper-facing labels for `B.1`/`C1`, `B.2`/`C2`, and
+  `B.3`/`C3`, while treating `autocorrelation_bounds_k*` as internal ids only.
 - Keep paper artifact-role attribution separate from artifact availability:
   `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
   AlphaEvolve PDF contribution records for figure creators and companion

@@ -2485,21 +2485,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     README/ROADMAP text that keeps the three autocorrelation claims distinct
     from broad Appendix B family coverage.
 
-- [ ] Track Appendix B.1-B.3 paper-heading and constant-label evidence.
+- [x] Track Appendix B.1-B.3 paper-heading and constant-label evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B names the three
     sections `B.1. First autocorrelation inequality`, `B.2. Second
     autocorrelation inequality`, and `B.3. Third autocorrelation inequality`.
     Their mathematical constants are `C1`, `C2`, and `C3`; no paper heading or
     caption labels them as `k=3`, `k=4`, or `k=5`.
-  - Current gap: paper-facing Appendix B TODOs require normalized result rows,
-    but the checked Appendix B registry and its tests use internal labels such
-    as `autocorrelation_bounds_k3` and `Autocorrelation inequality, k=3`.
-    Without explicit paper-heading and constant-label evidence, future reports
-    could expose those internal ids as if they were AlphaEvolve terminology.
-  - Required result: add paper/report evidence for each B.1-B.3 row with exact
-    source section id, paper heading, constant label, internal family id, and
-    display-label policy. Update README/ROADMAP text so public claims use the
-    paper's B.1-B.3 and C1-C3 labels, not the current k-number convention.
+  - Status: the Appendix B registry now records exact B.1-B.3 paper-label
+    metadata for each autocorrelation family: source section id, paper
+    heading, C1-C3 constant id, display label, internal family id, and a policy
+    that marks `autocorrelation_bounds_k*` as internal implementation ids only.
+    Registry validation rejects missing or drifted paper labels and public
+    `k=` display names. README, ROADMAP, and the paper index now use the paper
+    B.1-B.3/C1-C3 labels.
+  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
+    passes.
 
 - [ ] Track Appendix B.8 squared-ratio convention evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.8 gives point-set

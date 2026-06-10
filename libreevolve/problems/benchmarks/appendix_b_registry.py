@@ -24,6 +24,29 @@ EXPECTED_FAMILY_IDS = (
     "circle_packing_unit_square",
     "circle_packing_perimeter4_rectangle",
 )
+EXPECTED_AUTOCORRELATION_LABELS = {
+    "autocorrelation_bounds_k3": {
+        "source_section_id": "B.1",
+        "paper_heading": "First autocorrelation inequality",
+        "constant_id": "C1",
+        "display_label": "B.1. First autocorrelation inequality (C1)",
+        "internal_label_policy": "internal_id_only_not_paper_label",
+    },
+    "autocorrelation_bounds_k4": {
+        "source_section_id": "B.2",
+        "paper_heading": "Second autocorrelation inequality",
+        "constant_id": "C2",
+        "display_label": "B.2. Second autocorrelation inequality (C2)",
+        "internal_label_policy": "internal_id_only_not_paper_label",
+    },
+    "autocorrelation_bounds_k5": {
+        "source_section_id": "B.3",
+        "paper_heading": "Third autocorrelation inequality",
+        "constant_id": "C3",
+        "display_label": "B.3. Third autocorrelation inequality (C3)",
+        "internal_label_policy": "internal_id_only_not_paper_label",
+    },
+}
 STATUSES = frozenset({"implemented", "implemented_smoke", "planned", "background_only", "out_of_scope"})
 DIRECTIONS = frozenset({"maximize", "minimize", "satisfy", "prove"})
 _ID_RE = re.compile(r"[a-z][a-z0-9_]{1,79}")
@@ -117,6 +140,7 @@ def _validate_family(
     if _ID_RE.fullmatch(family_id) is None:
         issues.append(AppendixBRegistryIssue("invalid_family_id", "family id must be snake_case", family_id))
     _require_text(family, "name", family_id, issues)
+    _validate_autocorrelation_paper_label(family, family_id, issues)
     status = family.get("status")
     if status not in STATUSES:
         issues.append(AppendixBRegistryIssue("invalid_status", "invalid implementation status", family_id))
@@ -149,6 +173,30 @@ def _validate_family(
             issues.append(AppendixBRegistryIssue("missing_fixture_path", f"fixture does not exist: {fixture}", family_id))
     elif fixture is not None:
         issues.append(AppendixBRegistryIssue("unexpected_fixture", "non-implemented family must not advertise a fixture", family_id))
+
+
+def _validate_autocorrelation_paper_label(
+    family: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    expected = EXPECTED_AUTOCORRELATION_LABELS.get(family_id)
+    if expected is None:
+        return
+    label = family.get("paper_label")
+    if not isinstance(label, dict):
+        issues.append(AppendixBRegistryIssue("missing_paper_label", "B.1-B.3 autocorrelation rows require paper_label metadata", family_id))
+        return
+    if label.get("internal_family_id") != family_id:
+        issues.append(AppendixBRegistryIssue("invalid_paper_label_internal_id", "paper_label.internal_family_id must match the registry id", family_id))
+    for field, expected_value in expected.items():
+        if label.get(field) != expected_value:
+            issues.append(AppendixBRegistryIssue(f"invalid_paper_label_{field}", f"paper_label.{field} must match the AlphaEvolve Appendix B heading metadata", family_id))
+    display_label = label.get("display_label")
+    if family.get("name") != display_label:
+        issues.append(AppendixBRegistryIssue("paper_label_name_mismatch", "family name must use the paper-facing B.1-B.3 display label", family_id))
+    if isinstance(family.get("name"), str) and re.search(r"\bk\s*=", family["name"]):
+        issues.append(AppendixBRegistryIssue("paper_label_uses_internal_k_label", "family name must not expose internal k-number labels as paper terminology", family_id))
 
 
 def _family_id(family: object, index: int) -> str:

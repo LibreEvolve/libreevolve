@@ -2782,22 +2782,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     domain, prior/current values, proof direction, payload hashes, and source
     links from aggregate Appendix B coverage.
 
-- [ ] Keep Appendix B.1-B.3 roadmap wording scoped until paper-heading label
+- [x] Keep Appendix B.1-B.3 roadmap wording scoped until paper-heading label
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.1-B.3 headings are `First
     autocorrelation inequality`, `Second autocorrelation inequality`, and
     `Third autocorrelation inequality`; the constants are `C1`, `C2`, and
     `C3`. The paper does not describe them with `k=3`, `k=4`, or `k=5`
     labels.
-  - Current evidence: roadmap/README/paper-index wording can cite broad
-    Appendix B family/status and step-function gaps, but the checked
-    `alphaevolve_appendix_b.json` registry and `appendix_b_registry.py` still
-    use internal `autocorrelation_bounds_k3/k4/k5` ids and `k=3/k=4/k=5`
-    display names without paper-facing label provenance.
-  - Required result: when Appendix B.1-B.3 paper-label metadata lands, update
-    ROADMAP, README, papers index, registry validation, and tests so roadmap
-    claims use B.1-B.3 headings and C1-C3 constants, and any internal ids are
-    not presented as AlphaEvolve paper labels.
+  - Status: ROADMAP now records that B.1-B.3 public labels are tied to exact
+    paper section/constant metadata, while `autocorrelation_bounds_k*` remains
+    internal-only implementation id vocabulary. The registry validator and
+    tests reject missing paper labels, drifted constants, and public `k=`
+    names.
+  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
+    passes.
 
 - [ ] Keep Appendix B.8 roadmap wording scoped until squared-ratio convention
       provenance exists.

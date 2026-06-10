@@ -662,31 +662,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     paper-facing examples or certification rows, and keep docs from treating
     the schema alone as AlphaEvolve-style acknowledgement-process evidence.
 
-- [ ] Populate core AlphaEvolve system-development contribution provenance.
-  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Contributions says the
-    initial version of AlphaEvolve was designed and implemented by specific
-    contributors; project vision and problem scoping, first benchmark problem
-    for iterating on AlphaEvolve, final version development, infrastructure
-    maintenance, code reviews, team coordination, and research-program
-    supervision are all separately attributed. Local PDF page 22 contains the
-    implementation, scoping, first-benchmark, final-system, and infrastructure
-    categories; page 23 contains code-review, team-coordination, and
-    supervision categories.
-  - Current gap: LibreEvolve now accepts optional
-    `system_contributions.yaml` / `Problem.system_contribution_metadata`
-    records and reports
-    `runtime.history.system_contribution_provenance_report` for role labels,
-    responsible person/team labels where safe, development phases,
-    artifact/module/report linkage, source page/section locators,
-    privacy/retention policy, and review/signoff state. Existing fixtures
-    still lack real populated reviewed system-contribution records and
-    paper-facing certification examples.
-  - Required result: populate representative fixtures with reviewed
-    system-contribution metadata, link records to source page/section evidence
-    and project artifact/module/report labels, add paper-facing examples or
-    certification rows, and keep docs from treating the schema alone as
-    AlphaEvolve-style system-development contribution parity evidence.
-
 - [ ] Add replayable evaluator environment, package-source, and accelerator
   provenance.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2, 2.4, 2.6, and 4.

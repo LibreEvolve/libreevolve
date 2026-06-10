@@ -171,7 +171,10 @@ LibreEvolve has:
   `problem.system_contribution_metadata` and summarized by
   `runtime.history.system_contribution_provenance_report` for system design,
   project scoping, first-benchmark iteration, final-system, infrastructure,
-  code-review, coordination, and supervision role provenance
+  code-review, coordination, and supervision role provenance; the
+  `matrix_multiplication` example carries a reviewed AlphaEvolve pages 22-23
+  fixture and a manifest regression for the claim-ready system-development
+  contribution boundary
 - manifest-visible `libreevolve.candidate_language_policy.v1` records that
   declare the current Python-primary text-workspace boundary and explicitly
   mark arbitrary-language/build-system runners as unsupported

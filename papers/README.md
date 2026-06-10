@@ -433,8 +433,10 @@ project scoping, first-benchmark iteration, final-system, infrastructure,
 code-review, coordination, and supervision role provenance. These records are
 paper-attributed development facts, not generic git history, package metadata,
 publication-author metadata, acknowledgement roles, or local validation
-evidence; populated reviewed records are still needed before making
-AlphaEvolve-style system-development contribution parity claims.
+evidence; the `matrix_multiplication` example now provides a reviewed
+`system_contributions.yaml` fixture for AlphaEvolve pages 22-23, and its
+zero-generation manifest report is claim-ready for system-development
+contribution parity.
 
 AlphaEvolve process-exhibit note: completed manifests now include
 `runtime.history.alphaevolve_process_exhibit_report` with schema

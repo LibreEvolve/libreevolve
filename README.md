@@ -2264,8 +2264,9 @@ paper-attributed system design, project scoping, first-benchmark iteration,
 final-system, infrastructure, code-review, coordination, and supervision roles
 separate from generic git history, package metadata, publication-author
 metadata, acknowledgements, and local validation evidence. Populated reviewed
-fixture records are still needed before treating this schema/report surface as
-AlphaEvolve system-development contribution parity evidence.
+fixture records in the `matrix_multiplication` example now link AlphaEvolve
+PDF pages 22-23 to those development phases; its zero-generation manifest
+report is claim-ready for the system-development contribution boundary.
 Completed manifests also include
 `runtime.history.candidate_abstraction_choice_report`, which records the
 current selected abstraction as a Python-primary code-file set, links it back

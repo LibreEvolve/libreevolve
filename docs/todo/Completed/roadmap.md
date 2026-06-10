@@ -8370,3 +8370,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     `papers/source_rights.json` and a manifest regression for the claim-ready
     title-page boundary.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document populated system-development contribution metadata in ROADMAP.
+  - Spec evidence: AlphaEvolve PDF pages 22-23 separate paper-attributed
+    system-development roles from publication-author, acknowledgement, and
+    application-review roles.
+  - Status: ROADMAP now records that the `matrix_multiplication` example has a
+    reviewed AlphaEvolve pages 22-23 system-contribution fixture and a
+    manifest regression for the claim-ready system-development contribution
+    boundary.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

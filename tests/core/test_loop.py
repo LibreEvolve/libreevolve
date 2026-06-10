@@ -7725,6 +7725,44 @@ def test_loaded_system_contribution_metadata_reaches_manifest_and_report():
     ] is True
 
 
+def test_matrix_example_system_contribution_fixture_is_claim_ready():
+    repo_root = Path(__file__).resolve().parents[2]
+    problem = load_problem(
+        repo_root
+        / "libreevolve"
+        / "problems"
+        / "examples"
+        / "matrix_multiplication"
+    )
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(
+        problem,
+        Config(max_generations=0, log_dir=tmpdir, problem_name="matrix_system_roles"),
+    )
+
+    manifest = json.loads(
+        (Path(tmpdir) / "matrix_system_roles" / "manifest.json").read_text()
+    )
+    metadata = manifest["problem"]["system_contribution_metadata"]
+    assert metadata["schema"] == "libreevolve.system_contribution_metadata.v1"
+    assert metadata["status"] == "provided"
+    assert len(metadata["records"]) == 8
+
+    report = manifest["runtime"]["history"][
+        "system_contribution_provenance_report"
+    ]
+    assert validate_system_contribution_provenance_report(report)["ok"] is True
+    assert report["claim_ready"] is True
+    assert report["missing_phases"] == []
+    assert report["source_pages"] == [22, 23]
+    assert report["artifact_link_count"] == 8
+    assert report["review_scope_count"] == 8
+    assert report["claim_readiness"][
+        "alphaevolve_system_contribution_parity"
+    ] is True
+
+
 def test_system_contribution_report_marks_missing_metadata_boundary():
     tmpdir = tempfile.mkdtemp()
 

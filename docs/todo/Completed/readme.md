@@ -10957,3 +10957,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     `papers/source_rights.json`, and that its zero-generation manifest report
     is claim-ready for the title-page affiliation and footnote boundary.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document populated system-development contribution metadata in README.
+  - Spec evidence: AlphaEvolve PDF pages 22-23 attribute core development
+    phases including initial design, scoping, first benchmark, final system,
+    infrastructure, code review, coordination, and supervision.
+  - Status: README now states that the `matrix_multiplication` example carries
+    reviewed system-contribution fixture records linked to AlphaEvolve PDF
+    pages 22-23, and that its zero-generation manifest report is claim-ready
+    for the system-development contribution boundary.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

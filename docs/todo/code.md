@@ -394,30 +394,6 @@ Primary evidence:
     from treating the schema alone as AlphaEvolve-style paper-process
     acknowledgement evidence.
 
-- [ ] Populate core system-development contribution provenance.
-  - Spec evidence: AlphaEvolve's Contributions section attributes the initial
-    system design/implementation, project vision and problem scoping, first
-    benchmark used for iterating on the system, final AlphaEvolve version,
-    infrastructure maintenance, majority code reviews, team coordination, and
-    research-program supervision to specific contributors and roles. Local PDF
-    extraction places the implementation/scoping/first-benchmark/final-system/
-    infrastructure roles on page 22 and the code-review, coordination, and
-    supervision roles on page 23.
-  - Current evidence: LibreEvolve now accepts optional
-    `system_contributions.yaml` / direct
-    `Problem.system_contribution_metadata`, normalizes
-    `problem.system_contribution_metadata`, and emits
-    `runtime.history.system_contribution_provenance_report` with readiness
-    checks for all required development phases, artifact/module/report links,
-    source page locators, review scopes, privacy policy, and review/signoff.
-    Existing fixtures have not yet been populated with real reviewed
-    system-contribution records or paper-facing certification rows.
-  - Required result: populate representative fixtures with reviewed
-    system-contribution records, link them to source page/section evidence and
-    project artifact/module/report labels, add paper-facing examples or
-    certification rows, and keep docs from treating the schema alone as
-    AlphaEvolve-style development contribution parity evidence.
-
 - [ ] Tighten remaining workspace topology collision diagnostics and keep
   materialization diagnostics complete for future edge cases.
   - Spec evidence: AlphaEvolve operates on task-defined program artifacts and

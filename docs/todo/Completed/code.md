@@ -16172,3 +16172,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: `py -3.12 -m pytest
     tests/core/test_loop.py::test_matrix_example_title_page_fixture_is_claim_ready
     --tb=short` passes.
+
+- [x] Populate core system-development contribution provenance.
+  - Spec evidence: AlphaEvolve PDF pages 22-23 attribute initial design,
+    project vision/scoping, first-benchmark iteration, final system
+    development, infrastructure maintenance, code review, team coordination,
+    and supervision roles.
+  - Status: `libreevolve/problems/examples/matrix_multiplication/system_contributions.yaml`
+    now provides reviewed representative system-contribution records for all
+    required phases, with source page/section locators, artifact/module labels,
+    review scopes, privacy policy, and review status. A manifest regression
+    proves the real fixture reaches
+    `runtime.history.system_contribution_provenance_report` as claim-ready for
+    `alphaevolve_system_contribution_parity`.
+  - Verification: `py -3.12 -m pytest
+    tests/core/test_loop.py::test_matrix_example_system_contribution_fixture_is_claim_ready
+    --tb=short` passes.

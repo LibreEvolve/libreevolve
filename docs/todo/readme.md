@@ -406,27 +406,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     those roles without implying the schema alone proves AlphaEvolve-style
     paper-process acknowledgement evidence.
 
-- [ ] Keep README system-development provenance scoped until contribution-role
-      evidence is populated.
-  - Spec evidence: AlphaEvolve's Contributions section separately attributes
-    system design/implementation phases, project vision and problem scoping,
-    the first benchmark used for iterating on AlphaEvolve, infrastructure
-    maintenance, code reviews, team coordination, and research-program
-    supervision. Local PDF pages 22-23 show these roles as paper-attributed
-    development provenance, separate from author metadata and
-    acknowledgements.
-  - Current evidence: README now documents optional
-    `system_contributions.yaml` / `Problem.system_contribution_metadata`,
-    normalized `problem.system_contribution_metadata`, and
-    `runtime.history.system_contribution_provenance_report` for
-    paper-attributed development roles. Existing fixtures do not yet carry real
-    reviewed system-contribution records.
-  - Required result: when representative fixtures are populated with reviewed
-    contribution-role evidence, update README, ROADMAP, papers index, and
-    code/paper TODOs together so README can describe those roles without
-    implying the schema alone proves AlphaEvolve-style system-development
-    contribution parity.
-
 - [ ] Keep README workspace-topology diagnostics scoped to current
   materialization and command preflight coverage.
   - Spec evidence: AlphaEvolve-style codebase evolution should leave stable,

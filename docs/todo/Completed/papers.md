@@ -10936,3 +10936,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     that this example's zero-generation manifest is claim-ready for
     title-page affiliation and footnote parity.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Populate core AlphaEvolve system-development contribution provenance.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` pages 22-23 attribute
+    initial design, project vision/scoping, first-benchmark iteration, final
+    system development, infrastructure maintenance, code review, team
+    coordination, and supervision roles.
+  - Status: `libreevolve/problems/examples/matrix_multiplication/system_contributions.yaml`
+    now provides reviewed representative system-contribution records with
+    source page/section locators, artifact/module labels, review scopes,
+    privacy/retention policy, and review status. `papers/README.md` now states
+    that this example's zero-generation manifest is claim-ready for
+    system-development contribution parity.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

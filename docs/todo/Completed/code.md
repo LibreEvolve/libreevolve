@@ -16078,3 +16078,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused matrix-result and paper-manifest tests cover the
     pinned bundle, tamper/regeneration drift, persisted inventory file, and
     manifest hook.
+
+- [x] Add a Figure 9 matrix-diff artifact-emission boundary contract.
+  - Spec evidence: AlphaEvolve Appendix A Figures 9a-9c are magnified
+    source/diff panels for Figure 4's 4x4 matrix program and require rendered,
+    OCR/text, and source-diff artifacts before reproduced-panel claims.
+  - Status: `libreevolve.alphaevolve_figure9_matrix_diff_artifact_boundary.v1`
+    now validates the current `not_emitted_by_local_report_export` state,
+    rejects false emitted claims without panel artifacts, validates emitted
+    Figure 9 panel artifact records and nested Figure 9 exhibit metadata, and
+    records required future fields for panel ids/order/pages, code line spans,
+    source-diff excerpts, rendered images, OCR text, panel-set artifacts,
+    artifact paths, and hashes.
+  - Verification: focused matrix-exhibit and paper-manifest tests cover the
+    absence boundary, emitted panel validation, invalid nested evidence,
+    summary rendering, and manifest hook.

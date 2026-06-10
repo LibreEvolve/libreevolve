@@ -1093,8 +1093,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     source/diff excerpt artifact hashes, rendered/OCR text hashes, panel
     continuity, semantic component labels for the shown code changes, and links
     from the appendix panels to matrix target rows, sweep metadata, exactness
-    certificates, and companion source evidence. It also states that the
-    rendered/OCR/source-diff panel artifacts are not emitted or checked in.
+    certificates, and companion source evidence. It now also documents
+    `libreevolve.alphaevolve_figure9_matrix_diff_artifact_boundary.v1` as the
+    current `not_emitted_by_local_report_export` boundary and required future
+    panel-artifact fields. It still states that the rendered/OCR/source-diff
+    panel artifacts are not emitted or checked in.
   - Required result: when Appendix A Figure 9 magnified-diff panel artifacts
     land, update README, ROADMAP, papers index, and matching TODOs so README
     distinguishes reproduced appendix source/diff panels from Figure 4

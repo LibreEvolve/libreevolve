@@ -10858,3 +10858,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     validate hashes and regeneration parity while keeping scope limited to the
     one known baseline.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Track Appendix A Figure 9 artifact-emission absence separately from
+      declared panel metadata.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A Figures 9a-9c
+    present the magnified source/diff panels for Figure 4's matrix program.
+  - Status: `libreevolve.alphaevolve_figure9_matrix_diff_artifact_boundary.v1`
+    now records the current `not_emitted_by_local_report_export` boundary and
+    validates required future emitted-artifact fields for panel ids/order/pages,
+    line spans, source-diff excerpts, rendered images, OCR text, aggregate
+    panel-set artifacts, artifact paths/hashes, and nested Figure 9 exhibit
+    metadata. The paper-manifest gate validates this boundary.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

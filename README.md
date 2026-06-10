@@ -3921,7 +3921,13 @@ source-diff/rendered-image/OCR artifact hashes, semantic component coverage
 for optimizer, initialization, noise, clipping, loss, discretization, and
 sweep changes, and links to matrix result, sweep-space, certificate, and
 companion notebook/source evidence. It validates declared exhibit metadata
-once artifacts exist; it does not render or check in those appendix panels.
+once artifacts exist; it does not render or check in those appendix panels. The
+companion boundary
+`libreevolve.alphaevolve_figure9_matrix_diff_artifact_boundary.v1` validates
+the current `not_emitted_by_local_report_export` state and required future
+artifact fields for Figure 9a-9c panel ids/order/pages, code line spans,
+source-diff excerpts, rendered panel images, OCR text, aggregate panel-set
+artifacts, artifact paths/hashes, and nested Figure 9 exhibit metadata.
 LLM feedback-grader calibration reports use
 `libreevolve.llm_feedback_calibration.v1` in
 `libreevolve/llm/feedback_calibration.py`; the contract validates declared

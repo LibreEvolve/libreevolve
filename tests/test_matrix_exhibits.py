@@ -2,15 +2,19 @@ import json
 
 from libreevolve.problems.benchmarks.matrix_exhibits import (
     FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA,
+    FIGURE9_MATRIX_DIFF_ARTIFACT_BOUNDARY_SCHEMA,
     FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA,
     MATRIX_RANK_TABLE_ARTIFACT_BOUNDARY_SCHEMA,
     MATRIX_RANK_TABLE_EXHIBIT_SCHEMA,
+    figure9_matrix_diff_artifact_boundary_record,
     matrix_rank_table_artifact_boundary_record,
     render_figure4_matrix_discovery_exhibit_summary,
+    render_figure9_matrix_diff_artifact_boundary_summary,
     render_figure9_matrix_diff_exhibit_summary,
     render_matrix_rank_table_artifact_boundary_summary,
     render_matrix_rank_table_exhibit_summary,
     validate_figure4_matrix_discovery_exhibit,
+    validate_figure9_matrix_diff_artifact_boundary,
     validate_figure9_matrix_diff_exhibit,
     validate_matrix_rank_table_artifact_boundary,
     validate_matrix_rank_table_exhibit,
@@ -107,6 +111,29 @@ def _valid_exhibit() -> dict:
                 ["lr", "weight_decay", "clip_min", "clip_max", "grad_noise_std"],
             ),
         ],
+    }
+
+
+def _figure9_artifact(panel_id: str) -> dict:
+    panel = next(panel for panel in _valid_exhibit()["panels"] if panel["panel_id"] == panel_id)
+    return {
+        "exhibit_id": "figure9_matrix_diff_magnified",
+        "panel_id": panel_id,
+        "panel_order": panel["panel_order"],
+        "source_pdf_page": panel["source_pdf_page"],
+        "code_line_span": dict(panel["code_line_span"]),
+        "source_diff_excerpt": panel["source_diff_excerpt"],
+        "rendered_image_artifact": panel["rendered_image_artifact"],
+        "rendered_text_artifact": panel["rendered_text_artifact"],
+        "rendered_panel_set": _artifact("figures/figure9_panels.png", "f"),
+        "ocr_text_artifact": _artifact("figures/figure9_ocr.txt", "1"),
+        "artifact_paths": [
+            f"figures/{panel_id}_diff.txt",
+            f"figures/{panel_id}.png",
+            f"figures/{panel_id}_ocr.txt",
+        ],
+        "artifact_sha256": "a" * 64,
+        "figure9_matrix_diff_exhibit": _valid_exhibit(),
     }
 
 
@@ -427,6 +454,83 @@ def test_render_figure9_matrix_diff_exhibit_summary_reports_shape():
     assert "| schema_status | ok |" in summary
     assert "| panel_count | 3 |" in summary
     assert "| semantic_component_count | 7 |" in summary
+
+
+def test_figure9_matrix_diff_artifact_boundary_accepts_current_absence():
+    boundary = figure9_matrix_diff_artifact_boundary_record()
+
+    validation = validate_figure9_matrix_diff_artifact_boundary(boundary)
+
+    assert boundary["schema"] == FIGURE9_MATRIX_DIFF_ARTIFACT_BOUNDARY_SCHEMA
+    assert validation.ok is True
+    assert validation.artifact_status == "not_emitted_by_local_report_export"
+    assert validation.emitted_artifact_count == 0
+    assert validation.required_field_count == 13
+    assert validation.issues == []
+
+
+def test_figure9_matrix_diff_artifact_boundary_rejects_absence_with_artifacts():
+    boundary = figure9_matrix_diff_artifact_boundary_record()
+    boundary["emitted_artifacts"] = [_figure9_artifact("figure9a")]
+
+    validation = validate_figure9_matrix_diff_artifact_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "unexpected_emitted_artifacts" in codes
+
+
+def test_figure9_matrix_diff_artifact_boundary_requires_emitted_artifacts():
+    boundary = figure9_matrix_diff_artifact_boundary_record()
+    boundary["artifact_status"] = "emitted"
+
+    validation = validate_figure9_matrix_diff_artifact_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "missing_figure9_matrix_diff_artifacts" in codes
+
+
+def test_figure9_matrix_diff_artifact_boundary_accepts_emitted_panel_artifacts():
+    boundary = figure9_matrix_diff_artifact_boundary_record()
+    boundary["artifact_status"] = "emitted"
+    boundary["emitted_artifacts"] = [
+        _figure9_artifact("figure9a"),
+        _figure9_artifact("figure9b"),
+        _figure9_artifact("figure9c"),
+    ]
+
+    validation = validate_figure9_matrix_diff_artifact_boundary(boundary)
+
+    assert validation.ok is True
+    assert validation.emitted_artifact_count == 3
+    assert validation.issues == []
+
+
+def test_figure9_matrix_diff_artifact_boundary_rejects_invalid_nested_artifact():
+    boundary = figure9_matrix_diff_artifact_boundary_record()
+    boundary["artifact_status"] = "emitted"
+    artifact = _figure9_artifact("figure9a")
+    artifact["panel_order"] = 2
+    artifact["artifact_paths"] = ["../escape.png"]
+    artifact["figure9_matrix_diff_exhibit"]["panels"] = artifact["figure9_matrix_diff_exhibit"]["panels"][:2]
+    boundary["emitted_artifacts"] = [artifact]
+
+    validation = validate_figure9_matrix_diff_artifact_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_artifact_panel_order" in codes
+    assert "invalid_artifact_path" in codes
+    assert "invalid_nested_exhibit_missing_panel" in codes
+
+
+def test_render_figure9_matrix_diff_artifact_boundary_summary_reports_shape():
+    summary = render_figure9_matrix_diff_artifact_boundary_summary()
+
+    assert "AlphaEvolve Figure 9 matrix-diff artifact boundary" in summary
+    assert "| artifact_status | not_emitted_by_local_report_export |" in summary
+    assert "| required_field_count | 13 |" in summary
 
 
 def test_validate_matrix_rank_table_exhibit_accepts_table2_and_table3_metadata():

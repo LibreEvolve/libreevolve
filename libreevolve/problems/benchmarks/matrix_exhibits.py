@@ -15,6 +15,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
 
 FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA = "libreevolve.alphaevolve_figure4_matrix_discovery_exhibit.v1"
 FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA = "libreevolve.alphaevolve_figure9_matrix_diff_exhibit.v1"
+FIGURE9_MATRIX_DIFF_ARTIFACT_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_figure9_matrix_diff_artifact_boundary.v1"
 MATRIX_RANK_TABLE_EXHIBIT_SCHEMA = "libreevolve.alphaevolve_matrix_rank_table_exhibit.v1"
 MATRIX_RANK_TABLE_ARTIFACT_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1"
 EXPECTED_FIGURE4_EXHIBIT_ID = "figure4_matrix_discovery"
@@ -94,6 +95,22 @@ EXPECTED_SEMANTIC_COMPONENTS = frozenset(
         "sweep",
     }
 )
+FIGURE9_MATRIX_DIFF_ARTIFACT_STATUSES = frozenset({"not_emitted_by_local_report_export", "emitted"})
+FIGURE9_MATRIX_DIFF_ARTIFACT_REQUIRED_FIELDS = (
+    "exhibit_id",
+    "panel_id",
+    "panel_order",
+    "source_pdf_page",
+    "code_line_span",
+    "source_diff_excerpt",
+    "rendered_image_artifact",
+    "rendered_text_artifact",
+    "rendered_panel_set",
+    "ocr_text_artifact",
+    "artifact_paths",
+    "artifact_sha256",
+    "figure9_matrix_diff_exhibit",
+)
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
 
 
@@ -108,6 +125,15 @@ class Figure9MatrixDiffExhibitValidation:
     ok: bool
     panel_count: int
     semantic_component_count: int
+    issues: list[Figure9MatrixDiffExhibitIssue]
+
+
+@dataclass(frozen=True)
+class Figure9MatrixDiffArtifactBoundaryValidation:
+    ok: bool
+    artifact_status: str | None
+    emitted_artifact_count: int
+    required_field_count: int
     issues: list[Figure9MatrixDiffExhibitIssue]
 
 
@@ -162,6 +188,25 @@ def matrix_rank_table_artifact_boundary_record() -> dict[str, Any]:
             "This is a Table 2/Table 3 matrix-rank table artifact availability "
             "boundary. It does not claim local report/export code emits rendered "
             "table, OCR text, or source-excerpt artifacts."
+        ),
+    }
+
+
+def figure9_matrix_diff_artifact_boundary_record() -> dict[str, Any]:
+    return {
+        "schema": FIGURE9_MATRIX_DIFF_ARTIFACT_BOUNDARY_SCHEMA,
+        "exhibit_schema": FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA,
+        "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "source_figure": EXPECTED_SOURCE_FIGURE,
+        "target_id": EXPECTED_TARGET_ID,
+        "artifact_status": "not_emitted_by_local_report_export",
+        "local_export_scope": "figure9_matrix_diff_report_export",
+        "required_artifact_fields": list(FIGURE9_MATRIX_DIFF_ARTIFACT_REQUIRED_FIELDS),
+        "emitted_artifacts": [],
+        "claim_boundary": (
+            "This is a Figure 9 matrix-diff artifact availability boundary. "
+            "It does not claim local report/export code emits rendered "
+            "panel images, OCR text, or source-diff artifacts for Figures 9a-9c."
         ),
     }
 
@@ -241,6 +286,58 @@ def validate_figure9_matrix_diff_exhibit(
         ok=not issues,
         panel_count=panel_count,
         semantic_component_count=len(semantic_components),
+        issues=issues,
+    )
+
+
+def validate_figure9_matrix_diff_artifact_boundary(
+    boundary: object | str | Path | None = None,
+) -> Figure9MatrixDiffArtifactBoundaryValidation:
+    if boundary is None:
+        boundary = figure9_matrix_diff_artifact_boundary_record()
+    data, read_issues = _load_figure9_boundary(boundary)
+    if read_issues:
+        return Figure9MatrixDiffArtifactBoundaryValidation(False, None, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[Figure9MatrixDiffExhibitIssue] = []
+    if data.get("schema") != FIGURE9_MATRIX_DIFF_ARTIFACT_BOUNDARY_SCHEMA:
+        issues.append(Figure9MatrixDiffExhibitIssue("invalid_schema", "unsupported Figure 9 matrix-diff artifact boundary schema"))
+    if data.get("exhibit_schema") != FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA:
+        issues.append(Figure9MatrixDiffExhibitIssue("invalid_exhibit_schema", "exhibit_schema must identify Figure 9 matrix-diff exhibit records"))
+    if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
+        issues.append(Figure9MatrixDiffExhibitIssue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("source_figure") != EXPECTED_SOURCE_FIGURE:
+        issues.append(Figure9MatrixDiffExhibitIssue("invalid_source_figure", "source_figure must identify Figures 9a-9c"))
+    if data.get("target_id") != EXPECTED_TARGET_ID:
+        issues.append(Figure9MatrixDiffExhibitIssue("invalid_target_id", "target_id must be mm_4x4x4"))
+    status = data.get("artifact_status")
+    if status not in FIGURE9_MATRIX_DIFF_ARTIFACT_STATUSES:
+        issues.append(Figure9MatrixDiffExhibitIssue("invalid_artifact_status", "artifact_status must be a known Figure 9 matrix-diff artifact status"))
+    if not isinstance(data.get("local_export_scope"), str) or not data["local_export_scope"].strip():
+        issues.append(Figure9MatrixDiffExhibitIssue("missing_local_export_scope", "local_export_scope is required"))
+    required_field_count = _validate_figure9_artifact_required_fields(data.get("required_artifact_fields"), issues)
+    artifacts = data.get("emitted_artifacts")
+    if not isinstance(artifacts, list):
+        issues.append(Figure9MatrixDiffExhibitIssue("invalid_emitted_artifacts", "emitted_artifacts must be a list"))
+        artifact_count = 0
+    else:
+        artifact_count = len(artifacts)
+        if status == "not_emitted_by_local_report_export":
+            if artifacts:
+                issues.append(Figure9MatrixDiffExhibitIssue("unexpected_emitted_artifacts", "absence boundary must not include emitted Figure 9 artifacts"))
+            boundary_text = data.get("claim_boundary")
+            if not isinstance(boundary_text, str) or "does not claim" not in boundary_text:
+                issues.append(Figure9MatrixDiffExhibitIssue("missing_claim_boundary", "absence boundary must state that it does not claim local artifact emission"))
+        elif status == "emitted":
+            if not artifacts:
+                issues.append(Figure9MatrixDiffExhibitIssue("missing_figure9_matrix_diff_artifacts", "emitted status requires Figure 9a-9c artifact records"))
+            for artifact in artifacts:
+                _validate_figure9_artifact_record(artifact, issues)
+    return Figure9MatrixDiffArtifactBoundaryValidation(
+        ok=not issues,
+        artifact_status=status if isinstance(status, str) else None,
+        emitted_artifact_count=artifact_count,
+        required_field_count=required_field_count,
         issues=issues,
     )
 
@@ -358,6 +455,27 @@ def render_figure9_matrix_diff_exhibit_summary(exhibit: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def render_figure9_matrix_diff_artifact_boundary_summary(boundary: dict[str, Any] | None = None) -> str:
+    if boundary is None:
+        boundary = figure9_matrix_diff_artifact_boundary_record()
+    validation = validate_figure9_matrix_diff_artifact_boundary(boundary)
+    status = "ok" if validation.ok else "invalid"
+    lines = [
+        "AlphaEvolve Figure 9 matrix-diff artifact boundary",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| artifact_status | {validation.artifact_status or '<unknown>'} |",
+        f"| emitted_artifact_count | {validation.emitted_artifact_count} |",
+        f"| required_field_count | {validation.required_field_count} |",
+    ]
+    if validation.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(f"- {issue.code}: {issue.message}" for issue in validation.issues)
+    return "\n".join(lines)
+
+
 def render_matrix_rank_table_exhibit_summary(exhibit: dict[str, Any]) -> str:
     validation = validate_matrix_rank_table_exhibit(exhibit)
     status = "ok" if validation.ok else "invalid"
@@ -467,6 +585,103 @@ def _load_table_boundary(
         if isinstance(loaded, dict):
             return loaded, []
     return None, [MatrixRankTableExhibitIssue("invalid_shape", "matrix-rank table artifact boundary must be a JSON object")]
+
+
+def _load_figure9_boundary(
+    boundary: object | str | Path,
+) -> tuple[dict[str, Any] | None, list[Figure9MatrixDiffExhibitIssue]]:
+    if isinstance(boundary, dict):
+        return dict(boundary), []
+    if isinstance(boundary, (str, Path)):
+        path = Path(boundary)
+        try:
+            loaded = json.loads(path.read_text(encoding="utf-8"))
+        except OSError as exc:
+            return None, [Figure9MatrixDiffExhibitIssue("read_error", f"failed to read Figure 9 artifact boundary: {exc}")]
+        except json.JSONDecodeError as exc:
+            return None, [Figure9MatrixDiffExhibitIssue("invalid_json", f"invalid Figure 9 artifact boundary JSON: {exc.msg}")]
+        if isinstance(loaded, dict):
+            return loaded, []
+    return None, [Figure9MatrixDiffExhibitIssue("invalid_shape", "Figure 9 artifact boundary must be a JSON object")]
+
+
+def _validate_figure9_artifact_required_fields(
+    value: object,
+    issues: list[Figure9MatrixDiffExhibitIssue],
+) -> int:
+    if not isinstance(value, list) or not value:
+        issues.append(Figure9MatrixDiffExhibitIssue("invalid_required_artifact_fields", "required_artifact_fields must be a non-empty list"))
+        return 0
+    seen: set[str] = set()
+    for field in value:
+        if not isinstance(field, str) or not field.strip():
+            issues.append(Figure9MatrixDiffExhibitIssue("invalid_required_artifact_field", "required artifact field names must be non-empty strings"))
+            continue
+        if field in seen:
+            issues.append(Figure9MatrixDiffExhibitIssue("duplicate_required_artifact_field", "required_artifact_fields must be unique"))
+        seen.add(field)
+    missing = sorted(set(FIGURE9_MATRIX_DIFF_ARTIFACT_REQUIRED_FIELDS) - seen)
+    if missing:
+        issues.append(Figure9MatrixDiffExhibitIssue("missing_required_artifact_field", "required_artifact_fields must include all Figure 9 artifact fields"))
+    return len(value)
+
+
+def _validate_figure9_artifact_record(
+    artifact: object,
+    issues: list[Figure9MatrixDiffExhibitIssue],
+) -> None:
+    if not isinstance(artifact, dict):
+        issues.append(Figure9MatrixDiffExhibitIssue("invalid_figure9_matrix_diff_artifact", "emitted Figure 9 artifact records must be objects"))
+        return
+    if artifact.get("exhibit_id") != EXPECTED_FIGURE9_EXHIBIT_ID:
+        issues.append(Figure9MatrixDiffExhibitIssue("invalid_artifact_exhibit_id", "artifact exhibit_id must identify the Figure 9 matrix-diff exhibit"))
+    panel_id = artifact.get("panel_id")
+    if panel_id not in EXPECTED_PANEL_ORDER:
+        issues.append(Figure9MatrixDiffExhibitIssue("invalid_artifact_panel_id", "artifact panel_id must be figure9a, figure9b, or figure9c"))
+    else:
+        if artifact.get("panel_order") != EXPECTED_PANEL_ORDER[panel_id]:
+            issues.append(Figure9MatrixDiffExhibitIssue("invalid_artifact_panel_order", "artifact panel_order must match Figure 9a-9c order"))
+        if artifact.get("source_pdf_page") != EXPECTED_PANEL_PAGES[panel_id]:
+            issues.append(Figure9MatrixDiffExhibitIssue("invalid_artifact_source_pdf_page", "artifact source_pdf_page must match the Figure 9 panel page"))
+    _validate_line_span(artifact.get("code_line_span"), issues)
+    _validate_artifact(artifact.get("source_diff_excerpt"), "artifact_source_diff_excerpt", issues)
+    _validate_artifact(artifact.get("rendered_image_artifact"), "artifact_rendered_image_artifact", issues)
+    _validate_artifact(artifact.get("rendered_text_artifact"), "artifact_rendered_text_artifact", issues)
+    _validate_artifact(artifact.get("rendered_panel_set"), "artifact_rendered_panel_set", issues)
+    _validate_artifact(artifact.get("ocr_text_artifact"), "artifact_ocr_text_artifact", issues)
+    _validate_figure9_artifact_paths(artifact.get("artifact_paths"), issues)
+    sha = artifact.get("artifact_sha256")
+    if not isinstance(sha, str) or _SHA256_RE.fullmatch(sha) is None:
+        issues.append(Figure9MatrixDiffExhibitIssue("invalid_artifact_sha256", "artifact_sha256 must be a lowercase SHA-256 hex digest"))
+    exhibit_report = validate_figure9_matrix_diff_exhibit(artifact.get("figure9_matrix_diff_exhibit"))
+    issues.extend(
+        Figure9MatrixDiffExhibitIssue(f"invalid_nested_exhibit_{issue.code}", issue.message)
+        for issue in exhibit_report.issues
+    )
+
+
+def _validate_figure9_artifact_paths(
+    value: object,
+    issues: list[Figure9MatrixDiffExhibitIssue],
+) -> None:
+    if not isinstance(value, list) or not value:
+        issues.append(Figure9MatrixDiffExhibitIssue("invalid_artifact_paths", "artifact_paths must be a non-empty list"))
+        return
+    seen: set[str] = set()
+    for path in value:
+        path_obj = Path(path) if isinstance(path, str) else None
+        if (
+            path_obj is None
+            or not path
+            or path_obj.is_absolute()
+            or path.startswith(("/", "\\"))
+            or ".." in path_obj.parts
+        ):
+            issues.append(Figure9MatrixDiffExhibitIssue("invalid_artifact_path", "artifact_paths entries must be safe relative paths"))
+            continue
+        if path in seen:
+            issues.append(Figure9MatrixDiffExhibitIssue("duplicate_artifact_path", "artifact_paths entries must be unique"))
+        seen.add(path)
 
 
 def _validate_rank_table_artifact_required_fields(

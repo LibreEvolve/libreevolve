@@ -1332,6 +1332,11 @@ Implemented:
   clipping, loss, discretization, and sweep changes, and links to matrix
   result, sweep-space, exactness-certificate, and companion notebook evidence.
   It does not render or commit the appendix panel artifacts.
+  `libreevolve.alphaevolve_figure9_matrix_diff_artifact_boundary.v1` now
+  records the current `not_emitted_by_local_report_export` boundary and
+  validates required future artifact fields for panel ids/order/pages, line
+  spans, source-diff excerpts, rendered images, OCR text, panel-set artifacts,
+  artifact paths/hashes, and nested Figure 9 exhibit metadata.
 - `libreevolve/problems/benchmarks/paper_artifact_roles.py`: AlphaEvolve paper
   artifact-role attribution and linkage-boundary contract, but concrete
   rendered figure and notebook artifacts are not yet linked. It validates the

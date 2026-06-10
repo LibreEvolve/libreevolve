@@ -8307,3 +8307,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     names `validate_strassen_2x2_publication_bundle()`, and keeps the claim
     scoped to one baseline rather than Appendix A suite discovery.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the Figure 9 matrix-diff artifact boundary in ROADMAP.
+  - Spec evidence: roadmap Figure 9 wording needs to distinguish declared
+    panel metadata from actual rendered/OCR/source-diff appendix panel
+    artifacts.
+  - Status: ROADMAP now names
+    `libreevolve.alphaevolve_figure9_matrix_diff_artifact_boundary.v1`, scopes
+    it to the current `not_emitted_by_local_report_export` state, and keeps
+    real Figure 9 panel artifact emission open.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

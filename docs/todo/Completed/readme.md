@@ -10893,3 +10893,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     paper manifest validates report/inventory hashes and regeneration parity
     while keeping the claim scoped to one baseline.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the Figure 9 matrix-diff artifact boundary in README.
+  - Spec evidence: README Figure 9 wording needs to distinguish declared panel
+    metadata from actual rendered/OCR/source-diff appendix panel artifacts.
+  - Status: README now names
+    `libreevolve.alphaevolve_figure9_matrix_diff_artifact_boundary.v1`, scopes
+    it to the current `not_emitted_by_local_report_export` state, and lists
+    required future artifact fields for Figure 9a-9c panel ids/order/pages,
+    code line spans, source-diff excerpts, rendered images, OCR text,
+    panel-set artifacts, artifact paths, and hashes.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

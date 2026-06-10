@@ -874,6 +874,11 @@ is not yet an AlphaEvolve reproduction.
   optimizer/init/noise/clipping/loss/discretization/sweep labels, and links to
   result, sweep-space, certificate, and companion notebook evidence. Rendered
   appendix panel artifacts are still not emitted or checked in.
+  `libreevolve.alphaevolve_figure9_matrix_diff_artifact_boundary.v1` now
+  validates the current `not_emitted_by_local_report_export` boundary and
+  required future fields for panel ids/order/pages, code line spans,
+  source-diff excerpts, rendered panel images, OCR text, aggregate panel-set
+  artifacts, artifact paths/hashes, and nested Figure 9 exhibit metadata.
 - Keep Figure 4 matrix-discovery exhibit claims scoped to declared exhibit
   validation: `libreevolve.alphaevolve_figure4_matrix_discovery_exhibit.v1`
   now validates the main-text exhibit id, page 11, caption linkage,

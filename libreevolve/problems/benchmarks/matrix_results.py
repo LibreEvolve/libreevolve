@@ -562,6 +562,30 @@ def matrix_suite_publication_artifact_boundary_record() -> dict[str, Any]:
     }
 
 
+def matrix_suite_publication_artifact_boundary_from_artifacts(
+    generated_target_artifacts: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Build a generated suite publication boundary from target artifacts."""
+    artifacts = copy.deepcopy(generated_target_artifacts)
+    boundary = matrix_suite_publication_artifact_boundary_record()
+    boundary.update(
+        {
+            "artifact_status": "generated",
+            "generated_target_artifacts": artifacts,
+            "claim_boundary": (
+                "Generated target artifacts preserve one Appendix A matrix "
+                "publication artifact record per registered target; this still "
+                "does not claim local runners emit the full suite automatically."
+            ),
+        }
+    )
+    validation = validate_matrix_suite_publication_artifact_boundary(boundary)
+    if not validation.ok:
+        messages = "; ".join(issue.message for issue in validation.issues)
+        raise ValueError(f"matrix suite publication artifact boundary is invalid: {messages}")
+    return boundary
+
+
 def validate_matrix_suite_publication_artifact_boundary(
     boundary: object | str | Path | None = None,
 ) -> MatrixSuitePublicationArtifactBoundaryValidation:
@@ -6929,6 +6953,7 @@ def _validate_matrix_suite_publication_artifacts(
         _validate_suite_artifact_paths(artifact.get("artifact_paths"), issues)
         _validate_suite_matrix_result_report(artifact.get("matrix_result_report"), safe_id, issues)
         _validate_suite_artifact_inventory(artifact.get("artifact_inventory"), safe_id, issues)
+        _validate_suite_nested_publication_links(artifact, issues)
     for target_id in sorted(set(registry_targets) - seen):
         issues.append(
             MatrixResultIssue(
@@ -6936,6 +6961,57 @@ def _validate_matrix_suite_publication_artifacts(
                 f"suite publication artifacts must include target {target_id}",
             )
         )
+
+
+def _validate_suite_nested_publication_links(
+    artifact: dict[str, Any],
+    issues: list[MatrixResultIssue],
+) -> None:
+    report = artifact.get("matrix_result_report")
+    if not isinstance(report, dict):
+        return
+    if artifact.get("dimensions") != report.get("dimensions"):
+        issues.append(
+            MatrixResultIssue(
+                "suite_publication_nested_dimensions_mismatch",
+                "suite publication dimensions must match nested matrix result report",
+            )
+        )
+    if artifact.get("coefficient_domain") != report.get("coefficient_domain"):
+        issues.append(
+            MatrixResultIssue(
+                "suite_publication_nested_coefficient_domain_mismatch",
+                "suite publication coefficient_domain must match nested matrix result report",
+            )
+        )
+    artifacts = report.get("artifacts")
+    if not isinstance(artifacts, list):
+        return
+    artifacts_by_kind = {
+        item.get("kind"): item for item in artifacts if isinstance(item, dict)
+    }
+    for kind, ref_field, hash_field in (
+        ("algorithm", "algorithm_ref", "algorithm_sha256"),
+        ("certificate", "exactness_certificate_ref", "exactness_certificate_sha256"),
+        ("notebook", "notebook_ref", "notebook_sha256"),
+    ):
+        nested = artifacts_by_kind.get(kind)
+        if not isinstance(nested, dict):
+            continue
+        if artifact.get(ref_field) != nested.get("path"):
+            issues.append(
+                MatrixResultIssue(
+                    f"suite_publication_nested_{kind}_ref_mismatch",
+                    f"suite publication {ref_field} must match nested matrix result {kind} artifact path",
+                )
+            )
+        if artifact.get(hash_field) != nested.get("sha256"):
+            issues.append(
+                MatrixResultIssue(
+                    f"suite_publication_nested_{kind}_hash_mismatch",
+                    f"suite publication {hash_field} must match nested matrix result {kind} artifact hash",
+                )
+            )
 
 
 def _validate_safe_ref_field(

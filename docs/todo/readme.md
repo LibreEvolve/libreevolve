@@ -661,6 +661,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README now also documents `libreevolve.matrix_suite_publication_artifact_boundary.v1`
     as the current `not_generated_locally` boundary and required future fields
     for one generated artifact record per registered Appendix A target.
+    `matrix_suite_publication_artifact_boundary_from_artifacts()` can build the
+    generated boundary and validation checks nested matrix-result report
+    linkage, while README still marks full-suite generation missing.
     Matching paper TODO and paper-index entries now make the same distinction.
   - Required result: when real tensor-decomposition benchmark runs emit
     target tensors, discovered algorithms, coefficient data, certificates,

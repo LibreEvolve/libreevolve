@@ -2973,6 +2973,10 @@ Primary evidence:
     exactness certificates, notebooks, per-seed reports, embedded
     matrix-result reports, artifact inventories, publication-bundle refs,
     artifact paths, and hashes.
+    `matrix_suite_publication_artifact_boundary_from_artifacts()` builds a
+    generated boundary from one record per registered target and validation
+    checks nested matrix-result report linkage, but no local runner generates
+    those suite-wide artifacts.
   - Required result: connect exact target tensors, tensor-decomposition
     algorithms, coefficient-domain data, certificate artifacts, and
     notebook/export artifacts to the registered target suite; keep the existing

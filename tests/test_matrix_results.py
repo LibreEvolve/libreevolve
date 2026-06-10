@@ -41,6 +41,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     matrix_result_artifact_inventory,
     matrix_scalar_field_runtime_boundary_from_evidence,
     matrix_scalar_field_runtime_boundary_record,
+    matrix_suite_publication_artifact_boundary_from_artifacts,
     matrix_suite_publication_artifact_boundary_record,
     matrix_sweep_space_runtime_boundary_from_evidence,
     matrix_sweep_space_runtime_boundary_record,
@@ -987,14 +988,14 @@ def _suite_publication_artifact(target: dict) -> dict:
         "target_tensor_ref": f"matrix/{target_id}/target_tensor.json",
         "target_tensor_sha256": "1" * 64,
         "algorithm_ref": f"matrix/{target_id}/algorithm.json",
-        "algorithm_sha256": "2" * 64,
+        "algorithm_sha256": "b" * 64,
         "coefficient_domain": "half_integer",
         "coefficient_data_ref": f"matrix/{target_id}/coefficients.json",
         "coefficient_data_sha256": "3" * 64,
         "exactness_certificate_ref": f"matrix/{target_id}/certificate.json",
-        "exactness_certificate_sha256": "4" * 64,
+        "exactness_certificate_sha256": "a" * 64,
         "notebook_ref": f"matrix/{target_id}/reproduce.ipynb",
-        "notebook_sha256": "5" * 64,
+        "notebook_sha256": "c" * 64,
         "per_seed_report_ref": f"matrix/{target_id}/per_seed_report.json",
         "per_seed_report_sha256": "6" * 64,
         "matrix_result_report": report,
@@ -1055,9 +1056,9 @@ def test_matrix_suite_publication_artifact_boundary_requires_all_registered_targ
 
 
 def test_matrix_suite_publication_artifact_boundary_accepts_generated_suite_fixture():
-    boundary = matrix_suite_publication_artifact_boundary_record()
-    boundary["artifact_status"] = "generated"
-    boundary["generated_target_artifacts"] = _suite_publication_artifacts()
+    boundary = matrix_suite_publication_artifact_boundary_from_artifacts(
+        _suite_publication_artifacts()
+    )
 
     validation = validate_matrix_suite_publication_artifact_boundary(boundary)
 
@@ -1065,6 +1066,16 @@ def test_matrix_suite_publication_artifact_boundary_accepts_generated_suite_fixt
     assert validation.artifact_status == "generated"
     assert validation.generated_target_count == EXPECTED_TARGET_COUNT
     assert validation.issues == []
+
+
+def test_matrix_suite_publication_artifact_boundary_builder_rejects_incomplete_suite():
+    with pytest.raises(
+        ValueError,
+        match="matrix suite publication artifact boundary is invalid",
+    ):
+        matrix_suite_publication_artifact_boundary_from_artifacts(
+            [_suite_publication_artifact(matrix_target_records()[0])]
+        )
 
 
 def test_matrix_suite_publication_artifact_boundary_rejects_invalid_nested_evidence():
@@ -1089,6 +1100,28 @@ def test_matrix_suite_publication_artifact_boundary_rejects_invalid_nested_evide
     assert "invalid_algorithm_sha256" in codes
     assert "matrix_result_target_mismatch" in codes
     assert "inventory_not_ok" in codes
+
+
+def test_matrix_suite_publication_artifact_boundary_rejects_nested_report_link_drift():
+    boundary = matrix_suite_publication_artifact_boundary_from_artifacts(
+        _suite_publication_artifacts()
+    )
+    artifact = boundary["generated_target_artifacts"][0]
+    artifact["matrix_result_report"]["dimensions"] = [9, 9, 9]
+    report_algorithm = next(
+        item
+        for item in artifact["matrix_result_report"]["artifacts"]
+        if item["kind"] == "algorithm"
+    )
+    report_algorithm["path"] = "matrix/changed/algorithm.json"
+
+    validation = validate_matrix_suite_publication_artifact_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_nested_matrix_result_target_dimensions_mismatch" in codes
+    assert "suite_publication_nested_dimensions_mismatch" in codes
+    assert "suite_publication_nested_algorithm_ref_mismatch" in codes
 
 
 def test_render_matrix_suite_publication_artifact_boundary_summary_reports_shape():

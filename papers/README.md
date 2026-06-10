@@ -1261,6 +1261,10 @@ Implemented:
   exactness certificate, notebook, per-seed report, embedded matrix-result
   report, artifact inventory, publication-bundle refs, artifact paths, and
   hashes. The paper-manifest gate validates this boundary.
+  `matrix_suite_publication_artifact_boundary_from_artifacts()` can build the
+  generated boundary from one record per registered target, with nested
+  matrix-result report linkage checks, but no local process generates the full
+  suite artifacts yet.
   `libreevolve.matrix_baseline_component_runtime_boundary.v1` now records the
   current `not_emitted_by_local_runner` boundary for Section 3.1-style
   starting-algorithm provenance and required future emitted fields for

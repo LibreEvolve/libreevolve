@@ -10832,3 +10832,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     hashes. The paper-manifest gate validates this boundary with the Appendix
     A matrix checks.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Track matrix baseline-component runtime absence separately from final
+      result reports.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 starts matrix
+    decomposition search from a standard gradient-based algorithm with an
+    initializer, reconstruction loss function, and Adam optimizer.
+  - Status: `libreevolve.matrix_baseline_component_runtime_boundary.v1` now
+    records the current `not_emitted_by_local_runner` boundary and validates
+    required future emitted fields for baseline components, optimizer config,
+    generation-0 metrics, mutation lineage, result refs, artifact paths, and
+    hashes. The paper-manifest gate validates this boundary with the Appendix
+    A matrix checks.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

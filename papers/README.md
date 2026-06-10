@@ -1124,7 +1124,16 @@ Implemented:
   report, and artifact inventory files. It still does not provide discovered
   tensor-decomposition algorithms, certificates, or notebook exports across the
   full Appendix A target suite. It also validates matrix result metadata after
-  the report exists. `libreevolve.matrix_cascade_run_runtime_boundary.v1` now
+  the report exists.
+  `libreevolve.matrix_baseline_component_runtime_boundary.v1` now records the
+  current `not_emitted_by_local_runner` boundary for Section 3.1-style
+  starting-algorithm provenance and required future emitted fields for
+  run/target ids, baseline program ids, initializer/reconstruction-loss/
+  optimizer component records, Adam optimizer name/version/config, mutable
+  component scopes, fixed component hashes, generation-0 metrics, mutation
+  lineage, matrix-result refs, artifact paths, and artifact hashes. It does
+  not yet provide emitted baseline component records for local matrix runs.
+  `libreevolve.matrix_cascade_run_runtime_boundary.v1` now
   records the current `not_emitted_by_local_runner` boundary for Section
   3.1-style repeated-seed matrix cascade traces and required future emitted
   fields for run/target/seed ids, cascade ids and versions, stage traces with

@@ -717,6 +717,16 @@ is not yet an AlphaEvolve reproduction.
   future attempted target sizes, measured GPU memory, OOM artifacts,
   reduced-seed tradeoffs, and exclusion rationale. Actual local scaling runs
   remain open.
+- Keep matrix starting-algorithm wording scoped to boundary validation rather
+  than emitted Section 3.1 provenance:
+  `libreevolve.matrix_baseline_component_runtime_boundary.v1` now validates
+  the current `not_emitted_by_local_runner` boundary and required future
+  emitted-record fields for run/target ids, baseline program ids,
+  initializer/reconstruction-loss/optimizer component records, Adam optimizer
+  name/version/config, mutable component scopes, fixed component hashes,
+  generation-0 metrics, mutation lineage, matrix-result refs, artifact paths,
+  and artifact hashes. Local benchmark runners still need to emit those
+  baseline component records.
 - Keep matrix repeated-seed wording scoped to result reports versus executed
   cascade traces: `libreevolve.matrix_cascade_run_runtime_boundary.v1` now
   validates the current `not_emitted_by_local_runner` boundary and required

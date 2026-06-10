@@ -10870,3 +10870,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     stage traces, accepted final rank, candidate/result refs, artifact paths,
     and hashes.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the matrix baseline-component runtime boundary in README.
+  - Spec evidence: README matrix wording needs to distinguish final matrix
+    result-report validation from AlphaEvolve Section 3.1 starting-algorithm
+    provenance.
+  - Status: README now names
+    `libreevolve.matrix_baseline_component_runtime_boundary.v1`, scopes it to
+    the current `not_emitted_by_local_runner` state, and lists required future
+    emitted-record fields for baseline components, Adam optimizer metadata,
+    generation-0 metrics, mutation lineage, result refs, artifact paths, and
+    hashes.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

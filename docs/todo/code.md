@@ -3205,11 +3205,16 @@ Primary evidence:
     programs.
   - Current evidence: LibreEvolve records matrix target/result metadata after
     a report exists, plus TODOs for near-integrality, sweep provenance,
-    scalar fields, and the Figure 8 loss-only ablation. It does not yet define
-    a matrix benchmark runner or report field that inventories the initial
-    gradient-based solver components, records their source hashes, declares
-    which components are fixed versus mutable, or links accepted mutations
-    back to the baseline initializer/loss/optimizer boundaries.
+    scalar fields, and the Figure 8 loss-only ablation.
+    `libreevolve.matrix_baseline_component_runtime_boundary.v1` now validates
+    the current `not_emitted_by_local_runner` boundary and required future
+    fields for baseline component records, optimizer metadata, generation-0
+    metrics, mutation lineage, matrix-result refs, artifact paths, and hashes.
+    It does not yet define a matrix benchmark runner or report field that
+    emits the initial gradient-based solver components, records their source
+    hashes, declares which components are fixed versus mutable, or links
+    accepted mutations back to the baseline initializer/loss/optimizer
+    boundaries.
   - Required result: add matrix benchmark metadata and validators for the
     starting algorithm component inventory: initializer, reconstruction loss,
     optimizer identity and version/config, mutable component scopes, fixed

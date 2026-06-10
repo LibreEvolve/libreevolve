@@ -16047,3 +16047,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused matrix-result and paper-manifest tests cover the
     absence boundary, emitted-trace validation, nested report validation, and
     manifest hook.
+
+- [x] Add a matrix baseline-component runtime boundary contract.
+  - Spec evidence: AlphaEvolve Section 3.1 says matrix-decomposition search
+    starts from a problem description and a standard gradient-based algorithm
+    with an initializer, reconstruction loss function, and Adam optimizer.
+  - Status: `libreevolve.matrix_baseline_component_runtime_boundary.v1` now
+    validates the current `not_emitted_by_local_runner` state, rejects false
+    emitted claims without baseline records, validates emitted component
+    records, Adam optimizer metadata, generation-0 metrics, mutation lineage,
+    artifact paths, and hashes, and records required future fields for Section
+    3.1 starting-algorithm provenance. Local matrix benchmark runners still do
+    not emit those records.
+  - Verification: focused matrix-result and paper-manifest tests cover the
+    absence boundary, emitted-record validation, invalid component metadata,
+    and manifest hook.

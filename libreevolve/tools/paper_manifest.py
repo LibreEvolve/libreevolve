@@ -111,12 +111,14 @@ from libreevolve.problems.benchmarks.matrix_exhibits import (
     validate_matrix_rank_table_artifact_boundary,
 )
 from libreevolve.problems.benchmarks.matrix_results import (
+    matrix_baseline_component_runtime_boundary_record,
     matrix_cascade_run_runtime_boundary_record,
     matrix_headline_historicity_runtime_boundary_record,
     matrix_near_integrality_runtime_boundary_record,
     matrix_scalar_field_runtime_boundary_record,
     matrix_sweep_space_runtime_boundary_record,
     matrix_tensor_rank_runtime_boundary_record,
+    validate_matrix_baseline_component_runtime_boundary,
     validate_matrix_cascade_run_runtime_boundary,
     validate_matrix_headline_historicity_runtime_boundary,
     validate_matrix_near_integrality_runtime_boundary,
@@ -637,6 +639,16 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
             _safe_manifest_label(issue.note_id) if issue.note_id else None,
         )
         for issue in row_note_artifact_report.issues
+    )
+    baseline_component_runtime_report = validate_matrix_baseline_component_runtime_boundary(
+        matrix_baseline_component_runtime_boundary_record()
+    )
+    issues.extend(
+        PaperManifestIssue(
+            f"matrix_baseline_component_runtime_{issue.code}",
+            issue.message,
+        )
+        for issue in baseline_component_runtime_report.issues
     )
     cascade_run_runtime_report = validate_matrix_cascade_run_runtime_boundary(
         matrix_cascade_run_runtime_boundary_record()

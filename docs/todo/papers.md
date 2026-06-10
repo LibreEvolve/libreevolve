@@ -3581,11 +3581,15 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current evidence: the paper-facing matrix TODOs track result reports,
     Appendix A target curation, near-integrality prompt/evaluator evidence,
     sweep-space provenance, scalar-field evidence, resource-frontier records,
-    and final artifact/certificate availability. They do not require a
-    paper-facing run record for the generation-0 matrix solver components,
-    their source hashes/configuration, fixed-versus-mutable boundaries, or
-    mutation lineage showing how later accepted candidates changed the
-    initializer, loss, optimizer, or surrounding search program.
+    and final artifact/certificate availability.
+    `libreevolve.matrix_baseline_component_runtime_boundary.v1` now validates
+    the current `not_emitted_by_local_runner` boundary and required future
+    baseline component, optimizer, generation-0, lineage, result, artifact, and
+    hash fields. It does not yet provide a paper-facing run record for the
+    generation-0 matrix solver components, their source hashes/configuration,
+    fixed-versus-mutable boundaries, or mutation lineage showing how later
+    accepted candidates changed the initializer, loss, optimizer, or
+    surrounding search program.
   - Required result: add paper-facing matrix run artifacts that inventory the
     initial gradient-based algorithm, record initializer/loss/optimizer
     configuration and hashes, declare mutable and fixed scopes, include

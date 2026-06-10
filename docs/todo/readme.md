@@ -1153,7 +1153,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: README documents matrix result reports, Appendix A
     registry coverage, checked Strassen artifacts, and open follow-ups for
     near-integrality, sweep provenance, scalar fields, and scaling limits. It
-    does not yet document a matrix benchmark run record that inventories the
+    now documents `libreevolve.matrix_baseline_component_runtime_boundary.v1`,
+    which validates the current `not_emitted_by_local_runner` boundary and
+    required future fields for Section 3.1 starting-algorithm records. It does
+    not yet document a matrix benchmark run record that inventories the
     generation-0 initializer/loss/optimizer components, records their source
     hashes/configuration, declares mutable versus fixed scopes, or links
     accepted mutations back to changed baseline components.

@@ -9,6 +9,7 @@ from libreevolve.problems.benchmarks.companion_sources import (
 )
 from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_ARTIFACT_INVENTORY_SCHEMA,
+    MATRIX_BASELINE_COMPONENT_RUNTIME_SCHEMA,
     MATRIX_CASCADE_RUN_RUNTIME_SCHEMA,
     MATRIX_HEADLINE_HISTORICITY_SCHEMA,
     MATRIX_HEADLINE_HISTORICITY_RUNTIME_SCHEMA,
@@ -22,6 +23,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_SWEEP_SPACE_RUNTIME_SCHEMA,
     MATRIX_TENSOR_RANK_SCHEMA,
     MATRIX_TENSOR_RANK_RUNTIME_SCHEMA,
+    matrix_baseline_component_runtime_boundary_record,
     matrix_cascade_run_runtime_boundary_record,
     matrix_headline_historicity_runtime_boundary_record,
     matrix_near_integrality_runtime_boundary_record,
@@ -29,6 +31,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     matrix_scalar_field_runtime_boundary_record,
     matrix_sweep_space_runtime_boundary_record,
     matrix_tensor_rank_runtime_boundary_record,
+    render_matrix_baseline_component_runtime_boundary_summary,
     render_matrix_cascade_run_runtime_boundary_summary,
     render_matrix_headline_historicity_summary,
     render_matrix_headline_historicity_runtime_boundary_summary,
@@ -41,6 +44,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     render_matrix_sweep_space_runtime_boundary_summary,
     render_matrix_tensor_rank_summary,
     render_matrix_tensor_rank_runtime_boundary_summary,
+    validate_matrix_baseline_component_runtime_boundary,
     validate_matrix_cascade_run_runtime_boundary,
     validate_matrix_headline_historicity_evidence,
     validate_matrix_headline_historicity_runtime_boundary,
@@ -118,6 +122,67 @@ def _valid_report() -> dict:
     }
 
 
+def _valid_baseline_component_record() -> dict:
+    return {
+        "run_id": "run_001",
+        "target_id": "mm_4x4x4",
+        "baseline_program_id": "baseline_001",
+        "component_records": [
+            {
+                "component_name": "initializer",
+                "component_id": "init_001",
+                "component_ref": "matrix/mm_4x4x4/baseline.py:init",
+                "source_path": "matrix/mm_4x4x4/baseline.py",
+                "source_sha256": "a" * 64,
+                "mutability": "mutable",
+                "config": {"distribution": "normal"},
+            },
+            {
+                "component_name": "reconstruction_loss",
+                "component_id": "loss_001",
+                "component_ref": "matrix/mm_4x4x4/baseline.py:loss",
+                "source_path": "matrix/mm_4x4x4/baseline.py",
+                "source_sha256": "b" * 64,
+                "mutability": "mutable",
+                "config": {"loss": "frobenius"},
+            },
+            {
+                "component_name": "optimizer",
+                "component_id": "adam_001",
+                "component_ref": "matrix/mm_4x4x4/baseline.py:optimizer",
+                "source_path": "matrix/mm_4x4x4/baseline.py",
+                "source_sha256": "c" * 64,
+                "mutability": "fixed",
+                "config": {"optimizer": "Adam"},
+            },
+        ],
+        "initializer_ref": "matrix/mm_4x4x4/baseline.py:init",
+        "reconstruction_loss_ref": "matrix/mm_4x4x4/baseline.py:loss",
+        "optimizer_ref": "matrix/mm_4x4x4/baseline.py:optimizer",
+        "optimizer_name": "Adam",
+        "optimizer_version": "torch.optim.Adam",
+        "optimizer_config": {
+            "learning_rate": 0.001,
+            "beta1": 0.9,
+            "beta2": 0.999,
+        },
+        "mutable_component_scopes": ["initializer", "reconstruction_loss"],
+        "fixed_component_hashes": {"optimizer": "c" * 64},
+        "generation0_metrics": {"rank": 50, "score": 0.0, "exact": True},
+        "mutation_lineage": [
+            {
+                "generation": 1,
+                "parent_program_id": "baseline_001",
+                "child_program_id": "candidate_001",
+                "changed_component_names": ["reconstruction_loss"],
+            }
+        ],
+        "matrix_result_ref": "matrix/mm_4x4x4/result.json",
+        "artifact_paths": ["matrix/mm_4x4x4/baseline_components.json"],
+        "artifact_sha256": "d" * 64,
+    }
+
+
 def _valid_cascade_run_record() -> dict:
     return {
         "run_id": "run_001",
@@ -167,6 +232,80 @@ def test_matrix_result_report_loads_json_file(tmp_path):
 
     assert validation.ok is True
     assert validation.target_id == "mm_4x4x4"
+
+
+def test_matrix_baseline_component_runtime_boundary_accepts_current_absence():
+    boundary = matrix_baseline_component_runtime_boundary_record()
+
+    validation = validate_matrix_baseline_component_runtime_boundary(boundary)
+
+    assert boundary["schema"] == MATRIX_BASELINE_COMPONENT_RUNTIME_SCHEMA
+    assert validation.ok is True
+    assert validation.runtime_emission_status == "not_emitted_by_local_runner"
+    assert validation.emitted_record_count == 0
+    assert validation.required_field_count == 17
+
+
+def test_matrix_baseline_component_runtime_boundary_rejects_absence_with_records():
+    boundary = matrix_baseline_component_runtime_boundary_record()
+    boundary["emitted_records"] = [_valid_baseline_component_record()]
+
+    validation = validate_matrix_baseline_component_runtime_boundary(boundary)
+
+    assert validation.ok is False
+    codes = {issue.code for issue in validation.issues}
+    assert "unexpected_runtime_baseline_component_records" in codes
+
+
+def test_matrix_baseline_component_runtime_boundary_requires_emitted_records():
+    boundary = matrix_baseline_component_runtime_boundary_record()
+    boundary["runtime_emission_status"] = "emitted"
+
+    validation = validate_matrix_baseline_component_runtime_boundary(boundary)
+
+    assert validation.ok is False
+    codes = {issue.code for issue in validation.issues}
+    assert "missing_runtime_baseline_component_records" in codes
+
+
+def test_matrix_baseline_component_runtime_boundary_accepts_emitted_record():
+    boundary = matrix_baseline_component_runtime_boundary_record()
+    boundary["runtime_emission_status"] = "emitted"
+    boundary["emitted_records"] = [_valid_baseline_component_record()]
+
+    validation = validate_matrix_baseline_component_runtime_boundary(boundary)
+
+    assert validation.ok is True
+    assert validation.emitted_record_count == 1
+    assert validation.issues == []
+
+
+def test_matrix_baseline_component_runtime_boundary_rejects_invalid_components():
+    boundary = matrix_baseline_component_runtime_boundary_record()
+    boundary["runtime_emission_status"] = "emitted"
+    record = _valid_baseline_component_record()
+    record["component_records"] = record["component_records"][:2]
+    record["optimizer_name"] = "SGD"
+    record["optimizer_config"]["learning_rate"] = "fast"
+    record["artifact_paths"] = ["../escape.json"]
+    boundary["emitted_records"] = [record]
+
+    validation = validate_matrix_baseline_component_runtime_boundary(boundary)
+
+    assert validation.ok is False
+    codes = {issue.code for issue in validation.issues}
+    assert "runtime_record_0_missing_required_components" in codes
+    assert "runtime_record_0_invalid_optimizer_name" in codes
+    assert "runtime_record_0_invalid_optimizer_config_learning_rate" in codes
+    assert "runtime_record_0_invalid_baseline_component_artifact_path" in codes
+
+
+def test_render_matrix_baseline_component_runtime_boundary_summary_reports_shape():
+    summary = render_matrix_baseline_component_runtime_boundary_summary()
+
+    assert "Matrix baseline-component runtime boundary" in summary
+    assert "runtime_emission_status" in summary
+    assert "required_field_count" in summary
 
 
 def test_matrix_cascade_run_runtime_boundary_accepts_current_absence():

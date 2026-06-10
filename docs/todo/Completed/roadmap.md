@@ -8289,3 +8289,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     current `not_emitted_by_local_runner` state, and keeps real matrix
     cascade-trace emission open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the matrix baseline-component runtime boundary in ROADMAP.
+  - Spec evidence: roadmap matrix wording needs to distinguish final
+    result/report readiness from AlphaEvolve Section 3.1
+    baseline-to-evolved-program provenance.
+  - Status: ROADMAP now names
+    `libreevolve.matrix_baseline_component_runtime_boundary.v1`, scopes it to
+    the current `not_emitted_by_local_runner` state, and keeps real baseline
+    component record emission open.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

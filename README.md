@@ -3420,6 +3420,15 @@ rank or hit fraction does not match the per-seed rank records. Reports must expl
 reports are valid only when that flag is false. AlphaEvolve-comparable matrix
 claims require integer or half-integer coefficients, verified exactness, exact
 per-seed results, and algorithm/certificate/notebook artifacts.
+Matrix baseline-component provenance uses
+`libreevolve.matrix_baseline_component_runtime_boundary.v1`; it validates the
+current `not_emitted_by_local_runner` state for AlphaEvolve Section 3.1-style
+starting-algorithm records and the required future emitted-record fields for
+run/target ids, baseline program ids, initializer/reconstruction-loss/optimizer
+component records, Adam optimizer name/version/config, mutable component
+scopes, fixed component hashes, generation-0 metrics, mutation lineage,
+matrix-result refs, artifact paths, and artifact hashes. Local matrix benchmark
+runners still do not emit those baseline component records.
 Matrix cascade-run provenance uses
 `libreevolve.matrix_cascade_run_runtime_boundary.v1`; it validates the current
 `not_emitted_by_local_runner` state for AlphaEvolve Section 3.1-style

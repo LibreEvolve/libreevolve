@@ -22,6 +22,7 @@ from libreevolve.problems.benchmarks.companion_sources import (
 MATRIX_RESULT_SCHEMA = "libreevolve.matrix_result_report.v1"
 MATRIX_ARTIFACT_INVENTORY_SCHEMA = "libreevolve.matrix_result_artifact_inventory.v1"
 MATRIX_PUBLICATION_BUNDLE_SCHEMA = "libreevolve.matrix_publication_bundle.v1"
+MATRIX_BASELINE_COMPONENT_RUNTIME_SCHEMA = "libreevolve.matrix_baseline_component_runtime_boundary.v1"
 MATRIX_CASCADE_RUN_RUNTIME_SCHEMA = "libreevolve.matrix_cascade_run_runtime_boundary.v1"
 MATRIX_NEAR_INTEGRALITY_SCHEMA = "libreevolve.matrix_near_integrality_evidence.v1"
 MATRIX_NEAR_INTEGRALITY_RUNTIME_SCHEMA = "libreevolve.matrix_near_integrality_runtime_boundary.v1"
@@ -37,6 +38,28 @@ COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer", "rational", "float"}
 PUBLICATION_COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer"})
 EXACTNESS_STATUSES = frozenset({"verified", "failed", "not_checked"})
 ARTIFACT_KINDS = frozenset({"algorithm", "certificate", "summary", "notebook"})
+MATRIX_BASELINE_COMPONENT_RUNTIME_STATUSES = frozenset({"not_emitted_by_local_runner", "emitted"})
+MATRIX_BASELINE_COMPONENT_REQUIRED_NAMES = frozenset({"initializer", "reconstruction_loss", "optimizer"})
+MATRIX_BASELINE_COMPONENT_MUTABILITY = frozenset({"fixed", "mutable"})
+MATRIX_BASELINE_COMPONENT_RUNTIME_REQUIRED_FIELDS = (
+    "run_id",
+    "target_id",
+    "baseline_program_id",
+    "component_records",
+    "initializer_ref",
+    "reconstruction_loss_ref",
+    "optimizer_ref",
+    "optimizer_name",
+    "optimizer_version",
+    "optimizer_config",
+    "mutable_component_scopes",
+    "fixed_component_hashes",
+    "generation0_metrics",
+    "mutation_lineage",
+    "matrix_result_ref",
+    "artifact_paths",
+    "artifact_sha256",
+)
 MATRIX_CASCADE_RUN_RUNTIME_STATUSES = frozenset({"not_emitted_by_local_runner", "emitted"})
 MATRIX_CASCADE_RUN_RUNTIME_REQUIRED_FIELDS = (
     "run_id",
@@ -277,6 +300,15 @@ class MatrixPublicationBundleValidation:
 
 
 @dataclass(frozen=True)
+class MatrixBaselineComponentRuntimeValidation:
+    ok: bool
+    runtime_emission_status: str | None
+    emitted_record_count: int
+    required_field_count: int
+    issues: list[MatrixResultIssue]
+
+
+@dataclass(frozen=True)
 class MatrixCascadeRunRuntimeValidation:
     ok: bool
     runtime_emission_status: str | None
@@ -454,6 +486,119 @@ def validate_matrix_result_report(report: object | str | Path) -> MatrixResultVa
         seed_count=seed_count or 0,
         best_rank=best_rank,
         hit_fraction=hit_fraction,
+        issues=issues,
+    )
+
+
+def matrix_baseline_component_runtime_boundary_record() -> dict[str, Any]:
+    return {
+        "schema": MATRIX_BASELINE_COMPONENT_RUNTIME_SCHEMA,
+        "target_suite": APPENDIX_A_TARGET_SUITE,
+        "result_schema": MATRIX_RESULT_SCHEMA,
+        "runtime_emission_status": "not_emitted_by_local_runner",
+        "local_runner_scope": "matrix_benchmark_runner",
+        "required_emission_fields": list(MATRIX_BASELINE_COMPONENT_RUNTIME_REQUIRED_FIELDS),
+        "emitted_records": [],
+        "claim_boundary": (
+            "This is a matrix baseline-component absence/readiness boundary. "
+            "It does not claim local matrix runners emit AlphaEvolve Section "
+            "3.1 initializer, reconstruction-loss, and Adam-optimizer provenance."
+        ),
+    }
+
+
+def validate_matrix_baseline_component_runtime_boundary(
+    boundary: object | str | Path | None = None,
+) -> MatrixBaselineComponentRuntimeValidation:
+    """Validate whether matrix runners emit Section 3.1 baseline-component records."""
+    data, read_issues = _load_report(
+        matrix_baseline_component_runtime_boundary_record() if boundary is None else boundary
+    )
+    if read_issues:
+        return MatrixBaselineComponentRuntimeValidation(False, None, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[MatrixResultIssue] = []
+    if data.get("schema") != MATRIX_BASELINE_COMPONENT_RUNTIME_SCHEMA:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_schema",
+                "unsupported matrix baseline-component runtime boundary schema",
+            )
+        )
+    if data.get("target_suite") != APPENDIX_A_TARGET_SUITE:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_target_suite",
+                "runtime boundary must target AlphaEvolve Appendix A",
+            )
+        )
+    if data.get("result_schema") != MATRIX_RESULT_SCHEMA:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_result_schema",
+                "runtime boundary must reference the matrix result report schema",
+            )
+        )
+    status = data.get("runtime_emission_status")
+    if status not in MATRIX_BASELINE_COMPONENT_RUNTIME_STATUSES:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_runtime_emission_status",
+                "runtime_emission_status must be not_emitted_by_local_runner or emitted",
+            )
+        )
+        status = None
+    if not isinstance(data.get("local_runner_scope"), str) or not data["local_runner_scope"].strip():
+        issues.append(
+            MatrixResultIssue(
+                "missing_local_runner_scope",
+                "local_runner_scope must identify the local runner surface",
+            )
+        )
+    required_field_count = _validate_matrix_baseline_component_required_fields(
+        data.get("required_emission_fields"),
+        issues,
+    )
+    emitted_records = data.get("emitted_records")
+    if not isinstance(emitted_records, list):
+        issues.append(
+            MatrixResultIssue(
+                "invalid_emitted_records",
+                "emitted_records must be a list",
+            )
+        )
+        emitted_records = []
+    emitted_record_count = len(emitted_records)
+    if status == "not_emitted_by_local_runner":
+        if emitted_records:
+            issues.append(
+                MatrixResultIssue(
+                    "unexpected_runtime_baseline_component_records",
+                    "not_emitted_by_local_runner status must not include emitted records",
+                )
+            )
+        claim_boundary = data.get("claim_boundary")
+        if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary.lower():
+            issues.append(
+                MatrixResultIssue(
+                    "missing_absence_claim_boundary",
+                    "absence boundary must explicitly say it does not claim runtime emission",
+                )
+            )
+    elif status == "emitted":
+        if not emitted_records:
+            issues.append(
+                MatrixResultIssue(
+                    "missing_runtime_baseline_component_records",
+                    "emitted status requires at least one emitted record",
+                )
+            )
+        _validate_matrix_baseline_component_records(emitted_records, issues)
+    return MatrixBaselineComponentRuntimeValidation(
+        ok=not issues,
+        runtime_emission_status=status if isinstance(status, str) else None,
+        emitted_record_count=emitted_record_count,
+        required_field_count=required_field_count,
         issues=issues,
     )
 
@@ -1631,6 +1776,27 @@ def render_matrix_cascade_run_runtime_boundary_summary(
     status = "ok" if validation.ok else "invalid"
     lines = [
         "Matrix cascade-run runtime boundary",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| runtime_emission_status | {validation.runtime_emission_status or '<unknown>'} |",
+        f"| emitted_record_count | {validation.emitted_record_count} |",
+        f"| required_field_count | {validation.required_field_count} |",
+    ]
+    if validation.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(f"- {issue.code}: {issue.message}" for issue in validation.issues)
+    return "\n".join(lines)
+
+
+def render_matrix_baseline_component_runtime_boundary_summary(
+    boundary: dict[str, Any] | None = None,
+) -> str:
+    validation = validate_matrix_baseline_component_runtime_boundary(boundary)
+    status = "ok" if validation.ok else "invalid"
+    lines = [
+        "Matrix baseline-component runtime boundary",
         "",
         "| Field | Value |",
         "|---|---|",
@@ -3094,6 +3260,425 @@ def _runtime_record_text(
         )
         return None
     return value
+
+
+def _validate_matrix_baseline_component_required_fields(
+    value: object,
+    issues: list[MatrixResultIssue],
+) -> int:
+    if not isinstance(value, list) or not value:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_required_emission_fields",
+                "required_emission_fields must be a non-empty list",
+            )
+        )
+        return 0
+    fields: list[str] = []
+    seen: set[str] = set()
+    for item in value:
+        if not isinstance(item, str) or not item.strip():
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_required_emission_field",
+                    "required_emission_fields entries must be non-empty strings",
+                )
+            )
+            continue
+        if item in seen:
+            issues.append(
+                MatrixResultIssue(
+                    "duplicate_required_emission_field",
+                    "required_emission_fields entries must be unique",
+                )
+            )
+            continue
+        seen.add(item)
+        fields.append(item)
+    missing = sorted(set(MATRIX_BASELINE_COMPONENT_RUNTIME_REQUIRED_FIELDS) - set(fields))
+    if missing:
+        issues.append(
+            MatrixResultIssue(
+                "missing_required_emission_field",
+                "required_emission_fields must include baseline component, optimizer, generation-0, lineage, result, artifact, and hash fields",
+            )
+        )
+    return len(fields)
+
+
+def _validate_matrix_baseline_component_records(
+    records: list[object],
+    issues: list[MatrixResultIssue],
+) -> None:
+    seen: set[tuple[str, str, str]] = set()
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_runtime_baseline_component_record",
+                    "emitted baseline-component records must be objects",
+                )
+            )
+            continue
+        run_id = _baseline_component_text_field(record, "run_id", index, issues)
+        target_id = _baseline_component_text_field(record, "target_id", index, issues)
+        baseline_program_id = _baseline_component_text_field(record, "baseline_program_id", index, issues)
+        _baseline_component_text_field(record, "initializer_ref", index, issues)
+        _baseline_component_text_field(record, "reconstruction_loss_ref", index, issues)
+        _baseline_component_text_field(record, "optimizer_ref", index, issues)
+        optimizer_name = _baseline_component_text_field(record, "optimizer_name", index, issues)
+        _baseline_component_text_field(record, "optimizer_version", index, issues)
+        _baseline_component_text_field(record, "matrix_result_ref", index, issues)
+        if target_id is not None and matrix_target_by_id(target_id) is None:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_unknown_target_id",
+                    "target_id is not in the AlphaEvolve Appendix A matrix registry",
+                )
+            )
+        if optimizer_name is not None and optimizer_name.lower() != "adam":
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_invalid_optimizer_name",
+                    "Section 3.1 baseline-component records must identify the Adam optimizer",
+                )
+            )
+        if run_id is not None and target_id is not None and baseline_program_id is not None:
+            key = (run_id, target_id, baseline_program_id)
+            if key in seen:
+                issues.append(
+                    MatrixResultIssue(
+                        f"runtime_record_{index}_duplicate_baseline_component_record",
+                        "run_id, target_id, and baseline_program_id must uniquely identify emitted baseline records",
+                    )
+                )
+            else:
+                seen.add(key)
+        component_names = _validate_baseline_component_records(
+            record.get("component_records"),
+            index,
+            issues,
+        )
+        _validate_optimizer_config(record.get("optimizer_config"), index, issues)
+        _validate_mutable_component_scopes(
+            record.get("mutable_component_scopes"),
+            component_names,
+            index,
+            issues,
+        )
+        _validate_fixed_component_hashes(
+            record.get("fixed_component_hashes"),
+            component_names,
+            index,
+            issues,
+        )
+        _validate_generation0_metrics(record.get("generation0_metrics"), index, issues)
+        _validate_mutation_lineage(record.get("mutation_lineage"), component_names, index, issues)
+        _validate_runtime_artifact_paths(record.get("artifact_paths"), "baseline_component", index, issues)
+        _validate_runtime_artifact_sha(record.get("artifact_sha256"), "baseline_component", index, issues)
+
+
+def _baseline_component_text_field(
+    record: dict[str, Any],
+    field: str,
+    index: int,
+    issues: list[MatrixResultIssue],
+) -> str | None:
+    value = record.get(field)
+    if not isinstance(value, str) or not value.strip():
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{index}_missing_{field}",
+                f"emitted baseline-component records must include {field}",
+            )
+        )
+        return None
+    return value
+
+
+def _validate_baseline_component_records(
+    value: object,
+    index: int,
+    issues: list[MatrixResultIssue],
+) -> set[str]:
+    if not isinstance(value, list) or not value:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{index}_invalid_component_records",
+                "component_records must be a non-empty list",
+            )
+        )
+        return set()
+    seen: set[str] = set()
+    for component_index, component in enumerate(value):
+        if not isinstance(component, dict):
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_invalid_component_record",
+                    "component_records entries must be objects",
+                )
+            )
+            continue
+        name = component.get("component_name")
+        if name not in MATRIX_BASELINE_COMPONENT_REQUIRED_NAMES:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_component_{component_index}_invalid_component_name",
+                    "component_name must be initializer, reconstruction_loss, or optimizer",
+                )
+            )
+        elif name in seen:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_component_{component_index}_duplicate_component_name",
+                    "component_records must not repeat component_name values",
+                )
+            )
+        else:
+            seen.add(name)
+        for field in ("component_id", "component_ref"):
+            value_text = component.get(field)
+            if not isinstance(value_text, str) or not value_text.strip():
+                issues.append(
+                    MatrixResultIssue(
+                        f"runtime_record_{index}_component_{component_index}_missing_{field}",
+                        f"component records must include {field}",
+                    )
+                )
+        source_path = component.get("source_path")
+        if not isinstance(source_path, str) or _safe_relative_path(source_path) is None:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_component_{component_index}_invalid_source_path",
+                    "component source_path must be a safe relative path",
+                )
+            )
+        source_sha = component.get("source_sha256")
+        if not isinstance(source_sha, str) or _SHA256_RE.fullmatch(source_sha) is None:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_component_{component_index}_invalid_source_hash",
+                    "component source_sha256 must be a lowercase SHA-256 hex digest",
+                )
+            )
+        mutability = component.get("mutability")
+        if mutability not in MATRIX_BASELINE_COMPONENT_MUTABILITY:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_component_{component_index}_invalid_mutability",
+                    "component mutability must be fixed or mutable",
+                )
+            )
+        config = component.get("config")
+        if config is not None and not isinstance(config, dict):
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_component_{component_index}_invalid_config",
+                    "component config must be an object when present",
+                )
+            )
+    missing = sorted(MATRIX_BASELINE_COMPONENT_REQUIRED_NAMES - seen)
+    if missing:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{index}_missing_required_components",
+                "component_records must include initializer, reconstruction_loss, and optimizer",
+            )
+        )
+    return seen
+
+
+def _validate_optimizer_config(
+    value: object,
+    index: int,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if not isinstance(value, dict) or not value:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{index}_invalid_optimizer_config",
+                "optimizer_config must be a non-empty object",
+            )
+        )
+        return
+    for key in ("learning_rate", "beta1", "beta2"):
+        number = value.get(key)
+        if isinstance(number, bool) or not isinstance(number, (int, float)) or not math.isfinite(float(number)):
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_invalid_optimizer_config_{key}",
+                    f"optimizer_config {key} must be finite",
+                )
+            )
+
+
+def _validate_mutable_component_scopes(
+    value: object,
+    component_names: set[str],
+    index: int,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if not isinstance(value, list) or not value:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{index}_invalid_mutable_component_scopes",
+                "mutable_component_scopes must be a non-empty list",
+            )
+        )
+        return
+    seen: set[str] = set()
+    for scope in value:
+        if not isinstance(scope, str) or not scope.strip():
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_invalid_mutable_component_scope",
+                    "mutable_component_scopes entries must be non-empty strings",
+                )
+            )
+            continue
+        if scope in seen:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_duplicate_mutable_component_scope",
+                    "mutable_component_scopes entries must be unique",
+                )
+            )
+        seen.add(scope)
+        if component_names and scope not in component_names:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_unknown_mutable_component_scope",
+                    "mutable_component_scopes entries must refer to component_records names",
+                )
+            )
+
+
+def _validate_fixed_component_hashes(
+    value: object,
+    component_names: set[str],
+    index: int,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if not isinstance(value, dict) or not value:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{index}_invalid_fixed_component_hashes",
+                "fixed_component_hashes must be a non-empty object",
+            )
+        )
+        return
+    for key, digest in value.items():
+        if not isinstance(key, str) or (component_names and key not in component_names):
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_unknown_fixed_component_hash",
+                    "fixed_component_hashes keys must refer to component_records names",
+                )
+            )
+        if not isinstance(digest, str) or _SHA256_RE.fullmatch(digest) is None:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_invalid_fixed_component_hash",
+                    "fixed_component_hashes values must be lowercase SHA-256 hex digests",
+                )
+            )
+
+
+def _validate_generation0_metrics(
+    value: object,
+    index: int,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{index}_invalid_generation0_metrics",
+                "generation0_metrics must be an object",
+            )
+        )
+        return
+    rank = value.get("rank")
+    if isinstance(rank, bool) or not isinstance(rank, int) or rank <= 0:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{index}_invalid_generation0_rank",
+                "generation0_metrics rank must be a positive integer",
+            )
+        )
+    score = value.get("score")
+    if isinstance(score, bool) or not isinstance(score, (int, float)) or not math.isfinite(float(score)):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{index}_invalid_generation0_score",
+                "generation0_metrics score must be finite",
+            )
+        )
+    if not isinstance(value.get("exact"), bool):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{index}_invalid_generation0_exact",
+                "generation0_metrics exact must be boolean",
+            )
+        )
+
+
+def _validate_mutation_lineage(
+    value: object,
+    component_names: set[str],
+    index: int,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if not isinstance(value, list) or not value:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{index}_invalid_mutation_lineage",
+                "mutation_lineage must be a non-empty list",
+            )
+        )
+        return
+    for lineage_index, step in enumerate(value):
+        if not isinstance(step, dict):
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_lineage_{lineage_index}_invalid_step",
+                    "mutation_lineage entries must be objects",
+                )
+            )
+            continue
+        generation = step.get("generation")
+        if isinstance(generation, bool) or not isinstance(generation, int) or generation < 0:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_lineage_{lineage_index}_invalid_generation",
+                    "mutation lineage generation must be a non-negative integer",
+                )
+            )
+        for field in ("parent_program_id", "child_program_id"):
+            value_text = step.get(field)
+            if not isinstance(value_text, str) or not value_text.strip():
+                issues.append(
+                    MatrixResultIssue(
+                        f"runtime_record_{index}_lineage_{lineage_index}_missing_{field}",
+                        f"mutation lineage entries must include {field}",
+                    )
+                )
+        changed = step.get("changed_component_names")
+        if not isinstance(changed, list) or not changed:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_lineage_{lineage_index}_invalid_changed_components",
+                    "changed_component_names must be a non-empty list",
+                )
+            )
+            continue
+        for name in changed:
+            if not isinstance(name, str) or (component_names and name not in component_names):
+                issues.append(
+                    MatrixResultIssue(
+                        f"runtime_record_{index}_lineage_{lineage_index}_unknown_changed_component",
+                        "changed_component_names must refer to component_records names",
+                    )
+                )
 
 
 def _validate_matrix_cascade_run_runtime_required_fields(

@@ -2667,10 +2667,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current evidence: roadmap benchmark language points to matrix result
     contracts, Appendix A registry coverage, checked Strassen artifacts, and
     follow-ups for near-integrality, sweep spaces, scalar fields, and scaling
-    resource frontiers. It does not yet require run artifacts that inventory
-    the generation-0 matrix solver components, record their hashes/config, mark
-    fixed versus mutable scopes, or link accepted mutations to changed
-    initializer/loss/optimizer/search-code components.
+    resource frontiers. It now points to
+    `libreevolve.matrix_baseline_component_runtime_boundary.v1`, which
+    validates the current `not_emitted_by_local_runner` boundary and required
+    future fields for Section 3.1 starting-algorithm records. It does not yet
+    require emitted run artifacts that inventory the generation-0 matrix solver
+    components, record their hashes/config, mark fixed versus mutable scopes,
+    or link accepted mutations to changed initializer/loss/optimizer/search-code
+    components.
   - Required result: when matrix benchmark runners persist baseline component
     inventory, generation-0 outcomes, mutable-scope declarations, and mutation
     lineage, update ROADMAP, README, papers index, and code/paper TODO entries

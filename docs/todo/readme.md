@@ -499,14 +499,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     evolvable component spans when markers are present, embedded score-field
     candidate-path links when candidate-owned evaluation ran, and the hashed
     standalone `task_specification.json` run artifact. It also documents
-    bounded candidate and prompt JSONL row joins plus the checked
+    bounded candidate, prompt, and evaluator JSONL row joins plus the checked
     `docs/examples/task_specification.embedded_evaluate_math.json` example.
     README should still not imply full AlphaEvolve task-spec parity because
-    score-field causal attribution and independent evaluator row ids remain
-    incomplete.
-  - Required result: when score-field causal attribution and independent
-    evaluator-row id resolution land, update README, ROADMAP, papers index, and
-    code/paper TODOs together.
+    score-field causal attribution remains incomplete.
+  - Required result: when score-field causal attribution lands, update README,
+    ROADMAP, papers index, and code/paper TODOs together.
 
 - [ ] Keep README install and CLI wording scoped to editable/local use versus
   release-artifact verification.

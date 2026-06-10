@@ -20,6 +20,7 @@ import unicodedata
 from pathlib import Path
 
 from libreevolve.core.artifact_schema import (
+    EVALUATOR_RESULT_RECORD_SCHEMA,
     PROMPT_CURRENT_BINDING_TABLE_RECORD_SCHEMA,
     versioned_record,
 )
@@ -4938,6 +4939,7 @@ def _runtime_artifact_pointers(run_dir: Path) -> dict:
     resolved_run_dir = _resolve_path_for_scope(run_dir)
     for name in (
         "history.jsonl",
+        "evaluator_results.jsonl",
         "failure_history.jsonl",
         "archive_events.jsonl",
         "history_invalid.jsonl",
@@ -5206,6 +5208,7 @@ def _bounded_redacted_plugin_context_text(
 def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudget) -> dict:
     history_exists = (run_dir / "history.jsonl").exists()
     programs = db.all_programs()
+    evaluator_result_export = _write_evaluator_results(run_dir, programs)
     programs_logged = len(programs)
     archive_state = db.archive_state_snapshot()
     paper_metric_contract = _paper_evaluator_metric_contract_report(
@@ -5228,6 +5231,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "failure_index": db.failure_index_snapshot(),
         "hypothesis_index": db.hypothesis_index_snapshot(),
         "artifact_index": db.artifact_index_snapshot(),
+        "evaluator_result_export": evaluator_result_export,
         "paper_evaluator_metric_contract": paper_metric_contract,
         "paper_metric_table_export": _paper_metric_table_export_report(
             paper_metric_contract
@@ -10294,6 +10298,9 @@ def _task_spec_artifact_resolution_report(
             "prompt_history_rows_joined": deep_id_resolution["claim_readiness"][
                 "prompt_history_rows_joined"
             ],
+            "evaluator_row_ids_resolved": deep_id_resolution["claim_readiness"][
+                "evaluator_row_ids_resolved"
+            ],
             "runtime_artifact_cross_links": artifact_link_count > 0,
             "artifact_links_all_present": artifact_link_count > 0
             and artifact_link_count == artifact_present_count,
@@ -10306,6 +10313,81 @@ def _task_spec_artifact_resolution_report(
     }
     report["validation"] = validate_task_spec_artifact_resolution_report(report)
     return report
+
+
+def _write_evaluator_results(run_dir: Path, programs: list[Program]) -> dict:
+    path = run_dir / "evaluator_results.jsonl"
+    records = [
+        _evaluator_result_record(program, index)
+        for index, program in enumerate(programs)
+        if isinstance(program.evaluation, Mapping) and program.evaluation
+    ]
+    if not records:
+        return {
+            "schema": "libreevolve.evaluator_result_export.v1",
+            "path": "evaluator_results.jsonl",
+            "record_schema": EVALUATOR_RESULT_RECORD_SCHEMA,
+            "record_count": 0,
+            "exists": False,
+            "sha256": None,
+        }
+    lines = [
+        strict_json_dumps(versioned_record(EVALUATOR_RESULT_RECORD_SCHEMA, record))
+        for record in records
+    ]
+    text = "\n".join(lines) + "\n"
+    path.write_text(text, encoding="utf-8")
+    return {
+        "schema": "libreevolve.evaluator_result_export.v1",
+        "path": "evaluator_results.jsonl",
+        "record_schema": EVALUATOR_RESULT_RECORD_SCHEMA,
+        "record_count": len(records),
+        "exists": True,
+        "sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+        "row_policy": "derived_from_final_program_evaluation_payloads",
+    }
+
+
+def _evaluator_result_record(program: Program, index: int) -> dict:
+    evaluation = program.evaluation if isinstance(program.evaluation, Mapping) else {}
+    metadata = evaluation.get("metadata") if isinstance(evaluation.get("metadata"), Mapping) else {}
+    metrics = {
+        str(name): _paper_metric_table_number(value)
+        for name, value in sorted(program.metrics.items())
+        if isinstance(name, str)
+        and isinstance(value, (int, float))
+        and not isinstance(value, bool)
+        and math.isfinite(value)
+    }
+    raw_id = f"{index}:{program.id}:{program.generation}:{_workspace_sha256(program.workspace())}"
+    record = {
+        "row_id": hashlib.sha256(raw_id.encode("utf-8")).hexdigest()[:24],
+        "row_index": index,
+        "candidate_id": program.id,
+        "candidate_type": (
+            program.metadata.get("candidate_type")
+            if isinstance(program.metadata, Mapping)
+            else None
+        ),
+        "generation": program.generation,
+        "parent_id": program.parent_id,
+        "is_valid": evaluation.get("is_valid"),
+        "score": _finite_json_number(program.fitness),
+        "metrics": metrics,
+        "metric_names": sorted(metrics),
+        "evaluator_mode": metadata.get("evaluator_mode"),
+        "configured_stage_count": len(metadata.get("configured_stage_results", []))
+        if isinstance(metadata.get("configured_stage_results"), list)
+        else 0,
+        "llm_feedback_count": len(metadata.get("llm_feedback", []))
+        if isinstance(metadata.get("llm_feedback"), list)
+        else 0,
+        "source_policy": "derived_from_program_evaluation_payload",
+    }
+    error = evaluation.get("error")
+    if isinstance(error, str) and error:
+        record["error"] = error[:240]
+    return record
 
 
 def _task_spec_deep_id_resolution(run_dir: Path, programs: list[Program]) -> dict:
@@ -10330,6 +10412,11 @@ def _task_spec_deep_id_resolution(run_dir: Path, programs: list[Program]) -> dic
         for record in generated_records
         if record["history_join"]["prompt_history_score_joined"]
     )
+    evaluator_result_join_count = sum(
+        1
+        for record in records
+        if record["evaluation_link"]["evaluator_result_joined"]
+    )
     generated_prompt_record_count = sum(
         1
         for record in generated_records
@@ -10347,11 +10434,12 @@ def _task_spec_deep_id_resolution(run_dir: Path, programs: list[Program]) -> dic
         "generated_prompt_record_count": generated_prompt_record_count,
         "prompt_history_add_join_count": prompt_add_join_count,
         "prompt_history_score_join_count": prompt_score_join_count,
+        "evaluator_result_join_count": evaluator_result_join_count,
         "records": records,
         "join_policy": {
             "candidate_history": "candidate_id_to_history_jsonl_id_or_failure_history_jsonl_program_id",
             "prompt_history": "prompt_program_id_to_prompt_history_add_and_candidate_id_to_prompt_history_score_metadata_last_program_id",
-            "evaluator_history": "program_evaluation_embedded_in_candidate_history_rows_not_independent_evaluator_row_id",
+            "evaluator_history": "candidate_id_to_evaluator_results_jsonl_row",
         },
         "claim_ready": False,
         "claim_readiness": {
@@ -10363,7 +10451,9 @@ def _task_spec_deep_id_resolution(run_dir: Path, programs: list[Program]) -> dic
                 and prompt_add_join_count == generated_prompt_record_count
                 and prompt_score_join_count == generated_prompt_record_count
             ),
-            "evaluator_row_ids_resolved": False,
+            "evaluator_row_ids_resolved": (
+                len(programs) > 0 and evaluator_result_join_count == len(records)
+            ),
             "full_alphaevolve_task_spec_id_resolution": False,
         },
     }
@@ -10387,6 +10477,11 @@ def _task_spec_deep_id_record(
         if isinstance(evaluation.get("metadata"), Mapping)
         else {}
     )
+    evaluator_result = (
+        history_indexes.get("evaluator_result_by_candidate_id", {}).get(program.id)
+        if isinstance(history_indexes.get("evaluator_result_by_candidate_id"), Mapping)
+        else None
+    )
     return {
         "candidate_id": program.id,
         "candidate_type": metadata.get("candidate_type"),
@@ -10402,7 +10497,11 @@ def _task_spec_deep_id_record(
             "configured_stage_count": len(eval_metadata.get("configured_stage_results", []))
             if isinstance(eval_metadata.get("configured_stage_results"), list)
             else 0,
-            "row_policy": "evaluation_payload_is_embedded_in_joined_candidate_history_record",
+            "evaluator_result_joined": isinstance(evaluator_result, Mapping),
+            "evaluator_result": (
+                dict(evaluator_result) if isinstance(evaluator_result, Mapping) else None
+            ),
+            "row_policy": "candidate_id_to_evaluator_results_jsonl_row",
         },
     }
 
@@ -10465,6 +10564,7 @@ def _task_spec_artifact_paths_for_field(field_name: str) -> list[str]:
         "evaluation_code": [
             "manifest.json",
             "history.jsonl",
+            "evaluator_results.jsonl",
             "failure_history.jsonl",
             "evaluator_artifacts",
         ],
@@ -10493,6 +10593,7 @@ def _task_spec_artifact_paths_for_field(field_name: str) -> list[str]:
         "objective_metrics": [
             "manifest.json",
             "history.jsonl",
+            "evaluator_results.jsonl",
         ],
     }.get(field_name, ["manifest.json"])
 
@@ -10965,6 +11066,8 @@ def validate_task_spec_artifact_resolution_report(report: object) -> dict:
             issues.append({"code": "invalid_task_spec_candidate_history_readiness", "message": "candidate history row readiness must be boolean"})
         if readiness.get("prompt_history_rows_joined") not in {True, False}:
             issues.append({"code": "invalid_task_spec_prompt_history_readiness", "message": "prompt history row readiness must be boolean"})
+        if readiness.get("evaluator_row_ids_resolved") not in {True, False}:
+            issues.append({"code": "invalid_task_spec_evaluator_row_readiness", "message": "evaluator row id readiness must be boolean"})
         if readiness.get("full_alphaevolve_task_spec_parity") is not False:
             issues.append({"code": "task_spec_parity_overclaim", "message": "full AlphaEvolve task-spec parity must remain false"})
     if report.get("claim_ready") is not False:
@@ -10993,6 +11096,7 @@ def _validate_task_spec_deep_id_resolution(
     generated_prompt_record_count = 0
     prompt_history_add_join_count = 0
     prompt_history_score_join_count = 0
+    evaluator_result_join_count = 0
     for index, record in enumerate(records):
         if not isinstance(record, Mapping):
             issues.append({"code": "invalid_task_spec_deep_id_record", "message": f"deep id record {index} must be an object"})
@@ -11018,8 +11122,21 @@ def _validate_task_spec_deep_id_resolution(
         evaluation_link = record.get("evaluation_link")
         if not isinstance(evaluation_link, Mapping):
             issues.append({"code": "invalid_task_spec_deep_id_evaluation_link", "message": f"deep id record {index} evaluation_link must be an object"})
-        elif evaluation_link.get("row_policy") != "evaluation_payload_is_embedded_in_joined_candidate_history_record":
-            issues.append({"code": "invalid_task_spec_deep_id_evaluation_policy", "message": f"deep id record {index} evaluation policy is invalid"})
+        else:
+            if evaluation_link.get("row_policy") != "candidate_id_to_evaluator_results_jsonl_row":
+                issues.append({"code": "invalid_task_spec_deep_id_evaluation_policy", "message": f"deep id record {index} evaluation policy is invalid"})
+            if evaluation_link.get("evaluator_result_joined") is True:
+                evaluator_result_join_count += 1
+                evaluator_result = evaluation_link.get("evaluator_result")
+                if not isinstance(evaluator_result, Mapping):
+                    issues.append({"code": "invalid_task_spec_deep_id_evaluator_result", "message": f"deep id record {index} evaluator_result must be an object when joined"})
+                else:
+                    if evaluator_result.get("stream") != "evaluator_results.jsonl":
+                        issues.append({"code": "invalid_task_spec_deep_id_evaluator_stream", "message": f"deep id record {index} evaluator stream is invalid"})
+                    if not isinstance(evaluator_result.get("line_number"), int):
+                        issues.append({"code": "invalid_task_spec_deep_id_evaluator_line", "message": f"deep id record {index} evaluator line number is invalid"})
+                    if not isinstance(evaluator_result.get("row_id"), str) or len(evaluator_result.get("row_id", "")) != 24:
+                        issues.append({"code": "invalid_task_spec_deep_id_evaluator_row_id", "message": f"deep id record {index} evaluator row_id is invalid"})
     _validate_report_count(
         report,
         "candidate_history_join_count",
@@ -11044,6 +11161,12 @@ def _validate_task_spec_deep_id_resolution(
         prompt_history_score_join_count,
         issues,
     )
+    _validate_report_count(
+        report,
+        "evaluator_result_join_count",
+        evaluator_result_join_count,
+        issues,
+    )
     readiness = report.get("claim_readiness")
     if not isinstance(readiness, Mapping):
         issues.append({"code": "invalid_task_spec_deep_id_readiness", "message": "deep id claim_readiness must be an object"})
@@ -11052,8 +11175,8 @@ def _validate_task_spec_deep_id_resolution(
             issues.append({"code": "invalid_task_spec_deep_id_candidate_readiness", "message": "candidate history row readiness must be boolean"})
         if readiness.get("prompt_history_rows_joined") not in {True, False}:
             issues.append({"code": "invalid_task_spec_deep_id_prompt_readiness", "message": "prompt history readiness must be boolean"})
-        if readiness.get("evaluator_row_ids_resolved") is not False:
-            issues.append({"code": "task_spec_deep_id_evaluator_overclaim", "message": "evaluator row id resolution must remain false"})
+        if readiness.get("evaluator_row_ids_resolved") not in {True, False}:
+            issues.append({"code": "invalid_task_spec_deep_id_evaluator_readiness", "message": "evaluator row id readiness must be boolean"})
         if readiness.get("full_alphaevolve_task_spec_id_resolution") is not False:
             issues.append({"code": "task_spec_deep_id_parity_overclaim", "message": "full task-spec id resolution must remain false"})
     if report.get("claim_ready") is not False:
@@ -11402,6 +11525,7 @@ def _process_exhibit_artifact_evidence(run_dir: Path) -> list[dict]:
         "manifest.json": ["run_manifest", "task_specification", "runtime_history"],
         "task_specification.json": ["standalone_task_specification"],
         "history.jsonl": ["candidate_history", "database_add", "evaluation_results"],
+        "evaluator_results.jsonl": ["evaluator_result_rows"],
         "failure_history.jsonl": ["rejected_candidates", "diff_or_evaluation_failures"],
         "archive_events.jsonl": ["program_database_archive_events"],
         "controller_budget_events.jsonl": ["controller_budget_events"],
@@ -16553,6 +16677,7 @@ def _write_prompt_current_binding_table(run_dir: Path, rows: list[dict]) -> dict
 def _prompt_current_history_join_indexes(run_dir: Path) -> dict:
     history_rows: dict[str, dict] = {}
     failure_rows: dict[str, dict] = {}
+    evaluator_result_rows: dict[str, dict] = {}
     prompt_add_rows: dict[str, dict] = {}
     prompt_score_rows_by_candidate: dict[str, list[dict]] = {}
 
@@ -16588,6 +16713,28 @@ def _prompt_current_history_join_indexes(run_dir: Path) -> dict:
                     "program_id": program_id,
                     "record_schema": record.get("record_schema"),
                     "admission_reason": record.get("admission_reason"),
+                }
+
+    evaluator_results_path = run_dir / "evaluator_results.jsonl"
+    if evaluator_results_path.exists():
+        for line_number, record in enumerate(
+            iter_strict_jsonl_objects(
+                evaluator_results_path,
+                stream_name="evaluator_results.jsonl",
+            ),
+            start=1,
+        ):
+            candidate_id = record.get("candidate_id")
+            if isinstance(candidate_id, str):
+                evaluator_result_rows[candidate_id] = {
+                    "stream": "evaluator_results.jsonl",
+                    "line_number": line_number,
+                    "candidate_id": candidate_id,
+                    "row_id": record.get("row_id"),
+                    "record_schema": record.get("record_schema"),
+                    "is_valid": record.get("is_valid"),
+                    "score": record.get("score"),
+                    "evaluator_mode": record.get("evaluator_mode"),
                 }
 
     prompt_path = run_dir / "prompt_history.jsonl"
@@ -16632,6 +16779,7 @@ def _prompt_current_history_join_indexes(run_dir: Path) -> dict:
     return {
         "candidate_history_by_id": history_rows,
         "candidate_failure_history_by_id": failure_rows,
+        "evaluator_result_by_candidate_id": evaluator_result_rows,
         "prompt_add_by_id": prompt_add_rows,
         "prompt_scores_by_candidate_id": prompt_score_rows_by_candidate,
     }

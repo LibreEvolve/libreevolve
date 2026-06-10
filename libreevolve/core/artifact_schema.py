@@ -6,6 +6,7 @@ ARTIFACT_SCHEMA_VERSION = 1
 RUN_MANIFEST_SCHEMA = "libreevolve.run_manifest.v1"
 HISTORY_RECORD_SCHEMA = "libreevolve.history.program.v1"
 FAILURE_RECORD_SCHEMA = "libreevolve.failure_history.v1"
+EVALUATOR_RESULT_RECORD_SCHEMA = "libreevolve.evaluator_result.v1"
 ARCHIVE_EVENT_RECORD_SCHEMA = "libreevolve.archive_event.v1"
 LLM_CALL_RECORD_SCHEMA = "libreevolve.llm_call.v1"
 LLM_REWARD_RECORD_SCHEMA = "libreevolve.llm_reward.v1"
@@ -24,6 +25,7 @@ def run_artifact_schema() -> dict:
         "legacy_record_policy": LEGACY_RECORD_POLICY,
         "jsonl_records": {
             "history.jsonl": HISTORY_RECORD_SCHEMA,
+            "evaluator_results.jsonl": EVALUATOR_RESULT_RECORD_SCHEMA,
             "failure_history.jsonl": FAILURE_RECORD_SCHEMA,
             "archive_events.jsonl": ARCHIVE_EVENT_RECORD_SCHEMA,
             "llm_calls.jsonl": {

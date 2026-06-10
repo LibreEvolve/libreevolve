@@ -42,16 +42,17 @@ Completed runtime manifests also include
 startup task-spec bundle, validates that each field's manifest paths resolve,
 and links task-spec fields to concrete runtime artifact paths such as
 `manifest.json`, `history.jsonl`, `failure_history.jsonl`, `prompt_history.jsonl`,
-`llm_calls.jsonl`, `controller_budget_events.jsonl`, `evaluator_artifacts`,
-`best.py`, `best_workspace`, and the standalone `task_specification.json`.
+`evaluator_results.jsonl`, `llm_calls.jsonl`, `controller_budget_events.jsonl`,
+`evaluator_artifacts`, `best.py`, `best_workspace`, and the standalone
+`task_specification.json`.
 It records per-field reference summaries, program counts, manifest-path
 resolution counts, artifact-link/presence counts, and bounded
 `deep_id_resolution` records that join candidate ids to `history.jsonl` /
 `failure_history.jsonl` rows and generated prompt ids to `prompt_history.jsonl`
-add/score rows. `docs/examples/task_specification.embedded_evaluate_math.json`
-is a validated standalone documentation example. The runtime report's
-`claim_ready: false` gaps still cover causal score-field attribution and
-independent evaluator row ids.
+add/score rows, plus evaluator row ids in `evaluator_results.jsonl`.
+`docs/examples/task_specification.embedded_evaluate_math.json` is a validated
+standalone documentation example. The runtime report's `claim_ready: false`
+gap still covers causal score-field attribution.
 Completed manifests also include
 `runtime.history.initial_program_idea_provenance_report` with schema
 `libreevolve.initial_program_idea_provenance_report.v1`. This report reads
@@ -283,6 +284,7 @@ runs/
     ├── manifest.json
     ├── task_specification.json
     ├── history.jsonl
+    ├── evaluator_results.jsonl
     ├── failure_history.jsonl
     ├── archive_events.jsonl          # Migration placement events when migration runs
     ├── controller_budget_events.jsonl # Replayable synchronous controller budget events
@@ -509,9 +511,10 @@ Metadata-only static records remain manifest-only and are not copied as bytes.
 
 Current artifacts are explicitly marked as local v1 machine-readable formats.
 `manifest.json` carries top-level `schema_version` and `artifact_schema`
-fields, and current `history.jsonl`, `failure_history.jsonl`,
-`archive_events.jsonl`, `llm_calls.jsonl`, `prompt_history.jsonl`, and
-`prompt_current_binding_table.jsonl` rows carry `schema_version` plus
+fields, and current `history.jsonl`, `evaluator_results.jsonl`,
+`failure_history.jsonl`, `archive_events.jsonl`, `llm_calls.jsonl`,
+`prompt_history.jsonl`, and `prompt_current_binding_table.jsonl` rows carry
+`schema_version` plus
 `record_schema`. Missing schema markers are treated as legacy v0 rows by
 `show`, accepted-history restore helpers, and the LLM call-ledger reader where
 those readers have legacy compatibility paths. True migration and full resume

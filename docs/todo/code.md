@@ -208,9 +208,10 @@ Primary evidence:
     checked paper-facing standalone example validated by
     `tests/test_task_spec_examples.py`. These links remain non-causal
     provenance.
-  - Required result: finish score-field causal attribution and independent
-    evaluator-row id resolution rather than only evaluation payloads embedded
-    in candidate history rows.
+    Runtime also emits `evaluator_results.jsonl` rows and task-spec deep-id
+    records join candidate ids to those row ids.
+  - Required result: finish score-field causal attribution from evaluator
+    outputs to candidate/evolved-block paths.
 
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.

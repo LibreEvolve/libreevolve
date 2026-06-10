@@ -281,17 +281,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     markers are present, embedded score-field candidate-path links when
     candidate-owned evaluation ran, and the hashed standalone
     `task_specification.json` run artifact. It also includes bounded candidate
-    and prompt JSONL row joins, plus the checked
+    prompt, and evaluator JSONL row joins, plus the checked
     `docs/examples/task_specification.embedded_evaluate_math.json` standalone
     example.
   - Current gap: paper-facing evidence still lacks causal score-field
-    attribution from evaluator outputs to candidate/evolved-block paths and
-    independent evaluator-row id resolution rather than evaluation payloads
-    embedded in candidate history rows.
-  - Required result: finish causal evaluator score-field linkage, independent
-    evaluator-row id resolution, and README/ROADMAP wording that treats the
-    current bundle plus artifact-resolution report as partial AlphaEvolve
-    task-spec evidence rather than full parity.
+    attribution from evaluator outputs to candidate/evolved-block paths.
+  - Required result: finish causal evaluator score-field linkage and
+    README/ROADMAP wording that treats the current bundle plus
+    artifact-resolution report as partial AlphaEvolve task-spec evidence rather
+    than full parity.
 
 - [ ] Independent per-role LLM scheduler state and reward policy.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.6.

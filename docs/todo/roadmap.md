@@ -604,13 +604,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     markers are present, embedded score-field candidate-path links when
     candidate-owned evaluation ran, and a hashed standalone
     `task_specification.json` run artifact. It also includes bounded candidate
-    and prompt JSONL row joins, plus the checked
+    prompt, and evaluator JSONL row joins, plus the checked
     `docs/examples/task_specification.embedded_evaluate_math.json` example. It
     is still a partial artifact, not full AlphaEvolve task-spec parity with
-    causal score attribution and independent evaluator row ids.
-  - Required result: when score-field causal attribution and independent
-    evaluator-row id resolution land, update ROADMAP, README, papers index, and
-    code/paper TODOs together.
+    causal score attribution.
+  - Required result: when score-field causal attribution lands, update ROADMAP,
+    README, papers index, and code/paper TODOs together.
 
 ## Missing Roadmap Items
 

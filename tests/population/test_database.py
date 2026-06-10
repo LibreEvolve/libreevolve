@@ -7,6 +7,7 @@ import pytest
 from libreevolve.core.artifact_schema import (
     ARCHIVE_EVENT_RECORD_SCHEMA,
     ARTIFACT_SCHEMA_VERSION,
+    EVALUATOR_RESULT_RECORD_SCHEMA,
     FAILURE_RECORD_SCHEMA,
     HISTORY_RECORD_SCHEMA,
     LLM_CALL_RECORD_SCHEMA,
@@ -2623,6 +2624,10 @@ def test_run_artifacts_include_current_schema_markers():
     assert manifest["schema_version"] == ARTIFACT_SCHEMA_VERSION
     assert manifest["artifact_schema"]["name"] == RUN_MANIFEST_SCHEMA
     assert manifest["artifact_schema"]["jsonl_records"]["history.jsonl"] == HISTORY_RECORD_SCHEMA
+    assert (
+        manifest["artifact_schema"]["jsonl_records"]["evaluator_results.jsonl"]
+        == EVALUATOR_RESULT_RECORD_SCHEMA
+    )
     assert (
         manifest["artifact_schema"]["jsonl_records"]["archive_events.jsonl"]
         == ARCHIVE_EVENT_RECORD_SCHEMA

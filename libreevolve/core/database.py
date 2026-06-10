@@ -63,6 +63,7 @@ from libreevolve.problems.loader import _normalize_metric_schema
 
 RUN_ARTIFACT_NAMES = {
     "task_specification.json",
+    "evaluator_results.jsonl",
     "history.jsonl",
     "history_invalid.jsonl",
     "failure_history.jsonl",

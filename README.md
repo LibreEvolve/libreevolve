@@ -454,12 +454,14 @@ py -3.12 -m libreevolve show examples/runs/sorting_ttt_rl
 These checked-in examples are legacy history fixtures. They are useful for
 testing `show`, but they do not include the current full run-artifact set such
 as `manifest.json`, `archive_events.jsonl`, `llm_calls.jsonl`,
-`prompt_history.jsonl`, `failure_history.jsonl`, or `best_workspace/`.
+`prompt_history.jsonl`, `evaluator_results.jsonl`, `failure_history.jsonl`, or
+`best_workspace/`.
 Current run artifacts are strict machine-readable local formats, but they are
 now marked with explicit v1 schema metadata. `manifest.json` carries top-level
 `schema_version` and `artifact_schema` fields, and current `history.jsonl`,
-`failure_history.jsonl`, `archive_events.jsonl`, `llm_calls.jsonl`, and
-`prompt_history.jsonl` rows carry `schema_version` plus `record_schema`.
+`evaluator_results.jsonl`, `failure_history.jsonl`, `archive_events.jsonl`,
+`llm_calls.jsonl`, and `prompt_history.jsonl` rows carry `schema_version` plus
+`record_schema`.
 Legacy checked-in histories
 without those fields remain readable for `show` and accepted-history restore
 helpers, but true migration and resume branching by schema remain future work.
@@ -2191,10 +2193,11 @@ artifact, initial evolvable component span ids when markers are present, and
 embedded score-field candidate-path links when candidate-owned evaluation ran.
 The report also includes bounded `deep_id_resolution` records that join
 candidate ids to `history.jsonl` / `failure_history.jsonl` rows and generated
-prompt ids to `prompt_history.jsonl` add/score rows. This is still partial
-evidence: `docs/examples/task_specification.embedded_evaluate_math.json`
-provides a validated paper-facing standalone example, while causal score-field
-attribution and independent evaluator row ids remain open.
+prompt ids to `prompt_history.jsonl` add/score rows, plus evaluator row ids in
+`evaluator_results.jsonl`. This is still partial evidence:
+`docs/examples/task_specification.embedded_evaluate_math.json` provides a
+validated paper-facing standalone example, while causal score-field attribution
+remains open.
 Problem fixtures can optionally add `formulation.yaml` or `formulation.yml`;
 direct callers can set `Problem.formulation_metadata`. The manifest normalizes
 this to `problem.formulation_metadata` with fixed vocabularies for problem

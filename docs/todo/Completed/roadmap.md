@@ -8411,3 +8411,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: runtime tests validate the report schema and ROADMAP no
     longer lists cross-run metric-contract diffs as the remaining evaluator
     table gap.
+
+- [x] Document Figure 3 marker source artifacts and final classification in
+      ROADMAP.
+  - Spec evidence: ROADMAP marker syntax wording needed to separate local
+    parser behavior from AlphaEvolve Figure 3 source-exhibit reproduction.
+  - Status: ROADMAP now lists marker spelling provenance as including hashed
+    local PDF page-text and Figure 3 marker-line artifacts when the paper cache
+    is present, final local classification of the Figure 3 space variant as
+    PDF text-extraction uncertainty, and the current canonical-only
+    compatibility decision.
+  - Verification: marker provenance runtime tests validate attached source
+    artifacts and final classification.

@@ -11001,3 +11001,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     names, and metric-contract/table-column/display-policy drift detection.
   - Verification: runtime tests validate claim-ready no-drift cross-run reports
     and drift detection for changed metric-name sets.
+
+- [x] Document Figure 3 marker source artifacts and final classification in
+      README.
+  - Spec evidence: README marker syntax wording needed to separate supported
+    local grammar from AlphaEvolve Figure 3 source-exhibit reproduction.
+  - Status: README now states that marker spelling reports attach hashed page
+    text and Figure 3 marker-line artifacts under
+    `paper_artifacts/marker_spelling/` when the local PDF cache is present, and
+    classify the Figure 3 space variant as
+    `pdf_text_extraction_uncertainty_not_supported_parser_syntax` without
+    enabling that syntax.
+  - Verification: marker provenance runtime tests validate attached source
+    artifacts and final classification.

@@ -580,10 +580,12 @@ AlphaEvolve marker-spelling note: completed manifests now include
 `libreevolve.marker_spelling_provenance_report.v1`. The report records the
 Section 2.1 canonical `# EVOLVE-BLOCK-START/END` source locations, the Figure
 3 extracted/rendered `# EVOLVE-BLOCK START` space variant, local parser probes,
-and a canonical-hyphenated-only compatibility decision. It remains
-`claim_ready: false` because source screenshots or exact excerpt hashes, exact
-Figure 3 text artifacts, and final classification as rendered text, OCR/text
-extraction issue, or paper typo remain open.
+and a canonical-hyphenated-only compatibility decision. When the local
+AlphaEvolve PDF cache is present, completed runs attach hashed page-text and
+Figure 3 marker-line artifacts under `paper_artifacts/marker_spelling/` and
+classify the space variant as
+`pdf_text_extraction_uncertainty_not_supported_parser_syntax`, so the local
+parser grammar remains distinct from source-exhibit reproduction.
 
 AlphaEvolve runtime-accounting note: the ensemble call-history accessor is now
 a bounded retained in-memory window with retained/total/dropped counters, not

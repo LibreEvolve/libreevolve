@@ -73,32 +73,6 @@ Primary evidence:
     that separates runtime evolve-block inventory from paper-faithful
     minimal-change codebase integration evidence.
 
-- [ ] Extend Figure 3 evolve-block marker spelling provenance with source
-      artifacts and final classification.
-  - Spec evidence: AlphaEvolve Section 2.1 names the special marker comments
-    as `# EVOLVE-BLOCK-START` and `# EVOLVE-BLOCK-END` on local PDF page 4,
-    while PDF text extraction from Figure 3(a) on page 6 shows one opening
-    marker as `# EVOLVE-BLOCK START` and another as `# EVOLVE-BLOCK-START`.
-    The same Figure 3 caption says the user-provided file has blocks marked
-    for evolution plus a special `evaluate` function invoked by evaluators.
-  - Current evidence: LibreEvolve deliberately enforces the local exact
-    Python marker grammar `# EVOLVE-BLOCK-START/END` and rejects malformed or
-    unsupported marker-like syntax. A direct parser check accepts canonical
-    `# EVOLVE-BLOCK-START a` but does not recognize `# EVOLVE-BLOCK START` as
-    a start marker; when that space variant is paired with
-    `# EVOLVE-BLOCK-END`, validation reports `orphan_end`. Completed manifests
-    now include `runtime.history.marker_spelling_provenance_report` with schema
-    `libreevolve.marker_spelling_provenance_report.v1`, recording marker text
-    per paper source location, local parser probes, provisional classification
-    of the Figure 3 space spelling as a figure-text variant or extraction
-    uncertainty, and the current canonical-hyphenated-only compatibility
-    decision.
-  - Required result: preserve source artifact hashes or screenshots for the
-    variant, produce exact Figure 3 text artifacts, finalize whether the
-    discrepancy is rendered figure text, extraction/OCR uncertainty, or paper
-    typo, add a deliberate compatibility mode only if intended, and keep
-    parser/support claims scoped to the implemented local grammar.
-
 - [ ] Finish candidate-embedded `evaluate(eval_inputs)` entrypoint support and
       evidence.
   - Spec evidence: AlphaEvolve Section 2.1 and Figure 3 present a

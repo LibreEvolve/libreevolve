@@ -5522,22 +5522,44 @@ def test_runtime_history_reports_marker_spelling_provenance():
     assert space_variant["local_support"] == "unsupported_current_parser"
     assert space_variant["local_parser_probe"]["accepted"] is False
     assert space_variant["local_parser_probe"]["error"] == "orphan_end"
-    assert space_variant["source_artifact"]["status"] == "not_attached"
-    assert report["claim_ready"] is False
-    assert report["claim_readiness"]["source_locations_recorded"] is True
-    assert report["claim_readiness"]["source_artifact_hashes_attached"] is False
-    assert "source_pdf_excerpt_or_screenshot_hashes" in (
-        report["claim_readiness"]["remaining_gap"]
+    assert space_variant["source_artifact"]["status"] == "attached"
+    assert len(space_variant["source_artifact"]["sha256"]) == 64
+    assert space_variant["source_artifact"]["marker_text_found"] is True
+    assert space_variant["source_artifact"]["marker_token_found"] is True
+    assert space_variant["final_classification"] == (
+        "pdf_text_extraction_uncertainty_not_supported_parser_syntax"
     )
+    source_artifacts = report["source_artifacts"]
+    assert source_artifacts["schema"] == (
+        "libreevolve.marker_spelling_source_artifacts.v1"
+    )
+    assert len(source_artifacts["paper_sha256"]) == 64
+    assert source_artifacts["page_artifacts"]["4"]["status"] == "attached"
+    figure_3_artifact = source_artifacts["figure_3_marker_text_artifact"]
+    assert figure_3_artifact["status"] == "attached"
+    assert figure_3_artifact["artifact_path"].endswith(
+        "alphaevolve_figure_3a_marker_text.txt"
+    )
+    assert (Path(tmpdir) / "t" / figure_3_artifact["artifact_path"]).exists()
+    assert report["variant_classification"]["classification"] == (
+        "pdf_text_extraction_uncertainty_not_supported_parser_syntax"
+    )
+    assert report["variant_classification"]["parser_compatibility_changed"] is False
+    assert report["claim_ready"] is True
+    assert report["claim_readiness"]["source_locations_recorded"] is True
+    assert report["claim_readiness"]["source_artifact_hashes_attached"] is True
+    assert report["claim_readiness"]["exact_figure_3_text_artifact"] is True
+    assert report["claim_readiness"]["final_variant_classification"] is True
+    assert report["claim_readiness"]["remaining_gap"] == []
 
     edited = copy.deepcopy(report)
     edited["compatibility_decision"]["space_variant_supported"] = True
-    edited["claim_readiness"]["final_variant_classification"] = True
+    edited["variant_classification"]["parser_compatibility_changed"] = True
     validation = validate_marker_spelling_provenance_report(edited)
     assert validation["ok"] is False
     assert {issue["code"] for issue in validation["issues"]} >= {
         "space_variant_support_overclaim",
-        "variant_classification_overclaim",
+        "variant_compatibility_overclaim",
     }
 
 

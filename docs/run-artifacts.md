@@ -196,8 +196,15 @@ including canonical `# EVOLVE-BLOCK-START/END` entries, the extracted/rendered
 Figure 3 `# EVOLVE-BLOCK START` space variant, local parser probe hashes,
 accept/reject outcomes, and a canonical-hyphenated-only compatibility decision.
 The space variant remains unsupported by the current parser and fails as
-`orphan_end` when paired with `# EVOLVE-BLOCK-END`. Source screenshots or exact
-excerpt hashes and final variant classification remain open.
+`orphan_end` when paired with `# EVOLVE-BLOCK-END`. When the local
+`papers/2506.13131__AlphaEvolve.pdf` cache is available, the report writes
+`paper_artifacts/marker_spelling/alphaevolve_page_4_text.txt`,
+`alphaevolve_page_6_text.txt`, and
+`alphaevolve_figure_3a_marker_text.txt` into the run directory, records their
+SHA-256 hashes, links marker records to the extracted source artifacts, and
+stores `libreevolve.marker_variant_classification.v1` with final local
+classification
+`pdf_text_extraction_uncertainty_not_supported_parser_syntax`.
 JSONL streams use a local complete-line durability policy. Accepted rows are
 strict-serialized before append, written as newline-terminated records, flushed,
 and fsynced before the append helper returns. Before appending to an existing

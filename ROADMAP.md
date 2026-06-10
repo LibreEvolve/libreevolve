@@ -13,9 +13,11 @@ LibreEvolve has:
   `# EVOLVE-BLOCK-START/END` regions
 - marker spelling provenance reports under
   `runtime.history.marker_spelling_provenance_report`, recording AlphaEvolve
-  Section 2.1/Figure 3 marker-text source locations, local parser probes, and
-  the current canonical-only compatibility decision for the Figure 3 space
-  variant
+  Section 2.1/Figure 3 marker-text source locations, local parser probes,
+  hashed local PDF page-text / Figure 3 marker-line artifacts when the paper
+  cache is present, final local classification of the Figure 3 space variant
+  as PDF text-extraction uncertainty, and the current canonical-only
+  compatibility decision for that variant
 - existing-codebase integration reports under
   `runtime.history.existing_codebase_integration_report`, inventorying
   candidate workspace marker spans, skeleton hashes, unmarked-file hashes,

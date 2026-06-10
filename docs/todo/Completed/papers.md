@@ -11008,3 +11008,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: runtime tests generate two real zero-generation manifests,
     validate a claim-ready no-drift cross-run report, and verify drift
     detection when a run's metric-name set changes.
+
+- [x] Extend Figure 3 evolve-block marker spelling source variants with source
+      artifacts and final classification.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.1 names
+    `# EVOLVE-BLOCK-START` / `# EVOLVE-BLOCK-END`; local PDF text extraction
+    from Figure 3(a) shows both a space variant and the canonical spelling.
+  - Status: paper-facing runtime reports now attach hashed source artifacts for
+    the AlphaEvolve PDF page text and Figure 3 marker-line text when the local
+    PDF cache is available. The marker report links each source-location record
+    to those artifacts and records a final local classification of the space
+    variant as PDF text-extraction uncertainty rather than supported parser
+    syntax.
+  - Verification: marker provenance tests validate artifact attachment,
+    artifact paths/hashes, marker-presence metadata, final classification, and
+    overclaim rejection when parser compatibility is toggled.

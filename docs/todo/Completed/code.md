@@ -16270,3 +16270,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: `py -3.12 -m pytest
     tests/core/test_loop.py::test_paper_metric_cross_run_report_compares_metric_tables
     -q` passes.
+
+- [x] Extend Figure 3 evolve-block marker spelling provenance with source
+      artifacts and final classification.
+  - Spec evidence: AlphaEvolve Section 2.1 names marker comments as
+    `# EVOLVE-BLOCK-START` and `# EVOLVE-BLOCK-END`, while local PDF text
+    extraction from Figure 3(a) shows both `# EVOLVE-BLOCK START` and
+    `# EVOLVE-BLOCK-START`.
+  - Status: `runtime.history.marker_spelling_provenance_report` now receives
+    the run directory and, when the local AlphaEvolve PDF cache is present,
+    writes hashed source artifacts under `paper_artifacts/marker_spelling/`:
+    page 4 text, page 6 text, and Figure 3 marker/evaluate lines. Marker
+    records now link to those artifacts with PDF/page/text hashes and exact or
+    token-level marker-presence checks. The report also records
+    `libreevolve.marker_variant_classification.v1`, classifying the space
+    variant as `pdf_text_extraction_uncertainty_not_supported_parser_syntax`
+    while preserving the canonical-hyphenated-only compatibility decision.
+  - Verification: `py -3.12 -m pytest
+    tests/core/test_loop.py::test_runtime_history_reports_marker_spelling_provenance
+    -q` passes.

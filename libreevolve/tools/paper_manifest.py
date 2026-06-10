@@ -28,11 +28,13 @@ from libreevolve.problems.benchmarks.ablation_registry import (
 )
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     REGISTRY_PATH as APPENDIX_A_MATRIX_REGISTRY_PATH,
+    appendix_a_matrix_baseline_citation_boundary_record,
     appendix_a_matrix_curation_record,
     appendix_a_matrix_local_resource_frontier_record,
     appendix_a_matrix_resource_frontier_record,
     appendix_a_matrix_row_note_artifact_boundary_record,
     appendix_a_matrix_subset_scope_artifact_boundary_record,
+    validate_appendix_a_matrix_baseline_citation_boundary,
     validate_appendix_a_matrix_curation,
     validate_appendix_a_matrix_local_resource_frontier,
     validate_appendix_a_matrix_resource_frontier,
@@ -578,6 +580,17 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
             _safe_manifest_label(issue.target_id) if issue.target_id else None,
         )
         for issue in curation_report.issues
+    )
+    baseline_citation_report = validate_appendix_a_matrix_baseline_citation_boundary(
+        appendix_a_matrix_baseline_citation_boundary_record()
+    )
+    issues.extend(
+        PaperManifestIssue(
+            f"appendix_a_baseline_citation_{issue.code}",
+            issue.message,
+            _safe_manifest_label(issue.target_id) if issue.target_id else None,
+        )
+        for issue in baseline_citation_report.issues
     )
     resource_frontier_report = validate_appendix_a_matrix_resource_frontier(
         appendix_a_matrix_resource_frontier_record()

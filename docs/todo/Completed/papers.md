@@ -10805,3 +10805,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     evidence, artifact paths, and hashes. The paper-manifest gate validates
     this boundary with the Appendix A matrix checks.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Track Appendix A matrix best-known-rank citation absence separately from
+      registry rank values.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 and Appendix A
+    Table 3 include best-known-rank comparisons with cited prior-work
+    references.
+  - Status: `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`
+    now records the current `not_recorded_locally` boundary and validates
+    required future per-target citation fields for reference id, source
+    table/page, source artifact path/hash, applicability caveats,
+    field/characteristic scope, and report-visible baseline-source refs. The
+    paper-manifest gate validates this boundary with the Appendix A matrix
+    checks.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

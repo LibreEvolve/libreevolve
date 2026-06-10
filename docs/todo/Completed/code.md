@@ -16017,3 +16017,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused Appendix A registry and paper-manifest tests cover
     the absence boundary, emitted-artifact validation, invalid nested evidence,
     and manifest hook.
+
+- [x] Add an Appendix A matrix best-known-rank citation boundary contract.
+  - Spec evidence: AlphaEvolve Table 2 and Appendix A Table 3 include
+    best-known-rank comparisons with cited prior-work references.
+  - Status: `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`
+    now validates the current `not_recorded_locally` state, rejects false
+    citation claims without per-target citation records, and records required
+    future fields for target id, dimensions, best-known rank, cited reference
+    id, source table/page, source artifact path/hash, applicability caveats,
+    field/characteristic scope, and report-visible baseline-source refs. Local
+    report/export code still does not emit those citation records.
+  - Verification: focused Appendix A registry and paper-manifest tests cover
+    the absence boundary, recorded-citation validation, invalid citation
+    fields, and manifest hook.

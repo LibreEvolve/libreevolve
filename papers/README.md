@@ -1081,6 +1081,12 @@ Implemented:
   representative policy, axis-permutation equivalent omissions, included-target
   rationales, and unspecified `p` cutoff. It still does not justify every
   possible excluded non-equivalent target.
+  `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`
+  records the current `not_recorded_locally` boundary for per-target
+  best-known-rank citation provenance and validates required future fields for
+  cited reference id, source table/page, source artifact path/hash,
+  applicability caveats, field/characteristic scope, and report-visible
+  baseline-source refs.
   `libreevolve.alphaevolve_matrix_subset_scope.v1` records the paper-facing
   matrix subset boundary between `appendix_a_full` (`54` rows: `38` matched,
   `14` surpassed, `2` fell behind), `main_text_mnp_le_5` (`20` rows: `17`

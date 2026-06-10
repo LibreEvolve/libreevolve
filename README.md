@@ -3383,6 +3383,12 @@ present. That registry records the 54 AlphaEvolve Appendix A Table 3 target
 identities, dimensions, best-known ranks, AlphaEvolve ranks, outcome
 categories, and exact-algorithm flags, while preserving the boundary that it
 is target/outcome coverage rather than construction or curation evidence.
+`libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`
+validates the current `not_recorded_locally` state for per-target
+best-known-rank citations and records required future fields for target id,
+dimensions, best-known rank, cited reference id, source table/page, source
+artifact path/hash, applicability caveats, field/characteristic scope, and
+report-visible baseline-source refs.
 The same validator checks
 `libreevolve/problems/benchmarks/alphaevolve_appendix_b.json` when present.
 That registry enumerates the thirteen AlphaEvolve Appendix B constructive-math

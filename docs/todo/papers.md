@@ -3187,7 +3187,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     cited prior-work source for each best-known baseline rank, source
     page/table, reference id, source artifact digest, finite-field or
     characteristic caveat, or baseline-source field in generated result
-    reports.
+    reports. `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`
+    now validates the current `not_recorded_locally` boundary and required
+    future per-target citation fields, but no emitted paper artifact currently
+    carries those source records.
   - Required result: add paper-facing baseline-rank provenance before using
     Appendix A best-known-rank comparisons as fully traceable evidence:
     per-target cited-source metadata, manifest/companion-artifact validation,

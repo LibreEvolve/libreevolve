@@ -3250,6 +3250,10 @@ Primary evidence:
     work supports each best-known rank, the bibliography/reference id, source
     page/table location, finite-field or characteristic caveats, companion
     artifact links, or a digestible source record for baseline-rank claims.
+    `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`
+    now validates the current `not_recorded_locally` state and required future
+    per-target citation fields, but local report/export code does not emit or
+    consume those citation records.
   - Required result: extend the Appendix A registry or companion metadata with
     per-target prior-baseline citation provenance and validation: reference id,
     source artifact/page/table, applicability caveats, and report-visible

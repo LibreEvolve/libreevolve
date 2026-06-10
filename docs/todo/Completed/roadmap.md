@@ -8271,3 +8271,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     scopes it to the current `not_emitted_by_local_report_export` state, and
     keeps real row-note caveat artifact emission open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the Appendix A matrix baseline-citation boundary in ROADMAP.
+  - Spec evidence: roadmap matrix wording needs to distinguish rank-value
+    registry coverage from traceable cited prior-baseline evidence.
+  - Status: ROADMAP now names
+    `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`,
+    scopes it to the current `not_recorded_locally` state, and keeps real
+    per-target baseline citation artifact emission open.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

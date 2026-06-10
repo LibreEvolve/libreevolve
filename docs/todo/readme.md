@@ -886,6 +886,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     It does not document a per-target prior-work citation/source record for
     each best-known rank, reference id, paper/source location, applicability
     caveat, source digest, or report-visible baseline-source field.
+    `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`
+    now documents and validates that README-scoped absence boundary plus
+    required future per-target citation fields.
   - Required result: when Appendix A best-known-rank citation provenance lands,
     update README, ROADMAP, papers index, and code/paper TODOs together so
     README distinguishes stored best-known rank values from traceable cited

@@ -2410,6 +2410,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     flags, but not per-target cited prior-work sources, bibliography reference
     ids, source page/table locations, finite-field or characteristic caveats,
     source digests, or report-visible baseline-source metadata.
+    `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`
+    now documents and validates that roadmap-scoped absence boundary plus
+    required future per-target citation fields.
   - Required result: when best-known-rank citation provenance lands, update
     ROADMAP, README, papers index, and code/paper TODOs so roadmap text
     distinguishes rank-value registry coverage from traceable prior-baseline

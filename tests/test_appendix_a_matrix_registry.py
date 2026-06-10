@@ -1,6 +1,7 @@
 import json
 
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
+    BASELINE_CITATION_BOUNDARY_SCHEMA,
     CURATION_SCHEMA,
     EXPECTED_TARGET_COUNT,
     LOCAL_RESOURCE_FRONTIER_SCHEMA,
@@ -10,6 +11,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     SUBSET_SCOPE_ARTIFACT_BOUNDARY_SCHEMA,
     SUBSET_SCOPE_SCHEMA,
     TARGET_SUITE,
+    appendix_a_matrix_baseline_citation_boundary_record,
     appendix_a_matrix_curation_record,
     appendix_a_matrix_local_resource_frontier_record,
     appendix_a_matrix_resource_frontier_record,
@@ -19,6 +21,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     appendix_a_matrix_subset_scope_record,
     matrix_target_by_id,
     matrix_target_records,
+    render_appendix_a_matrix_baseline_citation_boundary_summary,
     render_appendix_a_matrix_curation_summary,
     render_appendix_a_matrix_local_resource_frontier_summary,
     render_appendix_a_matrix_resource_frontier_summary,
@@ -27,6 +30,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     render_appendix_a_matrix_row_note_summary,
     render_appendix_a_matrix_subset_scope_artifact_boundary_summary,
     render_appendix_a_matrix_subset_scope_summary,
+    validate_appendix_a_matrix_baseline_citation_boundary,
     validate_appendix_a_matrix_curation,
     validate_appendix_a_matrix_local_resource_frontier,
     validate_appendix_a_matrix_resource_frontier,
@@ -171,6 +175,94 @@ def test_appendix_a_matrix_curation_summary_renders_counts():
     assert "| included_target_count | 54 |" in summary
     assert "| omitted_equivalent_count | 155 |" in summary
     assert "| outside_rough_rule_count | 1 |" in summary
+
+
+def test_appendix_a_matrix_baseline_citation_boundary_accepts_current_absence():
+    report = validate_appendix_a_matrix_baseline_citation_boundary()
+
+    assert report.ok is True
+    assert report.citation_status == "not_recorded_locally"
+    assert report.citation_count == 0
+    assert report.required_field_count == 11
+    assert report.issues == []
+
+
+def test_appendix_a_matrix_baseline_citation_boundary_rejects_absence_with_citations():
+    boundary = appendix_a_matrix_baseline_citation_boundary_record()
+    boundary["baseline_citations"] = [_baseline_citation(matrix_target_records()[0])]
+    boundary["claim_boundary"] = "Citations exist."
+
+    report = validate_appendix_a_matrix_baseline_citation_boundary(boundary)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "unexpected_baseline_citations" in codes
+    assert "missing_claim_boundary" in codes
+
+
+def test_appendix_a_matrix_baseline_citation_boundary_requires_all_targets_when_recorded():
+    boundary = appendix_a_matrix_baseline_citation_boundary_record()
+    boundary["citation_status"] = "recorded"
+
+    report = validate_appendix_a_matrix_baseline_citation_boundary(boundary)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "missing_baseline_citations" in codes
+
+
+def test_appendix_a_matrix_baseline_citation_boundary_accepts_recorded_rows():
+    boundary = {
+        "schema": BASELINE_CITATION_BOUNDARY_SCHEMA,
+        "registry_schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1",
+        "source_paper_id": "2506.13131",
+        "target_suite": TARGET_SUITE,
+        "citation_status": "recorded",
+        "required_citation_fields": list(appendix_a_matrix_baseline_citation_boundary_record()["required_citation_fields"]),
+        "baseline_citations": [_baseline_citation(target) for target in matrix_target_records()],
+        "claim_boundary": "Local metadata records baseline citations.",
+    }
+
+    report = validate_appendix_a_matrix_baseline_citation_boundary(boundary)
+
+    assert report.ok is True
+    assert report.citation_status == "recorded"
+    assert report.citation_count == EXPECTED_TARGET_COUNT
+    assert report.issues == []
+
+
+def test_appendix_a_matrix_baseline_citation_boundary_rejects_invalid_citation_fields():
+    target = matrix_target_records()[0]
+    boundary = appendix_a_matrix_baseline_citation_boundary_record()
+    boundary["citation_status"] = "recorded"
+    citation = _baseline_citation(target)
+    citation["dimensions"] = [9, 9, 9]
+    citation["best_known_rank"] = -1
+    citation["cited_reference_id"] = "999"
+    citation["source_artifact_path"] = "../escape.json"
+    citation["source_artifact_sha256"] = "not-a-digest"
+    citation["applicability_caveats"] = ""
+    boundary["baseline_citations"] = [citation]
+
+    report = validate_appendix_a_matrix_baseline_citation_boundary(boundary)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_baseline_dimensions" in codes
+    assert "invalid_baseline_rank" in codes
+    assert "invalid_cited_reference_id" in codes
+    assert "invalid_source_artifact_path" in codes
+    assert "invalid_source_artifact_sha256" in codes
+    assert "missing_applicability_caveats" in codes
+
+
+def test_appendix_a_matrix_baseline_citation_boundary_summary_renders_counts():
+    summary = render_appendix_a_matrix_baseline_citation_boundary_summary()
+
+    assert "AlphaEvolve Appendix A matrix baseline-citation boundary" in summary
+    assert "| schema_status | ok |" in summary
+    assert "| citation_status | not_recorded_locally |" in summary
+    assert "| citation_count | 0 |" in summary
 
 
 def test_appendix_a_matrix_resource_frontier_validates_paper_oom_boundary():
@@ -356,6 +448,22 @@ def _row_note_artifact() -> dict:
         "row_note_evidence": evidence,
         "artifact_paths": ["tables/mm_4x5x6_row_note.json"],
         "artifact_sha256": "b" * 64,
+    }
+
+
+def _baseline_citation(target: dict) -> dict:
+    return {
+        "target_id": target["id"],
+        "dimensions": list(target["dimensions"]),
+        "best_known_rank": target["best_known_rank"],
+        "cited_reference_id": "95",
+        "source_table": "Appendix A Table 3",
+        "source_pdf_page": 34,
+        "source_artifact_path": f"papers/alphaevolve/baselines/{target['id']}.json",
+        "source_artifact_sha256": "c" * 64,
+        "applicability_caveats": "baseline rank citation requires paper source verification",
+        "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+        "report_baseline_source_ref": f"baseline:{target['id']}:ref95",
     }
 
 

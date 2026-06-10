@@ -702,6 +702,12 @@ is not yet an AlphaEvolve reproduction.
   axis-permutation equivalent omissions, included-target rationales, and
   unspecified `p` cutoff. Explicit non-equivalent excluded-target
   justifications remain open.
+- Keep Appendix A best-known-rank citation claims scoped:
+  `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`
+  now validates the current `not_recorded_locally` boundary and required
+  future per-target fields for cited reference id, source table/page, source
+  artifact path/hash, applicability caveats, field/characteristic scope, and
+  report-visible baseline-source refs.
 - Keep matrix target-scaling claims scoped to paper-source frontier evidence:
   `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1` now
   validates the Appendix A page 34 boundary for sizes beyond `<5,5,5>`, 1000

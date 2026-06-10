@@ -11,6 +11,7 @@ from typing import Any
 REGISTRY_PATH = Path(__file__).with_name("alphaevolve_appendix_a_matrix.json")
 REGISTRY_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
 CURATION_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_curation.v1"
+BASELINE_CITATION_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1"
 RESOURCE_FRONTIER_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1"
 LOCAL_RESOURCE_FRONTIER_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1"
 SUBSET_SCOPE_SCHEMA = "libreevolve.alphaevolve_matrix_subset_scope.v1"
@@ -20,6 +21,20 @@ ROW_NOTE_ARTIFACT_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_r
 TARGET_SUITE = "alphaevolve_appendix_a"
 EXPECTED_TARGET_COUNT = 54
 OUTCOMES = frozenset({"matched", "surpassed", "fell_behind"})
+BASELINE_CITATION_STATUSES = frozenset({"not_recorded_locally", "recorded"})
+BASELINE_CITATION_REQUIRED_FIELDS = (
+    "target_id",
+    "dimensions",
+    "best_known_rank",
+    "cited_reference_id",
+    "source_table",
+    "source_pdf_page",
+    "source_artifact_path",
+    "source_artifact_sha256",
+    "applicability_caveats",
+    "finite_field_or_characteristic_scope",
+    "report_baseline_source_ref",
+)
 SUBSET_SCOPE_ARTIFACT_STATUSES = frozenset({"not_emitted_by_local_report_export", "emitted"})
 SUBSET_SCOPE_ARTIFACT_REQUIRED_FIELDS = (
     "subset_scope_id",
@@ -107,6 +122,15 @@ class MatrixTargetCurationReport:
     omitted_equivalent_count: int
     outside_rough_rule_count: int
     issues: list[MatrixTargetCurationIssue]
+
+
+@dataclass(frozen=True)
+class MatrixBaselineCitationBoundaryReport:
+    ok: bool
+    citation_status: str | None
+    citation_count: int
+    required_field_count: int
+    issues: list[MatrixTargetIssue]
 
 
 @dataclass(frozen=True)
@@ -256,6 +280,70 @@ def validate_appendix_a_matrix_curation(
         included_target_count=included_count,
         omitted_equivalent_count=omitted_count,
         outside_rough_rule_count=outside_count,
+        issues=issues,
+    )
+
+
+def appendix_a_matrix_baseline_citation_boundary_record() -> dict[str, Any]:
+    return {
+        "schema": BASELINE_CITATION_BOUNDARY_SCHEMA,
+        "registry_schema": REGISTRY_SCHEMA,
+        "source_paper_id": "2506.13131",
+        "target_suite": TARGET_SUITE,
+        "citation_status": "not_recorded_locally",
+        "required_citation_fields": list(BASELINE_CITATION_REQUIRED_FIELDS),
+        "baseline_citations": [],
+        "claim_boundary": (
+            "This is an Appendix A matrix best-known-rank citation boundary. "
+            "It does not claim local metadata records the cited prior-work "
+            "source behind each best-known rank."
+        ),
+    }
+
+
+def validate_appendix_a_matrix_baseline_citation_boundary(
+    boundary: object | str | Path | None = None,
+) -> MatrixBaselineCitationBoundaryReport:
+    if boundary is None:
+        boundary = appendix_a_matrix_baseline_citation_boundary_record()
+    data, read_issues = _load_baseline_citation_boundary(boundary)
+    if read_issues:
+        return MatrixBaselineCitationBoundaryReport(False, None, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[MatrixTargetIssue] = []
+    if data.get("schema") != BASELINE_CITATION_BOUNDARY_SCHEMA:
+        issues.append(MatrixTargetIssue("invalid_schema", "unsupported Appendix A matrix baseline-citation boundary schema"))
+    if data.get("registry_schema") != REGISTRY_SCHEMA:
+        issues.append(MatrixTargetIssue("invalid_registry_schema", "registry_schema must identify Appendix A matrix registry records"))
+    if data.get("source_paper_id") != "2506.13131":
+        issues.append(MatrixTargetIssue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("target_suite") != TARGET_SUITE:
+        issues.append(MatrixTargetIssue("invalid_target_suite", "target_suite must be alphaevolve_appendix_a"))
+    status = data.get("citation_status")
+    if status not in BASELINE_CITATION_STATUSES:
+        issues.append(MatrixTargetIssue("invalid_citation_status", "citation_status must be a known baseline-citation status"))
+    required_field_count = _validate_baseline_citation_required_fields(data.get("required_citation_fields"), issues)
+    citations = data.get("baseline_citations")
+    if not isinstance(citations, list):
+        issues.append(MatrixTargetIssue("invalid_baseline_citations", "baseline_citations must be a list"))
+        citation_count = 0
+    else:
+        citation_count = len(citations)
+        if status == "not_recorded_locally":
+            if citations:
+                issues.append(MatrixTargetIssue("unexpected_baseline_citations", "absence boundary must not include baseline citation records"))
+            boundary_text = data.get("claim_boundary")
+            if not isinstance(boundary_text, str) or "does not claim" not in boundary_text:
+                issues.append(MatrixTargetIssue("missing_claim_boundary", "absence boundary must state that it does not claim local baseline-citation metadata"))
+        elif status == "recorded":
+            if len(citations) != EXPECTED_TARGET_COUNT:
+                issues.append(MatrixTargetIssue("missing_baseline_citations", "recorded status requires one baseline citation for each Appendix A matrix target"))
+            _validate_baseline_citation_records(citations, issues)
+    return MatrixBaselineCitationBoundaryReport(
+        ok=not issues,
+        citation_status=status if isinstance(status, str) else None,
+        citation_count=citation_count,
+        required_field_count=required_field_count,
         issues=issues,
     )
 
@@ -770,6 +858,31 @@ def render_appendix_a_matrix_curation_summary(
     return "\n".join(lines)
 
 
+def render_appendix_a_matrix_baseline_citation_boundary_summary(
+    boundary: object | str | Path | None = None,
+) -> str:
+    report = validate_appendix_a_matrix_baseline_citation_boundary(boundary)
+    status = "ok" if report.ok else "invalid"
+    lines = [
+        "AlphaEvolve Appendix A matrix baseline-citation boundary",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| citation_status | {report.citation_status or '<unknown>'} |",
+        f"| citation_count | {report.citation_count} |",
+        f"| required_field_count | {report.required_field_count} |",
+    ]
+    if report.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(
+            f"- {issue.code}: {issue.message}"
+            + (f" ({issue.target_id})" if issue.target_id else "")
+            for issue in report.issues
+        )
+    return "\n".join(lines)
+
+
 def render_appendix_a_matrix_resource_frontier_summary(
     recordset: object | str | Path | None = None,
 ) -> str:
@@ -945,6 +1058,24 @@ def _load_curation_recordset(
         if isinstance(loaded, dict):
             return loaded, []
     return None, [MatrixTargetCurationIssue("invalid_shape", "curation recordset must be a JSON object")]
+
+
+def _load_baseline_citation_boundary(
+    boundary: object | str | Path,
+) -> tuple[dict[str, Any] | None, list[MatrixTargetIssue]]:
+    if isinstance(boundary, dict):
+        return dict(boundary), []
+    if isinstance(boundary, (str, Path)):
+        path = Path(boundary)
+        try:
+            loaded = json.loads(path.read_text(encoding="utf-8"))
+        except OSError as exc:
+            return None, [MatrixTargetIssue("read_error", f"failed to read baseline-citation boundary: {exc}")]
+        except json.JSONDecodeError as exc:
+            return None, [MatrixTargetIssue("invalid_json", f"invalid baseline-citation boundary JSON: {exc.msg}")]
+        if isinstance(loaded, dict):
+            return loaded, []
+    return None, [MatrixTargetIssue("invalid_shape", "baseline-citation boundary must be a JSON object")]
 
 
 def _load_resource_frontier_recordset(
@@ -1138,6 +1269,84 @@ def _omitted_axis_permutation_records(target: dict[str, Any]) -> list[dict[str, 
             }
         )
     return omitted
+
+
+def _validate_baseline_citation_required_fields(
+    value: object,
+    issues: list[MatrixTargetIssue],
+) -> int:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixTargetIssue("invalid_required_citation_fields", "required_citation_fields must be a non-empty list"))
+        return 0
+    seen: set[str] = set()
+    for field in value:
+        if not isinstance(field, str) or not field.strip():
+            issues.append(MatrixTargetIssue("invalid_required_citation_field", "required citation field names must be non-empty strings"))
+            continue
+        if field in seen:
+            issues.append(MatrixTargetIssue("duplicate_required_citation_field", "required_citation_fields must be unique"))
+        seen.add(field)
+    if set(BASELINE_CITATION_REQUIRED_FIELDS) - seen:
+        issues.append(MatrixTargetIssue("missing_required_citation_field", "required_citation_fields must include all baseline-citation fields"))
+    return len(value)
+
+
+def _validate_baseline_citation_records(
+    value: list[object],
+    issues: list[MatrixTargetIssue],
+) -> None:
+    targets = matrix_target_records()
+    expected_by_id = {target["id"]: target for target in targets if isinstance(target.get("id"), str)}
+    seen: set[str] = set()
+    for citation in value:
+        if not isinstance(citation, dict):
+            issues.append(MatrixTargetIssue("invalid_baseline_citation", "baseline citation records must be objects"))
+            continue
+        target_id = citation.get("target_id")
+        safe_id = target_id if isinstance(target_id, str) else None
+        expected = expected_by_id.get(safe_id or "")
+        if expected is None:
+            issues.append(MatrixTargetIssue("unknown_baseline_target_id", "baseline citation target_id must belong to Appendix A matrix registry", safe_id))
+            continue
+        if safe_id in seen:
+            issues.append(MatrixTargetIssue("duplicate_baseline_target_id", "baseline citation target_id values must be unique", safe_id))
+        seen.add(safe_id)
+        if citation.get("dimensions") != expected.get("dimensions"):
+            issues.append(MatrixTargetIssue("invalid_baseline_dimensions", "baseline citation dimensions must match the registry target", safe_id))
+        if citation.get("best_known_rank") != expected.get("best_known_rank"):
+            issues.append(MatrixTargetIssue("invalid_baseline_rank", "baseline citation best_known_rank must match the registry target", safe_id))
+        reference_id = citation.get("cited_reference_id")
+        if not isinstance(reference_id, str) or not reference_id.isdigit() or not 1 <= int(reference_id) <= 120:
+            issues.append(MatrixTargetIssue("invalid_cited_reference_id", "cited_reference_id must be a paper bibliography id from 1 through 120", safe_id))
+        if not isinstance(citation.get("source_table"), str) or not citation["source_table"].strip():
+            issues.append(MatrixTargetIssue("missing_source_table", "source_table is required", safe_id))
+        if isinstance(citation.get("source_pdf_page"), bool) or not isinstance(citation.get("source_pdf_page"), int) or citation["source_pdf_page"] <= 0:
+            issues.append(MatrixTargetIssue("invalid_source_pdf_page", "source_pdf_page must be a positive integer", safe_id))
+        for field in ("applicability_caveats", "finite_field_or_characteristic_scope", "report_baseline_source_ref"):
+            if not isinstance(citation.get(field), str) or not citation[field].strip():
+                issues.append(MatrixTargetIssue(f"missing_{field}", f"{field} is required", safe_id))
+        _validate_baseline_citation_artifact_path(citation.get("source_artifact_path"), safe_id, issues)
+        source_hash = citation.get("source_artifact_sha256")
+        if not isinstance(source_hash, str) or _SHA256_RE.fullmatch(source_hash) is None:
+            issues.append(MatrixTargetIssue("invalid_source_artifact_sha256", "source_artifact_sha256 must be a lowercase SHA-256 hex digest", safe_id))
+    for target_id in sorted(set(expected_by_id) - seen):
+        issues.append(MatrixTargetIssue("missing_baseline_target_citation", "each Appendix A matrix target must have a baseline citation record", target_id))
+
+
+def _validate_baseline_citation_artifact_path(
+    value: object,
+    target_id: str | None,
+    issues: list[MatrixTargetIssue],
+) -> None:
+    path_obj = Path(value) if isinstance(value, str) else None
+    if (
+        path_obj is None
+        or not value
+        or path_obj.is_absolute()
+        or value.startswith(("/", "\\"))
+        or ".." in path_obj.parts
+    ):
+        issues.append(MatrixTargetIssue("invalid_source_artifact_path", "source_artifact_path must be a safe relative path", target_id))
 
 
 def _validate_selection_policy(value: object, issues: list[MatrixTargetCurationIssue]) -> None:

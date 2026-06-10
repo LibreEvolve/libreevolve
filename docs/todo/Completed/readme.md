@@ -10847,3 +10847,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     rank/reference values, source text, caveat flags, nested row-note evidence,
     artifact paths, and hashes.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the Appendix A matrix baseline-citation boundary in README.
+  - Spec evidence: README matrix wording needs to separate stored best-known
+    rank values from traceable per-target prior-work citation evidence.
+  - Status: README now names
+    `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`,
+    scopes it to the current `not_recorded_locally` state, and lists required
+    future per-target citation fields for reference id, source table/page,
+    source artifact path/hash, applicability caveats, field/characteristic
+    scope, and report-visible baseline-source refs.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

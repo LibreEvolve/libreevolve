@@ -1438,6 +1438,116 @@ def matrix_sweep_space_runtime_boundary_record() -> dict[str, Any]:
     }
 
 
+def matrix_sweep_space_runtime_boundary_from_evidence(
+    *,
+    run_id: str,
+    candidate_id: str,
+    seed: int,
+    matrix_result_ref: str,
+    sweep_space_evidence: dict[str, Any],
+    artifact_paths: list[str] | None = None,
+    artifact_sha256: str | None = None,
+) -> dict[str, Any]:
+    """Build an emitted sweep-space runtime record from validated evidence."""
+    validation = validate_matrix_sweep_space_evidence(sweep_space_evidence)
+    if not validation.ok:
+        messages = "; ".join(issue.message for issue in validation.issues)
+        raise ValueError(f"sweep_space_evidence is invalid: {messages}")
+    target_id = sweep_space_evidence.get("target_id")
+    if not isinstance(target_id, str) or not target_id.strip():
+        raise ValueError("sweep_space_evidence.target_id must be non-empty")
+    if not isinstance(run_id, str) or not run_id.strip():
+        raise ValueError("run_id must be non-empty")
+    if not isinstance(candidate_id, str) or not candidate_id.strip():
+        raise ValueError("candidate_id must be non-empty")
+    if isinstance(seed, bool) or not isinstance(seed, int):
+        raise ValueError("seed must be an integer")
+    if not isinstance(matrix_result_ref, str) or not matrix_result_ref.strip():
+        raise ValueError("matrix_result_ref must be non-empty")
+    winning_configuration = _selected_sweep_configuration(
+        sweep_space_evidence,
+        sweep_space_evidence.get("winning_configuration_id"),
+    )
+    paths = (
+        artifact_paths
+        if artifact_paths is not None
+        else [f"matrix/{target_id}/sweep_space_{candidate_id}.json"]
+    )
+    digest = (
+        artifact_sha256
+        if artifact_sha256 is not None
+        else _stable_json_sha256(
+            {
+                "run_id": run_id,
+                "candidate_id": candidate_id,
+                "target_id": target_id,
+                "seed": seed,
+                "search_program_ref": sweep_space_evidence.get(
+                    "search_program_ref"
+                ),
+                "winning_configuration_id": sweep_space_evidence.get(
+                    "winning_configuration_id"
+                ),
+                "exactness_certificate_ref": winning_configuration.get(
+                    "exactness_certificate_ref"
+                ),
+                "final_decomposition_ref": winning_configuration.get(
+                    "final_decomposition_ref"
+                ),
+                "matrix_result_ref": matrix_result_ref,
+            }
+        )
+    )
+    boundary = matrix_sweep_space_runtime_boundary_record()
+    boundary.update(
+        {
+            "runtime_emission_status": "emitted",
+            "emitted_records": [
+                {
+                    "run_id": run_id,
+                    "candidate_id": candidate_id,
+                    "target_id": target_id,
+                    "seed": seed,
+                    "search_program_ref": sweep_space_evidence.get(
+                        "search_program_ref"
+                    ),
+                    "sweep_function_name": sweep_space_evidence.get(
+                        "sweep_function_name"
+                    ),
+                    "hyper_library": copy.deepcopy(
+                        sweep_space_evidence.get("hyper_library")
+                    ),
+                    "hyperparameters": copy.deepcopy(
+                        sweep_space_evidence.get("hyperparameters")
+                    ),
+                    "sampled_configurations": copy.deepcopy(
+                        sweep_space_evidence.get("sampled_configurations")
+                    ),
+                    "winning_configuration_id": sweep_space_evidence.get(
+                        "winning_configuration_id"
+                    ),
+                    "exactness_certificate_ref": winning_configuration.get(
+                        "exactness_certificate_ref"
+                    ),
+                    "final_decomposition_ref": winning_configuration.get(
+                        "final_decomposition_ref"
+                    ),
+                    "matrix_result_ref": matrix_result_ref,
+                    "artifact_paths": copy.deepcopy(paths),
+                    "artifact_sha256": digest,
+                    "sweep_space_evidence": copy.deepcopy(sweep_space_evidence),
+                }
+            ],
+            "claim_boundary": (
+                "Emitted records link matrix search programs to Figure 9 "
+                "sweep-space hyperparameter evidence; this still does not claim "
+                "local runners automatically emit those records."
+            ),
+        }
+    )
+    return boundary
+
+
 def validate_matrix_sweep_space_runtime_boundary(
     boundary: object | str | Path | None = None,
 ) -> MatrixSweepSpaceRuntimeValidation:
@@ -3515,7 +3625,73 @@ def _validate_sweep_space_runtime_records(
             continue
         run_id = _runtime_record_text(record, "run_id", issues)
         candidate_id = _runtime_record_text(record, "candidate_id", issues)
+        target_id = _runtime_record_text(record, "target_id", issues)
+        seed = _runtime_record_int(record, "seed", issues)
+        search_program_ref = _runtime_record_text(
+            record,
+            "search_program_ref",
+            issues,
+        )
+        sweep_function_name = _runtime_record_text(
+            record,
+            "sweep_function_name",
+            issues,
+        )
+        hyper_library = record.get("hyper_library")
+        if not isinstance(hyper_library, dict):
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_runtime_record_hyper_library",
+                    "emitted runtime sweep-space records must include hyper_library",
+                )
+            )
+            hyper_library = None
+        hyperparameters = record.get("hyperparameters")
+        if not isinstance(hyperparameters, list) or not hyperparameters:
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_runtime_record_hyperparameters",
+                    "emitted runtime sweep-space records must include non-empty hyperparameters",
+                )
+            )
+            hyperparameters = None
+        sampled_configurations = record.get("sampled_configurations")
+        if not isinstance(sampled_configurations, list) or not sampled_configurations:
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_runtime_record_sampled_configurations",
+                    "emitted runtime sweep-space records must include non-empty sampled_configurations",
+                )
+            )
+            sampled_configurations = None
+        winning_configuration_id = _runtime_record_text(
+            record,
+            "winning_configuration_id",
+            issues,
+        )
+        exactness_certificate_ref = _runtime_record_text(
+            record,
+            "exactness_certificate_ref",
+            issues,
+        )
+        final_decomposition_ref = _runtime_record_text(
+            record,
+            "final_decomposition_ref",
+            issues,
+        )
         _runtime_record_text(record, "matrix_result_ref", issues)
+        _validate_runtime_artifact_paths(
+            record.get("artifact_paths"),
+            "sweep_space",
+            index,
+            issues,
+        )
+        _validate_runtime_artifact_sha(
+            record.get("artifact_sha256"),
+            "sweep_space",
+            index,
+            issues,
+        )
         if run_id is not None and candidate_id is not None:
             key = (run_id, candidate_id)
             if key in seen:
@@ -3537,6 +3713,150 @@ def _validate_sweep_space_runtime_records(
                 )
                 for issue in nested_validation.issues
             )
+        elif isinstance(nested, dict):
+            _validate_sweep_space_runtime_record_linkage(
+                record_index=index,
+                nested=nested,
+                target_id=target_id,
+                search_program_ref=search_program_ref,
+                sweep_function_name=sweep_function_name,
+                hyper_library=hyper_library,
+                hyperparameters=hyperparameters,
+                sampled_configurations=sampled_configurations,
+                winning_configuration_id=winning_configuration_id,
+                exactness_certificate_ref=exactness_certificate_ref,
+                final_decomposition_ref=final_decomposition_ref,
+                issues=issues,
+            )
+
+
+def _validate_sweep_space_runtime_record_linkage(
+    *,
+    record_index: int,
+    nested: dict[str, Any],
+    target_id: str | None,
+    search_program_ref: str | None,
+    sweep_function_name: str | None,
+    hyper_library: dict[str, Any] | None,
+    hyperparameters: list[Any] | None,
+    sampled_configurations: list[Any] | None,
+    winning_configuration_id: str | None,
+    exactness_certificate_ref: str | None,
+    final_decomposition_ref: str | None,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if target_id is not None and nested.get("target_id") != target_id:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_sweep_space_target_mismatch",
+                "runtime target_id must match nested sweep-space evidence",
+            )
+        )
+    if (
+        search_program_ref is not None
+        and nested.get("search_program_ref") != search_program_ref
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_sweep_space_search_program_mismatch",
+                "runtime search_program_ref must match nested sweep-space evidence",
+            )
+        )
+    if (
+        sweep_function_name is not None
+        and nested.get("sweep_function_name") != sweep_function_name
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_sweep_space_function_mismatch",
+                "runtime sweep_function_name must match nested sweep-space evidence",
+            )
+        )
+    if hyper_library is not None and nested.get("hyper_library") != hyper_library:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_sweep_space_hyper_library_mismatch",
+                "runtime hyper_library must match nested sweep-space evidence",
+            )
+        )
+    if hyperparameters is not None and nested.get("hyperparameters") != hyperparameters:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_sweep_space_hyperparameters_mismatch",
+                "runtime hyperparameters must match nested sweep-space evidence",
+            )
+        )
+    if (
+        sampled_configurations is not None
+        and nested.get("sampled_configurations") != sampled_configurations
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_sweep_space_configurations_mismatch",
+                "runtime sampled_configurations must match nested sweep-space evidence",
+            )
+        )
+    if (
+        winning_configuration_id is not None
+        and nested.get("winning_configuration_id") != winning_configuration_id
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_sweep_space_winner_mismatch",
+                "runtime winning_configuration_id must match nested sweep-space evidence",
+            )
+        )
+    if winning_configuration_id is None:
+        return
+    try:
+        winner = _selected_sweep_configuration(nested, winning_configuration_id)
+    except ValueError:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_sweep_space_missing_winner",
+                "runtime winning_configuration_id must identify a selected nested configuration",
+            )
+        )
+        return
+    if (
+        exactness_certificate_ref is not None
+        and winner.get("exactness_certificate_ref") != exactness_certificate_ref
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_sweep_space_certificate_mismatch",
+                "runtime exactness_certificate_ref must match the selected nested configuration",
+            )
+        )
+    if (
+        final_decomposition_ref is not None
+        and winner.get("final_decomposition_ref") != final_decomposition_ref
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_sweep_space_decomposition_mismatch",
+                "runtime final_decomposition_ref must match the selected nested configuration",
+            )
+        )
+
+
+def _selected_sweep_configuration(
+    evidence: dict[str, Any],
+    winning_configuration_id: object,
+) -> dict[str, Any]:
+    if not isinstance(winning_configuration_id, str):
+        raise ValueError("winning_configuration_id must be a string")
+    configurations = evidence.get("sampled_configurations")
+    if not isinstance(configurations, list):
+        raise ValueError("sampled_configurations must be a list")
+    for configuration in configurations:
+        if (
+            isinstance(configuration, dict)
+            and configuration.get("configuration_id") == winning_configuration_id
+            and configuration.get("selected") is True
+        ):
+            return configuration
+    raise ValueError("winning_configuration_id must identify a selected configuration")
 
 
 def _validate_sweep_configuration_values(

@@ -893,12 +893,17 @@ is not yet an AlphaEvolve reproduction.
   losses/ranks, winning configuration identity, and final decomposition plus
   exactness-certificate links.
   `libreevolve.matrix_sweep_space_runtime_boundary.v1` now validates the
-  current `not_emitted_by_local_runner` boundary and required future
-  emitted-record fields for search-program refs, sweep function identity,
-  hyper-library and hyperparameter declarations, sampled configurations,
-  winning configuration, certificate/decomposition refs, matrix-result refs,
-  artifact paths, and artifact hashes. Local benchmark runners still need to
-  emit those records during matrix search.
+  current `not_emitted_by_local_runner` boundary and emitted records for
+  run/target/candidate ids, seeds, search-program refs, sweep function
+  identity, hyper-library and hyperparameter declarations, sampled
+  configurations, winning configuration, certificate/decomposition refs,
+  matrix-result refs, artifact paths, and artifact hashes.
+  `matrix_sweep_space_runtime_boundary_from_evidence()` builds an emitted
+  runtime row from validated sweep-space evidence and validation links it back
+  to the nested target, search program, `sweep` function, hyper-library,
+  hyperparameters, sampled configurations, winner, and selected certificate/
+  decomposition evidence. Local benchmark runners still need to emit those
+  records during matrix search.
 - Connect real compiler/hardware/kernel/scheduling fixtures to
   `libreevolve.systems_result_report.v1`, with separate optimization,
   held-out/generalization, and reference-correctness gates plus artifacts that

@@ -39,6 +39,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     matrix_result_artifact_inventory,
     matrix_scalar_field_runtime_boundary_record,
     matrix_suite_publication_artifact_boundary_record,
+    matrix_sweep_space_runtime_boundary_from_evidence,
     matrix_sweep_space_runtime_boundary_record,
     matrix_tensor_rank_runtime_boundary_record,
     render_matrix_baseline_component_runtime_boundary_summary,
@@ -1440,22 +1441,98 @@ def test_matrix_sweep_space_runtime_boundary_requires_emitted_records():
 
 
 def test_matrix_sweep_space_runtime_boundary_accepts_emitted_evidence():
-    boundary = matrix_sweep_space_runtime_boundary_record()
-    boundary["runtime_emission_status"] = "emitted"
-    boundary["emitted_records"] = [
-        {
-            "run_id": "run_001",
-            "candidate_id": "candidate_001",
-            "matrix_result_ref": "matrix/mm_4x4x4/report.json",
-            "sweep_space_evidence": _valid_sweep_space_evidence(),
-        }
-    ]
+    boundary = matrix_sweep_space_runtime_boundary_from_evidence(
+        run_id="run_001",
+        candidate_id="candidate_001",
+        seed=11,
+        matrix_result_ref="matrix/mm_4x4x4/report.json",
+        sweep_space_evidence=_valid_sweep_space_evidence(),
+    )
 
     validation = validate_matrix_sweep_space_runtime_boundary(boundary)
 
     assert validation.ok is True
     assert validation.runtime_emission_status == "emitted"
     assert validation.emitted_record_count == 1
+    record = boundary["emitted_records"][0]
+    assert record["target_id"] == "mm_4x4x4"
+    assert record["seed"] == 11
+    assert record["search_program_ref"] == "programs/mm_4x4x4_sweep.py"
+    assert record["sweep_function_name"] == "sweep"
+    assert record["winning_configuration_id"] == "cfg_002"
+    assert record["exactness_certificate_ref"] == "certificates/cfg_002.json"
+    assert record["final_decomposition_ref"] == "decompositions/cfg_002.json"
+
+
+def test_matrix_sweep_space_runtime_boundary_builder_rejects_invalid_evidence():
+    evidence = _valid_sweep_space_evidence()
+    evidence["sweep_function_name"] = "search"
+
+    with pytest.raises(ValueError, match="sweep_space_evidence is invalid"):
+        matrix_sweep_space_runtime_boundary_from_evidence(
+            run_id="run_001",
+            candidate_id="candidate_001",
+            seed=11,
+            matrix_result_ref="matrix/mm_4x4x4/report.json",
+            sweep_space_evidence=evidence,
+        )
+
+
+def test_matrix_sweep_space_runtime_boundary_rejects_linkage_mismatch():
+    boundary = matrix_sweep_space_runtime_boundary_from_evidence(
+        run_id="run_001",
+        candidate_id="candidate_001",
+        seed=11,
+        matrix_result_ref="matrix/mm_4x4x4/report.json",
+        sweep_space_evidence=_valid_sweep_space_evidence(),
+    )
+    record = boundary["emitted_records"][0]
+    record["target_id"] = "mm_5x5x5"
+    record["search_program_ref"] = "programs/other.py"
+    record["sweep_function_name"] = "search"
+    record["hyper_library"] = {"name": "other", "source": "user"}
+    record["hyperparameters"][0]["high"] = 0.2
+    record["sampled_configurations"][1]["loss"] = 2.0
+    record["winning_configuration_id"] = "cfg_001"
+    record["exactness_certificate_ref"] = "certificates/other.json"
+    record["final_decomposition_ref"] = "decompositions/other.json"
+
+    validation = validate_matrix_sweep_space_runtime_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "runtime_record_0_sweep_space_target_mismatch" in codes
+    assert "runtime_record_0_sweep_space_search_program_mismatch" in codes
+    assert "runtime_record_0_sweep_space_function_mismatch" in codes
+    assert "runtime_record_0_sweep_space_hyper_library_mismatch" in codes
+    assert "runtime_record_0_sweep_space_hyperparameters_mismatch" in codes
+    assert "runtime_record_0_sweep_space_configurations_mismatch" in codes
+    assert "runtime_record_0_sweep_space_winner_mismatch" in codes
+    assert "runtime_record_0_sweep_space_missing_winner" in codes
+
+
+def test_matrix_sweep_space_runtime_boundary_rejects_missing_required_record_fields():
+    boundary = matrix_sweep_space_runtime_boundary_from_evidence(
+        run_id="run_001",
+        candidate_id="candidate_001",
+        seed=11,
+        matrix_result_ref="matrix/mm_4x4x4/report.json",
+        sweep_space_evidence=_valid_sweep_space_evidence(),
+    )
+    record = boundary["emitted_records"][0]
+    del record["artifact_paths"]
+    record["seed"] = "11"
+    record["hyperparameters"] = []
+    record["artifact_sha256"] = "not-a-sha"
+
+    validation = validate_matrix_sweep_space_runtime_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_runtime_record_seed" in codes
+    assert "invalid_runtime_record_hyperparameters" in codes
+    assert "runtime_record_0_invalid_sweep_space_artifact_paths" in codes
+    assert "runtime_record_0_invalid_sweep_space_artifact_hash" in codes
 
 
 def test_matrix_sweep_space_runtime_boundary_rejects_invalid_nested_evidence():

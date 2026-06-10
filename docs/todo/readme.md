@@ -884,12 +884,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     per-sweep outcomes, selected winner identity, and final
     decomposition/exactness-certificate links. It now also documents
     `libreevolve.matrix_sweep_space_runtime_boundary.v1` as the current
-    `not_emitted_by_local_runner` boundary plus required future emitted-record
-    fields for search-program refs, sweep function identity, hyper-library and
-    hyperparameter declarations, sampled configurations, winning
-    configuration, certificate/decomposition refs, matrix-result refs,
-    artifact paths, and artifact hashes. It also states that local matrix
-    benchmark runners still do not emit those records.
+    `not_emitted_by_local_runner` boundary plus emitted-record validation for
+    run/target/candidate ids, seeds, search-program refs, sweep function
+    identity, hyper-library and hyperparameter declarations, sampled
+    configurations, winning configuration, certificate/decomposition refs,
+    matrix-result refs, artifact paths, and artifact hashes. It also documents
+    the builder that turns validated sweep-space evidence into a linked runtime
+    row and states that local matrix benchmark runners still do not emit those
+    records.
   - Required result: when matrix runners emit sweep-space provenance, update
     README, ROADMAP, papers index, and matching TODOs so README can distinguish
     actual AlphaEvolve Figure 4/Figure 9 search-program evidence from schema

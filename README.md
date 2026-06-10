@@ -3674,11 +3674,16 @@ artifacts. It validates emitted evidence after a run records it; local matrix
 benchmark runners still do not emit those sweep-space records during search.
 The companion runtime boundary
 `libreevolve.matrix_sweep_space_runtime_boundary.v1` validates the current
-`not_emitted_by_local_runner` state and the required future emitted-record
-fields for search-program refs, sweep function identity, hyper-library and
+`not_emitted_by_local_runner` state and emitted records for run/target/candidate
+ids, seeds, search-program refs, sweep function identity, hyper-library and
 hyperparameter declarations, sampled configurations, winning configuration,
 certificate/decomposition refs, matrix-result refs, artifact paths, and
-artifact hashes.
+artifact hashes. The helper
+`matrix_sweep_space_runtime_boundary_from_evidence()` builds an emitted runtime
+row from validated sweep-space evidence and validation links every row back to
+the nested target, search program, `sweep` function, hyper-library,
+hyperparameters, sampled configurations, winning configuration, and selected
+certificate/decomposition evidence.
 Appendix A matrix target-suite curation uses
 `libreevolve.alphaevolve_appendix_a_matrix_curation.v1`; the built-in record
 preserves the paper's rough `2 <= m,n <= 5` selection wording, unspecified

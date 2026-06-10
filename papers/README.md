@@ -397,9 +397,10 @@ review, early exploration, support/advice, practical-application management
 advice, application review, application-specific advice, source locators,
 privacy/redaction policy, and review/signoff state. These are paper-process
 and governance roles, not implementation authorship, publication-author
-metadata, benchmark validation, or deployment evidence; populated reviewed
-records are still needed before making paper-facing acknowledgement parity
-claims.
+metadata, benchmark validation, or deployment evidence; the
+`matrix_multiplication` example now provides a reviewed `acknowledgements.yaml`
+fixture for AlphaEvolve pages 21-22, and its zero-generation manifest report
+is claim-ready for acknowledgement-role parity.
 
 AlphaEvolve publication-author note: LibreEvolve now has optional
 `paper_authors.yaml` / `Problem.paper_author_metadata` records plus

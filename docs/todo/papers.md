@@ -635,33 +635,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     keep documented local breadth separate from AlphaEvolve-style broad
     collaborator-feedback evidence until those records exist.
 
-- [ ] Populate acknowledgement-role evidence for review, support, and
-      practical application management advice.
-  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Acknowledgements separately
-    thank contributors for reviewing the white paper, early explorations and
-    insightful discussions, support and advice, helpful advice on managing the
-    practical applications, and reviewing application-specific work. Local PDF
-    extraction places the general paper-process acknowledgement text on page 21
-    and additional application-specific advice/review acknowledgement text on
-    page 22.
-  - Current evidence: paper/status records track early-user feedback, expert
-    formulation, application owner/reviewer roles, core contribution
-    provenance, optional `acknowledgements.yaml` /
-    `Problem.acknowledgement_metadata`, normalized
-    `problem.acknowledgement_metadata`, and
-    `runtime.history.acknowledgement_role_provenance_report`. The report
-    records safe contributor labels, role category, affected white-paper or
-    application scope, source page/section, privacy/redaction policy,
-    review/signoff state, and boundaries that keep acknowledgement-process
-    evidence separate from technical validation, benchmark formulation,
-    deployment, publication-author metadata, and system-development
-    provenance. Existing fixtures still lack real populated reviewed
-    acknowledgement records and paper-facing certification examples.
-  - Required result: populate representative fixtures with reviewed
-    acknowledgement records, link them to source page/section evidence, add
-    paper-facing examples or certification rows, and keep docs from treating
-    the schema alone as AlphaEvolve-style acknowledgement-process evidence.
-
 - [ ] Add replayable evaluator environment, package-source, and accelerator
   provenance.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2, 2.4, 2.6, and 4.

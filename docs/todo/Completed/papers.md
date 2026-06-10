@@ -10949,3 +10949,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     that this example's zero-generation manifest is claim-ready for
     system-development contribution parity.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Populate acknowledgement-role evidence for review, support, and
+      practical application management advice.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` pages 21-22 acknowledge
+    white-paper review, early exploration, support/advice,
+    practical-application management advice, application review, and
+    application-specific advice.
+  - Status: `libreevolve/problems/examples/matrix_multiplication/acknowledgements.yaml`
+    now provides reviewed representative acknowledgement records with source
+    page/section locators, scope labels, privacy/redaction policy, and review
+    status. `papers/README.md` now states that this example's zero-generation
+    manifest is claim-ready for acknowledgement-role parity.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

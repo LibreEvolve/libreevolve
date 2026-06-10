@@ -148,7 +148,10 @@ LibreEvolve has:
   `runtime.history.acknowledgement_role_provenance_report` for white-paper
   review, early exploration, support/advice, practical-application management
   advice, application review, application-specific advice, source locators,
-  privacy/redaction policy, and review/signoff readiness
+  privacy/redaction policy, and review/signoff readiness; the
+  `matrix_multiplication` example carries a reviewed AlphaEvolve pages 21-22
+  fixture and a manifest regression for the claim-ready acknowledgement-role
+  boundary
 - optional publication-author metadata under `paper_authors.yaml` or direct
   `Problem.paper_author_metadata`, normalized into
   `problem.paper_author_metadata` and summarized by

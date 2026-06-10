@@ -16188,3 +16188,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: `py -3.12 -m pytest
     tests/core/test_loop.py::test_matrix_example_system_contribution_fixture_is_claim_ready
     --tb=short` passes.
+
+- [x] Populate acknowledgement-role provenance for review, support, and
+      practical application management advice.
+  - Spec evidence: AlphaEvolve PDF pages 21-22 acknowledge white-paper review,
+    early exploration, support/advice, practical-application management
+    advice, application review, and application-specific advice.
+  - Status: `libreevolve/problems/examples/matrix_multiplication/acknowledgements.yaml`
+    now provides reviewed representative acknowledgement-role records for all
+    required categories, with source page/section locators, scope labels,
+    privacy/redaction policy, and review status. A manifest regression proves
+    the real fixture reaches
+    `runtime.history.acknowledgement_role_provenance_report` as claim-ready
+    for `alphaevolve_acknowledgement_role_parity`.
+  - Verification: `py -3.12 -m pytest
+    tests/core/test_loop.py::test_matrix_example_acknowledgement_fixture_is_claim_ready
+    --tb=short` passes.

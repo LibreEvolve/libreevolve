@@ -2221,7 +2221,11 @@ scope labels. Completed manifests include
 white-paper review, early exploration, support/advice,
 practical-application-management advice, application review, and
 application-specific advice separate from implementation authorship,
-publication-author metadata, benchmark validation, and deployment signoff.
+publication-author metadata, benchmark validation, and deployment signoff. The
+`matrix_multiplication` example now includes a reviewed
+`acknowledgements.yaml` fixture linked to AlphaEvolve PDF pages 21-22; its
+zero-generation manifest report is claim-ready for the acknowledgement-role
+boundary.
 Problem fixtures can also optionally add `paper_authors.yaml` or
 `paper_authors.yml`; direct callers can set `Problem.paper_author_metadata`.
 The manifest normalizes this to `problem.paper_author_metadata` with fixed

@@ -7239,6 +7239,45 @@ def test_loaded_acknowledgement_metadata_reaches_manifest_and_report():
     ] is True
 
 
+def test_matrix_example_acknowledgement_fixture_is_claim_ready():
+    repo_root = Path(__file__).resolve().parents[2]
+    problem = load_problem(
+        repo_root
+        / "libreevolve"
+        / "problems"
+        / "examples"
+        / "matrix_multiplication"
+    )
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(
+        problem,
+        Config(
+            max_generations=0,
+            log_dir=tmpdir,
+            problem_name="matrix_acknowledgements",
+        ),
+    )
+
+    manifest = json.loads(
+        (Path(tmpdir) / "matrix_acknowledgements" / "manifest.json").read_text()
+    )
+    metadata = manifest["problem"]["acknowledgement_metadata"]
+    assert metadata["schema"] == "libreevolve.acknowledgement_metadata.v1"
+    assert metadata["status"] == "provided"
+    assert len(metadata["records"]) == 6
+
+    report = manifest["runtime"]["history"]["acknowledgement_role_provenance_report"]
+    assert validate_acknowledgement_role_provenance_report(report)["ok"] is True
+    assert report["claim_ready"] is True
+    assert report["record_count"] == 6
+    assert report["source_pages"] == [21, 22]
+    assert report["records_with_source_locator"] == 6
+    assert report["claim_readiness"][
+        "alphaevolve_acknowledgement_role_parity"
+    ] is True
+
+
 def test_acknowledgement_report_marks_missing_metadata_boundary():
     tmpdir = tempfile.mkdtemp()
 

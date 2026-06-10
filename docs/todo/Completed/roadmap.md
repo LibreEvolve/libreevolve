@@ -8380,3 +8380,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     manifest regression for the claim-ready system-development contribution
     boundary.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document populated acknowledgement-role metadata in ROADMAP.
+  - Spec evidence: AlphaEvolve PDF pages 21-22 expose paper-process and
+    application-specific acknowledgement roles as a separate governance
+    evidence category.
+  - Status: ROADMAP now records that the `matrix_multiplication` example has a
+    reviewed AlphaEvolve pages 21-22 acknowledgement fixture and a manifest
+    regression for the claim-ready acknowledgement-role boundary.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

@@ -10967,3 +10967,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     pages 22-23, and that its zero-generation manifest report is claim-ready
     for the system-development contribution boundary.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document populated acknowledgement-role metadata in README.
+  - Spec evidence: AlphaEvolve PDF pages 21-22 separate white-paper review,
+    early exploration, support/advice, practical-application management
+    advice, application review, and application-specific advice from authorship
+    and implementation roles.
+  - Status: README now states that the `matrix_multiplication` example carries
+    a reviewed `acknowledgements.yaml` fixture linked to AlphaEvolve PDF pages
+    21-22, and that its zero-generation manifest report is claim-ready for the
+    acknowledgement-role boundary.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

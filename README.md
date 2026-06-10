@@ -1474,7 +1474,11 @@ labels each visible inspiration by its selected metric niche, stores raw and
 normalized declared metric values, and marks whether the rendered prompt
 contained at least two distinct metric niches. Completed manifests summarize
 those records at `runtime.history.metric_diverse_inspiration_report` with schema
-`libreevolve.metric_diverse_inspiration_report.v1`.
+`libreevolve.metric_diverse_inspiration_report.v1`. The same report carries a
+`benchmark_policy` boundary with `alphaevolve_section_2_4_claim_ready: false`,
+keeping benchmark-required metric-diverse prompt policies, cross-run fixtures,
+and scalar/single-metric comparison evidence separate from current-run
+prompt-visible telemetry.
 Inspiration `mixed` is a deterministic priority cascade:
 metric leaders, novelty-ranked candidates, selection-score leaders, then random
 fill for any remaining slots.

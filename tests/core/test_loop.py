@@ -11811,6 +11811,14 @@ def test_loop_records_prompt_visible_metric_diverse_inspiration_evidence():
     assert diversity["distinct_metric_count"] == 2
     assert diversity["distinct_metric_niches"] == ["score", "latency"]
     assert diversity["metric_diverse_prompt_visible"] is True
+    assert diversity["claim_ready"] is False
+    assert diversity["benchmark_policy"] == {
+        "schema": "libreevolve.metric_diverse_prompt_benchmark_boundary.v1",
+        "benchmark_required_metric_diverse_prompt_policy": False,
+        "cross_run_metric_diverse_prompt_fixture": False,
+        "scalar_and_single_metric_comparison": False,
+        "alphaevolve_section_2_4_claim_ready": False,
+    }
     assert diversity["records"][0]["metric_niche"] == "score"
     assert diversity["records"][0]["metric_niche_source"] == (
         "selection_metadata.target_metrics"
@@ -11825,8 +11833,31 @@ def test_loop_records_prompt_visible_metric_diverse_inspiration_evidence():
     assert report["schema"] == "libreevolve.metric_diverse_inspiration_report.v1"
     assert report["candidate_count"] == 1
     assert report["metric_diverse_prompt_count"] == 1
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"][
+        "prompt_visible_metric_diversity_evidence"
+    ] is True
+    assert report["claim_readiness"][
+        "benchmark_required_metric_diverse_prompt_policy"
+    ] is False
+    assert report["benchmark_policy"]["alphaevolve_section_2_4_claim_ready"] is False
+    assert "scalar_and_single_metric_comparison" in (
+        report["benchmark_policy"]["remaining_required_evidence"]
+    )
     assert report["validation"]["ok"] is True
     assert validate_metric_diverse_inspiration_report(report)["ok"] is True
+
+    edited = copy.deepcopy(report)
+    edited["claim_ready"] = True
+    edited["benchmark_policy"]["alphaevolve_section_2_4_claim_ready"] = True
+    edited["claim_readiness"]["benchmark_required_metric_diverse_prompt_policy"] = True
+    validation = validate_metric_diverse_inspiration_report(edited)
+    assert validation["ok"] is False
+    assert {
+        "invalid_claim_ready",
+        "invalid_benchmark_policy",
+        "benchmark_claim_overclaim",
+    }.issubset({issue["code"] for issue in validation["issues"]})
 
 
 def test_prompt_context_policy_overrides_upstream_inspiration_strategy():

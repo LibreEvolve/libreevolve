@@ -197,8 +197,10 @@ inspirations to the prompt-visible render policy, labels each visible
 inspiration with a declared metric niche, records raw/normalized metric values,
 and marks whether the prompt contained at least two distinct metric niches.
 Completed manifests summarize this evidence in
-`runtime.history.metric_diverse_inspiration_report`; benchmark-required
-metric-diverse prompt policies and cross-run comparison fixtures remain open.
+`runtime.history.metric_diverse_inspiration_report`; its `benchmark_policy`
+boundary keeps `alphaevolve_section_2_4_claim_ready` false until
+benchmark-required metric-diverse prompt policies, cross-run fixtures, and
+scalar/single-metric comparison reports exist.
 It can also cap already validated/redacted plugin `extra_context` with
 `extra_context_max_chars`, recording input/rendered/omitted character counts.
 LLM-grader prompt context can now be narrowed with `llm_feedback_fields`, a

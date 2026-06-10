@@ -1673,7 +1673,11 @@ Primary evidence:
     prompt-visible inspiration by declared metric niche, preserving raw and
     normalized metric values, and marking whether a single rendered prompt
     spans at least two metric niches. Completed manifests roll this up in
-    `runtime.history.metric_diverse_inspiration_report`.
+    `runtime.history.metric_diverse_inspiration_report`, which now carries a
+    `libreevolve.metric_diverse_prompt_benchmark_boundary.v1`
+    `benchmark_policy` and keeps benchmark-required metric-diverse prompt
+    policy, cross-run fixture, scalar/single-metric comparison, and
+    AlphaEvolve Section 2.4 readiness claims false.
   - Required result: add benchmark-required policies/fixtures and comparison
     reports showing multi-score runs can deliberately condition the model on
     programs excelling under different metrics in the same prompt.

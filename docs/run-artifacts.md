@@ -3011,6 +3011,13 @@ the prompt hash, selection strategy, prompt-visible inspiration ids, distinct
 metric niches, and per-visible-inspiration raw and normalized declared metric
 values. The report counts candidates with any prompt-visible inspirations and
 candidates whose rendered prompt contained at least two distinct metric niches.
+Each candidate record and the aggregate report also carry `benchmark_policy`
+with schema `libreevolve.metric_diverse_prompt_benchmark_boundary.v1`; the
+fields `benchmark_required_metric_diverse_prompt_policy`,
+`cross_run_metric_diverse_prompt_fixture`,
+`scalar_and_single_metric_comparison`, and
+`alphaevolve_section_2_4_claim_ready` remain false until future benchmark
+fixtures and comparison reports populate them.
 
 This is current-run prompt-conditioning evidence, not a benchmark policy by
 itself. The report's remaining gaps are benchmark fixtures or policies that

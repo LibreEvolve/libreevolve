@@ -1372,7 +1372,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     prompt-visible inspiration ids, metric-niche labels, raw/normalized metric
     values, prompt hash linkage, and whether a rendered prompt spans at least
     two metric niches. Completed manifests summarize this at
-    `runtime.history.metric_diverse_inspiration_report`.
+    `runtime.history.metric_diverse_inspiration_report`, whose
+    `libreevolve.metric_diverse_prompt_benchmark_boundary.v1`
+    `benchmark_policy` keeps benchmark-required policy, cross-run fixture,
+    scalar/single-metric comparison, and AlphaEvolve Section 2.4 readiness
+    false.
   - Current gap: the paper/status surfaces still do not require benchmark runs
     to use metric-diverse prompt slates, compare those runs with scalar archive
     sampling, or provide cross-run fixtures for different definitions of

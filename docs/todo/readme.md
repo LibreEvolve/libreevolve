@@ -96,10 +96,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     overlays, metric-targeted parent/inspiration sampling, prompt context
     filters/ranking, generated-candidate
     `metadata.inspiration_selection.metric_diversity`, and
-    `runtime.history.metric_diverse_inspiration_report`. It should still not
-    imply those current-run evidence surfaces enforce benchmark-wide
-    metric-diverse prompt conditioning or compare against scalar and
-    one-at-a-time metric-targeted sampling.
+    `runtime.history.metric_diverse_inspiration_report`, whose
+    `libreevolve.metric_diverse_prompt_benchmark_boundary.v1`
+    `benchmark_policy` keeps AlphaEvolve Section 2.4 readiness false. It
+    should still not imply those current-run evidence surfaces enforce
+    benchmark-wide metric-diverse prompt conditioning or compare against scalar
+    and one-at-a-time metric-targeted sampling.
   - Required result: when benchmark-required metric-diverse prompt policies and
     fixtures land, update README, ROADMAP, papers index, and code/paper TODOs
     together so README distinguishes current-run prompt-visible evidence from

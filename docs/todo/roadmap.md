@@ -651,9 +651,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     metric-cell overlays, metric/frontier retained pools, metric-targeted
     resurfacing, generated-candidate
     `metadata.inspiration_selection.metric_diversity`, and
-    `runtime.history.metric_diverse_inspiration_report`. They still do not
-    require benchmark policies or fixtures proving multi-score runs
-    consistently use and compare prompt slates with different metric niches.
+    `runtime.history.metric_diverse_inspiration_report`, whose
+    `libreevolve.metric_diverse_prompt_benchmark_boundary.v1`
+    `benchmark_policy` keeps AlphaEvolve Section 2.4 readiness false. They
+    still do not require benchmark policies or fixtures proving multi-score
+    runs consistently use and compare prompt slates with different metric
+    niches.
   - Required result: when benchmark-required metric-diverse prompt policies and
     fixtures land, update ROADMAP, README, papers index, and code/paper TODOs
     together so roadmap text distinguishes current-run evidence from

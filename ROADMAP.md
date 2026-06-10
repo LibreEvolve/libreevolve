@@ -47,6 +47,12 @@ LibreEvolve has:
   figure IDs, node/edge-to-component mappings, Figure 2 pseudocode-step
   mappings, artifact cross-links, and explicit gaps for rendered diagram
   hashes, exact diagram text, and full process parity
+- distributed-pipeline topology boundary reports under
+  `runtime.history.distributed_pipeline_topology_report`, naming the current
+  single-process controller, in-process database, configured LLM sampler
+  backends, local evaluator nodes, zero queues, blocking dependency edges, and
+  runtime-budget linkage while keeping AlphaEvolve async pipeline parity
+  explicitly false
 - runtime cascade summaries that aggregate configured-stage promotion,
   attrition, threshold failures, work counters, bounded candidate-stage
   history cross-links, denominator-policy boundaries, and explicit
@@ -492,8 +498,10 @@ is not yet an AlphaEvolve reproduction.
 ### 6. Async and resumable runtime
 
 - Add a controller with bounded queues for LLM proposals and evaluator workers;
-  the current loop supports sequential `proposals_per_generation` batches but
-  not concurrent proposal/evaluation queues.
+  the current loop reports its synchronous topology under
+  `runtime.history.distributed_pipeline_topology_report` and supports
+  sequential `proposals_per_generation` batches, but not concurrent
+  proposal/evaluation queues.
 - Compose the current restored LLM scheduler, prompt-history, RNG, archive, and
   budget snapshots with controller and pending-evaluation checkpoint state so
   long runs can resume from more than a terminal drained boundary.

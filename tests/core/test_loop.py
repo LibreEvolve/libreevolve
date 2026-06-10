@@ -46,6 +46,7 @@ from libreevolve.core.loop import (
     validate_controller_state_snapshot,
     validate_evaluation_cascade_report,
     validate_evaluator_workload_report,
+    validate_distributed_pipeline_topology_report,
     validate_alphaevolve_process_exhibit_report,
     validate_candidate_abstraction_choice_report,
     validate_candidate_language_runner_contract_report,
@@ -1523,6 +1524,41 @@ def test_completed_runtime_persists_archive_state_cursor_snapshot():
     assert validation["issues"] == []
     assert validation["record"]["event_stream_status"] == "present"
     assert validation["record"]["event_count"] == 2
+    topology = manifest["runtime"]["history"]["distributed_pipeline_topology_report"]
+    assert topology["schema"] == "libreevolve.distributed_pipeline_topology_report.v1"
+    assert topology["validation"]["ok"] is True
+    assert validate_distributed_pipeline_topology_report(topology)["ok"] is True
+    assert topology["queue_count"] == 0
+    assert topology["queues"] == []
+    assert topology["dispatch_policy"]["asyncio_pipeline"] is False
+    assert topology["pending_work_checkpoint"]["supported"] is False
+    assert topology["claim_ready"] is False
+    assert topology["claim_readiness"]["controller_sampler_evaluator_roles_named"] is True
+    assert topology["claim_readiness"]["alphaevolve_async_pipeline_topology"] is False
+    assert {node["role"] for node in topology["nodes"]} >= {
+        "controller",
+        "program_database",
+        "llm_sampler",
+        "evaluation_node",
+    }
+    assert all(edge["blocking"] is True for edge in topology["blocking_edges"])
+    assert all(edge["queue"] is None for edge in topology["blocking_edges"])
+
+    edited = copy.deepcopy(topology)
+    edited["dispatch_policy"]["asyncio_pipeline"] = True
+    edited["pending_work_checkpoint"]["supported"] = True
+    edited["nodes"][0]["async_worker"] = True
+    edited["claim_ready"] = True
+    edited["claim_readiness"]["alphaevolve_async_pipeline_topology"] = True
+    topology_validation = validate_distributed_pipeline_topology_report(edited)
+    assert topology_validation["ok"] is False
+    assert {
+        "async_worker_overclaim",
+        "async_pipeline_overclaim",
+        "pending_checkpoint_overclaim",
+        "claim_ready_overclaim",
+        "async_topology_overclaim",
+    }.issubset({issue["code"] for issue in topology_validation["issues"]})
 
 
 def test_validate_controller_state_snapshot_reports_overclaims_and_pending_work():

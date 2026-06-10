@@ -5412,6 +5412,12 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 archive_state,
             )
         ),
+        "distributed_pipeline_topology_report": (
+            _distributed_pipeline_topology_report(
+                db.startup_manifest_snapshot(),
+                budget,
+            )
+        ),
         "controller_state": _runtime_controller_state(run_dir, budget),
     }
     if summary["no_candidates_evaluated"]:
@@ -27366,6 +27372,307 @@ def validate_evaluation_cascade_report(report: object) -> dict:
         issues.append({"code": "claim_ready_overclaimed", "message": "current cascade report must not claim AlphaEvolve readiness"})
     return {
         "schema": "libreevolve.evaluation_cascade_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _distributed_pipeline_topology_report(
+    startup_manifest: Mapping[str, object],
+    budget: RunBudget,
+) -> dict:
+    config = (
+        startup_manifest.get("config")
+        if isinstance(startup_manifest.get("config"), Mapping)
+        else {}
+    )
+    backends = config.get("backends") if isinstance(config.get("backends"), list) else []
+    eval_stages = (
+        config.get("eval_stages")
+        if isinstance(config.get("eval_stages"), list)
+        else []
+    )
+    role_backend_indices = (
+        config.get("llm_role_backend_indices")
+        if isinstance(config.get("llm_role_backend_indices"), Mapping)
+        else {}
+    )
+    llm_nodes = [
+        _pipeline_llm_sampler_node(index, backend, role_backend_indices)
+        for index, backend in enumerate(backends)
+        if isinstance(backend, Mapping)
+    ]
+    evaluator_nodes = _pipeline_evaluation_nodes(eval_stages)
+    nodes = [
+        {
+            "node_id": "controller:local",
+            "role": "controller",
+            "implementation": "single_process_serial_loop",
+            "worker_identity": "process_main_thread",
+            "async_worker": False,
+            "state_source": "runtime.history.controller_state",
+        },
+        {
+            "node_id": "database:local",
+            "role": "program_database",
+            "implementation": "in_process_program_database",
+            "worker_identity": "process_main_thread",
+            "async_worker": False,
+            "state_source": "history_and_archive_jsonl_artifacts",
+        },
+        *llm_nodes,
+        *evaluator_nodes,
+    ]
+    blocking_edges = [
+        {
+            "edge_id": "database_sample_to_controller",
+            "from": "database:local",
+            "to": "controller:local",
+            "dependency": "parent_and_inspiration_sampling",
+            "blocking": True,
+            "queue": None,
+        },
+        {
+            "edge_id": "controller_to_llm_sampler",
+            "from": "controller:local",
+            "to": "llm_sampler:*",
+            "dependency": "mutation_generation_call",
+            "blocking": True,
+            "queue": None,
+        },
+        {
+            "edge_id": "controller_to_evaluation_node",
+            "from": "controller:local",
+            "to": "evaluation_node:*",
+            "dependency": "candidate_validation_and_scoring",
+            "blocking": True,
+            "queue": None,
+        },
+        {
+            "edge_id": "evaluation_to_database_admission",
+            "from": "evaluation_node:*",
+            "to": "database:local",
+            "dependency": "archive_admission_after_evaluation",
+            "blocking": True,
+            "queue": None,
+        },
+    ]
+    report = {
+        "schema": "libreevolve.distributed_pipeline_topology_report.v1",
+        "source": "startup_manifest_config_and_runtime_budget",
+        "node_count": len(nodes),
+        "nodes": nodes,
+        "queue_count": 0,
+        "queues": [],
+        "blocking_edge_count": len(blocking_edges),
+        "blocking_edges": blocking_edges,
+        "dispatch_policy": {
+            "schema": "libreevolve.pipeline_dispatch_policy.v1",
+            "controller": "single_process_serial_loop",
+            "llm_sampler_dispatch": "inline_blocking_call",
+            "evaluation_dispatch": "inline_blocking_local_subprocess",
+            "database_admission": "synchronous_after_candidate_evaluation",
+            "deterministic_merge_order": "loop_order",
+            "asyncio_pipeline": False,
+        },
+        "throughput_budget_linkage": {
+            "budget_source": "runtime.consumed_and_controller_budget_events",
+            "generations_completed": budget.generations_completed,
+            "evaluations": budget.evaluations,
+            "llm_calls": budget.llm_calls,
+            "queued_work_accounted": False,
+            "worker_fanout_accounted": False,
+        },
+        "pending_work_checkpoint": {
+            "supported": False,
+            "queued_proposals": 0,
+            "running_proposals": 0,
+            "queued_evaluations": 0,
+            "running_evaluations": 0,
+            "in_flight_llm_calls": 0,
+            "state_source": "terminal_controller_state_only",
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "alphaevolve_async_pipeline_topology": False,
+            "controller_sampler_evaluator_roles_named": True,
+            "queue_dependency_graph": False,
+            "worker_identity_and_fanout": False,
+            "pending_work_checkpoint": False,
+            "remaining_gap": [
+                "async_controller_queues",
+                "llm_sampler_worker_identities",
+                "evaluation_node_worker_identities",
+                "queue_capacities_and_dependency_edges",
+                "throughput_budget_dispatch_telemetry",
+                "pending_work_checkpoint_state",
+            ],
+        },
+    }
+    report["validation"] = validate_distributed_pipeline_topology_report(report)
+    return report
+
+
+def _pipeline_llm_sampler_node(
+    index: int,
+    backend: Mapping[str, object],
+    role_backend_indices: Mapping[str, object],
+) -> dict:
+    roles = [
+        role
+        for role, indices in role_backend_indices.items()
+        if isinstance(role, str)
+        and isinstance(indices, list)
+        and index in [item for item in indices if isinstance(item, int)]
+    ]
+    return {
+        "node_id": f"llm_sampler:backend_{index}",
+        "role": "llm_sampler",
+        "backend_index": index,
+        "provider": backend.get("type"),
+        "model": backend.get("model"),
+        "role_ownership": sorted(roles) if roles else ["default_ensemble_pool"],
+        "implementation": "in_process_ensemble_call",
+        "worker_identity": "process_main_thread",
+        "async_worker": False,
+        "queue": None,
+    }
+
+
+def _pipeline_evaluation_nodes(eval_stages: list) -> list[dict]:
+    if not eval_stages:
+        return [
+            {
+                "node_id": "evaluation_node:default_validator",
+                "role": "evaluation_node",
+                "stage_index": None,
+                "stage_name": None,
+                "mode": "external_validator",
+                "implementation": "local_subprocess_validator",
+                "worker_identity": "process_main_thread_spawns_subprocess",
+                "async_worker": False,
+                "queue": None,
+            }
+        ]
+    nodes: list[dict] = []
+    for index, stage in enumerate(eval_stages):
+        if not isinstance(stage, Mapping):
+            continue
+        name = str(stage.get("name", f"stage_{index}"))
+        nodes.append(
+            {
+                "node_id": f"evaluation_node:stage_{index}:{name}",
+                "role": "evaluation_node",
+                "stage_index": index,
+                "stage_name": name,
+                "mode": str(stage.get("mode", "external_validator")),
+                "implementation": (
+                    "candidate_embedded_evaluate_subprocess"
+                    if stage.get("mode") == "embedded_evaluate"
+                    else "local_subprocess_validator"
+                ),
+                "worker_identity": "process_main_thread_spawns_subprocess",
+                "async_worker": False,
+                "queue": None,
+            }
+        )
+    return nodes
+
+
+def validate_distributed_pipeline_topology_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.distributed_pipeline_topology_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "distributed pipeline topology report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "node_count",
+        "nodes",
+        "queue_count",
+        "queues",
+        "blocking_edge_count",
+        "blocking_edges",
+        "dispatch_policy",
+        "throughput_budget_linkage",
+        "pending_work_checkpoint",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"pipeline topology report missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != "libreevolve.distributed_pipeline_topology_report.v1":
+        issues.append({"code": "invalid_schema", "message": "pipeline topology schema is unsupported"})
+    if report.get("source") != "startup_manifest_config_and_runtime_budget":
+        issues.append({"code": "invalid_source", "message": "pipeline topology source is unsupported"})
+    nodes = report.get("nodes")
+    if not isinstance(nodes, list):
+        issues.append({"code": "invalid_nodes", "message": "nodes must be a list"})
+        nodes = []
+    else:
+        for index, node in enumerate(nodes):
+            if not isinstance(node, dict):
+                issues.append({"code": "invalid_node", "message": f"node {index} must be an object"})
+                continue
+            if not isinstance(node.get("node_id"), str) or not node.get("node_id"):
+                issues.append({"code": "invalid_node_id", "message": f"node {index} must include node_id"})
+            if node.get("role") not in {"controller", "program_database", "llm_sampler", "evaluation_node"}:
+                issues.append({"code": "invalid_node_role", "message": f"node {index} role is unsupported"})
+            if node.get("async_worker") is not False:
+                issues.append({"code": "async_worker_overclaim", "message": f"node {index} must not claim async worker support"})
+    _validate_report_count(report, "node_count", len(nodes), issues)
+    queues = report.get("queues")
+    if not isinstance(queues, list):
+        issues.append({"code": "invalid_queues", "message": "queues must be a list"})
+        queues = []
+    _validate_report_count(report, "queue_count", len(queues), issues)
+    edges = report.get("blocking_edges")
+    if not isinstance(edges, list):
+        issues.append({"code": "invalid_edges", "message": "blocking_edges must be a list"})
+        edges = []
+    else:
+        for index, edge in enumerate(edges):
+            if not isinstance(edge, dict):
+                issues.append({"code": "invalid_edge", "message": f"edge {index} must be an object"})
+                continue
+            if edge.get("blocking") is not True:
+                issues.append({"code": "nonblocking_edge_overclaim", "message": f"edge {index} must remain blocking"})
+            if edge.get("queue") is not None:
+                issues.append({"code": "queue_edge_overclaim", "message": f"edge {index} must not claim queue linkage"})
+    _validate_report_count(report, "blocking_edge_count", len(edges), issues)
+    dispatch = report.get("dispatch_policy")
+    if not isinstance(dispatch, dict):
+        issues.append({"code": "invalid_dispatch_policy", "message": "dispatch_policy must be an object"})
+    elif dispatch.get("asyncio_pipeline") is not False:
+        issues.append({"code": "async_pipeline_overclaim", "message": "dispatch_policy must not claim asyncio pipeline support"})
+    pending = report.get("pending_work_checkpoint")
+    if not isinstance(pending, dict):
+        issues.append({"code": "invalid_pending_work_checkpoint", "message": "pending_work_checkpoint must be an object"})
+    elif pending.get("supported") is not False:
+        issues.append({"code": "pending_checkpoint_overclaim", "message": "pending work checkpoint must remain unsupported"})
+    if report.get("claim_ready") is not False:
+        issues.append({"code": "claim_ready_overclaim", "message": "pipeline topology report must not claim AlphaEvolve readiness"})
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, dict):
+        issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
+    elif readiness.get("alphaevolve_async_pipeline_topology") is not False:
+        issues.append({"code": "async_topology_overclaim", "message": "claim_readiness must not claim async topology parity"})
+    return {
+        "schema": "libreevolve.distributed_pipeline_topology_report.v1",
         "ok": not issues,
         "issues": issues,
     }

@@ -1549,7 +1549,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     file. This does not persist queued/running async workers, in-flight
     provider outputs, evaluator-worker state, pending archive admissions,
     partially completed generation state, or deterministic mid-generation
-    controller resume ledgers.
+    controller resume ledgers. ROADMAP and completed manifests now also expose
+    `runtime.history.distributed_pipeline_topology_report`, which names the
+    current local controller/database/LLM-sampler/evaluation-node topology,
+    records zero queues and blocking edges, links runtime-budget counters, and
+    keeps AlphaEvolve async topology parity false with validation overclaim
+    guards.
   - Required result: when async controller queues, pending-work checkpoints,
     mid-generation resume, evaluator-worker state, provider-output replay, or
     deterministic controller resume ledgers land, update the roadmap, README,

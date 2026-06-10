@@ -462,6 +462,17 @@ diagram artifacts and hashes, exact diagram text/accessibility export,
 async controller/sampler/evaluator topology, independent evaluator-pool
 parallelism, and artifact-level step validation remain open.
 
+AlphaEvolve distributed-pipeline topology note: completed manifests now include
+`runtime.history.distributed_pipeline_topology_report` with schema
+`libreevolve.distributed_pipeline_topology_report.v1`. The report names the
+current LibreEvolve controller, program database, configured LLM sampler
+backends, local evaluator nodes, zero queues, and blocking dependency edges,
+and links the topology to consumed runtime/controller-budget counters. It is
+`claim_ready: false` because it records a single-process synchronous topology;
+async controller queues, real sampler/evaluator worker fan-out, queue
+capacities, nonblocking dependency tracking, throughput dispatch telemetry,
+and pending-work checkpoints remain open before Section 2.6 topology parity.
+
 AlphaEvolve evaluator-metric note: LibreEvolve now reserves boolean `is_valid`
 as a local admission gate outside declared `metrics.yaml` objectives and stores
 non-scalar evaluator attachments separately, while AlphaEvolve Section 2.1 and

@@ -192,18 +192,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     `terminal_synchronous_controller_drained`,
     `single_process_serial_loop`, zero queued/running proposals and
     evaluations, zero in-flight LLM calls, and limitations including
-    `synchronous_terminal_snapshot_not_async_queue_checkpoint`.
-  - Current gap: paper-facing evidence does not name distributed pipeline
-    nodes or roles, identify LLM sampler workers, identify evaluation nodes or
-    cluster/local worker ownership, record queue capacities and dependency
-    edges, preserve dispatch/completion/admission ordering, link throughput
-    decisions to budget records, or provide pending-work checkpoints. Without
-    those artifacts, the controller-state summary is negative boundary
-    evidence, not Section 2.6 topology parity.
-  - Required result: add topology-report artifacts, validators, and papers
-    index links for controller/sampler/evaluation-node ids, queue and blocking
-    dependency graphs, worker role ownership, throughput-budget linkage,
-    pending-work checkpoint state, and claim-readiness checks.
+    `synchronous_terminal_snapshot_not_async_queue_checkpoint`. Completed
+    manifests now also include
+    `runtime.history.distributed_pipeline_topology_report` with schema
+    `libreevolve.distributed_pipeline_topology_report.v1`, current
+    controller/database/LLM-sampler/evaluation-node ids, zero queues, blocking
+    dependency edges, synchronous dispatch/admission policy, runtime-budget
+    linkage, pending-work checkpoint unsupported status, and validator-backed
+    overclaim checks.
+  - Current gap: this is paper-facing negative boundary evidence, not Section
+    2.6 topology parity. It does not implement or preserve async queues,
+    queue capacities, nonblocking dependencies, real sampler/evaluator worker
+    fan-out, cluster-local execution ownership beyond the current
+    process/subprocess boundary, throughput dispatch telemetry, or resumable
+    pending-work checkpoints.
+  - Required result: implement async topology-report artifacts, validators,
+    and papers index links for real controller/sampler/evaluation-node worker
+    ids, queue and blocking dependency graphs, worker role ownership,
+    throughput-budget dispatch telemetry, pending-work checkpoint state, and
+    claim-readiness checks.
 
 - [ ] Extend Figure 1/Figure 2 architecture-process exhibit provenance into
       full paper evidence.

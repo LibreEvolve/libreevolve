@@ -2583,14 +2583,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     controller/worker work. Current manifests deliberately report
     `controller_model: single_process_serial_loop`, zero queued/running
     proposals or evaluations, zero in-flight LLM calls, and limitations saying
-    the snapshot is not an async queue checkpoint. README should not let that
-    negative boundary evidence read as AlphaEvolve-style distributed-pipeline
-    topology.
-  - Required result: when topology artifacts land, update README, ROADMAP,
-    papers index, and code/paper TODOs with controller/sampler/evaluation-node
-    ids, queue/dependency edges, worker role ownership, throughput-budget
-    linkage, pending-work checkpoints, and validation status so README
-    separates local terminal controller evidence from reproduced Section 2.6
+    the snapshot is not an async queue checkpoint. README now also documents
+    `runtime.history.distributed_pipeline_topology_report`, which names the
+    current local controller, database, configured LLM sampler backends, local
+    evaluator nodes, zero queues, blocking edges, runtime-budget linkage, and
+    validation overclaim guards while keeping `claim_ready: false`.
+  - Required result: when async topology artifacts land, update README,
+    ROADMAP, papers index, and code/paper TODOs with real queue capacities,
+    dependency edges, worker role ownership/fan-out, throughput dispatch
+    telemetry, pending-work checkpoints, and validation status so README
+    separates local synchronous topology evidence from reproduced Section 2.6
     pipeline evidence.
 
 - [ ] Keep README sample-efficiency claims scoped to budget telemetry until

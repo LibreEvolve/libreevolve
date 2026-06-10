@@ -1376,6 +1376,16 @@ including safe relative path checks, file existence, SHA-256, byte count,
 strict JSONL event count, last sequence/kind, per-record status, and a stable
 records hash. This is not a mid-generation or async worker queue checkpoint.
 Completed manifests also include
+`runtime.history.distributed_pipeline_topology_report`, a bounded topology
+report for the current local runtime. It names the single-process controller,
+in-process program database, configured LLM sampler backends, local evaluator
+nodes, blocking controller/sampler/evaluator/database edges, zero queues, and
+the runtime-budget counters linked to that topology. Its validator keeps
+`claim_ready: false` and rejects async-pipeline, async-worker, pending-work
+checkpoint, or AlphaEvolve Section 2.6 topology overclaims. This report is
+negative boundary evidence for the current synchronous implementation, not a
+distributed async pipeline.
+Completed manifests also include
 `runtime.history.alphaevolve_process_exhibit_report`, which maps AlphaEvolve
 Figure 1/Figure 2 process nodes, edges, and Figure 2 displayed controller
 steps to LibreEvolve components and run-artifact paths. The report records

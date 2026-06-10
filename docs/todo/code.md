@@ -1402,17 +1402,27 @@ Primary evidence:
     `single_process_serial_loop`, zero queued/running proposals, evaluations,
     and in-flight LLM calls, plus limitations such as
     `synchronous_terminal_snapshot_not_async_queue_checkpoint` and
-    `no_mid_generation_resume_boundary`. That is useful negative evidence for
-    the current boundary, but it does not define pipeline-node roles, queue
-    edges, blocking dependencies, sampler/evaluator worker identities, or
-    throughput-oriented dispatch/admission telemetry.
-  - Required result: add a versioned distributed-pipeline topology artifact and
-    validator with controller id/state, LLM sampler ids and backend-role
-    ownership, evaluation-node ids and workload/cluster identity, queue names
-    and capacities, dependency/blocking edges, dispatch/completion/admission
-    ordering, throughput-budget linkage, pending-work checkpoints, and
-    README/ROADMAP checks that distinguish topology evidence from the current
-    terminal synchronous controller snapshot.
+    `no_mid_generation_resume_boundary`. Final manifests also include
+    `runtime.history.distributed_pipeline_topology_report` with schema
+    `libreevolve.distributed_pipeline_topology_report.v1`. It names
+    `controller:local`, `database:local`, configured LLM sampler backend
+    nodes, configured/default evaluation nodes, zero queues, blocking
+    dependency edges, synchronous dispatch/admission policy, runtime-budget
+    linkage, and unsupported pending-work checkpoints.
+    `validate_distributed_pipeline_topology_report()` verifies the counts and
+    rejects async-pipeline, async-worker, pending-checkpoint, claim-ready, and
+    AlphaEvolve async-topology overclaims.
+  - Remaining gap: the topology report is still current-boundary evidence, not
+    Section 2.6 parity. It does not implement async controller queues, queue
+    capacities, nonblocking dependency edges, real sampler/evaluator worker
+    fan-out, cluster/local worker ownership beyond the local process/subprocess
+    boundary, throughput dispatch telemetry, or resumable pending-work
+    checkpoints.
+  - Required result: implement the async distributed-pipeline runtime and
+    extend the topology artifact with real queue names/capacities,
+    dependency/blocking edges, worker identities, throughput dispatch and
+    completion/admission ordering telemetry, and pending-work checkpoints while
+    keeping README/ROADMAP claims scoped to the validated report.
 
 - [ ] Add statistical hypothesis-test gates to evaluation cascades.
   - Spec evidence: AlphaEvolve Section 2.4 describes the evaluation cascade as

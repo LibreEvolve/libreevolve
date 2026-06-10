@@ -1066,6 +1066,18 @@ drained boundary and reports pending work, malformed fields, or async/full
 replay overclaims as validation failures. Queued/running async worker state,
 provider-output replay, and end-to-end lineage replay proof remain separate
 resume work.
+Completed runtime history also records
+`runtime.history.distributed_pipeline_topology_report` with schema
+`libreevolve.distributed_pipeline_topology_report.v1`. The report names the
+current local synchronous topology: `controller:local`, `database:local`,
+configured `llm_sampler:backend_*` nodes, configured or default
+`evaluation_node:*` nodes, zero queues, and blocking dependency edges for
+sampling, mutation generation, evaluation, and archive admission. Its
+`throughput_budget_linkage` points at consumed runtime and controller-budget
+events while marking queued-work and worker-fanout accounting unsupported.
+`validate_distributed_pipeline_topology_report()` keeps `claim_ready: false`
+and fails async-pipeline, async-worker, pending-checkpoint, or AlphaEvolve
+async-topology overclaims.
 Malformed evaluator accounting passed directly to `RunBudget.record_evaluation()`
 is rejected before local evaluation counters mutate. The current
 `max_evaluations` limit is still a seed/candidate evaluation cap rather than a

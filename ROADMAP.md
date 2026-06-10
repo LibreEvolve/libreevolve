@@ -858,6 +858,11 @@ is not yet an AlphaEvolve reproduction.
   source refs, and links to result, scalar-field, tensor-rank, Figure 4,
   Figure 9, and companion Colab evidence. The runner still does not emit the
   headline record or linked decomposition/certificate/source artifacts.
+  `libreevolve.matrix_headline_historicity_runtime_boundary.v1` now validates
+  the current `not_emitted_by_local_runner` boundary and required future
+  emitted-record fields for headline target/rank/field values, source refs,
+  prior comparisons, evidence links, matrix-result refs, artifact paths, and
+  artifact hashes.
 - Keep matrix outcome claims scoped to named target subsets:
   `libreevolve.alphaevolve_matrix_subset_scope.v1` now validates
   `appendix_a_full`, `main_text_mnp_le_5`, and `table_2_selected` membership,

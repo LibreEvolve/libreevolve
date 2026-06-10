@@ -10,6 +10,7 @@ from libreevolve.problems.benchmarks.companion_sources import (
 from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_ARTIFACT_INVENTORY_SCHEMA,
     MATRIX_HEADLINE_HISTORICITY_SCHEMA,
+    MATRIX_HEADLINE_HISTORICITY_RUNTIME_SCHEMA,
     MATRIX_NEAR_INTEGRALITY_SCHEMA,
     MATRIX_NEAR_INTEGRALITY_RUNTIME_SCHEMA,
     MATRIX_PUBLICATION_BUNDLE_SCHEMA,
@@ -20,12 +21,14 @@ from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_SWEEP_SPACE_RUNTIME_SCHEMA,
     MATRIX_TENSOR_RANK_SCHEMA,
     MATRIX_TENSOR_RANK_RUNTIME_SCHEMA,
+    matrix_headline_historicity_runtime_boundary_record,
     matrix_near_integrality_runtime_boundary_record,
     matrix_result_artifact_inventory,
     matrix_scalar_field_runtime_boundary_record,
     matrix_sweep_space_runtime_boundary_record,
     matrix_tensor_rank_runtime_boundary_record,
     render_matrix_headline_historicity_summary,
+    render_matrix_headline_historicity_runtime_boundary_summary,
     render_matrix_near_integrality_summary,
     render_matrix_near_integrality_runtime_boundary_summary,
     render_matrix_result_summary,
@@ -36,6 +39,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     render_matrix_tensor_rank_summary,
     render_matrix_tensor_rank_runtime_boundary_summary,
     validate_matrix_headline_historicity_evidence,
+    validate_matrix_headline_historicity_runtime_boundary,
     validate_matrix_near_integrality_evidence,
     validate_matrix_near_integrality_runtime_boundary,
     validate_matrix_publication_bundle,
@@ -1484,3 +1488,97 @@ def test_render_matrix_headline_historicity_summary_reports_shape():
     assert "| target_id | mm_4x4x4 |" in summary
     assert "| prior_comparison_count | 2 |" in summary
     assert "| source_ref_count | 2 |" in summary
+
+
+def test_matrix_headline_historicity_runtime_boundary_accepts_current_absence():
+    boundary = matrix_headline_historicity_runtime_boundary_record()
+
+    validation = validate_matrix_headline_historicity_runtime_boundary(boundary)
+
+    assert boundary["schema"] == MATRIX_HEADLINE_HISTORICITY_RUNTIME_SCHEMA
+    assert validation.ok is True
+    assert validation.runtime_emission_status == "not_emitted_by_local_runner"
+    assert validation.emitted_record_count == 0
+    assert validation.required_field_count == 14
+    assert "prior_comparisons" in boundary["required_emission_fields"]
+    assert "evidence_links" in boundary["required_emission_fields"]
+    assert "matrix_result_ref" in boundary["required_emission_fields"]
+
+
+def test_matrix_headline_historicity_runtime_boundary_rejects_absence_with_records():
+    boundary = matrix_headline_historicity_runtime_boundary_record()
+    boundary["emitted_records"] = [
+        {
+            "run_id": "run_001",
+            "candidate_id": "candidate_001",
+            "matrix_result_ref": "matrix/mm_4x4x4/report.json",
+            "headline_historicity_evidence": _valid_headline_historicity_evidence(),
+        }
+    ]
+
+    validation = validate_matrix_headline_historicity_runtime_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "unexpected_runtime_headline_historicity_records" in codes
+
+
+def test_matrix_headline_historicity_runtime_boundary_requires_emitted_records():
+    boundary = matrix_headline_historicity_runtime_boundary_record()
+    boundary["runtime_emission_status"] = "emitted"
+
+    validation = validate_matrix_headline_historicity_runtime_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "missing_runtime_headline_historicity_records" in codes
+
+
+def test_matrix_headline_historicity_runtime_boundary_accepts_emitted_evidence():
+    boundary = matrix_headline_historicity_runtime_boundary_record()
+    boundary["runtime_emission_status"] = "emitted"
+    boundary["emitted_records"] = [
+        {
+            "run_id": "run_001",
+            "candidate_id": "candidate_001",
+            "matrix_result_ref": "matrix/mm_4x4x4/report.json",
+            "headline_historicity_evidence": _valid_headline_historicity_evidence(),
+        }
+    ]
+
+    validation = validate_matrix_headline_historicity_runtime_boundary(boundary)
+
+    assert validation.ok is True
+    assert validation.runtime_emission_status == "emitted"
+    assert validation.emitted_record_count == 1
+
+
+def test_matrix_headline_historicity_runtime_boundary_rejects_invalid_nested_evidence():
+    boundary = matrix_headline_historicity_runtime_boundary_record()
+    boundary["runtime_emission_status"] = "emitted"
+    nested = _valid_headline_historicity_evidence()
+    nested["headline_claim"]["rank"] = 49
+    boundary["emitted_records"] = [
+        {
+            "run_id": "run_001",
+            "candidate_id": "candidate_001",
+            "matrix_result_ref": "matrix/mm_4x4x4/report.json",
+            "headline_historicity_evidence": nested,
+        }
+    ]
+
+    validation = validate_matrix_headline_historicity_runtime_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "runtime_record_0_headline_historicity_invalid_headline_rank" in codes
+
+
+def test_render_matrix_headline_historicity_runtime_boundary_summary_reports_shape():
+    summary = render_matrix_headline_historicity_runtime_boundary_summary()
+
+    assert "Matrix headline historicity runtime boundary" in summary
+    assert "| schema_status | ok |" in summary
+    assert "| runtime_emission_status | not_emitted_by_local_runner |" in summary
+    assert "| emitted_record_count | 0 |" in summary
+    assert "| required_field_count | 14 |" in summary

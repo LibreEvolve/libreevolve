@@ -1382,6 +1382,40 @@ def test_validate_paper_manifest_checks_matrix_tensor_rank_runtime_boundary(
     assert "matrix_tensor_rank_runtime_missing_runtime_tensor_rank_records" in codes
 
 
+def test_validate_paper_manifest_checks_matrix_headline_historicity_runtime_boundary(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        json.dumps(
+            {
+                "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1",
+                "source_paper_id": "2506.13131",
+                "target_suite": "alphaevolve_appendix_a",
+                "targets": [],
+            }
+        ),
+        encoding="utf-8",
+    )
+    boundary = paper_manifest.matrix_headline_historicity_runtime_boundary_record()
+    boundary["runtime_emission_status"] = "emitted"
+    monkeypatch.setattr(
+        paper_manifest,
+        "matrix_headline_historicity_runtime_boundary_record",
+        lambda: boundary,
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "matrix_headline_historicity_runtime_missing_runtime_headline_historicity_records" in codes
+
+
 def test_validate_paper_manifest_checks_example_scope_records(monkeypatch, tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

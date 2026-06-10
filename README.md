@@ -3698,7 +3698,11 @@ tensor-rank, Figure 4, Figure 9, and companion Colab evidence. It also
 validates the companion notebook selection-scope record for that headline
 claim. It validates the declared evidence shape; local matrix benchmark runners
 still do not emit the headline record or the linked decomposition/certificate/
-source artifacts.
+source artifacts. The companion runtime boundary
+`libreevolve.matrix_headline_historicity_runtime_boundary.v1` validates the
+current `not_emitted_by_local_runner` state and required future emitted-record
+fields for headline target/rank/field values, source refs, prior comparisons,
+evidence links, matrix-result refs, artifact paths, and artifact hashes.
 Matrix-rank table exhibit evidence uses
 `libreevolve.alphaevolve_matrix_rank_table_exhibit.v1`; it validates declared
 Table 2 and Appendix A Table 3 table exhibits, including stable table ids,

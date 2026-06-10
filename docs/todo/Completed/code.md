@@ -15954,3 +15954,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused matrix-result and paper-manifest tests cover the
     absence boundary, emitted-record validation, invalid nested evidence, and
     manifest hook.
+
+- [x] Add a matrix headline historicity runtime-emission boundary contract.
+  - Spec evidence: AlphaEvolve's abstract and Section 3.1 headline the
+    `mm_4x4x4` complex rank-48 result as the first characteristic-zero
+    rank-below-49 improvement after 56 years, separate from rank-row and
+    scalar-field evidence alone.
+  - Status: `libreevolve.matrix_headline_historicity_runtime_boundary.v1` now
+    validates the current `not_emitted_by_local_runner` state, rejects false
+    emitted claims without nested headline historicity evidence, and records
+    required future fields for headline target/rank/field values, source refs,
+    prior comparisons, evidence links, matrix-result refs, artifact paths, and
+    artifact hashes. Local matrix runners still do not emit headline/source/
+    decomposition/certificate artifacts.
+  - Verification: focused matrix-result and paper-manifest tests cover the
+    absence boundary, emitted-record validation, invalid nested evidence, and
+    manifest hook.

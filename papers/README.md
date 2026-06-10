@@ -1147,6 +1147,11 @@ Implemented:
   refs, and links to result, scalar-field, tensor-rank, Figure 4, Figure 9,
   and companion Colab evidence. No local matrix benchmark runner emits those
   headline/source/decomposition/certificate artifacts yet.
+  `libreevolve.matrix_headline_historicity_runtime_boundary.v1` now records the
+  current `not_emitted_by_local_runner` boundary and required future
+  emitted-record fields for headline target/rank/field values, source refs,
+  prior comparisons, evidence links, matrix-result refs, artifact paths, and
+  artifact hashes.
   `libreevolve.alphaevolve_matrix_rank_table_exhibit.v1` validates declared
   Table 2 and Appendix A Table 3 matrix-rank table exhibits, including stable
   table ids, source page/caption links, selected/full-table membership, row

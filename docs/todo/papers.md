@@ -3269,11 +3269,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     dimensions, scalar field/characteristic, reported rank, 56-year
     first-below-49 flags, Strassen/Fawzi prior comparisons, bibliography-style
     reference ids, source refs, and links to result, scalar-field, tensor-rank,
-    Figure 4, Figure 9, and companion Colab evidence. A table row or
-    scalar-field record alone still would not prove the "first improvement
-    after 56 years" claim, and no emitted artifact currently preserves the
-    abstract/Section 3.1 source spans, decomposition/certificate links, or
-    companion-notebook digest.
+    Figure 4, Figure 9, and companion Colab evidence.
+    `libreevolve.matrix_headline_historicity_runtime_boundary.v1` now validates
+    the current `not_emitted_by_local_runner` boundary and required future
+    emitted-record fields for headline target/rank/field values, source refs,
+    prior comparisons, evidence links, matrix-result refs, artifact paths, and
+    artifact hashes. A table row or scalar-field record alone still would not
+    prove the "first improvement after 56 years" claim, and no emitted artifact
+    currently preserves the abstract/Section 3.1 source spans,
+    decomposition/certificate links, or companion-notebook digest.
   - Required result: emit paper-facing matrix-headline provenance artifacts
     with target id, dimensions, scalar field/characteristic, reported rank,
     Strassen baseline rank and scope, finite-field Fawzi caveat, bibliography

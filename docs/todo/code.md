@@ -3270,8 +3270,13 @@ Primary evidence:
     claim to target id, dimensions, rank, scalar-field/characteristic scope,
     56-year first-below-49 flags, Strassen/Fawzi prior comparisons, source
     refs, and links to result, scalar-field, tensor-rank, Figure 4, Figure 9,
-    and companion Colab evidence. It is still a schema contract only: local
-    matrix benchmark runners do not emit the headline JSON, source-ref
+    and companion Colab evidence.
+    `libreevolve.matrix_headline_historicity_runtime_boundary.v1` now validates
+    the current `not_emitted_by_local_runner` boundary and required future
+    emitted-record fields for headline target/rank/field values, source refs,
+    prior comparisons, evidence links, matrix-result refs, artifact paths, and
+    artifact hashes. It is still a schema contract only: local matrix benchmark
+    runners do not emit the headline JSON, source-ref
     extraction, decomposition/certificate links, or companion-notebook digest
     needed to prove the stronger historicity claim from concrete artifacts.
   - Required result: emit and commit matrix-headline provenance artifacts with

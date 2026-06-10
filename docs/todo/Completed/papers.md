@@ -10750,3 +10750,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     paper-manifest gate validates this boundary with the Appendix A matrix
     checks.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Track matrix headline historicity runtime-emission absence separately
+      from declared evidence validation.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` abstract and Section 3.1
+    state the 4x4 complex rank-48 headline, including the 56-year
+    characteristic-zero first-below-49 framing and prior Strassen/Fawzi
+    comparisons.
+  - Status: `libreevolve.matrix_headline_historicity_runtime_boundary.v1` now
+    records the current `not_emitted_by_local_runner` boundary and validates
+    required future emitted-record fields for headline target/rank/field
+    values, source refs, prior comparisons, evidence links, matrix-result refs,
+    artifact paths, and artifact hashes. The paper-manifest gate validates
+    this boundary with the Appendix A matrix checks.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

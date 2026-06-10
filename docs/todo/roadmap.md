@@ -2483,8 +2483,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     target id, dimensions, scalar field/characteristic, rank, 56-year
     first-below-49 flags, Strassen/Fawzi comparison scope, source refs, and
     links to result, scalar-field, tensor-rank, Figure 4, Figure 9, and
-    companion Colab evidence. This is not yet emitted runtime/source evidence:
-    the runner still does not write headline artifacts or concrete
+    companion Colab evidence.
+    `libreevolve.matrix_headline_historicity_runtime_boundary.v1` now validates
+    the current `not_emitted_by_local_runner` boundary and required future
+    emitted-record fields for headline target/rank/field values, source refs,
+    prior comparisons, evidence links, matrix-result refs, artifact paths, and
+    artifact hashes. This is not yet emitted runtime/source evidence: the
+    runner still does not write headline artifacts or concrete
     source-span/decomposition/certificate/Colab digest links.
   - Required result: when matrix-headline artifacts land, update ROADMAP,
     README, papers index, and code/paper TODOs with target id, dimensions,

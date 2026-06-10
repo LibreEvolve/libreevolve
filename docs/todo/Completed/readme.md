@@ -10798,3 +10798,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     winning configuration, certificate/decomposition refs, matrix-result refs,
     artifact paths, and artifact hashes.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the matrix headline historicity runtime boundary in README.
+  - Spec evidence: README matrix wording needs to separate declared headline
+    historicity evidence validation from actual local runner emission for the
+    4x4 complex rank-48 first-improvement claim.
+  - Status: README now names
+    `libreevolve.matrix_headline_historicity_runtime_boundary.v1`, scopes it
+    to the current `not_emitted_by_local_runner` state, and lists required
+    future emitted-record fields for headline target/rank/field values, source
+    refs, prior comparisons, evidence links, matrix-result refs, artifact
+    paths, and artifact hashes.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

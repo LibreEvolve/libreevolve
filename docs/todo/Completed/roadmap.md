@@ -8231,3 +8231,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     current `not_emitted_by_local_runner` state, and keeps real local
     sweep-space artifact emission open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the matrix headline historicity runtime boundary in ROADMAP.
+  - Spec evidence: roadmap matrix wording needs to distinguish declared
+    headline historicity schema validation from actual local-run artifacts for
+    the 4x4 complex rank-48 first-improvement claim.
+  - Status: ROADMAP now names
+    `libreevolve.matrix_headline_historicity_runtime_boundary.v1`, scopes it to
+    the current `not_emitted_by_local_runner` state, and keeps real local
+    headline/source/decomposition/certificate artifact emission open.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

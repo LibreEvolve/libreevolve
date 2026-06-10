@@ -176,7 +176,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     validator-visible `stage["workload"]`, validated dataset/budget/
     checkpoint/artifact/score-field declarations, and
     `runtime.history.evaluator_workload_report`. It also says the report is
-    not a workload-specific runner and remains `claim_ready: false`.
+    not a workload-specific runner and remains `claim_ready: false`. README can
+    now cite dataset-digest completeness, score-field-to-returned-metric
+    linkage, observed artifact evidence, protocol-readiness counts, and the
+    managed-runner overclaim guard.
   - Required result: when executable workload-specific training/search
     contracts land, update README, ROADMAP, papers index, and code/paper TODOs
     together so README distinguishes declarative workload provenance from

@@ -54,7 +54,8 @@ LibreEvolve has:
 - evaluator-workload declarations for configured stages, including
   `simple_check`, `inner_search`, `ml_training`, and `custom` classifications,
   validated dataset/budget/checkpoint/score-field metadata, validator-visible
-  `stage["workload"]`, and runtime aggregation under
+  `stage["workload"]`, runtime dataset/score-field/artifact readiness
+  evidence, explicit managed-runner overclaim guards, and aggregation under
   `runtime.history.evaluator_workload_report`
 - strict scalar evaluator-output validation against `metrics.yaml`, including
   finite, strictly increasing non-boolean metric bounds and a reserved boolean
@@ -377,9 +378,9 @@ is not yet an AlphaEvolve reproduction.
   independent cross-oracle disagreement outcome records beyond the current
   local cascade plus optional synchronous feedback graders.
 - Extend evaluator-workload provenance into actual workload-specific execution
-  contracts for inner-search and ML-training tasks: dataset/split hash
-  enforcement, training/search loop runners, checkpoint completeness checks,
-  score-field-to-artifact linkage, and stochastic re-evaluation policy.
+  contracts for inner-search and ML-training tasks: managed training/search
+  loop runners, checkpoint completeness checks beyond observed artifacts,
+  score-field-to-artifact causality, and stochastic re-evaluation policy.
 - Extend `runtime.history.automated_evaluator_scope_report` beyond the current
   machine-feedback/manual-experiment/LLM-feedback boundary into robust
   evaluator-environment fixtures, manual-to-code transition policy, and

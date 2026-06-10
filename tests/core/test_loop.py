@@ -6005,9 +6005,12 @@ def test_runtime_history_reports_evaluator_workload_provenance():
     tmpdir = tempfile.mkdtemp()
     digest = "b" * 64
     problem = _problem(
+        "import json\n"
+        "from pathlib import Path\n"
         "def evaluate(code, workspace, stage):\n"
         "    workload = stage['workload']\n"
         "    ok = workload['type'] == 'inner_search'\n"
+        "    Path('search_trace.json').write_text(json.dumps({'ok': ok}))\n"
         "    return {'score': 1.0 if ok else 0.0, 'is_valid': ok}\n"
     )
 
@@ -6020,6 +6023,7 @@ def test_runtime_history_reports_evaluator_workload_provenance():
             eval_stages=[
                 {
                     "name": "search_stage",
+                    "artifact_include": ["search_trace.json"],
                     "workload": {
                         "type": "inner_search",
                         "datasets": [
@@ -6051,6 +6055,15 @@ def test_runtime_history_reports_evaluator_workload_provenance():
     assert report["stage_count"] == 1
     assert report["declared_workload_stage_count"] == 1
     assert report["workload_type_counts"] == {"inner_search": 1}
+    assert report["workload_protocol_policy"]["paper_claim_ready"] is False
+    assert report["protocol_readiness"] == {
+        "declared_protocol_stage_count": 1,
+        "dataset_digest_complete_stage_count": 1,
+        "score_field_linked_stage_count": 1,
+        "artifact_evidence_stage_count": 1,
+        "managed_runner_stage_count": 0,
+        "claim_ready": False,
+    }
     assert report["claim_ready"] is False
 
     stage = report["stages"][0]
@@ -6063,6 +6076,40 @@ def test_runtime_history_reports_evaluator_workload_provenance():
     assert stage["budget"]["max_trials"] == 25
     assert stage["checkpoint_policy"] == "retained_artifacts"
     assert stage["score_fields"] == ["score"]
+    assert stage["dataset_digest_evidence"] == {
+        "required_for_protocol_claim": True,
+        "dataset_count": 1,
+        "sha256_count": 1,
+        "missing_sha256_dataset_ids": [],
+        "missing_sha256_dataset_ids_truncated": False,
+        "complete": True,
+    }
+    assert stage["score_field_linkage"]["complete"] is True
+    assert stage["score_field_linkage"]["declared_score_fields"] == ["score"]
+    assert stage["score_field_linkage"]["observed_metric_names"] == [
+        "is_valid",
+        "score",
+    ]
+    assert stage["artifact_evidence"]["file_count"] == 1
+    assert stage["artifact_evidence"]["sha256_count"] == 1
+    assert stage["artifact_evidence"]["sample_paths"] == ["search_trace.json"]
+    assert stage["artifact_evidence"]["completeness_status"] == "observed"
+    assert stage["protocol_execution"] == {
+        "managed_runner": False,
+        "execution_owner": "problem_local_validator",
+        "validator_workload_context": True,
+        "claim_ready": False,
+    }
+
+    overclaimed = copy.deepcopy(report)
+    overclaimed["workload_protocol_policy"]["paper_claim_ready"] = True
+    overclaimed["protocol_readiness"]["claim_ready"] = True
+    validation = validate_evaluator_workload_report(overclaimed)
+    assert validation["ok"] is False
+    assert any(
+        issue["code"] == "workload_protocol_overclaim"
+        for issue in validation["issues"]
+    )
 
 
 def test_runtime_history_reports_embedded_evaluator_entrypoint():

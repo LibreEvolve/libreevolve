@@ -518,10 +518,13 @@ AlphaEvolve evaluator-workload note: configured stages can now declare
 with validated dataset/split hashes, budget fields, checkpoint policy,
 artifact policy, and scored metric-field names. Runtime manifests summarize
 executed stage workload evidence under
-`runtime.history.evaluator_workload_report`. This is provenance for the
-Section 2.1 claim that evaluators may run inner search or train models, not yet
-proof that LibreEvolve provides workload-specific training/search runners,
-checkpoint completeness, or score-field-to-artifact verification.
+`runtime.history.evaluator_workload_report`, including dataset-digest
+completeness, score-field-to-returned-metric linkage, observed artifact file
+evidence, protocol-readiness counts, and an explicit policy that managed
+`inner_search` and `ml_training` runners remain absent. This is provenance for
+the Section 2.1 claim that evaluators may run inner search or train models, not
+yet proof that LibreEvolve provides workload-specific training/search runners,
+checkpoint completeness, or score-field-to-artifact causality.
 
 AlphaEvolve task-specification note: startup manifests now include
 `task_specification` with schema

@@ -709,18 +709,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     for `simple_check`, `inner_search`, `ml_training`, or `custom`, including
     optional dataset/split hashes, budget fields, checkpoint/artifact policy,
     and score-field names. Runtime manifests summarize executed stage workload
-    evidence under `runtime.history.evaluator_workload_report`.
+    evidence under `runtime.history.evaluator_workload_report`, including
+    dataset-digest completeness, score-field-to-returned-metric linkage,
+    observed artifact file evidence, protocol-readiness counts, and validation
+    that rejects workload protocol overclaims.
   - Current gap: paper-facing evidence still does not enforce the protocol
-    needed for search/training-style evaluators: required dataset/split
-    provenance by workload type, model-training configuration execution,
-    checkpoint or construction-artifact completeness, randomized initialization
-    policy, and linkage from produced artifacts to returned scores.
+    needed for search/training-style evaluators: managed model-training or
+    search-loop execution, checkpoint or construction-artifact completeness
+    beyond observed files, randomized initialization policy, and causal linkage
+    from produced artifacts to returned scores.
   - Required result: extend report/manifest evidence into executable evaluator
-    workload contracts for `inner_search` and `ml_training`, with required
-    dataset/split hashes where appropriate, training/search loop records,
-    checkpoint/artifact linkage, seed/retry semantics, score-field mapping, and
-    examples that keep quick validators distinct from AlphaEvolve-style
-    evaluator workloads that train models or run search.
+    workload contracts for `inner_search` and `ml_training`, with managed
+    training/search loop records, checkpoint/artifact linkage, seed/retry
+    semantics, score-field-to-artifact causality, and examples that keep quick
+    validators distinct from AlphaEvolve-style evaluator workloads that train
+    models or run search.
 
 - [ ] Complete accelerator/async budgets and executed ablation support.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.6 and 4.

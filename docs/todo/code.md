@@ -1341,17 +1341,21 @@ Primary evidence:
     Validators receive the declaration as `stage["workload"]`, and completed
     manifests aggregate executed stage workload evidence under
     `runtime.history.evaluator_workload_report` with `claim_ready: false`.
+    The report now includes dataset-digest completeness, declared
+    score-field-to-returned-metric linkage, observed artifact/checkpoint file
+    evidence, protocol-readiness counts, and validation that rejects workload
+    protocol overclaims.
   - Remaining gap: the workload declaration/report does not yet enforce a
-    training/search protocol runner, require dataset/split digests for every
-    workload, verify checkpoint completeness or produced construction
-    artifacts, validate randomized initialization semantics, or prove metric
-    linkage from produced artifacts to candidate-returned scores.
+    managed training/search protocol runner, verify checkpoint completeness
+    beyond observed artifact files, validate randomized initialization
+    semantics, or prove causal metric linkage from produced artifacts to
+    candidate-returned scores.
   - Required result: extend the versioned evaluator-workload contract into
-    executable `inner_search` and `ml_training` protocols with required
-    dataset/split hashes where appropriate, training/search loop records,
-    checkpoint/artifact completeness checks, seed/retry semantics, score-field
-    linkage, and report examples before claiming AlphaEvolve-style evaluator
-    support for evolved search algorithms or model-training workloads.
+    executable `inner_search` and `ml_training` protocols with managed
+    training/search loop records, checkpoint/artifact completeness checks,
+    seed/retry semantics, score-field-to-artifact causality, and report
+    examples before claiming AlphaEvolve-style evaluator support for evolved
+    search algorithms or model-training workloads.
 
 - [ ] Add asynchronous evaluator workers and concurrent proposal control.
   - Spec evidence: AlphaEvolve parallelizes evaluation, often distributing

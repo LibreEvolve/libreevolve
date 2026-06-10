@@ -2515,10 +2515,13 @@ LibreEvolve validates optional dataset/split hashes, budget fields,
 checkpoint policy, artifact policy, and score-field names, passes the
 declaration to three-argument validators as `stage["workload"]`, and aggregates
 executed stage evidence under `runtime.history.evaluator_workload_report`.
-That report is a paper-facing provenance boundary, not a workload-specific
-runner: it remains `claim_ready: false` until training/search protocol
-execution, checkpoint completeness, and score-field-to-artifact checks are
-enforced.
+That report now records dataset-digest completeness, declared score-field to
+returned-metric linkage, observed artifact/checkpoint file evidence, protocol
+readiness counts, and an explicit policy that no managed `inner_search` or
+`ml_training` runner exists yet. It is a paper-facing provenance boundary, not
+a workload-specific runner: it remains `claim_ready: false` until managed
+training/search protocol execution, checkpoint completeness, and
+score-field-to-artifact causality are enforced.
 Configured stage `retries` are capped at `10`; the total subprocess attempts
 for a stage remain `samples * (retries + 1)` before early success/stop.
 Retries are threshold-aware when `min_score` or `metric_thresholds` is

@@ -24542,6 +24542,21 @@ def _evaluator_workload_report(programs: list[Program]) -> dict:
                     "score_fields": workload.get("score_fields", []),
                     "artifact_policy": workload.get("artifact_policy", "not_declared"),
                     "seed_count": workload.get("seed_count", 0),
+                    "dataset_digest_evidence": _workload_dataset_digest_evidence(
+                        workload_type,
+                        workload.get("datasets", []),
+                    ),
+                    "protocol_execution": {
+                        "managed_runner": False,
+                        "execution_owner": "problem_local_validator",
+                        "validator_workload_context": declared,
+                        "claim_ready": False,
+                    },
+                    "_observed_metric_names": set(),
+                    "_score_field_complete_count": 0,
+                    "_artifact_file_count": 0,
+                    "_artifact_sha256_count": 0,
+                    "_artifact_paths": set(),
                     "sample_count": 0,
                     "retry_attempts": 0,
                     "subprocess_attempts": 0,
@@ -24560,11 +24575,17 @@ def _evaluator_workload_report(programs: list[Program]) -> dict:
             stage["retry_attempts"] += int(accounting.get("retry_attempts", 0))
             stage["subprocess_attempts"] += int(accounting.get("subprocess_attempts", 0))
             stage["timeout_count"] += int(accounting.get("timeout_count", 0))
+            _accumulate_workload_runtime_evidence(stage, raw_stage)
     ordered_stages = [
         _finalize_workload_stage_record(record)
         for record in sorted(stages.values(), key=lambda item: (item["stage_index"], item["name"]))
     ]
     declared_workload_stage_count = sum(1 for stage in ordered_stages if stage["declared"])
+    protocol_stages = [
+        stage
+        for stage in ordered_stages
+        if stage["declared"] and stage["workload_type"] in {"inner_search", "ml_training"}
+    ]
     report = {
         "schema": "libreevolve.evaluator_workload_report.v1",
         "source": "runtime_history_configured_stage_results",
@@ -24573,6 +24594,39 @@ def _evaluator_workload_report(programs: list[Program]) -> dict:
         "declared_workload_stage_count": declared_workload_stage_count,
         "workload_type_counts": dict(sorted(workload_type_counts.items())),
         "stages": ordered_stages,
+        "workload_protocol_policy": {
+            "schema": "libreevolve.evaluator_workload_protocol_policy.v1",
+            "managed_inner_search_runner": False,
+            "managed_ml_training_runner": False,
+            "dataset_digest_check": "reported_from_workload_metadata_not_enforced_for_all_workloads",
+            "score_field_linkage": "declared_score_fields_checked_against_returned_metrics",
+            "checkpoint_artifact_check": "observed_artifact_records_only",
+            "paper_claim_ready": False,
+        },
+        "protocol_readiness": {
+            "declared_protocol_stage_count": len(protocol_stages),
+            "dataset_digest_complete_stage_count": sum(
+                1
+                for stage in protocol_stages
+                if stage["dataset_digest_evidence"]["complete"] is True
+            ),
+            "score_field_linked_stage_count": sum(
+                1
+                for stage in protocol_stages
+                if stage["score_field_linkage"]["complete"] is True
+            ),
+            "artifact_evidence_stage_count": sum(
+                1
+                for stage in protocol_stages
+                if stage["artifact_evidence"]["file_count"] > 0
+            ),
+            "managed_runner_stage_count": sum(
+                1
+                for stage in protocol_stages
+                if stage["protocol_execution"]["managed_runner"] is True
+            ),
+            "claim_ready": False,
+        },
         "claim_ready": False,
         "claim_readiness": {
             "alphaevolve_inner_search_or_ml_training": False,
@@ -26631,12 +26685,114 @@ def _configured_stage_workload(raw_stage: dict) -> dict:
     }
 
 
+def _workload_dataset_digest_evidence(workload_type: str, datasets: object) -> dict:
+    dataset_records = datasets if isinstance(datasets, list) else []
+    required = workload_type in {"inner_search", "ml_training"}
+    dataset_count = sum(1 for dataset in dataset_records if isinstance(dataset, dict))
+    sha256_count = sum(
+        1
+        for dataset in dataset_records
+        if isinstance(dataset, dict)
+        and isinstance(dataset.get("sha256"), str)
+        and len(dataset.get("sha256", "")) == 64
+    )
+    missing_refs = [
+        str(dataset.get("id", f"dataset_{index}"))
+        for index, dataset in enumerate(dataset_records)
+        if isinstance(dataset, dict) and not isinstance(dataset.get("sha256"), str)
+    ]
+    complete = (
+        dataset_count > 0 and sha256_count == dataset_count
+        if required
+        else sha256_count == dataset_count
+    )
+    return {
+        "required_for_protocol_claim": required,
+        "dataset_count": dataset_count,
+        "sha256_count": sha256_count,
+        "missing_sha256_dataset_ids": missing_refs[:20],
+        "missing_sha256_dataset_ids_truncated": len(missing_refs) > 20,
+        "complete": complete,
+    }
+
+
+def _accumulate_workload_runtime_evidence(
+    stage: dict,
+    raw_stage: Mapping[str, object],
+) -> None:
+    metrics = raw_stage.get("metrics")
+    metric_names = (
+        {name for name in metrics if isinstance(name, str)}
+        if isinstance(metrics, Mapping)
+        else set()
+    )
+    stage["_observed_metric_names"].update(metric_names)
+    score_fields = [
+        field for field in stage.get("score_fields", []) if isinstance(field, str)
+    ]
+    if score_fields and set(score_fields).issubset(metric_names):
+        stage["_score_field_complete_count"] += 1
+    metadata = raw_stage.get("metadata")
+    artifacts = metadata.get("artifacts") if isinstance(metadata, Mapping) else None
+    files = artifacts.get("files") if isinstance(artifacts, Mapping) else None
+    if not isinstance(files, list):
+        return
+    for artifact in files:
+        if not isinstance(artifact, Mapping):
+            continue
+        stage["_artifact_file_count"] += 1
+        if isinstance(artifact.get("sha256"), str):
+            stage["_artifact_sha256_count"] += 1
+        path = artifact.get("path")
+        if isinstance(path, str) and path:
+            stage["_artifact_paths"].add(path)
+
+
 def _finalize_workload_stage_record(record: dict) -> dict:
     finalized = dict(record)
+    observed_metric_names = sorted(finalized.pop("_observed_metric_names", set()))
+    score_fields = [
+        field for field in finalized.get("score_fields", []) if isinstance(field, str)
+    ]
+    missing_score_fields = [
+        field for field in score_fields if field not in set(observed_metric_names)
+    ]
+    score_field_complete_count = int(finalized.pop("_score_field_complete_count", 0))
+    artifact_file_count = int(finalized.pop("_artifact_file_count", 0))
+    artifact_sha256_count = int(finalized.pop("_artifact_sha256_count", 0))
+    artifact_paths = sorted(finalized.pop("_artifact_paths", set()))
     finalized["candidate_ids"] = finalized["candidate_ids"][:50]
     finalized["candidate_ids_truncated"] = finalized["candidate_count"] > len(
         finalized["candidate_ids"]
     )
+    finalized["score_field_linkage"] = {
+        "declared_score_fields": score_fields,
+        "observed_metric_names": observed_metric_names,
+        "missing_score_fields": missing_score_fields,
+        "candidate_count_with_all_score_fields": score_field_complete_count,
+        "complete": bool(score_fields)
+        and score_field_complete_count == finalized["candidate_count"],
+    }
+    checkpoint_policy = str(finalized.get("checkpoint_policy", "not_declared"))
+    artifact_required = checkpoint_policy == "retained_artifacts" or str(
+        finalized.get("artifact_policy", "not_declared")
+    ) not in {"", "not_declared", "none"}
+    finalized["artifact_evidence"] = {
+        "required_for_declared_policy": artifact_required,
+        "checkpoint_policy": checkpoint_policy,
+        "artifact_policy": finalized.get("artifact_policy", "not_declared"),
+        "file_count": artifact_file_count,
+        "sha256_count": artifact_sha256_count,
+        "sample_paths": artifact_paths[:20],
+        "sample_paths_truncated": len(artifact_paths) > 20,
+        "completeness_status": (
+            "observed"
+            if artifact_file_count > 0
+            else "missing_retained_artifacts"
+            if artifact_required
+            else "not_required"
+        ),
+    }
     return finalized
 
 
@@ -26658,6 +26814,8 @@ def validate_evaluator_workload_report(report: object) -> dict:
         "declared_workload_stage_count",
         "workload_type_counts",
         "stages",
+        "workload_protocol_policy",
+        "protocol_readiness",
         "claim_ready",
         "claim_readiness",
     }
@@ -26710,6 +26868,14 @@ def validate_evaluator_workload_report(report: object) -> dict:
             issues.append({"code": "invalid_budget", "message": f"workload stage {index} budget must be an object"})
         if not isinstance(stage.get("score_fields"), list):
             issues.append({"code": "invalid_score_fields", "message": f"workload stage {index} score_fields must be a list"})
+        if not isinstance(stage.get("dataset_digest_evidence"), dict):
+            issues.append({"code": "invalid_dataset_digest_evidence", "message": f"workload stage {index} dataset_digest_evidence must be an object"})
+        if not isinstance(stage.get("score_field_linkage"), dict):
+            issues.append({"code": "invalid_score_field_linkage", "message": f"workload stage {index} score_field_linkage must be an object"})
+        if not isinstance(stage.get("artifact_evidence"), dict):
+            issues.append({"code": "invalid_artifact_evidence", "message": f"workload stage {index} artifact_evidence must be an object"})
+        if not isinstance(stage.get("protocol_execution"), dict):
+            issues.append({"code": "invalid_protocol_execution", "message": f"workload stage {index} protocol_execution must be an object"})
     if isinstance(report.get("stage_count"), int) and not isinstance(report.get("stage_count"), bool):
         if report["stage_count"] != len(stages):
             issues.append({"code": "invalid_stage_count", "message": "stage_count must equal stages length"})
@@ -26726,6 +26892,21 @@ def validate_evaluator_workload_report(report: object) -> dict:
             issues.append({"code": "invalid_type_counts", "message": "workload type counts mismatch"})
     else:
         issues.append({"code": "invalid_type_counts", "message": "workload_type_counts must be an object"})
+    protocol_policy = report.get("workload_protocol_policy")
+    if not isinstance(protocol_policy, dict):
+        issues.append({"code": "invalid_workload_protocol_policy", "message": "workload_protocol_policy must be an object"})
+    else:
+        if protocol_policy.get("schema") != "libreevolve.evaluator_workload_protocol_policy.v1":
+            issues.append({"code": "invalid_workload_protocol_policy_schema", "message": "workload_protocol_policy schema is unsupported"})
+        if protocol_policy.get("paper_claim_ready") is not False:
+            issues.append({"code": "workload_protocol_overclaim", "message": "workload protocol policy must not claim paper readiness"})
+    readiness = report.get("protocol_readiness")
+    if not isinstance(readiness, dict):
+        issues.append({"code": "invalid_protocol_readiness", "message": "protocol_readiness must be an object"})
+    elif readiness.get("claim_ready") is not False:
+        issues.append({"code": "workload_protocol_overclaim", "message": "protocol_readiness must not claim paper readiness"})
+    if report.get("claim_ready") is not False:
+        issues.append({"code": "claim_ready_overclaim", "message": "workload report must not claim AlphaEvolve workload parity"})
     return {
         "schema": "libreevolve.evaluator_workload_report.v1",
         "ok": not issues,

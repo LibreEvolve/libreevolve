@@ -2423,10 +2423,13 @@ budget fields, checkpoint/artifact policy strings, and manifest-safe
 `score_fields`. The declaration is persisted in sanitized stage metadata,
 passed to validators as `stage["workload"]`, retained in `manifest.json`, and
 summarized in `runtime.history.evaluator_workload_report` with per-stage
-candidate/pass/fail and work-counter totals. The report intentionally keeps
-`claim_ready: false` because LibreEvolve does not yet enforce
-workload-specific training/search runners, checkpoint completeness, or
-score-field-to-artifact linkage.
+candidate/pass/fail and work-counter totals. The report also records
+dataset-digest completeness, declared score-field linkage to returned metrics,
+observed artifact/checkpoint file evidence, protocol-readiness counts, and an
+explicit overclaim guard for managed workload runners. It intentionally keeps
+`claim_ready: false` because LibreEvolve does not yet enforce managed
+workload-specific training/search runners, checkpoint completeness beyond
+observed artifact files, or score-field-to-artifact causality.
 Evaluator-returned structured program outputs are stored as first-class
 evaluation metadata when `evaluate()` returns the reserved `outputs` or
 `program_output` key beside declared scalar metrics plus boolean `is_valid`.

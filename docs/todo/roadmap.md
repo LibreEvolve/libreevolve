@@ -187,7 +187,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     dataset/budget/checkpoint/score-field metadata, validator-visible
     `stage["workload"]`, and aggregation under
     `runtime.history.evaluator_workload_report`. The near-term roadmap still
-    requires workload-specific execution contracts before broader claims.
+    cites runtime dataset-digest, score-field, artifact-evidence, and
+    protocol-readiness boundaries, and still requires workload-specific
+    execution contracts before broader claims.
   - Required result: when executable workload-specific training/search
     contracts land, update ROADMAP, README, papers index, and code/paper TODOs
     together so roadmap wording distinguishes declarative workload provenance

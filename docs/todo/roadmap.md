@@ -808,26 +808,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     so roadmap wording distinguishes file-ingestion mechanics from
     AlphaEvolve-style intentionally typed explicit-context evidence.
 
-- [ ] Keep primary-prompt roadmap wording scoped until instruction/target
-      provenance exists.
-  - Spec evidence: AlphaEvolve Section 2.2 says the primary evolution prompt
-    combines sampled previously discovered solutions with system instructions
-    for proposing changes to a particular solution.
-  - Current evidence: ROADMAP, README, and papers-index wording can cite
-    prompt templates, prompt-program ids, selected parent/inspiration
-    metadata, parent-code rendering policy, mutation-instruction variants, and
-    prompt-size diagnostics. They do not yet require a prompt-core record that
-    links instruction identity/version/hash, target solution id/source hash,
-    sampled supporting-solution roles, provider message-role placement,
-    edit-scope constraints, and required prompt-channel presence for each
-    mutation call.
-  - Required result: when primary-prompt ingredient metadata and validators
-    land, update ROADMAP, README, papers index, and code/paper TODO entries
-    together so roadmap wording separates generic prompt-template rendering
-    from AlphaEvolve-style target-specific prompt instruction evidence,
-    including whether provider calls used role-separated
-    system/developer/user messages or a serialized single prompt.
-
 - [ ] Keep stochastic-formatting roadmap wording scoped to marker mechanics
       until distribution provenance exists.
   - Spec evidence: AlphaEvolve Section 2.2 says stochastic formatting uses

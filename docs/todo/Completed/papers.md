@@ -6,6 +6,24 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Track primary-prompt instruction and target-solution evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.2 says the
+    primary prompt includes previously discovered solutions sampled from the
+    program database and system instructions for proposing changes to a
+    particular solution.
+  - Status: `runtime.history.primary_prompt_instruction_report` now records
+    paper-facing prompt ingredient evidence: target program/workspace hash,
+    sampled solution roles, instruction policy/hash/redaction boundary,
+    provider message-role placement as serialized single prompt, edit-scope
+    constraints, required-channel diagnostics, and prompt/call linkage when
+    telemetry is available.
+  - Verification: `py -3.12 -m pytest
+    tests/core/test_loop.py::test_runtime_history_reports_primary_prompt_instruction_provenance
+    -q` passed.
+  - Remaining gap: role-separated provider system/developer/user messages
+    remain unsupported; stochastic prompt-format distribution provenance is a
+    separate open prompt TODO.
+
 - [x] Track stale source-specific absence wording in active TODO bodies.
   - Paper evidence: the paper index uses implementation-status and TODO
     coverage tables as the source-to-backlog chain for paper-alignment audits.

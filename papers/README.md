@@ -572,6 +572,16 @@ cap-driven truncation, and suppressed metric reasons. It also records
 feedback-section selection, deterministic order, section caps,
 source-present/suppressed sections, and the fixed global feedback-text cap.
 Completed runs also write `prompt_prior_score_table.jsonl` cross-run rows.
+Completed manifests also include
+`runtime.history.primary_prompt_instruction_report` with schema
+`libreevolve.primary_prompt_instruction_report.v1`, recording generated prompt
+target solution hashes, sampled supporting inspiration roles, mutation
+instruction policy/hash, required task/current-program/instruction channel
+presence, mutation-mode constraints, prompt/call ids when telemetry joins are
+available, and the current serialized-single-prompt provider placement. This is
+paper-facing primary-prompt ingredient evidence; role-separated
+system/developer/user provider messages remain unsupported and are not claimed
+as AlphaEvolve parity.
 
 AlphaEvolve existing-codebase integration note: completed manifests now include
 `runtime.history.existing_codebase_integration_report` with schema

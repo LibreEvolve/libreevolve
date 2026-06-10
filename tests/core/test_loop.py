@@ -76,6 +76,7 @@ from libreevolve.core.loop import (
     validate_mutation_consistency_report,
     validate_prompt_example_copy_report,
     validate_prompt_current_binding_report,
+    validate_primary_prompt_instruction_report,
     validate_prompt_prior_score_provenance_report,
     validate_natural_language_preamble_report,
     validate_proposal_diversity_report,
@@ -4070,6 +4071,90 @@ x=2
     assert section["candidate_file"]["exists"] is True
     assert section["candidate_file"]["normalized_full_file_span"] == [0, 4]
     assert section["parent_file"]["sha256"] != section["candidate_file"]["sha256"]
+
+
+def test_runtime_history_reports_primary_prompt_instruction_provenance():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem()
+    problem.initial_programs = ["x=1", "x=0"]
+    llm = _TelemetryLLM("x=2")
+
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(
+            problem,
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                mutation_mode="full",
+                num_inspirations=1,
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["primary_prompt_instruction_report"]
+
+    assert report["schema"] == "libreevolve.primary_prompt_instruction_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_primary_prompt_instruction_report(report)["ok"] is True
+    assert report["generated_candidate_count"] == 1
+    assert report["prompt_record_count"] == 1
+    assert report["target_solution_link_count"] == 1
+    assert report["instruction_hash_count"] == 1
+    assert report["inspiration_context_record_count"] == 1
+    assert report["telemetry_join_count"] == 1
+    assert report["claim_ready"] is True
+    assert report["claim_readiness"]["target_solution_hashes_recorded"] is True
+    assert report["claim_readiness"]["instruction_hashes_recorded"] is True
+    assert report["claim_readiness"]["supporting_inspiration_roles_observed"] is True
+    assert report["claim_readiness"]["provider_message_role_placement_recorded"] is True
+    assert report["claim_readiness"]["role_separated_provider_messages_supported"] is False
+    assert report["claim_readiness"]["full_alphaevolve_primary_prompt_parity"] is False
+    assert report["claim_readiness"]["remaining_gap"] == []
+
+    record = report["records"][0]
+    assert record["prompt_program_id"].startswith("prompt-seed-")
+    assert len(record["prompt_sha256"]) == 64
+    target = record["target_solution"]
+    assert target["role"] == "target"
+    assert target["prompt_visible"] is True
+    assert len(target["workspace_sha256"]) == 64
+    sampled_roles = {item["role"] for item in record["sampled_prior_solutions"]}
+    assert sampled_roles == {"target", "inspiration"}
+    assert record["sampled_prior_solution_count"] == 2
+    assert len(record["selected_inspiration_ids"]) == 1
+    instruction = record["instruction_block"]
+    assert instruction["instruction_policy_id"] == (
+        "PromptSampler._render_mutation_instructions"
+    )
+    assert instruction["mutation_instruction_variant"] == "default"
+    assert instruction["mutation_instruction_include_example"] is True
+    assert len(instruction["instruction_text_sha256"]) == 64
+    assert instruction["instruction_text_retention"] == "hash_only_section_budget"
+    placement = record["provider_message_role_placement"]
+    assert placement["mutation_call_joined"] is True
+    assert placement["mutation_call_ids"] == ["call-0"]
+    assert placement["scheduler_role"] == "mutation"
+    assert placement["provider_payload_shape"] == "serialized_single_prompt_string"
+    assert placement["role_separated_messages_supported"] is False
+    channels = {item["name"]: item for item in record["required_channel_records"]}
+    assert channels["task"]["present"] is True
+    assert channels["parent_code"]["present"] is True
+    assert channels["mutation_instructions"]["present"] is True
+    assert record["required_channels_present"] is True
+
+    edited = copy.deepcopy(report)
+    edited["records"][0]["provider_message_role_placement"][
+        "role_separated_messages_supported"
+    ] = True
+    edited["claim_readiness"]["full_alphaevolve_primary_prompt_parity"] = True
+    validation = validate_primary_prompt_instruction_report(edited)
+    assert validation["ok"] is False
+    assert {issue["code"] for issue in validation["issues"]} >= {
+        "role_separated_messages_overclaim",
+        "full_primary_prompt_parity_overclaim",
+    }
 
 
 def test_runtime_history_reports_natural_language_preamble_metadata():

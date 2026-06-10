@@ -4,6 +4,25 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README primary-prompt wording scoped until instruction/target
+      provenance exists.
+  - Spec evidence: AlphaEvolve Section 2.2 says the primary prompt comprises
+    sampled previously discovered solutions plus system instructions on how to
+    propose changes to a particular solution.
+  - Status: README now documents
+    `runtime.history.primary_prompt_instruction_report` as the paper-facing
+    prompt-core record tying target solution id/workspace hash, sampled
+    supporting solution roles, mutation-instruction policy/hash, required
+    channel presence, mutation-mode constraints, and prompt/call ids to each
+    generated mutation prompt. It also states that LibreEvolve currently sends
+    a serialized single prompt string through the mutation scheduler role, not
+    role-separated provider system/developer/user messages.
+  - Verification: `py -3.12 -m pytest
+    tests/core/test_loop.py::test_runtime_history_reports_primary_prompt_instruction_provenance
+    -q` passed.
+  - Remaining gap: none for README scoping; stochastic-formatting
+    distribution provenance remains a separate open prompt TODO.
+
 - [x] Keep README candidate-language wording scoped to the Python-primary
       boundary record versus real language/build runners.
   - Spec evidence: AlphaEvolve tasks can define program artifacts and evaluator

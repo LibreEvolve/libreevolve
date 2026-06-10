@@ -5363,6 +5363,9 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
             run_dir,
             db.startup_manifest_snapshot(),
         ),
+        "primary_prompt_instruction_report": (
+            _primary_prompt_instruction_report(programs)
+        ),
         "prompt_prior_score_provenance_report": (
             _prompt_prior_score_provenance_report(
                 programs,
@@ -19135,6 +19138,553 @@ def validate_prompt_current_binding_report(report: object) -> dict:
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _primary_prompt_instruction_report(programs: list[Program]) -> dict:
+    program_by_id = {program.id: program for program in programs}
+    records = [
+        _primary_prompt_instruction_record(program, program_by_id)
+        for program in programs
+        if _prompt_current_binding_is_generated(program)
+    ]
+    target_link_count = sum(
+        1
+        for record in records
+        if isinstance(record.get("target_solution"), Mapping)
+        and _is_sha256_hex(record["target_solution"].get("workspace_sha256"))
+    )
+    instruction_hash_count = sum(
+        1
+        for record in records
+        if isinstance(record.get("instruction_block"), Mapping)
+        and _is_sha256_hex(record["instruction_block"].get("instruction_text_sha256"))
+    )
+    inspiration_context_record_count = sum(
+        1
+        for record in records
+        if record.get("sampled_prior_solution_count", 0) > 1
+    )
+    telemetry_join_count = sum(
+        1
+        for record in records
+        if isinstance(record.get("provider_message_role_placement"), Mapping)
+        and record["provider_message_role_placement"].get("mutation_call_joined")
+        is True
+    )
+    remaining_gap = []
+    if records and target_link_count != len(records):
+        remaining_gap.append("target_solution_workspace_hashes")
+    if records and instruction_hash_count != len(records):
+        remaining_gap.append("mutation_instruction_hashes")
+    if records and inspiration_context_record_count == 0:
+        remaining_gap.append("sampled_prior_inspiration_solution_roles")
+    report = {
+        "schema": "libreevolve.primary_prompt_instruction_report.v1",
+        "source": (
+            "generated_program_metadata_prompt_diagnostics_parent_and_"
+            "inspiration_selection"
+        ),
+        "generated_candidate_count": len(records),
+        "prompt_record_count": len(records),
+        "target_solution_link_count": target_link_count,
+        "instruction_hash_count": instruction_hash_count,
+        "inspiration_context_record_count": inspiration_context_record_count,
+        "telemetry_join_count": telemetry_join_count,
+        "records": records[:50],
+        "records_limit": 50,
+        "records_truncated": len(records) > 50,
+        "provider_message_policy": {
+            "mutation_scheduler_role": "mutation",
+            "provider_payload_shape": "serialized_single_prompt_string",
+            "role_separated_system_developer_user_messages": False,
+            "role_separated_message_support": "unsupported_current_backends",
+        },
+        "ingredient_policy": {
+            "target_solution_source": "program.parent_id_workspace_at_mutation_time",
+            "supporting_solution_source": (
+                "metadata.inspiration_selection.selected_program_ids"
+            ),
+            "instruction_source": (
+                "PromptSampler._render_mutation_instructions_section_budget_hash"
+            ),
+            "prompt_role_source": (
+                "metadata.llm_calls.role_when_available_else_loop_mutation_role"
+            ),
+            "required_channels": [
+                "task",
+                "parent_code",
+                "mutation_instructions",
+            ],
+            "optional_supporting_channels": [
+                "inspirations",
+                "parent_feedback",
+                "parent_score",
+                "parent_metrics",
+                "context",
+                "extra_context",
+                "recent_failures",
+            ],
+        },
+        "claim_ready": bool(records) and not remaining_gap,
+        "claim_readiness": {
+            "prompt_records_present": bool(records),
+            "target_solution_hashes_recorded": bool(records)
+            and target_link_count == len(records),
+            "instruction_hashes_recorded": bool(records)
+            and instruction_hash_count == len(records),
+            "sampled_solution_roles_recorded": bool(records),
+            "supporting_inspiration_roles_observed": (
+                inspiration_context_record_count > 0
+            ),
+            "provider_message_role_placement_recorded": bool(records),
+            "role_separated_provider_messages_supported": False,
+            "full_alphaevolve_primary_prompt_parity": False,
+            "remaining_gap": remaining_gap,
+        },
+    }
+    report["validation"] = validate_primary_prompt_instruction_report(report)
+    return report
+
+
+def _primary_prompt_instruction_record(
+    program: Program,
+    program_by_id: Mapping[str, Program],
+) -> dict:
+    metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
+    prompt_diagnostics = (
+        metadata.get("prompt_diagnostics")
+        if isinstance(metadata.get("prompt_diagnostics"), Mapping)
+        else {}
+    )
+    prompt_context_policy = (
+        prompt_diagnostics.get("prompt_context_policy")
+        if isinstance(prompt_diagnostics.get("prompt_context_policy"), Mapping)
+        else {}
+    )
+    section_hashes = _prompt_section_hashes(prompt_diagnostics)
+    section_names = set(section_hashes)
+    parent = (
+        program_by_id.get(program.parent_id)
+        if isinstance(program.parent_id, str)
+        else None
+    )
+    inspiration_selection = (
+        metadata.get("inspiration_selection")
+        if isinstance(metadata.get("inspiration_selection"), Mapping)
+        else {}
+    )
+    selected_inspiration_ids = [
+        item
+        for item in inspiration_selection.get("selected_program_ids", [])
+        if isinstance(item, str)
+    ]
+    prior_solutions = []
+    if parent is not None:
+        prior_solutions.append(
+            _primary_prompt_solution_role_record(
+                parent,
+                role="target",
+                ordinal=0,
+                prompt_visible="parent_code" in section_names,
+            )
+        )
+    elif isinstance(program.parent_id, str):
+        prior_solutions.append(
+            _primary_prompt_missing_solution_role_record(
+                program.parent_id,
+                role="target",
+                ordinal=0,
+            )
+        )
+    for ordinal, inspiration_id in enumerate(selected_inspiration_ids, start=1):
+        inspiration = program_by_id.get(inspiration_id)
+        if inspiration is None:
+            prior_solutions.append(
+                _primary_prompt_missing_solution_role_record(
+                    inspiration_id,
+                    role="inspiration",
+                    ordinal=ordinal,
+                )
+            )
+        else:
+            prior_solutions.append(
+                _primary_prompt_solution_role_record(
+                    inspiration,
+                    role="inspiration",
+                    ordinal=ordinal,
+                    prompt_visible=True,
+                )
+            )
+    llm_calls = (
+        [
+            call
+            for call in metadata.get("llm_calls", [])
+            if isinstance(call, Mapping) and call.get("role") == "mutation"
+        ]
+        if isinstance(metadata.get("llm_calls"), list)
+        else []
+    )
+    call_ids = [
+        call.get("id")
+        for call in llm_calls
+        if isinstance(call.get("id"), str) and call.get("id")
+    ]
+    required_channels = [
+        _primary_prompt_channel_record(name, section_hashes, required=True)
+        for name in ("task", "parent_code", "mutation_instructions")
+    ]
+    required_channels.append(
+        _primary_prompt_channel_record(
+            "inspirations",
+            section_hashes,
+            required=False,
+            omission_reason=(
+                "no_inspiration_programs_selected"
+                if not selected_inspiration_ids
+                else None
+            ),
+        )
+    )
+    mutation_mode = metadata.get("mutation_mode")
+    return {
+        "candidate_id": program.id,
+        "candidate_status": _prompt_prior_candidate_status(program),
+        "generation": program.generation,
+        "prompt_program_id": (
+            metadata.get("prompt_program_id")
+            if isinstance(metadata.get("prompt_program_id"), str)
+            else None
+        ),
+        "prompt_sha256": prompt_diagnostics.get("prompt_sha256"),
+        "prompt_sha256_scope": prompt_diagnostics.get("prompt_sha256_scope"),
+        "target_solution": prior_solutions[0] if prior_solutions else None,
+        "sampled_prior_solutions": prior_solutions[:51],
+        "sampled_prior_solution_count": len(prior_solutions),
+        "sampled_prior_solution_ids": [
+            record["program_id"]
+            for record in prior_solutions
+            if isinstance(record.get("program_id"), str)
+        ][:50],
+        "selected_inspiration_ids": selected_inspiration_ids[:50],
+        "selected_inspiration_ids_truncated": len(selected_inspiration_ids) > 50,
+        "instruction_block": {
+            "instruction_policy_id": "PromptSampler._render_mutation_instructions",
+            "mutation_instruction_variant": prompt_context_policy.get(
+                "mutation_instruction_variant"
+            ),
+            "mutation_instruction_include_example": prompt_context_policy.get(
+                "mutation_instruction_include_example"
+            ),
+            "instruction_text_sha256": section_hashes.get("mutation_instructions"),
+            "instruction_text_retention": "hash_only_section_budget",
+            "instruction_text_role": "serialized_single_prompt_section",
+        },
+        "provider_message_role_placement": {
+            "mutation_call_joined": bool(call_ids),
+            "mutation_call_ids": call_ids[:10],
+            "scheduler_role": "mutation",
+            "provider_payload_shape": "serialized_single_prompt_string",
+            "system_message": "not_role_separated",
+            "developer_message": "not_role_separated",
+            "user_message": "serialized_prompt_payload",
+            "role_separated_messages_supported": False,
+        },
+        "edit_scope_constraints": {
+            "mutation_mode": mutation_mode if isinstance(mutation_mode, str) else None,
+            "mutation_mode_source": "candidate.metadata.mutation_mode",
+            "proposal_metadata_enabled": prompt_context_policy.get(
+                "proposal_metadata_enabled"
+            ),
+        },
+        "required_channel_records": required_channels,
+        "required_channels_present": all(
+            channel["present"]
+            for channel in required_channels
+            if channel["required"]
+        ),
+    }
+
+
+def _prompt_section_hashes(prompt_diagnostics: Mapping[str, object]) -> dict[str, str]:
+    section_budget = prompt_diagnostics.get("section_budget")
+    sections = (
+        section_budget.get("sections")
+        if isinstance(section_budget, Mapping)
+        else None
+    )
+    hashes: dict[str, str] = {}
+    if not isinstance(sections, list):
+        return hashes
+    for section in sections:
+        if not isinstance(section, Mapping):
+            continue
+        name = section.get("name")
+        sha = section.get("sha256")
+        if isinstance(name, str) and _is_sha256_hex(sha):
+            hashes[name] = sha
+    return hashes
+
+
+def _primary_prompt_solution_role_record(
+    program: Program,
+    *,
+    role: str,
+    ordinal: int,
+    prompt_visible: bool,
+) -> dict:
+    return {
+        "program_id": program.id,
+        "role": role,
+        "ordinal": ordinal,
+        "generation": program.generation,
+        "workspace_sha256": _workspace_sha256(program.workspace()),
+        "source_hash_scope": "candidate_workspace",
+        "prompt_visible": prompt_visible,
+        "missing": False,
+    }
+
+
+def _primary_prompt_missing_solution_role_record(
+    program_id: str,
+    *,
+    role: str,
+    ordinal: int,
+) -> dict:
+    return {
+        "program_id": program_id,
+        "role": role,
+        "ordinal": ordinal,
+        "generation": None,
+        "workspace_sha256": None,
+        "source_hash_scope": "missing_runtime_program_record",
+        "prompt_visible": False,
+        "missing": True,
+    }
+
+
+def _primary_prompt_channel_record(
+    name: str,
+    section_hashes: Mapping[str, str],
+    *,
+    required: bool,
+    omission_reason: str | None = None,
+) -> dict:
+    present = name in section_hashes
+    return {
+        "name": name,
+        "required": required,
+        "present": present,
+        "section_sha256": section_hashes.get(name),
+        "omission_reason": None if present else omission_reason,
+    }
+
+
+def validate_primary_prompt_instruction_report(report: object) -> dict:
+    issues: list[dict] = []
+    schema = "libreevolve.primary_prompt_instruction_report.v1"
+    if not isinstance(report, dict):
+        return {
+            "schema": schema,
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "primary prompt instruction report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "generated_candidate_count",
+        "prompt_record_count",
+        "target_solution_link_count",
+        "instruction_hash_count",
+        "inspiration_context_record_count",
+        "telemetry_join_count",
+        "records",
+        "records_limit",
+        "records_truncated",
+        "provider_message_policy",
+        "ingredient_policy",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"primary prompt report missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != schema:
+        issues.append(
+            {"code": "invalid_schema", "message": "unsupported primary prompt schema"}
+        )
+    expected_source = (
+        "generated_program_metadata_prompt_diagnostics_parent_and_"
+        "inspiration_selection"
+    )
+    if report.get("source") != expected_source:
+        issues.append(
+            {"code": "invalid_source", "message": "unsupported primary prompt source"}
+        )
+    for field in (
+        "generated_candidate_count",
+        "prompt_record_count",
+        "target_solution_link_count",
+        "instruction_hash_count",
+        "inspiration_context_record_count",
+        "telemetry_join_count",
+    ):
+        value = report.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    records = report.get("records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_records", "message": "records must be a list"})
+        records = []
+    _validate_report_count(report, "prompt_record_count", len(records), issues)
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append(
+                {"code": "invalid_record", "message": f"record {index} must be an object"}
+            )
+            continue
+        if not isinstance(record.get("candidate_id"), str) or not record.get("candidate_id"):
+            issues.append(
+                {"code": "invalid_candidate_id", "message": f"record {index} candidate_id is invalid"}
+            )
+        if record.get("candidate_status") not in {
+            "accepted_history",
+            "rejected_history",
+        }:
+            issues.append(
+                {"code": "invalid_candidate_status", "message": f"record {index} status is invalid"}
+            )
+        if not _is_sha256_hex(record.get("prompt_sha256")):
+            issues.append(
+                {"code": "invalid_prompt_hash", "message": f"record {index} prompt hash is invalid"}
+            )
+        target = record.get("target_solution")
+        if not isinstance(target, Mapping):
+            issues.append(
+                {"code": "invalid_target_solution", "message": f"record {index} target_solution must be an object"}
+            )
+        else:
+            if target.get("role") != "target":
+                issues.append(
+                    {"code": "invalid_target_role", "message": f"record {index} target role is invalid"}
+                )
+            if not _is_sha256_hex(target.get("workspace_sha256")):
+                issues.append(
+                    {"code": "invalid_target_hash", "message": f"record {index} target workspace hash is invalid"}
+                )
+        sampled = record.get("sampled_prior_solutions")
+        if not isinstance(sampled, list) or not sampled:
+            issues.append(
+                {"code": "invalid_sampled_prior_solutions", "message": f"record {index} sampled prior solutions are invalid"}
+            )
+        else:
+            roles = [
+                item.get("role")
+                for item in sampled
+                if isinstance(item, Mapping)
+            ]
+            if "target" not in roles:
+                issues.append(
+                    {"code": "missing_target_sampled_solution", "message": f"record {index} must include target sampled solution"}
+                )
+            for role in roles:
+                if role not in {"target", "inspiration"}:
+                    issues.append(
+                        {"code": "invalid_sampled_solution_role", "message": f"record {index} sampled solution role is invalid"}
+                    )
+        instruction = record.get("instruction_block")
+        if not isinstance(instruction, Mapping):
+            issues.append(
+                {"code": "invalid_instruction_block", "message": f"record {index} instruction_block must be an object"}
+            )
+        else:
+            if instruction.get("instruction_policy_id") != "PromptSampler._render_mutation_instructions":
+                issues.append(
+                    {"code": "invalid_instruction_policy", "message": f"record {index} instruction policy is invalid"}
+                )
+            if not _is_sha256_hex(instruction.get("instruction_text_sha256")):
+                issues.append(
+                    {"code": "invalid_instruction_hash", "message": f"record {index} instruction hash is invalid"}
+                )
+        placement = record.get("provider_message_role_placement")
+        if not isinstance(placement, Mapping):
+            issues.append(
+                {"code": "invalid_provider_message_role_placement", "message": f"record {index} provider placement must be an object"}
+            )
+        else:
+            if placement.get("provider_payload_shape") != "serialized_single_prompt_string":
+                issues.append(
+                    {"code": "invalid_provider_payload_shape", "message": f"record {index} provider payload shape is invalid"}
+                )
+            if placement.get("role_separated_messages_supported") is not False:
+                issues.append(
+                    {"code": "role_separated_messages_overclaim", "message": f"record {index} must not overclaim role-separated provider messages"}
+                )
+        channels = record.get("required_channel_records")
+        if not isinstance(channels, list):
+            issues.append(
+                {"code": "invalid_required_channel_records", "message": f"record {index} channel records must be a list"}
+            )
+        else:
+            by_name = {
+                channel.get("name"): channel
+                for channel in channels
+                if isinstance(channel, Mapping)
+            }
+            for name in ("task", "parent_code", "mutation_instructions"):
+                channel = by_name.get(name)
+                if not isinstance(channel, Mapping) or channel.get("present") is not True:
+                    issues.append(
+                        {"code": "missing_required_prompt_channel", "message": f"record {index} missing required prompt channel {name}"}
+                    )
+    policy = report.get("provider_message_policy")
+    if not isinstance(policy, Mapping):
+        issues.append(
+            {"code": "invalid_provider_message_policy", "message": "provider_message_policy must be an object"}
+        )
+    elif policy.get("role_separated_system_developer_user_messages") is not False:
+        issues.append(
+            {"code": "provider_message_policy_overclaim", "message": "provider message policy must not claim role-separated messages"}
+        )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"}
+        )
+    else:
+        if readiness.get("role_separated_provider_messages_supported") is not False:
+            issues.append(
+                {"code": "role_separated_readiness_overclaim", "message": "role-separated provider messages must remain unsupported"}
+            )
+        if readiness.get("full_alphaevolve_primary_prompt_parity") is not False:
+            issues.append(
+                {"code": "full_primary_prompt_parity_overclaim", "message": "full AlphaEvolve primary prompt parity must remain false"}
+            )
+        remaining_gap = readiness.get("remaining_gap")
+        claim_ready = report.get("claim_ready")
+        if not isinstance(remaining_gap, list):
+            issues.append(
+                {"code": "invalid_remaining_gap", "message": "remaining_gap must be a list"}
+            )
+        elif claim_ready != (bool(records) and not remaining_gap):
+            issues.append(
+                {"code": "claim_ready_mismatch", "message": "claim_ready must match records and remaining_gap"}
+            )
+    return {"schema": schema, "ok": not issues, "issues": issues}
 
 
 def _prompt_prior_score_provenance_report(

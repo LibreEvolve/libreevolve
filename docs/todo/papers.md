@@ -481,27 +481,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     comparable results for alternative abstractions before claiming
     AlphaEvolve-style abstraction-selection evidence.
 
-- [ ] Track primary-prompt instruction and target-solution evidence.
-  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.2 says the
-    primary prompt includes previously discovered solutions sampled from the
-    program database and system instructions for proposing changes to a
-    particular solution.
-  - Current gap: paper/status records can show prompt ids, template hashes,
-    selected parent/inspiration ids, prompt-context policy, and prompt-size
-    diagnostics. They do not preserve a paper-facing prompt-core record that
-    identifies the current target solution, the role of each sampled prior
-    solution, the instruction block/version/hash used for that target, whether
-    that instruction was delivered through provider system/developer/user role
-    messages or through a serialized single prompt, or required-channel
-    presence/omission status.
-  - Required result: add paper-facing prompt ingredient records with prompt
-    call id, target program/source hash, sampled solution roles, instruction
-    policy id, instruction text hash/redaction policy, provider message-role
-    placement, edit-scope or mutation mode constraints, required-channel
-    diagnostics, prompt-history linkage, and wording that separates
-    AlphaEvolve-style target-specific prompt instructions from generic
-    prompt-template compatibility.
-
 - [ ] Track stochastic prompt-format probability provenance.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.2 says stochastic
     formatting uses template placeholders with human-provided alternatives for

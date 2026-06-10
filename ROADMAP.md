@@ -150,6 +150,13 @@ LibreEvolve has:
   reasons, explicit `average_score` display/formula aliasing normalized
   `program.fitness`, feedback-section selection/order/section-cap/global-cap
   policy attribution, plus `prompt_prior_score_table.jsonl` cross-run rows
+- runtime primary-prompt instruction provenance under
+  `runtime.history.primary_prompt_instruction_report`, recording generated
+  prompt target solution hashes, sampled supporting inspiration roles,
+  mutation-instruction policy/hash, required task/parent-code/instruction
+  channel presence, mutation-mode constraints, telemetry call joins when
+  present, and the current serialized-single-prompt provider placement
+  boundary instead of role-separated provider message parity
 - runtime initial-program idea provenance reports under
   `runtime.history.initial_program_idea_provenance_report`, linking optional
   seed idea-origin metadata and seed variant ids from `problem.seed_sources` to

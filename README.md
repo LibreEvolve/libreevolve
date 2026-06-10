@@ -1169,6 +1169,16 @@ metric fields, including prompt-context metric selection, cap-driven
 truncation, and suppressed metric reasons. It also records feedback-section
 selection, deterministic order, per-section caps, source-present/suppressed
 sections, and the fixed global feedback-text cap used after section caps.
+Completed manifests also include
+`runtime.history.primary_prompt_instruction_report`, which records the
+AlphaEvolve primary-prompt core for generated mutation prompts: target
+solution id/workspace hash, sampled supporting inspiration ids and roles,
+mutation-instruction policy/version/hash, required task/parent-code/instruction
+channel presence, mutation-mode edit-scope constraints, prompt/call ids when
+telemetry joins are available, and the current provider placement boundary.
+LibreEvolve currently sends a serialized single prompt string through the
+mutation scheduler role; role-separated provider system/developer/user message
+payloads remain unsupported and are not claimed as AlphaEvolve parity.
 Completed runs also write
 `prompt_prior_score_table.jsonl`, a flattened cross-run table of prompt ids,
 score-source ids, displayed aggregate and `average_score` values, raw metrics,

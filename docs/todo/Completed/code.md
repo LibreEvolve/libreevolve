@@ -4,6 +4,26 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add primary-prompt instruction and target-solution provenance.
+  - Spec evidence: AlphaEvolve Section 2.2 says the primary evolution prompt
+    comprises multiple previously discovered solutions sampled from the
+    program database plus system instructions on how to propose changes to a
+    particular solution.
+  - Status: completed manifests now include
+    `runtime.history.primary_prompt_instruction_report` with schema
+    `libreevolve.primary_prompt_instruction_report.v1`. The report records
+    generated prompt target solution ids and workspace hashes, sampled
+    supporting inspiration ids and roles, mutation-instruction policy and
+    section hash, required task/parent-code/instruction channel presence,
+    mutation-mode constraints, prompt/call ids where telemetry joins exist,
+    and the current serialized-single-prompt provider placement boundary.
+  - Verification: `py -3.12 -m pytest
+    tests/core/test_loop.py::test_runtime_history_reports_primary_prompt_instruction_provenance
+    -q` passed.
+  - Remaining gap: role-separated provider system/developer/user message
+    payloads remain unsupported and are not claimed as full AlphaEvolve
+    prompt parity.
+
 - [x] Detect stale source-specific absence wording inside active TODO bodies.
   - Spec evidence: active TODO ledgers are the audit surface for AlphaEvolve
     and paper-alignment gaps, so current-evidence clauses must not claim

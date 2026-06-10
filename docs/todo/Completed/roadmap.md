@@ -4,6 +4,24 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Keep primary-prompt roadmap wording scoped until instruction/target
+      provenance exists.
+  - Spec evidence: AlphaEvolve Section 2.2 says the primary evolution prompt
+    combines sampled previously discovered solutions with system instructions
+    for proposing changes to a particular solution.
+  - Status: ROADMAP current-state bullets now include
+    `runtime.history.primary_prompt_instruction_report`, recording target
+    solution hashes, sampled supporting inspiration roles, instruction
+    policy/hash, required task/parent-code/instruction channel presence,
+    mutation-mode constraints, telemetry call joins when present, and the
+    current serialized-single-prompt provider placement boundary instead of
+    role-separated provider message parity.
+  - Verification: `py -3.12 -m pytest
+    tests/core/test_loop.py::test_runtime_history_reports_primary_prompt_instruction_provenance
+    -q` passed.
+  - Remaining gap: none for roadmap scoping; stochastic-formatting
+    distribution provenance remains a separate open prompt TODO.
+
 - [x] Keep candidate-language roadmap scope aligned with the Python-primary
       policy boundary.
   - Spec evidence: AlphaEvolve tasks can define language/build/evaluator

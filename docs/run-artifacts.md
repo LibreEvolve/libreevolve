@@ -1879,6 +1879,17 @@ score-source ids, displayed aggregate and `average_score` values, raw metric
 maps, history/evaluator row joins, score-display visibility summaries,
 execution-output visibility summaries, stage-summary IO summaries, and
 feedback-section visibility summaries.
+Completed manifests also include
+`runtime.history.primary_prompt_instruction_report` with schema
+`libreevolve.primary_prompt_instruction_report.v1`. This report records, for
+generated mutation prompts, the target solution id and workspace hash, sampled
+supporting inspiration ids and roles, mutation-instruction policy id and
+section hash, required task/parent-code/mutation-instruction channel presence,
+mutation-mode edit-scope constraints, prompt/call ids where LLM telemetry
+joins are available, and the provider-placement boundary. The current provider
+payload is a serialized single prompt string sent through the mutation
+scheduler role; role-separated system/developer/user provider messages remain
+unsupported.
 LLM feedback workspace prompts use the shared versioned secret-pattern grammar
 before provider calls. Prompt history and quarantine streams still contain
 some fixed-policy retention surfaces. Feedback provider outputs are retained according to

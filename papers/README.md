@@ -556,10 +556,10 @@ It also records stage-summary IO display attribution for rendered stage
 stdout/stderr/error fields, an explicit `average_score` display/formula alias
 for normalized `program.fitness`, and score-display field visibility for
 aggregate and metric fields, including prompt-context metric selection,
-cap-driven truncation, and suppressed metric reasons.
+cap-driven truncation, and suppressed metric reasons. It also records
+feedback-section selection, deterministic order, section caps,
+source-present/suppressed sections, and the fixed global feedback-text cap.
 Completed runs also write `prompt_prior_score_table.jsonl` cross-run rows.
-It remains `claim_ready: false` because global feedback-section truncation
-policy remains open.
 
 AlphaEvolve existing-codebase integration note: completed manifests now include
 `runtime.history.existing_codebase_integration_report` with schema

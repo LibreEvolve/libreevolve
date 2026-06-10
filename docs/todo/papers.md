@@ -586,40 +586,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     boundary, and claim checks before treating local `prompt_format_options`
     as AlphaEvolve-style stochastic-formatting evidence.
 
-- [ ] Track prompt-visible prior-score provenance for rendered evaluation
-      results.
-  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.2 says rendered
-    evaluation results contain the program, execution result, and scores
-    assigned by `evaluate`; Figure 3(c) shows previously discovered programs
-    with named metric scores and an `average_score` before the program text.
-  - Partial status: LibreEvolve renders current-parent metrics and inspiration
-    fitness/metric summaries in mutation prompts, including declared metric
-    role, direction, bounds, normalization, and range diagnostics where a
-    problem manifest defines them. Completed manifests now include
-    `runtime.history.prompt_prior_score_provenance_report`, which links
-    generated mutation prompts to target-parent and selected-inspiration score
-    records with prompt ids/hashes, program roles, source workspace hashes,
-    finite raw metrics, displayed aggregate formula (`program.fitness`),
-    history/failure-history row joins, evaluator-result row joins, and
-    top-level prompt-feedback execution-output display attribution for
-    `stdout`, `stderr`, and `error` under the active prompt context policy,
-    plus stage-summary IO display attribution for rendered stage
-    stdout/stderr/error fields, and score-display field visibility for
-    aggregate, `average_score`, and metric fields, including prompt-context
-    metric selection, cap-driven truncation, and suppressed metric reasons.
-    Score records expose `displayed_average_score`, its display text/hash, and
-    the explicit formula/policy that aliases normalized `program.fitness`.
-    Completed runs also export `prompt_prior_score_table.jsonl` cross-run rows
-    with prompt ids, score-source ids, displayed aggregate and `average_score`
-    values, metric maps, history/evaluator row joins, score-display visibility
-    summaries, execution-output visibility summaries, and stage-summary IO
-    visibility summaries.
-  - Current gap: paper/status records still do not preserve global
-    feedback-section truncation policy.
-  - Required result: add feedback-section truncation policy and claim checks
-    before treating prompt metric headers as full AlphaEvolve-style rendered
-    evaluation-result evidence.
-
 - [ ] Populate early-user and collaborator feedback provenance as paper
       evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Acknowledgements thank early

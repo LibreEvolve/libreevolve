@@ -10978,3 +10978,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     21-22, and that its zero-generation manifest report is claim-ready for the
     acknowledgement-role boundary.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document rendered-evaluation-result prior-score provenance in README.
+  - Spec evidence: README wording needed to distinguish implemented
+    prompt-visible prior-score evidence from unsupported AlphaEvolve
+    rendered-evaluation claims.
+  - Status: README now states that
+    `runtime.history.prompt_prior_score_provenance_report` records parent and
+    inspiration score rows, explicit `average_score` display/formula evidence,
+    score-display visibility/omission/truncation, execution-output and
+    stage-summary IO attribution, feedback-section truncation policy, and
+    flattened `prompt_prior_score_table.jsonl` rows.
+  - Verification: prompt prior-score runtime tests validate these fields and
+    README no longer lists the prior feedback-section policy gap as open.

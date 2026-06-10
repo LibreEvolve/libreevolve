@@ -76,6 +76,8 @@ from libreevolve.core.jsonl import (
 )
 from libreevolve.core.meta_prompt import PromptDatabase, parse_prompt_mutation_response
 from libreevolve.core.prompt import (
+    PROMPT_CONTEXT_POLICY_FEEDBACK_SECTION_ORDER,
+    PROMPT_CONTEXT_POLICY_FEEDBACK_SECTIONS,
     PromptSampler,
     PromptTemplateError,
     prompt_context_policy_sha256,
@@ -124,6 +126,7 @@ from libreevolve.population.program import (
 from libreevolve.problems.loader import Problem
 
 VALID_THRESHOLD = 0.0
+PROMPT_FEEDBACK_GLOBAL_MAX_CHARS = 1800
 CONTROLLER_STATE_ARTIFACT_INVENTORY_SCHEMA = (
     "libreevolve.controller_state_artifact_inventory.v1"
 )
@@ -17934,6 +17937,19 @@ def _prompt_prior_score_provenance_report(
         and score.get("stage_summary_io_display", {}).get("evaluator_result_joined")
         is True
     )
+    feedback_section_policy_count = sum(
+        1
+        for record in records
+        for score in record["score_records"]
+        if isinstance(score.get("feedback_section_display"), Mapping)
+    )
+    feedback_section_global_policy_count = sum(
+        1
+        for record in records
+        for score in record["score_records"]
+        if score.get("feedback_section_display", {}).get("global_cap_chars")
+        == PROMPT_FEEDBACK_GLOBAL_MAX_CHARS
+    )
     report = {
         "schema": "libreevolve.prompt_prior_score_provenance_report.v1",
         "source": "runtime_history_prompt_diagnostics_parent_and_inspiration_selection",
@@ -17963,6 +17979,10 @@ def _prompt_prior_score_provenance_report(
         "stage_summary_io_evaluator_join_count": (
             stage_summary_io_evaluator_join_count
         ),
+        "feedback_section_policy_record_count": feedback_section_policy_count,
+        "feedback_section_global_policy_record_count": (
+            feedback_section_global_policy_count
+        ),
         "cross_run_prompt_score_table_record_count": table_export["record_count"],
         "records": records[:50],
         "records_limit": 50,
@@ -17980,6 +18000,7 @@ def _prompt_prior_score_provenance_report(
             "execution_result_field_policy": "prompt_context_policy_execution_output_fields_and_caps_with_redacted_bounded_previews",
             "stage_summary_io_source": "evaluation_stage_stdout_stderr_error_fields_rendered_by_stage_summary_io",
             "stage_summary_io_policy": "prompt_context_policy_stage_summary_fields_io_and_execution_output_fields_with_caps",
+            "feedback_section_policy": "prompt_context_policy_feedback_sections_order_section_caps_and_fixed_global_feedback_cap",
             "cross_run_table_policy": "stable_jsonl_rows_with_run_id_problem_prompt_candidate_score_source_metric_and_runtime_join_fields",
         },
         "cross_run_prompt_score_table": table_export,
@@ -18003,11 +18024,13 @@ def _prompt_prior_score_provenance_report(
                 stage_summary_io_count > 0
                 and stage_summary_io_evaluator_join_count == stage_summary_io_count
             ),
+            "feedback_section_global_truncation_policy": (
+                score_record_count > 0
+                and feedback_section_global_policy_count == score_record_count
+            ),
             "cross_run_prompt_score_table": table_export["record_count"] > 0,
             "full_alphaevolve_rendered_evaluation_result_provenance": False,
-            "remaining_gap": [
-                "feedback_section_global_truncation_policy",
-            ],
+            "remaining_gap": [],
         },
     }
     report["validation"] = validate_prompt_prior_score_provenance_report(report)
@@ -18044,6 +18067,11 @@ def _prompt_prior_score_table_rows(
             stage_summary_io = (
                 score.get("stage_summary_io_display")
                 if isinstance(score.get("stage_summary_io_display"), Mapping)
+                else {}
+            )
+            feedback_section_display = (
+                score.get("feedback_section_display")
+                if isinstance(score.get("feedback_section_display"), Mapping)
                 else {}
             )
             score_display = (
@@ -18108,6 +18136,11 @@ def _prompt_prior_score_table_rows(
                     "stage_summary_io": (
                         _prompt_prior_score_table_stage_summary_io(
                             stage_summary_io
+                        )
+                    ),
+                    "feedback_section_display": (
+                        _prompt_prior_score_table_feedback_section_display(
+                            feedback_section_display
                         )
                     ),
                 }
@@ -18272,6 +18305,58 @@ def _prompt_prior_score_table_stage_summary_io(display: Mapping[str, object]) ->
         "visible_stage_count": display.get("visible_stage_count"),
         "stage_records": visible_stage_summaries,
         "evaluator_result_joined": display.get("evaluator_result_joined") is True,
+    }
+
+
+def _prompt_prior_score_table_feedback_section_display(
+    display: Mapping[str, object],
+) -> dict:
+    section_records = (
+        display.get("section_records")
+        if isinstance(display.get("section_records"), list)
+        else []
+    )
+    return {
+        "prompt_visible": display.get("prompt_visible") is True,
+        "global_cap_chars": display.get("global_cap_chars"),
+        "global_cap_applied": display.get("global_cap_applied") is True,
+        "source_section_count": display.get("source_section_count"),
+        "visible_section_count": display.get("visible_section_count"),
+        "selected_sections": list(display.get("selected_sections", []))
+        if isinstance(display.get("selected_sections"), list)
+        else [],
+        "section_order": list(display.get("section_order", []))
+        if isinstance(display.get("section_order"), list)
+        else [],
+        "section_caps": dict(display.get("section_caps", {}))
+        if isinstance(display.get("section_caps"), Mapping)
+        else {},
+        "visible_sections": [
+            section.get("name")
+            for section in section_records
+            if isinstance(section, Mapping)
+            and section.get("prompt_visible") is True
+        ],
+        "suppressed_sections": [
+            {
+                "name": section.get("name"),
+                "omission_reason": section.get("omission_reason"),
+            }
+            for section in section_records
+            if isinstance(section, Mapping)
+            and section.get("prompt_visible") is False
+            and section.get("has_source") is True
+        ],
+        "section_truncation": [
+            {
+                "name": section.get("name"),
+                "cap_chars": section.get("cap_chars"),
+                "section_cap_applied": section.get("section_cap_applied") is True,
+            }
+            for section in section_records
+            if isinstance(section, Mapping)
+            and section.get("section_cap_applied") is True
+        ],
     }
 
 
@@ -18460,6 +18545,12 @@ def _prompt_prior_score_record(
             prompt_diagnostics=prompt_diagnostics,
             evaluator_row=evaluator_row,
         ),
+        "feedback_section_display": _prompt_prior_feedback_section_display_record(
+            source_program,
+            role=role,
+            prompt_visible=prompt_visible,
+            prompt_diagnostics=prompt_diagnostics,
+        ),
     }
 
 
@@ -18531,6 +18622,22 @@ def _missing_prompt_prior_score_record(
             "stage_records": [],
             "evaluator_result_joined": False,
             "evaluator_result": None,
+        },
+        "feedback_section_display": {
+            "schema": "libreevolve.prompt_prior_feedback_section_display.v1",
+            "source": "missing_prompt_prior_program",
+            "role": role,
+            "prompt_visible": False,
+            "prompt_visibility_source": "prompt_selection_metadata_missing_program",
+            "omission_reason": "selected_program_not_found_in_runtime_history",
+            "selected_sections": [],
+            "section_order": [],
+            "section_caps": {},
+            "global_cap_chars": PROMPT_FEEDBACK_GLOBAL_MAX_CHARS,
+            "global_cap_applied": False,
+            "source_section_count": 0,
+            "visible_section_count": 0,
+            "section_records": [],
         },
     }
 
@@ -19089,6 +19196,269 @@ def _prompt_stage_io_display_text(field_records: list[dict]) -> str:
     return "\n".join(lines)
 
 
+def _prompt_prior_feedback_section_display_record(
+    source_program: Program,
+    *,
+    role: str,
+    prompt_visible: bool,
+    prompt_diagnostics: Mapping[str, object],
+) -> dict:
+    evaluation = (
+        source_program.evaluation
+        if isinstance(source_program.evaluation, Mapping)
+        else {}
+    )
+    metadata = (
+        evaluation.get("metadata")
+        if isinstance(evaluation.get("metadata"), Mapping)
+        else {}
+    )
+    policy = (
+        prompt_diagnostics.get("prompt_context_policy")
+        if isinstance(prompt_diagnostics.get("prompt_context_policy"), Mapping)
+        else {}
+    )
+    selected_sections = _prompt_prior_policy_list(
+        policy,
+        "feedback_sections",
+        default=sorted(PROMPT_CONTEXT_POLICY_FEEDBACK_SECTIONS),
+    )
+    section_order = _prompt_prior_feedback_section_order(policy)
+    section_caps = _prompt_prior_policy_int_mapping(
+        policy,
+        "feedback_section_max_chars_by_name",
+        allowed=set(PROMPT_CONTEXT_POLICY_FEEDBACK_SECTIONS),
+    )
+    section_name = "parent_feedback" if role == "target" else "inspirations"
+    surface = _prompt_prior_feedback_channel_surface_status(
+        role,
+        prompt_visible=prompt_visible,
+        prompt_diagnostics=prompt_diagnostics,
+    )
+    source_sections = _prompt_prior_feedback_source_sections(
+        source_program,
+        evaluation,
+        metadata,
+    )
+    records = []
+    selected = set(selected_sections)
+    ordered_names = [
+        name
+        for name in section_order
+        if name in PROMPT_CONTEXT_POLICY_FEEDBACK_SECTIONS
+    ]
+    for name in ordered_names:
+        has_source = name in source_sections
+        cap = section_caps.get(name)
+        visible = surface["visible"] and name in selected and has_source and cap != 0
+        omission_reason = None
+        if not visible:
+            if surface["visible"] is not True:
+                omission_reason = surface["omission_reason"]
+            elif name not in selected:
+                omission_reason = "feedback_section_not_selected_by_prompt_context_policy"
+            elif not has_source:
+                omission_reason = "feedback_section_has_no_source_content"
+            elif cap == 0:
+                omission_reason = "feedback_section_suppressed_by_prompt_context_policy_cap"
+        records.append(
+            {
+                "name": name,
+                "selected": name in selected,
+                "order_index": len(records),
+                "has_source": has_source,
+                "source": source_sections.get(name),
+                "cap_chars": cap,
+                "section_cap_configured": cap is not None,
+                "section_cap_applied": (
+                    isinstance(cap, int) and not isinstance(cap, bool) and cap >= 0
+                ),
+                "prompt_visible": visible,
+                "omission_reason": omission_reason,
+            }
+        )
+    visible_sections = [
+        record["name"] for record in records if record["prompt_visible"] is True
+    ]
+    rendered_section_budget = _prompt_prior_section_budget_record(
+        prompt_diagnostics,
+        section_name,
+    )
+    global_cap_applied = False
+    if rendered_section_budget is not None:
+        chars = rendered_section_budget.get("chars")
+        global_cap_applied = (
+            isinstance(chars, int)
+            and not isinstance(chars, bool)
+            and chars >= PROMPT_FEEDBACK_GLOBAL_MAX_CHARS
+        )
+    return {
+        "schema": "libreevolve.prompt_prior_feedback_section_display.v1",
+        "source": "prompt_context_policy_feedback_sections_order_caps_and_global_feedback_cap",
+        "role": role,
+        "prompt_visible": bool(visible_sections),
+        "prompt_visibility_source": surface["source"],
+        "omission_reason": None
+        if visible_sections
+        else surface["omission_reason"] or "no_feedback_sections_rendered",
+        "feedback_template_section": section_name,
+        "feedback_template_section_budget": rendered_section_budget,
+        "selected_sections": selected_sections,
+        "section_order": ordered_names,
+        "section_caps": section_caps,
+        "global_cap_chars": PROMPT_FEEDBACK_GLOBAL_MAX_CHARS,
+        "global_cap_policy": "fixed_prompt_feedback_text_chars_after_section_caps",
+        "global_cap_applied": global_cap_applied,
+        "source_section_count": len(source_sections),
+        "visible_section_count": len(visible_sections),
+        "section_records": records,
+    }
+
+
+def _prompt_prior_feedback_section_order(
+    policy: Mapping[str, object],
+) -> list[str]:
+    configured = _prompt_prior_policy_list(
+        policy,
+        "feedback_section_order",
+        default=list(PROMPT_CONTEXT_POLICY_FEEDBACK_SECTION_ORDER),
+    )
+    seen = set()
+    ordered = []
+    for name in configured + list(PROMPT_CONTEXT_POLICY_FEEDBACK_SECTION_ORDER):
+        if name in PROMPT_CONTEXT_POLICY_FEEDBACK_SECTIONS and name not in seen:
+            ordered.append(name)
+            seen.add(name)
+    return ordered
+
+
+def _prompt_prior_feedback_source_sections(
+    source_program: Program,
+    evaluation: Mapping[str, object],
+    metadata: Mapping[str, object],
+) -> dict[str, str]:
+    sections: dict[str, str] = {}
+    proposal = (
+        source_program.metadata.get("proposal")
+        if isinstance(source_program.metadata, Mapping)
+        else None
+    )
+    if isinstance(proposal, Mapping) and proposal:
+        sections["proposal"] = "program.metadata.proposal"
+    stages = evaluation.get("stages")
+    if isinstance(stages, list) and any(isinstance(stage, Mapping) for stage in stages):
+        sections["stage_summary"] = "evaluation.stages"
+    if any(
+        _prompt_execution_output_raw_text(evaluation.get(field)) is not None
+        for field in _PROMPT_EXECUTION_OUTPUT_FIELDS
+    ):
+        sections["execution_output"] = "evaluation.stdout_stderr_error"
+    if isinstance(metadata.get("attempts"), list) and metadata.get("attempts"):
+        sections["sample_retry_diagnostics"] = "evaluation.metadata.attempts"
+    if isinstance(metadata.get("artifacts"), list) and metadata.get("artifacts"):
+        sections["validator_artifacts"] = "evaluation.metadata.artifacts"
+    if _prompt_prior_has_validator_diagnostic_source(metadata):
+        sections["validator_diagnostics"] = "evaluation.metadata.validator_diagnostics"
+    if (
+        isinstance(metadata.get("program_outputs"), list)
+        and metadata.get("program_outputs")
+    ):
+        sections["program_outputs"] = "evaluation.metadata.program_outputs"
+    if isinstance(metadata.get("llm_feedback"), list) and metadata.get("llm_feedback"):
+        sections["llm_grader_feedback"] = "evaluation.metadata.llm_feedback"
+    return sections
+
+
+def _prompt_prior_has_validator_diagnostic_source(
+    metadata: Mapping[str, object],
+) -> bool:
+    diagnostic_keys = {
+        "configured_stage_results",
+        "diagnostic_output",
+        "evaluator_dependency_policy",
+        "malformed_metrics",
+        "materialization_error",
+        "metric_aggregation",
+        "metric_bound_diagnostics",
+        "syntax_errors",
+        "timeout_cleanup",
+        "validator_boundary",
+        "validator_env",
+        "validator_resource_limit",
+        "stdin",
+    }
+    return any(key in metadata for key in diagnostic_keys)
+
+
+def _prompt_prior_feedback_channel_surface_status(
+    role: str,
+    *,
+    prompt_visible: bool,
+    prompt_diagnostics: Mapping[str, object],
+) -> dict:
+    policy = (
+        prompt_diagnostics.get("prompt_context_policy")
+        if isinstance(prompt_diagnostics.get("prompt_context_policy"), Mapping)
+        else {}
+    )
+    disabled = set(_prompt_prior_policy_list(policy, "disabled_sections", default=[]))
+    section_name = "parent_feedback" if role == "target" else "inspirations"
+    source = (
+        "parent_feedback_template_field"
+        if role == "target"
+        else "inspiration_feedback_template_field"
+    )
+    if not prompt_visible:
+        return {
+            "visible": False,
+            "source": source,
+            "omission_reason": "score_source_not_prompt_visible",
+        }
+    if section_name in disabled:
+        return {
+            "visible": False,
+            "source": source,
+            "omission_reason": f"{section_name}_disabled_by_prompt_context_policy",
+        }
+    if not _prompt_prior_section_budget_has_rendered(
+        prompt_diagnostics,
+        section_name,
+    ):
+        return {
+            "visible": False,
+            "source": source,
+            "omission_reason": f"{section_name}_not_rendered_by_prompt_template",
+        }
+    return {"visible": True, "source": source, "omission_reason": None}
+
+
+def _prompt_prior_section_budget_record(
+    prompt_diagnostics: Mapping[str, object],
+    section_name: str,
+) -> dict | None:
+    section_budget = (
+        prompt_diagnostics.get("section_budget")
+        if isinstance(prompt_diagnostics.get("section_budget"), Mapping)
+        else {}
+    )
+    sections = section_budget.get("sections")
+    if not isinstance(sections, list):
+        return None
+    for section in sections:
+        if not isinstance(section, Mapping):
+            continue
+        if section.get("name") != section_name:
+            continue
+        return {
+            "name": section.get("name"),
+            "chars": section.get("chars"),
+            "rendered_estimate_chars": section.get("rendered_estimate_chars"),
+            "occurrences": section.get("occurrences"),
+            "sha256": section.get("sha256"),
+        }
+    return None
+
+
 def _prompt_prior_feedback_surface_status(
     role: str,
     *,
@@ -19489,6 +19859,8 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
         "stage_summary_io_record_count",
         "prompt_visible_stage_summary_io_record_count",
         "stage_summary_io_evaluator_join_count",
+        "feedback_section_policy_record_count",
+        "feedback_section_global_policy_record_count",
         "cross_run_prompt_score_table_record_count",
         "records",
         "records_limit",
@@ -19526,6 +19898,8 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
     stage_summary_io_count = 0
     prompt_visible_stage_summary_io_count = 0
     stage_summary_io_evaluator_join_count = 0
+    feedback_section_policy_count = 0
+    feedback_section_global_policy_count = 0
     for record_index, record in enumerate(records):
         if not isinstance(record, Mapping):
             issues.append({"code": "invalid_record", "message": f"record {record_index} must be an object"})
@@ -19764,6 +20138,78 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
                 if isinstance(stage_display.get("visible_stage_count"), int) and not isinstance(stage_display.get("visible_stage_count"), bool):
                     if stage_display.get("visible_stage_count") != visible_stage_count:
                         issues.append({"code": "stage_summary_io_visible_count_mismatch", "message": f"record {record_index} score {score_index} visible stage count does not match stage records"})
+            feedback_display = score.get("feedback_section_display")
+            if not isinstance(feedback_display, Mapping):
+                issues.append({"code": "invalid_feedback_section_display", "message": f"record {record_index} score {score_index} feedback_section_display must be an object"})
+            else:
+                feedback_section_policy_count += 1
+                if feedback_display.get("schema") != "libreevolve.prompt_prior_feedback_section_display.v1":
+                    issues.append({"code": "invalid_feedback_section_schema", "message": f"record {record_index} score {score_index} feedback-section schema is unsupported"})
+                if feedback_display.get("global_cap_chars") == PROMPT_FEEDBACK_GLOBAL_MAX_CHARS:
+                    feedback_section_global_policy_count += 1
+                else:
+                    issues.append({"code": "invalid_feedback_section_global_cap", "message": f"record {record_index} score {score_index} feedback global cap is invalid"})
+                if feedback_display.get("global_cap_policy") != "fixed_prompt_feedback_text_chars_after_section_caps":
+                    issues.append({"code": "invalid_feedback_section_global_policy", "message": f"record {record_index} score {score_index} feedback global cap policy is invalid"})
+                if not isinstance(feedback_display.get("global_cap_applied"), bool):
+                    issues.append({"code": "invalid_feedback_section_global_cap_applied", "message": f"record {record_index} score {score_index} feedback global cap flag must be boolean"})
+                selected_sections = feedback_display.get("selected_sections")
+                if not isinstance(selected_sections, list):
+                    issues.append({"code": "invalid_feedback_selected_sections", "message": f"record {record_index} score {score_index} selected_sections must be a list"})
+                    selected_sections = []
+                section_order = feedback_display.get("section_order")
+                if not isinstance(section_order, list):
+                    issues.append({"code": "invalid_feedback_section_order", "message": f"record {record_index} score {score_index} section_order must be a list"})
+                    section_order = []
+                section_caps = feedback_display.get("section_caps")
+                if not isinstance(section_caps, Mapping):
+                    issues.append({"code": "invalid_feedback_section_caps", "message": f"record {record_index} score {score_index} section_caps must be an object"})
+                    section_caps = {}
+                section_records = feedback_display.get("section_records")
+                if not isinstance(section_records, list):
+                    issues.append({"code": "invalid_feedback_section_records", "message": f"record {record_index} score {score_index} section_records must be a list"})
+                    section_records = []
+                visible_section_count = 0
+                source_section_count = 0
+                seen_feedback_sections = set()
+                for section_index, section_record in enumerate(section_records):
+                    if not isinstance(section_record, Mapping):
+                        issues.append({"code": "invalid_feedback_section_record", "message": f"record {record_index} score {score_index} feedback section {section_index} must be an object"})
+                        continue
+                    name = section_record.get("name")
+                    if name not in PROMPT_CONTEXT_POLICY_FEEDBACK_SECTIONS:
+                        issues.append({"code": "invalid_feedback_section_name", "message": f"record {record_index} score {score_index} feedback section name is unsupported"})
+                    elif name in seen_feedback_sections:
+                        issues.append({"code": "duplicate_feedback_section_name", "message": f"record {record_index} score {score_index} feedback section name is duplicated"})
+                    else:
+                        seen_feedback_sections.add(name)
+                    if not isinstance(section_record.get("selected"), bool):
+                        issues.append({"code": "invalid_feedback_section_selected", "message": f"record {record_index} score {score_index} feedback selected flag must be boolean"})
+                    if not isinstance(section_record.get("has_source"), bool):
+                        issues.append({"code": "invalid_feedback_section_has_source", "message": f"record {record_index} score {score_index} feedback has_source flag must be boolean"})
+                    elif section_record.get("has_source") is True:
+                        source_section_count += 1
+                    if not isinstance(section_record.get("section_cap_configured"), bool):
+                        issues.append({"code": "invalid_feedback_section_cap_configured", "message": f"record {record_index} score {score_index} feedback cap-configured flag must be boolean"})
+                    if not isinstance(section_record.get("section_cap_applied"), bool):
+                        issues.append({"code": "invalid_feedback_section_cap_applied", "message": f"record {record_index} score {score_index} feedback cap-applied flag must be boolean"})
+                    if section_record.get("prompt_visible") is True:
+                        visible_section_count += 1
+                        if section_record.get("omission_reason") is not None:
+                            issues.append({"code": "visible_feedback_section_has_omission", "message": f"record {record_index} score {score_index} visible feedback section must not have omission reason"})
+                    elif section_record.get("prompt_visible") is False:
+                        if not isinstance(section_record.get("omission_reason"), str) or not section_record.get("omission_reason"):
+                            issues.append({"code": "missing_feedback_section_omission", "message": f"record {record_index} score {score_index} omitted feedback section needs reason"})
+                    else:
+                        issues.append({"code": "invalid_feedback_section_prompt_visible", "message": f"record {record_index} score {score_index} feedback prompt_visible must be boolean"})
+                if feedback_display.get("visible_section_count") != visible_section_count:
+                    issues.append({"code": "feedback_visible_section_count_mismatch", "message": f"record {record_index} score {score_index} visible feedback section count is invalid"})
+                if feedback_display.get("source_section_count") != source_section_count:
+                    issues.append({"code": "feedback_source_section_count_mismatch", "message": f"record {record_index} score {score_index} source feedback section count is invalid"})
+                if feedback_display.get("prompt_visible") is True and visible_section_count == 0:
+                    issues.append({"code": "feedback_visible_without_sections", "message": f"record {record_index} score {score_index} feedback display is visible without visible sections"})
+                if feedback_display.get("prompt_visible") is False and feedback_display.get("omission_reason") in {None, ""}:
+                    issues.append({"code": "missing_feedback_display_omission", "message": f"record {record_index} score {score_index} omitted feedback display needs reason"})
     truncated = report.get("records_truncated") is True
     _validate_prompt_prior_report_count(
         report,
@@ -19870,6 +20316,20 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
         truncated,
         issues,
     )
+    _validate_prompt_prior_report_count(
+        report,
+        "feedback_section_policy_record_count",
+        feedback_section_policy_count,
+        truncated,
+        issues,
+    )
+    _validate_prompt_prior_report_count(
+        report,
+        "feedback_section_global_policy_record_count",
+        feedback_section_global_policy_count,
+        truncated,
+        issues,
+    )
     table_record_count = report.get("cross_run_prompt_score_table_record_count")
     if (
         not isinstance(table_record_count, int)
@@ -19934,6 +20394,7 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
             "average_score_formula_parity",
             "execution_result_text_display_attribution",
             "stage_summary_io_display_attribution",
+            "feedback_section_global_truncation_policy",
             "cross_run_prompt_score_table",
         ):
             if readiness.get(field) not in {True, False}:

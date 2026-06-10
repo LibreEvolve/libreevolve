@@ -135,8 +135,8 @@ LibreEvolve has:
   display attribution, score-display field visibility for aggregate and metric
   fields including prompt-context selection/cap omission and truncation
   reasons, explicit `average_score` display/formula aliasing normalized
-  `program.fitness`, plus `prompt_prior_score_table.jsonl` cross-run rows,
-  while leaving global feedback-section truncation policy open
+  `program.fitness`, feedback-section selection/order/section-cap/global-cap
+  policy attribution, plus `prompt_prior_score_table.jsonl` cross-run rows
 - runtime initial-program idea provenance reports under
   `runtime.history.initial_program_idea_provenance_report`, linking optional
   seed idea-origin metadata and seed variant ids from `problem.seed_sources` to

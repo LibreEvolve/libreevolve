@@ -16204,3 +16204,27 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: `py -3.12 -m pytest
     tests/core/test_loop.py::test_matrix_example_acknowledgement_fixture_is_claim_ready
     --tb=short` passes.
+
+- [x] Add prompt-visible prior-score provenance for rendered evaluation
+      results.
+  - Spec evidence: AlphaEvolve Section 2.2 says rendered evaluation results
+    contain the program, execution result, and scores assigned by `evaluate`;
+    Figure 3(c) shows prior programs with named metric scores and an
+    `average_score` before code.
+  - Status: `runtime.history.prompt_prior_score_provenance_report` now links
+    generated mutation prompts to target-parent and selected-inspiration score
+    records with prompt ids/hashes, source workspace hashes, finite raw
+    metrics, `program.fitness` aggregate score, explicit `average_score`
+    display/formula/hash, score-display visibility/omission/truncation
+    records, evaluator/history row joins, execution-output display
+    attribution, stage-summary IO attribution, and feedback-section
+    selection/order/section-cap/global-cap policy records. The flattened
+    `prompt_prior_score_table.jsonl` carries the same cross-run join
+    summaries.
+  - Verification: `py -3.12 -m pytest
+    tests/core/test_loop.py::test_runtime_history_reports_prompt_current_binding_for_diff_mutation
+    tests/core/test_loop.py::test_runtime_history_reports_prompt_prior_score_display_omission_policy
+    tests/core/test_loop.py::test_runtime_history_reports_prompt_prior_execution_output_display
+    tests/core/test_loop.py::test_runtime_history_reports_prompt_prior_stage_summary_io_display
+    tests/core/test_loop.py::test_runtime_history_reports_prompt_prior_feedback_section_policy
+    -q` passes.

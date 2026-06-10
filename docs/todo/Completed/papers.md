@@ -10962,3 +10962,20 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     status. `papers/README.md` now states that this example's zero-generation
     manifest is claim-ready for acknowledgement-role parity.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Track prompt-visible prior-score provenance for rendered evaluation
+      results.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.2 says rendered
+    evaluation results contain the program, execution result, and scores
+    assigned by `evaluate`; Figure 3(c) shows previously discovered programs
+    with named metric scores and an `average_score` before program text.
+  - Status: paper-facing docs now describe
+    `runtime.history.prompt_prior_score_provenance_report` and
+    `prompt_prior_score_table.jsonl` as the local evidence surface for
+    prompt-visible parent/inspiration score rows, score display fields,
+    execution-output and stage-summary IO attribution, evaluator/history joins,
+    explicit `average_score` display/formula policy, and feedback-section
+    truncation policy.
+  - Verification: prompt prior-score runtime tests validate the report schema,
+    score display, `average_score`, execution-output, stage-summary IO, and
+    feedback-section policy records.

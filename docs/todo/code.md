@@ -597,46 +597,6 @@ Primary evidence:
     implemented weighted markers from AlphaEvolve-style stochastic-formatting
     evidence.
 
-- [ ] Add prompt-visible prior-score provenance for rendered evaluation
-      results.
-  - Spec evidence: AlphaEvolve Section 2.2 says rendered evaluation results
-    include the program, execution result, and scores assigned by `evaluate`;
-    Figure 3(c) shows prior programs preceded by named metric scores and an
-    `average_score` summary before the code.
-  - Current evidence: `PromptSampler` renders parent metrics through
-    `{parent_metrics}` and inspiration headers with finite fitness plus
-    declared metric entries, including role/direction/bounds/normalization
-    annotations. Prompt histories and generated-program metadata identify
-    selected parents, inspirations, prompt ids, and prompt context policy.
-    Completed manifests now include
-    `runtime.history.prompt_prior_score_provenance_report`, which links
-    generated mutation prompts to target-parent and selected-inspiration score
-    records with prompt ids/hashes, program roles, source workspace hashes,
-    finite raw metrics, displayed aggregate formula (`program.fitness`),
-    history/failure-history row joins, `evaluator_results.jsonl` row joins,
-    and top-level prompt-feedback execution-output display attribution for
-    `stdout`, `stderr`, and `error` under the active prompt context policy,
-    plus stage-summary IO display attribution for rendered stage
-    stdout/stderr/error fields, and score-display field visibility for
-    aggregate, `average_score`, and metric fields, including prompt-context
-    metric selection, cap-driven truncation, and suppressed metric reasons.
-    Score records expose `displayed_average_score`, its display text/hash, and
-    the explicit formula/policy that aliases normalized `program.fitness`.
-    Completed runs also export `prompt_prior_score_table.jsonl` cross-run rows
-    with prompt ids, score-source ids, displayed aggregate and `average_score`
-    values, metric maps, history/evaluator row joins, score-display visibility
-    summaries, execution-output visibility summaries, and stage-summary IO
-    visibility summaries.
-    Validators reject mismatched score formulas, malformed joins, malformed
-    average-score formula/text/hash records, malformed score-display records,
-    malformed execution-output display records, malformed stage-summary IO
-    records, and malformed table export metadata.
-  - Remaining gap: prompt-score provenance still does not prove complete
-    global feedback-section truncation policy.
-  - Required result: add feedback-section truncation policy before treating
-    prompt metric headers as full AlphaEvolve-style rendered evaluation-result
-    provenance.
-
 - [ ] Add explicit-context source-role provenance for AlphaEvolve prompt
       context.
   - Spec evidence: AlphaEvolve Section 2.2 says users can tailor the primary

@@ -3804,6 +3804,104 @@ x=2
     }
 
 
+def test_runtime_history_reports_prompt_prior_feedback_section_policy():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "print('feedback stdout source')\n"
+        "def evaluate(c): return {'score':1.0,'is_valid':True}"
+    )
+    prompt_db = PromptDatabase(Path(tmpdir) / "prompts", templates=[DEFAULT_TEMPLATE])
+    parent_prompt = prompt_db.select()
+    prompt_db.mutate(
+        parent_prompt.id,
+        parent_prompt.template,
+        generation=1,
+        context_policy={
+            "feedback_sections": ["execution_output", "stage_summary"],
+            "feedback_section_order": ["stage_summary", "execution_output"],
+            "feedback_section_max_chars_by_name": {"execution_output": 0},
+            "stage_summary_fields": ["name", "score"],
+        },
+    )
+    prompt_db.record_result(parent_prompt.id, 0.0)
+    response = """<<<SEARCH
+x=1
+===
+x=2
+>>>REPLACE"""
+
+    with (
+        patch("libreevolve.core.loop.build_llm", return_value=_llm(response)),
+        patch("libreevolve.core.loop.PromptDatabase", return_value=prompt_db),
+    ):
+        evolve(
+            problem,
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"][
+        "prompt_prior_score_provenance_report"
+    ]
+
+    assert report["validation"]["ok"] is True
+    assert validate_prompt_prior_score_provenance_report(report)["ok"] is True
+    assert report["feedback_section_policy_record_count"] == 1
+    assert report["feedback_section_global_policy_record_count"] == 1
+    assert (
+        report["claim_readiness"]["feedback_section_global_truncation_policy"]
+        is True
+    )
+    assert "feedback_section_global_truncation_policy" not in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+
+    score_row = report["records"][0]["score_records"][0]
+    display = score_row["feedback_section_display"]
+    assert display["schema"] == (
+        "libreevolve.prompt_prior_feedback_section_display.v1"
+    )
+    assert display["global_cap_chars"] == 1800
+    assert display["global_cap_policy"] == (
+        "fixed_prompt_feedback_text_chars_after_section_caps"
+    )
+    assert display["selected_sections"] == ["execution_output", "stage_summary"]
+    assert display["section_order"][:2] == ["stage_summary", "execution_output"]
+    assert display["section_caps"] == {"execution_output": 0}
+    sections = {section["name"]: section for section in display["section_records"]}
+    assert sections["stage_summary"]["prompt_visible"] is True
+    assert sections["execution_output"]["has_source"] is True
+    assert sections["execution_output"]["prompt_visible"] is False
+    assert sections["execution_output"]["omission_reason"] == (
+        "feedback_section_suppressed_by_prompt_context_policy_cap"
+    )
+
+    table_row = json.loads(
+        (run_dir / "prompt_prior_score_table.jsonl").read_text(encoding="utf-8")
+    )
+    assert table_row["feedback_section_display"]["global_cap_chars"] == 1800
+    assert "stage_summary" in table_row["feedback_section_display"]["visible_sections"]
+    assert table_row["feedback_section_display"]["suppressed_sections"][0] == {
+        "name": "execution_output",
+        "omission_reason": "feedback_section_suppressed_by_prompt_context_policy_cap",
+    }
+
+    edited_report = copy.deepcopy(report)
+    edited_report["records"][0]["score_records"][0]["feedback_section_display"][
+        "global_cap_chars"
+    ] = 1799
+    validation = validate_prompt_prior_score_provenance_report(edited_report)
+    assert validation["ok"] is False
+    assert "invalid_feedback_section_global_cap" in {
+        issue["code"] for issue in validation["issues"]
+    }
+
+
 def test_runtime_history_reports_prompt_current_binding_for_evolve_block_span():
     tmpdir = tempfile.mkdtemp()
     problem = _problem()

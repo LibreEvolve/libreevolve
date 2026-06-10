@@ -1166,14 +1166,15 @@ attribution for rendered stage stdout/stderr/error fields. It also records
 an explicit `average_score` display/formula alias for normalized
 `program.fitness`, plus score-display field visibility for aggregate and
 metric fields, including prompt-context metric selection, cap-driven
-truncation, and suppressed metric reasons. Completed runs also write
+truncation, and suppressed metric reasons. It also records feedback-section
+selection, deterministic order, per-section caps, source-present/suppressed
+sections, and the fixed global feedback-text cap used after section caps.
+Completed runs also write
 `prompt_prior_score_table.jsonl`, a flattened cross-run table of prompt ids,
 score-source ids, displayed aggregate and `average_score` values, raw metrics,
 history/evaluator row joins, score-display visibility summaries,
-execution-output visibility summaries, and stage-summary IO
-visibility summaries. It remains
-`claim_ready: false`
-until global feedback-section truncation policy is implemented. Prompt history can still store raw seed code,
+execution-output visibility summaries, stage-summary IO visibility summaries,
+and feedback-section visibility summaries. Prompt history can still store raw seed code,
 explicit context files, plugin context, and candidate code. Keep those inputs
 free of secrets unless you are comfortable sending and persisting that content.
 Accepted `failure_history.jsonl` rows are also bounded diagnostic records, not

@@ -8389,3 +8389,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     reviewed AlphaEvolve pages 21-22 acknowledgement fixture and a manifest
     regression for the claim-ready acknowledgement-role boundary.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document rendered-evaluation-result prior-score provenance in ROADMAP.
+  - Spec evidence: ROADMAP needed to scope AlphaEvolve rendered-evaluation
+    claims to concrete prompt/evaluator/history artifacts.
+  - Status: ROADMAP now records prompt prior-score provenance with
+    parent/inspiration score rows, evaluator/history joins, explicit
+    `average_score` display/formula evidence, score-display visibility,
+    execution-output and stage-summary IO attribution, feedback-section
+    truncation policy, and cross-run `prompt_prior_score_table.jsonl` rows.
+  - Verification: prompt prior-score runtime tests validate these fields and
+    ROADMAP no longer lists the prior feedback-section policy gap as open.

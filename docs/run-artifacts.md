@@ -48,9 +48,10 @@ It records per-field reference summaries, program counts, manifest-path
 resolution counts, artifact-link/presence counts, and bounded
 `deep_id_resolution` records that join candidate ids to `history.jsonl` /
 `failure_history.jsonl` rows and generated prompt ids to `prompt_history.jsonl`
-add/score rows. Its `claim_ready: false` gaps still cover paper-facing
-standalone examples, causal score-field attribution, and independent evaluator
-row ids.
+add/score rows. `docs/examples/task_specification.embedded_evaluate_math.json`
+is a validated standalone documentation example. The runtime report's
+`claim_ready: false` gaps still cover causal score-field attribution and
+independent evaluator row ids.
 Completed manifests also include
 `runtime.history.initial_program_idea_provenance_report` with schema
 `libreevolve.initial_program_idea_provenance_report.v1`. This report reads

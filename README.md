@@ -2192,8 +2192,9 @@ embedded score-field candidate-path links when candidate-owned evaluation ran.
 The report also includes bounded `deep_id_resolution` records that join
 candidate ids to `history.jsonl` / `failure_history.jsonl` rows and generated
 prompt ids to `prompt_history.jsonl` add/score rows. This is still partial
-evidence: causal score-field attribution, independent evaluator row ids, and
-paper-facing standalone task-spec examples remain open.
+evidence: `docs/examples/task_specification.embedded_evaluate_math.json`
+provides a validated paper-facing standalone example, while causal score-field
+attribution and independent evaluator row ids remain open.
 Problem fixtures can optionally add `formulation.yaml` or `formulation.yml`;
 direct callers can set `Problem.formulation_metadata`. The manifest normalizes
 this to `problem.formulation_metadata` with fixed vocabularies for problem

@@ -525,8 +525,10 @@ evidence such as candidate history, prompt history, LLM calls, controller
 budget events, evaluator artifacts, best exports, initial evolvable component
 span ids when markers are present, and embedded score-field candidate-path
 links when candidate-owned evaluation ran. It also records bounded candidate
-and prompt JSONL row joins. Paper-facing standalone task-spec examples, causal
-score attribution, and independent evaluator row ids remain open.
+and prompt JSONL row joins. The checked
+`docs/examples/task_specification.embedded_evaluate_math.json` file is a
+validated paper-facing standalone example; causal score attribution and
+independent evaluator row ids remain open.
 
 AlphaEvolve candidate-abstraction note: completed manifests now include
 `runtime.history.candidate_abstraction_choice_report` with schema

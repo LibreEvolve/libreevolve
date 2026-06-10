@@ -204,10 +204,13 @@ Primary evidence:
     manifest bundle. The report also records bounded `deep_id_resolution`
     records that join candidate ids to `history.jsonl` / `failure_history.jsonl`
     rows and generated prompt ids to `prompt_history.jsonl` add/score rows.
-    These links remain non-causal provenance.
-  - Required result: finish score-field causal attribution, paper-facing
-    standalone task-spec examples, and independent evaluator-row id resolution
-    rather than only evaluation payloads embedded in candidate history rows.
+    `docs/examples/task_specification.embedded_evaluate_math.json` is now a
+    checked paper-facing standalone example validated by
+    `tests/test_task_spec_examples.py`. These links remain non-causal
+    provenance.
+  - Required result: finish score-field causal attribution and independent
+    evaluator-row id resolution rather than only evaluation payloads embedded
+    in candidate history rows.
 
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.

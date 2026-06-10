@@ -1,0 +1,98 @@
+{
+  "fields": {
+    "background_knowledge": {
+      "context_policy_manifest_path": "problem.context_policy",
+      "context_source_count": 1,
+      "ids": [
+        {
+          "context_index": 0,
+          "relative_path": "context/notes.md",
+          "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        }
+      ],
+      "manifest_path": "problem.context_sources",
+      "status": "present"
+    },
+    "candidate_representation": {
+      "language_runner_ready": true,
+      "manifest_path": "policies.candidate_language",
+      "policy": "python_primary_text_workspace",
+      "primary_language": "python",
+      "status": "present"
+    },
+    "evaluation_code": {
+      "embedded_candidate_evaluate": true,
+      "embedded_stage_indices": [
+        0
+      ],
+      "entrypoint_count": 0,
+      "manifest_path": "problem.evaluator_sources",
+      "status": "present"
+    },
+    "human_problem_formulation": {
+      "contributor_count": 1,
+      "manifest_path": "problem.formulation_metadata",
+      "problem_origin": "benchmark_fixture",
+      "review_status": "self_reviewed",
+      "schema": "libreevolve.problem_formulation.v1",
+      "status": "present"
+    },
+    "initial_programs": {
+      "count": 1,
+      "ids": [
+        {
+          "relative_path": "initial_programs/seed.py",
+          "seed_index": 0,
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ],
+      "manifest_path": "problem.seed_sources",
+      "status": "present"
+    },
+    "llm_ensemble": {
+      "backend_count": 1,
+      "ids": [
+        {
+          "api_mode": null,
+          "backend_index": 0,
+          "model": "example-model",
+          "type": "openai"
+        }
+      ],
+      "manifest_path": "config.backends",
+      "role_routing_manifest_path": "config.llm_role_backend_indices",
+      "status": "present"
+    },
+    "objective_metrics": {
+      "manifest_path": "problem.objective_schema",
+      "metric_count": 1,
+      "primary_metric": "score",
+      "status": "present"
+    },
+    "prompt_template_and_config": {
+      "ids": [
+        {
+          "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "variant_index": 0
+        }
+      ],
+      "manifest_path": "config.prompt_variants_metadata",
+      "status": "present",
+      "variant_count": 1
+    }
+  },
+  "schema": "libreevolve.alphaevolve_task_specification_bundle.v1",
+  "source": "startup_manifest_cross_reference",
+  "status": "partial_alphaevolve_task_specification",
+  "task_spec_id": "fa8c19a9bbcdbd124de6b6812d13c13aab0a42a0d244f68bba4e8666e00d714d",
+  "unsupported_or_incomplete": [
+    "example_is_documentation_fixture_not_runtime_manifest",
+    "task_spec_needs_score_path_causal_attribution",
+    "independent_evaluator_row_ids_unresolved"
+  ],
+  "validation": {
+    "issues": [],
+    "ok": true,
+    "schema": "libreevolve.alphaevolve_task_specification_bundle.v1"
+  }
+}

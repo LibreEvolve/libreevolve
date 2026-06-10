@@ -2183,13 +2183,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     3.1 uses multiple randomized initializations for matrix tensor targets.
   - Current evidence: README describes cascade evaluation, staged validators,
     samples, retries, thresholds, stage/sample budgets, and prompt-visible
-    diagnostics. It does not yet document a statistical cascade policy with
-    confidence intervals, p-values, sequential stopping, false-promotion/
-    false-rejection budgets, or explicit small-scale/main-test stage roles.
-  - Required result: when statistical cascade promotion reports and validation
-    land, update README, ROADMAP, papers index, and code/paper TODOs so README
-    distinguishes current deterministic staged threshold gates from
-    AlphaEvolve-style hypothesis-testing cascades.
+    diagnostics. README now also documents
+    `runtime.history.cascade_hypothesis_test_policy_report`, which records
+    inferred small-scale/main-test roles, observed promotion counts,
+    configured sample/seed counts, and validator-backed negative evidence for
+    statistical tests, confidence intervals, p-values, sequential stopping, and
+    false-promotion/false-rejection budgets.
+  - Required result: when statistical cascade promotion execution lands,
+    update README, ROADMAP, papers index, and code/paper TODOs so README
+    distinguishes the current boundary report from AlphaEvolve-style
+    hypothesis-testing cascades.
 
 - [ ] Keep README mutation-response wording scoped beyond bounded
       natural-language preamble capture.

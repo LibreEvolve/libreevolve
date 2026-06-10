@@ -57,6 +57,11 @@ LibreEvolve has:
   attrition, threshold failures, work counters, bounded candidate-stage
   history cross-links, denominator-policy boundaries, and explicit
   claim-readiness limitations under `runtime.history.evaluation_cascade_report`
+- cascade hypothesis-test boundary reports under
+  `runtime.history.cascade_hypothesis_test_policy_report`, naming inferred
+  small-scale-filter/main-test roles and validating that current promotion is
+  deterministic threshold/artifact checking rather than statistical
+  confidence, p-value, or sequential-test gating
 - evaluator-workload declarations for configured stages, including
   `simple_check`, `inner_search`, `ml_training`, and `custom` classifications,
   validated dataset/budget/checkpoint/score-field metadata, validator-visible
@@ -378,10 +383,11 @@ is not yet an AlphaEvolve reproduction.
 - Extend `runtime.history.qualitative_feedback_policy_report` beyond
   criterion/rubric/intent metadata into calibration/task-suite evidence and
   prompt-history row audits for hard-to-code properties such as simplicity.
-- Add statistical hypothesis-test promotion policies for cascades, separating
-  current staged threshold gates from AlphaEvolve-style small-scale filters,
-  main-test promotion decisions, confidence or p-value evidence, and
-  sequential stopping diagnostics.
+- Add statistical hypothesis-test promotion policies for cascades, extending
+  the current `runtime.history.cascade_hypothesis_test_policy_report` boundary
+  from inferred roles and deterministic threshold/artifact checks into real
+  confidence or p-value evidence, sequential stopping diagnostics, and
+  false-promotion/false-rejection budgets.
 - Extend the evaluator/oracle registry beyond the current arbitration-policy
   matrix and local post-evaluator disagreement outcomes into independent
   reference/statistical oracles, benchmark sufficiency evidence, and

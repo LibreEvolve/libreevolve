@@ -5220,6 +5220,11 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
     evaluator_result_export = _write_evaluator_results(run_dir, programs)
     programs_logged = len(programs)
     archive_state = db.archive_state_snapshot()
+    startup_manifest = db.startup_manifest_snapshot()
+    evaluation_cascade_report = _evaluation_cascade_report(
+        programs,
+        startup_manifest,
+    )
     paper_metric_contract = _paper_evaluator_metric_contract_report(
         db,
         programs,
@@ -5336,9 +5341,12 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 db.startup_manifest_snapshot(),
             )
         ),
-        "evaluation_cascade_report": _evaluation_cascade_report(
-            programs,
-            db.startup_manifest_snapshot(),
+        "evaluation_cascade_report": evaluation_cascade_report,
+        "cascade_hypothesis_test_policy_report": (
+            _cascade_hypothesis_test_policy_report(
+                evaluation_cascade_report,
+                startup_manifest,
+            )
         ),
         "evaluator_workload_report": _evaluator_workload_report(programs),
         "qualitative_feedback_policy_report": (
@@ -13071,6 +13079,150 @@ def _evaluation_cascade_report(
     }
     report["validation"] = validate_evaluation_cascade_report(report)
     return report
+
+
+def _cascade_hypothesis_test_policy_report(
+    cascade_report: Mapping[str, object],
+    startup_manifest: Mapping[str, object],
+) -> dict:
+    config = (
+        startup_manifest.get("config")
+        if isinstance(startup_manifest.get("config"), Mapping)
+        else {}
+    )
+    eval_stages = (
+        config.get("eval_stages")
+        if isinstance(config.get("eval_stages"), list)
+        else []
+    )
+    stages_by_id = {
+        stage.get("stage_id"): stage
+        for stage in cascade_report.get("stages", [])
+        if isinstance(stage, Mapping) and isinstance(stage.get("stage_id"), str)
+    }
+    stage_policies = [
+        _cascade_hypothesis_stage_policy(index, stage, len(eval_stages), stages_by_id)
+        for index, stage in enumerate(eval_stages)
+        if isinstance(stage, Mapping)
+    ]
+    observed_stage_count = (
+        cascade_report.get("stage_count")
+        if isinstance(cascade_report.get("stage_count"), int)
+        and not isinstance(cascade_report.get("stage_count"), bool)
+        else 0
+    )
+    report = {
+        "schema": "libreevolve.cascade_hypothesis_test_policy_report.v1",
+        "source": "config_eval_stages_and_evaluation_cascade_report",
+        "cascade_report_schema": cascade_report.get("schema"),
+        "configured_stage_policy_count": len(stage_policies),
+        "observed_stage_count": observed_stage_count,
+        "stage_policies": stage_policies,
+        "current_policy": {
+            "schema": "libreevolve.cascade_promotion_policy_boundary.v1",
+            "promotion_mechanism": "deterministic_threshold_and_artifact_checks",
+            "statistical_hypothesis_tests_supported": False,
+            "confidence_intervals_supported": False,
+            "p_values_supported": False,
+            "sequential_stopping_supported": False,
+            "false_promotion_budget_supported": False,
+            "false_rejection_budget_supported": False,
+            "per_sample_observation_retention": (
+                "stage_accounting_and_candidate_stage_summary_only"
+            ),
+            "paper_claim_ready": False,
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "alphaevolve_section_2_4_hypothesis_testing": False,
+            "small_scale_filter_roles_named": bool(stage_policies),
+            "main_test_role_named": bool(stage_policies),
+            "fixed_threshold_promotion_evidence": True,
+            "statistical_test_configuration": False,
+            "confidence_or_p_value_records": False,
+            "sequential_stopping_diagnostics": False,
+            "false_promotion_false_rejection_budgets": False,
+            "remaining_gap": [
+                "statistical_test_configuration",
+                "retained_per_sample_observations",
+                "confidence_interval_or_p_value_records",
+                "sequential_stopping_rule",
+                "false_promotion_false_rejection_budget",
+                "noisy_repeated_seed_promotion_tests",
+            ],
+        },
+    }
+    report["validation"] = validate_cascade_hypothesis_test_policy_report(report)
+    return report
+
+
+def _cascade_hypothesis_stage_policy(
+    index: int,
+    stage: Mapping[str, object],
+    stage_count: int,
+    stages_by_id: Mapping[object, Mapping[str, object]],
+) -> dict:
+    name = str(stage.get("name", f"stage_{index}"))
+    stage_id = f"{index}:{name}"
+    observed = stages_by_id.get(stage_id, {})
+    role = "main_test" if index == stage_count - 1 else "small_scale_filter"
+    if stage_count > 2 and 0 < index < stage_count - 1:
+        role = "intermediate_filter"
+    samples = stage.get("samples", 1)
+    configured_samples = (
+        samples
+        if isinstance(samples, int) and not isinstance(samples, bool)
+        else 1
+    )
+    seeds = stage.get("seeds")
+    seed_count = (
+        len(seeds)
+        if isinstance(seeds, list)
+        else 0
+    )
+    return {
+        "stage_id": stage_id,
+        "stage_index": index,
+        "stage_name": name,
+        "inferred_role": role,
+        "promotion_decision_source": "fixed_threshold_and_artifact_checks",
+        "thresholds": {
+            "fitness": stage.get("min_score"),
+            "metric_thresholds_configured": isinstance(stage.get("metric_thresholds"), Mapping),
+            "artifact_checks_configured": any(
+                key in stage
+                for key in (
+                    "min_artifacts",
+                    "program_output_checks",
+                    "require_program_output",
+                    "required_artifacts",
+                )
+            ),
+        },
+        "sample_design": {
+            "configured_samples": configured_samples,
+            "configured_seed_count": seed_count,
+            "explicit_seeds_configured": seed_count > 0,
+            "repeated_sample_or_seed_design": configured_samples > 1 or seed_count > 1,
+        },
+        "observed": {
+            "entered": observed.get("candidate_count", 0),
+            "passed": observed.get("passed", 0),
+            "failed": observed.get("failed", 0),
+            "sample_count": observed.get("sample_count", 0),
+            "promotion_rate": observed.get("promotion_rate"),
+        },
+        "statistical_test": {
+            "configured": False,
+            "test_name": None,
+            "confidence_interval": None,
+            "p_value": None,
+            "sequential_stopping": False,
+            "false_promotion_budget": None,
+            "false_rejection_budget": None,
+        },
+        "claim_ready": False,
+    }
 
 
 def _cascade_candidate_stage_record(
@@ -27372,6 +27524,227 @@ def validate_evaluation_cascade_report(report: object) -> dict:
         issues.append({"code": "claim_ready_overclaimed", "message": "current cascade report must not claim AlphaEvolve readiness"})
     return {
         "schema": "libreevolve.evaluation_cascade_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def validate_cascade_hypothesis_test_policy_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.cascade_hypothesis_test_policy_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "cascade hypothesis-test policy report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "cascade_report_schema",
+        "configured_stage_policy_count",
+        "observed_stage_count",
+        "stage_policies",
+        "current_policy",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": (
+                    "cascade hypothesis-test policy report missing fields: "
+                    f"{sorted(missing)}"
+                ),
+            }
+        )
+    if report.get("schema") != "libreevolve.cascade_hypothesis_test_policy_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "cascade hypothesis-test policy report schema is unsupported",
+            }
+        )
+    if report.get("source") != "config_eval_stages_and_evaluation_cascade_report":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "cascade hypothesis-test policy report source is unsupported",
+            }
+        )
+    if report.get("cascade_report_schema") != "libreevolve.evaluation_cascade_report.v1":
+        issues.append(
+            {
+                "code": "invalid_cascade_report_schema",
+                "message": "cascade report schema linkage is unsupported",
+            }
+        )
+    stage_policies = report.get("stage_policies")
+    if not isinstance(stage_policies, list):
+        issues.append(
+            {
+                "code": "invalid_stage_policies",
+                "message": "stage_policies must be a list",
+            }
+        )
+        stage_policies = []
+    if (
+        isinstance(report.get("configured_stage_policy_count"), int)
+        and not isinstance(report.get("configured_stage_policy_count"), bool)
+    ):
+        if report["configured_stage_policy_count"] != len(stage_policies):
+            issues.append(
+                {
+                    "code": "stage_policy_count_mismatch",
+                    "message": "configured_stage_policy_count must match stage_policies length",
+                }
+            )
+    else:
+        issues.append(
+            {
+                "code": "invalid_stage_policy_count",
+                "message": "configured_stage_policy_count must be a non-negative integer",
+            }
+        )
+    for index, stage in enumerate(stage_policies):
+        if not isinstance(stage, dict):
+            issues.append(
+                {
+                    "code": "invalid_stage_policy",
+                    "message": "stage policy records must be objects",
+                }
+            )
+            continue
+        for key in ("stage_id", "stage_name", "inferred_role", "promotion_decision_source"):
+            if not isinstance(stage.get(key), str) or not stage.get(key):
+                issues.append(
+                    {
+                        "code": "invalid_stage_policy_field",
+                        "message": f"stage policy {index} {key} must be non-empty text",
+                    }
+                )
+        if stage.get("inferred_role") not in {
+            "small_scale_filter",
+            "intermediate_filter",
+            "main_test",
+        }:
+            issues.append(
+                {
+                    "code": "invalid_stage_role",
+                    "message": f"stage policy {index} inferred_role is unsupported",
+                }
+            )
+        if stage.get("promotion_decision_source") != "fixed_threshold_and_artifact_checks":
+            issues.append(
+                {
+                    "code": "promotion_source_overclaim",
+                    "message": "current cascade promotion source must remain fixed-threshold",
+                }
+            )
+        statistical_test = stage.get("statistical_test")
+        if not isinstance(statistical_test, dict):
+            issues.append(
+                {
+                    "code": "invalid_statistical_test",
+                    "message": f"stage policy {index} statistical_test must be an object",
+                }
+            )
+            continue
+        if statistical_test.get("configured") is not False:
+            issues.append(
+                {
+                    "code": "statistical_test_overclaim",
+                    "message": "current cascade stages must not claim statistical tests",
+                }
+            )
+        if statistical_test.get("confidence_interval") is not None:
+            issues.append(
+                {
+                    "code": "confidence_interval_overclaim",
+                    "message": "current cascade stages must not claim confidence intervals",
+                }
+            )
+        if statistical_test.get("p_value") is not None:
+            issues.append(
+                {
+                    "code": "p_value_overclaim",
+                    "message": "current cascade stages must not claim p-values",
+                }
+            )
+        if statistical_test.get("sequential_stopping") is not False:
+            issues.append(
+                {
+                    "code": "sequential_stopping_overclaim",
+                    "message": "current cascade stages must not claim sequential stopping",
+                }
+            )
+    current_policy = report.get("current_policy")
+    if not isinstance(current_policy, dict):
+        issues.append(
+            {
+                "code": "invalid_current_policy",
+                "message": "current_policy must be an object",
+            }
+        )
+    else:
+        if (
+            current_policy.get("schema")
+            != "libreevolve.cascade_promotion_policy_boundary.v1"
+        ):
+            issues.append(
+                {
+                    "code": "invalid_current_policy_schema",
+                    "message": "current policy schema is unsupported",
+                }
+            )
+        false_fields = {
+            "statistical_hypothesis_tests_supported": "policy_statistical_test_overclaim",
+            "confidence_intervals_supported": "policy_confidence_interval_overclaim",
+            "p_values_supported": "policy_p_value_overclaim",
+            "sequential_stopping_supported": "policy_sequential_stopping_overclaim",
+            "false_promotion_budget_supported": "policy_false_promotion_budget_overclaim",
+            "false_rejection_budget_supported": "policy_false_rejection_budget_overclaim",
+            "paper_claim_ready": "policy_paper_claim_ready_overclaim",
+        }
+        for field, code in false_fields.items():
+            if current_policy.get(field) is not False:
+                issues.append(
+                    {
+                        "code": code,
+                        "message": f"current_policy.{field} must be false",
+                    }
+                )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, dict):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+    else:
+        if readiness.get("alphaevolve_section_2_4_hypothesis_testing") is not False:
+            issues.append(
+                {
+                    "code": "alphaevolve_hypothesis_testing_overclaim",
+                    "message": "current cascade policy must not claim Section 2.4 parity",
+                }
+            )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "claim_ready_overclaim",
+                "message": "current cascade hypothesis-test report must not claim readiness",
+            }
+        )
+    return {
+        "schema": "libreevolve.cascade_hypothesis_test_policy_report.v1",
         "ok": not issues,
         "issues": issues,
     }

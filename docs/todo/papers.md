@@ -1579,13 +1579,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     initializations should provide evidence for noisy benchmark decisions.
   - Partial status: LibreEvolve has ordered staged validators with scalar and
     metric thresholds, samples, explicit seeds, retries, stage/sample budgets,
-    and prompt-visible diagnostics.
-  - Current gap: paper-facing evidence does not define statistical
-    hypothesis-test policies, confidence intervals, p-values, sequential
-    stopping rules, false-promotion/false-rejection budgets, or explicit
-    small-scale-versus-main-test stage roles. Current cascades can be accurate
-    threshold gates without proving AlphaEvolve-style hypothesis-testing
-    promotion semantics.
+    and prompt-visible diagnostics. Completed manifests now include
+    `runtime.history.cascade_hypothesis_test_policy_report` with schema
+    `libreevolve.cascade_hypothesis_test_policy_report.v1`, inferred
+    small-scale-filter/intermediate/main-test roles, observed
+    entry/pass/fail/sample/promotion summaries, configured sample/seed counts,
+    and validation that current promotion remains deterministic
+    threshold/artifact checking.
+  - Current gap: paper-facing evidence now names the current role boundary but
+    still does not implement statistical hypothesis-test policies, confidence
+    intervals, p-values, sequential stopping rules, or false-promotion/
+    false-rejection budgets. Current cascades can be accurate threshold gates
+    without proving AlphaEvolve-style hypothesis-testing promotion semantics.
   - Required result: add report/schema evidence for statistical cascade
     promotion decisions, including per-sample observations, test parameters,
     confidence or p-value outputs, sequential stopping diagnostics, and

@@ -180,6 +180,16 @@ metadata paths, evaluator source refs when available, denominator-policy
 boundaries, and `claim_ready: false` limitations for missing difficulty/
 test-set, benchmark seed/sample, and cost evidence.
 Completed manifests also include
+`runtime.history.cascade_hypothesis_test_policy_report` with schema
+`libreevolve.cascade_hypothesis_test_policy_report.v1`. It derives current
+stage roles from configured cascade order, links each stage to observed
+entry/pass/fail/sample/promotion-rate summaries, records configured sample and
+seed counts, and states that the current promotion mechanism is deterministic
+threshold and artifact checks. Its validation fails if the report claims
+statistical tests, confidence intervals, p-values, sequential stopping,
+false-promotion/false-rejection budgets, paper readiness, or AlphaEvolve
+Section 2.4 hypothesis-testing parity.
+Completed manifests also include
 `runtime.history.existing_codebase_integration_report` with schema
 `libreevolve.existing_codebase_integration_report.v1`. This report scans
 runtime candidate workspaces for Python `# EVOLVE-BLOCK-START/END` markers and

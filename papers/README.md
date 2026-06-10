@@ -514,7 +514,13 @@ main-test exposure, early-prune counts, bounded candidate-stage cross-links to
 boundaries, and explicit `claim_ready: false` limitations. Stage difficulty/
 test-set identities, benchmark seed/sample policy, and cost-savings evidence
 remain open before claiming AlphaEvolve cascade efficiency or
-hypothesis-testing parity.
+hypothesis-testing parity. Completed manifests also include
+`runtime.history.cascade_hypothesis_test_policy_report`, which names inferred
+small-scale-filter/intermediate/main-test roles from stage order, links current
+promotion counts and sample/seed configuration, and validates that current
+promotion is still deterministic thresholds/artifact checks rather than
+statistical tests, confidence intervals, p-values, sequential stopping, or
+false-promotion/false-rejection-budgeted hypothesis testing.
 
 AlphaEvolve embedded-evaluator note: configured stages can now opt into
 `mode: embedded_evaluate`, which imports the materialized candidate primary
@@ -1393,11 +1399,13 @@ Implemented:
   anti-gaming fixtures.
 - `libreevolve/core/evaluator.py`: evaluation-cascade status. Configured
   stages support deterministic scalar and metric thresholds, samples, explicit
-  seeds, retries, and stage/sample budgets. They are not yet AlphaEvolve
-  Section 2.4 hypothesis-testing cascades: no report/schema records
-  statistical test parameters, confidence intervals, p-values, sequential
-  stopping, false-promotion/false-rejection budgets, or explicit
-  small-scale-filter versus main-test promotion roles.
+  seeds, retries, and stage/sample budgets. Completed manifests include
+  `runtime.history.cascade_hypothesis_test_policy_report`, which records
+  inferred small-scale-filter/main-test roles and validates the current
+  deterministic threshold boundary. They are not yet AlphaEvolve Section 2.4
+  hypothesis-testing cascades: no runtime policy applies statistical test
+  parameters, confidence intervals, p-values, sequential stopping, or
+  false-promotion/false-rejection budgets to promotion decisions.
 - `libreevolve/problems/benchmarks/ablation_results.py`: equal-budget
   ablation-result report contract. It validates the AlphaEvolve Figure 8
   full-system baseline plus the five component ablations, declared targets,

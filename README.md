@@ -2511,6 +2511,15 @@ refs when available, and `claim_ready: false` until stage difficulty/scale
 labels, evaluator test-set hashes, benchmark seed/sample policy, and
 cost-savings evidence are added.
 Completed manifests also include
+`runtime.history.cascade_hypothesis_test_policy_report`, which records the
+current cascade promotion-policy boundary. It infers small-scale-filter,
+intermediate-filter, and main-test roles from configured stage order, links
+those stages to observed promotion/attrition counts, records configured sample
+and seed counts, and explicitly marks current promotion as deterministic
+threshold/artifact checks. Its validator keeps statistical tests, confidence
+intervals, p-values, sequential stopping, false-promotion/false-rejection
+budgets, and AlphaEvolve Section 2.4 hypothesis-testing readiness false.
+Completed manifests also include
 `runtime.history.automated_evaluator_scope_report`, which records the current
 AlphaEvolve scope boundary: candidate admission is owned by deterministic
 machine evaluator execution, optional LLM feedback graders are post-evaluator

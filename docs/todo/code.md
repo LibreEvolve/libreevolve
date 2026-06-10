@@ -1434,12 +1434,22 @@ Primary evidence:
   - Current evidence: `CascadeEvaluator` supports ordered configured stages,
     `min_score`, per-metric thresholds, required program-output/artifact
     checks, samples, explicit seeds, retries, sample/stage wall-clock budgets,
-    and diagnostic records. These are deterministic threshold and aggregation
-    gates: there is no versioned statistical hypothesis-test policy,
-    confidence interval or p-value evidence, sequential-test stopping rule,
-    false-promotion/false-rejection budget, small-scale-versus-main-test
-    labeling, or promotion report that proves a candidate advanced because a
-    noisy sample set was statistically promising.
+    and diagnostic records. Completed manifests now include
+    `runtime.history.cascade_hypothesis_test_policy_report` with schema
+    `libreevolve.cascade_hypothesis_test_policy_report.v1`. It infers
+    `small_scale_filter`, `intermediate_filter`, and `main_test` roles from
+    configured stage order, links observed entry/pass/fail/sample/promotion
+    counts from `runtime.history.evaluation_cascade_report`, records configured
+    sample and seed counts, and validates that current promotion remains
+    deterministic threshold/artifact checking. The validator rejects
+    statistical-test, confidence-interval, p-value, sequential-stopping,
+    false-promotion/false-rejection-budget, and claim-ready overclaims.
+  - Remaining gap: no runtime policy uses statistical test parameters,
+    retained per-sample observations, confidence or p-value evidence,
+    sequential-test stopping rules, or false-promotion/false-rejection budgets
+    to decide promotion. The stage role labels are inferred boundary evidence,
+    not proof that a noisy repeated-seed sample set was statistically
+    promising.
   - Required result: add a cascade promotion policy with explicit stage roles
     (`small_scale_filter`, `main_test`, etc.), statistical test configuration,
     retained per-sample observations, confidence or p-value records,

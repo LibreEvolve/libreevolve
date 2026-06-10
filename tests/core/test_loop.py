@@ -45,6 +45,7 @@ from libreevolve.core.loop import (
     validate_acknowledgement_role_provenance_report,
     validate_controller_state_snapshot,
     validate_evaluation_cascade_report,
+    validate_cascade_hypothesis_test_policy_report,
     validate_evaluator_workload_report,
     validate_distributed_pipeline_topology_report,
     validate_alphaevolve_process_exhibit_report,
@@ -5531,6 +5532,103 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
         issue["code"] == "cascade_denominator_overclaim"
         for issue in validation["issues"]
     )
+
+    hypothesis_policy = manifest["runtime"]["history"][
+        "cascade_hypothesis_test_policy_report"
+    ]
+    assert (
+        hypothesis_policy["schema"]
+        == "libreevolve.cascade_hypothesis_test_policy_report.v1"
+    )
+    assert hypothesis_policy["validation"]["ok"] is True
+    assert validate_cascade_hypothesis_test_policy_report(hypothesis_policy)[
+        "ok"
+    ] is True
+    assert hypothesis_policy["configured_stage_policy_count"] == 2
+    assert hypothesis_policy["observed_stage_count"] == 2
+    assert hypothesis_policy["current_policy"] == {
+        "schema": "libreevolve.cascade_promotion_policy_boundary.v1",
+        "promotion_mechanism": "deterministic_threshold_and_artifact_checks",
+        "statistical_hypothesis_tests_supported": False,
+        "confidence_intervals_supported": False,
+        "p_values_supported": False,
+        "sequential_stopping_supported": False,
+        "false_promotion_budget_supported": False,
+        "false_rejection_budget_supported": False,
+        "per_sample_observation_retention": (
+            "stage_accounting_and_candidate_stage_summary_only"
+        ),
+        "paper_claim_ready": False,
+    }
+    assert hypothesis_policy["claim_ready"] is False
+    assert (
+        hypothesis_policy["claim_readiness"][
+            "alphaevolve_section_2_4_hypothesis_testing"
+        ]
+        is False
+    )
+    assert "confidence_interval_or_p_value_records" in (
+        hypothesis_policy["claim_readiness"]["remaining_gap"]
+    )
+    smoke_policy, main_policy = hypothesis_policy["stage_policies"]
+    assert smoke_policy["stage_id"] == "0:smoke"
+    assert smoke_policy["inferred_role"] == "small_scale_filter"
+    assert smoke_policy["promotion_decision_source"] == (
+        "fixed_threshold_and_artifact_checks"
+    )
+    assert smoke_policy["sample_design"] == {
+        "configured_samples": 1,
+        "configured_seed_count": 0,
+        "explicit_seeds_configured": False,
+        "repeated_sample_or_seed_design": False,
+    }
+    assert smoke_policy["observed"]["entered"] == 2
+    assert smoke_policy["observed"]["passed"] == 1
+    assert smoke_policy["observed"]["failed"] == 1
+    assert smoke_policy["observed"]["promotion_rate"] == 0.5
+    assert smoke_policy["statistical_test"] == {
+        "configured": False,
+        "test_name": None,
+        "confidence_interval": None,
+        "p_value": None,
+        "sequential_stopping": False,
+        "false_promotion_budget": None,
+        "false_rejection_budget": None,
+    }
+    assert main_policy["stage_id"] == "1:main"
+    assert main_policy["inferred_role"] == "main_test"
+
+    overclaimed_policy = copy.deepcopy(hypothesis_policy)
+    overclaimed_policy["claim_ready"] = True
+    overclaimed_policy["current_policy"]["statistical_hypothesis_tests_supported"] = True
+    overclaimed_policy["current_policy"]["p_values_supported"] = True
+    overclaimed_policy["current_policy"]["paper_claim_ready"] = True
+    overclaimed_policy["claim_readiness"][
+        "alphaevolve_section_2_4_hypothesis_testing"
+    ] = True
+    overclaimed_policy["stage_policies"][0]["promotion_decision_source"] = (
+        "welch_t_test"
+    )
+    overclaimed_policy["stage_policies"][0]["statistical_test"]["configured"] = True
+    overclaimed_policy["stage_policies"][0]["statistical_test"]["p_value"] = 0.01
+    overclaimed_policy["stage_policies"][0]["statistical_test"][
+        "sequential_stopping"
+    ] = True
+    policy_validation = validate_cascade_hypothesis_test_policy_report(
+        overclaimed_policy
+    )
+    assert policy_validation["ok"] is False
+    assert {
+        "claim_ready_overclaim",
+        "policy_statistical_test_overclaim",
+        "policy_p_value_overclaim",
+        "policy_paper_claim_ready_overclaim",
+        "alphaevolve_hypothesis_testing_overclaim",
+        "promotion_source_overclaim",
+        "statistical_test_overclaim",
+        "p_value_overclaim",
+        "sequential_stopping_overclaim",
+    }.issubset({issue["code"] for issue in policy_validation["issues"]})
 
 
 def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():

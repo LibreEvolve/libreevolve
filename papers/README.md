@@ -550,8 +550,10 @@ include `runtime.history.prompt_prior_score_provenance_report`, which links
 generated mutation prompts to target-parent and selected-inspiration score
 records. It records prompt ids/hashes, program roles, source workspace hashes,
 raw finite metrics, displayed aggregate score formula, history/failure-history
-row joins, and evaluator-result row joins. It remains `claim_ready: false`
-because execution-result text display attribution, score omission/truncation
+row joins, evaluator-result row joins, and top-level prompt-feedback
+execution-output display attribution for `stdout`, `stderr`, and `error`.
+It remains `claim_ready: false` because score omission/truncation policy,
+stage-summary IO display attribution, global feedback-section truncation
 policy, exact `average_score` formula parity, and cross-run prompt-score table
 exports remain open.
 

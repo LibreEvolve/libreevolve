@@ -643,12 +643,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     parent/inspiration metadata, metric normalization annotations, and
     `runtime.history.prompt_prior_score_provenance_report`, which links prompt
     score records to program ids, source hashes, finite metrics, history rows,
-    and evaluator-result rows.
-  - Required result: keep README scoped until execution-output display
-    attribution, score omission/truncation records, exact `average_score`
-    formula parity or an explicit substitution policy, and cross-run
-    prompt-score table exports distinguish current prompt metric rendering from
-    full AlphaEvolve-style rendered evaluation results.
+    evaluator-result rows, and top-level prompt-feedback execution-output
+    display attribution.
+  - Required result: keep README scoped until score omission/truncation records,
+    stage-summary IO display attribution, global feedback-section truncation
+    policy, exact `average_score` formula parity or an explicit substitution
+    policy, and cross-run prompt-score table exports distinguish current prompt
+    metric rendering from full AlphaEvolve-style rendered evaluation results.
 
 - [ ] Keep README ablation-report wording aligned with current LLM budget
   stops.

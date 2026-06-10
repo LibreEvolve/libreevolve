@@ -162,6 +162,8 @@ _MAX_PLUGIN_SIDE_EFFECT_ERROR_CHARS = 500
 _MAX_DIRECT_INLINE_SEED_CHARS = 1_000_000
 _MAX_CRITIQUE_RETAINED_PROMPT_CHARS = 6000
 _MAX_CRITIQUE_RETAINED_MUTATION_CHARS = 4000
+_PROMPT_EXECUTION_OUTPUT_FIELDS = ("stdout", "stderr", "error")
+_PROMPT_EXECUTION_OUTPUT_DEFAULT_FIELD_CHARS = 400
 META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA = (
     "libreevolve.meta_prompt_context_policy_capabilities.v1"
 )
@@ -10395,12 +10397,40 @@ def _evaluator_result_record(program: Program, index: int) -> dict:
         "llm_feedback_count": len(metadata.get("llm_feedback", []))
         if isinstance(metadata.get("llm_feedback"), list)
         else 0,
+        "execution_output": _evaluator_result_execution_output_record(evaluation),
         "source_policy": "derived_from_program_evaluation_payload",
     }
     error = evaluation.get("error")
     if isinstance(error, str) and error:
         record["error"] = error[:240]
     return record
+
+
+def _evaluator_result_execution_output_record(evaluation: Mapping[str, object]) -> dict:
+    fields = {
+        field: _prompt_execution_output_field_record(
+            evaluation.get(field),
+            field=field,
+            selected=True,
+            prompt_visible=True,
+            field_cap_chars=_PROMPT_EXECUTION_OUTPUT_DEFAULT_FIELD_CHARS,
+            omission_reason=None,
+        )
+        for field in _PROMPT_EXECUTION_OUTPUT_FIELDS
+    }
+    present_fields = [
+        field
+        for field, record in fields.items()
+        if record["raw_present"]
+    ]
+    return {
+        "schema": "libreevolve.evaluator_result_execution_output.v1",
+        "source": "evaluation_stdout_stderr_error_fields",
+        "field_policy": "redacted_bounded_prompt_preview_fields",
+        "default_max_chars": _PROMPT_EXECUTION_OUTPUT_DEFAULT_FIELD_CHARS,
+        "present_fields": present_fields,
+        "field_records": fields,
+    }
 
 
 def _task_spec_deep_id_resolution(run_dir: Path, programs: list[Program]) -> dict:
@@ -16784,6 +16814,7 @@ def _prompt_current_history_join_indexes(run_dir: Path) -> dict:
                     "is_valid": record.get("is_valid"),
                     "score": record.get("score"),
                     "evaluator_mode": record.get("evaluator_mode"),
+                    "execution_output": record.get("execution_output"),
                 }
 
     prompt_path = run_dir / "prompt_history.jsonl"
@@ -17799,6 +17830,26 @@ def _prompt_prior_score_provenance_report(
         for score in record["score_records"]
         if score.get("prompt_visible") is not True
     )
+    execution_result_count = sum(
+        1
+        for record in records
+        for score in record["score_records"]
+        if score.get("execution_result_display", {}).get("has_source_execution_result")
+        is True
+    )
+    prompt_visible_execution_result_count = sum(
+        1
+        for record in records
+        for score in record["score_records"]
+        if score.get("execution_result_display", {}).get("prompt_visible") is True
+    )
+    execution_result_evaluator_join_count = sum(
+        1
+        for record in records
+        for score in record["score_records"]
+        if score.get("execution_result_display", {}).get("evaluator_result_joined")
+        is True
+    )
     report = {
         "schema": "libreevolve.prompt_prior_score_provenance_report.v1",
         "source": "runtime_history_prompt_diagnostics_parent_and_inspiration_selection",
@@ -17810,6 +17861,13 @@ def _prompt_prior_score_provenance_report(
         "history_join_count": history_join_count,
         "evaluator_result_join_count": evaluator_join_count,
         "omitted_or_truncated_score_record_count": omitted_or_truncated_count,
+        "execution_result_record_count": execution_result_count,
+        "prompt_visible_execution_result_record_count": (
+            prompt_visible_execution_result_count
+        ),
+        "execution_result_evaluator_join_count": (
+            execution_result_evaluator_join_count
+        ),
         "records": records[:50],
         "records_limit": 50,
         "records_truncated": len(records) > 50,
@@ -17820,6 +17878,8 @@ def _prompt_prior_score_provenance_report(
             "history_join_policy": "candidate_ids_joined_to_history_jsonl_or_failure_history_jsonl_and_evaluator_results_jsonl",
             "displayed_aggregate_policy": "stored_program_fitness_as_prompt_visible_normalized_fitness",
             "raw_metric_policy": "finite_non_boolean_program_metrics",
+            "execution_result_source": "evaluation_stdout_stderr_error_fields_rendered_by_parent_feedback_or_inspiration_feedback",
+            "execution_result_field_policy": "prompt_context_policy_execution_output_fields_and_caps_with_redacted_bounded_previews",
         },
         "claim_ready": False,
         "claim_readiness": {
@@ -17831,10 +17891,15 @@ def _prompt_prior_score_provenance_report(
             and evaluator_join_count == score_record_count,
             "prompt_visible_score_rows": score_record_count > 0
             and omitted_or_truncated_count == 0,
+            "execution_result_text_display_attribution": (
+                execution_result_count > 0
+                and execution_result_evaluator_join_count == execution_result_count
+            ),
             "full_alphaevolve_rendered_evaluation_result_provenance": False,
             "remaining_gap": [
-                "execution_result_text_display_attribution",
                 "score_omission_and_truncation_policy",
+                "stage_summary_io_display_attribution",
+                "feedback_section_global_truncation_policy",
                 "average_score_formula_parity",
                 "cross_run_prompt_score_table_export",
             ],
@@ -17879,6 +17944,7 @@ def _prompt_prior_score_provenance_record(
                 role="target",
                 prompt_visible=True,
                 prompt_visibility_source="parent_score_and_parent_metrics_template_fields",
+                prompt_diagnostics=prompt_diagnostics,
                 history_indexes=history_indexes,
                 ordinal=0,
             )
@@ -17904,6 +17970,7 @@ def _prompt_prior_score_provenance_record(
                     len(selected_inspiration_ids),
                 ),
                 prompt_visibility_source="prompt_diagnostics.inspiration_policy",
+                prompt_diagnostics=prompt_diagnostics,
                 history_indexes=history_indexes,
                 ordinal=ordinal,
             )
@@ -17929,6 +17996,7 @@ def _prompt_prior_score_record(
     role: str,
     prompt_visible: bool,
     prompt_visibility_source: str,
+    prompt_diagnostics: Mapping[str, object],
     history_indexes: Mapping[str, object],
     ordinal: int,
 ) -> dict:
@@ -17961,6 +18029,13 @@ def _prompt_prior_score_record(
         "history_row": dict(history_row) if isinstance(history_row, Mapping) else None,
         "evaluator_result_joined": isinstance(evaluator_row, Mapping),
         "evaluator_result": dict(evaluator_row) if isinstance(evaluator_row, Mapping) else None,
+        "execution_result_display": _prompt_prior_execution_result_display_record(
+            source_program,
+            role=role,
+            prompt_visible=prompt_visible,
+            prompt_diagnostics=prompt_diagnostics,
+            evaluator_row=evaluator_row,
+        ),
     }
 
 
@@ -17988,6 +18063,361 @@ def _missing_prompt_prior_score_record(
         "history_row": None,
         "evaluator_result_joined": False,
         "evaluator_result": None,
+        "execution_result_display": {
+            "schema": "libreevolve.prompt_prior_execution_result_display.v1",
+            "source": "missing_prompt_prior_program",
+            "role": role,
+            "prompt_visible": False,
+            "prompt_visibility_source": "prompt_selection_metadata_missing_program",
+            "omission_reason": "selected_program_not_found_in_runtime_history",
+            "has_source_execution_result": False,
+            "source_fields": [],
+            "prompt_visible_fields": [],
+            "field_records": [],
+            "evaluator_result_joined": False,
+            "evaluator_result": None,
+        },
+    }
+
+
+def _prompt_prior_execution_result_display_record(
+    source_program: Program,
+    *,
+    role: str,
+    prompt_visible: bool,
+    prompt_diagnostics: Mapping[str, object],
+    evaluator_row: Mapping[str, object] | None,
+) -> dict:
+    evaluation = (
+        source_program.evaluation
+        if isinstance(source_program.evaluation, Mapping)
+        else {}
+    )
+    policy = (
+        prompt_diagnostics.get("prompt_context_policy")
+        if isinstance(prompt_diagnostics.get("prompt_context_policy"), Mapping)
+        else {}
+    )
+    selected_fields = _prompt_prior_policy_list(
+        policy,
+        "execution_output_fields",
+        default=list(_PROMPT_EXECUTION_OUTPUT_FIELDS),
+    )
+    field_caps = _prompt_prior_policy_int_mapping(
+        policy,
+        "execution_output_max_chars_by_field",
+    )
+    surface = _prompt_prior_feedback_surface_status(
+        role,
+        prompt_visible=prompt_visible,
+        prompt_diagnostics=prompt_diagnostics,
+    )
+    source_fields = [
+        field
+        for field in _PROMPT_EXECUTION_OUTPUT_FIELDS
+        if _prompt_execution_output_raw_text(evaluation.get(field)) is not None
+    ]
+    visible_stdout = _prompt_execution_output_field_visible(
+        evaluation,
+        "stdout",
+        selected_fields=selected_fields,
+        field_caps=field_caps,
+        surface_visible=surface["visible"],
+    )
+    visible_stderr = _prompt_execution_output_field_visible(
+        evaluation,
+        "stderr",
+        selected_fields=selected_fields,
+        field_caps=field_caps,
+        surface_visible=surface["visible"],
+    )
+    stdout_or_stderr_visible = visible_stdout or visible_stderr
+    field_records = []
+    for field in _PROMPT_EXECUTION_OUTPUT_FIELDS:
+        field_visible = _prompt_execution_output_field_visible(
+            evaluation,
+            field,
+            selected_fields=selected_fields,
+            field_caps=field_caps,
+            surface_visible=surface["visible"],
+            suppress_error=field == "error" and stdout_or_stderr_visible,
+        )
+        field_records.append(
+            _prompt_execution_output_field_record(
+                evaluation.get(field),
+                field=field,
+                selected=field in selected_fields,
+                prompt_visible=field_visible,
+                field_cap_chars=field_caps.get(field),
+                omission_reason=_prompt_execution_output_omission_reason(
+                    evaluation.get(field),
+                    field,
+                    selected_fields=selected_fields,
+                    field_caps=field_caps,
+                    surface=surface,
+                    suppress_error=field == "error"
+                    and stdout_or_stderr_visible,
+                ),
+            )
+        )
+    visible_fields = [
+        record["field"]
+        for record in field_records
+        if record["prompt_visible"] is True
+    ]
+    display_omission_reason = surface["omission_reason"]
+    if not visible_fields and display_omission_reason is None:
+        display_omission_reason = "no_selected_execution_output_fields_rendered"
+    return {
+        "schema": "libreevolve.prompt_prior_execution_result_display.v1",
+        "source": "evaluation_stdout_stderr_error_fields",
+        "role": role,
+        "prompt_visible": bool(visible_fields),
+        "prompt_visibility_source": surface["source"],
+        "omission_reason": None if visible_fields else display_omission_reason,
+        "has_source_execution_result": bool(source_fields),
+        "source_fields": source_fields,
+        "selected_fields": selected_fields,
+        "field_caps": field_caps,
+        "prompt_visible_fields": visible_fields,
+        "field_records": field_records,
+        "evaluator_result_joined": isinstance(evaluator_row, Mapping),
+        "evaluator_result": (
+            dict(evaluator_row) if isinstance(evaluator_row, Mapping) else None
+        ),
+    }
+
+
+def _prompt_prior_feedback_surface_status(
+    role: str,
+    *,
+    prompt_visible: bool,
+    prompt_diagnostics: Mapping[str, object],
+) -> dict:
+    policy = (
+        prompt_diagnostics.get("prompt_context_policy")
+        if isinstance(prompt_diagnostics.get("prompt_context_policy"), Mapping)
+        else {}
+    )
+    disabled = set(_prompt_prior_policy_list(policy, "disabled_sections", default=[]))
+    feedback_sections = set(
+        _prompt_prior_policy_list(
+            policy,
+            "feedback_sections",
+            default=[
+                "proposal",
+                "stage_summary",
+                "execution_output",
+                "sample_retry_diagnostics",
+                "validator_artifacts",
+                "validator_diagnostics",
+                "program_outputs",
+                "llm_grader_feedback",
+            ],
+        )
+    )
+    section_name = "parent_feedback" if role == "target" else "inspirations"
+    source = (
+        "parent_feedback_execution_output_section"
+        if role == "target"
+        else "inspiration_feedback_execution_output_section"
+    )
+    if not prompt_visible:
+        return {
+            "visible": False,
+            "source": source,
+            "omission_reason": "score_source_not_prompt_visible",
+        }
+    if section_name in disabled:
+        return {
+            "visible": False,
+            "source": source,
+            "omission_reason": f"{section_name}_disabled_by_prompt_context_policy",
+        }
+    if "execution_output" not in feedback_sections:
+        return {
+            "visible": False,
+            "source": source,
+            "omission_reason": "execution_output_feedback_section_disabled",
+        }
+    if not _prompt_prior_section_budget_has_rendered(
+        prompt_diagnostics,
+        section_name,
+    ):
+        return {
+            "visible": False,
+            "source": source,
+            "omission_reason": f"{section_name}_not_rendered_by_prompt_template",
+        }
+    return {"visible": True, "source": source, "omission_reason": None}
+
+
+def _prompt_prior_section_budget_has_rendered(
+    prompt_diagnostics: Mapping[str, object],
+    section_name: str,
+) -> bool:
+    section_budget = (
+        prompt_diagnostics.get("section_budget")
+        if isinstance(prompt_diagnostics.get("section_budget"), Mapping)
+        else {}
+    )
+    sections = section_budget.get("sections")
+    if not isinstance(sections, list):
+        return False
+    for section in sections:
+        if not isinstance(section, Mapping):
+            continue
+        if section.get("name") != section_name:
+            continue
+        chars = section.get("chars")
+        occurrences = section.get("occurrences")
+        return (
+            isinstance(chars, int)
+            and not isinstance(chars, bool)
+            and chars > 0
+            and isinstance(occurrences, int)
+            and not isinstance(occurrences, bool)
+            and occurrences > 0
+        )
+    return False
+
+
+def _prompt_execution_output_field_visible(
+    evaluation: Mapping[str, object],
+    field: str,
+    *,
+    selected_fields: list[str],
+    field_caps: Mapping[str, int],
+    surface_visible: bool,
+    suppress_error: bool = False,
+) -> bool:
+    if not surface_visible or field not in selected_fields or suppress_error:
+        return False
+    if field_caps.get(field) == 0:
+        return False
+    return _prompt_execution_output_raw_text(evaluation.get(field)) is not None
+
+
+def _prompt_execution_output_omission_reason(
+    value: object,
+    field: str,
+    *,
+    selected_fields: list[str],
+    field_caps: Mapping[str, int],
+    surface: Mapping[str, object],
+    suppress_error: bool = False,
+) -> str | None:
+    if field not in selected_fields:
+        return "field_not_selected_by_prompt_context_policy"
+    if field_caps.get(field) == 0:
+        return "field_suppressed_by_prompt_context_policy_cap"
+    if _prompt_execution_output_raw_text(value) is None:
+        return "empty_or_missing_execution_output_field"
+    if suppress_error:
+        return "error_field_suppressed_when_stdout_or_stderr_visible"
+    if surface.get("visible") is not True:
+        reason = surface.get("omission_reason")
+        return str(reason) if isinstance(reason, str) and reason else None
+    return None
+
+
+def _prompt_execution_output_field_record(
+    value: object,
+    *,
+    field: str,
+    selected: bool,
+    prompt_visible: bool,
+    field_cap_chars: int | None,
+    omission_reason: str | None,
+) -> dict:
+    raw = _prompt_execution_output_raw_text(value)
+    max_chars = (
+        field_cap_chars
+        if isinstance(field_cap_chars, int)
+        and not isinstance(field_cap_chars, bool)
+        else _PROMPT_EXECUTION_OUTPUT_DEFAULT_FIELD_CHARS
+    )
+    display_text = None
+    display_sha256 = None
+    display_chars = 0
+    redacted = False
+    truncated = False
+    raw_sha256 = None
+    raw_chars = 0
+    if raw is not None:
+        raw_sha256 = hashlib.sha256(raw.encode("utf-8", errors="replace")).hexdigest()
+        raw_chars = len(raw)
+        redacted_text = redact_sensitive_text(raw)
+        redacted = redacted_text != raw
+        truncated = len(redacted_text) > max_chars
+        if prompt_visible:
+            display_text = _prompt_execution_output_truncate(
+                redacted_text,
+                max_chars,
+            ).replace("\n", "\\n")
+            display_sha256 = hashlib.sha256(
+                display_text.encode("utf-8", errors="replace")
+            ).hexdigest()
+            display_chars = len(display_text)
+    return {
+        "field": field,
+        "selected": selected,
+        "field_cap_chars": field_cap_chars,
+        "raw_present": raw is not None,
+        "raw_chars": raw_chars,
+        "raw_sha256": raw_sha256,
+        "redacted": redacted,
+        "truncated": truncated,
+        "prompt_visible": prompt_visible,
+        "omission_reason": omission_reason,
+        "display_text": display_text,
+        "display_chars": display_chars,
+        "display_sha256": display_sha256,
+    }
+
+
+def _prompt_execution_output_raw_text(value: object) -> str | None:
+    if value is None:
+        return None
+    text = str(value).replace("\r\n", "\n").strip()
+    return text or None
+
+
+def _prompt_execution_output_truncate(text: str, max_chars: int) -> str:
+    if len(text) <= max_chars:
+        return text
+    notice = f"...[truncated {len(text) - max_chars} chars]"
+    keep = max(0, max_chars - len(notice))
+    return text[:keep] + notice
+
+
+def _prompt_prior_policy_list(
+    policy: Mapping[str, object],
+    field: str,
+    *,
+    default: list[str],
+) -> list[str]:
+    value = policy.get(field)
+    if not isinstance(value, list):
+        return list(default)
+    return [item for item in value if isinstance(item, str)]
+
+
+def _prompt_prior_policy_int_mapping(
+    policy: Mapping[str, object],
+    field: str,
+) -> dict[str, int]:
+    value = policy.get(field)
+    if not isinstance(value, Mapping):
+        return {}
+    return {
+        str(key): item
+        for key, item in value.items()
+        if isinstance(key, str)
+        and key in _PROMPT_EXECUTION_OUTPUT_FIELDS
+        and isinstance(item, int)
+        and not isinstance(item, bool)
+        and item >= 0
     }
 
 
@@ -18077,6 +18507,9 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
         "history_join_count",
         "evaluator_result_join_count",
         "omitted_or_truncated_score_record_count",
+        "execution_result_record_count",
+        "prompt_visible_execution_result_record_count",
+        "execution_result_evaluator_join_count",
         "records",
         "records_limit",
         "records_truncated",
@@ -18104,6 +18537,9 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
     history_join_count = 0
     evaluator_join_count = 0
     omitted_count = 0
+    execution_result_count = 0
+    prompt_visible_execution_result_count = 0
+    execution_result_evaluator_join_count = 0
     for record_index, record in enumerate(records):
         if not isinstance(record, Mapping):
             issues.append({"code": "invalid_record", "message": f"record {record_index} must be an object"})
@@ -18177,6 +18613,54 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
                     issues.append({"code": "invalid_evaluator_stream", "message": f"record {record_index} score {score_index} evaluator stream is invalid"})
             elif score.get("evaluator_result_joined") is not False:
                 issues.append({"code": "invalid_evaluator_join_flag", "message": f"record {record_index} score {score_index} evaluator_result_joined must be boolean"})
+            execution_display = score.get("execution_result_display")
+            if not isinstance(execution_display, Mapping):
+                issues.append({"code": "invalid_execution_result_display", "message": f"record {record_index} score {score_index} execution_result_display must be an object"})
+            else:
+                if execution_display.get("schema") != "libreevolve.prompt_prior_execution_result_display.v1":
+                    issues.append({"code": "invalid_execution_result_display_schema", "message": f"record {record_index} score {score_index} execution display schema is unsupported"})
+                if execution_display.get("has_source_execution_result") is True:
+                    execution_result_count += 1
+                elif execution_display.get("has_source_execution_result") is not False:
+                    issues.append({"code": "invalid_execution_result_source_flag", "message": f"record {record_index} score {score_index} execution source flag must be boolean"})
+                if execution_display.get("prompt_visible") is True:
+                    prompt_visible_execution_result_count += 1
+                elif execution_display.get("prompt_visible") is not False:
+                    issues.append({"code": "invalid_execution_result_prompt_visible", "message": f"record {record_index} score {score_index} execution prompt_visible must be boolean"})
+                if execution_display.get("evaluator_result_joined") is True:
+                    execution_result_evaluator_join_count += 1
+                    execution_evaluator = execution_display.get("evaluator_result")
+                    if not isinstance(execution_evaluator, Mapping):
+                        issues.append({"code": "invalid_execution_result_evaluator_row", "message": f"record {record_index} score {score_index} execution evaluator row must be an object"})
+                    elif execution_evaluator.get("stream") != "evaluator_results.jsonl":
+                        issues.append({"code": "invalid_execution_result_evaluator_stream", "message": f"record {record_index} score {score_index} execution evaluator stream is invalid"})
+                elif execution_display.get("evaluator_result_joined") is not False:
+                    issues.append({"code": "invalid_execution_result_evaluator_join", "message": f"record {record_index} score {score_index} execution evaluator join flag must be boolean"})
+                field_records = execution_display.get("field_records")
+                if not isinstance(field_records, list):
+                    issues.append({"code": "invalid_execution_result_fields", "message": f"record {record_index} score {score_index} execution field_records must be a list"})
+                    field_records = []
+                visible_fields = []
+                for field_index, field_record in enumerate(field_records):
+                    if not isinstance(field_record, Mapping):
+                        issues.append({"code": "invalid_execution_result_field_record", "message": f"record {record_index} score {score_index} execution field {field_index} must be an object"})
+                        continue
+                    field_name = field_record.get("field")
+                    if field_name not in _PROMPT_EXECUTION_OUTPUT_FIELDS:
+                        issues.append({"code": "invalid_execution_result_field_name", "message": f"record {record_index} score {score_index} execution field name is invalid"})
+                    if field_record.get("prompt_visible") is True:
+                        visible_fields.append(field_name)
+                        if not isinstance(field_record.get("display_text"), str):
+                            issues.append({"code": "missing_execution_result_display_text", "message": f"record {record_index} score {score_index} visible execution field needs display text"})
+                        if field_record.get("omission_reason") is not None:
+                            issues.append({"code": "visible_execution_result_has_omission", "message": f"record {record_index} score {score_index} visible execution field must not have omission reason"})
+                    elif field_record.get("prompt_visible") is False:
+                        if not isinstance(field_record.get("omission_reason"), str) or not field_record.get("omission_reason"):
+                            issues.append({"code": "missing_execution_result_omission", "message": f"record {record_index} score {score_index} omitted execution field needs reason"})
+                    else:
+                        issues.append({"code": "invalid_execution_field_prompt_visible", "message": f"record {record_index} score {score_index} execution field prompt_visible must be boolean"})
+                if execution_display.get("prompt_visible_fields") != visible_fields:
+                    issues.append({"code": "execution_result_visible_fields_mismatch", "message": f"record {record_index} score {score_index} visible execution fields do not match field records"})
     truncated = report.get("records_truncated") is True
     _validate_prompt_prior_report_count(
         report,
@@ -18227,6 +18711,27 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
         truncated,
         issues,
     )
+    _validate_prompt_prior_report_count(
+        report,
+        "execution_result_record_count",
+        execution_result_count,
+        truncated,
+        issues,
+    )
+    _validate_prompt_prior_report_count(
+        report,
+        "prompt_visible_execution_result_record_count",
+        prompt_visible_execution_result_count,
+        truncated,
+        issues,
+    )
+    _validate_prompt_prior_report_count(
+        report,
+        "execution_result_evaluator_join_count",
+        execution_result_evaluator_join_count,
+        truncated,
+        issues,
+    )
     if not isinstance(report.get("score_policy"), Mapping):
         issues.append({"code": "invalid_score_policy", "message": "score_policy must be an object"})
     if report.get("claim_ready") is not False:
@@ -18240,6 +18745,7 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
             "history_rows_joined",
             "evaluator_rows_joined",
             "prompt_visible_score_rows",
+            "execution_result_text_display_attribution",
         ):
             if readiness.get(field) not in {True, False}:
                 issues.append({"code": f"invalid_{field}", "message": f"claim_readiness.{field} must be boolean"})

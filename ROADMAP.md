@@ -130,9 +130,11 @@ LibreEvolve has:
   `runtime.history.prompt_prior_score_provenance_report`, linking generated
   mutation prompts to target-parent and selected-inspiration score records,
   source workspace hashes, finite metric values, displayed aggregate score
-  formula, history/failure-history rows, and evaluator-result rows, while
-  leaving execution-output display attribution, omission/truncation policy,
-  exact `average_score` parity, and cross-run prompt-score tables open
+  formula, history/failure-history rows, evaluator-result rows, and top-level
+  prompt-feedback execution-output display attribution, while leaving score
+  omission/truncation policy, stage-summary IO display attribution, global
+  feedback-section truncation policy, exact `average_score` parity, and
+  cross-run prompt-score tables open
 - runtime initial-program idea provenance reports under
   `runtime.history.initial_program_idea_provenance_report`, linking optional
   seed idea-origin metadata and seed variant ids from `problem.seed_sources` to

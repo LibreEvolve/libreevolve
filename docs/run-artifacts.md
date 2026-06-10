@@ -1822,10 +1822,13 @@ generated mutation prompts to target-parent and selected-inspiration score
 records, preserving prompt ids/hashes, program roles, source workspace hashes,
 finite raw metric values, displayed aggregate formula (`program.fitness`),
 `history.jsonl` / `failure_history.jsonl` row joins, and
-`evaluator_results.jsonl` row joins. It is prompt-score provenance, not full
-AlphaEvolve rendered-evaluation-result parity: execution-result text display
-attribution, score omission/truncation policy, exact `average_score` formula
-parity, and cross-run prompt-score table exports remain open.
+`evaluator_results.jsonl` row joins. It also records top-level prompt-feedback
+execution-output display attribution for `stdout`, `stderr`, and `error`
+under the active prompt context policy. It is prompt-score provenance, not full
+AlphaEvolve rendered-evaluation-result parity: score omission/truncation
+policy, stage-summary IO display attribution, global feedback-section
+truncation policy, exact `average_score` formula parity, and cross-run
+prompt-score table exports remain open.
 LLM feedback workspace prompts use the shared versioned secret-pattern grammar
 before provider calls. Prompt history and quarantine streams still contain
 some fixed-policy retention surfaces. Feedback provider outputs are retained according to

@@ -613,17 +613,20 @@ Primary evidence:
     generated mutation prompts to target-parent and selected-inspiration score
     records with prompt ids/hashes, program roles, source workspace hashes,
     finite raw metrics, displayed aggregate formula (`program.fitness`),
-    history/failure-history row joins, and `evaluator_results.jsonl` row joins.
-    Validators reject mismatched score formulas and malformed joins.
-  - Remaining gap: prompt-score provenance still does not prove execution-result
-    text display attribution, complete score omission/truncation policy, exact
-    AlphaEvolve `average_score` formula parity, or cross-run prompt-score table
-    exports.
-  - Required result: add execution-output display attribution, score
-    omission/truncation records, `average_score` display/formula parity or an
-    explicit substitution policy, and a cross-run prompt-score table export
-    before treating prompt metric headers as full AlphaEvolve-style rendered
-    evaluation-result provenance.
+    history/failure-history row joins, `evaluator_results.jsonl` row joins,
+    and top-level prompt-feedback execution-output display attribution for
+    `stdout`, `stderr`, and `error` under the active prompt context policy.
+    Validators reject mismatched score formulas, malformed joins, and malformed
+    execution-output display records.
+  - Remaining gap: prompt-score provenance still does not prove complete score
+    omission/truncation policy, stage-summary IO display attribution, global
+    feedback-section truncation policy, exact AlphaEvolve `average_score`
+    formula parity, or cross-run prompt-score table exports.
+  - Required result: add score omission/truncation records, stage-summary IO
+    display attribution, feedback-section truncation policy, `average_score`
+    display/formula parity or an explicit substitution policy, and a cross-run
+    prompt-score table export before treating prompt metric headers as full
+    AlphaEvolve-style rendered evaluation-result provenance.
 
 - [ ] Add explicit-context source-role provenance for AlphaEvolve prompt
       context.

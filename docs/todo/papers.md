@@ -600,16 +600,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     generated mutation prompts to target-parent and selected-inspiration score
     records with prompt ids/hashes, program roles, source workspace hashes,
     finite raw metrics, displayed aggregate formula (`program.fitness`),
-    history/failure-history row joins, and evaluator-result row joins.
-  - Current gap: paper/status records still do not preserve execution-result
-    text display attribution, complete score omission/truncation policy, exact
-    AlphaEvolve `average_score` formula parity, or cross-run prompt-score table
-    exports.
-  - Required result: add execution-output display attribution,
-    omission/truncation records, `average_score` display/formula parity or an
-    explicit substitution policy, cross-run prompt-score exports, and claim
-    checks before treating prompt metric headers as full AlphaEvolve-style
-    rendered evaluation-result evidence.
+    history/failure-history row joins, evaluator-result row joins, and
+    top-level prompt-feedback execution-output display attribution for
+    `stdout`, `stderr`, and `error` under the active prompt context policy.
+  - Current gap: paper/status records still do not preserve complete score
+    omission/truncation policy, stage-summary IO display attribution, global
+    feedback-section truncation policy, exact AlphaEvolve `average_score`
+    formula parity, or cross-run prompt-score table exports.
+  - Required result: add omission/truncation records, stage-summary IO display
+    attribution, feedback-section truncation policy, `average_score`
+    display/formula parity or an explicit substitution policy, cross-run
+    prompt-score exports, and claim checks before treating prompt metric
+    headers as full AlphaEvolve-style rendered evaluation-result evidence.
 
 - [ ] Populate early-user and collaborator feedback provenance as paper
       evidence.

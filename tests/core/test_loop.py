@@ -3465,6 +3465,85 @@ x=2
     }
 
 
+def test_runtime_history_reports_prompt_prior_execution_output_display():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "print('parent stdout visible')\n"
+        "def evaluate(c): return {'score':1.0,'is_valid':True}"
+    )
+    problem.context_policy = {
+        "feedback_sections": ["execution_output"],
+        "execution_output_fields": ["stdout", "stderr", "error"],
+        "execution_output_max_chars_by_field": {"stdout": 80},
+    }
+    response = """<<<SEARCH
+x=1
+===
+x=2
+>>>REPLACE"""
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm(response)):
+        evolve(
+            problem,
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"][
+        "prompt_prior_score_provenance_report"
+    ]
+
+    assert report["validation"]["ok"] is True
+    assert validate_prompt_prior_score_provenance_report(report)["ok"] is True
+    assert report["execution_result_record_count"] == 1
+    assert report["prompt_visible_execution_result_record_count"] == 1
+    assert report["execution_result_evaluator_join_count"] == 1
+    assert (
+        report["claim_readiness"]["execution_result_text_display_attribution"]
+        is True
+    )
+    assert "execution_result_text_display_attribution" not in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+
+    score_row = report["records"][0]["score_records"][0]
+    display = score_row["execution_result_display"]
+    assert display["schema"] == (
+        "libreevolve.prompt_prior_execution_result_display.v1"
+    )
+    assert display["role"] == "target"
+    assert display["prompt_visible"] is True
+    assert display["has_source_execution_result"] is True
+    assert display["source_fields"] == ["stdout"]
+    assert display["prompt_visible_fields"] == ["stdout"]
+    assert display["evaluator_result"]["stream"] == "evaluator_results.jsonl"
+    assert display["evaluator_result"]["execution_output"]["present_fields"] == [
+        "stdout"
+    ]
+    stdout = display["field_records"][0]
+    assert stdout["field"] == "stdout"
+    assert stdout["prompt_visible"] is True
+    assert stdout["display_text"] == "parent stdout visible"
+    assert stdout["raw_sha256"] == hashlib.sha256(
+        b"parent stdout visible"
+    ).hexdigest()
+
+    edited_report = copy.deepcopy(report)
+    edited_report["records"][0]["score_records"][0]["execution_result_display"][
+        "field_records"
+    ][0]["display_text"] = None
+    validation = validate_prompt_prior_score_provenance_report(edited_report)
+    assert validation["ok"] is False
+    assert "missing_execution_result_display_text" in {
+        issue["code"] for issue in validation["issues"]
+    }
+
+
 def test_runtime_history_reports_prompt_current_binding_for_evolve_block_span():
     tmpdir = tempfile.mkdtemp()
     problem = _problem()

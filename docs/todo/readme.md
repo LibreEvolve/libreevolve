@@ -1001,8 +1001,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     documents `libreevolve.alphaevolve_appendix_a_matrix_curation.v1` for
     rough selection wording, sorted representative policy, omitted
     symmetry-equivalent target ids, included-target rationales, and the
-    unspecified `p` cutoff. It does not document explicit justifications for
-    every possible excluded non-equivalent target outside the reported suite.
+    unspecified `p` cutoff. README now also documents
+    `libreevolve.alphaevolve_appendix_a_matrix_excluded_target_curation_boundary.v1`
+    as the current `not_recorded_locally` boundary and required future
+    excluded-target justification fields. It does not document emitted
+    justifications for every possible excluded non-equivalent target outside
+    the reported suite.
   - Required result: when excluded-target justification metadata lands, update
     README, ROADMAP, papers index, and matching TODOs so README does not imply
     the curation record proves full exhaustive target-suite construction.

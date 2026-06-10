@@ -3414,6 +3414,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     source wording, and included-target rationales for the reported suite. It
     does not justify every possible excluded non-equivalent target outside the
     rough rank/size heuristic.
+    `libreevolve.alphaevolve_appendix_a_matrix_excluded_target_curation_boundary.v1`
+    now records the current `not_recorded_locally` boundary and validates
+    required future excluded-target justification fields for excluded target
+    ids, dimensions, exclusion class/reason, source basis, rough-rule and
+    `p`-cutoff relations, symmetry-equivalence status, local attempt/resource
+    frontier refs, artifact paths, and hashes. The paper-manifest gate
+    validates this boundary.
   - Required result: add paper-facing excluded-target justifications for
     non-equivalent matrix sizes outside the reported suite. Keep this separate
     from construction artifacts and from larger-target resource-frontier/OOM

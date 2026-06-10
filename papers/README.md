@@ -1081,6 +1081,12 @@ Implemented:
   representative policy, axis-permutation equivalent omissions, included-target
   rationales, and unspecified `p` cutoff. It still does not justify every
   possible excluded non-equivalent target.
+  `libreevolve.alphaevolve_appendix_a_matrix_excluded_target_curation_boundary.v1`
+  records the current `not_recorded_locally` boundary for excluded
+  non-equivalent target justifications and validates required future fields for
+  excluded target ids, dimensions, exclusion class/reason, source basis,
+  rough-rule and `p`-cutoff relations, symmetry-equivalence status, local
+  attempt/resource-frontier refs, artifact paths, and hashes.
   `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`
   records the current `not_recorded_locally` boundary for per-target
   best-known-rank citation provenance and validates required future fields for

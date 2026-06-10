@@ -10915,3 +10915,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     scopes it to the current `not_emitted_by_local_report_export` state, and
     lists required future artifact/lineage fields for Figure 4 reproduction.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the Appendix A excluded-target curation boundary in README.
+  - Spec evidence: README target-suite curation wording needs to distinguish
+    reported-suite curation and symmetry-equivalent omissions from exhaustive
+    justification of excluded non-equivalent targets.
+  - Status: README now names
+    `libreevolve.alphaevolve_appendix_a_matrix_excluded_target_curation_boundary.v1`,
+    scopes it to the current `not_recorded_locally` state, and lists required
+    future excluded-target justification fields.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

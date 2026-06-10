@@ -700,8 +700,13 @@ is not yet an AlphaEvolve reproduction.
   provenance: `libreevolve.alphaevolve_appendix_a_matrix_curation.v1` now
   validates the rough size-selection wording, sorted representative policy,
   axis-permutation equivalent omissions, included-target rationales, and
-  unspecified `p` cutoff. Explicit non-equivalent excluded-target
-  justifications remain open.
+  unspecified `p` cutoff.
+  `libreevolve.alphaevolve_appendix_a_matrix_excluded_target_curation_boundary.v1`
+  now validates the current `not_recorded_locally` boundary and required
+  future fields for excluded target ids, dimensions, exclusion class/reason,
+  source basis, rough-rule and `p`-cutoff relations, symmetry-equivalence
+  status, local attempt/resource-frontier refs, artifact paths, and hashes.
+  Explicit non-equivalent excluded-target justifications remain open.
 - Keep Appendix A best-known-rank citation claims scoped:
   `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`
   now validates the current `not_recorded_locally` boundary and required

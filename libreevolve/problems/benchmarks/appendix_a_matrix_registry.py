@@ -11,6 +11,7 @@ from typing import Any
 REGISTRY_PATH = Path(__file__).with_name("alphaevolve_appendix_a_matrix.json")
 REGISTRY_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
 CURATION_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_curation.v1"
+EXCLUDED_TARGET_CURATION_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_excluded_target_curation_boundary.v1"
 BASELINE_CITATION_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1"
 RESOURCE_FRONTIER_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1"
 LOCAL_RESOURCE_FRONTIER_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1"
@@ -21,6 +22,31 @@ ROW_NOTE_ARTIFACT_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_r
 TARGET_SUITE = "alphaevolve_appendix_a"
 EXPECTED_TARGET_COUNT = 54
 OUTCOMES = frozenset({"matched", "surpassed", "fell_behind"})
+EXCLUDED_TARGET_CURATION_STATUSES = frozenset({"not_recorded_locally", "recorded"})
+EXCLUDED_TARGET_CURATION_REQUIRED_FIELDS = (
+    "excluded_target_id",
+    "dimensions",
+    "canonical_order",
+    "exclusion_class",
+    "exclusion_reason",
+    "source_basis",
+    "source_pdf_page",
+    "rough_rule_relation",
+    "p_cutoff_relation",
+    "symmetry_equivalence_status",
+    "local_attempt_ref",
+    "resource_frontier_ref",
+    "artifact_paths",
+    "artifact_sha256",
+)
+EXCLUDED_TARGET_CURATION_CLASSES = frozenset(
+    {
+        "outside_rough_mn_rule",
+        "beyond_unspecified_p_cutoff",
+        "resource_frontier_excluded",
+        "not_selected_by_paper_curation",
+    }
+)
 BASELINE_CITATION_STATUSES = frozenset({"not_recorded_locally", "recorded"})
 BASELINE_CITATION_REQUIRED_FIELDS = (
     "target_id",
@@ -121,6 +147,15 @@ class MatrixTargetCurationReport:
     included_target_count: int
     omitted_equivalent_count: int
     outside_rough_rule_count: int
+    issues: list[MatrixTargetCurationIssue]
+
+
+@dataclass(frozen=True)
+class MatrixExcludedTargetCurationBoundaryReport:
+    ok: bool
+    curation_status: str | None
+    excluded_target_count: int
+    required_field_count: int
     issues: list[MatrixTargetCurationIssue]
 
 
@@ -280,6 +315,85 @@ def validate_appendix_a_matrix_curation(
         included_target_count=included_count,
         omitted_equivalent_count=omitted_count,
         outside_rough_rule_count=outside_count,
+        issues=issues,
+    )
+
+
+def appendix_a_matrix_excluded_target_curation_boundary_record() -> dict[str, Any]:
+    return {
+        "schema": EXCLUDED_TARGET_CURATION_BOUNDARY_SCHEMA,
+        "curation_schema": CURATION_SCHEMA,
+        "source_paper_id": "2506.13131",
+        "source_section": "AlphaEvolve Appendix A",
+        "source_pdf_page": 34,
+        "target_suite": TARGET_SUITE,
+        "curation_status": "not_recorded_locally",
+        "required_excluded_target_fields": list(EXCLUDED_TARGET_CURATION_REQUIRED_FIELDS),
+        "excluded_non_equivalent_targets": [],
+        "coverage_policy": {
+            "status": "not_exhaustive",
+            "boundary": (
+                "Appendix A gives rough size-selection wording and an "
+                "unspecified p cutoff, but local metadata does not enumerate "
+                "or justify every excluded non-equivalent matrix target."
+            ),
+        },
+        "claim_boundary": (
+            "This is an excluded-target curation boundary. It does not claim "
+            "local metadata justifies every non-equivalent matrix size that is "
+            "outside the reported Appendix A target suite."
+        ),
+    }
+
+
+def validate_appendix_a_matrix_excluded_target_curation_boundary(
+    boundary: object | str | Path | None = None,
+) -> MatrixExcludedTargetCurationBoundaryReport:
+    if boundary is None:
+        boundary = appendix_a_matrix_excluded_target_curation_boundary_record()
+    data, read_issues = _load_excluded_target_curation_boundary(boundary)
+    if read_issues:
+        return MatrixExcludedTargetCurationBoundaryReport(False, None, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[MatrixTargetCurationIssue] = []
+    if data.get("schema") != EXCLUDED_TARGET_CURATION_BOUNDARY_SCHEMA:
+        issues.append(MatrixTargetCurationIssue("invalid_schema", "unsupported Appendix A matrix excluded-target curation boundary schema"))
+    if data.get("curation_schema") != CURATION_SCHEMA:
+        issues.append(MatrixTargetCurationIssue("invalid_curation_schema", "curation_schema must identify Appendix A matrix curation records"))
+    if data.get("source_paper_id") != "2506.13131":
+        issues.append(MatrixTargetCurationIssue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("source_section") != "AlphaEvolve Appendix A":
+        issues.append(MatrixTargetCurationIssue("invalid_source_section", "source_section must be AlphaEvolve Appendix A"))
+    if data.get("source_pdf_page") != 34:
+        issues.append(MatrixTargetCurationIssue("invalid_source_pdf_page", "source_pdf_page must identify page 34"))
+    if data.get("target_suite") != TARGET_SUITE:
+        issues.append(MatrixTargetCurationIssue("invalid_target_suite", "target_suite must be alphaevolve_appendix_a"))
+    status = data.get("curation_status")
+    if status not in EXCLUDED_TARGET_CURATION_STATUSES:
+        issues.append(MatrixTargetCurationIssue("invalid_curation_status", "curation_status must be a known excluded-target curation status"))
+    required_field_count = _validate_excluded_target_required_fields(data.get("required_excluded_target_fields"), issues)
+    _validate_excluded_target_coverage_policy(data.get("coverage_policy"), status, issues)
+    excluded_targets = data.get("excluded_non_equivalent_targets")
+    if not isinstance(excluded_targets, list):
+        issues.append(MatrixTargetCurationIssue("invalid_excluded_non_equivalent_targets", "excluded_non_equivalent_targets must be a list"))
+        excluded_count = 0
+    else:
+        excluded_count = len(excluded_targets)
+        if status == "not_recorded_locally":
+            if excluded_targets:
+                issues.append(MatrixTargetCurationIssue("unexpected_excluded_targets", "absence boundary must not include excluded non-equivalent target records"))
+            claim_boundary = data.get("claim_boundary")
+            if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary:
+                issues.append(MatrixTargetCurationIssue("missing_claim_boundary", "absence boundary must state that it does not claim local excluded-target justifications"))
+        elif status == "recorded":
+            if not excluded_targets:
+                issues.append(MatrixTargetCurationIssue("missing_excluded_targets", "recorded status requires excluded non-equivalent target records"))
+            _validate_excluded_target_records(excluded_targets, issues)
+    return MatrixExcludedTargetCurationBoundaryReport(
+        ok=not issues,
+        curation_status=status if isinstance(status, str) else None,
+        excluded_target_count=excluded_count,
+        required_field_count=required_field_count,
         issues=issues,
     )
 
@@ -858,6 +972,31 @@ def render_appendix_a_matrix_curation_summary(
     return "\n".join(lines)
 
 
+def render_appendix_a_matrix_excluded_target_curation_boundary_summary(
+    boundary: object | str | Path | None = None,
+) -> str:
+    report = validate_appendix_a_matrix_excluded_target_curation_boundary(boundary)
+    status = "ok" if report.ok else "invalid"
+    lines = [
+        "AlphaEvolve Appendix A matrix excluded-target curation boundary",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| curation_status | {report.curation_status or '<unknown>'} |",
+        f"| excluded_target_count | {report.excluded_target_count} |",
+        f"| required_field_count | {report.required_field_count} |",
+    ]
+    if report.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(
+            f"- {issue.code}: {issue.message}"
+            + (f" ({issue.target_id})" if issue.target_id else "")
+            for issue in report.issues
+        )
+    return "\n".join(lines)
+
+
 def render_appendix_a_matrix_baseline_citation_boundary_summary(
     boundary: object | str | Path | None = None,
 ) -> str:
@@ -1058,6 +1197,24 @@ def _load_curation_recordset(
         if isinstance(loaded, dict):
             return loaded, []
     return None, [MatrixTargetCurationIssue("invalid_shape", "curation recordset must be a JSON object")]
+
+
+def _load_excluded_target_curation_boundary(
+    boundary: object | str | Path,
+) -> tuple[dict[str, Any] | None, list[MatrixTargetCurationIssue]]:
+    if isinstance(boundary, dict):
+        return dict(boundary), []
+    if isinstance(boundary, (str, Path)):
+        path = Path(boundary)
+        try:
+            loaded = json.loads(path.read_text(encoding="utf-8"))
+        except OSError as exc:
+            return None, [MatrixTargetCurationIssue("read_error", f"failed to read excluded-target curation boundary: {exc}")]
+        except json.JSONDecodeError as exc:
+            return None, [MatrixTargetCurationIssue("invalid_json", f"invalid excluded-target curation boundary JSON: {exc.msg}")]
+        if isinstance(loaded, dict):
+            return loaded, []
+    return None, [MatrixTargetCurationIssue("invalid_shape", "excluded-target curation boundary must be a JSON object")]
 
 
 def _load_baseline_citation_boundary(
@@ -1463,6 +1620,148 @@ def _validate_omitted_equivalent_targets(
     for omitted_id in sorted(set(expected) - seen):
         issues.append(MatrixTargetCurationIssue("missing_omitted_equivalent_target", "all omitted axis-permutation equivalents must be listed", omitted_id))
     return len(value)
+
+
+def _validate_excluded_target_required_fields(
+    value: object,
+    issues: list[MatrixTargetCurationIssue],
+) -> int:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixTargetCurationIssue("invalid_required_excluded_target_fields", "required_excluded_target_fields must be a non-empty list"))
+        return 0
+    seen: set[str] = set()
+    for field in value:
+        if not isinstance(field, str) or not field.strip():
+            issues.append(MatrixTargetCurationIssue("invalid_required_excluded_target_field", "required excluded-target field names must be non-empty strings"))
+            continue
+        if field in seen:
+            issues.append(MatrixTargetCurationIssue("duplicate_required_excluded_target_field", "required_excluded_target_fields must be unique"))
+        seen.add(field)
+    if set(EXCLUDED_TARGET_CURATION_REQUIRED_FIELDS) - seen:
+        issues.append(MatrixTargetCurationIssue("missing_required_excluded_target_field", "required_excluded_target_fields must include all excluded-target curation fields"))
+    return len(value)
+
+
+def _validate_excluded_target_coverage_policy(
+    value: object,
+    status: object,
+    issues: list[MatrixTargetCurationIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(MatrixTargetCurationIssue("invalid_coverage_policy", "coverage_policy must be an object"))
+        return
+    policy_status = value.get("status")
+    if status == "not_recorded_locally":
+        if policy_status != "not_exhaustive":
+            issues.append(MatrixTargetCurationIssue("invalid_coverage_policy_status", "absence boundary must mark coverage policy not_exhaustive"))
+        boundary = value.get("boundary")
+        if not isinstance(boundary, str) or "does not enumerate" not in boundary or "excluded non-equivalent" not in boundary:
+            issues.append(MatrixTargetCurationIssue("missing_coverage_boundary", "coverage policy must preserve the excluded non-equivalent target boundary"))
+    elif status == "recorded":
+        if policy_status not in {"exhaustive_over_declared_finite_scope", "partial_with_scope"}:
+            issues.append(MatrixTargetCurationIssue("invalid_coverage_policy_status", "recorded coverage must state exhaustive_over_declared_finite_scope or partial_with_scope"))
+        scope = value.get("scope")
+        if not isinstance(scope, str) or not scope.strip():
+            issues.append(MatrixTargetCurationIssue("missing_coverage_scope", "recorded coverage policy must define the finite or partial scope"))
+
+
+def _validate_excluded_target_records(
+    value: list[object],
+    issues: list[MatrixTargetCurationIssue],
+) -> None:
+    registry_ids = {target["id"] for target in matrix_target_records() if isinstance(target.get("id"), str)}
+    omitted_equivalent_ids = {
+        record["omitted_target_id"]
+        for target in matrix_target_records()
+        for record in _omitted_axis_permutation_records(target)
+    }
+    seen: set[str] = set()
+    for record in value:
+        if not isinstance(record, dict):
+            issues.append(MatrixTargetCurationIssue("invalid_excluded_target", "excluded target records must be objects"))
+            continue
+        target_id = record.get("excluded_target_id")
+        safe_id = target_id if isinstance(target_id, str) else None
+        if safe_id is None or _ID_RE.fullmatch(safe_id) is None:
+            issues.append(MatrixTargetCurationIssue("invalid_excluded_target_id", "excluded_target_id must use mm_MxNxP syntax", safe_id))
+            continue
+        if safe_id in seen:
+            issues.append(MatrixTargetCurationIssue("duplicate_excluded_target_id", "excluded target ids must be unique", safe_id))
+        seen.add(safe_id)
+        if safe_id in registry_ids:
+            issues.append(MatrixTargetCurationIssue("excluded_target_in_registry", "excluded target must not be one of the reported Appendix A targets", safe_id))
+        if safe_id in omitted_equivalent_ids:
+            issues.append(MatrixTargetCurationIssue("excluded_target_is_symmetry_equivalent", "excluded target boundary is only for non-equivalent targets, not axis-permutation omissions", safe_id))
+        dimensions = _validate_excluded_target_dimensions(record.get("dimensions"), safe_id, issues)
+        if dimensions is not None:
+            expected_id = "mm_" + "x".join(str(value) for value in dimensions)
+            if safe_id != expected_id:
+                issues.append(MatrixTargetCurationIssue("excluded_target_id_dimension_mismatch", "excluded_target_id must match dimensions", safe_id))
+            if dimensions != sorted(dimensions):
+                issues.append(MatrixTargetCurationIssue("excluded_target_not_canonical", "excluded target dimensions must use sorted canonical order", safe_id))
+        if record.get("canonical_order") != "m <= n <= p":
+            issues.append(MatrixTargetCurationIssue("invalid_excluded_target_canonical_order", "canonical_order must be m <= n <= p", safe_id))
+        if record.get("exclusion_class") not in EXCLUDED_TARGET_CURATION_CLASSES:
+            issues.append(MatrixTargetCurationIssue("invalid_exclusion_class", "exclusion_class must be a known excluded-target class", safe_id))
+        for field in (
+            "exclusion_reason",
+            "source_basis",
+            "rough_rule_relation",
+            "p_cutoff_relation",
+            "symmetry_equivalence_status",
+            "local_attempt_ref",
+            "resource_frontier_ref",
+        ):
+            if not isinstance(record.get(field), str) or not record[field].strip():
+                issues.append(MatrixTargetCurationIssue(f"missing_{field}", f"{field} is required", safe_id))
+        if record.get("symmetry_equivalence_status") != "non_equivalent_to_reported_sorted_representatives":
+            issues.append(MatrixTargetCurationIssue("invalid_symmetry_equivalence_status", "excluded target records must be non-equivalent to reported sorted representatives", safe_id))
+        if isinstance(record.get("source_pdf_page"), bool) or not isinstance(record.get("source_pdf_page"), int) or record["source_pdf_page"] <= 0:
+            issues.append(MatrixTargetCurationIssue("invalid_excluded_target_source_pdf_page", "source_pdf_page must be a positive integer", safe_id))
+        _validate_excluded_target_artifact_paths(record.get("artifact_paths"), safe_id, issues)
+        artifact_hash = record.get("artifact_sha256")
+        if not isinstance(artifact_hash, str) or _SHA256_RE.fullmatch(artifact_hash) is None:
+            issues.append(MatrixTargetCurationIssue("invalid_excluded_target_artifact_sha256", "artifact_sha256 must be a lowercase SHA-256 hex digest", safe_id))
+
+
+def _validate_excluded_target_dimensions(
+    value: object,
+    target_id: str | None,
+    issues: list[MatrixTargetCurationIssue],
+) -> list[int] | None:
+    if (
+        not isinstance(value, list)
+        or len(value) != 3
+        or any(isinstance(item, bool) or not isinstance(item, int) or item < 2 for item in value)
+    ):
+        issues.append(MatrixTargetCurationIssue("invalid_excluded_target_dimensions", "dimensions must be three positive matrix dimensions >= 2", target_id))
+        return None
+    return list(value)
+
+
+def _validate_excluded_target_artifact_paths(
+    value: object,
+    target_id: str | None,
+    issues: list[MatrixTargetCurationIssue],
+) -> None:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixTargetCurationIssue("invalid_excluded_target_artifact_paths", "artifact_paths must be a non-empty list", target_id))
+        return
+    seen: set[str] = set()
+    for path in value:
+        path_obj = Path(path) if isinstance(path, str) else None
+        if (
+            path_obj is None
+            or not path
+            or path_obj.is_absolute()
+            or path.startswith(("/", "\\"))
+            or ".." in path_obj.parts
+        ):
+            issues.append(MatrixTargetCurationIssue("invalid_excluded_target_artifact_path", "artifact_paths entries must be safe relative paths", target_id))
+            continue
+        if path in seen:
+            issues.append(MatrixTargetCurationIssue("duplicate_excluded_target_artifact_path", "artifact_paths entries must be unique", target_id))
+        seen.add(path)
 
 
 def _validate_subset_scope_records(

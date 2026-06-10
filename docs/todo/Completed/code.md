@@ -16107,3 +16107,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused matrix-exhibit and paper-manifest tests cover the
     absence boundary, emitted artifact/lineage validation, invalid nested
     evidence, summary rendering, and manifest hook.
+
+- [x] Add an Appendix A excluded-target curation boundary contract.
+  - Spec evidence: AlphaEvolve Appendix A says the reported matrix target
+    suite is roughly selected from dimensions with `2 <= m,n <= 5`, an
+    unspecified reasonable `p` cutoff, and sorted axis-permutation
+    representatives; that does not by itself justify every excluded
+    non-equivalent target.
+  - Status: `libreevolve.alphaevolve_appendix_a_matrix_excluded_target_curation_boundary.v1`
+    now validates the current `not_recorded_locally` state, rejects false
+    recorded claims without excluded-target rows, validates future recorded
+    excluded non-equivalent target rows, and records required fields for
+    target ids, dimensions, exclusion class/reason, source basis, rough-rule
+    and `p`-cutoff relations, symmetry-equivalence status, local
+    attempt/resource-frontier refs, artifact paths, and hashes.
+  - Verification: focused Appendix A registry and paper-manifest tests cover
+    the absence boundary, recorded-row validation, invalid row drift, summary
+    rendering, and manifest hook.

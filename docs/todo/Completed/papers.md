@@ -10882,3 +10882,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     mutation lineage, artifact paths/hashes, and nested Figure 4 exhibit
     metadata. The paper-manifest gate validates this boundary.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Track Appendix A excluded-target curation absence separately from
+      reported-suite curation metadata.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A gives rough
+    matrix target-suite selection wording and axis-permutation symmetry, but
+    not an exhaustive local justification ledger for excluded non-equivalent
+    targets.
+  - Status: `libreevolve.alphaevolve_appendix_a_matrix_excluded_target_curation_boundary.v1`
+    now records the current `not_recorded_locally` boundary and validates
+    required future fields for excluded target ids, dimensions, exclusion
+    class/reason, source basis, rough-rule and `p`-cutoff relations,
+    symmetry-equivalence status, local attempt/resource-frontier refs,
+    artifact paths, and hashes. The paper-manifest gate validates this
+    boundary.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

@@ -8328,3 +8328,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     scopes it to the current `not_emitted_by_local_report_export` state, and
     keeps real Figure 4 artifact and lineage emission open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the Appendix A excluded-target curation boundary in ROADMAP.
+  - Spec evidence: roadmap target-suite curation wording needs to distinguish
+    reported-suite curation and symmetry-equivalent omissions from exhaustive
+    justification of excluded non-equivalent targets.
+  - Status: ROADMAP now names
+    `libreevolve.alphaevolve_appendix_a_matrix_excluded_target_curation_boundary.v1`,
+    scopes it to the current `not_recorded_locally` state, and keeps real
+    excluded-target justification records open.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

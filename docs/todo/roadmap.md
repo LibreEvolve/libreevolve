@@ -2392,8 +2392,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `libreevolve.alphaevolve_appendix_a_matrix_curation.v1`, which records the
     paper's rough size-selection wording, sorted representative policy,
     omitted axis-permutation equivalents, included-target rationales, and
-    unspecified `p` cutoff. It does not justify every possible excluded
-    non-equivalent target outside the reported suite.
+    unspecified `p` cutoff. Roadmap now also points to
+    `libreevolve.alphaevolve_appendix_a_matrix_excluded_target_curation_boundary.v1`,
+    which validates the current `not_recorded_locally` boundary and required
+    future excluded-target justification fields. It does not justify every
+    possible excluded non-equivalent target outside the reported suite.
   - Required result: when excluded-target justification metadata lands, update
     ROADMAP, README, papers index, and code/paper TODOs so roadmap text
     distinguishes reported-suite curation provenance from exhaustive

@@ -3,6 +3,7 @@ import json
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     BASELINE_CITATION_BOUNDARY_SCHEMA,
     CURATION_SCHEMA,
+    EXCLUDED_TARGET_CURATION_BOUNDARY_SCHEMA,
     EXPECTED_TARGET_COUNT,
     LOCAL_RESOURCE_FRONTIER_SCHEMA,
     ROW_NOTE_ARTIFACT_BOUNDARY_SCHEMA,
@@ -13,6 +14,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     TARGET_SUITE,
     appendix_a_matrix_baseline_citation_boundary_record,
     appendix_a_matrix_curation_record,
+    appendix_a_matrix_excluded_target_curation_boundary_record,
     appendix_a_matrix_local_resource_frontier_record,
     appendix_a_matrix_resource_frontier_record,
     appendix_a_matrix_row_note_artifact_boundary_record,
@@ -23,6 +25,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     matrix_target_records,
     render_appendix_a_matrix_baseline_citation_boundary_summary,
     render_appendix_a_matrix_curation_summary,
+    render_appendix_a_matrix_excluded_target_curation_boundary_summary,
     render_appendix_a_matrix_local_resource_frontier_summary,
     render_appendix_a_matrix_resource_frontier_summary,
     render_appendix_a_matrix_registry_summary,
@@ -32,6 +35,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     render_appendix_a_matrix_subset_scope_summary,
     validate_appendix_a_matrix_baseline_citation_boundary,
     validate_appendix_a_matrix_curation,
+    validate_appendix_a_matrix_excluded_target_curation_boundary,
     validate_appendix_a_matrix_local_resource_frontier,
     validate_appendix_a_matrix_resource_frontier,
     validate_appendix_a_matrix_registry,
@@ -175,6 +179,145 @@ def test_appendix_a_matrix_curation_summary_renders_counts():
     assert "| included_target_count | 54 |" in summary
     assert "| omitted_equivalent_count | 155 |" in summary
     assert "| outside_rough_rule_count | 1 |" in summary
+
+
+def _excluded_target() -> dict:
+    return {
+        "excluded_target_id": "mm_6x6x7",
+        "dimensions": [6, 6, 7],
+        "canonical_order": "m <= n <= p",
+        "exclusion_class": "outside_rough_mn_rule",
+        "exclusion_reason": "outside the paper's rough 2 <= m,n <= 5 reported-size rule",
+        "source_basis": "Appendix A rough target-suite selection statement",
+        "source_pdf_page": 34,
+        "rough_rule_relation": "m and n exceed the rough reported range",
+        "p_cutoff_relation": "not selected under the paper's unspecified reasonable p cutoff",
+        "symmetry_equivalence_status": "non_equivalent_to_reported_sorted_representatives",
+        "local_attempt_ref": "not_attempted_locally",
+        "resource_frontier_ref": "appendix_a_resource_frontier:paper_beyond_5x5x5_single_gpu_1000_seeds",
+        "artifact_paths": ["matrix/curation/excluded/mm_6x6x7.json"],
+        "artifact_sha256": "d" * 64,
+    }
+
+
+def test_appendix_a_matrix_excluded_target_curation_boundary_accepts_current_absence():
+    report = validate_appendix_a_matrix_excluded_target_curation_boundary()
+
+    assert report.ok is True
+    assert report.curation_status == "not_recorded_locally"
+    assert report.excluded_target_count == 0
+    assert report.required_field_count == 14
+    assert report.issues == []
+
+
+def test_appendix_a_matrix_excluded_target_curation_boundary_rejects_absence_with_records():
+    boundary = appendix_a_matrix_excluded_target_curation_boundary_record()
+    boundary["excluded_non_equivalent_targets"] = [_excluded_target()]
+    boundary["claim_boundary"] = "Excluded targets are justified."
+
+    report = validate_appendix_a_matrix_excluded_target_curation_boundary(boundary)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "unexpected_excluded_targets" in codes
+    assert "missing_claim_boundary" in codes
+
+
+def test_appendix_a_matrix_excluded_target_curation_boundary_requires_records_when_recorded():
+    boundary = appendix_a_matrix_excluded_target_curation_boundary_record()
+    boundary["curation_status"] = "recorded"
+    boundary["coverage_policy"] = {
+        "status": "partial_with_scope",
+        "scope": "matrix sizes m,n,p <= 7 outside the reported table",
+    }
+
+    report = validate_appendix_a_matrix_excluded_target_curation_boundary(boundary)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "missing_excluded_targets" in codes
+
+
+def test_appendix_a_matrix_excluded_target_curation_boundary_accepts_recorded_rows():
+    boundary = {
+        "schema": EXCLUDED_TARGET_CURATION_BOUNDARY_SCHEMA,
+        "curation_schema": CURATION_SCHEMA,
+        "source_paper_id": "2506.13131",
+        "source_section": "AlphaEvolve Appendix A",
+        "source_pdf_page": 34,
+        "target_suite": TARGET_SUITE,
+        "curation_status": "recorded",
+        "required_excluded_target_fields": list(appendix_a_matrix_excluded_target_curation_boundary_record()["required_excluded_target_fields"]),
+        "excluded_non_equivalent_targets": [_excluded_target()],
+        "coverage_policy": {
+            "status": "partial_with_scope",
+            "scope": "fixture coverage for one non-equivalent target outside the reported table",
+        },
+        "claim_boundary": "Local metadata records excluded target justifications for the declared scope.",
+    }
+
+    report = validate_appendix_a_matrix_excluded_target_curation_boundary(boundary)
+
+    assert report.ok is True
+    assert report.curation_status == "recorded"
+    assert report.excluded_target_count == 1
+    assert report.issues == []
+
+
+def test_appendix_a_matrix_excluded_target_curation_boundary_rejects_invalid_rows():
+    boundary = appendix_a_matrix_excluded_target_curation_boundary_record()
+    boundary["curation_status"] = "recorded"
+    boundary["coverage_policy"] = {
+        "status": "partial_with_scope",
+        "scope": "invalid fixture coverage",
+    }
+    target = _excluded_target()
+    target["excluded_target_id"] = "mm_2x4x5"
+    target["dimensions"] = [5, 4, 2]
+    target["exclusion_class"] = "unknown"
+    target["symmetry_equivalence_status"] = "axis_permutation_equivalent"
+    target["artifact_paths"] = ["../escape.json"]
+    target["artifact_sha256"] = "not-a-digest"
+    boundary["excluded_non_equivalent_targets"] = [target]
+
+    report = validate_appendix_a_matrix_excluded_target_curation_boundary(boundary)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "excluded_target_in_registry" in codes
+    assert "excluded_target_id_dimension_mismatch" in codes
+    assert "excluded_target_not_canonical" in codes
+    assert "invalid_exclusion_class" in codes
+    assert "invalid_symmetry_equivalence_status" in codes
+    assert "invalid_excluded_target_artifact_path" in codes
+    assert "invalid_excluded_target_artifact_sha256" in codes
+
+
+def test_appendix_a_matrix_excluded_target_curation_boundary_rejects_symmetry_equivalent_rows():
+    boundary = appendix_a_matrix_excluded_target_curation_boundary_record()
+    boundary["curation_status"] = "recorded"
+    boundary["coverage_policy"] = {
+        "status": "partial_with_scope",
+        "scope": "invalid symmetry fixture coverage",
+    }
+    target = _excluded_target()
+    target["excluded_target_id"] = "mm_4x2x5"
+    target["dimensions"] = [4, 2, 5]
+    boundary["excluded_non_equivalent_targets"] = [target]
+
+    report = validate_appendix_a_matrix_excluded_target_curation_boundary(boundary)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "excluded_target_is_symmetry_equivalent" in codes
+
+
+def test_appendix_a_matrix_excluded_target_curation_boundary_summary_renders_counts():
+    summary = render_appendix_a_matrix_excluded_target_curation_boundary_summary()
+
+    assert "AlphaEvolve Appendix A matrix excluded-target curation boundary" in summary
+    assert "| curation_status | not_recorded_locally |" in summary
+    assert "| excluded_target_count | 0 |" in summary
 
 
 def test_appendix_a_matrix_baseline_citation_boundary_accepts_current_absence():

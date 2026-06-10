@@ -1246,6 +1246,44 @@ def test_validate_paper_manifest_checks_appendix_a_matrix_registry_when_present(
     assert "appendix_a_curation_missing_included_target" in codes
 
 
+def test_validate_paper_manifest_checks_matrix_excluded_target_curation_boundary(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        json.dumps(
+            {
+                "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1",
+                "source_paper_id": "2506.13131",
+                "target_suite": "alphaevolve_appendix_a",
+                "targets": [],
+            }
+        ),
+        encoding="utf-8",
+    )
+    boundary = paper_manifest.appendix_a_matrix_excluded_target_curation_boundary_record()
+    boundary["curation_status"] = "recorded"
+    boundary["coverage_policy"] = {
+        "status": "partial_with_scope",
+        "scope": "fixture scope",
+    }
+    monkeypatch.setattr(
+        paper_manifest,
+        "appendix_a_matrix_excluded_target_curation_boundary_record",
+        lambda: boundary,
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "appendix_a_excluded_target_curation_missing_excluded_targets" in codes
+
+
 def test_validate_paper_manifest_checks_matrix_cascade_run_runtime_boundary(
     monkeypatch,
     tmp_path,

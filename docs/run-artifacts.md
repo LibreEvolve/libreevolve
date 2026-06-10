@@ -42,8 +42,9 @@ Completed runtime manifests also include
 startup task-spec bundle, validates that each field's manifest paths resolve,
 and links task-spec fields to concrete runtime artifact paths such as
 `manifest.json`, `history.jsonl`, `failure_history.jsonl`, `prompt_history.jsonl`,
-`evaluator_results.jsonl`, `llm_calls.jsonl`, `controller_budget_events.jsonl`,
-`evaluator_artifacts`, `best.py`, `best_workspace`, and the standalone
+`prompt_prior_score_table.jsonl`, `evaluator_results.jsonl`, `llm_calls.jsonl`,
+`controller_budget_events.jsonl`, `evaluator_artifacts`, `best.py`,
+`best_workspace`, and the standalone
 `task_specification.json`.
 It records per-field reference summaries, program counts, manifest-path
 resolution counts, artifact-link/presence counts, and bounded
@@ -300,6 +301,7 @@ runs/
     ├── prompt_history.jsonl
     ├── prompt_history_invalid.jsonl   # Only when a prompt record is rejected
     ├── prompt_current_binding_table.jsonl # Generated prompt/current binding rows
+    ├── prompt_prior_score_table.jsonl # Generated prompt prior-score rows
     ├── best.py
     ├── evaluator_artifacts/
     │   └── ...                        # Optional collected validator outputs
@@ -515,7 +517,8 @@ Current artifacts are explicitly marked as local v1 machine-readable formats.
 `manifest.json` carries top-level `schema_version` and `artifact_schema`
 fields, and current `history.jsonl`, `evaluator_results.jsonl`,
 `failure_history.jsonl`, `archive_events.jsonl`, `llm_calls.jsonl`,
-`prompt_history.jsonl`, and `prompt_current_binding_table.jsonl` rows carry
+`prompt_history.jsonl`, `prompt_current_binding_table.jsonl`, and
+`prompt_prior_score_table.jsonl` rows carry
 `schema_version` plus
 `record_schema`. Missing schema markers are treated as legacy v0 rows by
 `show`, accepted-history restore helpers, and the LLM call-ledger reader where
@@ -1824,11 +1827,14 @@ finite raw metric values, displayed aggregate formula (`program.fitness`),
 `history.jsonl` / `failure_history.jsonl` row joins, and
 `evaluator_results.jsonl` row joins. It also records top-level prompt-feedback
 execution-output display attribution for `stdout`, `stderr`, and `error`
-under the active prompt context policy. It is prompt-score provenance, not full
-AlphaEvolve rendered-evaluation-result parity: score omission/truncation
-policy, stage-summary IO display attribution, global feedback-section
-truncation policy, exact `average_score` formula parity, and cross-run
-prompt-score table exports remain open.
+under the active prompt context policy. Completed runs also export
+`prompt_prior_score_table.jsonl`, a flattened cross-run table with prompt ids,
+score-source ids, displayed scores, raw metric maps, history/evaluator row
+joins, and execution-output visibility summaries. It is prompt-score
+provenance, not full AlphaEvolve rendered-evaluation-result parity: score
+omission/truncation policy, stage-summary IO display attribution, global
+feedback-section truncation policy, and exact `average_score` formula parity
+remain open.
 LLM feedback workspace prompts use the shared versioned secret-pattern grammar
 before provider calls. Prompt history and quarantine streams still contain
 some fixed-policy retention surfaces. Feedback provider outputs are retained according to

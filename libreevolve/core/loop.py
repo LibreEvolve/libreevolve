@@ -22,6 +22,7 @@ from pathlib import Path
 from libreevolve.core.artifact_schema import (
     EVALUATOR_RESULT_RECORD_SCHEMA,
     PROMPT_CURRENT_BINDING_TABLE_RECORD_SCHEMA,
+    PROMPT_PRIOR_SCORE_TABLE_RECORD_SCHEMA,
     versioned_record,
 )
 from libreevolve.core.best_artifacts import (
@@ -4954,6 +4955,7 @@ def _runtime_artifact_pointers(run_dir: Path) -> dict:
         "prompt_history.jsonl",
         "prompt_history_invalid.jsonl",
         "prompt_current_binding_table.jsonl",
+        "prompt_prior_score_table.jsonl",
         "manifest_invalid.jsonl",
         "evaluator_artifacts",
         "plugin_artifacts",
@@ -5350,6 +5352,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
             _prompt_prior_score_provenance_report(
                 programs,
                 run_dir,
+                db.startup_manifest_snapshot(),
             )
         ),
         "natural_language_preamble_report": _natural_language_preamble_report(programs),
@@ -17785,6 +17788,7 @@ def validate_prompt_current_binding_report(report: object) -> dict:
 def _prompt_prior_score_provenance_report(
     programs: list[Program],
     run_dir: Path,
+    startup_manifest: Mapping[str, object],
 ) -> dict:
     program_by_id = {program.id: program for program in programs}
     history_indexes = _prompt_current_history_join_indexes(run_dir)
@@ -17799,6 +17803,8 @@ def _prompt_prior_score_provenance_report(
         )
         for program in generated
     ]
+    table_rows = _prompt_prior_score_table_rows(records, startup_manifest)
+    table_export = _write_prompt_prior_score_table(run_dir, table_rows)
     score_record_count = sum(len(record["score_records"]) for record in records)
     target_score_count = sum(
         1
@@ -17868,6 +17874,7 @@ def _prompt_prior_score_provenance_report(
         "execution_result_evaluator_join_count": (
             execution_result_evaluator_join_count
         ),
+        "cross_run_prompt_score_table_record_count": table_export["record_count"],
         "records": records[:50],
         "records_limit": 50,
         "records_truncated": len(records) > 50,
@@ -17880,7 +17887,9 @@ def _prompt_prior_score_provenance_report(
             "raw_metric_policy": "finite_non_boolean_program_metrics",
             "execution_result_source": "evaluation_stdout_stderr_error_fields_rendered_by_parent_feedback_or_inspiration_feedback",
             "execution_result_field_policy": "prompt_context_policy_execution_output_fields_and_caps_with_redacted_bounded_previews",
+            "cross_run_table_policy": "stable_jsonl_rows_with_run_id_problem_prompt_candidate_score_source_metric_and_runtime_join_fields",
         },
+        "cross_run_prompt_score_table": table_export,
         "claim_ready": False,
         "claim_readiness": {
             "target_scores_joined": target_score_count > 0
@@ -17895,18 +17904,217 @@ def _prompt_prior_score_provenance_report(
                 execution_result_count > 0
                 and execution_result_evaluator_join_count == execution_result_count
             ),
+            "cross_run_prompt_score_table": table_export["record_count"] > 0,
             "full_alphaevolve_rendered_evaluation_result_provenance": False,
             "remaining_gap": [
                 "score_omission_and_truncation_policy",
                 "stage_summary_io_display_attribution",
                 "feedback_section_global_truncation_policy",
                 "average_score_formula_parity",
-                "cross_run_prompt_score_table_export",
             ],
         },
     }
     report["validation"] = validate_prompt_prior_score_provenance_report(report)
     return report
+
+
+def _prompt_prior_score_table_rows(
+    records: list[dict],
+    startup_manifest: Mapping[str, object],
+) -> list[dict]:
+    config = (
+        startup_manifest.get("config")
+        if isinstance(startup_manifest.get("config"), Mapping)
+        else {}
+    )
+    run_id = config.get("run_id") if isinstance(config.get("run_id"), str) else None
+    problem_name = (
+        config.get("problem_name")
+        if isinstance(config.get("problem_name"), str)
+        else None
+    )
+    rows: list[dict] = []
+    for prompt_record in records:
+        if not isinstance(prompt_record, Mapping):
+            continue
+        for score in prompt_record.get("score_records", []):
+            if not isinstance(score, Mapping):
+                continue
+            execution_display = (
+                score.get("execution_result_display")
+                if isinstance(score.get("execution_result_display"), Mapping)
+                else {}
+            )
+            rows.append(
+                {
+                    "schema": "libreevolve.prompt_prior_score_table_row.v1",
+                    "run_id": run_id,
+                    "problem_name": problem_name,
+                    "candidate_id": prompt_record.get("candidate_id"),
+                    "candidate_status": prompt_record.get("candidate_status"),
+                    "candidate_generation": prompt_record.get("generation"),
+                    "prompt_program_id": prompt_record.get("prompt_program_id"),
+                    "prompt_sha256": prompt_record.get("prompt_sha256"),
+                    "prompt_sha256_scope": prompt_record.get("prompt_sha256_scope"),
+                    "parent_id": prompt_record.get("parent_id"),
+                    "score_role": score.get("role"),
+                    "score_ordinal": score.get("ordinal"),
+                    "score_program_id": score.get("program_id"),
+                    "score_candidate_type": score.get("candidate_type"),
+                    "score_generation": score.get("generation"),
+                    "source_hash": score.get("source_hash"),
+                    "prompt_visible": score.get("prompt_visible"),
+                    "prompt_visibility_source": score.get("prompt_visibility_source"),
+                    "omission_reason": score.get("omission_reason"),
+                    "displayed_aggregate_score": score.get(
+                        "displayed_aggregate_score"
+                    ),
+                    "displayed_aggregate_formula": score.get(
+                        "displayed_aggregate_formula"
+                    ),
+                    "metric_names": list(score.get("metric_names", []))
+                    if isinstance(score.get("metric_names"), list)
+                    else [],
+                    "raw_metrics": dict(score.get("raw_metrics", {}))
+                    if isinstance(score.get("raw_metrics"), Mapping)
+                    else {},
+                    "history_join": _prompt_prior_score_table_history_join(score),
+                    "evaluator_result": _prompt_prior_score_table_evaluator_join(
+                        score
+                    ),
+                    "execution_result": (
+                        _prompt_prior_score_table_execution_result(
+                            execution_display
+                        )
+                    ),
+                }
+            )
+    return rows
+
+
+def _prompt_prior_score_table_history_join(score: Mapping[str, object]) -> dict:
+    history_row = score.get("history_row")
+    return {
+        "joined": score.get("history_joined") is True,
+        "stream": (
+            history_row.get("stream") if isinstance(history_row, Mapping) else None
+        ),
+        "line_number": (
+            history_row.get("line_number")
+            if isinstance(history_row, Mapping)
+            else None
+        ),
+        "record_schema": (
+            history_row.get("record_schema")
+            if isinstance(history_row, Mapping)
+            else None
+        ),
+    }
+
+
+def _prompt_prior_score_table_evaluator_join(score: Mapping[str, object]) -> dict:
+    evaluator_result = score.get("evaluator_result")
+    return {
+        "joined": score.get("evaluator_result_joined") is True,
+        "stream": (
+            evaluator_result.get("stream")
+            if isinstance(evaluator_result, Mapping)
+            else None
+        ),
+        "line_number": (
+            evaluator_result.get("line_number")
+            if isinstance(evaluator_result, Mapping)
+            else None
+        ),
+        "row_id": (
+            evaluator_result.get("row_id")
+            if isinstance(evaluator_result, Mapping)
+            else None
+        ),
+        "score": (
+            evaluator_result.get("score")
+            if isinstance(evaluator_result, Mapping)
+            else None
+        ),
+        "is_valid": (
+            evaluator_result.get("is_valid")
+            if isinstance(evaluator_result, Mapping)
+            else None
+        ),
+    }
+
+
+def _prompt_prior_score_table_execution_result(display: Mapping[str, object]) -> dict:
+    field_records = (
+        display.get("field_records")
+        if isinstance(display.get("field_records"), list)
+        else []
+    )
+    visible_field_hashes = {
+        str(field.get("field")): field.get("display_sha256")
+        for field in field_records
+        if isinstance(field, Mapping)
+        and field.get("prompt_visible") is True
+        and isinstance(field.get("field"), str)
+    }
+    omitted_fields = [
+        {
+            "field": field.get("field"),
+            "omission_reason": field.get("omission_reason"),
+        }
+        for field in field_records
+        if isinstance(field, Mapping) and field.get("prompt_visible") is False
+    ]
+    return {
+        "has_source_execution_result": (
+            display.get("has_source_execution_result") is True
+        ),
+        "prompt_visible": display.get("prompt_visible") is True,
+        "source_fields": list(display.get("source_fields", []))
+        if isinstance(display.get("source_fields"), list)
+        else [],
+        "selected_fields": list(display.get("selected_fields", []))
+        if isinstance(display.get("selected_fields"), list)
+        else [],
+        "prompt_visible_fields": list(display.get("prompt_visible_fields", []))
+        if isinstance(display.get("prompt_visible_fields"), list)
+        else [],
+        "visible_field_display_sha256": visible_field_hashes,
+        "omitted_fields": omitted_fields,
+        "omission_reason": display.get("omission_reason"),
+        "evaluator_result_joined": display.get("evaluator_result_joined") is True,
+    }
+
+
+def _write_prompt_prior_score_table(run_dir: Path, rows: list[dict]) -> dict:
+    table_path = run_dir / "prompt_prior_score_table.jsonl"
+    if not rows:
+        return {
+            "schema": "libreevolve.prompt_prior_score_table_export.v1",
+            "path": "prompt_prior_score_table.jsonl",
+            "record_schema": PROMPT_PRIOR_SCORE_TABLE_RECORD_SCHEMA,
+            "record_count": 0,
+            "exists": False,
+            "sha256": None,
+            "cross_run_policy": "rows_are_safe_to_concatenate_across_run_directories_by_run_id",
+        }
+    lines = [
+        strict_json_dumps(
+            versioned_record(PROMPT_PRIOR_SCORE_TABLE_RECORD_SCHEMA, row)
+        )
+        for row in rows
+    ]
+    text = "\n".join(lines) + "\n"
+    table_path.write_text(text, encoding="utf-8")
+    return {
+        "schema": "libreevolve.prompt_prior_score_table_export.v1",
+        "path": "prompt_prior_score_table.jsonl",
+        "record_schema": PROMPT_PRIOR_SCORE_TABLE_RECORD_SCHEMA,
+        "record_count": len(rows),
+        "exists": True,
+        "sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+        "cross_run_policy": "rows_are_safe_to_concatenate_across_run_directories_by_run_id",
+    }
 
 
 def _prompt_prior_score_provenance_record(
@@ -18510,10 +18718,12 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
         "execution_result_record_count",
         "prompt_visible_execution_result_record_count",
         "execution_result_evaluator_join_count",
+        "cross_run_prompt_score_table_record_count",
         "records",
         "records_limit",
         "records_truncated",
         "score_policy",
+        "cross_run_prompt_score_table",
         "claim_ready",
         "claim_readiness",
     }
@@ -18732,6 +18942,53 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
         truncated,
         issues,
     )
+    table_record_count = report.get("cross_run_prompt_score_table_record_count")
+    if (
+        not isinstance(table_record_count, int)
+        or isinstance(table_record_count, bool)
+        or table_record_count < 0
+    ):
+        issues.append(
+            {
+                "code": "invalid_cross_run_prompt_score_table_record_count",
+                "message": "cross_run_prompt_score_table_record_count must be a non-negative integer",
+            }
+        )
+    cross_run_table = report.get("cross_run_prompt_score_table")
+    if not isinstance(cross_run_table, Mapping):
+        issues.append(
+            {
+                "code": "invalid_cross_run_prompt_score_table",
+                "message": "cross_run_prompt_score_table must be an object",
+            }
+        )
+    else:
+        if cross_run_table.get("schema") != "libreevolve.prompt_prior_score_table_export.v1":
+            issues.append(
+                {
+                    "code": "invalid_cross_run_prompt_score_table_schema",
+                    "message": "cross_run_prompt_score_table schema is unsupported",
+                }
+            )
+        if (
+            cross_run_table.get("record_schema")
+            != PROMPT_PRIOR_SCORE_TABLE_RECORD_SCHEMA
+        ):
+            issues.append(
+                {
+                    "code": "invalid_cross_run_prompt_score_table_record_schema",
+                    "message": "cross_run_prompt_score_table record schema is unsupported",
+                }
+            )
+        if isinstance(table_record_count, int) and not isinstance(
+            table_record_count, bool
+        ) and cross_run_table.get("record_count") != table_record_count:
+            issues.append(
+                {
+                    "code": "cross_run_prompt_score_table_count_mismatch",
+                    "message": "cross_run_prompt_score_table record count must match report count",
+                }
+            )
     if not isinstance(report.get("score_policy"), Mapping):
         issues.append({"code": "invalid_score_policy", "message": "score_policy must be an object"})
     if report.get("claim_ready") is not False:
@@ -18746,6 +19003,7 @@ def validate_prompt_prior_score_provenance_report(report: object) -> dict:
             "evaluator_rows_joined",
             "prompt_visible_score_rows",
             "execution_result_text_display_attribution",
+            "cross_run_prompt_score_table",
         ):
             if readiness.get(field) not in {True, False}:
                 issues.append({"code": f"invalid_{field}", "message": f"claim_readiness.{field} must be boolean"})

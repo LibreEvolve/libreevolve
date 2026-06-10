@@ -3424,11 +3424,18 @@ x=2
     assert score_report["history_join_count"] == 1
     assert score_report["evaluator_result_join_count"] == 1
     assert score_report["omitted_or_truncated_score_record_count"] == 0
+    assert score_report["cross_run_prompt_score_table_record_count"] == 1
+    assert score_report["cross_run_prompt_score_table"]["exists"] is True
+    assert score_report["cross_run_prompt_score_table"]["record_count"] == 1
+    assert score_report["cross_run_prompt_score_table"]["path"] == (
+        "prompt_prior_score_table.jsonl"
+    )
     assert score_report["claim_ready"] is False
     assert score_report["claim_readiness"]["target_scores_joined"] is True
     assert score_report["claim_readiness"]["history_rows_joined"] is True
     assert score_report["claim_readiness"]["evaluator_rows_joined"] is True
     assert score_report["claim_readiness"]["prompt_visible_score_rows"] is True
+    assert score_report["claim_readiness"]["cross_run_prompt_score_table"] is True
     assert (
         score_report["claim_readiness"][
             "full_alphaevolve_rendered_evaluation_result_provenance"
@@ -3453,6 +3460,25 @@ x=2
     assert score_row["evaluator_result_joined"] is True
     assert score_row["evaluator_result"]["stream"] == "evaluator_results.jsonl"
     assert score_row["evaluator_result"]["line_number"] == 1
+    score_table_path = run_dir / "prompt_prior_score_table.jsonl"
+    score_table_lines = score_table_path.read_text(encoding="utf-8").splitlines()
+    assert len(score_table_lines) == 1
+    score_table_row = json.loads(score_table_lines[0])
+    assert score_table_row["record_schema"] == (
+        "libreevolve.prompt_prior_score_table.v1"
+    )
+    assert score_table_row["run_id"] == manifest["config"]["run_id"]
+    assert score_table_row["problem_name"] == "t"
+    assert score_table_row["candidate_id"] == record["candidate_id"]
+    assert score_table_row["prompt_program_id"] == record["prompt_program_id"]
+    assert score_table_row["score_role"] == "target"
+    assert score_table_row["score_program_id"] == record["parent_id"]
+    assert score_table_row["displayed_aggregate_formula"] == "program.fitness"
+    assert score_table_row["history_join"]["line_number"] == 1
+    assert score_table_row["evaluator_result"]["line_number"] == 1
+    assert manifest["runtime"]["artifacts"]["prompt_prior_score_table.jsonl"][
+        "exists"
+    ] is True
 
     edited_score_report = copy.deepcopy(score_report)
     edited_score_report["records"][0]["score_records"][0][
@@ -3503,6 +3529,7 @@ x=2
     assert report["execution_result_record_count"] == 1
     assert report["prompt_visible_execution_result_record_count"] == 1
     assert report["execution_result_evaluator_join_count"] == 1
+    assert report["cross_run_prompt_score_table_record_count"] == 1
     assert (
         report["claim_readiness"]["execution_result_text_display_attribution"]
         is True
@@ -3532,6 +3559,14 @@ x=2
     assert stdout["raw_sha256"] == hashlib.sha256(
         b"parent stdout visible"
     ).hexdigest()
+    table_row = json.loads(
+        (run_dir / "prompt_prior_score_table.jsonl").read_text(encoding="utf-8")
+    )
+    assert table_row["execution_result"]["prompt_visible"] is True
+    assert table_row["execution_result"]["prompt_visible_fields"] == ["stdout"]
+    assert table_row["execution_result"]["visible_field_display_sha256"] == {
+        "stdout": stdout["display_sha256"]
+    }
 
     edited_report = copy.deepcopy(report)
     edited_report["records"][0]["score_records"][0]["execution_result_display"][

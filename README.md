@@ -460,8 +460,9 @@ Current run artifacts are strict machine-readable local formats, but they are
 now marked with explicit v1 schema metadata. `manifest.json` carries top-level
 `schema_version` and `artifact_schema` fields, and current `history.jsonl`,
 `evaluator_results.jsonl`, `failure_history.jsonl`, `archive_events.jsonl`,
-`llm_calls.jsonl`, and `prompt_history.jsonl` rows carry `schema_version` plus
-`record_schema`.
+`llm_calls.jsonl`, `prompt_history.jsonl`,
+`prompt_current_binding_table.jsonl`, and `prompt_prior_score_table.jsonl`
+rows carry `schema_version` plus `record_schema`.
 Legacy checked-in histories
 without those fields remain readable for `show` and accepted-history restore
 helpers, but true migration and resume branching by schema remain future work.
@@ -1160,10 +1161,14 @@ prompt ids/hashes, program roles, source workspace hashes, raw finite metrics,
 the displayed aggregate formula (`program.fitness`), history/failure-history
 row joins, `evaluator_results.jsonl` row joins, and top-level prompt-feedback
 execution-output display attribution for `stdout`, `stderr`, and `error`
-fields under the active prompt context policy. It remains `claim_ready: false`
+fields under the active prompt context policy. Completed runs also write
+`prompt_prior_score_table.jsonl`, a flattened cross-run table of prompt ids,
+score-source ids, displayed aggregate scores, raw metrics, history/evaluator
+row joins, and execution-output visibility summaries. It remains
+`claim_ready: false`
 until score omission/truncation policy, stage-summary IO display attribution,
-global feedback-section truncation policy, `average_score` formula parity, and
-cross-run prompt-score table export are implemented. Prompt history can still store raw seed code,
+global feedback-section truncation policy, and `average_score` formula parity
+are implemented. Prompt history can still store raw seed code,
 explicit context files, plugin context, and candidate code. Keep those inputs
 free of secrets unless you are comfortable sending and persisting that content.
 Accepted `failure_history.jsonl` rows are also bounded diagnostic records, not

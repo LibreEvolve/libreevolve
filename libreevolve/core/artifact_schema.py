@@ -14,6 +14,9 @@ PROMPT_HISTORY_RECORD_SCHEMA = "libreevolve.prompt_history.v1"
 PROMPT_CURRENT_BINDING_TABLE_RECORD_SCHEMA = (
     "libreevolve.prompt_current_binding_table.v1"
 )
+PROMPT_PRIOR_SCORE_TABLE_RECORD_SCHEMA = (
+    "libreevolve.prompt_prior_score_table.v1"
+)
 CONTROLLER_BUDGET_EVENT_RECORD_SCHEMA = "libreevolve.controller_budget_event.v1"
 LEGACY_RECORD_POLICY = "missing_schema_version_accepted_as_legacy_v0"
 
@@ -35,6 +38,9 @@ def run_artifact_schema() -> dict:
             "prompt_history.jsonl": PROMPT_HISTORY_RECORD_SCHEMA,
             "prompt_current_binding_table.jsonl": (
                 PROMPT_CURRENT_BINDING_TABLE_RECORD_SCHEMA
+            ),
+            "prompt_prior_score_table.jsonl": (
+                PROMPT_PRIOR_SCORE_TABLE_RECORD_SCHEMA
             ),
             "controller_budget_events.jsonl": CONTROLLER_BUDGET_EVENT_RECORD_SCHEMA,
         },

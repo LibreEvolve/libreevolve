@@ -616,17 +616,20 @@ Primary evidence:
     history/failure-history row joins, `evaluator_results.jsonl` row joins,
     and top-level prompt-feedback execution-output display attribution for
     `stdout`, `stderr`, and `error` under the active prompt context policy.
-    Validators reject mismatched score formulas, malformed joins, and malformed
-    execution-output display records.
+    Completed runs also export `prompt_prior_score_table.jsonl` cross-run rows
+    with prompt ids, score-source ids, displayed scores, metric maps,
+    history/evaluator row joins, and execution-output visibility summaries.
+    Validators reject mismatched score formulas, malformed joins, malformed
+    execution-output display records, and malformed table export metadata.
   - Remaining gap: prompt-score provenance still does not prove complete score
     omission/truncation policy, stage-summary IO display attribution, global
     feedback-section truncation policy, exact AlphaEvolve `average_score`
-    formula parity, or cross-run prompt-score table exports.
+    formula parity.
   - Required result: add score omission/truncation records, stage-summary IO
     display attribution, feedback-section truncation policy, `average_score`
-    display/formula parity or an explicit substitution policy, and a cross-run
-    prompt-score table export before treating prompt metric headers as full
-    AlphaEvolve-style rendered evaluation-result provenance.
+    display/formula parity or an explicit substitution policy before treating
+    prompt metric headers as full AlphaEvolve-style rendered evaluation-result
+    provenance.
 
 - [ ] Add explicit-context source-role provenance for AlphaEvolve prompt
       context.

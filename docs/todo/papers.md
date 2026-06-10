@@ -603,15 +603,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     history/failure-history row joins, evaluator-result row joins, and
     top-level prompt-feedback execution-output display attribution for
     `stdout`, `stderr`, and `error` under the active prompt context policy.
+    Completed runs also export `prompt_prior_score_table.jsonl` cross-run rows
+    with prompt ids, score-source ids, displayed scores, metric maps,
+    history/evaluator row joins, and execution-output visibility summaries.
   - Current gap: paper/status records still do not preserve complete score
     omission/truncation policy, stage-summary IO display attribution, global
     feedback-section truncation policy, exact AlphaEvolve `average_score`
-    formula parity, or cross-run prompt-score table exports.
+    formula parity.
   - Required result: add omission/truncation records, stage-summary IO display
     attribution, feedback-section truncation policy, `average_score`
-    display/formula parity or an explicit substitution policy, cross-run
-    prompt-score exports, and claim checks before treating prompt metric
-    headers as full AlphaEvolve-style rendered evaluation-result evidence.
+    display/formula parity or an explicit substitution policy, and claim checks
+    before treating prompt metric headers as full AlphaEvolve-style rendered
+    evaluation-result evidence.
 
 - [ ] Populate early-user and collaborator feedback provenance as paper
       evidence.

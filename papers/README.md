@@ -552,10 +552,10 @@ records. It records prompt ids/hashes, program roles, source workspace hashes,
 raw finite metrics, displayed aggregate score formula, history/failure-history
 row joins, evaluator-result row joins, and top-level prompt-feedback
 execution-output display attribution for `stdout`, `stderr`, and `error`.
+Completed runs also write `prompt_prior_score_table.jsonl` cross-run rows.
 It remains `claim_ready: false` because score omission/truncation policy,
 stage-summary IO display attribution, global feedback-section truncation
-policy, exact `average_score` formula parity, and cross-run prompt-score table
-exports remain open.
+policy, and exact `average_score` formula parity remain open.
 
 AlphaEvolve existing-codebase integration note: completed manifests now include
 `runtime.history.existing_codebase_integration_report` with schema

@@ -644,12 +644,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `runtime.history.prompt_prior_score_provenance_report`, which links prompt
     score records to program ids, source hashes, finite metrics, history rows,
     evaluator-result rows, and top-level prompt-feedback execution-output
-    display attribution.
+    display attribution. README can also cite `prompt_prior_score_table.jsonl`
+    cross-run rows for flattened prompt-score exports.
   - Required result: keep README scoped until score omission/truncation records,
     stage-summary IO display attribution, global feedback-section truncation
     policy, exact `average_score` formula parity or an explicit substitution
-    policy, and cross-run prompt-score table exports distinguish current prompt
-    metric rendering from full AlphaEvolve-style rendered evaluation results.
+    policy distinguish current prompt metric rendering from full
+    AlphaEvolve-style rendered evaluation results.
 
 - [ ] Keep README ablation-report wording aligned with current LLM budget
   stops.

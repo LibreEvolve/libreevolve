@@ -113,8 +113,9 @@ LibreEvolve has:
   also use weighted `[[prompt:name]]` stochastic formatting markers backed by
   `prompt_format_options`
 - optional synchronous LLM critique/revision before mutation application
-- optional LLM feedback graders with provenance, discard rules, and weighted
-  score composition using normalized bounded reviewer scores
+- optional LLM feedback graders with qualitative criterion provenance, discard
+  rules, and weighted score composition using normalized bounded reviewer
+  scores
 - UCB-style backend routing plus experimental throughput/depth metadata,
   ensemble-level call telemetry with redacted/bounded provider errors, and
   configurable retry/fallback attempts plus a local accepted-response
@@ -368,6 +369,9 @@ is not yet an AlphaEvolve reproduction.
   `libreevolve.llm_feedback_calibration.v1` report and artifact-inventory
   contracts now validate declared multi-task calibration evidence, but no
   runtime fixture generates those reports yet.
+- Extend `runtime.history.qualitative_feedback_policy_report` beyond
+  criterion/rubric/intent metadata into calibration/task-suite evidence and
+  prompt-history row audits for hard-to-code properties such as simplicity.
 - Add statistical hypothesis-test promotion policies for cascades, separating
   current staged threshold gates from AlphaEvolve-style small-scale filters,
   main-test promotion decisions, confidence or p-value evidence, and

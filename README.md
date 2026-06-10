@@ -57,7 +57,7 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 | 📜 | **Failure memory** | Failed/rejected mutations are logged to `failure_history.jsonl` and bounded recent examples are shown in prompts |
 | 🧭 | **Proposal lifecycle evidence** | Completed manifests summarize generated proposal parsing, evaluation, admission/rejection, backend summaries, and failure-memory linkage |
 | 🧾 | **Prompt programs** | Prompt templates are selected, scored, logged, and optionally mutated for meta-prompt evolution |
-| 🧐 | **Optional LLM critique and feedback** | Critique can revise mutations before evaluation; feedback graders can add metrics, adjust fitness evidence, or discard candidates after evaluation |
+| 🧐 | **Optional LLM critique and feedback** | Critique can revise mutations before evaluation; feedback graders can add criterion-linked metrics, adjust fitness evidence, or discard candidates after evaluation |
 | 🔌 | **Plugin system** | Lifecycle plus metadata/artifact hooks with paper-inspired plugins |
 | ✅ | **Focused test suite** | Unit coverage for the current prototype surface, including workspace candidates, candidate blocks, mutation modes, evaluator results, metrics, archives, and CLI behavior |
 
@@ -827,6 +827,16 @@ are made strict-JSON-safe, secret-redacted, string/container-bounded, and
 annotated with `telemetry_safety` diagnostics when values are stringified,
 truncated, omitted, or redacted. Validator/diff/syntax stages remain distinct
 from these reviewer stages by name and metadata kind.
+Feedback graders can also declare qualitative criterion provenance with
+`criterion`, `criterion_description`, `evaluator_gap_rationale`, `rubric`,
+`feedback_intent`, and `calibration_report_id`. Successful, failed, and skipped
+feedback records retain a bounded `qualitative_policy` object with criterion
+metadata, rubric/prompt hashes, metric linkage, score-versus-discard intent,
+and prompt-feedback linkage. Completed manifests summarize this boundary under
+`runtime.history.qualitative_feedback_policy_report`; the report remains
+`claim_ready: false` until calibration/task-suite evidence and prompt-history
+row audits prove the grader is a governed hard-to-code criterion rather than
+generic post-evaluation LLM scoring.
 Prompt-program archives validate direct reward policy and prompt-state inputs:
 reward bounds must be strictly increasing, prompt reward mode is limited to the
 documented modes, exploration coefficients must be finite and non-negative, and

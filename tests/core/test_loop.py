@@ -61,6 +61,7 @@ from libreevolve.core.loop import (
     validate_evaluator_oracle_registry,
     validate_embedded_evaluator_entrypoint_report,
     validate_automated_evaluator_scope_report,
+    validate_qualitative_feedback_policy_report,
     validate_paper_evaluator_metric_contract,
     validate_paper_author_metadata_report,
     validate_paper_metric_table_export,
@@ -16470,16 +16471,60 @@ def test_loop_applies_llm_feedback_to_candidate_score():
                 log_dir=tmpdir,
                 problem_name="t",
                 llm_feedback=[
-                    {"name": "simplicity", "metric": "simplicity", "weight": 0.2}
+                    {
+                        "name": "simplicity",
+                        "metric": "simplicity",
+                        "weight": 0.2,
+                        "criterion": "simplicity",
+                        "criterion_description": "Candidate should stay concise.",
+                        "evaluator_gap_rationale": (
+                            "The deterministic evaluator measures correctness, "
+                            "not readability."
+                        ),
+                        "rubric": "Prefer fewer moving parts and clear names.",
+                        "feedback_intent": "score",
+                        "calibration_report_id": "simplicity_calibration_v1",
+                    }
                 ],
             ),
         )
 
     records = [json.loads(l) for l in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()]
     child = records[-1]
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["qualitative_feedback_policy_report"]
     assert best.fitness == 1.1
     assert child["metrics"]["simplicity"] == 0.5
-    assert child["evaluation"]["metadata"]["llm_feedback"][0]["name"] == "simplicity"
+    feedback = child["evaluation"]["metadata"]["llm_feedback"][0]
+    assert feedback["name"] == "simplicity"
+    assert feedback["qualitative_policy"]["criterion"] == "simplicity"
+    assert feedback["qualitative_policy"]["feedback_intent"] == "score"
+    assert feedback["qualitative_policy"]["complete_for_current_policy"] is True
+
+    assert report["schema"] == "libreevolve.qualitative_feedback_policy_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_qualitative_feedback_policy_report(report)["ok"] is True
+    assert report["configured_llm_feedback_count"] == 1
+    assert report["configured_qualitative_policy_count"] == 1
+    assert report["complete_policy_count"] == 1
+    assert report["observed_feedback_record_count"] == 1
+    assert report["claim_ready"] is False
+    policy_record = report["records"][0]
+    assert policy_record["feedback_id"] == "llm_feedback:simplicity"
+    assert policy_record["criterion_description_present"] is True
+    assert policy_record["evaluator_gap_rationale_present"] is True
+    assert len(policy_record["rubric_sha256"]) == 64
+    assert policy_record["calibration_report_id"] == "simplicity_calibration_v1"
+    assert policy_record["runtime_record_count"] == 1
+
+    overclaimed = copy.deepcopy(report)
+    overclaimed["policy"]["paper_claim_ready"] = True
+    overclaimed["claim_ready"] = True
+    validation = validate_qualitative_feedback_policy_report(overclaimed)
+    assert validation["ok"] is False
+    assert {
+        issue["code"] for issue in validation["issues"]
+    } >= {"qualitative_feedback_overclaim", "claim_ready_overclaim"}
 
 
 def test_loop_honors_feedback_retention_mode_in_history_and_manifest():

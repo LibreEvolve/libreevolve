@@ -1938,23 +1938,20 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     together so README neither underclaims the report and inventory contracts
     nor overclaims executed AlphaEvolve-style calibration evidence.
 
-- [ ] Keep README qualitative-feedback wording scoped until criterion
-      provenance exists.
+- [ ] Keep README qualitative-feedback wording scoped until calibration and
+      prompt-history audits exist.
   - Spec evidence: AlphaEvolve Section 2.4 says LLM-generated feedback can
     grade hard-to-code properties such as simplicity and either add them as
     scores or discard candidates when a criterion is not fulfilled.
-  - Current evidence: README accurately documents optional LLM feedback
-    graders, bounded prompts, score parsing, normalized bounds/direction,
-    weighted deltas, discard/min-score behavior, failure policies, and
-    feedback-sourced objective metrics. It should not imply those mechanics
-    prove AlphaEvolve-style qualitative feedback unless grader configuration
-    also records the judged property, evaluator-gap rationale, rubric/prompt
-    artifact, score-versus-discard intent, metric linkage, and calibration or
-    report evidence.
-  - Required result: when qualitative-feedback criterion provenance lands,
-    update README, ROADMAP, papers index, and code/paper TODOs together so
-    README distinguishes current generic feedback graders from governed
-    hard-to-code criteria such as simplicity.
+  - Current evidence: README documents optional LLM feedback graders plus
+    qualitative policy fields, retained `qualitative_policy` records, and
+    `runtime.history.qualitative_feedback_policy_report`. It should not imply
+    AlphaEvolve-style qualitative feedback quality until calibration/task-suite
+    linkage and prompt-history audits exist.
+  - Required result: when calibration/task-suite and prompt-history audit
+    evidence lands, update README, ROADMAP, papers index, and code/paper TODOs
+    together so README distinguishes declared hard-to-code criteria from
+    validated qualitative feedback such as simplicity.
 
 - [ ] Keep README provider-cancellation wording scoped to timeout policy and
   observation evidence versus live hard cancellation.

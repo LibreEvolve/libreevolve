@@ -205,6 +205,15 @@ It can also cap already validated/redacted plugin `extra_context` with
 `extra_context_max_chars`, recording input/rendered/omitted character counts.
 LLM-grader prompt context can now be narrowed with `llm_feedback_fields`, a
 safe allowlist over `name`, `score`, `discard`, `error`, and `feedback`.
+Qualitative LLM-feedback policy can now be declared with `criterion`,
+`criterion_description`, `evaluator_gap_rationale`, `rubric`,
+`feedback_intent`, and `calibration_report_id`. Runtime feedback records retain
+a bounded `qualitative_policy` object, and completed manifests summarize
+configured/observed criteria under
+`runtime.history.qualitative_feedback_policy_report`. This records the
+hard-to-code criterion boundary for properties such as simplicity, but it is
+not yet AlphaEvolve-grade evidence because calibration/task-suite linkage and
+prompt-history row audits remain open.
 Proposal metadata prompt context can now be narrowed with `proposal_fields`, a
 safe allowlist over idea, rationale, and hypothesis fields.
 Stage-summary prompt context can now be narrowed with `stage_summary_fields`,

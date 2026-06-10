@@ -1594,18 +1594,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     prompts, parsed scores, normalized bounds/direction, weighted fitness
     deltas, discard/min-score behavior, failure policies, objective
     feedback-sourced metrics, feedback-index summaries, and calibration-report
-    validators.
-  - Current gap: paper-facing status does not require each grader to declare
-    the qualitative property it represents, why that property is outside or
-    impractical for the evaluator, whether it is intended as a score,
-    discard gate, or both, or how the rubric/prompt, metric linkage,
-    calibration evidence, and prompt-history rows prove AlphaEvolve-style
-    qualitative feedback rather than generic post-evaluation LLM scoring.
-  - Required result: add report/manifest evidence for qualitative feedback
-    criteria: criterion label and rationale, rubric/prompt artifact hash,
-    score-or-discard intent, metric linkage, calibration/task-suite linkage,
-    prompt-history linkage, and validation examples for hard-to-code properties
-    such as simplicity.
+    validators. Grader configs can now declare qualitative policy fields, and
+    runtime records retain `qualitative_policy` with criterion metadata,
+    evaluator-gap rationale, rubric/prompt hashes, score-or-discard intent,
+    metric linkage, optional calibration report id, and prompt-feedback
+    linkage. Completed manifests summarize configured and observed criteria in
+    `runtime.history.qualitative_feedback_policy_report`.
+  - Current gap: paper-facing status still lacks executed calibration/task-suite
+    linkage, prompt-history row audits, and ablation evidence that the declared
+    criterion improves search or filtering quality.
+  - Required result: add calibration/task-suite linkage, prompt-history row
+    audits, and validation examples for hard-to-code properties such as
+    simplicity.
 
 - [ ] Track natural-language proposal preambles beyond bounded leading capture.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3(c) and Section 2.3.

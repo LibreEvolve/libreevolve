@@ -2344,7 +2344,16 @@ failure record stores the policy, retry count, attempt records, final
 exception/message, redacted bounded response preview, backend id, normalized
 LLM call telemetry, and discard/penalty decision; the corresponding
 `llm_feedback:<name>` stage stores
-the same policy summary under metadata. Runtime
+the same policy summary under metadata.
+Feedback records can also include `qualitative_policy` with schema
+`libreevolve.qualitative_feedback_policy.v1`, covering the configured
+criterion, criterion description, evaluator-gap rationale, rubric/prompt
+hashes, score-versus-discard intent, metric linkage, optional calibration
+report id, and prompt-feedback linkage. Completed manifests summarize these
+configured and observed policies under
+`runtime.history.qualitative_feedback_policy_report`; it remains
+`claim_ready: false` until calibration/task-suite linkage and prompt-history
+row audits exist. Runtime
 `Program.metrics` keys must match the same manifest-safe
 metric-name grammar as declared `metrics.yaml` names, including optional dotted
 namespaces. Unsafe plugin-added metric side effects are reverted and recorded

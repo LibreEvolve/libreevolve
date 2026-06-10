@@ -1695,23 +1695,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     code/paper TODO entries together so they neither underclaim the report
     contract nor overclaim executed calibration evidence.
 
-- [ ] Keep qualitative-feedback roadmap wording scoped until criterion
-      provenance exists.
+- [ ] Keep qualitative-feedback roadmap wording scoped until calibration and
+      prompt-history audits exist.
   - Spec evidence: AlphaEvolve Section 2.4 says LLM-generated feedback can
     grade desirable characteristics that are difficult to capture precisely in
     the evaluator, such as simplicity, and can use those grades as scores or
     discard gates.
   - Current evidence: ROADMAP and README can cite configured LLM feedback
-    graders, bounded prompts, parsed scores, normalized deltas, discard
-    policies, feedback-sourced objective metrics, feedback indexes, and
-    calibration-report contracts. They do not yet require qualitative
-    criterion declarations, evaluator-gap rationales, rubric/prompt artifact
-    hashes, score-versus-discard intent, or report linkage proving that a
-    grader represents a specific hard-to-code property.
-  - Required result: when qualitative-feedback policy metadata and reports
-    land, update ROADMAP, README, papers index, and code/paper TODOs together
-    so roadmap wording distinguishes generic post-evaluation LLM scoring from
-    AlphaEvolve-style qualitative feedback criteria.
+    graders, qualitative criterion declarations, evaluator-gap rationales,
+    rubric/prompt hashes, score-versus-discard intent, feedback records, and
+    `runtime.history.qualitative_feedback_policy_report`. They still do not
+    prove calibration/task-suite linkage or prompt-history row audits.
+  - Required result: when calibration/task-suite and prompt-history audit
+    evidence lands, update ROADMAP, README, papers index, and code/paper TODOs
+    together so roadmap wording distinguishes declared qualitative criteria
+    from validated AlphaEvolve-style qualitative feedback.
 
 - [ ] Keep benchmark-hardening roadmap wording scoped to smoke evidence versus
   benchmark-grade fixtures.

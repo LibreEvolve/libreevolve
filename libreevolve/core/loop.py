@@ -5341,6 +5341,12 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
             db.startup_manifest_snapshot(),
         ),
         "evaluator_workload_report": _evaluator_workload_report(programs),
+        "qualitative_feedback_policy_report": (
+            _qualitative_feedback_policy_report(
+                db.startup_manifest_snapshot(),
+                programs,
+            )
+        ),
         "automated_evaluator_scope_report": (
             _automated_evaluator_scope_report(
                 db.startup_manifest_snapshot(),
@@ -15675,6 +15681,157 @@ def _automated_evaluator_scope_report(
     return report
 
 
+def _qualitative_feedback_policy_report(
+    startup_manifest: Mapping[str, object],
+    programs: list[Program],
+) -> dict:
+    config = (
+        startup_manifest.get("config")
+        if isinstance(startup_manifest.get("config"), Mapping)
+        else {}
+    )
+    llm_feedback = (
+        config.get("llm_feedback")
+        if isinstance(config.get("llm_feedback"), list)
+        else []
+    )
+    runtime_counts = _qualitative_feedback_runtime_counts(programs)
+    records = [
+        _qualitative_feedback_policy_record(index, grader, runtime_counts)
+        for index, grader in enumerate(llm_feedback)
+        if isinstance(grader, Mapping)
+    ]
+    configured_policy_count = sum(1 for record in records if record["configured"])
+    complete_policy_count = sum(
+        1 for record in records if record["complete_for_current_policy"] is True
+    )
+    report = {
+        "schema": "libreevolve.qualitative_feedback_policy_report.v1",
+        "source": "startup_manifest_config_and_runtime_history",
+        "configured_llm_feedback_count": len(llm_feedback),
+        "configured_qualitative_policy_count": configured_policy_count,
+        "complete_policy_count": complete_policy_count,
+        "observed_feedback_record_count": sum(runtime_counts.values()),
+        "records": records,
+        "policy": {
+            "schema": "libreevolve.qualitative_feedback_policy.v1",
+            "criterion_metadata_required_for_claim": True,
+            "evaluator_gap_rationale_required_for_claim": True,
+            "rubric_or_prompt_hash_required_for_claim": True,
+            "score_or_discard_intent_required_for_claim": True,
+            "calibration_or_task_suite_required_for_claim": True,
+            "prompt_history_linkage": "evaluation.metadata.llm_feedback",
+            "paper_claim_ready": False,
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "alphaevolve_qualitative_feedback_criteria": complete_policy_count > 0,
+            "reason": (
+                "qualitative feedback criteria can now be declared and observed, "
+                "but calibration/task-suite evidence and prompt-history audits "
+                "are not yet sufficient for AlphaEvolve-style qualitative "
+                "feedback claims"
+            ),
+            "remaining_gap": [
+                "calibration_or_task_suite_linkage",
+                "prompt_history_row_linkage",
+                "criterion_quality_ablation",
+            ],
+        },
+    }
+    report["validation"] = validate_qualitative_feedback_policy_report(report)
+    return report
+
+
+def _qualitative_feedback_runtime_counts(programs: list[Program]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for program in programs:
+        evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+        metadata = evaluation.get("metadata") if isinstance(evaluation.get("metadata"), dict) else {}
+        records = metadata.get("llm_feedback")
+        if not isinstance(records, list):
+            continue
+        for record in records:
+            if not isinstance(record, Mapping):
+                continue
+            name = record.get("name")
+            if isinstance(name, str):
+                counts[name] = counts.get(name, 0) + 1
+    return counts
+
+
+def _qualitative_feedback_policy_record(
+    index: int,
+    grader: Mapping[str, object],
+    runtime_counts: Mapping[str, int],
+) -> dict:
+    name = str(grader.get("name", f"feedback_{index}"))
+    metric = grader.get("metric", f"llm_{name}")
+    criterion = grader.get("criterion", name)
+    description = grader.get("criterion_description")
+    rationale = grader.get("evaluator_gap_rationale")
+    rubric = grader.get("rubric")
+    prompt = grader.get("prompt")
+    intent = grader.get("feedback_intent")
+    if not isinstance(intent, str):
+        if _finite_json_number(grader.get("weight")) and grader.get("min_score") is not None:
+            intent = "score_and_discard"
+        elif grader.get("min_score") is not None:
+            intent = "discard"
+        else:
+            intent = "score"
+    configured = any(
+        key in grader
+        for key in (
+            "criterion",
+            "criterion_description",
+            "evaluator_gap_rationale",
+            "rubric",
+            "feedback_intent",
+            "calibration_report_id",
+        )
+    )
+    required_fields = {
+        "criterion_description": isinstance(description, str) and bool(description.strip()),
+        "evaluator_gap_rationale": isinstance(rationale, str) and bool(rationale.strip()),
+        "rubric_or_prompt": (
+            isinstance(rubric, str)
+            and bool(rubric.strip())
+            or isinstance(prompt, str)
+            and bool(prompt.strip())
+        ),
+        "feedback_intent": intent in {"score", "discard", "score_and_discard"},
+        "metric_linkage": isinstance(metric, str) and bool(metric),
+    }
+    calibration_report_id = grader.get("calibration_report_id")
+    return {
+        "feedback_id": f"llm_feedback:{name}",
+        "configured_index": index,
+        "configured": configured,
+        "criterion": criterion if isinstance(criterion, str) else name,
+        "criterion_description_present": required_fields["criterion_description"],
+        "evaluator_gap_rationale_present": required_fields["evaluator_gap_rationale"],
+        "rubric_sha256": _text_sha256(rubric if isinstance(rubric, str) else None),
+        "prompt_sha256": _text_sha256(prompt if isinstance(prompt, str) else None),
+        "feedback_intent": intent,
+        "metric": metric if isinstance(metric, str) else None,
+        "objective_metric": grader.get("objective_metric") is True,
+        "calibration_report_id": (
+            calibration_report_id if isinstance(calibration_report_id, str) else None
+        ),
+        "required_fields_present": required_fields,
+        "complete_for_current_policy": all(required_fields.values()),
+        "runtime_record_count": int(runtime_counts.get(name, 0)),
+        "prompt_feedback_linkage": "evaluation.metadata.llm_feedback",
+    }
+
+
+def _text_sha256(value: str | None) -> str | None:
+    if not value:
+        return None
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
+
 def _automated_evaluator_records(
     evaluator_sources: list,
     eval_stages: list,
@@ -15765,6 +15922,161 @@ def _automated_evaluator_runtime_summary(programs: list[Program]) -> dict:
         "llm_feedback_record_count": llm_feedback_record_count,
         "manual_feedback_record_count": manual_feedback_record_count,
         "manual_feedback_primary_gate_count": 0,
+    }
+
+
+def validate_qualitative_feedback_policy_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.qualitative_feedback_policy_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "qualitative feedback policy report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "configured_llm_feedback_count",
+        "configured_qualitative_policy_count",
+        "complete_policy_count",
+        "observed_feedback_record_count",
+        "records",
+        "policy",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": (
+                    "qualitative feedback policy report missing fields: "
+                    f"{sorted(missing)}"
+                ),
+            }
+        )
+    if report.get("schema") != "libreevolve.qualitative_feedback_policy_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "qualitative feedback policy report schema is unsupported",
+            }
+        )
+    if report.get("source") != "startup_manifest_config_and_runtime_history":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "qualitative feedback policy report source is unsupported",
+            }
+        )
+    records = report.get("records")
+    if not isinstance(records, list):
+        issues.append(
+            {
+                "code": "invalid_records",
+                "message": "qualitative feedback policy records must be a list",
+            }
+        )
+        records = []
+    configured = 0
+    complete = 0
+    observed = 0
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append(
+                {
+                    "code": "invalid_record",
+                    "message": f"qualitative feedback policy record {index} must be an object",
+                }
+            )
+            continue
+        if not isinstance(record.get("feedback_id"), str) or not record.get("feedback_id"):
+            issues.append(
+                {
+                    "code": "invalid_feedback_id",
+                    "message": f"qualitative feedback policy record {index} feedback_id must be text",
+                }
+            )
+        if record.get("configured") is True:
+            configured += 1
+        if record.get("complete_for_current_policy") is True:
+            complete += 1
+        runtime_count = record.get("runtime_record_count")
+        if isinstance(runtime_count, int) and not isinstance(runtime_count, bool) and runtime_count >= 0:
+            observed += runtime_count
+        else:
+            issues.append(
+                {
+                    "code": "invalid_runtime_record_count",
+                    "message": f"qualitative feedback policy record {index} runtime count must be non-negative",
+                }
+            )
+        if not isinstance(record.get("required_fields_present"), dict):
+            issues.append(
+                {
+                    "code": "invalid_required_fields_present",
+                    "message": f"qualitative feedback policy record {index} required_fields_present must be an object",
+                }
+            )
+    _validate_report_count(
+        report,
+        "configured_llm_feedback_count",
+        len(records),
+        issues,
+    )
+    _validate_report_count(
+        report,
+        "configured_qualitative_policy_count",
+        configured,
+        issues,
+    )
+    _validate_report_count(report, "complete_policy_count", complete, issues)
+    _validate_report_count(
+        report,
+        "observed_feedback_record_count",
+        observed,
+        issues,
+    )
+    policy = report.get("policy")
+    if not isinstance(policy, dict):
+        issues.append(
+            {
+                "code": "invalid_policy",
+                "message": "qualitative feedback policy must be an object",
+            }
+        )
+    else:
+        if policy.get("schema") != "libreevolve.qualitative_feedback_policy.v1":
+            issues.append(
+                {
+                    "code": "invalid_policy_schema",
+                    "message": "qualitative feedback policy schema is unsupported",
+                }
+            )
+        if policy.get("paper_claim_ready") is not False:
+            issues.append(
+                {
+                    "code": "qualitative_feedback_overclaim",
+                    "message": "qualitative feedback policy must not claim paper readiness",
+                }
+            )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "claim_ready_overclaim",
+                "message": "qualitative feedback report must not claim AlphaEvolve readiness",
+            }
+        )
+    return {
+        "schema": "libreevolve.qualitative_feedback_policy_report.v1",
+        "ok": not issues,
+        "issues": issues,
     }
 
 

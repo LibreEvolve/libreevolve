@@ -49,6 +49,12 @@ _FEEDBACK_GRADER_FIELDS = {
     "failure_policy",
     "failure_retries",
     "failure_penalty",
+    "criterion",
+    "criterion_description",
+    "evaluator_gap_rationale",
+    "rubric",
+    "feedback_intent",
+    "calibration_report_id",
 }
 def build_critique_prompt(
     base_prompt: str,
@@ -165,6 +171,7 @@ def apply_llm_feedback(
             record = {
                 "name": name,
                 "metric": metric_name,
+                "qualitative_policy": grader["qualitative_policy"],
                 "error": "llm_feedback_skipped_invalid",
                 "message": "candidate is invalid and llm_feedback.include_invalid is false",
                 "backend_idx": None,
@@ -244,6 +251,7 @@ def apply_llm_feedback(
                 "raw_response": raw_response,
                 "raw_response_retention": raw_response_retention,
                 "include_invalid": grader["include_invalid"],
+                "qualitative_policy": grader["qualitative_policy"],
                 "failure_policy": failure_policy,
                 "failure_retries": failure_retries,
                 "failure_attempts": attempts,
@@ -294,6 +302,7 @@ def apply_llm_feedback(
         record = {
             "name": name,
             "metric": metric_name,
+            "qualitative_policy": grader["qualitative_policy"],
             "score": score,
             "normalized_score": normalized_score,
             "score_bounds": list(bounds),
@@ -375,6 +384,18 @@ def _validate_feedback_grader(grader: object, *, default_name: str) -> dict:
         else _feedback_probability(grader.get("failure_penalty"), "failure_penalty")
     )
     prompt = _feedback_prompt_instruction(grader.get("prompt"))
+    feedback_intent = grader.get("feedback_intent")
+    if feedback_intent is None:
+        if weight > 0.0 and min_score is not None:
+            feedback_intent = "score_and_discard"
+        elif min_score is not None:
+            feedback_intent = "discard"
+        else:
+            feedback_intent = "score"
+    if feedback_intent not in {"score", "discard", "score_and_discard"}:
+        raise ValueError(
+            "llm_feedback.feedback_intent must be one of ['score', 'discard', 'score_and_discard']"
+        )
     return {
         "name": name,
         "metric": metric_name,
@@ -390,6 +411,14 @@ def _validate_feedback_grader(grader: object, *, default_name: str) -> dict:
         "failure_penalty": failure_penalty,
         "bounds_configured": "bounds" in grader,
         "direction_configured": "direction" in grader,
+        "qualitative_policy": _feedback_qualitative_policy(
+            grader,
+            name=name,
+            metric=metric_name,
+            objective_metric=objective_metric,
+            prompt=prompt,
+            feedback_intent=feedback_intent,
+        ),
     }
 
 
@@ -443,6 +472,87 @@ def _validate_feedback_grader_schema(grader: dict) -> None:
     unsupported = sorted(set(grader) - _FEEDBACK_GRADER_FIELDS)
     if unsupported:
         raise ValueError(f"llm_feedback grader has unsupported fields {unsupported}")
+
+
+def _feedback_qualitative_policy(
+    grader: dict,
+    *,
+    name: str,
+    metric: str,
+    objective_metric: bool,
+    prompt: str | None,
+    feedback_intent: str,
+) -> dict:
+    criterion = _feedback_label(grader.get("criterion", name), "criterion")
+    description = _feedback_optional_policy_text(
+        grader.get("criterion_description"),
+        "criterion_description",
+    )
+    rationale = _feedback_optional_policy_text(
+        grader.get("evaluator_gap_rationale"),
+        "evaluator_gap_rationale",
+    )
+    rubric = _feedback_optional_policy_text(grader.get("rubric"), "rubric")
+    calibration_report_id = grader.get("calibration_report_id")
+    if calibration_report_id is not None:
+        calibration_report_id = _feedback_label(
+            calibration_report_id,
+            "calibration_report_id",
+        )
+    required_present = {
+        "criterion_description": bool(description),
+        "evaluator_gap_rationale": bool(rationale),
+        "rubric": bool(rubric),
+        "feedback_intent": True,
+        "metric_linkage": bool(metric),
+    }
+    return {
+        "schema": "libreevolve.qualitative_feedback_policy.v1",
+        "configured": any(
+            key in grader
+            for key in (
+                "criterion",
+                "criterion_description",
+                "evaluator_gap_rationale",
+                "rubric",
+                "feedback_intent",
+                "calibration_report_id",
+            )
+        ),
+        "criterion": criterion,
+        "criterion_description": description,
+        "evaluator_gap_rationale": rationale,
+        "rubric_sha256": _feedback_text_sha256(rubric),
+        "rubric_chars": len(rubric) if rubric else 0,
+        "prompt_sha256": _feedback_text_sha256(prompt),
+        "prompt_chars": len(prompt) if prompt else 0,
+        "feedback_intent": feedback_intent,
+        "metric": metric,
+        "objective_metric": objective_metric,
+        "calibration_report_id": calibration_report_id,
+        "required_fields_present": required_present,
+        "complete_for_current_policy": all(required_present.values()),
+        "prompt_feedback_linkage": "evaluation.metadata.llm_feedback",
+    }
+
+
+def _feedback_optional_policy_text(value: object, field: str) -> str | None:
+    if value is None:
+        return None
+    if not isinstance(value, str):
+        raise ValueError(f"llm_feedback.{field} must be a string")
+    if not value.strip():
+        return None
+    return _truncate_text(
+        _redact_sensitive_text(value),
+        _MAX_FEEDBACK_PROMPT_INSTRUCTION_CHARS,
+    )
+
+
+def _feedback_text_sha256(value: str | None) -> str | None:
+    if not value:
+        return None
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()
 
 
 def _feedback_failure_attempt_record(

@@ -1450,17 +1450,20 @@ Primary evidence:
     `objective_metric: true` filling for declared non-primary
     `source: feedback` metrics. Runtime histories and manifests can expose
     bounded feedback records, and calibration-report validators can check
-    declared grader calibration evidence. However, grader configs do not record
-    the qualitative property being judged, why the property is hard to encode
-    in `evaluate()`, whether the intended action is score augmentation,
-    discard gating, or both, or how the grader rubric maps to the evaluator
-    metric schema and prompt-visible evidence.
-  - Required result: add versioned qualitative-feedback policy metadata and
-    validation for each grader: criterion name/description, evaluator-gap
-    rationale, rubric or prompt artifact hash, score-versus-discard intent,
-    metric linkage, calibration/report linkage, prompt-history linkage, and
-    tests/docs proving qualitative criteria such as simplicity are explicitly
-    governed rather than implicit free-form grader prompts.
+    declared grader calibration evidence. Grader configs can now declare
+    `criterion`, `criterion_description`, `evaluator_gap_rationale`, `rubric`,
+    `feedback_intent`, and `calibration_report_id`; feedback records retain
+    `qualitative_policy`, and completed manifests emit
+    `runtime.history.qualitative_feedback_policy_report` with configured and
+    observed criterion counts, rubric/prompt hashes, metric linkage,
+    score-versus-discard intent, and overclaim validation.
+  - Remaining gap: calibration/task-suite linkage and prompt-history row
+    audits are still not executed, so criterion policy metadata does not yet
+    prove AlphaEvolve-style qualitative feedback quality.
+  - Required result: add executed calibration/task-suite linkage,
+    prompt-history row audits, and ablation examples proving hard-to-code
+    criteria such as simplicity are governed and useful rather than merely
+    declared.
 
 - [ ] Add unified expensive-evaluation compute budgets and resumable state.
   - Spec evidence: AlphaEvolve can spend hours or roughly 100 compute-hours on

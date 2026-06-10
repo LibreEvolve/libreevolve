@@ -1428,6 +1428,12 @@ def _validate_llm_feedback(graders: object) -> None:
         "failure_policy",
         "failure_retries",
         "failure_penalty",
+        "criterion",
+        "criterion_description",
+        "evaluator_gap_rationale",
+        "rubric",
+        "feedback_intent",
+        "calibration_report_id",
     }
     for index, grader in enumerate(graders):
         label = f"llm_feedback[{index}]"
@@ -1436,9 +1442,27 @@ def _validate_llm_feedback(graders: object) -> None:
         unsupported = _unsupported_mapping_keys(label, grader, allowed)
         if unsupported:
             raise ConfigError(f"{label} has unsupported fields {unsupported}")
-        for field_name in ("prompt",):
+        for field_name in (
+            "prompt",
+            "criterion_description",
+            "evaluator_gap_rationale",
+            "rubric",
+        ):
             if field_name in grader and not isinstance(grader[field_name], str):
                 raise ConfigError(f"{label}.{field_name} must be a string")
+        if "criterion" in grader:
+            _require_feedback_label(f"{label}.criterion", grader["criterion"])
+        if "calibration_report_id" in grader:
+            _require_feedback_label(
+                f"{label}.calibration_report_id",
+                grader["calibration_report_id"],
+            )
+        if "feedback_intent" in grader:
+            _require_enum(
+                f"{label}.feedback_intent",
+                grader["feedback_intent"],
+                {"score", "discard", "score_and_discard"},
+            )
         if "name" in grader:
             _require_feedback_label(f"{label}.name", grader["name"])
         if "metric" in grader:

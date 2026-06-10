@@ -140,6 +140,40 @@ def test_reads_seeds():
         ]
 
 
+def test_allows_missing_validate_py_for_embedded_only_problem_config():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        (d / "validate.py").unlink()
+        (d / "config.yaml").write_text(
+            "eval_stages:\n"
+            "  - name: candidate_eval\n"
+            "    mode: embedded_evaluate\n"
+            "    eval_inputs:\n"
+            "      score: 0.5\n",
+            encoding="utf-8",
+        )
+
+        p = load_problem(d)
+
+        assert p.validate_path == d / "validate.py"
+        assert not p.validate_path.exists()
+        assert len(p.initial_programs) == 1
+
+
+def test_requires_validate_py_when_problem_config_has_external_stage():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        (d / "validate.py").unlink()
+        (d / "config.yaml").write_text(
+            "eval_stages:\n"
+            "  - name: external_gate\n",
+            encoding="utf-8",
+        )
+
+        with pytest.raises(FileNotFoundError, match="validate.py"):
+            load_problem(d)
+
+
 def test_rejects_secret_like_top_level_seed_file_path_without_leak():
     with tempfile.TemporaryDirectory() as t:
         d = _make(t)

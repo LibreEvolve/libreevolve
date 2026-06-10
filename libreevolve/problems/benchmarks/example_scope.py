@@ -53,6 +53,19 @@ _EXAMPLE_BENCHMARK_SCOPE_RECORDS: tuple[dict[str, Any], ...] = (
     },
     {
         "schema": EXAMPLE_BENCHMARK_SCOPE_SCHEMA,
+        "problem_id": "embedded_evaluate_math",
+        "path": "libreevolve/problems/examples/embedded_evaluate_math",
+        "level": "smoke",
+        "alphaevolve_comparable": False,
+        "current_role": "embedded_entrypoint_fixture",
+        "reason": "Exercises candidate-owned evaluate(eval_inputs) loading without an external validate.py, not a paper benchmark.",
+        "required_upgrades": [
+            "Attach a non-toy target family with benchmark-scale evaluator inputs.",
+            "Record repeated-seed results and path-level score attribution artifacts.",
+        ],
+    },
+    {
+        "schema": EXAMPLE_BENCHMARK_SCOPE_SCHEMA,
         "problem_id": "matrix_multiplication",
         "path": "libreevolve/problems/examples/matrix_multiplication",
         "level": "smoke",

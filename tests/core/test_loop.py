@@ -5274,7 +5274,10 @@ def test_runtime_history_reports_embedded_evaluator_entrypoint():
     )
     assert report["claim_ready"] is False
     assert report["claim_readiness"]["candidate_owned_evaluate_entrypoint"] is True
-    assert report["claim_readiness"]["embedded_only_problem_definition"] is False
+    assert report["claim_readiness"]["embedded_only_problem_definition"] is True
+    assert "load_problem_without_external_validate_py" not in (
+        report["claim_readiness"]["remaining_gap"]
+    )
 
     record = report["records"][0]
     assert record["stage_name"] == "candidate_eval"
@@ -6789,7 +6792,7 @@ def test_loop_writes_unified_task_specification_bundle_to_manifest():
         "policies.candidate_language"
     )
     assert fields["objective_metrics"]["primary_metric"] == "score"
-    assert "embedded_only_problem_definitions_still_require_loader_support" in (
+    assert "embedded_only_problem_definitions_need_score_path_provenance" in (
         task_spec["unsupported_or_incomplete"]
     )
 

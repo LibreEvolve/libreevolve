@@ -156,7 +156,10 @@ def load_problem(problem_dir: str | Path) -> Problem:
         raise ValueError(f"metrics.yaml in {d}: 'metrics' must be a non-empty list")
     metrics, primary_metric, primary_bounds = _normalize_metric_schema(metrics, d)
     validate_path = d / "validate.py"
-    _require_problem_file(validate_path, "validate.py")
+    if _problem_file_exists_or_is_invalid(validate_path):
+        _require_problem_file(validate_path, "validate.py")
+    elif not _problem_config_declares_embedded_only_evaluation(d):
+        _require_problem_file(validate_path, "validate.py")
     seed_dir = d / "initial_programs"
     workspaces, seed_sources, seed_skipped, seed_policy = _load_initial_workspaces(seed_dir)
     seeds = [workspace.code for workspace in workspaces]
@@ -400,6 +403,44 @@ def _load_metrics_yaml(path: Path) -> object:
         raise ValueError(
             f"{path}: invalid metrics.yaml YAML: {redacted_yaml_error(exc)}"
         ) from exc
+
+
+def _problem_file_exists_or_is_invalid(path: Path) -> bool:
+    if _is_link(path):
+        return True
+    try:
+        return path.exists()
+    except OSError:
+        return True
+
+
+def _problem_config_declares_embedded_only_evaluation(problem_dir: Path) -> bool:
+    path = problem_dir / "config.yaml"
+    if _is_link(path):
+        return False
+    try:
+        if not path.exists() or not path.is_file():
+            return False
+        text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return False
+    try:
+        raw = safe_load_unique(text) if text.strip() else {}
+    except yaml.YAMLError:
+        return False
+    if not isinstance(raw, dict) or not all(isinstance(key, str) for key in raw):
+        return False
+    stages = raw.get("eval_stages")
+    if not isinstance(stages, list) or not stages:
+        return False
+    for stage in stages:
+        if (
+            not isinstance(stage, dict)
+            or not all(isinstance(key, str) for key in stage)
+            or stage.get("mode") != "embedded_evaluate"
+        ):
+            return False
+    return True
 
 
 def _load_formulation_metadata(problem_dir: Path) -> dict:

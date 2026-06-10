@@ -1,6 +1,7 @@
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
+from libreevolve.core.config import Config
 from libreevolve.core.evaluator import CascadeEvaluator
 from libreevolve.problems.loader import load_problem
 
@@ -39,6 +40,13 @@ SORTING_EXAMPLE_DIR = (
     / "problems"
     / "examples"
     / "sorting"
+)
+EMBEDDED_EVALUATE_EXAMPLE_DIR = (
+    Path(__file__).resolve().parents[1]
+    / "libreevolve"
+    / "problems"
+    / "examples"
+    / "embedded_evaluate_math"
 )
 EXAMPLE_RUNS_DIR = Path(__file__).resolve().parents[1] / "examples" / "runs"
 
@@ -358,6 +366,32 @@ def test_workspace_math_loader_records_nested_static_seed_workspace():
             "content_b64": "/0xFU1RBVElDCg==",
         },
     )
+
+
+def test_embedded_evaluate_example_loads_without_external_validate_py():
+    problem = load_problem(EMBEDDED_EVALUATE_EXAMPLE_DIR)
+    config = Config(
+        eval_stages=[
+            {
+                "name": "candidate_eval",
+                "mode": "embedded_evaluate",
+                "eval_inputs": {
+                    "cases": [0, 1, 2, 3],
+                    "expected": [0, 2, 6, 12],
+                },
+            }
+        ]
+    )
+    result = CascadeEvaluator(problem, stages=config.eval_stages).evaluate(
+        problem.initial_workspaces[0],
+        diff_error=None,
+    )
+
+    assert not problem.validate_path.exists()
+    assert result.is_valid is True
+    assert result.metrics["score"] == 0.25
+    assert result.metadata["evaluator_mode"] == "embedded_evaluate"
+    assert "validate_path" not in result.metadata
 
 
 def _write_workspace_math_support_files(tmp_path: Path) -> None:

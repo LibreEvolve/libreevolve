@@ -5308,7 +5308,10 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
             programs,
         ),
         "embedded_evaluator_entrypoint_report": (
-            _embedded_evaluator_entrypoint_report(programs)
+            _embedded_evaluator_entrypoint_report(
+                programs,
+                db.startup_manifest_snapshot(),
+            )
         ),
         "evaluation_cascade_report": _evaluation_cascade_report(programs),
         "evaluator_workload_report": _evaluator_workload_report(programs),
@@ -17506,7 +17509,10 @@ def _evaluator_oracle_runtime_summary(programs: list[Program]) -> dict:
     }
 
 
-def _embedded_evaluator_entrypoint_report(programs: list[Program]) -> dict:
+def _embedded_evaluator_entrypoint_report(
+    programs: list[Program],
+    startup_manifest: Mapping[str, object],
+) -> dict:
     records = []
     external_candidate_count = 0
     embedded_candidate_count = 0
@@ -17542,6 +17548,16 @@ def _embedded_evaluator_entrypoint_report(programs: list[Program]) -> dict:
                         )
                     )
     records = _dedupe_embedded_entrypoint_records(records)
+    embedded_only_problem_definition = _embedded_only_problem_definition_ready(
+        startup_manifest
+    )
+    remaining_gap = [
+        "skeleton_to_evolved_block_invocation_trace",
+        "score_field_to_evolved_code_path_mapping",
+        "stronger_callable_isolation_or_build_policy",
+    ]
+    if not embedded_only_problem_definition:
+        remaining_gap.insert(0, "load_problem_without_external_validate_py")
     report = {
         "schema": "libreevolve.embedded_evaluator_entrypoint_report.v1",
         "source": "runtime_history_evaluation_metadata",
@@ -17563,18 +17579,33 @@ def _embedded_evaluator_entrypoint_report(programs: list[Program]) -> dict:
         "claim_ready": False,
         "claim_readiness": {
             "candidate_owned_evaluate_entrypoint": bool(records),
-            "embedded_only_problem_definition": False,
+            "embedded_only_problem_definition": embedded_only_problem_definition,
             "evolved_block_to_score_path_mapping": False,
-            "remaining_gap": [
-                "load_problem_without_external_validate_py",
-                "skeleton_to_evolved_block_invocation_trace",
-                "score_field_to_evolved_code_path_mapping",
-                "stronger_callable_isolation_or_build_policy",
-            ],
+            "remaining_gap": remaining_gap,
         },
     }
     report["validation"] = validate_embedded_evaluator_entrypoint_report(report)
     return report
+
+
+def _embedded_only_problem_definition_ready(
+    startup_manifest: Mapping[str, object],
+) -> bool:
+    config = (
+        startup_manifest.get("config")
+        if isinstance(startup_manifest.get("config"), Mapping)
+        else {}
+    )
+    stages = config.get("eval_stages") if isinstance(config, Mapping) else None
+    return (
+        isinstance(stages, list)
+        and bool(stages)
+        and all(
+            isinstance(stage, Mapping)
+            and stage.get("mode") == "embedded_evaluate"
+            for stage in stages
+        )
+    )
 
 
 def _embedded_entrypoint_record(
@@ -17751,8 +17782,8 @@ def validate_embedded_evaluator_entrypoint_report(report: object) -> dict:
     readiness = report.get("claim_readiness")
     if not isinstance(readiness, dict):
         issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
-    elif readiness.get("embedded_only_problem_definition") is not False:
-        issues.append({"code": "embedded_only_overclaim", "message": "embedded-only problem definition must remain false"})
+    elif not isinstance(readiness.get("embedded_only_problem_definition"), bool):
+        issues.append({"code": "invalid_embedded_only_problem_definition", "message": "embedded-only problem definition readiness must be boolean"})
     return {
         "schema": "libreevolve.embedded_evaluator_entrypoint_report.v1",
         "ok": not issues,

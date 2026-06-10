@@ -1934,7 +1934,7 @@ libreevolve/
 │   └── ttt_rl.py        # ThetaEvolve-inspired training data export
 └── problems/
     ├── loader.py         # load_problem() + Problem dataclass
-    └── examples/         # hello_world, circle_packing, sorting, matrix_multiplication, workspace_math
+    └── examples/         # hello_world, circle_packing, sorting, matrix_multiplication, workspace_math, embedded_evaluate_math
 ```
 
 </details>
@@ -1948,7 +1948,7 @@ context:
 my_problem/
 ├── task_description.txt          # Non-empty UTF-8 objective the LLM should optimize
 ├── metrics.yaml                  # Scoring metrics
-├── validate.py                   # evaluate(code: str) -> dict
+├── validate.py                   # evaluate(code: str) -> dict for external-validator stages
 ├── initial_programs/
 │   ├── seed.py                   # Single-file starting program
 │   └── workspace_seed/           # Optional multi-file starting program
@@ -1963,8 +1963,11 @@ my_problem/
 The problem root itself must be a real directory, not a symlink or Windows
 junction. The required setup files and optional context manifest must be regular
 problem-local files. Directory-shaped, symlinked, or junction-backed
-`task_description.txt`, `metrics.yaml`, `validate.py`, `context.yaml`, and
-`context.yml` paths are rejected before contents are read. Unreadable context
+`task_description.txt`, `metrics.yaml`, `context.yaml`, and `context.yml`
+paths are rejected before contents are read. `validate.py` is required for
+default/external-validator evaluation and may be omitted only when
+`config.yaml` declares a non-empty all-`embedded_evaluate` stage list.
+Unreadable context
 manifests fail problem loading with a path-aware diagnostic whose error text is
 redacted before display. Read failures for `task_description.txt` and
 `metrics.yaml`, plus inspection/stat failures for `validate.py`, also fail
@@ -2183,8 +2186,8 @@ task-spec manifest paths and cross-links each field to runtime evidence such as
 candidate history, prompt history, LLM calls, controller-budget events,
 evaluator artifacts, and best exports. This is still partial evidence:
 evolvable component span ids, score-field-to-candidate-path links,
-embedded-only task definitions, standalone task-spec examples, and deeper
-per-id history resolution remain open.
+standalone task-spec examples, and deeper per-id history resolution remain
+open.
 Problem fixtures can optionally add `formulation.yaml` or `formulation.yml`;
 direct callers can set `Problem.formulation_metadata`. The manifest normalizes
 this to `problem.formulation_metadata` with fixed vocabularies for problem
@@ -2366,8 +2369,9 @@ Completed manifests summarize executed embedded stages under
 `runtime.history.embedded_evaluator_entrypoint_report`, including program/stage
 ids, entrypoint, callable, signature, eval-input provenance, dependency scope,
 metric names, and remaining Figure 3 parity gaps.
-Embedded stages still require the problem to include the normal `validate.py`
-file for loading, but that validator is not run for the embedded stage.
+Embedded-only problems may omit `validate.py` when `config.yaml` declares a
+non-empty stage list where every stage uses `mode: embedded_evaluate`.
+Mixed/default/external-validator problems still require `validate.py`.
 For `eval_stages`, `timeout_sec` is a per-validator-subprocess-attempt timeout.
 `samples` and `retries` each create additional attempts. To bound each sample,
 set `max_sample_seconds`; to bound a whole configured stage, set

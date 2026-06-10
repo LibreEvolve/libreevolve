@@ -18,6 +18,7 @@ def test_example_scope_records_mark_shipped_examples_as_smoke_only():
         "hello_world",
         "sorting",
         "workspace_math",
+        "embedded_evaluate_math",
         "matrix_multiplication",
         "circle_packing",
     }
@@ -79,4 +80,5 @@ def test_example_scope_summary_renders_scope_table():
     assert "| schema_status | ok |" in summary
     assert "| smoke_only | yes |" in summary
     assert "| comparable_problem_count | 0 |" in summary
+    assert "| embedded_evaluate_math | smoke | no | embedded_entrypoint_fixture |" in summary
     assert "| matrix_multiplication | smoke | no | operation_counter_smoke_fixture |" in summary

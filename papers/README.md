@@ -491,9 +491,12 @@ file and invokes a candidate-owned `evaluate(eval_inputs)` callable with
 JSON-safe configured inputs. Metadata records the candidate callable and
 eval-input provenance, and completed manifests now summarize executed embedded
 entrypoints under `runtime.history.embedded_evaluator_entrypoint_report`.
-`validate.py` remains the default problem-loading contract, and embedded-only
-examples plus skeleton/block invocation evidence remain necessary before
-claiming Figure 3 evaluator parity.
+`validate.py` remains the default problem-loading contract, but
+`load_problem()` now allows missing `validate.py` for a non-empty all-
+`embedded_evaluate` stage list and the `embedded_evaluate_math` fixture covers
+that embedded-only path. Skeleton/block invocation evidence, stronger
+candidate import isolation, and path-level score attribution remain necessary
+before claiming Figure 3 evaluator parity.
 
 AlphaEvolve evaluator-workload note: configured stages can now declare
 `workload.type` as `simple_check`, `inner_search`, `ml_training`, or `custom`,
@@ -517,8 +520,8 @@ labels. Completed manifests now also include
 task-spec manifest paths and links each task-spec field to runtime artifact
 evidence such as candidate history, prompt history, LLM calls, controller
 budget events, evaluator artifacts, and best exports. Standalone task-spec
-examples, evolvable-span ids, embedded-only problem definitions, score-field
-links to evolved code paths, and deeper per-id history resolution remain open.
+examples, evolvable-span ids, score-field links to evolved code paths, and
+deeper per-id history resolution remain open.
 
 AlphaEvolve candidate-abstraction note: completed manifests now include
 `runtime.history.candidate_abstraction_choice_report` with schema

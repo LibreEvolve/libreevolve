@@ -123,13 +123,15 @@ Primary evidence:
     metric names, and explicit remaining Figure 3 parity gaps. Tests cover
     successful candidate invocation despite an invalid external validator,
     diagnostics for missing or unsupported candidate callables, and the runtime
-    report contract. External `validate.py` remains the default mode and
-    `load_problem()` still requires a problem-root `validate.py`.
-  - Required result: finish loader/problem-format support for embedded-only
-    problem definitions, skeleton-to-block invocation coupling, stronger
+    report contract. External `validate.py` remains the default mode, but
+    `load_problem()` now permits missing `validate.py` only when `config.yaml`
+    declares a non-empty all-`embedded_evaluate` stage list; the
+    `embedded_evaluate_math` fixture proves the checked-in embedded-only problem
+    format and CLI path.
+  - Required result: finish skeleton-to-block invocation coupling, stronger
     candidate callable build/import isolation beyond the local subprocess
-    boundary, paper-facing embedded-only examples, and provenance that links
-    score fields back to specific skeleton/evolved-block paths.
+    boundary, and provenance that links score fields back to specific
+    skeleton/evolved-block paths.
 
 - [ ] Extend Figure 1/Figure 2 process-exhibit report into rendered diagram
       parity.
@@ -196,10 +198,9 @@ Primary evidence:
     controller-budget events, evaluator artifacts, and best exports.
   - Required result: finish evolvable component span references, score-field
     links from evaluator results to candidate/evolved-block paths,
-    embedded-only problem-format support, standalone task-spec report examples,
-    and deeper validation that every referenced id resolves to exact
-    prompt/evaluator/candidate/history records rather than only field-level
-    artifact paths.
+    standalone task-spec report examples, and deeper validation that every
+    referenced id resolves to exact prompt/evaluator/candidate/history records
+    rather than only field-level artifact paths.
 
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.

@@ -4078,6 +4078,39 @@ def test_run_manifest_records_config_file_provenance(tmp_path):
     assert source["sha256"] == hashlib.sha256(config_bytes).hexdigest()
 
 
+def test_run_accepts_embedded_only_problem_without_validate_py(tmp_path):
+    _make_problem(tmp_path)
+    (tmp_path / "validate.py").unlink()
+    (tmp_path / "initial_programs" / "seed.py").write_text(
+        "def evaluate(eval_inputs):\n"
+        "    return {'score': eval_inputs['score'], 'is_valid': True}\n",
+        encoding="utf-8",
+    )
+    config_text = (
+        f"log_dir: {(tmp_path / 'runs').as_posix()}\n"
+        "max_generations: 0\n"
+        "eval_stages:\n"
+        "  - name: candidate_eval\n"
+        "    mode: embedded_evaluate\n"
+        "    eval_inputs:\n"
+        "      score: 0.75\n"
+    )
+    (tmp_path / "config.yaml").write_text(config_text, encoding="utf-8")
+
+    r = CliRunner().invoke(cli, ["run", str(tmp_path)])
+
+    assert r.exit_code == 0
+    manifest = json.loads(
+        (tmp_path / "runs" / tmp_path.name / "manifest.json").read_text(encoding="utf-8")
+    )
+    report = manifest["runtime"]["history"]["embedded_evaluator_entrypoint_report"]
+    assert report["validation"]["ok"] is True
+    assert report["embedded_entrypoint_count"] == 1
+    record = report["records"][0]
+    assert record["evaluator_mode"] == "embedded_evaluate"
+    assert record["signature"] == "evaluate(eval_inputs)"
+
+
 def test_run_zero_generation_all_invalid_seed_manifest_matches_cli_no_best(tmp_path):
     _make_problem(tmp_path)
     (tmp_path / "validate.py").write_text(

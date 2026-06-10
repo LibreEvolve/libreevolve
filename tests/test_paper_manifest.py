@@ -1625,6 +1625,40 @@ def test_validate_paper_manifest_checks_figure9_matrix_diff_artifact_boundary(
     assert "figure9_matrix_diff_artifact_missing_figure9_matrix_diff_artifacts" in codes
 
 
+def test_validate_paper_manifest_checks_figure4_matrix_discovery_artifact_boundary(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        json.dumps(
+            {
+                "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1",
+                "source_paper_id": "2506.13131",
+                "target_suite": "alphaevolve_appendix_a",
+                "targets": [],
+            }
+        ),
+        encoding="utf-8",
+    )
+    boundary = paper_manifest.figure4_matrix_discovery_artifact_boundary_record()
+    boundary["artifact_status"] = "emitted"
+    monkeypatch.setattr(
+        paper_manifest,
+        "figure4_matrix_discovery_artifact_boundary_record",
+        lambda: boundary,
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "figure4_matrix_discovery_artifact_missing_figure4_matrix_discovery_artifacts" in codes
+
+
 def test_validate_paper_manifest_checks_matrix_subset_scope_artifact_boundary(
     monkeypatch,
     tmp_path,

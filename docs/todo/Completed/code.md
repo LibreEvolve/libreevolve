@@ -16093,3 +16093,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused matrix-exhibit and paper-manifest tests cover the
     absence boundary, emitted panel validation, invalid nested evidence,
     summary rendering, and manifest hook.
+
+- [x] Add a Figure 4 matrix-discovery artifact and lineage boundary contract.
+  - Spec evidence: AlphaEvolve Figure 4 presents the main-text matrix
+    discovery exhibit and says the displayed discovery required 15 mutations.
+  - Status: `libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1`
+    now validates the current `not_emitted_by_local_report_export` state,
+    rejects false emitted claims without Figure 4 artifacts, validates emitted
+    artifact records, accepted 15-mutation lineage shape, nested Figure 4
+    exhibit metadata, and required future fields for rendered figure, left
+    diff outline, highlighted excerpts, paper text excerpt, region/source-diff
+    artifacts, artifact paths, and hashes.
+  - Verification: focused matrix-exhibit and paper-manifest tests cover the
+    absence boundary, emitted artifact/lineage validation, invalid nested
+    evidence, summary rendering, and manifest hook.

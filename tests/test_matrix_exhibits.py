@@ -1,18 +1,22 @@
 import json
 
 from libreevolve.problems.benchmarks.matrix_exhibits import (
+    FIGURE4_MATRIX_DISCOVERY_ARTIFACT_BOUNDARY_SCHEMA,
     FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA,
     FIGURE9_MATRIX_DIFF_ARTIFACT_BOUNDARY_SCHEMA,
     FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA,
     MATRIX_RANK_TABLE_ARTIFACT_BOUNDARY_SCHEMA,
     MATRIX_RANK_TABLE_EXHIBIT_SCHEMA,
+    figure4_matrix_discovery_artifact_boundary_record,
     figure9_matrix_diff_artifact_boundary_record,
     matrix_rank_table_artifact_boundary_record,
+    render_figure4_matrix_discovery_artifact_boundary_summary,
     render_figure4_matrix_discovery_exhibit_summary,
     render_figure9_matrix_diff_artifact_boundary_summary,
     render_figure9_matrix_diff_exhibit_summary,
     render_matrix_rank_table_artifact_boundary_summary,
     render_matrix_rank_table_exhibit_summary,
+    validate_figure4_matrix_discovery_artifact_boundary,
     validate_figure4_matrix_discovery_exhibit,
     validate_figure9_matrix_diff_artifact_boundary,
     validate_figure9_matrix_diff_exhibit,
@@ -198,6 +202,65 @@ def _valid_figure4_exhibit() -> dict:
     }
 
 
+def _figure4_artifact() -> dict:
+    components = [
+        "optimizer",
+        "initialization",
+        "loss",
+        "sweep",
+        "optimizer",
+        "loss",
+        "sweep",
+        "initialization",
+        "loss",
+        "optimizer",
+        "sweep",
+        "loss",
+        "initialization",
+        "optimizer",
+        "sweep",
+    ]
+    return {
+        "exhibit_id": "figure4_matrix_discovery",
+        "source_pdf_page": 11,
+        "mutation_count": 15,
+        "rendered_figure": _artifact("figures/figure4_matrix_discovery.png", "4"),
+        "left_diff_outline": _artifact("figures/figure4_left_diff_outline.png", "5"),
+        "highlighted_excerpts": _artifact("figures/figure4_highlighted_excerpts.json", "6"),
+        "paper_text_excerpt": _artifact("figures/figure4_caption_excerpt.txt", "7"),
+        "rendered_region_artifacts": [
+            _artifact("figures/figure4_left_full_diff_outline.png", "8"),
+            _artifact("figures/figure4_top_right_optimizer_initialization.png", "9"),
+            _artifact("figures/figure4_middle_right_loss_function.png", "a"),
+            _artifact("figures/figure4_bottom_right_hyperparameter_sweep.png", "b"),
+        ],
+        "source_diff_artifacts": [
+            _artifact("figures/figure4_left_full_diff_outline_diff.txt", "c"),
+            _artifact("figures/figure4_top_right_optimizer_initialization_diff.txt", "d"),
+            _artifact("figures/figure4_middle_right_loss_function_diff.txt", "e"),
+            _artifact("figures/figure4_bottom_right_hyperparameter_sweep_diff.txt", "f"),
+        ],
+        "accepted_mutation_lineage": [
+            {
+                "generation": index + 1,
+                "parent_program_id": f"program_{index:02d}",
+                "child_program_id": f"program_{index + 1:02d}",
+                "accepted_candidate_id": f"candidate_{index + 1:02d}",
+                "changed_component_names": [component],
+            }
+            for index, component in enumerate(components)
+        ],
+        "artifact_paths": [
+            "figures/figure4_matrix_discovery.png",
+            "figures/figure4_left_diff_outline.png",
+            "figures/figure4_caption_excerpt.txt",
+            "figures/figure4_mutation_lineage.json",
+        ],
+        "artifact_sha256": "a" * 64,
+        "figure4_matrix_discovery_exhibit": _valid_figure4_exhibit(),
+    }
+
+
 def _table_row(target: dict, row_order: int) -> dict:
     target_id = target["id"]
     return {
@@ -379,6 +442,79 @@ def test_render_figure4_matrix_discovery_exhibit_summary_reports_shape():
     assert "| schema_status | ok |" in summary
     assert "| region_count | 4 |" in summary
     assert "| semantic_component_count | 7 |" in summary
+
+
+def test_figure4_matrix_discovery_artifact_boundary_accepts_current_absence():
+    boundary = figure4_matrix_discovery_artifact_boundary_record()
+
+    validation = validate_figure4_matrix_discovery_artifact_boundary(boundary)
+
+    assert boundary["schema"] == FIGURE4_MATRIX_DISCOVERY_ARTIFACT_BOUNDARY_SCHEMA
+    assert validation.ok is True
+    assert validation.artifact_status == "not_emitted_by_local_report_export"
+    assert validation.emitted_artifact_count == 0
+    assert validation.required_field_count == 13
+    assert validation.issues == []
+
+
+def test_figure4_matrix_discovery_artifact_boundary_rejects_absence_with_artifacts():
+    boundary = figure4_matrix_discovery_artifact_boundary_record()
+    boundary["emitted_artifacts"] = [_figure4_artifact()]
+
+    validation = validate_figure4_matrix_discovery_artifact_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "unexpected_emitted_artifacts" in codes
+
+
+def test_figure4_matrix_discovery_artifact_boundary_requires_emitted_artifacts():
+    boundary = figure4_matrix_discovery_artifact_boundary_record()
+    boundary["artifact_status"] = "emitted"
+
+    validation = validate_figure4_matrix_discovery_artifact_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "missing_figure4_matrix_discovery_artifacts" in codes
+
+
+def test_figure4_matrix_discovery_artifact_boundary_accepts_emitted_artifacts():
+    boundary = figure4_matrix_discovery_artifact_boundary_record()
+    boundary["artifact_status"] = "emitted"
+    boundary["emitted_artifacts"] = [_figure4_artifact()]
+
+    validation = validate_figure4_matrix_discovery_artifact_boundary(boundary)
+
+    assert validation.ok is True
+    assert validation.emitted_artifact_count == 1
+    assert validation.issues == []
+
+
+def test_figure4_matrix_discovery_artifact_boundary_rejects_invalid_lineage_and_nested_exhibit():
+    boundary = figure4_matrix_discovery_artifact_boundary_record()
+    boundary["artifact_status"] = "emitted"
+    artifact = _figure4_artifact()
+    artifact["accepted_mutation_lineage"] = artifact["accepted_mutation_lineage"][:14]
+    artifact["artifact_paths"] = ["../escape.png"]
+    artifact["figure4_matrix_discovery_exhibit"]["mutation_count"] = 14
+    boundary["emitted_artifacts"] = [artifact]
+
+    validation = validate_figure4_matrix_discovery_artifact_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_accepted_mutation_count" in codes
+    assert "invalid_artifact_path" in codes
+    assert "invalid_nested_exhibit_invalid_mutation_count" in codes
+
+
+def test_render_figure4_matrix_discovery_artifact_boundary_summary_reports_shape():
+    summary = render_figure4_matrix_discovery_artifact_boundary_summary()
+
+    assert "AlphaEvolve Figure 4 matrix-discovery artifact boundary" in summary
+    assert "| artifact_status | not_emitted_by_local_report_export |" in summary
+    assert "| required_field_count | 13 |" in summary
 
 
 def test_validate_figure9_matrix_diff_exhibit_accepts_panel_metadata():

@@ -3501,9 +3501,15 @@ Primary evidence:
     artifacts/hashes, rendering/source artifact hashes, semantic component
     labels, and links from the displayed exhibit to Figure 9, decomposition
     reports, sweep metadata, certificates, and companion paper evidence. It
-    validates declared metadata only; no local generator emits or checks in the
-    rendered/text/source-diff Figure 4 artifacts, and no lineage artifact proves
-    the accepted 15-mutation sequence.
+    validates declared metadata only.
+    `libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1`
+    now validates the current `not_emitted_by_local_report_export` boundary
+    and required future fields for rendered Figure 4 image, left diff outline,
+    highlighted excerpts, paper text excerpt, region renders, source-diff
+    artifacts, accepted 15-mutation lineage, artifact paths/hashes, and nested
+    Figure 4 exhibit metadata. No local generator emits or checks in the
+    rendered/text/source-diff Figure 4 artifacts, and no lineage artifact
+    proves the accepted 15-mutation sequence.
   - Required result: emit or commit the concrete Figure 4 rendered/text/source
     diff artifacts plus accepted mutation sequence records with component
     labels for each accepted mutation, selected Table 2/Appendix A row mappings,

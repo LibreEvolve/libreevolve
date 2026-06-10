@@ -14,6 +14,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
 
 
 FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA = "libreevolve.alphaevolve_figure4_matrix_discovery_exhibit.v1"
+FIGURE4_MATRIX_DISCOVERY_ARTIFACT_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1"
 FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA = "libreevolve.alphaevolve_figure9_matrix_diff_exhibit.v1"
 FIGURE9_MATRIX_DIFF_ARTIFACT_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_figure9_matrix_diff_artifact_boundary.v1"
 MATRIX_RANK_TABLE_EXHIBIT_SCHEMA = "libreevolve.alphaevolve_matrix_rank_table_exhibit.v1"
@@ -73,6 +74,22 @@ EXPECTED_FIGURE4_HIGHLIGHT_COMPONENTS = frozenset(
         "loss",
         "sweep",
     }
+)
+FIGURE4_MATRIX_DISCOVERY_ARTIFACT_STATUSES = frozenset({"not_emitted_by_local_report_export", "emitted"})
+FIGURE4_MATRIX_DISCOVERY_ARTIFACT_REQUIRED_FIELDS = (
+    "exhibit_id",
+    "source_pdf_page",
+    "mutation_count",
+    "rendered_figure",
+    "left_diff_outline",
+    "highlighted_excerpts",
+    "paper_text_excerpt",
+    "rendered_region_artifacts",
+    "source_diff_artifacts",
+    "accepted_mutation_lineage",
+    "artifact_paths",
+    "artifact_sha256",
+    "figure4_matrix_discovery_exhibit",
 )
 EXPECTED_PANEL_ORDER = {
     "figure9a": 1,
@@ -152,6 +169,15 @@ class Figure4MatrixDiscoveryExhibitValidation:
 
 
 @dataclass(frozen=True)
+class Figure4MatrixDiscoveryArtifactBoundaryValidation:
+    ok: bool
+    artifact_status: str | None
+    emitted_artifact_count: int
+    required_field_count: int
+    issues: list[Figure4MatrixDiscoveryExhibitIssue]
+
+
+@dataclass(frozen=True)
 class MatrixRankTableExhibitIssue:
     code: str
     message: str
@@ -188,6 +214,25 @@ def matrix_rank_table_artifact_boundary_record() -> dict[str, Any]:
             "This is a Table 2/Table 3 matrix-rank table artifact availability "
             "boundary. It does not claim local report/export code emits rendered "
             "table, OCR text, or source-excerpt artifacts."
+        ),
+    }
+
+
+def figure4_matrix_discovery_artifact_boundary_record() -> dict[str, Any]:
+    return {
+        "schema": FIGURE4_MATRIX_DISCOVERY_ARTIFACT_BOUNDARY_SCHEMA,
+        "exhibit_schema": FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA,
+        "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "source_figure": EXPECTED_FIGURE4_SOURCE_FIGURE,
+        "target_id": EXPECTED_TARGET_ID,
+        "artifact_status": "not_emitted_by_local_report_export",
+        "local_export_scope": "figure4_matrix_discovery_report_export",
+        "required_artifact_fields": list(FIGURE4_MATRIX_DISCOVERY_ARTIFACT_REQUIRED_FIELDS),
+        "emitted_artifacts": [],
+        "claim_boundary": (
+            "This is a Figure 4 matrix-discovery artifact and lineage "
+            "availability boundary. It does not claim local report/export code "
+            "emits rendered Figure 4 artifacts or accepted 15-mutation lineage."
         ),
     }
 
@@ -286,6 +331,58 @@ def validate_figure9_matrix_diff_exhibit(
         ok=not issues,
         panel_count=panel_count,
         semantic_component_count=len(semantic_components),
+        issues=issues,
+    )
+
+
+def validate_figure4_matrix_discovery_artifact_boundary(
+    boundary: object | str | Path | None = None,
+) -> Figure4MatrixDiscoveryArtifactBoundaryValidation:
+    if boundary is None:
+        boundary = figure4_matrix_discovery_artifact_boundary_record()
+    data, read_issues = _load_figure4_boundary(boundary)
+    if read_issues:
+        return Figure4MatrixDiscoveryArtifactBoundaryValidation(False, None, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[Figure4MatrixDiscoveryExhibitIssue] = []
+    if data.get("schema") != FIGURE4_MATRIX_DISCOVERY_ARTIFACT_BOUNDARY_SCHEMA:
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_schema", "unsupported Figure 4 matrix-discovery artifact boundary schema"))
+    if data.get("exhibit_schema") != FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA:
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_exhibit_schema", "exhibit_schema must identify Figure 4 matrix-discovery exhibit records"))
+    if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("source_figure") != EXPECTED_FIGURE4_SOURCE_FIGURE:
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_source_figure", "source_figure must be Figure 4"))
+    if data.get("target_id") != EXPECTED_TARGET_ID:
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_target_id", "target_id must be mm_4x4x4"))
+    status = data.get("artifact_status")
+    if status not in FIGURE4_MATRIX_DISCOVERY_ARTIFACT_STATUSES:
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_artifact_status", "artifact_status must be a known Figure 4 matrix-discovery artifact status"))
+    if not isinstance(data.get("local_export_scope"), str) or not data["local_export_scope"].strip():
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("missing_local_export_scope", "local_export_scope is required"))
+    required_field_count = _validate_figure4_artifact_required_fields(data.get("required_artifact_fields"), issues)
+    artifacts = data.get("emitted_artifacts")
+    if not isinstance(artifacts, list):
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_emitted_artifacts", "emitted_artifacts must be a list"))
+        artifact_count = 0
+    else:
+        artifact_count = len(artifacts)
+        if status == "not_emitted_by_local_report_export":
+            if artifacts:
+                issues.append(Figure4MatrixDiscoveryExhibitIssue("unexpected_emitted_artifacts", "absence boundary must not include emitted Figure 4 artifacts"))
+            boundary_text = data.get("claim_boundary")
+            if not isinstance(boundary_text, str) or "does not claim" not in boundary_text:
+                issues.append(Figure4MatrixDiscoveryExhibitIssue("missing_claim_boundary", "absence boundary must state that it does not claim local artifact emission"))
+        elif status == "emitted":
+            if not artifacts:
+                issues.append(Figure4MatrixDiscoveryExhibitIssue("missing_figure4_matrix_discovery_artifacts", "emitted status requires Figure 4 artifact and lineage records"))
+            for artifact in artifacts:
+                _validate_figure4_artifact_record(artifact, issues)
+    return Figure4MatrixDiscoveryArtifactBoundaryValidation(
+        ok=not issues,
+        artifact_status=status if isinstance(status, str) else None,
+        emitted_artifact_count=artifact_count,
+        required_field_count=required_field_count,
         issues=issues,
     )
 
@@ -429,6 +526,27 @@ def render_figure4_matrix_discovery_exhibit_summary(exhibit: dict[str, Any]) -> 
         f"| region_count | {validation.region_count} |",
         f"| semantic_component_count | {validation.semantic_component_count} |",
         f"| source_figure | {exhibit.get('source_figure', '<unknown>')} |",
+    ]
+    if validation.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(f"- {issue.code}: {issue.message}" for issue in validation.issues)
+    return "\n".join(lines)
+
+
+def render_figure4_matrix_discovery_artifact_boundary_summary(boundary: dict[str, Any] | None = None) -> str:
+    if boundary is None:
+        boundary = figure4_matrix_discovery_artifact_boundary_record()
+    validation = validate_figure4_matrix_discovery_artifact_boundary(boundary)
+    status = "ok" if validation.ok else "invalid"
+    lines = [
+        "AlphaEvolve Figure 4 matrix-discovery artifact boundary",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| artifact_status | {validation.artifact_status or '<unknown>'} |",
+        f"| emitted_artifact_count | {validation.emitted_artifact_count} |",
+        f"| required_field_count | {validation.required_field_count} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -585,6 +703,151 @@ def _load_table_boundary(
         if isinstance(loaded, dict):
             return loaded, []
     return None, [MatrixRankTableExhibitIssue("invalid_shape", "matrix-rank table artifact boundary must be a JSON object")]
+
+
+def _load_figure4_boundary(
+    boundary: object | str | Path,
+) -> tuple[dict[str, Any] | None, list[Figure4MatrixDiscoveryExhibitIssue]]:
+    if isinstance(boundary, dict):
+        return dict(boundary), []
+    if isinstance(boundary, (str, Path)):
+        path = Path(boundary)
+        try:
+            loaded = json.loads(path.read_text(encoding="utf-8"))
+        except OSError as exc:
+            return None, [Figure4MatrixDiscoveryExhibitIssue("read_error", f"failed to read Figure 4 artifact boundary: {exc}")]
+        except json.JSONDecodeError as exc:
+            return None, [Figure4MatrixDiscoveryExhibitIssue("invalid_json", f"invalid Figure 4 artifact boundary JSON: {exc.msg}")]
+        if isinstance(loaded, dict):
+            return loaded, []
+    return None, [Figure4MatrixDiscoveryExhibitIssue("invalid_shape", "Figure 4 artifact boundary must be a JSON object")]
+
+
+def _validate_figure4_artifact_required_fields(
+    value: object,
+    issues: list[Figure4MatrixDiscoveryExhibitIssue],
+) -> int:
+    if not isinstance(value, list) or not value:
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_required_artifact_fields", "required_artifact_fields must be a non-empty list"))
+        return 0
+    seen: set[str] = set()
+    for field in value:
+        if not isinstance(field, str) or not field.strip():
+            issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_required_artifact_field", "required artifact field names must be non-empty strings"))
+            continue
+        if field in seen:
+            issues.append(Figure4MatrixDiscoveryExhibitIssue("duplicate_required_artifact_field", "required_artifact_fields must be unique"))
+        seen.add(field)
+    missing = sorted(set(FIGURE4_MATRIX_DISCOVERY_ARTIFACT_REQUIRED_FIELDS) - seen)
+    if missing:
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("missing_required_artifact_field", "required_artifact_fields must include all Figure 4 artifact and lineage fields"))
+    return len(value)
+
+
+def _validate_figure4_artifact_record(
+    artifact: object,
+    issues: list[Figure4MatrixDiscoveryExhibitIssue],
+) -> None:
+    if not isinstance(artifact, dict):
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_figure4_matrix_discovery_artifact", "emitted Figure 4 artifact records must be objects"))
+        return
+    if artifact.get("exhibit_id") != EXPECTED_FIGURE4_EXHIBIT_ID:
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_artifact_exhibit_id", "artifact exhibit_id must identify the Figure 4 matrix-discovery exhibit"))
+    if artifact.get("source_pdf_page") != EXPECTED_FIGURE4_PAGE:
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_artifact_source_pdf_page", "artifact source_pdf_page must be 11"))
+    if artifact.get("mutation_count") != EXPECTED_FIGURE4_MUTATION_COUNT:
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_artifact_mutation_count", "artifact mutation_count must be 15"))
+    _validate_figure4_artifact(artifact.get("rendered_figure"), "artifact_rendered_figure", issues)
+    _validate_figure4_artifact(artifact.get("left_diff_outline"), "artifact_left_diff_outline", issues)
+    _validate_figure4_artifact(artifact.get("highlighted_excerpts"), "artifact_highlighted_excerpts", issues)
+    _validate_figure4_artifact(artifact.get("paper_text_excerpt"), "artifact_paper_text_excerpt", issues)
+    _validate_figure4_artifact_list(artifact.get("rendered_region_artifacts"), "rendered_region_artifacts", issues)
+    _validate_figure4_artifact_list(artifact.get("source_diff_artifacts"), "source_diff_artifacts", issues)
+    _validate_figure4_mutation_lineage(artifact.get("accepted_mutation_lineage"), issues)
+    _validate_figure4_artifact_paths(artifact.get("artifact_paths"), issues)
+    sha = artifact.get("artifact_sha256")
+    if not isinstance(sha, str) or _SHA256_RE.fullmatch(sha) is None:
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_artifact_sha256", "artifact_sha256 must be a lowercase SHA-256 hex digest"))
+    exhibit_report = validate_figure4_matrix_discovery_exhibit(artifact.get("figure4_matrix_discovery_exhibit"))
+    issues.extend(
+        Figure4MatrixDiscoveryExhibitIssue(f"invalid_nested_exhibit_{issue.code}", issue.message)
+        for issue in exhibit_report.issues
+    )
+
+
+def _validate_figure4_artifact_list(
+    value: object,
+    label: str,
+    issues: list[Figure4MatrixDiscoveryExhibitIssue],
+) -> None:
+    if not isinstance(value, list) or not value:
+        issues.append(Figure4MatrixDiscoveryExhibitIssue(f"invalid_{label}", f"{label} must be a non-empty list"))
+        return
+    for artifact in value:
+        _validate_figure4_artifact(artifact, label, issues)
+
+
+def _validate_figure4_mutation_lineage(
+    value: object,
+    issues: list[Figure4MatrixDiscoveryExhibitIssue],
+) -> None:
+    if not isinstance(value, list) or not value:
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_accepted_mutation_lineage", "accepted_mutation_lineage must be a non-empty list"))
+        return
+    if len(value) != EXPECTED_FIGURE4_MUTATION_COUNT:
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_accepted_mutation_count", "accepted_mutation_lineage must contain 15 accepted mutations"))
+    seen_generations: set[int] = set()
+    components: set[str] = set()
+    for mutation in value:
+        if not isinstance(mutation, dict):
+            issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_accepted_mutation", "accepted mutation records must be objects"))
+            continue
+        generation = mutation.get("generation")
+        if isinstance(generation, bool) or not isinstance(generation, int) or generation <= 0:
+            issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_mutation_generation", "mutation generation must be a positive integer"))
+        else:
+            if generation in seen_generations:
+                issues.append(Figure4MatrixDiscoveryExhibitIssue("duplicate_mutation_generation", "mutation generations must be unique"))
+            seen_generations.add(generation)
+        for field in ("parent_program_id", "child_program_id", "accepted_candidate_id"):
+            if not isinstance(mutation.get(field), str) or not mutation[field].strip():
+                issues.append(Figure4MatrixDiscoveryExhibitIssue(f"missing_mutation_{field}", f"accepted mutation records must include {field}"))
+        changed = mutation.get("changed_component_names")
+        if not isinstance(changed, list) or not changed:
+            issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_mutation_changed_components", "changed_component_names must be a non-empty list"))
+            continue
+        for component in changed:
+            if component not in EXPECTED_SEMANTIC_COMPONENTS:
+                issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_mutation_component", "changed components must match the matrix diff taxonomy"))
+            elif isinstance(component, str):
+                components.add(component)
+    missing_components = sorted(EXPECTED_FIGURE4_HIGHLIGHT_COMPONENTS - components)
+    if missing_components:
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("missing_mutation_component", "accepted mutation lineage must cover optimizer, initialization, loss, and sweep components"))
+
+
+def _validate_figure4_artifact_paths(
+    value: object,
+    issues: list[Figure4MatrixDiscoveryExhibitIssue],
+) -> None:
+    if not isinstance(value, list) or not value:
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_artifact_paths", "artifact_paths must be a non-empty list"))
+        return
+    seen: set[str] = set()
+    for path in value:
+        path_obj = Path(path) if isinstance(path, str) else None
+        if (
+            path_obj is None
+            or not path
+            or path_obj.is_absolute()
+            or path.startswith(("/", "\\"))
+            or ".." in path_obj.parts
+        ):
+            issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_artifact_path", "artifact_paths entries must be safe relative paths"))
+            continue
+        if path in seen:
+            issues.append(Figure4MatrixDiscoveryExhibitIssue("duplicate_artifact_path", "artifact_paths entries must be unique"))
+        seen.add(path)
 
 
 def _load_figure9_boundary(

@@ -3912,7 +3912,14 @@ hyperparameter-sweep highlight regions, source-diff/rendered-region artifact
 hashes, semantic component coverage, and links to Figure 9, matrix result,
 sweep-space, certificate, and companion notebook evidence. It validates
 declared exhibit metadata once artifacts exist; it does not render or check in
-the Figure 4 panel artifacts or prove the accepted 15-mutation lineage.
+the Figure 4 panel artifacts or prove the accepted 15-mutation lineage. The
+companion boundary
+`libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1`
+validates the current `not_emitted_by_local_report_export` state and required
+future artifact/lineage fields for the rendered Figure 4 image, left diff
+outline, highlighted excerpts, paper text excerpt, region renders, source-diff
+artifacts, accepted 15-mutation lineage, artifact paths/hashes, and nested
+Figure 4 exhibit metadata.
 Appendix A Figure 9 matrix-diff exhibit metadata uses
 `libreevolve.alphaevolve_figure9_matrix_diff_exhibit.v1`; it validates the
 three magnified Figure 9a/9b/9c panel ids, paper pages 35-37, Figure 4

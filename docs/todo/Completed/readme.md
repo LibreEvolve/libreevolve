@@ -10904,3 +10904,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     code line spans, source-diff excerpts, rendered images, OCR text,
     panel-set artifacts, artifact paths, and hashes.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the Figure 4 matrix-discovery artifact and lineage boundary in
+      README.
+  - Spec evidence: README Figure 4 wording needs to distinguish declared
+    exhibit metadata from actual rendered/source artifacts and accepted
+    mutation lineage.
+  - Status: README now names
+    `libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1`,
+    scopes it to the current `not_emitted_by_local_report_export` state, and
+    lists required future artifact/lineage fields for Figure 4 reproduction.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

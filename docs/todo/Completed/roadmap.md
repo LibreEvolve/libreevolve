@@ -8317,3 +8317,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     it to the current `not_emitted_by_local_report_export` state, and keeps
     real Figure 9 panel artifact emission open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the Figure 4 matrix-discovery artifact and lineage boundary in
+      ROADMAP.
+  - Spec evidence: roadmap Figure 4 wording needs to distinguish declared
+    exhibit metadata from actual rendered/source artifacts and accepted
+    mutation lineage.
+  - Status: ROADMAP now names
+    `libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1`,
+    scopes it to the current `not_emitted_by_local_report_export` state, and
+    keeps real Figure 4 artifact and lineage emission open.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

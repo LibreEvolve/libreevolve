@@ -3546,8 +3546,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     15-mutation caption count, component labels for
     optimizer/initialization/loss/sweep changes, and links from the displayed
     figure to report, certificate, notebook, Figure 9, and source-paper
-    artifacts. It does not render or commit those Figure 4 artifacts, and it
-    does not prove the accepted 15-mutation sequence.
+    artifacts.
+    `libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1`
+    now validates the current `not_emitted_by_local_report_export` boundary
+    and required future fields for rendered/source artifacts, accepted
+    15-mutation lineage, artifact paths/hashes, and nested Figure 4 metadata.
+    It does not render or commit those Figure 4 artifacts, and it does not
+    prove the accepted 15-mutation sequence.
   - Required result: add concrete paper-facing Figure 4 rendered/source-diff
     artifacts and accepted-mutation lineage records with component labels,
     Table 2/Appendix A row mappings, rank/baseline values, decomposition

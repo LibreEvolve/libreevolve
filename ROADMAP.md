@@ -887,6 +887,12 @@ is not yet an AlphaEvolve reproduction.
   hashes, semantic optimizer/init/loss/sweep coverage, and links to Figure 9,
   result, sweep-space, certificate, and companion notebook evidence. Rendered
   Figure 4 artifacts and accepted-mutation lineage records remain open.
+  `libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1` now
+  validates the current `not_emitted_by_local_report_export` boundary and
+  required future fields for rendered Figure 4 image, left diff outline,
+  highlighted excerpts, paper text excerpt, region renders, source-diff
+  artifacts, accepted 15-mutation lineage, artifact paths/hashes, and nested
+  Figure 4 exhibit metadata.
 - Keep matrix headline historicity claims scoped to declared evidence:
   `libreevolve.matrix_headline_historicity_evidence.v1` now validates the
   `mm_4x4x4` complex rank-48 headline against dimensions, rank, 48 scalar

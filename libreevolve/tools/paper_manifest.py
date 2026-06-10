@@ -107,8 +107,10 @@ from libreevolve.problems.benchmarks.paper_artifact_roles import (
     validate_paper_artifact_roles,
 )
 from libreevolve.problems.benchmarks.matrix_exhibits import (
+    figure4_matrix_discovery_artifact_boundary_record,
     figure9_matrix_diff_artifact_boundary_record,
     matrix_rank_table_artifact_boundary_record,
+    validate_figure4_matrix_discovery_artifact_boundary,
     validate_figure9_matrix_diff_artifact_boundary,
     validate_matrix_rank_table_artifact_boundary,
 )
@@ -740,6 +742,16 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
             issue.message,
         )
         for issue in figure9_artifact_report.issues
+    )
+    figure4_artifact_report = validate_figure4_matrix_discovery_artifact_boundary(
+        figure4_matrix_discovery_artifact_boundary_record()
+    )
+    issues.extend(
+        PaperManifestIssue(
+            f"figure4_matrix_discovery_artifact_{issue.code}",
+            issue.message,
+        )
+        for issue in figure4_artifact_report.issues
     )
     return issues
 

@@ -10870,3 +10870,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     panel-set artifacts, artifact paths/hashes, and nested Figure 9 exhibit
     metadata. The paper-manifest gate validates this boundary.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Track Figure 4 artifact and 15-mutation lineage absence separately from
+      declared exhibit metadata.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 4 is the main-text
+    matrix discovery exhibit and its caption says the example required 15
+    mutations.
+  - Status: `libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1`
+    now records the current `not_emitted_by_local_report_export` boundary and
+    validates required future fields for rendered/source artifacts, accepted
+    mutation lineage, artifact paths/hashes, and nested Figure 4 exhibit
+    metadata. The paper-manifest gate validates this boundary.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

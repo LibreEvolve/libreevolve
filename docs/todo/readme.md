@@ -1121,8 +1121,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     mappings, rendered visual/text artifact paths/hashes, rendering parameters,
     the 15-mutation caption count, component-level mutation categories, and
     links from the displayed exhibit to Figure 9, matrix reports,
-    certificates, notebooks, and paper-source evidence. It also states that
-    rendered/source artifacts and accepted-mutation lineage are not emitted.
+    certificates, notebooks, and paper-source evidence. It now also documents
+    `libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1`
+    as the current `not_emitted_by_local_report_export` boundary and required
+    future Figure 4 artifact/lineage fields. It also states that rendered/
+    source artifacts and accepted-mutation lineage are not emitted.
   - Required result: when Figure 4 rendered/source artifacts and accepted
     mutation-lineage records land, update README, ROADMAP, papers index, and
     matching TODOs so README distinguishes reproduced main-text matrix exhibit

@@ -1324,6 +1324,12 @@ Implemented:
   sweep-space, exactness-certificate, and companion notebook evidence. It does
   not render or commit the Figure 4 artifacts, and it does not prove the
   accepted 15-mutation lineage.
+  `libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1` now
+  records the current `not_emitted_by_local_report_export` boundary and
+  validates required future artifact/lineage fields for rendered Figure 4
+  image, left diff outline, highlighted excerpts, paper text excerpt, region
+  renders, source-diff artifacts, accepted 15-mutation lineage, artifact
+  paths/hashes, and nested Figure 4 exhibit metadata.
 - `libreevolve/problems/benchmarks/matrix_exhibits.py`: AlphaEvolve Appendix A
   Figure 9a-9c magnified matrix-diff metadata contract. It validates the three
   panel ids, paper pages 35-37, Figure 4 caption linkage, `mm_4x4x4` rank-48

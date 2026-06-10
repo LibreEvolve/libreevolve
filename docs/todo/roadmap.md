@@ -2529,7 +2529,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     visual/text artifact paths/hashes, rendering/source parameters, the
     15-mutation caption count, component-change labels, and links from the
     displayed figure to Figure 9, decomposition reports, exactness
-    certificates, notebooks, and paper-source evidence. It does not emit or
+    certificates, notebooks, and paper-source evidence. It now also points to
+    `libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1`,
+    which validates the current `not_emitted_by_local_report_export` boundary
+    and required future Figure 4 artifact/lineage fields. It does not emit or
     check in the rendered/source artifacts or accepted 15-mutation lineage.
   - Required result: when Figure 4 rendered/source artifacts and accepted
     mutation-lineage records land, update ROADMAP, README, papers index, and

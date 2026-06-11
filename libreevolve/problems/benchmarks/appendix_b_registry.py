@@ -388,6 +388,8 @@ EXPECTED_B8_WITNESS_REQUIRED_FIELDS = (
     "maximum_pairwise_distance",
     "recomputed_squared_ratio",
     "figure_panel_id",
+    "figure_panel_artifact_path",
+    "figure_panel_artifact_sha256",
 )
 EXPECTED_B8_WITNESS_ROWS = (
     {
@@ -401,7 +403,8 @@ EXPECTED_B8_WITNESS_ROWS = (
         "coordinate_artifact_status": "not_recorded_locally",
         "distance_certificate_status": "not_recorded_locally",
         "recomputed_ratio_status": "not_recorded_locally",
-        "claim_boundary": "The registry records the paper's squared-ratio convention but does not claim local coordinates or all-pairs distance certificates for the 16-point 2D witness.",
+        "figure_panel_artifact_status": "not_recorded_locally",
+        "claim_boundary": "The registry records the paper's squared-ratio convention but does not claim local coordinates, all-pairs distance certificates, or Figure 12 panel artifacts for the 16-point 2D witness.",
     },
     {
         "result_id": "b8_14_points_3d",
@@ -414,7 +417,8 @@ EXPECTED_B8_WITNESS_ROWS = (
         "coordinate_artifact_status": "not_recorded_locally",
         "distance_certificate_status": "not_recorded_locally",
         "recomputed_ratio_status": "not_recorded_locally",
-        "claim_boundary": "The registry records the paper's squared-ratio convention but does not claim local coordinates or all-pairs distance certificates for the 14-point 3D witness.",
+        "figure_panel_artifact_status": "not_recorded_locally",
+        "claim_boundary": "The registry records the paper's squared-ratio convention but does not claim local coordinates, all-pairs distance certificates, or Figure 12 panel artifacts for the 14-point 3D witness.",
     },
 )
 EXPECTED_B8_WITNESS_IDS = tuple(row["result_id"] for row in EXPECTED_B8_WITNESS_ROWS)
@@ -1469,7 +1473,7 @@ def _validate_b8_witness_boundary(
                         issues.append(AppendixBRegistryIssue(f"invalid_b8_witness_{field}", f"B.8 witness {field} must match the Figure 12 missing-evidence row", family_id))
                 elif actual != expected_value:
                     issues.append(AppendixBRegistryIssue(f"invalid_b8_witness_{field}", f"B.8 witness {field} must match the Figure 12 missing-evidence row", family_id))
-        for field in ("coordinate_artifact_status", "distance_certificate_status", "recomputed_ratio_status"):
+        for field in ("coordinate_artifact_status", "distance_certificate_status", "recomputed_ratio_status", "figure_panel_artifact_status"):
             if witness.get(field) != "not_recorded_locally":
                 issues.append(AppendixBRegistryIssue(f"invalid_b8_{field}", f"B.8 {field} must be not_recorded_locally in the absence boundary", family_id))
         raw = witness.get("raw_reported_squared_ratio")

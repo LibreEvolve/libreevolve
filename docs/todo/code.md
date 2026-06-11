@@ -2588,17 +2588,19 @@ Primary evidence:
     `witness_certificate_boundary` now lists the required future witness
     fields, including coordinate artifact path/hash, coordinate payload schema,
     distance-certificate path/hash, min/max pairwise distances, recomputed
-    squared ratio, and figure panel id. It also validates the two
+    squared ratio, figure panel id, and Figure 12 panel artifact path/hash. It
+    also validates the two
     missing-witness rows against the paper facts: 16 points in 2D/Figure 12
     left with squared ratio `12.889266112` versus prior `12.890`, and 14
     points in 3D/Figure 12 right with squared ratio `4.165849767` versus prior
     `4.168`, while marking both witnesses `not_recorded_locally`. It still
     does not provide the coordinate payloads, finite-coordinate checks,
-    all-pairs minimum/maximum distance certificates, or recomputed squared
-    ratio from coordinates.
+    all-pairs minimum/maximum distance certificates, recomputed squared ratio
+    from coordinates, or rendered Figure 12 panel artifacts.
   - Required result: add Appendix B.8 witness rows and validators that record
     real point-set artifact hashes, pairwise-distance certificate hashes,
-    recomputed min distance, max distance, and squared ratio from coordinates.
+    recomputed min distance, max distance, squared ratio from coordinates, and
+    Figure 12 panel artifact hashes.
 
 - [ ] Add Appendix B.5 minimum-overlap step-function provenance.
   - Spec evidence: AlphaEvolve Appendix B.5 improves the Erdos minimum-overlap

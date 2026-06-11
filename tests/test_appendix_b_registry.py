@@ -460,6 +460,7 @@ def test_appendix_b_registry_rejects_b8_witness_boundary_overclaim(tmp_path):
     first["point_count"] = 15
     first["raw_reported_squared_ratio"] = 13.0
     first["coordinate_artifact_status"] = "recorded"
+    first["figure_panel_artifact_status"] = "recorded"
     first["claim_boundary"] = "Coordinates exist."
     boundary["missing_witnesses"] = boundary["missing_witnesses"][:1]
     registry = tmp_path / "registry.json"
@@ -476,6 +477,7 @@ def test_appendix_b_registry_rejects_b8_witness_boundary_overclaim(tmp_path):
     assert "invalid_b8_witness_raw_reported_squared_ratio" in codes
     assert "invalid_b8_witness_improvement_direction" in codes
     assert "invalid_b8_coordinate_artifact_status" in codes
+    assert "invalid_b8_figure_panel_artifact_status" in codes
     assert "missing_b8_witness_claim_boundary" in codes
     assert "missing_b8_witness_id" in codes
 

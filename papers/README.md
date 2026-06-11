@@ -99,9 +99,10 @@ point sets, the registry now preserves the paper's squared-ratio convention:
 `3.590162407468`, and 14 points in 3D report squared value `4.165849767` with
 derived ratio `2.041041343775`; both are compared against prior squared bounds
 from `[29]`. Its `witness_certificate_boundary` records the future coordinate
-artifact and distance-certificate fields required before local witness proof
-can be claimed, preserves the 16-point/2D and 14-point/3D missing-witness
-rows, and keeps both B.8 witnesses `not_recorded_locally`.
+artifact, distance-certificate, and Figure 12 panel artifact fields required
+before local witness proof can be claimed, preserves the 16-point/2D and
+14-point/3D missing-witness rows, and keeps both B.8 witnesses and panel
+artifacts `not_recorded_locally`.
 For B.5 Erdős minimum overlap, the registry now records the source
 paired-function formulation, zero-extension convention, shift-supremum
 objective, known lower/upper bounds, `[40]` equivalence, and mapping to the

@@ -781,8 +781,9 @@ is not yet an AlphaEvolve reproduction.
   smoke-only, and the actual AlphaEvolve container artifacts, placement
   payloads, panel artifacts, exact certificates, payload-schema validation
   certificates, positive-radius certificates, sum-of-radii formula
-  certificates, source locators, canonicalization policy, recomputed sum, and
-  companion Colab link remain open.
+  certificates, source locators, value-extraction certificates,
+  value-reconciliation certificate, canonicalization policy, recomputed sum,
+  and companion Colab link remain open.
 - Keep paper artifact-role attribution separate from artifact availability:
   `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
   AlphaEvolve PDF contribution records for figure creators and companion

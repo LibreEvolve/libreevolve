@@ -2720,12 +2720,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `2.6340 -> 2.6358` display separately from the Appendix B.12/Figure 14
     `2.634` to `2.635` strings.
   - Remaining gap: the roadmap still cannot cite source-specific locators,
-    normalized values, rounding/canonicalization policy, selected canonical
-    value, recomputed sum, or companion Colab link.
+    Figure 5 panel artifacts, value-extraction certificates, normalized
+    values, rounding/canonicalization policy, selected canonical value,
+    value-reconciliation certificate, recomputed sum, or companion Colab link.
   - Required result: when those precision artifacts land, update ROADMAP,
-    README, papers index, and code/paper TODOs with per-source value records
-    and safeguards against conflating figure-display precision with appendix
-    text precision.
+    README, papers index, and code/paper TODOs with per-source value records,
+    panel artifacts, extraction/reconciliation certificates, and safeguards
+    against conflating figure-display precision with appendix text precision.
 
 - [ ] Keep Appendix B figure roadmap wording scoped until Figures 10-14
       provenance exists.

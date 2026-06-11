@@ -2445,12 +2445,14 @@ Primary evidence:
     Figure 5 `2.6340 -> 2.6358` strings separately from the Appendix
     B.12/Figure 14 `2.634` to `2.635` strings and validates required future
     reconciliation fields.
-  - Remaining gap: the registry still has no source locators, normalized
+  - Remaining gap: the registry still has no source locators, Figure 5 panel
+    artifact, per-source value-extraction certificates, normalized
     numeric-value records, rounding/precision policy, selected canonical
-    report value, recomputed sum, or companion Colab artifact link.
-  - Required result: add those per-source numeric-value records and policy
-    artifacts so Figure 5 visual values and Appendix text values are not
-    conflated.
+    report value, value-reconciliation certificate, recomputed sum, or
+    companion Colab artifact link.
+  - Required result: add those per-source numeric-value records, extraction
+    certificates, panel artifacts, and policy artifacts so Figure 5 visual
+    values and Appendix text values are not conflated.
 
 - [ ] Add Appendix B figure-level construction provenance for Figures 10-14.
   - Spec evidence: AlphaEvolve Appendix B includes displayed construction

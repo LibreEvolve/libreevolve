@@ -171,7 +171,8 @@ as a separate precision boundary from the Appendix B.12/Figure 14 `2.634` to
 `2.635` strings, while the AlphaEvolve container artifacts, placement
 payloads, Figure 14 panel artifacts, exact certificates, payload-schema
 validation certificates, positive-radius certificates, sum-of-radii formula
-certificates, source locators, canonicalization policy, recomputed sum, and
+certificates, source locators, value-extraction certificates,
+value-reconciliation certificate, canonicalization policy, recomputed sum, and
 companion Colab link remain absent.
 Appendix B says reported construction data and verification code
 appear in an accompanying Google Colab; this registry is not that

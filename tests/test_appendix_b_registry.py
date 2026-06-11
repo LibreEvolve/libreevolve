@@ -995,8 +995,13 @@ def test_appendix_b_registry_requires_figure5_b12_precision_boundary(tmp_path):
     boundary["figure5_display_reported_sum_of_radii"] = "2.635"
     boundary["required_reconciliation_fields"] = ["figure5_source_locator"]
     boundary["source_locator_status"] = "recorded"
+    boundary["figure5_panel_artifact_status"] = "recorded"
+    boundary["figure5_value_extraction_certificate_status"] = "recorded"
+    boundary["appendix_b12_value_extraction_certificate_status"] = "recorded"
+    boundary["figure14_caption_extraction_certificate_status"] = "recorded"
     boundary["rounding_policy_status"] = "recorded"
     boundary["canonical_value_selection_status"] = "recorded"
+    boundary["value_reconciliation_certificate_status"] = "recorded"
     boundary["claim_boundary"] = "The values are reconciled."
     registry = tmp_path / "registry.json"
     registry.write_text(json.dumps(data), encoding="utf-8")
@@ -1009,8 +1014,13 @@ def test_appendix_b_registry_requires_figure5_b12_precision_boundary(tmp_path):
     assert "invalid_figure5_b12_precision_figure5_display_reported_sum_of_radii" in codes
     assert "invalid_figure5_b12_precision_required_reconciliation_fields" in codes
     assert "invalid_figure5_b12_precision_source_locator_status" in codes
+    assert "invalid_figure5_b12_precision_figure5_panel_artifact_status" in codes
+    assert "invalid_figure5_b12_precision_figure5_value_extraction_certificate_status" in codes
+    assert "invalid_figure5_b12_precision_appendix_b12_value_extraction_certificate_status" in codes
+    assert "invalid_figure5_b12_precision_figure14_caption_extraction_certificate_status" in codes
     assert "invalid_figure5_b12_precision_rounding_policy_status" in codes
     assert "invalid_figure5_b12_precision_canonical_value_selection_status" in codes
+    assert "invalid_figure5_b12_precision_value_reconciliation_certificate_status" in codes
     assert "missing_figure5_b12_precision_claim_boundary" in codes
     assert report.issues[0].family_id == "circle_packing_unit_square"
 

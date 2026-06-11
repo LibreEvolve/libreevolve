@@ -3695,8 +3695,9 @@ Figure 14 panel artifact path/hash fields required before local reproduction
 can be claimed, with container and panel artifacts explicitly
 `not_recorded_locally`. The actual B.12-B.13 container artifacts, placement
 payloads, panel artifacts, exact certificates, source-specific precision
-locators, canonicalization policy, recomputed sum, and companion Colab link
-remain absent.
+locators, value-extraction certificates, value-reconciliation certificate,
+canonicalization policy, recomputed sum, and companion Colab link remain
+absent.
 `libreevolve.problems.benchmarks.math_outcomes` now records a Section 3.2
 aggregate-outcome absence boundary: over 50 mathematical problems, more than
 five branches, roughly 75% best-known rediscovery, roughly 20% SOTA

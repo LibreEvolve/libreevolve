@@ -18,6 +18,7 @@ from libreevolve.problems.benchmarks.appendix_b_registry import (
     EXPECTED_B8_METRIC_CONVENTIONS,
     EXPECTED_B8_WITNESS_IDS,
     EXPECTED_B8_WITNESS_REQUIRED_FIELDS,
+    EXPECTED_B8_WITNESS_ROWS,
     EXPECTED_AUTOCORRELATION_LABELS,
     EXPECTED_AUTOCORRELATION_STEP_EVIDENCE,
     EXPECTED_B4_HERMITE_REQUIRED_FIELDS,
@@ -102,6 +103,9 @@ def test_appendix_b_registry_enumerates_all_alphaevolve_families():
     assert boundary["status"] == "not_recorded_locally"
     assert boundary["required_witness_fields"] == list(EXPECTED_B8_WITNESS_REQUIRED_FIELDS)
     assert [row["result_id"] for row in boundary["missing_witnesses"]] == list(EXPECTED_B8_WITNESS_IDS)
+    for witness, expected in zip(boundary["missing_witnesses"], EXPECTED_B8_WITNESS_ROWS, strict=True):
+        for field, expected_value in expected.items():
+            assert witness[field] == expected_value
     b5 = next(family for family in data["families"] if family["id"] == "erdos_minimum_overlap")
     assert b5["source_formulation_evidence"] == EXPECTED_B5_SOURCE_FORMULATION
     assert b5["step_function_result_boundary"] == EXPECTED_B5_STEP_FUNCTION_BOUNDARY
@@ -453,6 +457,8 @@ def test_appendix_b_registry_rejects_b8_witness_boundary_overclaim(tmp_path):
     boundary["status"] = "recorded"
     boundary["required_witness_fields"] = ["result_id"]
     first = boundary["missing_witnesses"][0]
+    first["point_count"] = 15
+    first["raw_reported_squared_ratio"] = 13.0
     first["coordinate_artifact_status"] = "recorded"
     first["claim_boundary"] = "Coordinates exist."
     boundary["missing_witnesses"] = boundary["missing_witnesses"][:1]
@@ -466,6 +472,9 @@ def test_appendix_b_registry_rejects_b8_witness_boundary_overclaim(tmp_path):
     assert "invalid_b8_witness_boundary_status" in codes
     assert "invalid_b8_witness_required_fields" in codes
     assert "invalid_b8_missing_witness_count" in codes
+    assert "invalid_b8_witness_point_count" in codes
+    assert "invalid_b8_witness_raw_reported_squared_ratio" in codes
+    assert "invalid_b8_witness_improvement_direction" in codes
     assert "invalid_b8_coordinate_artifact_status" in codes
     assert "missing_b8_witness_claim_boundary" in codes
     assert "missing_b8_witness_id" in codes

@@ -2588,10 +2588,14 @@ Primary evidence:
     `witness_certificate_boundary` now lists the required future witness
     fields, including coordinate artifact path/hash, coordinate payload schema,
     distance-certificate path/hash, min/max pairwise distances, recomputed
-    squared ratio, and figure panel id, while marking both witnesses
-    `not_recorded_locally`. It still does not provide the coordinate payloads,
-    finite-coordinate checks, all-pairs minimum/maximum distance certificates,
-    or recomputed squared ratio from coordinates.
+    squared ratio, and figure panel id. It also validates the two
+    missing-witness rows against the paper facts: 16 points in 2D/Figure 12
+    left with squared ratio `12.889266112` versus prior `12.890`, and 14
+    points in 3D/Figure 12 right with squared ratio `4.165849767` versus prior
+    `4.168`, while marking both witnesses `not_recorded_locally`. It still
+    does not provide the coordinate payloads, finite-coordinate checks,
+    all-pairs minimum/maximum distance certificates, or recomputed squared
+    ratio from coordinates.
   - Required result: add Appendix B.8 witness rows and validators that record
     real point-set artifact hashes, pairwise-distance certificate hashes,
     recomputed min distance, max distance, and squared ratio from coordinates.

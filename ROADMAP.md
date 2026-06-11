@@ -699,8 +699,9 @@ is not yet an AlphaEvolve reproduction.
   raw values, square-root-derived ratios, point counts, dimensions, prior
   squared bounds, Figure 12 panel labels, and comparison policy, but not the
   coordinate payloads or all-pairs distance certificates. A
-  `witness_certificate_boundary` now records the required future witness fields
-  and keeps both B.8 witnesses explicitly `not_recorded_locally`.
+  `witness_certificate_boundary` now records the required future witness
+  fields, preserves the 16-point/2D and 14-point/3D missing-witness rows, and
+  keeps both B.8 witnesses explicitly `not_recorded_locally`.
 - Keep Appendix B.5 source-problem and construction evidence separated: the
   registry now validates the original paired-function Erdős formulation,
   zero-extension convention, shift-supremum objective, known bounds, `[40]`

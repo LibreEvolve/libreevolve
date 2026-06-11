@@ -389,7 +389,35 @@ EXPECTED_B8_WITNESS_REQUIRED_FIELDS = (
     "recomputed_squared_ratio",
     "figure_panel_id",
 )
-EXPECTED_B8_WITNESS_IDS = ("b8_16_points_2d", "b8_14_points_3d")
+EXPECTED_B8_WITNESS_ROWS = (
+    {
+        "result_id": "b8_16_points_2d",
+        "source_section_id": "B.8",
+        "source_figure": "Figure 12 left",
+        "point_count": 16,
+        "dimension": 2,
+        "raw_reported_squared_ratio": 12.889266112,
+        "prior_best_squared_ratio": 12.890,
+        "coordinate_artifact_status": "not_recorded_locally",
+        "distance_certificate_status": "not_recorded_locally",
+        "recomputed_ratio_status": "not_recorded_locally",
+        "claim_boundary": "The registry records the paper's squared-ratio convention but does not claim local coordinates or all-pairs distance certificates for the 16-point 2D witness.",
+    },
+    {
+        "result_id": "b8_14_points_3d",
+        "source_section_id": "B.8",
+        "source_figure": "Figure 12 right",
+        "point_count": 14,
+        "dimension": 3,
+        "raw_reported_squared_ratio": 4.165849767,
+        "prior_best_squared_ratio": 4.168,
+        "coordinate_artifact_status": "not_recorded_locally",
+        "distance_certificate_status": "not_recorded_locally",
+        "recomputed_ratio_status": "not_recorded_locally",
+        "claim_boundary": "The registry records the paper's squared-ratio convention but does not claim local coordinates or all-pairs distance certificates for the 14-point 3D witness.",
+    },
+)
+EXPECTED_B8_WITNESS_IDS = tuple(row["result_id"] for row in EXPECTED_B8_WITNESS_ROWS)
 EXPECTED_B5_SOURCE_FORMULATION = {
     "source_section_id": "B.5",
     "constant_id": "C5",
@@ -1381,6 +1409,10 @@ def _validate_b8_witness_boundary(
         return
     if len(missing) != len(EXPECTED_B8_WITNESS_IDS):
         issues.append(AppendixBRegistryIssue("invalid_b8_missing_witness_count", "B.8 must track both missing point-set witnesses", family_id))
+    expected_by_id = {
+        row["result_id"]: row
+        for row in EXPECTED_B8_WITNESS_ROWS
+    }
     seen: set[str] = set()
     for witness in missing:
         if not isinstance(witness, dict):
@@ -1393,9 +1425,27 @@ def _validate_b8_witness_boundary(
             if result_id in seen:
                 issues.append(AppendixBRegistryIssue("duplicate_b8_missing_witness_id", "B.8 missing witness ids must be unique", family_id))
             seen.add(result_id)
+            expected = expected_by_id[result_id]
+            for field, expected_value in expected.items():
+                actual = witness.get(field)
+                if isinstance(expected_value, float):
+                    if isinstance(actual, bool) or not isinstance(actual, (int, float)) or not math.isclose(float(actual), expected_value, rel_tol=0.0, abs_tol=1e-12):
+                        issues.append(AppendixBRegistryIssue(f"invalid_b8_witness_{field}", f"B.8 witness {field} must match the Figure 12 missing-evidence row", family_id))
+                elif actual != expected_value:
+                    issues.append(AppendixBRegistryIssue(f"invalid_b8_witness_{field}", f"B.8 witness {field} must match the Figure 12 missing-evidence row", family_id))
         for field in ("coordinate_artifact_status", "distance_certificate_status", "recomputed_ratio_status"):
             if witness.get(field) != "not_recorded_locally":
                 issues.append(AppendixBRegistryIssue(f"invalid_b8_{field}", f"B.8 {field} must be not_recorded_locally in the absence boundary", family_id))
+        raw = witness.get("raw_reported_squared_ratio")
+        prior = witness.get("prior_best_squared_ratio")
+        if (
+            isinstance(raw, (int, float))
+            and not isinstance(raw, bool)
+            and isinstance(prior, (int, float))
+            and not isinstance(prior, bool)
+            and float(raw) >= float(prior)
+        ):
+            issues.append(AppendixBRegistryIssue("invalid_b8_witness_improvement_direction", "B.8 witness raw squared ratio must improve on the prior squared bound", family_id))
         claim_boundary = witness.get("claim_boundary")
         if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary:
             issues.append(AppendixBRegistryIssue("missing_b8_witness_claim_boundary", "B.8 missing witness rows must state that local coordinate/certificate evidence is not claimed", family_id))

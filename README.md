@@ -3606,7 +3606,8 @@ point counts, dimensions, prior squared bounds, and comparison policy. It does
 not yet store the coordinate payloads or all-pairs distance certificates for
 those witnesses; a validated `witness_certificate_boundary` now records the
 required future coordinate-artifact, distance-certificate, min/max-distance,
-recomputed-ratio, and Figure-panel fields while keeping both witnesses marked
+recomputed-ratio, and Figure-panel fields while preserving the 16-point/2D
+and 14-point/3D Figure 12 witness rows and keeping both witnesses marked
 `not_recorded_locally`. For Appendix B.5, the registry now preserves the
 source Erdős minimum-overlap formulation with non-negative
 `f,g: [-1,1] -> [0,1]`, `f + g = 1`, `integral f = 1`, zero extension outside

@@ -669,6 +669,12 @@
         "missing_witnesses": [
           {
             "result_id": "b8_16_points_2d",
+            "source_section_id": "B.8",
+            "source_figure": "Figure 12 left",
+            "point_count": 16,
+            "dimension": 2,
+            "raw_reported_squared_ratio": 12.889266112,
+            "prior_best_squared_ratio": 12.89,
             "coordinate_artifact_status": "not_recorded_locally",
             "distance_certificate_status": "not_recorded_locally",
             "recomputed_ratio_status": "not_recorded_locally",
@@ -676,6 +682,12 @@
           },
           {
             "result_id": "b8_14_points_3d",
+            "source_section_id": "B.8",
+            "source_figure": "Figure 12 right",
+            "point_count": 14,
+            "dimension": 3,
+            "raw_reported_squared_ratio": 4.165849767,
+            "prior_best_squared_ratio": 4.168,
             "coordinate_artifact_status": "not_recorded_locally",
             "distance_certificate_status": "not_recorded_locally",
             "recomputed_ratio_status": "not_recorded_locally",

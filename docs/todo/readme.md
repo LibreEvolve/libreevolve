@@ -1726,9 +1726,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: README now points to B.8 squared-ratio convention
     metadata with point counts, dimensions, prior squared bounds, and Figure 12
     panel linkage. It also points to a `witness_certificate_boundary` that
-    records required future coordinate/certificate fields and keeps both
-    witnesses `not_recorded_locally`. It still warns that coordinate payloads
-    and all-pairs min/max distance recomputation remain open.
+    records required future coordinate/certificate fields, validates the
+    16-point/2D and 14-point/3D missing-witness rows, and keeps both witnesses
+    `not_recorded_locally`. It still warns that coordinate payloads and
+    all-pairs min/max distance recomputation remain open.
   - Required result: when Appendix B.8 distance-certificate metadata lands,
     update README, ROADMAP, papers index, and code/paper TODOs together so
     README distinguishes raw convention metadata from validated point-set

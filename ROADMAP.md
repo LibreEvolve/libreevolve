@@ -874,7 +874,7 @@ is not yet an AlphaEvolve reproduction.
   `papers/follow_on_sources.json` now emits the committed follow-on source row
   with docs/TODO claim-surface links, linked problem-coverage evidence for the
   declared-67 versus observed-68 numbered-page boundary, and an explicit
-  no-cache policy. Cached PDF rows, notebook mapping/artifact hashes, and
+  no-cache policy. Cached PDF rows, notebook SHA-256/artifact hashes, and
   Appendix B claim mappings remain open.
 - Keep follow-on problem-repository rights separate from the original PDF,
   `alphaevolve_results`, and LibreEvolve licensing:
@@ -892,8 +892,7 @@ is not yet an AlphaEvolve reproduction.
   the source phrase that the repository does not contain the code to run
   AlphaEvolve. It treats notebooks as prompts/verifiers/inputs/outputs around
   completed experiments, not runnable AlphaEvolve implementation artifacts;
-  per-problem notebook mapping, SHA-256 notebook inventory, and cell-level
-  artifact verification remain open.
+  SHA-256 notebook inventory and cell-level artifact verification remain open.
 - Keep Tao follow-on blog claims secondary to pinned artifacts:
   `papers/follow_on_tao_blog.json` now records the canonical WordPress URL,
   post id/date/modified metadata, retrieval hashes, linked arXiv/repository/
@@ -945,11 +944,10 @@ is not yet an AlphaEvolve reproduction.
   placeholders, `1` generic Colab landing URL, and `1` paper-link placeholder),
   pins raw-page byte counts and SHA-256 hashes for all 68 numbered HTML pages,
   emits per-page source rows with titles, paper sections, page URLs, hashes,
-  link-status diagnostics, and status-bucket labels,
-  and links to the runtime-absence notebook inventory with 28 pinned notebook
-  paths, while per-problem notebook mapping, notebook SHA-256 hashes, and
-  notebook absence reasons remain incomplete. Prompt/verifier/initial/final/
-  visualization flags remain open.
+  link-status diagnostics, status-bucket labels, notebook-link mappings, and
+  notebook absence reasons, and links to the runtime-absence notebook
+  inventory with 28 pinned notebook paths. Notebook SHA-256 hashes and
+  prompt/verifier/initial/final/visualization flags remain open.
 - Keep Appendix A matrix target-suite curation scoped to reported-suite
   provenance: `libreevolve.alphaevolve_appendix_a_matrix_curation.v1` now
   validates the rough size-selection wording, sorted representative policy,

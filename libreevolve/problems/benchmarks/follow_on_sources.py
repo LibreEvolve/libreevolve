@@ -315,6 +315,8 @@ def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
             "all_page_resource_link_diagnostics_complete": True,
             "source_inventory_rows_emitted": True,
             "source_inventory_row_count": 68,
+            "notebook_mapping_complete": True,
+            "notebook_absence_reason_inventory_complete": True,
             "per_problem_inventory_validated": False,
             "page_hash_inventory_complete": True,
             "claim_boundary": (
@@ -322,8 +324,9 @@ def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
                 "67-problem count against 68 observed numbered HTML pages, "
                 "classifies page 68, records all-page resource-link "
                 "diagnostics, pins raw-page hashes, and emits per-page "
-                "source rows with status buckets, but does not claim notebook "
-                "mapping, notebook absence reasons, or artifact flags."
+                "source rows with status buckets, notebook-link mappings, "
+                "and absence reasons, but does not claim notebook SHA-256 "
+                "hashes or artifact flags."
             ),
         },
         "source_use": {
@@ -335,7 +338,7 @@ def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
             "citation_arxiv_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
         },
         "required_follow_on_work": [
-            "complete_per_problem_notebook_and_artifact_inventory",
+            "complete_per_problem_notebook_sha256_and_artifact_inventory",
             "validate_notebook_prompt_verifier_initial_final_artifacts",
             "map_original_appendix_b_claims_to_follow_on_problem_records",
             "attach_rights_attribution_to_generated_artifacts",
@@ -486,8 +489,8 @@ def alphaevolve_follow_on_runtime_absence_record() -> dict[str, Any]:
             "coverage": "many_not_all_problem_notebooks",
             "hash_algorithm": "git_blob_sha1",
             "sha256_inventory_complete": False,
-            "problem_id_mapping_complete": False,
-            "absence_reason_inventory_complete": False,
+            "problem_id_mapping_complete": True,
+            "absence_reason_inventory_complete": True,
             "notebooks": [
                 {
                     "path": path,
@@ -517,11 +520,10 @@ def alphaevolve_follow_on_runtime_absence_record() -> dict[str, Any]:
             "not_alphaevolve_runtime_implementation": True,
             "not_replayable_alphaevolve_service": True,
             "not_full_notebook_cell_inventory": True,
-            "not_per_problem_absence_inventory": True,
+            "not_notebook_sha256_inventory": True,
             "must_not_describe_notebooks_as_runtime_harnesses": True,
         },
         "remaining_runtime_work": [
-            "map_notebooks_to_problem_ids_and_absence_reasons",
             "compute_sha256_for_each_notebook",
             "validate_notebook_cell_artifact_flags",
         ],
@@ -740,7 +742,7 @@ def alphaevolve_follow_on_source_manifest_record() -> dict[str, Any]:
                     ),
                 },
                 "remaining_work": [
-                    "complete_per_problem_notebook_and_artifact_inventory",
+                    "complete_per_problem_notebook_sha256_and_artifact_inventory",
                     "validate_notebook_prompt_verifier_initial_final_artifacts",
                     "map_original_appendix_b_claims_to_follow_on_problem_records",
                     "attach_rights_attribution_to_generated_artifacts",
@@ -1272,6 +1274,8 @@ def _validate_problem_coverage_evidence(value: object, issues: list[AlphaEvolveF
         "all_page_resource_link_diagnostics_complete": True,
         "source_inventory_rows_emitted": True,
         "source_inventory_row_count": 68,
+        "notebook_mapping_complete": True,
+        "notebook_absence_reason_inventory_complete": True,
         "per_problem_inventory_validated": False,
         "page_hash_inventory_complete": True,
     }
@@ -1285,7 +1289,7 @@ def _validate_problem_coverage_evidence(value: object, issues: list[AlphaEvolveF
     if (
         not isinstance(claim_boundary, str)
         or "does not claim" not in claim_boundary
-        or "notebook mapping" not in claim_boundary
+        or "notebook SHA-256" not in claim_boundary
         or "artifact flags" not in claim_boundary
     ):
         issues.append(_issue("missing_problem_coverage_claim_boundary", "problem_coverage_evidence must preserve notebook and artifact gaps", EXPECTED_REPOSITORY_NAME))
@@ -1310,7 +1314,7 @@ def _validate_source_use(value: object, issues: list[AlphaEvolveFollowOnMathSour
 
 def _validate_required_follow_on_work(value: object, issues: list[AlphaEvolveFollowOnMathSourceIssue]) -> None:
     required = {
-        "complete_per_problem_notebook_and_artifact_inventory",
+        "complete_per_problem_notebook_sha256_and_artifact_inventory",
         "validate_notebook_prompt_verifier_initial_final_artifacts",
         "map_original_appendix_b_claims_to_follow_on_problem_records",
         "attach_rights_attribution_to_generated_artifacts",
@@ -1397,7 +1401,7 @@ def _validate_follow_on_manifest_remaining_work(
     issues: list[AlphaEvolveFollowOnMathSourceIssue],
 ) -> None:
     expected = {
-        "complete_per_problem_notebook_and_artifact_inventory",
+        "complete_per_problem_notebook_sha256_and_artifact_inventory",
         "validate_notebook_prompt_verifier_initial_final_artifacts",
         "map_original_appendix_b_claims_to_follow_on_problem_records",
         "attach_rights_attribution_to_generated_artifacts",
@@ -1682,8 +1686,8 @@ def _validate_runtime_absence_notebook_inventory(
         "coverage": "many_not_all_problem_notebooks",
         "hash_algorithm": "git_blob_sha1",
         "sha256_inventory_complete": False,
-        "problem_id_mapping_complete": False,
-        "absence_reason_inventory_complete": False,
+        "problem_id_mapping_complete": True,
+        "absence_reason_inventory_complete": True,
     }
     for field, expected_value in expected_fields.items():
         if value.get(field) != expected_value:
@@ -1764,7 +1768,7 @@ def _validate_runtime_absence_limits(
         "not_alphaevolve_runtime_implementation": True,
         "not_replayable_alphaevolve_service": True,
         "not_full_notebook_cell_inventory": True,
-        "not_per_problem_absence_inventory": True,
+        "not_notebook_sha256_inventory": True,
         "must_not_describe_notebooks_as_runtime_harnesses": True,
     }
     for field, expected_value in expected.items():
@@ -1777,7 +1781,6 @@ def _validate_remaining_runtime_work(
     issues: list[AlphaEvolveFollowOnMathSourceIssue],
 ) -> None:
     expected = {
-        "map_notebooks_to_problem_ids_and_absence_reasons",
         "compute_sha256_for_each_notebook",
         "validate_notebook_cell_artifact_flags",
     }
@@ -1785,7 +1788,7 @@ def _validate_remaining_runtime_work(
         issues.append(_issue("invalid_remaining_runtime_work", "remaining_runtime_work must list unsatisfied runtime-absence follow-ups", EXPECTED_REPOSITORY_NAME))
         return
     if set(value) != expected:
-        issues.append(_issue("remaining_runtime_work_mismatch", "remaining_runtime_work must preserve notebook mapping, hashing, and cell-artifact follow-ups", EXPECTED_REPOSITORY_NAME))
+        issues.append(_issue("remaining_runtime_work_mismatch", "remaining_runtime_work must preserve notebook hashing and cell-artifact follow-ups", EXPECTED_REPOSITORY_NAME))
 
 
 def _validate_runtime_absence_manifest_source(

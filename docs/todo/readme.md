@@ -1480,18 +1480,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `status_grid.png`, and `result_distribution.png`, parsed status buckets,
     43 listed ids, 24 `not_listed_in_status_json` ids, and the declared-67
     versus observed-68 numbered HTML page boundary. README now also names the
-    linked runtime-absence notebook inventory with `28` pinned notebook paths,
-    while per-problem notebook mapping, notebook SHA-256 hashes, and absence
-    reasons remain incomplete. README now points to page-68 classification and
-    all-page raw HTML hashes and emitted per-page source rows, but still
-    cannot point to prompt/verifier/initial/final/visualization flags, notebook
-    absence reasons, or per-problem notebook hashes.
-  - Required result: after notebook/artifact source-coverage metadata lands,
-    update README so AlphaEvolve follow-on claims name partial notebook/
-    artifact coverage, notebook absence reasons, and explicit wording that
-    avoids implying notebook or artifact coverage is complete when only
-    problem-page, status-bucket, link, hash, and row evidence is currently
-    scoped.
+    linked runtime-absence notebook inventory with `28` pinned notebook paths
+    and validated notebook-link/absence-reason mapping. README now points to
+    page-68 classification, all-page raw HTML hashes, and emitted per-page
+    source rows, but still cannot point to prompt/verifier/initial/final/
+    visualization flags or per-problem notebook hashes.
+  - Required result: after notebook SHA-256 and artifact source-coverage
+    metadata lands, update README so AlphaEvolve follow-on claims name partial
+    notebook/artifact coverage and explicit wording that avoids implying
+    notebook or artifact coverage is complete when only problem-page,
+    status-bucket, link, hash, notebook-link, absence-reason, and row evidence
+    is currently scoped.
 
 - [ ] Keep README follow-on problem-count wording scoped until page inventory
       is reconciled.
@@ -1507,14 +1506,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     that evidence. README now also documents page 68 as an extra numbered
     duplicate-title `Logic puzzles` page outside the declared 67-page
     navigation range, plus all-page resource-link diagnostics. README still
-    does not list notebook mapping, absence reasons, notebook hashes, or
-    artifact flags on the emitted per-page source rows.
-  - Required result: after notebook/artifact row fields land, update README so
-    follow-on source claims distinguish paper/README problem count from full
-    live repository HTML-page inventory, list duplicate or placeholder pages as
-    snapshot diagnostics, and avoid treating every numbered page as a complete
-    notebook/paper-linked source artifact until row-level notebook and artifact
-    provenance exists.
+    does not list notebook hashes or artifact flags on the emitted per-page
+    source rows.
+  - Required result: after notebook SHA-256/artifact row fields land, update
+    README so follow-on source claims distinguish paper/README problem count
+    from full live repository HTML-page inventory, list duplicate or
+    placeholder pages as snapshot diagnostics, and avoid treating every
+    numbered page as a complete notebook/paper-linked source artifact until
+    row-level notebook hash and artifact provenance exists.
 
 - [ ] Keep README figure/notebook provenance wording scoped until paper
       artifact-role records are bound to artifacts.

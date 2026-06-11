@@ -2140,17 +2140,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `status_grid.png`, and `result_distribution.png`, parsed status buckets,
     43 listed ids, 24 `not_listed_in_status_json` ids, and the declared-67
     versus observed-68 numbered HTML page boundary. ROADMAP now also names the
-    linked runtime-absence notebook inventory with `28` pinned notebook paths,
-    while per-problem notebook mapping, notebook SHA-256 hashes, and absence
-    reasons remain incomplete. ROADMAP now points to page-68 classification
-    and all-page raw HTML hashes plus emitted per-page source rows, but still
-    cannot point to prompt/verifier/initial/final/visualization flags, notebook
-    absence reasons, or per-problem notebook hashes.
-  - Required result: once notebook/artifact coverage fields are implemented,
-    update ROADMAP milestones and evidence gates so follow-on AlphaEvolve math
-    coverage records page/notebook/artifact availability by problem and avoids
-    treating a live partial-notebook repository as fully static or notebook/
-    artifact-complete.
+    linked runtime-absence notebook inventory with `28` pinned notebook paths
+    and validated notebook-link/absence-reason mapping. ROADMAP now points to
+    page-68 classification and all-page raw HTML hashes plus emitted per-page
+    source rows, but still cannot point to prompt/verifier/initial/final/
+    visualization flags or per-problem notebook hashes.
+  - Required result: once notebook SHA-256/artifact coverage fields are
+    implemented, update ROADMAP milestones and evidence gates so follow-on
+    AlphaEvolve math coverage records page/notebook/artifact availability by
+    problem and avoids treating a live partial-notebook repository as fully
+    static or notebook/artifact-complete.
 
 - [ ] Keep follow-on problem-count roadmap gates scoped until numbered-page
       inventory is reconciled.
@@ -2166,13 +2165,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     that evidence. ROADMAP now also documents page 68 as an extra numbered
     duplicate-title `Logic puzzles` page outside the declared 67-page
     navigation range, plus all-page resource-link diagnostics. ROADMAP still
-    lacks notebook mapping, absence reasons, notebook hashes, and artifact
-    flags on the emitted per-page source rows.
-  - Required result: when notebook/artifact row fields land, update ROADMAP,
-    README, papers index, and code/paper TODOs so follow-on coverage gates
-    include notebook mapping or absence reasons, notebook hashes, artifact
-    flags, and snapshot-scoped wording for the counted 67-versus-68 source
-    mismatch.
+    lacks notebook hashes and artifact flags on the emitted per-page source
+    rows.
+  - Required result: when notebook SHA-256/artifact row fields land, update
+    ROADMAP, README, papers index, and code/paper TODOs so follow-on coverage
+    gates include notebook hashes, artifact flags, and snapshot-scoped wording
+    for the counted 67-versus-68 source mismatch.
 
 - [ ] Keep paper-artifact roadmap wording scoped until creator/assembler role
       records are bound to artifacts.

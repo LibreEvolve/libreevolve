@@ -267,6 +267,65 @@ EXPECTED_ALL_PAGE_TITLE_SECTION_ROWS = (
     (67, '67. Logic puzzles', 'Logic puzzles', '6.44', 67),
     (68, '68. Logic puzzles', 'Logic puzzles', '6.44', None),
 )
+EXPECTED_EXISTING_REPOSITORY_NOTEBOOK_LINKS = (
+    (1, 'colabURL', 'experiments/finite_field_kakeya_problem/finite_field_kakeya.ipynb'),
+    (1, 'colabURL2', 'experiments/finite_field_nikodym_problem/finite_field_nikodym.ipynb'),
+    (2, 'colabURL', 'experiments/autocorrelation_problems/autocorrelation_problems.ipynb'),
+    (3, 'colabURL', 'experiments/autocorrelation_problems/autocorrelation_problems.ipynb'),
+    (7, 'colabURL', 'experiments/difference_bases/difference_bases.ipynb'),
+    (9, 'colabURL', 'experiments/kakeya_needle_2d/kakeya_needle_2d.ipynb'),
+    (10, 'colabURL', 'experiments/kakeya_needle_3d/kakeya_needle_3d.ipynb'),
+    (11, 'colabURL', 'experiments/sphere_packing_uncertainty_principles/sphere_packing_uncertainty_principles.ipynb'),
+    (12, 'colabURL', 'experiments/sphere_packing_uncertainty_principles/sphere_packing_uncertainty_principles.ipynb'),
+    (13, 'colabURL', 'experiments/sphere_packing_uncertainty_principles/sphere_packing_uncertainty_principles.ipynb'),
+    (14, 'colabURL', 'experiments/classical_inequalities/classical_inequalities.ipynb'),
+    (15, 'colabURL', 'experiments/classical_inequalities/classical_inequalities.ipynb'),
+    (16, 'colabURL', 'experiments/classical_inequalities/classical_inequalities.ipynb'),
+    (17, 'colabURL', 'experiments/classical_inequalities/classical_inequalities.ipynb'),
+    (18, 'colabURL', 'experiments/classical_inequalities/classical_inequalities.ipynb'),
+    (19, 'colabURL', 'experiments/ovals_problem/ovals_problem.ipynb'),
+    (27, 'colabURL', 'experiments/prime_number_theorem/prime_number_theorem.ipynb'),
+    (28, 'colabURL', 'experiments/flat_polynomials/flat_polynomials.ipynb'),
+    (32, 'colabURL', 'experiments/spherical_t_designs/spherical_t_designs.ipynb'),
+    (33, 'colabURL', 'experiments/thomson_problem/thomson_problem.ipynb'),
+    (34, 'colabURL', 'experiments/tammes_problem/tammes_problem.ipynb'),
+    (35, 'colabURL', 'experiments/packing_unit_cubes/packing_unit_cubes.ipynb'),
+    (46, 'colabURL', 'experiments/edges_vs_triangles/edges_vs_triangles.ipynb'),
+    (53, 'colabURL', 'experiments/equidistant_points_in_convex_polygons/Equidistant_points_in_convex_polygons.ipynb'),
+    (54, 'colabURL', 'experiments/kissing_cylinders/kissing_cylinders.ipynb'),
+    (60, 'colabURL', 'experiments/no_5_on_a_sphere/no_5_on_a_sphere.ipynb'),
+    (61, 'colabURL', 'experiments/ring_loading_problem/ring_loading_problem.ipynb'),
+    (62, 'colabURL', 'experiments/the_2d_moving_sofa/the_2d_moving_sofa.ipynb'),
+    (63, 'colabURL', 'experiments/the_2d_moving_sofa/the_2d_moving_sofa.ipynb'),
+    (64, 'colabURL', 'experiments/the_3d_moving_sofa/the_3d_moving_sofa.ipynb'),
+    (65, 'colabURL', 'experiments/imo_2025_p6/imo_2025_p6.ipynb'),
+)
+EXPECTED_MISSING_REPOSITORY_NOTEBOOK_LINKS = (
+    (36, 'colabURL', 'experiments/packing_circles_max_sum_of_radii/packing_circles_max_sum_of_radii.ipynb'),
+    (42, 'colabURL', 'experiments/sums_differences_problems/sums_differences_problem.ipynb'),
+    (44, 'colabURL', 'experiments/sums_differences_problems/sums_differences_problem.ipynb'),
+    (45, 'colabURL', 'experiments/finite_field_sum_product_problem/finite_field_sum_product_problem.ipynb'),
+    (58, 'colabURL', 'experiments/erdos_szekeres_happy_ending_problem/erdos_szekeres_happy_ending_problem.ipynb'),
+    (59, 'colabURL', 'experiments/subsets_of_the_grid_with_no_isosceles_triangles/subsets_of_the_grid_with_no_isosceles_triangles.ipynb'),
+)
+EXPECTED_EXTERNAL_ALPHAEVOLVE_RESULTS_COLAB_LINKS = ((4, 'colabURL'), (5, 'colabURL'), (8, 'colabURL'), (48, 'colabURL'), (49, 'colabURL'), (50, 'colabURL'))
+EXPECTED_UNDER_CONSTRUCTION_NOTEBOOK_LINKS = (
+    (6, 'colabURL'), (20, 'colabURL'), (21, 'colabURL'), (22, 'colabURL'),
+    (23, 'colabURL'), (24, 'colabURL'), (25, 'colabURL'), (26, 'colabURL'),
+    (29, 'colabURL'), (30, 'colabURL'), (31, 'colabURL'), (37, 'colabURL'),
+    (38, 'colabURL'), (39, 'colabURL'), (40, 'colabURL'), (41, 'colabURL'),
+    (43, 'colabURL'), (47, 'colabURL'), (51, 'colabURL'), (52, 'colabURL'),
+    (55, 'colabURL'), (56, 'colabURL'), (57, 'colabURL'), (66, 'colabURL'),
+    (67, 'colabURL'),
+)
+EXPECTED_GENERIC_COLAB_LANDING_LINKS = ((68, 'colabURL'),)
+EXPECTED_UNLINKED_PINNED_NOTEBOOK_PATHS = (
+    'experiments/erdos_szekeres_happy_ending_problem/happy_ending_problem.ipynb',
+    'experiments/finite_field_sum_product_problem/finite_field_sum_product.ipynb',
+    'experiments/packing_circles_max_sum_of_radii/packing_circle_max_sum_of_radii.ipynb',
+    'experiments/subsets_of_the_grid_with_no_isosceles_triangles/no_isosceles_triangles.ipynb',
+    'experiments/sums_differences_problems/sums_differences_problems.ipynb',
+)
 EXPECTED_STATUS_BUCKETS = {
     "world_record": (1, 2, 4, 5, 7, 8, 9, 10, 30, 32, 35, 42, 48, 49, 50, 59, 60, 61, 64),
     "former_record": (3, 36, 38, 44),
@@ -434,14 +493,115 @@ def _link_status_for_page(page_id: int, key: str) -> str:
     return "missing"
 
 
+def _notebook_metadata_by_path() -> dict[str, dict[str, Any]]:
+    return {
+        path: {"bytes": byte_count, "git_blob_sha": git_blob_sha}
+        for path, byte_count, git_blob_sha in EXPECTED_FOLLOW_ON_NOTEBOOKS
+    }
+
+
+def _colab_url_for_notebook_link(status: str, notebook_path: str | None) -> str:
+    if status in {"repository_notebook_path", "repository_notebook_path_not_in_pinned_tree"}:
+        return (
+            "https://github.com/google-deepmind/"
+            f"alphaevolve_repository_of_problems/blob/main/{notebook_path}"
+        )
+    if status == "external_alphaevolve_results_colab":
+        return (
+            "https://colab.research.google.com/github/google-deepmind/"
+            "alphaevolve_results/blob/master/mathematical_results.ipynb"
+        )
+    if status == "generic_colab_landing_page":
+        return "https://colab.research.google.com/"
+    return "#"
+
+
+def _expected_notebook_link_records_by_page() -> dict[int, list[dict[str, Any]]]:
+    notebook_metadata = _notebook_metadata_by_path()
+    records_by_page: dict[int, list[dict[str, Any]]] = {page_id: [] for page_id in range(1, EXPECTED_OBSERVED_NUMBERED_HTML_COUNT + 1)}
+
+    def append_record(
+        page_id: int,
+        link_field: str,
+        status: str,
+        notebook_path: str | None = None,
+        absence_reason: str | None = None,
+    ) -> None:
+        metadata = notebook_metadata.get(notebook_path or "")
+        records_by_page[page_id].append(
+            {
+                "link_field": link_field,
+                "colab_url": _colab_url_for_notebook_link(status, notebook_path),
+                "notebook_mapping_status": status,
+                "notebook_path": notebook_path,
+                "notebook_bytes": metadata["bytes"] if metadata else None,
+                "notebook_git_blob_sha": metadata["git_blob_sha"] if metadata else None,
+                "absence_reason": absence_reason,
+            }
+        )
+
+    for page_id, link_field, notebook_path in EXPECTED_EXISTING_REPOSITORY_NOTEBOOK_LINKS:
+        append_record(page_id, link_field, "repository_notebook_path", notebook_path)
+    for page_id, link_field, notebook_path in EXPECTED_MISSING_REPOSITORY_NOTEBOOK_LINKS:
+        append_record(
+            page_id,
+            link_field,
+            "repository_notebook_path_not_in_pinned_tree",
+            notebook_path,
+            "linked_repository_notebook_path_absent_from_pinned_tree",
+        )
+    for page_id, link_field in EXPECTED_EXTERNAL_ALPHAEVOLVE_RESULTS_COLAB_LINKS:
+        append_record(
+            page_id,
+            link_field,
+            "external_alphaevolve_results_colab",
+            None,
+            "colab_link_points_to_alphaevolve_results_companion_not_follow_on_repository",
+        )
+    for page_id, link_field in EXPECTED_UNDER_CONSTRUCTION_NOTEBOOK_LINKS:
+        append_record(
+            page_id,
+            link_field,
+            "under_construction_placeholder",
+            None,
+            "colab_link_under_construction_placeholder",
+        )
+    for page_id, link_field in EXPECTED_GENERIC_COLAB_LANDING_LINKS:
+        append_record(
+            page_id,
+            link_field,
+            "generic_colab_landing_page",
+            None,
+            "generic_colab_landing_page_not_notebook",
+        )
+    return records_by_page
+
+
+def _page_notebook_mapping_status(notebook_links: list[dict[str, Any]]) -> str:
+    statuses = {str(link["notebook_mapping_status"]) for link in notebook_links}
+    if statuses == {"repository_notebook_path"}:
+        return "mapped_repository_notebook"
+    if "repository_notebook_path_not_in_pinned_tree" in statuses:
+        return "linked_repository_notebook_path_absent_from_pinned_tree"
+    if "external_alphaevolve_results_colab" in statuses:
+        return "external_alphaevolve_results_companion_colab"
+    if "under_construction_placeholder" in statuses:
+        return "colab_link_under_construction_placeholder"
+    if "generic_colab_landing_page" in statuses:
+        return "generic_colab_landing_page_not_notebook"
+    return "unknown"
+
+
 def _expected_all_page_source_inventory_rows() -> list[dict[str, Any]]:
     hash_records = {
         record["page_id"]: record
         for record in _expected_all_page_hash_records()
     }
+    notebook_links_by_page = _expected_notebook_link_records_by_page()
     rows = []
     for page_id, title, title_key, paper_section, navigation_total in EXPECTED_ALL_PAGE_TITLE_SECTION_ROWS:
         hash_record = hash_records[page_id]
+        notebook_links = notebook_links_by_page[page_id]
         rows.append(
             {
                 "page_id": page_id,
@@ -464,7 +624,8 @@ def _expected_all_page_source_inventory_rows() -> list[dict[str, Any]]:
                 "sha256": hash_record["sha256"],
                 "colab_link_status": _link_status_for_page(page_id, "colab_link_status_page_ids"),
                 "paper_link_status": _link_status_for_page(page_id, "paper_link_status_page_ids"),
-                "notebook_mapping_status": "not_mapped",
+                "notebook_mapping_status": _page_notebook_mapping_status(notebook_links),
+                "notebook_links": notebook_links,
                 "artifact_presence_status": "not_validated",
             }
         )
@@ -490,6 +651,7 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
             "problem_page_access_mode": "browser_page",
             "notebook_access_mode": "colab_notebook_many_not_all",
             "notebook_inventory_complete": False,
+            "notebook_mapping_complete": True,
             "page_hash_inventory_complete": True,
             "source_inventory_rows_emitted": True,
             "notebook_hash_inventory_complete": False,
@@ -620,15 +782,37 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
             "source_inventory_rows_emitted": True,
             "page_url_hash_link_status_rows_complete": True,
             "status_bucket_membership_attached": True,
-            "notebook_mapping_complete": False,
+            "notebook_mapping_complete": True,
+            "notebook_absence_reason_inventory_complete": True,
+            "notebook_link_target_count": (
+                len(EXPECTED_EXISTING_REPOSITORY_NOTEBOOK_LINKS)
+                + len(EXPECTED_MISSING_REPOSITORY_NOTEBOOK_LINKS)
+                + len(EXPECTED_EXTERNAL_ALPHAEVOLVE_RESULTS_COLAB_LINKS)
+                + len(EXPECTED_UNDER_CONSTRUCTION_NOTEBOOK_LINKS)
+                + len(EXPECTED_GENERIC_COLAB_LANDING_LINKS)
+            ),
+            "notebook_link_target_status_counts": {
+                "repository_notebook_path": len(EXPECTED_EXISTING_REPOSITORY_NOTEBOOK_LINKS),
+                "repository_notebook_path_not_in_pinned_tree": len(EXPECTED_MISSING_REPOSITORY_NOTEBOOK_LINKS),
+                "external_alphaevolve_results_colab": len(EXPECTED_EXTERNAL_ALPHAEVOLVE_RESULTS_COLAB_LINKS),
+                "under_construction_placeholder": len(EXPECTED_UNDER_CONSTRUCTION_NOTEBOOK_LINKS),
+                "generic_colab_landing_page": len(EXPECTED_GENERIC_COLAB_LANDING_LINKS),
+            },
+            "unique_mapped_repository_notebook_path_count": len(
+                {
+                    notebook_path
+                    for _, _, notebook_path in EXPECTED_EXISTING_REPOSITORY_NOTEBOOK_LINKS
+                }
+            ),
+            "unlinked_pinned_notebook_paths": list(EXPECTED_UNLINKED_PINNED_NOTEBOOK_PATHS),
             "artifact_presence_matrix_complete": False,
             "rows": _expected_all_page_source_inventory_rows(),
             "claim_boundary": (
                 "All 68 numbered pages have emitted source rows with page "
                 "URLs, raw-page hashes, section ids, link-status diagnostics, "
-                "and status-bucket labels; this does not claim per-problem "
-                "notebook mapping, notebook absence reasons, or "
-                "prompt/verifier/initial/final/visualization artifact flags."
+                "status-bucket labels, notebook link mappings, and notebook "
+                "absence reasons; this does not claim notebook SHA-256 hashes "
+                "or prompt/verifier/initial/final/visualization artifact flags."
             ),
         },
         "notebook_inventory_link": {
@@ -636,13 +820,14 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
             "source_boundary": "alphaevolve_follow_on_runtime_absence",
             "pinned_notebook_path_count": len(EXPECTED_FOLLOW_ON_NOTEBOOKS),
             "path_inventory_status": "pinned_git_blob_inventory_recorded",
-            "problem_id_mapping_complete": False,
+            "problem_id_mapping_complete": True,
             "sha256_inventory_complete": False,
-            "absence_reason_inventory_complete": False,
+            "absence_reason_inventory_complete": True,
             "claim_boundary": (
                 "The follow-on runtime-absence record pins notebook paths and "
-                "git blob ids, but does not claim per-problem notebook mapping, "
-                "SHA-256 notebook hashes, or absence reasons."
+                "git blob ids, and the coverage rows map page-level notebook "
+                "links and absence reasons, but this does not claim SHA-256 "
+                "notebook hashes or cell-level artifact flags."
             ),
         },
         "status_artifacts": [
@@ -666,7 +851,6 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
             "bucket_semantics": "repository_status_json_explicit_buckets",
         },
         "remaining_coverage_work": [
-            "discover_notebook_paths_and_absence_reasons",
             "validate_prompt_verifier_initial_final_visualization_flags",
         ],
     }
@@ -783,6 +967,7 @@ def _validate_coverage_scope(value: object, issues: list[AlphaEvolveFollowOnProb
         "problem_page_access_mode": "browser_page",
         "notebook_access_mode": "colab_notebook_many_not_all",
         "notebook_inventory_complete": False,
+        "notebook_mapping_complete": True,
         "page_hash_inventory_complete": True,
         "source_inventory_rows_emitted": True,
         "notebook_hash_inventory_complete": False,
@@ -1026,13 +1211,24 @@ def _validate_all_page_source_inventory(
         "source_inventory_rows_emitted": True,
         "page_url_hash_link_status_rows_complete": True,
         "status_bucket_membership_attached": True,
-        "notebook_mapping_complete": False,
+        "notebook_mapping_complete": True,
+        "notebook_absence_reason_inventory_complete": True,
+        "notebook_link_target_count": 69,
+        "notebook_link_target_status_counts": {
+            "repository_notebook_path": 31,
+            "repository_notebook_path_not_in_pinned_tree": 6,
+            "external_alphaevolve_results_colab": 6,
+            "under_construction_placeholder": 25,
+            "generic_colab_landing_page": 1,
+        },
+        "unique_mapped_repository_notebook_path_count": 23,
+        "unlinked_pinned_notebook_paths": list(EXPECTED_UNLINKED_PINNED_NOTEBOOK_PATHS),
         "artifact_presence_matrix_complete": False,
     }
     for field, expected_value in expected.items():
         if value.get(field) != expected_value:
             code = f"invalid_all_page_source_inventory_{field}"
-            if field in {"notebook_mapping_complete", "artifact_presence_matrix_complete"}:
+            if field == "artifact_presence_matrix_complete":
                 code = f"all_page_source_inventory_{field}_overclaim"
             issues.append(_issue(code, f"all_page_source_inventory.{field} must match the emitted row evidence boundary"))
     rows = value.get("rows")
@@ -1068,7 +1264,7 @@ def _validate_all_page_source_inventory(
     if (
         not isinstance(claim_boundary, str)
         or "does not claim" not in claim_boundary
-        or "notebook mapping" not in claim_boundary
+        or "notebook SHA-256 hashes" not in claim_boundary
         or "artifact flags" not in claim_boundary
     ):
         issues.append(_issue("missing_all_page_source_inventory_claim_boundary", "all-page source inventory must preserve notebook and artifact gaps"))
@@ -1083,9 +1279,9 @@ def _validate_notebook_inventory_link(value: object, issues: list[AlphaEvolveFol
         "source_boundary": "alphaevolve_follow_on_runtime_absence",
         "pinned_notebook_path_count": len(EXPECTED_FOLLOW_ON_NOTEBOOKS),
         "path_inventory_status": "pinned_git_blob_inventory_recorded",
-        "problem_id_mapping_complete": False,
+        "problem_id_mapping_complete": True,
         "sha256_inventory_complete": False,
-        "absence_reason_inventory_complete": False,
+        "absence_reason_inventory_complete": True,
     }
     for field, expected_value in expected.items():
         if value.get(field) != expected_value:
@@ -1169,7 +1365,6 @@ def _validate_status_summary(value: object, issues: list[AlphaEvolveFollowOnProb
 
 def _validate_remaining_coverage_work(value: object, issues: list[AlphaEvolveFollowOnProblemCoverageIssue]) -> None:
     required = {
-        "discover_notebook_paths_and_absence_reasons",
         "validate_prompt_verifier_initial_final_visualization_flags",
     }
     if not isinstance(value, list) or not all(isinstance(item, str) for item in value):

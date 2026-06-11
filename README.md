@@ -4032,8 +4032,7 @@ row with docs/TODO claim-surface links, a linked
 boundary, and an explicit no-cache policy: it is later math-source evidence for
 the original paper's Section 3.2 handoff, not the original `2506.13131`
 AlphaEvolve specification, not a local cached PDF row, and not proof of
-notebook mapping, notebook absence reasons, or complete notebook/artifact
-coverage yet.
+notebook SHA-256 hashes or complete notebook/artifact coverage yet.
 `papers/follow_on_repository_rights.json` records the pinned problem
 repository's source-use terms separately from both the original PDF and
 `alphaevolve_results`: citation/BibTeX requirement, Google LLC copyright,
@@ -4048,8 +4047,8 @@ visualization artifact-kind flags, explicit AlphaEvolve-runtime absence, and
 verifier-versus-runtime classification from the README statement that the
 repository does not contain the code to run AlphaEvolve. This sidecar proves
 the notebooks are source artifacts around experiments already run, not runnable
-AlphaEvolve implementation artifacts; full per-problem notebook mapping,
-SHA-256 notebook inventory, and cell-level artifact verification remain open.
+AlphaEvolve implementation artifacts; notebook SHA-256 inventory and cell-level
+artifact verification remain open.
 `papers/follow_on_tao_blog.json` records Terence Tao's November 5, 2025
 follow-on blog post as secondary source commentary for arXiv `2511.02864` and
 the pinned problem repository. It preserves the canonical WordPress URL, API
@@ -4107,12 +4106,12 @@ URLs, `6` direct Google Colab URLs, `25` under-construction Colab
 placeholders, `1` generic Colab landing URL, and `1` paper-link placeholder),
 pins raw-page byte counts and SHA-256 hashes for all 68 numbered HTML pages,
 emits per-page source rows with titles, paper sections, page URLs, hashes,
-link-status diagnostics, and status-bucket labels,
-and links to the runtime-absence notebook inventory with 28 pinned notebook
-paths, while per-problem notebook mapping, notebook SHA-256 hashes, and
-notebook absence reasons remain incomplete. This is status-artifact,
-bucket-membership, resource-link, raw-page-hash, and source-row evidence;
-prompt/verifier/final artifact flags remain open work.
+link-status diagnostics, status-bucket labels, notebook-link mappings, and
+notebook absence reasons, and links to the runtime-absence notebook inventory
+with 28 pinned notebook paths. This is status-artifact, bucket-membership,
+resource-link, raw-page-hash, notebook-link, absence-reason, and source-row
+evidence; notebook SHA-256 hashes and prompt/verifier/final artifact flags
+remain open work.
 Matrix headline historicity evidence uses
 `libreevolve.matrix_headline_historicity_evidence.v1`; it validates declared
 provenance for the `mm_4x4x4` complex rank-48 headline, including dimensions,

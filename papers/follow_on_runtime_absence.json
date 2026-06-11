@@ -24,8 +24,8 @@
           "coverage": "many_not_all_problem_notebooks",
           "hash_algorithm": "git_blob_sha1",
           "sha256_inventory_complete": false,
-          "problem_id_mapping_complete": false,
-          "absence_reason_inventory_complete": false,
+          "problem_id_mapping_complete": true,
+          "absence_reason_inventory_complete": true,
           "notebooks": [
             {
               "path": "experiments/autocorrelation_problems/autocorrelation_problems.ipynb",
@@ -407,11 +407,10 @@
           "not_alphaevolve_runtime_implementation": true,
           "not_replayable_alphaevolve_service": true,
           "not_full_notebook_cell_inventory": true,
-          "not_per_problem_absence_inventory": true,
+          "not_notebook_sha256_inventory": true,
           "must_not_describe_notebooks_as_runtime_harnesses": true
         },
         "remaining_runtime_work": [
-          "map_notebooks_to_problem_ids_and_absence_reasons",
           "compute_sha256_for_each_notebook",
           "validate_notebook_cell_artifact_flags"
         ]

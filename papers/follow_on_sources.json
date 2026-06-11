@@ -87,9 +87,11 @@
           "all_page_resource_link_diagnostics_complete": true,
           "source_inventory_rows_emitted": true,
           "source_inventory_row_count": 68,
+          "notebook_mapping_complete": true,
+          "notebook_absence_reason_inventory_complete": true,
           "per_problem_inventory_validated": false,
           "page_hash_inventory_complete": true,
-          "claim_boundary": "The follow-on coverage record reconciles the declared 67-problem count against 68 observed numbered HTML pages, classifies page 68, records all-page resource-link diagnostics, pins raw-page hashes, and emits per-page source rows with status buckets, but does not claim notebook mapping, notebook absence reasons, or artifact flags."
+          "claim_boundary": "The follow-on coverage record reconciles the declared 67-problem count against 68 observed numbered HTML pages, classifies page 68, records all-page resource-link diagnostics, pins raw-page hashes, and emits per-page source rows with status buckets, notebook-link mappings, and absence reasons, but does not claim notebook SHA-256 hashes or artifact flags."
         },
         "source_use": {
           "repository_software_license": "Apache-2.0",
@@ -100,7 +102,7 @@
           "citation_arxiv_id": "2511.02864"
         },
         "required_follow_on_work": [
-          "complete_per_problem_notebook_and_artifact_inventory",
+          "complete_per_problem_notebook_sha256_and_artifact_inventory",
           "validate_notebook_prompt_verifier_initial_final_artifacts",
           "map_original_appendix_b_claims_to_follow_on_problem_records",
           "attach_rights_attribution_to_generated_artifacts"
@@ -126,7 +128,7 @@
         "scope": "committed follow-on source provenance, not cached PDF or per-problem inventory"
       },
       "remaining_work": [
-        "complete_per_problem_notebook_and_artifact_inventory",
+        "complete_per_problem_notebook_sha256_and_artifact_inventory",
         "validate_notebook_prompt_verifier_initial_final_artifacts",
         "map_original_appendix_b_claims_to_follow_on_problem_records",
         "attach_rights_attribution_to_generated_artifacts"

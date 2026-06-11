@@ -46,6 +46,8 @@ def test_validate_alphaevolve_follow_on_math_source_accepts_builtin_record():
     assert coverage["all_page_resource_link_diagnostics_complete"] is True
     assert coverage["source_inventory_rows_emitted"] is True
     assert coverage["source_inventory_row_count"] == 68
+    assert coverage["notebook_mapping_complete"] is True
+    assert coverage["notebook_absence_reason_inventory_complete"] is True
     assert coverage["per_problem_inventory_validated"] is False
     assert coverage["page_hash_inventory_complete"] is True
 
@@ -205,6 +207,10 @@ def test_validate_alphaevolve_follow_on_runtime_absence_accepts_builtin_record()
     assert validation.alphaevolve_runtime_available is False
     assert validation.verifier_code_available is True
     assert validation.issues == []
+    inventory = recordset["notebook_inventory"]
+    assert inventory["problem_id_mapping_complete"] is True
+    assert inventory["absence_reason_inventory_complete"] is True
+    assert inventory["sha256_inventory_complete"] is False
 
 
 def test_validate_alphaevolve_follow_on_runtime_absence_manifest_accepts_builtin_record():
@@ -238,6 +244,10 @@ def test_validate_alphaevolve_follow_on_runtime_absence_rejects_runtime_drift():
     recordset["notebook_inventory"]["notebooks"][0]["git_blob_sha"] = "0" * 40
     recordset["notebook_inventory"]["notebooks"][0]["artifact_kinds"] = ["runtime"]
     recordset["notebook_inventory"]["notebooks"][0]["alphaevolve_runtime_available"] = True
+    recordset["notebook_inventory"]["problem_id_mapping_complete"] = False
+    recordset["notebook_inventory"]["absence_reason_inventory_complete"] = False
+    recordset["boundary"]["not_notebook_sha256_inventory"] = False
+    recordset["remaining_runtime_work"] = ["map_notebooks_to_problem_ids_and_absence_reasons"]
     recordset["runtime_boundary"]["alphaevolve_runtime_available"] = True
     recordset["runtime_boundary"]["verifier_is_not_runtime"] = False
     recordset["runtime_boundary"]["absence_source_phrase"] = "runtime included"
@@ -250,7 +260,11 @@ def test_validate_alphaevolve_follow_on_runtime_absence_rejects_runtime_drift():
     assert "invalid_runtime_absence_repository_commit" in codes
     assert "invalid_runtime_absence_notebook_git_blob_sha" in codes
     assert "invalid_runtime_absence_notebook_artifact_kinds" in codes
+    assert "invalid_runtime_absence_notebook_problem_id_mapping_complete" in codes
+    assert "invalid_runtime_absence_notebook_absence_reason_inventory_complete" in codes
     assert "runtime_absence_notebook_runtime_available_overclaim" in codes
+    assert "invalid_runtime_absence_limits_not_notebook_sha256_inventory" in codes
+    assert "remaining_runtime_work_mismatch" in codes
     assert "runtime_absence_runtime_available_overclaim" in codes
     assert "runtime_absence_verifier_runtime_boundary_missing" in codes
     assert "invalid_runtime_absence_boundary_absence_source_phrase" in codes
@@ -434,6 +448,8 @@ def test_validate_alphaevolve_follow_on_math_source_rejects_repository_claim_ove
     coverage["all_page_resource_link_diagnostics_complete"] = False
     coverage["source_inventory_rows_emitted"] = False
     coverage["source_inventory_row_count"] = 67
+    coverage["notebook_mapping_complete"] = False
+    coverage["notebook_absence_reason_inventory_complete"] = False
     coverage["per_problem_inventory_validated"] = True
     coverage["page_hash_inventory_complete"] = False
     coverage["claim_boundary"] = "Every numbered page is classified and hashed."
@@ -456,6 +472,8 @@ def test_validate_alphaevolve_follow_on_math_source_rejects_repository_claim_ove
     assert "invalid_problem_coverage_evidence_all_page_resource_link_diagnostics_complete" in codes
     assert "invalid_problem_coverage_evidence_source_inventory_rows_emitted" in codes
     assert "invalid_problem_coverage_evidence_source_inventory_row_count" in codes
+    assert "invalid_problem_coverage_evidence_notebook_mapping_complete" in codes
+    assert "invalid_problem_coverage_evidence_notebook_absence_reason_inventory_complete" in codes
     assert "problem_coverage_evidence_per_problem_inventory_validated_overclaim" in codes
     assert "invalid_problem_coverage_evidence_page_hash_inventory_complete" in codes
     assert "missing_problem_coverage_claim_boundary" in codes

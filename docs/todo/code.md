@@ -2297,9 +2297,9 @@ Primary evidence:
     43 listed ids, 24 `not_listed_in_status_json` ids, and the declared-67
     versus observed-68 numbered HTML page boundary. It now also links to the
     follow-on runtime-absence notebook inventory, preserving `28` pinned
-    notebook paths while keeping per-problem mapping, notebook SHA-256 hashes,
-    and absence reasons incomplete. The standard paper-manifest gate validates
-    the built-in coverage record. It now classifies page 68 as an extra
+    notebook paths and validated notebook-link/absence-reason mapping. The
+    standard paper-manifest gate validates the built-in coverage record. It
+    now classifies page 68 as an extra
     numbered duplicate-title `Logic puzzles` page outside the declared
     67-page navigation range and records all-page resource-link diagnostics:
     `36` GitHub notebook blob URLs, `6` direct Google Colab URLs, `25`
@@ -2307,17 +2307,17 @@ Primary evidence:
     `1` paper-link placeholder. It also pins raw-page byte counts and SHA-256
     hashes for all `68` numbered HTML pages and emits per-page source rows
     with titles, paper sections, page URLs, hashes, link-status diagnostics,
-    and status-bucket labels. It still does not map notebooks or absence
-    reasons to problem ids or validate prompt/verifier/initial/final/
-    visualization flags per problem.
+    status-bucket labels, notebook-link mappings, and absence reasons. It
+    still does not validate notebook SHA-256 hashes or prompt/verifier/
+    initial/final/visualization flags per problem.
   - Required result: extend the follow-on repository coverage manifest and
-    validators with notebook path/hash or absence reason and artifact presence
-    flags for prompt/verifier/initial/final/visualization/analysis on the
-    emitted per-page source rows, plus README/ROADMAP wording that separates
-    complete declared problem-page coverage from partial notebook/artifact/
-    status coverage at a pinned snapshot.
+    validators with notebook SHA-256 hashes and artifact presence flags for
+    prompt/verifier/initial/final/visualization/analysis on the emitted
+    per-page source rows, plus README/ROADMAP wording that separates complete
+    declared problem-page coverage from partial notebook/artifact/status
+    coverage at a pinned snapshot.
 
-- [ ] Complete follow-on notebook and artifact mapping on emitted per-page rows.
+- [ ] Complete follow-on notebook SHA-256 and artifact flags on emitted per-page rows.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
     README says the repository contains problem descriptions for 67
     mathematical problems, but the current `problems/` directory exposes 68
@@ -2334,14 +2334,14 @@ Primary evidence:
     diagnostics, including the `25` under-construction Colab placeholders and
     the page-68 generic Colab plus paper-link placeholder. It also pins raw
     byte counts and SHA-256 hashes for every numbered page and emits per-page
-    source rows with URL, section, link status, pinned page hash, and
-    status-bucket membership. It still does not attach notebook mapping,
-    notebook absence reasons, notebook SHA-256 hashes, or artifact flags for
-    every numbered page.
-  - Required result: extend repository-page inventory validation with page
-    notebook path or absence reason, notebook hash fields, prompt/verifier/
-    initial/final/visualization flags, and README/ROADMAP wording that
-    distinguishes paper-declared problem count from full live repository page
+    source rows with URL, section, link status, pinned page hash,
+    status-bucket membership, notebook-link mappings, and notebook absence
+    reasons. It still does not attach notebook SHA-256 hashes or artifact
+    flags for every numbered page.
+  - Required result: extend repository-page inventory validation with notebook
+    hash fields, prompt/verifier/initial/final/visualization flags, and
+    README/ROADMAP wording that distinguishes paper-declared problem count
+    from full live repository page
     inventory.
 
 - [ ] Add paper-artifact creator and assembler provenance for figures and

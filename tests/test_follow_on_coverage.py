@@ -76,25 +76,41 @@ def test_validate_alphaevolve_follow_on_problem_coverage_accepts_builtin_record(
     assert source_rows["source_inventory_rows_emitted"] is True
     assert source_rows["page_url_hash_link_status_rows_complete"] is True
     assert source_rows["status_bucket_membership_attached"] is True
-    assert source_rows["notebook_mapping_complete"] is False
+    assert source_rows["notebook_mapping_complete"] is True
+    assert source_rows["notebook_absence_reason_inventory_complete"] is True
+    assert source_rows["notebook_link_target_count"] == 69
+    assert source_rows["notebook_link_target_status_counts"] == {
+        "repository_notebook_path": 31,
+        "repository_notebook_path_not_in_pinned_tree": 6,
+        "external_alphaevolve_results_colab": 6,
+        "under_construction_placeholder": 25,
+        "generic_colab_landing_page": 1,
+    }
+    assert source_rows["unique_mapped_repository_notebook_path_count"] == 23
+    assert len(source_rows["unlinked_pinned_notebook_paths"]) == 5
     assert source_rows["artifact_presence_matrix_complete"] is False
     assert len(source_rows["rows"]) == 68
     assert source_rows["rows"][0]["title"] == "1. Kakeya and Nikodym sets in finite fields"
     assert source_rows["rows"][0]["status_bucket"] == "world_record"
     assert source_rows["rows"][0]["colab_link_status"] == "github_notebook_blob_url"
+    assert [link["link_field"] for link in source_rows["rows"][0]["notebook_links"]] == ["colabURL", "colabURL2"]
+    assert source_rows["rows"][0]["notebook_links"][1]["notebook_path"] == "experiments/finite_field_nikodym_problem/finite_field_nikodym.ipynb"
     assert source_rows["rows"][30]["page_id"] == 31
     assert source_rows["rows"][30]["title"] == "32. Furstenberg-S\u00e1rk\u00f6zy Problem"
+    assert source_rows["rows"][35]["notebook_mapping_status"] == "linked_repository_notebook_path_absent_from_pinned_tree"
+    assert source_rows["rows"][35]["notebook_links"][0]["absence_reason"] == "linked_repository_notebook_path_absent_from_pinned_tree"
     assert source_rows["rows"][56]["page_id"] == 57
     assert source_rows["rows"][56]["title"] == "58. Rudin problem for polynomials"
     assert source_rows["rows"][-1]["page_classification"] == "extra_numbered_page_duplicate_title_outside_declared_67_navigation"
     assert source_rows["rows"][-1]["status_bucket"] == "extra_numbered_page"
     assert source_rows["rows"][-1]["paper_link_status"] == "placeholder"
+    assert source_rows["rows"][-1]["notebook_mapping_status"] == "generic_colab_landing_page_not_notebook"
     link = recordset["notebook_inventory_link"]
     assert link["source_manifest"] == "papers/follow_on_runtime_absence.json"
     assert link["pinned_notebook_path_count"] == 28
-    assert link["problem_id_mapping_complete"] is False
+    assert link["problem_id_mapping_complete"] is True
     assert link["sha256_inventory_complete"] is False
-    assert link["absence_reason_inventory_complete"] is False
+    assert link["absence_reason_inventory_complete"] is True
 
 
 def test_validate_alphaevolve_follow_on_problem_coverage_loads_json_file(tmp_path):
@@ -169,9 +185,9 @@ def test_validate_alphaevolve_follow_on_problem_coverage_rejects_inventory_overc
     scope["artifact_presence_matrix_complete"] = True
     link = recordset["notebook_inventory_link"]
     link["pinned_notebook_path_count"] = 67
-    link["problem_id_mapping_complete"] = True
+    link["problem_id_mapping_complete"] = False
     link["sha256_inventory_complete"] = True
-    link["absence_reason_inventory_complete"] = True
+    link["absence_reason_inventory_complete"] = False
     link["claim_boundary"] = "Every problem has a mapped notebook."
     inventory = recordset["numbered_page_inventory"]
     inventory["observed_numbered_html_count"] = 67
@@ -203,10 +219,16 @@ def test_validate_alphaevolve_follow_on_problem_coverage_rejects_inventory_overc
     source_rows["row_count"] = 67
     source_rows["source_inventory_rows_emitted"] = False
     source_rows["status_bucket_membership_attached"] = False
-    source_rows["notebook_mapping_complete"] = True
+    source_rows["notebook_mapping_complete"] = False
+    source_rows["notebook_absence_reason_inventory_complete"] = False
+    source_rows["notebook_link_target_count"] = 68
+    source_rows["notebook_link_target_status_counts"]["repository_notebook_path"] = 30
+    source_rows["unique_mapped_repository_notebook_path_count"] = 22
+    source_rows["unlinked_pinned_notebook_paths"] = []
     source_rows["artifact_presence_matrix_complete"] = True
     source_rows["rows"][0]["status_bucket"] = "unknown"
     source_rows["rows"][0]["sha256"] = "0" * 64
+    source_rows["rows"][0]["notebook_links"] = source_rows["rows"][0]["notebook_links"][:1]
     source_rows["rows"] = source_rows["rows"][:-1]
     source_rows["claim_boundary"] = "Every notebook and artifact is mapped."
     recordset["remaining_coverage_work"] = ["classify_extra_numbered_page_68"]
@@ -220,9 +242,9 @@ def test_validate_alphaevolve_follow_on_problem_coverage_rejects_inventory_overc
     assert "notebook_hash_inventory_complete_overclaim" in codes
     assert "artifact_presence_matrix_complete_overclaim" in codes
     assert "invalid_notebook_inventory_link_pinned_notebook_path_count" in codes
-    assert "notebook_inventory_link_problem_id_mapping_complete_overclaim" in codes
+    assert "invalid_notebook_inventory_link_problem_id_mapping_complete" in codes
     assert "notebook_inventory_link_sha256_inventory_complete_overclaim" in codes
-    assert "notebook_inventory_link_absence_reason_inventory_complete_overclaim" in codes
+    assert "invalid_notebook_inventory_link_absence_reason_inventory_complete" in codes
     assert "missing_notebook_inventory_link_claim_boundary" in codes
     assert "invalid_numbered_page_inventory_observed_numbered_html_count" in codes
     assert "invalid_numbered_page_inventory_extra_numbered_page_ids" in codes
@@ -249,11 +271,17 @@ def test_validate_alphaevolve_follow_on_problem_coverage_rejects_inventory_overc
     assert "invalid_all_page_source_inventory_row_count" in codes
     assert "invalid_all_page_source_inventory_source_inventory_rows_emitted" in codes
     assert "invalid_all_page_source_inventory_status_bucket_membership_attached" in codes
-    assert "all_page_source_inventory_notebook_mapping_complete_overclaim" in codes
+    assert "invalid_all_page_source_inventory_notebook_mapping_complete" in codes
+    assert "invalid_all_page_source_inventory_notebook_absence_reason_inventory_complete" in codes
+    assert "invalid_all_page_source_inventory_notebook_link_target_count" in codes
+    assert "invalid_all_page_source_inventory_notebook_link_target_status_counts" in codes
+    assert "invalid_all_page_source_inventory_unique_mapped_repository_notebook_path_count" in codes
+    assert "invalid_all_page_source_inventory_unlinked_pinned_notebook_paths" in codes
     assert "all_page_source_inventory_artifact_presence_matrix_complete_overclaim" in codes
     assert "all_page_source_inventory_page_id_mismatch" in codes
     assert "invalid_all_page_source_inventory_row_status_bucket" in codes
     assert "invalid_all_page_source_inventory_row_sha256" in codes
+    assert "invalid_all_page_source_inventory_row_notebook_links" in codes
     assert "missing_all_page_source_inventory_claim_boundary" in codes
     assert "missing_remaining_coverage_work" in codes
 

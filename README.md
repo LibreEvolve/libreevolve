@@ -3689,12 +3689,14 @@ and records a separate `figure5_b12_precision_boundary` for the Figure 5
 display `2.6340 -> 2.6358` versus the Appendix B.12/Figure 14 value strings
 `2.634` to `2.635`.
 Validated `sum_of_radii_result_boundary` entries record future placement,
-container, containment, non-overlap, perimeter, recomputed-sum, and Figure 14
-panel artifact path/hash fields required before local reproduction can be
-claimed, with container and panel artifacts explicitly `not_recorded_locally`.
-The actual B.12-B.13 container artifacts, placement payloads, panel artifacts,
-exact certificates, source-specific precision locators, canonicalization
-policy, recomputed sum, and companion Colab link remain absent.
+container, exact-count, payload-schema validation, positive-radius,
+containment, non-overlap, perimeter, sum-formula, recomputed-sum, and
+Figure 14 panel artifact path/hash fields required before local reproduction
+can be claimed, with container and panel artifacts explicitly
+`not_recorded_locally`. The actual B.12-B.13 container artifacts, placement
+payloads, panel artifacts, exact certificates, source-specific precision
+locators, canonicalization policy, recomputed sum, and companion Colab link
+remain absent.
 `libreevolve.problems.benchmarks.math_outcomes` now records a Section 3.2
 aggregate-outcome absence boundary: over 50 mathematical problems, more than
 five branches, roughly 75% best-known rediscovery, roughly 20% SOTA

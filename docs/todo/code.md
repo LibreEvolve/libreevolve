@@ -2808,16 +2808,19 @@ Primary evidence:
     `sum_of_radii >= 2.365`, and the fact that the checked-in 26-circle
     fixture is smoke-only. They still mark witnesses `not_recorded_locally`:
     no AlphaEvolve container artifact hashes, circle-center/radius payload
-    hashes, exact-count certificates, containment certificates, pairwise
+    hashes, exact-count certificates, payload-schema validation certificates,
+    positive-radius certificates, containment certificates, pairwise
     non-overlap certificates, rectangle-dimension payload, rectangle-perimeter
-    certificate, recomputed sums, or Figure 14 artifacts exist.
+    certificate, sum-of-radii formula certificates, recomputed sums, or
+    Figure 14 artifacts exist.
   - Required result: replace the `not_recorded_locally` boundaries with real
     Appendix B.12-B.13 witness artifacts: container artifact hashes,
-    circle-center/radius payload hashes, exact-count checks, containment
+    circle-center/radius payload hashes, exact-count checks,
+    payload-schema validation, positive-radius certificates, containment
     certificates, pairwise non-overlap certificates, rectangle dimensions,
-    rectangle-perimeter proof, recomputed sums of radii, Figure 14 panel
-    artifacts, and README/ROADMAP wording that separates the 26-circle smoke
-    fixture from full paper-claim evidence.
+    rectangle-perimeter proof, sum-of-radii formula certificates, recomputed
+    sums of radii, Figure 14 panel artifacts, and README/ROADMAP wording that
+    separates the 26-circle smoke fixture from full paper-claim evidence.
 
 - [ ] Add aggregate constructive-math outcome coverage reports.
   - Spec evidence: AlphaEvolve Section 3.2 reports more than 50 mathematical

@@ -772,15 +772,17 @@ is not yet an AlphaEvolve reproduction.
   validates `n = 26` and `n = 32` unit-square rows, the `n = 21` perimeter-4
   rectangle row, prior and reported sums of radii, Figure 14 panel links, the
   B.13 caption display `sum_of_radii >= 2.365` versus text value `2.3658`,
-  and required future placement, containment, non-overlap, perimeter,
+  and required future placement, exact-count, payload-schema validation,
+  positive-radius, containment, non-overlap, perimeter, sum-formula,
   recomputed-sum, container-artifact, and Figure 14 panel artifact path/hash
   fields. It also preserves the Figure 5 display `2.6340 -> 2.6358` as a
   separate precision boundary from the Appendix B.12/Figure 14 `2.634` to
   `2.635` strings. The checked-in 26-circle fixture remains explicitly
   smoke-only, and the actual AlphaEvolve container artifacts, placement
-  payloads, panel artifacts, exact certificates, source locators,
-  canonicalization policy, recomputed sum, and companion Colab link remain
-  open.
+  payloads, panel artifacts, exact certificates, payload-schema validation
+  certificates, positive-radius certificates, sum-of-radii formula
+  certificates, source locators, canonicalization policy, recomputed sum, and
+  companion Colab link remain open.
 - Keep paper artifact-role attribution separate from artifact availability:
   `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
   AlphaEvolve PDF contribution records for figure creators and companion

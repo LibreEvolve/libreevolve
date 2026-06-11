@@ -1912,17 +1912,19 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     prior and reported values, Figure 14 panel links, the B.13 caption display,
     and required future placement/container/certificate fields while keeping
     the checked-in 26-circle fixture smoke-only. It still warns that the actual
-    AlphaEvolve container artifacts, placement payloads,
-    containment/non-overlap certificates, rectangle dimensions,
-    rectangle-perimeter proof, recomputed sums, and Figure 14 panel artifacts
-    are absent.
+    AlphaEvolve container artifacts, placement payloads, exact-count
+    certificates, payload-schema validation certificates, positive-radius
+    certificates, containment/non-overlap certificates, rectangle dimensions,
+    rectangle-perimeter proof, sum-of-radii formula certificates, recomputed
+    sums, and Figure 14 panel artifacts are absent.
   - Required result: when the actual Appendix B.12-B.13 packing payloads and
     certificates land, update README, ROADMAP, papers index, and code/paper
     TODOs together so README names container hashes, placement hashes,
-    exact-count checks, containment/non-overlap certificates, rectangle
-    dimensions, recomputed sums, Figure 14 panel artifacts, and source links
-    while keeping the 26-circle smoke fixture out of full AlphaEvolve evidence
-    claims.
+    exact-count checks, payload-schema validation, positive-radius
+    certificates, containment/non-overlap certificates, rectangle dimensions,
+    sum-of-radii formula certificates, recomputed sums, Figure 14 panel
+    artifacts, and source links while keeping the 26-circle smoke fixture out
+    of full AlphaEvolve evidence claims.
 
 - [ ] Keep README Appendix B result wording scoped until revised-result
       provenance exists.

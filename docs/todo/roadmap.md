@@ -3014,15 +3014,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and required future placement/container/certificate fields while keeping
     the checked-in 26-circle fixture smoke-only. It still does not claim
     container artifact hashes, placement payload hashes, exact-count checks,
+    payload-schema validation certificates, positive-radius certificates,
     containment/non-overlap certificates, rectangle dimensions,
-    rectangle-perimeter proof, recomputed sums, or rendered Figure 14 panel
-    artifacts.
+    rectangle-perimeter proof, sum-of-radii formula certificates, recomputed
+    sums, or rendered Figure 14 panel artifacts.
   - Required result: when the actual Appendix B.12-B.13 packing payloads and
     certificates land, update ROADMAP, README, papers index, and code/paper
     TODOs so roadmap claims distinguish all three `n`/container rows,
-    certificates, sum-of-radii values, Figure 14 artifacts, container hashes,
-    payload hashes, and source locations from the existing 26-circle smoke
-    fixture.
+    certificates, payload-schema validation, positive-radius checks,
+    sum-of-radii formula proofs, sum-of-radii values, Figure 14 artifacts,
+    container hashes, payload hashes, and source locations from the existing
+    26-circle smoke fixture.
 
 - [ ] Keep Appendix B roadmap wording scoped until revised-result provenance
       exists.

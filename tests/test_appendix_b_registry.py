@@ -921,7 +921,11 @@ def test_appendix_b_registry_requires_sum_of_radii_boundary(tmp_path):
     first["circle_count"] = 25
     first["reported_sum_of_radii"] = 2.0
     first["container_artifact_status"] = "recorded"
+    first["circle_count_certificate_status"] = "recorded"
     first["circle_placement_artifact_status"] = "recorded"
+    first["circle_schema_validation_certificate_status"] = "recorded"
+    first["positive_radius_certificate_status"] = "recorded"
+    first["sum_of_radii_formula_certificate_status"] = "recorded"
     first["figure_panel_artifact_status"] = "recorded"
     first["claim_boundary"] = "Placement exists."
     boundary["missing_witnesses"] = boundary["missing_witnesses"][:1]
@@ -940,7 +944,11 @@ def test_appendix_b_registry_requires_sum_of_radii_boundary(tmp_path):
     assert "invalid_sum_of_radii_witness_circle_count" in codes
     assert "invalid_sum_of_radii_witness_reported_sum_of_radii" in codes
     assert "invalid_sum_of_radii_container_artifact_status" in codes
+    assert "invalid_sum_of_radii_circle_count_certificate_status" in codes
     assert "invalid_sum_of_radii_circle_placement_artifact_status" in codes
+    assert "invalid_sum_of_radii_circle_schema_validation_certificate_status" in codes
+    assert "invalid_sum_of_radii_positive_radius_certificate_status" in codes
+    assert "invalid_sum_of_radii_sum_of_radii_formula_certificate_status" in codes
     assert "invalid_sum_of_radii_figure_panel_artifact_status" in codes
     assert "missing_sum_of_radii_claim_boundary" in codes
     assert "invalid_sum_of_radii_improvement_direction" in codes

@@ -169,9 +169,10 @@ the caption display `sum_of_radii >= 2.365` separately from the text value
 scoped as smoke-only and now preserves Figure 5's `2.6340 -> 2.6358` display
 as a separate precision boundary from the Appendix B.12/Figure 14 `2.634` to
 `2.635` strings, while the AlphaEvolve container artifacts, placement
-payloads, Figure 14 panel artifacts, exact certificates, source locators,
-canonicalization policy, recomputed sum, and companion Colab link remain
-absent.
+payloads, Figure 14 panel artifacts, exact certificates, payload-schema
+validation certificates, positive-radius certificates, sum-of-radii formula
+certificates, source locators, canonicalization policy, recomputed sum, and
+companion Colab link remain absent.
 Appendix B says reported construction data and verification code
 appear in an accompanying Google Colab; this registry is not that
 Colab-equivalent evidence surface and does not yet store construction-data

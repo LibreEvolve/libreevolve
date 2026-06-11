@@ -845,6 +845,7 @@ is not yet an AlphaEvolve reproduction.
   `google-deepmind/alphaevolve_results` commit, `mathematical_results.ipynb`
   raw/Colab URLs, SHA-256 digest, byte count, nbformat, cell count,
   readability status, matrix/constructive-math claim mappings,
+  the Appendix B `result_row_boundary` inventory of `19` expected result ids,
   improved-results-only selection policy, matched-result exclusions,
   AlphaEvolve runtime-code absence, and the companion repository's
   Apache-2.0/CC-BY-4.0 license and disclaimer boundary.

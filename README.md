@@ -3995,11 +3995,13 @@ pins `google-deepmind/alphaevolve_results` at commit
 `4226acbf237ff9ad10ba7673a2af127a2d8a5971`, records
 `mathematical_results.ipynb` with its raw URL, Colab URL, SHA-256 digest, byte
 count, nbformat, cell count, and readability status, and preserves claim
-mappings for matrix and constructive-math source evidence. It also records the
-companion repository's improved-results-only selection policy, matched-result
-exclusion, absence of AlphaEvolve runtime code, Apache-2.0 software /
-CC-BY-4.0 materials license split, AS-IS disclaimer, and non-official-product
-boundary. The committed `papers/companion_sources.json` manifest emits that
+mappings for matrix and constructive-math source evidence. The
+constructive-math mapping is tied to the Appendix B `result_row_boundary` and
+preserves the `19` expected Appendix B result ids. It also records the companion
+repository's improved-results-only selection policy, matched-result exclusion,
+absence of AlphaEvolve runtime code, Apache-2.0 software / CC-BY-4.0 materials
+license split, AS-IS disclaimer, and non-official-product boundary. The
+committed `papers/companion_sources.json` manifest emits that
 external source row, its docs/TODO claim-surface links, and its local-cache
 policy; the standard paper-manifest gate validates the sidecar. Companion
 selection-scope rows now distinguish improved-over-SOTA results included in the

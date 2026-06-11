@@ -1522,8 +1522,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     source phrases. README now also documents
     `libreevolve.alphaevolve_paper_artifact_linkage.v1`, which validates the
     current `not_yet_linked` availability boundary and required digest/link/
-    source-map fields, but it does not document concrete rendered figure files,
-    companion notebook URLs/digests, or source-to-artifact maps.
+    source-map fields. The companion Colab source mapping for constructive
+    math now preserves the Appendix B `result_row_boundary` inventory of `19`
+    expected result ids, but README still does not document concrete rendered
+    figure files, companion notebook URLs/digests, or source-to-artifact maps.
   - Required result: when role records are linked to concrete rendered or
     companion-notebook artifacts, update README, ROADMAP, papers index, and
     code/paper TODOs together so README distinguishes artifact availability,

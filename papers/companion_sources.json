@@ -82,6 +82,29 @@
               "correctness-verification code"
             ],
             "source_artifact_ref": "mathematical_results.ipynb",
+            "appendix_b_expected_result_count": 19,
+            "appendix_b_expected_result_ids": [
+              "b1_c1_600_interval_step_function",
+              "b2_c2_50_interval_step_function",
+              "b3_c3_400_interval_step_function",
+              "b4_uncertainty_hermite_c012",
+              "b4_uncertainty_revision_c4_0_3216",
+              "figure10_minimum_overlap_step_function",
+              "b6_u1_size_2003",
+              "b6_u2_size_54265",
+              "b7_11_unit_hexagons",
+              "b7_12_unit_hexagons",
+              "b8_16_points_2d",
+              "b8_14_points_3d",
+              "b9_triangle_n11",
+              "b10_convex_region_n13",
+              "b10_convex_region_n14",
+              "b11_kissing_d11_593",
+              "b12_unit_square_n26",
+              "b12_unit_square_n32",
+              "b13_perimeter4_rectangle_n21"
+            ],
+            "appendix_b_result_inventory_source": "alphaevolve_appendix_b.json result_row_boundary",
             "local_reproduction_artifact_ref": null,
             "local_export_equivalent": false
           }

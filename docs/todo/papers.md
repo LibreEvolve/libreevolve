@@ -3290,7 +3290,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     cell/source maps. `libreevolve.alphaevolve_paper_artifact_linkage.v1` now
     machine-validates that absence as a `not_yet_linked` availability boundary
     with expected digest/link/source-map fields for future concrete artifacts,
-    and the paper-manifest gate validates that boundary.
+    and the companion Colab source mapping now preserves the Appendix B
+    `result_row_boundary` inventory of `19` expected result ids. The
+    paper-manifest gate validates that boundary.
   - Required result: connect paper-facing artifact-role records to rendered
     figures and companion notebook source artifacts with digest/link metadata
     and README/ROADMAP wording that separates artifact availability from

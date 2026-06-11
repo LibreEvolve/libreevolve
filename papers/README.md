@@ -1713,6 +1713,7 @@ Implemented:
   `google-deepmind/alphaevolve_results` commit, `mathematical_results.ipynb`
   raw/Colab URLs, SHA-256 digest, byte count, nbformat, cell count, readability
   status, matrix and constructive-math claim mappings, the official notebook's
+  Appendix B `result_row_boundary` inventory of `19` expected result ids,
   improved-results-only selection policy, matched-result exclusions, runtime
   AlphaEvolve-code absence, and the companion repository's Apache-2.0 software /
   CC-BY-4.0 materials licensing plus disclaimer boundary.

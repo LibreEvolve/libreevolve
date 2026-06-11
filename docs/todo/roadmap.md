@@ -2184,8 +2184,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and source phrases. `libreevolve.alphaevolve_paper_artifact_linkage.v1`
     now validates the current `not_yet_linked` availability boundary and the
     digest/link/source-map fields required before rendered figure or notebook
-    artifacts can be claimed. It does not bind those roles to rendered figure
-    hashes, companion-notebook URLs/digests, or source-to-artifact maps.
+    artifacts can be claimed. The companion Colab source mapping for
+    constructive math now preserves the Appendix B `result_row_boundary`
+    inventory of `19` expected result ids. It does not bind those roles to
+    rendered figure hashes, companion-notebook URLs/digests, or
+    source-to-artifact maps.
   - Required result: when role records are linked to concrete rendered or
     companion-notebook artifacts, update ROADMAP, README, papers index, and
     code/paper TODO entries together so roadmap wording distinguishes artifact

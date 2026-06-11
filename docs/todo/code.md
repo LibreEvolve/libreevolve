@@ -2346,8 +2346,11 @@ Primary evidence:
     `libreevolve.alphaevolve_paper_artifact_linkage.v1` now validates the
     current `not_yet_linked` availability boundary for rendered figure and
     companion-notebook artifacts, plus the digest/link/source-map fields
-    required before concrete artifacts can be claimed. The paper-manifest gate
-    validates both the role record and the linkage-boundary record.
+    required before concrete artifacts can be claimed. The companion Colab
+    source mapping for constructive math now also preserves the Appendix B
+    `result_row_boundary` inventory of `19` expected result ids. The
+    paper-manifest gate validates both the role record and the
+    linkage-boundary record.
   - Required result: connect those role records to concrete rendered figure or
     companion-notebook artifacts with digest/link metadata, retrieval
     provenance, and source-to-artifact maps, while keeping docs wording clear

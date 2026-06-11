@@ -12,6 +12,7 @@ from libreevolve.problems.benchmarks.companion_sources import (
     validate_alphaevolve_companion_selection_scope,
     validate_alphaevolve_companion_source_manifest,
 )
+from libreevolve.problems.benchmarks.appendix_b_registry import EXPECTED_APPENDIX_B_RESULT_IDS
 
 
 def test_validate_alphaevolve_companion_colab_source_accepts_builtin_record():
@@ -25,6 +26,14 @@ def test_validate_alphaevolve_companion_colab_source_accepts_builtin_record():
     assert validation.claim_mapping_count == 2
     assert validation.local_cache_available is False
     assert validation.issues == []
+    appendix_b_mapping = next(
+        mapping
+        for mapping in recordset["claim_mappings"]
+        if mapping["claim_id"] == "appendix_b_constructive_math_improved_results"
+    )
+    assert appendix_b_mapping["appendix_b_expected_result_count"] == len(EXPECTED_APPENDIX_B_RESULT_IDS)
+    assert appendix_b_mapping["appendix_b_expected_result_ids"] == list(EXPECTED_APPENDIX_B_RESULT_IDS)
+    assert appendix_b_mapping["appendix_b_result_inventory_source"] == "alphaevolve_appendix_b.json result_row_boundary"
 
 
 def test_validate_alphaevolve_companion_colab_source_loads_json_file(tmp_path):
@@ -251,6 +260,26 @@ def test_validate_alphaevolve_companion_colab_source_rejects_claim_mapping_overc
     assert "invalid_source_artifact_ref" in codes
     assert "local_reproduction_overclaim" in codes
     assert "local_export_overclaim" in codes
+
+
+def test_validate_alphaevolve_companion_colab_source_rejects_appendix_b_inventory_drift():
+    recordset = alphaevolve_companion_colab_source_record()
+    mapping = next(
+        mapping
+        for mapping in recordset["claim_mappings"]
+        if mapping["claim_id"] == "appendix_b_constructive_math_improved_results"
+    )
+    mapping["appendix_b_expected_result_count"] = 1
+    mapping["appendix_b_expected_result_ids"] = ["b1_c1_600_interval_step_function"]
+    mapping["appendix_b_result_inventory_source"] = "README.md"
+
+    validation = validate_alphaevolve_companion_colab_source(recordset)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_appendix_b_expected_result_count" in codes
+    assert "invalid_appendix_b_expected_result_ids" in codes
+    assert "invalid_appendix_b_result_inventory_source" in codes
 
 
 def test_render_alphaevolve_companion_colab_source_summary_reports_shape():

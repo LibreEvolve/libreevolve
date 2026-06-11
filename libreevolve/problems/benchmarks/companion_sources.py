@@ -6,6 +6,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from libreevolve.problems.benchmarks.appendix_b_registry import EXPECTED_APPENDIX_B_RESULT_IDS
+
 
 ALPHAEVOLVE_COMPANION_COLAB_SCHEMA = "libreevolve.alphaevolve_companion_colab_source.v1"
 ALPHAEVOLVE_COMPANION_SOURCE_MANIFEST_SCHEMA = (
@@ -194,6 +196,9 @@ def alphaevolve_companion_colab_source_record() -> dict[str, Any]:
                     "correctness-verification code",
                 ],
                 "source_artifact_ref": EXPECTED_NOTEBOOK_PATH,
+                "appendix_b_expected_result_count": len(EXPECTED_APPENDIX_B_RESULT_IDS),
+                "appendix_b_expected_result_ids": list(EXPECTED_APPENDIX_B_RESULT_IDS),
+                "appendix_b_result_inventory_source": "alphaevolve_appendix_b.json result_row_boundary",
                 "local_reproduction_artifact_ref": None,
                 "local_export_equivalent": False,
             },
@@ -1064,6 +1069,13 @@ def _validate_claim_mapping(
         issues.append(AlphaEvolveCompanionColabIssue("invalid_cell_markers", "claim mapping must include non-empty cell markers", claim_id))
     if mapping.get("source_artifact_ref") != EXPECTED_NOTEBOOK_PATH:
         issues.append(AlphaEvolveCompanionColabIssue("invalid_source_artifact_ref", "claim mapping must point to mathematical_results.ipynb", claim_id))
+    if claim_id == "appendix_b_constructive_math_improved_results":
+        if mapping.get("appendix_b_expected_result_count") != len(EXPECTED_APPENDIX_B_RESULT_IDS):
+            issues.append(AlphaEvolveCompanionColabIssue("invalid_appendix_b_expected_result_count", "Appendix B companion mapping must preserve the expected result-row count", claim_id))
+        if mapping.get("appendix_b_expected_result_ids") != list(EXPECTED_APPENDIX_B_RESULT_IDS):
+            issues.append(AlphaEvolveCompanionColabIssue("invalid_appendix_b_expected_result_ids", "Appendix B companion mapping must preserve the expected result-row id inventory", claim_id))
+        if mapping.get("appendix_b_result_inventory_source") != "alphaevolve_appendix_b.json result_row_boundary":
+            issues.append(AlphaEvolveCompanionColabIssue("invalid_appendix_b_result_inventory_source", "Appendix B companion mapping must link back to the result_row_boundary inventory", claim_id))
     if mapping.get("local_reproduction_artifact_ref") is not None:
         issues.append(AlphaEvolveCompanionColabIssue("local_reproduction_overclaim", "external companion mappings must not claim local reproduction artifacts"))
     if mapping.get("local_export_equivalent") is not False:

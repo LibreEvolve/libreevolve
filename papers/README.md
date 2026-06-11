@@ -972,7 +972,10 @@ captured proposal text hashes and marks rejected/no-accepted branches as
 `runtime.history.controller_backtracking_report` now records current-run branch
 state transitions and observed redirects from abandoned-looking branches to a
 later fallback parent or alternative branch, while explicitly marking causal
-controller backtracking proof as absent.
+controller backtracking proof as absent. The committed
+`papers/controller_backtracking_boundary.json` sidecar now emits that
+`observed_redirects_without_controller_policy` boundary, and
+`validate_paper_manifest()` requires and validates it at the real repo root.
 `runtime.history.proposal_diversity_report` also records exact proposal and
 idea hash uniqueness/duplicate counts by generation and proposal batch, with
 bounded sample records and an exact-text-only analysis policy.

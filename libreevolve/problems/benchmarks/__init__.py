@@ -89,6 +89,12 @@ from libreevolve.problems.benchmarks.companion_sources import (
     render_alphaevolve_companion_colab_source_summary,
     validate_alphaevolve_companion_colab_source,
 )
+from libreevolve.problems.benchmarks.controller_backtracking_boundary import (
+    CONTROLLER_BACKTRACKING_BOUNDARY_SCHEMA,
+    controller_backtracking_boundary_record,
+    render_controller_backtracking_boundary_summary,
+    validate_controller_backtracking_boundary,
+)
 from libreevolve.problems.benchmarks.example_scope import (
     EXAMPLE_BENCHMARK_SCOPE_SCHEMA,
     example_benchmark_scope_records,
@@ -320,6 +326,7 @@ __all__ = [
     "BENCHMARK_HARDENING_SCHEMA",
     "CANDIDATE_ABSTRACTION_BOUNDARY_SCHEMA",
     "CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA",
+    "CONTROLLER_BACKTRACKING_BOUNDARY_SCHEMA",
     "EXPECTED_TARGET_COUNT",
     "EVALUATION_CASCADE_BOUNDARY_SCHEMA",
     "EXAMPLE_BENCHMARK_SCOPE_SCHEMA",
@@ -390,6 +397,7 @@ __all__ = [
     "benchmark_hardening_artifact_inventory",
     "candidate_abstraction_boundary_record",
     "certification_artifact_inventory",
+    "controller_backtracking_boundary_record",
     "evaluation_cascade_boundary_record",
     "example_benchmark_scope_records",
     "existing_codebase_integration_boundary_record",
@@ -445,6 +453,7 @@ __all__ = [
     "render_benchmark_hardening_summary",
     "render_candidate_abstraction_boundary_summary",
     "render_certification_summary",
+    "render_controller_backtracking_boundary_summary",
     "render_evaluation_cascade_boundary_summary",
     "render_example_benchmark_scope_summary",
     "render_existing_codebase_integration_boundary_summary",
@@ -497,6 +506,7 @@ __all__ = [
     "validate_benchmark_hardening_report",
     "validate_candidate_abstraction_boundary",
     "validate_certification_evidence_bundle",
+    "validate_controller_backtracking_boundary",
     "validate_evaluation_cascade_boundary",
     "validate_example_benchmark_scope",
     "validate_existing_codebase_integration_boundary",

@@ -1887,7 +1887,9 @@ Primary evidence:
     `validate_controller_backtracking_report()`. It records current-run branch
     state transitions and observed later fallback-parent or alternative-branch
     selections after abandoned-looking branches while keeping causal controller
-    proof false.
+    proof false. The committed
+    `papers/controller_backtracking_boundary.json` sidecar now records the
+    paper-manifest-validated controller-policy absence boundary.
   - Remaining gap: this is observed redirect evidence, not a controller-owned
     backtracking policy. LibreEvolve still does not persist a configured branch
     state machine, suppression or retry policy event, explicit fallback-target

@@ -1456,7 +1456,9 @@ state transitions and observed redirects from abandoned-looking branches to a
 later fallback parent or alternative branch. This is observed parent-selection
 evidence, not causal controller proof: suppression/retry policies, explicit
 fallback-target decisions, resumed-search replay, and cross-run branch tables
-remain future work.
+remain future work. The committed
+`papers/controller_backtracking_boundary.json` sidecar now records that
+paper-manifest-validated controller-policy absence boundary.
 `runtime.history.proposal_diversity_report` adds current-run exact duplicate
 evidence over captured proposal metadata, including per-generation and
 per-batch proposal/idea hash counts plus bounded sample records. It is an

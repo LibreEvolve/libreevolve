@@ -113,7 +113,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `runtime.history.controller_backtracking_report` with schema
     `libreevolve.controller_backtracking_report.v1`, which records current-run
     branch state transitions and observed redirects from abandoned-looking
-    branches to a later fallback parent or alternative branch.
+    branches to a later fallback parent or alternative branch. The committed
+    `papers/controller_backtracking_boundary.json` sidecar now preserves the
+    paper-manifest-validated controller-policy absence boundary.
   - Current gap: these reports are evidence of abandoned-looking branches and
     observed redirects, not proof that the controller deliberately backtracked
     under a configured policy. They still lack suppression/retry events,

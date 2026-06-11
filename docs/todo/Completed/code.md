@@ -4,6 +4,25 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit controller backtracking policy boundary sidecar.
+  - Spec evidence: AlphaEvolve frames discovery as including backtracking on
+    unpromising hypotheses, which needs controller-owned suppression/retry,
+    fallback-selection, and resumed-search evidence before parity claims.
+  - Status: `papers/controller_backtracking_boundary.json` now emits the
+    `libreevolve.alphaevolve_controller_backtracking_boundary.v1`
+    `observed_redirects_without_controller_policy` boundary, and
+    `validate_paper_manifest()` requires and validates it at the real repo
+    root.
+  - Verification: `py -3.12 -m pytest
+    tests\test_controller_backtracking_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\controller_backtracking_boundary.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: no local controller-owned suppression/retry policy records,
+    fallback-target decision events, causal resumed-search replay, or
+    cross-run hypothesis branch tables exist.
+
 - [x] Emit evaluation-cascade efficiency boundary sidecar.
   - Spec evidence: AlphaEvolve Section 2.4 says cascades promote promising
     candidates through increasingly difficult tests and prune weaker candidates

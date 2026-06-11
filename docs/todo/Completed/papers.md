@@ -6,6 +6,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit controller backtracking policy boundary sidecar.
+  - Paper evidence: AlphaEvolve describes discovery as ideation, exploration,
+    backtracking on unpromising hypotheses, experimentation, and validation.
+  - Status: `papers/controller_backtracking_boundary.json` now carries the
+    paper-facing `libreevolve.alphaevolve_controller_backtracking_boundary.v1`
+    absence boundary. The paper-manifest gate requires and validates the
+    sidecar at the real repo root.
+  - Verification: `py -3.12 -m pytest
+    tests\test_controller_backtracking_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\controller_backtracking_boundary.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining paper gap: this is an absence boundary; configured
+    suppression/retry policy, fallback-target decisions, causal resumed-search
+    replay, and cross-run branch tables remain open.
+
 - [x] Emit evaluation-cascade efficiency boundary sidecar.
   - Paper evidence: AlphaEvolve Section 2.4 describes increasingly difficult
     cascade tests, promotion of promising candidates, early pruning, and

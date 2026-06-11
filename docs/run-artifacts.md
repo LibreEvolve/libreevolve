@@ -1547,7 +1547,9 @@ Important behavior:
   claim-readiness flags. A branch with rejected candidates and no accepted
   candidates is marked as `abandoned_evidence`, but controller suppression,
   fallback selection events, causal redirected-sampling proof, and cross-run
-  branch tables remain unsupported.
+  branch tables remain unsupported. The committed
+  `papers/controller_backtracking_boundary.json` sidecar preserves the same
+  controller-policy absence boundary for paper-manifest validation.
 - `runtime.history.proposal_diversity_report` stores exact current-run
   proposal-diversity evidence for generated candidates with captured proposal
   metadata. It records generated/proposal/idea counts, exact proposal-signature

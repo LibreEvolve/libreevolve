@@ -89,7 +89,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     linkage, and claim-readiness limits. README also documents
     `runtime.history.controller_backtracking_report`, which records current-run
     branch state transitions and observed redirects to a later fallback parent
-    or alternative branch without claiming causal controller proof.
+    or alternative branch without claiming causal controller proof. README now
+    also names `papers/controller_backtracking_boundary.json` as the committed
+    paper-manifest-validated controller-policy absence boundary.
   - Required result: when explicit controller-owned backtracking policy lands,
     update README, ROADMAP, papers index, and code/paper TODOs with configured
     suppression/retry behavior, selected fallback ancestor or alternative

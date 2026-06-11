@@ -2512,7 +2512,9 @@ to `history.jsonl`, a denominator policy that defines the runtime candidate,
 stage-entry, main-test exposure, and early-prune populations, evaluator source
 refs when available, and `claim_ready: false` until stage difficulty/scale
 labels, evaluator test-set hashes, benchmark seed/sample policy, and
-cost-savings evidence are added.
+cost-savings evidence are added. The committed
+`papers/evaluation_cascade_boundary.json` sidecar now records that
+paper-manifest-validated cascade-efficiency absence boundary.
 Completed manifests also include
 `runtime.history.cascade_hypothesis_test_policy_report`, which records the
 current cascade promotion-policy boundary. `eval_stages[].role` can declare

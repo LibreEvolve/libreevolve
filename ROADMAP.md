@@ -59,7 +59,10 @@ LibreEvolve has:
 - runtime cascade summaries that aggregate configured-stage promotion,
   attrition, threshold failures, work counters, bounded candidate-stage
   history cross-links, denominator-policy boundaries, and explicit
-  claim-readiness limitations under `runtime.history.evaluation_cascade_report`
+  claim-readiness limitations under `runtime.history.evaluation_cascade_report`,
+  with `papers/evaluation_cascade_boundary.json` now carrying the
+  paper-manifest-validated absence boundary for stage difficulty/test-set
+  identities, benchmark seed/sample policy, and cost-savings evidence
 - cascade hypothesis-test boundary reports under
   `runtime.history.cascade_hypothesis_test_policy_report`, naming configured
   or fallback-inferred small-scale-filter/main-test roles, deterministic threshold/artifact

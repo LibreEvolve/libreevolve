@@ -1,0 +1,37 @@
+{
+  "schema": "libreevolve.alphaevolve_evaluation_cascade_boundary.v1",
+  "runtime_report_schema": "libreevolve.evaluation_cascade_report.v1",
+  "hypothesis_test_policy_report_schema": "libreevolve.cascade_hypothesis_test_policy_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_section_id": "2.4",
+  "source_claim": "evaluation cascades use increasingly difficult test ensembles to promote promising candidates and prune less promising candidates before larger budgets are spent",
+  "boundary_status": "runtime_attrition_without_benchmark_efficiency_evidence",
+  "runtime_report_status": "evaluation_cascade_report_available_when_stages_run",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "stage_id",
+    "stage_role",
+    "difficulty_scale_label",
+    "evaluator_test_set_identity",
+    "test_set_sha256",
+    "sample_count",
+    "random_seed_policy",
+    "promotion_rule",
+    "main_test_exposure_count",
+    "early_prune_count",
+    "per_stage_elapsed_seconds",
+    "counterfactual_full_evaluation_cost",
+    "observed_cost_savings",
+    "claim_readiness"
+  ],
+  "missing_evidence": {
+    "stage_difficulty_or_scale_rationale": "not_recorded_locally",
+    "evaluator_test_set_identities": "not_recorded_locally",
+    "test_set_hashes": "not_recorded_locally",
+    "benchmark_seed_sample_policy": "not_recorded_locally",
+    "counterfactual_full_evaluation_costs": "not_recorded_locally",
+    "wall_clock_cost_savings": "not_recorded_locally",
+    "matrix_multiplication_repeated_seed_policy": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has runtime cascade attrition and hypothesis-test policy reports, but does not claim AlphaEvolve-style cascade-efficiency evidence with stage difficulty rationale, evaluator test-set identities and hashes, benchmark seed/sample policy, counterfactual full-evaluation costs, or observed wall-clock cost savings."
+}

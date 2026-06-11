@@ -82,7 +82,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `candidate_stage_records` with `history.jsonl` metadata paths, evaluator
     source refs when available, a denominator policy for runtime candidate,
     stage-entry, main-test exposure, and early-prune populations, and explicit
-    denominator overclaim validation.
+    denominator overclaim validation. The committed
+    `papers/evaluation_cascade_boundary.json` sidecar now preserves the
+    paper-manifest-validated cascade-efficiency absence boundary.
   - Current gap: paper-facing evidence still lacks stage difficulty or scale
     rationale, evaluator/test-set identities, benchmark seed/sample policy,
     and counterfactual cost/wall-clock savings. The report therefore remains

@@ -181,7 +181,9 @@ totals, elapsed seconds, promotion rates, main-test exposure, early-prune
 counts, stop reasons, bounded candidate-stage records with `history.jsonl`
 metadata paths, evaluator source refs when available, denominator-policy
 boundaries, and `claim_ready: false` limitations for missing difficulty/
-test-set, benchmark seed/sample, and cost evidence.
+test-set, benchmark seed/sample, and cost evidence. The committed
+`papers/evaluation_cascade_boundary.json` sidecar preserves the same
+cascade-efficiency absence boundary for paper-manifest validation.
 Completed manifests also include
 `runtime.history.cascade_hypothesis_test_policy_report` with schema
 `libreevolve.cascade_hypothesis_test_policy_report.v1`. It derives current

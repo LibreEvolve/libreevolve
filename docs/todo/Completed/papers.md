@@ -6,6 +6,24 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit evaluation-cascade efficiency boundary sidecar.
+  - Paper evidence: AlphaEvolve Section 2.4 describes increasingly difficult
+    cascade tests, promotion of promising candidates, early pruning, and
+    multi-seed matrix-multiplication evaluation.
+  - Status: `papers/evaluation_cascade_boundary.json` now carries the
+    paper-facing `libreevolve.alphaevolve_evaluation_cascade_boundary.v1`
+    absence boundary. The paper-manifest gate requires and validates the
+    sidecar at the real repo root.
+  - Verification: `py -3.12 -m pytest
+    tests\test_evaluation_cascade_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\evaluation_cascade_boundary.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining paper gap: this is an absence boundary; stage difficulty/test-set
+    metadata, seed/sample policy, and counterfactual cost-savings evidence
+    remain open.
+
 - [x] Emit proposal lifecycle independent-audit boundary sidecar.
   - Paper evidence: AlphaEvolve frames execution and automatic evaluation as
     grounding that filters incorrect base-LLM suggestions before discovered

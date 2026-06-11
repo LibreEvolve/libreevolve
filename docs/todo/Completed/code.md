@@ -4,6 +4,26 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit evaluation-cascade efficiency boundary sidecar.
+  - Spec evidence: AlphaEvolve Section 2.4 says cascades promote promising
+    candidates through increasingly difficult tests and prune weaker candidates
+    before larger budgets are spent; the matrix experiment also uses multiple
+    random seeds.
+  - Status: `papers/evaluation_cascade_boundary.json` now emits the
+    `libreevolve.alphaevolve_evaluation_cascade_boundary.v1`
+    `runtime_attrition_without_benchmark_efficiency_evidence` boundary, and
+    `validate_paper_manifest()` requires and validates it at the real repo
+    root.
+  - Verification: `py -3.12 -m pytest
+    tests\test_evaluation_cascade_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\evaluation_cascade_boundary.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: no local cascade artifact records stage difficulty/scale
+    rationale, evaluator test-set identities and hashes, benchmark seed/sample
+    policy, counterfactual full-evaluation cost, or wall-clock cost savings.
+
 - [x] Emit proposal lifecycle independent-audit boundary sidecar.
   - Spec evidence: AlphaEvolve says execution and automatic evaluation ground
     LLM-directed evolution and filter incorrect base-LLM suggestions, which

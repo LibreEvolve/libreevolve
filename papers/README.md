@@ -647,7 +647,11 @@ main-test exposure, early-prune counts, bounded candidate-stage cross-links to
 boundaries, and explicit `claim_ready: false` limitations. Stage difficulty/
 test-set identities, benchmark seed/sample policy, and cost-savings evidence
 remain open before claiming AlphaEvolve cascade efficiency or
-hypothesis-testing parity. Completed manifests also include
+hypothesis-testing parity. The committed
+`papers/evaluation_cascade_boundary.json` sidecar now emits that
+`runtime_attrition_without_benchmark_efficiency_evidence` boundary, and
+`validate_paper_manifest()` requires and validates it at the real repo root.
+Completed manifests also include
 `runtime.history.cascade_hypothesis_test_policy_report`, which names configured
 or fallback-inferred small-scale-filter/intermediate/main-test roles, links
 current promotion counts and sample/seed configuration, and validates that

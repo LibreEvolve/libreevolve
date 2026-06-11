@@ -1330,7 +1330,10 @@ Primary evidence:
     when available, and a denominator policy for runtime candidate,
     stage-entry, main-test exposure, and early-prune populations. Validation
     rejects denominator overclaims. Tests cover a two-stage run where one
-    candidate reaches the final stage and another is pruned at smoke.
+    candidate reaches the final stage and another is pruned at smoke. The
+    committed `papers/evaluation_cascade_boundary.json` sidecar now records
+    the paper-manifest-validated absence boundary for missing cascade-
+    efficiency evidence.
   - Required result: finish difficulty/scale labels, evaluator/test-set hashes,
     benchmark seed/sample policy beyond runtime accounting, and counterfactual
     cost-savings evidence before claiming AlphaEvolve-style evaluation-cascade

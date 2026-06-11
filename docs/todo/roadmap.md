@@ -117,7 +117,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     rates, main-test exposure, early-prune counts, and explicit
     `claim_ready: false` limitations. ROADMAP can also cite bounded
     candidate-stage `history.jsonl` cross-links and runtime denominator-policy
-    boundaries.
+    boundaries. ROADMAP now also names
+    `papers/evaluation_cascade_boundary.json` as the committed paper-manifest-
+    validated cascade-efficiency absence boundary.
   - Required result: update ROADMAP, README, papers index, and code/paper TODOs
     with the partial report and remaining work for stage difficulty/scale
     labels, evaluator/test-set hashes, benchmark seed/sample policy, and

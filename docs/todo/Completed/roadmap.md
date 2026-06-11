@@ -2,6 +2,20 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Emit evaluation-cascade boundary sidecar for roadmap evidence.
+  - Status: `papers/evaluation_cascade_boundary.json` now lets roadmap wording
+    point to a committed absence boundary for stage difficulty/test-set
+    identities, benchmark seed/sample policy, counterfactual full-evaluation
+    cost, and observed cost-savings evidence.
+  - Verification: `py -3.12 -m pytest
+    tests\test_evaluation_cascade_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\evaluation_cascade_boundary.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: real benchmark-grade cascade efficiency evidence remains
+    open.
+
 - [x] Emit proposal lifecycle audit boundary sidecar for roadmap evidence.
   - Status: `papers/proposal_lifecycle_audit_boundary.json` now lets roadmap
     wording point to a committed absence boundary for independent rejudge,

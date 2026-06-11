@@ -95,6 +95,12 @@ from libreevolve.problems.benchmarks.example_scope import (
     render_example_benchmark_scope_summary,
     validate_example_benchmark_scope,
 )
+from libreevolve.problems.benchmarks.evaluation_cascade_boundary import (
+    EVALUATION_CASCADE_BOUNDARY_SCHEMA,
+    evaluation_cascade_boundary_record,
+    render_evaluation_cascade_boundary_summary,
+    validate_evaluation_cascade_boundary,
+)
 from libreevolve.problems.benchmarks.existing_codebase_integration import (
     EXISTING_CODEBASE_INTEGRATION_BOUNDARY_SCHEMA,
     existing_codebase_integration_boundary_record,
@@ -315,6 +321,7 @@ __all__ = [
     "CANDIDATE_ABSTRACTION_BOUNDARY_SCHEMA",
     "CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA",
     "EXPECTED_TARGET_COUNT",
+    "EVALUATION_CASCADE_BOUNDARY_SCHEMA",
     "EXAMPLE_BENCHMARK_SCOPE_SCHEMA",
     "EXISTING_CODEBASE_INTEGRATION_BOUNDARY_SCHEMA",
     "FIGURE8_ARTIFACT_BOUNDARY_SCHEMA",
@@ -383,6 +390,7 @@ __all__ = [
     "benchmark_hardening_artifact_inventory",
     "candidate_abstraction_boundary_record",
     "certification_artifact_inventory",
+    "evaluation_cascade_boundary_record",
     "example_benchmark_scope_records",
     "existing_codebase_integration_boundary_record",
     "proposal_lifecycle_audit_boundary_record",
@@ -437,6 +445,7 @@ __all__ = [
     "render_benchmark_hardening_summary",
     "render_candidate_abstraction_boundary_summary",
     "render_certification_summary",
+    "render_evaluation_cascade_boundary_summary",
     "render_example_benchmark_scope_summary",
     "render_existing_codebase_integration_boundary_summary",
     "render_figure8_exhibit_summary",
@@ -488,6 +497,7 @@ __all__ = [
     "validate_benchmark_hardening_report",
     "validate_candidate_abstraction_boundary",
     "validate_certification_evidence_bundle",
+    "validate_evaluation_cascade_boundary",
     "validate_example_benchmark_scope",
     "validate_existing_codebase_integration_boundary",
     "validate_figure8_exhibit",

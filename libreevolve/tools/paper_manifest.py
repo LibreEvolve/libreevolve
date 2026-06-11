@@ -56,6 +56,10 @@ from libreevolve.problems.benchmarks.candidate_abstraction import (
     candidate_abstraction_boundary_record,
     validate_candidate_abstraction_boundary,
 )
+from libreevolve.problems.benchmarks.evaluation_cascade_boundary import (
+    evaluation_cascade_boundary_record,
+    validate_evaluation_cascade_boundary,
+)
 from libreevolve.problems.benchmarks.example_scope import (
     example_benchmark_scope_records,
     validate_example_benchmark_scope,
@@ -178,6 +182,7 @@ FIGURE8_ABLATION_ARTIFACTS_FILE = "papers/figure8_ablation_artifacts.json"
 EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integration_boundary.json"
 CANDIDATE_ABSTRACTION_BOUNDARY_FILE = "papers/candidate_abstraction_boundary.json"
 PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_FILE = "papers/proposal_lifecycle_audit_boundary.json"
+EVALUATION_CASCADE_BOUNDARY_FILE = "papers/evaluation_cascade_boundary.json"
 MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE = "papers/matrix_headline_historicity_artifacts.json"
 APPENDIX_A_BASELINE_CITATIONS_FILE = "papers/appendix_a_matrix_baseline_citations.json"
 MATRIX_BASELINE_COMPONENT_RUNTIME_FILE = "papers/matrix_baseline_component_runtime_boundary.json"
@@ -555,6 +560,7 @@ def validate_paper_manifest(
     issues.extend(_validate_existing_codebase_integration_boundary(root_path))
     issues.extend(_validate_candidate_abstraction_boundary(root_path))
     issues.extend(_validate_proposal_lifecycle_audit_boundary(root_path))
+    issues.extend(_validate_evaluation_cascade_boundary(root_path))
     issues.extend(_validate_example_benchmark_scope_records(root_path))
     issues.extend(_validate_math_outcome_boundaries(root_path))
 
@@ -1297,6 +1303,38 @@ def _validate_proposal_lifecycle_audit_boundary(root_path: Path) -> list[PaperMa
             f"proposal_lifecycle_audit_boundary_{issue.code}",
             issue.message,
             "proposal_lifecycle_audit",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_evaluation_cascade_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / EVALUATION_CASCADE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = evaluation_cascade_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "evaluation_cascade_boundary_manifest_missing",
+                    (
+                        f"{EVALUATION_CASCADE_BOUNDARY_FILE} must emit "
+                        "evaluation-cascade efficiency evidence availability"
+                    ),
+                    "evaluation_cascade",
+                )
+            ]
+    report = validate_evaluation_cascade_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"evaluation_cascade_boundary_{issue.code}",
+            issue.message,
+            "evaluation_cascade",
         )
         for issue in report.issues
     ]

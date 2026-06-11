@@ -553,6 +553,7 @@ class ProgramDatabase:
         self._archive_ids: set[str] = set()
         self._failure_counts: dict[str, int] = {}
         self._controller_budget_event_sequence: int = 0
+        self._archive_admission_event_sequence: int = 0
         self._workspace_limits = _candidate_workspace_limits_from_config(config)
         self._write_manifest(startup_manifest)
 
@@ -696,6 +697,7 @@ class ProgramDatabase:
             _validate_program_history_record(program, self._jsonl, metadata=metadata)
             archive_program.metadata = metadata
         program.metadata = metadata
+        self._log_archive_admission_event(program, event)
         return event
 
     def log(self, program: Program) -> None:
@@ -1244,6 +1246,16 @@ class ProgramDatabase:
             quarantine_snapshot_retention_mode=self._quarantine_snapshot_retention_mode,
         )
 
+    def _log_archive_admission_event(self, program: Program, event: Mapping[str, object]) -> None:
+        self._archive_admission_event_sequence += 1
+        self._log_archive_event(
+            _archive_admission_event_record(
+                program,
+                event,
+                admission_sequence=self._archive_admission_event_sequence,
+            )
+        )
+
     def _write_manifest(self, manifest: dict) -> None:
         strict_json_dump(manifest, self._manifest, indent=2)
         task_specification = manifest.get("task_specification")
@@ -1396,9 +1408,10 @@ def load_failure_history_records(path: str | Path) -> list[dict]:
 
 
 def load_archive_event_records(path: str | Path) -> list[dict]:
-    """Load archive_events.jsonl as a checked migration audit stream."""
+    """Load archive_events.jsonl as a checked archive event stream."""
     records: list[dict] = []
-    previous_sequence = 0
+    previous_migration_sequence = 0
+    previous_admission_sequence = 0
     try:
         for line_number, record in enumerate(
             iter_strict_jsonl_objects(Path(path), stream_name="archive_events.jsonl"),
@@ -1410,10 +1423,13 @@ def load_archive_event_records(path: str | Path) -> list[dict]:
                 expected_schema=ARCHIVE_EVENT_RECORD_SCHEMA,
                 stream_name="archive_events.jsonl",
             )
-            previous_sequence = _validate_archive_event_record(
-                record,
-                line_number,
-                previous_sequence,
+            previous_migration_sequence, previous_admission_sequence = (
+                _validate_archive_event_record(
+                    record,
+                    line_number,
+                    previous_migration_sequence,
+                    previous_admission_sequence,
+                )
             )
             records.append(copy.deepcopy(record))
     except StrictJsonlError as exc:
@@ -1429,8 +1445,13 @@ def archive_event_replay_audit(
     event_path = Path(path)
     if not event_path.exists():
         return _archive_event_replay_absent_audit(archive_state_snapshot)
+    records = [
+        record
+        for record in load_archive_event_records(event_path)
+        if record.get("event_type") == "migration"
+    ]
     return audit_archive_event_records(
-        load_archive_event_records(event_path),
+        records,
         archive_state_snapshot,
     )
 
@@ -2217,14 +2238,81 @@ def _archive_snapshot_cell_map(
 
 def _archive_event_replay_audit_limitations() -> list[str]:
     return [
-        "audit_replays_migration_rows_only_not_normal_archive_admissions",
+        "audit_replays_migration_rows_only_admission_rows_are_not_restore_engine",
         "audit_does_not_restore_controller_pending_work",
         "superseded_non_migration_cell_replacements_report_as_mismatches",
         "archive_contents_snapshot_remains_restore_source",
     ]
 
 
+def _archive_admission_event_record(
+    program: Program,
+    event: Mapping[str, object],
+    *,
+    admission_sequence: int,
+) -> dict:
+    record: dict[str, object] = {
+        "event_type": "admission",
+        "admission_sequence": admission_sequence,
+        "program_id": program.id,
+        "canonical_program_id": program.id,
+        "archive_sequence": event.get("archive_sequence"),
+        "island_id": event.get("island_id"),
+        "admitted": event.get("admitted"),
+        "reason": event.get("reason"),
+        "cell": event.get("cell"),
+        "selection_score": _history_safe_selection_score(program),
+        "threshold": event.get("threshold"),
+        "evaluation_is_valid": event.get("evaluation_is_valid"),
+        "cell_admitted": event.get("cell_admitted"),
+        "elite_retained": event.get("elite_retained"),
+        "sampling_eligible": event.get("sampling_eligible"),
+        "search_state_changed": event.get("search_state_changed"),
+    }
+    previous_occupant_id = event.get("previous_occupant_id")
+    if previous_occupant_id is None or isinstance(previous_occupant_id, str):
+        record["previous_occupant_id"] = previous_occupant_id
+    objective_vector = _history_safe_objective_vector(program)
+    if objective_vector is not None:
+        record["objective_vector"] = objective_vector
+    descriptors = event.get("descriptors")
+    if isinstance(descriptors, Mapping):
+        record["descriptors"] = {
+            str(name): float(value)
+            for name, value in sorted(descriptors.items())
+            if isinstance(name, str) and _is_finite_real(value)
+        }
+    return record
+
+
 def _validate_archive_event_record(
+    record: dict,
+    line_number: int,
+    previous_migration_sequence: int,
+    previous_admission_sequence: int,
+) -> tuple[int, int]:
+    event_type = record.get("event_type")
+    if event_type == "migration":
+        previous_migration_sequence = _validate_archive_migration_event_record(
+            record,
+            line_number,
+            previous_migration_sequence,
+        )
+    elif event_type == "admission":
+        previous_admission_sequence = _validate_archive_admission_event_record(
+            record,
+            line_number,
+            previous_admission_sequence,
+        )
+    else:
+        raise ArchiveEventRestoreError(
+            f"Malformed archive_events.jsonl at line {line_number}: "
+            "event_type must be migration or admission"
+        )
+    return previous_migration_sequence, previous_admission_sequence
+
+
+def _validate_archive_migration_event_record(
     record: dict,
     line_number: int,
     previous_sequence: int,
@@ -2257,11 +2345,6 @@ def _validate_archive_event_record(
         raise ArchiveEventRestoreError(
             f"Malformed archive_events.jsonl at line {line_number}: "
             f"unsupported fields: {sorted(unsupported)}"
-        )
-    if record["event_type"] != "migration":
-        raise ArchiveEventRestoreError(
-            f"Malformed archive_events.jsonl at line {line_number}: "
-            "event_type must be migration"
         )
     sequence = _validate_archive_event_positive_int(
         record["migration_sequence"],
@@ -2325,6 +2408,124 @@ def _validate_archive_event_record(
     return sequence
 
 
+def _validate_archive_admission_event_record(
+    record: dict,
+    line_number: int,
+    previous_sequence: int,
+) -> int:
+    required = {
+        "schema_version",
+        "record_schema",
+        "event_type",
+        "admission_sequence",
+        "program_id",
+        "canonical_program_id",
+        "archive_sequence",
+        "island_id",
+        "admitted",
+        "reason",
+        "cell",
+        "selection_score",
+        "threshold",
+        "evaluation_is_valid",
+        "cell_admitted",
+        "elite_retained",
+        "sampling_eligible",
+        "search_state_changed",
+    }
+    missing = required - set(record)
+    if missing:
+        raise ArchiveEventRestoreError(
+            f"Malformed archive_events.jsonl at line {line_number}: "
+            f"missing fields: {sorted(missing)}"
+        )
+    supported = required | {
+        "objective_vector",
+        "descriptors",
+        "previous_occupant_id",
+    }
+    unsupported = set(record) - supported
+    if unsupported:
+        raise ArchiveEventRestoreError(
+            f"Malformed archive_events.jsonl at line {line_number}: "
+            f"unsupported fields: {sorted(unsupported)}"
+        )
+    sequence = _validate_archive_event_positive_int(
+        record["admission_sequence"],
+        line_number,
+        "admission_sequence",
+    )
+    if sequence <= previous_sequence:
+        raise ArchiveEventRestoreError(
+            f"Malformed archive_events.jsonl at line {line_number}: "
+            "admission_sequence must be strictly increasing"
+        )
+    for field in ("program_id", "canonical_program_id"):
+        try:
+            validate_program_identity(record[field])
+        except ValueError as exc:
+            raise ArchiveEventRestoreError(
+                f"Malformed archive_events.jsonl at line {line_number}: {field}: {exc}"
+            ) from exc
+    if record["program_id"] != record["canonical_program_id"]:
+        raise ArchiveEventRestoreError(
+            f"Malformed archive_events.jsonl at line {line_number}: "
+            "canonical_program_id must match program_id"
+        )
+    _validate_archive_event_optional_non_negative_int(
+        record["archive_sequence"],
+        line_number,
+        "archive_sequence",
+    )
+    _validate_archive_event_optional_non_negative_int(
+        record["island_id"],
+        line_number,
+        "island_id",
+    )
+    for field in (
+        "admitted",
+        "evaluation_is_valid",
+        "cell_admitted",
+        "elite_retained",
+        "sampling_eligible",
+        "search_state_changed",
+    ):
+        if not isinstance(record[field], bool):
+            raise ArchiveEventRestoreError(
+                f"Malformed archive_events.jsonl at line {line_number}: "
+                f"{field} must be boolean"
+            )
+    _validate_archive_event_reason(record["reason"], line_number)
+    _validate_archive_event_cell(record["cell"], line_number)
+    selection_score = record["selection_score"]
+    if selection_score is not None and not _is_finite_real(selection_score):
+        raise ArchiveEventRestoreError(
+            f"Malformed archive_events.jsonl at line {line_number}: "
+            "selection_score must be finite or null"
+        )
+    threshold = record["threshold"]
+    if not _is_finite_real(threshold):
+        raise ArchiveEventRestoreError(
+            f"Malformed archive_events.jsonl at line {line_number}: "
+            "threshold must be finite"
+        )
+    previous_occupant_id = record.get("previous_occupant_id")
+    if previous_occupant_id is not None:
+        try:
+            validate_program_identity(previous_occupant_id)
+        except ValueError as exc:
+            raise ArchiveEventRestoreError(
+                f"Malformed archive_events.jsonl at line {line_number}: "
+                f"previous_occupant_id: {exc}"
+            ) from exc
+    _validate_archive_event_objective_vector(
+        record.get("objective_vector"),
+        line_number,
+    )
+    _validate_archive_event_descriptors(record.get("descriptors"), line_number)
+    return sequence
+
+
 def _validate_archive_event_objective_vector(value: object, line_number: int) -> None:
     if value is None:
         return
@@ -2369,6 +2570,32 @@ def _validate_archive_event_objective_vector(value: object, line_number: int) ->
         )
 
 
+def _validate_archive_event_descriptors(value: object, line_number: int) -> None:
+    if value is None:
+        return
+    if not isinstance(value, dict):
+        raise ArchiveEventRestoreError(
+            f"Malformed archive_events.jsonl at line {line_number}: "
+            "descriptors must be an object or null"
+        )
+    for name, descriptor_value in value.items():
+        if not isinstance(name, str) or not name:
+            raise ArchiveEventRestoreError(
+                f"Malformed archive_events.jsonl at line {line_number}: "
+                "descriptor names must be non-empty text"
+            )
+        if redact_sensitive_text(name) != name:
+            raise ArchiveEventRestoreError(
+                f"Malformed archive_events.jsonl at line {line_number}: "
+                "descriptor names must not contain secret-like text"
+            )
+        if not _is_finite_real(descriptor_value):
+            raise ArchiveEventRestoreError(
+                f"Malformed archive_events.jsonl at line {line_number}: "
+                f"descriptor {name!r} must be finite"
+            )
+
+
 def _validate_archive_event_positive_int(
     value: object,
     line_number: int,
@@ -2378,8 +2605,18 @@ def _validate_archive_event_positive_int(
         raise ArchiveEventRestoreError(
             f"Malformed archive_events.jsonl at line {line_number}: "
             f"{field} must be a positive integer"
-        )
+    )
     return value
+
+
+def _validate_archive_event_optional_non_negative_int(
+    value: object,
+    line_number: int,
+    field: str,
+) -> int | None:
+    if value is None:
+        return None
+    return _validate_archive_event_non_negative_int(value, line_number, field)
 
 
 def _validate_archive_event_non_negative_int(

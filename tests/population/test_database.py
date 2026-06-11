@@ -5620,6 +5620,41 @@ def _archive_event_row(program_id: str = "p1", **extra) -> dict:
     return row
 
 
+def _archive_admission_event_row(program_id: str = "p1", **extra) -> dict:
+    row = {
+        "schema_version": ARTIFACT_SCHEMA_VERSION,
+        "record_schema": ARCHIVE_EVENT_RECORD_SCHEMA,
+        "event_type": "admission",
+        "admission_sequence": 1,
+        "program_id": program_id,
+        "canonical_program_id": program_id,
+        "archive_sequence": 1,
+        "island_id": 0,
+        "admitted": True,
+        "reason": "empty_cell",
+        "cell": [0, 1, 2],
+        "selection_score": 0.5,
+        "threshold": 0.0,
+        "evaluation_is_valid": True,
+        "cell_admitted": True,
+        "elite_retained": True,
+        "sampling_eligible": True,
+        "search_state_changed": True,
+        "descriptors": {"performance": 0.5},
+        "previous_occupant_id": None,
+        "objective_vector": {
+            "policy": "normalized_declared_metric_vector_v1",
+            "normalized_metrics": {"score": 0.5},
+            "selection_policy": {
+                "type": "mean_normalized_declared_metrics",
+                "metrics": ["score"],
+            },
+        },
+    }
+    row.update(extra)
+    return row
+
+
 def _write_archive_events(path: Path, rows: list[dict]) -> None:
     path.write_text(
         "\n".join(json.dumps(row) for row in rows) + "\n",
@@ -5774,6 +5809,81 @@ def test_load_archive_event_records_validates_current_schema_rows(tmp_path):
     assert load_archive_event_records(events)[0]["program_id"] == "p1"
 
 
+def test_load_archive_event_records_accepts_admission_rows(tmp_path):
+    events = tmp_path / "archive_events.jsonl"
+    _write_archive_events(
+        events,
+        [
+            _archive_admission_event_row("p1", admission_sequence=1),
+            _archive_event_row("p1", migration_sequence=1),
+            _archive_admission_event_row(
+                "p2",
+                admission_sequence=2,
+                admitted=False,
+                archive_sequence=None,
+                island_id=None,
+                cell=None,
+                reason="not_improving_cell",
+                cell_admitted=False,
+                elite_retained=False,
+                sampling_eligible=False,
+                search_state_changed=False,
+            ),
+        ],
+    )
+
+    records = load_archive_event_records(events)
+
+    assert [record["event_type"] for record in records] == [
+        "admission",
+        "migration",
+        "admission",
+    ]
+    assert records[0]["admission_sequence"] == 1
+    assert records[2]["archive_sequence"] is None
+    assert records[2]["admitted"] is False
+
+
+def test_program_database_add_logs_archive_admission_event(tmp_path):
+    db = ProgramDatabase(Config(log_dir=str(tmp_path), problem_name="t"))
+    admitted = Program(
+        id="accepted",
+        code="x = 1\n",
+        fitness=0.7,
+        metrics={"score": 0.7},
+        evaluation={"is_valid": True},
+        metadata={"normalized_metrics": {"score": 0.7}, "selection_score": 0.7},
+    )
+
+    event = db.add(admitted)
+    records = load_archive_event_records(tmp_path / "t" / "archive_events.jsonl")
+
+    assert event["program_id"] == "accepted"
+    assert len(records) == 1
+    record = records[0]
+    assert record["schema_version"] == ARTIFACT_SCHEMA_VERSION
+    assert record["record_schema"] == ARCHIVE_EVENT_RECORD_SCHEMA
+    assert record["event_type"] == "admission"
+    assert record["admission_sequence"] == 1
+    assert record["program_id"] == "accepted"
+    assert record["canonical_program_id"] == "accepted"
+    assert record["archive_sequence"] == 1
+    assert record["island_id"] == 0
+    assert record["admitted"] is True
+    assert record["reason"] == "empty_cell"
+    assert record["cell"] == event["cell"]
+    assert record["selection_score"] == 0.7
+    assert record["threshold"] == 0.0
+    assert record["evaluation_is_valid"] is True
+    assert record["cell_admitted"] is True
+    assert record["elite_retained"] is True
+    assert record["sampling_eligible"] is True
+    assert record["search_state_changed"] is True
+    assert record["previous_occupant_id"] is None
+    assert record["objective_vector"]["normalized_metrics"] == {"score": 0.7}
+    assert record["descriptors"] == event["descriptors"]
+
+
 def test_load_archive_event_records_accepts_legacy_rows_without_objective_vector(
     tmp_path,
 ):
@@ -5918,7 +6028,7 @@ def test_archive_event_replay_audit_reports_absent_stream(tmp_path):
     assert audit["status"] == "archive_events_absent"
     assert audit["event_count"] == 0
     assert audit["limitations"] == [
-        "audit_replays_migration_rows_only_not_normal_archive_admissions",
+        "audit_replays_migration_rows_only_admission_rows_are_not_restore_engine",
         "audit_does_not_restore_controller_pending_work",
         "superseded_non_migration_cell_replacements_report_as_mismatches",
         "archive_contents_snapshot_remains_restore_source",
@@ -6291,12 +6401,19 @@ def test_maybe_migrate_triggers_on_interval():
     assert events[0]["program_id"] == p.id
     assert events[0]["identity_policy"] == "canonical_id_reference"
     assert db.best().metadata["migration_placements"] == events
-    [record] = [
+    archive_records = [
         json.loads(line)
         for line in (Path(tmpdir) / "t" / "archive_events.jsonl")
         .read_text(encoding="utf-8")
         .splitlines()
     ]
+    [record] = [
+        row for row in archive_records if row.get("event_type") == "migration"
+    ]
+    [admission_record] = [
+        row for row in archive_records if row.get("event_type") == "admission"
+    ]
+    assert admission_record["program_id"] == p.id
     assert record["schema_version"] == ARTIFACT_SCHEMA_VERSION
     assert record["record_schema"] == ARCHIVE_EVENT_RECORD_SCHEMA
     assert record["event_type"] == "migration"

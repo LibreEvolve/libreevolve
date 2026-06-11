@@ -12850,7 +12850,7 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
                 "exact_source_diagram_text_reproduction",
                 "async_controller_sampler_evaluator_topology",
                 "independent_evaluator_pool_parallelism",
-                "durable_llm_and_archive_stream_candidate_joins",
+                "durable_llm_stream_candidate_joins",
             ],
         },
     }
@@ -13164,6 +13164,7 @@ def _process_candidate_semantic_traces(
     history_indexes = _prompt_current_history_join_indexes(run_dir)
     controller_rows = _process_controller_event_rows_by_kind(run_dir)
     llm_rows = _process_llm_call_rows_by_id(run_dir)
+    archive_rows = _process_archive_event_rows_by_program_id(run_dir)
     traces = []
     for program in programs:
         if len(traces) >= 25:
@@ -13176,6 +13177,7 @@ def _process_candidate_semantic_traces(
             history_indexes,
             controller_rows,
             llm_rows,
+            archive_rows,
         )
         traces.append(trace)
     return traces
@@ -13186,6 +13188,7 @@ def _process_candidate_semantic_trace_record(
     history_indexes: Mapping[str, object],
     controller_rows: Mapping[str, list[dict]],
     llm_rows: Mapping[str, dict],
+    archive_rows: Mapping[str, list[dict]],
 ) -> dict:
     metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
     prompt_program_id = metadata.get("prompt_program_id")
@@ -13221,6 +13224,13 @@ def _process_candidate_semantic_trace_record(
         for call_id in llm_call_ids
         if call_id in llm_rows
     ][:25]
+    archive_event_rows = [
+        dict(row)
+        for row in archive_rows.get(program.id, [])
+        if isinstance(row, Mapping)
+    ][:25]
+    llm_stream_joined = bool(llm_stream_rows)
+    archive_stream_joined = bool(archive_event_rows)
     step_joins = [
         {
             "step_id": "fig2.step_1_sample",
@@ -13251,7 +13261,7 @@ def _process_candidate_semantic_trace_record(
             "llm_call_ids": llm_call_ids[:25],
             "llm_call_ids_truncated": len(llm_call_ids) > 25,
             "llm_call_stream_rows": llm_stream_rows,
-            "llm_call_stream_joined": bool(llm_stream_rows),
+            "llm_call_stream_joined": llm_stream_joined,
             "controller_llm_call_event_rows": _process_controller_event_sample(
                 controller_rows,
                 "llm_call",
@@ -13310,7 +13320,8 @@ def _process_candidate_semantic_trace_record(
             if isinstance(archive_admission, Mapping)
             else None,
             "archive_sequence": _mapping_int(metadata, "archive_sequence"),
-            "archive_event_stream_joined": False,
+            "archive_event_stream_rows": archive_event_rows,
+            "archive_event_stream_joined": archive_stream_joined,
         },
     ]
     required_step_join_count = sum(
@@ -13326,11 +13337,19 @@ def _process_candidate_semantic_trace_record(
         "step_join_count": required_step_join_count,
         "step_joins": step_joins,
         "semantic_trace_ready": required_step_join_count == len(step_joins),
-        "durable_every_stream_join": False,
-        "remaining_gap": [
-            "llm_calls_jsonl_row_join_when_provider_ledger_absent",
-            "archive_events_jsonl_candidate_join_for_normal_admissions",
-        ],
+        "durable_every_stream_join": llm_stream_joined and archive_stream_joined,
+        "remaining_gap": (
+            []
+            if llm_stream_joined and archive_stream_joined
+            else [
+                gap
+                for gap, joined in (
+                    ("llm_calls_jsonl_row_join_when_provider_ledger_absent", llm_stream_joined),
+                    ("archive_events_jsonl_candidate_join_for_normal_admissions", archive_stream_joined),
+                )
+                if not joined
+            ]
+        ),
     }
 
 
@@ -13378,6 +13397,35 @@ def _process_llm_call_rows_by_id(run_dir: Path) -> dict[str, dict]:
             "role": record.get("role"),
             "status": record.get("status"),
         }
+    return rows
+
+
+def _process_archive_event_rows_by_program_id(run_dir: Path) -> dict[str, list[dict]]:
+    path = run_dir / "archive_events.jsonl"
+    rows: dict[str, list[dict]] = {}
+    if not path.exists():
+        return rows
+    for line_number, record in enumerate(
+        iter_strict_jsonl_objects(path, stream_name="archive_events.jsonl"),
+        start=1,
+    ):
+        if record.get("event_type") != "admission":
+            continue
+        program_id = record.get("program_id")
+        if not isinstance(program_id, str):
+            continue
+        rows.setdefault(program_id, []).append(
+            {
+                "stream": "archive_events.jsonl",
+                "line_number": line_number,
+                "event_type": record.get("event_type"),
+                "admission_sequence": record.get("admission_sequence"),
+                "archive_sequence": record.get("archive_sequence"),
+                "program_id": program_id,
+                "admitted": record.get("admitted"),
+                "reason": record.get("reason"),
+            }
+        )
     return rows
 
 
@@ -13590,15 +13638,10 @@ def _process_exhibit_component_todo_links() -> list[dict]:
             "claim_surface_paths": claim_surfaces,
         },
         {
-            "gap_id": "durable_llm_and_archive_stream_candidate_joins",
+            "gap_id": "durable_llm_stream_candidate_joins",
             "status": "open",
             "component_ids": [
-                "fig2.step_1_sample",
-                "fig2.step_2_build_prompt",
                 "fig2.step_3_generate",
-                "fig2.step_4_apply_diff",
-                "fig2.step_5_execute_evaluator",
-                "fig2.step_6_add_database",
             ],
             "active_todo_paths": active_todos,
             "claim_surface_paths": claim_surfaces,
@@ -14038,8 +14081,14 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
             issues.append({"code": "candidate_trace_join_count_overflow", "message": "step_join_count cannot exceed step count"})
         if not isinstance(trace.get("semantic_trace_ready"), bool):
             issues.append({"code": "invalid_candidate_trace_readiness", "message": "semantic_trace_ready must be boolean"})
-        if trace.get("durable_every_stream_join") is not False:
-            issues.append({"code": "durable_every_stream_trace_overclaim", "message": "candidate trace must not claim durable every-stream joins"})
+        if not isinstance(trace.get("durable_every_stream_join"), bool):
+            issues.append({"code": "invalid_durable_every_stream_trace_flag", "message": "candidate trace durable_every_stream_join must be boolean"})
+        remaining_gap = trace.get("remaining_gap")
+        if not isinstance(remaining_gap, list) or not all(isinstance(item, str) and item for item in remaining_gap):
+            issues.append({"code": "invalid_candidate_trace_remaining_gap", "message": "candidate trace remaining_gap must be text ids"})
+            remaining_gap = []
+        if trace.get("durable_every_stream_join") is True and remaining_gap:
+            issues.append({"code": "durable_every_stream_trace_gap_mismatch", "message": "durable candidate stream joins cannot retain stream gaps"})
         for step in step_joins:
             if not isinstance(step, Mapping):
                 issues.append({"code": "invalid_candidate_trace_step", "message": "candidate trace step must be an object"})
@@ -14066,8 +14115,14 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
                     or value < 1
                 ):
                     issues.append({"code": "invalid_candidate_trace_line_number", "message": f"{field} must be a positive integer or null"})
-            if step.get("archive_event_stream_joined") not in {None, False}:
-                issues.append({"code": "archive_event_stream_overclaim", "message": "archive event stream joins must not be claimed"})
+            if step.get("archive_event_stream_joined") not in {None, True, False}:
+                issues.append({"code": "invalid_archive_event_stream_join_flag", "message": "archive event stream join flag must be boolean"})
+            archive_rows = step.get("archive_event_stream_rows")
+            if archive_rows is not None and (
+                not isinstance(archive_rows, list)
+                or not all(isinstance(item, Mapping) for item in archive_rows)
+            ):
+                issues.append({"code": "invalid_archive_event_stream_rows", "message": "archive event stream rows must be row objects"})
             if step.get("llm_call_stream_joined") not in {None, True, False}:
                 issues.append({"code": "invalid_llm_call_stream_join_flag", "message": "llm call stream join flag must be boolean"})
     component_todo_links = report.get("component_todo_links")

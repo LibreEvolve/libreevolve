@@ -1485,7 +1485,7 @@ def test_completed_runtime_persists_archive_state_cursor_snapshot():
     assert archive_state["islands"][2]["occupied_cell_count"] == 0
     replay_audit = manifest["runtime"]["history"]["archive_event_replay_audit"]
     assert replay_audit["schema"] == "libreevolve.archive_event_replay_audit.v1"
-    assert replay_audit["status"] == "archive_events_absent"
+    assert replay_audit["status"] == "no_migration_placements"
     assert replay_audit["audit_only"] is True
     assert replay_audit["replay_engine_supported"] is False
     assert replay_audit["event_count"] == 0
@@ -5943,7 +5943,7 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert "exact_source_diagram_text_reproduction" in (
         report["claim_readiness"]["remaining_gap"]
     )
-    assert "durable_llm_and_archive_stream_candidate_joins" in (
+    assert "durable_llm_stream_candidate_joins" in (
         report["claim_readiness"]["remaining_gap"]
     )
     assert "semantic_candidate_level_step_stream_join_against_each_stream" not in (
@@ -6057,14 +6057,17 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert trace_steps["fig2.step_6_add_database"]["archive_admitted"] is True
     assert trace_steps["fig2.step_6_add_database"][
         "archive_event_stream_joined"
-    ] is False
+    ] is True
+    assert trace_steps["fig2.step_6_add_database"]["archive_event_stream_rows"][0][
+        "event_type"
+    ] == "admission"
     todo_links_by_gap = {
         link["gap_id"]: link for link in report["component_todo_links"]
     }
     assert "fig2.step_5_execute_evaluator" in todo_links_by_gap[
         "independent_evaluator_pool_parallelism"
     ]["component_ids"]
-    assert todo_links_by_gap["durable_llm_and_archive_stream_candidate_joins"][
+    assert todo_links_by_gap["durable_llm_stream_candidate_joins"][
         "active_todo_paths"
     ] == [
         "docs/todo/code.md",

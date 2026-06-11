@@ -4,6 +4,23 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add process-exhibit archive-admission stream joins.
+  - Spec evidence: AlphaEvolve Figure 2 ends each candidate loop with
+    `database.add(...)`, so generated-candidate traces should cite a durable
+    archive/database stream row for the admission decision instead of relying
+    only on candidate metadata.
+  - Status: `ProgramDatabase.admit()` now appends `event_type: "admission"`
+    rows to `archive_events.jsonl`, `load_archive_event_records()` validates
+    both admission and migration rows while replay audits continue to replay
+    migration rows only, and
+    `runtime.history.alphaevolve_process_exhibit_report` joins generated
+    candidate traces to bounded archive-admission event rows.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4638 passed, 21 skipped, 2 deselected.
+  - Remaining gap: exact source-diagram reproduction, async topology,
+    independent evaluator-pool parallelism, and durable LLM stream joins for
+    every generated step remain open.
+
 - [x] Add process-exhibit generated-candidate semantic traces.
   - Spec evidence: AlphaEvolve Figure 2 is a candidate-producing loop, so
     local process evidence should connect generated candidates to prompt,
@@ -17,8 +34,8 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4636 passed, 21 skipped, 2 deselected.
   - Remaining gap: exact source-diagram reproduction, async topology,
-    independent evaluator-pool parallelism, and durable LLM/archive stream
-    candidate joins for every process step remain open.
+    independent evaluator-pool parallelism, and durable LLM stream candidate
+    joins remain open.
 
 - [x] Add process-exhibit stream row summaries.
   - Spec evidence: AlphaEvolve Figure 2 names controller-loop steps that map
@@ -33,8 +50,8 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4636 passed, 21 skipped, 2 deselected.
   - Remaining gap: exact source-diagram reproduction, async topology,
-    independent evaluator-pool parallelism, and durable LLM/archive stream
-    candidate joins remain open.
+    independent evaluator-pool parallelism, and durable LLM stream candidate
+    joins remain open.
 
 - [x] Add process-exhibit step-stream artifact links.
   - Spec evidence: AlphaEvolve Figure 2 is a stepwise controller loop, so a
@@ -49,8 +66,8 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4636 passed, 21 skipped, 2 deselected.
   - Remaining gap: exact source-diagram reproduction, async topology,
-    independent evaluator-pool parallelism, and durable LLM/archive stream
-    joins remain open.
+    independent evaluator-pool parallelism, and durable LLM stream joins remain
+    open.
 
 - [x] Generate process-exhibit diagram text artifacts.
   - Spec evidence: AlphaEvolve Figure 1/Figure 2 are process diagrams, so a

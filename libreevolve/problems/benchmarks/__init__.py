@@ -190,10 +190,13 @@ from libreevolve.problems.benchmarks.matrix_results import (
     write_strassen_2x2_publication_bundle,
 )
 from libreevolve.problems.benchmarks.math_outcomes import (
+    MATH_HEURISTIC_HANDOFF_BOUNDARY_SCHEMA,
     MATH_OUTCOME_BOUNDARY_SCHEMA,
     MATH_STARTING_CONSTRUCTION_BOUNDARY_SCHEMA,
+    alphaevolve_math_heuristic_handoff_boundary,
     alphaevolve_math_outcome_boundary,
     alphaevolve_math_starting_construction_boundary,
+    validate_math_heuristic_handoff_boundary,
     validate_math_outcome_boundary,
     validate_math_starting_construction_boundary,
 )
@@ -304,6 +307,7 @@ __all__ = [
     "MATRIX_SWEEP_SPACE_RUNTIME_SCHEMA",
     "MATRIX_TENSOR_RANK_SCHEMA",
     "MATRIX_TENSOR_RANK_RUNTIME_SCHEMA",
+    "MATH_HEURISTIC_HANDOFF_BOUNDARY_SCHEMA",
     "MATH_OUTCOME_BOUNDARY_SCHEMA",
     "MATH_STARTING_CONSTRUCTION_BOUNDARY_SCHEMA",
     "STRASSEN_2X2_PUBLICATION_BUNDLE_ROOT",
@@ -330,6 +334,7 @@ __all__ = [
     "appendix_a_matrix_subset_scope_record",
     "alphaevolve_companion_colab_source_record",
     "alphaevolve_follow_on_math_source_record",
+    "alphaevolve_math_heuristic_handoff_boundary",
     "alphaevolve_math_outcome_boundary",
     "alphaevolve_math_starting_construction_boundary",
     "alphaevolve_follow_on_problem_coverage_record",
@@ -456,6 +461,7 @@ __all__ = [
     "validate_strassen_2x2_publication_bundle",
     "validate_matrix_tensor_rank_evidence",
     "validate_matrix_tensor_rank_runtime_boundary",
+    "validate_math_heuristic_handoff_boundary",
     "validate_math_outcome_boundary",
     "validate_math_starting_construction_boundary",
     "validate_paper_artifact_roles",

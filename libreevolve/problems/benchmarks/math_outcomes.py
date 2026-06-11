@@ -6,6 +6,7 @@ from typing import Any
 
 MATH_OUTCOME_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_math_outcome_boundary.v1"
 MATH_STARTING_CONSTRUCTION_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_math_starting_construction_boundary.v1"
+MATH_HEURISTIC_HANDOFF_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_math_heuristic_handoff_boundary.v1"
 EXPECTED_REQUIRED_INSTANCE_FIELDS = (
     "instance_id",
     "problem_family_id",
@@ -45,6 +46,24 @@ EXPECTED_REQUIRED_STARTING_CONSTRUCTION_FIELDS = (
     "prior_best_visibility_policy",
     "prior_best_seeding_policy",
 )
+EXPECTED_REQUIRED_HEURISTIC_HANDOFF_FIELDS = (
+    "instance_id",
+    "heuristic_program_id",
+    "heuristic_program_artifact_path",
+    "heuristic_program_artifact_sha256",
+    "fixed_time_budget_seconds",
+    "incumbent_construction_artifact_path",
+    "incumbent_construction_artifact_sha256",
+    "previous_best_heuristic_id",
+    "produced_construction_artifact_path",
+    "produced_construction_artifact_sha256",
+    "before_metric_value",
+    "after_metric_value",
+    "improvement_delta",
+    "evaluator_score",
+    "verifier_artifact_path",
+    "verifier_artifact_sha256",
+)
 EXPECTED_SOURCE_SUMMARY = {
     "source_paper_id": "2506.13131",
     "source_section_id": "3.2",
@@ -64,6 +83,18 @@ EXPECTED_STARTING_CONSTRUCTION_SUMMARY = {
     "starting_point_text": "the initial starting point was a simple or a random construction",
     "allowed_claimed_starting_classes": ["simple", "random"],
     "unsupported_without_explicit_label": ["human_seeded", "prior_art_seeded", "expert_seeded"],
+}
+EXPECTED_HEURISTIC_HANDOFF_SUMMARY = {
+    "source_paper_id": "2506.13131",
+    "source_section_id": "3.2",
+    "source_claim": "constructive-math programs are search heuristics that produce constructions",
+    "methodology_text": "evolve heuristic search algorithms rather than directly evolving the constructions themselves",
+    "program_role": "program representing a search heuristic",
+    "fixed_budget_text": "given a fixed time budget",
+    "example_budget_seconds": 1000,
+    "incumbent_input_text": "shown the best construction found by the previous best heuristic",
+    "goal_text": "leverage this starting point and the allotted time to find an even better construction",
+    "selection_target": "heuristics effective at improving already high-quality solutions",
 }
 EXPECTED_MATH_OUTCOME_BOUNDARY = {
     "schema": MATH_OUTCOME_BOUNDARY_SCHEMA,
@@ -97,8 +128,26 @@ EXPECTED_STARTING_CONSTRUCTION_BOUNDARY = {
         "prior_best_seeding_policy": "not_recorded_locally",
     },
 }
+EXPECTED_HEURISTIC_HANDOFF_BOUNDARY = {
+    "schema": MATH_HEURISTIC_HANDOFF_BOUNDARY_SCHEMA,
+    **EXPECTED_HEURISTIC_HANDOFF_SUMMARY,
+    "status": "not_recorded_locally",
+    "scope_boundary": "This boundary records the paper's Section 3.2 heuristic-to-construction handoff, but does not claim local heuristic program artifacts, incumbent construction inputs, fixed-budget execution records, produced construction artifacts, scores, or verifier evidence.",
+    "required_handoff_fields": list(EXPECTED_REQUIRED_HEURISTIC_HANDOFF_FIELDS),
+    "missing_evidence": {
+        "per_instance_handoff_rows": "not_recorded_locally",
+        "heuristic_program_artifacts": "not_recorded_locally",
+        "fixed_budget_execution_records": "not_recorded_locally",
+        "incumbent_construction_artifacts": "not_recorded_locally",
+        "produced_construction_artifacts": "not_recorded_locally",
+        "before_after_metric_values": "not_recorded_locally",
+        "evaluator_scores": "not_recorded_locally",
+        "verifier_artifacts": "not_recorded_locally",
+    },
+}
 _MISSING_EVIDENCE_KEYS = tuple(EXPECTED_MATH_OUTCOME_BOUNDARY["missing_evidence"].keys())
 _STARTING_MISSING_EVIDENCE_KEYS = tuple(EXPECTED_STARTING_CONSTRUCTION_BOUNDARY["missing_evidence"].keys())
+_HANDOFF_MISSING_EVIDENCE_KEYS = tuple(EXPECTED_HEURISTIC_HANDOFF_BOUNDARY["missing_evidence"].keys())
 
 
 @dataclass(frozen=True)
@@ -136,6 +185,16 @@ def alphaevolve_math_starting_construction_boundary() -> dict[str, Any]:
         "unsupported_without_explicit_label": list(EXPECTED_STARTING_CONSTRUCTION_SUMMARY["unsupported_without_explicit_label"]),
         "required_starting_construction_fields": list(EXPECTED_REQUIRED_STARTING_CONSTRUCTION_FIELDS),
         "missing_evidence": dict(EXPECTED_STARTING_CONSTRUCTION_BOUNDARY["missing_evidence"]),
+    }
+
+
+def alphaevolve_math_heuristic_handoff_boundary() -> dict[str, Any]:
+    """Return the Section 3.2 heuristic-to-construction handoff absence boundary."""
+
+    return {
+        **EXPECTED_HEURISTIC_HANDOFF_BOUNDARY,
+        "required_handoff_fields": list(EXPECTED_REQUIRED_HEURISTIC_HANDOFF_FIELDS),
+        "missing_evidence": dict(EXPECTED_HEURISTIC_HANDOFF_BOUNDARY["missing_evidence"]),
     }
 
 
@@ -239,6 +298,49 @@ def validate_math_starting_construction_boundary(boundary: object | None = None)
     scope_boundary = data.get("scope_boundary")
     if not isinstance(scope_boundary, str) or "does not claim" not in scope_boundary:
         issues.append(MathOutcomeBoundaryIssue("missing_starting_scope_boundary", "scope_boundary must state that local starting-construction evidence is not claimed"))
+    return MathOutcomeBoundaryValidation(
+        ok=not issues,
+        status=status if isinstance(status, str) else None,
+        minimum_problem_instances=None,
+        minimum_branch_count=None,
+        issues=issues,
+    )
+
+
+def validate_math_heuristic_handoff_boundary(boundary: object | None = None) -> MathOutcomeBoundaryValidation:
+    """Validate Section 3.2 heuristic program handoff metadata."""
+
+    data = alphaevolve_math_heuristic_handoff_boundary() if boundary is None else boundary
+    if not isinstance(data, dict):
+        return MathOutcomeBoundaryValidation(False, None, None, None, [MathOutcomeBoundaryIssue("invalid_boundary", "boundary must be an object")])
+    issues: list[MathOutcomeBoundaryIssue] = []
+    for field, expected_value in EXPECTED_HEURISTIC_HANDOFF_BOUNDARY.items():
+        if field in {"required_handoff_fields", "missing_evidence"}:
+            continue
+        actual = data.get(field)
+        if actual != expected_value:
+            issues.append(MathOutcomeBoundaryIssue(f"invalid_handoff_{field}", f"{field} must match the AlphaEvolve Section 3.2 heuristic-handoff claim"))
+    status = data.get("status")
+    if status != "not_recorded_locally":
+        issues.append(MathOutcomeBoundaryIssue("invalid_handoff_status", "heuristic handoff boundary must remain not_recorded_locally until per-instance handoff artifacts exist"))
+    if data.get("required_handoff_fields") != list(EXPECTED_REQUIRED_HEURISTIC_HANDOFF_FIELDS):
+        issues.append(MathOutcomeBoundaryIssue("invalid_required_handoff_fields", "required_handoff_fields must enumerate future heuristic program, incumbent, produced construction, score, and verifier fields"))
+    budget = data.get("example_budget_seconds")
+    if isinstance(budget, bool) or not isinstance(budget, int) or budget <= 0:
+        issues.append(MathOutcomeBoundaryIssue("invalid_handoff_example_budget_seconds", "example fixed budget must be a positive integer number of seconds"))
+    missing = data.get("missing_evidence")
+    if not isinstance(missing, dict):
+        issues.append(MathOutcomeBoundaryIssue("invalid_handoff_missing_evidence", "missing_evidence must be an object"))
+    else:
+        for key in _HANDOFF_MISSING_EVIDENCE_KEYS:
+            if missing.get(key) != "not_recorded_locally":
+                issues.append(MathOutcomeBoundaryIssue(f"invalid_handoff_missing_{key}", f"{key} must remain not_recorded_locally until heuristic-handoff evidence artifacts exist"))
+        extra = set(missing) - set(_HANDOFF_MISSING_EVIDENCE_KEYS)
+        if extra:
+            issues.append(MathOutcomeBoundaryIssue("extra_handoff_missing_evidence", "handoff missing_evidence contains unknown keys"))
+    scope_boundary = data.get("scope_boundary")
+    if not isinstance(scope_boundary, str) or "does not claim" not in scope_boundary:
+        issues.append(MathOutcomeBoundaryIssue("missing_handoff_scope_boundary", "scope_boundary must state that local heuristic-handoff evidence is not claimed"))
     return MathOutcomeBoundaryValidation(
         ok=not issues,
         status=status if isinstance(status, str) else None,

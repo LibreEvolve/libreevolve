@@ -645,6 +645,14 @@ is not yet an AlphaEvolve reproduction.
   prior-best visibility, and prior-best seeding policy. Those artifacts and
   policies remain open before any Section 3.2 breadth claim can be treated as
   simple/random-start evidence.
+- Keep constructive-math heuristic-handoff claims scoped to the Section 3.2
+  handoff absence boundary: `math_outcomes` now validates that AlphaEvolve
+  evolved search-heuristic programs, not direct constructions, gave them fixed
+  budgets such as `1000` seconds, showed the previous best heuristic's
+  construction, and selected for producing better constructions. Per-instance
+  heuristic program artifacts, incumbent/produced construction artifacts,
+  before/after metric values, evaluator scores, and verifier evidence remain
+  open.
 - Add Appendix B result-version provenance before quoting paper-level
   constructive-math constants: source manuscript version, reported value,
   superseded/current status, update note, attribution, and verifier/Colab

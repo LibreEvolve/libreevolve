@@ -3667,7 +3667,13 @@ percentage recomputation explicitly `not_recorded_locally`. The same module
 also validates the Section 3.2 starting-point boundary that those cases began
 from "a simple or a random construction"; per-instance starting construction
 artifacts, generator/seed records, baseline metrics, and prior-best seeding
-policies remain `not_recorded_locally`. For Appendix B.4, the registry now
+policies remain `not_recorded_locally`. It also validates the Section 3.2
+heuristic-handoff boundary: programs are search heuristics rather than direct
+final constructions, run under fixed budgets such as `1000` seconds, receive
+the previous best heuristic's construction, and are selected for producing a
+better construction. Local heuristic program artifacts, incumbent and produced
+construction artifacts, before/after metrics, scores, and verifier evidence
+remain `not_recorded_locally`. For Appendix B.4, the registry now
 preserves the uncertainty-inequality formulation, the `[33]` prior-bound
 rounding distinction (`0.353` stated versus `0.3523` rounded), the first-version
 Hermite-polynomial result boundary (`C4 <= 0.3521` with coefficients

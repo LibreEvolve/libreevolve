@@ -157,7 +157,13 @@ aggregate percentages remain absent. The same module now records the Section
 3.2 starting-point absence boundary for the paper statement that the initial
 starting point was "a simple or a random construction"; per-instance starting
 construction artifacts, generator/seed records, baseline metrics, and
-prior-best seeding policies remain absent.
+prior-best seeding policies remain absent. It also records the Section 3.2
+heuristic-handoff absence boundary: AlphaEvolve evolved search-heuristic
+programs instead of direct constructions, gave them fixed budgets such as
+`1000` seconds, showed them the previous best heuristic's construction, and
+selected for better produced constructions. Local heuristic program artifacts,
+incumbent/produced construction artifacts, before/after metrics, scores, and
+verifier evidence remain absent.
 For Appendix B.4 uncertainty-inequality evidence, the registry now records the
 source formulation, the `[33]` prior-bound rounding distinction (`0.353`
 stated versus `0.3523` rounded), the first-version Hermite-polynomial result

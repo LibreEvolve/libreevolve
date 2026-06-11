@@ -2904,21 +2904,22 @@ Primary evidence:
     gives those heuristics a fixed search budget and a strong incumbent or
     previous best construction, then scores whether the candidate improves the
     construction under that budget.
-  - Current evidence: LibreEvolve can evolve Python workspaces, pass static
-    context files, copy evaluator artifacts out of temporary workspaces, and
-    validate benchmark/result schemas after reports are declared. The Appendix
-    B registry and circle-packing smoke example can describe expected
-    construction/certificate artifact kinds, but there is no first-class
-    problem contract or benchmark runner that supplies an incumbent
-    construction to a candidate search heuristic, records the fixed budget and
-    incumbent identity, captures the returned improved construction, and
-    links that handoff to result artifacts and verifier inputs.
-  - Required result: add a benchmark-grade heuristic-search fixture contract
-    that makes incumbent construction, budget, candidate-produced construction,
-    verifier/certificate artifacts, and improvement status explicit in
-    evaluator metadata and benchmark reports. Keep this separate from generic
-    context files or smoke artifact copy-out until a runner proves the full
-    AlphaEvolve Section 3.2 handoff loop.
+  - Current evidence: `libreevolve.problems.benchmarks.math_outcomes` now
+    records a Section 3.2 heuristic-handoff absence boundary. It preserves the
+    paper claim that AlphaEvolve evolved search-heuristic programs rather than
+    direct constructions, gave them fixed budgets such as `1000` seconds,
+    showed the previous best heuristic's construction, and selected for a
+    better produced construction. It validates required future handoff fields
+    while keeping heuristic program artifacts, incumbent/produced construction
+    artifacts, before/after metrics, scores, and verifier artifacts
+    `not_recorded_locally`.
+  - Required result: replace the absence boundary with a benchmark-grade
+    heuristic-search fixture contract that makes incumbent construction,
+    budget, candidate-produced construction, verifier/certificate artifacts,
+    and improvement status explicit in evaluator metadata and benchmark
+    reports. Keep this separate from generic context files or smoke artifact
+    copy-out until a runner proves the full AlphaEvolve Section 3.2 handoff
+    loop.
 
 - [ ] Add constructive-math heuristic-stage sequence provenance.
   - Spec evidence: AlphaEvolve Section 3.2 says each evolved heuristic was

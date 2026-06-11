@@ -2788,14 +2788,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     budget and a strong previously found construction, then search for an
     improved construction. This differs from only validating a final
     construction artifact after the fact.
-  - Current evidence: the paper TODOs already require benchmark-grade
-    constructive-math fixtures, construction/certificate validators, target
-    baselines, and saved artifacts. Current code/docs also support static
-    context and evaluator artifact copy-out. They do not yet define paper
-    evidence for an AlphaEvolve-style handoff where the evaluator provides the
-    incumbent construction and budget to the candidate heuristic, records the
-    candidate's improved construction, and verifies the improvement as part of
-    the benchmark result.
+  - Current evidence: paper-facing coverage now includes a Section 3.2
+    heuristic-handoff absence boundary in
+    `libreevolve.problems.benchmarks.math_outcomes`. It preserves the
+    search-heuristic-not-direct-construction method, fixed-budget example,
+    previous-best construction input, and better-construction selection target,
+    while marking heuristic programs, incumbent/produced construction
+    artifacts, before/after metrics, scores, and verifier evidence absent.
   - Required result: before claiming Section 3.2-style constructive-math
     alignment, add paper/report evidence for incumbent identity, budget,
     heuristic output construction, verifier/certificate inputs, and improvement

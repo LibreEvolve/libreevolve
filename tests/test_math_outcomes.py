@@ -1,13 +1,18 @@
 from libreevolve.problems.benchmarks.math_outcomes import (
+    EXPECTED_HEURISTIC_HANDOFF_SUMMARY,
     EXPECTED_REQUIRED_AGGREGATE_FIELDS,
+    EXPECTED_REQUIRED_HEURISTIC_HANDOFF_FIELDS,
     EXPECTED_REQUIRED_INSTANCE_FIELDS,
     EXPECTED_REQUIRED_STARTING_CONSTRUCTION_FIELDS,
     EXPECTED_SOURCE_SUMMARY,
     EXPECTED_STARTING_CONSTRUCTION_SUMMARY,
+    MATH_HEURISTIC_HANDOFF_BOUNDARY_SCHEMA,
     MATH_OUTCOME_BOUNDARY_SCHEMA,
     MATH_STARTING_CONSTRUCTION_BOUNDARY_SCHEMA,
+    alphaevolve_math_heuristic_handoff_boundary,
     alphaevolve_math_outcome_boundary,
     alphaevolve_math_starting_construction_boundary,
+    validate_math_heuristic_handoff_boundary,
     validate_math_outcome_boundary,
     validate_math_starting_construction_boundary,
 )
@@ -23,6 +28,9 @@ def test_math_outcome_boundary_is_exported_from_benchmark_package():
     starting = benchmarks.alphaevolve_math_starting_construction_boundary()
     assert starting["schema"] == benchmarks.MATH_STARTING_CONSTRUCTION_BOUNDARY_SCHEMA
     assert benchmarks.validate_math_starting_construction_boundary(starting).ok is True
+    handoff = benchmarks.alphaevolve_math_heuristic_handoff_boundary()
+    assert handoff["schema"] == benchmarks.MATH_HEURISTIC_HANDOFF_BOUNDARY_SCHEMA
+    assert benchmarks.validate_math_heuristic_handoff_boundary(handoff).ok is True
 
 
 def test_alphaevolve_math_outcome_boundary_preserves_section_3_2_claim():
@@ -55,6 +63,20 @@ def test_alphaevolve_math_starting_construction_boundary_preserves_section_3_2_c
     assert boundary["required_starting_construction_fields"] == list(EXPECTED_REQUIRED_STARTING_CONSTRUCTION_FIELDS)
     assert set(boundary["missing_evidence"].values()) == {"not_recorded_locally"}
     assert "does not claim local per-instance starting construction artifacts" in boundary["scope_boundary"]
+
+
+def test_alphaevolve_math_heuristic_handoff_boundary_preserves_section_3_2_claim():
+    boundary = alphaevolve_math_heuristic_handoff_boundary()
+    validation = validate_math_heuristic_handoff_boundary(boundary)
+
+    assert validation.ok is True
+    assert validation.status == "not_recorded_locally"
+    assert boundary["schema"] == MATH_HEURISTIC_HANDOFF_BOUNDARY_SCHEMA
+    for field, expected_value in EXPECTED_HEURISTIC_HANDOFF_SUMMARY.items():
+        assert boundary[field] == expected_value
+    assert boundary["required_handoff_fields"] == list(EXPECTED_REQUIRED_HEURISTIC_HANDOFF_FIELDS)
+    assert set(boundary["missing_evidence"].values()) == {"not_recorded_locally"}
+    assert "does not claim local heuristic program artifacts" in boundary["scope_boundary"]
 
 
 def test_math_outcome_boundary_rejects_premature_aggregate_claims():
@@ -106,6 +128,25 @@ def test_math_starting_construction_boundary_rejects_premature_seed_claims():
     assert "missing_starting_scope_boundary" in codes
 
 
+def test_math_heuristic_handoff_boundary_rejects_premature_handoff_claims():
+    boundary = alphaevolve_math_heuristic_handoff_boundary()
+    boundary["status"] = "recorded"
+    boundary["example_budget_seconds"] = 0
+    boundary["required_handoff_fields"] = ["instance_id"]
+    boundary["missing_evidence"]["produced_construction_artifacts"] = "recorded"
+    boundary["scope_boundary"] = "Local heuristic handoff evidence is verified."
+
+    validation = validate_math_heuristic_handoff_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_handoff_status" in codes
+    assert "invalid_handoff_example_budget_seconds" in codes
+    assert "invalid_required_handoff_fields" in codes
+    assert "invalid_handoff_missing_produced_construction_artifacts" in codes
+    assert "missing_handoff_scope_boundary" in codes
+
+
 def test_math_outcome_boundary_rejects_missing_evidence_shape():
     boundary = alphaevolve_math_outcome_boundary()
     boundary["missing_evidence"] = []
@@ -124,3 +165,13 @@ def test_math_starting_construction_boundary_rejects_missing_evidence_shape():
 
     assert validation.ok is False
     assert [issue.code for issue in validation.issues] == ["invalid_starting_missing_evidence"]
+
+
+def test_math_heuristic_handoff_boundary_rejects_missing_evidence_shape():
+    boundary = alphaevolve_math_heuristic_handoff_boundary()
+    boundary["missing_evidence"] = []
+
+    validation = validate_math_heuristic_handoff_boundary(boundary)
+
+    assert validation.ok is False
+    assert [issue.code for issue in validation.issues] == ["invalid_handoff_missing_evidence"]

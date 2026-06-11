@@ -2624,12 +2624,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Spec evidence: AlphaEvolve Section 3.2 mathematical applications evolved
     search heuristics that were given a fixed budget and a previous best
     construction to improve, not just standalone final construction validators.
-  - Current evidence: roadmap and TODO entries already ask for constructive
-    math benchmarks, target/SOTA baselines, construction artifacts, and
-    certificate validators. Current code supports static context files and
-    evaluator artifact copy-out, but no roadmap-backed runtime or benchmark
-    contract yet models the incumbent-construction input, candidate heuristic
-    output, budget record, and improvement verification as a first-class loop.
+  - Current evidence: roadmap/README/paper-index wording now cites the Section
+    3.2 heuristic-handoff absence boundary in
+    `libreevolve.problems.benchmarks.math_outcomes`. It validates the method
+    summary and required future fields for heuristic programs, fixed budgets,
+    incumbent construction input, produced construction output, before/after
+    metrics, scores, and verifier artifacts, while the actual rows and
+    artifacts remain absent.
   - Required result: when heuristic-search benchmark runners land, update
     roadmap, README, papers index, and code/paper TODO entries together with
     the incumbent-construction schema, budget policy, result-artifact paths,

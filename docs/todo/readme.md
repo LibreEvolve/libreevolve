@@ -1535,12 +1535,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Spec evidence: AlphaEvolve Section 3.2 evolved heuristic search programs
     that use a fixed budget and a strong previously discovered construction as
     input, then return an improved construction for verification.
-  - Current evidence: README can accurately describe workspace seeds, static
-    context, evaluator artifacts, Appendix B coverage/status records, and
-    smoke examples. It should not imply current constructive-math support
-    includes a benchmark runner that passes incumbent constructions to
-    candidate heuristics, records the fixed search budget, or verifies
-    candidate-produced construction improvements as a Section 3.2-style loop.
+  - Current evidence: README now points to the Section 3.2 heuristic-handoff
+    absence boundary in `libreevolve.problems.benchmarks.math_outcomes`. It
+    describes search-heuristic programs, fixed budgets such as `1000` seconds,
+    previous-best construction input, and better-construction selection, while
+    saying local heuristic program artifacts, incumbent/produced construction
+    artifacts, before/after metrics, scores, and verifier evidence remain
+    `not_recorded_locally`.
   - Required result: when real heuristic-search handoff support lands, update
     README, ROADMAP, papers index, and code/paper TODO entries together so
     README distinguishes static problem context and post-run artifacts from

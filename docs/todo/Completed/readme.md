@@ -4,6 +4,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document process-exhibit async topology boundary.
+  - Status: README now documents that the process-exhibit report links to the
+    validated current synchronous topology boundary while preserving exact
+    source-diagram, actual async-pipeline implementation, and evaluator-pool
+    gaps.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4638 passed, 21 skipped, 2 deselected.
+  - Remaining gap: full AlphaEvolve process-diagram parity remains open.
+
 - [x] Document process-exhibit durable LLM stream joins.
   - Status: README now documents generated-candidate semantic traces with
     durable LLM and archive-admission stream rows in the process-exhibit

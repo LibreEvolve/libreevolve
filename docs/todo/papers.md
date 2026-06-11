@@ -220,9 +220,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     fan-out, cluster-local execution ownership beyond the current
     process/subprocess boundary, throughput dispatch telemetry, or resumable
     pending-work checkpoints.
-  - Required result: implement async topology-report artifacts, validators,
-    and papers index links for real controller/sampler/evaluation-node worker
-    ids, queue and blocking dependency graphs, worker role ownership,
+  - Required result: implement real async runtime topology artifacts and
+    validators for controller/sampler/evaluation-node worker ids, queue
+    capacities, nonblocking/blocking dependency graphs, worker role ownership,
     throughput-budget dispatch telemetry, pending-work checkpoint state, and
     claim-readiness checks.
 
@@ -248,17 +248,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     with SHA-256 hashes, validates each displayed Figure 2 step against the
     artifact-inventory paths it cites, records strict JSONL row summaries for
     cited streams, records bounded generated-candidate semantic traces with
-    durable LLM and archive-admission stream rows, and records component-to-TODO links for the
-    remaining process gaps.
+    durable LLM and archive-admission stream rows, records a validated current
+    synchronous topology boundary linked to
+    `runtime.history.distributed_pipeline_topology_report`, and records
+    component-to-TODO links for the remaining process gaps.
   - Current gap: paper-facing evidence still lacks exact source-diagram
-    reproduction, async controller/sampler/evaluator topology, and independent
-    evaluator-pool parallelism strong enough to treat the local mapping as full reproduced
-    AlphaEvolve architecture evidence.
-  - Required result: add exact diagram text/source reproduction, topology
-    evidence, and README/ROADMAP wording that separates local
+    reproduction, AlphaEvolve-style async controller/sampler/evaluator
+    implementation, and independent evaluator-pool parallelism strong enough
+    to treat the local mapping as full reproduced AlphaEvolve architecture
+    evidence.
+  - Required result: add exact diagram text/source reproduction, async
+    topology implementation evidence, and README/ROADMAP wording that separates local
     workflow diagrams, generated Mermaid artifacts, artifact-link records, row
-    summaries, and semantic candidate traces from full reproduced AlphaEvolve
-    architecture evidence.
+    summaries, semantic candidate traces, and current-topology boundaries from
+    full reproduced AlphaEvolve architecture evidence.
 
 - [ ] Extend unified task-specification provenance beyond field-level artifact
       resolution.

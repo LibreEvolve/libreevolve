@@ -5943,11 +5943,19 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert report["claim_readiness"]["step_artifact_stream_validation_records"] is True
     assert report["claim_readiness"]["step_stream_row_summaries"] is True
     assert report["claim_readiness"]["component_todo_links"] is True
+    assert report["claim_readiness"]["async_topology_record"] is True
+    assert report["claim_readiness"]["alphaevolve_async_pipeline_topology"] is False
     assert report["claim_readiness"]["rendered_diagram_artifacts"] is True
     assert report["claim_readiness"]["accessibility_exports"] is True
     assert report["claim_readiness"]["exact_diagram_text_reproduction"] is False
     assert report["claim_readiness"]["durable_every_stream_candidate_join"] is True
     assert "exact_source_diagram_text_reproduction" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    assert "alphaevolve_async_pipeline_topology_implementation" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    assert "async_controller_sampler_evaluator_topology" not in (
         report["claim_readiness"]["remaining_gap"]
     )
     assert "durable_llm_stream_candidate_joins" not in (
@@ -6036,6 +6044,24 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert evaluator_validation["all_artifact_records_resolved"] is True
     assert evaluator_validation["row_summary_record_count"] >= 1
     assert report["component_todo_link_count"] == 3
+    topology = report["async_topology_record"]
+    assert topology["schema"] == "libreevolve.process_exhibit_async_topology_record.v1"
+    assert topology["record_status"] == "recorded"
+    assert topology["source_report_ref"] == (
+        "runtime.history.distributed_pipeline_topology_report"
+    )
+    assert topology["source_report_validation_ok"] is True
+    assert topology["controller_model"] == "single_process_serial_loop"
+    assert topology["queue_count"] == 0
+    assert topology["asyncio_pipeline"] is False
+    assert topology["pending_work_checkpoint_supported"] is False
+    assert topology["alphaevolve_async_pipeline_topology"] is False
+    assert set(topology["roles"]) == {
+        "controller",
+        "evaluation_node",
+        "llm_sampler",
+        "program_database",
+    }
     assert report["candidate_semantic_trace_count"] == 1
     assert report["durable_candidate_stream_join_count"] == 1
     assert report["claim_readiness"]["candidate_semantic_trace_records"] is True
@@ -6079,6 +6105,9 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert "fig2.step_5_execute_evaluator" in todo_links_by_gap[
         "independent_evaluator_pool_parallelism"
     ]["component_ids"]
+    assert "fig2.step_3_generate" in todo_links_by_gap[
+        "alphaevolve_async_pipeline_topology_implementation"
+    ]["component_ids"]
     assert "durable_llm_stream_candidate_joins" not in todo_links_by_gap
     artifact_by_path = {
         artifact["path"]: artifact for artifact in report["artifact_evidence"]
@@ -6113,6 +6142,22 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     validation = validate_alphaevolve_process_exhibit_report(edited)
     assert validation["ok"] is False
     assert "invalid_rendered_artifact_hash" in {
+        issue["code"] for issue in validation["issues"]
+    }
+
+    edited = copy.deepcopy(report)
+    edited["claim_readiness"]["alphaevolve_async_pipeline_topology"] = True
+    validation = validate_alphaevolve_process_exhibit_report(edited)
+    assert validation["ok"] is False
+    assert "async_topology_overclaim" in {
+        issue["code"] for issue in validation["issues"]
+    }
+
+    edited = copy.deepcopy(report)
+    edited["async_topology_record"]["asyncio_pipeline"] = True
+    validation = validate_alphaevolve_process_exhibit_report(edited)
+    assert validation["ok"] is False
+    assert "async_topology_pipeline_overclaim" in {
         issue["code"] for issue in validation["issues"]
     }
 

@@ -5231,6 +5231,10 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         programs,
     )
     hypothesis_branch_report = _hypothesis_branch_report(db, programs)
+    distributed_pipeline_topology = _distributed_pipeline_topology_report(
+        startup_manifest,
+        budget,
+    )
     summary = {
         "programs_logged": programs_logged,
         "history_partially_written": history_exists,
@@ -5330,7 +5334,11 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
             )
         ),
         "alphaevolve_process_exhibit_report": (
-            _alphaevolve_process_exhibit_report(run_dir, programs)
+            _alphaevolve_process_exhibit_report(
+                run_dir,
+                programs,
+                distributed_pipeline_topology,
+            )
         ),
         "evaluator_oracle_registry": _evaluator_oracle_registry_report(
             db,
@@ -5421,12 +5429,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 archive_state,
             )
         ),
-        "distributed_pipeline_topology_report": (
-            _distributed_pipeline_topology_report(
-                db.startup_manifest_snapshot(),
-                budget,
-            )
-        ),
+        "distributed_pipeline_topology_report": distributed_pipeline_topology,
         "controller_state": _runtime_controller_state(run_dir, budget),
     }
     if summary["no_candidates_evaluated"]:
@@ -12609,7 +12612,11 @@ def _validate_report_count(
         issues.append({"code": f"{field}_mismatch", "message": f"{field} does not match report records"})
 
 
-def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) -> dict:
+def _alphaevolve_process_exhibit_report(
+    run_dir: Path,
+    programs: list[Program],
+    distributed_pipeline_topology: Mapping[str, object],
+) -> dict:
     figure_1_nodes = [
         _process_node(
             "fig1.human_problem_inputs",
@@ -12782,6 +12789,9 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
         stream_row_evidence,
     )
     component_todo_links = _process_exhibit_component_todo_links()
+    async_topology_record = _process_exhibit_async_topology_record(
+        distributed_pipeline_topology
+    )
     candidate_semantic_traces = _process_candidate_semantic_traces(
         run_dir,
         programs,
@@ -12834,6 +12844,7 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
         "candidate_semantic_traces": candidate_semantic_traces,
         "candidate_semantic_trace_count": len(candidate_semantic_traces),
         "durable_candidate_stream_join_count": durable_candidate_stream_join_count,
+        "async_topology_record": async_topology_record,
         "component_todo_links": component_todo_links,
         "component_todo_link_count": len(component_todo_links),
         "claim_ready": False,
@@ -12847,6 +12858,10 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
             ),
             "step_stream_row_summaries": step_stream_row_summary_count > 0,
             "candidate_semantic_trace_records": bool(candidate_semantic_traces),
+            "async_topology_record": (
+                async_topology_record.get("record_status") == "recorded"
+            ),
+            "alphaevolve_async_pipeline_topology": False,
             "component_todo_links": True,
             "rendered_diagram_artifacts": rendered_count == len(figures),
             "accessibility_exports": accessibility_count == len(figures),
@@ -12858,7 +12873,7 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
             "full_alphaevolve_process_parity": False,
             "remaining_gap": [
                 "exact_source_diagram_text_reproduction",
-                "async_controller_sampler_evaluator_topology",
+                "alphaevolve_async_pipeline_topology_implementation",
                 "independent_evaluator_pool_parallelism",
             ],
         },
@@ -13164,6 +13179,70 @@ def _process_step_streams_resolved(validations: list[dict]) -> bool:
         and validation.get("all_artifact_records_resolved") is True
         for validation in validations
     )
+
+
+def _process_exhibit_async_topology_record(
+    topology_report: Mapping[str, object],
+) -> dict:
+    validation = (
+        topology_report.get("validation")
+        if isinstance(topology_report.get("validation"), Mapping)
+        else validate_distributed_pipeline_topology_report(dict(topology_report))
+    )
+    readiness = (
+        topology_report.get("claim_readiness")
+        if isinstance(topology_report.get("claim_readiness"), Mapping)
+        else {}
+    )
+    dispatch = (
+        topology_report.get("dispatch_policy")
+        if isinstance(topology_report.get("dispatch_policy"), Mapping)
+        else {}
+    )
+    pending = (
+        topology_report.get("pending_work_checkpoint")
+        if isinstance(topology_report.get("pending_work_checkpoint"), Mapping)
+        else {}
+    )
+    nodes = topology_report.get("nodes") if isinstance(topology_report.get("nodes"), list) else []
+    roles = sorted(
+        {
+            node.get("role")
+            for node in nodes
+            if isinstance(node, Mapping) and isinstance(node.get("role"), str)
+        }
+    )
+    worker_identities = sorted(
+        {
+            node.get("worker_identity")
+            for node in nodes
+            if isinstance(node, Mapping)
+            and isinstance(node.get("worker_identity"), str)
+        }
+    )
+    return {
+        "schema": "libreevolve.process_exhibit_async_topology_record.v1",
+        "record_status": "recorded",
+        "source_report_ref": "runtime.history.distributed_pipeline_topology_report",
+        "source_report_schema": topology_report.get("schema"),
+        "source_report_validation_ok": validation.get("ok") is True,
+        "controller_model": dispatch.get("controller"),
+        "node_count": topology_report.get("node_count"),
+        "roles": roles,
+        "queue_count": topology_report.get("queue_count"),
+        "blocking_edge_count": topology_report.get("blocking_edge_count"),
+        "worker_identities": worker_identities,
+        "asyncio_pipeline": dispatch.get("asyncio_pipeline"),
+        "pending_work_checkpoint_supported": pending.get("supported"),
+        "alphaevolve_async_pipeline_topology": readiness.get(
+            "alphaevolve_async_pipeline_topology"
+        ),
+        "queue_dependency_graph": readiness.get("queue_dependency_graph"),
+        "worker_identity_and_fanout": readiness.get("worker_identity_and_fanout"),
+        "topology_boundary": (
+            "validated_current_synchronous_topology_not_alphaevolve_async_pipeline"
+        ),
+    }
 
 
 def _process_candidate_semantic_traces(
@@ -13622,7 +13701,7 @@ def _process_exhibit_component_todo_links() -> list[dict]:
             "claim_surface_paths": claim_surfaces,
         },
         {
-            "gap_id": "async_controller_sampler_evaluator_topology",
+            "gap_id": "alphaevolve_async_pipeline_topology_implementation",
             "status": "open",
             "component_ids": [
                 "fig1.llm_ensemble",
@@ -13747,6 +13826,7 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
         "candidate_semantic_traces",
         "candidate_semantic_trace_count",
         "durable_candidate_stream_join_count",
+        "async_topology_record",
         "component_todo_links",
         "component_todo_link_count",
         "claim_ready",
@@ -14138,6 +14218,8 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
                 issues.append({"code": "invalid_archive_event_stream_rows", "message": "archive event stream rows must be row objects"})
             if step.get("llm_call_stream_joined") not in {None, True, False}:
                 issues.append({"code": "invalid_llm_call_stream_join_flag", "message": "llm call stream join flag must be boolean"})
+    async_topology_record = report.get("async_topology_record")
+    _validate_process_exhibit_async_topology_record(async_topology_record, issues)
     component_todo_links = report.get("component_todo_links")
     if not isinstance(component_todo_links, list):
         issues.append({"code": "invalid_component_todo_links", "message": "component_todo_links must be a list"})
@@ -14175,6 +14257,15 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
             issues.append({"code": "invalid_step_stream_row_summary_readiness", "message": "step stream row summary readiness must be boolean"})
         if readiness.get("candidate_semantic_trace_records") not in {True, False}:
             issues.append({"code": "invalid_candidate_trace_readiness", "message": "candidate semantic trace readiness must be boolean"})
+        if readiness.get("async_topology_record") not in {True, False}:
+            issues.append({"code": "invalid_async_topology_record_readiness", "message": "async topology record readiness must be boolean"})
+        elif readiness.get("async_topology_record") is True and not (
+            isinstance(async_topology_record, Mapping)
+            and async_topology_record.get("record_status") == "recorded"
+        ):
+            issues.append({"code": "async_topology_record_overclaim", "message": "async topology record readiness requires a recorded topology record"})
+        if readiness.get("alphaevolve_async_pipeline_topology") is not False:
+            issues.append({"code": "async_topology_overclaim", "message": "process exhibit must not claim AlphaEvolve async pipeline topology"})
         if readiness.get("component_todo_links") not in {True, False}:
             issues.append({"code": "invalid_component_todo_readiness", "message": "component TODO link readiness must be boolean"})
         if readiness.get("rendered_diagram_artifacts") not in {True, False}:
@@ -14201,6 +14292,57 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _validate_process_exhibit_async_topology_record(
+    value: object,
+    issues: list[dict],
+) -> None:
+    if not isinstance(value, Mapping):
+        issues.append({"code": "invalid_async_topology_record", "message": "async_topology_record must be an object"})
+        return
+    if value.get("schema") != "libreevolve.process_exhibit_async_topology_record.v1":
+        issues.append({"code": "invalid_async_topology_record_schema", "message": "async topology record schema is unsupported"})
+    if value.get("record_status") != "recorded":
+        issues.append({"code": "invalid_async_topology_record_status", "message": "async topology record must be recorded"})
+    if value.get("source_report_ref") != "runtime.history.distributed_pipeline_topology_report":
+        issues.append({"code": "invalid_async_topology_source_ref", "message": "async topology record must cite distributed pipeline topology report"})
+    if value.get("source_report_schema") != "libreevolve.distributed_pipeline_topology_report.v1":
+        issues.append({"code": "invalid_async_topology_source_schema", "message": "async topology source schema must match distributed pipeline topology report"})
+    if value.get("source_report_validation_ok") is not True:
+        issues.append({"code": "async_topology_source_invalid", "message": "async topology source report must validate"})
+    if value.get("controller_model") != "single_process_serial_loop":
+        issues.append({"code": "invalid_async_topology_controller_model", "message": "current process exhibit topology must record the synchronous controller boundary"})
+    for field in ("node_count", "queue_count", "blocking_edge_count"):
+        if not isinstance(value.get(field), int) or isinstance(value.get(field), bool) or value.get(field) < 0:
+            issues.append({"code": f"invalid_async_topology_{field}", "message": f"async topology {field} must be a non-negative integer"})
+    roles = value.get("roles")
+    required_roles = {
+        "controller",
+        "program_database",
+        "llm_sampler",
+        "evaluation_node",
+    }
+    if not isinstance(roles, list) or not all(isinstance(role, str) and role for role in roles):
+        issues.append({"code": "invalid_async_topology_roles", "message": "async topology roles must be text"})
+    elif not required_roles.issubset(set(roles)):
+        issues.append({"code": "missing_async_topology_roles", "message": "async topology record must name controller, database, sampler, and evaluation roles"})
+    identities = value.get("worker_identities")
+    if not isinstance(identities, list) or not all(isinstance(identity, str) and identity for identity in identities):
+        issues.append({"code": "invalid_async_topology_worker_identities", "message": "async topology worker identities must be text"})
+    if value.get("asyncio_pipeline") is not False:
+        issues.append({"code": "async_topology_pipeline_overclaim", "message": "process exhibit topology must not claim asyncio pipeline support"})
+    if value.get("pending_work_checkpoint_supported") is not False:
+        issues.append({"code": "async_topology_pending_checkpoint_overclaim", "message": "process exhibit topology must not claim pending-work checkpoint support"})
+    for field in (
+        "alphaevolve_async_pipeline_topology",
+        "queue_dependency_graph",
+        "worker_identity_and_fanout",
+    ):
+        if value.get(field) is not False:
+            issues.append({"code": f"{field}_overclaim", "message": f"async topology record must keep {field} false"})
+    if value.get("topology_boundary") != "validated_current_synchronous_topology_not_alphaevolve_async_pipeline":
+        issues.append({"code": "invalid_async_topology_boundary", "message": "async topology boundary label is invalid"})
 
 
 def _validate_process_status(value: object, issues: list[dict], owner: str) -> None:

@@ -4,6 +4,26 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add process-exhibit async topology boundary joins.
+  - Spec evidence: AlphaEvolve Section 2.6 says the implementation is an
+    asynchronous pipeline with controller, LLM samplers, and evaluation nodes,
+    so the Figure 1/Figure 2 process exhibit should identify whether local
+    topology evidence exists before leaving async topology as a vague missing
+    record.
+  - Status: `runtime.history.alphaevolve_process_exhibit_report` now records
+    `async_topology_record`, linking the process exhibit to
+    `runtime.history.distributed_pipeline_topology_report` with validation
+    status, controller model, role names, queue count, blocking-edge count,
+    worker identities, pending-checkpoint status, and explicit false readiness
+    for AlphaEvolve async topology. The remaining process gap now names
+    `alphaevolve_async_pipeline_topology_implementation` instead of implying
+    local topology boundary evidence is absent.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4638 passed, 21 skipped, 2 deselected.
+  - Remaining gap: exact source-diagram reproduction, actual AlphaEvolve async
+    pipeline implementation, and independent evaluator-pool parallelism remain
+    open.
+
 - [x] Add process-exhibit durable LLM stream joins.
   - Spec evidence: AlphaEvolve Figure 2's `llm.generate(...)` step should be
     tied to durable local generation-call evidence before the local process

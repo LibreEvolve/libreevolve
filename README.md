@@ -1396,9 +1396,11 @@ artifact cross-links, generated Mermaid/text accessibility artifacts under
 `paper_artifacts/process_exhibit/`, per-step artifact-stream validation
 records, strict JSONL row summaries for cited streams, generated candidate
 semantic traces with durable LLM and archive-admission stream rows,
-component-to-TODO links for the remaining process gaps, and `claim_ready:
-false` limitations for exact source-diagram reproduction, async controller
-topology, and independent evaluator-pool parallelism.
+validated current synchronous topology boundary evidence linked to
+`runtime.history.distributed_pipeline_topology_report`, component-to-TODO
+links for the remaining process gaps, and `claim_ready: false` limitations
+for exact source-diagram reproduction, AlphaEvolve async controller topology
+implementation, and independent evaluator-pool parallelism.
 The committed `papers/process_exhibit_boundary.json` sidecar now records that
 paper-manifest-validated process-exhibit parity boundary.
 Accepted archive admissions prevalidate their strict history record before

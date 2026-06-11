@@ -177,16 +177,19 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     artifacts and hashes under `paper_artifacts/process_exhibit/`, per-step
     artifact-stream validation records, strict JSONL row summaries,
     generated candidate semantic traces with durable LLM and archive-admission
-    stream rows, component-to-TODO links, and names
+    stream rows, a validated current synchronous topology boundary linked to
+    `runtime.history.distributed_pipeline_topology_report`,
+    component-to-TODO links, and names
     `papers/process_exhibit_boundary.json` as the committed sidecar for the
     paper-manifest-validated absence boundary.
-  - Required result: when exact source-diagram reproduction, async controller
-    topology and independent evaluator-pool parallelism land, update README,
+  - Required result: when exact source-diagram reproduction,
+    AlphaEvolve-style async controller topology implementation and independent
+    evaluator-pool parallelism land, update README,
     ROADMAP, papers index, and matching TODOs
     so README distinguishes local workflow explanation, generated Mermaid
     artifacts, artifact-link records, row summaries, and semantic candidate
-    traces from full reproduced AlphaEvolve architecture/process exhibit
-    evidence.
+    traces/current-topology boundaries from full reproduced AlphaEvolve
+    architecture/process exhibit evidence.
 
 - [ ] Keep README evaluator-workload wording scoped until inner-search and
       ML-training execution contracts exist.
@@ -2604,8 +2607,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     local-or-cluster execution identity, mutation-depth impact, pending-work
     resume behavior, and equal-budget report links.
 
-- [ ] Keep README distributed-pipeline wording scoped until topology evidence
-      exists.
+- [ ] Keep README distributed-pipeline wording scoped until async topology
+      implementation exists.
   - Spec evidence: AlphaEvolve Section 2.6 describes an asynchronous pipeline
     composed of a controller, LLM samplers, and evaluation nodes, where
     concurrent computations block on unfinished dependencies and the system is
@@ -2620,7 +2623,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     current local controller, database, configured LLM sampler backends, local
     evaluator nodes, zero queues, blocking edges, runtime-budget linkage, and
     validation overclaim guards while keeping `claim_ready: false`.
-  - Required result: when async topology artifacts land, update README,
+  - Required result: when async topology implementation lands, update README,
     ROADMAP, papers index, and code/paper TODOs with real queue capacities,
     dependency edges, worker role ownership/fan-out, throughput dispatch
     telemetry, pending-work checkpoints, and validation status so README

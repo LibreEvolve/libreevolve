@@ -171,17 +171,18 @@ Primary evidence:
     validates each Figure 2 pseudocode step against the artifact-inventory
     paths it cites, records strict JSONL row summaries for cited streams, and
     records bounded generated-candidate semantic traces with durable LLM and
-    archive-admission stream rows plus component-to-TODO links for the
-    remaining process gaps. The report still carries
+    archive-admission stream rows, a validated current synchronous topology
+    boundary linked to `runtime.history.distributed_pipeline_topology_report`,
+    plus component-to-TODO links for the remaining process gaps. The report still carries
     `claim_ready: false` readiness gaps. The committed
     `papers/process_exhibit_boundary.json` sidecar now records that
     paper-manifest-validated process-exhibit parity boundary.
-  - Required result: add exact source-diagram text reproduction, async
-    controller/sampler/evaluator topology records, independent evaluator-pool
-    parallelism evidence, and docs checks so local workflow diagrams, generated Mermaid
+  - Required result: add exact source-diagram text reproduction, implement
+    AlphaEvolve-style async controller/sampler/evaluator topology,
+    independent evaluator-pool parallelism evidence, and docs checks so local workflow diagrams, generated Mermaid
     artifacts, artifact-link records, row summaries, and semantic candidate
-    traces are not mistaken for full reproduced AlphaEvolve process-diagram
-    evidence.
+    traces/topology boundaries are not mistaken for full reproduced
+    AlphaEvolve process-diagram evidence.
 
 - [ ] Extend unified AlphaEvolve task-specification reports into full
       artifact-level parity.

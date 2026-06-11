@@ -6,6 +6,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Record process-exhibit async topology boundary.
+  - Paper evidence: AlphaEvolve Figure 1/2 process evidence intersects Section
+    2.6's controller, LLM sampler, and evaluation-node topology, so the
+    paper-facing process exhibit should link to the validated local topology
+    boundary before narrowing the remaining gap to actual async implementation.
+  - Status: paper-facing manifests now preserve
+    `async_topology_record` inside
+    `runtime.history.alphaevolve_process_exhibit_report`, linked to
+    `runtime.history.distributed_pipeline_topology_report`. The process
+    boundary status is now
+    `process_mapping_with_async_topology_boundary_without_full_parity`.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4638 passed, 21 skipped, 2 deselected.
+  - Remaining paper gap: exact source-diagram reproduction, actual
+    AlphaEvolve async pipeline implementation, and evaluator-pool parallelism
+    remain open.
+
 - [x] Record process-exhibit durable LLM stream joins.
   - Paper evidence: AlphaEvolve Figure 2's `llm.generate(...)` step should be
     backed by durable local generation-call evidence before paper-facing

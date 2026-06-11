@@ -182,17 +182,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     Mermaid/text accessibility artifacts and hashes, per-step artifact-stream
     validation records, strict JSONL row summaries, generated candidate
     semantic traces with durable LLM and archive-admission stream rows,
+    a validated current synchronous topology boundary linked to
+    `runtime.history.distributed_pipeline_topology_report`,
     component-to-TODO links, and explicit remaining
     process-parity gaps. It now also names
     `papers/process_exhibit_boundary.json` as the committed sidecar for the
     paper-manifest-validated absence boundary.
-  - Required result: when exact source-diagram reproduction, async
-    controller/sampler/evaluator topology and independent evaluator-pool
-    parallelism land, update ROADMAP,
+  - Required result: when exact source-diagram reproduction,
+    AlphaEvolve-style async controller/sampler/evaluator implementation and
+    independent evaluator-pool parallelism land, update ROADMAP,
     README, papers index, and code/paper TODOs so roadmap wording
     distinguishes local workflow documentation, generated Mermaid artifacts,
-    artifact-link records, row summaries, and semantic candidate traces from
-    full reproduced AlphaEvolve process-diagram evidence.
+    artifact-link records, row summaries, semantic candidate traces, and
+    current-topology boundary evidence from full reproduced AlphaEvolve
+    process-diagram evidence.
 
 - [ ] Keep evaluator-workload roadmap wording scoped until inner-search and
       ML-training execution contracts exist.

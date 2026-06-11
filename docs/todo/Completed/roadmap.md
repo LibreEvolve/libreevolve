@@ -2,6 +2,16 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Record process-exhibit async topology boundary for roadmap evidence.
+  - Status: ROADMAP now lists the process-exhibit link to the validated
+    current synchronous topology boundary as current Figure 1/Figure 2
+    evidence, while keeping actual AlphaEvolve async pipeline implementation
+    and full process parity open.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4638 passed, 21 skipped, 2 deselected.
+  - Remaining gap: exact source-diagram reproduction, actual async pipeline
+    implementation, and evaluator-pool parallelism remain open.
+
 - [x] Record process-exhibit durable LLM stream joins for roadmap evidence.
   - Status: ROADMAP now lists generated candidate semantic traces with durable
     LLM and archive-admission stream rows as current Figure 1/Figure 2

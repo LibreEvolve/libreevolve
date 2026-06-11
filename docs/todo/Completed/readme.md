@@ -4,6 +4,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document process-exhibit source diagram text boundary.
+  - Status: README now documents hashed source-PDF page text extracts for
+    Figure 1/Figure 2 in the process-exhibit report while preserving exact
+    source-diagram layout, actual async-pipeline implementation, and
+    independent evaluator-pool implementation gaps.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4638 passed, 21 skipped, 2 deselected.
+  - Remaining gap: full AlphaEvolve process-diagram parity remains open.
+
 - [x] Document process-exhibit evaluator-pool boundary.
   - Status: README now documents that the process-exhibit report records a
     validated current inline evaluator-pool parallelism boundary while

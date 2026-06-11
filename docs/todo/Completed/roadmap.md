@@ -2,6 +2,16 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Record process-exhibit source diagram text boundary for roadmap evidence.
+  - Status: ROADMAP now lists hashed source-PDF page text extracts for Figure
+    1/Figure 2 as current process-exhibit evidence while keeping exact
+    source-diagram layout reproduction and full process parity open.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4638 passed, 21 skipped, 2 deselected.
+  - Remaining gap: exact source-diagram layout reproduction, actual async
+    pipeline implementation, and independent evaluator-pool implementation
+    remain open.
+
 - [x] Record process-exhibit evaluator-pool boundary for roadmap evidence.
   - Status: ROADMAP now lists the process-exhibit link to the validated
     current inline evaluator-pool boundary as current Figure 1/Figure 2

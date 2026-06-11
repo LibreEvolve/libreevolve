@@ -5943,6 +5943,7 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert report["claim_readiness"]["step_artifact_stream_validation_records"] is True
     assert report["claim_readiness"]["step_stream_row_summaries"] is True
     assert report["claim_readiness"]["component_todo_links"] is True
+    assert report["claim_readiness"]["source_diagram_text_record"] is True
     assert report["claim_readiness"]["async_topology_record"] is True
     assert report["claim_readiness"]["alphaevolve_async_pipeline_topology"] is False
     assert report["claim_readiness"]["evaluator_pool_parallelism_record"] is True
@@ -5951,7 +5952,10 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert report["claim_readiness"]["accessibility_exports"] is True
     assert report["claim_readiness"]["exact_diagram_text_reproduction"] is False
     assert report["claim_readiness"]["durable_every_stream_candidate_join"] is True
-    assert "exact_source_diagram_text_reproduction" in (
+    assert "exact_source_diagram_layout_reproduction" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    assert "exact_source_diagram_text_reproduction" not in (
         report["claim_readiness"]["remaining_gap"]
     )
     assert "alphaevolve_async_pipeline_topology_implementation" in (
@@ -6052,6 +6056,35 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert evaluator_validation["all_artifact_records_resolved"] is True
     assert evaluator_validation["row_summary_record_count"] >= 1
     assert report["component_todo_link_count"] == 3
+    source_text = report["source_diagram_text_record"]
+    assert source_text["schema"] == (
+        "libreevolve.process_exhibit_source_diagram_text_record.v1"
+    )
+    assert source_text["record_status"] == "attached"
+    assert source_text["source_paper"] == "papers/2506.13131__AlphaEvolve.pdf"
+    assert source_text["source_figure_ids"] == ["Figure 1", "Figure 2"]
+    assert source_text["extraction_tool"] == "pypdf.extract_text"
+    assert source_text["extraction_scope"] == (
+        "source_page_text_extract_not_visual_diagram_layout"
+    )
+    assert source_text["exact_diagram_text_reproduction"] is False
+    assert source_text["exact_diagram_layout_reproduction"] is False
+    assert source_text["figure_record_count"] == 2
+    assert source_text["attached_figure_record_count"] == 2
+    assert source_text["remaining_gap"] == ["exact_visual_diagram_layout_reproduction"]
+    source_records = {
+        record["figure_id"]: record for record in source_text["figure_records"]
+    }
+    assert source_records["alphaevolve_figure_1"]["local_pdf_page"] == 3
+    assert source_records["alphaevolve_figure_1"]["source_figure_label_present"] is True
+    assert source_records["alphaevolve_figure_1"]["artifact"]["path"] == (
+        "paper_artifacts/process_exhibit/source_alphaevolve_figure_1_page_3_text.txt"
+    )
+    assert source_records["alphaevolve_figure_2"]["local_pdf_page"] == 4
+    assert source_records["alphaevolve_figure_2"]["source_figure_label_present"] is True
+    assert source_records["alphaevolve_figure_2"]["artifact"]["hash_scope"] == (
+        "source_pdf_page_text_extract"
+    )
     topology = report["async_topology_record"]
     assert topology["schema"] == "libreevolve.process_exhibit_async_topology_record.v1"
     assert topology["record_status"] == "recorded"
@@ -6130,6 +6163,9 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     todo_links_by_gap = {
         link["gap_id"]: link for link in report["component_todo_links"]
     }
+    assert "alphaevolve_figure_1" in todo_links_by_gap[
+        "exact_source_diagram_layout_reproduction"
+    ]["component_ids"]
     assert "fig2.step_5_execute_evaluator" in todo_links_by_gap[
         "independent_evaluator_pool_parallelism_implementation"
     ]["component_ids"]
@@ -6147,6 +6183,12 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert artifact_by_path["paper_artifacts/process_exhibit/figure_1.mmd"][
         "present"
     ] is True
+    assert artifact_by_path[
+        "paper_artifacts/process_exhibit/source_alphaevolve_figure_1_page_3_text.txt"
+    ]["present"] is True
+    assert "source_pdf_page_text_extract" in artifact_by_path[
+        "paper_artifacts/process_exhibit/source_alphaevolve_figure_2_page_4_text.txt"
+    ]["roles"]
     assert artifact_by_path[
         "paper_artifacts/process_exhibit/figure_2_accessibility.txt"
     ]["present"] is True
@@ -6170,6 +6212,14 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     validation = validate_alphaevolve_process_exhibit_report(edited)
     assert validation["ok"] is False
     assert "invalid_rendered_artifact_hash" in {
+        issue["code"] for issue in validation["issues"]
+    }
+
+    edited = copy.deepcopy(report)
+    edited["source_diagram_text_record"]["exact_diagram_text_reproduction"] = True
+    validation = validate_alphaevolve_process_exhibit_report(edited)
+    assert validation["ok"] is False
+    assert "source_diagram_text_overclaim" in {
         issue["code"] for issue in validation["issues"]
     }
 

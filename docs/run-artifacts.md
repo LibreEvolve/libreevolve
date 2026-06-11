@@ -1765,14 +1765,15 @@ deterministic Mermaid diagram source and plain-text accessibility exports under
 report validates each Figure 2 pseudocode step against the artifact inventory
 paths it cites, records strict JSONL row summaries for cited streams, and
 adds bounded generated-candidate semantic traces with durable LLM and
-archive-admission stream rows. It also records a validated current
-synchronous topology boundary linked to
+archive-admission stream rows. It also records hashed source-PDF page text
+extracts for AlphaEvolve Figure 1/Figure 2, a validated current synchronous
+topology boundary linked to
 `runtime.history.distributed_pipeline_topology_report` and a validated
 current inline evaluator-pool parallelism boundary before linking open process
 components back to the active TODO ledgers. It is a manifest-level
 process-exhibit map for the current synchronous loop, not an exact
 AlphaEvolve diagram reproduction, async pipeline implementation, or
-independent evaluator-pool implementation: exact source-diagram text,
+independent evaluator-pool implementation: exact source-diagram layout,
 AlphaEvolve-style async controller/sampler/evaluator implementation, and
 independent evaluator-pool implementation remain open.
 The committed `papers/process_exhibit_boundary.json` sidecar preserves that

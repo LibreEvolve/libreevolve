@@ -12780,6 +12780,10 @@ def _alphaevolve_process_exhibit_report(
         },
     ]
     _attach_process_figure_artifacts(run_dir, figures)
+    source_diagram_text_record = _process_exhibit_source_diagram_text_record(
+        run_dir,
+        figures,
+    )
     artifacts = _process_exhibit_artifact_evidence(run_dir)
     artifact_paths = [artifact["path"] for artifact in artifacts]
     stream_row_evidence = _process_exhibit_stream_row_evidence(run_dir)
@@ -12849,6 +12853,7 @@ def _alphaevolve_process_exhibit_report(
         "candidate_semantic_traces": candidate_semantic_traces,
         "candidate_semantic_trace_count": len(candidate_semantic_traces),
         "durable_candidate_stream_join_count": durable_candidate_stream_join_count,
+        "source_diagram_text_record": source_diagram_text_record,
         "async_topology_record": async_topology_record,
         "evaluator_pool_parallelism_record": evaluator_pool_parallelism_record,
         "component_todo_links": component_todo_links,
@@ -12864,6 +12869,9 @@ def _alphaevolve_process_exhibit_report(
             ),
             "step_stream_row_summaries": step_stream_row_summary_count > 0,
             "candidate_semantic_trace_records": bool(candidate_semantic_traces),
+            "source_diagram_text_record": (
+                source_diagram_text_record.get("record_status") == "attached"
+            ),
             "async_topology_record": (
                 async_topology_record.get("record_status") == "recorded"
             ),
@@ -12883,7 +12891,7 @@ def _alphaevolve_process_exhibit_report(
             ),
             "full_alphaevolve_process_parity": False,
             "remaining_gap": [
-                "exact_source_diagram_text_reproduction",
+                "exact_source_diagram_layout_reproduction",
                 "alphaevolve_async_pipeline_topology_implementation",
                 "independent_evaluator_pool_parallelism_implementation",
             ],
@@ -12978,6 +12986,132 @@ def _write_process_exhibit_artifact(
         "bytes": len(payload),
         "hash_scope": "generated_process_exhibit_text_artifact",
         "source": "runtime_history_static_figure_mapping",
+    }
+
+
+def _process_exhibit_source_diagram_text_record(
+    run_dir: Path,
+    figures: list[dict],
+) -> dict:
+    paper_rel = Path("papers") / "2506.13131__AlphaEvolve.pdf"
+    paper_path = Path.cwd() / paper_rel
+    base_record = {
+        "schema": "libreevolve.process_exhibit_source_diagram_text_record.v1",
+        "source_paper": str(paper_rel).replace("\\", "/"),
+        "source_figure_ids": ["Figure 1", "Figure 2"],
+        "extraction_tool": "pypdf.extract_text",
+        "extraction_scope": "source_page_text_extract_not_visual_diagram_layout",
+        "exact_diagram_text_reproduction": False,
+        "exact_diagram_layout_reproduction": False,
+    }
+    if not paper_path.exists():
+        return {
+            **base_record,
+            "record_status": "source_pdf_missing",
+            "paper_sha256": None,
+            "figure_records": [],
+            "figure_record_count": 0,
+            "attached_figure_record_count": 0,
+            "remaining_gap": ["source_pdf_available_for_page_text_extraction"],
+        }
+    try:
+        from pypdf import PdfReader
+
+        raw_pdf = paper_path.read_bytes()
+        reader = PdfReader(str(paper_path))
+        paper_sha = hashlib.sha256(raw_pdf).hexdigest()
+        figure_records = []
+        for figure in figures:
+            if not isinstance(figure, Mapping):
+                continue
+            figure_id = figure.get("figure_id")
+            local_page = figure.get("local_pdf_page")
+            if not isinstance(figure_id, str) or not isinstance(local_page, int):
+                continue
+            if local_page < 1 or local_page > len(reader.pages):
+                figure_records.append(
+                    {
+                        "figure_id": figure_id,
+                        "status": "page_unavailable",
+                        "local_pdf_page": local_page,
+                        "artifact": None,
+                    }
+                )
+                continue
+            text = reader.pages[local_page - 1].extract_text() or ""
+            source_label = (
+                "Figure 1" if figure_id == "alphaevolve_figure_1" else "Figure 2"
+            )
+            artifact = _write_process_exhibit_source_text_artifact(
+                run_dir,
+                f"paper_artifacts/process_exhibit/source_{figure_id}_page_{local_page}_text.txt",
+                text,
+                figure_id=figure_id,
+                local_pdf_page=local_page,
+                paper_sha256=paper_sha,
+            )
+            figure_records.append(
+                {
+                    "figure_id": figure_id,
+                    "status": "attached",
+                    "local_pdf_page": local_page,
+                    "source_figure_label": source_label,
+                    "source_figure_label_present": source_label in text,
+                    "caption_marker_present": "Figure" in text,
+                    "artifact": artifact,
+                }
+            )
+        attached_count = sum(
+            1 for record in figure_records if record.get("status") == "attached"
+        )
+        return {
+            **base_record,
+            "record_status": "attached" if attached_count == len(figures) else "partial",
+            "paper_sha256": paper_sha,
+            "figure_records": figure_records,
+            "figure_record_count": len(figure_records),
+            "attached_figure_record_count": attached_count,
+            "remaining_gap": ["exact_visual_diagram_layout_reproduction"],
+        }
+    except Exception as exc:  # pragma: no cover - defensive for optional PDF stack.
+        return {
+            **base_record,
+            "record_status": "extraction_error",
+            "paper_sha256": None,
+            "figure_records": [],
+            "figure_record_count": 0,
+            "attached_figure_record_count": 0,
+            "error_type": exc.__class__.__name__,
+            "error": _bounded_redacted_text(str(exc), _MAX_ARTIFACT_ERROR_CHARS),
+            "remaining_gap": ["source_pdf_page_text_extraction"],
+        }
+
+
+def _write_process_exhibit_source_text_artifact(
+    run_dir: Path,
+    relative_path: str,
+    content: str,
+    *,
+    figure_id: str,
+    local_pdf_page: int,
+    paper_sha256: str,
+) -> dict:
+    path = run_dir / relative_path
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content, encoding="utf-8", newline="\n")
+    payload = content.encode("utf-8")
+    return {
+        "figure_id": figure_id,
+        "status": "attached",
+        "artifact_kind": "source_page_text_extract",
+        "path": relative_path,
+        "sha256": hashlib.sha256(payload).hexdigest(),
+        "bytes": len(payload),
+        "hash_scope": "source_pdf_page_text_extract",
+        "source": "pypdf.extract_text",
+        "local_pdf_page": local_pdf_page,
+        "paper_sha256": paper_sha256,
+        "retention_policy": "local_run_artifact_source_page_text_extract",
     }
 
 
@@ -13764,7 +13898,7 @@ def _process_exhibit_component_todo_links() -> list[dict]:
     ]
     return [
         {
-            "gap_id": "exact_source_diagram_text_reproduction",
+            "gap_id": "exact_source_diagram_layout_reproduction",
             "status": "open",
             "component_ids": [
                 "alphaevolve_figure_1",
@@ -13826,6 +13960,14 @@ def _process_exhibit_artifact_evidence(run_dir: Path) -> list[dict]:
         ],
         "paper_artifacts/process_exhibit/figure_2_accessibility.txt": [
             "process_exhibit_figure_2_accessibility",
+        ],
+        "paper_artifacts/process_exhibit/source_alphaevolve_figure_1_page_3_text.txt": [
+            "process_exhibit_figure_1_source_page_text",
+            "source_pdf_page_text_extract",
+        ],
+        "paper_artifacts/process_exhibit/source_alphaevolve_figure_2_page_4_text.txt": [
+            "process_exhibit_figure_2_source_page_text",
+            "source_pdf_page_text_extract",
         ],
     }
     resolved_run_dir = _resolve_path_for_scope(run_dir)
@@ -13899,6 +14041,7 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
         "candidate_semantic_traces",
         "candidate_semantic_trace_count",
         "durable_candidate_stream_join_count",
+        "source_diagram_text_record",
         "async_topology_record",
         "evaluator_pool_parallelism_record",
         "component_todo_links",
@@ -14228,6 +14371,11 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
         durable_trace_count,
         issues,
     )
+    source_diagram_text_record = report.get("source_diagram_text_record")
+    _validate_process_exhibit_source_diagram_text_record(
+        source_diagram_text_record,
+        issues,
+    )
     for trace in candidate_semantic_traces:
         if not isinstance(trace, Mapping):
             issues.append({"code": "invalid_candidate_semantic_trace", "message": "candidate semantic traces must be objects"})
@@ -14336,6 +14484,13 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
             issues.append({"code": "invalid_step_stream_row_summary_readiness", "message": "step stream row summary readiness must be boolean"})
         if readiness.get("candidate_semantic_trace_records") not in {True, False}:
             issues.append({"code": "invalid_candidate_trace_readiness", "message": "candidate semantic trace readiness must be boolean"})
+        if readiness.get("source_diagram_text_record") not in {True, False}:
+            issues.append({"code": "invalid_source_diagram_text_readiness", "message": "source diagram text readiness must be boolean"})
+        elif readiness.get("source_diagram_text_record") is True and not (
+            isinstance(source_diagram_text_record, Mapping)
+            and source_diagram_text_record.get("record_status") == "attached"
+        ):
+            issues.append({"code": "source_diagram_text_record_overclaim", "message": "source diagram text readiness requires attached source records"})
         if readiness.get("async_topology_record") not in {True, False}:
             issues.append({"code": "invalid_async_topology_record_readiness", "message": "async topology record readiness must be boolean"})
         elif readiness.get("async_topology_record") is True and not (
@@ -14380,6 +14535,110 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _validate_process_exhibit_source_diagram_text_record(
+    value: object,
+    issues: list[dict],
+) -> None:
+    if not isinstance(value, Mapping):
+        issues.append({"code": "invalid_source_diagram_text_record", "message": "source_diagram_text_record must be an object"})
+        return
+    if value.get("schema") != "libreevolve.process_exhibit_source_diagram_text_record.v1":
+        issues.append({"code": "invalid_source_diagram_text_schema", "message": "source diagram text record schema is unsupported"})
+    if value.get("record_status") not in {"attached", "partial", "source_pdf_missing", "extraction_error"}:
+        issues.append({"code": "invalid_source_diagram_text_status", "message": "source diagram text record status is unsupported"})
+    if value.get("source_paper") != "papers/2506.13131__AlphaEvolve.pdf":
+        issues.append({"code": "invalid_source_diagram_paper", "message": "source diagram record must cite the cached AlphaEvolve PDF"})
+    if value.get("source_figure_ids") != ["Figure 1", "Figure 2"]:
+        issues.append({"code": "invalid_source_diagram_figure_ids", "message": "source diagram record must cover Figure 1 and Figure 2"})
+    if value.get("extraction_tool") != "pypdf.extract_text":
+        issues.append({"code": "invalid_source_diagram_extraction_tool", "message": "source diagram extraction tool is unsupported"})
+    if value.get("extraction_scope") != "source_page_text_extract_not_visual_diagram_layout":
+        issues.append({"code": "invalid_source_diagram_extraction_scope", "message": "source diagram extraction scope must preserve the layout boundary"})
+    if value.get("exact_diagram_text_reproduction") is not False:
+        issues.append({"code": "source_diagram_text_overclaim", "message": "source diagram text record must not claim exact text reproduction"})
+    if value.get("exact_diagram_layout_reproduction") is not False:
+        issues.append({"code": "source_diagram_layout_overclaim", "message": "source diagram text record must not claim exact layout reproduction"})
+    paper_sha = value.get("paper_sha256")
+    if paper_sha is not None and not _is_sha256_hex(paper_sha):
+        issues.append({"code": "invalid_source_diagram_paper_hash", "message": "paper_sha256 must be a SHA-256 hex digest or null"})
+    figure_records = value.get("figure_records")
+    if not isinstance(figure_records, list):
+        issues.append({"code": "invalid_source_diagram_figure_records", "message": "figure_records must be a list"})
+        figure_records = []
+    _validate_report_count(
+        value,
+        "figure_record_count",
+        len(figure_records),
+        issues,
+    )
+    attached_count = 0
+    expected_figure_ids = {"alphaevolve_figure_1", "alphaevolve_figure_2"}
+    seen_figure_ids: set[str] = set()
+    for index, record in enumerate(figure_records):
+        if not isinstance(record, Mapping):
+            issues.append({"code": "invalid_source_diagram_figure_record", "message": f"source diagram figure record {index} must be an object"})
+            continue
+        figure_id = record.get("figure_id")
+        if not isinstance(figure_id, str) or figure_id not in expected_figure_ids:
+            issues.append({"code": "invalid_source_diagram_figure_id", "message": "source diagram figure id is unsupported"})
+        else:
+            seen_figure_ids.add(figure_id)
+        if record.get("status") not in {"attached", "page_unavailable"}:
+            issues.append({"code": "invalid_source_diagram_figure_status", "message": "source diagram figure status is unsupported"})
+        if record.get("status") == "attached":
+            attached_count += 1
+            if not isinstance(record.get("source_figure_label_present"), bool):
+                issues.append({"code": "invalid_source_diagram_label_presence", "message": "source figure label presence must be boolean"})
+            if not isinstance(record.get("caption_marker_present"), bool):
+                issues.append({"code": "invalid_source_diagram_caption_presence", "message": "caption marker presence must be boolean"})
+            _validate_process_exhibit_source_text_artifact(record.get("artifact"), issues)
+        elif record.get("artifact") is not None:
+            issues.append({"code": "source_diagram_unattached_artifact_overclaim", "message": "unattached source diagram figures must not carry artifacts"})
+    if value.get("record_status") == "attached" and seen_figure_ids != expected_figure_ids:
+        issues.append({"code": "source_diagram_attached_coverage_mismatch", "message": "attached source diagram record must cover Figure 1 and Figure 2"})
+    _validate_report_count(
+        value,
+        "attached_figure_record_count",
+        attached_count,
+        issues,
+    )
+    remaining_gap = value.get("remaining_gap")
+    if not isinstance(remaining_gap, list) or not all(isinstance(item, str) and item for item in remaining_gap):
+        issues.append({"code": "invalid_source_diagram_remaining_gap", "message": "source diagram remaining_gap must be text ids"})
+    elif "exact_visual_diagram_layout_reproduction" not in remaining_gap:
+        issues.append({"code": "missing_source_diagram_layout_gap", "message": "source diagram record must retain the visual layout gap"})
+
+
+def _validate_process_exhibit_source_text_artifact(
+    value: object,
+    issues: list[dict],
+) -> None:
+    if not isinstance(value, Mapping):
+        issues.append({"code": "invalid_source_diagram_artifact", "message": "source diagram artifact must be an object"})
+        return
+    if value.get("status") != "attached":
+        issues.append({"code": "source_diagram_artifact_not_attached", "message": "source diagram artifact must be attached"})
+    if value.get("artifact_kind") != "source_page_text_extract":
+        issues.append({"code": "invalid_source_diagram_artifact_kind", "message": "source diagram artifact kind is invalid"})
+    path = value.get("path")
+    if not isinstance(path, str) or not path.startswith("paper_artifacts/process_exhibit/source_") or ".." in Path(path).parts:
+        issues.append({"code": "invalid_source_diagram_artifact_path", "message": "source diagram artifact path is unsafe"})
+    if not _is_sha256_hex(value.get("sha256")):
+        issues.append({"code": "invalid_source_diagram_artifact_hash", "message": "source diagram artifact sha256 must be a hash"})
+    if not isinstance(value.get("bytes"), int) or isinstance(value.get("bytes"), bool) or value.get("bytes") <= 0:
+        issues.append({"code": "invalid_source_diagram_artifact_bytes", "message": "source diagram artifact bytes must be positive"})
+    if value.get("hash_scope") != "source_pdf_page_text_extract":
+        issues.append({"code": "invalid_source_diagram_artifact_hash_scope", "message": "source diagram artifact hash scope is invalid"})
+    if value.get("source") != "pypdf.extract_text":
+        issues.append({"code": "invalid_source_diagram_artifact_source", "message": "source diagram artifact source is invalid"})
+    if not isinstance(value.get("local_pdf_page"), int) or isinstance(value.get("local_pdf_page"), bool):
+        issues.append({"code": "invalid_source_diagram_artifact_page", "message": "source diagram artifact page must be an int"})
+    if not _is_sha256_hex(value.get("paper_sha256")):
+        issues.append({"code": "invalid_source_diagram_artifact_paper_hash", "message": "source diagram artifact needs paper_sha256"})
+    if value.get("retention_policy") != "local_run_artifact_source_page_text_extract":
+        issues.append({"code": "invalid_source_diagram_artifact_retention", "message": "source diagram artifact retention policy is invalid"})
 
 
 def _validate_process_exhibit_async_topology_record(

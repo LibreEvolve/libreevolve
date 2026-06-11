@@ -4,6 +4,23 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add process-exhibit source diagram text boundary.
+  - Spec evidence: AlphaEvolve Figure 1 and Figure 2 are source-paper
+    process exhibits, so the local process report should preserve source-PDF
+    page evidence before narrowing the remaining diagram gap to exact visual
+    layout reproduction.
+  - Status: `runtime.history.alphaevolve_process_exhibit_report` now records
+    `source_diagram_text_record`, hashes the cached AlphaEvolve PDF, writes
+    pypdf page-text extracts for Figure 1/Figure 2 source pages under
+    `paper_artifacts/process_exhibit/`, and keeps exact text/layout
+    reproduction false. The remaining process gap now names
+    `exact_source_diagram_layout_reproduction`.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4638 passed, 21 skipped, 2 deselected.
+  - Remaining gap: exact source-diagram layout reproduction, actual
+    AlphaEvolve async pipeline implementation, and independent evaluator-pool
+    implementation remain open.
+
 - [x] Add process-exhibit evaluator-pool parallelism boundary.
   - Spec evidence: AlphaEvolve Figure 1 names an evaluator pool and Section
     2.4/2.6 describe parallelized evaluator work in the broader async

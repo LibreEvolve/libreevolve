@@ -177,20 +177,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     artifacts and hashes under `paper_artifacts/process_exhibit/`, per-step
     artifact-stream validation records, strict JSONL row summaries,
     generated candidate semantic traces with durable LLM and archive-admission
-    stream rows, a validated current synchronous topology boundary linked to
+    stream rows, hashed source-PDF page text extracts for Figure 1/Figure 2,
+    a validated current synchronous topology boundary linked to
     `runtime.history.distributed_pipeline_topology_report`,
     a validated current inline evaluator-pool parallelism boundary,
     component-to-TODO links, and names
     `papers/process_exhibit_boundary.json` as the committed sidecar for the
     paper-manifest-validated absence boundary.
-  - Required result: when exact source-diagram reproduction,
+  - Required result: when exact source-diagram layout reproduction,
     AlphaEvolve-style async controller topology implementation and independent
     evaluator-pool parallelism land, update README,
     ROADMAP, papers index, and matching TODOs
     so README distinguishes local workflow explanation, generated Mermaid
     artifacts, artifact-link records, row summaries, and semantic candidate
-    traces/current-topology/evaluator-pool boundaries from full reproduced
-    AlphaEvolve architecture/process exhibit evidence.
+    traces/source-text/current-topology/evaluator-pool boundaries from full
+    reproduced AlphaEvolve architecture/process exhibit evidence.
 
 - [ ] Keep README evaluator-workload wording scoped until inner-search and
       ML-training execution contracts exist.

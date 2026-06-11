@@ -10,7 +10,7 @@ PROCESS_EXHIBIT_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_process_exhibit_bound
 PROCESS_EXHIBIT_RUNTIME_REPORT_SCHEMA = "libreevolve.alphaevolve_process_exhibit_report.v1"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_FIGURE_IDS = ("Figure 1", "Figure 2")
-EXPECTED_BOUNDARY_STATUS = "process_mapping_with_process_boundaries_without_full_parity"
+EXPECTED_BOUNDARY_STATUS = "process_mapping_with_source_text_boundary_without_full_parity"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "figure_id",
     "source_page",
@@ -23,6 +23,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "rendered_diagram_artifact_hash",
     "exact_diagram_text_export",
     "accessibility_export",
+    "source_diagram_text_record",
     "async_topology_record",
     "evaluator_pool_parallelism_record",
     "artifact_step_validation_record",
@@ -30,7 +31,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "durable_candidate_stream_join_record",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "exact_source_diagram_text_reproduction": "not_recorded_locally",
+    "exact_source_diagram_layout_reproduction": "not_recorded_locally",
     "alphaevolve_async_pipeline_topology_implementation": "not_implemented_locally",
     "independent_evaluator_pool_parallelism_implementation": "not_implemented_locally",
 }
@@ -77,13 +78,14 @@ def process_exhibit_boundary_record() -> dict[str, Any]:
             "generated Mermaid/text accessibility artifacts, step-stream "
             "artifact-link validation, strict JSONL row summaries, generated "
             "candidate semantic traces with durable LLM and archive admission "
-            "stream joins, a validated current synchronous topology boundary "
+            "stream joins, hashed source-PDF page text extracts for Figure 1 "
+            "and Figure 2, a validated current synchronous topology boundary "
             "linked to the distributed-pipeline topology report, a validated "
             "current inline evaluator-pool parallelism boundary, and "
             "component-to-TODO links. It does not claim exact source-diagram "
-            "reproduction, AlphaEvolve async controller/sampler/evaluator "
-            "implementation, independent evaluator-pool implementation, or "
-            "full AlphaEvolve process parity."
+            "layout reproduction, AlphaEvolve async controller/sampler/"
+            "evaluator implementation, independent evaluator-pool "
+            "implementation, or full AlphaEvolve process parity."
         ),
     }
 

@@ -6,6 +6,21 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Record process-exhibit source diagram text boundary.
+  - Paper evidence: AlphaEvolve Figure 1/Figure 2 process evidence should link
+    local process mappings to the cached source paper before the remaining
+    diagram gap is narrowed to exact visual layout reproduction.
+  - Status: paper-facing manifests now preserve `source_diagram_text_record`
+    inside `runtime.history.alphaevolve_process_exhibit_report`, with hashed
+    pypdf page-text extracts for Figure 1/Figure 2 source pages. The process
+    boundary status is now
+    `process_mapping_with_source_text_boundary_without_full_parity`.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4638 passed, 21 skipped, 2 deselected.
+  - Remaining paper gap: exact source-diagram layout reproduction, actual
+    AlphaEvolve async pipeline implementation, and independent evaluator-pool
+    implementation remain open.
+
 - [x] Record process-exhibit evaluator-pool parallelism boundary.
   - Paper evidence: AlphaEvolve Figure 1 names an evaluator pool, and the
     process-exhibit sidecar already requires an
@@ -15,8 +30,8 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     `evaluator_pool_parallelism_record` inside
     `runtime.history.alphaevolve_process_exhibit_report`, linked to
     `runtime.history.distributed_pipeline_topology_report`. The process
-    boundary status is now
-    `process_mapping_with_process_boundaries_without_full_parity`.
+    boundary status subsequently advanced to
+    `process_mapping_with_source_text_boundary_without_full_parity`.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4638 passed, 21 skipped, 2 deselected.
   - Remaining paper gap: exact source-diagram reproduction, actual
@@ -33,7 +48,7 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     `runtime.history.alphaevolve_process_exhibit_report`, linked to
     `runtime.history.distributed_pipeline_topology_report`. The process
     boundary status subsequently advanced to
-    `process_mapping_with_process_boundaries_without_full_parity`.
+    `process_mapping_with_source_text_boundary_without_full_parity`.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4638 passed, 21 skipped, 2 deselected.
   - Remaining paper gap: exact source-diagram reproduction, actual

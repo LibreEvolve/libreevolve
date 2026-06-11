@@ -594,15 +594,16 @@ events, and best exports. It also records generated Mermaid/text
 accessibility artifacts with hashes, per-step artifact-stream validation
 records, strict JSONL row summaries, generated candidate semantic traces with
 durable LLM and archive-admission stream rows, and component-to-TODO links for
-the remaining process gaps. It now also links the process exhibit to the
+the remaining process gaps. It now also records hashed source-PDF page text
+extracts for AlphaEvolve Figure 1/Figure 2 and links the process exhibit to the
 validated current synchronous topology boundary in
 `runtime.history.distributed_pipeline_topology_report` and records a
 validated current inline evaluator-pool parallelism boundary. It remains
-`claim_ready: false` because exact source-diagram reproduction,
+`claim_ready: false` because exact source-diagram layout reproduction,
 AlphaEvolve-style async controller/sampler/evaluator implementation, and
 independent evaluator-pool implementation remain open.
 The committed `papers/process_exhibit_boundary.json` sidecar emits the
-`process_mapping_with_process_boundaries_without_full_parity` boundary, and
+`process_mapping_with_source_text_boundary_without_full_parity` boundary, and
 `validate_paper_manifest()` requires it at the real repo root.
 
 AlphaEvolve distributed-pipeline topology note: completed manifests now include

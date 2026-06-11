@@ -1664,6 +1664,8 @@ Implemented:
   image, left diff outline, highlighted excerpts, paper text excerpt, region
   renders, source-diff artifacts, accepted 15-mutation lineage, artifact
   paths/hashes, and nested Figure 4 exhibit metadata.
+  `papers/figure4_matrix_discovery_artifacts.json` emits that
+  absence/readiness boundary as a committed sidecar.
   `figure4_matrix_discovery_artifact_boundary_from_exhibit()` can build emitted
   artifacts from Figure 4 exhibit metadata plus supplied accepted-mutation
   lineage and validates nested exhibit linkage, but local report exports still

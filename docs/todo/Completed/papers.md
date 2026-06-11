@@ -6,6 +6,24 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit Figure 4 matrix-discovery artifact sidecar.
+  - Paper evidence: Figure 4 is the main-text matrix discovery exhibit for the
+    `mm_4x4x4` rank-48 program, and its caption ties the discovery to 15
+    accepted mutations and non-trivial optimizer, initialization, loss, and
+    hyperparameter-sweep changes.
+  - Status: `papers/figure4_matrix_discovery_artifacts.json` now carries the
+    paper-facing absence/readiness boundary for rendered Figure 4 artifacts,
+    source-diff artifacts, accepted 15-mutation lineage, artifact paths/hashes,
+    and nested Figure 4 exhibit metadata. The paper-manifest gate requires and
+    validates the sidecar at the real repo root.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_exhibits.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\matrix_exhibits.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: concrete rendered/source-diff artifacts and accepted
+    mutation-lineage records for Figure 4 remain open.
+
 - [x] Emit Figure 9 matrix-diff artifact sidecar.
   - Paper evidence: Appendix A Figures 9a-9c are the magnified panel set for
     the Figure 4 left diff and preserve concrete source/diff changes for the

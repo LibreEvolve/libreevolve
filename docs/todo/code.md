@@ -3480,6 +3480,8 @@ Primary evidence:
     highlighted excerpts, paper text excerpt, region renders, source-diff
     artifacts, accepted 15-mutation lineage, artifact paths/hashes, and nested
     Figure 4 exhibit metadata.
+    `papers/figure4_matrix_discovery_artifacts.json` now emits that
+    absence/readiness boundary as a committed sidecar.
     `figure4_matrix_discovery_artifact_boundary_from_exhibit()` builds emitted
     artifacts from validated Figure 4 exhibit metadata plus supplied accepted
     mutation lineage and checks nested exhibit linkage. No local generator

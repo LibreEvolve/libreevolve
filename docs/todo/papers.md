@@ -3515,6 +3515,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     now validates the current `not_emitted_by_local_report_export` boundary
     and emitted fields for rendered/source artifacts, accepted
     15-mutation lineage, artifact paths/hashes, and nested Figure 4 metadata.
+    `papers/figure4_matrix_discovery_artifacts.json` now emits that
+    absence/readiness boundary as a committed sidecar.
     `figure4_matrix_discovery_artifact_boundary_from_exhibit()` builds emitted
     artifacts from validated Figure 4 exhibit metadata plus supplied accepted
     mutation lineage and checks nested exhibit linkage. It does not render or

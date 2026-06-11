@@ -4,6 +4,26 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit Figure 4 matrix-discovery artifact sidecar.
+  - Spec evidence: AlphaEvolve Figure 4 presents the main-text 4x4 matrix
+    discovery exhibit, and its caption says the discovery required 15 accepted
+    mutations with non-trivial optimizer, initialization, loss-function, and
+    hyperparameter-sweep changes.
+  - Status: `papers/figure4_matrix_discovery_artifacts.json` now emits the
+    `not_emitted_by_local_report_export` absence/readiness boundary for the
+    rendered Figure 4 image, left diff outline, highlighted excerpts, paper
+    text excerpt, region renders, source-diff artifacts, accepted
+    15-mutation lineage, artifact paths/hashes, and nested Figure 4 exhibit
+    metadata. `validate_paper_manifest()` requires and validates the sidecar
+    at the real repo root when the Appendix A registry is in scope.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_exhibits.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\matrix_exhibits.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: local report/export code still does not render or check in
+    the Figure 4 artifacts or accepted 15-mutation lineage records.
+
 - [x] Emit Figure 9 matrix-diff artifact sidecar.
   - Spec evidence: AlphaEvolve Appendix A Figures 9a-9c present magnified
     source/diff panels for the `mm_4x4x4` rank-48 matrix-search program,

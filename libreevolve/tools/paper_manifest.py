@@ -146,6 +146,7 @@ APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE = "papers/appendix_a_matrix_subset_scope_
 APPENDIX_A_ROW_NOTE_ARTIFACTS_FILE = "papers/appendix_a_matrix_row_note_artifacts.json"
 MATRIX_RANK_TABLE_ARTIFACTS_FILE = "papers/matrix_rank_table_artifacts.json"
 FIGURE9_MATRIX_DIFF_ARTIFACTS_FILE = "papers/figure9_matrix_diff_artifacts.json"
+FIGURE4_MATRIX_DISCOVERY_ARTIFACTS_FILE = "papers/figure4_matrix_discovery_artifacts.json"
 MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE = "papers/matrix_headline_historicity_artifacts.json"
 APPENDIX_A_BASELINE_CITATIONS_FILE = "papers/appendix_a_matrix_baseline_citations.json"
 MATRIX_BASELINE_COMPONENT_RUNTIME_FILE = "papers/matrix_baseline_component_runtime_boundary.json"
@@ -1052,8 +1053,24 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
         )
         for issue in figure9_artifact_report.issues
     )
+    figure4_artifacts_path = root_path / FIGURE4_MATRIX_DISCOVERY_ARTIFACTS_FILE
+    if figure4_artifacts_path.exists():
+        figure4_artifact_recordset: object | str | Path = figure4_artifacts_path
+    else:
+        figure4_artifact_recordset = figure4_matrix_discovery_artifact_boundary_record()
+        if is_repo_root:
+            issues.append(
+                PaperManifestIssue(
+                    "figure4_matrix_discovery_artifact_manifest_missing",
+                    (
+                        f"{FIGURE4_MATRIX_DISCOVERY_ARTIFACTS_FILE} must emit "
+                        "Figure 4 matrix-discovery artifact availability"
+                    ),
+                    "figure4_matrix_discovery",
+                )
+            )
     figure4_artifact_report = validate_figure4_matrix_discovery_artifact_boundary(
-        figure4_matrix_discovery_artifact_boundary_record()
+        figure4_artifact_recordset
     )
     issues.extend(
         PaperManifestIssue(

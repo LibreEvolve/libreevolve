@@ -1584,14 +1584,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
       simple/random construction provenance exists.
   - Spec evidence: AlphaEvolve Section 3.2 says the initial starting point for
     the constructive-math cases was a simple or random construction.
-  - Current evidence: README can describe seed/source provenance, invalid
-    optimization-pressure seeds, Appendix B family/status coverage, aggregate
-    outcome gaps, and human-seeded matrix-result caveats. It does not yet
-    document constructive-math report fields that classify each initial
-    construction as simple, random, human-seeded, or prior-art-seeded, preserve
-    the construction artifact/hash and generator seed, record the baseline
-    value, or prove that aggregate Section 3.2 claims are not based on hidden
-    incumbent construction seeding.
+  - Current evidence: README now points to the Section 3.2 starting-point
+    absence boundary in `libreevolve.problems.benchmarks.math_outcomes`. It
+    documents the simple-or-random source statement and says per-instance
+    starting construction artifacts, generator/seed records, baseline metrics,
+    and prior-best seeding policies remain `not_recorded_locally`.
   - Required result: when constructive-math starting-construction provenance
     lands, update README, ROADMAP, papers index, and code/paper TODOs together
     so README distinguishes Appendix B family coverage and aggregate outcomes

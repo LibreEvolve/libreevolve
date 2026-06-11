@@ -3663,8 +3663,11 @@ five branches, roughly 75% best-known rediscovery, roughly 20% SOTA
 improvement, and the paper's verification claim. It validates the required
 future per-instance and aggregate fields while keeping per-problem rows,
 branch taxonomy, construction/verifier artifacts, outcome counts, and
-percentage recomputation explicitly `not_recorded_locally`. For Appendix B.4,
-the registry now
+percentage recomputation explicitly `not_recorded_locally`. The same module
+also validates the Section 3.2 starting-point boundary that those cases began
+from "a simple or a random construction"; per-instance starting construction
+artifacts, generator/seed records, baseline metrics, and prior-best seeding
+policies remain `not_recorded_locally`. For Appendix B.4, the registry now
 preserves the uncertainty-inequality formulation, the `[33]` prior-bound
 rounding distinction (`0.353` stated versus `0.3523` rounded), the first-version
 Hermite-polynomial result boundary (`C4 <= 0.3521` with coefficients

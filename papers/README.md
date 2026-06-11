@@ -153,7 +153,11 @@ best-known rediscovery, roughly 20% SOTA-improvement, and verification-claim
 source facts. It validates the required future per-instance and aggregate
 fields, but per-problem/per-parameter rows, branch labels, previous-best
 references, construction/verifier links, outcome statuses, and recomputed
-aggregate percentages remain absent.
+aggregate percentages remain absent. The same module now records the Section
+3.2 starting-point absence boundary for the paper statement that the initial
+starting point was "a simple or a random construction"; per-instance starting
+construction artifacts, generator/seed records, baseline metrics, and
+prior-best seeding policies remain absent.
 For Appendix B.4 uncertainty-inequality evidence, the registry now records the
 source formulation, the `[33]` prior-bound rounding distinction (`0.353`
 stated versus `0.3523` rounded), the first-version Hermite-polynomial result

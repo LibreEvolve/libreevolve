@@ -2845,13 +2845,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     the constructive-math cases summarized by the best-known rediscovery and
     SOTA-improvement percentages, "the initial starting point was a simple or a
     random construction."
-  - Current gap: paper-facing seed status preserves generation-0 source
-    identity and separately tracks strict seed validity plus human-seeded
-    matrix-result provenance. The Appendix B registry and aggregate outcome
-    TODOs still do not require per-instance starting-construction class,
-    random-generator/seed provenance, initial construction payload or hash,
-    baseline metric value, or a policy proving that prior-best/incumbent
-    constructions were not silently embedded as the starting point.
+  - Current gap: paper-facing coverage now includes a Section 3.2
+    starting-construction absence boundary in
+    `libreevolve.problems.benchmarks.math_outcomes`. It preserves the
+    simple-or-random source statement and required future fields for
+    per-instance starting class, artifact hash, generator/random seed,
+    baseline metric, and prior-best visibility/seeding policy. It does not yet
+    provide those rows or artifacts.
   - Required result: add paper/report evidence for each constructive-math
     problem instance: starting-construction class (`simple`, `random`,
     `human_seeded`, or `prior_art_seeded`), construction artifact/hash,

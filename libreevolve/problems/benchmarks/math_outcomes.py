@@ -5,6 +5,7 @@ from typing import Any
 
 
 MATH_OUTCOME_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_math_outcome_boundary.v1"
+MATH_STARTING_CONSTRUCTION_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_math_starting_construction_boundary.v1"
 EXPECTED_REQUIRED_INSTANCE_FIELDS = (
     "instance_id",
     "problem_family_id",
@@ -31,6 +32,19 @@ EXPECTED_REQUIRED_AGGREGATE_FIELDS = (
     "percentage_rounding_policy",
     "verified_case_count",
 )
+EXPECTED_REQUIRED_STARTING_CONSTRUCTION_FIELDS = (
+    "instance_id",
+    "problem_family_id",
+    "starting_construction_class",
+    "starting_construction_artifact_path",
+    "starting_construction_artifact_sha256",
+    "generator_id",
+    "random_seed",
+    "baseline_metric_name",
+    "baseline_metric_value",
+    "prior_best_visibility_policy",
+    "prior_best_seeding_policy",
+)
 EXPECTED_SOURCE_SUMMARY = {
     "source_paper_id": "2506.13131",
     "source_section_id": "3.2",
@@ -42,6 +56,14 @@ EXPECTED_SOURCE_SUMMARY = {
     "rediscovered_best_known_percent_approx": 75.0,
     "improved_sota_percent_approx": 20.0,
     "verification_claim": "In all these cases, results were verified according to their provided mathematical definitions.",
+}
+EXPECTED_STARTING_CONSTRUCTION_SUMMARY = {
+    "source_paper_id": "2506.13131",
+    "source_section_id": "3.2",
+    "source_claim": "constructive-math runs started from simple or random constructions",
+    "starting_point_text": "the initial starting point was a simple or a random construction",
+    "allowed_claimed_starting_classes": ["simple", "random"],
+    "unsupported_without_explicit_label": ["human_seeded", "prior_art_seeded", "expert_seeded"],
 }
 EXPECTED_MATH_OUTCOME_BOUNDARY = {
     "schema": MATH_OUTCOME_BOUNDARY_SCHEMA,
@@ -60,7 +82,23 @@ EXPECTED_MATH_OUTCOME_BOUNDARY = {
         "aggregate_percentage_recomputation": "not_recorded_locally",
     },
 }
+EXPECTED_STARTING_CONSTRUCTION_BOUNDARY = {
+    "schema": MATH_STARTING_CONSTRUCTION_BOUNDARY_SCHEMA,
+    **EXPECTED_STARTING_CONSTRUCTION_SUMMARY,
+    "status": "not_recorded_locally",
+    "scope_boundary": "This boundary records the paper's Section 3.2 simple-or-random starting-point claim, but does not claim local per-instance starting construction artifacts, random seeds, baseline metrics, or prior-best seeding policy evidence.",
+    "required_starting_construction_fields": list(EXPECTED_REQUIRED_STARTING_CONSTRUCTION_FIELDS),
+    "missing_evidence": {
+        "per_instance_starting_rows": "not_recorded_locally",
+        "starting_construction_artifacts": "not_recorded_locally",
+        "random_generator_and_seed_records": "not_recorded_locally",
+        "baseline_metric_values": "not_recorded_locally",
+        "prior_best_visibility_policy": "not_recorded_locally",
+        "prior_best_seeding_policy": "not_recorded_locally",
+    },
+}
 _MISSING_EVIDENCE_KEYS = tuple(EXPECTED_MATH_OUTCOME_BOUNDARY["missing_evidence"].keys())
+_STARTING_MISSING_EVIDENCE_KEYS = tuple(EXPECTED_STARTING_CONSTRUCTION_BOUNDARY["missing_evidence"].keys())
 
 
 @dataclass(frozen=True)
@@ -86,6 +124,18 @@ def alphaevolve_math_outcome_boundary() -> dict[str, Any]:
         "required_instance_fields": list(EXPECTED_REQUIRED_INSTANCE_FIELDS),
         "required_aggregate_fields": list(EXPECTED_REQUIRED_AGGREGATE_FIELDS),
         "missing_evidence": dict(EXPECTED_MATH_OUTCOME_BOUNDARY["missing_evidence"]),
+    }
+
+
+def alphaevolve_math_starting_construction_boundary() -> dict[str, Any]:
+    """Return the Section 3.2 starting-construction absence boundary."""
+
+    return {
+        **EXPECTED_STARTING_CONSTRUCTION_BOUNDARY,
+        "allowed_claimed_starting_classes": list(EXPECTED_STARTING_CONSTRUCTION_SUMMARY["allowed_claimed_starting_classes"]),
+        "unsupported_without_explicit_label": list(EXPECTED_STARTING_CONSTRUCTION_SUMMARY["unsupported_without_explicit_label"]),
+        "required_starting_construction_fields": list(EXPECTED_REQUIRED_STARTING_CONSTRUCTION_FIELDS),
+        "missing_evidence": dict(EXPECTED_STARTING_CONSTRUCTION_BOUNDARY["missing_evidence"]),
     }
 
 
@@ -148,5 +198,51 @@ def validate_math_outcome_boundary(boundary: object | None = None) -> MathOutcom
         status=status if isinstance(status, str) else None,
         minimum_problem_instances=min_instances,
         minimum_branch_count=min_branches,
+        issues=issues,
+    )
+
+
+def validate_math_starting_construction_boundary(boundary: object | None = None) -> MathOutcomeBoundaryValidation:
+    """Validate Section 3.2 simple-or-random starting-construction metadata."""
+
+    data = alphaevolve_math_starting_construction_boundary() if boundary is None else boundary
+    if not isinstance(data, dict):
+        return MathOutcomeBoundaryValidation(False, None, None, None, [MathOutcomeBoundaryIssue("invalid_boundary", "boundary must be an object")])
+    issues: list[MathOutcomeBoundaryIssue] = []
+    for field, expected_value in EXPECTED_STARTING_CONSTRUCTION_BOUNDARY.items():
+        if field in {"required_starting_construction_fields", "missing_evidence"}:
+            continue
+        actual = data.get(field)
+        if actual != expected_value:
+            issues.append(MathOutcomeBoundaryIssue(f"invalid_starting_{field}", f"{field} must match the AlphaEvolve Section 3.2 starting-construction claim"))
+    status = data.get("status")
+    if status != "not_recorded_locally":
+        issues.append(MathOutcomeBoundaryIssue("invalid_starting_status", "starting-construction boundary must remain not_recorded_locally until per-instance seed artifacts exist"))
+    if data.get("required_starting_construction_fields") != list(EXPECTED_REQUIRED_STARTING_CONSTRUCTION_FIELDS):
+        issues.append(MathOutcomeBoundaryIssue("invalid_required_starting_construction_fields", "required_starting_construction_fields must enumerate future per-instance starting construction rows"))
+    classes = data.get("allowed_claimed_starting_classes")
+    if classes != ["simple", "random"]:
+        issues.append(MathOutcomeBoundaryIssue("invalid_allowed_starting_classes", "Section 3.2 claimed starting classes must stay limited to simple and random"))
+    unsupported = data.get("unsupported_without_explicit_label")
+    if not isinstance(unsupported, list) or not {"human_seeded", "prior_art_seeded", "expert_seeded"}.issubset(set(unsupported)):
+        issues.append(MathOutcomeBoundaryIssue("invalid_unsupported_starting_classes", "human/prior-art/expert seeded starts must be explicitly labeled outside the simple-or-random claim"))
+    missing = data.get("missing_evidence")
+    if not isinstance(missing, dict):
+        issues.append(MathOutcomeBoundaryIssue("invalid_starting_missing_evidence", "missing_evidence must be an object"))
+    else:
+        for key in _STARTING_MISSING_EVIDENCE_KEYS:
+            if missing.get(key) != "not_recorded_locally":
+                issues.append(MathOutcomeBoundaryIssue(f"invalid_starting_missing_{key}", f"{key} must remain not_recorded_locally until starting-construction evidence artifacts exist"))
+        extra = set(missing) - set(_STARTING_MISSING_EVIDENCE_KEYS)
+        if extra:
+            issues.append(MathOutcomeBoundaryIssue("extra_starting_missing_evidence", "starting missing_evidence contains unknown keys"))
+    scope_boundary = data.get("scope_boundary")
+    if not isinstance(scope_boundary, str) or "does not claim" not in scope_boundary:
+        issues.append(MathOutcomeBoundaryIssue("missing_starting_scope_boundary", "scope_boundary must state that local starting-construction evidence is not claimed"))
+    return MathOutcomeBoundaryValidation(
+        ok=not issues,
+        status=status if isinstance(status, str) else None,
+        minimum_problem_instances=None,
+        minimum_branch_count=None,
         issues=issues,
     )

@@ -1,10 +1,15 @@
 from libreevolve.problems.benchmarks.math_outcomes import (
     EXPECTED_REQUIRED_AGGREGATE_FIELDS,
     EXPECTED_REQUIRED_INSTANCE_FIELDS,
+    EXPECTED_REQUIRED_STARTING_CONSTRUCTION_FIELDS,
     EXPECTED_SOURCE_SUMMARY,
+    EXPECTED_STARTING_CONSTRUCTION_SUMMARY,
     MATH_OUTCOME_BOUNDARY_SCHEMA,
+    MATH_STARTING_CONSTRUCTION_BOUNDARY_SCHEMA,
     alphaevolve_math_outcome_boundary,
+    alphaevolve_math_starting_construction_boundary,
     validate_math_outcome_boundary,
+    validate_math_starting_construction_boundary,
 )
 
 
@@ -15,6 +20,9 @@ def test_math_outcome_boundary_is_exported_from_benchmark_package():
 
     assert boundary["schema"] == benchmarks.MATH_OUTCOME_BOUNDARY_SCHEMA
     assert benchmarks.validate_math_outcome_boundary(boundary).ok is True
+    starting = benchmarks.alphaevolve_math_starting_construction_boundary()
+    assert starting["schema"] == benchmarks.MATH_STARTING_CONSTRUCTION_BOUNDARY_SCHEMA
+    assert benchmarks.validate_math_starting_construction_boundary(starting).ok is True
 
 
 def test_alphaevolve_math_outcome_boundary_preserves_section_3_2_claim():
@@ -32,6 +40,21 @@ def test_alphaevolve_math_outcome_boundary_preserves_section_3_2_claim():
     assert boundary["required_aggregate_fields"] == list(EXPECTED_REQUIRED_AGGREGATE_FIELDS)
     assert set(boundary["missing_evidence"].values()) == {"not_recorded_locally"}
     assert "does not claim local per-problem outcome rows" in boundary["scope_boundary"]
+
+
+def test_alphaevolve_math_starting_construction_boundary_preserves_section_3_2_claim():
+    boundary = alphaevolve_math_starting_construction_boundary()
+    validation = validate_math_starting_construction_boundary(boundary)
+
+    assert validation.ok is True
+    assert validation.status == "not_recorded_locally"
+    assert boundary["schema"] == MATH_STARTING_CONSTRUCTION_BOUNDARY_SCHEMA
+    for field, expected_value in EXPECTED_STARTING_CONSTRUCTION_SUMMARY.items():
+        assert boundary[field] == expected_value
+    assert boundary["allowed_claimed_starting_classes"] == ["simple", "random"]
+    assert boundary["required_starting_construction_fields"] == list(EXPECTED_REQUIRED_STARTING_CONSTRUCTION_FIELDS)
+    assert set(boundary["missing_evidence"].values()) == {"not_recorded_locally"}
+    assert "does not claim local per-instance starting construction artifacts" in boundary["scope_boundary"]
 
 
 def test_math_outcome_boundary_rejects_premature_aggregate_claims():
@@ -61,6 +84,28 @@ def test_math_outcome_boundary_rejects_premature_aggregate_claims():
     assert "missing_scope_boundary" in codes
 
 
+def test_math_starting_construction_boundary_rejects_premature_seed_claims():
+    boundary = alphaevolve_math_starting_construction_boundary()
+    boundary["status"] = "recorded"
+    boundary["allowed_claimed_starting_classes"] = ["simple", "random", "human_seeded"]
+    boundary["unsupported_without_explicit_label"] = ["human_seeded"]
+    boundary["required_starting_construction_fields"] = ["instance_id"]
+    boundary["missing_evidence"]["baseline_metric_values"] = "recorded"
+    boundary["scope_boundary"] = "Local starting constructions are verified."
+
+    validation = validate_math_starting_construction_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_starting_status" in codes
+    assert "invalid_starting_allowed_claimed_starting_classes" in codes
+    assert "invalid_allowed_starting_classes" in codes
+    assert "invalid_unsupported_starting_classes" in codes
+    assert "invalid_required_starting_construction_fields" in codes
+    assert "invalid_starting_missing_baseline_metric_values" in codes
+    assert "missing_starting_scope_boundary" in codes
+
+
 def test_math_outcome_boundary_rejects_missing_evidence_shape():
     boundary = alphaevolve_math_outcome_boundary()
     boundary["missing_evidence"] = []
@@ -69,3 +114,13 @@ def test_math_outcome_boundary_rejects_missing_evidence_shape():
 
     assert validation.ok is False
     assert [issue.code for issue in validation.issues] == ["invalid_missing_evidence"]
+
+
+def test_math_starting_construction_boundary_rejects_missing_evidence_shape():
+    boundary = alphaevolve_math_starting_construction_boundary()
+    boundary["missing_evidence"] = []
+
+    validation = validate_math_starting_construction_boundary(boundary)
+
+    assert validation.ok is False
+    assert [issue.code for issue in validation.issues] == ["invalid_starting_missing_evidence"]

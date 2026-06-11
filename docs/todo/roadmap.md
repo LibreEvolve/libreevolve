@@ -2676,12 +2676,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
       starting-construction provenance exists.
   - Spec evidence: AlphaEvolve Section 3.2 says the initial starting point in
     the constructive-math cases was a simple or random construction.
-  - Current evidence: roadmap/README/paper-index wording covers seed
-    provenance, strict seed-validity gaps, human-seeded matrix caveats,
-    Appendix B family/status coverage, and aggregate constructive-math outcome
-    gaps. It does not require constructive-math report metadata for starting
-    construction class, random generator and seed, construction artifact/hash,
-    baseline metric value, or prior-best visibility/seeding policy.
+  - Current evidence: roadmap/README/paper-index wording now cites the Section
+    3.2 starting-construction absence boundary in
+    `libreevolve.problems.benchmarks.math_outcomes`. It validates the
+    simple-or-random source statement and required future fields for starting
+    class, construction artifact, random generator/seed, baseline metric, and
+    prior-best visibility/seeding policy, while the actual rows and artifacts
+    remain absent.
   - Required result: when constructive-math reports validate simple/random
     starting-construction provenance, update ROADMAP, README, papers index, and
     code/paper TODOs so roadmap wording distinguishes aggregate Appendix B

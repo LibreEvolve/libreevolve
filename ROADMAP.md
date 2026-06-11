@@ -637,6 +637,14 @@ is not yet an AlphaEvolve reproduction.
   rows, mathematical branch labels, prior-best references,
   matched/improved/fell-behind status, construction/verifier artifacts, and
   recomputed aggregate percentages remain open.
+- Keep constructive-math starting-point claims scoped to the Section 3.2
+  simple-or-random absence boundary: the same metadata module now validates
+  the paper statement that the initial starting point was "a simple or a
+  random construction" and requires future per-instance fields for starting
+  class, construction artifact, generator/random seed, baseline metric,
+  prior-best visibility, and prior-best seeding policy. Those artifacts and
+  policies remain open before any Section 3.2 breadth claim can be treated as
+  simple/random-start evidence.
 - Add Appendix B result-version provenance before quoting paper-level
   constructive-math constants: source manuscript version, reported value,
   superseded/current status, update note, attribution, and verifier/Colab

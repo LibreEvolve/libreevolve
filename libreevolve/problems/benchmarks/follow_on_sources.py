@@ -159,6 +159,36 @@ EXPECTED_FOLLOW_ON_NOTEBOOKS = (
     ("experiments/the_3d_moving_sofa/the_3d_moving_sofa.ipynb", 309704, "fff09e075abf6e4391248dd80dc1cb0b616b4926"),
     ("experiments/thomson_problem/thomson_problem.ipynb", 86472, "95871bcbb7f5fdf43749d3d17cf61d37fc476081"),
 )
+EXPECTED_FOLLOW_ON_NOTEBOOK_SHA256S = {
+    "experiments/autocorrelation_problems/autocorrelation_problems.ipynb": "996e7e9dd20991fe06319d2c91e8af3501b48b14c2dd10e5ce3a95343ee071ba",
+    "experiments/classical_inequalities/classical_inequalities.ipynb": "b51091f45790eb89b72cd05c344febe7d7571f2370a7a90e1d77294c5eefc03d",
+    "experiments/difference_bases/difference_bases.ipynb": "e5bd224563055caf53c0fef9b9c67620c7124a14aa77094cce456d9927b65489",
+    "experiments/edges_vs_triangles/edges_vs_triangles.ipynb": "f4db3301d6fa8a59b833127230dd3afce8392ae1240e0806b6213c90a693706c",
+    "experiments/equidistant_points_in_convex_polygons/Equidistant_points_in_convex_polygons.ipynb": "aec48a4334aaa1a5ceb342677e5ee34a5a4f0fc08da4b58a38f44f3eb7ef9188",
+    "experiments/erdos_szekeres_happy_ending_problem/happy_ending_problem.ipynb": "e54087cec155baa2446cc66a05a6b0f593c76e186acad408f3ff2f9d32304fb0",
+    "experiments/finite_field_kakeya_problem/finite_field_kakeya.ipynb": "bc445b9a522ee1b0ea78e66536c90ca7e3b67071e07065b0d878e313852ce65b",
+    "experiments/finite_field_nikodym_problem/finite_field_nikodym.ipynb": "cd9be3d00417ed9f9aeb88e19d481bef692a1f72050157dd54ee22a176d734d8",
+    "experiments/finite_field_sum_product_problem/finite_field_sum_product.ipynb": "feeb2e1b6d77e3146863ab5cfc8b2588cc7575fb92745c4ce72747575043adaf",
+    "experiments/flat_polynomials/flat_polynomials.ipynb": "c6cb19c14077ccf20dbf2422a6d8bb5cb2f6c44fbc670569770a550e1234e6ef",
+    "experiments/imo_2025_p6/imo_2025_p6.ipynb": "14944077e2f9d66f2f96872b72d7bd53cb1a1af5512894e97950516387cb60f6",
+    "experiments/kakeya_needle_2d/kakeya_needle_2d.ipynb": "cee72a338df6f26a46813962b113daaf1c1d6a4210ac2af39e3becb758ca3810",
+    "experiments/kakeya_needle_3d/kakeya_needle_3d.ipynb": "2a503d78432fb1d7c218e9c53538e2e260e137fabf4dcc54eb6d1a51fa1c3652",
+    "experiments/kissing_cylinders/kissing_cylinders.ipynb": "d36aa867912149024c0da16eea5b2d3f73af805d2049d86892c92b26b17cd51a",
+    "experiments/no_5_on_a_sphere/no_5_on_a_sphere.ipynb": "0af65a39d7b5d5d55ba078d19b6dae4b410c66c3395101234a09f0223e5af075",
+    "experiments/ovals_problem/ovals_problem.ipynb": "5745654087376d544b6414ff0777452cb56f3d1f00dcca37decb07a79b1b71df",
+    "experiments/packing_circles_max_sum_of_radii/packing_circle_max_sum_of_radii.ipynb": "e7a304378a5ca80c74f94f5060a9f5db953767af850834513fd797e3306a935e",
+    "experiments/packing_unit_cubes/packing_unit_cubes.ipynb": "a260a6a7a75da3d1bf3242483beb2fce902b995fc5c34ca87e9573af5c7c2326",
+    "experiments/prime_number_theorem/prime_number_theorem.ipynb": "a66dd0674ace2a3e0771779b92292ce577f21bdb5af0b310b6456b322e59fbba",
+    "experiments/ring_loading_problem/ring_loading_problem.ipynb": "360ec04a8fa80654d54f4a32c9c31377ae2b78505444aa454161590dad2f7003",
+    "experiments/sphere_packing_uncertainty_principles/sphere_packing_uncertainty_principles.ipynb": "5ce6c2d79fbaa9babd235cf69fbbc14247091baec041551ed3d79645088b179e",
+    "experiments/spherical_t_designs/spherical_t_designs.ipynb": "6d117c8044884bb87a461292dc1aafd2056f15a622103665e2e2135cb4b86b27",
+    "experiments/subsets_of_the_grid_with_no_isosceles_triangles/no_isosceles_triangles.ipynb": "653accd24369672f1cc757b203dae311f1489895a1cb8e6242d3308fe657891d",
+    "experiments/sums_differences_problems/sums_differences_problems.ipynb": "8ac90e85303e97dc5d69489a6393692d018f87ee5ac220216313ead97daa1da2",
+    "experiments/tammes_problem/tammes_problem.ipynb": "2094a9b8cda3d05353fc76fbdbbe2de84745e2d43f31d63f75edcc727f5df150",
+    "experiments/the_2d_moving_sofa/the_2d_moving_sofa.ipynb": "8e418dcaf572c0334a8b21040e22b570a23d2b3f64450f9a8a00a0756c145299",
+    "experiments/the_3d_moving_sofa/the_3d_moving_sofa.ipynb": "a5b03434f3848bedcec5d47f87182660830209d811b4d31d3058357d3eabd73e",
+    "experiments/thomson_problem/thomson_problem.ipynb": "c0171419f891ce81a9a112ce57ec2c8870724e803487e1600064621b08a49671",
+}
 EXPECTED_TAO_BLOG_URL = (
     "https://terrytao.wordpress.com/2025/11/05/"
     "mathematical-exploration-and-discovery-at-scale/"
@@ -325,8 +355,8 @@ def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
                 "classifies page 68, records all-page resource-link "
                 "diagnostics, pins raw-page hashes, and emits per-page "
                 "source rows with status buckets, notebook-link mappings, "
-                "and absence reasons, but does not claim notebook SHA-256 "
-                "hashes or artifact flags."
+                "absence reasons, and pinned notebook SHA-256 hashes, but "
+                "does not claim artifact flags."
             ),
         },
         "source_use": {
@@ -338,7 +368,7 @@ def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
             "citation_arxiv_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
         },
         "required_follow_on_work": [
-            "complete_per_problem_notebook_sha256_and_artifact_inventory",
+            "complete_per_problem_notebook_artifact_flag_inventory",
             "validate_notebook_prompt_verifier_initial_final_artifacts",
             "map_original_appendix_b_claims_to_follow_on_problem_records",
             "attach_rights_attribution_to_generated_artifacts",
@@ -487,8 +517,8 @@ def alphaevolve_follow_on_runtime_absence_record() -> dict[str, Any]:
         "notebook_inventory": {
             "notebook_count": len(EXPECTED_FOLLOW_ON_NOTEBOOKS),
             "coverage": "many_not_all_problem_notebooks",
-            "hash_algorithm": "git_blob_sha1",
-            "sha256_inventory_complete": False,
+            "hash_algorithm": "git_blob_sha1_and_raw_sha256",
+            "sha256_inventory_complete": True,
             "problem_id_mapping_complete": True,
             "absence_reason_inventory_complete": True,
             "notebooks": [
@@ -496,6 +526,7 @@ def alphaevolve_follow_on_runtime_absence_record() -> dict[str, Any]:
                     "path": path,
                     "bytes": byte_count,
                     "git_blob_sha": git_blob_sha,
+                    "sha256": EXPECTED_FOLLOW_ON_NOTEBOOK_SHA256S[path],
                     "artifact_kinds": list(EXPECTED_FOLLOW_ON_NOTEBOOK_ARTIFACT_KINDS),
                     "alphaevolve_runtime_available": False,
                 }
@@ -520,11 +551,10 @@ def alphaevolve_follow_on_runtime_absence_record() -> dict[str, Any]:
             "not_alphaevolve_runtime_implementation": True,
             "not_replayable_alphaevolve_service": True,
             "not_full_notebook_cell_inventory": True,
-            "not_notebook_sha256_inventory": True,
+            "not_cell_artifact_flag_inventory": True,
             "must_not_describe_notebooks_as_runtime_harnesses": True,
         },
         "remaining_runtime_work": [
-            "compute_sha256_for_each_notebook",
             "validate_notebook_cell_artifact_flags",
         ],
     }
@@ -742,7 +772,7 @@ def alphaevolve_follow_on_source_manifest_record() -> dict[str, Any]:
                     ),
                 },
                 "remaining_work": [
-                    "complete_per_problem_notebook_sha256_and_artifact_inventory",
+                    "complete_per_problem_notebook_artifact_flag_inventory",
                     "validate_notebook_prompt_verifier_initial_final_artifacts",
                     "map_original_appendix_b_claims_to_follow_on_problem_records",
                     "attach_rights_attribution_to_generated_artifacts",
@@ -1289,10 +1319,9 @@ def _validate_problem_coverage_evidence(value: object, issues: list[AlphaEvolveF
     if (
         not isinstance(claim_boundary, str)
         or "does not claim" not in claim_boundary
-        or "notebook SHA-256" not in claim_boundary
         or "artifact flags" not in claim_boundary
     ):
-        issues.append(_issue("missing_problem_coverage_claim_boundary", "problem_coverage_evidence must preserve notebook and artifact gaps", EXPECTED_REPOSITORY_NAME))
+        issues.append(_issue("missing_problem_coverage_claim_boundary", "problem_coverage_evidence must preserve artifact gaps", EXPECTED_REPOSITORY_NAME))
 
 
 def _validate_source_use(value: object, issues: list[AlphaEvolveFollowOnMathSourceIssue]) -> None:
@@ -1314,7 +1343,7 @@ def _validate_source_use(value: object, issues: list[AlphaEvolveFollowOnMathSour
 
 def _validate_required_follow_on_work(value: object, issues: list[AlphaEvolveFollowOnMathSourceIssue]) -> None:
     required = {
-        "complete_per_problem_notebook_sha256_and_artifact_inventory",
+        "complete_per_problem_notebook_artifact_flag_inventory",
         "validate_notebook_prompt_verifier_initial_final_artifacts",
         "map_original_appendix_b_claims_to_follow_on_problem_records",
         "attach_rights_attribution_to_generated_artifacts",
@@ -1401,7 +1430,7 @@ def _validate_follow_on_manifest_remaining_work(
     issues: list[AlphaEvolveFollowOnMathSourceIssue],
 ) -> None:
     expected = {
-        "complete_per_problem_notebook_sha256_and_artifact_inventory",
+        "complete_per_problem_notebook_artifact_flag_inventory",
         "validate_notebook_prompt_verifier_initial_final_artifacts",
         "map_original_appendix_b_claims_to_follow_on_problem_records",
         "attach_rights_attribution_to_generated_artifacts",
@@ -1684,8 +1713,8 @@ def _validate_runtime_absence_notebook_inventory(
     expected_fields = {
         "notebook_count": len(EXPECTED_FOLLOW_ON_NOTEBOOKS),
         "coverage": "many_not_all_problem_notebooks",
-        "hash_algorithm": "git_blob_sha1",
-        "sha256_inventory_complete": False,
+        "hash_algorithm": "git_blob_sha1_and_raw_sha256",
+        "sha256_inventory_complete": True,
         "problem_id_mapping_complete": True,
         "absence_reason_inventory_complete": True,
     }
@@ -1697,7 +1726,11 @@ def _validate_runtime_absence_notebook_inventory(
         issues.append(_issue("invalid_runtime_absence_notebook_list", "notebook_inventory.notebooks must be a list", EXPECTED_REPOSITORY_NAME))
         return 0
     expected_by_path = {
-        path: {"bytes": byte_count, "git_blob_sha": git_blob_sha}
+        path: {
+            "bytes": byte_count,
+            "git_blob_sha": git_blob_sha,
+            "sha256": EXPECTED_FOLLOW_ON_NOTEBOOK_SHA256S[path],
+        }
         for path, byte_count, git_blob_sha in EXPECTED_FOLLOW_ON_NOTEBOOKS
     }
     actual_paths = [item.get("path") for item in notebooks if isinstance(item, dict)]
@@ -1719,6 +1752,11 @@ def _validate_runtime_absence_notebook_inventory(
             issues.append(_issue("invalid_runtime_absence_notebook_git_blob_sha", "notebook.git_blob_sha must match the pinned GitHub tree blob", path))
         if not isinstance(git_blob_sha, str) or _COMMIT_RE.fullmatch(git_blob_sha) is None:
             issues.append(_issue("invalid_runtime_absence_notebook_git_blob_sha_format", "notebook.git_blob_sha must be a 40-character Git blob hash", path))
+        sha256 = notebook.get("sha256")
+        if sha256 != expected["sha256"]:
+            issues.append(_issue("invalid_runtime_absence_notebook_sha256", "notebook.sha256 must match the pinned raw notebook digest", path))
+        if not isinstance(sha256, str) or _SHA256_RE.fullmatch(sha256) is None:
+            issues.append(_issue("invalid_runtime_absence_notebook_sha256_format", "notebook.sha256 must be a lowercase 64-hex digest", path))
         if notebook.get("artifact_kinds") != list(EXPECTED_FOLLOW_ON_NOTEBOOK_ARTIFACT_KINDS):
             issues.append(_issue("invalid_runtime_absence_notebook_artifact_kinds", "notebook artifact kinds must preserve prompt/verifier/input/output classification", path))
         if notebook.get("alphaevolve_runtime_available") is not False:
@@ -1768,7 +1806,7 @@ def _validate_runtime_absence_limits(
         "not_alphaevolve_runtime_implementation": True,
         "not_replayable_alphaevolve_service": True,
         "not_full_notebook_cell_inventory": True,
-        "not_notebook_sha256_inventory": True,
+        "not_cell_artifact_flag_inventory": True,
         "must_not_describe_notebooks_as_runtime_harnesses": True,
     }
     for field, expected_value in expected.items():
@@ -1781,14 +1819,13 @@ def _validate_remaining_runtime_work(
     issues: list[AlphaEvolveFollowOnMathSourceIssue],
 ) -> None:
     expected = {
-        "compute_sha256_for_each_notebook",
         "validate_notebook_cell_artifact_flags",
     }
     if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
         issues.append(_issue("invalid_remaining_runtime_work", "remaining_runtime_work must list unsatisfied runtime-absence follow-ups", EXPECTED_REPOSITORY_NAME))
         return
     if set(value) != expected:
-        issues.append(_issue("remaining_runtime_work_mismatch", "remaining_runtime_work must preserve notebook hashing and cell-artifact follow-ups", EXPECTED_REPOSITORY_NAME))
+        issues.append(_issue("remaining_runtime_work_mismatch", "remaining_runtime_work must preserve cell-artifact follow-ups", EXPECTED_REPOSITORY_NAME))
 
 
 def _validate_runtime_absence_manifest_source(

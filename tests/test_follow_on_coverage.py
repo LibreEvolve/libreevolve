@@ -95,6 +95,7 @@ def test_validate_alphaevolve_follow_on_problem_coverage_accepts_builtin_record(
     assert source_rows["rows"][0]["colab_link_status"] == "github_notebook_blob_url"
     assert [link["link_field"] for link in source_rows["rows"][0]["notebook_links"]] == ["colabURL", "colabURL2"]
     assert source_rows["rows"][0]["notebook_links"][1]["notebook_path"] == "experiments/finite_field_nikodym_problem/finite_field_nikodym.ipynb"
+    assert source_rows["rows"][0]["notebook_links"][1]["notebook_sha256"] == "cd9be3d00417ed9f9aeb88e19d481bef692a1f72050157dd54ee22a176d734d8"
     assert source_rows["rows"][30]["page_id"] == 31
     assert source_rows["rows"][30]["title"] == "32. Furstenberg-S\u00e1rk\u00f6zy Problem"
     assert source_rows["rows"][35]["notebook_mapping_status"] == "linked_repository_notebook_path_absent_from_pinned_tree"
@@ -109,7 +110,7 @@ def test_validate_alphaevolve_follow_on_problem_coverage_accepts_builtin_record(
     assert link["source_manifest"] == "papers/follow_on_runtime_absence.json"
     assert link["pinned_notebook_path_count"] == 28
     assert link["problem_id_mapping_complete"] is True
-    assert link["sha256_inventory_complete"] is False
+    assert link["sha256_inventory_complete"] is True
     assert link["absence_reason_inventory_complete"] is True
 
 
@@ -181,12 +182,12 @@ def test_validate_alphaevolve_follow_on_problem_coverage_rejects_inventory_overc
     scope = recordset["coverage_scope"]
     scope["notebook_inventory_complete"] = True
     scope["page_hash_inventory_complete"] = False
-    scope["notebook_hash_inventory_complete"] = True
+    scope["notebook_hash_inventory_complete"] = False
     scope["artifact_presence_matrix_complete"] = True
     link = recordset["notebook_inventory_link"]
     link["pinned_notebook_path_count"] = 67
     link["problem_id_mapping_complete"] = False
-    link["sha256_inventory_complete"] = True
+    link["sha256_inventory_complete"] = False
     link["absence_reason_inventory_complete"] = False
     link["claim_boundary"] = "Every problem has a mapped notebook."
     inventory = recordset["numbered_page_inventory"]
@@ -239,11 +240,11 @@ def test_validate_alphaevolve_follow_on_problem_coverage_rejects_inventory_overc
     assert validation.ok is False
     assert "notebook_inventory_complete_overclaim" in codes
     assert "invalid_coverage_scope_page_hash_inventory_complete" in codes
-    assert "notebook_hash_inventory_complete_overclaim" in codes
+    assert "invalid_coverage_scope_notebook_hash_inventory_complete" in codes
     assert "artifact_presence_matrix_complete_overclaim" in codes
     assert "invalid_notebook_inventory_link_pinned_notebook_path_count" in codes
     assert "invalid_notebook_inventory_link_problem_id_mapping_complete" in codes
-    assert "notebook_inventory_link_sha256_inventory_complete_overclaim" in codes
+    assert "invalid_notebook_inventory_link_sha256_inventory_complete" in codes
     assert "invalid_notebook_inventory_link_absence_reason_inventory_complete" in codes
     assert "missing_notebook_inventory_link_claim_boundary" in codes
     assert "invalid_numbered_page_inventory_observed_numbered_html_count" in codes

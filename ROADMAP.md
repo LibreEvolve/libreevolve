@@ -874,7 +874,7 @@ is not yet an AlphaEvolve reproduction.
   `papers/follow_on_sources.json` now emits the committed follow-on source row
   with docs/TODO claim-surface links, linked problem-coverage evidence for the
   declared-67 versus observed-68 numbered-page boundary, and an explicit
-  no-cache policy. Cached PDF rows, notebook SHA-256/artifact hashes, and
+  no-cache policy. Cached PDF rows, notebook artifact-flag validation, and
   Appendix B claim mappings remain open.
 - Keep follow-on problem-repository rights separate from the original PDF,
   `alphaevolve_results`, and LibreEvolve licensing:
@@ -892,7 +892,7 @@ is not yet an AlphaEvolve reproduction.
   the source phrase that the repository does not contain the code to run
   AlphaEvolve. It treats notebooks as prompts/verifiers/inputs/outputs around
   completed experiments, not runnable AlphaEvolve implementation artifacts;
-  SHA-256 notebook inventory and cell-level artifact verification remain open.
+  cell-level artifact verification remains open.
 - Keep Tao follow-on blog claims secondary to pinned artifacts:
   `papers/follow_on_tao_blog.json` now records the canonical WordPress URL,
   post id/date/modified metadata, retrieval hashes, linked arXiv/repository/

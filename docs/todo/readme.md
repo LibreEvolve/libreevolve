@@ -1484,13 +1484,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and validated notebook-link/absence-reason mapping. README now points to
     page-68 classification, all-page raw HTML hashes, and emitted per-page
     source rows, but still cannot point to prompt/verifier/initial/final/
-    visualization flags or per-problem notebook hashes.
-  - Required result: after notebook SHA-256 and artifact source-coverage
-    metadata lands, update README so AlphaEvolve follow-on claims name partial
-    notebook/artifact coverage and explicit wording that avoids implying
-    notebook or artifact coverage is complete when only problem-page,
-    status-bucket, link, hash, notebook-link, absence-reason, and row evidence
-    is currently scoped.
+    visualization flags.
+  - Required result: after artifact source-coverage metadata lands, update
+    README so AlphaEvolve follow-on claims name partial artifact coverage and
+    explicit wording that avoids implying artifact coverage is complete when
+    only problem-page, status-bucket, link, hash, notebook-link,
+    absence-reason, notebook-hash, and row evidence is currently scoped.
 
 - [ ] Keep README follow-on problem-count wording scoped until page inventory
       is reconciled.
@@ -1506,14 +1505,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     that evidence. README now also documents page 68 as an extra numbered
     duplicate-title `Logic puzzles` page outside the declared 67-page
     navigation range, plus all-page resource-link diagnostics. README still
-    does not list notebook hashes or artifact flags on the emitted per-page
-    source rows.
-  - Required result: after notebook SHA-256/artifact row fields land, update
-    README so follow-on source claims distinguish paper/README problem count
-    from full live repository HTML-page inventory, list duplicate or
-    placeholder pages as snapshot diagnostics, and avoid treating every
-    numbered page as a complete notebook/paper-linked source artifact until
-    row-level notebook hash and artifact provenance exists.
+    does not list artifact flags on the emitted per-page source rows.
+  - Required result: after artifact row fields land, update README so follow-on
+    source claims distinguish paper/README problem count from full live
+    repository HTML-page inventory, list duplicate or placeholder pages as
+    snapshot diagnostics, and avoid treating every numbered page as a complete
+    notebook/paper-linked source artifact until row-level artifact provenance
+    exists.
 
 - [ ] Keep README figure/notebook provenance wording scoped until paper
       artifact-role records are bound to artifacts.

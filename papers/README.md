@@ -1742,8 +1742,7 @@ Implemented:
   linked problem-coverage evidence for the declared-67 versus observed-68
   numbered-page boundary, and an explicit no-cache policy. It is later
   math-source evidence, not the original `2506.13131` specification, not a
-  cached PDF row, and not notebook SHA-256 or complete notebook/artifact
-  inventory.
+  cached PDF row, and not complete notebook artifact-flag inventory.
 - `papers/follow_on_repository_rights.json`: follow-on problem-repository
   source-use sidecar. It records the pinned repository's citation/BibTeX
   requirement, Google LLC copyright, Apache-2.0 software / CC-BY-4.0 materials
@@ -1754,12 +1753,12 @@ Implemented:
   rights, `alphaevolve_results` companion rights, or LibreEvolve licensing.
 - `papers/follow_on_runtime_absence.json`: follow-on problem-repository
   runtime-absence sidecar. It records the pinned README/tree evidence for 28
-  notebook paths, Git blob ids, byte counts, artifact-kind flags, explicit
-  AlphaEvolve-runtime absence, verifier-versus-runtime classification, and
-  docs/TODO claim-surface links. It is runtime-availability provenance for the
-  later problem repository, not evidence that the notebooks contain a runnable
-  AlphaEvolve implementation; SHA-256 notebook inventory and cell-level
-  artifact checks remain open.
+  notebook paths, Git blob ids, byte counts, raw SHA-256 hashes,
+  artifact-kind flags, explicit AlphaEvolve-runtime absence,
+  verifier-versus-runtime classification, and docs/TODO claim-surface links.
+  It is runtime-availability provenance for the later problem repository, not
+  evidence that the notebooks contain a runnable AlphaEvolve implementation;
+  cell-level artifact checks remain open.
 - `papers/follow_on_tao_blog.json`: Terence Tao follow-on blog source
   sidecar, not implementation-parity evidence. It records the November 5,
   2025 WordPress post URL, API post
@@ -1795,9 +1794,9 @@ Implemented:
   `1` paper-link placeholder), pins raw-page byte counts and SHA-256 hashes
   for all 68 numbered HTML pages, emits per-page source rows with titles,
   paper sections, page URLs, hashes, link-status diagnostics,
-  status-bucket labels, notebook-link mappings, and notebook absence reasons,
-  and links to the runtime-absence record's 28 pinned notebook paths, but it
-  is not notebook SHA-256 inventory or artifact-flag evidence.
+  status-bucket labels, notebook-link mappings, notebook absence reasons, and
+  notebook SHA-256 hashes, and links to the runtime-absence record's 28 pinned
+  notebook paths, but it is not artifact-flag evidence.
 - `libreevolve/llm/budget_report.py`: LLM role/retry budget report contract.
   It validates mutation, critique, and feedback role budgets, provider-internal
   retry attempts, token/cost/wall-clock limits and usage, persisted

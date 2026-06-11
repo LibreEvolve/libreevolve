@@ -2308,16 +2308,16 @@ Primary evidence:
     hashes for all `68` numbered HTML pages and emits per-page source rows
     with titles, paper sections, page URLs, hashes, link-status diagnostics,
     status-bucket labels, notebook-link mappings, and absence reasons. It
-    still does not validate notebook SHA-256 hashes or prompt/verifier/
-    initial/final/visualization flags per problem.
+    now also validates raw SHA-256 hashes for the `28` pinned repository
+    notebooks. It still does not validate prompt/verifier/initial/final/
+    visualization flags per problem.
   - Required result: extend the follow-on repository coverage manifest and
-    validators with notebook SHA-256 hashes and artifact presence flags for
-    prompt/verifier/initial/final/visualization/analysis on the emitted
-    per-page source rows, plus README/ROADMAP wording that separates complete
-    declared problem-page coverage from partial notebook/artifact/status
-    coverage at a pinned snapshot.
+    validators with artifact presence flags for prompt/verifier/initial/final/
+    visualization/analysis on the emitted per-page source rows, plus README/
+    ROADMAP wording that separates complete declared problem-page coverage
+    from partial artifact/status coverage at a pinned snapshot.
 
-- [ ] Complete follow-on notebook SHA-256 and artifact flags on emitted per-page rows.
+- [ ] Complete follow-on notebook artifact flags on emitted per-page rows.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
     README says the repository contains problem descriptions for 67
     mathematical problems, but the current `problems/` directory exposes 68
@@ -2336,12 +2336,11 @@ Primary evidence:
     byte counts and SHA-256 hashes for every numbered page and emits per-page
     source rows with URL, section, link status, pinned page hash,
     status-bucket membership, notebook-link mappings, and notebook absence
-    reasons. It still does not attach notebook SHA-256 hashes or artifact
-    flags for every numbered page.
-  - Required result: extend repository-page inventory validation with notebook
-    hash fields, prompt/verifier/initial/final/visualization flags, and
-    README/ROADMAP wording that distinguishes paper-declared problem count
-    from full live repository page
+    reasons, plus raw SHA-256 hashes for linked pinned notebooks. It still
+    does not attach artifact flags for every numbered page.
+  - Required result: extend repository-page inventory validation with prompt/
+    verifier/initial/final/visualization flags and README/ROADMAP wording that
+    distinguishes paper-declared problem count from full live repository page
     inventory.
 
 - [ ] Add paper-artifact creator and assembler provenance for figures and

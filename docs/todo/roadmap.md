@@ -2144,12 +2144,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and validated notebook-link/absence-reason mapping. ROADMAP now points to
     page-68 classification and all-page raw HTML hashes plus emitted per-page
     source rows, but still cannot point to prompt/verifier/initial/final/
-    visualization flags or per-problem notebook hashes.
-  - Required result: once notebook SHA-256/artifact coverage fields are
-    implemented, update ROADMAP milestones and evidence gates so follow-on
-    AlphaEvolve math coverage records page/notebook/artifact availability by
-    problem and avoids treating a live partial-notebook repository as fully
-    static or notebook/artifact-complete.
+    visualization flags.
+  - Required result: once artifact coverage fields are implemented, update
+    ROADMAP milestones and evidence gates so follow-on AlphaEvolve math
+    coverage records page/notebook/artifact availability by problem and avoids
+    treating a live partial-notebook repository as fully static or
+    artifact-complete.
 
 - [ ] Keep follow-on problem-count roadmap gates scoped until numbered-page
       inventory is reconciled.
@@ -2165,12 +2165,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     that evidence. ROADMAP now also documents page 68 as an extra numbered
     duplicate-title `Logic puzzles` page outside the declared 67-page
     navigation range, plus all-page resource-link diagnostics. ROADMAP still
-    lacks notebook hashes and artifact flags on the emitted per-page source
-    rows.
-  - Required result: when notebook SHA-256/artifact row fields land, update
-    ROADMAP, README, papers index, and code/paper TODOs so follow-on coverage
-    gates include notebook hashes, artifact flags, and snapshot-scoped wording
-    for the counted 67-versus-68 source mismatch.
+    lacks artifact flags on the emitted per-page source rows.
+  - Required result: when artifact row fields land, update ROADMAP, README,
+    papers index, and code/paper TODOs so follow-on coverage gates include
+    artifact flags and snapshot-scoped wording for the counted 67-versus-68
+    source mismatch.
 
 - [ ] Keep paper-artifact roadmap wording scoped until creator/assembler role
       records are bound to artifacts.

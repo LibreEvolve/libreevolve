@@ -22,8 +22,8 @@
         "notebook_inventory": {
           "notebook_count": 28,
           "coverage": "many_not_all_problem_notebooks",
-          "hash_algorithm": "git_blob_sha1",
-          "sha256_inventory_complete": false,
+          "hash_algorithm": "git_blob_sha1_and_raw_sha256",
+          "sha256_inventory_complete": true,
           "problem_id_mapping_complete": true,
           "absence_reason_inventory_complete": true,
           "notebooks": [
@@ -31,6 +31,7 @@
               "path": "experiments/autocorrelation_problems/autocorrelation_problems.ipynb",
               "bytes": 740589,
               "git_blob_sha": "617eeebbc391d535b82139f0a63f677074e16dca",
+              "sha256": "996e7e9dd20991fe06319d2c91e8af3501b48b14c2dd10e5ce3a95343ee071ba",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -44,6 +45,7 @@
               "path": "experiments/classical_inequalities/classical_inequalities.ipynb",
               "bytes": 32330,
               "git_blob_sha": "07709bb38cde8ef2b4f1ef7d5a5452db2d372848",
+              "sha256": "b51091f45790eb89b72cd05c344febe7d7571f2370a7a90e1d77294c5eefc03d",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -57,6 +59,7 @@
               "path": "experiments/difference_bases/difference_bases.ipynb",
               "bytes": 68217,
               "git_blob_sha": "0cdb812ada3b6053f749e05301a743fd191e8700",
+              "sha256": "e5bd224563055caf53c0fef9b9c67620c7124a14aa77094cce456d9927b65489",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -70,6 +73,7 @@
               "path": "experiments/edges_vs_triangles/edges_vs_triangles.ipynb",
               "bytes": 92456,
               "git_blob_sha": "e83e4a01c31ee122137c6826bcd1e6272f2fc1e2",
+              "sha256": "f4db3301d6fa8a59b833127230dd3afce8392ae1240e0806b6213c90a693706c",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -83,6 +87,7 @@
               "path": "experiments/equidistant_points_in_convex_polygons/Equidistant_points_in_convex_polygons.ipynb",
               "bytes": 3183232,
               "git_blob_sha": "160c7e47e7d8827310877092b9f0835194922573",
+              "sha256": "aec48a4334aaa1a5ceb342677e5ee34a5a4f0fc08da4b58a38f44f3eb7ef9188",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -96,6 +101,7 @@
               "path": "experiments/erdos_szekeres_happy_ending_problem/happy_ending_problem.ipynb",
               "bytes": 16831,
               "git_blob_sha": "7ecb9ca73d4deecb94bf6c26a2be70f1a5d5f05e",
+              "sha256": "e54087cec155baa2446cc66a05a6b0f593c76e186acad408f3ff2f9d32304fb0",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -109,6 +115,7 @@
               "path": "experiments/finite_field_kakeya_problem/finite_field_kakeya.ipynb",
               "bytes": 176127,
               "git_blob_sha": "ad7d55fc67eb191cbac38dea078787549cd85cc6",
+              "sha256": "bc445b9a522ee1b0ea78e66536c90ca7e3b67071e07065b0d878e313852ce65b",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -122,6 +129,7 @@
               "path": "experiments/finite_field_nikodym_problem/finite_field_nikodym.ipynb",
               "bytes": 97138,
               "git_blob_sha": "228345fbbe29d6f9913239d4fd44ad53287cf759",
+              "sha256": "cd9be3d00417ed9f9aeb88e19d481bef692a1f72050157dd54ee22a176d734d8",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -135,6 +143,7 @@
               "path": "experiments/finite_field_sum_product_problem/finite_field_sum_product.ipynb",
               "bytes": 30069,
               "git_blob_sha": "5d1c3f1609bf3a8a470ccb9845ef1117fddc1fba",
+              "sha256": "feeb2e1b6d77e3146863ab5cfc8b2588cc7575fb92745c4ce72747575043adaf",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -148,6 +157,7 @@
               "path": "experiments/flat_polynomials/flat_polynomials.ipynb",
               "bytes": 72500,
               "git_blob_sha": "b3276c9d212402e7e1e48faf72e33868ee1881c0",
+              "sha256": "c6cb19c14077ccf20dbf2422a6d8bb5cb2f6c44fbc670569770a550e1234e6ef",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -161,6 +171,7 @@
               "path": "experiments/imo_2025_p6/imo_2025_p6.ipynb",
               "bytes": 20175,
               "git_blob_sha": "b39631272746893fe395eecbd02e4d47cd605927",
+              "sha256": "14944077e2f9d66f2f96872b72d7bd53cb1a1af5512894e97950516387cb60f6",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -174,6 +185,7 @@
               "path": "experiments/kakeya_needle_2d/kakeya_needle_2d.ipynb",
               "bytes": 72281,
               "git_blob_sha": "1f01477b857ea9a5a07d30f4ee49db3e135f64e7",
+              "sha256": "cee72a338df6f26a46813962b113daaf1c1d6a4210ac2af39e3becb758ca3810",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -187,6 +199,7 @@
               "path": "experiments/kakeya_needle_3d/kakeya_needle_3d.ipynb",
               "bytes": 237723,
               "git_blob_sha": "0a7a1667536ec779d72989de0c3622e0d23506a0",
+              "sha256": "2a503d78432fb1d7c218e9c53538e2e260e137fabf4dcc54eb6d1a51fa1c3652",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -200,6 +213,7 @@
               "path": "experiments/kissing_cylinders/kissing_cylinders.ipynb",
               "bytes": 94134,
               "git_blob_sha": "14d14daf90e511f3c988989b21354fbf6e201fd7",
+              "sha256": "d36aa867912149024c0da16eea5b2d3f73af805d2049d86892c92b26b17cd51a",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -213,6 +227,7 @@
               "path": "experiments/no_5_on_a_sphere/no_5_on_a_sphere.ipynb",
               "bytes": 103026,
               "git_blob_sha": "0e8b3b4da863c316ab7207d78e2c04f551baa185",
+              "sha256": "0af65a39d7b5d5d55ba078d19b6dae4b410c66c3395101234a09f0223e5af075",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -226,6 +241,7 @@
               "path": "experiments/ovals_problem/ovals_problem.ipynb",
               "bytes": 19563,
               "git_blob_sha": "b47cfee8cddc895ff1d8b2edf3bccf1aae31f3d7",
+              "sha256": "5745654087376d544b6414ff0777452cb56f3d1f00dcca37decb07a79b1b71df",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -239,6 +255,7 @@
               "path": "experiments/packing_circles_max_sum_of_radii/packing_circle_max_sum_of_radii.ipynb",
               "bytes": 77546,
               "git_blob_sha": "0f4de7b576720a3116c0aa8a3d6e9b5c12a6a92e",
+              "sha256": "e7a304378a5ca80c74f94f5060a9f5db953767af850834513fd797e3306a935e",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -252,6 +269,7 @@
               "path": "experiments/packing_unit_cubes/packing_unit_cubes.ipynb",
               "bytes": 124215,
               "git_blob_sha": "c147faa3323f47a64f1c2127ea35c1eadac590d1",
+              "sha256": "a260a6a7a75da3d1bf3242483beb2fce902b995fc5c34ca87e9573af5c7c2326",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -265,6 +283,7 @@
               "path": "experiments/prime_number_theorem/prime_number_theorem.ipynb",
               "bytes": 13841,
               "git_blob_sha": "284319bcf534c5152b433a03f56126e955497ebc",
+              "sha256": "a66dd0674ace2a3e0771779b92292ce577f21bdb5af0b310b6456b322e59fbba",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -278,6 +297,7 @@
               "path": "experiments/ring_loading_problem/ring_loading_problem.ipynb",
               "bytes": 44196,
               "git_blob_sha": "ea5abec2001c7002b2edcd59a27e04079293b5fb",
+              "sha256": "360ec04a8fa80654d54f4a32c9c31377ae2b78505444aa454161590dad2f7003",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -291,6 +311,7 @@
               "path": "experiments/sphere_packing_uncertainty_principles/sphere_packing_uncertainty_principles.ipynb",
               "bytes": 104990,
               "git_blob_sha": "38badb91897a6fb822d4203458f277fe783885d0",
+              "sha256": "5ce6c2d79fbaa9babd235cf69fbbc14247091baec041551ed3d79645088b179e",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -304,6 +325,7 @@
               "path": "experiments/spherical_t_designs/spherical_t_designs.ipynb",
               "bytes": 242167,
               "git_blob_sha": "1134a81661580506e2599335ba051efbdb99e068",
+              "sha256": "6d117c8044884bb87a461292dc1aafd2056f15a622103665e2e2135cb4b86b27",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -317,6 +339,7 @@
               "path": "experiments/subsets_of_the_grid_with_no_isosceles_triangles/no_isosceles_triangles.ipynb",
               "bytes": 38367,
               "git_blob_sha": "c0d665a986ece2f7efd220f2f179ebf2935149e5",
+              "sha256": "653accd24369672f1cc757b203dae311f1489895a1cb8e6242d3308fe657891d",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -330,6 +353,7 @@
               "path": "experiments/sums_differences_problems/sums_differences_problems.ipynb",
               "bytes": 643544,
               "git_blob_sha": "4f763db6d59b224e5ba9ebbab0e4e54683f74ea3",
+              "sha256": "8ac90e85303e97dc5d69489a6393692d018f87ee5ac220216313ead97daa1da2",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -343,6 +367,7 @@
               "path": "experiments/tammes_problem/tammes_problem.ipynb",
               "bytes": 117565,
               "git_blob_sha": "360abdd1b160a180288cd2da07dd8f0f8b227d62",
+              "sha256": "2094a9b8cda3d05353fc76fbdbbe2de84745e2d43f31d63f75edcc727f5df150",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -356,6 +381,7 @@
               "path": "experiments/the_2d_moving_sofa/the_2d_moving_sofa.ipynb",
               "bytes": 18029403,
               "git_blob_sha": "1125bb223c471d94d5ee32cc463a785b8f6a01be",
+              "sha256": "8e418dcaf572c0334a8b21040e22b570a23d2b3f64450f9a8a00a0756c145299",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -369,6 +395,7 @@
               "path": "experiments/the_3d_moving_sofa/the_3d_moving_sofa.ipynb",
               "bytes": 309704,
               "git_blob_sha": "fff09e075abf6e4391248dd80dc1cb0b616b4926",
+              "sha256": "a5b03434f3848bedcec5d47f87182660830209d811b4d31d3058357d3eabd73e",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -382,6 +409,7 @@
               "path": "experiments/thomson_problem/thomson_problem.ipynb",
               "bytes": 86472,
               "git_blob_sha": "95871bcbb7f5fdf43749d3d17cf61d37fc476081",
+              "sha256": "c0171419f891ce81a9a112ce57ec2c8870724e803487e1600064621b08a49671",
               "artifact_kinds": [
                 "prompt",
                 "verification_code",
@@ -407,11 +435,10 @@
           "not_alphaevolve_runtime_implementation": true,
           "not_replayable_alphaevolve_service": true,
           "not_full_notebook_cell_inventory": true,
-          "not_notebook_sha256_inventory": true,
+          "not_cell_artifact_flag_inventory": true,
           "must_not_describe_notebooks_as_runtime_harnesses": true
         },
         "remaining_runtime_work": [
-          "compute_sha256_for_each_notebook",
           "validate_notebook_cell_artifact_flags"
         ]
       },

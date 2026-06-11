@@ -685,6 +685,14 @@ is not yet an AlphaEvolve reproduction.
   required future point-coordinate, domain, unit-area, convexity, all-triples
   area, recomputed-minimum-area, and figure-panel fields. The actual
   coordinate/domain payloads and area certificates remain open.
+- Keep Appendix B.11 kissing-number claims scoped to lemma-boundary evidence
+  until the 593-vector certificate lands: the registry now validates the
+  dimension-11 target, prior lower bound `592`, reported lower bound `593`,
+  nonzero integral-coordinate witness requirements, max-norm versus
+  minimum-pairwise-distance condition, Lemma 1 transformation to sphere
+  centers, and required future vector, norm/distance, lemma-applicability,
+  transformed-center, and recomputed-lower-bound fields. The actual vector
+  payload and exact proof certificates remain open.
 - Keep paper artifact-role attribution separate from artifact availability:
   `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
   AlphaEvolve PDF contribution records for figure creators and companion

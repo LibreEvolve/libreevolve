@@ -17,6 +17,10 @@ from libreevolve.problems.benchmarks.appendix_b_registry import (
     EXPECTED_B8_WITNESS_REQUIRED_FIELDS,
     EXPECTED_AUTOCORRELATION_LABELS,
     EXPECTED_AUTOCORRELATION_STEP_EVIDENCE,
+    EXPECTED_B11_KISSING_IDS,
+    EXPECTED_B11_KISSING_REQUIRED_FIELDS,
+    EXPECTED_B11_KISSING_ROWS,
+    EXPECTED_B11_KISSING_SUMMARY,
     EXPECTED_FAMILY_IDS,
     EXPECTED_HEILBRONN_IDS,
     EXPECTED_HEILBRONN_ROWS,
@@ -95,6 +99,15 @@ def test_appendix_b_registry_enumerates_all_alphaevolve_families():
         for witness, expected in zip(boundary["missing_witnesses"], EXPECTED_HEILBRONN_ROWS[family_id], strict=True):
             for field, expected_value in expected.items():
                 assert witness[field] == expected_value
+    b11 = next(family for family in data["families"] if family["id"] == "kissing_number_d11")
+    b11_boundary = b11["kissing_result_boundary"]
+    assert b11_boundary["required_witness_fields"] == list(EXPECTED_B11_KISSING_REQUIRED_FIELDS)
+    for field, expected_value in EXPECTED_B11_KISSING_SUMMARY.items():
+        assert b11_boundary[field] == expected_value
+    assert [row["result_id"] for row in b11_boundary["missing_witnesses"]] == list(EXPECTED_B11_KISSING_IDS)
+    for witness, expected in zip(b11_boundary["missing_witnesses"], EXPECTED_B11_KISSING_ROWS, strict=True):
+        for field, expected_value in expected.items():
+            assert witness[field] == expected_value
 
 
 def test_appendix_b_registry_requires_advertised_fixtures_to_exist(tmp_path):
@@ -532,3 +545,46 @@ def test_appendix_b_registry_requires_heilbronn_boundary_object(tmp_path):
     assert report.ok is False
     assert [issue.code for issue in report.issues] == ["missing_heilbronn_boundary"]
     assert report.issues[0].family_id == "heilbronn_triangle"
+
+
+def test_appendix_b_registry_requires_b11_kissing_boundary(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    family = next(family for family in data["families"] if family["id"] == "kissing_number_d11")
+    boundary = family["kissing_result_boundary"]
+    boundary["status"] = "recorded"
+    boundary["dimension"] = 10
+    boundary["prior_lower_bound"] = 594
+    boundary["required_witness_fields"] = ["result_id"]
+    first = boundary["missing_witnesses"][0]
+    first["vector_count"] = 592
+    first["vector_artifact_status"] = "recorded"
+    first["claim_boundary"] = "Vectors exist."
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_b11_kissing_boundary_status" in codes
+    assert "invalid_b11_kissing_dimension" in codes
+    assert "invalid_b11_kissing_prior_lower_bound" in codes
+    assert "invalid_b11_kissing_required_fields" in codes
+    assert "invalid_b11_kissing_improvement_direction" in codes
+    assert "invalid_b11_kissing_witness_vector_count" in codes
+    assert "invalid_b11_kissing_vector_artifact_status" in codes
+    assert "missing_b11_kissing_claim_boundary" in codes
+
+
+def test_appendix_b_registry_requires_b11_kissing_boundary_object(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    family = next(family for family in data["families"] if family["id"] == "kissing_number_d11")
+    del family["kissing_result_boundary"]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+
+    assert report.ok is False
+    assert [issue.code for issue in report.issues] == ["missing_b11_kissing_boundary"]
+    assert report.issues[0].family_id == "kissing_number_d11"

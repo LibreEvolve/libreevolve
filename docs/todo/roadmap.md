@@ -2953,16 +2953,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     lower bound by checking 593 nonzero integral-coordinate points with a
     maximum-norm versus minimum-pairwise-distance condition, then applying
     Lemma 1 to obtain a valid kissing configuration.
-  - Current evidence: roadmap/README/paper-index wording can cite Appendix B
-    family/status coverage, construction/verifier export gaps, aggregate
-    outcome gaps, and Figure 10-14 visual exhibit gaps. It does not require a
-    kissing-specific proof certificate for cardinality, dimension, coordinate
-    domain, exact norm/distance inequalities, Lemma 1 applicability, transformed
-    sphere centers, tangency/non-overlap checks, or lower-bound claim linkage.
-  - Required result: when Appendix B.11 proof-certificate records and
-    validators land, update ROADMAP, README, papers index, and code/paper TODOs
-    so roadmap wording distinguishes rendered construction/figure evidence
-    from proof-grade kissing-number lower-bound verification.
+  - Current evidence: roadmap/README/paper-index wording now cites the B.11
+    `kissing_result_boundary`, including dimension, prior/reported lower
+    bounds, 593-vector witness count, integral-coordinate and nonzero
+    requirements, exact norm/distance condition, Lemma 1 applicability,
+    transformed sphere-center formula, and required future vector/certificate
+    fields. It still does not claim a real vector payload, exact
+    norm/distance certificate, transformed-center certificate, or recomputed
+    lower bound.
+  - Required result: when the actual Appendix B.11 proof payload and
+    certificates land, update ROADMAP, README, papers index, and code/paper
+    TODOs so roadmap wording distinguishes rendered construction/figure
+    evidence from proof-grade kissing-number lower-bound verification.
 
 - [ ] Keep Appendix B.12-B.13 roadmap wording scoped until circle/rectangle
       sum-of-radii provenance exists.

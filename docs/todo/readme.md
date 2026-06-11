@@ -1851,16 +1851,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     number lower bound of 593 from 593 nonzero integral-coordinate points plus
     an exact norm/distance condition and Lemma 1's transformation into a valid
     kissing configuration.
-  - Current evidence: README can describe Appendix B family/status coverage,
-    construction/verifier export gaps, aggregate outcome gaps, and visual
-    construction figure gaps. It does not yet document a kissing-specific
-    certificate with point count, dimension, coordinate domain, exact
-    norm/pairwise-distance inequalities, Lemma 1 applicability, transformed
-    sphere centers, tangency/non-overlap checks, and lower-bound claim linkage.
-  - Required result: when Appendix B.11 certificate provenance lands, update
-    README, ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes visual Appendix B construction evidence from proof-grade
-    kissing-number lower-bound verification.
+  - Current evidence: README now names the B.11 `kissing_result_boundary`,
+    including dimension, prior/reported lower bounds, 593-vector witness count,
+    coordinate domain, exact norm/distance condition, Lemma 1 applicability,
+    transformed sphere-center formula, and required future vector/certificate
+    fields. It still warns that the actual 593-vector payload, exact
+    norm/distance certificate, transformed-center certificate, and recomputed
+    lower bound are absent.
+  - Required result: when the actual Appendix B.11 vector payload and
+    certificates land, update README, ROADMAP, papers index, and code/paper
+    TODOs together so README distinguishes visual Appendix B construction
+    evidence from proof-grade kissing-number lower-bound verification.
 
 - [ ] Keep README Appendix B.12-B.13 circle/rectangle wording scoped until
       sum-of-radii provenance exists.

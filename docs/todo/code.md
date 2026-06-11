@@ -2733,17 +2733,20 @@ Primary evidence:
     points whose maximum norm is smaller than their minimum pairwise distance,
     then proves via Lemma 1 that scaling those points gives a valid kissing
     configuration.
-  - Current evidence: Appendix B TODOs cover family/status registry rows,
-    construction-data/verifier exports, aggregate outcome reports, and
-    Figure 10-14 visual exhibit provenance. They do not require a
-    kissing-specific certificate that checks point count, dimension,
-    nonzero/integral coordinates, exact norm and pairwise-distance inequalities,
-    the transformation to sphere centers, non-overlap/tangency verification, or
-    linkage from those proof checks to the reported lower-bound claim.
-  - Required result: add Appendix B.11 certificate/report metadata and
-    validators for the kissing-number construction: point-set artifact hash,
-    dimension and cardinality, exact coordinate domain, norm and distance
-    bounds, Lemma 1 applicability checks, transformed sphere-center evidence,
+  - Current evidence: `alphaevolve_appendix_b.json` now records a B.11
+    `kissing_result_boundary` with dimension `11`, prior lower bound `592`,
+    reported lower bound `593`, witness vector count `593`, integral-coordinate
+    and nonzero requirements, the max-norm versus minimum-pairwise-distance
+    condition, Lemma 1's input condition, and the transformation
+    `{2 x / ||x||}` to sphere centers. The boundary still marks the witness
+    `not_recorded_locally`: no 593-vector payload hash, integral-coordinate
+    certificate, nonzero certificate, exact norm/distance certificate,
+    Lemma 1 applicability certificate, transformed-center certificate, or
+    recomputed lower bound exists.
+  - Required result: replace the `not_recorded_locally` boundary with real
+    Appendix B.11 witness artifacts: 593-vector payload hash, exact coordinate
+    and dimension metadata, cardinality check, norm/distance certificate,
+    Lemma 1 proof-step record, transformed sphere-center verification,
     lower-bound claim linkage, and docs separating a rendered construction
     figure from proof-grade kissing-configuration verification.
 

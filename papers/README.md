@@ -127,6 +127,13 @@ in a unit-area convex region improving `0.0277` to `0.0278`. The
 links and the point-coordinate, domain, unit-area, convexity, all-triples area,
 and recomputed-minimum-area fields required before local reproduction can be
 claimed, while the coordinate/domain payloads remain absent.
+For B.11 kissing number in dimension 11, the registry now records the prior
+lower bound `592`, reported lower bound `593`, 593 nonzero integral
+11-dimensional vector witness condition, max-norm versus minimum-pairwise
+distance requirement, and Lemma 1 transformation to sphere centers
+`{2 x / ||x||}`. Its `kissing_result_boundary` records the vector payload and
+exact certificate fields required before local reproduction can be claimed,
+while the vector payload remains absent.
 Appendix B says reported construction data and verification code
 appear in an accompanying Google Colab; this registry is not that
 Colab-equivalent evidence surface and does not yet store construction-data

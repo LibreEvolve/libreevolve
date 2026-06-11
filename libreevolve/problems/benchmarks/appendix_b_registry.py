@@ -406,6 +406,57 @@ EXPECTED_HEILBRONN_IDS = {
     family_id: tuple(row["result_id"] for row in rows)
     for family_id, rows in EXPECTED_HEILBRONN_ROWS.items()
 }
+EXPECTED_B11_KISSING_REQUIRED_FIELDS = (
+    "result_id",
+    "dimension",
+    "vector_count",
+    "vector_artifact_path",
+    "vector_artifact_sha256",
+    "vector_payload_schema",
+    "integral_coordinate_certificate_path",
+    "integral_coordinate_certificate_sha256",
+    "nonzero_certificate_path",
+    "nonzero_certificate_sha256",
+    "max_norm_certificate_path",
+    "max_norm_certificate_sha256",
+    "min_pairwise_distance_certificate_path",
+    "min_pairwise_distance_certificate_sha256",
+    "lemma_applicability_certificate_path",
+    "lemma_applicability_certificate_sha256",
+    "transformed_center_certificate_path",
+    "transformed_center_certificate_sha256",
+    "recomputed_lower_bound",
+)
+EXPECTED_B11_KISSING_SUMMARY = {
+    "status": "not_recorded_locally",
+    "source_section_id": "B.11",
+    "source_problem_name": "Kissing number in dimension 11",
+    "dimension": 11,
+    "prior_lower_bound": 592,
+    "prior_lower_bound_source": "[31]",
+    "reported_lower_bound": 593,
+    "reported_bound_relation": "kissing_number_11 >= 593",
+    "witness_vector_count": 593,
+    "witness_vector_dimension": 11,
+    "witness_coordinate_domain": "integral_coordinates",
+    "witness_nonzero_condition": "0 not in C",
+    "witness_norm_distance_condition": "max_norm_smaller_than_minimum_pairwise_distance",
+    "lemma_id": "B.11 Lemma 1",
+    "lemma_input_condition": "C subset R^d, 0 not in C, min_pairwise_distance >= max_norm",
+    "lemma_transformation": "unit_sphere_centers = {2 x / ||x|| : x in C}",
+    "lemma_output": "valid_kissing_configuration_in_dimension_d",
+    "required_witness_fields": list(EXPECTED_B11_KISSING_REQUIRED_FIELDS),
+}
+EXPECTED_B11_KISSING_ROWS = (
+    {
+        "result_id": "b11_kissing_d11_593",
+        "dimension": 11,
+        "vector_count": 593,
+        "reported_lower_bound": 593,
+        "reported_bound_relation": "kissing_number_11 >= 593",
+    },
+)
+EXPECTED_B11_KISSING_IDS = tuple(row["result_id"] for row in EXPECTED_B11_KISSING_ROWS)
 STATUSES = frozenset({"implemented", "implemented_smoke", "planned", "background_only", "out_of_scope"})
 DIRECTIONS = frozenset({"maximize", "minimize", "satisfy", "prove"})
 _ID_RE = re.compile(r"[a-z][a-z0-9_]{1,79}")
@@ -509,6 +560,7 @@ def _validate_family(
     _validate_b6_witness_boundary(family, family_id, issues)
     _validate_b7_packing_boundary(family, family_id, issues)
     _validate_heilbronn_boundary(family, family_id, issues)
+    _validate_b11_kissing_boundary(family, family_id, issues)
     status = family.get("status")
     if status not in STATUSES:
         issues.append(AppendixBRegistryIssue("invalid_status", "invalid implementation status", family_id))
@@ -1060,6 +1112,82 @@ def _validate_heilbronn_boundary(
         result_id = witness.get("result_id")
         if result_id not in expected_ids:
             issues.append(AppendixBRegistryIssue("invalid_heilbronn_missing_witness_id", "Heilbronn missing witness result_id must match the expected Figure 13 rows", family_id))
+
+
+def _validate_b11_kissing_boundary(
+    family: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    if family_id != "kissing_number_d11":
+        return
+    boundary = family.get("kissing_result_boundary")
+    if not isinstance(boundary, dict):
+        issues.append(AppendixBRegistryIssue("missing_b11_kissing_boundary", "B.11 requires kissing_result_boundary", family_id))
+        return
+    for field, expected_value in EXPECTED_B11_KISSING_SUMMARY.items():
+        actual = boundary.get(field)
+        if actual != expected_value:
+            issues.append(AppendixBRegistryIssue(f"invalid_b11_kissing_{field}", f"B.11 kissing_result_boundary.{field} must match the AlphaEvolve source summary", family_id))
+    if boundary.get("status") != "not_recorded_locally":
+        issues.append(AppendixBRegistryIssue("invalid_b11_kissing_boundary_status", "B.11 kissing boundary must remain not_recorded_locally until vector and certificate artifacts exist", family_id))
+    if boundary.get("required_witness_fields") != list(EXPECTED_B11_KISSING_REQUIRED_FIELDS):
+        issues.append(AppendixBRegistryIssue("invalid_b11_kissing_required_fields", "B.11 boundary must enumerate required future vector, norm/distance, and lemma-certificate fields", family_id))
+    prior = boundary.get("prior_lower_bound")
+    reported = boundary.get("reported_lower_bound")
+    if (
+        isinstance(prior, int)
+        and not isinstance(prior, bool)
+        and isinstance(reported, int)
+        and not isinstance(reported, bool)
+        and reported <= prior
+    ):
+        issues.append(AppendixBRegistryIssue("invalid_b11_kissing_improvement_direction", "B.11 reported lower bound must improve on the prior lower bound", family_id))
+    missing = boundary.get("missing_witnesses")
+    if not isinstance(missing, list):
+        issues.append(AppendixBRegistryIssue("invalid_b11_kissing_missing_witnesses", "B.11 missing_witnesses must be a list", family_id))
+        return
+    if len(missing) != len(EXPECTED_B11_KISSING_ROWS):
+        issues.append(AppendixBRegistryIssue("invalid_b11_kissing_missing_witness_count", "B.11 must track the 593-vector witness", family_id))
+    by_id = {
+        witness.get("result_id"): witness
+        for witness in missing
+        if isinstance(witness, dict)
+    }
+    seen: set[str] = set()
+    for expected in EXPECTED_B11_KISSING_ROWS:
+        result_id = expected["result_id"]
+        witness = by_id.get(result_id)
+        if not isinstance(witness, dict):
+            issues.append(AppendixBRegistryIssue("missing_b11_kissing_witness_id", "B.11 boundary must include the 593-vector result id", family_id))
+            continue
+        if result_id in seen:
+            issues.append(AppendixBRegistryIssue("duplicate_b11_kissing_witness_id", "B.11 witness ids must be unique", family_id))
+        seen.add(result_id)
+        for field, expected_value in expected.items():
+            if witness.get(field) != expected_value:
+                issues.append(AppendixBRegistryIssue(f"invalid_b11_kissing_witness_{field}", f"B.11 witness {field} must match the AlphaEvolve result summary", family_id))
+        for field in (
+            "vector_artifact_status",
+            "integral_coordinate_certificate_status",
+            "nonzero_certificate_status",
+            "norm_distance_certificate_status",
+            "lemma_applicability_certificate_status",
+            "transformed_center_certificate_status",
+            "recomputed_lower_bound_status",
+        ):
+            if witness.get(field) != "not_recorded_locally":
+                issues.append(AppendixBRegistryIssue(f"invalid_b11_kissing_{field}", f"B.11 {field} must be not_recorded_locally in the absence boundary", family_id))
+        claim_boundary = witness.get("claim_boundary")
+        if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary:
+            issues.append(AppendixBRegistryIssue("missing_b11_kissing_claim_boundary", "B.11 missing witness row must state that local vector/certificate evidence is not claimed", family_id))
+    for witness in missing:
+        if not isinstance(witness, dict):
+            issues.append(AppendixBRegistryIssue("invalid_b11_kissing_missing_witness", "B.11 missing witness rows must be objects", family_id))
+            continue
+        result_id = witness.get("result_id")
+        if result_id not in EXPECTED_B11_KISSING_IDS:
+            issues.append(AppendixBRegistryIssue("invalid_b11_kissing_missing_witness_id", "B.11 missing witness result_id must match the 593-vector row", family_id))
 
 
 def _family_id(family: object, index: int) -> str:

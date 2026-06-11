@@ -2670,20 +2670,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     nonzero integral-coordinate points in dimension 11, with maximum norm
     smaller than minimum pairwise distance, and uses Lemma 1 to derive a valid
     kissing configuration and lower bound of at least 593.
-  - Current gap: paper-facing Appendix B coverage records family/status
-    entries, expected construction/certificate artifact shapes, Colab/verifier
-    export gaps, aggregate outcomes, and construction figures. It does not
-    require the proof-grade certificate specific to the kissing-number claim:
-    point count, coordinate domain, dimension, exact norm and distance
-    inequalities, Lemma 1 applicability, transformed sphere centers,
-    tangency/non-overlap checks, or claim linkage from the point-set artifact
-    to the lower-bound statement.
-  - Required result: add paper/report evidence for Appendix B.11 with a
-    point-set artifact hash, exact coordinate and dimension metadata,
-    cardinality check, norm/distance certificate, Lemma 1 proof-step record,
-    transformed sphere-center verification, lower-bound claim id, and README/
-    ROADMAP wording that distinguishes visual construction evidence from
-    proof-grade kissing-configuration certification.
+  - Current gap: paper-facing Appendix B coverage now retains the B.11
+    dimension, prior/reported lower bounds, 593-vector witness count,
+    integral-coordinate and nonzero requirements, exact norm/distance
+    condition, Lemma 1 input condition, and transformed-center formula through
+    a validated `kissing_result_boundary`. It still does not retain a real
+    593-vector payload, payload hash, integral-coordinate certificate,
+    nonzero certificate, norm/distance certificate, Lemma 1 applicability
+    certificate, transformed sphere-center verification, or recomputed lower
+    bound.
+  - Required result: add paper/report evidence for the missing Appendix B.11
+    witness artifacts: point-set artifact hash, exact coordinate and dimension
+    metadata, cardinality check, norm/distance certificate, Lemma 1 proof-step
+    record, transformed sphere-center verification, lower-bound claim id, and
+    README/ROADMAP wording that distinguishes visual construction evidence
+    from proof-grade kissing-configuration certification.
 
 - [ ] Track Appendix B.12-B.13 circle/rectangle sum-of-radii evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.12-B.13 gives

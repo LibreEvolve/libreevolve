@@ -3636,8 +3636,16 @@ Figure 13 left/middle/right. Validated `heilbronn_result_boundary` entries
 record future point-coordinate, domain, membership, unit-area,
 all-triples-area, convexity, recomputed-minimum-area, and figure-panel fields
 required before local reproduction can be claimed. The actual B.9-B.10
-coordinate/domain payloads and area certificates remain absent. It is also
-not a
+coordinate/domain payloads and area certificates remain absent. For Appendix
+B.11, the registry now preserves the dimension-11 kissing-number result
+summary: prior lower bound `592`, reported lower bound `593`, the 593
+nonzero integral 11-dimensional vector witness condition, the max-norm versus
+minimum-pairwise-distance requirement, and Lemma 1's transformation
+`{2 x / ||x||}` to unit-sphere centers. A validated `kissing_result_boundary`
+records future vector payload, integral-coordinate, nonzero, norm/distance,
+lemma-applicability, transformed-center, and recomputed-lower-bound fields
+required before local reproduction can be claimed. The actual B.11 vector
+payload and exact proof certificates remain absent. It is also not a
 Section 3.2 aggregate outcome ledger: LibreEvolve does not yet enumerate the
 paper's over-50 mathematical problem instances, branch taxonomy, previous-best
 references, matched/improved/failed statuses, or aggregate percentages for

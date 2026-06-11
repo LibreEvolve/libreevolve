@@ -1,0 +1,24 @@
+{
+  "schema": "libreevolve.matrix_scalar_field_runtime_boundary.v1",
+  "target_suite": "alphaevolve_appendix_a",
+  "evidence_schema": "libreevolve.matrix_scalar_field_evidence.v1",
+  "runtime_emission_status": "not_emitted_by_local_runner",
+  "local_runner_scope": "matrix_benchmark_runner",
+  "required_emission_fields": [
+    "run_id",
+    "candidate_id",
+    "target_id",
+    "seed",
+    "scalar_field",
+    "characteristic",
+    "applicability",
+    "coefficient_representation",
+    "algorithm_ref",
+    "certificate_ref",
+    "matrix_result_ref",
+    "artifact_paths",
+    "artifact_sha256"
+  ],
+  "emitted_records": [],
+  "claim_boundary": "This is a runtime-emission absence/readiness boundary. It does not claim local matrix runners emit AlphaEvolve Section 3.1 scalar-field evidence."
+}

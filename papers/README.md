@@ -1459,6 +1459,8 @@ Implemented:
   for run/target/candidate ids, seeds, scalar field, characteristic,
   applicability, coefficient representation, algorithm refs, certificate refs,
   matrix-result refs, artifact paths, and artifact hashes.
+  `papers/matrix_scalar_field_runtime_boundary.json` emits that
+  absence/readiness boundary as a committed sidecar.
   `matrix_scalar_field_runtime_boundary_from_evidence()` builds a runtime row
   from validated scalar-field evidence and checks linkage back to nested
   target, field claim, applicability, coefficient representation, algorithm,

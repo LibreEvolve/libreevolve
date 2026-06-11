@@ -4,6 +4,25 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit matrix scalar-field runtime boundary sidecar.
+  - Spec evidence: AlphaEvolve Table 2 and Section 3.1 distinguish
+    complex-valued matrix multiplication algorithms, exact real/complex
+    applicability, characteristic-0 claims, and finite-field-only prior work.
+  - Status: `papers/matrix_scalar_field_runtime_boundary.json` now emits the
+    `not_emitted_by_local_runner` absence/readiness boundary for scalar-field,
+    characteristic, applicability, coefficient-representation, algorithm,
+    certificate, matrix-result, artifact-path, and artifact-hash provenance.
+    `validate_paper_manifest()` requires and validates the sidecar at the real
+    repo root when the Appendix A registry is in scope.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\matrix_results.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: local matrix benchmark runners still do not emit exact
+    complex coefficient, decomposition, certificate, or scalar-field artifacts
+    from actual runs.
+
 - [x] Emit matrix near-integrality runtime boundary sidecar.
   - Spec evidence: AlphaEvolve Section 3.1 says matrix candidates were
     prompted to generate near-integral decompositions and final entries were

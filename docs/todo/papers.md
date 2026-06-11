@@ -3566,6 +3566,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     emitted records for run/target/candidate ids, seeds, scalar field,
     characteristic, applicability, coefficient representation, algorithm refs,
     certificate refs, matrix-result refs, artifact paths, and artifact hashes.
+    `papers/matrix_scalar_field_runtime_boundary.json` now emits that
+    absence/readiness boundary as a committed sidecar.
     `matrix_scalar_field_runtime_boundary_from_evidence()` builds a runtime row
     from validated scalar-field evidence and validation checks linkage to
     nested target, field claim, applicability, coefficient representation,

@@ -3814,7 +3814,9 @@ boundary `libreevolve.matrix_scalar_field_runtime_boundary.v1` validates the
 current `not_emitted_by_local_runner` state and emitted records for
 run/target/candidate ids, seeds, scalar field, characteristic, applicability,
 coefficient representation, algorithm refs, certificate refs, matrix-result
-refs, artifact paths, and artifact hashes. The helper
+refs, artifact paths, and artifact hashes.
+`papers/matrix_scalar_field_runtime_boundary.json` emits that
+absence/readiness boundary as a committed sidecar. The helper
 `matrix_scalar_field_runtime_boundary_from_evidence()` builds an emitted
 runtime row from validated scalar-field evidence and validation links every row
 back to its nested target, field claim, applicability, coefficient

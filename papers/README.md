@@ -193,8 +193,9 @@ boundary (`C4 <= 0.3521` using coefficients
 `[0.32925, -0.01159, -8.9216e-5]`), the qualitative similarity claim against
 `[33]`, and the post-first-version revision note (`[18]` at `0.3284`, then
 AlphaEvolve at `0.3216`). These rows are still absence boundaries: coefficient
-payloads, Hermite/Fourier/root certificates, coefficient-comparison artifacts,
-including prior/AlphaEvolve coefficient payloads, basis-alignment certificate,
+payloads, Hermite/Fourier/root certificates, origin-condition certificates,
+eventual-nonnegative certificates, coefficient-comparison artifacts including
+prior/AlphaEvolve coefficient payloads, basis-alignment certificate,
 similarity metric, and hypothesis-source artifact, Colab/verifier linkage,
 comparison-to-`0.3284` certificates, and recomputed constants are not recorded
 locally.

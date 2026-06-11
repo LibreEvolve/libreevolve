@@ -2933,13 +2933,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     `hermite_result_boundary` for the Hermite basis terms, approximate
     coefficients, `P(0)=0`/`x^2` factor step, largest-root computation, and
     `r_max^2 / (2*pi)` formula. It still does not contain coefficient payload
-    hashes, verifier artifacts, sign/condition certificates, root
-    certificates, or recomputed-bound evidence.
+    hashes, verifier artifacts, Hermite-basis certificates, Fourier-transform
+    certificates, origin-condition certificates, eventual-nonnegative
+    certificates, root certificates, or recomputed-bound evidence.
   - Required result: add paper/report evidence for the missing B.4 coefficient
-    payload, Fourier/test-function certificates, largest-positive-root
-    calculation, bound recomputation, verifier artifacts, and documentation
-    that separates this certificate from B.4 revision-history and
-    near-optimality interpretation evidence.
+    payload, Hermite-basis and Fourier/test-function certificates,
+    origin-condition and eventual-nonnegative certificates,
+    largest-positive-root calculation, bound recomputation, verifier artifacts,
+    and documentation that separates this certificate from B.4 revision-history
+    and near-optimality interpretation evidence.
 
 - [ ] Track Appendix B.4 prior-construction similarity and hypothesis evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.4 reports the

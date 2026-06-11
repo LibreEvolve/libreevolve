@@ -3711,8 +3711,9 @@ AlphaEvolve `0.3216`). These are validated absence boundaries: the local
 coefficient payloads, Hermite/Fourier/root certificates, coefficient-level
 comparison artifacts (prior and AlphaEvolve coefficient payloads,
 basis-alignment certificate, similarity metric, and hypothesis-source
-artifact), Colab/verifier linkage, comparison-to-`0.3284` certificates, and
-recomputed constants remain absent. Matrix-result
+artifact), origin-condition certificates, eventual-nonnegative certificates,
+Colab/verifier linkage, comparison-to-`0.3284` certificates, and recomputed
+constants remain absent. Matrix-result
 publication metadata has a separate
 `libreevolve.matrix_result_report.v1` contract in
 `libreevolve/problems/benchmarks/matrix_results.py`; it validates target

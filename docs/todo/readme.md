@@ -1944,7 +1944,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: README now documents the B.4 Hermite result boundary:
     coefficient values, Hermite basis, `P(x)/x^2` root computation, formula
     `r_max^2 / (2*pi)`, and absence of local coefficient payloads,
-    Hermite/Fourier/root certificates, and recomputed constants.
+    Hermite/Fourier/root certificates, origin-condition certificates,
+    eventual-nonnegative certificates, and recomputed constants.
   - Required result: when actual B.4 Hermite certificate artifacts land, update
     README, ROADMAP, papers index, and code/paper TODOs together so README
     distinguishes the quoted uncertainty-inequality value from verified

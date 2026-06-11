@@ -681,6 +681,7 @@ is not yet an AlphaEvolve reproduction.
   qualitative similarity/hypothesis claim against `[33]`, and the
   post-first-version revision note (`[18]` at `0.3284`, AlphaEvolve at
   `0.3216`). Actual coefficient payloads, Hermite/Fourier/root certificates,
+  origin-condition certificates, eventual-nonnegative certificates,
   coefficient-comparison artifacts (prior and AlphaEvolve payloads,
   basis-alignment certificate, similarity metric, and hypothesis-source
   artifact), Colab/verifier linkage, comparison-to-`0.3284` certificates, and

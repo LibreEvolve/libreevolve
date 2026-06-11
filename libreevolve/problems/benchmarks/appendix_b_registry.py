@@ -295,7 +295,7 @@ EXPECTED_B4_HERMITE_RESULT = {
     "eventual_nonnegative_certificate_status": "not_recorded_locally",
     "root_certificate_status": "not_recorded_locally",
     "recomputed_upper_bound_status": "not_recorded_locally",
-    "claim_boundary": "The registry records the paper's B.4 Hermite-polynomial result summary but does not claim a local coefficient payload, basis/Fourier certificate, root certificate, or recomputed upper bound.",
+    "claim_boundary": "The registry records the paper's B.4 Hermite-polynomial result summary but does not claim a local coefficient payload, Hermite-basis certificate, Fourier-transform certificate, origin-condition certificate, eventual-nonnegative certificate, root certificate, or recomputed upper bound.",
 }
 EXPECTED_B4_SIMILARITY_EVIDENCE = {
     "source_section_id": "B.4",

@@ -3050,7 +3050,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current evidence: roadmap/README/paper-index wording now cites the
     validated B.4 Hermite boundary: basis terms, coefficient precision,
     `P(0)=0`, `P(x)/x^2`, root calculation target, `r_max^2 / (2*pi)`, and
-    absence of local coefficient/certificate/recomputation artifacts.
+    absence of local coefficient, Hermite/Fourier/root,
+    origin-condition, eventual-nonnegative, and recomputation artifacts.
   - Required result: when actual B.4 Hermite-polynomial certificate artifacts
     land, update ROADMAP, README, papers index, and code/paper TODOs so roadmap
     claims separate the quoted `C4` value, the polynomial/root certificate,

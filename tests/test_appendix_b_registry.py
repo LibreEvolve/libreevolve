@@ -347,6 +347,12 @@ def test_appendix_b_registry_requires_b4_uncertainty_boundaries(tmp_path):
     b4["prior_bound_rounding_evidence"]["prior_upper_bound_rounded_solution"] = 0.353
     b4["hermite_result_boundary"]["reported_upper_bound"] = 0.36
     b4["hermite_result_boundary"]["coefficient_payload_status"] = "recorded"
+    b4["hermite_result_boundary"]["hermite_basis_certificate_status"] = "recorded"
+    b4["hermite_result_boundary"]["fourier_transform_certificate_status"] = "recorded"
+    b4["hermite_result_boundary"]["origin_condition_certificate_status"] = "recorded"
+    b4["hermite_result_boundary"]["eventual_nonnegative_certificate_status"] = "recorded"
+    b4["hermite_result_boundary"]["root_certificate_status"] = "recorded"
+    b4["hermite_result_boundary"]["recomputed_upper_bound_status"] = "recorded"
     b4["hermite_result_boundary"]["claim_boundary"] = "Local coefficients are verified."
     b4["prior_construction_similarity_evidence"]["comparison_status"] = "recorded"
     b4["prior_construction_similarity_evidence"]["prior_coefficient_payload_status"] = "recorded"
@@ -372,6 +378,12 @@ def test_appendix_b_registry_requires_b4_uncertainty_boundaries(tmp_path):
     assert "invalid_b4_prior_rounding_order" in codes
     assert "invalid_b4_hermite_reported_upper_bound" in codes
     assert "invalid_b4_hermite_coefficient_payload_status" in codes
+    assert "invalid_b4_hermite_hermite_basis_certificate_status" in codes
+    assert "invalid_b4_hermite_fourier_transform_certificate_status" in codes
+    assert "invalid_b4_hermite_origin_condition_certificate_status" in codes
+    assert "invalid_b4_hermite_eventual_nonnegative_certificate_status" in codes
+    assert "invalid_b4_hermite_root_certificate_status" in codes
+    assert "invalid_b4_hermite_recomputed_upper_bound_status" in codes
     assert "missing_b4_hermite_claim_boundary" in codes
     assert "invalid_b4_hermite_improvement_direction" in codes
     assert "invalid_b4_similarity_comparison_status" in codes

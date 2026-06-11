@@ -2895,8 +2895,10 @@ Primary evidence:
     `[0.32925, -0.01159, -8.9216e-5]`, the Fourier/Hermite property,
     `P(0)=0`, largest positive root of `P(x)/x^2`, formula
     `r_max^2 / (2*pi)`, and reported `C4 <= 0.3521`. Required future
-    coefficient payload and certificate fields are validated, but all artifact
-    statuses remain `not_recorded_locally`.
+    coefficient payload and certificate fields are validated, including
+    Hermite-basis, Fourier-transform, origin-condition, eventual-nonnegative,
+    root, and recomputed-bound certificates, but all artifact statuses remain
+    `not_recorded_locally`.
   - Required result: add the actual Appendix B.4 coefficient payload,
     Hermite-basis, Fourier-transform, origin-condition, eventual-nonnegative,
     root, and recomputed-bound certificates with hashes. Keep this separate

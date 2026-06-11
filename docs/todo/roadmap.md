@@ -2989,13 +2989,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     requirements, exact max-norm versus minimum-pairwise-distance condition,
     Lemma 1 applicability, transformed sphere-center formula, and required
     future vector/certificate fields. It still does not claim a real vector
-    payload, exact max-norm
-    certificate, exact minimum-pairwise-distance certificate,
-    transformed-center certificate, or recomputed lower bound.
+    payload, count/dimension certificates, norm/distance matrices, exact
+    max-norm certificate, max-norm witness vector, exact
+    minimum-pairwise-distance certificate, minimum-pair witness, strict
+    norm-distance inequality certificate, transformed-center and unit-sphere
+    certificates, kissing-angle certificate, or recomputed lower bound.
   - Required result: when the actual Appendix B.11 proof payload and
     certificates land, update ROADMAP, README, papers index, and code/paper
     TODOs so roadmap wording distinguishes rendered construction/figure
-    evidence from proof-grade kissing-number lower-bound verification.
+    evidence from proof-grade kissing-number lower-bound verification with
+    count/dimension, matrix, strict-inequality, unit-sphere, and kissing-angle
+    evidence.
 
 - [ ] Keep Appendix B.12-B.13 roadmap wording scoped until circle/rectangle
       sum-of-radii provenance exists.

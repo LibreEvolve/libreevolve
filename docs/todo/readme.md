@@ -1888,13 +1888,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     coordinate domain, exact max-norm versus minimum-pairwise-distance
     condition, Lemma 1 applicability, transformed sphere-center formula, and
     required future vector/certificate fields. It still warns that the actual
-    593-vector payload, exact max-norm
-    certificate, exact minimum-pairwise-distance certificate,
-    transformed-center certificate, and recomputed lower bound are absent.
+    593-vector payload, count/dimension certificates, norm/distance matrices,
+    exact max-norm certificate, max-norm witness vector, exact
+    minimum-pairwise-distance certificate, minimum-pair witness, strict
+    norm-distance inequality certificate, transformed-center and unit-sphere
+    certificates, kissing-angle certificate, and recomputed lower bound are
+    absent.
   - Required result: when the actual Appendix B.11 vector payload and
     certificates land, update README, ROADMAP, papers index, and code/paper
     TODOs together so README distinguishes visual Appendix B construction
-    evidence from proof-grade kissing-number lower-bound verification.
+    evidence from proof-grade kissing-number lower-bound verification with
+    count/dimension, matrix, strict-inequality, unit-sphere, and kissing-angle
+    evidence.
 
 - [ ] Keep README Appendix B.12-B.13 circle/rectangle wording scoped until
       sum-of-radii provenance exists.

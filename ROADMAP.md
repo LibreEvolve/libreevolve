@@ -760,10 +760,13 @@ is not yet an AlphaEvolve reproduction.
   dimension-11 target, prior lower bound `592`, reported lower bound `593`,
   nonzero integral-coordinate witness requirements, max-norm versus
   minimum-pairwise-distance condition, Lemma 1 transformation to sphere
-  centers, and required future vector, separate max-norm,
-  minimum-pairwise-distance, lemma-applicability, transformed-center, and
-  recomputed-lower-bound fields. The actual vector payload, max-norm proof,
-  minimum-pairwise-distance proof, and exact proof certificates remain open.
+  centers, and required future vector, count/dimension, norm-matrix,
+  distance-matrix, separate max-norm, minimum-pairwise-distance, strict
+  inequality, lemma-applicability, transformed-center, unit-sphere
+  normalization, kissing-angle, and recomputed-lower-bound fields. The actual
+  vector payload, count/dimension certificates, norm/distance matrices,
+  strict inequality proof, transformed unit-sphere proof, kissing-angle proof,
+  and exact proof certificates remain open.
 - Keep Appendix B.12-B.13 sum-of-radii packing claims scoped to
   result-boundary evidence until placement certificates land: the registry now
   validates `n = 26` and `n = 32` unit-square rows, the `n = 21` perimeter-4

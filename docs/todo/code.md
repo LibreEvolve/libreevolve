@@ -2775,17 +2775,22 @@ Primary evidence:
     condition, Lemma 1's input condition, and the transformation
     `{2 x / ||x||}` to sphere centers. The boundary still marks the witness
     `not_recorded_locally`: no 593-vector payload hash, integral-coordinate
-    certificate, nonzero certificate, separate exact max-norm certificate,
-    separate exact minimum-pairwise-distance certificate, Lemma 1 applicability
-    certificate, transformed-center certificate, or recomputed lower bound
-    exists.
+    certificate, nonzero certificate, count/dimension certificate, norm matrix,
+    pairwise-distance matrix, separate exact max-norm certificate, max-norm
+    witness vector certificate, separate exact minimum-pairwise-distance
+    certificate, minimum-pair witness certificate, strict norm-distance
+    inequality certificate, Lemma 1 applicability certificate,
+    transformed-center certificate, unit-sphere normalization certificate,
+    kissing-angle certificate, or recomputed lower bound exists.
   - Required result: replace the `not_recorded_locally` boundary with real
     Appendix B.11 witness artifacts: 593-vector payload hash, exact coordinate
-    and dimension metadata, cardinality check, max-norm certificate,
-    minimum-pairwise-distance certificate, Lemma 1 proof-step record,
-    transformed sphere-center verification,
-    lower-bound claim linkage, and docs separating a rendered construction
-    figure from proof-grade kissing-configuration verification.
+    and dimension metadata, cardinality check, norm matrix, pairwise-distance
+    matrix, max-norm certificate, max-norm witness vector,
+    minimum-pairwise-distance certificate, minimum-pair witness, strict
+    norm-distance inequality certificate, Lemma 1 proof-step record,
+    transformed sphere-center and unit-sphere verification, kissing-angle
+    certificate, lower-bound claim linkage, and docs separating a rendered
+    construction figure from proof-grade kissing-configuration verification.
 
 - [ ] Add Appendix B.12-B.13 circle/rectangle sum-of-radii provenance.
   - Spec evidence: AlphaEvolve Appendix B.12-B.13 reports three fixed-`n`

@@ -856,8 +856,17 @@ def test_appendix_b_registry_requires_b11_kissing_boundary(tmp_path):
     first = boundary["missing_witnesses"][0]
     first["vector_count"] = 592
     first["vector_artifact_status"] = "recorded"
+    first["vector_count_certificate_status"] = "recorded"
+    first["vector_dimension_certificate_status"] = "recorded"
+    first["norm_matrix_artifact_status"] = "recorded"
+    first["pairwise_distance_matrix_artifact_status"] = "recorded"
     first["max_norm_certificate_status"] = "recorded"
+    first["max_norm_witness_vector_certificate_status"] = "recorded"
     first["min_pairwise_distance_certificate_status"] = "recorded"
+    first["min_pairwise_distance_witness_certificate_status"] = "recorded"
+    first["strict_norm_distance_inequality_certificate_status"] = "recorded"
+    first["unit_sphere_normalization_certificate_status"] = "recorded"
+    first["kissing_angle_certificate_status"] = "recorded"
     first["claim_boundary"] = "Vectors exist."
     registry = tmp_path / "registry.json"
     registry.write_text(json.dumps(data), encoding="utf-8")
@@ -873,8 +882,17 @@ def test_appendix_b_registry_requires_b11_kissing_boundary(tmp_path):
     assert "invalid_b11_kissing_improvement_direction" in codes
     assert "invalid_b11_kissing_witness_vector_count" in codes
     assert "invalid_b11_kissing_vector_artifact_status" in codes
+    assert "invalid_b11_kissing_vector_count_certificate_status" in codes
+    assert "invalid_b11_kissing_vector_dimension_certificate_status" in codes
+    assert "invalid_b11_kissing_norm_matrix_artifact_status" in codes
+    assert "invalid_b11_kissing_pairwise_distance_matrix_artifact_status" in codes
     assert "invalid_b11_kissing_max_norm_certificate_status" in codes
+    assert "invalid_b11_kissing_max_norm_witness_vector_certificate_status" in codes
     assert "invalid_b11_kissing_min_pairwise_distance_certificate_status" in codes
+    assert "invalid_b11_kissing_min_pairwise_distance_witness_certificate_status" in codes
+    assert "invalid_b11_kissing_strict_norm_distance_inequality_certificate_status" in codes
+    assert "invalid_b11_kissing_unit_sphere_normalization_certificate_status" in codes
+    assert "invalid_b11_kissing_kissing_angle_certificate_status" in codes
     assert "missing_b11_kissing_claim_boundary" in codes
 
 

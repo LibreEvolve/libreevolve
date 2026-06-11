@@ -2713,16 +2713,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     minimum-pairwise-distance condition, Lemma 1 input condition, and
     transformed-center formula through
     a validated `kissing_result_boundary`. It still does not retain a real
-    593-vector payload, payload hash, integral-coordinate certificate,
-    nonzero certificate, separate max-norm certificate, separate
-    minimum-pairwise-distance certificate, Lemma 1 applicability certificate,
-    transformed sphere-center verification, or recomputed lower bound.
+    593-vector payload, payload hash, count/dimension certificates,
+    integral-coordinate certificate, nonzero certificate, norm/distance matrix
+    artifacts, separate max-norm certificate, max-norm witness vector,
+    separate minimum-pairwise-distance certificate, minimum-pair witness,
+    strict norm-distance inequality certificate, Lemma 1 applicability
+    certificate, transformed sphere-center and unit-sphere verification,
+    kissing-angle certificate, or recomputed lower bound.
   - Required result: add paper/report evidence for the missing Appendix B.11
     witness artifacts: point-set artifact hash, exact coordinate and dimension
-    metadata, cardinality check, max-norm certificate,
-    minimum-pairwise-distance certificate, Lemma 1 proof-step record,
-    transformed sphere-center verification, lower-bound claim id, and
-    README/ROADMAP wording that distinguishes visual construction evidence
+    metadata, cardinality check, norm/distance matrix artifacts, max-norm
+    certificate, max-norm witness vector, minimum-pairwise-distance
+    certificate, minimum-pair witness, strict norm-distance inequality
+    certificate, Lemma 1 proof-step record, transformed sphere-center and
+    unit-sphere verification, kissing-angle certificate, lower-bound claim id,
+    and README/ROADMAP wording that distinguishes visual construction evidence
     from proof-grade kissing-configuration certification.
 
 - [ ] Track Appendix B.12-B.13 circle/rectangle sum-of-radii evidence.

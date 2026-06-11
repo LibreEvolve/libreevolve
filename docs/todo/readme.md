@@ -1959,7 +1959,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     the prior hypothesis that the construction is nearly optimal.
   - Current evidence: README now points to the B.4 qualitative similarity
     boundary and states that coefficient-level comparison artifacts are not
-    recorded locally. It does not claim the near-optimality hypothesis is
+    recorded locally: prior and AlphaEvolve coefficient payloads,
+    basis-alignment certificate, coefficient-similarity metric, and hypothesis
+    source artifact. It does not claim the near-optimality hypothesis is
     locally verified.
   - Required result: when Appendix B.4 comparison artifacts land, update
     README, ROADMAP, papers index, and code/paper TODOs together so README

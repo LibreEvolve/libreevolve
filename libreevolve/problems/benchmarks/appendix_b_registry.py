@@ -303,6 +303,11 @@ EXPECTED_B4_SIMILARITY_EVIDENCE = {
     "similarity_claim": "Qualitatively our linear combination is very similar to the one found in [33].",
     "hypothesis_claim": "The paper treats that similarity as empirical support for the [33] hypothesis that the construction is nearly optimal.",
     "comparison_status": "not_recorded_locally",
+    "prior_coefficient_payload_status": "not_recorded_locally",
+    "alphaevolve_coefficient_payload_status": "not_recorded_locally",
+    "basis_alignment_certificate_status": "not_recorded_locally",
+    "coefficient_similarity_metric_status": "not_recorded_locally",
+    "near_optimality_hypothesis_source_status": "not_recorded_locally",
     "required_comparison_fields": [
         "prior_coefficient_payload_path",
         "prior_coefficient_payload_sha256",
@@ -313,7 +318,7 @@ EXPECTED_B4_SIMILARITY_EVIDENCE = {
         "coefficient_similarity_metric",
         "near_optimality_hypothesis_source",
     ],
-    "claim_boundary": "The registry records the paper's qualitative similarity statement but does not claim a local coefficient-level comparison to [33].",
+    "claim_boundary": "The registry records the paper's qualitative similarity statement but does not claim local prior/AlphaEvolve coefficient payloads, basis-alignment certificates, coefficient-similarity metrics, or hypothesis-source artifacts for [33].",
 }
 EXPECTED_B4_REVISION_REQUIRED_FIELDS = (
     "revision_artifact_path",
@@ -1330,6 +1335,15 @@ def _validate_b4_similarity_evidence(
             issues.append(AppendixBRegistryIssue(f"invalid_b4_similarity_{field}", f"B.4 prior_construction_similarity_evidence.{field} must match the AlphaEvolve similarity statement", family_id))
     if evidence.get("comparison_status") != "not_recorded_locally":
         issues.append(AppendixBRegistryIssue("invalid_b4_similarity_comparison_status", "B.4 similarity comparison must remain not_recorded_locally until coefficient comparison artifacts exist", family_id))
+    for field in (
+        "prior_coefficient_payload_status",
+        "alphaevolve_coefficient_payload_status",
+        "basis_alignment_certificate_status",
+        "coefficient_similarity_metric_status",
+        "near_optimality_hypothesis_source_status",
+    ):
+        if evidence.get(field) != "not_recorded_locally":
+            issues.append(AppendixBRegistryIssue(f"invalid_b4_similarity_{field}", f"B.4 similarity {field} must be not_recorded_locally in the absence boundary", family_id))
     claim_boundary = evidence.get("claim_boundary")
     if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary:
         issues.append(AppendixBRegistryIssue("missing_b4_similarity_claim_boundary", "B.4 similarity evidence must state that local coefficient-level comparison is not claimed", family_id))

@@ -2951,8 +2951,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     construction-to-prior comparison and near-optimality hypothesis as a
     distinct validated B.4 `prior_construction_similarity_evidence` claim. It
     still does not include the actual prior construction identifier,
-    coefficient payloads, basis-alignment evidence, or coefficient-similarity
-    metric.
+    coefficient payloads, basis-alignment evidence, coefficient-similarity
+    metric, or near-optimality hypothesis source artifact.
   - Required result: add B.4 paper-evidence records for the missing comparison
     artifacts to reference `[33]`: prior construction identifier, comparable
     structure or coefficient fields, source page/section, evidence-strength

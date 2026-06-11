@@ -349,6 +349,11 @@ def test_appendix_b_registry_requires_b4_uncertainty_boundaries(tmp_path):
     b4["hermite_result_boundary"]["coefficient_payload_status"] = "recorded"
     b4["hermite_result_boundary"]["claim_boundary"] = "Local coefficients are verified."
     b4["prior_construction_similarity_evidence"]["comparison_status"] = "recorded"
+    b4["prior_construction_similarity_evidence"]["prior_coefficient_payload_status"] = "recorded"
+    b4["prior_construction_similarity_evidence"]["alphaevolve_coefficient_payload_status"] = "recorded"
+    b4["prior_construction_similarity_evidence"]["basis_alignment_certificate_status"] = "recorded"
+    b4["prior_construction_similarity_evidence"]["coefficient_similarity_metric_status"] = "recorded"
+    b4["prior_construction_similarity_evidence"]["near_optimality_hypothesis_source_status"] = "recorded"
     b4["prior_construction_similarity_evidence"]["claim_boundary"] = "Local comparison is verified."
     b4["revision_result_boundary"]["revised_reported_constant"] = 0.4
     b4["revision_result_boundary"]["revision_artifact_status"] = "recorded"
@@ -370,6 +375,11 @@ def test_appendix_b_registry_requires_b4_uncertainty_boundaries(tmp_path):
     assert "missing_b4_hermite_claim_boundary" in codes
     assert "invalid_b4_hermite_improvement_direction" in codes
     assert "invalid_b4_similarity_comparison_status" in codes
+    assert "invalid_b4_similarity_prior_coefficient_payload_status" in codes
+    assert "invalid_b4_similarity_alphaevolve_coefficient_payload_status" in codes
+    assert "invalid_b4_similarity_basis_alignment_certificate_status" in codes
+    assert "invalid_b4_similarity_coefficient_similarity_metric_status" in codes
+    assert "invalid_b4_similarity_near_optimality_hypothesis_source_status" in codes
     assert "missing_b4_similarity_claim_boundary" in codes
     assert "invalid_b4_revision_revised_reported_constant" in codes
     assert "invalid_b4_revision_revision_artifact_status" in codes

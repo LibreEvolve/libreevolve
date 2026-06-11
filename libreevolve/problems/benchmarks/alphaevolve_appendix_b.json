@@ -346,6 +346,11 @@
         "similarity_claim": "Qualitatively our linear combination is very similar to the one found in [33].",
         "hypothesis_claim": "The paper treats that similarity as empirical support for the [33] hypothesis that the construction is nearly optimal.",
         "comparison_status": "not_recorded_locally",
+        "prior_coefficient_payload_status": "not_recorded_locally",
+        "alphaevolve_coefficient_payload_status": "not_recorded_locally",
+        "basis_alignment_certificate_status": "not_recorded_locally",
+        "coefficient_similarity_metric_status": "not_recorded_locally",
+        "near_optimality_hypothesis_source_status": "not_recorded_locally",
         "required_comparison_fields": [
           "prior_coefficient_payload_path",
           "prior_coefficient_payload_sha256",
@@ -356,7 +361,7 @@
           "coefficient_similarity_metric",
           "near_optimality_hypothesis_source"
         ],
-        "claim_boundary": "The registry records the paper's qualitative similarity statement but does not claim a local coefficient-level comparison to [33]."
+        "claim_boundary": "The registry records the paper's qualitative similarity statement but does not claim local prior/AlphaEvolve coefficient payloads, basis-alignment certificates, coefficient-similarity metrics, or hypothesis-source artifacts for [33]."
       },
       "revision_result_boundary": {
         "status": "not_recorded_locally",

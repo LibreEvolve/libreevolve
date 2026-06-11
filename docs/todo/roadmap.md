@@ -3067,7 +3067,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     B.4 similarity record that ties the AlphaEvolve construction to the prior
     `[33]` construction and labels the near-optimality hypothesis as a paper
     claim, while stating that coefficient-level comparison artifacts are not
-    locally recorded.
+    locally recorded: prior and AlphaEvolve coefficient payloads,
+    basis-alignment certificate, coefficient-similarity metric, and hypothesis
+    source artifact.
   - Required result: when Appendix B.4 prior-construction comparison artifacts
     land, update ROADMAP, README, papers index, and code/paper TODOs so roadmap
     claims distinguish value improvement, method similarity, and empirical

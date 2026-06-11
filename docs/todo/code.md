@@ -2913,7 +2913,10 @@ Primary evidence:
     `prior_construction_similarity_evidence` with source `[33]`, the
     qualitative similarity statement, the near-optimality hypothesis claim,
     required future comparison fields, and a claim boundary stating that no
-    local coefficient-level comparison is claimed.
+    local coefficient-level comparison is claimed. It now keeps the prior
+    coefficient payload, AlphaEvolve coefficient payload, basis-alignment
+    certificate, coefficient-similarity metric, and near-optimality hypothesis
+    source artifact statuses `not_recorded_locally`.
   - Required result: add the actual Appendix B.4 comparison artifacts that
     link the AlphaEvolve Hermite-polynomial construction to the prior `[33]`
     construction: source page/section, prior coefficient payload, AlphaEvolve

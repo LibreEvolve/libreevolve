@@ -4027,10 +4027,13 @@ verifier / initial / final-program artifact kinds, hosted problem-page URL
 pattern, runtime-code absence, Apache-2.0 software / CC-BY-4.0 materials
 license split, citation requirement, and live-repository snapshot policy. The
 committed `papers/follow_on_sources.json` sidecar emits the follow-on source
-row with docs/TODO claim-surface links and an explicit no-cache policy: it is
-later math-source evidence for the original paper's Section 3.2 handoff, not
-the original `2506.13131` AlphaEvolve specification, not a local cached PDF
-row, and not proof of per-problem notebook/status coverage yet.
+row with docs/TODO claim-surface links, a linked
+`libreevolve.alphaevolve_follow_on_problem_coverage.v1` numbered-page evidence
+boundary, and an explicit no-cache policy: it is later math-source evidence for
+the original paper's Section 3.2 handoff, not the original `2506.13131`
+AlphaEvolve specification, not a local cached PDF row, and not proof of
+per-problem page hashes, page-68 classification, or complete notebook/artifact
+coverage yet.
 `papers/follow_on_repository_rights.json` records the pinned problem
 repository's source-use terms separately from both the original PDF and
 `alphaevolve_results`: citation/BibTeX requirement, Google LLC copyright,

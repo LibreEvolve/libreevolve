@@ -2160,18 +2160,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     HTML files. `problems/67.html` and `problems/68.html` are both titled
     `Logic puzzles`; page 67 uses a placeholder Colab link, and page 68 uses a
     generic Colab URL plus a placeholder paper link.
-  - Current evidence: roadmap TODOs require follow-on coverage snapshots,
-    hosted page URLs, notebook/artifact availability, status bucket semantics,
-    and live-repository policy. They do not require an evidence gate that
-    reconciles paper/README problem count with live numbered HTML inventory or
-    flags duplicate titles, repeated section mappings, and placeholder/generic
-    resource links.
-  - Required result: when numbered-page inventory validation lands, update
-    ROADMAP, README, papers index, and code/paper TODOs so follow-on coverage
-    gates include expected-versus-discovered page counts, page id/title/section
-    mapping, duplicate diagnostics, resource-link validity, discrepancy
-    classification, and snapshot-scoped wording for any 67-versus-68 source
-    mismatch.
+  - Current evidence: ROADMAP now documents the follow-on coverage boundary
+    that reconciles the README/paper declared `67` problem count with `68`
+    observed numbered HTML pages, and the follow-on source manifest now links
+    that evidence. ROADMAP still lacks page-68 classification plus duplicate
+    title, repeated section-mapping, and placeholder/generic resource-link
+    diagnostics.
+  - Required result: when page-68 classification and resource-link diagnostics
+    land, update ROADMAP, README, papers index, and code/paper TODOs so
+    follow-on coverage gates include page id/title/section mapping, duplicate
+    diagnostics, resource-link validity, discrepancy classification, and
+    snapshot-scoped wording for the counted 67-versus-68 source mismatch.
 
 - [ ] Keep paper-artifact roadmap wording scoped until creator/assembler role
       records are bound to artifacts.

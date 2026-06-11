@@ -58,7 +58,7 @@
           "declared_problem_count": 67,
           "problem_pages_declared_complete": true,
           "per_problem_inventory_validated": false,
-          "numbered_page_inventory_validated": false,
+          "numbered_page_inventory_validated": true,
           "notebook_coverage": "many_not_all",
           "runtime_code_available": false,
           "notebook_artifact_kinds": [
@@ -73,6 +73,19 @@
           "hosted_problem_page_url_pattern": "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/{n}.html",
           "status_artifact_inventory_validated": true
         },
+        "problem_coverage_evidence": {
+          "schema": "libreevolve.alphaevolve_follow_on_problem_coverage.v1",
+          "source_boundary": "alphaevolve_follow_on_problem_coverage",
+          "declared_problem_count": 67,
+          "observed_numbered_html_count": 68,
+          "extra_numbered_page_ids": [
+            68
+          ],
+          "numbered_page_inventory_validated": true,
+          "per_problem_inventory_validated": false,
+          "page_hash_inventory_complete": false,
+          "claim_boundary": "The follow-on coverage record reconciles the declared 67-problem count against 68 observed numbered HTML pages, but does not claim per-problem page hashes or page-68 classification."
+        },
         "source_use": {
           "repository_software_license": "Apache-2.0",
           "repository_materials_license": "CC-BY-4.0",
@@ -83,7 +96,7 @@
         },
         "required_follow_on_work": [
           "build_per_problem_repository_inventory",
-          "reconcile_numbered_problem_pages_with_declared_count",
+          "classify_extra_numbered_page_68",
           "validate_notebook_prompt_verifier_initial_final_artifacts",
           "map_original_appendix_b_claims_to_follow_on_problem_records",
           "attach_rights_attribution_to_generated_artifacts"
@@ -110,7 +123,7 @@
       },
       "remaining_work": [
         "build_per_problem_repository_inventory",
-        "reconcile_numbered_problem_pages_with_declared_count",
+        "classify_extra_numbered_page_68",
         "validate_notebook_prompt_verifier_initial_final_artifacts",
         "map_original_appendix_b_claims_to_follow_on_problem_records",
         "attach_rights_attribution_to_generated_artifacts"

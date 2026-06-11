@@ -2311,7 +2311,7 @@ Primary evidence:
     declared problem-page coverage from partial notebook/artifact/status
     coverage at a pinned snapshot.
 
-- [ ] Reconcile follow-on numbered problem-page inventory with README count.
+- [ ] Classify follow-on extra numbered page 68 after count reconciliation.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
     README says the repository contains problem descriptions for 67
     mathematical problems, but the current `problems/` directory exposes 68
@@ -2319,19 +2319,18 @@ Primary evidence:
     and `problems/68.html` titled `Logic puzzles`; `67.html` uses a Colab link
     placeholder `#`, while `68.html` uses a generic
     `https://colab.research.google.com/` URL and a paper-link placeholder `#`.
-  - Current evidence: follow-on coverage TODOs require all 67 problem ids,
-    hosted page URLs, notebook paths or absence reasons, status buckets, and
-    access modes. They do not require a numbered-page inventory check that
-    reconciles repository file count with README/paper problem count, detects
-    duplicate titles/sections, or flags placeholder/generic resource links in
-    individual pages.
-  - Required result: add repository-page inventory validation with repository
-    URL/ref/commit/date, discovered numbered HTML files, expected problem-count
-    policy, duplicate title/section detection, page id-to-paper section
-    mapping, placeholder/generic link diagnostics for Colab and paper links,
-    and README/ROADMAP wording that distinguishes paper-declared problem count
-    from live repository page inventory until the source discrepancy is
-    classified.
+  - Current evidence: `libreevolve.alphaevolve_follow_on_problem_coverage.v1`
+    now reconciles the README/paper declared `67` problem count with `68`
+    observed numbered HTML pages, and `papers/follow_on_sources.json` links
+    that numbered-page evidence boundary. The coverage still does not classify
+    page 68, detect duplicate titles/sections, or flag placeholder/generic
+    resource links in individual pages.
+  - Required result: extend repository-page inventory validation with page
+    id/title/section mapping, duplicate title/section detection,
+    placeholder/generic link diagnostics for Colab and paper links, explicit
+    page-68 classification, and README/ROADMAP wording that distinguishes
+    paper-declared problem count from live repository page inventory now that
+    the source discrepancy is counted but not yet classified.
 
 - [ ] Add paper-artifact creator and assembler provenance for figures and
       companion notebooks.

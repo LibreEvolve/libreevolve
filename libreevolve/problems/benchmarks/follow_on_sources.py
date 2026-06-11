@@ -36,6 +36,9 @@ EXPECTED_FOLLOW_ON_REPOSITORY_RIGHTS_MANIFEST_FILE = (
 EXPECTED_FOLLOW_ON_RUNTIME_ABSENCE_MANIFEST_FILE = (
     "papers/follow_on_runtime_absence.json"
 )
+EXPECTED_FOLLOW_ON_PROBLEM_COVERAGE_SCHEMA = (
+    "libreevolve.alphaevolve_follow_on_problem_coverage.v1"
+)
 EXPECTED_FOLLOW_ON_TAO_BLOG_MANIFEST_FILE = "papers/follow_on_tao_blog.json"
 EXPECTED_ORIGINAL_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_FOLLOW_ON_ARXIV_ID = "2511.02864"
@@ -290,7 +293,7 @@ def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
             "declared_problem_count": EXPECTED_DECLARED_PROBLEM_COUNT,
             "problem_pages_declared_complete": True,
             "per_problem_inventory_validated": False,
-            "numbered_page_inventory_validated": False,
+            "numbered_page_inventory_validated": True,
             "notebook_coverage": "many_not_all",
             "runtime_code_available": False,
             "notebook_artifact_kinds": list(EXPECTED_ARTIFACT_KINDS),
@@ -299,6 +302,22 @@ def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
                 "alphaevolve_repository_of_problems/problems/{n}.html"
             ),
             "status_artifact_inventory_validated": True,
+        },
+        "problem_coverage_evidence": {
+            "schema": EXPECTED_FOLLOW_ON_PROBLEM_COVERAGE_SCHEMA,
+            "source_boundary": "alphaevolve_follow_on_problem_coverage",
+            "declared_problem_count": EXPECTED_DECLARED_PROBLEM_COUNT,
+            "observed_numbered_html_count": 68,
+            "extra_numbered_page_ids": [68],
+            "numbered_page_inventory_validated": True,
+            "per_problem_inventory_validated": False,
+            "page_hash_inventory_complete": False,
+            "claim_boundary": (
+                "The follow-on coverage record reconciles the declared "
+                "67-problem count against 68 observed numbered HTML pages, "
+                "but does not claim per-problem page hashes or page-68 "
+                "classification."
+            ),
         },
         "source_use": {
             "repository_software_license": "Apache-2.0",
@@ -310,7 +329,7 @@ def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
         },
         "required_follow_on_work": [
             "build_per_problem_repository_inventory",
-            "reconcile_numbered_problem_pages_with_declared_count",
+            "classify_extra_numbered_page_68",
             "validate_notebook_prompt_verifier_initial_final_artifacts",
             "map_original_appendix_b_claims_to_follow_on_problem_records",
             "attach_rights_attribution_to_generated_artifacts",
@@ -716,7 +735,7 @@ def alphaevolve_follow_on_source_manifest_record() -> dict[str, Any]:
                 },
                 "remaining_work": [
                     "build_per_problem_repository_inventory",
-                    "reconcile_numbered_problem_pages_with_declared_count",
+                    "classify_extra_numbered_page_68",
                     "validate_notebook_prompt_verifier_initial_final_artifacts",
                     "map_original_appendix_b_claims_to_follow_on_problem_records",
                     "attach_rights_attribution_to_generated_artifacts",
@@ -744,6 +763,7 @@ def validate_alphaevolve_follow_on_math_source(
     local_pdf_cache_available = _validate_paper(data.get("paper"), issues)
     repository_ref_pinned = _validate_repository(data.get("repository"), issues)
     _validate_repository_claims(data.get("repository_claims"), issues)
+    _validate_problem_coverage_evidence(data.get("problem_coverage_evidence"), issues)
     _validate_source_use(data.get("source_use"), issues)
     _validate_required_follow_on_work(data.get("required_follow_on_work"), issues)
     source_count = sum(
@@ -1210,7 +1230,7 @@ def _validate_repository_claims(value: object, issues: list[AlphaEvolveFollowOnM
         "declared_problem_count": EXPECTED_DECLARED_PROBLEM_COUNT,
         "problem_pages_declared_complete": True,
         "per_problem_inventory_validated": False,
-        "numbered_page_inventory_validated": False,
+        "numbered_page_inventory_validated": True,
         "notebook_coverage": "many_not_all",
         "runtime_code_available": False,
         "hosted_problem_page_url_pattern": (
@@ -1224,11 +1244,40 @@ def _validate_repository_claims(value: object, issues: list[AlphaEvolveFollowOnM
             code = f"invalid_repository_claims_{field}"
             if field == "runtime_code_available":
                 code = "runtime_code_overclaim"
-            elif field in {"per_problem_inventory_validated", "numbered_page_inventory_validated"}:
+            elif field == "per_problem_inventory_validated":
                 code = f"{field}_overclaim"
             issues.append(_issue(code, f"repository_claims.{field} must match the scoped follow-on source evidence", EXPECTED_REPOSITORY_NAME))
     if tuple(value.get("notebook_artifact_kinds") or ()) != EXPECTED_ARTIFACT_KINDS:
         issues.append(_issue("invalid_notebook_artifact_kinds", "repository_claims.notebook_artifact_kinds must preserve the README artifact kinds", EXPECTED_REPOSITORY_NAME))
+
+
+def _validate_problem_coverage_evidence(value: object, issues: list[AlphaEvolveFollowOnMathSourceIssue]) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_problem_coverage_evidence", "problem_coverage_evidence must be an object", EXPECTED_REPOSITORY_NAME))
+        return
+    expected = {
+        "schema": EXPECTED_FOLLOW_ON_PROBLEM_COVERAGE_SCHEMA,
+        "source_boundary": "alphaevolve_follow_on_problem_coverage",
+        "declared_problem_count": EXPECTED_DECLARED_PROBLEM_COUNT,
+        "observed_numbered_html_count": 68,
+        "extra_numbered_page_ids": [68],
+        "numbered_page_inventory_validated": True,
+        "per_problem_inventory_validated": False,
+        "page_hash_inventory_complete": False,
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            code = f"invalid_problem_coverage_evidence_{field}"
+            if field in {"per_problem_inventory_validated", "page_hash_inventory_complete"}:
+                code = f"problem_coverage_evidence_{field}_overclaim"
+            issues.append(_issue(code, f"problem_coverage_evidence.{field} must link only the validated numbered-page boundary", EXPECTED_REPOSITORY_NAME))
+    claim_boundary = value.get("claim_boundary")
+    if (
+        not isinstance(claim_boundary, str)
+        or "does not claim" not in claim_boundary
+        or "page-68 classification" not in claim_boundary
+    ):
+        issues.append(_issue("missing_problem_coverage_claim_boundary", "problem_coverage_evidence must preserve page-hash and page-68 classification gaps", EXPECTED_REPOSITORY_NAME))
 
 
 def _validate_source_use(value: object, issues: list[AlphaEvolveFollowOnMathSourceIssue]) -> None:
@@ -1251,7 +1300,7 @@ def _validate_source_use(value: object, issues: list[AlphaEvolveFollowOnMathSour
 def _validate_required_follow_on_work(value: object, issues: list[AlphaEvolveFollowOnMathSourceIssue]) -> None:
     required = {
         "build_per_problem_repository_inventory",
-        "reconcile_numbered_problem_pages_with_declared_count",
+        "classify_extra_numbered_page_68",
         "validate_notebook_prompt_verifier_initial_final_artifacts",
         "map_original_appendix_b_claims_to_follow_on_problem_records",
         "attach_rights_attribution_to_generated_artifacts",
@@ -1339,7 +1388,7 @@ def _validate_follow_on_manifest_remaining_work(
 ) -> None:
     expected = {
         "build_per_problem_repository_inventory",
-        "reconcile_numbered_problem_pages_with_declared_count",
+        "classify_extra_numbered_page_68",
         "validate_notebook_prompt_verifier_initial_final_artifacts",
         "map_original_appendix_b_claims_to_follow_on_problem_records",
         "attach_rights_attribution_to_generated_artifacts",

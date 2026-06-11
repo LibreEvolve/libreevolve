@@ -35,6 +35,14 @@ def test_validate_alphaevolve_follow_on_math_source_accepts_builtin_record():
     assert validation.repository_ref_pinned is True
     assert validation.local_pdf_cache_available is False
     assert validation.issues == []
+    claims = recordset["repository_claims"]
+    assert claims["numbered_page_inventory_validated"] is True
+    coverage = recordset["problem_coverage_evidence"]
+    assert coverage["schema"] == "libreevolve.alphaevolve_follow_on_problem_coverage.v1"
+    assert coverage["observed_numbered_html_count"] == 68
+    assert coverage["extra_numbered_page_ids"] == [68]
+    assert coverage["per_problem_inventory_validated"] is False
+    assert coverage["page_hash_inventory_complete"] is False
 
 
 def test_validate_alphaevolve_follow_on_math_source_loads_json_file(tmp_path):
@@ -408,11 +416,17 @@ def test_validate_alphaevolve_follow_on_math_source_rejects_repository_claim_ove
     claims = recordset["repository_claims"]
     claims["declared_problem_count"] = 68
     claims["per_problem_inventory_validated"] = True
-    claims["numbered_page_inventory_validated"] = True
+    claims["numbered_page_inventory_validated"] = False
     claims["notebook_coverage"] = "all"
     claims["runtime_code_available"] = True
     claims["status_artifact_inventory_validated"] = False
     claims["notebook_artifact_kinds"] = ["problem_pages"]
+    coverage = recordset["problem_coverage_evidence"]
+    coverage["observed_numbered_html_count"] = 67
+    coverage["extra_numbered_page_ids"] = []
+    coverage["per_problem_inventory_validated"] = True
+    coverage["page_hash_inventory_complete"] = True
+    coverage["claim_boundary"] = "Every numbered page is classified and hashed."
 
     validation = validate_alphaevolve_follow_on_math_source(recordset)
     codes = {issue.code for issue in validation.issues}
@@ -420,11 +434,16 @@ def test_validate_alphaevolve_follow_on_math_source_rejects_repository_claim_ove
     assert validation.ok is False
     assert "invalid_repository_claims_declared_problem_count" in codes
     assert "per_problem_inventory_validated_overclaim" in codes
-    assert "numbered_page_inventory_validated_overclaim" in codes
+    assert "invalid_repository_claims_numbered_page_inventory_validated" in codes
     assert "invalid_repository_claims_notebook_coverage" in codes
     assert "runtime_code_overclaim" in codes
     assert "invalid_repository_claims_status_artifact_inventory_validated" in codes
     assert "invalid_notebook_artifact_kinds" in codes
+    assert "invalid_problem_coverage_evidence_observed_numbered_html_count" in codes
+    assert "invalid_problem_coverage_evidence_extra_numbered_page_ids" in codes
+    assert "problem_coverage_evidence_per_problem_inventory_validated_overclaim" in codes
+    assert "problem_coverage_evidence_page_hash_inventory_complete_overclaim" in codes
+    assert "missing_problem_coverage_claim_boundary" in codes
 
 
 def test_validate_alphaevolve_follow_on_math_source_rejects_scope_and_source_use_drift():

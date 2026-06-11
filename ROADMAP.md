@@ -872,9 +872,11 @@ is not yet an AlphaEvolve reproduction.
   notebook coverage, prompt/verifier/initial/final artifact kinds, runtime-code
   absence, source-use licenses, and citation boundary.
   `papers/follow_on_sources.json` now emits the committed follow-on source row
-  with docs/TODO claim-surface links and an explicit no-cache policy. Cached
-  PDF rows, per-problem inventory, numbered-page reconciliation, notebook
-  artifact hashes, and Appendix B claim mappings remain open.
+  with docs/TODO claim-surface links, linked problem-coverage evidence for the
+  declared-67 versus observed-68 numbered-page boundary, and an explicit
+  no-cache policy. Cached PDF rows, per-problem inventory, page-68
+  classification, notebook artifact hashes, and Appendix B claim mappings
+  remain open.
 - Keep follow-on problem-repository rights separate from the original PDF,
   `alphaevolve_results`, and LibreEvolve licensing:
   `papers/follow_on_repository_rights.json` now records the pinned repository's

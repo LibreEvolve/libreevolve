@@ -1738,10 +1738,12 @@ Implemented:
   repository policy, declared 67-problem count, many-but-not-all notebook
   coverage, prompt/verifier/initial/final artifact kinds, runtime-code absence,
   source-use licenses, and citation boundary. `papers/follow_on_sources.json`
-  emits this committed follow-on source row with docs/TODO claim-surface links
-  and an explicit no-cache policy. It is later math-source evidence, not the
-  original `2506.13131` specification, not a cached PDF row, and not a
-  per-problem notebook/status inventory.
+  emits this committed follow-on source row with docs/TODO claim-surface links,
+  linked problem-coverage evidence for the declared-67 versus observed-68
+  numbered-page boundary, and an explicit no-cache policy. It is later
+  math-source evidence, not the original `2506.13131` specification, not a
+  cached PDF row, and not a per-problem page-hash, page-68 classification, or
+  complete notebook/artifact inventory.
 - `papers/follow_on_repository_rights.json`: follow-on problem-repository
   source-use sidecar. It records the pinned repository's citation/BibTeX
   requirement, Google LLC copyright, Apache-2.0 software / CC-BY-4.0 materials

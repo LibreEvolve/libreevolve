@@ -1500,16 +1500,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `problems/67.html` and `problems/68.html` are both titled `Logic puzzles`;
     one page has an under-construction Colab placeholder and the other has a
     generic Colab URL plus a placeholder paper link.
-  - Current evidence: README TODOs require follow-on repository coverage,
-    hosted URLs, notebook/artifact access modes, status buckets, and pinned
-    snapshots. They do not require README wording that explains the live
-    repository's numbered-page inventory versus the README/paper problem-count
-    claim, nor do they require duplicate-title or placeholder-link diagnostics.
-  - Required result: after numbered-page inventory validation exists, update
-    README so follow-on source claims distinguish paper/README problem count
-    from live repository HTML-page count, list any duplicate or placeholder
-    pages as snapshot diagnostics, and avoid treating every numbered page as a
-    complete problem/notebook/paper-linked source artifact until reconciled.
+  - Current evidence: README now documents the follow-on coverage boundary
+    that reconciles the README/paper declared `67` problem count with `68`
+    observed numbered HTML pages, and the follow-on source manifest now links
+    that evidence. README still does not classify page 68 or include
+    duplicate-title, repeated-section, generic-Colab, or placeholder-link
+    diagnostics.
+  - Required result: after page-68 classification and resource-link diagnostics
+    land, update README so follow-on source claims distinguish paper/README
+    problem count from live repository HTML-page count, list any duplicate or
+    placeholder pages as snapshot diagnostics, and avoid treating every
+    numbered page as a complete problem/notebook/paper-linked source artifact
+    until classified.
 
 - [ ] Keep README figure/notebook provenance wording scoped until paper
       artifact-role records are bound to artifacts.

@@ -2342,8 +2342,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     benchmark harness. The `workspace_math` smoke fixture now covers a nested
     package, declared JSON data, and a binary static seed asset without making
     benchmark claims. The scope registry is validated in focused tests, by
-    smoke hardening evidence, and by the routine paper-manifest validation
-    gate that reviewers run for paper-facing evidence.
+    smoke hardening evidence, through `papers/example_benchmark_scope.json`,
+    and by the routine paper-manifest validation gate that reviewers run for
+    paper-facing evidence.
     `validate_benchmark_evidence_scope()` now cross-checks
     hardening reports against the matching scope record and optional hardening
     artifact inventory, rejecting smoke-only example promotion, paper-claim

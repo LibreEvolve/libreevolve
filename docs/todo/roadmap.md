@@ -1732,8 +1732,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     has a scope-checked hardening bundle helper that emits report, inventory,
     summary, and scope-validation files while preserving
     `alphaevolve_comparable: false`. The shipped-example scope registry has
-    focused tests, and the standard paper-manifest validation path now validates
-    that registry directly.
+    focused tests, emits `papers/example_benchmark_scope.json`, and the
+    standard paper-manifest validation path now validates that sidecar.
   - Required result: when tensor/geometric/compiler/systems fixtures emit
     benchmark-grade hardening reports, update the roadmap, README, papers
     index, and code/paper TODO entries together so they neither

@@ -156,6 +156,7 @@ MATRIX_NEAR_INTEGRALITY_RUNTIME_FILE = "papers/matrix_near_integrality_runtime_b
 MATRIX_SCALAR_FIELD_RUNTIME_FILE = "papers/matrix_scalar_field_runtime_boundary.json"
 MATRIX_SWEEP_SPACE_RUNTIME_FILE = "papers/matrix_sweep_space_runtime_boundary.json"
 MATRIX_TENSOR_RANK_RUNTIME_FILE = "papers/matrix_tensor_rank_runtime_boundary.json"
+EXAMPLE_BENCHMARK_SCOPE_FILE = "papers/example_benchmark_scope.json"
 PAPER_ARTIFACT_ROLES_FILE = "papers/paper_artifact_roles.json"
 PAPER_ARTIFACT_LINKAGE_FILE = "papers/paper_artifact_linkage.json"
 SHA256_RE = re.compile(r"[0-9a-f]{64}")
@@ -516,7 +517,7 @@ def validate_paper_manifest(
     issues.extend(_validate_appendix_a_matrix_registry_if_present(root_path))
     issues.extend(_validate_appendix_b_registry_if_present(root_path))
     issues.extend(_validate_ablation_registry_if_present(root_path))
-    issues.extend(_validate_example_benchmark_scope_records())
+    issues.extend(_validate_example_benchmark_scope_records(root_path))
 
     if set(csv_by_id) - seen_ids:
         for row_id in sorted(set(csv_by_id) - seen_ids):
@@ -1137,8 +1138,34 @@ def _validate_ablation_registry_if_present(root_path: Path) -> list[PaperManifes
     ]
 
 
-def _validate_example_benchmark_scope_records() -> list[PaperManifestIssue]:
-    report = validate_example_benchmark_scope(example_benchmark_scope_records())
+def _validate_example_benchmark_scope_records(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    scope_path = root_path / EXAMPLE_BENCHMARK_SCOPE_FILE
+    if scope_path.exists():
+        try:
+            recordset: object = json.loads(scope_path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+            return [
+                PaperManifestIssue(
+                    "example_scope_manifest_unreadable",
+                    _manifest_diagnostic(scope_path, root_path, exc),
+                    "example_benchmark_scope",
+                )
+            ]
+    else:
+        recordset = example_benchmark_scope_records()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "example_scope_manifest_missing",
+                    f"{EXAMPLE_BENCHMARK_SCOPE_FILE} must emit shipped-example benchmark scope records",
+                    "example_benchmark_scope",
+                )
+            ]
+    report = validate_example_benchmark_scope(recordset)
     return [
         PaperManifestIssue(
             f"example_scope_{issue.code}",

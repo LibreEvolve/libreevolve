@@ -620,7 +620,8 @@ is not yet an AlphaEvolve reproduction.
   bundle helper that emits report, inventory, summary, and smoke-scope
   validation evidence while preserving `alphaevolve_comparable: false`. The
   standard paper-manifest gate now validates the shipped example-scope records
-  directly so smoke fixtures cannot drift into paper-comparable claims.
+  from `papers/example_benchmark_scope.json` so smoke fixtures cannot drift
+  into paper-comparable claims.
 - Connect real benchmark fixtures to `libreevolve.benchmark_hardening.v1`
   reports emitted by actual randomized/exhaustive validators and anti-gaming
   fixtures, including protected score/correctness/artifact signals,

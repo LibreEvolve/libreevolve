@@ -2,6 +2,19 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Emit shipped-example benchmark scope sidecar for roadmap evidence.
+  - Status: `papers/example_benchmark_scope.json` now lets roadmap wording
+    point to a committed `libreevolve.example_benchmark_scope.v1` boundary for
+    shipped smoke examples, while preserving that these examples are not
+    AlphaEvolve-comparable benchmark evidence.
+  - Verification: `py -3.12 -m pytest tests\test_example_benchmark_scope.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\example_scope.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: the active roadmap TODO still tracks actual benchmark-grade
+    tensor/geometric/compiler/systems fixtures and reports.
+
 - [x] Emit matrix suite publication-artifact sidecar for roadmap evidence.
   - Status: `papers/matrix_suite_publication_artifacts.json` now lets roadmap
     wording point to a committed absence/readiness boundary for full Appendix

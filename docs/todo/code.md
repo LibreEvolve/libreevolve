@@ -2412,8 +2412,9 @@ Primary evidence:
     being counted as benchmark evidence by accident. The `workspace_math`
     smoke fixture now exercises a nested package, declared JSON data, and a
     binary static seed asset while preserving its smoke-only scope. That scope
-    registry has unit coverage, is consumed by smoke hardening bundles, and is
-    now validated by the routine paper-manifest gate.
+    registry has unit coverage, is consumed by smoke hardening bundles, emits
+    `papers/example_benchmark_scope.json`, and is now validated by the routine
+    paper-manifest gate.
     `validate_benchmark_evidence_scope()` now cross-checks hardening reports
     against the matching scope record and optional hardening artifact inventory,
     rejecting smoke-only example promotion, paper-claim scope mismatches, and

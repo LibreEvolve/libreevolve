@@ -3947,7 +3947,8 @@ checked local larger-target attempt corpus is emitted yet.
 The paper-manifest validator also checks the shipped example-scope registry,
 keeping `hello_world`, `sorting`, `workspace_math`, `matrix_multiplication`,
 and `circle_packing` marked as smoke-only rather than AlphaEvolve-comparable
-benchmark evidence.
+benchmark evidence. The committed `papers/example_benchmark_scope.json`
+sidecar now emits those shipped-example scope records for paper-facing review.
 The paper-manifest validator checks source-row identity before trusting cached
 PDFs: arXiv source URLs must carry an arXiv id matching the manifest `id`, and
 local PDF filenames must begin with the manifest id before any `__` title

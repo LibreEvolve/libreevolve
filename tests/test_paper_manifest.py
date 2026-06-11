@@ -3152,6 +3152,53 @@ def test_validate_paper_manifest_checks_example_scope_records(monkeypatch, tmp_p
     assert "example_scope_smoke_marked_comparable" in codes
 
 
+def test_validate_paper_manifest_accepts_example_scope_sidecar(monkeypatch, tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    scope_path = tmp_path / paper_manifest.EXAMPLE_BENCHMARK_SCOPE_FILE
+    scope_path.write_text(
+        json.dumps(paper_manifest.example_benchmark_scope_records(), indent=2),
+        encoding="utf-8",
+    )
+    invalid_records = paper_manifest.example_benchmark_scope_records()
+    invalid_records[0]["alphaevolve_comparable"] = True
+    monkeypatch.setattr(paper_manifest, "example_benchmark_scope_records", lambda: invalid_records)
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_drifted_example_scope_sidecar(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    records = paper_manifest.example_benchmark_scope_records()
+    records[0]["alphaevolve_comparable"] = True
+    (tmp_path / paper_manifest.EXAMPLE_BENCHMARK_SCOPE_FILE).write_text(
+        json.dumps(records, indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "example_scope_smoke_marked_comparable" in codes
+
+
+def test_validate_paper_manifest_requires_example_scope_sidecar_at_repo_root(monkeypatch, tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "example_scope_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_reports_invalid_encoding_json_manifest(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

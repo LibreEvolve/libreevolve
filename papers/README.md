@@ -1301,7 +1301,7 @@ Implemented:
   registry that keeps `hello_world`, `sorting`, `workspace_math`,
   `matrix_multiplication`, and `circle_packing` marked as smoke-only and not
   AlphaEvolve-comparable. The standard paper-manifest validator checks these
-  records directly.
+  records through the committed `papers/example_benchmark_scope.json` sidecar.
 - `libreevolve/problems/benchmarks/matrix_results.py`: AlphaEvolve-style
   matrix-result report contract. It validates target identity, dimensions,
   seed count, best rank, hit fraction, exactness-certificate status,

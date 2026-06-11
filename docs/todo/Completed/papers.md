@@ -6,6 +6,24 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit shipped-example benchmark scope sidecar.
+  - Paper evidence: AlphaEvolve distinguishes benchmark-quality experiments
+    from illustrative examples through reported target families, comparable
+    budgets, repeated runs, and publication artifacts.
+  - Status: `papers/example_benchmark_scope.json` now carries the
+    paper-facing `libreevolve.example_benchmark_scope.v1` shipped-example
+    records, keeping current examples smoke-only and not
+    AlphaEvolve-comparable. The paper-manifest gate requires and validates the
+    sidecar at the real repo root.
+  - Verification: `py -3.12 -m pytest tests\test_example_benchmark_scope.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\example_scope.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining paper gap: examples remain smoke/demo fixtures; benchmark-grade
+    non-toy targets, anti-gaming artifacts, repeated-seed runs, and
+    AlphaEvolve-comparable reports remain open.
+
 - [x] Emit matrix suite publication-artifact sidecar.
   - Paper evidence: Appendix A matrix claims require concrete target-suite
     artifacts: target tensors, algorithms, coefficient data, exactness

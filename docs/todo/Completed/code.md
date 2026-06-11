@@ -4,6 +4,23 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit shipped-example benchmark scope sidecar.
+  - Spec evidence: AlphaEvolve-style benchmark claims require target-family
+    experiments, repeated runs, and evidence artifacts; shipped smoke examples
+    must not be counted as benchmark-grade evidence by accident.
+  - Status: `papers/example_benchmark_scope.json` now emits the
+    `libreevolve.example_benchmark_scope.v1` records for shipped examples, and
+    `validate_paper_manifest()` requires and validates the sidecar at the real
+    repo root.
+  - Verification: `py -3.12 -m pytest tests\test_example_benchmark_scope.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\example_scope.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: shipped examples remain smoke/demo fixtures; benchmark-grade
+    non-toy targets, anti-gaming artifacts, repeated-seed runs, and
+    AlphaEvolve-comparable reports remain open.
+
 - [x] Emit matrix suite publication-artifact sidecar.
   - Spec evidence: AlphaEvolve Appendix A reports matrix results as a target
     suite with per-target ranks, exact algorithms, certificates, notebooks,

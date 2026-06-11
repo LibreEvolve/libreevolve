@@ -719,8 +719,9 @@ is not yet an AlphaEvolve reproduction.
   lower-bound formula. A `finite_set_witness_boundary` now validates the
   paper's `U1` and `U2` witness summaries, set sizes `2003` and `54265`,
   reported lower bounds `1.1479 <= C6` and `1.1584 <= C6`, and required
-  future finite-set payload and certificate fields, while the actual set
-  payloads and recomputation certificates remain open.
+  future finite-set payload, contains-zero, non-negative, admissibility,
+  sum/difference, and recomputation fields, while the actual set payloads and
+  recomputation certificates remain open.
 - Keep Appendix B.7 regular-hexagon packing claims scoped to result-boundary
   evidence until geometry certificates land: the registry now validates the
   unit-regular-hexagon objective, Figure 11 linkage, prior `[29]` values,

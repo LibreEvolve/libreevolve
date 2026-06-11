@@ -119,7 +119,8 @@ notation, known `1.14465 <= C6 <= 4/3` bounds, Gyarmati admissibility
 condition, and lower-bound formula. Its `finite_set_witness_boundary` records
 the paper's two witness summaries, `U1` of size `2003` with
 `1.1479 <= C6` and `U2` of size `54265` with `1.1584 <= C6`, plus the
-integer-set payload and certificate fields required before local reproduction
+integer-set payload, contains-zero, non-negative, admissibility,
+sum/difference, and recomputation fields required before local reproduction
 can be claimed, while the finite-set construction payloads remain absent.
 For B.7 regular-hexagon packing, the registry now records the
 unit-regular-hexagon objective, Figure 11 linkage, prior `[29]` values, and

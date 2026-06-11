@@ -2605,10 +2605,14 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current gap: paper-facing Appendix B coverage now retains both B.6
     witness identities, set cardinalities, reported lower bounds, source
     section, theorem linkage, and required future finite-set witness fields
-    through a validated `finite_set_witness_boundary`. It still does not
-    retain real `U1`/`U2` integer-set payloads, payload hashes, contains-zero
-    or non-negative certificates, admissibility certificates, `|U-U|`/`|U+U|`
-    cardinalities, max elements, or recomputed lower bounds.
+    through a validated `finite_set_witness_boundary`. The required fields now
+    separate contains-zero and non-negative certificate hashes, and each
+    missing witness has explicit `not_recorded_locally` statuses for
+    integer-set payloads, contains-zero certificates, non-negative
+    certificates, admissibility certificates, sum/difference certificates, and
+    recomputed lower bounds. It still does not retain real `U1`/`U2`
+    payloads, `|U-U|`/`|U+U|` cardinalities, max elements, or recomputed lower
+    bounds.
   - Required result: add paper/report evidence for the missing Appendix B.6
     witness artifacts: sorted integer payload hashes, max elements,
     contains-zero and non-negativity certificates, feasibility checks,

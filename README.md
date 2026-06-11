@@ -3628,9 +3628,10 @@ sums-and-differences theorem statement, sumset/difference-set definitions,
 finite-set admissibility condition, and lower-bound formula. A validated
 `finite_set_witness_boundary` records the two paper-reported witnesses,
 `U1` of size `2003` with `1.1479 <= C6` and `U2` of size `54265` with
-`1.1584 <= C6`, plus the future integer-set payload, admissibility
-certificate, sum/difference cardinality certificate, max-element, and
-recomputed-bound fields required before local reproduction can be claimed.
+`1.1584 <= C6`, plus the future integer-set payload, contains-zero and
+non-negative certificates, admissibility certificate, sum/difference
+cardinality certificate, max-element, and recomputed-bound fields required
+before local reproduction can be claimed.
 The actual B.6 finite-set payloads and recomputation certificates remain
 absent. For Appendix B.7, the registry now preserves the unit-regular-hexagon
 packing objective, Figure 11 linkage, prior `[29]` outer side lengths, and

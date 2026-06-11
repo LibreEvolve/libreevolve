@@ -517,7 +517,9 @@ EXPECTED_B6_WITNESS_REQUIRED_FIELDS = (
     "integer_set_artifact_sha256",
     "finite_set_payload_schema",
     "contains_zero_certificate_path",
+    "contains_zero_certificate_sha256",
     "non_negative_certificate_path",
+    "non_negative_certificate_sha256",
     "admissibility_certificate_path",
     "admissibility_certificate_sha256",
     "sumset_cardinality",
@@ -533,6 +535,8 @@ EXPECTED_B6_WITNESS_ROWS = (
         "set_size": 2003,
         "reported_lower_bound": 1.1479,
         "reported_bound_relation": "1.1479 <= C6",
+        "contains_zero_certificate_status": "not_recorded_locally",
+        "non_negative_certificate_status": "not_recorded_locally",
     },
     {
         "result_id": "b6_u2_size_54265",
@@ -540,6 +544,8 @@ EXPECTED_B6_WITNESS_ROWS = (
         "set_size": 54265,
         "reported_lower_bound": 1.1584,
         "reported_bound_relation": "1.1584 <= C6",
+        "contains_zero_certificate_status": "not_recorded_locally",
+        "non_negative_certificate_status": "not_recorded_locally",
     },
 )
 EXPECTED_B6_WITNESS_IDS = tuple(row["result_id"] for row in EXPECTED_B6_WITNESS_ROWS)
@@ -1648,6 +1654,8 @@ def _validate_b6_witness_boundary(
                 issues.append(AppendixBRegistryIssue(f"invalid_b6_witness_{field}", f"B.6 witness {field} must match the AlphaEvolve result summary", family_id))
         for field in (
             "integer_set_artifact_status",
+            "contains_zero_certificate_status",
+            "non_negative_certificate_status",
             "admissibility_certificate_status",
             "sum_difference_certificate_status",
             "recomputed_lower_bound_status",

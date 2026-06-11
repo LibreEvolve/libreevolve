@@ -3243,18 +3243,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     and validated notebook-link/absence-reason mapping. The standard
     paper-manifest gate validates the built-in coverage record. Paper-facing
     rows now exist with page URL, section, link status, pinned hash,
-    status-bucket evidence, notebook-link mappings, absence reasons, and raw
-    SHA-256 hashes for linked pinned notebooks, but they still lack prompt/
-    verifier/initial/final/visualization flags.
-  - Required result: add source-manifest rows and checks for the problem
-    repository snapshot that attach prompt/verifier/initial/final/
-    visualization/analysis presence flags to the emitted status/source rows,
-    plus citation wording that avoids implying artifact coverage is complete
-    when only problem-page, status-bucket, resource-link, raw-page-hash,
-    notebook-link, absence-reason, notebook-hash, and row evidence is
-    currently available.
+    status-bucket evidence, notebook-link mappings, absence reasons, raw
+    SHA-256 hashes, and scoped prompt/verifier/initial/final/visualization
+    flags for linked pinned notebooks.
+  - Required result: keep citation wording from implying full notebook cell
+    inventory when only problem-page, status-bucket, resource-link,
+    raw-page-hash, notebook-link, absence-reason, notebook-hash, scoped
+    artifact-flag, and row evidence is currently available.
 
-- [ ] Complete follow-on notebook artifact fields on emitted source rows.
+- [x] Complete follow-on notebook artifact fields on emitted source rows.
   - Paper/source evidence: the
     `google-deepmind/alphaevolve_repository_of_problems` README says the
     repository contains problem descriptions for 67 mathematical problems, but
@@ -3273,11 +3270,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     `1` paper-link placeholder. It also pins raw-page byte counts and SHA-256
     hashes for all `68` numbered HTML pages and emits per-page rows with URL,
     section, link-status, pinned hash reference, status-bucket membership,
-    notebook-link mappings, and absence reasons. Paper-facing rows still do
-    not attach artifact-presence fields.
-  - Required result: extend source-manifest validation for numbered problem
-    pages with artifact-presence flags and README/ROADMAP/papers wording that
-    keeps problem-count claims snapshot-scoped.
+    notebook-link mappings, absence reasons, and scoped artifact-presence
+    fields for linked pinned notebooks.
+  - Completed result: source-manifest validation now covers numbered problem
+    pages with artifact-presence flags and README/ROADMAP/papers wording keeps
+    problem-count and full-cell-inventory claims snapshot-scoped.
 
 - [ ] Track paper-artifact creator and assembler roles for figures and Colab.
   - Paper evidence: the Contributions section of

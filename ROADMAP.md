@@ -874,7 +874,7 @@ is not yet an AlphaEvolve reproduction.
   `papers/follow_on_sources.json` now emits the committed follow-on source row
   with docs/TODO claim-surface links, linked problem-coverage evidence for the
   declared-67 versus observed-68 numbered-page boundary, and an explicit
-  no-cache policy. Cached PDF rows, notebook artifact-flag validation, and
+  no-cache policy. Cached PDF rows, full notebook cell inventories, and
   Appendix B claim mappings remain open.
 - Keep follow-on problem-repository rights separate from the original PDF,
   `alphaevolve_results`, and LibreEvolve licensing:
@@ -887,12 +887,14 @@ is not yet an AlphaEvolve reproduction.
 - Keep follow-on problem-repository runtime availability scoped:
   `papers/follow_on_runtime_absence.json` now records the pinned repository
   README/tree evidence for 28 notebooks, including paths, Git blob ids, byte
-  counts, artifact-kind flags, explicit `alphaevolve_runtime_available: false`,
-  verifier-versus-runtime classification, docs/TODO claim-surface links, and
-  the source phrase that the repository does not contain the code to run
-  AlphaEvolve. It treats notebooks as prompts/verifiers/inputs/outputs around
-  completed experiments, not runnable AlphaEvolve implementation artifacts;
-  cell-level artifact verification remains open.
+  counts, raw SHA-256 hashes, artifact-kind flags, scoped observed artifact
+  presence flags from notebook cell titles, explicit
+  `alphaevolve_runtime_available: false`, verifier-versus-runtime
+  classification, docs/TODO claim-surface links, and the source phrase that
+  the repository does not contain the code to run AlphaEvolve. It treats
+  notebooks as prompts/verifiers/inputs/outputs around completed experiments,
+  not runnable AlphaEvolve implementation artifacts; full notebook cell
+  inventories remain outside the claim.
 - Keep Tao follow-on blog claims secondary to pinned artifacts:
   `papers/follow_on_tao_blog.json` now records the canonical WordPress URL,
   post id/date/modified metadata, retrieval hashes, linked arXiv/repository/
@@ -946,8 +948,9 @@ is not yet an AlphaEvolve reproduction.
   emits per-page source rows with titles, paper sections, page URLs, hashes,
   link-status diagnostics, status-bucket labels, notebook-link mappings, and
   notebook absence reasons, and links to the runtime-absence notebook
-  inventory with 28 pinned notebook paths. Notebook SHA-256 hashes and
-  prompt/verifier/initial/final/visualization flags remain open.
+  inventory with 28 pinned notebook paths and scoped prompt/verifier/initial/
+  final/visualization artifact flags. Full notebook cell inventories remain
+  outside the claim.
 - Keep Appendix A matrix target-suite curation scoped to reported-suite
   provenance: `libreevolve.alphaevolve_appendix_a_matrix_curation.v1` now
   validates the rough size-selection wording, sorted representative policy,

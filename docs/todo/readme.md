@@ -1483,13 +1483,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     linked runtime-absence notebook inventory with `28` pinned notebook paths
     and validated notebook-link/absence-reason mapping. README now points to
     page-68 classification, all-page raw HTML hashes, and emitted per-page
-    source rows, but still cannot point to prompt/verifier/initial/final/
-    visualization flags.
-  - Required result: after artifact source-coverage metadata lands, update
-    README so AlphaEvolve follow-on claims name partial artifact coverage and
-    explicit wording that avoids implying artifact coverage is complete when
-    only problem-page, status-bucket, link, hash, notebook-link,
-    absence-reason, notebook-hash, and row evidence is currently scoped.
+    source rows with scoped prompt/verifier/initial/final/visualization flags,
+    while keeping full notebook cell inventories outside the claim.
+  - Required result: keep README wording explicit that completed follow-on
+    evidence covers problem-page, status-bucket, link, hash, notebook-link,
+    absence-reason, notebook-hash, scoped artifact-flag, and row evidence, not
+    full notebook cell inventories.
 
 - [ ] Keep README follow-on problem-count wording scoped until page inventory
       is reconciled.
@@ -1504,14 +1503,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     observed numbered HTML pages, and the follow-on source manifest now links
     that evidence. README now also documents page 68 as an extra numbered
     duplicate-title `Logic puzzles` page outside the declared 67-page
-    navigation range, plus all-page resource-link diagnostics. README still
-    does not list artifact flags on the emitted per-page source rows.
-  - Required result: after artifact row fields land, update README so follow-on
-    source claims distinguish paper/README problem count from full live
-    repository HTML-page inventory, list duplicate or placeholder pages as
-    snapshot diagnostics, and avoid treating every numbered page as a complete
-    notebook/paper-linked source artifact until row-level artifact provenance
-    exists.
+    navigation range, plus all-page resource-link diagnostics and scoped
+    artifact flags for linked pinned notebooks.
+  - Required result: keep README follow-on source claims distinguishing
+    paper/README problem count from full live repository HTML-page inventory,
+    list duplicate or placeholder pages as snapshot diagnostics, and avoid
+    treating every numbered page as a complete notebook/paper-linked source
+    artifact.
 
 - [ ] Keep README figure/notebook provenance wording scoped until paper
       artifact-role records are bound to artifacts.

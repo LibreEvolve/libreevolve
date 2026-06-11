@@ -14,6 +14,7 @@ from libreevolve.problems.benchmarks.follow_on_sources import (
     EXPECTED_REPOSITORY_COMMIT,
     EXPECTED_REPOSITORY_NAME,
     EXPECTED_REPOSITORY_URL,
+    expected_follow_on_notebook_artifact_flags,
 )
 
 
@@ -500,6 +501,7 @@ def _notebook_metadata_by_path() -> dict[str, dict[str, Any]]:
             "bytes": byte_count,
             "git_blob_sha": git_blob_sha,
             "sha256": EXPECTED_FOLLOW_ON_NOTEBOOK_SHA256S[path],
+            "artifact_presence_flags": expected_follow_on_notebook_artifact_flags(path),
         }
         for path, byte_count, git_blob_sha in EXPECTED_FOLLOW_ON_NOTEBOOKS
     }
@@ -542,6 +544,7 @@ def _expected_notebook_link_records_by_page() -> dict[int, list[dict[str, Any]]]
                 "notebook_bytes": metadata["bytes"] if metadata else None,
                 "notebook_git_blob_sha": metadata["git_blob_sha"] if metadata else None,
                 "notebook_sha256": metadata["sha256"] if metadata else None,
+                "notebook_artifact_presence_flags": metadata["artifact_presence_flags"] if metadata else None,
                 "absence_reason": absence_reason,
             }
         )
@@ -598,6 +601,21 @@ def _page_notebook_mapping_status(notebook_links: list[dict[str, Any]]) -> str:
     return "unknown"
 
 
+def _page_artifact_presence_status(notebook_links: list[dict[str, Any]]) -> str:
+    statuses = {str(link["notebook_mapping_status"]) for link in notebook_links}
+    if statuses == {"repository_notebook_path"}:
+        return "validated_repository_notebook_artifact_flags"
+    if "repository_notebook_path_not_in_pinned_tree" in statuses:
+        return "not_applicable_repository_notebook_target_absent"
+    if "external_alphaevolve_results_colab" in statuses:
+        return "not_applicable_external_companion_colab"
+    if "under_construction_placeholder" in statuses:
+        return "not_applicable_under_construction_placeholder"
+    if "generic_colab_landing_page" in statuses:
+        return "not_applicable_generic_colab_landing_page"
+    return "not_applicable_no_notebook_link"
+
+
 def _expected_all_page_source_inventory_rows() -> list[dict[str, Any]]:
     hash_records = {
         record["page_id"]: record
@@ -632,7 +650,7 @@ def _expected_all_page_source_inventory_rows() -> list[dict[str, Any]]:
                 "paper_link_status": _link_status_for_page(page_id, "paper_link_status_page_ids"),
                 "notebook_mapping_status": _page_notebook_mapping_status(notebook_links),
                 "notebook_links": notebook_links,
-                "artifact_presence_status": "not_validated",
+                "artifact_presence_status": _page_artifact_presence_status(notebook_links),
             }
         )
     return rows
@@ -661,7 +679,7 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
             "page_hash_inventory_complete": True,
             "source_inventory_rows_emitted": True,
             "notebook_hash_inventory_complete": True,
-            "artifact_presence_matrix_complete": False,
+            "artifact_presence_matrix_complete": True,
         },
         "numbered_page_inventory": {
             "observed_numbered_html_count": EXPECTED_OBSERVED_NUMBERED_HTML_COUNT,
@@ -811,15 +829,15 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
                 }
             ),
             "unlinked_pinned_notebook_paths": list(EXPECTED_UNLINKED_PINNED_NOTEBOOK_PATHS),
-            "artifact_presence_matrix_complete": False,
+            "artifact_presence_matrix_complete": True,
             "rows": _expected_all_page_source_inventory_rows(),
             "claim_boundary": (
                 "All 68 numbered pages have emitted source rows with page "
                 "URLs, raw-page hashes, section ids, link-status diagnostics, "
                 "status-bucket labels, notebook link mappings, and notebook "
-                "absence reasons, and notebook SHA-256 hashes; this does not "
-                "claim prompt/verifier/initial/final/visualization artifact "
-                "flags."
+                "absence reasons, notebook SHA-256 hashes, and scoped prompt/"
+                "verifier/initial/final/visualization artifact flags; this "
+                "does not claim full notebook cell inventories."
             ),
         },
         "notebook_inventory_link": {
@@ -830,11 +848,13 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
             "problem_id_mapping_complete": True,
             "sha256_inventory_complete": True,
             "absence_reason_inventory_complete": True,
+            "artifact_flag_inventory_complete": True,
             "claim_boundary": (
                 "The follow-on runtime-absence record pins notebook paths and "
                 "git blob ids, records raw notebook SHA-256 hashes, and the "
-                "coverage rows map page-level notebook links and absence "
-                "reasons, but this does not claim cell-level artifact flags."
+                "coverage rows map page-level notebook links, absence reasons, "
+                "and scoped notebook artifact flags, but this does not claim "
+                "full notebook cell inventories."
             ),
         },
         "status_artifacts": [
@@ -857,9 +877,7 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
             "unclassified_problem_count": len(EXPECTED_UNCLASSIFIED_PROBLEM_IDS),
             "bucket_semantics": "repository_status_json_explicit_buckets",
         },
-        "remaining_coverage_work": [
-            "validate_prompt_verifier_initial_final_visualization_flags",
-        ],
+        "remaining_coverage_work": [],
     }
 
 
@@ -978,7 +996,7 @@ def _validate_coverage_scope(value: object, issues: list[AlphaEvolveFollowOnProb
         "page_hash_inventory_complete": True,
         "source_inventory_rows_emitted": True,
         "notebook_hash_inventory_complete": True,
-        "artifact_presence_matrix_complete": False,
+        "artifact_presence_matrix_complete": True,
     }
     for field, expected_value in expected.items():
         if value.get(field) != expected_value:
@@ -1230,12 +1248,12 @@ def _validate_all_page_source_inventory(
         },
         "unique_mapped_repository_notebook_path_count": 23,
         "unlinked_pinned_notebook_paths": list(EXPECTED_UNLINKED_PINNED_NOTEBOOK_PATHS),
-        "artifact_presence_matrix_complete": False,
+        "artifact_presence_matrix_complete": True,
     }
     for field, expected_value in expected.items():
         if value.get(field) != expected_value:
             code = f"invalid_all_page_source_inventory_{field}"
-            if field == "artifact_presence_matrix_complete":
+            if field == "artifact_presence_matrix_complete" and expected_value is False:
                 code = f"all_page_source_inventory_{field}_overclaim"
             issues.append(_issue(code, f"all_page_source_inventory.{field} must match the emitted row evidence boundary"))
     rows = value.get("rows")
@@ -1271,9 +1289,9 @@ def _validate_all_page_source_inventory(
     if (
         not isinstance(claim_boundary, str)
         or "does not claim" not in claim_boundary
-        or "artifact flags" not in claim_boundary
+        or "full notebook cell inventories" not in claim_boundary
     ):
-        issues.append(_issue("missing_all_page_source_inventory_claim_boundary", "all-page source inventory must preserve artifact gaps"))
+        issues.append(_issue("missing_all_page_source_inventory_claim_boundary", "all-page source inventory must preserve full-cell-inventory boundary"))
 
 
 def _validate_notebook_inventory_link(value: object, issues: list[AlphaEvolveFollowOnProblemCoverageIssue]) -> None:
@@ -1288,6 +1306,7 @@ def _validate_notebook_inventory_link(value: object, issues: list[AlphaEvolveFol
         "problem_id_mapping_complete": True,
         "sha256_inventory_complete": True,
         "absence_reason_inventory_complete": True,
+        "artifact_flag_inventory_complete": True,
     }
     for field, expected_value in expected.items():
         if value.get(field) != expected_value:
@@ -1370,14 +1389,12 @@ def _validate_status_summary(value: object, issues: list[AlphaEvolveFollowOnProb
 
 
 def _validate_remaining_coverage_work(value: object, issues: list[AlphaEvolveFollowOnProblemCoverageIssue]) -> None:
-    required = {
-        "validate_prompt_verifier_initial_final_visualization_flags",
-    }
+    required: set[str] = set()
     if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
         issues.append(_issue("invalid_remaining_coverage_work", "remaining_coverage_work must be a list of remaining work ids"))
         return
-    for work_id in sorted(required - set(value)):
-        issues.append(_issue("missing_remaining_coverage_work", f"remaining_coverage_work is missing {work_id}"))
+    if set(value) != required:
+        issues.append(_issue("remaining_coverage_work_mismatch", "remaining_coverage_work must be empty once notebook artifact flags are recorded"))
 
 
 def _issue(

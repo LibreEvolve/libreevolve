@@ -4031,8 +4031,8 @@ row with docs/TODO claim-surface links, a linked
 `libreevolve.alphaevolve_follow_on_problem_coverage.v1` numbered-page evidence
 boundary, and an explicit no-cache policy: it is later math-source evidence for
 the original paper's Section 3.2 handoff, not the original `2506.13131`
-AlphaEvolve specification, not a local cached PDF row, and not proof of
-complete notebook artifact-flag coverage yet.
+AlphaEvolve specification, not a local cached PDF row, and not a full notebook
+cell inventory.
 `papers/follow_on_repository_rights.json` records the pinned problem
 repository's source-use terms separately from both the original PDF and
 `alphaevolve_results`: citation/BibTeX requirement, Google LLC copyright,
@@ -4043,12 +4043,13 @@ source material, generated local artifacts, and LibreEvolve's own license.
 `papers/follow_on_runtime_absence.json` records the same pinned problem
 repository's runtime-availability boundary: 28 notebook paths with Git blob
 ids, byte counts, and raw SHA-256 hashes from the pinned tree, prompt/verifier/
-initial/final/visualization artifact-kind flags, explicit AlphaEvolve-runtime
-absence, and verifier-versus-runtime classification from the README statement
-that the repository does not contain the code to run AlphaEvolve. This sidecar
-proves the notebooks are source artifacts around experiments already run, not
-runnable AlphaEvolve implementation artifacts; cell-level artifact verification
-remains open.
+initial/final/visualization artifact-kind flags, scoped observed artifact
+presence flags from notebook cell titles, explicit AlphaEvolve-runtime absence,
+and verifier-versus-runtime classification from the README statement that the
+repository does not contain the code to run AlphaEvolve. This sidecar proves
+the notebooks are source artifacts around experiments already run, not runnable
+AlphaEvolve implementation artifacts; full notebook cell inventories remain
+outside the claim.
 `papers/follow_on_tao_blog.json` records Terence Tao's November 5, 2025
 follow-on blog post as secondary source commentary for arXiv `2511.02864` and
 the pinned problem repository. It preserves the canonical WordPress URL, API
@@ -4110,8 +4111,8 @@ link-status diagnostics, status-bucket labels, notebook-link mappings,
 notebook absence reasons, and notebook SHA-256 hashes, and links to the
 runtime-absence notebook inventory with 28 pinned notebook paths. This is
 status-artifact, bucket-membership, resource-link, raw-page-hash,
-notebook-link, absence-reason, notebook-hash, and source-row evidence;
-prompt/verifier/final artifact flags remain open work.
+notebook-link, absence-reason, notebook-hash, scoped artifact-flag, and
+source-row evidence; full notebook cell inventories remain outside the claim.
 Matrix headline historicity evidence uses
 `libreevolve.matrix_headline_historicity_evidence.v1`; it validates declared
 provenance for the `mm_4x4x4` complex rank-48 headline, including dimensions,

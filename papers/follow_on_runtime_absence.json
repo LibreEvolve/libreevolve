@@ -26,6 +26,8 @@
           "sha256_inventory_complete": true,
           "problem_id_mapping_complete": true,
           "absence_reason_inventory_complete": true,
+          "artifact_flag_inventory_complete": true,
+          "artifact_flag_evidence": "notebook_cell_titles_scanned_at_pinned_commit",
           "notebooks": [
             {
               "path": "experiments/autocorrelation_problems/autocorrelation_problems.ipynb",
@@ -39,6 +41,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": true
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -53,6 +63,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": false
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -67,6 +85,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": false
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -81,6 +107,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": false,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": true
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -95,6 +129,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": false,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": true
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -109,6 +151,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": false,
+                "verification_code": true,
+                "initial_program": false,
+                "final_evolved_programs": false,
+                "visualization_or_analysis_where_appropriate": true
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -123,6 +173,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": false
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -137,6 +195,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": false
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -151,6 +217,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": false
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -165,6 +239,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": true
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -179,6 +261,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": false,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": true
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -193,6 +283,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": true
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -207,6 +305,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": true
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -221,6 +327,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": true
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -235,6 +349,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": true
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -249,6 +371,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": false
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -263,6 +393,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": true
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -277,6 +415,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": false
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -291,6 +437,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": false
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -305,6 +459,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": false
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -319,6 +481,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": false
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -333,6 +503,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": false,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": false
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -347,6 +525,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": true
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -361,6 +547,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": false
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -375,6 +569,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": true
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -389,6 +591,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": true
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -403,6 +613,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": true
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             },
             {
@@ -417,6 +635,14 @@
                 "final_evolved_programs",
                 "visualization_or_analysis_where_appropriate"
               ],
+              "artifact_presence_flags": {
+                "prompt": true,
+                "verification_code": true,
+                "initial_program": true,
+                "final_evolved_programs": true,
+                "visualization_or_analysis_where_appropriate": true
+              },
+              "artifact_presence_status": "cell_title_evidence_recorded",
               "alphaevolve_runtime_available": false
             }
           ]
@@ -435,12 +661,9 @@
           "not_alphaevolve_runtime_implementation": true,
           "not_replayable_alphaevolve_service": true,
           "not_full_notebook_cell_inventory": true,
-          "not_cell_artifact_flag_inventory": true,
           "must_not_describe_notebooks_as_runtime_harnesses": true
         },
-        "remaining_runtime_work": [
-          "validate_notebook_cell_artifact_flags"
-        ]
+        "remaining_runtime_work": []
       },
       "claim_artifact_links": {
         "runtime_absence_used_by": [

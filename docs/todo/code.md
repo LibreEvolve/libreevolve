@@ -2308,16 +2308,14 @@ Primary evidence:
     hashes for all `68` numbered HTML pages and emits per-page source rows
     with titles, paper sections, page URLs, hashes, link-status diagnostics,
     status-bucket labels, notebook-link mappings, and absence reasons. It
-    now also validates raw SHA-256 hashes for the `28` pinned repository
-    notebooks. It still does not validate prompt/verifier/initial/final/
-    visualization flags per problem.
-  - Required result: extend the follow-on repository coverage manifest and
-    validators with artifact presence flags for prompt/verifier/initial/final/
-    visualization/analysis on the emitted per-page source rows, plus README/
-    ROADMAP wording that separates complete declared problem-page coverage
-    from partial artifact/status coverage at a pinned snapshot.
+    now also validates raw SHA-256 hashes and scoped prompt/verifier/initial/
+    final/visualization artifact flags for the `28` pinned repository
+    notebooks. It still does not claim a full notebook cell inventory.
+  - Required result: keep README/ROADMAP wording scoped so completed declared
+    problem-page coverage, notebook-link mapping, notebook hashes, and
+    artifact flags are separated from full notebook cell inventories.
 
-- [ ] Complete follow-on notebook artifact flags on emitted per-page rows.
+- [x] Complete follow-on notebook artifact flags on emitted per-page rows.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
     README says the repository contains problem descriptions for 67
     mathematical problems, but the current `problems/` directory exposes 68
@@ -2337,11 +2335,12 @@ Primary evidence:
     source rows with URL, section, link status, pinned page hash,
     status-bucket membership, notebook-link mappings, and notebook absence
     reasons, plus raw SHA-256 hashes for linked pinned notebooks. It still
-    does not attach artifact flags for every numbered page.
-  - Required result: extend repository-page inventory validation with prompt/
-    verifier/initial/final/visualization flags and README/ROADMAP wording that
-    distinguishes paper-declared problem count from full live repository page
-    inventory.
+    records explicit non-applicable statuses for pages without pinned
+    repository notebooks.
+  - Completed result: repository-page inventory validation now records prompt/
+    verifier/initial/final/visualization flags for linked pinned notebooks and
+    README/ROADMAP wording distinguishes paper-declared problem count from full
+    live repository page inventory and full notebook cell inventories.
 
 - [ ] Add paper-artifact creator and assembler provenance for figures and
       companion notebooks.

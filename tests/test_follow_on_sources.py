@@ -212,7 +212,24 @@ def test_validate_alphaevolve_follow_on_runtime_absence_accepts_builtin_record()
     assert inventory["absence_reason_inventory_complete"] is True
     assert inventory["sha256_inventory_complete"] is True
     assert inventory["hash_algorithm"] == "git_blob_sha1_and_raw_sha256"
+    assert inventory["artifact_flag_inventory_complete"] is True
+    assert inventory["artifact_flag_evidence"] == "notebook_cell_titles_scanned_at_pinned_commit"
     assert inventory["notebooks"][0]["sha256"] == "996e7e9dd20991fe06319d2c91e8af3501b48b14c2dd10e5ce3a95343ee071ba"
+    assert inventory["notebooks"][0]["artifact_presence_flags"] == {
+        "prompt": True,
+        "verification_code": True,
+        "initial_program": True,
+        "final_evolved_programs": True,
+        "visualization_or_analysis_where_appropriate": True,
+    }
+    happy_ending = next(
+        notebook
+        for notebook in inventory["notebooks"]
+        if notebook["path"] == "experiments/erdos_szekeres_happy_ending_problem/happy_ending_problem.ipynb"
+    )
+    assert happy_ending["artifact_presence_flags"]["prompt"] is False
+    assert happy_ending["artifact_presence_flags"]["verification_code"] is True
+    assert recordset["remaining_runtime_work"] == []
 
 
 def test_validate_alphaevolve_follow_on_runtime_absence_manifest_accepts_builtin_record():
@@ -246,11 +263,14 @@ def test_validate_alphaevolve_follow_on_runtime_absence_rejects_runtime_drift():
     recordset["notebook_inventory"]["notebooks"][0]["git_blob_sha"] = "0" * 40
     recordset["notebook_inventory"]["notebooks"][0]["sha256"] = "0" * 64
     recordset["notebook_inventory"]["notebooks"][0]["artifact_kinds"] = ["runtime"]
+    recordset["notebook_inventory"]["notebooks"][0]["artifact_presence_flags"]["prompt"] = False
+    recordset["notebook_inventory"]["notebooks"][0]["artifact_presence_status"] = "unvalidated"
     recordset["notebook_inventory"]["notebooks"][0]["alphaevolve_runtime_available"] = True
     recordset["notebook_inventory"]["sha256_inventory_complete"] = False
+    recordset["notebook_inventory"]["artifact_flag_inventory_complete"] = False
     recordset["notebook_inventory"]["problem_id_mapping_complete"] = False
     recordset["notebook_inventory"]["absence_reason_inventory_complete"] = False
-    recordset["boundary"]["not_cell_artifact_flag_inventory"] = False
+    recordset["boundary"]["not_full_notebook_cell_inventory"] = False
     recordset["remaining_runtime_work"] = ["compute_sha256_for_each_notebook"]
     recordset["runtime_boundary"]["alphaevolve_runtime_available"] = True
     recordset["runtime_boundary"]["verifier_is_not_runtime"] = False
@@ -265,11 +285,14 @@ def test_validate_alphaevolve_follow_on_runtime_absence_rejects_runtime_drift():
     assert "invalid_runtime_absence_notebook_git_blob_sha" in codes
     assert "invalid_runtime_absence_notebook_sha256" in codes
     assert "invalid_runtime_absence_notebook_artifact_kinds" in codes
+    assert "invalid_runtime_absence_notebook_artifact_presence_flags" in codes
+    assert "invalid_runtime_absence_notebook_artifact_presence_status" in codes
     assert "invalid_runtime_absence_notebook_sha256_inventory_complete" in codes
+    assert "invalid_runtime_absence_notebook_artifact_flag_inventory_complete" in codes
     assert "invalid_runtime_absence_notebook_problem_id_mapping_complete" in codes
     assert "invalid_runtime_absence_notebook_absence_reason_inventory_complete" in codes
     assert "runtime_absence_notebook_runtime_available_overclaim" in codes
-    assert "invalid_runtime_absence_limits_not_cell_artifact_flag_inventory" in codes
+    assert "invalid_runtime_absence_limits_not_full_notebook_cell_inventory" in codes
     assert "remaining_runtime_work_mismatch" in codes
     assert "runtime_absence_runtime_available_overclaim" in codes
     assert "runtime_absence_verifier_runtime_boundary_missing" in codes

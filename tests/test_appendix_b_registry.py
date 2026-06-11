@@ -7,6 +7,7 @@ from libreevolve.problems.benchmarks.appendix_b_registry import (
     EXPECTED_APPENDIX_B_RESULT_ROW_BOUNDARY,
     EXPECTED_APPENDIX_B_RESULT_ROW_MISSING_EVIDENCE_KEYS,
     EXPECTED_APPENDIX_B_RESULT_ROW_REQUIRED_FIELDS,
+    EXPECTED_APPENDIX_B_RESULT_IDS,
     EXPECTED_B5_SOURCE_FORMULATION,
     EXPECTED_B5_STEP_FUNCTION_BOUNDARY,
     EXPECTED_B5_STEP_FUNCTION_REQUIRED_FIELDS,
@@ -66,6 +67,8 @@ def test_appendix_b_registry_enumerates_all_alphaevolve_families():
     assert family_ids.count("circle_packing_unit_square") == 1
     for field, expected in EXPECTED_APPENDIX_B_RESULT_ROW_BOUNDARY.items():
         assert result_boundary[field] == expected
+    assert result_boundary["expected_result_count"] == len(EXPECTED_APPENDIX_B_RESULT_IDS)
+    assert result_boundary["expected_result_ids"] == list(EXPECTED_APPENDIX_B_RESULT_IDS)
     assert result_boundary["required_result_row_fields"] == list(EXPECTED_APPENDIX_B_RESULT_ROW_REQUIRED_FIELDS)
     assert set(result_boundary["missing_evidence"]) == set(EXPECTED_APPENDIX_B_RESULT_ROW_MISSING_EVIDENCE_KEYS)
     assert set(result_boundary["source_section_ids"]) == {f"B.{index}" for index in range(1, 14)}
@@ -200,6 +203,8 @@ def test_appendix_b_registry_rejects_result_row_boundary_overclaim(tmp_path):
     boundary = data["result_row_boundary"]
     boundary["status"] = "recorded"
     boundary["source_section_ids"] = ["B.1"]
+    boundary["expected_result_count"] = 1
+    boundary["expected_result_ids"] = ["b1_c1_600_interval_step_function"]
     boundary["required_result_row_fields"] = ["result_id"]
     boundary["missing_evidence"]["previous_best_attribution"] = "recorded"
     boundary["scope_boundary"] = "Normalized Appendix B result rows are verified."
@@ -212,6 +217,8 @@ def test_appendix_b_registry_rejects_result_row_boundary_overclaim(tmp_path):
     assert report.ok is False
     assert "invalid_result_row_boundary_status" in codes
     assert "invalid_result_row_boundary_source_section_ids" in codes
+    assert "invalid_result_row_boundary_expected_result_count" in codes
+    assert "invalid_result_row_boundary_expected_result_ids" in codes
     assert "invalid_result_row_required_fields" in codes
     assert "invalid_result_row_missing_previous_best_attribution" in codes
     assert "missing_result_row_scope_boundary" in codes

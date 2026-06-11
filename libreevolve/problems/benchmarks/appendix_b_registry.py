@@ -59,6 +59,27 @@ EXPECTED_APPENDIX_B_RESULT_ROW_MISSING_EVIDENCE_KEYS = (
     "source_location_mapping",
     "result_version_status_rows",
 )
+EXPECTED_APPENDIX_B_RESULT_IDS = (
+    "b1_c1_600_interval_step_function",
+    "b2_c2_50_interval_step_function",
+    "b3_c3_400_interval_step_function",
+    "b4_uncertainty_hermite_c012",
+    "b4_uncertainty_revision_c4_0_3216",
+    "figure10_minimum_overlap_step_function",
+    "b6_u1_size_2003",
+    "b6_u2_size_54265",
+    "b7_11_unit_hexagons",
+    "b7_12_unit_hexagons",
+    "b8_16_points_2d",
+    "b8_14_points_3d",
+    "b9_triangle_n11",
+    "b10_convex_region_n13",
+    "b10_convex_region_n14",
+    "b11_kissing_d11_593",
+    "b12_unit_square_n26",
+    "b12_unit_square_n32",
+    "b13_perimeter4_rectangle_n21",
+)
 EXPECTED_APPENDIX_B_RESULT_ROW_BOUNDARY = {
     "status": "not_recorded_locally",
     "source_section_range": "Appendix B.1-B.13",
@@ -78,6 +99,8 @@ EXPECTED_APPENDIX_B_RESULT_ROW_BOUNDARY = {
         "B.13",
     ],
     "source_claim": "Appendix B reports heterogeneous text-level mathematical result claims with family-specific metrics, parameters, prior bounds, reported values, and construction representations.",
+    "expected_result_count": len(EXPECTED_APPENDIX_B_RESULT_IDS),
+    "expected_result_ids": list(EXPECTED_APPENDIX_B_RESULT_IDS),
     "required_result_row_fields": list(EXPECTED_APPENDIX_B_RESULT_ROW_REQUIRED_FIELDS),
     "missing_evidence": {
         key: "not_recorded_locally"

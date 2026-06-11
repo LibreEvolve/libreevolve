@@ -2489,7 +2489,8 @@ Primary evidence:
     sphere/kissing configurations, and geometric packing placements.
   - Current evidence: `alphaevolve_appendix_b.json` now has a validated
     top-level `result_row_boundary` for the missing cross-family B.1-B.13
-    layer. It enumerates required future fields for stable result ids,
+    layer. It enumerates `19` expected future result ids, including the B.4
+    revision row, plus required future fields for stable result ids,
     family/source locations, metric definitions, parameter tuples,
     optimization and bound direction, previous-best attribution, reported
     AlphaEvolve values, displayed relations, result-version status,

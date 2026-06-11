@@ -2758,10 +2758,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     now describe a validated Appendix B `result_row_boundary` in
     `alphaevolve_appendix_b.json`. The boundary names the missing normalized
     result-row layer for every B.1-B.13 text-level numeric claim, including
-    metric definitions, parameter tuples, bound direction or optimization
-    direction, previous-best value/source, AlphaEvolve reported value, source
-    location, construction-representation schema, construction/verifier
-    artifact hashes, result-version status, recomputed values, and
+    `19` expected future result ids, metric definitions, parameter tuples,
+    bound direction or optimization direction, previous-best value/source,
+    AlphaEvolve reported value, source location, construction-representation
+    schema, construction/verifier artifact hashes, result-version status,
+    recomputed values, and
     recomputation status. The actual rows and artifacts remain
     `not_recorded_locally`.
   - Required result: when Appendix B per-result metric/value provenance lands,

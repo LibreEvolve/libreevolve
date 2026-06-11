@@ -79,10 +79,11 @@ registry currently marks only the unit-square circle-packing fixture as
 with objective direction, target/baseline status, construction/certificate
 artifact shape, certification need, rationale, and AlphaEvolve citation
 metadata. The top-level `result_row_boundary` now records that normalized
-B.1-B.13 result-row evidence remains absent: result ids, metric definitions,
-parameter tuples, prior-value attribution, source locations, construction
-payload hashes, verifier artifacts, result-version status, and recomputed
-values are still `not_recorded_locally`. For B.1-B.3 autocorrelation, the
+B.1-B.13 result-row evidence remains absent: it enumerates `19` expected
+result ids, including the B.4 revision row, and still requires metric
+definitions, parameter tuples, prior-value attribution, source locations,
+construction payload hashes, verifier artifacts, result-version status, and
+recomputed values, all `not_recorded_locally`. For B.1-B.3 autocorrelation, the
 registry now stores paper-facing
 labels for `B.1. First autocorrelation inequality (C1)`,
 `B.2. Second autocorrelation inequality (C2)`, and

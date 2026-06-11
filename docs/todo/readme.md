@@ -1655,9 +1655,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     sets, coordinates, kissing configurations, and packing placements.
   - Current evidence: README now describes the Appendix B registry's validated
     `result_row_boundary`, which records the missing per-result row layer for
-    every B.1-B.13 text-level numeric claim. The boundary names metric
-    definitions, parameter tuples, upper/lower or maximize/minimize
-    semantics, previous-best values/sources, AlphaEvolve reported values,
+    every B.1-B.13 text-level numeric claim. The boundary now names `19`
+    expected future result ids, including the B.4 revision row, plus metric
+    definitions, parameter tuples, upper/lower or maximize/minimize semantics,
+    previous-best values/sources, AlphaEvolve reported values,
     source locations, construction-representation schemas, construction/
     verifier artifact hashes, result-version status, recomputed values, and
     recomputation status as required future evidence. The actual rows and

@@ -2449,6 +2449,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     configurations, and geometric packing placements.
   - Current gap: paper-facing Appendix B status now includes a validated
     `result_row_boundary` in `alphaevolve_appendix_b.json`. It records the
+    `19` expected future result ids, including the B.4 revision row, and the
     required future fields for stable result ids, family/source locations,
     metric definitions, parameter tuples, upper/lower or maximize/minimize
     semantics, previous-best value/source, reported AlphaEvolve value,

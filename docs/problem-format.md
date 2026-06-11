@@ -435,6 +435,33 @@ and records cleanup metadata in the evaluation result. This timeout cleanup is
 not a deterministic descendant-process guarantee, container, network sandbox,
 memory limit, or general resource policy.
 
+## Candidate Runner Declarations
+
+`config.yaml` can declare future candidate-language and build-system runner
+surfaces without enabling execution:
+
+```yaml
+candidate_language_runners:
+  - language: rust
+    candidate_role: supporting_text_workspace_member
+    file_patterns: ["src/*.rs"]
+    marker_grammar: custom_declared_unsupported
+    runner_command: ["cargo", "test"]
+
+candidate_build_systems:
+  - name: cargo
+    build_files: ["Cargo.toml"]
+    build_command: ["cargo", "build"]
+    artifact_patterns: ["target/debug/*"]
+```
+
+These records are manifest metadata only. LibreEvolve validates them as
+manifest-safe declarations, stores them under `config` and
+`policies.candidate_language.runner_declarations`, and includes them in
+`runtime.history.candidate_language_runner_contract_report`. They do not run
+commands, do not enable non-Python mutation or build execution, and keep
+`language_runner_ready: false`.
+
 ## Evaluation semantics
 
 The evaluator returns an `EvaluationResult` with normalized fitness, raw

@@ -266,13 +266,16 @@ LibreEvolve has:
   contribution boundary
 - manifest-visible `libreevolve.candidate_language_policy.v1` records that
   declare the current Python-primary text-workspace boundary and explicitly
-  mark arbitrary-language/build-system runners as unsupported
+  mark arbitrary-language/build-system runners as unsupported, while
+  preserving metadata-only `candidate_language_runners` and
+  `candidate_build_systems` declarations when configured
 - runtime candidate-language runner contract reports under
   `runtime.history.candidate_language_runner_contract_report`, recording the
   current Python subprocess validator runner, non-Python text files as
   workspace-only/no-runner members, unsupported arbitrary-language and
-  build-system runner contracts, unsupported task-abstraction hooks, and exact
-  remaining gaps before AlphaEvolve-grade language/build parity, with
+  build-system runner contracts, metadata-only language/build declarations,
+  unsupported task-abstraction hooks, and exact remaining gaps before
+  AlphaEvolve-grade executable language/build parity, with
   `papers/candidate_language_runner_boundary.json` now carrying the
   paper-manifest-validated absence boundary for configured non-Python runners,
   language-aware marker grammars, build-system contracts, runner environment
@@ -302,7 +305,8 @@ is not yet an AlphaEvolve reproduction.
 ### 1. Finish candidate workspace fidelity
 
 - Extend the checked candidate-language runner contracts into actual
-  non-Python language runners when non-Python candidates become supported.
+  non-Python language runners when non-Python candidates become supported; the
+  current declaration fields are manifest metadata only.
 - Add problem-defined candidate abstraction hooks if LibreEvolve should move
   beyond the documented code-file-set divergence from AlphaEvolve's flexible
   solution-abstraction API.

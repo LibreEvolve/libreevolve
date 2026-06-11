@@ -4,6 +4,27 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add metadata-only candidate language/build runner declarations.
+  - Spec evidence: AlphaEvolve Sections 2.1-2.2 treat task code and evaluator
+    interfaces as task-defined surfaces, so future arbitrary-language/build
+    support needs manifest-visible runner declarations before execution
+    parity can be claimed.
+  - Status: `Config` now accepts validated `candidate_language_runners` and
+    `candidate_build_systems` records. Startup manifests persist them under
+    `config` and `policies.candidate_language.runner_declarations`, and
+    `runtime.history.candidate_language_runner_contract_report` carries the
+    declaration records while keeping execution unsupported and
+    `language_runner_ready: false`.
+  - Verification: `py -3.12 -m pytest tests\core\test_config.py
+    tests\population\test_database.py
+    tests\core\test_loop.py::test_runtime_history_reports_candidate_language_runner_contracts
+    tests\core\test_loop.py::test_runtime_history_reports_declared_candidate_language_runner_metadata
+    -q` passed.
+  - Remaining gap: these are metadata-only declarations; executable
+    non-Python language runners, build-system runners, language-aware marker
+    grammars, runner environment/artifact provenance, and task-defined
+    abstraction hooks remain open.
+
 - [x] Emit Figure 1/Figure 2 process-exhibit boundary sidecar.
   - Spec evidence: AlphaEvolve Figure 1 shows the high-level discovery loop,
     and Figure 2 expands it into database sampling, prompt construction, LLM

@@ -9715,6 +9715,32 @@ def _candidate_language_runner_contract_report(
         else {}
     )
     policy_validation = validate_candidate_language_policy(candidate_policy)
+    runner_declarations = (
+        candidate_policy.get("runner_declarations")
+        if isinstance(candidate_policy.get("runner_declarations"), Mapping)
+        else {}
+    )
+    language_runner_declarations = list(
+        runner_declarations.get("language_runner_declarations")
+        if isinstance(runner_declarations.get("language_runner_declarations"), list)
+        else []
+    )
+    build_system_declarations = list(
+        runner_declarations.get("build_system_declarations")
+        if isinstance(runner_declarations.get("build_system_declarations"), list)
+        else []
+    )
+    remaining_runner_gaps = [
+        (
+            "execution_for_declared_non_python_language_or_build_runners"
+            if language_runner_declarations or build_system_declarations
+            else "configured_non_python_language_runners"
+        ),
+        "language_aware_evolve_block_marker_grammars",
+        "build_system_runner_contracts",
+        "task_defined_candidate_abstraction_hooks",
+        "runner_artifact_and_environment_provenance",
+    ]
     report = {
         "schema": "libreevolve.candidate_language_runner_contract_report.v1",
         "source": "candidate_language_policy_and_runtime_workspace_contracts",
@@ -9759,12 +9785,22 @@ def _candidate_language_runner_contract_report(
         ],
         "build_system_runner_contracts": {
             "status": "unsupported",
-            "declared_build_files": [],
+            "declared_build_files": sorted(
+                {
+                    pattern
+                    for record in build_system_declarations
+                    if isinstance(record, Mapping)
+                    for pattern in record.get("build_files", [])
+                    if isinstance(pattern, str)
+                }
+            ),
             "build_runner": "unsupported",
             "package_install_runner": "unsupported",
             "compiled_artifact_capture": "unsupported",
             "accelerator_or_hardware_contract": "unsupported",
         },
+        "declared_language_runner_records": language_runner_declarations,
+        "declared_build_system_records": build_system_declarations,
         "task_candidate_abstraction_hooks": {
             "status": "unsupported",
             "problem_declared_candidate_type": "not_configured",
@@ -9775,30 +9811,21 @@ def _candidate_language_runner_contract_report(
         },
         "alphaevolve_contract_gap": {
             "paper_sections": ["2.1", "2.2"],
-            "required_before_parity_claim": [
-                "configured_non_python_language_runners",
-                "language_aware_evolve_block_marker_grammars",
-                "build_system_runner_contracts",
-                "task_defined_candidate_abstraction_hooks",
-                "runner_artifact_and_environment_provenance",
-            ],
+            "required_before_parity_claim": list(remaining_runner_gaps),
         },
         "claim_ready": False,
         "claim_readiness": {
             "selected_policy_validated": policy_validation.get("ok") is True,
             "python_runner_contract_recorded": True,
+            "metadata_runner_declarations_recorded": bool(
+                language_runner_declarations or build_system_declarations
+            ),
             "non_python_language_runners_configured": False,
             "language_aware_marker_grammars_configured": False,
             "build_system_runner_contracts_configured": False,
             "task_candidate_abstraction_hooks_configured": False,
             "alphaevolve_language_runner_parity": False,
-            "remaining_gap": [
-                "configured_non_python_language_runners",
-                "language_aware_evolve_block_marker_grammars",
-                "build_system_runner_contracts",
-                "task_defined_candidate_abstraction_hooks",
-                "runner_artifact_and_environment_provenance",
-            ],
+            "remaining_gap": list(remaining_runner_gaps),
         },
     }
     report["validation"] = validate_candidate_language_runner_contract_report(report)
@@ -9825,6 +9852,8 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
         "selected_policy",
         "configured_language_runners",
         "build_system_runner_contracts",
+        "declared_language_runner_records",
+        "declared_build_system_records",
         "task_candidate_abstraction_hooks",
         "alphaevolve_contract_gap",
         "claim_ready",
@@ -9963,11 +9992,62 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
                         "message": f"{field} must remain unsupported",
                     }
                 )
-        if build_contracts.get("declared_build_files") != []:
+        declared_build_files = build_contracts.get("declared_build_files")
+        if not isinstance(declared_build_files, list) or not all(
+            isinstance(item, str) and item for item in declared_build_files
+        ):
             issues.append(
                 {
-                    "code": "declared_build_files_overclaim",
-                    "message": "declared build files must remain empty",
+                    "code": "invalid_declared_build_files",
+                    "message": "declared build files must be a list of path labels",
+                }
+            )
+    declared_language_runners = report.get("declared_language_runner_records")
+    if not isinstance(declared_language_runners, list):
+        issues.append(
+            {
+                "code": "invalid_declared_language_runner_records",
+                "message": "declared_language_runner_records must be a list",
+            }
+        )
+        declared_language_runners = []
+    for record in declared_language_runners:
+        if not isinstance(record, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_declared_language_runner_record",
+                    "message": "declared language runner records must be objects",
+                }
+            )
+        elif record.get("execution_status") not in {"declared_metadata_only", "unsupported"}:
+            issues.append(
+                {
+                    "code": "declared_language_runner_execution_overclaim",
+                    "message": "declared language runners must not claim supported execution",
+                }
+            )
+    declared_build_systems = report.get("declared_build_system_records")
+    if not isinstance(declared_build_systems, list):
+        issues.append(
+            {
+                "code": "invalid_declared_build_system_records",
+                "message": "declared_build_system_records must be a list",
+            }
+        )
+        declared_build_systems = []
+    for record in declared_build_systems:
+        if not isinstance(record, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_declared_build_system_record",
+                    "message": "declared build system records must be objects",
+                }
+            )
+        elif record.get("execution_status") not in {"declared_metadata_only", "unsupported"}:
+            issues.append(
+                {
+                    "code": "declared_build_system_execution_overclaim",
+                    "message": "declared build systems must not claim supported execution",
                 }
             )
     hooks = report.get("task_candidate_abstraction_hooks")

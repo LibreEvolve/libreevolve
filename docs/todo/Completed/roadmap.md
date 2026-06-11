@@ -2,6 +2,17 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Record metadata-only candidate runner declarations for roadmap evidence.
+  - Status: ROADMAP now describes `candidate_language_runners` and
+    `candidate_build_systems` as manifest-preserved, non-executed declaration
+    metadata feeding the candidate-language policy and runner contract report.
+  - Verification: `py -3.12 -m pytest tests\core\test_config.py
+    tests\population\test_database.py
+    tests\core\test_loop.py::test_runtime_history_reports_candidate_language_runner_contracts
+    tests\core\test_loop.py::test_runtime_history_reports_declared_candidate_language_runner_metadata
+    -q` passed.
+  - Remaining gap: actual non-Python/build runner execution remains open.
+
 - [x] Emit process-exhibit boundary sidecar for roadmap evidence.
   - Status: `papers/process_exhibit_boundary.json` now lets roadmap wording
     point to a committed absence boundary for rendered process-diagram

@@ -3799,6 +3799,13 @@ def test_manifest_written():
             "build_system_runners": "unsupported",
             "problem_defined_solution_abstractions": "unsupported",
         },
+        "runner_declarations": {
+            "declaration_status": "not_configured",
+            "language_runner_declarations": [],
+            "build_system_declarations": [],
+            "execution_status": "unsupported",
+            "declaration_scope": "manifest_metadata_only_not_executed",
+        },
         "alphaevolve_divergence": (
             "LibreEvolve currently evolves bounded Python-primary workspace "
             "file sets instead of arbitrary language/codebase solution objects."
@@ -4088,6 +4095,23 @@ def test_validate_candidate_language_policy_rejects_runner_overclaims():
             "build_system_runners": "supported",
             "problem_defined_solution_abstractions": "supported",
         },
+        "runner_declarations": {
+            "declaration_status": "metadata_only_no_execution",
+            "language_runner_declarations": [
+                {
+                    "language": "rust",
+                    "candidate_role": "supporting_text_workspace_member",
+                    "file_patterns": ["src/*.rs"],
+                    "marker_grammar": "unsupported",
+                    "runner_command": ["cargo", "test"],
+                    "execution_status": "supported",
+                    "notes": "",
+                }
+            ],
+            "build_system_declarations": [],
+            "execution_status": "supported",
+            "declaration_scope": "manifest_metadata_only_not_executed",
+        },
         "alphaevolve_divergence": "overclaimed",
         "language_runner_ready": True,
         "remaining_gap": [],
@@ -4102,8 +4126,59 @@ def test_validate_candidate_language_policy_rejects_runner_overclaims():
     assert "arbitrary_language_runners_overclaim" in codes
     assert "build_system_runners_overclaim" in codes
     assert "problem_defined_solution_abstractions_overclaim" in codes
+    assert "runner_declaration_execution_overclaim" in codes
+    assert "language_runner_declaration_execution_overclaim" in codes
     assert "language_runner_ready_overclaim" in codes
     assert "missing_remaining_gap" in codes
+
+
+def test_manifest_records_candidate_language_runner_declarations():
+    tmpdir = tempfile.mkdtemp()
+    ProgramDatabase(
+        Config(
+            log_dir=tmpdir,
+            problem_name="t",
+            candidate_language_runners=[
+                {
+                    "language": "rust",
+                    "candidate_role": "supporting_text_workspace_member",
+                    "file_patterns": ["src/*.rs"],
+                    "marker_grammar": "custom_declared_unsupported",
+                    "runner_command": ["cargo", "test"],
+                    "notes": "declared for future runner support",
+                }
+            ],
+            candidate_build_systems=[
+                {
+                    "name": "cargo",
+                    "build_files": ["Cargo.toml"],
+                    "build_command": ["cargo", "build"],
+                    "artifact_patterns": ["target/debug/*"],
+                }
+            ],
+        )
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+
+    assert manifest["config"]["candidate_language_runners"][0]["language"] == "rust"
+    assert manifest["config"]["candidate_build_systems"][0]["name"] == "cargo"
+    policy = manifest["policies"]["candidate_language"]
+    declarations = policy["runner_declarations"]
+    assert declarations["declaration_status"] == "metadata_only_no_execution"
+    assert declarations["execution_status"] == "unsupported"
+    assert declarations["language_runner_declarations"][0]["runner_command"] == [
+        "cargo",
+        "test",
+    ]
+    assert declarations["build_system_declarations"][0]["build_files"] == [
+        "Cargo.toml"
+    ]
+    validation = validate_candidate_language_policy(policy)
+    assert validation["ok"] is True
+    assert "runner_execution_for_declared_candidate_language_or_build_system" in (
+        policy["remaining_gap"]
+    )
 
 
 def test_manifest_records_validator_network_deny_policy():

@@ -89,6 +89,8 @@ class Config:
     max_candidate_total_chars: int = DEFAULT_MAX_CANDIDATE_TOTAL_CHARS
     max_candidate_static_file_bytes: int = DEFAULT_MAX_CANDIDATE_STATIC_FILE_BYTES
     max_candidate_total_static_bytes: int = DEFAULT_MAX_CANDIDATE_TOTAL_STATIC_BYTES
+    candidate_language_runners: list[dict] = field(default_factory=list)
+    candidate_build_systems: list[dict] = field(default_factory=list)
     eval_stages:            list[dict] = field(default_factory=list)
     prompt_variants:        list[str] = field(default_factory=list)
     prompt_variant_semantic_policy: str = "alphaevolve"
@@ -277,6 +279,12 @@ class Config:
             "max_candidate_total_static_bytes",
             self.max_candidate_total_static_bytes,
             minimum=0,
+        )
+        self.candidate_language_runners = _validate_candidate_language_runners(
+            self.candidate_language_runners
+        )
+        self.candidate_build_systems = _validate_candidate_build_systems(
+            self.candidate_build_systems
         )
         _require_bool("meta_prompt_evolution", self.meta_prompt_evolution)
         _require_int("meta_prompt_interval", self.meta_prompt_interval, minimum=0)
@@ -545,6 +553,165 @@ def _validate_evaluator_stdin_source_exclusive(
 ) -> None:
     if stdin_text is not None and stdin_file is not None:
         raise ConfigError(f"{name} must not set both stdin_text and stdin_file")
+
+
+def _validate_candidate_language_runners(value: object) -> list[dict]:
+    if not isinstance(value, list):
+        raise ConfigError("candidate_language_runners must be a list")
+    normalized: list[dict] = []
+    seen: set[str] = set()
+    for index, item in enumerate(value):
+        path = f"candidate_language_runners[{index}]"
+        if not isinstance(item, dict):
+            raise ConfigError(f"{path} must be a mapping")
+        allowed = {
+            "language",
+            "candidate_role",
+            "file_patterns",
+            "marker_grammar",
+            "runner_command",
+            "execution_status",
+            "notes",
+        }
+        unknown = sorted(str(key) for key in item if key not in allowed)
+        if unknown:
+            raise ConfigError(f"{path} has unknown key(s): {unknown}")
+        if "language" not in item:
+            raise ConfigError(f"{path}.language is required")
+        language = _require_safe_identifier(f"{path}.language", item["language"]).lower()
+        if language in seen:
+            raise ConfigError(f"duplicate candidate language runner declaration {language!r}")
+        seen.add(language)
+        execution_status = item.get("execution_status", "declared_metadata_only")
+        _require_enum(
+            f"{path}.execution_status",
+            execution_status,
+            {"declared_metadata_only", "unsupported"},
+        )
+        file_patterns = _validate_candidate_glob_patterns(
+            f"{path}.file_patterns",
+            item.get("file_patterns", []),
+        )
+        normalized.append(
+            {
+                "language": language,
+                "candidate_role": _validate_candidate_declaration_text(
+                    f"{path}.candidate_role",
+                    item.get("candidate_role", "supporting_text_workspace_member"),
+                ),
+                "file_patterns": file_patterns,
+                "marker_grammar": _validate_candidate_declaration_text(
+                    f"{path}.marker_grammar",
+                    item.get("marker_grammar", "unsupported"),
+                ),
+                "runner_command": _validate_candidate_runner_command(
+                    f"{path}.runner_command",
+                    item.get("runner_command"),
+                ),
+                "execution_status": execution_status,
+                "notes": _validate_candidate_declaration_text(
+                    f"{path}.notes",
+                    item.get("notes", ""),
+                    allow_empty=True,
+                ),
+            }
+        )
+    return normalized
+
+
+def _validate_candidate_build_systems(value: object) -> list[dict]:
+    if not isinstance(value, list):
+        raise ConfigError("candidate_build_systems must be a list")
+    normalized: list[dict] = []
+    seen: set[str] = set()
+    for index, item in enumerate(value):
+        path = f"candidate_build_systems[{index}]"
+        if not isinstance(item, dict):
+            raise ConfigError(f"{path} must be a mapping")
+        allowed = {
+            "name",
+            "build_files",
+            "build_command",
+            "artifact_patterns",
+            "execution_status",
+            "notes",
+        }
+        unknown = sorted(str(key) for key in item if key not in allowed)
+        if unknown:
+            raise ConfigError(f"{path} has unknown key(s): {unknown}")
+        if "name" not in item:
+            raise ConfigError(f"{path}.name is required")
+        name = _require_safe_identifier(f"{path}.name", item["name"]).lower()
+        if name in seen:
+            raise ConfigError(f"duplicate candidate build system declaration {name!r}")
+        seen.add(name)
+        execution_status = item.get("execution_status", "declared_metadata_only")
+        _require_enum(
+            f"{path}.execution_status",
+            execution_status,
+            {"declared_metadata_only", "unsupported"},
+        )
+        build_files = _validate_candidate_glob_patterns(
+            f"{path}.build_files",
+            item.get("build_files", []),
+        )
+        artifact_patterns = _validate_candidate_glob_patterns(
+            f"{path}.artifact_patterns",
+            item.get("artifact_patterns", []),
+        )
+        normalized.append(
+            {
+                "name": name,
+                "build_files": build_files,
+                "build_command": _validate_candidate_runner_command(
+                    f"{path}.build_command",
+                    item.get("build_command"),
+                ),
+                "artifact_patterns": artifact_patterns,
+                "execution_status": execution_status,
+                "notes": _validate_candidate_declaration_text(
+                    f"{path}.notes",
+                    item.get("notes", ""),
+                    allow_empty=True,
+                ),
+            }
+        )
+    return normalized
+
+
+def _validate_candidate_glob_patterns(path: str, value: object) -> list[str]:
+    _validate_artifact_glob_list(path, value)
+    assert isinstance(value, list)
+    return list(value)
+
+
+def _validate_candidate_declaration_text(
+    path: str,
+    value: object,
+    *,
+    allow_empty: bool = False,
+) -> str:
+    text = _require_string(path, value, allow_empty=allow_empty)
+    if redact_sensitive_text(text) != text:
+        raise ConfigError(f"{path} must not contain secret-like text")
+    if any(ord(ch) < 32 or ord(ch) == 127 for ch in text):
+        raise ConfigError(f"{path} must be manifest-safe text")
+    if any(unicodedata.category(ch) == "Cf" for ch in text):
+        raise ConfigError(f"{path} must be display-safe text")
+    return text
+
+
+def _validate_candidate_runner_command(path: str, value: object) -> list[str]:
+    if value in (None, ""):
+        return []
+    if not isinstance(value, list) or not value:
+        raise ConfigError(f"{path} must be a non-empty list of command tokens")
+    command: list[str] = []
+    for index, token in enumerate(value):
+        command.append(
+            _validate_candidate_declaration_text(f"{path}[{index}]", token)
+        )
+    return command
 
 
 def _normalize_path_string(name: str, value: object) -> str:

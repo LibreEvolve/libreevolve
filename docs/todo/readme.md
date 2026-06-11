@@ -391,7 +391,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `workspace_packaging_fixture` and not AlphaEvolve-comparable. README now
     also names `papers/candidate_language_runner_boundary.json` as the
     committed paper-manifest-validated arbitrary-language/build-runner absence
-    boundary.
+    boundary, and documents metadata-only `candidate_language_runners` /
+    `candidate_build_systems` declarations as non-executed manifest evidence.
   - Required result: when a codebase-scale benchmark/report lands, update
     README, ROADMAP, papers index, and code/paper TODO entries with the
     generated-line/component counts, cross-file dependency edit evidence,

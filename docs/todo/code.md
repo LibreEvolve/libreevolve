@@ -38,13 +38,15 @@ Primary evidence:
     `libreevolve.candidate_language_runner_contract_report.v1`, recording the
     selected startup policy, the current Python subprocess validator runner,
     non-Python text members as workspace-only/no-runner records, unsupported
-    arbitrary-language and build-system runner contracts, unsupported task
-    candidate-abstraction hooks, and the exact remaining gaps before
-    AlphaEvolve-style language/build parity. The committed
+    arbitrary-language and build-system runner contracts, metadata-only
+    `candidate_language_runners` and `candidate_build_systems` declarations
+    when configured, unsupported task candidate-abstraction hooks, and the
+    exact remaining executable-contract gaps before AlphaEvolve-style
+    language/build parity. The committed
     `papers/candidate_language_runner_boundary.json` sidecar now records the
     paper-manifest-validated arbitrary-language/build-runner absence boundary.
-  - Required result: add configured candidate language/runner declarations,
-    language-aware evolve-block grammars, build-system runner contracts, and
+  - Required result: turn metadata declarations into executable language and
+    build runner contracts, add language-aware evolve-block grammars, and add
     problem-defined candidate abstraction hooks before claiming non-Python or
     arbitrary-codebase AlphaEvolve fidelity. The remaining gap is implementing
     those runners and abstractions, not making the current Python-only

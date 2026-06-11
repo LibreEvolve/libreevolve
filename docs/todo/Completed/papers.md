@@ -6,6 +6,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Record metadata-only candidate language/build runner declarations.
+  - Paper evidence: AlphaEvolve Sections 2.1-2.2 leave the program artifact,
+    evaluator interface, and solution representation task-defined rather than
+    limited to one Python-primary workspace.
+  - Status: paper-facing manifests can now preserve
+    `candidate_language_runners` and `candidate_build_systems` as validated,
+    metadata-only declarations under `policies.candidate_language` and
+    `runtime.history.candidate_language_runner_contract_report`.
+  - Verification: `py -3.12 -m pytest tests\core\test_config.py
+    tests\population\test_database.py
+    tests\core\test_loop.py::test_runtime_history_reports_candidate_language_runner_contracts
+    tests\core\test_loop.py::test_runtime_history_reports_declared_candidate_language_runner_metadata
+    -q` passed.
+  - Remaining paper gap: executable runner/build contracts, marker grammars,
+    environment/artifact provenance, and task-defined abstraction hooks remain
+    absent.
+
 - [x] Emit Figure 1/Figure 2 process-exhibit boundary sidecar.
   - Paper evidence: AlphaEvolve Figure 1 and Figure 2 define the paper's
     high-level discovery process and expanded controller flow.

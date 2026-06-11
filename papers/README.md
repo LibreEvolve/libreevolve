@@ -742,10 +742,12 @@ Completed manifests also include
 `libreevolve.candidate_language_runner_contract_report.v1`. This report records
 the current Python subprocess validator runner contract, non-Python text files
 as workspace-only/no-runner members, unsupported arbitrary-language and
-build-system runner contracts, unsupported task candidate-abstraction hooks,
-and the remaining contract gaps for configured non-Python runners,
-language-aware evolve-block grammars, build-system runners, task-defined
-abstraction hooks, and runner environment/artifact provenance. The committed
+build-system runner contracts, metadata-only `candidate_language_runners` and
+`candidate_build_systems` declarations when configured, unsupported task
+candidate-abstraction hooks, and the remaining contract gaps for executing
+declared non-Python/build runners, language-aware evolve-block grammars,
+build-system runners, task-defined abstraction hooks, and runner
+environment/artifact provenance. The committed
 `papers/candidate_language_runner_boundary.json` sidecar now emits that
 `python_primary_without_arbitrary_language_runner_evidence` boundary, and
 `validate_paper_manifest()` requires and validates it at the real repo root.

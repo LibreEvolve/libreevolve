@@ -4,6 +4,22 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document metadata-only candidate runner declarations.
+  - Spec evidence: AlphaEvolve arbitrary-language/build claims need a
+    task-defined runner surface, but declaration metadata alone must not imply
+    executable runner support.
+  - Status: README now documents `candidate_language_runners` and
+    `candidate_build_systems` as validated manifest metadata only, recorded in
+    `policies.candidate_language.runner_declarations` and the runtime runner
+    contract report while keeping `language_runner_ready: false`.
+  - Verification: `py -3.12 -m pytest tests\core\test_config.py
+    tests\population\test_database.py
+    tests\core\test_loop.py::test_runtime_history_reports_candidate_language_runner_contracts
+    tests\core\test_loop.py::test_runtime_history_reports_declared_candidate_language_runner_metadata
+    -q` passed.
+  - Remaining gap: none for README declaration scoping; executable
+    arbitrary-language/build runner evidence remains an active code/paper gap.
+
 - [x] Keep README process-exhibit wording tied to committed sidecar.
   - Spec evidence: AlphaEvolve Figure 1/Figure 2 process-diagram parity needs
     rendered artifacts, exact diagram text/accessibility export, topology

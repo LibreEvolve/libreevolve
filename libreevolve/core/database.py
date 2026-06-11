@@ -7274,6 +7274,8 @@ def _startup_manifest_payload(
             "max_candidate_total_chars": config.max_candidate_total_chars,
             "max_candidate_static_file_bytes": config.max_candidate_static_file_bytes,
             "max_candidate_total_static_bytes": config.max_candidate_total_static_bytes,
+            "candidate_language_runners": list(config.candidate_language_runners),
+            "candidate_build_systems": list(config.candidate_build_systems),
             "eval_stages": _manifest_eval_stages(config.eval_stages),
             "prompt_variants": prompt_variants["values"],
             "prompt_variant_semantic_policy": config.prompt_variant_semantic_policy,
@@ -7396,7 +7398,7 @@ def _startup_manifest_payload(
             "validator_network": _validator_network_policy(
                 config.validator_network_policy
             ),
-            "candidate_language": _candidate_language_policy(),
+            "candidate_language": _candidate_language_policy(config),
             "seed_post_processing": {
                 "policy": "raw_evaluator_baseline",
                 "llm_feedback": "not_applied",
@@ -7580,6 +7582,28 @@ def _task_specification_bundle(manifest: Mapping[str, object]) -> dict:
                 "policy": candidate_language.get("policy"),
                 "primary_language": candidate_language.get("primary_language"),
                 "language_runner_ready": candidate_language.get("language_runner_ready"),
+                "language_runner_declaration_count": len(
+                    _manifest_list(
+                        candidate_language.get("runner_declarations", {}).get(
+                            "language_runner_declarations"
+                        )
+                        if isinstance(
+                            candidate_language.get("runner_declarations"), Mapping
+                        )
+                        else None
+                    )
+                ),
+                "build_system_declaration_count": len(
+                    _manifest_list(
+                        candidate_language.get("runner_declarations", {}).get(
+                            "build_system_declarations"
+                        )
+                        if isinstance(
+                            candidate_language.get("runner_declarations"), Mapping
+                        )
+                        else None
+                    )
+                ),
             },
             "objective_metrics": {
                 "status": "present"
@@ -7835,7 +7859,26 @@ def _context_source_refs(context_sources: list) -> list[dict]:
     return refs
 
 
-def _candidate_language_policy() -> dict:
+def _candidate_language_policy(config: Config) -> dict:
+    language_runner_declarations = list(config.candidate_language_runners)
+    build_system_declarations = list(config.candidate_build_systems)
+    declaration_status = (
+        "metadata_only_no_execution"
+        if language_runner_declarations or build_system_declarations
+        else "not_configured"
+    )
+    remaining_gap = [
+        "language_aware_evolve_block_marker_grammars",
+        "problem_defined_candidate_abstraction_hooks",
+        "build_system_and_arbitrary_language_runner_contracts",
+    ]
+    if language_runner_declarations or build_system_declarations:
+        remaining_gap.insert(
+            0,
+            "runner_execution_for_declared_candidate_language_or_build_system",
+        )
+    else:
+        remaining_gap.insert(0, "language_or_runner_declarations_for_non_python_candidates")
     return {
         "schema": CANDIDATE_LANGUAGE_POLICY_SCHEMA,
         "policy": "python_primary_text_workspace_v1",
@@ -7861,17 +7904,19 @@ def _candidate_language_policy() -> dict:
             "build_system_runners": "unsupported",
             "problem_defined_solution_abstractions": "unsupported",
         },
+        "runner_declarations": {
+            "declaration_status": declaration_status,
+            "language_runner_declarations": language_runner_declarations,
+            "build_system_declarations": build_system_declarations,
+            "execution_status": "unsupported",
+            "declaration_scope": "manifest_metadata_only_not_executed",
+        },
         "alphaevolve_divergence": (
             "LibreEvolve currently evolves bounded Python-primary workspace "
             "file sets instead of arbitrary language/codebase solution objects."
         ),
         "language_runner_ready": False,
-        "remaining_gap": [
-            "language_or_runner_declarations_for_non_python_candidates",
-            "language_aware_evolve_block_marker_grammars",
-            "problem_defined_candidate_abstraction_hooks",
-            "build_system_and_arbitrary_language_runner_contracts",
-        ],
+        "remaining_gap": remaining_gap,
     }
 
 
@@ -7898,6 +7943,7 @@ def validate_candidate_language_policy(policy: object) -> dict:
         "text_member_policy",
         "static_member_policy",
         "runner_policy",
+        "runner_declarations",
         "alphaevolve_divergence",
         "language_runner_ready",
         "remaining_gap",
@@ -8027,6 +8073,16 @@ def validate_candidate_language_policy(policy: object) -> dict:
                         "message": f"{field} must remain unsupported in this policy",
                     }
                 )
+    declarations = policy.get("runner_declarations")
+    if not isinstance(declarations, Mapping):
+        issues.append(
+            {
+                "code": "invalid_runner_declarations",
+                "message": "runner_declarations must be an object",
+            }
+        )
+    else:
+        _validate_candidate_runner_declarations(issues, declarations)
     if not isinstance(policy.get("alphaevolve_divergence"), str) or not policy[
         "alphaevolve_divergence"
     ].strip():
@@ -8045,11 +8101,26 @@ def validate_candidate_language_policy(policy: object) -> dict:
             }
         )
     required_gaps = {
-        "language_or_runner_declarations_for_non_python_candidates",
         "language_aware_evolve_block_marker_grammars",
         "problem_defined_candidate_abstraction_hooks",
         "build_system_and_arbitrary_language_runner_contracts",
     }
+    declaration_count = 0
+    if isinstance(declarations, Mapping):
+        declaration_count = len(
+            declarations.get("language_runner_declarations", [])
+            if isinstance(declarations.get("language_runner_declarations"), list)
+            else []
+        ) + len(
+            declarations.get("build_system_declarations", [])
+            if isinstance(declarations.get("build_system_declarations"), list)
+            else []
+        )
+    required_gaps.add(
+        "runner_execution_for_declared_candidate_language_or_build_system"
+        if declaration_count
+        else "language_or_runner_declarations_for_non_python_candidates"
+    )
     gaps = policy.get("remaining_gap")
     if not isinstance(gaps, list) or not all(
         isinstance(item, str) and item for item in gaps
@@ -8081,6 +8152,154 @@ def validate_candidate_language_policy(policy: object) -> dict:
         ),
         "issues": issues,
     }
+
+
+def _validate_candidate_runner_declarations(
+    issues: list[dict],
+    declarations: Mapping,
+) -> None:
+    expected = {
+        "declaration_status",
+        "language_runner_declarations",
+        "build_system_declarations",
+        "execution_status",
+        "declaration_scope",
+    }
+    missing = expected - set(declarations)
+    if missing:
+        issues.append(
+            {
+                "code": "runner_declarations_missing_fields",
+                "message": f"runner_declarations missing fields: {sorted(missing)}",
+            }
+        )
+    unsupported = set(declarations) - expected
+    if unsupported:
+        issues.append(
+            {
+                "code": "runner_declarations_unsupported_fields",
+                "message": (
+                    "runner_declarations has unsupported fields: "
+                    f"{sorted(unsupported)}"
+                ),
+            }
+        )
+    language_declarations = declarations.get("language_runner_declarations")
+    build_declarations = declarations.get("build_system_declarations")
+    if not isinstance(language_declarations, list):
+        issues.append(
+            {
+                "code": "invalid_language_runner_declarations",
+                "message": "language_runner_declarations must be a list",
+            }
+        )
+        language_declarations = []
+    if not isinstance(build_declarations, list):
+        issues.append(
+            {
+                "code": "invalid_build_system_declarations",
+                "message": "build_system_declarations must be a list",
+            }
+        )
+        build_declarations = []
+    declaration_count = len(language_declarations) + len(build_declarations)
+    expected_status = "metadata_only_no_execution" if declaration_count else "not_configured"
+    if declarations.get("declaration_status") != expected_status:
+        issues.append(
+            {
+                "code": "invalid_runner_declaration_status",
+                "message": f"runner declaration status must be {expected_status}",
+            }
+        )
+    if declarations.get("execution_status") != "unsupported":
+        issues.append(
+            {
+                "code": "runner_declaration_execution_overclaim",
+                "message": "runner declaration execution_status must remain unsupported",
+            }
+        )
+    if declarations.get("declaration_scope") != "manifest_metadata_only_not_executed":
+        issues.append(
+            {
+                "code": "invalid_runner_declaration_scope",
+                "message": "runner declarations must be scoped as manifest metadata only",
+            }
+        )
+    for index, record in enumerate(language_declarations):
+        if not isinstance(record, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_language_runner_declaration_record",
+                    "message": f"language runner declaration {index} must be an object",
+                }
+            )
+            continue
+        required = {
+            "language",
+            "candidate_role",
+            "file_patterns",
+            "marker_grammar",
+            "runner_command",
+            "execution_status",
+            "notes",
+        }
+        missing = required - set(record)
+        if missing:
+            issues.append(
+                {
+                    "code": "language_runner_declaration_missing_fields",
+                    "message": (
+                        f"language runner declaration {index} missing fields: "
+                        f"{sorted(missing)}"
+                    ),
+                }
+            )
+        if record.get("execution_status") not in {"declared_metadata_only", "unsupported"}:
+            issues.append(
+                {
+                    "code": "language_runner_declaration_execution_overclaim",
+                    "message": (
+                        "language runner declarations must not claim supported execution"
+                    ),
+                }
+            )
+    for index, record in enumerate(build_declarations):
+        if not isinstance(record, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_build_system_declaration_record",
+                    "message": f"build system declaration {index} must be an object",
+                }
+            )
+            continue
+        required = {
+            "name",
+            "build_files",
+            "build_command",
+            "artifact_patterns",
+            "execution_status",
+            "notes",
+        }
+        missing = required - set(record)
+        if missing:
+            issues.append(
+                {
+                    "code": "build_system_declaration_missing_fields",
+                    "message": (
+                        f"build system declaration {index} missing fields: "
+                        f"{sorted(missing)}"
+                    ),
+                }
+            )
+        if record.get("execution_status") not in {"declared_metadata_only", "unsupported"}:
+            issues.append(
+                {
+                    "code": "build_system_declaration_execution_overclaim",
+                    "message": (
+                        "build system declarations must not claim supported execution"
+                    ),
+                }
+            )
 
 
 def _candidate_policy_issue_if(

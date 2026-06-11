@@ -430,19 +430,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     `runtime.history.candidate_language_runner_contract_report`, a checked
     negative-boundary contract report that records the current Python runner,
     non-Python text members as workspace-only/no-runner records, unsupported
-    arbitrary-language and build-system runner contracts, unsupported task
-    candidate-abstraction hooks, and the remaining contract gaps for
-    AlphaEvolve-style language/build parity. The committed
+    arbitrary-language and build-system runner contracts, metadata-only
+    `candidate_language_runners` and `candidate_build_systems` declarations
+    when configured, unsupported task candidate-abstraction hooks, and the
+    remaining executable contract gaps for AlphaEvolve-style language/build
+    parity. The committed
     `papers/candidate_language_runner_boundary.json` sidecar now preserves the
     paper-manifest-validated arbitrary-language/build-runner absence boundary.
   - Current gap: this is an honest boundary record, not non-Python or
-    arbitrary-codebase support. There are no configured language runners,
-    build-system contracts, language-aware marker grammars, or task-defined
-    candidate abstraction hooks.
-  - Required result: add configured language runners, build-system contracts,
-    language-aware marker grammars, and task-defined candidate abstraction
-    hooks before treating the current Python-primary workspace policy as
-    AlphaEvolve-grade arbitrary-codebase or arbitrary-language support.
+    arbitrary-codebase support. Metadata-only language/build declarations can
+    now be recorded, but there are no executable non-Python language runners,
+    build-system execution contracts, language-aware marker grammars, or
+    task-defined candidate abstraction hooks.
+  - Required result: add executable configured language runners, build-system
+    contracts, language-aware marker grammars, and task-defined candidate
+    abstraction hooks before treating the current Python-primary workspace
+    policy as AlphaEvolve-grade arbitrary-codebase or arbitrary-language
+    support.
 
 - [ ] Extend existing-codebase minimal-marker integration evidence beyond
       runtime workspace inventory.

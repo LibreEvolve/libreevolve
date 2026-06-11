@@ -129,6 +129,83 @@ def test_default_candidate_workspace_budgets_match_model_policy():
     assert config.max_candidate_total_static_bytes == DEFAULT_MAX_CANDIDATE_TOTAL_STATIC_BYTES
 
 
+def test_candidate_language_runner_declarations_are_normalized():
+    config = Config(
+        candidate_language_runners=[
+            {
+                "language": "Rust",
+                "candidate_role": "supporting_text_workspace_member",
+                "file_patterns": ["src/*.rs"],
+                "marker_grammar": "custom_declared_unsupported",
+                "runner_command": ["cargo", "test"],
+                "notes": "future runner declaration",
+            }
+        ],
+        candidate_build_systems=[
+            {
+                "name": "Cargo",
+                "build_files": ["Cargo.toml"],
+                "build_command": ["cargo", "build"],
+                "artifact_patterns": ["target/debug/*"],
+            }
+        ],
+    )
+
+    assert config.candidate_language_runners == [
+        {
+            "language": "rust",
+            "candidate_role": "supporting_text_workspace_member",
+            "file_patterns": ["src/*.rs"],
+            "marker_grammar": "custom_declared_unsupported",
+            "runner_command": ["cargo", "test"],
+            "execution_status": "declared_metadata_only",
+            "notes": "future runner declaration",
+        }
+    ]
+    assert config.candidate_build_systems == [
+        {
+            "name": "cargo",
+            "build_files": ["Cargo.toml"],
+            "build_command": ["cargo", "build"],
+            "artifact_patterns": ["target/debug/*"],
+            "execution_status": "declared_metadata_only",
+            "notes": "",
+        }
+    ]
+
+
+@pytest.mark.parametrize(
+    ("kwargs", "message"),
+    [
+        ({"candidate_language_runners": "rust"}, "candidate_language_runners"),
+        (
+            {"candidate_language_runners": [{"language": "rust", "execution_status": "supported"}]},
+            "candidate_language_runners\\[0\\]\\.execution_status",
+        ),
+        (
+            {"candidate_language_runners": [{"language": "rust", "file_patterns": ["../src/*.rs"]}]},
+            "path-safe glob patterns",
+        ),
+        (
+            {"candidate_language_runners": [{"language": "api_key=sk-proj_SECRET_1234567890"}]},  # pragma: allowlist secret
+            "manifest-safe identifier",
+        ),
+        ({"candidate_build_systems": "cargo"}, "candidate_build_systems"),
+        (
+            {"candidate_build_systems": [{"name": "cargo", "execution_status": "supported"}]},
+            "candidate_build_systems\\[0\\]\\.execution_status",
+        ),
+        (
+            {"candidate_build_systems": [{"name": "cargo", "build_command": "cargo build"}]},
+            "candidate_build_systems\\[0\\]\\.build_command",
+        ),
+    ],
+)
+def test_candidate_runner_declarations_reject_invalid_values(kwargs, message):
+    with pytest.raises(ConfigError, match=message):
+        Config(**kwargs)
+
+
 @pytest.mark.parametrize(
     ("kwargs", "message"),
     [

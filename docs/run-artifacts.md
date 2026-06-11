@@ -890,14 +890,21 @@ Python-primary bounded text-workspace representation, typed static-member
 support, fail-closed non-Python marker handling, Python subprocess validator
 runner boundary, and explicit unsupported status for arbitrary-language
 runners, build-system runners, and problem-defined solution abstractions.
+When `config.yaml` sets `candidate_language_runners` or
+`candidate_build_systems`, those entries are normalized as manifest-safe,
+metadata-only declarations under `config` and
+`policies.candidate_language.runner_declarations`; they are not executed and
+the policy keeps `language_runner_ready: false`.
 Completed manifests include
 `runtime.history.candidate_language_runner_contract_report` with schema
 `libreevolve.candidate_language_runner_contract_report.v1`. The report records
 the selected startup policy, the current Python subprocess validator runner
 contract, non-Python text members as workspace-only/no-runner records,
-unsupported arbitrary-language and build-system runner contracts, unsupported
-task candidate-abstraction hooks, and the exact contract gaps that must close
-before AlphaEvolve-style arbitrary-language/codebase parity can be claimed.
+unsupported arbitrary-language and build-system runner contracts, any
+metadata-only language/build declarations, unsupported task
+candidate-abstraction hooks, and the exact executable contract gaps that must
+close before AlphaEvolve-style arbitrary-language/codebase parity can be
+claimed.
 The committed `papers/candidate_language_runner_boundary.json` sidecar
 preserves the same arbitrary-language/build-runner absence boundary for
 paper-manifest validation.

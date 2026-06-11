@@ -6283,6 +6283,8 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
     assert build_contracts["build_runner"] == "unsupported"
     assert build_contracts["package_install_runner"] == "unsupported"
     assert build_contracts["compiled_artifact_capture"] == "unsupported"
+    assert report["declared_language_runner_records"] == []
+    assert report["declared_build_system_records"] == []
 
     hooks = report["task_candidate_abstraction_hooks"]
     assert hooks["status"] == "unsupported"
@@ -6293,6 +6295,7 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
 
     assert report["claim_ready"] is False
     assert report["claim_readiness"]["python_runner_contract_recorded"] is True
+    assert report["claim_readiness"]["metadata_runner_declarations_recorded"] is False
     assert report["claim_readiness"]["non_python_language_runners_configured"] is False
     assert report["claim_readiness"]["language_aware_marker_grammars_configured"] is False
     assert report["claim_readiness"]["build_system_runner_contracts_configured"] is False
@@ -6311,6 +6314,12 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
     edited["configured_language_runners"][1]["runner_contract"] = "supported"
     edited["configured_language_runners"][2]["build_contract"] = "supported"
     edited["build_system_runner_contracts"]["build_runner"] = "supported"
+    edited["declared_language_runner_records"] = [
+        {"language": "rust", "execution_status": "supported"}
+    ]
+    edited["declared_build_system_records"] = [
+        {"name": "cargo", "execution_status": "supported"}
+    ]
     edited["task_candidate_abstraction_hooks"]["serializer_hook"] = "supported"
     edited["claim_readiness"]["alphaevolve_language_runner_parity"] = True
     validation = validate_candidate_language_runner_contract_report(edited)
@@ -6321,9 +6330,63 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
         "non_python_text_runner_overclaim",
         "arbitrary_language_build_overclaim",
         "build_runner_overclaim",
+        "declared_language_runner_execution_overclaim",
+        "declared_build_system_execution_overclaim",
         "serializer_hook_overclaim",
         "alphaevolve_language_runner_parity_overclaim",
     }
+
+
+def test_runtime_history_reports_declared_candidate_language_runner_metadata():
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(
+        _problem(),
+        Config(
+            max_generations=0,
+            log_dir=tmpdir,
+            problem_name="t",
+            candidate_language_runners=[
+                {
+                    "language": "rust",
+                    "file_patterns": ["src/*.rs"],
+                    "marker_grammar": "custom_declared_unsupported",
+                    "runner_command": ["cargo", "test"],
+                }
+            ],
+            candidate_build_systems=[
+                {
+                    "name": "cargo",
+                    "build_files": ["Cargo.toml"],
+                    "build_command": ["cargo", "build"],
+                    "artifact_patterns": ["target/debug/*"],
+                }
+            ],
+        ),
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"][
+        "candidate_language_runner_contract_report"
+    ]
+
+    assert report["validation"]["ok"] is True
+    assert validate_candidate_language_runner_contract_report(report)["ok"] is True
+    assert report["declared_language_runner_records"][0]["language"] == "rust"
+    assert report["declared_language_runner_records"][0]["runner_command"] == [
+        "cargo",
+        "test",
+    ]
+    assert report["declared_build_system_records"][0]["name"] == "cargo"
+    assert report["build_system_runner_contracts"]["declared_build_files"] == [
+        "Cargo.toml"
+    ]
+    assert report["claim_readiness"]["metadata_runner_declarations_recorded"] is True
+    assert report["claim_readiness"]["non_python_language_runners_configured"] is False
+    assert report["claim_readiness"]["build_system_runner_contracts_configured"] is False
+    assert "execution_for_declared_non_python_language_or_build_runners" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
 
 
 def test_runtime_history_reports_initial_program_idea_provenance():

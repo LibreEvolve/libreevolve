@@ -1573,12 +1573,17 @@ Startup manifests include `policies.candidate_language` with schema
 `libreevolve.candidate_language_policy.v1`, which declares this
 Python-primary text-workspace boundary, fail-closed non-Python marker handling,
 typed static-member support, and unsupported arbitrary-language/build-system
-runner surfaces. Completed manifests also include
+runner surfaces. `config.yaml` can now declare metadata-only future runner
+surfaces through `candidate_language_runners` and `candidate_build_systems`;
+these declarations are retained in `config` and
+`policies.candidate_language.runner_declarations` but are not executed and do
+not make `language_runner_ready` true. Completed manifests also include
 `runtime.history.candidate_language_runner_contract_report`, a checked
 negative-boundary report that records the current Python runner contract,
 lists non-Python text and arbitrary-language runner/build contracts as
-unsupported, and keeps language-aware marker grammars, build-system runners,
-and problem-defined candidate abstraction hooks as explicit remaining gaps. The
+unsupported, carries any metadata-only language/build declarations, and keeps
+language-aware marker grammars, executable build-system runners, and
+problem-defined candidate abstraction hooks as explicit remaining gaps. The
 committed `papers/candidate_language_runner_boundary.json` sidecar now records
 that paper-manifest-validated arbitrary-language/build-runner absence boundary.
 
@@ -2387,8 +2392,9 @@ Completed manifests also include
 candidate-language boundary tied to checked runtime evidence: Python is the
 only supported primary language runner, non-Python text files remain
 workspace-only members with fail-closed marker-like syntax, arbitrary-language
-and build-system runners are unsupported, and AlphaEvolve-grade language,
-build, environment, and task-abstraction contracts remain open.
+and build-system runners are unsupported, metadata-only runner/build
+declarations are preserved when configured, and AlphaEvolve-grade executable
+language, build, environment, and task-abstraction contracts remain open.
 The committed `papers/candidate_language_runner_boundary.json` sidecar keeps
 that arbitrary-language/build-runner absence boundary under paper-manifest
 validation.

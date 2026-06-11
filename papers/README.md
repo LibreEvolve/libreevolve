@@ -152,13 +152,15 @@ paper reports over 50 problems across more than five branches, with roughly
 LibreEvolve still needs per-problem/per-parameter rows, branch labels,
 previous-best references, construction/verifier links, outcome statuses, and
 validated aggregate percentages before making that class of breadth claim.
-It also does not record Appendix B result-version provenance. Appendix B.4
-first reports an uncertainty-inequality bound of `C4 <= 0.3521`, then notes
-that after the first manuscript version Henry Cohn pointed to a refined
-approach and AlphaEvolve improved the reported constant further to `0.3216`.
-Current registry rows do not distinguish first-version and updated constants,
-superseded/current status, update attribution, or verifier/Colab artifact
-linkage for revised mathematical results.
+For Appendix B.4 uncertainty-inequality evidence, the registry now records the
+source formulation, the `[33]` prior-bound rounding distinction (`0.353`
+stated versus `0.3523` rounded), the first-version Hermite-polynomial result
+boundary (`C4 <= 0.3521` using coefficients
+`[0.32925, -0.01159, -8.9216e-5]`), the qualitative similarity claim against
+`[33]`, and the post-first-version revision note (`[18]` at `0.3284`, then
+AlphaEvolve at `0.3216`). These rows are still absence boundaries: coefficient
+payloads, Hermite/Fourier/root certificates, coefficient-comparison artifacts,
+Colab/verifier linkage, and recomputed constants are not recorded locally.
 It also checks `libreevolve/problems/benchmarks/alphaevolve_ablations.json`,
 which defines the AlphaEvolve Figure 8 ablation report contract for the full
 system, `No evolution`, `No context in the prompt`, `No meta prompt evolution`,

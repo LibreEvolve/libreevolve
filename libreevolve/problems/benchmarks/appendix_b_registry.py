@@ -92,6 +92,117 @@ EXPECTED_AUTOCORRELATION_STEP_EVIDENCE = {
         "construction_payload_status": "not_recorded_locally",
     },
 }
+EXPECTED_B4_SOURCE_FORMULATION = {
+    "source_section_id": "B.4",
+    "constant_id": "C4",
+    "source_problem_name": "An uncertainty inequality",
+    "function_domain": "R -> R",
+    "fourier_transform_convention": "f_hat(xi) = integral_R f(x) exp(-2*pi*i*x*xi) dx",
+    "radius_function": "A(f) = inf{r > 0 : f(x) >= 0 for all |x| >= r}",
+    "admissible_function_parity": "even",
+    "admissible_origin_condition": "max(f(0), f_hat(0)) < 0",
+    "target_inequality": "A(f) A(f_hat) >= C4",
+    "bound_direction": "upper_bound_by_test_function",
+    "known_lower_bound": 0.2025,
+    "known_upper_bound_as_stated_in_source": 0.353,
+    "known_upper_bound_after_four_digit_rounding": 0.3523,
+    "known_bounds_source": "[33]",
+    "construction_payload_status": "not_recorded_locally",
+}
+EXPECTED_B4_PRIOR_BOUND_ROUNDING = {
+    "source_section_id": "B.4",
+    "prior_source": "[33]",
+    "prior_lower_bound": 0.2025,
+    "prior_upper_bound_stated": 0.353,
+    "prior_upper_bound_rounded_solution": 0.3523,
+    "rounding_note": "The paper states that [33] gives 0.353, but rounding that solution to the fourth digit gives 0.3523.",
+    "comparison_policy": "compare AlphaEvolve 0.3521 against rounded 0.3523 while preserving the source-stated 0.353 display",
+}
+EXPECTED_B4_HERMITE_REQUIRED_FIELDS = (
+    "result_id",
+    "coefficient_payload_path",
+    "coefficient_payload_sha256",
+    "coefficient_payload_schema",
+    "hermite_basis_certificate_path",
+    "hermite_basis_certificate_sha256",
+    "fourier_transform_certificate_path",
+    "fourier_transform_certificate_sha256",
+    "origin_condition_certificate_path",
+    "origin_condition_certificate_sha256",
+    "eventual_nonnegative_certificate_path",
+    "eventual_nonnegative_certificate_sha256",
+    "root_certificate_path",
+    "root_certificate_sha256",
+    "recomputed_upper_bound",
+)
+EXPECTED_B4_HERMITE_RESULT = {
+    "status": "not_recorded_locally",
+    "result_id": "b4_uncertainty_hermite_c012",
+    "source_section_id": "B.4",
+    "constant_id": "C4",
+    "test_function_form": "f(x) = P(x) exp(-pi x^2)",
+    "polynomial_form": "P(x) = c0 H0(x) + c1 H4(x) + c2 H8(x)",
+    "basis_family": "Hermite polynomials H_{4k}",
+    "coefficient_labels": ["c0", "c1", "c2"],
+    "reported_coefficients_approx": [0.32925, -0.01159, -0.000089216],
+    "fourier_eigenfunction_property": "Fourier transform of H_n(x) exp(-pi x^2) is i^n H_n(xi) exp(-pi xi^2)",
+    "p_zero_condition": "P(0) = 0",
+    "root_computation": "largest positive root of P(x) / x^2",
+    "bound_formula": "r_max^2 / (2*pi)",
+    "reported_upper_bound": 0.3521,
+    "reported_bound_relation": "C4 <= 0.3521",
+    "required_payload_fields": list(EXPECTED_B4_HERMITE_REQUIRED_FIELDS),
+    "coefficient_payload_status": "not_recorded_locally",
+    "hermite_basis_certificate_status": "not_recorded_locally",
+    "fourier_transform_certificate_status": "not_recorded_locally",
+    "origin_condition_certificate_status": "not_recorded_locally",
+    "eventual_nonnegative_certificate_status": "not_recorded_locally",
+    "root_certificate_status": "not_recorded_locally",
+    "recomputed_upper_bound_status": "not_recorded_locally",
+    "claim_boundary": "The registry records the paper's B.4 Hermite-polynomial result summary but does not claim a local coefficient payload, basis/Fourier certificate, root certificate, or recomputed upper bound.",
+}
+EXPECTED_B4_SIMILARITY_EVIDENCE = {
+    "source_section_id": "B.4",
+    "prior_source": "[33]",
+    "similarity_claim": "Qualitatively our linear combination is very similar to the one found in [33].",
+    "hypothesis_claim": "The paper treats that similarity as empirical support for the [33] hypothesis that the construction is nearly optimal.",
+    "comparison_status": "not_recorded_locally",
+    "required_comparison_fields": [
+        "prior_coefficient_payload_path",
+        "prior_coefficient_payload_sha256",
+        "alphaevolve_coefficient_payload_path",
+        "alphaevolve_coefficient_payload_sha256",
+        "basis_alignment_certificate_path",
+        "basis_alignment_certificate_sha256",
+        "coefficient_similarity_metric",
+        "near_optimality_hypothesis_source",
+    ],
+    "claim_boundary": "The registry records the paper's qualitative similarity statement but does not claim a local coefficient-level comparison to [33].",
+}
+EXPECTED_B4_REVISION_REQUIRED_FIELDS = (
+    "revision_artifact_path",
+    "revision_artifact_sha256",
+    "colab_or_verifier_reference",
+    "recomputed_revised_constant",
+    "comparison_to_0_3284_certificate_path",
+    "comparison_to_0_3284_certificate_sha256",
+)
+EXPECTED_B4_REVISION_RESULT = {
+    "status": "not_recorded_locally",
+    "source_section_id": "B.4",
+    "first_version_reported_upper_bound": 0.3521,
+    "external_refined_constant": 0.3284,
+    "external_refined_source": "[18]",
+    "revised_reported_constant": 0.3216,
+    "revision_trigger": "After the first manuscript version, Henry Cohn pointed out the recent [18] refinement.",
+    "reported_revision_method": "incorporating the refined approach into AlphaEvolve",
+    "details_location": "accompanying Google Colab",
+    "required_revision_fields": list(EXPECTED_B4_REVISION_REQUIRED_FIELDS),
+    "revision_artifact_status": "not_recorded_locally",
+    "colab_reference_status": "not_recorded_locally",
+    "recomputed_revised_constant_status": "not_recorded_locally",
+    "claim_boundary": "The registry records the B.4 post-first-version 0.3216 note but does not claim local revision artifacts or recomputation.",
+}
 EXPECTED_B8_METRIC_CONVENTIONS = (
     {
         "result_id": "b8_16_points_2d",
@@ -649,6 +760,7 @@ def _validate_family(
     _require_text(family, "name", family_id, issues)
     _validate_autocorrelation_paper_label(family, family_id, issues)
     _validate_autocorrelation_step_evidence(family, family_id, issues)
+    _validate_b4_uncertainty_evidence(family, family_id, issues)
     _validate_b8_metric_conventions(family, family_id, issues)
     _validate_b8_witness_boundary(family, family_id, issues)
     _validate_b5_source_formulation(family, family_id, issues)
@@ -743,6 +855,186 @@ def _validate_autocorrelation_step_evidence(
             issues.append(AppendixBRegistryIssue("step_function_label_section_mismatch", "step_function_evidence source section must match paper_label", family_id))
         if evidence.get("constant_id") != label.get("constant_id"):
             issues.append(AppendixBRegistryIssue("step_function_label_constant_mismatch", "step_function_evidence constant id must match paper_label", family_id))
+
+
+def _validate_b4_uncertainty_evidence(
+    family: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    if family_id != "uncertainty_inequality":
+        return
+    _validate_b4_source_formulation(family, family_id, issues)
+    _validate_b4_prior_rounding(family, family_id, issues)
+    _validate_b4_hermite_result(family, family_id, issues)
+    _validate_b4_similarity_evidence(family, family_id, issues)
+    _validate_b4_revision_result(family, family_id, issues)
+
+
+def _validate_b4_source_formulation(
+    family: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    evidence = family.get("source_formulation_evidence")
+    if not isinstance(evidence, dict):
+        issues.append(AppendixBRegistryIssue("missing_b4_source_formulation", "B.4 requires source_formulation_evidence", family_id))
+        return
+    for field, expected_value in EXPECTED_B4_SOURCE_FORMULATION.items():
+        actual = evidence.get(field)
+        if isinstance(expected_value, float):
+            if isinstance(actual, bool) or not isinstance(actual, (int, float)) or not math.isclose(float(actual), expected_value, rel_tol=0.0, abs_tol=1e-12):
+                issues.append(AppendixBRegistryIssue(f"invalid_b4_source_{field}", f"B.4 source_formulation_evidence.{field} must match the AlphaEvolve source formulation", family_id))
+        elif actual != expected_value:
+            issues.append(AppendixBRegistryIssue(f"invalid_b4_source_{field}", f"B.4 source_formulation_evidence.{field} must match the AlphaEvolve source formulation", family_id))
+    lower = evidence.get("known_lower_bound")
+    rounded = evidence.get("known_upper_bound_after_four_digit_rounding")
+    stated = evidence.get("known_upper_bound_as_stated_in_source")
+    if (
+        isinstance(lower, (int, float))
+        and not isinstance(lower, bool)
+        and isinstance(rounded, (int, float))
+        and not isinstance(rounded, bool)
+        and isinstance(stated, (int, float))
+        and not isinstance(stated, bool)
+        and not (float(lower) < float(rounded) < float(stated))
+    ):
+        issues.append(AppendixBRegistryIssue("invalid_b4_source_bound_order", "B.4 known bound values must preserve lower < rounded upper < source-stated upper", family_id))
+
+
+def _validate_b4_prior_rounding(
+    family: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    evidence = family.get("prior_bound_rounding_evidence")
+    if not isinstance(evidence, dict):
+        issues.append(AppendixBRegistryIssue("missing_b4_prior_bound_rounding", "B.4 requires prior_bound_rounding_evidence", family_id))
+        return
+    for field, expected_value in EXPECTED_B4_PRIOR_BOUND_ROUNDING.items():
+        actual = evidence.get(field)
+        if isinstance(expected_value, float):
+            if isinstance(actual, bool) or not isinstance(actual, (int, float)) or not math.isclose(float(actual), expected_value, rel_tol=0.0, abs_tol=1e-12):
+                issues.append(AppendixBRegistryIssue(f"invalid_b4_prior_{field}", f"B.4 prior_bound_rounding_evidence.{field} must match the AlphaEvolve rounding note", family_id))
+        elif actual != expected_value:
+            issues.append(AppendixBRegistryIssue(f"invalid_b4_prior_{field}", f"B.4 prior_bound_rounding_evidence.{field} must match the AlphaEvolve rounding note", family_id))
+    stated = evidence.get("prior_upper_bound_stated")
+    rounded = evidence.get("prior_upper_bound_rounded_solution")
+    if (
+        isinstance(stated, (int, float))
+        and not isinstance(stated, bool)
+        and isinstance(rounded, (int, float))
+        and not isinstance(rounded, bool)
+        and float(rounded) >= float(stated)
+    ):
+        issues.append(AppendixBRegistryIssue("invalid_b4_prior_rounding_order", "B.4 rounded prior upper bound must remain below the source-stated display value", family_id))
+
+
+def _validate_b4_hermite_result(
+    family: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    boundary = family.get("hermite_result_boundary")
+    if not isinstance(boundary, dict):
+        issues.append(AppendixBRegistryIssue("missing_b4_hermite_result_boundary", "B.4 requires hermite_result_boundary", family_id))
+        return
+    for field, expected_value in EXPECTED_B4_HERMITE_RESULT.items():
+        actual = boundary.get(field)
+        if isinstance(expected_value, float):
+            if isinstance(actual, bool) or not isinstance(actual, (int, float)) or not math.isclose(float(actual), expected_value, rel_tol=0.0, abs_tol=1e-12):
+                issues.append(AppendixBRegistryIssue(f"invalid_b4_hermite_{field}", f"B.4 hermite_result_boundary.{field} must match the AlphaEvolve result summary", family_id))
+        elif actual != expected_value:
+            issues.append(AppendixBRegistryIssue(f"invalid_b4_hermite_{field}", f"B.4 hermite_result_boundary.{field} must match the AlphaEvolve result summary", family_id))
+    if boundary.get("status") != "not_recorded_locally":
+        issues.append(AppendixBRegistryIssue("invalid_b4_hermite_status", "B.4 Hermite boundary must remain not_recorded_locally until coefficient and certificate artifacts exist", family_id))
+    if boundary.get("required_payload_fields") != list(EXPECTED_B4_HERMITE_REQUIRED_FIELDS):
+        issues.append(AppendixBRegistryIssue("invalid_b4_hermite_required_payload_fields", "B.4 Hermite boundary must enumerate required future coefficient and certificate fields", family_id))
+    for field in (
+        "coefficient_payload_status",
+        "hermite_basis_certificate_status",
+        "fourier_transform_certificate_status",
+        "origin_condition_certificate_status",
+        "eventual_nonnegative_certificate_status",
+        "root_certificate_status",
+        "recomputed_upper_bound_status",
+    ):
+        if boundary.get(field) != "not_recorded_locally":
+            issues.append(AppendixBRegistryIssue(f"invalid_b4_hermite_{field}", f"B.4 {field} must be not_recorded_locally in the absence boundary", family_id))
+    claim_boundary = boundary.get("claim_boundary")
+    if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary:
+        issues.append(AppendixBRegistryIssue("missing_b4_hermite_claim_boundary", "B.4 Hermite boundary must state that local coefficient/certificate evidence is not claimed", family_id))
+    prior = family.get("prior_bound_rounding_evidence")
+    prior_upper = prior.get("prior_upper_bound_rounded_solution") if isinstance(prior, dict) else None
+    reported = boundary.get("reported_upper_bound")
+    if (
+        isinstance(prior_upper, (int, float))
+        and not isinstance(prior_upper, bool)
+        and isinstance(reported, (int, float))
+        and not isinstance(reported, bool)
+        and float(reported) >= float(prior_upper)
+    ):
+        issues.append(AppendixBRegistryIssue("invalid_b4_hermite_improvement_direction", "B.4 Hermite result must improve on the rounded prior upper bound", family_id))
+
+
+def _validate_b4_similarity_evidence(
+    family: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    evidence = family.get("prior_construction_similarity_evidence")
+    if not isinstance(evidence, dict):
+        issues.append(AppendixBRegistryIssue("missing_b4_similarity_evidence", "B.4 requires prior_construction_similarity_evidence", family_id))
+        return
+    for field, expected_value in EXPECTED_B4_SIMILARITY_EVIDENCE.items():
+        if evidence.get(field) != expected_value:
+            issues.append(AppendixBRegistryIssue(f"invalid_b4_similarity_{field}", f"B.4 prior_construction_similarity_evidence.{field} must match the AlphaEvolve similarity statement", family_id))
+    if evidence.get("comparison_status") != "not_recorded_locally":
+        issues.append(AppendixBRegistryIssue("invalid_b4_similarity_comparison_status", "B.4 similarity comparison must remain not_recorded_locally until coefficient comparison artifacts exist", family_id))
+    claim_boundary = evidence.get("claim_boundary")
+    if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary:
+        issues.append(AppendixBRegistryIssue("missing_b4_similarity_claim_boundary", "B.4 similarity evidence must state that local coefficient-level comparison is not claimed", family_id))
+
+
+def _validate_b4_revision_result(
+    family: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    boundary = family.get("revision_result_boundary")
+    if not isinstance(boundary, dict):
+        issues.append(AppendixBRegistryIssue("missing_b4_revision_result_boundary", "B.4 requires revision_result_boundary", family_id))
+        return
+    for field, expected_value in EXPECTED_B4_REVISION_RESULT.items():
+        actual = boundary.get(field)
+        if isinstance(expected_value, float):
+            if isinstance(actual, bool) or not isinstance(actual, (int, float)) or not math.isclose(float(actual), expected_value, rel_tol=0.0, abs_tol=1e-12):
+                issues.append(AppendixBRegistryIssue(f"invalid_b4_revision_{field}", f"B.4 revision_result_boundary.{field} must match the post-first-version note", family_id))
+        elif actual != expected_value:
+            issues.append(AppendixBRegistryIssue(f"invalid_b4_revision_{field}", f"B.4 revision_result_boundary.{field} must match the post-first-version note", family_id))
+    if boundary.get("status") != "not_recorded_locally":
+        issues.append(AppendixBRegistryIssue("invalid_b4_revision_status", "B.4 revision boundary must remain not_recorded_locally until revision artifacts exist", family_id))
+    if boundary.get("required_revision_fields") != list(EXPECTED_B4_REVISION_REQUIRED_FIELDS):
+        issues.append(AppendixBRegistryIssue("invalid_b4_revision_required_fields", "B.4 revision boundary must enumerate required future revision artifacts", family_id))
+    for field in ("revision_artifact_status", "colab_reference_status", "recomputed_revised_constant_status"):
+        if boundary.get(field) != "not_recorded_locally":
+            issues.append(AppendixBRegistryIssue(f"invalid_b4_revision_{field}", f"B.4 {field} must be not_recorded_locally in the absence boundary", family_id))
+    claim_boundary = boundary.get("claim_boundary")
+    if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary:
+        issues.append(AppendixBRegistryIssue("missing_b4_revision_claim_boundary", "B.4 revision boundary must state that local revision evidence is not claimed", family_id))
+    first = boundary.get("first_version_reported_upper_bound")
+    external = boundary.get("external_refined_constant")
+    revised = boundary.get("revised_reported_constant")
+    if (
+        isinstance(first, (int, float))
+        and not isinstance(first, bool)
+        and isinstance(external, (int, float))
+        and not isinstance(external, bool)
+        and isinstance(revised, (int, float))
+        and not isinstance(revised, bool)
+        and not (float(revised) < float(external) < float(first))
+    ):
+        issues.append(AppendixBRegistryIssue("invalid_b4_revision_improvement_direction", "B.4 revision values must preserve revised 0.3216 < external 0.3284 < first-version 0.3521", family_id))
 
 
 def _validate_b8_metric_conventions(

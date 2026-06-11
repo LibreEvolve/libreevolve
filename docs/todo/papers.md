@@ -2865,18 +2865,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     version Henry Cohn identified a refined approach and AlphaEvolve improved
     the reported constant further to `0.3216`, with details delegated to the
     accompanying Google Colab.
-  - Current gap: paper-facing status treats Appendix B as thirteen families
-    with planned/smoke statuses and expected artifact shapes. It does not
-    distinguish first-version versus updated constants, superseded bounds,
-    post-publication notes, contributor/advisor attribution for the revision,
-    or which verifier artifact corresponds to each reported value.
-  - Required result: add paper/report evidence for result revision identity,
-    manuscript/source version, reported constant or construction value,
-    previous and superseding values, update note, attribution, and verifier/
-    Colab linkage before claiming Appendix B result parity. README, ROADMAP,
-    papers index, and code TODOs should keep Appendix B wording scoped until
-    versioned result rows prevent mixing stale and current mathematical
-    claims.
+  - Current gap: paper-facing Appendix B coverage now distinguishes the B.4
+    first-version `C4 <= 0.3521` result, Henry Cohn's pointer to `[18]`, the
+    external refined `0.3284`, and AlphaEvolve's revised `0.3216` through a
+    validated `revision_result_boundary`. It still does not include the
+    revision artifact, Colab/verifier reference, source manuscript date, or
+    recomputed revised constant.
+  - Required result: add paper/report evidence for the missing result revision
+    artifacts: manuscript/source version, superseded/current status,
+    verifier/Colab linkage, recomputed revised constants, and artifact hashes
+    before claiming Appendix B result parity. README, ROADMAP, papers index,
+    and code TODOs should keep Appendix B wording scoped until versioned
+    artifacts prevent mixing stale and current mathematical claims.
 
 - [ ] Track Appendix B.4 prior-bound rounding evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.4 gives the known
@@ -2884,19 +2884,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     reference `[33]` states the prior upper bound as `0.353`, but that rounding
     the referenced solution to the fourth digit gives `0.3523`, which is the
     comparison baseline for AlphaEvolve's first-version `C4 <= 0.3521` result.
-  - Current gap: paper-facing Appendix B TODOs track revised constants,
-    Hermite/coefficient payloads, verifier/Colab links, previous-bound
-    comparisons, and qualitative similarity to reference `[33]`. They do not
-    preserve the prior source's stated value versus rounded value, the
-    fourth-digit rounding policy, lower-bound context, or the precise baseline
-    value that makes the `0.3521` improvement meaningful.
+  - Current gap: paper-facing Appendix B coverage now preserves the prior
+    source's stated value versus rounded value, lower-bound context, rounding
+    policy, and comparison baseline through validated B.4
+    `source_formulation_evidence` and `prior_bound_rounding_evidence`. It does
+    not yet retain a `[33]` page/section locator or source-solution artifact
+    that would independently audit the rounding statement.
   - Required result: add B.4 paper-evidence records for the prior `[33]`
-    bound: source id and page/section, stated value `0.353`,
-    rounded/recomputed value `0.3523`, lower bound `0.2025`, rounding
-    precision/policy, source-solution artifact or citation status, comparison
-    against AlphaEvolve's `0.3521` first-version bound, and README/ROADMAP
-    wording that separates this prior-bound caveat from the later `0.3216`
-    revision and from Hermite-polynomial certificate evidence.
+    source locator/artifact status and any source-solution evidence needed to
+    audit the stated `0.353` versus rounded `0.3523` distinction, while keeping
+    README/ROADMAP wording separate from the later `0.3216` revision and from
+    Hermite-polynomial certificate evidence.
 
 - [ ] Track Appendix B.4 Hermite-polynomial certificate evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.4 derives
@@ -2906,18 +2904,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     `[0.32925, -0.01159, -8.9216e-5]` for `H0`, `H4`, and `H8`, then computes
     the upper bound from the largest positive root of `P(x)/x^2` using
     `r_max^2 / (2*pi)`.
-  - Current gap: paper-facing Appendix B TODOs track numeric result rows,
-    revised constants, verifier/Colab links, and qualitative similarity to
-    reference `[33]`. They do not require B.4-specific evidence for coefficient
-    precision, Hermite-basis identities, the `P(0)=0` and `x^2` factor step,
-    sign/condition checks, largest-root computation, or recomputation of the
-    reported bound from the root certificate.
-  - Required result: add paper/report evidence for B.4 Hermite basis terms,
-    coefficient payload and precision, Fourier/test-function assumptions,
-    `P(0)=0`/factor handling, largest-positive-root calculation, bound
-    recomputation via `r_max^2 / (2*pi)`, previous-bound comparison, verifier
-    artifacts, and documentation that separates this certificate from B.4
-    revision-history and near-optimality interpretation evidence.
+  - Current gap: paper-facing Appendix B coverage now records a validated B.4
+    `hermite_result_boundary` for the Hermite basis terms, approximate
+    coefficients, `P(0)=0`/`x^2` factor step, largest-root computation, and
+    `r_max^2 / (2*pi)` formula. It still does not contain coefficient payload
+    hashes, verifier artifacts, sign/condition certificates, root
+    certificates, or recomputed-bound evidence.
+  - Required result: add paper/report evidence for the missing B.4 coefficient
+    payload, Fourier/test-function certificates, largest-positive-root
+    calculation, bound recomputation, verifier artifacts, and documentation
+    that separates this certificate from B.4 revision-history and
+    near-optimality interpretation evidence.
 
 - [ ] Track Appendix B.4 prior-construction similarity and hypothesis evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.4 reports the
@@ -2925,17 +2922,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     combination is qualitatively very similar to the construction in reference
     `[33]`, which the paper presents as empirical confirmation of the
     hypothesis that the construction is nearly optimal.
-  - Current gap: paper-facing Appendix B TODOs track numeric result rows,
-    Hermite/coefficient payloads, prior-best values, revised constants, and
-    verifier/Colab links. They do not preserve the qualitative
-    construction-to-prior comparison or the near-optimality hypothesis as a
-    distinct paper-evidence claim.
-  - Required result: add B.4 paper-evidence records for the comparison to
-    reference `[33]`: prior construction identifier, comparable structure or
-    coefficient fields, qualitative-similarity claim, near-optimality
-    hypothesis claim id, source page/section, evidence-strength label, and
-    README/ROADMAP wording that does not conflate numerical improvement with
-    qualitative hypothesis support.
+  - Current gap: paper-facing Appendix B coverage now preserves the qualitative
+    construction-to-prior comparison and near-optimality hypothesis as a
+    distinct validated B.4 `prior_construction_similarity_evidence` claim. It
+    still does not include the actual prior construction identifier,
+    coefficient payloads, basis-alignment evidence, or coefficient-similarity
+    metric.
+  - Required result: add B.4 paper-evidence records for the missing comparison
+    artifacts to reference `[33]`: prior construction identifier, comparable
+    structure or coefficient fields, source page/section, evidence-strength
+    label, and README/ROADMAP wording that does not conflate numerical
+    improvement with qualitative hypothesis support.
 
 - [ ] Generate AlphaEvolve-suite matrix-result publication artifacts.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 and Appendix A

@@ -2822,18 +2822,17 @@ Primary evidence:
     then notes that after the first version Henry Cohn pointed to a refined
     approach and AlphaEvolve improved the reported constant further to
     `0.3216`, with details in the accompanying Google Colab.
-  - Current evidence: `alphaevolve_appendix_b.json` is a family/status ledger:
-    it records the `uncertainty_inequality` family as planned with null
-    target-baseline value and generic construction/certificate artifact labels.
-    It does not represent per-result constants, manuscript revision status,
-    superseded versus current reported bounds, post-publication notes, advisor
-    attribution, or links from revised constants to verifier artifacts.
-  - Required result: add result-version metadata for Appendix B benchmark
-    rows, including paper revision/source date, reported constant or
-    construction value, superseded/current status, update note, attribution
-    where relevant, verifier/Colab artifact linkage, and validation that docs
-    do not mix first-version and updated bounds when claiming AlphaEvolve-style
-    mathematical result parity.
+  - Current evidence: `alphaevolve_appendix_b.json` now records a B.4
+    `revision_result_boundary` that distinguishes the first-version
+    `C4 <= 0.3521` result, Henry Cohn's pointer to `[18]`, the external
+    refined constant `0.3284`, and AlphaEvolve's revised `0.3216` note. The
+    registry validator enforces those fields and keeps revision artifacts,
+    Colab/verifier references, and recomputation status `not_recorded_locally`.
+  - Required result: add the actual result-version artifacts for Appendix B
+    benchmark rows, including paper revision/source date, superseded/current
+    status, verifier/Colab artifact linkage, recomputed revised constants, and
+    validation that docs do not mix first-version and updated bounds when
+    claiming AlphaEvolve-style mathematical result parity.
 
 - [ ] Add Appendix B.4 prior-bound rounding provenance.
   - Spec evidence: AlphaEvolve Appendix B.4 states the known uncertainty
@@ -2842,18 +2841,15 @@ Primary evidence:
     `0.3523` when its solution is rounded to the fourth digit. The same
     paragraph then compares AlphaEvolve's first-version `C4 <= 0.3521` result
     against that rounded prior bound.
-  - Current evidence: existing Appendix B TODOs require revised-result rows,
-    Hermite-polynomial certificate details, verifier links, and qualitative
-    comparison to reference `[33]`. They do not require a source-linked record
-    for the prior `[33]` stated value, the paper's fourth-digit rounding
-    caveat, the lower-bound context, or the exact baseline value used when
-    claiming the `0.3521` improvement.
-  - Required result: add Appendix B.4 prior-bound metadata and validators for
-    the `[33]` source id/page or section, stated prior upper bound `0.353`,
-    rounded/recomputed prior bound `0.3523`, lower-bound context `0.2025`,
-    rounding precision and policy, source-solution artifact or citation status,
-    comparison to AlphaEvolve's `0.3521` first-version bound, and docs checks
-    that keep this prior-bound caveat distinct from the later `0.3216`
+  - Current evidence: `alphaevolve_appendix_b.json` now records B.4
+    `source_formulation_evidence` and `prior_bound_rounding_evidence` for
+    `[33]`: lower bound `0.2025`, source-stated upper bound `0.353`, rounded
+    comparison baseline `0.3523`, and the comparison policy against
+    AlphaEvolve's first-version `0.3521`. `appendix_b_registry.py` validates
+    those values and their ordering.
+  - Required result: add the actual prior-source solution citation/artifact
+    details and any page/section locator needed to audit the `[33]` rounding
+    statement, while keeping this caveat distinct from the later `0.3216`
     revision and from Hermite certificate verification.
 
 - [ ] Add Appendix B.4 Hermite-polynomial certificate provenance.
@@ -2864,19 +2860,18 @@ Primary evidence:
     `[0.32925, -0.01159, -8.9216e-5]` for `H0`, `H4`, and `H8`, factors
     `P(x)` by `x^2`, takes the largest positive root of `P(x)/x^2`, and
     computes the bound as `r_max^2 / (2*pi)`.
-  - Current evidence: existing Appendix B TODOs require numeric result rows,
-    revised-result provenance, construction/verifier links, and qualitative
-    comparison to reference `[33]`. They do not require B.4-specific
-    coefficient precision, Hermite-basis identities, even-polynomial/Fourier
-    invariance assumptions, sign/condition checks for the test function,
-    largest-root calculation evidence, or the normalization formula that turns
-    the root certificate into the `C4` upper bound.
-  - Required result: add Appendix B.4 construction/certificate metadata and
-    validators for Hermite basis terms, coefficient payload and precision,
-    `P(0)=0`/`x^2` factor handling, positivity/sign-condition checks,
-    largest-positive-root computation, `r_max^2 / (2*pi)` recomputation,
-    previous bound comparison, and artifact hashes. Keep this separate from
-    the B.4 revision-history and near-optimality-similarity TODOs.
+  - Current evidence: `alphaevolve_appendix_b.json` now records a validated
+    B.4 `hermite_result_boundary`: `f(x) = P(x) exp(-pi x^2)`, `P` as
+    `c0 H0 + c1 H4 + c2 H8`, approximate coefficients
+    `[0.32925, -0.01159, -8.9216e-5]`, the Fourier/Hermite property,
+    `P(0)=0`, largest positive root of `P(x)/x^2`, formula
+    `r_max^2 / (2*pi)`, and reported `C4 <= 0.3521`. Required future
+    coefficient payload and certificate fields are validated, but all artifact
+    statuses remain `not_recorded_locally`.
+  - Required result: add the actual Appendix B.4 coefficient payload,
+    Hermite-basis, Fourier-transform, origin-condition, eventual-nonnegative,
+    root, and recomputed-bound certificates with hashes. Keep this separate
+    from the B.4 revision-history and near-optimality-similarity TODOs.
 
 - [ ] Add Appendix B.4 prior-construction similarity and hypothesis provenance.
   - Spec evidence: AlphaEvolve Appendix B.4 does more than report the
@@ -2885,19 +2880,18 @@ Primary evidence:
     qualitatively very similar to the construction in reference `[33]` and
     treats that similarity as empirical support for the prior hypothesis that
     the construction is nearly optimal.
-  - Current evidence: existing Appendix B TODOs require per-result values,
-    coefficient payloads, verifier links, revised-result provenance, and
-    comparison to previous numeric bounds. They do not require a source-linked
-    qualitative comparison between the AlphaEvolve construction and the prior
-    `[33]` construction, nor a claim record for the near-optimality hypothesis
-    that the paper says was empirically supported.
-  - Required result: add Appendix B.4 comparison/provenance metadata that links
-    the AlphaEvolve Hermite-polynomial construction to the prior `[33]`
-    construction: source reference and page/section, comparable construction
-    family, coefficient/structure comparison fields, qualitative-similarity
-    claim text, hypothesis claim id, evidence strength label, and docs
-    validation that separates numeric bound improvement from qualitative
-    near-optimality evidence.
+  - Current evidence: `alphaevolve_appendix_b.json` now records validated B.4
+    `prior_construction_similarity_evidence` with source `[33]`, the
+    qualitative similarity statement, the near-optimality hypothesis claim,
+    required future comparison fields, and a claim boundary stating that no
+    local coefficient-level comparison is claimed.
+  - Required result: add the actual Appendix B.4 comparison artifacts that
+    link the AlphaEvolve Hermite-polynomial construction to the prior `[33]`
+    construction: source page/section, prior coefficient payload, AlphaEvolve
+    coefficient payload, basis-alignment certificate, coefficient-similarity
+    metric, hypothesis claim id, evidence-strength label, and docs validation
+    that separates numeric bound improvement from qualitative near-optimality
+    evidence.
 
 - [ ] Add incumbent-construction handoff contracts for heuristic-search
       benchmarks.

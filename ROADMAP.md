@@ -637,6 +637,17 @@ is not yet an AlphaEvolve reproduction.
   superseded/current status, update note, attribution, and verifier/Colab
   artifact linkage for revised results such as the uncertainty-inequality
   bound.
+- Keep Appendix B.4 uncertainty-inequality claims scoped to validated absence
+  boundaries until coefficient/revision artifacts land: the registry now
+  validates the source formulation, `[33]` prior-bound rounding (`0.353`
+  stated versus `0.3523` rounded), the first-version Hermite-polynomial
+  result boundary (`C4 <= 0.3521`, coefficients
+  `[0.32925, -0.01159, -8.9216e-5]`, `P(x)/x^2`, and `r_max^2 / (2*pi)`), the
+  qualitative similarity/hypothesis claim against `[33]`, and the
+  post-first-version revision note (`[18]` at `0.3284`, AlphaEvolve at
+  `0.3216`). Actual coefficient payloads, Hermite/Fourier/root certificates,
+  coefficient-comparison artifacts, Colab/verifier linkage, and recomputation
+  certificates remain open.
 - Keep Appendix B.1-B.3 public labels tied to paper terminology: the registry
   now validates exact paper-facing labels for `B.1`/`C1`, `B.2`/`C2`, and
   `B.3`/`C3`, while treating `autocorrelation_bounds_k*` as internal ids only.

@@ -2995,15 +2995,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     an improved `0.3216` constant linked to a refined approach and the
     accompanying Google Colab.
   - Current evidence: `ROADMAP.md`, README, papers index, and the Appendix B
-    registry describe family coverage, planned/smoke status, target-baseline
-    placeholders, and missing verifier data. They do not require versioned
-    per-result values, superseded/current status, update notes, source
-    manuscript version, attribution, or artifact linkage for revised
-    mathematical constants.
-  - Required result: when Appendix B result-version provenance lands, update
-    ROADMAP, README, papers index, and code/paper TODO entries together with
-    revision-aware result rows and validation so roadmap wording cannot treat a
-    family/status registry as current AlphaEvolve Appendix B result evidence.
+    registry now cite a validated B.4 `revision_result_boundary` for the
+    first-version `C4 <= 0.3521`, Henry Cohn's pointer to `[18]`, external
+    `0.3284`, and AlphaEvolve's revised `0.3216`. Local revision artifacts,
+    Colab/verifier linkage, and recomputation remain absent.
+  - Required result: when actual Appendix B result-version artifacts land,
+    update ROADMAP, README, papers index, and code/paper TODO entries together
+    with revision-aware artifacts and validation so roadmap wording cannot
+    treat a family/status registry as current AlphaEvolve Appendix B result
+    evidence.
 
 - [ ] Keep Appendix B.4 roadmap wording scoped until prior-bound rounding
       provenance exists.
@@ -3014,16 +3014,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     AlphaEvolve value `C4 <= 0.3521` is positioned as an improvement over that
     rounded prior bound.
   - Current evidence: `ROADMAP.md`, README, papers index, and Appendix B TODOs
-    can cite broad Appendix B numeric-result rows, revised-result provenance,
-    Hermite certificate gaps, and construction/verifier gaps. They do not
-    require source-linked evidence for the prior paper's stated value versus
-    rounded comparison value, lower-bound context, rounding policy, or the
-    precise baseline used for the `0.3521` improvement claim.
-  - Required result: when Appendix B.4 prior-bound rounding evidence lands,
+    now cite validated B.4 prior-bound rounding evidence: `[33]` source-stated
+    `0.353`, rounded `0.3523` baseline, lower-bound context `0.2025`, and
+    comparison to AlphaEvolve's first-version `0.3521`. The precise `[33]`
+    source locator and source-solution artifact remain absent.
+  - Required result: when Appendix B.4 prior-source artifacts or locators land,
     update ROADMAP, README, papers index, and code/paper TODOs so roadmap
-    claims distinguish the `[33]` stated `0.353` value, the rounded `0.3523`
-    baseline, AlphaEvolve's `0.3521` first-version result, the later `0.3216`
-    revision, and the separate Hermite-polynomial certificate.
+    claims can cite the rounding evidence directly without treating it as a
+    reproduced local certificate.
 
 - [ ] Keep Appendix B.4 roadmap wording scoped until Hermite-polynomial
       certificate evidence exists.
@@ -3032,17 +3030,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `f(x) = P(x) exp(-pi x^2)`, approximate coefficients
     `[0.32925, -0.01159, -8.9216e-5]`, the largest positive root of
     `P(x)/x^2`, and the formula `r_max^2 / (2*pi)`.
-  - Current evidence: roadmap/README/paper-index wording can cite broad
-    Appendix B numeric-result rows, construction/verifier gaps, revised-result
-    provenance, and B.4 prior-construction similarity gaps. It does not require
-    B.4-specific Hermite basis terms, coefficient precision, sign/condition
-    checks, root-calculation artifacts, bound recomputation, or certificate
-    payload hashes.
-  - Required result: when B.4 Hermite-polynomial certificate metadata and
-    validators land, update ROADMAP, README, papers index, and code/paper TODOs
-    so roadmap claims separate the quoted `C4` value, the polynomial/root
-    certificate, revised-result history, and qualitative near-optimality
-    interpretation.
+  - Current evidence: roadmap/README/paper-index wording now cites the
+    validated B.4 Hermite boundary: basis terms, coefficient precision,
+    `P(0)=0`, `P(x)/x^2`, root calculation target, `r_max^2 / (2*pi)`, and
+    absence of local coefficient/certificate/recomputation artifacts.
+  - Required result: when actual B.4 Hermite-polynomial certificate artifacts
+    land, update ROADMAP, README, papers index, and code/paper TODOs so roadmap
+    claims separate the quoted `C4` value, the polynomial/root certificate,
+    revised-result history, and qualitative near-optimality interpretation.
 
 - [ ] Keep Appendix B.4 roadmap wording scoped until prior-construction
       similarity evidence exists.
@@ -3051,16 +3046,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     qualitatively very similar to the construction in reference `[33]`, and
     uses that similarity as empirical support for the hypothesis that the
     construction is nearly optimal.
-  - Current evidence: roadmap/README/paper-index wording can cite Appendix B
-    numeric-result rows, coefficient/construction payload gaps,
-    construction/verifier exports, and revised-result provenance. It does not
-    require a separate B.4 comparison record that ties the AlphaEvolve
-    construction to the prior `[33]` construction and labels the
-    near-optimality hypothesis evidence.
-  - Required result: when Appendix B.4 prior-construction comparison metadata
-    and validators land, update ROADMAP, README, papers index, and code/paper
-    TODOs so roadmap claims distinguish value improvement, method similarity,
-    and empirical support for near-optimality.
+  - Current evidence: roadmap/README/paper-index wording now cites a validated
+    B.4 similarity record that ties the AlphaEvolve construction to the prior
+    `[33]` construction and labels the near-optimality hypothesis as a paper
+    claim, while stating that coefficient-level comparison artifacts are not
+    locally recorded.
+  - Required result: when Appendix B.4 prior-construction comparison artifacts
+    land, update ROADMAP, README, papers index, and code/paper TODOs so roadmap
+    claims distinguish value improvement, method similarity, and empirical
+    support for near-optimality.
 
 - [ ] Keep benchmark metric-range roadmap wording scoped to documented smoke
       normalization versus real target/SOTA baselines.

@@ -3661,13 +3661,16 @@ is also not a
 Section 3.2 aggregate outcome ledger: LibreEvolve does not yet enumerate the
 paper's over-50 mathematical problem instances, branch taxonomy, previous-best
 references, matched/improved/failed statuses, or aggregate percentages for
-best-known rediscovery and SOTA improvement. The registry also does not yet
-preserve Appendix B result-version provenance: for example, Appendix B.4
-reports an uncertainty-inequality bound and then notes a post-first-version
-refinement to a stronger constant. LibreEvolve does not yet store manuscript
-version, superseded/current status, update notes, attribution, or
-verifier-artifact linkage for revised mathematical constants. Matrix-result
-publication metadata has a separate
+best-known rediscovery and SOTA improvement. For Appendix B.4, the registry now
+preserves the uncertainty-inequality formulation, the `[33]` prior-bound
+rounding distinction (`0.353` stated versus `0.3523` rounded), the first-version
+Hermite-polynomial result boundary (`C4 <= 0.3521` with coefficients
+`[0.32925, -0.01159, -8.9216e-5]`), the qualitative similarity claim against
+`[33]`, and the post-first-version revision note (`0.3284` from `[18]`, then
+AlphaEvolve `0.3216`). These are validated absence boundaries: the local
+coefficient payloads, Hermite/Fourier/root certificates, coefficient-level
+comparison artifacts, Colab/verifier linkage, and recomputed constants remain
+absent. Matrix-result publication metadata has a separate
 `libreevolve.matrix_result_report.v1` contract in
 `libreevolve/problems/benchmarks/matrix_results.py`; it validates target
 identity, dimensions, seed count, best rank, hit fraction, per-seed best-rank

@@ -17,6 +17,13 @@ from libreevolve.problems.benchmarks.appendix_b_registry import (
     EXPECTED_B8_WITNESS_REQUIRED_FIELDS,
     EXPECTED_AUTOCORRELATION_LABELS,
     EXPECTED_AUTOCORRELATION_STEP_EVIDENCE,
+    EXPECTED_B4_HERMITE_REQUIRED_FIELDS,
+    EXPECTED_B4_HERMITE_RESULT,
+    EXPECTED_B4_PRIOR_BOUND_ROUNDING,
+    EXPECTED_B4_REVISION_REQUIRED_FIELDS,
+    EXPECTED_B4_REVISION_RESULT,
+    EXPECTED_B4_SIMILARITY_EVIDENCE,
+    EXPECTED_B4_SOURCE_FORMULATION,
     EXPECTED_B11_KISSING_IDS,
     EXPECTED_B11_KISSING_REQUIRED_FIELDS,
     EXPECTED_B11_KISSING_ROWS,
@@ -61,6 +68,14 @@ def test_appendix_b_registry_enumerates_all_alphaevolve_families():
         evidence = autocorrelation[family_id]["step_function_evidence"]
         for field, expected_value in EXPECTED_AUTOCORRELATION_STEP_EVIDENCE[family_id].items():
             assert evidence[field] == expected_value
+    b4 = next(family for family in data["families"] if family["id"] == "uncertainty_inequality")
+    assert b4["source_formulation_evidence"] == EXPECTED_B4_SOURCE_FORMULATION
+    assert b4["prior_bound_rounding_evidence"] == EXPECTED_B4_PRIOR_BOUND_ROUNDING
+    assert b4["hermite_result_boundary"] == EXPECTED_B4_HERMITE_RESULT
+    assert b4["hermite_result_boundary"]["required_payload_fields"] == list(EXPECTED_B4_HERMITE_REQUIRED_FIELDS)
+    assert b4["prior_construction_similarity_evidence"] == EXPECTED_B4_SIMILARITY_EVIDENCE
+    assert b4["revision_result_boundary"] == EXPECTED_B4_REVISION_RESULT
+    assert b4["revision_result_boundary"]["required_revision_fields"] == list(EXPECTED_B4_REVISION_REQUIRED_FIELDS)
     b8 = next(family for family in data["families"] if family["id"] == "max_min_distance_point_sets")
     assert b8["metric_convention_evidence"] == list(EXPECTED_B8_METRIC_CONVENTIONS)
     boundary = b8["witness_certificate_boundary"]
@@ -214,6 +229,66 @@ def test_appendix_b_registry_requires_autocorrelation_step_evidence_object(tmp_p
     assert report.ok is False
     assert [issue.code for issue in report.issues] == ["missing_step_function_evidence"]
     assert report.issues[0].family_id == "autocorrelation_bounds_k5"
+
+
+def test_appendix_b_registry_requires_b4_uncertainty_boundaries(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    b4 = next(family for family in data["families"] if family["id"] == "uncertainty_inequality")
+    b4["source_formulation_evidence"]["known_upper_bound_after_four_digit_rounding"] = 0.354
+    b4["prior_bound_rounding_evidence"]["prior_upper_bound_rounded_solution"] = 0.353
+    b4["hermite_result_boundary"]["reported_upper_bound"] = 0.36
+    b4["hermite_result_boundary"]["coefficient_payload_status"] = "recorded"
+    b4["hermite_result_boundary"]["claim_boundary"] = "Local coefficients are verified."
+    b4["prior_construction_similarity_evidence"]["comparison_status"] = "recorded"
+    b4["prior_construction_similarity_evidence"]["claim_boundary"] = "Local comparison is verified."
+    b4["revision_result_boundary"]["revised_reported_constant"] = 0.4
+    b4["revision_result_boundary"]["revision_artifact_status"] = "recorded"
+    b4["revision_result_boundary"]["claim_boundary"] = "Local revision is verified."
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_b4_source_known_upper_bound_after_four_digit_rounding" in codes
+    assert "invalid_b4_source_bound_order" in codes
+    assert "invalid_b4_prior_prior_upper_bound_rounded_solution" in codes
+    assert "invalid_b4_prior_rounding_order" in codes
+    assert "invalid_b4_hermite_reported_upper_bound" in codes
+    assert "invalid_b4_hermite_coefficient_payload_status" in codes
+    assert "missing_b4_hermite_claim_boundary" in codes
+    assert "invalid_b4_hermite_improvement_direction" in codes
+    assert "invalid_b4_similarity_comparison_status" in codes
+    assert "missing_b4_similarity_claim_boundary" in codes
+    assert "invalid_b4_revision_revised_reported_constant" in codes
+    assert "invalid_b4_revision_revision_artifact_status" in codes
+    assert "missing_b4_revision_claim_boundary" in codes
+    assert "invalid_b4_revision_improvement_direction" in codes
+
+
+def test_appendix_b_registry_requires_b4_uncertainty_boundary_objects(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    b4 = next(family for family in data["families"] if family["id"] == "uncertainty_inequality")
+    del b4["source_formulation_evidence"]
+    del b4["prior_bound_rounding_evidence"]
+    del b4["hermite_result_boundary"]
+    del b4["prior_construction_similarity_evidence"]
+    del b4["revision_result_boundary"]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+
+    assert report.ok is False
+    assert [issue.code for issue in report.issues] == [
+        "missing_b4_source_formulation",
+        "missing_b4_prior_bound_rounding",
+        "missing_b4_hermite_result_boundary",
+        "missing_b4_similarity_evidence",
+        "missing_b4_revision_result_boundary",
+    ]
+    assert {issue.family_id for issue in report.issues} == {"uncertainty_inequality"}
 
 
 def test_appendix_b_registry_requires_b8_metric_convention_rows(tmp_path):

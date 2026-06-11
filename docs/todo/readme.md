@@ -1889,12 +1889,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     uncertainty inequality: the text first reports `C4 <= 0.3521`, then notes
     a post-first-version refinement after Henry Cohn's observation that
     improved the reported constant to `0.3216`.
-  - Current evidence: README describes the Appendix B registry as family/status
-    coverage plus missing construction-data and verifier-code exports. It does
-    not mention result revisions, superseded constants, source manuscript
-    version, update attribution, or verifier artifacts for revised mathematical
-    values.
-  - Required result: when Appendix B result-version rows and validators land,
+  - Current evidence: README now describes the B.4
+    `revision_result_boundary`: first-version `C4 <= 0.3521`, Henry Cohn's
+    pointer to `[18]`, external `0.3284`, and AlphaEvolve's revised `0.3216`
+    note. It also says local revision artifacts, Colab/verifier linkage, and
+    recomputed constants remain absent.
+  - Required result: when actual Appendix B result-version artifacts land,
     update README, ROADMAP, papers index, and code/paper TODOs together so
     README does not imply the family registry is enough to reproduce current
     AlphaEvolve Appendix B constants or accidentally mix stale and revised
@@ -1908,17 +1908,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     referenced solution to the fourth digit gives `0.3523`. AlphaEvolve's
     first-version `C4 <= 0.3521` result is compared against that rounded
     baseline.
-  - Current evidence: README can describe Appendix B family/status coverage,
-    construction/verifier export gaps, revised-result gaps, Hermite-certificate
-    gaps, and B.4 similarity-interpretation gaps. It does not separately warn
-    that prior-bound claims need source-linked evidence for the stated
-    `[33]` value, the fourth-digit rounding caveat, the lower-bound context,
-    and the exact comparison baseline.
-  - Required result: when B.4 prior-bound rounding metadata and validators
+  - Current evidence: README now distinguishes the prior `[33]` `0.353`
+    statement, the rounded `0.3523` comparison baseline, AlphaEvolve's
+    `0.3521` first-version bound, the later `0.3216` revision, and the
+    separate Hermite certificate boundary. The underlying `[33]`
+    source-solution artifact and page/section locator remain absent.
+  - Required result: when B.4 prior-source artifacts or precise source locators
     land, update README, ROADMAP, papers index, and code/paper TODOs together
-    so README distinguishes the prior `0.353` statement, the rounded `0.3523`
-    comparison baseline, AlphaEvolve's `0.3521` first-version bound, the later
-    `0.3216` revision, and the separate Hermite certificate evidence.
+    so README can cite the rounding evidence directly without treating it as a
+    reproduced local certificate.
 
 - [ ] Keep README Appendix B.4 numeric wording scoped until Hermite-polynomial
       certificate evidence exists.
@@ -1926,15 +1924,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     uncertainty-inequality bound from a Hermite-polynomial test function,
     approximate coefficients `[0.32925, -0.01159, -8.9216e-5]`, the largest
     positive root of `P(x)/x^2`, and the formula `r_max^2 / (2*pi)`.
-  - Current evidence: README can describe Appendix B family/status coverage,
-    construction/verifier export gaps, revised-result gaps, and B.4
-    similarity-interpretation gaps. It does not document B.4 coefficient
-    payloads, Hermite-basis identities, root computation, sign/condition
-    checks, bound recomputation, or artifact hashes for the actual `C4`
-    certificate.
-  - Required result: when B.4 Hermite certificate metadata and validators land,
-    update README, ROADMAP, papers index, and code/paper TODOs together so
-    README distinguishes the quoted uncertainty-inequality value from verified
+  - Current evidence: README now documents the B.4 Hermite result boundary:
+    coefficient values, Hermite basis, `P(x)/x^2` root computation, formula
+    `r_max^2 / (2*pi)`, and absence of local coefficient payloads,
+    Hermite/Fourier/root certificates, and recomputed constants.
+  - Required result: when actual B.4 Hermite certificate artifacts land, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README
+    distinguishes the quoted uncertainty-inequality value from verified
     polynomial/root evidence, result-version history, and qualitative
     near-optimality interpretation.
 
@@ -1944,12 +1940,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     construction found by AlphaEvolve is qualitatively very similar to the one
     in reference `[33]`, and presents that similarity as empirical support for
     the prior hypothesis that the construction is nearly optimal.
-  - Current evidence: README can point to Appendix B numeric-value,
-    coefficient, construction/verifier, and revised-result gaps. It does not
-    separately warn that B.4's interpretation claim needs source-linked
-    comparison evidence before README characterizes the result as supporting a
-    near-optimality hypothesis.
-  - Required result: when Appendix B.4 comparison metadata lands, update
+  - Current evidence: README now points to the B.4 qualitative similarity
+    boundary and states that coefficient-level comparison artifacts are not
+    recorded locally. It does not claim the near-optimality hypothesis is
+    locally verified.
+  - Required result: when Appendix B.4 comparison artifacts land, update
     README, ROADMAP, papers index, and code/paper TODOs together so README
     distinguishes the reported `C4` numeric bound from qualitative similarity
     to prior work and from any claim that the construction is nearly optimal.

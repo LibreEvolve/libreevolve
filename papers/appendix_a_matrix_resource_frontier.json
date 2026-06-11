@@ -1,0 +1,20 @@
+{
+  "schema": "libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1",
+  "source_paper_id": "2506.13131",
+  "source_section": "AlphaEvolve Appendix A",
+  "source_pdf_page": 34,
+  "target_suite": "alphaevolve_appendix_a",
+  "frontier_observations": [
+    {
+      "attempt_id": "paper_beyond_5x5x5_single_gpu_1000_seeds",
+      "target_scope": "sizes_beyond_5x5x5",
+      "seed_count": 1000,
+      "accelerator_profile": "single_gpu_accelerator",
+      "resource_status": "often_out_of_memory",
+      "extension_requirement": "further_optimization_required",
+      "source_phrase": "sizes beyond <5,5,5> on 1000 random seeds on evaluators with a single GPU accelerator often run out of memory",
+      "local_execution_evidence": false,
+      "local_artifacts": []
+    }
+  ]
+}

@@ -140,6 +140,8 @@ from libreevolve.problems.benchmarks.matrix_results import (
 REQUIRED_FIELDS = ("id", "title", "url", "file", "ok", "bytes", "sha256", "message")
 APPENDIX_A_CURATION_FILE = "papers/appendix_a_matrix_curation.json"
 APPENDIX_A_EXCLUDED_TARGET_CURATION_FILE = "papers/appendix_a_matrix_excluded_target_curation.json"
+APPENDIX_A_RESOURCE_FRONTIER_FILE = "papers/appendix_a_matrix_resource_frontier.json"
+APPENDIX_A_LOCAL_RESOURCE_FRONTIER_FILE = "papers/appendix_a_matrix_local_resource_frontier.json"
 APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE = "papers/appendix_a_matrix_subset_scope_artifacts.json"
 APPENDIX_A_ROW_NOTE_ARTIFACTS_FILE = "papers/appendix_a_matrix_row_note_artifacts.json"
 MATRIX_RANK_TABLE_ARTIFACTS_FILE = "papers/matrix_rank_table_artifacts.json"
@@ -673,8 +675,21 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
         )
         for issue in baseline_citation_report.issues
     )
+    resource_frontier_path = root_path / APPENDIX_A_RESOURCE_FRONTIER_FILE
+    if resource_frontier_path.exists():
+        resource_frontier_recordset: object | str | Path = resource_frontier_path
+    else:
+        resource_frontier_recordset = appendix_a_matrix_resource_frontier_record()
+        if is_repo_root:
+            issues.append(
+                PaperManifestIssue(
+                    "appendix_a_resource_frontier_manifest_missing",
+                    f"{APPENDIX_A_RESOURCE_FRONTIER_FILE} must emit the Appendix A paper resource-frontier boundary",
+                    "appendix_a_matrix_resource_frontier",
+                )
+            )
     resource_frontier_report = validate_appendix_a_matrix_resource_frontier(
-        appendix_a_matrix_resource_frontier_record()
+        resource_frontier_recordset
     )
     issues.extend(
         PaperManifestIssue(
@@ -684,8 +699,24 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
         )
         for issue in resource_frontier_report.issues
     )
+    local_resource_frontier_path = root_path / APPENDIX_A_LOCAL_RESOURCE_FRONTIER_FILE
+    if local_resource_frontier_path.exists():
+        local_resource_frontier_recordset: object | str | Path = local_resource_frontier_path
+    else:
+        local_resource_frontier_recordset = appendix_a_matrix_local_resource_frontier_record()
+        if is_repo_root:
+            issues.append(
+                PaperManifestIssue(
+                    "appendix_a_local_resource_frontier_manifest_missing",
+                    (
+                        f"{APPENDIX_A_LOCAL_RESOURCE_FRONTIER_FILE} must emit the "
+                        "Appendix A local resource-frontier absence boundary"
+                    ),
+                    "appendix_a_matrix_local_resource_frontier",
+                )
+            )
     local_resource_frontier_report = validate_appendix_a_matrix_local_resource_frontier(
-        appendix_a_matrix_local_resource_frontier_record()
+        local_resource_frontier_recordset
     )
     issues.extend(
         PaperManifestIssue(

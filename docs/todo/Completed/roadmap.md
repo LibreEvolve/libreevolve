@@ -2,6 +2,20 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Emit Appendix A matrix resource-frontier sidecars for roadmap evidence.
+  - Status: `papers/appendix_a_matrix_resource_frontier.json` and
+    `papers/appendix_a_matrix_local_resource_frontier.json` now let roadmap
+    wording point to committed paper-only and local-absence boundaries for the
+    Appendix A larger-target OOM/resource claim.
+  - Verification: `py -3.12 -m pytest
+    tests\test_appendix_a_matrix_registry.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\appendix_a_matrix_registry.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: the active roadmap TODO still tracks real local
+    larger-target scaling attempts and diagnostics.
+
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
 - [x] Keep Appendix A matrix-baseline roadmap wording scoped until

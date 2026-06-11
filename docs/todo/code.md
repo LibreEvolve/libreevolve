@@ -3326,11 +3326,15 @@ Primary evidence:
     1000 random seeds, single-GPU evaluators, frequent OOM, and
     further-optimization need. It intentionally records
     `local_execution_evidence: false` and no local artifacts.
+    `papers/appendix_a_matrix_resource_frontier.json` now emits that
+    paper-only resource boundary as a committed sidecar.
     `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1` now
     validates the local absence/readiness boundary and required fields for
     future target-size attempts, measured accelerator/GPU memory profile, OOM
     diagnostics, reduced-seed policy, artifacts, and attempted-versus-excluded
     target policy.
+    `papers/appendix_a_matrix_local_resource_frontier.json` now emits that
+    local absence boundary as a committed sidecar.
     `appendix_a_matrix_local_resource_frontier_from_attempts()` builds an
     `attempts_recorded` boundary from supplied local attempt diagnostics, but
     actual larger-target attempts and emitted artifacts remain missing.

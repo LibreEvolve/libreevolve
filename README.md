@@ -3922,12 +3922,15 @@ record preserves the paper's page 34 statement that sizes beyond `<5,5,5>`
 with 1000 random seeds on single-GPU evaluators often ran out of memory and
 needed further optimization. It is paper-source boundary evidence only: it
 does not claim local execution evidence or declare local OOM artifacts. The
-companion
+committed `papers/appendix_a_matrix_resource_frontier.json` sidecar emits that
+paper-only boundary. The companion
 `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1` record
 keeps the local side explicit: no larger-target matrix scaling attempts,
 measured GPU memory profiles, OOM diagnostics, reduced-seed tradeoffs, or
 attempted-versus-excluded target policies have been recorded yet, and those
-fields are required before local scaling-frontier claims.
+fields are required before local scaling-frontier claims. The committed
+`papers/appendix_a_matrix_local_resource_frontier.json` sidecar emits that
+local absence/readiness boundary.
 `appendix_a_matrix_local_resource_frontier_from_attempts()` can build an
 `attempts_recorded` boundary from supplied local attempt diagnostics, but no
 checked local larger-target attempt corpus is emitted yet.

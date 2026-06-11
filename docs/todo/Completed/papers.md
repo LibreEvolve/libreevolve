@@ -6,6 +6,26 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit Appendix A matrix resource-frontier sidecars.
+  - Paper evidence: Appendix A states that larger matrix sizes beyond
+    `<5,5,5>` often ran out of memory under the paper's 1000-random-seed,
+    single-GPU evaluation setup.
+  - Status: `papers/appendix_a_matrix_resource_frontier.json` now carries the
+    paper-only resource-frontier boundary, and
+    `papers/appendix_a_matrix_local_resource_frontier.json` carries the
+    explicit local absence/readiness boundary for larger-target scaling
+    attempts. The paper-manifest gate requires and validates both sidecars at
+    the real repo root.
+  - Verification: `py -3.12 -m pytest
+    tests\test_appendix_a_matrix_registry.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\appendix_a_matrix_registry.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: no local larger-target attempt corpus, GPU memory profile,
+    OOM diagnostics, reduced-seed tradeoff, or target inclusion/exclusion
+    policy has been emitted.
+
 - [x] Emit Appendix A matrix target-suite curation sidecars.
   - Paper evidence: Appendix A says the matrix target suite was chosen roughly
     from sizes with 2 <= m,n <= 5 and a reasonable p cutoff, and that axis

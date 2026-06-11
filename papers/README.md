@@ -1378,11 +1378,15 @@ Implemented:
   `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1` records the
   paper-source larger-target boundary for sizes beyond `<5,5,5>`, 1000 random
   seeds, single-GPU evaluators, frequent OOM, and further-optimization need.
+  `papers/appendix_a_matrix_resource_frontier.json` emits that paper-only
+  boundary as a committed sidecar.
   `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1`
   separately records the current absence of local matrix scaling attempts plus
   the fields required for measured GPU memory, OOM artifacts, reduced-seed
   tradeoffs, and exclusion rationale; it does not provide those local attempts
   or artifacts.
+  `papers/appendix_a_matrix_local_resource_frontier.json` emits that local
+  absence/readiness boundary as a committed sidecar.
   `appendix_a_matrix_local_resource_frontier_from_attempts()` can build an
   `attempts_recorded` boundary from supplied local attempt diagnostics, but no
   checked local larger-target attempt corpus is emitted yet.

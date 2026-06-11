@@ -4,6 +4,28 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit Appendix A matrix resource-frontier sidecars.
+  - Spec evidence: AlphaEvolve Appendix A says sizes beyond `<5,5,5>` with
+    1000 random seeds on single-GPU evaluators often ran out of memory and
+    require further optimization.
+  - Status: `papers/appendix_a_matrix_resource_frontier.json` now emits the
+    paper-only resource-frontier boundary with `local_execution_evidence:
+    false` and no local artifacts. The companion
+    `papers/appendix_a_matrix_local_resource_frontier.json` sidecar now emits
+    the local `not_executed_locally` absence/readiness boundary and required
+    future attempt fields. `validate_paper_manifest()` requires and validates
+    both sidecars at the real repo root when the Appendix A registry is in
+    scope.
+  - Verification: `py -3.12 -m pytest
+    tests\test_appendix_a_matrix_registry.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\appendix_a_matrix_registry.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: actual local larger-target attempts, measured GPU memory,
+    OOM/resource diagnostics, reduced-seed tradeoffs, and
+    attempted-versus-excluded target policy remain active work.
+
 - [x] Emit Appendix A matrix target-suite curation sidecars.
   - Spec evidence: AlphaEvolve Appendix A describes the 54 reported matrix
     sizes as roughly chosen from dimensions with 2 <= m,n <= 5 and a

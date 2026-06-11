@@ -2322,11 +2322,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     resource-frontier contract validates the paper-only boundary for sizes
     beyond `<5,5,5>`, 1000 random seeds, single-GPU evaluators, frequent OOM,
     and further-optimization need.
+    `papers/appendix_a_matrix_resource_frontier.json` now emits that
+    paper-only boundary as a committed sidecar.
     `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1` now
     validates the local absence/readiness boundary and required future fields
     for attempted-target rows, measured GPU memory/resource diagnostics,
     seed-count tradeoff records, artifacts, and target inclusion/exclusion
     policy beyond the reported suite.
+    `papers/appendix_a_matrix_local_resource_frontier.json` now emits that
+    absence/readiness boundary as a committed sidecar.
     `appendix_a_matrix_local_resource_frontier_from_attempts()` can build an
     `attempts_recorded` boundary from supplied local attempt diagnostics, but
     roadmap wording still treats real larger-target attempts as missing.

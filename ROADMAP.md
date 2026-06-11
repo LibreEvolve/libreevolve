@@ -997,11 +997,15 @@ is not yet an AlphaEvolve reproduction.
   `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1` now
   validates the Appendix A page 34 boundary for sizes beyond `<5,5,5>`, 1000
   random seeds, single-GPU evaluators, frequent OOM, and further-optimization
-  need. `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1`
+  need, and `papers/appendix_a_matrix_resource_frontier.json` emits that
+  paper-only boundary as a committed sidecar.
+  `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1`
   now validates the local absence/readiness boundary and required fields for
   future attempted target sizes, measured GPU memory, OOM artifacts,
-  reduced-seed tradeoffs, and exclusion rationale. Actual local scaling runs
-  remain open.
+  reduced-seed tradeoffs, and exclusion rationale.
+  `papers/appendix_a_matrix_local_resource_frontier.json` emits that local
+  absence boundary as a committed sidecar. Actual local scaling runs remain
+  open.
   `appendix_a_matrix_local_resource_frontier_from_attempts()` builds an
   `attempts_recorded` boundary from supplied local attempt diagnostics without
   claiming the full paper frontier has been reproduced.

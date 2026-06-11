@@ -43,6 +43,8 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     appendix_a_matrix_baseline_citation_boundary_from_builtin_citations,
     appendix_a_matrix_curation_record,
     appendix_a_matrix_excluded_target_curation_boundary_record,
+    appendix_a_matrix_local_resource_frontier_record,
+    appendix_a_matrix_resource_frontier_record,
     appendix_a_matrix_row_note_artifact_boundary_from_records,
     appendix_a_matrix_subset_scope_artifact_boundary_from_records,
 )
@@ -1508,6 +1510,110 @@ def test_validate_paper_manifest_checks_matrix_excluded_target_curation_boundary
     codes = {issue.code for issue in report.issues}
     assert report.ok is False
     assert "appendix_a_excluded_target_curation_missing_excluded_targets" in codes
+
+
+def test_validate_paper_manifest_accepts_committed_matrix_resource_frontier_sidecars(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        Path(paper_manifest.APPENDIX_A_MATRIX_REGISTRY_PATH).read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    (tmp_path / paper_manifest.APPENDIX_A_RESOURCE_FRONTIER_FILE).write_text(
+        json.dumps(appendix_a_matrix_resource_frontier_record(), indent=2),
+        encoding="utf-8",
+    )
+    (tmp_path / paper_manifest.APPENDIX_A_LOCAL_RESOURCE_FRONTIER_FILE).write_text(
+        json.dumps(appendix_a_matrix_local_resource_frontier_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_matrix_resource_frontier_sidecar_drift(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        Path(paper_manifest.APPENDIX_A_MATRIX_REGISTRY_PATH).read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    resource = appendix_a_matrix_resource_frontier_record()
+    resource["frontier_observations"][0]["seed_count"] = 100
+    (tmp_path / paper_manifest.APPENDIX_A_RESOURCE_FRONTIER_FILE).write_text(
+        json.dumps(resource, indent=2),
+        encoding="utf-8",
+    )
+    (tmp_path / paper_manifest.APPENDIX_A_LOCAL_RESOURCE_FRONTIER_FILE).write_text(
+        json.dumps(appendix_a_matrix_local_resource_frontier_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "appendix_a_resource_frontier_invalid_seed_count" in codes
+
+
+def test_validate_paper_manifest_rejects_matrix_local_resource_frontier_sidecar_drift(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        Path(paper_manifest.APPENDIX_A_MATRIX_REGISTRY_PATH).read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    local_resource = appendix_a_matrix_local_resource_frontier_record()
+    local_resource["local_frontier_status"] = "attempts_recorded"
+    local_resource["excluded_target_policy"] = {
+        "status": "defined",
+        "boundary": "fixture policy",
+    }
+    (tmp_path / paper_manifest.APPENDIX_A_RESOURCE_FRONTIER_FILE).write_text(
+        json.dumps(appendix_a_matrix_resource_frontier_record(), indent=2),
+        encoding="utf-8",
+    )
+    (tmp_path / paper_manifest.APPENDIX_A_LOCAL_RESOURCE_FRONTIER_FILE).write_text(
+        json.dumps(local_resource, indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "appendix_a_local_resource_frontier_missing_local_attempts" in codes
+
+
+def test_validate_paper_manifest_requires_matrix_resource_frontier_sidecars_at_repo_root(
+    tmp_path,
+    monkeypatch,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        Path(paper_manifest.APPENDIX_A_MATRIX_REGISTRY_PATH).read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "appendix_a_resource_frontier_manifest_missing" in codes
+    assert "appendix_a_local_resource_frontier_manifest_missing" in codes
 
 
 def test_validate_paper_manifest_checks_matrix_cascade_run_runtime_boundary(

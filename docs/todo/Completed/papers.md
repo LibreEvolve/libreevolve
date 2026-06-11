@@ -6,6 +6,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Record process-exhibit diagram text artifacts.
+  - Paper evidence: AlphaEvolve Figure 1/Figure 2 are process exhibits, so
+    artifact-backed local Figure 1/2 mappings need diagram source/export files
+    with stable hashes.
+  - Status: paper-facing manifests now preserve generated Mermaid source and
+    accessibility text exports for the Figure 1/2 process mapping, with
+    validated hashes and an updated `papers/process_exhibit_boundary.json`
+    boundary that no longer lists text/rendered artifacts as missing.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4636 passed, 21 skipped, 2 deselected.
+  - Remaining paper gap: exact source-diagram reproduction, async topology,
+    evaluator-pool parallelism, and per-step artifact validation remain open.
+
 - [x] Record static embedded evaluator invocation traces.
   - Paper evidence: AlphaEvolve Figure 3 ties the candidate-owned
     `evaluate(eval_inputs)` function to evolved blocks in the skeleton.

@@ -1392,11 +1392,12 @@ Completed manifests also include
 Figure 1/Figure 2 process nodes, edges, and Figure 2 displayed controller
 steps to LibreEvolve components and run-artifact paths. The report records
 source PDF page/caption locations, current single-process controller scope,
-artifact cross-links, and `claim_ready: false` limitations for rendered
-diagram hashes, exact diagram text, async controller topology, independent
+artifact cross-links, generated Mermaid/text accessibility artifacts under
+`paper_artifacts/process_exhibit/`, and `claim_ready: false` limitations for
+exact source-diagram reproduction, async controller topology, independent
 evaluator-pool parallelism, and artifact-level step validation.
 The committed `papers/process_exhibit_boundary.json` sidecar now records that
-paper-manifest-validated rendered process-diagram absence boundary.
+paper-manifest-validated process-exhibit parity boundary.
 Accepted archive admissions prevalidate their strict history record before
 mutating the live MAP-Elites/island archive, and direct admission thresholds
 must be finite non-boolean numbers. Direct `ProgramDatabase.add()`/`admit()`

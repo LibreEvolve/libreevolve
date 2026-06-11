@@ -4,6 +4,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document process-exhibit diagram text artifacts.
+  - Status: README now documents generated Mermaid/text accessibility artifacts
+    and hashes under `paper_artifacts/process_exhibit/` while preserving the
+    remaining exact-diagram, async-topology, evaluator-pool, and per-step
+    validation gaps.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4636 passed, 21 skipped, 2 deselected.
+  - Remaining gap: full AlphaEvolve process-diagram parity remains open.
+
 - [x] Document static embedded evaluator invocation traces.
   - Status: README now says the embedded evaluator report records static
     primary-file invocation traces from `evaluate()` through local

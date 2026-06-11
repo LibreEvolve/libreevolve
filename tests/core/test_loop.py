@@ -5934,8 +5934,13 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert report["pseudocode_step_count"] == 6
     assert report["claim_ready"] is False
     assert report["claim_readiness"]["stable_figure_ids"] is True
-    assert report["claim_readiness"]["rendered_diagram_artifacts"] is False
-    assert "rendered_process_diagram_artifacts_and_hashes" in (
+    assert report["claim_readiness"]["rendered_diagram_artifacts"] is True
+    assert report["claim_readiness"]["accessibility_exports"] is True
+    assert report["claim_readiness"]["exact_diagram_text_reproduction"] is False
+    assert "exact_source_diagram_text_reproduction" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    assert "rendered_process_diagram_artifacts_and_hashes" not in (
         report["claim_readiness"]["remaining_gap"]
     )
 
@@ -5943,9 +5948,24 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert set(figures) == {"alphaevolve_figure_1", "alphaevolve_figure_2"}
     assert figures["alphaevolve_figure_1"]["local_pdf_page"] == 3
     assert figures["alphaevolve_figure_2"]["local_pdf_page"] == 4
-    assert figures["alphaevolve_figure_1"]["rendered_artifact"]["status"] == (
-        "not_generated"
+    assert report["rendered_artifact_count"] == 2
+    assert report["accessibility_export_count"] == 2
+    figure_1_artifact = figures["alphaevolve_figure_1"]["rendered_artifact"]
+    assert figure_1_artifact["status"] == "generated"
+    assert figure_1_artifact["artifact_kind"] == "mermaid_source"
+    assert figure_1_artifact["path"] == "paper_artifacts/process_exhibit/figure_1.mmd"
+    figure_1_mermaid = Path(tmpdir) / "t" / figure_1_artifact["path"]
+    assert figure_1_mermaid.exists()
+    assert "flowchart LR" in figure_1_mermaid.read_text(encoding="utf-8")
+    assert len(figure_1_artifact["sha256"]) == 64
+    figure_2_accessibility = figures["alphaevolve_figure_2"]["accessibility_export"]
+    assert figure_2_accessibility["artifact_kind"] == "accessibility_text"
+    assert figure_2_accessibility["path"] == (
+        "paper_artifacts/process_exhibit/figure_2_accessibility.txt"
     )
+    assert "database.sample()" in (
+        Path(tmpdir) / "t" / figure_2_accessibility["path"]
+    ).read_text(encoding="utf-8")
 
     figure_2_steps = figures["alphaevolve_figure_2"]["pseudocode_steps"]
     assert [step["displayed_call"] for step in figure_2_steps] == [
@@ -5968,6 +5988,12 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert artifact_by_path["prompt_history.jsonl"]["present"] is True
     assert "llm_generation_calls" in artifact_by_path["llm_calls.jsonl"]["roles"]
     assert artifact_by_path["controller_budget_events.jsonl"]["present"] is True
+    assert artifact_by_path["paper_artifacts/process_exhibit/figure_1.mmd"][
+        "present"
+    ] is True
+    assert artifact_by_path[
+        "paper_artifacts/process_exhibit/figure_2_accessibility.txt"
+    ]["present"] is True
     assert artifact_by_path["manifest.json"]["hash_scope"] == (
         "final_manifest_self_reference_deferred"
     )
@@ -5981,6 +6007,14 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert {issue["code"] for issue in validation["issues"]} >= {
         "claim_ready_overclaim",
         "process_parity_overclaim",
+    }
+
+    edited = copy.deepcopy(report)
+    edited["figures"][0]["rendered_artifact"]["sha256"] = "nothex"
+    validation = validate_alphaevolve_process_exhibit_report(edited)
+    assert validation["ok"] is False
+    assert "invalid_rendered_artifact_hash" in {
+        issue["code"] for issue in validation["issues"]
     }
 
 

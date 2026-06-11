@@ -58,12 +58,12 @@ LibreEvolve has:
 - AlphaEvolve Figure 1/Figure 2 process-exhibit reports under
   `runtime.history.alphaevolve_process_exhibit_report`, preserving stable
   figure IDs, node/edge-to-component mappings, Figure 2 pseudocode-step
-  mappings, artifact cross-links, and explicit gaps for rendered diagram
-  hashes, exact diagram text, and full process parity, with
+  mappings, artifact cross-links, generated Mermaid/accessibility text
+  artifacts, and explicit gaps for exact source-diagram reproduction and full
+  process parity, with
   `papers/process_exhibit_boundary.json` now carrying the manifest-validated
-  absence boundary for rendered diagram artifacts/hashes, exact diagram
-  text/accessibility export, async topology, evaluator-pool parallelism, and
-  artifact-level step validation
+  boundary for exact source-diagram reproduction, async topology,
+  evaluator-pool parallelism, and artifact-level step validation
 - distributed-pipeline topology boundary reports under
   `runtime.history.distributed_pipeline_topology_report`, naming the current
   single-process controller, in-process database, configured LLM sampler

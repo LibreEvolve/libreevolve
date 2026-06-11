@@ -178,15 +178,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `runtime.history.alphaevolve_process_exhibit_report`, which records Figure
     1/Figure 2 exhibit IDs, node/edge-to-component mappings, implemented
     versus unsupported status per diagram node, Figure 2 pseudocode-step
-    mappings, source PDF/caption locations, artifact cross-links, and explicit
-    remaining process-parity gaps. It now also names
+    mappings, source PDF/caption locations, artifact cross-links, generated
+    Mermaid/text accessibility artifacts and hashes, and explicit remaining
+    process-parity gaps. It now also names
     `papers/process_exhibit_boundary.json` as the committed sidecar for the
     paper-manifest-validated absence boundary.
-  - Required result: when rendered diagram artifacts and hashes, exact diagram
-    text or accessibility export, async controller/sampler/evaluator topology,
-    independent evaluator-pool parallelism, and artifact-level per-step
-    validation land, update ROADMAP, README, papers index, and code/paper TODOs
-    so roadmap wording distinguishes local workflow documentation from full
+  - Required result: when exact source-diagram reproduction, async
+    controller/sampler/evaluator topology, independent evaluator-pool
+    parallelism, and artifact-level per-step validation land, update ROADMAP,
+    README, papers index, and code/paper TODOs so roadmap wording distinguishes
+    local workflow documentation and generated Mermaid artifacts from full
     reproduced AlphaEvolve process-diagram evidence.
 
 - [ ] Keep evaluator-workload roadmap wording scoped until inner-search and

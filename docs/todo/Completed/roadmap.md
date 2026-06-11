@@ -2,6 +2,15 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Record process-exhibit diagram text artifacts for roadmap evidence.
+  - Status: ROADMAP now lists generated Mermaid/accessibility text artifacts
+    and hashes as current Figure 1/Figure 2 process-exhibit evidence, while
+    keeping exact source-diagram reproduction and full process parity open.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4636 passed, 21 skipped, 2 deselected.
+  - Remaining gap: async topology, evaluator-pool parallelism, and per-step
+    stream validation remain open.
+
 - [x] Record static embedded evaluator invocation traces for roadmap evidence.
   - Status: ROADMAP now includes static local invocation traces from
     `evaluate()` to EVOLVE-block-backed functions as current embedded

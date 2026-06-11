@@ -12610,8 +12610,6 @@ def _validate_report_count(
 
 
 def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) -> dict:
-    artifacts = _process_exhibit_artifact_evidence(run_dir)
-    artifact_paths = [artifact["path"] for artifact in artifacts]
     figure_1_nodes = [
         _process_node(
             "fig1.human_problem_inputs",
@@ -12762,9 +12760,6 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
             "caption_location": "figure_caption_on_local_pdf_page_3",
             "nodes": figure_1_nodes,
             "edges": figure_1_edges,
-            "rendered_artifact": _process_rendered_artifact_placeholder(
-                "alphaevolve_figure_1"
-            ),
         },
         {
             "figure_id": "alphaevolve_figure_2",
@@ -12775,11 +12770,23 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
             "nodes": figure_2_nodes,
             "edges": figure_2_edges,
             "pseudocode_steps": figure_2_steps,
-            "rendered_artifact": _process_rendered_artifact_placeholder(
-                "alphaevolve_figure_2"
-            ),
         },
     ]
+    _attach_process_figure_artifacts(run_dir, figures)
+    artifacts = _process_exhibit_artifact_evidence(run_dir)
+    artifact_paths = [artifact["path"] for artifact in artifacts]
+    rendered_count = sum(
+        1
+        for figure in figures
+        if isinstance(figure.get("rendered_artifact"), Mapping)
+        and figure["rendered_artifact"].get("status") == "generated"
+    )
+    accessibility_count = sum(
+        1
+        for figure in figures
+        if isinstance(figure.get("accessibility_export"), Mapping)
+        and figure["accessibility_export"].get("status") == "generated"
+    )
     report = {
         "schema": "libreevolve.alphaevolve_process_exhibit_report.v1",
         "source": "runtime_history_static_figure_mapping",
@@ -12791,6 +12798,8 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
         "node_count": sum(len(figure.get("nodes", [])) for figure in figures),
         "edge_count": sum(len(figure.get("edges", [])) for figure in figures),
         "pseudocode_step_count": len(figure_2_steps),
+        "rendered_artifact_count": rendered_count,
+        "accessibility_export_count": accessibility_count,
         "artifact_evidence": artifacts,
         "artifact_evidence_paths": artifact_paths,
         "claim_ready": False,
@@ -12799,12 +12808,12 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
             "node_edge_component_mappings": True,
             "figure_2_pseudocode_step_mappings": True,
             "artifact_path_cross_links": True,
-            "rendered_diagram_artifacts": False,
+            "rendered_diagram_artifacts": rendered_count == len(figures),
+            "accessibility_exports": accessibility_count == len(figures),
             "exact_diagram_text_reproduction": False,
             "full_alphaevolve_process_parity": False,
             "remaining_gap": [
-                "rendered_process_diagram_artifacts_and_hashes",
-                "exact_diagram_text_or_accessibility_export",
+                "exact_source_diagram_text_reproduction",
                 "async_controller_sampler_evaluator_topology",
                 "independent_evaluator_pool_parallelism",
                 "artifact_level_step_validation_against_each_stream",
@@ -12855,14 +12864,162 @@ def _process_step(
     }
 
 
-def _process_rendered_artifact_placeholder(figure_id: str) -> dict:
+def _attach_process_figure_artifacts(run_dir: Path, figures: list[dict]) -> None:
+    for figure in figures:
+        figure_id = figure.get("figure_id")
+        if not isinstance(figure_id, str) or not figure_id:
+            continue
+        stem = figure_id.replace("alphaevolve_", "")
+        mermaid_path = f"paper_artifacts/process_exhibit/{stem}.mmd"
+        text_path = f"paper_artifacts/process_exhibit/{stem}_accessibility.txt"
+        figure["rendered_artifact"] = _write_process_exhibit_artifact(
+            run_dir,
+            mermaid_path,
+            _process_figure_mermaid(figure),
+            artifact_kind="mermaid_source",
+            figure_id=figure_id,
+        )
+        figure["accessibility_export"] = _write_process_exhibit_artifact(
+            run_dir,
+            text_path,
+            _process_figure_accessibility_text(figure),
+            artifact_kind="accessibility_text",
+            figure_id=figure_id,
+        )
+
+
+def _write_process_exhibit_artifact(
+    run_dir: Path,
+    relative_path: str,
+    content: str,
+    *,
+    artifact_kind: str,
+    figure_id: str,
+) -> dict:
+    path = run_dir / relative_path
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content, encoding="utf-8", newline="\n")
+    payload = content.encode("utf-8")
     return {
         "figure_id": figure_id,
-        "status": "not_generated",
-        "path": None,
-        "sha256": None,
-        "reason": "source figure is mapped as manifest metadata only in this slice",
+        "status": "generated",
+        "artifact_kind": artifact_kind,
+        "path": relative_path,
+        "sha256": hashlib.sha256(payload).hexdigest(),
+        "bytes": len(payload),
+        "hash_scope": "generated_process_exhibit_text_artifact",
+        "source": "runtime_history_static_figure_mapping",
     }
+
+
+def _process_figure_mermaid(figure: Mapping[str, object]) -> str:
+    lines = [
+        "---",
+        f"title: {_process_mermaid_label(str(figure.get('figure_id', 'process_figure')))}",
+        "---",
+        "flowchart LR",
+    ]
+    nodes = figure.get("nodes") if isinstance(figure.get("nodes"), list) else []
+    for node in nodes:
+        if not isinstance(node, Mapping):
+            continue
+        node_id = _process_mermaid_id(str(node.get("node_id", "")))
+        label = _process_mermaid_label(
+            f"{node.get('label', '')}\\n{node.get('status', '')}"
+        )
+        lines.append(f'  {node_id}["{label}"]')
+    edges = figure.get("edges") if isinstance(figure.get("edges"), list) else []
+    for edge in edges:
+        if not isinstance(edge, Mapping):
+            continue
+        source = _process_mermaid_id(str(edge.get("from", "")))
+        target = _process_mermaid_id(str(edge.get("to", "")))
+        relationship = _process_mermaid_label(str(edge.get("relationship", "")))
+        lines.append(f"  {source} -->|{relationship}| {target}")
+    steps = (
+        figure.get("pseudocode_steps")
+        if isinstance(figure.get("pseudocode_steps"), list)
+        else []
+    )
+    if steps:
+        lines.append("  subgraph figure_2_pseudocode_steps")
+        previous_id = None
+        for step in steps:
+            if not isinstance(step, Mapping):
+                continue
+            step_id = _process_mermaid_id(str(step.get("step_id", "")))
+            label = _process_mermaid_label(
+                f"{step.get('displayed_call', '')}\\n{step.get('status', '')}"
+            )
+            lines.append(f'    {step_id}["{label}"]')
+            if previous_id is not None:
+                lines.append(f"    {previous_id} --> {step_id}")
+            previous_id = step_id
+        lines.append("  end")
+    return "\n".join(lines) + "\n"
+
+
+def _process_figure_accessibility_text(figure: Mapping[str, object]) -> str:
+    lines = [
+        f"Figure id: {figure.get('figure_id')}",
+        f"Source: {figure.get('source')}",
+        f"Local PDF page: {figure.get('local_pdf_page')}",
+        f"Role: {figure.get('role')}",
+        "",
+        "Nodes:",
+    ]
+    for node in figure.get("nodes", []) if isinstance(figure.get("nodes"), list) else []:
+        if not isinstance(node, Mapping):
+            continue
+        lines.append(
+            "- "
+            f"{node.get('node_id')}: {node.get('label')} "
+            f"({node.get('status')}); component={node.get('local_component')}; "
+            f"evidence={', '.join(str(item) for item in node.get('evidence_paths', []))}"
+        )
+    lines.extend(["", "Edges:"])
+    for edge in figure.get("edges", []) if isinstance(figure.get("edges"), list) else []:
+        if not isinstance(edge, Mapping):
+            continue
+        lines.append(
+            f"- {edge.get('from')} -> {edge.get('to')}: {edge.get('relationship')}"
+        )
+    steps = (
+        figure.get("pseudocode_steps")
+        if isinstance(figure.get("pseudocode_steps"), list)
+        else []
+    )
+    if steps:
+        lines.extend(["", "Figure 2 pseudocode steps:"])
+        for step in steps:
+            if not isinstance(step, Mapping):
+                continue
+            lines.append(
+                "- "
+                f"{step.get('step_id')}: {step.get('displayed_call')} "
+                f"({step.get('status')}); component={step.get('local_component')}; "
+                f"evidence={', '.join(str(item) for item in step.get('evidence_paths', []))}"
+            )
+    lines.extend(
+        [
+            "",
+            "Boundary: generated from LibreEvolve runtime mapping evidence; not an exact source-paper diagram reproduction.",
+        ]
+    )
+    return "\n".join(lines) + "\n"
+
+
+def _process_mermaid_id(value: str) -> str:
+    cleaned = re.sub(r"[^A-Za-z0-9_]", "_", value).strip("_")
+    if not cleaned:
+        return "node"
+    if cleaned[0].isdigit():
+        cleaned = f"n_{cleaned}"
+    return cleaned
+
+
+def _process_mermaid_label(value: str) -> str:
+    return value.replace('"', "'").replace("\r", " ").replace("\n", "<br/>")
 
 
 def _process_exhibit_artifact_evidence(run_dir: Path) -> list[dict]:
@@ -12879,6 +13036,18 @@ def _process_exhibit_artifact_evidence(run_dir: Path) -> list[dict]:
         "evaluator_artifacts": ["evaluator_copy_out"],
         "best.py": ["improved_solution_export"],
         "best_workspace": ["improved_solution_workspace_export"],
+        "paper_artifacts/process_exhibit/figure_1.mmd": [
+            "process_exhibit_figure_1_mermaid",
+        ],
+        "paper_artifacts/process_exhibit/figure_1_accessibility.txt": [
+            "process_exhibit_figure_1_accessibility",
+        ],
+        "paper_artifacts/process_exhibit/figure_2.mmd": [
+            "process_exhibit_figure_2_mermaid",
+        ],
+        "paper_artifacts/process_exhibit/figure_2_accessibility.txt": [
+            "process_exhibit_figure_2_accessibility",
+        ],
     }
     resolved_run_dir = _resolve_path_for_scope(run_dir)
     records = []
@@ -12939,6 +13108,8 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
         "node_count",
         "edge_count",
         "pseudocode_step_count",
+        "rendered_artifact_count",
+        "accessibility_export_count",
         "artifact_evidence",
         "artifact_evidence_paths",
         "claim_ready",
@@ -12976,6 +13147,8 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
     nodes_seen: set[str] = set()
     edge_count = 0
     step_count = 0
+    rendered_count = 0
+    accessibility_count = 0
     for figure_index, figure in enumerate(figures):
         if not isinstance(figure, Mapping):
             issues.append({"code": "invalid_figure", "message": f"figure {figure_index} must be an object"})
@@ -13027,10 +13200,23 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
                 _validate_process_status(step.get("status"), issues, "step")
                 _validate_process_evidence_paths(step.get("evidence_paths"), issues, "step")
         rendered = figure.get("rendered_artifact")
-        if not isinstance(rendered, Mapping):
-            issues.append({"code": "invalid_rendered_artifact", "message": "rendered_artifact must be an object"})
-        elif rendered.get("status") != "not_generated":
-            issues.append({"code": "rendered_artifact_overclaim", "message": "rendered figure artifacts are not generated by this report"})
+        if _validate_process_figure_artifact(
+            rendered,
+            figure.get("figure_id"),
+            "rendered_artifact",
+            "mermaid_source",
+            issues,
+        ):
+            rendered_count += 1
+        accessibility = figure.get("accessibility_export")
+        if _validate_process_figure_artifact(
+            accessibility,
+            figure.get("figure_id"),
+            "accessibility_export",
+            "accessibility_text",
+            issues,
+        ):
+            accessibility_count += 1
 
     if isinstance(report.get("figure_count"), int) and not isinstance(report.get("figure_count"), bool):
         if report["figure_count"] != len(figures):
@@ -13052,6 +13238,16 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
             issues.append({"code": "step_count_mismatch", "message": "pseudocode_step_count must match step records"})
     else:
         issues.append({"code": "invalid_step_count", "message": "pseudocode_step_count must be an integer"})
+    if isinstance(report.get("rendered_artifact_count"), int) and not isinstance(report.get("rendered_artifact_count"), bool):
+        if report["rendered_artifact_count"] != rendered_count:
+            issues.append({"code": "rendered_artifact_count_mismatch", "message": "rendered_artifact_count must match generated figure artifacts"})
+    else:
+        issues.append({"code": "invalid_rendered_artifact_count", "message": "rendered_artifact_count must be an integer"})
+    if isinstance(report.get("accessibility_export_count"), int) and not isinstance(report.get("accessibility_export_count"), bool):
+        if report["accessibility_export_count"] != accessibility_count:
+            issues.append({"code": "accessibility_export_count_mismatch", "message": "accessibility_export_count must match generated accessibility exports"})
+    else:
+        issues.append({"code": "invalid_accessibility_export_count", "message": "accessibility_export_count must be an integer"})
 
     artifacts = report.get("artifact_evidence")
     artifact_paths = report.get("artifact_evidence_paths")
@@ -13078,8 +13274,12 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
     if not isinstance(readiness, Mapping):
         issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
     else:
-        if readiness.get("rendered_diagram_artifacts") is not False:
-            issues.append({"code": "rendered_diagram_overclaim", "message": "rendered diagram artifacts must remain false"})
+        if readiness.get("rendered_diagram_artifacts") not in {True, False}:
+            issues.append({"code": "invalid_rendered_diagram_readiness", "message": "rendered diagram readiness must be boolean"})
+        if readiness.get("accessibility_exports") not in {True, False}:
+            issues.append({"code": "invalid_accessibility_export_readiness", "message": "accessibility export readiness must be boolean"})
+        if readiness.get("exact_diagram_text_reproduction") is not False:
+            issues.append({"code": "exact_diagram_text_overclaim", "message": "exact source diagram text reproduction must remain false"})
         if readiness.get("full_alphaevolve_process_parity") is not False:
             issues.append({"code": "process_parity_overclaim", "message": "full AlphaEvolve process parity must remain false"})
     if report.get("claim_ready") is not False:
@@ -13094,6 +13294,42 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
 def _validate_process_status(value: object, issues: list[dict], owner: str) -> None:
     if value not in {"implemented_sync", "partial", "unsupported", "not_applicable"}:
         issues.append({"code": "invalid_process_status", "message": f"{owner} status is unsupported"})
+
+
+def _validate_process_figure_artifact(
+    value: object,
+    figure_id: object,
+    field: str,
+    expected_kind: str,
+    issues: list[dict],
+) -> bool:
+    if not isinstance(value, Mapping):
+        issues.append({"code": f"invalid_{field}", "message": f"{field} must be an object"})
+        return False
+    ok = True
+    if value.get("figure_id") != figure_id:
+        issues.append({"code": f"{field}_figure_mismatch", "message": f"{field} must reference its figure"})
+        ok = False
+    if value.get("status") != "generated":
+        issues.append({"code": f"{field}_not_generated", "message": f"{field} must be generated"})
+        ok = False
+    if value.get("artifact_kind") != expected_kind:
+        issues.append({"code": f"invalid_{field}_kind", "message": f"{field} has invalid artifact kind"})
+        ok = False
+    path = value.get("path")
+    if not isinstance(path, str) or not path.startswith("paper_artifacts/process_exhibit/") or ".." in Path(path).parts:
+        issues.append({"code": f"invalid_{field}_path", "message": f"{field} path must be a safe process-exhibit path"})
+        ok = False
+    if not _is_sha256_hex(value.get("sha256")):
+        issues.append({"code": f"invalid_{field}_hash", "message": f"{field} sha256 must be a hash"})
+        ok = False
+    if not isinstance(value.get("bytes"), int) or isinstance(value.get("bytes"), bool) or value.get("bytes") <= 0:
+        issues.append({"code": f"invalid_{field}_bytes", "message": f"{field} bytes must be positive"})
+        ok = False
+    if value.get("hash_scope") != "generated_process_exhibit_text_artifact":
+        issues.append({"code": f"invalid_{field}_hash_scope", "message": f"{field} hash scope is invalid"})
+        ok = False
+    return ok
 
 
 def _validate_process_evidence_paths(value: object, issues: list[dict], owner: str) -> None:

@@ -243,18 +243,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     node/edge mappings to LibreEvolve components, implemented/unsupported
     status per node, Figure 2 pseudocode-step mappings, source PDF page and
     caption locations, artifact cross-links, and validation that keeps
-    `claim_ready: false`.
-  - Current gap: paper-facing evidence still lacks rendered diagram/text
-    artifacts and hashes, exact diagram text or accessibility export, async
-    controller/sampler/evaluator topology, independent evaluator-pool
-    parallelism, artifact-level per-step validation, and component-to-TODO
-    links strong enough to treat the local mapping as full reproduced
-    AlphaEvolve architecture evidence.
-  - Required result: add paper-facing rendered/text Figure 1/Figure 2
-    artifacts, exact diagram text/accessibility export, step-level stream
-    validation, topology evidence, component-to-evidence/TODO links, and
-    README/ROADMAP wording that separates local workflow diagrams from full
+    `claim_ready: false`. The report now also writes generated Mermaid source
+    and text accessibility artifacts under `paper_artifacts/process_exhibit/`
+    with SHA-256 hashes.
+  - Current gap: paper-facing evidence still lacks exact source-diagram
+    reproduction, async controller/sampler/evaluator topology, independent
+    evaluator-pool parallelism, artifact-level per-step validation, and
+    component-to-TODO links strong enough to treat the local mapping as full
     reproduced AlphaEvolve architecture evidence.
+  - Required result: add exact diagram text/source reproduction, step-level
+    stream validation, topology evidence, component-to-evidence/TODO links, and
+    README/ROADMAP wording that separates local workflow diagrams and generated
+    Mermaid artifacts from full reproduced AlphaEvolve architecture evidence.
 
 - [ ] Extend unified task-specification provenance beyond field-level artifact
       resolution.

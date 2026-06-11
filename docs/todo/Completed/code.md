@@ -4,6 +4,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Generate process-exhibit diagram text artifacts.
+  - Spec evidence: AlphaEvolve Figure 1/Figure 2 are process diagrams, so a
+    local process mapping needs artifact files and hashes before it can move
+    beyond manifest-only prose.
+  - Status: `runtime.history.alphaevolve_process_exhibit_report` now writes
+    deterministic Mermaid source and text accessibility exports for Figure 1
+    and Figure 2 under `paper_artifacts/process_exhibit/`, records SHA-256
+    hashes and byte counts, includes the artifacts in runtime artifact
+    evidence, and validates generated artifact shape while keeping full process
+    parity false.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4636 passed, 21 skipped, 2 deselected.
+  - Remaining gap: exact source-diagram reproduction, async topology,
+    independent evaluator-pool parallelism, and artifact-level per-step stream
+    validation remain open.
+
 - [x] Add static embedded evaluator invocation traces.
   - Spec evidence: AlphaEvolve Figure 3 shows candidate-owned
     `evaluate(eval_inputs)` invoking evolved code to produce returned scores,

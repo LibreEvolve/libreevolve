@@ -1759,12 +1759,13 @@ figure IDs, source PDF page/caption locations, diagram node and edge records,
 Figure 2 pseudocode-step records, and cross-links to `manifest.json`,
 `history.jsonl`, `failure_history.jsonl`, `archive_events.jsonl`,
 `controller_budget_events.jsonl`, `llm_calls.jsonl`, `prompt_history.jsonl`,
-`evaluator_artifacts`, `best.py`, and `best_workspace`. It is a manifest-level
-process-exhibit map for the current synchronous loop, not a rendered
-AlphaEvolve diagram reproduction: rendered diagram artifacts/hashes, exact
-diagram text or accessibility export, async controller/sampler/evaluator
-topology, independent evaluator-pool parallelism, and artifact-level
-per-step validation remain open.
+`evaluator_artifacts`, `best.py`, and `best_workspace`. It also writes
+deterministic Mermaid diagram source and plain-text accessibility exports under
+`paper_artifacts/process_exhibit/` and records their SHA-256 hashes. It is a
+manifest-level process-exhibit map for the current synchronous loop, not an
+exact AlphaEvolve diagram reproduction: exact source-diagram text, async
+controller/sampler/evaluator topology, independent evaluator-pool
+parallelism, and artifact-level per-step validation remain open.
 The committed `papers/process_exhibit_boundary.json` sidecar preserves that
 absence boundary for paper-manifest validation at the repo root.
 Retained elite-only candidates can still resurface through best/exploit,

@@ -173,14 +173,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     divergent node status, Figure 2 pseudocode-step mappings, source
     PDF/caption locations, and links from displayed steps to prompt-history,
     LLM-call, evaluator, candidate-history, database, and controller-state
-    artifacts. README now also names `papers/process_exhibit_boundary.json` as
+    artifacts. README now also documents generated Mermaid/text accessibility
+    artifacts and hashes under `paper_artifacts/process_exhibit/`, and names
+    `papers/process_exhibit_boundary.json` as
     the committed sidecar for the paper-manifest-validated absence boundary.
-  - Required result: when rendered diagram artifacts/hashes, exact diagram
-    text or accessibility export, async controller topology, independent
-    evaluator-pool parallelism, and artifact-level step validation land, update
-    README, ROADMAP, papers index, and matching TODOs so README distinguishes
-    local workflow explanation from full reproduced AlphaEvolve
-    architecture/process exhibit evidence.
+  - Required result: when exact source-diagram reproduction, async controller
+    topology, independent evaluator-pool parallelism, and artifact-level step
+    validation land, update README, ROADMAP, papers index, and matching TODOs
+    so README distinguishes local workflow explanation and generated Mermaid
+    artifacts from full reproduced AlphaEvolve architecture/process exhibit
+    evidence.
 
 - [ ] Keep README evaluator-workload wording scoped until inner-search and
       ML-training execution contracts exist.

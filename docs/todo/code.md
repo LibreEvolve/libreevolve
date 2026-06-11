@@ -2712,17 +2712,20 @@ Primary evidence:
     regular-hexagon convention, outer regular-hexagon side-length objective,
     prior source `[29]`, and required future geometry witness fields. It
     still marks both witnesses `not_recorded_locally`: no placement payload
-    hashes, containment certificates, pairwise non-overlap certificates,
-    recomputed outer side lengths, or Figure 11 panel artifacts exist. The
-    required fields now include explicit Figure 11 panel artifact path/hash
-    entries, and each witness keeps `figure_panel_artifact_status:
-    not_recorded_locally`.
+    hashes, pose/orientation schemas, regular-hexagon geometry certificates,
+    containment certificates, pairwise non-overlap certificates, side-length
+    recomputation certificates, recomputed outer side lengths, or Figure 11
+    panel artifacts exist. The required fields now include explicit
+    pose/orientation, geometry-certificate, side-length recomputation, and
+    Figure 11 panel artifact path/hash entries, and each witness keeps those
+    statuses `not_recorded_locally`.
   - Required result: replace the `not_recorded_locally` boundary with real
-    Appendix B.7 witness artifacts: placement payload hashes, containment
-    certificates, pairwise non-overlap certificates, recomputed outer side
-    lengths, Figure 11 panel artifacts, and README/ROADMAP wording that
-    distinguishes both hexagon-packing witnesses from aggregate Appendix B
-    coverage.
+    Appendix B.7 witness artifacts: placement payload hashes,
+    pose/orientation schemas, regular-hexagon geometry certificates,
+    containment certificates, pairwise non-overlap certificates, side-length
+    recomputation certificates, recomputed outer side lengths, Figure 11 panel
+    artifacts, and README/ROADMAP wording that distinguishes both
+    hexagon-packing witnesses from aggregate Appendix B coverage.
 
 - [ ] Add Appendix B.9-B.10 Heilbronn minimum-area provenance.
   - Spec evidence: AlphaEvolve Appendix B.9-B.10 reports three Heilbronn

@@ -1832,15 +1832,20 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `packing_result_boundary`, including both `n` values, unit/outer hexagon
     conventions, side-length improvements, Figure 11 panel links, prior
     source, and required future placement/certificate fields. It still warns
-    that the actual placement payloads, containment certificates,
-    non-overlap certificates, recomputed side lengths, and Figure 11 panel
-    artifacts are absent. The boundary now includes explicit Figure 11 panel
-    artifact path/hash fields and keeps those artifacts `not_recorded_locally`.
+    that the actual placement payloads, pose/orientation schemas,
+    regular-hexagon geometry certificates, containment certificates,
+    non-overlap certificates, side-length recomputation certificates,
+    recomputed side lengths, and Figure 11 panel artifacts are absent. The
+    boundary now includes explicit pose/orientation, geometry-certificate,
+    side-length recomputation, and Figure 11 panel artifact path/hash fields
+    and keeps those artifacts `not_recorded_locally`.
   - Required result: when the actual Appendix B.7 placement payloads and
     certificates land, update README, ROADMAP, papers index, and code/paper
-    TODOs together so README names placement hashes, containment/non-overlap
-    certificates, recomputed side lengths, Figure 11 panel artifacts, and
-    source links without merging them into one generic hexagon-packing claim.
+    TODOs together so README names placement hashes, pose/orientation schemas,
+    regular-hexagon geometry certificates, containment/non-overlap
+    certificates, side-length recomputation certificates, recomputed side
+    lengths, Figure 11 panel artifacts, and source links without merging them
+    into one generic hexagon-packing claim.
 
 - [ ] Keep README Appendix B.9-B.10 Heilbronn wording scoped until
       minimum-area provenance exists.

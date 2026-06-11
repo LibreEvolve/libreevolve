@@ -735,10 +735,12 @@ is not yet an AlphaEvolve reproduction.
   evidence until geometry certificates land: the registry now validates the
   unit-regular-hexagon objective, Figure 11 linkage, prior `[29]` values,
   `n = 11` improvement from `3.943` to `3.931`, `n = 12` improvement from
-  `4.0` to `3.942`, and required future placement, containment,
-  non-overlap, recomputed-side-length, and Figure 11 panel artifact fields.
-  The actual placement payloads, geometry certificates, and panel artifacts
-  remain open.
+  `4.0` to `3.942`, and required future placement, pose/orientation,
+  regular-hexagon geometry, containment, non-overlap,
+  recomputed-side-length, side-length recomputation certificate, and Figure
+  11 panel artifact fields. The actual placement payloads, pose/orientation
+  schemas, geometry certificates, side-length recomputation certificates, and
+  panel artifacts remain open.
 - Keep Appendix B.9-B.10 Heilbronn claims scoped to result-boundary evidence
   until point/domain certificates land: the registry now validates the
   unit-area triangle row for `n = 11` with minimum area `> 0.0365`, the

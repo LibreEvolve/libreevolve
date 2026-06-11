@@ -2936,15 +2936,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `packing_result_boundary`, including both `n` values, unit/outer hexagon
     conventions, side-length improvements, Figure 11 panel links, prior
     source, and required future placement/certificate fields. It still does
-    not claim placement artifact hashes, containment certificates,
-    non-overlap certificates, recomputed side lengths, or rendered Figure 11
-    panel artifacts. The boundary now includes explicit Figure 11 panel
-    artifact path/hash fields and keeps those artifacts `not_recorded_locally`.
+    not claim placement artifact hashes, pose/orientation schemas,
+    regular-hexagon geometry certificates, containment certificates,
+    non-overlap certificates, side-length recomputation certificates,
+    recomputed side lengths, or rendered Figure 11 panel artifacts. The
+    boundary now includes explicit pose/orientation, geometry-certificate,
+    side-length recomputation, and Figure 11 panel artifact path/hash fields
+    and keeps those artifacts `not_recorded_locally`.
   - Required result: when the actual Appendix B.7 placement payloads and
     certificates land, update ROADMAP, README, papers index, and code/paper
     TODOs so roadmap claims distinguish both `n` values, geometry
-    conventions, certificate evidence, Figure 11 artifacts, payload hashes,
-    and source locations from aggregate Appendix B coverage.
+    conventions, pose/orientation schemas, regular-hexagon geometry
+    certificates, side-length recomputation certificates, Figure 11 artifacts,
+    payload hashes, and source locations from aggregate Appendix B coverage.
 
 - [ ] Keep Appendix B.9-B.10 roadmap wording scoped until Heilbronn
       minimum-area provenance exists.

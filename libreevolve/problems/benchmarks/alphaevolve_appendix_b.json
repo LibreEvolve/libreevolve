@@ -614,11 +614,20 @@
           "placement_artifact_path",
           "placement_artifact_sha256",
           "placement_payload_schema",
+          "hexagon_pose_schema",
+          "inner_hexagon_geometry_certificate_path",
+          "inner_hexagon_geometry_certificate_sha256",
+          "outer_hexagon_geometry_certificate_path",
+          "outer_hexagon_geometry_certificate_sha256",
+          "orientation_certificate_path",
+          "orientation_certificate_sha256",
           "containment_certificate_path",
           "containment_certificate_sha256",
           "non_overlap_certificate_path",
           "non_overlap_certificate_sha256",
           "recomputed_outer_side_length",
+          "side_length_recomputation_certificate_path",
+          "side_length_recomputation_certificate_sha256",
           "figure_panel_id",
           "figure_panel_artifact_path",
           "figure_panel_artifact_sha256"
@@ -632,11 +641,15 @@
             "reported_outer_side_length": 3.931,
             "reported_improvement_direction": "smaller_outer_side_length",
             "placement_artifact_status": "not_recorded_locally",
+            "inner_hexagon_geometry_certificate_status": "not_recorded_locally",
+            "outer_hexagon_geometry_certificate_status": "not_recorded_locally",
+            "orientation_certificate_status": "not_recorded_locally",
             "containment_certificate_status": "not_recorded_locally",
             "non_overlap_certificate_status": "not_recorded_locally",
+            "side_length_recomputation_certificate_status": "not_recorded_locally",
             "recomputed_outer_side_length_status": "not_recorded_locally",
             "figure_panel_artifact_status": "not_recorded_locally",
-            "claim_boundary": "The registry records the paper's B.7 n=11 packing summary but does not claim a local placement payload, containment certificate, non-overlap certificate, or recomputed outer side length."
+            "claim_boundary": "The registry records the paper's B.7 n=11 packing summary but does not claim a local placement payload, hexagon pose schema, regular-hexagon geometry certificates, orientation certificate, containment certificate, non-overlap certificate, or recomputed outer side length."
           },
           {
             "result_id": "b7_12_unit_hexagons",
@@ -646,11 +659,15 @@
             "reported_outer_side_length": 3.942,
             "reported_improvement_direction": "smaller_outer_side_length",
             "placement_artifact_status": "not_recorded_locally",
+            "inner_hexagon_geometry_certificate_status": "not_recorded_locally",
+            "outer_hexagon_geometry_certificate_status": "not_recorded_locally",
+            "orientation_certificate_status": "not_recorded_locally",
             "containment_certificate_status": "not_recorded_locally",
             "non_overlap_certificate_status": "not_recorded_locally",
+            "side_length_recomputation_certificate_status": "not_recorded_locally",
             "recomputed_outer_side_length_status": "not_recorded_locally",
             "figure_panel_artifact_status": "not_recorded_locally",
-            "claim_boundary": "The registry records the paper's B.7 n=12 packing summary but does not claim a local placement payload, containment certificate, non-overlap certificate, or recomputed outer side length."
+            "claim_boundary": "The registry records the paper's B.7 n=12 packing summary but does not claim a local placement payload, hexagon pose schema, regular-hexagon geometry certificates, orientation certificate, containment certificate, non-overlap certificate, or recomputed outer side length."
           }
         ]
       },

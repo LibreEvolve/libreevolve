@@ -2653,16 +2653,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     `n` rows, unit-hexagon side convention, outer side-length objective,
     prior/current values, comparison policy, source section, and Figure 11
     panel linkage through a validated `packing_result_boundary`. It still
-    does not retain real placement payloads, placement hashes, containment
-    certificates, pairwise-disjointness certificates, recomputed outer side
-    lengths, or rendered Figure 11 panel artifacts. The boundary now includes
-    explicit Figure 11 panel artifact path/hash fields and keeps each panel
-    artifact `not_recorded_locally`.
+    does not retain real placement payloads, placement hashes,
+    pose/orientation schemas, regular-hexagon geometry certificates,
+    containment certificates, pairwise-disjointness certificates, side-length
+    recomputation certificates, recomputed outer side lengths, or rendered
+    Figure 11 panel artifacts. The boundary now includes explicit
+    pose/orientation, geometry-certificate, side-length recomputation, and
+    Figure 11 panel artifact path/hash fields and keeps each panel artifact
+    `not_recorded_locally`.
   - Required result: add paper/report evidence for the missing Appendix B.7
-    witness artifacts: placement artifact hashes, containment certificates,
-    non-overlap certificates, recomputed side lengths, rendered Figure 11
-    panel artifacts, source section location, and README/ROADMAP text that
-    separates the two hexagon witnesses from broad Appendix B family coverage.
+    witness artifacts: placement artifact hashes, pose/orientation schemas,
+    regular-hexagon geometry certificates, containment certificates,
+    non-overlap certificates, side-length recomputation certificates,
+    recomputed side lengths, rendered Figure 11 panel artifacts, source
+    section location, and README/ROADMAP text that separates the two hexagon
+    witnesses from broad Appendix B family coverage.
 
 - [ ] Track Appendix B.9-B.10 Heilbronn minimum-area evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.9-B.10 gives

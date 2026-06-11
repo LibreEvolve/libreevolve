@@ -719,6 +719,10 @@ def test_appendix_b_registry_requires_b7_packing_boundary(tmp_path):
     first["hexagon_count"] = 10
     first["reported_outer_side_length"] = 3.95
     first["placement_artifact_status"] = "recorded"
+    first["inner_hexagon_geometry_certificate_status"] = "recorded"
+    first["outer_hexagon_geometry_certificate_status"] = "recorded"
+    first["orientation_certificate_status"] = "recorded"
+    first["side_length_recomputation_certificate_status"] = "recorded"
     first["figure_panel_artifact_status"] = "recorded"
     first["claim_boundary"] = "Placement exists."
     boundary["missing_witnesses"] = boundary["missing_witnesses"][:1]
@@ -736,6 +740,10 @@ def test_appendix_b_registry_requires_b7_packing_boundary(tmp_path):
     assert "invalid_b7_witness_hexagon_count" in codes
     assert "invalid_b7_witness_reported_outer_side_length" in codes
     assert "invalid_b7_placement_artifact_status" in codes
+    assert "invalid_b7_inner_hexagon_geometry_certificate_status" in codes
+    assert "invalid_b7_outer_hexagon_geometry_certificate_status" in codes
+    assert "invalid_b7_orientation_certificate_status" in codes
+    assert "invalid_b7_side_length_recomputation_certificate_status" in codes
     assert "invalid_b7_figure_panel_artifact_status" in codes
     assert "missing_b7_witness_claim_boundary" in codes
     assert "invalid_b7_improvement_direction" in codes

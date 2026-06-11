@@ -1,0 +1,2168 @@
+{
+  "schema": "libreevolve.alphaevolve_appendix_a_matrix_curation.v1",
+  "source_paper_id": "2506.13131",
+  "source_section": "AlphaEvolve Appendix A",
+  "source_pdf_page": 34,
+  "target_suite": "alphaevolve_appendix_a",
+  "selection_policy": {
+    "reported_target_count": 54,
+    "rough_min_dimension": 2,
+    "rough_m_max": 5,
+    "rough_n_max": 5,
+    "p_cutoff_policy": "reasonable_cutoff_not_numerically_specified_in_paper",
+    "paper_wording": "chosen roughly representing sizes where 2 <= m,n <= 5, with some reasonable cutoff for p"
+  },
+  "symmetry_policy": {
+    "canonical_order": "m <= n <= p",
+    "axis_permutation_equivalence": true,
+    "paper_wording": "equivalent algorithms for any permutations of the three axes"
+  },
+  "included_targets": [
+    {
+      "target_id": "mm_2x2x2",
+      "dimensions": [
+        2,
+        2,
+        2
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x2x3",
+      "dimensions": [
+        2,
+        2,
+        3
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x2x4",
+      "dimensions": [
+        2,
+        2,
+        4
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x2x5",
+      "dimensions": [
+        2,
+        2,
+        5
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x2x6",
+      "dimensions": [
+        2,
+        2,
+        6
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x2x7",
+      "dimensions": [
+        2,
+        2,
+        7
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x2x8",
+      "dimensions": [
+        2,
+        2,
+        8
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x2x9",
+      "dimensions": [
+        2,
+        2,
+        9
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x2x10",
+      "dimensions": [
+        2,
+        2,
+        10
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x2x11",
+      "dimensions": [
+        2,
+        2,
+        11
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x2x12",
+      "dimensions": [
+        2,
+        2,
+        12
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x2x13",
+      "dimensions": [
+        2,
+        2,
+        13
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x2x14",
+      "dimensions": [
+        2,
+        2,
+        14
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x2x15",
+      "dimensions": [
+        2,
+        2,
+        15
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x2x16",
+      "dimensions": [
+        2,
+        2,
+        16
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x3x3",
+      "dimensions": [
+        2,
+        3,
+        3
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x3x4",
+      "dimensions": [
+        2,
+        3,
+        4
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x3x5",
+      "dimensions": [
+        2,
+        3,
+        5
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x3x6",
+      "dimensions": [
+        2,
+        3,
+        6
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x3x7",
+      "dimensions": [
+        2,
+        3,
+        7
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x3x8",
+      "dimensions": [
+        2,
+        3,
+        8
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x3x9",
+      "dimensions": [
+        2,
+        3,
+        9
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x3x10",
+      "dimensions": [
+        2,
+        3,
+        10
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x4x4",
+      "dimensions": [
+        2,
+        4,
+        4
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x4x5",
+      "dimensions": [
+        2,
+        4,
+        5
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x4x6",
+      "dimensions": [
+        2,
+        4,
+        6
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x4x7",
+      "dimensions": [
+        2,
+        4,
+        7
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x4x8",
+      "dimensions": [
+        2,
+        4,
+        8
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x5x5",
+      "dimensions": [
+        2,
+        5,
+        5
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_2x5x6",
+      "dimensions": [
+        2,
+        5,
+        6
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_3x3x3",
+      "dimensions": [
+        3,
+        3,
+        3
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_3x3x4",
+      "dimensions": [
+        3,
+        3,
+        4
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_3x3x5",
+      "dimensions": [
+        3,
+        3,
+        5
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_3x3x6",
+      "dimensions": [
+        3,
+        3,
+        6
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_3x3x7",
+      "dimensions": [
+        3,
+        3,
+        7
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_3x3x8",
+      "dimensions": [
+        3,
+        3,
+        8
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_3x4x4",
+      "dimensions": [
+        3,
+        4,
+        4
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_3x4x5",
+      "dimensions": [
+        3,
+        4,
+        5
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_3x4x6",
+      "dimensions": [
+        3,
+        4,
+        6
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_3x4x7",
+      "dimensions": [
+        3,
+        4,
+        7
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_3x4x8",
+      "dimensions": [
+        3,
+        4,
+        8
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_3x5x5",
+      "dimensions": [
+        3,
+        5,
+        5
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_3x5x6",
+      "dimensions": [
+        3,
+        5,
+        6
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_3x5x7",
+      "dimensions": [
+        3,
+        5,
+        7
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_4x4x4",
+      "dimensions": [
+        4,
+        4,
+        4
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_4x4x5",
+      "dimensions": [
+        4,
+        4,
+        5
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_4x4x6",
+      "dimensions": [
+        4,
+        4,
+        6
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_4x4x7",
+      "dimensions": [
+        4,
+        4,
+        7
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_4x4x8",
+      "dimensions": [
+        4,
+        4,
+        8
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_4x4x9",
+      "dimensions": [
+        4,
+        4,
+        9
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_4x5x5",
+      "dimensions": [
+        4,
+        5,
+        5
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_4x5x6",
+      "dimensions": [
+        4,
+        5,
+        6
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_5x5x5",
+      "dimensions": [
+        5,
+        5,
+        5
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "rough_rule",
+      "inclusion_rationale": "within paper rough 2 <= m,n <= 5 selection"
+    },
+    {
+      "target_id": "mm_6x6x6",
+      "dimensions": [
+        6,
+        6,
+        6
+      ],
+      "canonical_representative": true,
+      "selection_bucket": "reported_outside_rough_rule",
+      "inclusion_rationale": "reported in Appendix A Table 3 outside the rough 2 <= m,n <= 5 selection"
+    }
+  ],
+  "omitted_equivalent_targets": [
+    {
+      "canonical_target_id": "mm_2x2x3",
+      "omitted_target_id": "mm_2x3x2",
+      "dimensions": [
+        2,
+        3,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x3",
+      "omitted_target_id": "mm_3x2x2",
+      "dimensions": [
+        3,
+        2,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x4",
+      "omitted_target_id": "mm_2x4x2",
+      "dimensions": [
+        2,
+        4,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x4",
+      "omitted_target_id": "mm_4x2x2",
+      "dimensions": [
+        4,
+        2,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x5",
+      "omitted_target_id": "mm_2x5x2",
+      "dimensions": [
+        2,
+        5,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x5",
+      "omitted_target_id": "mm_5x2x2",
+      "dimensions": [
+        5,
+        2,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x6",
+      "omitted_target_id": "mm_2x6x2",
+      "dimensions": [
+        2,
+        6,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x6",
+      "omitted_target_id": "mm_6x2x2",
+      "dimensions": [
+        6,
+        2,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x7",
+      "omitted_target_id": "mm_2x7x2",
+      "dimensions": [
+        2,
+        7,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x7",
+      "omitted_target_id": "mm_7x2x2",
+      "dimensions": [
+        7,
+        2,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x8",
+      "omitted_target_id": "mm_2x8x2",
+      "dimensions": [
+        2,
+        8,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x8",
+      "omitted_target_id": "mm_8x2x2",
+      "dimensions": [
+        8,
+        2,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x9",
+      "omitted_target_id": "mm_2x9x2",
+      "dimensions": [
+        2,
+        9,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x9",
+      "omitted_target_id": "mm_9x2x2",
+      "dimensions": [
+        9,
+        2,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x10",
+      "omitted_target_id": "mm_2x10x2",
+      "dimensions": [
+        2,
+        10,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x10",
+      "omitted_target_id": "mm_10x2x2",
+      "dimensions": [
+        10,
+        2,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x11",
+      "omitted_target_id": "mm_2x11x2",
+      "dimensions": [
+        2,
+        11,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x11",
+      "omitted_target_id": "mm_11x2x2",
+      "dimensions": [
+        11,
+        2,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x12",
+      "omitted_target_id": "mm_2x12x2",
+      "dimensions": [
+        2,
+        12,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x12",
+      "omitted_target_id": "mm_12x2x2",
+      "dimensions": [
+        12,
+        2,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x13",
+      "omitted_target_id": "mm_2x13x2",
+      "dimensions": [
+        2,
+        13,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x13",
+      "omitted_target_id": "mm_13x2x2",
+      "dimensions": [
+        13,
+        2,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x14",
+      "omitted_target_id": "mm_2x14x2",
+      "dimensions": [
+        2,
+        14,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x14",
+      "omitted_target_id": "mm_14x2x2",
+      "dimensions": [
+        14,
+        2,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x15",
+      "omitted_target_id": "mm_2x15x2",
+      "dimensions": [
+        2,
+        15,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x15",
+      "omitted_target_id": "mm_15x2x2",
+      "dimensions": [
+        15,
+        2,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x16",
+      "omitted_target_id": "mm_2x16x2",
+      "dimensions": [
+        2,
+        16,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x2x16",
+      "omitted_target_id": "mm_16x2x2",
+      "dimensions": [
+        16,
+        2,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x3",
+      "omitted_target_id": "mm_3x2x3",
+      "dimensions": [
+        3,
+        2,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x3",
+      "omitted_target_id": "mm_3x3x2",
+      "dimensions": [
+        3,
+        3,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x4",
+      "omitted_target_id": "mm_2x4x3",
+      "dimensions": [
+        2,
+        4,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x4",
+      "omitted_target_id": "mm_3x2x4",
+      "dimensions": [
+        3,
+        2,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x4",
+      "omitted_target_id": "mm_3x4x2",
+      "dimensions": [
+        3,
+        4,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x4",
+      "omitted_target_id": "mm_4x2x3",
+      "dimensions": [
+        4,
+        2,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x4",
+      "omitted_target_id": "mm_4x3x2",
+      "dimensions": [
+        4,
+        3,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x5",
+      "omitted_target_id": "mm_2x5x3",
+      "dimensions": [
+        2,
+        5,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x5",
+      "omitted_target_id": "mm_3x2x5",
+      "dimensions": [
+        3,
+        2,
+        5
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x5",
+      "omitted_target_id": "mm_3x5x2",
+      "dimensions": [
+        3,
+        5,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x5",
+      "omitted_target_id": "mm_5x2x3",
+      "dimensions": [
+        5,
+        2,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x5",
+      "omitted_target_id": "mm_5x3x2",
+      "dimensions": [
+        5,
+        3,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x6",
+      "omitted_target_id": "mm_2x6x3",
+      "dimensions": [
+        2,
+        6,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x6",
+      "omitted_target_id": "mm_3x2x6",
+      "dimensions": [
+        3,
+        2,
+        6
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x6",
+      "omitted_target_id": "mm_3x6x2",
+      "dimensions": [
+        3,
+        6,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x6",
+      "omitted_target_id": "mm_6x2x3",
+      "dimensions": [
+        6,
+        2,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x6",
+      "omitted_target_id": "mm_6x3x2",
+      "dimensions": [
+        6,
+        3,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x7",
+      "omitted_target_id": "mm_2x7x3",
+      "dimensions": [
+        2,
+        7,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x7",
+      "omitted_target_id": "mm_3x2x7",
+      "dimensions": [
+        3,
+        2,
+        7
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x7",
+      "omitted_target_id": "mm_3x7x2",
+      "dimensions": [
+        3,
+        7,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x7",
+      "omitted_target_id": "mm_7x2x3",
+      "dimensions": [
+        7,
+        2,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x7",
+      "omitted_target_id": "mm_7x3x2",
+      "dimensions": [
+        7,
+        3,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x8",
+      "omitted_target_id": "mm_2x8x3",
+      "dimensions": [
+        2,
+        8,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x8",
+      "omitted_target_id": "mm_3x2x8",
+      "dimensions": [
+        3,
+        2,
+        8
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x8",
+      "omitted_target_id": "mm_3x8x2",
+      "dimensions": [
+        3,
+        8,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x8",
+      "omitted_target_id": "mm_8x2x3",
+      "dimensions": [
+        8,
+        2,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x8",
+      "omitted_target_id": "mm_8x3x2",
+      "dimensions": [
+        8,
+        3,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x9",
+      "omitted_target_id": "mm_2x9x3",
+      "dimensions": [
+        2,
+        9,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x9",
+      "omitted_target_id": "mm_3x2x9",
+      "dimensions": [
+        3,
+        2,
+        9
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x9",
+      "omitted_target_id": "mm_3x9x2",
+      "dimensions": [
+        3,
+        9,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x9",
+      "omitted_target_id": "mm_9x2x3",
+      "dimensions": [
+        9,
+        2,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x9",
+      "omitted_target_id": "mm_9x3x2",
+      "dimensions": [
+        9,
+        3,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x10",
+      "omitted_target_id": "mm_2x10x3",
+      "dimensions": [
+        2,
+        10,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x10",
+      "omitted_target_id": "mm_3x2x10",
+      "dimensions": [
+        3,
+        2,
+        10
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x10",
+      "omitted_target_id": "mm_3x10x2",
+      "dimensions": [
+        3,
+        10,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x10",
+      "omitted_target_id": "mm_10x2x3",
+      "dimensions": [
+        10,
+        2,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x3x10",
+      "omitted_target_id": "mm_10x3x2",
+      "dimensions": [
+        10,
+        3,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x4",
+      "omitted_target_id": "mm_4x2x4",
+      "dimensions": [
+        4,
+        2,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x4",
+      "omitted_target_id": "mm_4x4x2",
+      "dimensions": [
+        4,
+        4,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x5",
+      "omitted_target_id": "mm_2x5x4",
+      "dimensions": [
+        2,
+        5,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x5",
+      "omitted_target_id": "mm_4x2x5",
+      "dimensions": [
+        4,
+        2,
+        5
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x5",
+      "omitted_target_id": "mm_4x5x2",
+      "dimensions": [
+        4,
+        5,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x5",
+      "omitted_target_id": "mm_5x2x4",
+      "dimensions": [
+        5,
+        2,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x5",
+      "omitted_target_id": "mm_5x4x2",
+      "dimensions": [
+        5,
+        4,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x6",
+      "omitted_target_id": "mm_2x6x4",
+      "dimensions": [
+        2,
+        6,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x6",
+      "omitted_target_id": "mm_4x2x6",
+      "dimensions": [
+        4,
+        2,
+        6
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x6",
+      "omitted_target_id": "mm_4x6x2",
+      "dimensions": [
+        4,
+        6,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x6",
+      "omitted_target_id": "mm_6x2x4",
+      "dimensions": [
+        6,
+        2,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x6",
+      "omitted_target_id": "mm_6x4x2",
+      "dimensions": [
+        6,
+        4,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x7",
+      "omitted_target_id": "mm_2x7x4",
+      "dimensions": [
+        2,
+        7,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x7",
+      "omitted_target_id": "mm_4x2x7",
+      "dimensions": [
+        4,
+        2,
+        7
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x7",
+      "omitted_target_id": "mm_4x7x2",
+      "dimensions": [
+        4,
+        7,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x7",
+      "omitted_target_id": "mm_7x2x4",
+      "dimensions": [
+        7,
+        2,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x7",
+      "omitted_target_id": "mm_7x4x2",
+      "dimensions": [
+        7,
+        4,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x8",
+      "omitted_target_id": "mm_2x8x4",
+      "dimensions": [
+        2,
+        8,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x8",
+      "omitted_target_id": "mm_4x2x8",
+      "dimensions": [
+        4,
+        2,
+        8
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x8",
+      "omitted_target_id": "mm_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x8",
+      "omitted_target_id": "mm_8x2x4",
+      "dimensions": [
+        8,
+        2,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x4x8",
+      "omitted_target_id": "mm_8x4x2",
+      "dimensions": [
+        8,
+        4,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x5x5",
+      "omitted_target_id": "mm_5x2x5",
+      "dimensions": [
+        5,
+        2,
+        5
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x5x5",
+      "omitted_target_id": "mm_5x5x2",
+      "dimensions": [
+        5,
+        5,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x5x6",
+      "omitted_target_id": "mm_2x6x5",
+      "dimensions": [
+        2,
+        6,
+        5
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x5x6",
+      "omitted_target_id": "mm_5x2x6",
+      "dimensions": [
+        5,
+        2,
+        6
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x5x6",
+      "omitted_target_id": "mm_5x6x2",
+      "dimensions": [
+        5,
+        6,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x5x6",
+      "omitted_target_id": "mm_6x2x5",
+      "dimensions": [
+        6,
+        2,
+        5
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_2x5x6",
+      "omitted_target_id": "mm_6x5x2",
+      "dimensions": [
+        6,
+        5,
+        2
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x3x4",
+      "omitted_target_id": "mm_3x4x3",
+      "dimensions": [
+        3,
+        4,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x3x4",
+      "omitted_target_id": "mm_4x3x3",
+      "dimensions": [
+        4,
+        3,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x3x5",
+      "omitted_target_id": "mm_3x5x3",
+      "dimensions": [
+        3,
+        5,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x3x5",
+      "omitted_target_id": "mm_5x3x3",
+      "dimensions": [
+        5,
+        3,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x3x6",
+      "omitted_target_id": "mm_3x6x3",
+      "dimensions": [
+        3,
+        6,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x3x6",
+      "omitted_target_id": "mm_6x3x3",
+      "dimensions": [
+        6,
+        3,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x3x7",
+      "omitted_target_id": "mm_3x7x3",
+      "dimensions": [
+        3,
+        7,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x3x7",
+      "omitted_target_id": "mm_7x3x3",
+      "dimensions": [
+        7,
+        3,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x3x8",
+      "omitted_target_id": "mm_3x8x3",
+      "dimensions": [
+        3,
+        8,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x3x8",
+      "omitted_target_id": "mm_8x3x3",
+      "dimensions": [
+        8,
+        3,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x4",
+      "omitted_target_id": "mm_4x3x4",
+      "dimensions": [
+        4,
+        3,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x4",
+      "omitted_target_id": "mm_4x4x3",
+      "dimensions": [
+        4,
+        4,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x5",
+      "omitted_target_id": "mm_3x5x4",
+      "dimensions": [
+        3,
+        5,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x5",
+      "omitted_target_id": "mm_4x3x5",
+      "dimensions": [
+        4,
+        3,
+        5
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x5",
+      "omitted_target_id": "mm_4x5x3",
+      "dimensions": [
+        4,
+        5,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x5",
+      "omitted_target_id": "mm_5x3x4",
+      "dimensions": [
+        5,
+        3,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x5",
+      "omitted_target_id": "mm_5x4x3",
+      "dimensions": [
+        5,
+        4,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x6",
+      "omitted_target_id": "mm_3x6x4",
+      "dimensions": [
+        3,
+        6,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x6",
+      "omitted_target_id": "mm_4x3x6",
+      "dimensions": [
+        4,
+        3,
+        6
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x6",
+      "omitted_target_id": "mm_4x6x3",
+      "dimensions": [
+        4,
+        6,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x6",
+      "omitted_target_id": "mm_6x3x4",
+      "dimensions": [
+        6,
+        3,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x6",
+      "omitted_target_id": "mm_6x4x3",
+      "dimensions": [
+        6,
+        4,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x7",
+      "omitted_target_id": "mm_3x7x4",
+      "dimensions": [
+        3,
+        7,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x7",
+      "omitted_target_id": "mm_4x3x7",
+      "dimensions": [
+        4,
+        3,
+        7
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x7",
+      "omitted_target_id": "mm_4x7x3",
+      "dimensions": [
+        4,
+        7,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x7",
+      "omitted_target_id": "mm_7x3x4",
+      "dimensions": [
+        7,
+        3,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x7",
+      "omitted_target_id": "mm_7x4x3",
+      "dimensions": [
+        7,
+        4,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x8",
+      "omitted_target_id": "mm_3x8x4",
+      "dimensions": [
+        3,
+        8,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x8",
+      "omitted_target_id": "mm_4x3x8",
+      "dimensions": [
+        4,
+        3,
+        8
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x8",
+      "omitted_target_id": "mm_4x8x3",
+      "dimensions": [
+        4,
+        8,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x8",
+      "omitted_target_id": "mm_8x3x4",
+      "dimensions": [
+        8,
+        3,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x4x8",
+      "omitted_target_id": "mm_8x4x3",
+      "dimensions": [
+        8,
+        4,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x5x5",
+      "omitted_target_id": "mm_5x3x5",
+      "dimensions": [
+        5,
+        3,
+        5
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x5x5",
+      "omitted_target_id": "mm_5x5x3",
+      "dimensions": [
+        5,
+        5,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x5x6",
+      "omitted_target_id": "mm_3x6x5",
+      "dimensions": [
+        3,
+        6,
+        5
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x5x6",
+      "omitted_target_id": "mm_5x3x6",
+      "dimensions": [
+        5,
+        3,
+        6
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x5x6",
+      "omitted_target_id": "mm_5x6x3",
+      "dimensions": [
+        5,
+        6,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x5x6",
+      "omitted_target_id": "mm_6x3x5",
+      "dimensions": [
+        6,
+        3,
+        5
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x5x6",
+      "omitted_target_id": "mm_6x5x3",
+      "dimensions": [
+        6,
+        5,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x5x7",
+      "omitted_target_id": "mm_3x7x5",
+      "dimensions": [
+        3,
+        7,
+        5
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x5x7",
+      "omitted_target_id": "mm_5x3x7",
+      "dimensions": [
+        5,
+        3,
+        7
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x5x7",
+      "omitted_target_id": "mm_5x7x3",
+      "dimensions": [
+        5,
+        7,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x5x7",
+      "omitted_target_id": "mm_7x3x5",
+      "dimensions": [
+        7,
+        3,
+        5
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_3x5x7",
+      "omitted_target_id": "mm_7x5x3",
+      "dimensions": [
+        7,
+        5,
+        3
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_4x4x5",
+      "omitted_target_id": "mm_4x5x4",
+      "dimensions": [
+        4,
+        5,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_4x4x5",
+      "omitted_target_id": "mm_5x4x4",
+      "dimensions": [
+        5,
+        4,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_4x4x6",
+      "omitted_target_id": "mm_4x6x4",
+      "dimensions": [
+        4,
+        6,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_4x4x6",
+      "omitted_target_id": "mm_6x4x4",
+      "dimensions": [
+        6,
+        4,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_4x4x7",
+      "omitted_target_id": "mm_4x7x4",
+      "dimensions": [
+        4,
+        7,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_4x4x7",
+      "omitted_target_id": "mm_7x4x4",
+      "dimensions": [
+        7,
+        4,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_4x4x8",
+      "omitted_target_id": "mm_4x8x4",
+      "dimensions": [
+        4,
+        8,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_4x4x8",
+      "omitted_target_id": "mm_8x4x4",
+      "dimensions": [
+        8,
+        4,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_4x4x9",
+      "omitted_target_id": "mm_4x9x4",
+      "dimensions": [
+        4,
+        9,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_4x4x9",
+      "omitted_target_id": "mm_9x4x4",
+      "dimensions": [
+        9,
+        4,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_4x5x5",
+      "omitted_target_id": "mm_5x4x5",
+      "dimensions": [
+        5,
+        4,
+        5
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_4x5x5",
+      "omitted_target_id": "mm_5x5x4",
+      "dimensions": [
+        5,
+        5,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_4x5x6",
+      "omitted_target_id": "mm_4x6x5",
+      "dimensions": [
+        4,
+        6,
+        5
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_4x5x6",
+      "omitted_target_id": "mm_5x4x6",
+      "dimensions": [
+        5,
+        4,
+        6
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_4x5x6",
+      "omitted_target_id": "mm_5x6x4",
+      "dimensions": [
+        5,
+        6,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_4x5x6",
+      "omitted_target_id": "mm_6x4x5",
+      "dimensions": [
+        6,
+        4,
+        5
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    },
+    {
+      "canonical_target_id": "mm_4x5x6",
+      "omitted_target_id": "mm_6x5x4",
+      "dimensions": [
+        6,
+        5,
+        4
+      ],
+      "equivalence": "matrix_tensor_axis_permutation"
+    }
+  ]
+}

@@ -4,6 +4,29 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit Appendix A matrix target-suite curation sidecars.
+  - Spec evidence: AlphaEvolve Appendix A describes the 54 reported matrix
+    sizes as roughly chosen from dimensions with 2 <= m,n <= 5 and a
+    reasonable p cutoff, while tensor symmetries make axis permutations
+    equivalent and motivate sorted representatives.
+  - Status: `papers/appendix_a_matrix_curation.json` now emits the
+    reported-suite curation record, including the rough selection wording,
+    sorted representative policy, included-target rationales, and omitted
+    axis-permutation-equivalent target ledger. The companion
+    `papers/appendix_a_matrix_excluded_target_curation.json` sidecar now emits
+    the `not_recorded_locally` boundary for broad excluded non-equivalent
+    target justifications. `validate_paper_manifest()` requires and validates
+    both sidecars at the real repo root when the Appendix A registry is in
+    scope.
+  - Verification: `py -3.12 -m pytest
+    tests\test_appendix_a_matrix_registry.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\appendix_a_matrix_registry.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: broad excluded non-equivalent target justification records
+    and any local larger-target resource/OOM evidence remain active work.
+
 - [x] Emit paper artifact-role/linkage sidecars.
   - Spec evidence: AlphaEvolve's Contributions section attributes paper
     figure creation to N.V., E.D., M.E., S.C., A.N., and A.Z.W., and the

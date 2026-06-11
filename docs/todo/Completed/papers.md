@@ -6,6 +6,25 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit Appendix A matrix target-suite curation sidecars.
+  - Paper evidence: Appendix A says the matrix target suite was chosen roughly
+    from sizes with 2 <= m,n <= 5 and a reasonable p cutoff, and that axis
+    permutations of matrix-multiplication tensors are equivalent.
+  - Status: `papers/appendix_a_matrix_curation.json` now carries the
+    paper-facing reported-suite curation record, and
+    `papers/appendix_a_matrix_excluded_target_curation.json` carries the
+    explicit `not_recorded_locally` boundary for broad excluded
+    non-equivalent target justifications. The paper-manifest gate requires and
+    validates both sidecars at the real repo root.
+  - Verification: `py -3.12 -m pytest
+    tests\test_appendix_a_matrix_registry.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\appendix_a_matrix_registry.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: paper-facing excluded-target justification records and
+    local resource-frontier/OOM evidence remain open.
+
 - [x] Emit paper artifact-role/linkage sidecars.
   - Paper evidence: the AlphaEvolve Contributions section names the initials
     responsible for creating the figures and assembling the accompanying

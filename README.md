@@ -3860,12 +3860,16 @@ permutation symmetries, included-target rationales, and the derived ledger of
 omitted symmetry-equivalent target ids. It is curation provenance for the
 reported suite, not target tensor/decomposition evidence, and it still does
 not justify every possible excluded non-equivalent target or capture the
-local larger-target OOM/resource frontier. The companion boundary
+local larger-target OOM/resource frontier. The committed
+`papers/appendix_a_matrix_curation.json` sidecar emits this reported-suite
+curation record. The companion boundary
 `libreevolve.alphaevolve_appendix_a_matrix_excluded_target_curation_boundary.v1`
 validates the current `not_recorded_locally` state and required future fields
 for excluded target ids, dimensions, exclusion class/reason, source basis,
 rough-rule and `p`-cutoff relations, symmetry-equivalence status, local
 attempt/resource-frontier refs, artifact paths, and hashes.
+`papers/appendix_a_matrix_excluded_target_curation.json` emits that absence
+boundary as a committed sidecar.
 `appendix_a_matrix_excluded_target_curation_boundary_from_records()` can build
 a recorded boundary for supplied excluded-target justifications over a declared
 coverage scope, but LibreEvolve still does not enumerate or justify every

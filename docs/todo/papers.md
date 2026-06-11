@@ -3336,14 +3336,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     policy, omitted symmetry-equivalent target ledger, unspecified p-cutoff
     source wording, and included-target rationales for the reported suite. It
     does not justify every possible excluded non-equivalent target outside the
-    rough rank/size heuristic.
+    rough rank/size heuristic. `papers/appendix_a_matrix_curation.json` now
+    emits that reported-suite curation record as committed paper-facing
+    evidence.
     `libreevolve.alphaevolve_appendix_a_matrix_excluded_target_curation_boundary.v1`
     now records the current `not_recorded_locally` boundary and validates
     required future excluded-target justification fields for excluded target
     ids, dimensions, exclusion class/reason, source basis, rough-rule and
     `p`-cutoff relations, symmetry-equivalence status, local attempt/resource
-    frontier refs, artifact paths, and hashes. The paper-manifest gate
-    validates this boundary.
+    frontier refs, artifact paths, and hashes.
+    `papers/appendix_a_matrix_excluded_target_curation.json` now emits that
+    absence boundary as committed paper-facing evidence. The paper-manifest
+    gate validates both sidecars.
     `appendix_a_matrix_excluded_target_curation_boundary_from_records()` builds
     a recorded boundary from supplied excluded-target justifications and a
     declared coverage scope, but no paper-facing broad excluded-target

@@ -3292,12 +3292,16 @@ Primary evidence:
     canonical sorted-representative rule, derived symmetry-equivalent omitted
     target ids, unspecified `p` cutoff policy, and per-included-target
     rationale for the reported 54 rows.
+    `papers/appendix_a_matrix_curation.json` now emits that reported-suite
+    curation record as a committed sidecar.
     `libreevolve.alphaevolve_appendix_a_matrix_excluded_target_curation_boundary.v1`
     now validates the current `not_recorded_locally` boundary and required
     future fields for excluded non-equivalent target ids, dimensions,
     exclusion class/reason, source basis, rough-rule and `p`-cutoff relations,
     symmetry-equivalence status, local attempt/resource-frontier refs,
     artifact paths, and hashes.
+    `papers/appendix_a_matrix_excluded_target_curation.json` now emits that
+    absence boundary as a committed sidecar.
     `appendix_a_matrix_excluded_target_curation_boundary_from_records()` builds
     a recorded boundary from supplied excluded-target justifications and a
     declared coverage scope. The actual broad excluded-target justification

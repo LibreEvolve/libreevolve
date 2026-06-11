@@ -1319,12 +1319,16 @@ Implemented:
   representative policy, axis-permutation equivalent omissions, included-target
   rationales, and unspecified `p` cutoff. It still does not justify every
   possible excluded non-equivalent target.
+  `papers/appendix_a_matrix_curation.json` emits that reported-suite curation
+  record as a committed sidecar.
   `libreevolve.alphaevolve_appendix_a_matrix_excluded_target_curation_boundary.v1`
   records the current `not_recorded_locally` boundary for excluded
   non-equivalent target justifications and validates required future fields for
   excluded target ids, dimensions, exclusion class/reason, source basis,
   rough-rule and `p`-cutoff relations, symmetry-equivalence status, local
   attempt/resource-frontier refs, artifact paths, and hashes.
+  `papers/appendix_a_matrix_excluded_target_curation.json` emits that boundary
+  as a committed sidecar.
   `appendix_a_matrix_excluded_target_curation_boundary_from_records()` can
   build a recorded boundary from supplied excluded-target justifications and a
   declared coverage scope, but no broad excluded-target justification corpus is

@@ -138,6 +138,8 @@ from libreevolve.problems.benchmarks.matrix_results import (
 
 
 REQUIRED_FIELDS = ("id", "title", "url", "file", "ok", "bytes", "sha256", "message")
+APPENDIX_A_CURATION_FILE = "papers/appendix_a_matrix_curation.json"
+APPENDIX_A_EXCLUDED_TARGET_CURATION_FILE = "papers/appendix_a_matrix_excluded_target_curation.json"
 APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE = "papers/appendix_a_matrix_subset_scope_artifacts.json"
 APPENDIX_A_ROW_NOTE_ARTIFACTS_FILE = "papers/appendix_a_matrix_row_note_artifacts.json"
 MATRIX_RANK_TABLE_ARTIFACTS_FILE = "papers/matrix_rank_table_artifacts.json"
@@ -590,9 +592,25 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
         )
         for issue in report.issues
     ]
-    curation_report = validate_appendix_a_matrix_curation(
-        appendix_a_matrix_curation_record(registry_path)
-    )
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+
+    curation_path = root_path / APPENDIX_A_CURATION_FILE
+    if curation_path.exists():
+        curation_recordset: object | str | Path = curation_path
+    else:
+        curation_recordset = appendix_a_matrix_curation_record(registry_path)
+        if is_repo_root:
+            issues.append(
+                PaperManifestIssue(
+                    "appendix_a_curation_manifest_missing",
+                    f"{APPENDIX_A_CURATION_FILE} must emit the Appendix A matrix target-suite curation record",
+                    "appendix_a_matrix_curation",
+                )
+            )
+    curation_report = validate_appendix_a_matrix_curation(curation_recordset)
     issues.extend(
         PaperManifestIssue(
             f"appendix_a_curation_{issue.code}",
@@ -601,8 +619,24 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
         )
         for issue in curation_report.issues
     )
+    excluded_curation_path = root_path / APPENDIX_A_EXCLUDED_TARGET_CURATION_FILE
+    if excluded_curation_path.exists():
+        excluded_curation_recordset: object | str | Path = excluded_curation_path
+    else:
+        excluded_curation_recordset = appendix_a_matrix_excluded_target_curation_boundary_record()
+        if is_repo_root:
+            issues.append(
+                PaperManifestIssue(
+                    "appendix_a_excluded_target_curation_manifest_missing",
+                    (
+                        f"{APPENDIX_A_EXCLUDED_TARGET_CURATION_FILE} must emit the "
+                        "Appendix A excluded-target curation boundary"
+                    ),
+                    "appendix_a_matrix_excluded_target_curation",
+                )
+            )
     excluded_curation_report = validate_appendix_a_matrix_excluded_target_curation_boundary(
-        appendix_a_matrix_excluded_target_curation_boundary_record()
+        excluded_curation_recordset
     )
     issues.extend(
         PaperManifestIssue(
@@ -617,10 +651,6 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
         baseline_citation_recordset: object | str | Path = baseline_citations_path
     else:
         baseline_citation_recordset = appendix_a_matrix_baseline_citation_boundary_record()
-        try:
-            is_repo_root = root_path.resolve() == _repo_root().resolve()
-        except OSError:
-            is_repo_root = False
         if is_repo_root:
             issues.append(
                 PaperManifestIssue(

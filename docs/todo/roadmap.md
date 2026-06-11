@@ -249,7 +249,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `runtime.history.existing_codebase_integration_report`, which records
     runtime candidate workspace marker spans, stable span ids, skeleton hashes,
     unmarked-file hashes, seed-source references, marker grammar, and explicit
-    upstream-integration gaps.
+    upstream-integration gaps. ROADMAP now also names
+    `papers/existing_codebase_integration_boundary.json` as the committed
+    paper-manifest-validated source-setup-level absence boundary.
   - Required result: when upstream codebase identity, pre-marker hashes,
     marker-only setup diffs, evaluator-call paths before/after marker
     insertion, setup-change counts, and portable static-source identities land,

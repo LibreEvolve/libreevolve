@@ -89,6 +89,12 @@ from libreevolve.problems.benchmarks.example_scope import (
     render_example_benchmark_scope_summary,
     validate_example_benchmark_scope,
 )
+from libreevolve.problems.benchmarks.existing_codebase_integration import (
+    EXISTING_CODEBASE_INTEGRATION_BOUNDARY_SCHEMA,
+    existing_codebase_integration_boundary_record,
+    render_existing_codebase_integration_boundary_summary,
+    validate_existing_codebase_integration_boundary,
+)
 from libreevolve.problems.benchmarks.follow_on_sources import (
     ALPHAEVOLVE_FOLLOW_ON_MATH_SOURCE_SCHEMA,
     alphaevolve_follow_on_math_source_record,
@@ -297,6 +303,7 @@ __all__ = [
     "CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA",
     "EXPECTED_TARGET_COUNT",
     "EXAMPLE_BENCHMARK_SCOPE_SCHEMA",
+    "EXISTING_CODEBASE_INTEGRATION_BOUNDARY_SCHEMA",
     "FIGURE8_ARTIFACT_BOUNDARY_SCHEMA",
     "FIGURE8_EXHIBIT_SCHEMA",
     "FIGURE4_MATRIX_DISCOVERY_ARTIFACT_BOUNDARY_SCHEMA",
@@ -362,6 +369,7 @@ __all__ = [
     "benchmark_hardening_artifact_inventory",
     "certification_artifact_inventory",
     "example_benchmark_scope_records",
+    "existing_codebase_integration_boundary_record",
     "figure4_matrix_discovery_artifact_boundary_from_exhibit",
     "figure8_exhibit_from_ablation_report",
     "figure8_artifact_boundary_record",
@@ -413,6 +421,7 @@ __all__ = [
     "render_benchmark_hardening_summary",
     "render_certification_summary",
     "render_example_benchmark_scope_summary",
+    "render_existing_codebase_integration_boundary_summary",
     "render_figure8_exhibit_summary",
     "render_figure8_artifact_boundary_summary",
     "render_figure4_matrix_discovery_artifact_boundary_summary",
@@ -461,6 +470,7 @@ __all__ = [
     "validate_benchmark_hardening_report",
     "validate_certification_evidence_bundle",
     "validate_example_benchmark_scope",
+    "validate_existing_codebase_integration_boundary",
     "validate_figure8_exhibit",
     "validate_figure8_artifact_boundary",
     "validate_figure4_matrix_discovery_artifact_boundary",

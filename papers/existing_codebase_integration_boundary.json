@@ -1,0 +1,43 @@
+{
+  "schema": "libreevolve.alphaevolve_existing_codebase_integration_boundary.v1",
+  "runtime_report_schema": "libreevolve.existing_codebase_integration_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_section_id": "2.1",
+  "source_figures": [
+    "Figure 2",
+    "Figure 3"
+  ],
+  "boundary_status": "not_recorded_at_source_setup_level",
+  "runtime_report_status": "runtime_workspace_marker_inventory_available",
+  "claim_ready": false,
+  "marker_contract": {
+    "language": "python",
+    "start_marker": "# EVOLVE-BLOCK-START",
+    "end_marker": "# EVOLVE-BLOCK-END",
+    "marker_grammar": "python_comment_exact_token_optional_manifest_safe_name"
+  },
+  "required_evidence_fields": [
+    "original_codebase_id",
+    "upstream_release_artifact",
+    "pre_marker_source_sha256",
+    "marker_added_setup_diff",
+    "setup_change_counts",
+    "evaluator_call_path_before_marker_insertion",
+    "evaluator_call_path_after_marker_insertion",
+    "copied_static_asset_source_identity",
+    "codebase_scale_fixture",
+    "runtime_report_linkage"
+  ],
+  "missing_evidence": {
+    "original_codebase_id": "not_recorded_locally",
+    "upstream_release_artifact": "not_recorded_locally",
+    "pre_marker_source_hashes": "not_recorded_locally",
+    "marker_added_setup_diff": "not_recorded_locally",
+    "setup_change_counts": "not_recorded_locally",
+    "evaluator_call_path_before_marker_insertion": "not_recorded_locally",
+    "evaluator_call_path_after_marker_insertion": "not_recorded_locally",
+    "copied_static_asset_source_identity": "not_recorded_locally",
+    "codebase_scale_fixture": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has runtime workspace marker inventory evidence, but does not claim AlphaEvolve-style minimal-change integration with an identified upstream codebase, pre-marker source hashes, marker-only setup diffs, setup-change counts, or evaluator-call continuity before and after marker insertion."
+}

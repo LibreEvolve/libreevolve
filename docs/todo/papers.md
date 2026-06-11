@@ -447,7 +447,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     `runtime.history.existing_codebase_integration_report`, which records
     runtime candidate workspace marker spans, stable span ids,
     skeleton-preservation hashes, language/comment syntax, unmarked-file
-    hashes, seed-source references, and claim-readiness gaps.
+    hashes, seed-source references, and claim-readiness gaps. The committed
+    `papers/existing_codebase_integration_boundary.json` sidecar now preserves
+    the source-setup-level `not_recorded_at_source_setup_level` boundary, and
+    the paper manifest requires and validates it at the real repo root.
   - Current gap: paper-facing evidence still does not prove that a real
     pre-existing codebase was integrated with a marker-only or minimal setup
     diff, that pre-marker source hashes and upstream identity are preserved,

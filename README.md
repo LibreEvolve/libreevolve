@@ -2821,10 +2821,12 @@ runtime candidate workspaces for Python marker spans, stable span ids, skeleton
 hashes with evolved block content replaced by placeholders, unmarked-file
 hashes, seed-source references, and the current marker grammar. The report is
 bounded evidence for local workspace marker preservation, not proof of
-AlphaEvolve's existing-codebase integration claim: original upstream codebase
-identity, pre-marker source hashes, marker-only setup diffs, evaluator call
-paths before/after marker insertion, portable release/source-root identity, and
-setup-change counts remain open.
+AlphaEvolve's existing-codebase integration claim. The committed
+`papers/existing_codebase_integration_boundary.json` sidecar now records that
+paper-manifest-validated source-setup-level absence boundary: original
+upstream codebase identity, pre-marker source hashes, marker-only setup diffs,
+evaluator call paths before/after marker insertion, portable release/source-
+root identity, and setup-change counts remain open.
 Completed manifests also include
 `runtime.history.candidate_abstraction_choice_report`, which keeps the current
 candidate representation scoped to direct Python workspace solutions while

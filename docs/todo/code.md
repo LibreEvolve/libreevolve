@@ -71,7 +71,10 @@ Primary evidence:
     `libreevolve.existing_codebase_integration_report.v1`, inventorying
     runtime candidate workspace marker spans, stable span ids, skeleton hashes,
     unmarked-file hashes, seed-source references, marker grammar, and explicit
-    claim-readiness gaps.
+    claim-readiness gaps. The committed
+    `papers/existing_codebase_integration_boundary.json` sidecar now records
+    the paper-manifest-validated `not_recorded_at_source_setup_level` boundary
+    for source-setup-level integration evidence that is still absent.
   - Required result: add integration metadata and validators for original
     codebase/artifact id, pre-marker source hashes, marker-added setup diff
     summary, evaluator-call path before/after marker insertion, setup-change

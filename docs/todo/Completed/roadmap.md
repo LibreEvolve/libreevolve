@@ -2,6 +2,22 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Emit existing-codebase source-setup boundary sidecar for roadmap
+      evidence.
+  - Status: `papers/existing_codebase_integration_boundary.json` now lets
+    roadmap wording point to a committed absence boundary for source-setup-
+    level existing-codebase integration evidence while keeping real upstream
+    fixture work open.
+  - Verification: `py -3.12 -m pytest
+    tests\test_existing_codebase_integration_boundary.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\existing_codebase_integration.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: upstream codebase identity, pre-marker hashes,
+    marker-only setup diffs, evaluator-call continuity, setup-change counts,
+    and portable static-source identity remain open.
+
 - [x] Emit Figure 8 ablation-curve artifact sidecar for roadmap evidence.
   - Status: `papers/figure8_ablation_artifacts.json` now lets roadmap wording
     point to a committed absence boundary for rendered Figure 8

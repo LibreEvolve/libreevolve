@@ -56,6 +56,10 @@ from libreevolve.problems.benchmarks.example_scope import (
     example_benchmark_scope_records,
     validate_example_benchmark_scope,
 )
+from libreevolve.problems.benchmarks.existing_codebase_integration import (
+    existing_codebase_integration_boundary_record,
+    validate_existing_codebase_integration_boundary,
+)
 from libreevolve.problems.benchmarks.math_outcomes import (
     alphaevolve_math_heuristic_handoff_boundary,
     alphaevolve_math_heuristic_stage_sequence_boundary,
@@ -163,6 +167,7 @@ MATRIX_RANK_TABLE_ARTIFACTS_FILE = "papers/matrix_rank_table_artifacts.json"
 FIGURE9_MATRIX_DIFF_ARTIFACTS_FILE = "papers/figure9_matrix_diff_artifacts.json"
 FIGURE4_MATRIX_DISCOVERY_ARTIFACTS_FILE = "papers/figure4_matrix_discovery_artifacts.json"
 FIGURE8_ABLATION_ARTIFACTS_FILE = "papers/figure8_ablation_artifacts.json"
+EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integration_boundary.json"
 MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE = "papers/matrix_headline_historicity_artifacts.json"
 APPENDIX_A_BASELINE_CITATIONS_FILE = "papers/appendix_a_matrix_baseline_citations.json"
 MATRIX_BASELINE_COMPONENT_RUNTIME_FILE = "papers/matrix_baseline_component_runtime_boundary.json"
@@ -537,6 +542,7 @@ def validate_paper_manifest(
     issues.extend(_validate_appendix_b_registry_if_present(root_path))
     issues.extend(_validate_ablation_registry_if_present(root_path))
     issues.extend(_validate_figure8_ablation_artifacts(root_path))
+    issues.extend(_validate_existing_codebase_integration_boundary(root_path))
     issues.extend(_validate_example_benchmark_scope_records(root_path))
     issues.extend(_validate_math_outcome_boundaries(root_path))
 
@@ -1183,6 +1189,38 @@ def _validate_figure8_ablation_artifacts(root_path: Path) -> list[PaperManifestI
             f"figure8_ablation_artifact_{issue.code}",
             issue.message,
             "figure8_ablation_curves",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_existing_codebase_integration_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = existing_codebase_integration_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "existing_codebase_integration_boundary_manifest_missing",
+                    (
+                        f"{EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE} must emit "
+                        "source-setup-level existing-codebase integration availability"
+                    ),
+                    "existing_codebase_integration",
+                )
+            ]
+    report = validate_existing_codebase_integration_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"existing_codebase_integration_boundary_{issue.code}",
+            issue.message,
+            "existing_codebase_integration",
         )
         for issue in report.issues
     ]

@@ -771,11 +771,14 @@ AlphaEvolve existing-codebase integration note: completed manifests now include
 `libreevolve.existing_codebase_integration_report.v1`. The report inventories
 runtime candidate workspaces for Python `# EVOLVE-BLOCK-START/END` marker
 spans, stable span ids, skeleton hashes, unmarked-file hashes, seed-source
-references, and the current marker grammar. It remains `claim_ready: false`
-because original upstream codebase identity, pre-marker source hashes,
-marker-only setup diffs, evaluator-call continuity before/after marker
-insertion, portable release/source-root identity, and setup-change counts
-remain open.
+references, and the current marker grammar. The committed
+`papers/existing_codebase_integration_boundary.json` sidecar now emits the
+source-setup-level `not_recorded_at_source_setup_level` boundary, and
+`validate_paper_manifest()` requires and validates it at the real repo root.
+The runtime report remains `claim_ready: false` because original upstream
+codebase identity, pre-marker source hashes, marker-only setup diffs,
+evaluator-call continuity before/after marker insertion, portable release/
+source-root identity, and setup-change counts remain open.
 
 AlphaEvolve marker-spelling note: completed manifests now include
 `runtime.history.marker_spelling_provenance_report` with schema

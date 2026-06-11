@@ -4,6 +4,22 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README existing-codebase wording tied to committed sidecar.
+  - Spec evidence: AlphaEvolve Section 2.1 minimal-marker integration claims
+    require source-setup evidence beyond runtime workspace marker inventory.
+  - Status: README now names
+    `papers/existing_codebase_integration_boundary.json` as the committed
+    sidecar for the source-setup-level existing-codebase integration absence
+    boundary, with paper-manifest validation.
+  - Verification: `py -3.12 -m pytest
+    tests\test_existing_codebase_integration_boundary.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\existing_codebase_integration.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: none for README sidecar scoping; real upstream
+    existing-codebase integration artifacts remain active code/paper gaps.
+
 - [x] Keep README Figure 8 artifact wording tied to committed sidecar.
   - Spec evidence: AlphaEvolve Figure 8 is a visual ablation exhibit, so README
     wording must distinguish validated exhibit metadata from actual rendered

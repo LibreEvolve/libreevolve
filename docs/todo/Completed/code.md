@@ -4,6 +4,27 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit existing-codebase source-setup boundary sidecar.
+  - Spec evidence: AlphaEvolve Section 2.1 says existing-codebase integration
+    should require only marker comments around evolved blocks, which implies
+    evidence for upstream identity, pre-marker hashes, marker-only setup diffs,
+    evaluator-call continuity, and setup-change counts.
+  - Status: `papers/existing_codebase_integration_boundary.json` now emits the
+    `libreevolve.alphaevolve_existing_codebase_integration_boundary.v1`
+    `not_recorded_at_source_setup_level` boundary, and
+    `validate_paper_manifest()` requires and validates it at the real repo
+    root.
+  - Verification: `py -3.12 -m pytest
+    tests\test_existing_codebase_integration_boundary.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\existing_codebase_integration.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: no local fixture proves marker-only integration against an
+    identified upstream codebase with pre-marker hashes, setup diffs,
+    evaluator-call before/after continuity, or portable static-source
+    identity.
+
 - [x] Emit Figure 8 ablation-curve artifact sidecar.
   - Spec evidence: AlphaEvolve Figure 8 is a rendered two-panel ablation
     exhibit tied to executed equal-budget matrix and kissing-number runs, not

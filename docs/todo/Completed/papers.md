@@ -6,6 +6,25 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit existing-codebase source-setup boundary sidecar.
+  - Paper evidence: AlphaEvolve Section 2.1 says special marker comments
+    allow minimal-change integration into existing codebases; Figure 3 links
+    those marked blocks to a codebase-local `evaluate(eval_inputs)` entrypoint.
+  - Status: `papers/existing_codebase_integration_boundary.json` now carries
+    the paper-facing
+    `libreevolve.alphaevolve_existing_codebase_integration_boundary.v1`
+    source-setup-level absence boundary. The paper-manifest gate requires and
+    validates the sidecar at the real repo root.
+  - Verification: `py -3.12 -m pytest
+    tests\test_existing_codebase_integration_boundary.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\existing_codebase_integration.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining paper gap: this is an absence boundary; upstream codebase
+    identity, pre-marker source hashes, marker-only setup diffs, evaluator
+    continuity, and setup-change counts remain open.
+
 - [x] Emit Figure 8 ablation-curve artifact sidecar.
   - Paper evidence: AlphaEvolve Figure 8 presents rendered ablation curves for
     matrix tensor decomposition and kissing-number sphere packing, with named

@@ -21,8 +21,11 @@ LibreEvolve has:
 - existing-codebase integration reports under
   `runtime.history.existing_codebase_integration_report`, inventorying
   candidate workspace marker spans, skeleton hashes, unmarked-file hashes,
-  seed-source references, and explicit remaining gaps for original codebase
-  identity, marker-only setup diffs, and setup-change counts
+  seed-source references, with
+  `papers/existing_codebase_integration_boundary.json` now carrying the
+  paper-manifest-validated source-setup-level absence boundary for original
+  codebase identity, pre-marker source hashes, marker-only setup diffs,
+  evaluator-call continuity, and setup-change counts
 - SEARCH/REPLACE diff mutation, including canonical AlphaEvolve fences, and
   configurable full-block/full-code replacement with unknown named block
   targets rejected before partial replacement

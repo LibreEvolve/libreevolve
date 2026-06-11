@@ -202,10 +202,13 @@ runtime candidate workspaces for Python `# EVOLVE-BLOCK-START/END` markers and
 records seed-source references, per-program workspace hashes, marked Python
 files, stable evolved-block span ids, marker line spans, block-content hashes,
 skeleton hashes with evolved content replaced by placeholders, and unmarked
-file hashes. The report is intentionally scoped to runtime workspace evidence:
-original upstream codebase identity, pre-marker source hashes, marker-added
-setup diffs, evaluator call paths before/after marker insertion, portable
-release/source-root identity, and setup-change counts remain open.
+file hashes. The committed
+`papers/existing_codebase_integration_boundary.json` sidecar preserves the
+same source-setup-level absence boundary for paper-manifest validation. The
+report is intentionally scoped to runtime workspace evidence: original
+upstream codebase identity, pre-marker source hashes, marker-added setup diffs,
+evaluator call paths before/after marker insertion, portable release/source-
+root identity, and setup-change counts remain open.
 Completed manifests also include
 `runtime.history.marker_spelling_provenance_report` with schema
 `libreevolve.marker_spelling_provenance_report.v1`. This report records

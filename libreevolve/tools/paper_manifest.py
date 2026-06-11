@@ -140,6 +140,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
 REQUIRED_FIELDS = ("id", "title", "url", "file", "ok", "bytes", "sha256", "message")
 APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE = "papers/appendix_a_matrix_subset_scope_artifacts.json"
 APPENDIX_A_ROW_NOTE_ARTIFACTS_FILE = "papers/appendix_a_matrix_row_note_artifacts.json"
+MATRIX_RANK_TABLE_ARTIFACTS_FILE = "papers/matrix_rank_table_artifacts.json"
 SHA256_RE = re.compile(r"[0-9a-f]{64}")
 PAPER_ID_RE = re.compile(r"(?:\d{4}\.\d{5}|[a-z0-9][a-z0-9-]{0,94}[a-z0-9])")
 ARXIV_ID_RE = re.compile(r"\d{4}\.\d{5}(?:v\d+)?")
@@ -784,8 +785,25 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
         )
         for issue in headline_runtime_report.issues
     )
+    rank_table_artifacts_path = root_path / MATRIX_RANK_TABLE_ARTIFACTS_FILE
+    if rank_table_artifacts_path.exists():
+        rank_table_artifact_recordset: object | str | Path = rank_table_artifacts_path
+    else:
+        rank_table_artifact_recordset = matrix_rank_table_artifact_boundary_record()
+        try:
+            is_repo_root = root_path.resolve() == _repo_root().resolve()
+        except OSError:
+            is_repo_root = False
+        if is_repo_root:
+            issues.append(
+                PaperManifestIssue(
+                    "matrix_rank_table_artifact_manifest_missing",
+                    f"{MATRIX_RANK_TABLE_ARTIFACTS_FILE} must emit Table 2/Table 3 matrix-rank table artifacts",
+                    "table2_matrix_rank_selected",
+                )
+            )
     rank_table_artifact_report = validate_matrix_rank_table_artifact_boundary(
-        matrix_rank_table_artifact_boundary_record()
+        rank_table_artifact_recordset
     )
     issues.extend(
         PaperManifestIssue(

@@ -13,8 +13,10 @@ from libreevolve.problems.benchmarks.matrix_exhibits import (
     figure4_matrix_discovery_artifact_boundary_record,
     figure9_matrix_diff_artifact_boundary_from_exhibit,
     figure9_matrix_diff_artifact_boundary_record,
+    matrix_rank_table_artifact_boundary_from_builtin_exhibit,
     matrix_rank_table_artifact_boundary_from_exhibit,
     matrix_rank_table_artifact_boundary_record,
+    matrix_rank_table_exhibit_record,
     render_figure4_matrix_discovery_artifact_boundary_summary,
     render_figure4_matrix_discovery_exhibit_summary,
     render_figure9_matrix_diff_artifact_boundary_summary,
@@ -777,6 +779,15 @@ def test_validate_matrix_rank_table_exhibit_accepts_table2_and_table3_metadata()
     assert validation.issues == []
 
 
+def test_matrix_rank_table_exhibit_record_validates_builtin_tables():
+    validation = validate_matrix_rank_table_exhibit(matrix_rank_table_exhibit_record())
+
+    assert validation.ok is True
+    assert validation.table_count == 2
+    assert validation.row_count == 70
+    assert validation.issues == []
+
+
 def test_validate_matrix_rank_table_exhibit_loads_json_file(tmp_path):
     path = tmp_path / "matrix_rank_tables.json"
     path.write_text(json.dumps(_valid_rank_table_exhibit()), encoding="utf-8")
@@ -922,6 +933,26 @@ def test_matrix_rank_table_artifact_boundary_accepts_emitted_artifact_record():
     assert artifacts["appendix_a_table3_matrix_rank_full"]["source_pdf_page"] == 34
     assert artifacts["appendix_a_table3_matrix_rank_full"]["row_count"] == 54
     assert artifacts["appendix_a_table3_matrix_rank_full"]["artifact_sha256"] == "b" * 64
+
+
+def test_matrix_rank_table_artifact_boundary_from_builtin_exhibit_accepts_sidecar_shape():
+    boundary = matrix_rank_table_artifact_boundary_from_builtin_exhibit()
+
+    validation = validate_matrix_rank_table_artifact_boundary(boundary)
+    artifacts = {
+        artifact["table_id"]: artifact for artifact in boundary["emitted_artifacts"]
+    }
+
+    assert validation.ok is True
+    assert validation.artifact_status == "emitted"
+    assert validation.emitted_artifact_count == 2
+    assert validation.issues == []
+    assert artifacts["table2_matrix_rank_selected"]["artifact_paths"] == [
+        "papers/matrix_rank_table_artifacts.json",
+    ]
+    assert artifacts["appendix_a_table3_matrix_rank_full"]["artifact_paths"] == [
+        "papers/matrix_rank_table_artifacts.json",
+    ]
 
 
 def test_matrix_rank_table_artifact_boundary_builder_rejects_invalid_exhibit():

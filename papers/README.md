@@ -1487,16 +1487,16 @@ Implemented:
   order, rank values, outcome counts and color semantics, complex-valued row
   annotations, concurrent-note linkage, rendered table/source/OCR artifact
   hashes, and links to registry, subset, row-note, scalar-field, result, and
-  companion Colab evidence. No local report/export emits those rendered table
-  artifacts yet. `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1`
-  records the current `not_emitted_by_local_report_export` boundary and
-  validates required future emitted-artifact fields for table identity, source
+  companion Colab evidence. `papers/matrix_rank_table_artifacts.json` now
+  emits the paper-facing Table 2/Table 3 artifact sidecar.
+  `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1` validates
+  that emitted sidecar and required artifact fields for table identity, source
   locations, rendered/OCR/source files, artifact paths/hashes, and nested
   table-exhibit evidence.
   `matrix_rank_table_artifact_boundary_from_exhibit()` can build emitted table
   artifacts from validated Table 2/Table 3 exhibit metadata and validates
-  nested table linkage, but no local report/export emits or checks in the
-  rendered table/OCR/source files yet.
+  nested table linkage. Local report/export code still does not automatically
+  attach the rendered table/OCR/source files to runtime outputs.
   `libreevolve.matrix_sweep_space_evidence.v1`
   now validates declared Figure 9-style sweep provenance for the evolved
   `sweep` function, user-provided `hyper` library identity, hyperparameter

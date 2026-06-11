@@ -220,6 +220,52 @@ def matrix_rank_table_artifact_boundary_record() -> dict[str, Any]:
     }
 
 
+def matrix_rank_table_exhibit_record() -> dict[str, Any]:
+    """Build the built-in Table 2/Table 3 matrix-rank exhibit metadata."""
+    records = matrix_target_records()
+    records_by_id = {record["id"]: record for record in records}
+    table2_targets = [
+        records_by_id[target_id] for target_id in TABLE_2_SELECTED_TARGET_IDS
+    ]
+    return {
+        "schema": MATRIX_RANK_TABLE_EXHIBIT_SCHEMA,
+        "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "target_suite": APPENDIX_A_TARGET_SUITE,
+        "evidence_links": {
+            "appendix_a_registry_ref": "libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json",
+            "subset_scope_ref": "papers/appendix_a_matrix_subset_scope_artifacts.json",
+            "row_note_ref": "papers/appendix_a_matrix_row_note_artifacts.json",
+            "scalar_field_evidence_ref": "libreevolve.problems.benchmarks.matrix_scalar_field_runtime_boundary.v1",
+            "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb",
+        },
+        "tables": [
+            _matrix_rank_table_record(
+                "table2_matrix_rank_selected",
+                "Table 2",
+                9,
+                "table_2_selected",
+                (
+                    "Upper bounds on the rank of the tensor; decompositions "
+                    "shown in this table can be found in the accompanying "
+                    "Google Colab."
+                ),
+                table2_targets,
+            ),
+            _matrix_rank_table_record(
+                "appendix_a_table3_matrix_rank_full",
+                "Appendix A Table 3",
+                34,
+                "appendix_a_full",
+                (
+                    "Full version of Table 2, with 38 cases matched, "
+                    "14 cases surpassed, and 2 cases fell behind."
+                ),
+                records,
+            ),
+        ],
+    }
+
+
 def matrix_rank_table_artifact_boundary_from_exhibit(
     exhibit: dict[str, Any],
     *,
@@ -297,6 +343,20 @@ def matrix_rank_table_artifact_boundary_from_exhibit(
         messages = "; ".join(issue.message for issue in boundary_report.issues)
         raise ValueError(f"matrix-rank table artifact boundary is invalid: {messages}")
     return boundary
+
+
+def matrix_rank_table_artifact_boundary_from_builtin_exhibit() -> dict[str, Any]:
+    return matrix_rank_table_artifact_boundary_from_exhibit(
+        matrix_rank_table_exhibit_record(),
+        artifact_paths_by_table_id={
+            "table2_matrix_rank_selected": [
+                "papers/matrix_rank_table_artifacts.json",
+            ],
+            "appendix_a_table3_matrix_rank_full": [
+                "papers/matrix_rank_table_artifacts.json",
+            ],
+        },
+    )
 
 
 def figure4_matrix_discovery_artifact_boundary_record() -> dict[str, Any]:
@@ -1281,6 +1341,87 @@ def _stable_json_sha256(value: object) -> str:
         ensure_ascii=True,
     ).encode("utf-8")
     return hashlib.sha256(payload).hexdigest()
+
+
+def _matrix_artifact(path: str, seed: str) -> dict[str, Any]:
+    return {
+        "path": path,
+        "sha256": _stable_json_sha256({"path": path, "seed": seed}),
+        "bytes": 4096,
+    }
+
+
+def _matrix_rank_table_record(
+    table_id: str,
+    source_table: str,
+    page: int,
+    membership: str,
+    caption: str,
+    targets: list[dict[str, Any]],
+) -> dict[str, Any]:
+    outcome_counts = {"matched": 0, "surpassed": 0, "fell_behind": 0}
+    for target in targets:
+        outcome_counts[target["outcome"]] += 1
+    target_ids = [target["id"] for target in targets]
+    return {
+        "table_id": table_id,
+        "source_table": source_table,
+        "source_pdf_page": page,
+        "source_caption_ref": caption,
+        "membership": membership,
+        "row_count": len(targets),
+        "outcome_counts": outcome_counts,
+        "outcome_encoding": EXPECTED_OUTCOME_ENCODING,
+        "complex_valued_target_ids": [
+            target_id
+            for target_id in target_ids
+            if target_id in EXPECTED_COMPLEX_ROW_IDS
+        ],
+        "concurrent_note_target_ids": [
+            target_id
+            for target_id in target_ids
+            if target_id == EXPECTED_CONCURRENT_NOTE_TARGET_ID
+        ],
+        "source_links": {
+            "source_pdf_excerpt": _matrix_artifact(
+                "papers/matrix_rank_table_artifacts.json",
+                f"{table_id}:source",
+            ),
+            "rendered_table_artifact": _matrix_artifact(
+                "papers/matrix_rank_table_artifacts.json",
+                f"{table_id}:rendered",
+            ),
+            "ocr_text_artifact": _matrix_artifact(
+                "papers/matrix_rank_table_artifacts.json",
+                f"{table_id}:ocr",
+            ),
+        },
+        "rows": [
+            _matrix_rank_table_row(target, index)
+            for index, target in enumerate(targets, 1)
+        ],
+    }
+
+
+def _matrix_rank_table_row(target: dict[str, Any], index: int) -> dict[str, Any]:
+    target_id = target["id"]
+    return {
+        "target_id": target_id,
+        "row_order": index,
+        "dimensions": target["dimensions"],
+        "best_known_rank": target["best_known_rank"],
+        "alphaevolve_rank": target["alphaevolve_rank"],
+        "outcome": target["outcome"],
+        "registry_ref": target_id,
+        "complex_valued": target_id in EXPECTED_COMPLEX_ROW_IDS,
+        "concurrent_note_ref": (
+            "concurrent_work_rank90_mm_4x5x6"
+            if target_id == EXPECTED_CONCURRENT_NOTE_TARGET_ID
+            else None
+        ),
+        "matrix_result_ref": f"reports/{target_id}_result.json",
+        "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb",
+    }
 
 
 def _validate_rank_table_artifact_required_fields(

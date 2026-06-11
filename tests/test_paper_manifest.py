@@ -39,6 +39,9 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     appendix_a_matrix_row_note_artifact_boundary_from_records,
     appendix_a_matrix_subset_scope_artifact_boundary_from_records,
 )
+from libreevolve.problems.benchmarks.matrix_exhibits import (
+    matrix_rank_table_artifact_boundary_from_builtin_exhibit,
+)
 from libreevolve.tools.paper_manifest import main, rehydrate_paper_cache, validate_paper_manifest
 
 PARTIAL_FIXTURE_STATUS = (
@@ -1680,6 +1683,55 @@ def test_validate_paper_manifest_checks_matrix_rank_table_artifact_boundary(
     codes = {issue.code for issue in report.issues}
     assert report.ok is False
     assert "matrix_rank_table_artifact_missing_matrix_rank_table_artifacts" in codes
+
+
+def test_validate_paper_manifest_accepts_committed_matrix_rank_table_artifact_sidecar(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        Path(paper_manifest.APPENDIX_A_MATRIX_REGISTRY_PATH).read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    sidecar = tmp_path / paper_manifest.MATRIX_RANK_TABLE_ARTIFACTS_FILE
+    sidecar.write_text(
+        json.dumps(
+            matrix_rank_table_artifact_boundary_from_builtin_exhibit(),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_matrix_rank_table_artifact_sidecar_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        Path(paper_manifest.APPENDIX_A_MATRIX_REGISTRY_PATH).read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    record = matrix_rank_table_artifact_boundary_from_builtin_exhibit()
+    record["emitted_artifacts"][0]["row_count"] = 999
+    sidecar = tmp_path / paper_manifest.MATRIX_RANK_TABLE_ARTIFACTS_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "matrix_rank_table_artifact_invalid_artifact_nested_row_count" in codes
 
 
 def test_validate_paper_manifest_checks_figure9_matrix_diff_artifact_boundary(

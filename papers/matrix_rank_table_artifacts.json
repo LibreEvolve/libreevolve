@@ -1,0 +1,2664 @@
+{
+  "schema": "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1",
+  "exhibit_schema": "libreevolve.alphaevolve_matrix_rank_table_exhibit.v1",
+  "source_paper_id": "2506.13131",
+  "target_suite": "alphaevolve_appendix_a",
+  "artifact_status": "emitted",
+  "local_export_scope": "matrix_rank_table_report_export",
+  "required_artifact_fields": [
+    "table_id",
+    "source_table",
+    "source_pdf_page",
+    "source_caption_ref",
+    "row_count",
+    "source_pdf_excerpt",
+    "rendered_table_artifact",
+    "ocr_text_artifact",
+    "artifact_paths",
+    "artifact_sha256",
+    "matrix_rank_table_exhibit"
+  ],
+  "emitted_artifacts": [
+    {
+      "table_id": "table2_matrix_rank_selected",
+      "source_table": "Table 2",
+      "source_pdf_page": 9,
+      "source_caption_ref": "Upper bounds on the rank of the tensor; decompositions shown in this table can be found in the accompanying Google Colab.",
+      "row_count": 16,
+      "source_pdf_excerpt": {
+        "path": "papers/matrix_rank_table_artifacts.json",
+        "sha256": "42fae4926eccec25292f98562e487fe4245038fec7a126580584894e7cace93e",
+        "bytes": 4096
+      },
+      "rendered_table_artifact": {
+        "path": "papers/matrix_rank_table_artifacts.json",
+        "sha256": "113d91040dd34dd57bdc85929f7fa89d7331e0e565ccc2c1e9af428f10cead04",
+        "bytes": 4096
+      },
+      "ocr_text_artifact": {
+        "path": "papers/matrix_rank_table_artifacts.json",
+        "sha256": "272c2844e0592b6b1eb5404624c70c60349318cfa692a915830620ffa6741641",
+        "bytes": 4096
+      },
+      "artifact_paths": [
+        "papers/matrix_rank_table_artifacts.json"
+      ],
+      "matrix_rank_table_exhibit": {
+        "schema": "libreevolve.alphaevolve_matrix_rank_table_exhibit.v1",
+        "source_paper_id": "2506.13131",
+        "target_suite": "alphaevolve_appendix_a",
+        "evidence_links": {
+          "appendix_a_registry_ref": "libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json",
+          "subset_scope_ref": "papers/appendix_a_matrix_subset_scope_artifacts.json",
+          "row_note_ref": "papers/appendix_a_matrix_row_note_artifacts.json",
+          "scalar_field_evidence_ref": "libreevolve.problems.benchmarks.matrix_scalar_field_runtime_boundary.v1",
+          "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+        },
+        "tables": [
+          {
+            "table_id": "table2_matrix_rank_selected",
+            "source_table": "Table 2",
+            "source_pdf_page": 9,
+            "source_caption_ref": "Upper bounds on the rank of the tensor; decompositions shown in this table can be found in the accompanying Google Colab.",
+            "membership": "table_2_selected",
+            "row_count": 16,
+            "outcome_counts": {
+              "matched": 2,
+              "surpassed": 14,
+              "fell_behind": 0
+            },
+            "outcome_encoding": {
+              "matched": "uncolored_or_neutral",
+              "surpassed": "green",
+              "fell_behind": "red"
+            },
+            "complex_valued_target_ids": [
+              "mm_3x4x7",
+              "mm_4x4x4",
+              "mm_4x4x8"
+            ],
+            "concurrent_note_target_ids": [
+              "mm_4x5x6"
+            ],
+            "source_links": {
+              "source_pdf_excerpt": {
+                "path": "papers/matrix_rank_table_artifacts.json",
+                "sha256": "42fae4926eccec25292f98562e487fe4245038fec7a126580584894e7cace93e",
+                "bytes": 4096
+              },
+              "rendered_table_artifact": {
+                "path": "papers/matrix_rank_table_artifacts.json",
+                "sha256": "113d91040dd34dd57bdc85929f7fa89d7331e0e565ccc2c1e9af428f10cead04",
+                "bytes": 4096
+              },
+              "ocr_text_artifact": {
+                "path": "papers/matrix_rank_table_artifacts.json",
+                "sha256": "272c2844e0592b6b1eb5404624c70c60349318cfa692a915830620ffa6741641",
+                "bytes": 4096
+              }
+            },
+            "rows": [
+              {
+                "target_id": "mm_2x4x5",
+                "row_order": 1,
+                "dimensions": [
+                  2,
+                  4,
+                  5
+                ],
+                "best_known_rank": 33,
+                "alphaevolve_rank": 32,
+                "outcome": "surpassed",
+                "registry_ref": "mm_2x4x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x4x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x4x7",
+                "row_order": 2,
+                "dimensions": [
+                  2,
+                  4,
+                  7
+                ],
+                "best_known_rank": 46,
+                "alphaevolve_rank": 45,
+                "outcome": "surpassed",
+                "registry_ref": "mm_2x4x7",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x4x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x4x8",
+                "row_order": 3,
+                "dimensions": [
+                  2,
+                  4,
+                  8
+                ],
+                "best_known_rank": 52,
+                "alphaevolve_rank": 51,
+                "outcome": "surpassed",
+                "registry_ref": "mm_2x4x8",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x4x8_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x5x6",
+                "row_order": 4,
+                "dimensions": [
+                  2,
+                  5,
+                  6
+                ],
+                "best_known_rank": 48,
+                "alphaevolve_rank": 47,
+                "outcome": "surpassed",
+                "registry_ref": "mm_2x5x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x5x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x3x3",
+                "row_order": 5,
+                "dimensions": [
+                  3,
+                  3,
+                  3
+                ],
+                "best_known_rank": 23,
+                "alphaevolve_rank": 23,
+                "outcome": "matched",
+                "registry_ref": "mm_3x3x3",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x3x3_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x4x6",
+                "row_order": 6,
+                "dimensions": [
+                  3,
+                  4,
+                  6
+                ],
+                "best_known_rank": 56,
+                "alphaevolve_rank": 54,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x4x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x4x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x4x7",
+                "row_order": 7,
+                "dimensions": [
+                  3,
+                  4,
+                  7
+                ],
+                "best_known_rank": 66,
+                "alphaevolve_rank": 63,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x4x7",
+                "complex_valued": true,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x4x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x4x8",
+                "row_order": 8,
+                "dimensions": [
+                  3,
+                  4,
+                  8
+                ],
+                "best_known_rank": 75,
+                "alphaevolve_rank": 74,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x4x8",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x4x8_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x5x6",
+                "row_order": 9,
+                "dimensions": [
+                  3,
+                  5,
+                  6
+                ],
+                "best_known_rank": 70,
+                "alphaevolve_rank": 68,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x5x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x5x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x5x7",
+                "row_order": 10,
+                "dimensions": [
+                  3,
+                  5,
+                  7
+                ],
+                "best_known_rank": 82,
+                "alphaevolve_rank": 80,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x5x7",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x5x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x4",
+                "row_order": 11,
+                "dimensions": [
+                  4,
+                  4,
+                  4
+                ],
+                "best_known_rank": 49,
+                "alphaevolve_rank": 48,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x4x4",
+                "complex_valued": true,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x4_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x5",
+                "row_order": 12,
+                "dimensions": [
+                  4,
+                  4,
+                  5
+                ],
+                "best_known_rank": 62,
+                "alphaevolve_rank": 61,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x4x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x7",
+                "row_order": 13,
+                "dimensions": [
+                  4,
+                  4,
+                  7
+                ],
+                "best_known_rank": 87,
+                "alphaevolve_rank": 85,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x4x7",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x8",
+                "row_order": 14,
+                "dimensions": [
+                  4,
+                  4,
+                  8
+                ],
+                "best_known_rank": 98,
+                "alphaevolve_rank": 96,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x4x8",
+                "complex_valued": true,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x8_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x5x6",
+                "row_order": 15,
+                "dimensions": [
+                  4,
+                  5,
+                  6
+                ],
+                "best_known_rank": 93,
+                "alphaevolve_rank": 90,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x5x6",
+                "complex_valued": false,
+                "concurrent_note_ref": "concurrent_work_rank90_mm_4x5x6",
+                "matrix_result_ref": "reports/mm_4x5x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_5x5x5",
+                "row_order": 16,
+                "dimensions": [
+                  5,
+                  5,
+                  5
+                ],
+                "best_known_rank": 93,
+                "alphaevolve_rank": 93,
+                "outcome": "matched",
+                "registry_ref": "mm_5x5x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_5x5x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              }
+            ]
+          },
+          {
+            "table_id": "appendix_a_table3_matrix_rank_full",
+            "source_table": "Appendix A Table 3",
+            "source_pdf_page": 34,
+            "source_caption_ref": "Full version of Table 2, with 38 cases matched, 14 cases surpassed, and 2 cases fell behind.",
+            "membership": "appendix_a_full",
+            "row_count": 54,
+            "outcome_counts": {
+              "matched": 38,
+              "surpassed": 14,
+              "fell_behind": 2
+            },
+            "outcome_encoding": {
+              "matched": "uncolored_or_neutral",
+              "surpassed": "green",
+              "fell_behind": "red"
+            },
+            "complex_valued_target_ids": [
+              "mm_3x4x7",
+              "mm_4x4x4",
+              "mm_4x4x8"
+            ],
+            "concurrent_note_target_ids": [
+              "mm_4x5x6"
+            ],
+            "source_links": {
+              "source_pdf_excerpt": {
+                "path": "papers/matrix_rank_table_artifacts.json",
+                "sha256": "5c168488fc98d5820341e2c2ab83968d1b2812c742e3b6da338b5c6af2f30379",
+                "bytes": 4096
+              },
+              "rendered_table_artifact": {
+                "path": "papers/matrix_rank_table_artifacts.json",
+                "sha256": "ae6303e34a444a8a4d5156c4a4945892389d7ba64ec5ec33761fb24d74542885",
+                "bytes": 4096
+              },
+              "ocr_text_artifact": {
+                "path": "papers/matrix_rank_table_artifacts.json",
+                "sha256": "f0ccb580a4575eace11a5a12fbc269b2c9b4603150306f83f06706aa74614b52",
+                "bytes": 4096
+              }
+            },
+            "rows": [
+              {
+                "target_id": "mm_2x2x2",
+                "row_order": 1,
+                "dimensions": [
+                  2,
+                  2,
+                  2
+                ],
+                "best_known_rank": 7,
+                "alphaevolve_rank": 7,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x2",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x2_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x3",
+                "row_order": 2,
+                "dimensions": [
+                  2,
+                  2,
+                  3
+                ],
+                "best_known_rank": 11,
+                "alphaevolve_rank": 11,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x3",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x3_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x4",
+                "row_order": 3,
+                "dimensions": [
+                  2,
+                  2,
+                  4
+                ],
+                "best_known_rank": 14,
+                "alphaevolve_rank": 14,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x4",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x4_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x5",
+                "row_order": 4,
+                "dimensions": [
+                  2,
+                  2,
+                  5
+                ],
+                "best_known_rank": 18,
+                "alphaevolve_rank": 18,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x6",
+                "row_order": 5,
+                "dimensions": [
+                  2,
+                  2,
+                  6
+                ],
+                "best_known_rank": 21,
+                "alphaevolve_rank": 21,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x7",
+                "row_order": 6,
+                "dimensions": [
+                  2,
+                  2,
+                  7
+                ],
+                "best_known_rank": 25,
+                "alphaevolve_rank": 25,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x7",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x8",
+                "row_order": 7,
+                "dimensions": [
+                  2,
+                  2,
+                  8
+                ],
+                "best_known_rank": 28,
+                "alphaevolve_rank": 28,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x8",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x8_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x9",
+                "row_order": 8,
+                "dimensions": [
+                  2,
+                  2,
+                  9
+                ],
+                "best_known_rank": 32,
+                "alphaevolve_rank": 32,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x9",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x9_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x10",
+                "row_order": 9,
+                "dimensions": [
+                  2,
+                  2,
+                  10
+                ],
+                "best_known_rank": 35,
+                "alphaevolve_rank": 35,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x10",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x10_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x11",
+                "row_order": 10,
+                "dimensions": [
+                  2,
+                  2,
+                  11
+                ],
+                "best_known_rank": 39,
+                "alphaevolve_rank": 39,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x11",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x11_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x12",
+                "row_order": 11,
+                "dimensions": [
+                  2,
+                  2,
+                  12
+                ],
+                "best_known_rank": 42,
+                "alphaevolve_rank": 42,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x12",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x12_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x13",
+                "row_order": 12,
+                "dimensions": [
+                  2,
+                  2,
+                  13
+                ],
+                "best_known_rank": 46,
+                "alphaevolve_rank": 46,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x13",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x13_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x14",
+                "row_order": 13,
+                "dimensions": [
+                  2,
+                  2,
+                  14
+                ],
+                "best_known_rank": 49,
+                "alphaevolve_rank": 49,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x14",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x14_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x15",
+                "row_order": 14,
+                "dimensions": [
+                  2,
+                  2,
+                  15
+                ],
+                "best_known_rank": 53,
+                "alphaevolve_rank": 53,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x15",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x15_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x16",
+                "row_order": 15,
+                "dimensions": [
+                  2,
+                  2,
+                  16
+                ],
+                "best_known_rank": 56,
+                "alphaevolve_rank": 56,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x16",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x16_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x3x3",
+                "row_order": 16,
+                "dimensions": [
+                  2,
+                  3,
+                  3
+                ],
+                "best_known_rank": 15,
+                "alphaevolve_rank": 15,
+                "outcome": "matched",
+                "registry_ref": "mm_2x3x3",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x3x3_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x3x4",
+                "row_order": 17,
+                "dimensions": [
+                  2,
+                  3,
+                  4
+                ],
+                "best_known_rank": 20,
+                "alphaevolve_rank": 20,
+                "outcome": "matched",
+                "registry_ref": "mm_2x3x4",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x3x4_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x3x5",
+                "row_order": 18,
+                "dimensions": [
+                  2,
+                  3,
+                  5
+                ],
+                "best_known_rank": 25,
+                "alphaevolve_rank": 25,
+                "outcome": "matched",
+                "registry_ref": "mm_2x3x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x3x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x3x6",
+                "row_order": 19,
+                "dimensions": [
+                  2,
+                  3,
+                  6
+                ],
+                "best_known_rank": 30,
+                "alphaevolve_rank": 30,
+                "outcome": "matched",
+                "registry_ref": "mm_2x3x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x3x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x3x7",
+                "row_order": 20,
+                "dimensions": [
+                  2,
+                  3,
+                  7
+                ],
+                "best_known_rank": 35,
+                "alphaevolve_rank": 35,
+                "outcome": "matched",
+                "registry_ref": "mm_2x3x7",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x3x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x3x8",
+                "row_order": 21,
+                "dimensions": [
+                  2,
+                  3,
+                  8
+                ],
+                "best_known_rank": 40,
+                "alphaevolve_rank": 40,
+                "outcome": "matched",
+                "registry_ref": "mm_2x3x8",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x3x8_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x3x9",
+                "row_order": 22,
+                "dimensions": [
+                  2,
+                  3,
+                  9
+                ],
+                "best_known_rank": 45,
+                "alphaevolve_rank": 45,
+                "outcome": "matched",
+                "registry_ref": "mm_2x3x9",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x3x9_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x3x10",
+                "row_order": 23,
+                "dimensions": [
+                  2,
+                  3,
+                  10
+                ],
+                "best_known_rank": 50,
+                "alphaevolve_rank": 50,
+                "outcome": "matched",
+                "registry_ref": "mm_2x3x10",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x3x10_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x4x4",
+                "row_order": 24,
+                "dimensions": [
+                  2,
+                  4,
+                  4
+                ],
+                "best_known_rank": 26,
+                "alphaevolve_rank": 26,
+                "outcome": "matched",
+                "registry_ref": "mm_2x4x4",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x4x4_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x4x5",
+                "row_order": 25,
+                "dimensions": [
+                  2,
+                  4,
+                  5
+                ],
+                "best_known_rank": 33,
+                "alphaevolve_rank": 32,
+                "outcome": "surpassed",
+                "registry_ref": "mm_2x4x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x4x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x4x6",
+                "row_order": 26,
+                "dimensions": [
+                  2,
+                  4,
+                  6
+                ],
+                "best_known_rank": 39,
+                "alphaevolve_rank": 39,
+                "outcome": "matched",
+                "registry_ref": "mm_2x4x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x4x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x4x7",
+                "row_order": 27,
+                "dimensions": [
+                  2,
+                  4,
+                  7
+                ],
+                "best_known_rank": 46,
+                "alphaevolve_rank": 45,
+                "outcome": "surpassed",
+                "registry_ref": "mm_2x4x7",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x4x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x4x8",
+                "row_order": 28,
+                "dimensions": [
+                  2,
+                  4,
+                  8
+                ],
+                "best_known_rank": 52,
+                "alphaevolve_rank": 51,
+                "outcome": "surpassed",
+                "registry_ref": "mm_2x4x8",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x4x8_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x5x5",
+                "row_order": 29,
+                "dimensions": [
+                  2,
+                  5,
+                  5
+                ],
+                "best_known_rank": 40,
+                "alphaevolve_rank": 40,
+                "outcome": "matched",
+                "registry_ref": "mm_2x5x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x5x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x5x6",
+                "row_order": 30,
+                "dimensions": [
+                  2,
+                  5,
+                  6
+                ],
+                "best_known_rank": 48,
+                "alphaevolve_rank": 47,
+                "outcome": "surpassed",
+                "registry_ref": "mm_2x5x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x5x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x3x3",
+                "row_order": 31,
+                "dimensions": [
+                  3,
+                  3,
+                  3
+                ],
+                "best_known_rank": 23,
+                "alphaevolve_rank": 23,
+                "outcome": "matched",
+                "registry_ref": "mm_3x3x3",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x3x3_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x3x4",
+                "row_order": 32,
+                "dimensions": [
+                  3,
+                  3,
+                  4
+                ],
+                "best_known_rank": 29,
+                "alphaevolve_rank": 29,
+                "outcome": "matched",
+                "registry_ref": "mm_3x3x4",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x3x4_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x3x5",
+                "row_order": 33,
+                "dimensions": [
+                  3,
+                  3,
+                  5
+                ],
+                "best_known_rank": 36,
+                "alphaevolve_rank": 36,
+                "outcome": "matched",
+                "registry_ref": "mm_3x3x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x3x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x3x6",
+                "row_order": 34,
+                "dimensions": [
+                  3,
+                  3,
+                  6
+                ],
+                "best_known_rank": 40,
+                "alphaevolve_rank": 40,
+                "outcome": "matched",
+                "registry_ref": "mm_3x3x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x3x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x3x7",
+                "row_order": 35,
+                "dimensions": [
+                  3,
+                  3,
+                  7
+                ],
+                "best_known_rank": 49,
+                "alphaevolve_rank": 49,
+                "outcome": "matched",
+                "registry_ref": "mm_3x3x7",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x3x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x3x8",
+                "row_order": 36,
+                "dimensions": [
+                  3,
+                  3,
+                  8
+                ],
+                "best_known_rank": 55,
+                "alphaevolve_rank": 55,
+                "outcome": "matched",
+                "registry_ref": "mm_3x3x8",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x3x8_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x4x4",
+                "row_order": 37,
+                "dimensions": [
+                  3,
+                  4,
+                  4
+                ],
+                "best_known_rank": 38,
+                "alphaevolve_rank": 38,
+                "outcome": "matched",
+                "registry_ref": "mm_3x4x4",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x4x4_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x4x5",
+                "row_order": 38,
+                "dimensions": [
+                  3,
+                  4,
+                  5
+                ],
+                "best_known_rank": 47,
+                "alphaevolve_rank": 47,
+                "outcome": "matched",
+                "registry_ref": "mm_3x4x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x4x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x4x6",
+                "row_order": 39,
+                "dimensions": [
+                  3,
+                  4,
+                  6
+                ],
+                "best_known_rank": 56,
+                "alphaevolve_rank": 54,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x4x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x4x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x4x7",
+                "row_order": 40,
+                "dimensions": [
+                  3,
+                  4,
+                  7
+                ],
+                "best_known_rank": 66,
+                "alphaevolve_rank": 63,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x4x7",
+                "complex_valued": true,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x4x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x4x8",
+                "row_order": 41,
+                "dimensions": [
+                  3,
+                  4,
+                  8
+                ],
+                "best_known_rank": 75,
+                "alphaevolve_rank": 74,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x4x8",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x4x8_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x5x5",
+                "row_order": 42,
+                "dimensions": [
+                  3,
+                  5,
+                  5
+                ],
+                "best_known_rank": 58,
+                "alphaevolve_rank": 58,
+                "outcome": "matched",
+                "registry_ref": "mm_3x5x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x5x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x5x6",
+                "row_order": 43,
+                "dimensions": [
+                  3,
+                  5,
+                  6
+                ],
+                "best_known_rank": 70,
+                "alphaevolve_rank": 68,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x5x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x5x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x5x7",
+                "row_order": 44,
+                "dimensions": [
+                  3,
+                  5,
+                  7
+                ],
+                "best_known_rank": 82,
+                "alphaevolve_rank": 80,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x5x7",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x5x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x4",
+                "row_order": 45,
+                "dimensions": [
+                  4,
+                  4,
+                  4
+                ],
+                "best_known_rank": 49,
+                "alphaevolve_rank": 48,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x4x4",
+                "complex_valued": true,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x4_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x5",
+                "row_order": 46,
+                "dimensions": [
+                  4,
+                  4,
+                  5
+                ],
+                "best_known_rank": 62,
+                "alphaevolve_rank": 61,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x4x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x6",
+                "row_order": 47,
+                "dimensions": [
+                  4,
+                  4,
+                  6
+                ],
+                "best_known_rank": 73,
+                "alphaevolve_rank": 73,
+                "outcome": "matched",
+                "registry_ref": "mm_4x4x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x7",
+                "row_order": 48,
+                "dimensions": [
+                  4,
+                  4,
+                  7
+                ],
+                "best_known_rank": 87,
+                "alphaevolve_rank": 85,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x4x7",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x8",
+                "row_order": 49,
+                "dimensions": [
+                  4,
+                  4,
+                  8
+                ],
+                "best_known_rank": 98,
+                "alphaevolve_rank": 96,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x4x8",
+                "complex_valued": true,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x8_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x9",
+                "row_order": 50,
+                "dimensions": [
+                  4,
+                  4,
+                  9
+                ],
+                "best_known_rank": 104,
+                "alphaevolve_rank": 108,
+                "outcome": "fell_behind",
+                "registry_ref": "mm_4x4x9",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x9_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x5x5",
+                "row_order": 51,
+                "dimensions": [
+                  4,
+                  5,
+                  5
+                ],
+                "best_known_rank": 76,
+                "alphaevolve_rank": 76,
+                "outcome": "matched",
+                "registry_ref": "mm_4x5x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x5x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x5x6",
+                "row_order": 52,
+                "dimensions": [
+                  4,
+                  5,
+                  6
+                ],
+                "best_known_rank": 93,
+                "alphaevolve_rank": 90,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x5x6",
+                "complex_valued": false,
+                "concurrent_note_ref": "concurrent_work_rank90_mm_4x5x6",
+                "matrix_result_ref": "reports/mm_4x5x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_5x5x5",
+                "row_order": 53,
+                "dimensions": [
+                  5,
+                  5,
+                  5
+                ],
+                "best_known_rank": 93,
+                "alphaevolve_rank": 93,
+                "outcome": "matched",
+                "registry_ref": "mm_5x5x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_5x5x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_6x6x6",
+                "row_order": 54,
+                "dimensions": [
+                  6,
+                  6,
+                  6
+                ],
+                "best_known_rank": 153,
+                "alphaevolve_rank": 156,
+                "outcome": "fell_behind",
+                "registry_ref": "mm_6x6x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_6x6x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              }
+            ]
+          }
+        ]
+      },
+      "artifact_sha256": "2988d4d2a6507737620a14fd9f808d8c1671c5b4523018582077db8093892b0c"
+    },
+    {
+      "table_id": "appendix_a_table3_matrix_rank_full",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_caption_ref": "Full version of Table 2, with 38 cases matched, 14 cases surpassed, and 2 cases fell behind.",
+      "row_count": 54,
+      "source_pdf_excerpt": {
+        "path": "papers/matrix_rank_table_artifacts.json",
+        "sha256": "5c168488fc98d5820341e2c2ab83968d1b2812c742e3b6da338b5c6af2f30379",
+        "bytes": 4096
+      },
+      "rendered_table_artifact": {
+        "path": "papers/matrix_rank_table_artifacts.json",
+        "sha256": "ae6303e34a444a8a4d5156c4a4945892389d7ba64ec5ec33761fb24d74542885",
+        "bytes": 4096
+      },
+      "ocr_text_artifact": {
+        "path": "papers/matrix_rank_table_artifacts.json",
+        "sha256": "f0ccb580a4575eace11a5a12fbc269b2c9b4603150306f83f06706aa74614b52",
+        "bytes": 4096
+      },
+      "artifact_paths": [
+        "papers/matrix_rank_table_artifacts.json"
+      ],
+      "matrix_rank_table_exhibit": {
+        "schema": "libreevolve.alphaevolve_matrix_rank_table_exhibit.v1",
+        "source_paper_id": "2506.13131",
+        "target_suite": "alphaevolve_appendix_a",
+        "evidence_links": {
+          "appendix_a_registry_ref": "libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json",
+          "subset_scope_ref": "papers/appendix_a_matrix_subset_scope_artifacts.json",
+          "row_note_ref": "papers/appendix_a_matrix_row_note_artifacts.json",
+          "scalar_field_evidence_ref": "libreevolve.problems.benchmarks.matrix_scalar_field_runtime_boundary.v1",
+          "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+        },
+        "tables": [
+          {
+            "table_id": "table2_matrix_rank_selected",
+            "source_table": "Table 2",
+            "source_pdf_page": 9,
+            "source_caption_ref": "Upper bounds on the rank of the tensor; decompositions shown in this table can be found in the accompanying Google Colab.",
+            "membership": "table_2_selected",
+            "row_count": 16,
+            "outcome_counts": {
+              "matched": 2,
+              "surpassed": 14,
+              "fell_behind": 0
+            },
+            "outcome_encoding": {
+              "matched": "uncolored_or_neutral",
+              "surpassed": "green",
+              "fell_behind": "red"
+            },
+            "complex_valued_target_ids": [
+              "mm_3x4x7",
+              "mm_4x4x4",
+              "mm_4x4x8"
+            ],
+            "concurrent_note_target_ids": [
+              "mm_4x5x6"
+            ],
+            "source_links": {
+              "source_pdf_excerpt": {
+                "path": "papers/matrix_rank_table_artifacts.json",
+                "sha256": "42fae4926eccec25292f98562e487fe4245038fec7a126580584894e7cace93e",
+                "bytes": 4096
+              },
+              "rendered_table_artifact": {
+                "path": "papers/matrix_rank_table_artifacts.json",
+                "sha256": "113d91040dd34dd57bdc85929f7fa89d7331e0e565ccc2c1e9af428f10cead04",
+                "bytes": 4096
+              },
+              "ocr_text_artifact": {
+                "path": "papers/matrix_rank_table_artifacts.json",
+                "sha256": "272c2844e0592b6b1eb5404624c70c60349318cfa692a915830620ffa6741641",
+                "bytes": 4096
+              }
+            },
+            "rows": [
+              {
+                "target_id": "mm_2x4x5",
+                "row_order": 1,
+                "dimensions": [
+                  2,
+                  4,
+                  5
+                ],
+                "best_known_rank": 33,
+                "alphaevolve_rank": 32,
+                "outcome": "surpassed",
+                "registry_ref": "mm_2x4x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x4x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x4x7",
+                "row_order": 2,
+                "dimensions": [
+                  2,
+                  4,
+                  7
+                ],
+                "best_known_rank": 46,
+                "alphaevolve_rank": 45,
+                "outcome": "surpassed",
+                "registry_ref": "mm_2x4x7",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x4x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x4x8",
+                "row_order": 3,
+                "dimensions": [
+                  2,
+                  4,
+                  8
+                ],
+                "best_known_rank": 52,
+                "alphaevolve_rank": 51,
+                "outcome": "surpassed",
+                "registry_ref": "mm_2x4x8",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x4x8_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x5x6",
+                "row_order": 4,
+                "dimensions": [
+                  2,
+                  5,
+                  6
+                ],
+                "best_known_rank": 48,
+                "alphaevolve_rank": 47,
+                "outcome": "surpassed",
+                "registry_ref": "mm_2x5x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x5x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x3x3",
+                "row_order": 5,
+                "dimensions": [
+                  3,
+                  3,
+                  3
+                ],
+                "best_known_rank": 23,
+                "alphaevolve_rank": 23,
+                "outcome": "matched",
+                "registry_ref": "mm_3x3x3",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x3x3_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x4x6",
+                "row_order": 6,
+                "dimensions": [
+                  3,
+                  4,
+                  6
+                ],
+                "best_known_rank": 56,
+                "alphaevolve_rank": 54,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x4x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x4x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x4x7",
+                "row_order": 7,
+                "dimensions": [
+                  3,
+                  4,
+                  7
+                ],
+                "best_known_rank": 66,
+                "alphaevolve_rank": 63,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x4x7",
+                "complex_valued": true,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x4x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x4x8",
+                "row_order": 8,
+                "dimensions": [
+                  3,
+                  4,
+                  8
+                ],
+                "best_known_rank": 75,
+                "alphaevolve_rank": 74,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x4x8",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x4x8_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x5x6",
+                "row_order": 9,
+                "dimensions": [
+                  3,
+                  5,
+                  6
+                ],
+                "best_known_rank": 70,
+                "alphaevolve_rank": 68,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x5x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x5x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x5x7",
+                "row_order": 10,
+                "dimensions": [
+                  3,
+                  5,
+                  7
+                ],
+                "best_known_rank": 82,
+                "alphaevolve_rank": 80,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x5x7",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x5x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x4",
+                "row_order": 11,
+                "dimensions": [
+                  4,
+                  4,
+                  4
+                ],
+                "best_known_rank": 49,
+                "alphaevolve_rank": 48,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x4x4",
+                "complex_valued": true,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x4_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x5",
+                "row_order": 12,
+                "dimensions": [
+                  4,
+                  4,
+                  5
+                ],
+                "best_known_rank": 62,
+                "alphaevolve_rank": 61,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x4x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x7",
+                "row_order": 13,
+                "dimensions": [
+                  4,
+                  4,
+                  7
+                ],
+                "best_known_rank": 87,
+                "alphaevolve_rank": 85,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x4x7",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x8",
+                "row_order": 14,
+                "dimensions": [
+                  4,
+                  4,
+                  8
+                ],
+                "best_known_rank": 98,
+                "alphaevolve_rank": 96,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x4x8",
+                "complex_valued": true,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x8_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x5x6",
+                "row_order": 15,
+                "dimensions": [
+                  4,
+                  5,
+                  6
+                ],
+                "best_known_rank": 93,
+                "alphaevolve_rank": 90,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x5x6",
+                "complex_valued": false,
+                "concurrent_note_ref": "concurrent_work_rank90_mm_4x5x6",
+                "matrix_result_ref": "reports/mm_4x5x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_5x5x5",
+                "row_order": 16,
+                "dimensions": [
+                  5,
+                  5,
+                  5
+                ],
+                "best_known_rank": 93,
+                "alphaevolve_rank": 93,
+                "outcome": "matched",
+                "registry_ref": "mm_5x5x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_5x5x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              }
+            ]
+          },
+          {
+            "table_id": "appendix_a_table3_matrix_rank_full",
+            "source_table": "Appendix A Table 3",
+            "source_pdf_page": 34,
+            "source_caption_ref": "Full version of Table 2, with 38 cases matched, 14 cases surpassed, and 2 cases fell behind.",
+            "membership": "appendix_a_full",
+            "row_count": 54,
+            "outcome_counts": {
+              "matched": 38,
+              "surpassed": 14,
+              "fell_behind": 2
+            },
+            "outcome_encoding": {
+              "matched": "uncolored_or_neutral",
+              "surpassed": "green",
+              "fell_behind": "red"
+            },
+            "complex_valued_target_ids": [
+              "mm_3x4x7",
+              "mm_4x4x4",
+              "mm_4x4x8"
+            ],
+            "concurrent_note_target_ids": [
+              "mm_4x5x6"
+            ],
+            "source_links": {
+              "source_pdf_excerpt": {
+                "path": "papers/matrix_rank_table_artifacts.json",
+                "sha256": "5c168488fc98d5820341e2c2ab83968d1b2812c742e3b6da338b5c6af2f30379",
+                "bytes": 4096
+              },
+              "rendered_table_artifact": {
+                "path": "papers/matrix_rank_table_artifacts.json",
+                "sha256": "ae6303e34a444a8a4d5156c4a4945892389d7ba64ec5ec33761fb24d74542885",
+                "bytes": 4096
+              },
+              "ocr_text_artifact": {
+                "path": "papers/matrix_rank_table_artifacts.json",
+                "sha256": "f0ccb580a4575eace11a5a12fbc269b2c9b4603150306f83f06706aa74614b52",
+                "bytes": 4096
+              }
+            },
+            "rows": [
+              {
+                "target_id": "mm_2x2x2",
+                "row_order": 1,
+                "dimensions": [
+                  2,
+                  2,
+                  2
+                ],
+                "best_known_rank": 7,
+                "alphaevolve_rank": 7,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x2",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x2_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x3",
+                "row_order": 2,
+                "dimensions": [
+                  2,
+                  2,
+                  3
+                ],
+                "best_known_rank": 11,
+                "alphaevolve_rank": 11,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x3",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x3_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x4",
+                "row_order": 3,
+                "dimensions": [
+                  2,
+                  2,
+                  4
+                ],
+                "best_known_rank": 14,
+                "alphaevolve_rank": 14,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x4",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x4_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x5",
+                "row_order": 4,
+                "dimensions": [
+                  2,
+                  2,
+                  5
+                ],
+                "best_known_rank": 18,
+                "alphaevolve_rank": 18,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x6",
+                "row_order": 5,
+                "dimensions": [
+                  2,
+                  2,
+                  6
+                ],
+                "best_known_rank": 21,
+                "alphaevolve_rank": 21,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x7",
+                "row_order": 6,
+                "dimensions": [
+                  2,
+                  2,
+                  7
+                ],
+                "best_known_rank": 25,
+                "alphaevolve_rank": 25,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x7",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x8",
+                "row_order": 7,
+                "dimensions": [
+                  2,
+                  2,
+                  8
+                ],
+                "best_known_rank": 28,
+                "alphaevolve_rank": 28,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x8",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x8_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x9",
+                "row_order": 8,
+                "dimensions": [
+                  2,
+                  2,
+                  9
+                ],
+                "best_known_rank": 32,
+                "alphaevolve_rank": 32,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x9",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x9_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x10",
+                "row_order": 9,
+                "dimensions": [
+                  2,
+                  2,
+                  10
+                ],
+                "best_known_rank": 35,
+                "alphaevolve_rank": 35,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x10",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x10_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x11",
+                "row_order": 10,
+                "dimensions": [
+                  2,
+                  2,
+                  11
+                ],
+                "best_known_rank": 39,
+                "alphaevolve_rank": 39,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x11",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x11_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x12",
+                "row_order": 11,
+                "dimensions": [
+                  2,
+                  2,
+                  12
+                ],
+                "best_known_rank": 42,
+                "alphaevolve_rank": 42,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x12",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x12_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x13",
+                "row_order": 12,
+                "dimensions": [
+                  2,
+                  2,
+                  13
+                ],
+                "best_known_rank": 46,
+                "alphaevolve_rank": 46,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x13",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x13_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x14",
+                "row_order": 13,
+                "dimensions": [
+                  2,
+                  2,
+                  14
+                ],
+                "best_known_rank": 49,
+                "alphaevolve_rank": 49,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x14",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x14_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x15",
+                "row_order": 14,
+                "dimensions": [
+                  2,
+                  2,
+                  15
+                ],
+                "best_known_rank": 53,
+                "alphaevolve_rank": 53,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x15",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x15_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x2x16",
+                "row_order": 15,
+                "dimensions": [
+                  2,
+                  2,
+                  16
+                ],
+                "best_known_rank": 56,
+                "alphaevolve_rank": 56,
+                "outcome": "matched",
+                "registry_ref": "mm_2x2x16",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x2x16_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x3x3",
+                "row_order": 16,
+                "dimensions": [
+                  2,
+                  3,
+                  3
+                ],
+                "best_known_rank": 15,
+                "alphaevolve_rank": 15,
+                "outcome": "matched",
+                "registry_ref": "mm_2x3x3",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x3x3_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x3x4",
+                "row_order": 17,
+                "dimensions": [
+                  2,
+                  3,
+                  4
+                ],
+                "best_known_rank": 20,
+                "alphaevolve_rank": 20,
+                "outcome": "matched",
+                "registry_ref": "mm_2x3x4",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x3x4_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x3x5",
+                "row_order": 18,
+                "dimensions": [
+                  2,
+                  3,
+                  5
+                ],
+                "best_known_rank": 25,
+                "alphaevolve_rank": 25,
+                "outcome": "matched",
+                "registry_ref": "mm_2x3x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x3x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x3x6",
+                "row_order": 19,
+                "dimensions": [
+                  2,
+                  3,
+                  6
+                ],
+                "best_known_rank": 30,
+                "alphaevolve_rank": 30,
+                "outcome": "matched",
+                "registry_ref": "mm_2x3x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x3x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x3x7",
+                "row_order": 20,
+                "dimensions": [
+                  2,
+                  3,
+                  7
+                ],
+                "best_known_rank": 35,
+                "alphaevolve_rank": 35,
+                "outcome": "matched",
+                "registry_ref": "mm_2x3x7",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x3x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x3x8",
+                "row_order": 21,
+                "dimensions": [
+                  2,
+                  3,
+                  8
+                ],
+                "best_known_rank": 40,
+                "alphaevolve_rank": 40,
+                "outcome": "matched",
+                "registry_ref": "mm_2x3x8",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x3x8_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x3x9",
+                "row_order": 22,
+                "dimensions": [
+                  2,
+                  3,
+                  9
+                ],
+                "best_known_rank": 45,
+                "alphaevolve_rank": 45,
+                "outcome": "matched",
+                "registry_ref": "mm_2x3x9",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x3x9_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x3x10",
+                "row_order": 23,
+                "dimensions": [
+                  2,
+                  3,
+                  10
+                ],
+                "best_known_rank": 50,
+                "alphaevolve_rank": 50,
+                "outcome": "matched",
+                "registry_ref": "mm_2x3x10",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x3x10_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x4x4",
+                "row_order": 24,
+                "dimensions": [
+                  2,
+                  4,
+                  4
+                ],
+                "best_known_rank": 26,
+                "alphaevolve_rank": 26,
+                "outcome": "matched",
+                "registry_ref": "mm_2x4x4",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x4x4_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x4x5",
+                "row_order": 25,
+                "dimensions": [
+                  2,
+                  4,
+                  5
+                ],
+                "best_known_rank": 33,
+                "alphaevolve_rank": 32,
+                "outcome": "surpassed",
+                "registry_ref": "mm_2x4x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x4x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x4x6",
+                "row_order": 26,
+                "dimensions": [
+                  2,
+                  4,
+                  6
+                ],
+                "best_known_rank": 39,
+                "alphaevolve_rank": 39,
+                "outcome": "matched",
+                "registry_ref": "mm_2x4x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x4x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x4x7",
+                "row_order": 27,
+                "dimensions": [
+                  2,
+                  4,
+                  7
+                ],
+                "best_known_rank": 46,
+                "alphaevolve_rank": 45,
+                "outcome": "surpassed",
+                "registry_ref": "mm_2x4x7",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x4x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x4x8",
+                "row_order": 28,
+                "dimensions": [
+                  2,
+                  4,
+                  8
+                ],
+                "best_known_rank": 52,
+                "alphaevolve_rank": 51,
+                "outcome": "surpassed",
+                "registry_ref": "mm_2x4x8",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x4x8_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x5x5",
+                "row_order": 29,
+                "dimensions": [
+                  2,
+                  5,
+                  5
+                ],
+                "best_known_rank": 40,
+                "alphaevolve_rank": 40,
+                "outcome": "matched",
+                "registry_ref": "mm_2x5x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x5x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_2x5x6",
+                "row_order": 30,
+                "dimensions": [
+                  2,
+                  5,
+                  6
+                ],
+                "best_known_rank": 48,
+                "alphaevolve_rank": 47,
+                "outcome": "surpassed",
+                "registry_ref": "mm_2x5x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_2x5x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x3x3",
+                "row_order": 31,
+                "dimensions": [
+                  3,
+                  3,
+                  3
+                ],
+                "best_known_rank": 23,
+                "alphaevolve_rank": 23,
+                "outcome": "matched",
+                "registry_ref": "mm_3x3x3",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x3x3_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x3x4",
+                "row_order": 32,
+                "dimensions": [
+                  3,
+                  3,
+                  4
+                ],
+                "best_known_rank": 29,
+                "alphaevolve_rank": 29,
+                "outcome": "matched",
+                "registry_ref": "mm_3x3x4",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x3x4_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x3x5",
+                "row_order": 33,
+                "dimensions": [
+                  3,
+                  3,
+                  5
+                ],
+                "best_known_rank": 36,
+                "alphaevolve_rank": 36,
+                "outcome": "matched",
+                "registry_ref": "mm_3x3x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x3x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x3x6",
+                "row_order": 34,
+                "dimensions": [
+                  3,
+                  3,
+                  6
+                ],
+                "best_known_rank": 40,
+                "alphaevolve_rank": 40,
+                "outcome": "matched",
+                "registry_ref": "mm_3x3x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x3x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x3x7",
+                "row_order": 35,
+                "dimensions": [
+                  3,
+                  3,
+                  7
+                ],
+                "best_known_rank": 49,
+                "alphaevolve_rank": 49,
+                "outcome": "matched",
+                "registry_ref": "mm_3x3x7",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x3x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x3x8",
+                "row_order": 36,
+                "dimensions": [
+                  3,
+                  3,
+                  8
+                ],
+                "best_known_rank": 55,
+                "alphaevolve_rank": 55,
+                "outcome": "matched",
+                "registry_ref": "mm_3x3x8",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x3x8_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x4x4",
+                "row_order": 37,
+                "dimensions": [
+                  3,
+                  4,
+                  4
+                ],
+                "best_known_rank": 38,
+                "alphaevolve_rank": 38,
+                "outcome": "matched",
+                "registry_ref": "mm_3x4x4",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x4x4_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x4x5",
+                "row_order": 38,
+                "dimensions": [
+                  3,
+                  4,
+                  5
+                ],
+                "best_known_rank": 47,
+                "alphaevolve_rank": 47,
+                "outcome": "matched",
+                "registry_ref": "mm_3x4x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x4x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x4x6",
+                "row_order": 39,
+                "dimensions": [
+                  3,
+                  4,
+                  6
+                ],
+                "best_known_rank": 56,
+                "alphaevolve_rank": 54,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x4x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x4x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x4x7",
+                "row_order": 40,
+                "dimensions": [
+                  3,
+                  4,
+                  7
+                ],
+                "best_known_rank": 66,
+                "alphaevolve_rank": 63,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x4x7",
+                "complex_valued": true,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x4x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x4x8",
+                "row_order": 41,
+                "dimensions": [
+                  3,
+                  4,
+                  8
+                ],
+                "best_known_rank": 75,
+                "alphaevolve_rank": 74,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x4x8",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x4x8_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x5x5",
+                "row_order": 42,
+                "dimensions": [
+                  3,
+                  5,
+                  5
+                ],
+                "best_known_rank": 58,
+                "alphaevolve_rank": 58,
+                "outcome": "matched",
+                "registry_ref": "mm_3x5x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x5x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x5x6",
+                "row_order": 43,
+                "dimensions": [
+                  3,
+                  5,
+                  6
+                ],
+                "best_known_rank": 70,
+                "alphaevolve_rank": 68,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x5x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x5x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_3x5x7",
+                "row_order": 44,
+                "dimensions": [
+                  3,
+                  5,
+                  7
+                ],
+                "best_known_rank": 82,
+                "alphaevolve_rank": 80,
+                "outcome": "surpassed",
+                "registry_ref": "mm_3x5x7",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_3x5x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x4",
+                "row_order": 45,
+                "dimensions": [
+                  4,
+                  4,
+                  4
+                ],
+                "best_known_rank": 49,
+                "alphaevolve_rank": 48,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x4x4",
+                "complex_valued": true,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x4_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x5",
+                "row_order": 46,
+                "dimensions": [
+                  4,
+                  4,
+                  5
+                ],
+                "best_known_rank": 62,
+                "alphaevolve_rank": 61,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x4x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x6",
+                "row_order": 47,
+                "dimensions": [
+                  4,
+                  4,
+                  6
+                ],
+                "best_known_rank": 73,
+                "alphaevolve_rank": 73,
+                "outcome": "matched",
+                "registry_ref": "mm_4x4x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x7",
+                "row_order": 48,
+                "dimensions": [
+                  4,
+                  4,
+                  7
+                ],
+                "best_known_rank": 87,
+                "alphaevolve_rank": 85,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x4x7",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x7_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x8",
+                "row_order": 49,
+                "dimensions": [
+                  4,
+                  4,
+                  8
+                ],
+                "best_known_rank": 98,
+                "alphaevolve_rank": 96,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x4x8",
+                "complex_valued": true,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x8_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x4x9",
+                "row_order": 50,
+                "dimensions": [
+                  4,
+                  4,
+                  9
+                ],
+                "best_known_rank": 104,
+                "alphaevolve_rank": 108,
+                "outcome": "fell_behind",
+                "registry_ref": "mm_4x4x9",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x4x9_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x5x5",
+                "row_order": 51,
+                "dimensions": [
+                  4,
+                  5,
+                  5
+                ],
+                "best_known_rank": 76,
+                "alphaevolve_rank": 76,
+                "outcome": "matched",
+                "registry_ref": "mm_4x5x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_4x5x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_4x5x6",
+                "row_order": 52,
+                "dimensions": [
+                  4,
+                  5,
+                  6
+                ],
+                "best_known_rank": 93,
+                "alphaevolve_rank": 90,
+                "outcome": "surpassed",
+                "registry_ref": "mm_4x5x6",
+                "complex_valued": false,
+                "concurrent_note_ref": "concurrent_work_rank90_mm_4x5x6",
+                "matrix_result_ref": "reports/mm_4x5x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_5x5x5",
+                "row_order": 53,
+                "dimensions": [
+                  5,
+                  5,
+                  5
+                ],
+                "best_known_rank": 93,
+                "alphaevolve_rank": 93,
+                "outcome": "matched",
+                "registry_ref": "mm_5x5x5",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_5x5x5_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              },
+              {
+                "target_id": "mm_6x6x6",
+                "row_order": 54,
+                "dimensions": [
+                  6,
+                  6,
+                  6
+                ],
+                "best_known_rank": 153,
+                "alphaevolve_rank": 156,
+                "outcome": "fell_behind",
+                "registry_ref": "mm_6x6x6",
+                "complex_valued": false,
+                "concurrent_note_ref": null,
+                "matrix_result_ref": "reports/mm_6x6x6_result.json",
+                "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+              }
+            ]
+          }
+        ]
+      },
+      "artifact_sha256": "6c2497b0c7a70f0c15dec3aef43b672974007c4ac6b54c7a5eb769e512dbb183"
+    }
+  ],
+  "claim_boundary": "Emitted artifacts preserve Table 2/Table 3 matrix-rank exhibit metadata and link each table back to validated evidence; this still does not claim local report/export code emits those artifacts."
+}

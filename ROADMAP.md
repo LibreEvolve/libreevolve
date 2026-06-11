@@ -1271,14 +1271,15 @@ is not yet an AlphaEvolve reproduction.
   counts/color semantics, complex-row annotations, concurrent-note linkage,
   rendered/source/OCR artifact hashes, and registry/subset/row-note/Colab
   links. Runtime reports still do not render or emit those table artifacts.
-  `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1` now records
-  the current `not_emitted_by_local_report_export` boundary and required
-  future emitted-artifact fields for table identity, source locations,
-  rendered/OCR/source files, artifact paths/hashes, and nested table-exhibit
-  evidence. `matrix_rank_table_artifact_boundary_from_exhibit()` builds emitted
-  Table 2/Table 3 artifact records from validated exhibit metadata and
-  validation checks nested table linkage. Runtime reports still do not render
-  or emit those table artifacts.
+  `papers/matrix_rank_table_artifacts.json` now emits the Table 2/Table 3
+  paper-table artifact sidecar. The companion
+  `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1` validates
+  that emitted sidecar and required artifact fields for table identity, source
+  locations, rendered/OCR/source files, artifact paths/hashes, and nested
+  table-exhibit evidence. `matrix_rank_table_artifact_boundary_from_exhibit()`
+  builds emitted Table 2/Table 3 artifact records from validated exhibit
+  metadata and validation checks nested table linkage. Runtime reports still
+  do not automatically attach those table artifacts.
 
 ### 10. Operational maturity
 

@@ -4,6 +4,26 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit Table 2/Table 3 matrix-rank table artifact sidecar.
+  - Spec evidence: AlphaEvolve Table 2 displays selected matrix tensor-rank
+    comparisons, while Appendix A Table 3 expands this to all 54 considered
+    targets with best-known ranks, AlphaEvolve ranks, outcome coloring/counts,
+    complex-valued row caveats, Colab decomposition links, and the concurrent
+    work note for `<4, 5, 6>`.
+  - Status: `papers/matrix_rank_table_artifacts.json` now emits the
+    `table2_matrix_rank_selected` and
+    `appendix_a_table3_matrix_rank_full` artifacts with source table/page/
+    caption linkage, row counts, source/rendered/OCR artifact records, nested
+    table-exhibit evidence, artifact paths, and SHA-256 digests.
+    `validate_paper_manifest()` consumes the sidecar when the Appendix A
+    registry is in scope.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_exhibits.py
+    tests\test_paper_manifest.py -q`, `py -3.12 -m pytest
+    tests\test_agents_docs.py -q`, and `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs` passed.
+  - Remaining gap: matrix reports/table exporters still need automatic
+    attachment of the emitted matrix-rank table artifacts.
+
 - [x] Emit Appendix A matrix subset-scope artifact sidecar.
   - Spec evidence: AlphaEvolve Table 2 scopes the all-matched-or-surpassed
     matrix statement to `m, n, p <= 5`, while Appendix A Table 3 is the full

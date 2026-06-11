@@ -2266,32 +2266,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     distinguishes declared per-seed report validation from executed
     AlphaEvolve-style matrix cascade evidence.
 
-- [ ] Keep Table 2/Table 3 matrix-rank table roadmap wording scoped until
-      emitted table exhibit artifacts exist.
-  - Spec evidence: AlphaEvolve Table 2 presents selected matrix tensor-rank
-    comparisons, and Appendix A Table 3 expands this to the full 54-target
-    table with caption aggregate counts, outcome coloring, complex-valued row
-    caveats, companion Colab decomposition links, and the concurrent-work note
-    for `<4, 5, 6>`.
-  - Current evidence: roadmap/README/paper-index status now points to
-    `libreevolve.alphaevolve_matrix_rank_table_exhibit.v1`, which validates
-    Table 2/Table 3 exhibit ids, selected-row versus full-table membership, row
-    ordering, caption aggregate validation, color/outcome encoding,
-    source/caption locations, rendered table artifacts/hashes, and links from
-    table rows to registry, report, certificate, and companion Colab evidence.
-    Runtime reports still do not render or emit those table artifacts.
-    `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1` now
-    documents and validates that roadmap-scoped absence boundary plus required
-    future emitted-artifact fields.
-    `matrix_rank_table_artifact_boundary_from_exhibit()` builds emitted table
-    artifacts from validated Table 2/Table 3 exhibit metadata and validation
-    checks nested table linkage, while roadmap wording still marks local
-    report/export artifact emission incomplete.
-  - Required result: when Table 2/Table 3 matrix-rank table exhibit artifacts
-    land, update ROADMAP, README, papers index, and code/paper TODOs together
-    so roadmap wording distinguishes reproduced paper-table exhibits from
-    general Appendix A registry and matrix result-report coverage.
-
 - [ ] Keep matrix headline roadmap wording scoped until emitted 4x4 rank-48
       historicity artifacts exist.
   - Spec evidence: AlphaEvolve's abstract and Section 3.1 say AlphaEvolve

@@ -3102,8 +3102,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     before treating per-seed matrix result reports as AlphaEvolve Section 3.1
     search evidence.
 
-- [ ] Track Table 2/Table 3 matrix-rank table exhibit provenance as paper
-      evidence.
+- [ ] Wire Table 2/Table 3 matrix-rank table artifacts into paper exports.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 is the main-text
     selected matrix-rank comparison table, and Appendix A Table 3 is the full
     54-target version with best-known ranks, AlphaEvolve ranks, outcome
@@ -3114,21 +3113,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     selected-row versus full-table relation, row ordering, caption aggregate
     checks, color/outcome encoding, complex-valued annotations, note linkage,
     source PDF/caption locations, rendered table artifact hashes, and
-    row-to-registry/report/Colab mappings. No emitted paper artifact or table
-    export currently carries those rendered/source/OCR files.
-    `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1` now
-    validates that absence boundary and required future emitted-artifact
-    fields for rendered table, OCR, source-excerpt, path/hash, and nested
-    exhibit evidence.
-    `matrix_rank_table_artifact_boundary_from_exhibit()` builds emitted table
-    artifact records from validated Table 2/Table 3 exhibit metadata and
-    validation checks nested table linkage, but no paper-facing table export
-    emits or checks in those files yet.
-  - Required result: emit paper-facing table exhibit records for Table 2 and
-    Appendix A Table 3: source PDF page/caption locations, table ids, row
+    row-to-registry/report/Colab mappings.
+    `papers/matrix_rank_table_artifacts.json` now emits paper-facing Table 2
+    and Appendix A Table 3 artifact records, and
+    `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1` validates
+    that emitted sidecar plus nested table linkage. No paper-facing table
+    export currently attaches those rendered/source/OCR files automatically.
+  - Required result: wire the emitted paper-table artifacts into report/table
+    export outputs with source PDF page/caption locations, table ids, row
     ids/order, selected/full-table membership, rank values, outcome classes and
     aggregate count validation, complex-valued and concurrent-work annotations,
-    rendered table artifacts/hashes, and links to Appendix A registry rows,
+    rendered table artifact hashes, and links to Appendix A registry rows,
     matrix reports/certificates, and companion source evidence.
 
 - [ ] Track matrix result subset-scope evidence for Table 2 versus Appendix A

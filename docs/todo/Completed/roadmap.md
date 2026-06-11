@@ -4,6 +4,22 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Keep Table 2/Table 3 matrix-rank table roadmap wording scoped until
+      emitted table exhibit artifacts exist.
+  - Spec evidence: AlphaEvolve Table 2 presents selected matrix tensor-rank
+    comparisons, and Appendix A Table 3 expands this to the full 54-target
+    table.
+  - Status: ROADMAP now documents
+    `papers/matrix_rank_table_artifacts.json` as the emitted Table 2/Table 3
+    matrix-rank table artifact sidecar, with nested evidence and digest
+    validation, while keeping automatic report/table exporter attachment open.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_exhibits.py
+    tests\test_paper_manifest.py -q`, `py -3.12 -m pytest
+    tests\test_agents_docs.py -q`, and `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs` passed.
+  - Remaining gap: none for roadmap scoping; exporter integration remains an
+    active code/paper gap.
+
 - [x] Keep matrix outcome roadmap wording scoped until emitted target-subset
       artifacts exist.
   - Spec evidence: AlphaEvolve Table 2 scopes the all-matched-or-surpassed

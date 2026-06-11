@@ -6,6 +6,24 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit Table 2/Table 3 matrix-rank table artifact sidecar.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 is the selected
+    matrix-rank comparison table, and Appendix A Table 3 is the full
+    54-target version with rank values, outcome coloring/counts,
+    complex-valued caveats, Colab links, and the concurrent-work note.
+  - Status: `papers/matrix_rank_table_artifacts.json` now carries
+    paper-facing artifacts for `table2_matrix_rank_selected` and
+    `appendix_a_table3_matrix_rank_full`, including source linkage,
+    source/rendered/OCR artifact records, row counts, nested table-exhibit
+    evidence, artifact paths, and digests. The paper-manifest gate validates
+    that sidecar when Appendix A registry evidence is present.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_exhibits.py
+    tests\test_paper_manifest.py -q`, `py -3.12 -m pytest
+    tests\test_agents_docs.py -q`, and `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs` passed.
+  - Remaining gap: paper-facing report/table exports still need automatic
+    attachment of those artifacts.
+
 - [x] Emit Appendix A matrix subset-scope artifact sidecar.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 scopes the
     all-matched-or-surpassed matrix statement to `m, n, p <= 5`; Appendix A

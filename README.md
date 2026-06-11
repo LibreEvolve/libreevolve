@@ -4156,17 +4156,18 @@ best-known and AlphaEvolve rank values, outcome counts and color semantics,
 complex-valued row annotations, `mm_4x5x6` concurrent-note linkage, rendered
 table/source/OCR artifact hashes, and links to registry, subset-scope,
 row-note, scalar-field, matrix-result, and companion Colab evidence. It does
-not render or emit those table artifacts during local runs yet. The companion
+not render or emit those table artifacts during local runs yet. The committed
+sidecar `papers/matrix_rank_table_artifacts.json` preserves emitted Table 2
+and Appendix A Table 3 artifact records for this paper-table evidence. The companion
 artifact boundary `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1`
-validates the current `not_emitted_by_local_report_export` state and required
-future emitted-artifact fields for table ids, source page/caption locations,
-rendered table files, OCR text, source excerpts, artifact paths/hashes, and
-nested matrix-rank table exhibit evidence.
+validates that emitted sidecar plus required artifact fields for table ids,
+source page/caption locations, rendered table files, OCR text, source
+excerpts, artifact paths/hashes, and nested matrix-rank table exhibit evidence.
 `matrix_rank_table_artifact_boundary_from_exhibit()` can build emitted Table 2
 and Appendix A Table 3 artifact records from validated exhibit metadata, and
 the artifact validator checks that top-level table artifacts still match the
 nested table exhibit they cite. Local report/export code still does not render
-or check in those table/OCR/source artifacts.
+or automatically attach those table/OCR/source artifacts to runtime outputs.
 `write_strassen_2x2_publication_bundle()` emits the checked-in Strassen bundle
 under
 `libreevolve/problems/benchmarks/artifacts/strassen_2x2_publication_bundle/`

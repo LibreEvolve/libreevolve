@@ -4,6 +4,21 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README Table 2/Table 3 matrix-rank table wording scoped until
+      emitted table exhibit artifacts exist.
+  - Spec evidence: AlphaEvolve Table 2 is the selected main-text matrix-rank
+    comparison table, and Appendix A Table 3 is the full 54-target version.
+  - Status: README now documents
+    `papers/matrix_rank_table_artifacts.json` as the committed emitted
+    Table 2/Table 3 matrix-rank table artifact sidecar and keeps automatic
+    report/table exporter attachment as the remaining boundary.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_exhibits.py
+    tests\test_paper_manifest.py -q`, `py -3.12 -m pytest
+    tests\test_agents_docs.py -q`, and `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs` passed.
+  - Remaining gap: none for README scoping; exporter integration remains an
+    active code/paper gap.
+
 - [x] Keep README matrix outcome wording scoped until emitted target-subset
       artifacts exist.
   - Spec evidence: AlphaEvolve Table 2 scopes the all-matched-or-surpassed

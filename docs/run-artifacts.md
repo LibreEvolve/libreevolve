@@ -3201,7 +3201,9 @@ explicit false-acceptance/false-rejection review fields. Its
 `claim_ready: false` boundary is intentional: the report proves local
 execution/evaluator gating and bounded failure-memory availability, not an
 independent rejudge of rejected candidates, cross-run semantic failed-proposal
-retrieval, or audited false-positive/false-negative rates.
+retrieval, or audited false-positive/false-negative rates. The committed
+`papers/proposal_lifecycle_audit_boundary.json` sidecar preserves the same
+independent-audit absence boundary for paper-manifest validation.
 
 Prompt feedback for the selected parent also renders bounded, redacted
 summaries from the candidate's persisted evaluation record: recent stage

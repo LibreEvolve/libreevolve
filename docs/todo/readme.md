@@ -42,7 +42,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     admission or rejection, rejection reasons, execution-filtered counts,
     failure-memory linkage, and explicit false-acceptance/false-rejection
     review fields. It also keeps the claim scoped to local execution-
-    grounding evidence rather than an independent benchmark rejudge.
+    grounding evidence rather than an independent benchmark rejudge. README
+    now also names `papers/proposal_lifecycle_audit_boundary.json` as the
+    committed paper-manifest-validated independent-audit absence boundary.
   - Required result: when independent rejudge/reference-checker or statistical
     oracle evidence lands, update README, ROADMAP, papers index, and code/paper
     TODOs together with benchmark-specific evaluator-oracle sufficiency,

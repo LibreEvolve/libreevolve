@@ -47,7 +47,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     proposals through backend/call summaries, mutation hashes, execution/
     evaluator validity, archive admission or rejection, rejection reasons,
     execution-filtered counts, failure-memory linkage, aggregate false-
-    acceptance/false-rejection review status, and claim-readiness checks.
+    acceptance/false-rejection review status, and claim-readiness checks. The
+    committed `papers/proposal_lifecycle_audit_boundary.json` sidecar now
+    preserves the paper-manifest-validated independent-audit absence boundary.
   - Current gap: the report is local run evidence. It does not independently
     rejudge accepted or rejected proposals, prove benchmark-specific evaluator-
     oracle sufficiency, aggregate cross-run proposal tables, or report audited

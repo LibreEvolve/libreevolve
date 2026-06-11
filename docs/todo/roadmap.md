@@ -91,7 +91,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     archive admission/rejection, rejection reason, execution-filtered counts,
     failure-memory linkage, and false-acceptance/false-rejection review
     status. The wording explicitly keeps this as local execution-grounding
-    evidence rather than an independent audit.
+    evidence rather than an independent audit. ROADMAP now also names
+    `papers/proposal_lifecycle_audit_boundary.json` as the committed
+    paper-manifest-validated independent-audit absence boundary.
   - Required result: when independent rejudge/reference-checker or statistical
     oracle reports land, update ROADMAP, README, papers index, and code/paper
     TODOs with benchmark-specific evaluator-oracle sufficiency, cross-run

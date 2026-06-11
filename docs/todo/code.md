@@ -1293,7 +1293,10 @@ Primary evidence:
     false-rejection review status. Focused tests cover a cleanly parsed LLM
     mutation that execution/evaluation marks invalid, rejects from archive
     admission, persists to `failure_history.jsonl`, and exposes through the
-    lifecycle report without accepting an invalid generated proposal.
+    lifecycle report without accepting an invalid generated proposal. The
+    committed `papers/proposal_lifecycle_audit_boundary.json` sidecar now
+    records the paper-manifest-validated `not_independently_audited` boundary
+    for independent rejudge/oracle and audited error-rate evidence.
   - Remaining gap: this is local run-level evidence, not an independent
     adjudication of whether every rejected proposal was truly incorrect or
     every accepted proposal was truly correct. It does not yet provide

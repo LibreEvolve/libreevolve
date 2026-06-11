@@ -6,6 +6,26 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit proposal lifecycle independent-audit boundary sidecar.
+  - Paper evidence: AlphaEvolve frames execution and automatic evaluation as
+    grounding that filters incorrect base-LLM suggestions before discovered
+    candidates are retained.
+  - Status: `papers/proposal_lifecycle_audit_boundary.json` now carries the
+    paper-facing
+    `libreevolve.alphaevolve_proposal_lifecycle_audit_boundary.v1` absence
+    boundary. The paper-manifest gate requires and validates the sidecar at the
+    real repo root.
+  - Verification: `py -3.12 -m pytest
+    tests\test_proposal_lifecycle_audit_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\proposal_lifecycle_audit.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining paper gap: this is an absence boundary; independent accepted/
+    rejected proposal rejudging, oracle sufficiency labels, cross-run proposal
+    tables, semantic failed-proposal retrieval, and audited error rates remain
+    open.
+
 - [x] Emit candidate-abstraction and bias-evidence boundary sidecar.
   - Paper evidence: AlphaEvolve Section 2.1 and the Discussion distinguish
     direct solution search, constructor functions, bespoke search algorithms,

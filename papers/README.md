@@ -925,7 +925,9 @@ failure-memory linkage, and explicit false-acceptance/false-rejection review
 status. This supports a local claim that execution/evaluation gates generated
 suggestions before accepted discovery claims, while remaining short of an
 independent rejudge, cross-run proposal table, or audited false-positive/false-
-negative rate.
+negative rate. The committed `papers/proposal_lifecycle_audit_boundary.json`
+sidecar now emits that `not_independently_audited` boundary, and
+`validate_paper_manifest()` requires and validates it at the real repo root.
 
 AlphaEvolve archive-history consistency note: accepted archive admissions
 prevalidate their strict candidate history record before mutating the live

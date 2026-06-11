@@ -4,6 +4,26 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit proposal lifecycle independent-audit boundary sidecar.
+  - Spec evidence: AlphaEvolve says execution and automatic evaluation ground
+    LLM-directed evolution and filter incorrect base-LLM suggestions, which
+    requires evidence beyond local proposal acceptance/rejection records before
+    making audited error-rate claims.
+  - Status: `papers/proposal_lifecycle_audit_boundary.json` now emits the
+    `libreevolve.alphaevolve_proposal_lifecycle_audit_boundary.v1`
+    `not_independently_audited` boundary, and `validate_paper_manifest()`
+    requires and validates it at the real repo root.
+  - Verification: `py -3.12 -m pytest
+    tests\test_proposal_lifecycle_audit_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\proposal_lifecycle_audit.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: no local independent rejudge/reference-or-statistical
+    oracle audit records accepted or rejected proposals, benchmark sufficiency
+    labels, cross-run proposal lifecycle tables, semantic failed-proposal
+    retrieval, or audited false-acceptance/false-rejection rates.
+
 - [x] Emit candidate-abstraction and bias-evidence boundary sidecar.
   - Spec evidence: AlphaEvolve Section 2.1 and the Discussion describe
     choosing between direct solutions, constructor functions, bespoke search

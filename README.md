@@ -1236,7 +1236,9 @@ mutation payload hashes, evaluator validity, archive admission or rejection,
 rejection reasons, execution-filtered counts, prompt-visible failure-memory
 availability, and explicit false-acceptance/false-rejection review fields. It
 is local execution-grounding evidence, not an independent benchmark rejudge or
-audited error-rate claim.
+audited error-rate claim. The committed
+`papers/proposal_lifecycle_audit_boundary.json` sidecar now records that
+paper-manifest-validated independent-audit absence boundary.
 Rejected workspace seed rows render all seed files into bounded `mutation_text`
 and include `seed_workspace` per-file path, role, byte count, SHA-256, snippet,
 and truncation metadata.

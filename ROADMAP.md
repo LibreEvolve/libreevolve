@@ -109,7 +109,11 @@ LibreEvolve has:
   history with failure records to show backend/call summaries, mutation hashes,
   evaluator validity, archive admission/rejection, rejection reasons,
   execution-filtered counts, bounded failure-memory linkage, and explicit
-  limitations for independent false-acceptance/false-rejection audits
+  limitations for independent false-acceptance/false-rejection audits, with
+  `papers/proposal_lifecycle_audit_boundary.json` now carrying the
+  paper-manifest-validated absence boundary for independent rejudge,
+  reference/statistical-oracle audit, cross-run proposal tables, semantic
+  failed-proposal retrieval, and audited error rates
 - opt-in evaluator artifact copy-out from temporary candidate workspaces with
   hashes, limits, and text redaction metadata
 - validator subprocess environment allowlisting, persisted stdout/stderr

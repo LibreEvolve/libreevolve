@@ -592,13 +592,14 @@ mappings, and run-artifact cross-links for prompt history, LLM calls,
 candidate history, evaluator artifacts, archive events, controller-budget
 events, and best exports. It also records generated Mermaid/text
 accessibility artifacts with hashes, per-step artifact-stream validation
-records, strict JSONL row summaries, and component-to-TODO links for the
-remaining process gaps. It remains `claim_ready: false` because exact
-source-diagram reproduction, async controller/sampler/evaluator topology,
-independent evaluator-pool parallelism, and semantic candidate-level joins
-across every process step stream remain open.
+records, strict JSONL row summaries, generated candidate semantic traces, and
+component-to-TODO links for the remaining process gaps. It remains
+`claim_ready: false` because exact source-diagram reproduction, async
+controller/sampler/evaluator topology, independent evaluator-pool
+parallelism, and durable LLM/archive stream joins for every process step
+remain open.
 The committed `papers/process_exhibit_boundary.json` sidecar emits the
-`process_mapping_with_step_row_summaries_without_full_parity` boundary, and
+`process_mapping_with_candidate_traces_without_full_parity` boundary, and
 `validate_paper_manifest()` requires it at the real repo root.
 
 AlphaEvolve distributed-pipeline topology note: completed manifests now include

@@ -170,16 +170,18 @@ Primary evidence:
     `paper_artifacts/process_exhibit/` with SHA-256 hashes. It now also
     validates each Figure 2 pseudocode step against the artifact-inventory
     paths it cites, records strict JSONL row summaries for cited streams, and
-    records component-to-TODO links for the remaining process gaps. The report
-    still carries `claim_ready: false` readiness gaps. The committed
+    records bounded generated-candidate semantic traces plus component-to-TODO
+    links for the remaining process gaps. The report still carries
+    `claim_ready: false` readiness gaps. The committed
     `papers/process_exhibit_boundary.json` sidecar now records that
     paper-manifest-validated process-exhibit parity boundary.
   - Required result: add exact source-diagram text reproduction, async
     controller/sampler/evaluator topology records, independent evaluator-pool
-    parallelism evidence, semantic candidate-level joins across every cited
-    process stream, and docs checks so local workflow diagrams, generated
-    Mermaid artifacts, artifact-link records, and row summaries are not
-    mistaken for full reproduced AlphaEvolve process-diagram evidence.
+    parallelism evidence, durable LLM/archive stream joins for every process
+    step, and docs checks so local workflow diagrams, generated Mermaid
+    artifacts, artifact-link records, row summaries, and semantic candidate
+    traces are not mistaken for full reproduced AlphaEvolve process-diagram
+    evidence.
 
 - [ ] Extend unified AlphaEvolve task-specification reports into full
       artifact-level parity.
@@ -503,13 +505,14 @@ Primary evidence:
     Figure 2 pseudocode-step mappings, component mappings, artifact
     cross-links, generated Mermaid/text artifacts and hashes, per-step
     artifact-stream validation records, strict JSONL row summaries,
-    component-to-TODO links, and explicit `claim_ready: false` gaps.
+    generated candidate semantic traces, component-to-TODO links, and explicit
+    `claim_ready: false` gaps.
   - Required result: add exact diagram/pseudocode text or accessibility
     reproduction, async topology evidence, independent evaluator-pool
-    evidence, semantic candidate-level joins across every process stream, and
-    docs checks that prevent README, ROADMAP, or papers-index wording from
-    treating component-level support as full reproduction of the AlphaEvolve
-    process diagrams.
+    evidence, durable LLM/archive stream joins for every process step, and docs
+    checks that prevent README, ROADMAP, or papers-index wording from treating
+    component-level support as full reproduction of the AlphaEvolve process
+    diagrams.
 
 - [ ] Add self-improvement and distillation evidence boundaries for
       infrastructure-facing claims.

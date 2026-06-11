@@ -2,10 +2,20 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Record process-exhibit generated-candidate semantic traces for roadmap evidence.
+  - Status: ROADMAP now lists bounded generated-candidate semantic traces as
+    current Figure 1/Figure 2 process-exhibit evidence, while keeping durable
+    LLM/archive stream joins and full process parity open.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4636 passed, 21 skipped, 2 deselected.
+  - Remaining gap: exact source-diagram reproduction, async topology, and
+    evaluator-pool parallelism remain open.
+
 - [x] Record process-exhibit stream row summaries for roadmap evidence.
-  - Status: ROADMAP now lists strict JSONL row summaries as current Figure 1/
-    Figure 2 process-exhibit evidence, while keeping semantic per-step stream
-    joins and full process parity open.
+  - Status: ROADMAP now lists strict JSONL row summaries and generated
+    candidate traces as current Figure 1/Figure 2 process-exhibit evidence,
+    while keeping durable LLM/archive candidate joins and full process parity
+    open.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4636 passed, 21 skipped, 2 deselected.
   - Remaining gap: exact source-diagram reproduction, async topology, and
@@ -14,7 +24,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 - [x] Record process-exhibit step-stream artifact links for roadmap evidence.
   - Status: ROADMAP now lists per-step artifact-stream validation records and
     component-to-TODO links as current Figure 1/Figure 2 process-exhibit
-    evidence, while keeping semantic stream joins and full process parity
+    evidence, while keeping durable stream joins and full process parity
     open.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4636 passed, 21 skipped, 2 deselected.

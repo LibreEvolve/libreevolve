@@ -10,7 +10,7 @@ PROCESS_EXHIBIT_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_process_exhibit_bound
 PROCESS_EXHIBIT_RUNTIME_REPORT_SCHEMA = "libreevolve.alphaevolve_process_exhibit_report.v1"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_FIGURE_IDS = ("Figure 1", "Figure 2")
-EXPECTED_BOUNDARY_STATUS = "process_mapping_with_step_row_summaries_without_full_parity"
+EXPECTED_BOUNDARY_STATUS = "process_mapping_with_candidate_traces_without_full_parity"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "figure_id",
     "source_page",
@@ -26,12 +26,13 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "async_topology_record",
     "evaluator_pool_parallelism_record",
     "artifact_step_validation_record",
+    "candidate_semantic_trace_record",
 )
 EXPECTED_MISSING_EVIDENCE = {
     "exact_source_diagram_text_reproduction": "not_recorded_locally",
     "async_controller_sampler_evaluator_topology": "not_recorded_locally",
     "independent_evaluator_pool_parallelism": "not_recorded_locally",
-    "semantic_candidate_level_step_stream_join": "not_recorded_locally",
+    "durable_llm_and_archive_stream_candidate_joins": "not_recorded_locally",
 }
 
 
@@ -74,11 +75,12 @@ def process_exhibit_boundary_record() -> dict[str, Any]:
             "mapping from AlphaEvolve Figure 1/Figure 2 process nodes, edges, "
             "and pseudocode steps to local components and artifacts, plus "
             "generated Mermaid/text accessibility artifacts, step-stream "
-            "artifact-link validation, strict JSONL row summaries, and "
-            "component-to-TODO links. It does not claim exact source-diagram "
-            "reproduction, async controller/sampler/evaluator topology, "
-            "independent evaluator-pool parallelism, or semantic "
-            "candidate-level joins across every process step stream."
+            "artifact-link validation, strict JSONL row summaries, generated "
+            "candidate semantic traces, and component-to-TODO links. It does "
+            "not claim exact source-diagram reproduction, async controller/"
+            "sampler/evaluator topology, independent evaluator-pool "
+            "parallelism, or durable LLM/archive stream candidate joins for "
+            "every process step."
         ),
     }
 

@@ -12782,6 +12782,10 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
         stream_row_evidence,
     )
     component_todo_links = _process_exhibit_component_todo_links()
+    candidate_semantic_traces = _process_candidate_semantic_traces(
+        run_dir,
+        programs,
+    )
     step_stream_row_summary_count = sum(
         1
         for validation in step_stream_validations
@@ -12821,6 +12825,8 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
         "step_stream_validations": step_stream_validations,
         "step_stream_validation_count": len(step_stream_validations),
         "step_stream_row_summary_count": step_stream_row_summary_count,
+        "candidate_semantic_traces": candidate_semantic_traces,
+        "candidate_semantic_trace_count": len(candidate_semantic_traces),
         "component_todo_links": component_todo_links,
         "component_todo_link_count": len(component_todo_links),
         "claim_ready": False,
@@ -12833,17 +12839,18 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
                 step_stream_validations
             ),
             "step_stream_row_summaries": step_stream_row_summary_count > 0,
+            "candidate_semantic_trace_records": bool(candidate_semantic_traces),
             "component_todo_links": True,
             "rendered_diagram_artifacts": rendered_count == len(figures),
             "accessibility_exports": accessibility_count == len(figures),
             "exact_diagram_text_reproduction": False,
-            "semantic_candidate_level_step_stream_validation": False,
+            "durable_every_stream_candidate_join": False,
             "full_alphaevolve_process_parity": False,
             "remaining_gap": [
                 "exact_source_diagram_text_reproduction",
                 "async_controller_sampler_evaluator_topology",
                 "independent_evaluator_pool_parallelism",
-                "semantic_candidate_level_step_stream_join_against_each_stream",
+                "durable_llm_and_archive_stream_candidate_joins",
             ],
         },
     }
@@ -13150,6 +13157,249 @@ def _process_step_streams_resolved(validations: list[dict]) -> bool:
     )
 
 
+def _process_candidate_semantic_traces(
+    run_dir: Path,
+    programs: list[Program],
+) -> list[dict]:
+    history_indexes = _prompt_current_history_join_indexes(run_dir)
+    controller_rows = _process_controller_event_rows_by_kind(run_dir)
+    llm_rows = _process_llm_call_rows_by_id(run_dir)
+    traces = []
+    for program in programs:
+        if len(traces) >= 25:
+            break
+        metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
+        if metadata.get("candidate_type") != "generated":
+            continue
+        trace = _process_candidate_semantic_trace_record(
+            program,
+            history_indexes,
+            controller_rows,
+            llm_rows,
+        )
+        traces.append(trace)
+    return traces
+
+
+def _process_candidate_semantic_trace_record(
+    program: Program,
+    history_indexes: Mapping[str, object],
+    controller_rows: Mapping[str, list[dict]],
+    llm_rows: Mapping[str, dict],
+) -> dict:
+    metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
+    prompt_program_id = metadata.get("prompt_program_id")
+    history_join = _prompt_current_history_join_record(
+        program.id,
+        prompt_program_id,
+        history_indexes,
+    )
+    evaluator_result = (
+        history_indexes.get("evaluator_result_by_candidate_id", {}).get(program.id)
+        if isinstance(history_indexes.get("evaluator_result_by_candidate_id"), Mapping)
+        else None
+    )
+    candidate_history = history_join.get("candidate_history")
+    prompt_history = history_join.get("prompt_history")
+    archive_admission = (
+        metadata.get("archive_admission")
+        if isinstance(metadata.get("archive_admission"), Mapping)
+        else None
+    )
+    llm_calls = (
+        metadata.get("llm_calls")
+        if isinstance(metadata.get("llm_calls"), list)
+        else []
+    )
+    llm_call_ids = [
+        call.get("id")
+        for call in llm_calls
+        if isinstance(call, Mapping) and isinstance(call.get("id"), str)
+    ]
+    llm_stream_rows = [
+        dict(llm_rows[call_id])
+        for call_id in llm_call_ids
+        if call_id in llm_rows
+    ][:25]
+    step_joins = [
+        {
+            "step_id": "fig2.step_1_sample",
+            "displayed_call": "database.sample()",
+            "join_status": "candidate_parent_selected",
+            "candidate_id": program.id,
+            "parent_id": program.parent_id,
+            "history_line_number": _mapping_int(candidate_history, "line_number"),
+            "prompt_program_id": prompt_program_id if isinstance(prompt_program_id, str) else None,
+        },
+        {
+            "step_id": "fig2.step_2_build_prompt",
+            "displayed_call": "prompt_sampler.build(...)",
+            "join_status": "prompt_history_joined"
+            if isinstance(prompt_history, Mapping)
+            and _mapping_int(prompt_history, "add_line_number") is not None
+            else "prompt_history_missing",
+            "prompt_program_id": prompt_program_id if isinstance(prompt_program_id, str) else None,
+            "prompt_history_add_line_number": _mapping_int(prompt_history, "add_line_number"),
+            "prompt_history_score_line_number": _mapping_int(prompt_history, "score_line_number"),
+        },
+        {
+            "step_id": "fig2.step_3_generate",
+            "displayed_call": "llm.generate(...)",
+            "join_status": "metadata_llm_call_ids_recorded"
+            if llm_call_ids
+            else "llm_call_ids_missing",
+            "llm_call_ids": llm_call_ids[:25],
+            "llm_call_ids_truncated": len(llm_call_ids) > 25,
+            "llm_call_stream_rows": llm_stream_rows,
+            "llm_call_stream_joined": bool(llm_stream_rows),
+            "controller_llm_call_event_rows": _process_controller_event_sample(
+                controller_rows,
+                "llm_call",
+            ),
+        },
+        {
+            "step_id": "fig2.step_4_apply_diff",
+            "displayed_call": "apply_diff(...)",
+            "join_status": "candidate_history_or_failure_joined"
+            if history_join.get("candidate_history_joined") is True
+            or history_join.get("candidate_failure_history") is not None
+            else "candidate_history_missing",
+            "mutation_mode": metadata.get("mutation_mode"),
+            "candidate_history_line_number": _mapping_int(candidate_history, "line_number"),
+            "candidate_failure_history_line_number": _mapping_int(
+                history_join.get("candidate_failure_history"),
+                "line_number",
+            ),
+            "mutation_payload_sha256": hashlib.sha256(
+                str(metadata.get("diff", "")).encode("utf-8")
+            ).hexdigest(),
+        },
+        {
+            "step_id": "fig2.step_5_execute_evaluator",
+            "displayed_call": "evaluator.execute(...)",
+            "join_status": "evaluator_result_joined"
+            if isinstance(evaluator_result, Mapping)
+            else "evaluator_result_missing",
+            "evaluator_result_line_number": _mapping_int(evaluator_result, "line_number"),
+            "evaluator_result_row_id": (
+                evaluator_result.get("row_id")
+                if isinstance(evaluator_result, Mapping)
+                and isinstance(evaluator_result.get("row_id"), str)
+                else None
+            ),
+            "is_valid": program.evaluation.get("is_valid")
+            if isinstance(program.evaluation, Mapping)
+            else None,
+            "score": _finite_json_number(program.fitness),
+            "controller_candidate_evaluation_event_rows": _process_controller_event_sample(
+                controller_rows,
+                "candidate_evaluation",
+            ),
+        },
+        {
+            "step_id": "fig2.step_6_add_database",
+            "displayed_call": "database.add(...)",
+            "join_status": "archive_admission_metadata_joined"
+            if isinstance(archive_admission, Mapping)
+            else "archive_admission_missing",
+            "candidate_history_line_number": _mapping_int(candidate_history, "line_number"),
+            "archive_admitted": archive_admission.get("admitted")
+            if isinstance(archive_admission, Mapping)
+            else None,
+            "archive_reason": archive_admission.get("reason")
+            if isinstance(archive_admission, Mapping)
+            else None,
+            "archive_sequence": _mapping_int(metadata, "archive_sequence"),
+            "archive_event_stream_joined": False,
+        },
+    ]
+    required_step_join_count = sum(
+        1 for step in step_joins if not str(step.get("join_status", "")).endswith("_missing")
+    )
+    return {
+        "candidate_id": program.id,
+        "candidate_type": metadata.get("candidate_type"),
+        "generation": program.generation,
+        "parent_id": program.parent_id,
+        "prompt_program_id": prompt_program_id if isinstance(prompt_program_id, str) else None,
+        "trace_scope": "generated_candidate_semantic_join",
+        "step_join_count": required_step_join_count,
+        "step_joins": step_joins,
+        "semantic_trace_ready": required_step_join_count == len(step_joins),
+        "durable_every_stream_join": False,
+        "remaining_gap": [
+            "llm_calls_jsonl_row_join_when_provider_ledger_absent",
+            "archive_events_jsonl_candidate_join_for_normal_admissions",
+        ],
+    }
+
+
+def _process_controller_event_rows_by_kind(run_dir: Path) -> dict[str, list[dict]]:
+    path = run_dir / "controller_budget_events.jsonl"
+    rows: dict[str, list[dict]] = {}
+    if not path.exists():
+        return rows
+    for line_number, record in enumerate(
+        iter_strict_jsonl_objects(path, stream_name="controller_budget_events.jsonl"),
+        start=1,
+    ):
+        kind = record.get("kind")
+        if not isinstance(kind, str):
+            continue
+        rows.setdefault(kind, []).append(
+            {
+                "stream": "controller_budget_events.jsonl",
+                "line_number": line_number,
+                "sequence": record.get("sequence"),
+                "kind": kind,
+                "role": record.get("role"),
+            }
+        )
+    return rows
+
+
+def _process_llm_call_rows_by_id(run_dir: Path) -> dict[str, dict]:
+    path = run_dir / "llm_calls.jsonl"
+    rows: dict[str, dict] = {}
+    if not path.exists():
+        return rows
+    for line_number, record in enumerate(
+        iter_strict_jsonl_objects(path, stream_name="llm_calls.jsonl"),
+        start=1,
+    ):
+        call_id = record.get("id")
+        if not isinstance(call_id, str):
+            continue
+        rows[call_id] = {
+            "stream": "llm_calls.jsonl",
+            "line_number": line_number,
+            "call_id": call_id,
+            "record_type": record.get("record_type", "call"),
+            "role": record.get("role"),
+            "status": record.get("status"),
+        }
+    return rows
+
+
+def _process_controller_event_sample(
+    rows_by_kind: Mapping[str, list[dict]],
+    kind: str,
+) -> list[dict]:
+    rows = rows_by_kind.get(kind)
+    if not isinstance(rows, list):
+        return []
+    return [dict(row) for row in rows[:25] if isinstance(row, Mapping)]
+
+
+def _mapping_int(value: object, field: str) -> int | None:
+    if not isinstance(value, Mapping):
+        return None
+    raw = value.get(field)
+    if isinstance(raw, int) and not isinstance(raw, bool):
+        return raw
+    return None
+
+
 def _process_exhibit_stream_row_evidence(run_dir: Path) -> list[dict]:
     stream_specs = {
         "history.jsonl": {
@@ -13340,7 +13590,7 @@ def _process_exhibit_component_todo_links() -> list[dict]:
             "claim_surface_paths": claim_surfaces,
         },
         {
-            "gap_id": "semantic_candidate_level_step_stream_join_against_each_stream",
+            "gap_id": "durable_llm_and_archive_stream_candidate_joins",
             "status": "open",
             "component_ids": [
                 "fig2.step_1_sample",
@@ -13451,6 +13701,8 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
         "step_stream_validations",
         "step_stream_validation_count",
         "step_stream_row_summary_count",
+        "candidate_semantic_traces",
+        "candidate_semantic_trace_count",
         "component_todo_links",
         "component_todo_link_count",
         "claim_ready",
@@ -13756,6 +14008,68 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
         row_summary_count,
         issues,
     )
+    candidate_semantic_traces = report.get("candidate_semantic_traces")
+    if not isinstance(candidate_semantic_traces, list):
+        issues.append({"code": "invalid_candidate_semantic_traces", "message": "candidate_semantic_traces must be a list"})
+        candidate_semantic_traces = []
+    _validate_report_count(
+        report,
+        "candidate_semantic_trace_count",
+        len(candidate_semantic_traces),
+        issues,
+    )
+    for trace in candidate_semantic_traces:
+        if not isinstance(trace, Mapping):
+            issues.append({"code": "invalid_candidate_semantic_trace", "message": "candidate semantic traces must be objects"})
+            continue
+        if not isinstance(trace.get("candidate_id"), str) or not trace.get("candidate_id"):
+            issues.append({"code": "invalid_candidate_trace_id", "message": "candidate trace must name a candidate"})
+        if trace.get("trace_scope") != "generated_candidate_semantic_join":
+            issues.append({"code": "invalid_candidate_trace_scope", "message": "candidate trace scope is invalid"})
+        step_joins = trace.get("step_joins")
+        if not isinstance(step_joins, list):
+            issues.append({"code": "invalid_candidate_trace_steps", "message": "candidate trace step_joins must be a list"})
+            step_joins = []
+        elif len(step_joins) != 6:
+            issues.append({"code": "candidate_trace_step_count_mismatch", "message": "candidate trace must cover six Figure 2 steps"})
+        if not isinstance(trace.get("step_join_count"), int) or isinstance(trace.get("step_join_count"), bool) or trace.get("step_join_count") < 0:
+            issues.append({"code": "invalid_candidate_trace_join_count", "message": "step_join_count must be non-negative integer"})
+        elif trace.get("step_join_count") > len(step_joins):
+            issues.append({"code": "candidate_trace_join_count_overflow", "message": "step_join_count cannot exceed step count"})
+        if not isinstance(trace.get("semantic_trace_ready"), bool):
+            issues.append({"code": "invalid_candidate_trace_readiness", "message": "semantic_trace_ready must be boolean"})
+        if trace.get("durable_every_stream_join") is not False:
+            issues.append({"code": "durable_every_stream_trace_overclaim", "message": "candidate trace must not claim durable every-stream joins"})
+        for step in step_joins:
+            if not isinstance(step, Mapping):
+                issues.append({"code": "invalid_candidate_trace_step", "message": "candidate trace step must be an object"})
+                continue
+            if not isinstance(step.get("step_id"), str) or not step.get("step_id"):
+                issues.append({"code": "invalid_candidate_trace_step_id", "message": "candidate trace step_id must be text"})
+            if not isinstance(step.get("displayed_call"), str) or not step.get("displayed_call"):
+                issues.append({"code": "invalid_candidate_trace_displayed_call", "message": "candidate trace displayed_call must be text"})
+            if not isinstance(step.get("join_status"), str) or not step.get("join_status"):
+                issues.append({"code": "invalid_candidate_trace_join_status", "message": "candidate trace join_status must be text"})
+            for field in (
+                "history_line_number",
+                "prompt_history_add_line_number",
+                "prompt_history_score_line_number",
+                "candidate_history_line_number",
+                "candidate_failure_history_line_number",
+                "evaluator_result_line_number",
+                "archive_sequence",
+            ):
+                value = step.get(field)
+                if value is not None and (
+                    not isinstance(value, int)
+                    or isinstance(value, bool)
+                    or value < 1
+                ):
+                    issues.append({"code": "invalid_candidate_trace_line_number", "message": f"{field} must be a positive integer or null"})
+            if step.get("archive_event_stream_joined") not in {None, False}:
+                issues.append({"code": "archive_event_stream_overclaim", "message": "archive event stream joins must not be claimed"})
+            if step.get("llm_call_stream_joined") not in {None, True, False}:
+                issues.append({"code": "invalid_llm_call_stream_join_flag", "message": "llm call stream join flag must be boolean"})
     component_todo_links = report.get("component_todo_links")
     if not isinstance(component_todo_links, list):
         issues.append({"code": "invalid_component_todo_links", "message": "component_todo_links must be a list"})
@@ -13791,6 +14105,8 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
             issues.append({"code": "invalid_step_stream_readiness", "message": "step stream validation readiness must be boolean"})
         if readiness.get("step_stream_row_summaries") not in {True, False}:
             issues.append({"code": "invalid_step_stream_row_summary_readiness", "message": "step stream row summary readiness must be boolean"})
+        if readiness.get("candidate_semantic_trace_records") not in {True, False}:
+            issues.append({"code": "invalid_candidate_trace_readiness", "message": "candidate semantic trace readiness must be boolean"})
         if readiness.get("component_todo_links") not in {True, False}:
             issues.append({"code": "invalid_component_todo_readiness", "message": "component TODO link readiness must be boolean"})
         if readiness.get("rendered_diagram_artifacts") not in {True, False}:
@@ -13799,8 +14115,8 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
             issues.append({"code": "invalid_accessibility_export_readiness", "message": "accessibility export readiness must be boolean"})
         if readiness.get("exact_diagram_text_reproduction") is not False:
             issues.append({"code": "exact_diagram_text_overclaim", "message": "exact source diagram text reproduction must remain false"})
-        if readiness.get("semantic_candidate_level_step_stream_validation") is not False:
-            issues.append({"code": "semantic_step_stream_overclaim", "message": "semantic candidate-level step stream validation must remain false"})
+        if readiness.get("durable_every_stream_candidate_join") is not False:
+            issues.append({"code": "durable_every_stream_overclaim", "message": "durable every-stream candidate joins must remain false"})
         if readiness.get("full_alphaevolve_process_parity") is not False:
             issues.append({"code": "process_parity_overclaim", "message": "full AlphaEvolve process parity must remain false"})
     if report.get("claim_ready") is not False:

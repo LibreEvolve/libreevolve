@@ -5913,10 +5913,9 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     tmpdir = tempfile.mkdtemp()
     problem = _problem(
         "def evaluate(code):\n"
-        "    ok = 'x=2' in code\n"
-        "    return {'score': 1.0 if ok else 0.0, 'is_valid': ok}\n"
+        "    return {'score': 1.0 if 'x=2' in code else 0.1, 'is_valid': True}\n"
     )
-    llm = _llm("<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE")
+    llm = _TelemetryLLM("<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE")
 
     with patch("libreevolve.core.loop.build_llm", return_value=llm):
         evolve(
@@ -5940,14 +5939,14 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert report["claim_readiness"]["rendered_diagram_artifacts"] is True
     assert report["claim_readiness"]["accessibility_exports"] is True
     assert report["claim_readiness"]["exact_diagram_text_reproduction"] is False
-    assert (
-        report["claim_readiness"]["semantic_candidate_level_step_stream_validation"]
-        is False
-    )
+    assert report["claim_readiness"]["durable_every_stream_candidate_join"] is False
     assert "exact_source_diagram_text_reproduction" in (
         report["claim_readiness"]["remaining_gap"]
     )
-    assert "semantic_candidate_level_step_stream_join_against_each_stream" in (
+    assert "durable_llm_and_archive_stream_candidate_joins" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    assert "semantic_candidate_level_step_stream_join_against_each_stream" not in (
         report["claim_readiness"]["remaining_gap"]
     )
     assert "row_level_step_stream_validation_against_each_stream" not in (
@@ -6003,7 +6002,7 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
         evidence["path"]: evidence for evidence in report["stream_row_evidence"]
     }
     assert stream_rows_by_path["history.jsonl"]["status"] == "rows_recorded"
-    assert stream_rows_by_path["history.jsonl"]["line_numbers"] == [1]
+    assert stream_rows_by_path["history.jsonl"]["line_numbers"] == [1, 2]
     assert stream_rows_by_path["history.jsonl"]["row_identifiers"][0]["id"].startswith(
         "candidate-"
     )
@@ -6033,15 +6032,41 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert evaluator_validation["all_artifact_records_resolved"] is True
     assert evaluator_validation["row_summary_record_count"] >= 1
     assert report["component_todo_link_count"] == 4
+    assert report["candidate_semantic_trace_count"] == 1
+    assert report["claim_readiness"]["candidate_semantic_trace_records"] is True
+    assert report["claim_readiness"]["durable_every_stream_candidate_join"] is False
+    [trace] = report["candidate_semantic_traces"]
+    assert trace["candidate_type"] == "generated"
+    assert trace["semantic_trace_ready"] is True
+    assert trace["durable_every_stream_join"] is False
+    assert trace["step_join_count"] == 6
+    trace_steps = {step["step_id"]: step for step in trace["step_joins"]}
+    assert trace_steps["fig2.step_2_build_prompt"][
+        "prompt_history_add_line_number"
+    ] == 1
+    assert trace_steps["fig2.step_2_build_prompt"][
+        "prompt_history_score_line_number"
+    ] == 2
+    assert trace_steps["fig2.step_3_generate"]["llm_call_ids"] == ["call-0"]
+    assert trace_steps["fig2.step_3_generate"][
+        "controller_llm_call_event_rows"
+    ][0]["kind"] == "llm_call"
+    assert trace_steps["fig2.step_5_execute_evaluator"][
+        "evaluator_result_line_number"
+    ] == 2
+    assert trace_steps["fig2.step_6_add_database"]["archive_admitted"] is True
+    assert trace_steps["fig2.step_6_add_database"][
+        "archive_event_stream_joined"
+    ] is False
     todo_links_by_gap = {
         link["gap_id"]: link for link in report["component_todo_links"]
     }
     assert "fig2.step_5_execute_evaluator" in todo_links_by_gap[
         "independent_evaluator_pool_parallelism"
     ]["component_ids"]
-    assert todo_links_by_gap[
-        "semantic_candidate_level_step_stream_join_against_each_stream"
-    ]["active_todo_paths"] == [
+    assert todo_links_by_gap["durable_llm_and_archive_stream_candidate_joins"][
+        "active_todo_paths"
+    ] == [
         "docs/todo/code.md",
         "docs/todo/roadmap.md",
         "docs/todo/readme.md",

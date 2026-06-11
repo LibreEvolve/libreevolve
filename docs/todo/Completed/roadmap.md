@@ -2,10 +2,19 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Record process-exhibit stream row summaries for roadmap evidence.
+  - Status: ROADMAP now lists strict JSONL row summaries as current Figure 1/
+    Figure 2 process-exhibit evidence, while keeping semantic per-step stream
+    joins and full process parity open.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4636 passed, 21 skipped, 2 deselected.
+  - Remaining gap: exact source-diagram reproduction, async topology, and
+    evaluator-pool parallelism remain open.
+
 - [x] Record process-exhibit step-stream artifact links for roadmap evidence.
   - Status: ROADMAP now lists per-step artifact-stream validation records and
     component-to-TODO links as current Figure 1/Figure 2 process-exhibit
-    evidence, while keeping row-level stream joins and full process parity
+    evidence, while keeping semantic stream joins and full process parity
     open.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4636 passed, 21 skipped, 2 deselected.
@@ -56,7 +65,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Status: `papers/process_exhibit_boundary.json` now lets roadmap wording
     point to a committed absence boundary for rendered process-diagram
     artifacts/hashes, exact diagram text/accessibility export, async topology,
-    evaluator-pool parallelism, and artifact-level step validation.
+    evaluator-pool parallelism, and deeper process-step validation.
   - Verification: `py -3.12 -m pytest
     tests\test_process_exhibit_boundary.py tests\test_paper_manifest.py
     tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest

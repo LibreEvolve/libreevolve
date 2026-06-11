@@ -175,15 +175,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     LLM-call, evaluator, candidate-history, database, and controller-state
     artifacts. README now also documents generated Mermaid/text accessibility
     artifacts and hashes under `paper_artifacts/process_exhibit/`, per-step
-    artifact-stream validation records, component-to-TODO links, and names
-    `papers/process_exhibit_boundary.json` as
+    artifact-stream validation records, strict JSONL row summaries,
+    component-to-TODO links, and names `papers/process_exhibit_boundary.json` as
     the committed sidecar for the paper-manifest-validated absence boundary.
   - Required result: when exact source-diagram reproduction, async controller
-    topology, independent evaluator-pool parallelism, and row-level
-    step-stream validation land, update README, ROADMAP, papers index, and
-    matching TODOs so README distinguishes local workflow explanation,
-    generated Mermaid artifacts, and artifact-link records from full
-    reproduced AlphaEvolve architecture/process exhibit evidence.
+    topology, independent evaluator-pool parallelism, and semantic
+    candidate-level step-stream joins land, update README, ROADMAP, papers
+    index, and matching TODOs so README distinguishes local workflow
+    explanation, generated Mermaid artifacts, artifact-link records, and row
+    summaries from full reproduced AlphaEvolve architecture/process exhibit
+    evidence.
 
 - [ ] Keep README evaluator-workload wording scoped until inner-search and
       ML-training execution contracts exist.
@@ -446,18 +447,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     1/2 exhibit IDs, diagram-node/edge labels, source page/caption locations,
     Figure 2 pseudocode-step mappings, artifact cross-links, generated
     Mermaid/text artifacts and hashes, per-step artifact-stream validation
-    records, component-to-TODO links, and `claim_ready: false` process-parity
-    gaps. It also names
+    records, strict JSONL row summaries, component-to-TODO links, and
+    `claim_ready: false` process-parity gaps. It also names
     `papers/process_exhibit_boundary.json` as the committed sidecar for that
     absence boundary. README workflow text should still remain local
     documentation, not a validated reproduction of the paper process diagrams.
   - Required result: when exact diagram/pseudocode text, rendered artifact
     parity, async topology evidence, independent evaluator-pool evidence, and
-    row-level step-stream validation land, update README, ROADMAP, papers
-    index, and code/paper TODOs together so README can explain which
-    process-diagram steps LibreEvolve implements, which are partial or
-    missing, and why process-diagram reproduction is separate from satisfying
-    each underlying workflow capability.
+    semantic step-stream joins land, update README, ROADMAP, papers index, and
+    code/paper TODOs together so README can explain which process-diagram
+    steps LibreEvolve implements, which are partial or missing, and why
+    process-diagram reproduction is separate from satisfying each underlying
+    workflow capability.
 
 - [ ] Extend README task-specification wording beyond field-level artifact
       resolution.

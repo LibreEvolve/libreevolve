@@ -7,7 +7,7 @@
     "Figure 2"
   ],
   "source_claim": "AlphaEvolve Figure 1 presents the high-level discovery loop and Figure 2 expands it into database sampling, prompt construction, LLM generation, diff application, evaluator execution, and database admission",
-  "boundary_status": "process_mapping_with_step_artifact_links_without_full_parity",
+  "boundary_status": "process_mapping_with_step_row_summaries_without_full_parity",
   "runtime_report_status": "alphaevolve_process_exhibit_report_available",
   "claim_ready": false,
   "required_evidence_fields": [
@@ -30,7 +30,7 @@
     "exact_source_diagram_text_reproduction": "not_recorded_locally",
     "async_controller_sampler_evaluator_topology": "not_recorded_locally",
     "independent_evaluator_pool_parallelism": "not_recorded_locally",
-    "row_level_step_stream_validation": "not_recorded_locally"
+    "semantic_candidate_level_step_stream_join": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has a validated runtime mapping from AlphaEvolve Figure 1/Figure 2 process nodes, edges, and pseudocode steps to local components and artifacts, plus generated Mermaid/text accessibility artifacts, step-stream artifact-link validation, and component-to-TODO links. It does not claim exact source-diagram reproduction, async controller/sampler/evaluator topology, independent evaluator-pool parallelism, or row-level step-stream validation."
+  "claim_boundary": "This boundary records that LibreEvolve has a validated runtime mapping from AlphaEvolve Figure 1/Figure 2 process nodes, edges, and pseudocode steps to local components and artifacts, plus generated Mermaid/text accessibility artifacts, step-stream artifact-link validation, strict JSONL row summaries, and component-to-TODO links. It does not claim exact source-diagram reproduction, async controller/sampler/evaluator topology, independent evaluator-pool parallelism, or semantic candidate-level joins across every process step stream."
 }

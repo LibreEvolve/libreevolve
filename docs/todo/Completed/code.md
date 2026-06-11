@@ -4,6 +4,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add process-exhibit stream row summaries.
+  - Spec evidence: AlphaEvolve Figure 2 names controller-loop steps that map
+    to durable local streams, so the process exhibit should expose row-level
+    stream summaries before the remaining gap is narrowed to semantic joins.
+  - Status: `runtime.history.alphaevolve_process_exhibit_report` now records
+    strict JSONL row summaries for cited process streams, including bounded
+    line numbers and row identifiers for history, failure, evaluator, prompt,
+    LLM, controller-budget, and archive streams when present. Step validation
+    records include row-summary status and counts while preserving semantic
+    candidate-level joins as an open process-parity gap.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4636 passed, 21 skipped, 2 deselected.
+  - Remaining gap: exact source-diagram reproduction, async topology,
+    independent evaluator-pool parallelism, and semantic candidate-level joins
+    across every process step stream remain open.
+
 - [x] Add process-exhibit step-stream artifact links.
   - Spec evidence: AlphaEvolve Figure 2 is a stepwise controller loop, so a
     local process exhibit needs per-step evidence records that resolve the
@@ -13,12 +29,12 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     `step_stream_validations` for all six displayed Figure 2 calls, resolves
     each cited evidence path against the artifact inventory, validates those
     records, and emits component-to-TODO links for exact source-diagram,
-    async-topology, evaluator-pool, and row-level stream-validation gaps.
+    async-topology, evaluator-pool, and semantic stream-join gaps.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4636 passed, 21 skipped, 2 deselected.
   - Remaining gap: exact source-diagram reproduction, async topology,
-    independent evaluator-pool parallelism, and row-level per-stream joins
-    remain open.
+    independent evaluator-pool parallelism, and semantic candidate-level
+    per-stream joins remain open.
 
 - [x] Generate process-exhibit diagram text artifacts.
   - Spec evidence: AlphaEvolve Figure 1/Figure 2 are process diagrams, so a

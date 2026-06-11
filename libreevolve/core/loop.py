@@ -12775,11 +12775,20 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
     _attach_process_figure_artifacts(run_dir, figures)
     artifacts = _process_exhibit_artifact_evidence(run_dir)
     artifact_paths = [artifact["path"] for artifact in artifacts]
+    stream_row_evidence = _process_exhibit_stream_row_evidence(run_dir)
     step_stream_validations = _process_step_stream_validations(
         figure_2_steps,
         artifacts,
+        stream_row_evidence,
     )
     component_todo_links = _process_exhibit_component_todo_links()
+    step_stream_row_summary_count = sum(
+        1
+        for validation in step_stream_validations
+        for stream in validation.get("stream_records", [])
+        if isinstance(stream, Mapping)
+        and stream.get("row_summary_recorded") is True
+    )
     rendered_count = sum(
         1
         for figure in figures
@@ -12807,8 +12816,11 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
         "accessibility_export_count": accessibility_count,
         "artifact_evidence": artifacts,
         "artifact_evidence_paths": artifact_paths,
+        "stream_row_evidence": stream_row_evidence,
+        "stream_row_evidence_count": len(stream_row_evidence),
         "step_stream_validations": step_stream_validations,
         "step_stream_validation_count": len(step_stream_validations),
+        "step_stream_row_summary_count": step_stream_row_summary_count,
         "component_todo_links": component_todo_links,
         "component_todo_link_count": len(component_todo_links),
         "claim_ready": False,
@@ -12820,17 +12832,18 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
             "step_artifact_stream_validation_records": _process_step_streams_resolved(
                 step_stream_validations
             ),
+            "step_stream_row_summaries": step_stream_row_summary_count > 0,
             "component_todo_links": True,
             "rendered_diagram_artifacts": rendered_count == len(figures),
             "accessibility_exports": accessibility_count == len(figures),
             "exact_diagram_text_reproduction": False,
-            "row_level_step_stream_validation": False,
+            "semantic_candidate_level_step_stream_validation": False,
             "full_alphaevolve_process_parity": False,
             "remaining_gap": [
                 "exact_source_diagram_text_reproduction",
                 "async_controller_sampler_evaluator_topology",
                 "independent_evaluator_pool_parallelism",
-                "row_level_step_stream_validation_against_each_stream",
+                "semantic_candidate_level_step_stream_join_against_each_stream",
             ],
         },
     }
@@ -13039,11 +13052,17 @@ def _process_mermaid_label(value: str) -> str:
 def _process_step_stream_validations(
     steps: list[dict],
     artifacts: list[dict],
+    stream_row_evidence: list[dict],
 ) -> list[dict]:
     artifact_by_path = {
         artifact.get("path"): artifact
         for artifact in artifacts
         if isinstance(artifact, Mapping) and isinstance(artifact.get("path"), str)
+    }
+    rows_by_path = {
+        evidence.get("path"): evidence
+        for evidence in stream_row_evidence
+        if isinstance(evidence, Mapping) and isinstance(evidence.get("path"), str)
     }
     validations = []
     for step in steps:
@@ -13082,6 +13101,19 @@ def _process_step_stream_validations(
                     record["hash_scope"] = artifact.get("hash_scope")
                 if isinstance(artifact.get("bytes"), int):
                     record["bytes"] = artifact["bytes"]
+            row_evidence = rows_by_path.get(path)
+            if isinstance(row_evidence, Mapping):
+                record["row_summary_recorded"] = (
+                    row_evidence.get("row_count", 0) > 0
+                )
+                record["row_evidence_status"] = row_evidence.get("status")
+                record["row_count"] = row_evidence.get("row_count")
+                record["row_line_numbers"] = row_evidence.get("line_numbers")
+                record["row_identifiers"] = row_evidence.get("row_identifiers")
+                record["row_join_policy"] = row_evidence.get("join_policy")
+            else:
+                record["row_summary_recorded"] = False
+                record["row_evidence_status"] = "not_indexed"
             stream_records.append(record)
         validations.append(
             {
@@ -13099,6 +13131,11 @@ def _process_step_stream_validations(
                 "all_streams_present": all(
                     record["present"] for record in stream_records
                 ),
+                "row_summary_record_count": sum(
+                    1
+                    for record in stream_records
+                    if record.get("row_summary_recorded") is True
+                ),
                 "row_level_join": False,
             }
         )
@@ -13111,6 +13148,146 @@ def _process_step_streams_resolved(validations: list[dict]) -> bool:
         and validation.get("all_artifact_records_resolved") is True
         for validation in validations
     )
+
+
+def _process_exhibit_stream_row_evidence(run_dir: Path) -> list[dict]:
+    stream_specs = {
+        "history.jsonl": {
+            "stream_kind": "candidate_history",
+            "join_policy": "history_rows_by_program_id",
+            "identifier_fields": ("id",),
+        },
+        "failure_history.jsonl": {
+            "stream_kind": "rejected_candidate_history",
+            "join_policy": "failure_rows_by_program_id",
+            "identifier_fields": ("program_id",),
+        },
+        "evaluator_results.jsonl": {
+            "stream_kind": "evaluator_result_export",
+            "join_policy": "evaluator_result_rows_by_candidate_id",
+            "identifier_fields": ("candidate_id", "row_id"),
+        },
+        "prompt_history.jsonl": {
+            "stream_kind": "prompt_history",
+            "join_policy": "prompt_history_rows_by_event_and_prompt_program_id",
+            "identifier_fields": ("event",),
+        },
+        "llm_calls.jsonl": {
+            "stream_kind": "llm_call_ledger",
+            "join_policy": "llm_call_rows_by_call_id_and_record_type",
+            "identifier_fields": ("id", "record_type", "role", "status"),
+        },
+        "controller_budget_events.jsonl": {
+            "stream_kind": "controller_budget_events",
+            "join_policy": "controller_budget_rows_by_sequence_and_kind",
+            "identifier_fields": ("sequence", "kind"),
+        },
+        "archive_events.jsonl": {
+            "stream_kind": "archive_events",
+            "join_policy": "archive_event_rows_by_program_id_and_sequence",
+            "identifier_fields": ("program_id", "archive_sequence", "reason"),
+        },
+    }
+    return [
+        _process_exhibit_stream_row_evidence_record(
+            run_dir / path,
+            path,
+            stream_kind=str(spec["stream_kind"]),
+            join_policy=str(spec["join_policy"]),
+            identifier_fields=tuple(spec["identifier_fields"]),
+        )
+        for path, spec in stream_specs.items()
+    ]
+
+
+def _process_exhibit_stream_row_evidence_record(
+    path: Path,
+    relative_path: str,
+    *,
+    stream_kind: str,
+    join_policy: str,
+    identifier_fields: tuple[str, ...],
+) -> dict:
+    if not path.exists():
+        return {
+            "path": relative_path,
+            "stream_kind": stream_kind,
+            "status": "absent",
+            "row_count": 0,
+            "line_numbers": [],
+            "line_numbers_truncated": False,
+            "row_identifiers": [],
+            "row_identifiers_truncated": False,
+            "join_policy": join_policy,
+            "row_summary_scope": "strict_jsonl_line_level_summary",
+        }
+    row_count = 0
+    line_numbers: list[int] = []
+    row_identifiers: list[dict] = []
+    try:
+        for line_number, record in enumerate(
+            iter_strict_jsonl_objects(path, stream_name=relative_path),
+            start=1,
+        ):
+            row_count += 1
+            if len(line_numbers) < 25:
+                line_numbers.append(line_number)
+            if len(row_identifiers) < 25 and isinstance(record, Mapping):
+                row_identifiers.append(
+                    _process_exhibit_row_identifier(
+                        record,
+                        line_number=line_number,
+                        identifier_fields=identifier_fields,
+                    )
+                )
+    except StrictJsonlError as exc:
+        return {
+            "path": relative_path,
+            "stream_kind": stream_kind,
+            "status": "invalid_jsonl",
+            "row_count": row_count,
+            "line_numbers": line_numbers,
+            "line_numbers_truncated": row_count > len(line_numbers),
+            "row_identifiers": row_identifiers,
+            "row_identifiers_truncated": row_count > len(row_identifiers),
+            "join_policy": join_policy,
+            "row_summary_scope": "strict_jsonl_line_level_summary",
+            "error": str(exc)[:240],
+        }
+    return {
+        "path": relative_path,
+        "stream_kind": stream_kind,
+        "status": "rows_recorded" if row_count else "empty",
+        "row_count": row_count,
+        "line_numbers": line_numbers,
+        "line_numbers_truncated": row_count > len(line_numbers),
+        "row_identifiers": row_identifiers,
+        "row_identifiers_truncated": row_count > len(row_identifiers),
+        "join_policy": join_policy,
+        "row_summary_scope": "strict_jsonl_line_level_summary",
+    }
+
+
+def _process_exhibit_row_identifier(
+    record: Mapping[str, object],
+    *,
+    line_number: int,
+    identifier_fields: tuple[str, ...],
+) -> dict:
+    identifier = {
+        "line_number": line_number,
+        "record_schema": record.get("record_schema"),
+    }
+    for field in identifier_fields:
+        value = record.get(field)
+        if isinstance(value, (str, int, float, bool)) or value is None:
+            identifier[field] = value
+    program = record.get("program")
+    if isinstance(program, Mapping):
+        prompt_id = program.get("id")
+        if isinstance(prompt_id, str):
+            identifier["prompt_program_id"] = prompt_id
+    return identifier
 
 
 def _process_exhibit_component_todo_links() -> list[dict]:
@@ -13163,7 +13340,7 @@ def _process_exhibit_component_todo_links() -> list[dict]:
             "claim_surface_paths": claim_surfaces,
         },
         {
-            "gap_id": "row_level_step_stream_validation_against_each_stream",
+            "gap_id": "semantic_candidate_level_step_stream_join_against_each_stream",
             "status": "open",
             "component_ids": [
                 "fig2.step_1_sample",
@@ -13269,8 +13446,11 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
         "accessibility_export_count",
         "artifact_evidence",
         "artifact_evidence_paths",
+        "stream_row_evidence",
+        "stream_row_evidence_count",
         "step_stream_validations",
         "step_stream_validation_count",
+        "step_stream_row_summary_count",
         "component_todo_links",
         "component_todo_link_count",
         "claim_ready",
@@ -13434,6 +13614,50 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
             issues.append({"code": "invalid_artifact_roles", "message": "artifact roles must be non-empty text"})
         if not isinstance(artifact.get("present"), bool):
             issues.append({"code": "invalid_artifact_present", "message": "artifact present must be boolean"})
+    stream_row_evidence = report.get("stream_row_evidence")
+    if not isinstance(stream_row_evidence, list):
+        issues.append({"code": "invalid_stream_row_evidence", "message": "stream_row_evidence must be a list"})
+        stream_row_evidence = []
+    _validate_report_count(
+        report,
+        "stream_row_evidence_count",
+        len(stream_row_evidence),
+        issues,
+    )
+    stream_row_paths: set[str] = set()
+    for evidence in stream_row_evidence:
+        if not isinstance(evidence, Mapping):
+            issues.append({"code": "invalid_stream_row_evidence_record", "message": "stream row evidence records must be objects"})
+            continue
+        path = evidence.get("path")
+        if not isinstance(path, str) or not path:
+            issues.append({"code": "invalid_stream_row_evidence_path", "message": "stream row evidence path must be text"})
+        else:
+            stream_row_paths.add(path)
+        if evidence.get("status") not in {"rows_recorded", "empty", "absent", "invalid_jsonl"}:
+            issues.append({"code": "invalid_stream_row_evidence_status", "message": "stream row evidence status is unsupported"})
+        row_count = evidence.get("row_count")
+        if not isinstance(row_count, int) or isinstance(row_count, bool) or row_count < 0:
+            issues.append({"code": "invalid_stream_row_count", "message": "row_count must be non-negative integer"})
+            row_count = 0
+        line_numbers = evidence.get("line_numbers")
+        if not isinstance(line_numbers, list) or not all(isinstance(item, int) and not isinstance(item, bool) and item > 0 for item in line_numbers):
+            issues.append({"code": "invalid_stream_row_line_numbers", "message": "line_numbers must be positive integers"})
+        elif len(line_numbers) > min(row_count, 25):
+            issues.append({"code": "stream_row_line_number_overcount", "message": "line_numbers exceed row summary cap"})
+        if not isinstance(evidence.get("line_numbers_truncated"), bool):
+            issues.append({"code": "invalid_stream_line_truncation_flag", "message": "line_numbers_truncated must be boolean"})
+        identifiers = evidence.get("row_identifiers")
+        if not isinstance(identifiers, list) or not all(isinstance(item, Mapping) for item in identifiers):
+            issues.append({"code": "invalid_stream_row_identifiers", "message": "row_identifiers must be objects"})
+        elif len(identifiers) > min(row_count, 25):
+            issues.append({"code": "stream_row_identifier_overcount", "message": "row_identifiers exceed row summary cap"})
+        if not isinstance(evidence.get("row_identifiers_truncated"), bool):
+            issues.append({"code": "invalid_stream_identifier_truncation_flag", "message": "row_identifiers_truncated must be boolean"})
+        if not isinstance(evidence.get("join_policy"), str) or not evidence.get("join_policy"):
+            issues.append({"code": "invalid_stream_join_policy", "message": "stream row evidence join_policy must be text"})
+        if evidence.get("row_summary_scope") != "strict_jsonl_line_level_summary":
+            issues.append({"code": "invalid_stream_row_summary_scope", "message": "stream row summary scope is invalid"})
     step_stream_validations = report.get("step_stream_validations")
     if not isinstance(step_stream_validations, list):
         issues.append({"code": "invalid_step_stream_validations", "message": "step_stream_validations must be a list"})
@@ -13446,6 +13670,7 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
         len(step_stream_validations),
         issues,
     )
+    row_summary_count = 0
     artifact_path_set = set(artifact_paths)
     for validation in step_stream_validations:
         if not isinstance(validation, Mapping):
@@ -13474,16 +13699,63 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
                 issues.append({"code": "invalid_step_stream_record_present", "message": "artifact_record_present must be boolean"})
             if not isinstance(stream.get("present"), bool):
                 issues.append({"code": "invalid_step_stream_present", "message": "present must be boolean"})
+            if stream.get("row_summary_recorded") not in {True, False}:
+                issues.append({"code": "invalid_step_stream_row_summary_flag", "message": "row_summary_recorded must be boolean"})
+            elif stream.get("row_summary_recorded") is True:
+                row_summary_count += 1
+            if stream.get("row_evidence_status") not in {"rows_recorded", "empty", "absent", "invalid_jsonl", "not_indexed"}:
+                issues.append({"code": "invalid_step_stream_row_evidence_status", "message": "row evidence status is unsupported"})
+            if stream.get("row_summary_recorded") is True and path not in stream_row_paths:
+                issues.append({"code": "missing_step_stream_row_evidence", "message": "row-summary stream must reference stream_row_evidence"})
+            row_count = stream.get("row_count")
+            if row_count is not None and (
+                not isinstance(row_count, int)
+                or isinstance(row_count, bool)
+                or row_count < 0
+            ):
+                issues.append({"code": "invalid_step_stream_row_count", "message": "stream row_count must be non-negative integer"})
+            line_numbers = stream.get("row_line_numbers")
+            if line_numbers is not None and (
+                not isinstance(line_numbers, list)
+                or not all(isinstance(item, int) and not isinstance(item, bool) and item > 0 for item in line_numbers)
+            ):
+                issues.append({"code": "invalid_step_stream_row_line_numbers", "message": "stream row line numbers must be positive integers"})
+            identifiers = stream.get("row_identifiers")
+            if identifiers is not None and (
+                not isinstance(identifiers, list)
+                or not all(isinstance(item, Mapping) for item in identifiers)
+            ):
+                issues.append({"code": "invalid_step_stream_row_identifiers", "message": "stream row identifiers must be objects"})
+            if stream.get("row_join_policy") is not None and (
+                not isinstance(stream.get("row_join_policy"), str)
+                or not stream.get("row_join_policy")
+            ):
+                issues.append({"code": "invalid_step_stream_row_join_policy", "message": "stream row join policy must be text"})
             if stream.get("row_level_join") is not False:
                 issues.append({"code": "step_stream_row_level_overclaim", "message": "row-level step stream joins are not claimed"})
             if stream.get("validation_status") not in {"artifact_record_resolved", "artifact_record_missing"}:
                 issues.append({"code": "invalid_step_stream_validation_status", "message": "invalid stream validation status"})
+        if not isinstance(validation.get("row_summary_record_count"), int) or isinstance(validation.get("row_summary_record_count"), bool) or validation.get("row_summary_record_count") < 0:
+            issues.append({"code": "invalid_step_row_summary_count", "message": "step row_summary_record_count must be non-negative integer"})
+        elif validation.get("row_summary_record_count") != sum(
+            1
+            for stream in streams
+            if isinstance(stream, Mapping)
+            and stream.get("row_summary_recorded") is True
+        ):
+            issues.append({"code": "step_row_summary_count_mismatch", "message": "step row_summary_record_count must match streams"})
         if validation.get("row_level_join") is not False:
             issues.append({"code": "step_validation_row_level_overclaim", "message": "row-level step validation is not claimed"})
         if not isinstance(validation.get("all_artifact_records_resolved"), bool):
             issues.append({"code": "invalid_step_artifact_resolution_flag", "message": "all_artifact_records_resolved must be boolean"})
         if not isinstance(validation.get("all_streams_present"), bool):
             issues.append({"code": "invalid_step_stream_presence_flag", "message": "all_streams_present must be boolean"})
+    _validate_report_count(
+        report,
+        "step_stream_row_summary_count",
+        row_summary_count,
+        issues,
+    )
     component_todo_links = report.get("component_todo_links")
     if not isinstance(component_todo_links, list):
         issues.append({"code": "invalid_component_todo_links", "message": "component_todo_links must be a list"})
@@ -13517,6 +13789,8 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
     else:
         if readiness.get("step_artifact_stream_validation_records") not in {True, False}:
             issues.append({"code": "invalid_step_stream_readiness", "message": "step stream validation readiness must be boolean"})
+        if readiness.get("step_stream_row_summaries") not in {True, False}:
+            issues.append({"code": "invalid_step_stream_row_summary_readiness", "message": "step stream row summary readiness must be boolean"})
         if readiness.get("component_todo_links") not in {True, False}:
             issues.append({"code": "invalid_component_todo_readiness", "message": "component TODO link readiness must be boolean"})
         if readiness.get("rendered_diagram_artifacts") not in {True, False}:
@@ -13525,8 +13799,8 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
             issues.append({"code": "invalid_accessibility_export_readiness", "message": "accessibility export readiness must be boolean"})
         if readiness.get("exact_diagram_text_reproduction") is not False:
             issues.append({"code": "exact_diagram_text_overclaim", "message": "exact source diagram text reproduction must remain false"})
-        if readiness.get("row_level_step_stream_validation") is not False:
-            issues.append({"code": "row_level_step_stream_overclaim", "message": "row-level step stream validation must remain false"})
+        if readiness.get("semantic_candidate_level_step_stream_validation") is not False:
+            issues.append({"code": "semantic_step_stream_overclaim", "message": "semantic candidate-level step stream validation must remain false"})
         if readiness.get("full_alphaevolve_process_parity") is not False:
             issues.append({"code": "process_parity_overclaim", "message": "full AlphaEvolve process parity must remain false"})
     if report.get("claim_ready") is not False:

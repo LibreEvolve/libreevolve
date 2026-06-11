@@ -1763,11 +1763,13 @@ Figure 2 pseudocode-step records, and cross-links to `manifest.json`,
 deterministic Mermaid diagram source and plain-text accessibility exports under
 `paper_artifacts/process_exhibit/` and records their SHA-256 hashes. The same
 report validates each Figure 2 pseudocode step against the artifact inventory
-paths it cites and links open process components back to the active TODO
-ledgers. It is a manifest-level process-exhibit map for the current
-synchronous loop, not an exact AlphaEvolve diagram reproduction: exact
-source-diagram text, async controller/sampler/evaluator topology, independent
-evaluator-pool parallelism, and row-level step-stream validation remain open.
+paths it cites, records strict JSONL row summaries for cited streams, and
+links open process components back to the active TODO ledgers. It is a
+manifest-level process-exhibit map for the current synchronous loop, not an
+exact AlphaEvolve diagram reproduction: exact source-diagram text, async
+controller/sampler/evaluator topology, independent evaluator-pool
+parallelism, and semantic candidate-level joins across every process step
+stream remain open.
 The committed `papers/process_exhibit_boundary.json` sidecar preserves that
 absence boundary for paper-manifest validation at the repo root.
 Retained elite-only candidates can still resurface through best/exploit,

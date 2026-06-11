@@ -1394,10 +1394,10 @@ steps to LibreEvolve components and run-artifact paths. The report records
 source PDF page/caption locations, current single-process controller scope,
 artifact cross-links, generated Mermaid/text accessibility artifacts under
 `paper_artifacts/process_exhibit/`, per-step artifact-stream validation
-records, component-to-TODO links for the remaining process gaps, and
-`claim_ready: false` limitations for exact source-diagram reproduction, async
-controller topology, independent evaluator-pool parallelism, and row-level
-step-stream validation.
+records, strict JSONL row summaries for cited streams, component-to-TODO links
+for the remaining process gaps, and `claim_ready: false` limitations for exact
+source-diagram reproduction, async controller topology, independent
+evaluator-pool parallelism, and semantic candidate-level step-stream joins.
 The committed `papers/process_exhibit_boundary.json` sidecar now records that
 paper-manifest-validated process-exhibit parity boundary.
 Accepted archive admissions prevalidate their strict history record before

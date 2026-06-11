@@ -693,6 +693,15 @@ is not yet an AlphaEvolve reproduction.
   centers, and required future vector, norm/distance, lemma-applicability,
   transformed-center, and recomputed-lower-bound fields. The actual vector
   payload and exact proof certificates remain open.
+- Keep Appendix B.12-B.13 sum-of-radii packing claims scoped to
+  result-boundary evidence until placement certificates land: the registry now
+  validates `n = 26` and `n = 32` unit-square rows, the `n = 21` perimeter-4
+  rectangle row, prior and reported sums of radii, Figure 14 panel links, the
+  B.13 caption display `sum_of_radii >= 2.365` versus text value `2.3658`,
+  and required future placement, containment, non-overlap, perimeter,
+  recomputed-sum, and figure-panel fields. The checked-in 26-circle fixture
+  remains explicitly smoke-only, and the actual AlphaEvolve placement payloads
+  and exact certificates remain open.
 - Keep paper artifact-role attribution separate from artifact availability:
   `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
   AlphaEvolve PDF contribution records for figure creators and companion

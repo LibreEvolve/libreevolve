@@ -2693,20 +2693,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     square, it improves from `2.936` to `2.937`; and for `n = 21` circles in a
     rectangle of perimeter `4`, it improves from `2.364` to `2.3658`.
     Figure 14 maps these to left, middle, and right panels.
-  - Current gap: paper-facing Appendix B TODOs require normalized result rows,
-    geometric packing payloads, and Figure 14 exhibit provenance in general,
-    and the checked-in `circle_packing` fixture is explicitly smoke-only. They
-    do not force B.12-B.13 reports to preserve all three parameter/container
-    rows, the rectangle perimeter convention, exact circle counts,
-    containment/non-overlap certificates, prior/current sum-of-radii values,
-    or Figure 14 panel linkage.
-  - Required result: add paper/report evidence for Appendix B.12-B.13 rows:
-    result id, `n`, container type and dimensions/perimeter, circle
-    center/radius artifact hash, exact-count check, containment certificate,
-    pairwise non-overlap certificate, recomputed sum of radii, prior
-    value/source, reported value, Figure 14 panel linkage, source section
-    location, and README/ROADMAP text that keeps the smoke fixture distinct
-    from full Appendix B packing evidence.
+  - Current gap: paper-facing Appendix B coverage now preserves all three
+    B.12-B.13 parameter/container rows, rectangle perimeter convention,
+    prior/current values, Figure 14 panel linkage, B.13 caption display, and
+    the smoke-only boundary for the checked-in 26-circle fixture through
+    validated `sum_of_radii_result_boundary` entries. It still does not retain
+    real circle-center/radius payloads, payload hashes, exact-count checks,
+    containment certificates, pairwise non-overlap certificates,
+    rectangle-perimeter proof, recomputed sums of radii, or rendered Figure 14
+    artifacts.
+  - Required result: add paper/report evidence for the missing Appendix
+    B.12-B.13 witness artifacts: circle center/radius artifact hashes,
+    exact-count checks, containment certificates, pairwise non-overlap
+    certificates, rectangle-perimeter proof, recomputed sums of radii, source
+    section location, and README/ROADMAP text that keeps the smoke fixture
+    distinct from full Appendix B packing evidence.
 
 - [ ] Track initial-program idea provenance for human-seeded benchmark claims.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.1 identifies the

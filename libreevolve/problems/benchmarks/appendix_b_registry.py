@@ -457,6 +457,103 @@ EXPECTED_B11_KISSING_ROWS = (
     },
 )
 EXPECTED_B11_KISSING_IDS = tuple(row["result_id"] for row in EXPECTED_B11_KISSING_ROWS)
+EXPECTED_B12_SUM_OF_RADII_REQUIRED_FIELDS = (
+    "result_id",
+    "circle_count",
+    "container_type",
+    "container_artifact_path",
+    "container_artifact_sha256",
+    "circle_placement_artifact_path",
+    "circle_placement_artifact_sha256",
+    "circle_payload_schema",
+    "containment_certificate_path",
+    "containment_certificate_sha256",
+    "non_overlap_certificate_path",
+    "non_overlap_certificate_sha256",
+    "recomputed_sum_of_radii",
+    "figure_panel_id",
+)
+EXPECTED_B13_SUM_OF_RADII_REQUIRED_FIELDS = (
+    "result_id",
+    "circle_count",
+    "container_type",
+    "container_artifact_path",
+    "container_artifact_sha256",
+    "rectangle_dimensions",
+    "rectangle_perimeter_certificate_path",
+    "rectangle_perimeter_certificate_sha256",
+    "circle_placement_artifact_path",
+    "circle_placement_artifact_sha256",
+    "circle_payload_schema",
+    "containment_certificate_path",
+    "containment_certificate_sha256",
+    "non_overlap_certificate_path",
+    "non_overlap_certificate_sha256",
+    "recomputed_sum_of_radii",
+    "figure_panel_id",
+)
+EXPECTED_SUM_OF_RADII_SUMMARIES = {
+    "circle_packing_unit_square": {
+        "status": "not_recorded_locally",
+        "source_section_id": "B.12",
+        "source_problem_name": "Packing circles inside a unit square to maximize sum of radii",
+        "container_type": "unit_square",
+        "container_constraint": "unit square",
+        "objective": "maximize_sum_of_radii",
+        "source_figure": "Figure 14",
+        "prior_best_source": "[29]",
+        "fixture_boundary": "The checked-in circle_packing fixture is a fixed-26 smoke validator and is not an AlphaEvolve B.12 result artifact.",
+        "required_witness_fields": list(EXPECTED_B12_SUM_OF_RADII_REQUIRED_FIELDS),
+    },
+    "circle_packing_perimeter4_rectangle": {
+        "status": "not_recorded_locally",
+        "source_section_id": "B.13",
+        "source_problem_name": "Packing circles inside a rectangle of perimeter 4 to maximize sum of radii",
+        "container_type": "perimeter4_rectangle",
+        "container_constraint": "rectangle perimeter = 4",
+        "objective": "maximize_sum_of_radii",
+        "source_figure": "Figure 14",
+        "prior_best_source": "[29]",
+        "required_witness_fields": list(EXPECTED_B13_SUM_OF_RADII_REQUIRED_FIELDS),
+    },
+}
+EXPECTED_SUM_OF_RADII_ROWS = {
+    "circle_packing_unit_square": (
+        {
+            "result_id": "b12_unit_square_n26",
+            "circle_count": 26,
+            "source_figure_panel": "Figure 14 left",
+            "prior_sum_of_radii": 2.634,
+            "reported_sum_of_radii": 2.635,
+            "caption_sum_of_radii_relation": "sum_of_radii >= 2.635",
+            "reported_improvement_direction": "larger_sum_of_radii",
+        },
+        {
+            "result_id": "b12_unit_square_n32",
+            "circle_count": 32,
+            "source_figure_panel": "Figure 14 middle",
+            "prior_sum_of_radii": 2.936,
+            "reported_sum_of_radii": 2.937,
+            "caption_sum_of_radii_relation": "sum_of_radii >= 2.937",
+            "reported_improvement_direction": "larger_sum_of_radii",
+        },
+    ),
+    "circle_packing_perimeter4_rectangle": (
+        {
+            "result_id": "b13_perimeter4_rectangle_n21",
+            "circle_count": 21,
+            "source_figure_panel": "Figure 14 right",
+            "prior_sum_of_radii": 2.364,
+            "reported_sum_of_radii": 2.3658,
+            "caption_sum_of_radii_relation": "sum_of_radii >= 2.365",
+            "reported_improvement_direction": "larger_sum_of_radii",
+        },
+    ),
+}
+EXPECTED_SUM_OF_RADII_IDS = {
+    family_id: tuple(row["result_id"] for row in rows)
+    for family_id, rows in EXPECTED_SUM_OF_RADII_ROWS.items()
+}
 STATUSES = frozenset({"implemented", "implemented_smoke", "planned", "background_only", "out_of_scope"})
 DIRECTIONS = frozenset({"maximize", "minimize", "satisfy", "prove"})
 _ID_RE = re.compile(r"[a-z][a-z0-9_]{1,79}")
@@ -561,6 +658,7 @@ def _validate_family(
     _validate_b7_packing_boundary(family, family_id, issues)
     _validate_heilbronn_boundary(family, family_id, issues)
     _validate_b11_kissing_boundary(family, family_id, issues)
+    _validate_sum_of_radii_boundary(family, family_id, issues)
     status = family.get("status")
     if status not in STATUSES:
         issues.append(AppendixBRegistryIssue("invalid_status", "invalid implementation status", family_id))
@@ -1188,6 +1286,91 @@ def _validate_b11_kissing_boundary(
         result_id = witness.get("result_id")
         if result_id not in EXPECTED_B11_KISSING_IDS:
             issues.append(AppendixBRegistryIssue("invalid_b11_kissing_missing_witness_id", "B.11 missing witness result_id must match the 593-vector row", family_id))
+
+
+def _validate_sum_of_radii_boundary(
+    family: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    expected_summary = EXPECTED_SUM_OF_RADII_SUMMARIES.get(family_id)
+    if expected_summary is None:
+        return
+    boundary = family.get("sum_of_radii_result_boundary")
+    if not isinstance(boundary, dict):
+        issues.append(AppendixBRegistryIssue("missing_sum_of_radii_boundary", "B.12-B.13 require sum_of_radii_result_boundary", family_id))
+        return
+    for field, expected_value in expected_summary.items():
+        actual = boundary.get(field)
+        if actual != expected_value:
+            issues.append(AppendixBRegistryIssue(f"invalid_sum_of_radii_{field}", f"sum_of_radii_result_boundary.{field} must match the AlphaEvolve source summary", family_id))
+    if boundary.get("status") != "not_recorded_locally":
+        issues.append(AppendixBRegistryIssue("invalid_sum_of_radii_boundary_status", "sum-of-radii boundary must remain not_recorded_locally until placement and certificate artifacts exist", family_id))
+    if boundary.get("required_witness_fields") != expected_summary["required_witness_fields"]:
+        issues.append(AppendixBRegistryIssue("invalid_sum_of_radii_required_fields", "sum-of-radii boundary must enumerate required future placement, container, and certificate fields", family_id))
+    if family_id == "circle_packing_unit_square" and "smoke validator" not in str(boundary.get("fixture_boundary", "")):
+        issues.append(AppendixBRegistryIssue("missing_sum_of_radii_fixture_boundary", "B.12 must distinguish the checked-in smoke fixture from AlphaEvolve result artifacts", family_id))
+    missing = boundary.get("missing_witnesses")
+    if not isinstance(missing, list):
+        issues.append(AppendixBRegistryIssue("invalid_sum_of_radii_missing_witnesses", "sum-of-radii missing_witnesses must be a list", family_id))
+        return
+    expected_rows = EXPECTED_SUM_OF_RADII_ROWS[family_id]
+    expected_ids = EXPECTED_SUM_OF_RADII_IDS[family_id]
+    if len(missing) != len(expected_rows):
+        issues.append(AppendixBRegistryIssue("invalid_sum_of_radii_missing_witness_count", "sum-of-radii boundary must track the expected Figure 14 witness rows", family_id))
+    by_id = {
+        witness.get("result_id"): witness
+        for witness in missing
+        if isinstance(witness, dict)
+    }
+    seen: set[str] = set()
+    for expected in expected_rows:
+        result_id = expected["result_id"]
+        witness = by_id.get(result_id)
+        if not isinstance(witness, dict):
+            issues.append(AppendixBRegistryIssue("missing_sum_of_radii_witness_id", "sum-of-radii boundary must include each expected result id", family_id))
+            continue
+        if result_id in seen:
+            issues.append(AppendixBRegistryIssue("duplicate_sum_of_radii_witness_id", "sum-of-radii witness ids must be unique", family_id))
+        seen.add(result_id)
+        for field, expected_value in expected.items():
+            actual = witness.get(field)
+            if isinstance(expected_value, float):
+                if isinstance(actual, bool) or not isinstance(actual, (int, float)) or not math.isclose(float(actual), expected_value, rel_tol=0.0, abs_tol=1e-12):
+                    issues.append(AppendixBRegistryIssue(f"invalid_sum_of_radii_witness_{field}", f"sum-of-radii witness {field} must match the AlphaEvolve result summary", family_id))
+            elif actual != expected_value:
+                issues.append(AppendixBRegistryIssue(f"invalid_sum_of_radii_witness_{field}", f"sum-of-radii witness {field} must match the AlphaEvolve result summary", family_id))
+        required_status_fields = [
+            "circle_placement_artifact_status",
+            "containment_certificate_status",
+            "non_overlap_certificate_status",
+            "recomputed_sum_of_radii_status",
+        ]
+        if family_id == "circle_packing_perimeter4_rectangle":
+            required_status_fields.append("rectangle_perimeter_certificate_status")
+        for field in required_status_fields:
+            if witness.get(field) != "not_recorded_locally":
+                issues.append(AppendixBRegistryIssue(f"invalid_sum_of_radii_{field}", f"sum-of-radii {field} must be not_recorded_locally in the absence boundary", family_id))
+        claim_boundary = witness.get("claim_boundary")
+        if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary:
+            issues.append(AppendixBRegistryIssue("missing_sum_of_radii_claim_boundary", "sum-of-radii missing witness rows must state that local placement/certificate evidence is not claimed", family_id))
+        prior = witness.get("prior_sum_of_radii")
+        reported = witness.get("reported_sum_of_radii")
+        if (
+            isinstance(prior, (int, float))
+            and not isinstance(prior, bool)
+            and isinstance(reported, (int, float))
+            and not isinstance(reported, bool)
+            and float(reported) <= float(prior)
+        ):
+            issues.append(AppendixBRegistryIssue("invalid_sum_of_radii_improvement_direction", "reported sum of radii must improve by exceeding the prior value", family_id))
+    for witness in missing:
+        if not isinstance(witness, dict):
+            issues.append(AppendixBRegistryIssue("invalid_sum_of_radii_missing_witness", "sum-of-radii missing witness rows must be objects", family_id))
+            continue
+        result_id = witness.get("result_id")
+        if result_id not in expected_ids:
+            issues.append(AppendixBRegistryIssue("invalid_sum_of_radii_missing_witness_id", "sum-of-radii missing witness result_id must match the expected Figure 14 rows", family_id))
 
 
 def _family_id(family: object, index: int) -> str:

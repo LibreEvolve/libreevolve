@@ -134,6 +134,14 @@ distance requirement, and Lemma 1 transformation to sphere centers
 `{2 x / ||x||}`. Its `kissing_result_boundary` records the vector payload and
 exact certificate fields required before local reproduction can be claimed,
 while the vector payload remains absent.
+For B.12-B.13 circle and rectangle packing, the registry now records three
+sum-of-radii boundaries: `n = 26` unit-square circles improving `2.634` to
+`2.635`, `n = 32` unit-square circles improving `2.936` to `2.937`, and
+`n = 21` perimeter-4 rectangle circles improving `2.364` to `2.3658`. Figure
+14 maps these to left, middle, and right panels; the B.13 row also preserves
+the caption display `sum_of_radii >= 2.365` separately from the text value
+`2.3658`. The unit-square boundary keeps the checked-in 26-circle fixture
+scoped as smoke-only, while the AlphaEvolve placement payloads remain absent.
 Appendix B says reported construction data and verification code
 appear in an accompanying Google Colab; this registry is not that
 Colab-equivalent evidence surface and does not yet store construction-data

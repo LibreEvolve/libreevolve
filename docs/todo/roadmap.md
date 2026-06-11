@@ -2973,17 +2973,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     sum of radii to `2.635`; `n = 32` circles in a unit square improve
     `2.936` to `2.937`; and `n = 21` circles in a perimeter-4 rectangle
     improve `2.364` to `2.3658`.
-  - Current evidence: roadmap/README/paper-index wording can cite the checked-in
-    fixed-26 smoke fixture, the broad Appendix B per-result gap, and Figure 14
-    visual gap, but it does not require B.12-B.13-specific parameter rows,
-    container geometry/perimeter metadata, exact count, placement payload
-    hashes, containment/non-overlap certificates, prior/current values, or
-    Figure 14 panel linkage.
-  - Required result: when Appendix B.12-B.13 packing metadata and validators
-    land, update ROADMAP, README, papers index, and code/paper TODOs so roadmap
-    claims distinguish all three `n`/container rows, certificates,
-    sum-of-radii values, Figure 14 links, payload hashes, and source locations
-    from the existing 26-circle smoke fixture.
+  - Current evidence: roadmap/README/paper-index wording now cites B.12-B.13
+    `sum_of_radii_result_boundary` entries for all three `n`/container rows,
+    prior and reported values, Figure 14 panel links, the B.13 caption display,
+    and required future placement/container/certificate fields while keeping
+    the checked-in 26-circle fixture smoke-only. It still does not claim
+    placement payload hashes, exact-count checks, containment/non-overlap
+    certificates, rectangle-perimeter proof, recomputed sums, or rendered
+    Figure 14 panel artifacts.
+  - Required result: when the actual Appendix B.12-B.13 packing payloads and
+    certificates land, update ROADMAP, README, papers index, and code/paper
+    TODOs so roadmap claims distinguish all three `n`/container rows,
+    certificates, sum-of-radii values, Figure 14 artifacts, payload hashes,
+    and source locations from the existing 26-circle smoke fixture.
 
 - [ ] Keep Appendix B roadmap wording scoped until revised-result provenance
       exists.

@@ -1869,17 +1869,19 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     improvements: `n = 26` circles in a unit square improve `2.634` to
     `2.635`, `n = 32` circles in a unit square improve `2.936` to `2.937`, and
     `n = 21` circles in a perimeter-4 rectangle improve `2.364` to `2.3658`.
-  - Current evidence: README documents the checked-in `circle_packing` example
-    as a fixed-26 unit-square smoke fixture, and it can point to broad
-    Appendix B per-result and Figure 14 visual gaps. It does not separately
-    warn that the full paper claim needs all three rows, container geometry,
-    exact circle counts, containment/non-overlap certificates, sum-of-radii
-    recomputation, prior/current values, and Figure 14 panel linkage.
-  - Required result: when Appendix B.12-B.13 packing metadata lands, update
-    README, ROADMAP, papers index, and code/paper TODOs together so README
-    names all three `n`/container rows, certificates, sum-of-radii values,
-    Figure 14 panel links, and artifact hashes while keeping the 26-circle
-    smoke fixture out of full AlphaEvolve evidence claims.
+  - Current evidence: README now names B.12-B.13
+    `sum_of_radii_result_boundary` entries for all three `n`/container rows,
+    prior and reported values, Figure 14 panel links, the B.13 caption display,
+    and required future placement/container/certificate fields while keeping
+    the checked-in 26-circle fixture smoke-only. It still warns that the actual
+    AlphaEvolve placement payloads, containment/non-overlap certificates,
+    rectangle-perimeter proof, and recomputed sums are absent.
+  - Required result: when the actual Appendix B.12-B.13 packing payloads and
+    certificates land, update README, ROADMAP, papers index, and code/paper
+    TODOs together so README names placement hashes, exact-count checks,
+    containment/non-overlap certificates, recomputed sums, Figure 14 panel
+    artifacts, and source links while keeping the 26-circle smoke fixture out
+    of full AlphaEvolve evidence claims.
 
 - [ ] Keep README Appendix B result wording scoped until revised-result
       provenance exists.

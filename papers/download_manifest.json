@@ -10,6 +10,16 @@
     "sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad"
   },
   {
+    "id": "2511.02864",
+    "title": "Mathematical_exploration_and_discovery_at_scale",
+    "url": "https://arxiv.org/pdf/2511.02864.pdf",
+    "file": "papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf",
+    "ok": true,
+    "bytes": 12141713,
+    "message": "downloaded",
+    "sha256": "77b43844077c98c26dfc76ad391cadbbd53d48a1d290ddae575ff4d1bcdef9d2"
+  },
+  {
     "id": "2511.17592",
     "title": "GigaEvo",
     "url": "https://arxiv.org/pdf/2511.17592.pdf",

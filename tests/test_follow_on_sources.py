@@ -39,7 +39,7 @@ def test_validate_alphaevolve_follow_on_math_source_accepts_builtin_record():
     assert validation.ok is True
     assert validation.source_count == 2
     assert validation.repository_ref_pinned is True
-    assert validation.local_pdf_cache_available is False
+    assert validation.local_pdf_cache_available is True
     assert validation.issues == []
     claims = recordset["repository_claims"]
     assert claims["numbered_page_inventory_validated"] is True
@@ -85,6 +85,13 @@ def test_validate_alphaevolve_follow_on_math_source_accepts_builtin_record():
     assert b8_row["follow_on_problem_page_ids"] == [50]
     assert b8_row["notebook_mapping_statuses"] == ["external_alphaevolve_results_colab"]
     assert recordset["required_follow_on_work"] == []
+    assert recordset["paper"]["local_cache"] == {
+        "available": True,
+        "manifest_row_present": True,
+        "file": "papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf",
+        "sha256": "77b43844077c98c26dfc76ad391cadbbd53d48a1d290ddae575ff4d1bcdef9d2",
+        "bytes": 12141713,
+    }
 
 
 def test_validate_alphaevolve_follow_on_math_source_loads_json_file(tmp_path):
@@ -104,7 +111,7 @@ def test_validate_alphaevolve_follow_on_source_manifest_accepts_builtin_record()
     assert validation.ok is True
     assert validation.source_count == 1
     assert validation.repository_ref_pinned is True
-    assert validation.local_pdf_cache_available is False
+    assert validation.local_pdf_cache_available is True
     assert validation.issues == []
 
 
@@ -127,8 +134,9 @@ def test_validate_alphaevolve_follow_on_source_manifest_rejects_surface_and_cach
     source["follow_on_source_id"] = "2511.02864v2"
     source["claim_artifact_links"]["follow_on_source_used_by"] = ["README.md"]
     source["claim_artifact_links"]["policy"] = "same_as_cached_pdf"
-    source["cache_policy"]["paper_cache_manifest_row_required"] = True
-    source["cache_policy"]["scope"] = "cached PDF evidence"
+    source["cache_policy"]["paper_cache_manifest_row_required"] = False
+    source["cache_policy"]["explicit_no_cache_policy_recorded"] = True
+    source["cache_policy"]["scope"] = "not cached PDF evidence"
     source["remaining_work"] = ["build_per_problem_repository_inventory"]
 
     validation = validate_alphaevolve_follow_on_source_manifest(recordset)
@@ -140,6 +148,7 @@ def test_validate_alphaevolve_follow_on_source_manifest_rejects_surface_and_cach
     assert "claim_artifact_surface_mismatch" in codes
     assert "invalid_claim_artifact_policy" in codes
     assert "invalid_cache_policy_paper_cache_manifest_row_required" in codes
+    assert "invalid_cache_policy_explicit_no_cache_policy_recorded" in codes
     assert "invalid_cache_policy_scope" in codes
     assert "manifest_remaining_work_mismatch" in codes
 
@@ -523,8 +532,8 @@ def test_validate_alphaevolve_follow_on_math_source_rejects_paper_identity_and_c
     recordset["paper"]["version"] = 2
     recordset["paper"]["versioned_id"] = "2511.02864v2"
     recordset["paper"]["authors"] = ["Anonymous"]
-    recordset["paper"]["local_cache"]["available"] = True
-    recordset["paper"]["local_cache"]["manifest_row_present"] = True
+    recordset["paper"]["local_cache"]["available"] = False
+    recordset["paper"]["local_cache"]["manifest_row_present"] = False
     recordset["paper"]["local_cache"]["file"] = "papers/2511.02864.pdf"
     recordset["paper"]["local_cache"]["sha256"] = "0" * 64
     recordset["paper"]["local_cache"]["bytes"] = 1
@@ -536,11 +545,11 @@ def test_validate_alphaevolve_follow_on_math_source_rejects_paper_identity_and_c
     assert "invalid_paper_version" in codes
     assert "invalid_paper_versioned_id" in codes
     assert "invalid_paper_authors" in codes
-    assert "local_pdf_cache_overclaim" in codes
-    assert "manifest_row_overclaim" in codes
-    assert "local_cache_file_overclaim" in codes
-    assert "local_cache_sha256_overclaim" in codes
-    assert "local_cache_bytes_overclaim" in codes
+    assert "invalid_local_cache_available" in codes
+    assert "invalid_local_cache_manifest_row_present" in codes
+    assert "invalid_local_cache_file" in codes
+    assert "invalid_local_cache_sha256" in codes
+    assert "invalid_local_cache_bytes" in codes
 
 
 def test_validate_alphaevolve_follow_on_math_source_rejects_repository_drift():
@@ -667,10 +676,10 @@ def test_render_alphaevolve_follow_on_math_source_summary_reports_shape():
     assert "| arxiv_version | v3 |" in summary
     assert "| declared_problem_count | 67 |" in summary
     assert "| repository_ref_pinned | True |" in summary
-    assert "| local_pdf_cache_available | False |" in summary
+    assert "| local_pdf_cache_available | True |" in summary
 
 
-def test_paper_manifest_rejects_follow_on_manifest_row_until_cache_boundary_updates(tmp_path):
+def test_paper_manifest_rejects_follow_on_manifest_row_cache_mismatch(tmp_path):
     papers_dir = tmp_path / "papers"
     papers_dir.mkdir()
     row = {
@@ -704,8 +713,8 @@ def test_paper_manifest_rejects_follow_on_manifest_row_until_cache_boundary_upda
     )
 
     report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
 
-    assert any(
-        issue.code == "alphaevolve_follow_on_math_source_manifest_cache_boundary_mismatch"
-        for issue in report.issues
-    )
+    assert "alphaevolve_follow_on_math_source_manifest_cache_file_mismatch" in codes
+    assert "alphaevolve_follow_on_math_source_manifest_cache_bytes_mismatch" in codes
+    assert "alphaevolve_follow_on_math_source_manifest_cache_sha256_mismatch" in codes

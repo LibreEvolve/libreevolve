@@ -137,8 +137,8 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     from executable AlphaEvolve runtime code and naming the remaining
     per-problem, SHA-256, and cell-level inventory gaps.
   - Remaining gap: none for this bounded README wording slice; Tao-blog
-    wording, full notebook inventory, and cached follow-on PDF wording remain
-    separate active README TODOs.
+    wording and full notebook inventory remain separate active README TODOs.
+    Cached follow-on PDF wording has since been recorded separately.
 
 - [x] Document follow-on problem-repository rights and attribution.
   - Spec evidence: the follow-on repository README records citation, dual
@@ -158,12 +158,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     `google-deepmind/alphaevolve_repository_of_problems` repository.
   - Status: README now documents `papers/follow_on_sources.json` as the
     committed follow-on source manifest with docs/TODO claim-surface links,
-    pinned repository identity, explicit no-cache policy, and the boundary that
-    this is later math-source evidence, not the original `2506.13131`
-    specification or a cached PDF row.
+    pinned repository identity, the cached `2511.02864` PDF manifest row, and
+    the boundary that this is later math-source evidence, not the original
+    `2506.13131` specification.
   - Remaining gap: none for this bounded README wording slice; per-problem
-    coverage, notebook artifact hashes, Appendix B mappings, rights rows, and
-    cached PDF evidence remain separate active TODOs.
+    coverage, notebook artifact hashes, Appendix B mappings, and rights rows
+    remain separate active TODOs. Cached PDF evidence has since been recorded.
 
 - [x] Document companion repository rights rows on generated artifacts.
   - Spec evidence: the companion repository README declares Apache-2.0 software
@@ -221,7 +221,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Spec evidence: README points readers to the local paper cache as the source
     ledger for paper-facing implementation status and benchmark decisions.
   - Status: README now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 24 cache
+    companion manifest that emits derived source identities for all 25 cache
     rows, including URL source id, filename source prefix, validation booleans,
     and the AlphaEvolve row's source-version link.
   - Remaining gap: none for this bounded README wording slice.
@@ -657,7 +657,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     algorithm subset.
   - Status: corrected and guarded. README now states the visible paper tables
     are a curated subset and that `papers/README.md` is the complete
-    implementation-status index for all 24 manifest rows. The paper-manifest
+    implementation-status index for all 25 manifest rows. The paper-manifest
     validator now flags root README paper summaries that list only a subset of
     manifest ids without this curated-summary disclosure.
   - Verification: `tests/test_paper_manifest.py` covers accepted curated

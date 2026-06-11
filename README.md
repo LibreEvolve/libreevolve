@@ -12,7 +12,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-238636?style=for-the-badge&labelColor=30363D&logo=opensourceinitiative&logoColor=white" alt="MIT License"></a>
   <img src="https://img.shields.io/badge/python-3.11+-1F6FEB?style=for-the-badge&labelColor=30363D&logo=python&logoColor=white" alt="Python 3.11+">
   <a href="https://github.com/romgenie/libreevolve/actions/workflows/tests.yml"><img src="https://github.com/romgenie/libreevolve/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
-  <img src="https://img.shields.io/badge/local%20paper%20cache-24-9E6A03?style=for-the-badge&labelColor=30363D&logo=arxiv&logoColor=white" alt="Local paper cache">
+  <img src="https://img.shields.io/badge/local%20paper%20cache-25-9E6A03?style=for-the-badge&labelColor=30363D&logo=arxiv&logoColor=white" alt="Local paper cache">
   <a href="https://libreevolve.com"><img src="https://img.shields.io/badge/web-libreevolve.com-6E7681?style=for-the-badge&labelColor=30363D&logo=globe&logoColor=white" alt="Website"></a>
 </p>
 
@@ -3548,11 +3548,11 @@ manifest/index verification documented there:
 </details>
 
 <details>
-<summary><h2>Local Paper Cache (24)</h2></summary>
+<summary><h2>Local Paper Cache (25)</h2></summary>
 
 <br>
 
-LibreEvolve is informed by a local cache of 24 papers on LLM-guided evolutionary computation, program synthesis, and quality-diversity optimization. The PDF cache lives locally under `papers/`, while the PDFs themselves are gitignored; the committed source tracks `papers/README.md` plus CSV/JSON download manifests with canonical SHA-256 digests. Manifest `title` fields are inventory/display slugs derived from cache names, not authoritative bibliographic titles; use `papers/README.md` for paper-facing titles, implementation status, and benchmark coverage decisions. Rehydrate the ignored PDF cache on a fresh checkout with `py -3.12 -m libreevolve.tools.paper_manifest --rehydrate`; the command downloads manifest URLs, verifies byte counts and SHA-256 hashes before installing files, and reports network/integrity failures explicitly. Validate the committed index with `py -3.12 -m libreevolve.tools.paper_manifest`; add `--require-local-pdfs` when the ignored PDF cache is present and should be checked for byte/hash match, `%PDF-` header shape, and lightweight `pypdf` page readability. Manifest/read diagnostics are emitted with repository-relative labels and secret-redacted exception text, including JSON/text CLI output. Local PDF stat/read failures are reported as structured, redacted validation issues rather than raw filesystem exceptions.
+LibreEvolve is informed by a local cache of 25 papers on LLM-guided evolutionary computation, program synthesis, and quality-diversity optimization. The PDF cache lives locally under `papers/`, while the PDFs themselves are gitignored; the committed source tracks `papers/README.md` plus CSV/JSON download manifests with canonical SHA-256 digests. Manifest `title` fields are inventory/display slugs derived from cache names, not authoritative bibliographic titles; use `papers/README.md` for paper-facing titles, implementation status, and benchmark coverage decisions. Rehydrate the ignored PDF cache on a fresh checkout with `py -3.12 -m libreevolve.tools.paper_manifest --rehydrate`; the command downloads manifest URLs, verifies byte counts and SHA-256 hashes before installing files, and reports network/integrity failures explicitly. Validate the committed index with `py -3.12 -m libreevolve.tools.paper_manifest`; add `--require-local-pdfs` when the ignored PDF cache is present and should be checked for byte/hash match, `%PDF-` header shape, and lightweight `pypdf` page readability. Manifest/read diagnostics are emitted with repository-relative labels and secret-redacted exception text, including JSON/text CLI output. Local PDF stat/read failures are reported as structured, redacted validation issues rather than raw filesystem exceptions.
 The paper-manifest validator also checks
 `libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json` when
 present. That registry records the 54 AlphaEvolve Appendix A Table 3 target
@@ -3932,7 +3932,7 @@ local PDF filenames must begin with the manifest id before any `__` title
 suffix. Non-arXiv source rows use the same local filename source-prefix rule,
 so the UCB1 foundational slug cannot silently drift to a different file label.
 The committed `papers/row_identity.json` companion manifest now emits those
-derived source identities for all 24 cache rows, including URL source id,
+derived source identities for all 25 cache rows, including URL source id,
 filename source prefix, validation booleans, and the AlphaEvolve row's link to
 `papers/source_versions.json`. This proves base id/URL/file consistency;
 source-rights metadata remains a separate evidence layer.
@@ -4027,13 +4027,17 @@ verifier / initial / final-program artifact kinds, hosted problem-page URL
 pattern, runtime-code absence, Apache-2.0 software / CC-BY-4.0 materials
 license split, citation requirement, and live-repository snapshot policy. The
 committed `papers/follow_on_sources.json` sidecar emits the follow-on source
-row with docs/TODO claim-surface links, a linked
+row with docs/TODO claim-surface links, the cached
+`papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf` row
+(`12141713` bytes,
+SHA-256 `77b43844077c98c26dfc76ad391cadbbd53d48a1d290ddae575ff4d1bcdef9d2`),
+a linked
 `libreevolve.alphaevolve_follow_on_problem_coverage.v1` numbered-page evidence
 boundary, an Appendix B crosswalk mapping the `19` original result ids across
-`13` families to follow-on problem pages and notebook-link statuses, and an
-explicit no-cache policy: it is later math-source evidence for the original
-paper's Section 3.2 handoff, not the original `2506.13131` AlphaEvolve
-specification, not a local cached PDF row, not a normalized Appendix B result
+`13` families to follow-on problem pages and notebook-link statuses, and a
+cache policy that requires the local PDF manifest row. It is later math-source
+evidence for the original paper's Section 3.2 handoff, not the original
+`2506.13131` AlphaEvolve specification, not a normalized Appendix B result
 ledger, and not a full notebook cell inventory.
 `papers/follow_on_repository_rights.json` records the pinned problem
 repository's source-use terms separately from both the original PDF and
@@ -4459,7 +4463,7 @@ benchmark-coverage qualifier. Symlink or Windows reparse-point backed local PDFs
 are rejected before byte/hash validation.
 
 The tables below are a curated subset for README context. `papers/README.md` is
-the complete implementation-status index for all 24 manifest rows.
+the complete implementation-status index for all 25 manifest rows.
 
 **Core system papers:**
 

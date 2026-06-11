@@ -815,7 +815,7 @@ is not yet an AlphaEvolve reproduction.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 24 cache rows and links the AlphaEvolve row to
+  identities for all 25 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -872,14 +872,16 @@ is not yet an AlphaEvolve reproduction.
   notebook coverage, prompt/verifier/initial/final artifact kinds, runtime-code
   absence, source-use licenses, and citation boundary.
   `papers/follow_on_sources.json` now emits the committed follow-on source row
-  with docs/TODO claim-surface links, linked problem-coverage evidence for the
-  declared-67 versus observed-68 numbered-page boundary, and an explicit
-  no-cache policy. It also maps the `19` original Appendix B result ids across
-  the `13` Appendix B families to follow-on repository problem pages and
+  with docs/TODO claim-surface links, the cached
+  `papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf`
+  row (`12141713` bytes,
+  SHA-256 `77b43844077c98c26dfc76ad391cadbbd53d48a1d290ddae575ff4d1bcdef9d2`),
+  and linked problem-coverage evidence for the declared-67 versus observed-68
+  numbered-page boundary. It also maps the `19` original Appendix B result ids
+  across the `13` Appendix B families to follow-on repository problem pages and
   notebook-link statuses without claiming normalized result rows, construction
   payloads, verifier artifacts, recomputed values, or full notebook cell
-  inventories. Cached PDF rows and deeper per-claim artifact/recomputation
-  ledgers remain open.
+  inventories. Deeper per-claim artifact/recomputation ledgers remain open.
 - Keep follow-on problem-repository rights separate from the original PDF,
   `alphaevolve_results`, and LibreEvolve licensing:
   `papers/follow_on_repository_rights.json` now records the pinned repository's

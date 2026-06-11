@@ -161,12 +161,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     `google-deepmind/alphaevolve_repository_of_problems` repository.
   - Status: ROADMAP now documents `papers/follow_on_sources.json` as the
     committed follow-on source manifest, with docs/TODO claim-surface links,
-    pinned repository identity, explicit no-cache policy, and separation from
-    both the original `2506.13131` specification and any future cached PDF row.
+    pinned repository identity, the cached `2511.02864` PDF manifest row, and
+    separation from the original `2506.13131` specification.
   - Later status: per-problem inventory, numbered-page reconciliation,
     notebook artifact hashes, Appendix B mappings, and generated-artifact
-    rights templates have since been recorded; cached PDF evidence remains
-    separate roadmap work.
+    rights templates have since been recorded; cached PDF evidence has also
+    been recorded as separate roadmap work.
 
 - [x] Document companion repository rights rows on generated artifacts.
   - Spec evidence: the companion repository README declares Apache-2.0 software
@@ -222,7 +222,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     URL, and local PDF label describing the same source before version or
     rights evidence attaches.
   - Status: ROADMAP now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 24 cache
+    companion manifest that emits derived source identities for all 25 cache
     rows and links the AlphaEvolve row to `papers/source_versions.json`.
   - Remaining gap: none for this bounded roadmap wording slice.
 

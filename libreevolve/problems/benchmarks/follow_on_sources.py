@@ -56,6 +56,13 @@ EXPECTED_FOLLOW_ON_VERSIONED_ID = "2511.02864v3"
 EXPECTED_FOLLOW_ON_TITLE = "Mathematical exploration and discovery at scale"
 EXPECTED_FOLLOW_ON_REVISION_DATE = "2025-12-22"
 EXPECTED_FOLLOW_ON_CATEGORY = "cs.NE"
+EXPECTED_FOLLOW_ON_PDF_FILE = (
+    "papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf"
+)
+EXPECTED_FOLLOW_ON_PDF_BYTES = 12141713
+EXPECTED_FOLLOW_ON_PDF_SHA256 = (
+    "77b43844077c98c26dfc76ad391cadbbd53d48a1d290ddae575ff4d1bcdef9d2"
+)
 EXPECTED_FOLLOW_ON_AUTHORS = (
     "Bogdan Georgiev",
     "Javier Gomez-Serrano",
@@ -590,11 +597,11 @@ def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
             "floating_pdf_url": f"https://arxiv.org/pdf/{EXPECTED_FOLLOW_ON_ARXIV_ID}.pdf",
             "versioned_pdf_url": f"https://arxiv.org/pdf/{EXPECTED_FOLLOW_ON_VERSIONED_ID}",
             "local_cache": {
-                "available": False,
-                "manifest_row_present": False,
-                "file": None,
-                "sha256": None,
-                "bytes": None,
+                "available": True,
+                "manifest_row_present": True,
+                "file": EXPECTED_FOLLOW_ON_PDF_FILE,
+                "sha256": EXPECTED_FOLLOW_ON_PDF_SHA256,
+                "bytes": EXPECTED_FOLLOW_ON_PDF_BYTES,
             },
         },
         "repository": {
@@ -1123,13 +1130,13 @@ def alphaevolve_follow_on_source_manifest_record() -> dict[str, Any]:
                     ),
                 },
                 "cache_policy": {
-                    "paper_cache_manifest_row_required": False,
-                    "explicit_no_cache_policy_recorded": True,
+                    "paper_cache_manifest_row_required": True,
+                    "explicit_no_cache_policy_recorded": False,
                     "repository_snapshot_required": True,
                     "local_cache_status_field": "source_record.paper.local_cache",
                     "scope": (
-                        "committed follow-on source provenance, not cached PDF "
-                        "or per-problem inventory"
+                        "committed follow-on source provenance with cached PDF "
+                        "and pinned repository snapshot, not per-problem inventory"
                     ),
                 },
                 "remaining_work": [],
@@ -1597,16 +1604,17 @@ def _validate_local_cache(value: object, issues: list[AlphaEvolveFollowOnMathSou
     if not isinstance(value, dict):
         issues.append(_issue("invalid_local_cache", "paper.local_cache must be an object", EXPECTED_FOLLOW_ON_ARXIV_ID))
         return False
-    available = value.get("available")
-    manifest_row_present = value.get("manifest_row_present")
-    if available is not False:
-        issues.append(_issue("local_pdf_cache_overclaim", "paper.local_cache.available must remain false until a cache row is validated", EXPECTED_FOLLOW_ON_ARXIV_ID))
-    if manifest_row_present is not False:
-        issues.append(_issue("manifest_row_overclaim", "paper.local_cache.manifest_row_present must remain false until a paper manifest row exists", EXPECTED_FOLLOW_ON_ARXIV_ID))
-    for field in ("file", "sha256", "bytes"):
-        if value.get(field) is not None:
-            issues.append(_issue(f"local_cache_{field}_overclaim", f"paper.local_cache.{field} must be null while the follow-on PDF is not cached", EXPECTED_FOLLOW_ON_ARXIV_ID))
-    return available is True
+    expected = {
+        "available": True,
+        "manifest_row_present": True,
+        "file": EXPECTED_FOLLOW_ON_PDF_FILE,
+        "sha256": EXPECTED_FOLLOW_ON_PDF_SHA256,
+        "bytes": EXPECTED_FOLLOW_ON_PDF_BYTES,
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_local_cache_{field}", f"paper.local_cache.{field} must match the validated follow-on PDF cache row", EXPECTED_FOLLOW_ON_ARXIV_ID))
+    return value.get("available") is True
 
 
 def _validate_repository(value: object, issues: list[AlphaEvolveFollowOnMathSourceIssue]) -> bool:
@@ -1876,8 +1884,8 @@ def _validate_follow_on_cache_policy(
         issues.append(_issue("invalid_cache_policy", "cache_policy must be an object"))
         return
     expected = {
-        "paper_cache_manifest_row_required": False,
-        "explicit_no_cache_policy_recorded": True,
+        "paper_cache_manifest_row_required": True,
+        "explicit_no_cache_policy_recorded": False,
         "repository_snapshot_required": True,
         "local_cache_status_field": "source_record.paper.local_cache",
     }
@@ -1885,8 +1893,13 @@ def _validate_follow_on_cache_policy(
         if value.get(field) != expected_value:
             issues.append(_issue(f"invalid_cache_policy_{field}", f"cache_policy.{field} must preserve the follow-on source cache boundary"))
     scope = value.get("scope")
-    if not isinstance(scope, str) or "not cached PDF" not in scope or "not" not in scope:
-        issues.append(_issue("invalid_cache_policy_scope", "cache_policy.scope must distinguish source provenance from cached PDFs and per-problem inventory"))
+    if (
+        not isinstance(scope, str)
+        or "cached PDF" not in scope
+        or "pinned repository snapshot" not in scope
+        or "not per-problem inventory" not in scope
+    ):
+        issues.append(_issue("invalid_cache_policy_scope", "cache_policy.scope must distinguish cached source provenance from per-problem inventory"))
 
 
 def _validate_follow_on_manifest_remaining_work(

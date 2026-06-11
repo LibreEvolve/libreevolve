@@ -547,7 +547,7 @@ def validate_paper_manifest(
     issues.extend(_validate_alphaevolve_follow_on_repository_rights_manifest(root_path))
     issues.extend(_validate_alphaevolve_follow_on_runtime_absence_manifest(root_path))
     issues.extend(_validate_alphaevolve_follow_on_tao_blog_manifest(root_path))
-    issues.extend(_validate_alphaevolve_follow_on_math_source_record(manifest_rows_by_id))
+    issues.extend(_validate_alphaevolve_follow_on_math_source_record(root_path, manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_follow_on_problem_coverage_record())
     issues.extend(_validate_alphaevolve_theoretical_cs_source_manifest(root_path))
     issues.extend(_validate_alphaevolve_official_blog_manifest(root_path))
@@ -1288,6 +1288,7 @@ def _validate_alphaevolve_companion_source_manifest(root_path: Path) -> list[Pap
 
 
 def _validate_alphaevolve_follow_on_math_source_record(
+    root_path: Path,
     manifest_rows_by_id: dict[str, dict[str, Any]],
 ) -> list[PaperManifestIssue]:
     record = alphaevolve_follow_on_math_source_record()
@@ -1300,14 +1301,43 @@ def _validate_alphaevolve_follow_on_math_source_record(
         )
         for issue in report.issues
     ]
-    if "2511.02864" in manifest_rows_by_id:
+    manifest_row = manifest_rows_by_id.get("2511.02864")
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    requires_cache_row = (
+        is_repo_root
+        or manifest_row is not None
+        or (root_path / EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE).exists()
+    )
+    if not requires_cache_row:
+        return issues
+    local_cache = record["paper"]["local_cache"]
+    if manifest_row is None:
         issues.append(
             PaperManifestIssue(
-                "alphaevolve_follow_on_math_source_manifest_cache_boundary_mismatch",
-                "Follow-on source record says arXiv 2511.02864 is not locally cached, but a manifest row exists",
+                "alphaevolve_follow_on_math_source_manifest_cache_row_missing",
+                "Follow-on source record says arXiv 2511.02864 is locally cached, but the download manifest row is missing",
                 "2511.02864",
             )
         )
+    else:
+        expected = {
+            "file": local_cache["file"],
+            "bytes": local_cache["bytes"],
+            "sha256": local_cache["sha256"],
+            "url": record["paper"]["floating_pdf_url"],
+        }
+        for field, expected_value in expected.items():
+            if manifest_row.get(field) != expected_value:
+                issues.append(
+                    PaperManifestIssue(
+                        f"alphaevolve_follow_on_math_source_manifest_cache_{field}_mismatch",
+                        f"Follow-on source local cache {field} must match the download manifest row",
+                        "2511.02864",
+                    )
+                )
     return issues
 
 

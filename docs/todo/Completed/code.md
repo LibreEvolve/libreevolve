@@ -145,8 +145,8 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     source URL, docs/TODO claim-surface links, and reuse policy separating
     copied source material from generated local artifacts.
   - Remaining gap: runtime-absence metadata, per-problem notebook/artifact
-    matrices, numbered-page reconciliation, and cached follow-on PDF evidence
-    remain active follow-on TODOs.
+    matrices, and numbered-page reconciliation remain active follow-on TODOs.
+    The cached follow-on PDF evidence has since been recorded separately.
 
 - [x] Add follow-on AlphaEvolve math-scale paper/repository source tracking.
   - Spec evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says the
@@ -158,14 +158,13 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     `papers/follow_on_sources.json`, linking the follow-on paper/repository
     source row to README, ROADMAP, papers, and TODO surfaces. The
     paper-manifest gate validates the sidecar, preserves the original
-    `2506.13131` versus later-source boundary, records an explicit no-cache
-    policy for `2511.02864`, and still rejects a false download-manifest cache
-    row until a real cached PDF row is implemented.
+    `2506.13131` versus later-source boundary, and requires the real cached
+    `2511.02864` download-manifest row.
   - Later status: per-problem repository inventory, numbered-page
     reconciliation, notebook/prompt/verifier/initial/final artifact metadata,
     Appendix B claim mapping, and generated-artifact rights templates have
-    since been recorded; cached PDF digest work remains separate follow-on
-    TODO evidence.
+    since been recorded; cached PDF digest work has also been recorded as
+    separate follow-on TODO evidence.
 
 - [x] Add companion-result repository rights and disclaimer provenance.
   - Spec evidence: the `google-deepmind/alphaevolve_results` README declares
@@ -242,7 +241,7 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     audit evidence; row id, source URL, and local PDF filename must identify
     the same paper before source-version or rights evidence attaches.
   - Status: `papers/row_identity.json` now emits schema-versioned source
-    identity rows for all 24 paper-cache entries, including manifest row id,
+    identity rows for all 25 paper-cache entries, including manifest row id,
     URL source id where available, local filename source prefix, validation
     booleans, SHA-256, and the AlphaEvolve row's source-version link. The
     paper-manifest gate validates the artifact against `download_manifest.json`.

@@ -3251,6 +3251,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     raw-page-hash, notebook-link, absence-reason, notebook-hash, scoped
     artifact-flag, and row evidence is currently available.
 
+- [ ] Track follow-on mathematical-discovery result rows from `2511.02864`.
+  - Paper/source evidence: arXiv `2511.02864v3`, `Mathematical exploration
+    and discovery at scale`, is the follow-on source named by the AlphaEvolve
+    Section 3.2 mathematical-discovery handoff. The local cache now includes
+    `papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf`
+    and `papers/follow_on_sources.json` validates the paper/repository source
+    row.
+  - Current gap: the cached PDF and source manifest prove source identity and
+    provenance only. LibreEvolve still does not normalize this follow-on
+    paper's result rows, construction payloads, verifier artifacts, recomputed
+    values, or full notebook cell inventory into paper-facing benchmark
+    evidence.
+  - Required result: add scoped follow-on result evidence before claiming
+    implementation, benchmark parity, verifier coverage, or recomputed
+    mathematical results from `2511.02864`.
+
 - [x] Complete follow-on notebook artifact fields on emitted source rows.
   - Paper/source evidence: the
     `google-deepmind/alphaevolve_repository_of_problems` README says the

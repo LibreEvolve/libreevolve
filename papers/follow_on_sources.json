@@ -34,11 +34,11 @@
           "floating_pdf_url": "https://arxiv.org/pdf/2511.02864.pdf",
           "versioned_pdf_url": "https://arxiv.org/pdf/2511.02864v3",
           "local_cache": {
-            "available": false,
-            "manifest_row_present": false,
-            "file": null,
-            "sha256": null,
-            "bytes": null
+            "available": true,
+            "manifest_row_present": true,
+            "file": "papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf",
+            "sha256": "77b43844077c98c26dfc76ad391cadbbd53d48a1d290ddae575ff4d1bcdef9d2",
+            "bytes": 12141713
           }
         },
         "repository": {
@@ -550,11 +550,11 @@
         "policy": "follow_on_sources_must_not_be_treated_as_original_alphaevolve_spec_or_cached_pdf"
       },
       "cache_policy": {
-        "paper_cache_manifest_row_required": false,
-        "explicit_no_cache_policy_recorded": true,
+        "paper_cache_manifest_row_required": true,
+        "explicit_no_cache_policy_recorded": false,
         "repository_snapshot_required": true,
         "local_cache_status_field": "source_record.paper.local_cache",
-        "scope": "committed follow-on source provenance, not cached PDF or per-problem inventory"
+        "scope": "committed follow-on source provenance with cached PDF and pinned repository snapshot, not per-problem inventory"
       },
       "remaining_work": []
     }

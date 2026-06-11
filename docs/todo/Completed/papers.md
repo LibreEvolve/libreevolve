@@ -122,8 +122,9 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     verifier-versus-runtime classification. The paper-manifest gate requires
     and validates this sidecar at repo root.
   - Remaining gap: none for this bounded runtime-absence slice; full notebook
-    cell inventory, problem-id mapping, notebook SHA-256 hashes, Tao-blog
-    evidence, and cached follow-on PDF evidence remain separate paper work.
+    cell inventory, problem-id mapping, notebook SHA-256 hashes, and Tao-blog
+    evidence remain separate paper work. The cached follow-on PDF row has
+    since been recorded separately.
 
 - [x] Track follow-on problem-repository rights, citation, and attribution.
   - Paper/source evidence: the follow-on problem repository README records the
@@ -146,14 +147,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     `2511.02864v3`, `Mathematical exploration and discovery at scale`, and the
     `google-deepmind/alphaevolve_repository_of_problems` repository.
   - Status: `papers/follow_on_sources.json` now records the follow-on
-    paper/repository source row, including versioned arXiv identity, pinned
-    repository commit, README digest, declared 67-problem count, notebook
-    coverage boundary, runtime-code absence, source-use licenses, citation
-    boundary, docs/TODO claim-surface links, and explicit no-cache policy. The
-    standard paper-manifest validation requires the sidecar at repo root.
+    paper/repository source row, including versioned arXiv identity, cached
+    `papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf`
+    row, pinned repository commit, README digest, declared 67-problem count,
+    notebook coverage boundary, runtime-code absence, source-use licenses,
+    citation boundary, and docs/TODO claim-surface links. The standard
+    paper-manifest validation requires the sidecar at repo root.
   - Later status: problem inventory, notebook hash/readability matrices,
     Appendix B claim mappings, and generated-artifact rights templates have
-    since been recorded; no cached `2511.02864` PDF/digest row exists yet.
+    since been recorded; the cached `2511.02864` PDF/digest row has also been
+    recorded.
 
 - [x] Track companion-result repository rights and disclaimer evidence.
   - Paper evidence: the `google-deepmind/alphaevolve_results` README declares

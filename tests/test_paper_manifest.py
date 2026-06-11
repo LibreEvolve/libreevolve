@@ -169,6 +169,21 @@ def _row(
     }
 
 
+def _follow_on_row():
+    record = alphaevolve_follow_on_source_manifest_record()["sources"][0]["source_record"]
+    cache = record["paper"]["local_cache"]
+    return {
+        "id": record["paper"]["arxiv_id"],
+        "title": "Mathematical_exploration_and_discovery_at_scale",
+        "url": record["paper"]["floating_pdf_url"],
+        "file": cache["file"],
+        "ok": True,
+        "bytes": cache["bytes"],
+        "sha256": cache["sha256"],
+        "message": "downloaded",
+    }
+
+
 def test_validate_paper_manifest_accepts_matching_local_pdf(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])
@@ -188,7 +203,7 @@ def test_validate_paper_manifest_accepts_matching_source_version_manifest(tmp_pa
     row = dict(source_record["manifest_row"])
     row.pop("url_kind")
     row.update({"ok": True, "message": "downloaded"})
-    _write_manifest(tmp_path, [row])
+    _write_manifest(tmp_path, [row, _follow_on_row()])
     (tmp_path / "papers" / "source_versions.json").write_text(
         json.dumps(alphaevolve_source_pdf_version_manifest_record(), indent=2),
         encoding="utf-8",
@@ -223,9 +238,9 @@ def test_validate_paper_manifest_accepts_matching_source_identity_manifest(tmp_p
     row = dict(source_record["manifest_row"])
     row.pop("url_kind")
     row.update({"ok": True, "message": "downloaded"})
-    _write_manifest(tmp_path, [row])
+    _write_manifest(tmp_path, [row, _follow_on_row()])
     (tmp_path / "papers" / "row_identity.json").write_text(
-        json.dumps(paper_source_identity_manifest_record([row]), indent=2),
+        json.dumps(paper_source_identity_manifest_record([row, _follow_on_row()]), indent=2),
         encoding="utf-8",
     )
 
@@ -344,7 +359,7 @@ def test_validate_paper_manifest_accepts_matching_follow_on_source_manifest(tmp_
     row = dict(source_record["manifest_row"])
     row.pop("url_kind")
     row.update({"ok": True, "message": "downloaded"})
-    _write_manifest(tmp_path, [row])
+    _write_manifest(tmp_path, [row, _follow_on_row()])
     (tmp_path / "papers" / "follow_on_sources.json").write_text(
         json.dumps(alphaevolve_follow_on_source_manifest_record(), indent=2),
         encoding="utf-8",
@@ -361,7 +376,7 @@ def test_validate_paper_manifest_rejects_follow_on_source_manifest_drift(tmp_pat
     row = dict(source_record["manifest_row"])
     row.pop("url_kind")
     row.update({"ok": True, "message": "downloaded"})
-    _write_manifest(tmp_path, [row])
+    _write_manifest(tmp_path, [row, _follow_on_row()])
     follow_on_record = alphaevolve_follow_on_source_manifest_record()
     follow_on_record["sources"][0]["source_record"]["repository"]["commit"] = "0" * 40
     (tmp_path / "papers" / "follow_on_sources.json").write_text(

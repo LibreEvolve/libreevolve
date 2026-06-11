@@ -52,6 +52,10 @@ from libreevolve.problems.benchmarks.appendix_b_registry import (
     REGISTRY_PATH as APPENDIX_B_REGISTRY_PATH,
     validate_appendix_b_registry,
 )
+from libreevolve.problems.benchmarks.candidate_abstraction import (
+    candidate_abstraction_boundary_record,
+    validate_candidate_abstraction_boundary,
+)
 from libreevolve.problems.benchmarks.example_scope import (
     example_benchmark_scope_records,
     validate_example_benchmark_scope,
@@ -168,6 +172,7 @@ FIGURE9_MATRIX_DIFF_ARTIFACTS_FILE = "papers/figure9_matrix_diff_artifacts.json"
 FIGURE4_MATRIX_DISCOVERY_ARTIFACTS_FILE = "papers/figure4_matrix_discovery_artifacts.json"
 FIGURE8_ABLATION_ARTIFACTS_FILE = "papers/figure8_ablation_artifacts.json"
 EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integration_boundary.json"
+CANDIDATE_ABSTRACTION_BOUNDARY_FILE = "papers/candidate_abstraction_boundary.json"
 MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE = "papers/matrix_headline_historicity_artifacts.json"
 APPENDIX_A_BASELINE_CITATIONS_FILE = "papers/appendix_a_matrix_baseline_citations.json"
 MATRIX_BASELINE_COMPONENT_RUNTIME_FILE = "papers/matrix_baseline_component_runtime_boundary.json"
@@ -543,6 +548,7 @@ def validate_paper_manifest(
     issues.extend(_validate_ablation_registry_if_present(root_path))
     issues.extend(_validate_figure8_ablation_artifacts(root_path))
     issues.extend(_validate_existing_codebase_integration_boundary(root_path))
+    issues.extend(_validate_candidate_abstraction_boundary(root_path))
     issues.extend(_validate_example_benchmark_scope_records(root_path))
     issues.extend(_validate_math_outcome_boundaries(root_path))
 
@@ -1221,6 +1227,38 @@ def _validate_existing_codebase_integration_boundary(root_path: Path) -> list[Pa
             f"existing_codebase_integration_boundary_{issue.code}",
             issue.message,
             "existing_codebase_integration",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_candidate_abstraction_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / CANDIDATE_ABSTRACTION_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = candidate_abstraction_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "candidate_abstraction_boundary_manifest_missing",
+                    (
+                        f"{CANDIDATE_ABSTRACTION_BOUNDARY_FILE} must emit "
+                        "candidate-abstraction and bias-evidence availability"
+                    ),
+                    "candidate_abstraction",
+                )
+            ]
+    report = validate_candidate_abstraction_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"candidate_abstraction_boundary_{issue.code}",
+            issue.message,
+            "candidate_abstraction",
         )
         for issue in report.issues
     ]

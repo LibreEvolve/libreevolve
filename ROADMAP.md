@@ -257,8 +257,11 @@ LibreEvolve has:
 - runtime candidate-abstraction choice reports under
   `runtime.history.candidate_abstraction_choice_report`, recording the current
   code-file-set selection, policy/runner linkage, runtime workspace shape,
-  unsupported constructor/search/paired alternatives, and remaining
-  AlphaEvolve abstraction-rationale and bias-evidence gaps
+  unsupported constructor/search/paired alternatives, with
+  `papers/candidate_abstraction_boundary.json` now carrying the
+  paper-manifest-validated absence boundary for abstraction rationale,
+  symmetry/bias evidence, problem-defined abstraction hooks, paired
+  representations, and equal-budget abstraction comparisons
 - local run-budget stop accounting for generations, evaluations,
   evaluator-seconds, wall-clock runtime, logical LLM calls, provider attempts,
   provider-reported tokens, configured estimated cost, and retained LLM

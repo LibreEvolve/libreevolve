@@ -2,6 +2,21 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Emit candidate-abstraction boundary sidecar for roadmap evidence.
+  - Status: `papers/candidate_abstraction_boundary.json` now lets roadmap
+    wording point to a committed absence boundary for problem-defined
+    candidate abstractions, abstraction rationale, symmetry/bias evidence, and
+    equal-budget abstraction comparisons while keeping real abstraction API
+    work open.
+  - Verification: `py -3.12 -m pytest
+    tests\test_candidate_abstraction_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\candidate_abstraction.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: typed abstraction hooks, paired solution/search support,
+    problem-structure labels, and equal-budget comparison reports remain open.
+
 - [x] Emit existing-codebase source-setup boundary sidecar for roadmap
       evidence.
   - Status: `papers/existing_codebase_integration_boundary.json` now lets

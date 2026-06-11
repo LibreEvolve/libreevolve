@@ -6,6 +6,25 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit candidate-abstraction and bias-evidence boundary sidecar.
+  - Paper evidence: AlphaEvolve Section 2.1 and the Discussion distinguish
+    direct solution search, constructor functions, bespoke search algorithms,
+    and paired solution/search representations, and note that those choices
+    carry different biases.
+  - Status: `papers/candidate_abstraction_boundary.json` now carries the
+    paper-facing `libreevolve.alphaevolve_candidate_abstraction_boundary.v1`
+    absence boundary. The paper-manifest gate requires and validates the
+    sidecar at the real repo root.
+  - Verification: `py -3.12 -m pytest
+    tests\test_candidate_abstraction_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\candidate_abstraction.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining paper gap: this is an absence boundary; rationale metadata,
+    problem-structure labels, abstraction hooks, paired representations, and
+    equal-budget bias-comparison reports remain open.
+
 - [x] Emit existing-codebase source-setup boundary sidecar.
   - Paper evidence: AlphaEvolve Section 2.1 says special marker comments
     allow minimal-change integration into existing codebases; Figure 3 links

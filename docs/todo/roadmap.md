@@ -279,7 +279,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     now include `runtime.history.candidate_abstraction_choice_report`, which
     records the selected code-file-set abstraction, policy/runner linkage,
     unsupported constructor/search/paired alternatives, runtime workspace
-    shape, and remaining bias/equal-budget evidence gaps.
+    shape, and remaining bias/equal-budget evidence gaps. ROADMAP now also
+    names `papers/candidate_abstraction_boundary.json` as the committed
+    paper-manifest-validated current absence boundary for problem-defined
+    candidate abstractions and bias-comparison evidence.
   - Required result: when rationale fields, symmetry/structure labels, typed
     candidate-abstraction hooks, paired solution/search support, or
     equal-budget abstraction-comparison reports land, update ROADMAP, README,

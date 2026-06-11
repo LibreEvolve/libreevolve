@@ -234,7 +234,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `runtime.history.candidate_abstraction_choice_report`, which records the
     selected code-file-set abstraction, policy linkage, unsupported
     constructor/search/paired alternatives, and missing bias/equal-budget
-    evidence.
+    evidence. README now also names
+    `papers/candidate_abstraction_boundary.json` as the committed
+    paper-manifest-validated current absence boundary for problem-defined
+    candidate abstractions and abstraction-bias evidence.
   - Required result: when benchmark rationale, problem-structure labels, typed
     candidate-abstraction hooks, paired solution/search APIs, or equal-budget
     abstraction-comparison reports land, update README, ROADMAP, papers index,

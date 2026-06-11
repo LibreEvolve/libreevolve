@@ -717,7 +717,10 @@ current selected abstraction to `policies.candidate_language`, records the
 Python-primary code-file-set boundary, summarizes runtime candidate workspace
 shape, names unsupported or not-yet-distinguished constructor-function,
 bespoke-search-algorithm, and paired solution/search alternatives, and keeps
-`claim_ready: false` for AlphaEvolve-style abstraction-selection fidelity.
+`claim_ready: false` for AlphaEvolve-style abstraction-selection fidelity. The
+committed `papers/candidate_abstraction_boundary.json` sidecar now emits the
+`not_configured_as_problem_defined_abstractions` boundary, and
+`validate_paper_manifest()` requires and validates it at the real repo root.
 Problem-level abstraction rationale, symmetry/structure assumptions,
 problem-defined abstraction hooks, paired representations, and equal-budget
 benchmark comparisons across alternative formulations remain open.
@@ -1120,7 +1123,8 @@ LibreEvolve's code-file-set abstraction as a current divergence, but Section
 2.1 and the Discussion describe choosing between direct solution search,
 constructor functions, bespoke search algorithms, and paired solution/search
 representations, with different biases for symmetric and non-symmetric
-problems. LibreEvolve still needs benchmark metadata and equal-budget reports
+problems. The committed candidate-abstraction sidecar preserves this absence
+boundary; LibreEvolve still needs benchmark metadata and equal-budget reports
 that justify and compare those abstraction choices.
 
 Code-scale evidence is separate from workspace mechanics. AlphaEvolve Table 1

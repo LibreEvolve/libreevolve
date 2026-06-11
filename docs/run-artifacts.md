@@ -169,6 +169,9 @@ paired solution/search alternatives. It remains `claim_ready: false` because
 LibreEvolve does not yet record problem-level abstraction rationale,
 symmetry/structure assumptions, problem-defined abstraction hooks, paired
 representations, or equal-budget comparison reports for those alternatives.
+The committed `papers/candidate_abstraction_boundary.json` sidecar preserves
+the same candidate-abstraction and bias-evidence absence boundary for
+paper-manifest validation.
 Completed runtime manifests include
 `runtime.history.evaluation_cascade_report` when configured stages have run.
 The `libreevolve.evaluation_cascade_report.v1` summary is rebuilt from

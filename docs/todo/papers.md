@@ -487,7 +487,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     selected code-file-set abstraction, serializer/runner linkage, runtime
     workspace shape, unsupported constructor/search/paired alternatives, and
     a claim-readiness check that keeps AlphaEvolve abstraction-selection
-    fidelity false.
+    fidelity false. The committed `papers/candidate_abstraction_boundary.json`
+    sidecar now preserves the paper-manifest-validated current absence
+    boundary for typed abstraction APIs and bias/equal-budget evidence.
   - Current gap: paper-facing evidence still lacks problem structure
     rationale, symmetry assumptions, typed problem-defined abstraction hooks,
     paired solution/search support, or equal-budget comparisons across

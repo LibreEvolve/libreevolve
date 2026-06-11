@@ -2368,11 +2368,12 @@ current selected abstraction as a Python-primary code-file set, links it back
 to `policies.candidate_language`, summarizes runtime workspace shape, and
 marks constructor-function, bespoke-search-algorithm, and paired
 solution/search representations as not yet typed or supported alternatives.
-It is explicit negative-boundary evidence for AlphaEvolve's flexible
-abstraction-selection claim: abstraction rationale, symmetry/structure
-assumptions, problem-defined abstraction hooks, paired representations, and
-equal-budget comparisons across direct, constructor, and search-algorithm
-formulations remain open.
+The committed `papers/candidate_abstraction_boundary.json` sidecar now carries
+the paper-manifest-validated boundary for AlphaEvolve's flexible abstraction-
+selection claim: abstraction rationale, symmetry/structure assumptions,
+problem-defined abstraction hooks, paired representations, and equal-budget
+comparisons across direct, constructor, and search-algorithm formulations
+remain open.
 Completed manifests also include
 `runtime.history.candidate_language_runner_contract_report`, which keeps this
 candidate-language boundary tied to checked runtime evidence: Python is the
@@ -2830,7 +2831,9 @@ root identity, and setup-change counts remain open.
 Completed manifests also include
 `runtime.history.candidate_abstraction_choice_report`, which keeps the current
 candidate representation scoped to direct Python workspace solutions while
-diagnosing unsupported abstraction alternatives and missing bias evidence.
+diagnosing unsupported abstraction alternatives and missing bias evidence. The
+committed `papers/candidate_abstraction_boundary.json` sidecar records the
+same paper-manifest-validated candidate-abstraction absence boundary.
 Unmarked seed programs remain fully supported.
 For current multi-file mutation prompts, `<<<FILE ... >>>FILE` paths are routed
 through the same safety normalizer as candidate workspaces, including nested

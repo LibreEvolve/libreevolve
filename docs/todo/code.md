@@ -229,7 +229,11 @@ Primary evidence:
     mutation/validator surfaces to the candidate-language policy, summarizes
     runtime workspace shape, names direct-solution/constructor/search/paired
     abstraction options, diagnoses unsupported alternatives, and validates that
-    AlphaEvolve abstraction-selection fidelity remains false.
+    AlphaEvolve abstraction-selection fidelity remains false. The committed
+    `papers/candidate_abstraction_boundary.json` sidecar now records the
+    paper-manifest-validated `not_configured_as_problem_defined_abstractions`
+    boundary for the missing abstraction-rationale and bias-benchmark
+    evidence.
   - Required result: add problem-level abstraction rationale,
     symmetry/structure assumptions, typed problem-defined candidate
     abstraction hooks, paired solution/search representations when supported,

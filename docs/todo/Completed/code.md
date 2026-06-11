@@ -4,6 +4,27 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit candidate-abstraction and bias-evidence boundary sidecar.
+  - Spec evidence: AlphaEvolve Section 2.1 and the Discussion describe
+    choosing between direct solutions, constructor functions, bespoke search
+    algorithms, and paired solution/search representations, with abstraction-
+    dependent biases.
+  - Status: `papers/candidate_abstraction_boundary.json` now emits the
+    `libreevolve.alphaevolve_candidate_abstraction_boundary.v1`
+    `not_configured_as_problem_defined_abstractions` boundary, and
+    `validate_paper_manifest()` requires and validates it at the real repo
+    root.
+  - Verification: `py -3.12 -m pytest
+    tests\test_candidate_abstraction_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\candidate_abstraction.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: no local abstraction API records problem rationale,
+    symmetry/bias assumptions, typed serializer/materializer/runner hooks,
+    paired solution/search representations, or equal-budget abstraction
+    comparison reports.
+
 - [x] Emit existing-codebase source-setup boundary sidecar.
   - Spec evidence: AlphaEvolve Section 2.1 says existing-codebase integration
     should require only marker comments around evolved blocks, which implies

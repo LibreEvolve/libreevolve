@@ -4,6 +4,22 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README candidate-abstraction wording tied to committed sidecar.
+  - Spec evidence: AlphaEvolve's flexible abstraction-selection claim needs
+    rationale and bias evidence beyond the current code-file-set workspace
+    representation.
+  - Status: README now names `papers/candidate_abstraction_boundary.json` as
+    the committed sidecar for the candidate-abstraction and bias-evidence
+    absence boundary, with paper-manifest validation.
+  - Verification: `py -3.12 -m pytest
+    tests\test_candidate_abstraction_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\candidate_abstraction.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: none for README sidecar scoping; real abstraction APIs and
+    equal-budget comparison reports remain active code/paper gaps.
+
 - [x] Keep README existing-codebase wording tied to committed sidecar.
   - Spec evidence: AlphaEvolve Section 2.1 minimal-marker integration claims
     require source-setup evidence beyond runtime workspace marker inventory.

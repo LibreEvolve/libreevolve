@@ -1,0 +1,67 @@
+{
+  "schema": "libreevolve.alphaevolve_candidate_abstraction_boundary.v1",
+  "runtime_report_schema": "libreevolve.candidate_abstraction_choice_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_section_id": "2.1",
+  "source_discussion_ref": "Discussion",
+  "boundary_status": "not_configured_as_problem_defined_abstractions",
+  "runtime_report_status": "candidate_abstraction_choice_report_available",
+  "selected_abstraction": "code_file_set",
+  "selected_representation": "python_primary_code_file_set",
+  "claim_ready": false,
+  "abstraction_options": [
+    {
+      "option_id": "direct_solution",
+      "paper_role": "search for solutions directly",
+      "local_status": "supported_as_python_file_or_workspace",
+      "typed_abstraction_api": "not_configured",
+      "bias_evidence": "not_recorded_locally",
+      "equal_budget_benchmark": "not_recorded_locally"
+    },
+    {
+      "option_id": "constructor_function",
+      "paper_role": "evolve constructor functions",
+      "local_status": "not_distinguished_from_python_workspace",
+      "typed_abstraction_api": "not_configured",
+      "bias_evidence": "not_recorded_locally",
+      "equal_budget_benchmark": "not_recorded_locally"
+    },
+    {
+      "option_id": "bespoke_search_algorithm",
+      "paper_role": "evolve bespoke search algorithms",
+      "local_status": "not_distinguished_from_python_workspace",
+      "typed_abstraction_api": "not_configured",
+      "bias_evidence": "not_recorded_locally",
+      "equal_budget_benchmark": "not_recorded_locally"
+    },
+    {
+      "option_id": "coevolved_solution_and_search",
+      "paper_role": "co-evolve intermediate solutions and search algorithms",
+      "local_status": "unsupported",
+      "typed_abstraction_api": "not_configured",
+      "bias_evidence": "not_recorded_locally",
+      "equal_budget_benchmark": "not_recorded_locally"
+    }
+  ],
+  "required_evidence_fields": [
+    "problem_abstraction_rationale",
+    "symmetry_structure_assumptions",
+    "problem_defined_serializer_hook",
+    "problem_defined_materializer_hook",
+    "problem_defined_runner_hook",
+    "paired_solution_search_representation",
+    "direct_solution_benchmark_report",
+    "constructor_function_benchmark_report",
+    "bespoke_search_algorithm_benchmark_report",
+    "equal_budget_bias_comparison_report"
+  ],
+  "missing_evidence": {
+    "problem_abstraction_rationale": "not_recorded_locally",
+    "symmetry_structure_assumptions": "not_recorded_locally",
+    "problem_defined_candidate_abstraction_hooks": "not_configured",
+    "paired_solution_search_representation": "not_supported",
+    "direct_constructor_search_equal_budget_comparisons": "not_recorded_locally",
+    "benchmark_bias_report": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records LibreEvolve's current code-file-set candidate representation and runtime abstraction-choice report, but does not claim AlphaEvolve-style problem-defined candidate abstractions, paired solution/search representations, abstraction-rationale metadata, symmetry/bias evidence, or equal-budget comparisons across direct-solution, constructor-function, and bespoke-search-algorithm approaches."
+}

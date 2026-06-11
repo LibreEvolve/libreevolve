@@ -3626,8 +3626,18 @@ panel and `n = 12` from `4.0` to `3.942` in the right panel. A validated
 `packing_result_boundary` records the future placement payload, containment
 certificate, non-overlap certificate, recomputed outer side length, and
 figure-panel fields required before local reproduction can be claimed. The
-actual B.7 placement payloads and geometry certificates remain absent. It is
-also not a
+actual B.7 placement payloads and geometry certificates remain absent. For
+Appendix B.9-B.10, the registry now preserves three Heilbronn result
+boundaries: `n = 11` points in a unit-area triangle with minimum formed
+triangle area `> 0.0365` versus prior `0.036`, `n = 13` points in a
+unit-area convex region improving `0.0306` to `0.0309`, and `n = 14` points
+in a unit-area convex region improving `0.0277` to `0.0278`, mapped to
+Figure 13 left/middle/right. Validated `heilbronn_result_boundary` entries
+record future point-coordinate, domain, membership, unit-area,
+all-triples-area, convexity, recomputed-minimum-area, and figure-panel fields
+required before local reproduction can be claimed. The actual B.9-B.10
+coordinate/domain payloads and area certificates remain absent. It is also
+not a
 Section 3.2 aggregate outcome ledger: LibreEvolve does not yet enumerate the
 paper's over-50 mathematical problem instances, branch taxonomy, previous-best
 references, matched/improved/failed statuses, or aggregate percentages for

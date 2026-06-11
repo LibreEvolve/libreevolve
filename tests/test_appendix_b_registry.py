@@ -18,6 +18,9 @@ from libreevolve.problems.benchmarks.appendix_b_registry import (
     EXPECTED_AUTOCORRELATION_LABELS,
     EXPECTED_AUTOCORRELATION_STEP_EVIDENCE,
     EXPECTED_FAMILY_IDS,
+    EXPECTED_HEILBRONN_IDS,
+    EXPECTED_HEILBRONN_ROWS,
+    EXPECTED_HEILBRONN_SUMMARIES,
     REGISTRY_PATH,
     validate_appendix_b_registry,
 )
@@ -83,6 +86,15 @@ def test_appendix_b_registry_enumerates_all_alphaevolve_families():
     for witness, expected in zip(b7_boundary["missing_witnesses"], EXPECTED_B7_PACKING_ROWS, strict=True):
         for field, expected_value in expected.items():
             assert witness[field] == expected_value
+    for family_id, expected_summary in EXPECTED_HEILBRONN_SUMMARIES.items():
+        family = next(family for family in data["families"] if family["id"] == family_id)
+        boundary = family["heilbronn_result_boundary"]
+        for field, expected_value in expected_summary.items():
+            assert boundary[field] == expected_value
+        assert [row["result_id"] for row in boundary["missing_witnesses"]] == list(EXPECTED_HEILBRONN_IDS[family_id])
+        for witness, expected in zip(boundary["missing_witnesses"], EXPECTED_HEILBRONN_ROWS[family_id], strict=True):
+            for field, expected_value in expected.items():
+                assert witness[field] == expected_value
 
 
 def test_appendix_b_registry_requires_advertised_fixtures_to_exist(tmp_path):
@@ -459,3 +471,64 @@ def test_appendix_b_registry_requires_b7_packing_boundary_object(tmp_path):
     assert report.ok is False
     assert [issue.code for issue in report.issues] == ["missing_b7_packing_boundary"]
     assert report.issues[0].family_id == "regular_hexagon_packing"
+
+
+def test_appendix_b_registry_requires_heilbronn_boundary(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    family = next(family for family in data["families"] if family["id"] == "heilbronn_triangle")
+    boundary = family["heilbronn_result_boundary"]
+    boundary["status"] = "recorded"
+    boundary["domain_area"] = 2.0
+    boundary["required_witness_fields"] = ["result_id"]
+    first = boundary["missing_witnesses"][0]
+    first["point_count"] = 10
+    first["reported_minimum_area"] = 0.035
+    first["point_coordinate_artifact_status"] = "recorded"
+    first["claim_boundary"] = "Coordinates exist."
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_heilbronn_boundary_status" in codes
+    assert "invalid_heilbronn_domain_area" in codes
+    assert "invalid_heilbronn_required_fields" in codes
+    assert "invalid_heilbronn_witness_point_count" in codes
+    assert "invalid_heilbronn_witness_reported_minimum_area" in codes
+    assert "invalid_heilbronn_point_coordinate_artifact_status" in codes
+    assert "missing_heilbronn_witness_claim_boundary" in codes
+    assert "invalid_heilbronn_improvement_direction" in codes
+
+
+def test_appendix_b_registry_requires_heilbronn_convex_boundary(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    family = next(family for family in data["families"] if family["id"] == "heilbronn_convex_region")
+    boundary = family["heilbronn_result_boundary"]
+    boundary["missing_witnesses"][0]["convexity_certificate_status"] = "recorded"
+    boundary["missing_witnesses"] = boundary["missing_witnesses"][:1]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_heilbronn_convexity_certificate_status" in codes
+    assert "invalid_heilbronn_missing_witness_count" in codes
+    assert "missing_heilbronn_witness_id" in codes
+
+
+def test_appendix_b_registry_requires_heilbronn_boundary_object(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    family = next(family for family in data["families"] if family["id"] == "heilbronn_triangle")
+    del family["heilbronn_result_boundary"]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+
+    assert report.ok is False
+    assert [issue.code for issue in report.issues] == ["missing_heilbronn_boundary"]
+    assert report.issues[0].family_id == "heilbronn_triangle"

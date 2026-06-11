@@ -677,6 +677,14 @@ is not yet an AlphaEvolve reproduction.
   `4.0` to `3.942`, and required future placement, containment,
   non-overlap, recomputed-side-length, and figure-panel fields. The actual
   placement payloads and geometry certificates remain open.
+- Keep Appendix B.9-B.10 Heilbronn claims scoped to result-boundary evidence
+  until point/domain certificates land: the registry now validates the
+  unit-area triangle row for `n = 11` with minimum area `> 0.0365`, the
+  convex-region rows for `n = 13` and `n = 14` with minimum areas `0.0309`
+  and `0.0278`, their prior `[29]` values, Figure 13 panel links, and
+  required future point-coordinate, domain, unit-area, convexity, all-triples
+  area, recomputed-minimum-area, and figure-panel fields. The actual
+  coordinate/domain payloads and area certificates remain open.
 - Keep paper artifact-role attribution separate from artifact availability:
   `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
   AlphaEvolve PDF contribution records for figure creators and companion

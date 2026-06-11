@@ -2709,19 +2709,23 @@ Primary evidence:
     region improve `0.0306` to `0.0309`; and `n = 14` points in a unit-area
     convex region improve `0.0277` to `0.0278`. Figure 13 displays the three
     constructions as left/middle/right panels.
-  - Current evidence: the broad Appendix B per-result TODO names Heilbronn
-    minimum areas and Figure 13 visual provenance, but no code/report schema
-    separately records the three B.9-B.10 parameter rows, domain type,
-    unit-area normalization, point-coordinate payload hashes, minimum-area
-    certificate, strict-versus-rounded comparison policy, or prior SOTA values.
-    A generated report could quote "Heilbronn improved" without proving which
-    construction, domain, and `n` value supports each bound.
-  - Required result: add Appendix B.9-B.10-specific result rows and validators
-    for `n`, domain type (`triangle` or `convex_region`), unit-area scaling,
-    point-set/region artifact hashes, all-triples minimum-area certificate,
-    prior value/source, reported value and strict inequality policy, Figure 13
-    panel linkage, and README/ROADMAP wording that distinguishes the three
-    Heilbronn constructions from aggregate Appendix B coverage.
+  - Current evidence: `alphaevolve_appendix_b.json` now records B.9-B.10
+    `heilbronn_result_boundary` entries for all three rows: `n = 11` in a
+    unit-area triangle with minimum area `> 0.0365`, `n = 13` in a unit-area
+    convex region with minimum area `0.0309`, and `n = 14` in a unit-area
+    convex region with minimum area `0.0278`. The boundaries record prior
+    values, comparison policy, Figure 13 left/middle/right linkage, and
+    required future point/domain/certificate fields. They still mark the
+    witnesses `not_recorded_locally`: no point-coordinate hashes, domain
+    artifacts, unit-area certificates, convexity certificates,
+    all-triples-area certificates, recomputed minimum areas, or Figure 13
+    panel artifacts exist.
+  - Required result: replace the `not_recorded_locally` boundaries with real
+    Appendix B.9-B.10 witness artifacts: point-set and region artifact hashes,
+    domain-membership proofs, unit-area scaling proofs, convexity proofs for
+    B.10, all-triples minimum-area certificates, recomputed minimum areas,
+    Figure 13 panel artifacts, and README/ROADMAP wording that distinguishes
+    the three Heilbronn constructions from aggregate Appendix B coverage.
 
 - [ ] Add kissing-number lemma certificate provenance for Appendix B.11.
   - Spec evidence: AlphaEvolve Appendix B.11 improves the dimension-11 kissing

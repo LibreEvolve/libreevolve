@@ -306,6 +306,106 @@ EXPECTED_B7_PACKING_ROWS = (
     },
 )
 EXPECTED_B7_PACKING_IDS = tuple(row["result_id"] for row in EXPECTED_B7_PACKING_ROWS)
+EXPECTED_B9_HEILBRONN_REQUIRED_FIELDS = (
+    "result_id",
+    "point_count",
+    "domain_type",
+    "domain_area",
+    "point_coordinate_artifact_path",
+    "point_coordinate_artifact_sha256",
+    "domain_artifact_path",
+    "domain_artifact_sha256",
+    "domain_membership_certificate_path",
+    "domain_membership_certificate_sha256",
+    "unit_area_certificate_path",
+    "unit_area_certificate_sha256",
+    "all_triples_area_certificate_path",
+    "all_triples_area_certificate_sha256",
+    "recomputed_minimum_area",
+    "figure_panel_id",
+)
+EXPECTED_B10_HEILBRONN_REQUIRED_FIELDS = (
+    "result_id",
+    "point_count",
+    "domain_type",
+    "domain_area",
+    "point_coordinate_artifact_path",
+    "point_coordinate_artifact_sha256",
+    "domain_artifact_path",
+    "domain_artifact_sha256",
+    "domain_membership_certificate_path",
+    "domain_membership_certificate_sha256",
+    "convexity_certificate_path",
+    "convexity_certificate_sha256",
+    "unit_area_certificate_path",
+    "unit_area_certificate_sha256",
+    "all_triples_area_certificate_path",
+    "all_triples_area_certificate_sha256",
+    "recomputed_minimum_area",
+    "figure_panel_id",
+)
+EXPECTED_HEILBRONN_SUMMARIES = {
+    "heilbronn_triangle": {
+        "status": "not_recorded_locally",
+        "source_section_id": "B.9",
+        "source_problem_name": "The Heilbronn problem for triangles",
+        "domain_type": "triangle",
+        "domain_area": 1.0,
+        "objective": "maximize_minimum_area_of_triangles_formed_by_points",
+        "source_figure": "Figure 13",
+        "required_witness_fields": list(EXPECTED_B9_HEILBRONN_REQUIRED_FIELDS),
+    },
+    "heilbronn_convex_region": {
+        "status": "not_recorded_locally",
+        "source_section_id": "B.10",
+        "source_problem_name": "The Heilbronn problem for convex regions",
+        "domain_type": "convex_region",
+        "domain_area": 1.0,
+        "objective": "maximize_minimum_area_of_triangles_formed_by_points",
+        "source_figure": "Figure 13",
+        "required_witness_fields": list(EXPECTED_B10_HEILBRONN_REQUIRED_FIELDS),
+    },
+}
+EXPECTED_HEILBRONN_ROWS = {
+    "heilbronn_triangle": (
+        {
+            "result_id": "b9_triangle_n11",
+            "point_count": 11,
+            "source_figure_panel": "Figure 13 left",
+            "prior_minimum_area": 0.036,
+            "reported_minimum_area": 0.0365,
+            "reported_value_relation": "minimum_area > 0.0365",
+            "comparison_policy": "strictly_greater_than_reported_threshold",
+            "prior_best_source": "[29]",
+        },
+    ),
+    "heilbronn_convex_region": (
+        {
+            "result_id": "b10_convex_region_n13",
+            "point_count": 13,
+            "source_figure_panel": "Figure 13 middle",
+            "prior_minimum_area": 0.0306,
+            "reported_minimum_area": 0.0309,
+            "reported_value_relation": "minimum_area >= 0.0309",
+            "comparison_policy": "at_least_reported_value",
+            "prior_best_source": "[29]",
+        },
+        {
+            "result_id": "b10_convex_region_n14",
+            "point_count": 14,
+            "source_figure_panel": "Figure 13 right",
+            "prior_minimum_area": 0.0277,
+            "reported_minimum_area": 0.0278,
+            "reported_value_relation": "minimum_area >= 0.0278",
+            "comparison_policy": "at_least_reported_value",
+            "prior_best_source": "[29]",
+        },
+    ),
+}
+EXPECTED_HEILBRONN_IDS = {
+    family_id: tuple(row["result_id"] for row in rows)
+    for family_id, rows in EXPECTED_HEILBRONN_ROWS.items()
+}
 STATUSES = frozenset({"implemented", "implemented_smoke", "planned", "background_only", "out_of_scope"})
 DIRECTIONS = frozenset({"maximize", "minimize", "satisfy", "prove"})
 _ID_RE = re.compile(r"[a-z][a-z0-9_]{1,79}")
@@ -408,6 +508,7 @@ def _validate_family(
     _validate_b6_theorem_condition(family, family_id, issues)
     _validate_b6_witness_boundary(family, family_id, issues)
     _validate_b7_packing_boundary(family, family_id, issues)
+    _validate_heilbronn_boundary(family, family_id, issues)
     status = family.get("status")
     if status not in STATUSES:
         issues.append(AppendixBRegistryIssue("invalid_status", "invalid implementation status", family_id))
@@ -871,6 +972,94 @@ def _validate_b7_packing_boundary(
         result_id = witness.get("result_id")
         if result_id not in EXPECTED_B7_PACKING_IDS:
             issues.append(AppendixBRegistryIssue("invalid_b7_missing_witness_id", "B.7 missing witness result_id must match n=11 or n=12", family_id))
+
+
+def _validate_heilbronn_boundary(
+    family: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    expected_summary = EXPECTED_HEILBRONN_SUMMARIES.get(family_id)
+    if expected_summary is None:
+        return
+    boundary = family.get("heilbronn_result_boundary")
+    if not isinstance(boundary, dict):
+        issues.append(AppendixBRegistryIssue("missing_heilbronn_boundary", "B.9-B.10 require heilbronn_result_boundary", family_id))
+        return
+    for field, expected_value in expected_summary.items():
+        actual = boundary.get(field)
+        if isinstance(expected_value, float):
+            if isinstance(actual, bool) or not isinstance(actual, (int, float)) or not math.isclose(float(actual), expected_value, rel_tol=0.0, abs_tol=1e-12):
+                issues.append(AppendixBRegistryIssue(f"invalid_heilbronn_{field}", f"Heilbronn boundary {field} must match the AlphaEvolve source summary", family_id))
+        elif actual != expected_value:
+            issues.append(AppendixBRegistryIssue(f"invalid_heilbronn_{field}", f"Heilbronn boundary {field} must match the AlphaEvolve source summary", family_id))
+    if boundary.get("status") != "not_recorded_locally":
+        issues.append(AppendixBRegistryIssue("invalid_heilbronn_boundary_status", "Heilbronn boundary must remain not_recorded_locally until point/domain/certificate artifacts exist", family_id))
+    if boundary.get("required_witness_fields") != expected_summary["required_witness_fields"]:
+        issues.append(AppendixBRegistryIssue("invalid_heilbronn_required_fields", "Heilbronn boundary must enumerate required future point, domain, and area-certificate fields", family_id))
+    missing = boundary.get("missing_witnesses")
+    if not isinstance(missing, list):
+        issues.append(AppendixBRegistryIssue("invalid_heilbronn_missing_witnesses", "Heilbronn missing_witnesses must be a list", family_id))
+        return
+    expected_rows = EXPECTED_HEILBRONN_ROWS[family_id]
+    expected_ids = EXPECTED_HEILBRONN_IDS[family_id]
+    if len(missing) != len(expected_rows):
+        issues.append(AppendixBRegistryIssue("invalid_heilbronn_missing_witness_count", "Heilbronn boundary must track the expected Figure 13 witness rows", family_id))
+    by_id = {
+        witness.get("result_id"): witness
+        for witness in missing
+        if isinstance(witness, dict)
+    }
+    seen: set[str] = set()
+    for expected in expected_rows:
+        result_id = expected["result_id"]
+        witness = by_id.get(result_id)
+        if not isinstance(witness, dict):
+            issues.append(AppendixBRegistryIssue("missing_heilbronn_witness_id", "Heilbronn boundary must include each expected result id", family_id))
+            continue
+        if result_id in seen:
+            issues.append(AppendixBRegistryIssue("duplicate_heilbronn_witness_id", "Heilbronn witness ids must be unique", family_id))
+        seen.add(result_id)
+        for field, expected_value in expected.items():
+            actual = witness.get(field)
+            if isinstance(expected_value, float):
+                if isinstance(actual, bool) or not isinstance(actual, (int, float)) or not math.isclose(float(actual), expected_value, rel_tol=0.0, abs_tol=1e-12):
+                    issues.append(AppendixBRegistryIssue(f"invalid_heilbronn_witness_{field}", f"Heilbronn witness {field} must match the AlphaEvolve result summary", family_id))
+            elif actual != expected_value:
+                issues.append(AppendixBRegistryIssue(f"invalid_heilbronn_witness_{field}", f"Heilbronn witness {field} must match the AlphaEvolve result summary", family_id))
+        required_status_fields = [
+            "point_coordinate_artifact_status",
+            "domain_artifact_status",
+            "domain_membership_certificate_status",
+            "unit_area_certificate_status",
+            "all_triples_area_certificate_status",
+            "recomputed_minimum_area_status",
+        ]
+        if family_id == "heilbronn_convex_region":
+            required_status_fields.append("convexity_certificate_status")
+        for field in required_status_fields:
+            if witness.get(field) != "not_recorded_locally":
+                issues.append(AppendixBRegistryIssue(f"invalid_heilbronn_{field}", f"Heilbronn {field} must be not_recorded_locally in the absence boundary", family_id))
+        claim_boundary = witness.get("claim_boundary")
+        if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary:
+            issues.append(AppendixBRegistryIssue("missing_heilbronn_witness_claim_boundary", "Heilbronn missing witness rows must state that local coordinate/domain/certificate evidence is not claimed", family_id))
+        prior = witness.get("prior_minimum_area")
+        reported = witness.get("reported_minimum_area")
+        if (
+            isinstance(prior, (int, float))
+            and not isinstance(prior, bool)
+            and isinstance(reported, (int, float))
+            and not isinstance(reported, bool)
+            and float(reported) <= float(prior)
+        ):
+            issues.append(AppendixBRegistryIssue("invalid_heilbronn_improvement_direction", "Heilbronn reported minimum area must improve by exceeding the prior minimum area", family_id))
+    for witness in missing:
+        if not isinstance(witness, dict):
+            issues.append(AppendixBRegistryIssue("invalid_heilbronn_missing_witness", "Heilbronn missing witness rows must be objects", family_id))
+            continue
+        result_id = witness.get("result_id")
+        if result_id not in expected_ids:
+            issues.append(AppendixBRegistryIssue("invalid_heilbronn_missing_witness_id", "Heilbronn missing witness result_id must match the expected Figure 13 rows", family_id))
 
 
 def _family_id(family: object, index: int) -> str:

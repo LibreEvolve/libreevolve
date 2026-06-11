@@ -1831,16 +1831,19 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     triangle area from `0.036` to greater than `0.0365`; `n = 13` points in a
     unit-area convex region improve `0.0306` to `0.0309`; and `n = 14` points
     in a unit-area convex region improve `0.0277` to `0.0278`.
-  - Current evidence: README can point to broad Appendix B per-result
-    metric/value and Figure 13 visual gaps, but it does not separately warn
-    that the Heilbronn results need per-parameter domain, unit-area,
-    coordinate/region payload, all-triples certificate, and prior/current
-    value evidence before quoting those bounds.
-  - Required result: when Appendix B.9-B.10 Heilbronn metadata lands, update
-    README, ROADMAP, papers index, and code/paper TODOs together so README
-    names the three `n` values, domains, minimum-area certificates, prior and
-    reported values, Figure 13 panel links, and artifact hashes without merging
-    them into one generic Heilbronn claim.
+  - Current evidence: README now names B.9-B.10
+    `heilbronn_result_boundary` entries for the three `n` values, domains,
+    prior and reported values, comparison policies, Figure 13 panel links, and
+    required future point/domain/certificate fields. It still warns that the
+    actual coordinate payloads, domain artifacts, unit-area proofs,
+    convexity proofs, all-triples certificates, and recomputed minimum areas
+    are absent.
+  - Required result: when the actual Appendix B.9-B.10 Heilbronn payloads and
+    certificates land, update README, ROADMAP, papers index, and code/paper
+    TODOs together so README names point/domain artifact hashes, unit-area and
+    convexity certificates, all-triples minimum-area certificates, recomputed
+    values, Figure 13 panel artifacts, and source links without merging them
+    into one generic Heilbronn claim.
 
 - [ ] Keep README kissing-number wording scoped until Lemma 1 certificate
       evidence exists.

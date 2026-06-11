@@ -118,6 +118,15 @@ two paper-reported improvements: `n = 11` from outer side length `3.943` to
 panel. Its `packing_result_boundary` records the placement payload and
 geometry-certificate fields required before local reproduction can be claimed,
 while the placement payloads remain absent.
+For B.9-B.10 Heilbronn variants, the registry now records three result
+boundaries: `n = 11` points in a unit-area triangle with minimum formed
+triangle area `> 0.0365` versus prior `0.036`, `n = 13` points in a
+unit-area convex region improving `0.0306` to `0.0309`, and `n = 14` points
+in a unit-area convex region improving `0.0277` to `0.0278`. The
+`heilbronn_result_boundary` entries preserve Figure 13 left/middle/right
+links and the point-coordinate, domain, unit-area, convexity, all-triples area,
+and recomputed-minimum-area fields required before local reproduction can be
+claimed, while the coordinate/domain payloads remain absent.
 Appendix B says reported construction data and verification code
 appear in an accompanying Google Colab; this registry is not that
 Colab-equivalent evidence surface and does not yet store construction-data

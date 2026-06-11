@@ -2651,17 +2651,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     `0.0306` to `0.0309`; and `n = 14` points in a unit-area convex region
     improving `0.0277` to `0.0278`. Figure 13 maps these to left, middle, and
     right panels.
-  - Current gap: paper-facing Appendix B TODOs require normalized result rows,
-    point-coordinate payloads, and Figure 13 exhibit provenance in general, but
-    they do not force B.9-B.10 reports to preserve the three separate
-    parameter/domain rows, unit-area scaling, all-triples minimum-area
-    certificates, prior/current values, or strict inequality/rounding policy.
-  - Required result: add paper/report evidence for Appendix B.9-B.10 rows:
-    result id, `n`, domain type, unit-area normalization proof, point and
-    region artifact hashes, minimum triangle area certificate over all triples,
-    prior value/source, reported value, comparison policy, Figure 13 panel
-    linkage, source section location, and README/ROADMAP text that separates
-    the three Heilbronn witnesses from broad Appendix B family coverage.
+  - Current gap: paper-facing Appendix B coverage now retains the three
+    B.9-B.10 parameter/domain rows, unit-area normalization requirement,
+    prior/current values, comparison policy, source section, and Figure 13
+    panel linkage through validated `heilbronn_result_boundary` entries. It
+    still does not retain real point-coordinate payloads, domain artifacts,
+    unit-area proofs, convexity proofs for B.10, all-triples minimum-area
+    certificates, recomputed minimum areas, or rendered Figure 13 artifacts.
+  - Required result: add paper/report evidence for the missing Appendix
+    B.9-B.10 witness artifacts: point and region artifact hashes, domain
+    membership proofs, unit-area normalization proof, convexity proof,
+    minimum triangle area certificate over all triples, recomputed minimum
+    area, source section location, and README/ROADMAP text that separates the
+    three Heilbronn witnesses from broad Appendix B family coverage.
 
 - [ ] Track kissing-number lemma certificate evidence for Appendix B.11.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.11 reports 593

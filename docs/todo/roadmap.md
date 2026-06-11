@@ -2934,16 +2934,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     the prior `0.036` bound to greater than `0.0365`; `n = 13` points in a
     unit-area convex region improve `0.0306` to `0.0309`; and `n = 14` points
     in a unit-area convex region improve `0.0277` to `0.0278`.
-  - Current evidence: roadmap/README/paper-index wording can cite the broad
-    Appendix B per-result and Figure 13 visual gaps, but it does not require
-    B.9-B.10-specific parameter rows, domain type, unit-area normalization,
-    point/region artifact hashes, all-triples minimum-area certificates,
-    prior/current values, or strict inequality/rounding policy.
-  - Required result: when Appendix B.9-B.10 Heilbronn metadata and validators
-    land, update ROADMAP, README, papers index, and code/paper TODOs so roadmap
-    claims distinguish the three `n` values, domains, certificate evidence,
-    prior/current values, Figure 13 panel links, payload hashes, and source
-    locations from aggregate Appendix B coverage.
+  - Current evidence: roadmap/README/paper-index wording now cites B.9-B.10
+    `heilbronn_result_boundary` entries for the three `n` values, domains,
+    prior and reported values, comparison policies, Figure 13 panel links, and
+    required future point/domain/certificate fields. It still does not claim
+    point/region artifact hashes, unit-area proofs, convexity proofs,
+    all-triples minimum-area certificates, recomputed values, or rendered
+    Figure 13 panel artifacts.
+  - Required result: when the actual Appendix B.9-B.10 Heilbronn payloads and
+    certificates land, update ROADMAP, README, papers index, and code/paper
+    TODOs so roadmap claims distinguish the three `n` values, domains,
+    certificate evidence, prior/current values, Figure 13 artifacts, payload
+    hashes, and source locations from aggregate Appendix B coverage.
 
 - [ ] Keep kissing-number roadmap wording scoped until Lemma 1 certificate
       evidence exists.

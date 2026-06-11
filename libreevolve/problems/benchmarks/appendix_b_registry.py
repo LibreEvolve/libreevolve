@@ -85,6 +85,55 @@ EXPECTED_APPENDIX_B_RESULT_ROW_BOUNDARY = {
     },
     "scope_boundary": "The registry records Appendix B family/status and selected family-specific boundaries, but does not claim a normalized per-result metric/value ledger, construction payload hashes, verifier artifacts, or recomputed values for every B.1-B.13 text-level claim.",
 }
+EXPECTED_APPENDIX_B_FIGURE_EXHIBIT_REQUIRED_FIELDS = (
+    "figure_id",
+    "figure_label",
+    "source_section_id",
+    "family_id",
+    "result_ids",
+    "panel_ids",
+    "subfigure_labels",
+    "caption_value_strings",
+    "previous_current_metric_values",
+    "construction_payload_artifact_path",
+    "construction_payload_artifact_sha256",
+    "rendered_visual_artifact_path",
+    "rendered_visual_artifact_sha256",
+    "render_parameters",
+    "source_colab_artifact_locator",
+    "verifier_certificate_links",
+)
+EXPECTED_APPENDIX_B_FIGURE_EXHIBIT_MISSING_EVIDENCE_KEYS = (
+    "figure_exhibit_rows",
+    "figure_subfigure_ids",
+    "family_parameter_links",
+    "caption_value_extraction",
+    "previous_current_metric_values",
+    "construction_payload_artifacts",
+    "rendered_visual_artifacts",
+    "render_parameters",
+    "source_colab_cells_or_artifacts",
+    "verifier_certificate_links",
+)
+EXPECTED_APPENDIX_B_FIGURE_EXHIBIT_BOUNDARY = {
+    "status": "not_recorded_locally",
+    "source_figure_range": "Figures 10-14",
+    "source_section_range": "Appendix B.5-B.13",
+    "figure_ids": [
+        "figure_10_erdos_minimum_overlap",
+        "figure_11_regular_hexagon_packing",
+        "figure_12_max_min_distance_point_sets",
+        "figure_13_heilbronn_triangle",
+        "figure_14_circle_rectangle_sum_of_radii",
+    ],
+    "source_claim": "Appendix B displays construction figures for Erdos minimum overlap, regular-hexagon packing, maximum/minimum-distance point sets, Heilbronn variants, and circle/rectangle sum-of-radii packing.",
+    "required_figure_exhibit_fields": list(EXPECTED_APPENDIX_B_FIGURE_EXHIBIT_REQUIRED_FIELDS),
+    "missing_evidence": {
+        key: "not_recorded_locally"
+        for key in EXPECTED_APPENDIX_B_FIGURE_EXHIBIT_MISSING_EVIDENCE_KEYS
+    },
+    "scope_boundary": "The registry records selected family-specific Figure 10-14 panel links, but does not claim a normalized Appendix B figure-exhibit ledger, rendered panel artifacts, caption-value extraction, source Colab cells, or verifier links for every construction figure.",
+}
 EXPECTED_AUTOCORRELATION_LABELS = {
     "autocorrelation_bounds_k3": {
         "source_section_id": "B.1",
@@ -1102,6 +1151,7 @@ def validate_appendix_b_registry(
     if data.get("source_paper_id") != "2506.13131":
         issues.append(AppendixBRegistryIssue("invalid_source", "source_paper_id must be 2506.13131"))
     _validate_result_row_boundary(data, issues)
+    _validate_figure_exhibit_boundary(data, issues)
     families = data.get("families")
     if not isinstance(families, list):
         return AppendixBRegistryReport(False, 0, 0, 0, 0, issues + [
@@ -1191,6 +1241,62 @@ def _validate_result_row_boundary(
         issues.append(AppendixBRegistryIssue(
             "missing_result_row_scope_boundary",
             "Appendix B result-row boundary must state that normalized per-result evidence is not claimed",
+        ))
+
+
+def _validate_figure_exhibit_boundary(
+    data: dict[str, Any],
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    boundary = data.get("figure_exhibit_boundary")
+    if not isinstance(boundary, dict):
+        issues.append(AppendixBRegistryIssue(
+            "missing_appendix_b_figure_exhibit_boundary",
+            "Appendix B registry requires figure_exhibit_boundary",
+        ))
+        return
+    for field, expected_value in EXPECTED_APPENDIX_B_FIGURE_EXHIBIT_BOUNDARY.items():
+        if field in {"required_figure_exhibit_fields", "missing_evidence"}:
+            continue
+        if boundary.get(field) != expected_value:
+            issues.append(AppendixBRegistryIssue(
+                f"invalid_figure_exhibit_boundary_{field}",
+                f"figure_exhibit_boundary.{field} must match the Appendix B figure-exhibit absence boundary",
+            ))
+    if boundary.get("status") != "not_recorded_locally":
+        issues.append(AppendixBRegistryIssue(
+            "invalid_figure_exhibit_boundary_status",
+            "Appendix B figure-exhibit boundary must remain not_recorded_locally until rendered panels and exhibit rows exist",
+        ))
+    if boundary.get("required_figure_exhibit_fields") != list(EXPECTED_APPENDIX_B_FIGURE_EXHIBIT_REQUIRED_FIELDS):
+        issues.append(AppendixBRegistryIssue(
+            "invalid_figure_exhibit_required_fields",
+            "Appendix B figure-exhibit boundary must enumerate the required future figure-exhibit fields",
+        ))
+    missing = boundary.get("missing_evidence")
+    if not isinstance(missing, dict):
+        issues.append(AppendixBRegistryIssue(
+            "invalid_figure_exhibit_missing_evidence",
+            "figure_exhibit_boundary.missing_evidence must be an object",
+        ))
+        return
+    expected_keys = set(EXPECTED_APPENDIX_B_FIGURE_EXHIBIT_MISSING_EVIDENCE_KEYS)
+    if set(missing) != expected_keys:
+        issues.append(AppendixBRegistryIssue(
+            "invalid_figure_exhibit_missing_evidence_keys",
+            "figure_exhibit_boundary.missing_evidence must enumerate every required evidence category",
+        ))
+    for key in EXPECTED_APPENDIX_B_FIGURE_EXHIBIT_MISSING_EVIDENCE_KEYS:
+        if missing.get(key) != "not_recorded_locally":
+            issues.append(AppendixBRegistryIssue(
+                f"invalid_figure_exhibit_missing_{key}",
+                f"Appendix B figure-exhibit missing evidence {key} must be not_recorded_locally",
+            ))
+    scope_boundary = boundary.get("scope_boundary")
+    if not isinstance(scope_boundary, str) or "does not claim" not in scope_boundary:
+        issues.append(AppendixBRegistryIssue(
+            "missing_figure_exhibit_scope_boundary",
+            "Appendix B figure-exhibit boundary must state that rendered exhibit evidence is not claimed",
         ))
 
 

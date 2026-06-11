@@ -1,6 +1,9 @@
 import json
 
 from libreevolve.problems.benchmarks.appendix_b_registry import (
+    EXPECTED_APPENDIX_B_FIGURE_EXHIBIT_BOUNDARY,
+    EXPECTED_APPENDIX_B_FIGURE_EXHIBIT_MISSING_EVIDENCE_KEYS,
+    EXPECTED_APPENDIX_B_FIGURE_EXHIBIT_REQUIRED_FIELDS,
     EXPECTED_APPENDIX_B_RESULT_ROW_BOUNDARY,
     EXPECTED_APPENDIX_B_RESULT_ROW_MISSING_EVIDENCE_KEYS,
     EXPECTED_APPENDIX_B_RESULT_ROW_REQUIRED_FIELDS,
@@ -52,6 +55,7 @@ def test_appendix_b_registry_enumerates_all_alphaevolve_families():
     data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
     family_ids = [family["id"] for family in data["families"]]
     result_boundary = data["result_row_boundary"]
+    figure_boundary = data["figure_exhibit_boundary"]
 
     assert report.ok is True
     assert report.family_count == 13
@@ -68,6 +72,21 @@ def test_appendix_b_registry_enumerates_all_alphaevolve_families():
     assert all(
         value == "not_recorded_locally"
         for value in result_boundary["missing_evidence"].values()
+    )
+    for field, expected in EXPECTED_APPENDIX_B_FIGURE_EXHIBIT_BOUNDARY.items():
+        assert figure_boundary[field] == expected
+    assert figure_boundary["required_figure_exhibit_fields"] == list(EXPECTED_APPENDIX_B_FIGURE_EXHIBIT_REQUIRED_FIELDS)
+    assert set(figure_boundary["missing_evidence"]) == set(EXPECTED_APPENDIX_B_FIGURE_EXHIBIT_MISSING_EVIDENCE_KEYS)
+    assert figure_boundary["figure_ids"] == [
+        "figure_10_erdos_minimum_overlap",
+        "figure_11_regular_hexagon_packing",
+        "figure_12_max_min_distance_point_sets",
+        "figure_13_heilbronn_triangle",
+        "figure_14_circle_rectangle_sum_of_radii",
+    ]
+    assert all(
+        value == "not_recorded_locally"
+        for value in figure_boundary["missing_evidence"].values()
     )
     autocorrelation = {
         family["id"]: family
@@ -196,6 +215,40 @@ def test_appendix_b_registry_rejects_result_row_boundary_overclaim(tmp_path):
     assert "invalid_result_row_required_fields" in codes
     assert "invalid_result_row_missing_previous_best_attribution" in codes
     assert "missing_result_row_scope_boundary" in codes
+
+
+def test_appendix_b_registry_requires_figure_exhibit_boundary(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    del data["figure_exhibit_boundary"]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+
+    assert report.ok is False
+    assert [issue.code for issue in report.issues] == ["missing_appendix_b_figure_exhibit_boundary"]
+
+
+def test_appendix_b_registry_rejects_figure_exhibit_boundary_overclaim(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    boundary = data["figure_exhibit_boundary"]
+    boundary["status"] = "recorded"
+    boundary["figure_ids"] = ["figure_10_erdos_minimum_overlap"]
+    boundary["required_figure_exhibit_fields"] = ["figure_id"]
+    boundary["missing_evidence"]["rendered_visual_artifacts"] = "recorded"
+    boundary["scope_boundary"] = "Appendix B figures are rendered."
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_figure_exhibit_boundary_status" in codes
+    assert "invalid_figure_exhibit_boundary_figure_ids" in codes
+    assert "invalid_figure_exhibit_required_fields" in codes
+    assert "invalid_figure_exhibit_missing_rendered_visual_artifacts" in codes
+    assert "missing_figure_exhibit_scope_boundary" in codes
 
 
 def test_appendix_b_registry_requires_result_row_missing_evidence_object(tmp_path):

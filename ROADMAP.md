@@ -784,6 +784,13 @@ is not yet an AlphaEvolve reproduction.
   certificates, source locators, value-extraction certificates,
   value-reconciliation certificate, canonicalization policy, recomputed sum,
   and companion Colab link remain open.
+- Keep Appendix B figure-exhibit claims scoped separately from family/result
+  boundaries: the top-level `figure_exhibit_boundary` now validates the
+  missing Figures 10-14 exhibit layer, including required future
+  figure/subfigure ids, caption values, previous/current metric values,
+  rendered visual artifacts, render parameters, source Colab locators, and
+  verifier links, while the actual exhibit rows and artifacts remain
+  `not_recorded_locally`.
 - Keep paper artifact-role attribution separate from artifact availability:
   `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
   AlphaEvolve PDF contribution records for figure creators and companion

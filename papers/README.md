@@ -178,6 +178,11 @@ Appendix B says reported construction data and verification code
 appear in an accompanying Google Colab; this registry is not that
 Colab-equivalent evidence surface and does not yet store construction-data
 exports or runnable verifier-code artifacts.
+The top-level Appendix B `figure_exhibit_boundary` now records the missing
+Figures 10-14 exhibit layer separately from family/result boundaries. It
+requires future figure/subfigure ids, caption values, previous/current metric
+values, rendered visual artifacts, render parameters, source Colab locators,
+and verifier links while keeping those rows and artifacts `not_recorded_locally`.
 For Section 3.2 aggregate mathematical-outcome evidence,
 `libreevolve.problems.benchmarks.math_outcomes` now records an absence boundary
 for the paper's over-50-problem, more-than-five-branch, roughly 75%

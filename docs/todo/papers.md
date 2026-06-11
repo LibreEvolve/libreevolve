@@ -2421,13 +2421,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     minimum overlap, Figure 11 for regular-hexagon packings, Figure 12 for
     maximum/minimum-distance point sets, Figure 13 for Heilbronn variants, and
     Figure 14 for circle and rectangle packing sum-of-radii improvements.
-  - Current gap: paper-facing Appendix B status is family/status coverage, and
-    existing TODOs require construction-data/verifier exports, aggregate
-    outcome reports, result-version provenance, and Figure 5 exhibit mapping.
-    There is no evidence row or report schema mapping Figures 10-14 to
-    figure/subfigure labels, family/parameter rows, previous/current values,
-    figure-caption values, construction payloads, visual artifact paths/hashes,
-    rendering parameters, source Colab cells/artifacts, or verifier links.
+  - Current gap: paper-facing Appendix B status now includes a validated
+    `figure_exhibit_boundary` for Figures 10-14. It records the required
+    future figure/subfigure labels, family/result links, previous/current
+    values, figure-caption values, construction payload hashes, visual artifact
+    paths/hashes, rendering parameters, source Colab cells/artifacts, and
+    verifier/certificate links, but keeps all corresponding rows and artifacts
+    `not_recorded_locally`.
   - Required result: add Appendix B figure-exhibit metadata with stable
     figure/subfigure IDs, family and parameter links, previous/current metric
     values with direction/unit, previous-best source, construction payload,

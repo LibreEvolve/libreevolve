@@ -2736,13 +2736,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     distance point sets, Figure 13 for Heilbronn variants, and Figure 14 for
     circle/rectangle packing sum-of-radii improvements.
   - Current evidence: `ROADMAP.md`, README, papers index, and code evidence
-    describe Appendix B family/status coverage, expected construction/
-    certificate artifacts, aggregate outcome gaps, result-version gaps, and
-    Figure 5 exhibit gaps. They do not require Appendix B figure/subfigure IDs,
-    family/parameter links, figure-caption values, visual artifact paths/
-    hashes, rendering parameters, construction payloads, previous-best
-    sources, source Colab cells/artifacts, or verifier linkage for
-    Figures 10-14.
+    now describe a validated Appendix B `figure_exhibit_boundary` for
+    Figures 10-14. The boundary requires future figure/subfigure IDs,
+    family/result links, figure-caption values, visual artifact paths/hashes,
+    rendering parameters, construction payloads, previous-best sources, source
+    Colab cells/artifacts, and verifier linkage, while the actual rows and
+    artifacts remain `not_recorded_locally`.
   - Required result: when Appendix B figure-level provenance lands, update
     ROADMAP, README, papers index, and code/paper TODO entries together with
     exhibit-level metadata and validators so roadmap text distinguishes broad

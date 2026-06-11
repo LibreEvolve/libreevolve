@@ -1634,13 +1634,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     Figure 5: Erdos minimum overlap, regular-hexagon packings,
     maximum/minimum-distance point sets, Heilbronn variants, and
     circle/rectangle packing sum-of-radii examples.
-  - Current evidence: README describes Appendix B family/status coverage,
-    construction/verifier export gaps, aggregate outcome/report gaps,
-    result-version provenance gaps, and Figure 5 exhibit gaps. It does not
-    document Appendix B Figure 10-14 mappings, subfigure labels,
-    figure-caption values, visual artifact paths/hashes, rendering parameters,
-    construction payloads, previous-best sources, source Colab cells/artifacts,
-    or verifier links.
+  - Current evidence: README describes Appendix B family/status coverage and a
+    validated `figure_exhibit_boundary` for Figures 10-14. The boundary names
+    required future Figure 10-14 mappings, subfigure labels, figure-caption
+    values, visual artifact paths/hashes, rendering parameters, construction
+    payloads, previous-best sources, source Colab cells/artifacts, and
+    verifier links, while the actual exhibit rows and artifacts remain absent.
   - Required result: when Appendix B figure-level provenance lands, update
     README, ROADMAP, papers index, and code/paper TODOs together so README
     distinguishes family/aggregate constructive-math coverage, main-text

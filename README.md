@@ -3698,6 +3698,12 @@ payloads, panel artifacts, exact certificates, source-specific precision
 locators, value-extraction certificates, value-reconciliation certificate,
 canonicalization policy, recomputed sum, and companion Colab link remain
 absent.
+The top-level Appendix B `figure_exhibit_boundary` now scopes Figures 10-14
+as a separate exhibit layer from family-level result boundaries. It validates
+future figure/subfigure ids, caption values, previous/current metric values,
+rendered visual artifacts, render parameters, source Colab locators, and
+verifier links while keeping the actual exhibit rows and artifacts
+`not_recorded_locally`.
 `libreevolve.problems.benchmarks.math_outcomes` now records a Section 3.2
 aggregate-outcome absence boundary: over 50 mathematical problems, more than
 five branches, roughly 75% best-known rediscovery, roughly 20% SOTA

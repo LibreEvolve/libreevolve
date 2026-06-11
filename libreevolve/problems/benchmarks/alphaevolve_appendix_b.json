@@ -57,6 +57,50 @@
     },
     "scope_boundary": "The registry records Appendix B family/status and selected family-specific boundaries, but does not claim a normalized per-result metric/value ledger, construction payload hashes, verifier artifacts, or recomputed values for every B.1-B.13 text-level claim."
   },
+  "figure_exhibit_boundary": {
+    "status": "not_recorded_locally",
+    "source_figure_range": "Figures 10-14",
+    "source_section_range": "Appendix B.5-B.13",
+    "figure_ids": [
+      "figure_10_erdos_minimum_overlap",
+      "figure_11_regular_hexagon_packing",
+      "figure_12_max_min_distance_point_sets",
+      "figure_13_heilbronn_triangle",
+      "figure_14_circle_rectangle_sum_of_radii"
+    ],
+    "source_claim": "Appendix B displays construction figures for Erdos minimum overlap, regular-hexagon packing, maximum/minimum-distance point sets, Heilbronn variants, and circle/rectangle sum-of-radii packing.",
+    "required_figure_exhibit_fields": [
+      "figure_id",
+      "figure_label",
+      "source_section_id",
+      "family_id",
+      "result_ids",
+      "panel_ids",
+      "subfigure_labels",
+      "caption_value_strings",
+      "previous_current_metric_values",
+      "construction_payload_artifact_path",
+      "construction_payload_artifact_sha256",
+      "rendered_visual_artifact_path",
+      "rendered_visual_artifact_sha256",
+      "render_parameters",
+      "source_colab_artifact_locator",
+      "verifier_certificate_links"
+    ],
+    "missing_evidence": {
+      "figure_exhibit_rows": "not_recorded_locally",
+      "figure_subfigure_ids": "not_recorded_locally",
+      "family_parameter_links": "not_recorded_locally",
+      "caption_value_extraction": "not_recorded_locally",
+      "previous_current_metric_values": "not_recorded_locally",
+      "construction_payload_artifacts": "not_recorded_locally",
+      "rendered_visual_artifacts": "not_recorded_locally",
+      "render_parameters": "not_recorded_locally",
+      "source_colab_cells_or_artifacts": "not_recorded_locally",
+      "verifier_certificate_links": "not_recorded_locally"
+    },
+    "scope_boundary": "The registry records selected family-specific Figure 10-14 panel links, but does not claim a normalized Appendix B figure-exhibit ledger, rendered panel artifacts, caption-value extraction, source Colab cells, or verifier links for every construction figure."
+  },
   "families": [
     {
       "id": "autocorrelation_bounds_k3",

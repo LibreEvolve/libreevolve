@@ -4,6 +4,21 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README Figure 8 artifact wording tied to committed sidecar.
+  - Spec evidence: AlphaEvolve Figure 8 is a visual ablation exhibit, so README
+    wording must distinguish validated exhibit metadata from actual rendered
+    curve artifacts.
+  - Status: README now names `papers/figure8_ablation_artifacts.json` as the
+    committed sidecar for the Figure 8 rendered-artifact absence boundary, with
+    paper-manifest validation.
+  - Verification: `py -3.12 -m pytest tests\test_ablation_exhibits.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\ablation_exhibits.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: none for README sidecar scoping; executed ablation reports
+    and rendered Figure 8 plots remain active code/paper gaps.
+
 - [x] Keep README Section 3.2 constructive-math boundary wording tied to
       committed sidecars.
   - Spec evidence: AlphaEvolve Section 3.2 constructive-math claims cover

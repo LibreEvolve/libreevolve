@@ -942,6 +942,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     plus declared rendered/source artifacts, rejecting invalid reports and
     missing curve/raw trace links. It does not render a plot, verify named
     files exist, or prove the linked artifacts came from real ablation runs.
+    The committed `papers/figure8_ablation_artifacts.json` sidecar now emits
+    the current rendered-artifact absence boundary for paper-manifest
+    validation.
   - Required result: emit Figure 8 exhibit records and rendered visual artifacts
     from runnable matrix/kissing ablation scripts, with source PDF page/caption
     location, concrete report/raw-trace/curve artifact hashes, rendering

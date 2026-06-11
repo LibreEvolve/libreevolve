@@ -3181,7 +3181,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     visual to report, curve-summary, and raw-seed-trace artifacts.
     `figure8_exhibit_from_ablation_report()` now derives the two-panel exhibit
     from a validated equal-budget report plus declared rendered/source
-    artifacts, while actual plot emission and real run proof remain open.
+    artifacts, while actual plot emission and real run proof remain open. The
+    committed `papers/figure8_ablation_artifacts.json` sidecar now emits this
+    absence boundary for paper-manifest validation.
   - Required result: when generated Figure 8 visual exhibit records and
     rendered artifacts land, update ROADMAP, README, papers index, and
     code/paper TODOs so roadmap wording distinguishes validated exhibit

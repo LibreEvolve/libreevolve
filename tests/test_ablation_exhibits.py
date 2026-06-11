@@ -4,9 +4,13 @@ import math
 from libreevolve.problems.benchmarks.ablation_registry import EXPECTED_VARIANT_IDS
 from libreevolve.problems.benchmarks.ablation_exhibits import (
     EXPECTED_LEGEND_LABELS,
+    FIGURE8_ARTIFACT_BOUNDARY_SCHEMA,
     FIGURE8_EXHIBIT_SCHEMA,
+    figure8_artifact_boundary_record,
     figure8_exhibit_from_ablation_report,
+    render_figure8_artifact_boundary_summary,
     render_figure8_exhibit_summary,
+    validate_figure8_artifact_boundary,
     validate_figure8_exhibit,
 )
 from libreevolve.problems.benchmarks.ablation_results import (
@@ -168,6 +172,32 @@ def test_validate_figure8_exhibit_accepts_paper_visual_metadata():
     assert validation.issues == []
 
 
+def test_validate_figure8_artifact_boundary_accepts_absence_record():
+    boundary = figure8_artifact_boundary_record()
+    validation = validate_figure8_artifact_boundary(boundary)
+
+    assert validation.ok is True
+    assert validation.artifact_status == "not_emitted_by_local_report_export"
+    assert validation.emitted_artifact_count == 0
+    assert validation.required_field_count == 12
+    assert boundary["schema"] == FIGURE8_ARTIFACT_BOUNDARY_SCHEMA
+    assert "does not claim local report/export code emits" in boundary["claim_boundary"]
+
+
+def test_validate_figure8_artifact_boundary_rejects_premature_emitted_claim():
+    boundary = figure8_artifact_boundary_record()
+    boundary["artifact_status"] = "emitted"
+    boundary["required_artifact_fields"] = ["exhibit_id"]
+    boundary["claim_boundary"] = "Figure 8 artifacts are emitted."
+
+    validation = validate_figure8_artifact_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "missing_figure8_artifacts" in codes
+    assert "missing_required_artifact_field" in codes
+
+
 def test_figure8_exhibit_builder_links_valid_ablation_report_artifacts():
     exhibit = figure8_exhibit_from_ablation_report(
         _valid_report(),
@@ -276,3 +306,12 @@ def test_render_figure8_exhibit_summary_reports_shape():
     assert "| schema_status | ok |" in summary
     assert "| panel_count | 2 |" in summary
     assert "| series_count | 12 |" in summary
+
+
+def test_render_figure8_artifact_boundary_summary_reports_absence_shape():
+    summary = render_figure8_artifact_boundary_summary(figure8_artifact_boundary_record())
+
+    assert "AlphaEvolve Figure 8 artifact boundary" in summary
+    assert "| schema_status | ok |" in summary
+    assert "| artifact_status | not_emitted_by_local_report_export |" in summary
+    assert "| emitted_artifact_count | 0 |" in summary

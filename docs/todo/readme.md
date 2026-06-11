@@ -641,6 +641,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `figure8_exhibit_from_ablation_report()` builder now derives that two-panel
     exhibit from a validated equal-budget report plus declared rendered/source
     artifacts, while still leaving actual plot emission and real run proof open.
+    The committed `papers/figure8_ablation_artifacts.json` sidecar now emits
+    this absence boundary for paper-manifest validation.
   - Required result: when generated Figure 8 exhibit records and rendered
     artifacts land, update README, ROADMAP, papers index, and matching TODOs so
     README distinguishes validated exhibit metadata from reproduced

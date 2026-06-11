@@ -1655,7 +1655,9 @@ Implemented:
   `figure8_exhibit_from_ablation_report()` builds that two-panel exhibit from
   a validated equal-budget ablation report plus declared rendered/source
   artifacts. It does not render plots or prove that benchmark scripts emitted
-  those artifacts.
+  those artifacts. The committed `papers/figure8_ablation_artifacts.json`
+  sidecar emits the current Figure 8 rendered-artifact absence boundary, and
+  `validate_paper_manifest()` requires and validates it at the real repo root.
 - `libreevolve/problems/benchmarks/matrix_exhibits.py`: AlphaEvolve main-text
   Figure 4 matrix-discovery metadata contract. It validates the main-text
   exhibit id, paper page 11, caption linkage, 15-mutation caption count,

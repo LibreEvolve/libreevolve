@@ -1212,7 +1212,9 @@ is not yet an AlphaEvolve reproduction.
   metadata, rendered artifact hashes, and report/raw-trace links.
   `figure8_exhibit_from_ablation_report()` can derive the two-panel exhibit
   from a validated equal-budget report plus declared artifacts. No real runner
-  produces those reports or rendered exhibit artifacts yet.
+  produces those reports or rendered exhibit artifacts yet. The committed
+  `papers/figure8_ablation_artifacts.json` sidecar now emits that
+  absence/readiness boundary for paper-manifest validation.
 - Keep Appendix A Figure 9 matrix-diff exhibit claims scoped to declared
   exhibit validation: `libreevolve.alphaevolve_figure9_matrix_diff_exhibit.v1`
   now validates Figure 9a/9b/9c panel ids, pages 35-37, Figure 4 caption

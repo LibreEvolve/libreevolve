@@ -4,6 +4,24 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit Figure 8 ablation-curve artifact sidecar.
+  - Spec evidence: AlphaEvolve Figure 8 is a rendered two-panel ablation
+    exhibit tied to executed equal-budget matrix and kissing-number runs, not
+    only a schema for future exhibit metadata.
+  - Status: `papers/figure8_ablation_artifacts.json` now emits the
+    `libreevolve.alphaevolve_figure8_artifact_boundary.v1`
+    `not_emitted_by_local_report_export` boundary, and
+    `validate_paper_manifest()` requires and validates it at the real repo
+    root.
+  - Verification: `py -3.12 -m pytest tests\test_ablation_exhibits.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\ablation_exhibits.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: no local runner emits executed Figure 8 ablation reports,
+    raw seed traces, curve summaries, rendered plots, rendering parameters, or
+    run links.
+
 - [x] Emit Section 3.2 constructive-math boundary sidecars.
   - Spec evidence: AlphaEvolve Section 3.2 reports broad constructive-math
     outcomes, simple/random starts, heuristic-to-construction handoff, and

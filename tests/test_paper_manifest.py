@@ -743,6 +743,51 @@ def test_validate_paper_manifest_reports_invalid_ablation_registry(tmp_path):
     assert "ablation_missing_variant" in issue_codes
 
 
+def test_validate_paper_manifest_accepts_figure8_ablation_artifact_sidecar(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.FIGURE8_ABLATION_ARTIFACTS_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.figure8_artifact_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_figure8_ablation_artifact_sidecar_drift(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.figure8_artifact_boundary_record()
+    record["source_figure"] = "Figure 7"
+    sidecar = tmp_path / paper_manifest.FIGURE8_ABLATION_ARTIFACTS_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "figure8_ablation_artifact_invalid_source_figure" in codes
+
+
+def test_validate_paper_manifest_requires_figure8_ablation_artifact_sidecar_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "figure8_ablation_artifact_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_math_outcome_boundary_sidecars(monkeypatch, tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

@@ -1,9 +1,13 @@
 """Benchmark registry metadata."""
 
 from libreevolve.problems.benchmarks.ablation_exhibits import (
+    FIGURE8_ARTIFACT_BOUNDARY_SCHEMA,
     FIGURE8_EXHIBIT_SCHEMA,
+    figure8_artifact_boundary_record,
     figure8_exhibit_from_ablation_report,
+    render_figure8_artifact_boundary_summary,
     render_figure8_exhibit_summary,
+    validate_figure8_artifact_boundary,
     validate_figure8_exhibit,
 )
 from libreevolve.problems.benchmarks.ablation_results import (
@@ -293,6 +297,7 @@ __all__ = [
     "CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA",
     "EXPECTED_TARGET_COUNT",
     "EXAMPLE_BENCHMARK_SCOPE_SCHEMA",
+    "FIGURE8_ARTIFACT_BOUNDARY_SCHEMA",
     "FIGURE8_EXHIBIT_SCHEMA",
     "FIGURE4_MATRIX_DISCOVERY_ARTIFACT_BOUNDARY_SCHEMA",
     "FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA",
@@ -359,6 +364,7 @@ __all__ = [
     "example_benchmark_scope_records",
     "figure4_matrix_discovery_artifact_boundary_from_exhibit",
     "figure8_exhibit_from_ablation_report",
+    "figure8_artifact_boundary_record",
     "figure4_matrix_discovery_artifact_boundary_record",
     "figure9_matrix_diff_artifact_boundary_from_exhibit",
     "figure9_matrix_diff_artifact_boundary_record",
@@ -408,6 +414,7 @@ __all__ = [
     "render_certification_summary",
     "render_example_benchmark_scope_summary",
     "render_figure8_exhibit_summary",
+    "render_figure8_artifact_boundary_summary",
     "render_figure4_matrix_discovery_artifact_boundary_summary",
     "render_figure4_matrix_discovery_exhibit_summary",
     "render_figure9_matrix_diff_artifact_boundary_summary",
@@ -455,6 +462,7 @@ __all__ = [
     "validate_certification_evidence_bundle",
     "validate_example_benchmark_scope",
     "validate_figure8_exhibit",
+    "validate_figure8_artifact_boundary",
     "validate_figure4_matrix_discovery_artifact_boundary",
     "validate_figure4_matrix_discovery_exhibit",
     "validate_figure9_matrix_diff_artifact_boundary",

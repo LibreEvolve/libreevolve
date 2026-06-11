@@ -2,6 +2,20 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Emit Figure 8 ablation-curve artifact sidecar for roadmap evidence.
+  - Status: `papers/figure8_ablation_artifacts.json` now lets roadmap wording
+    point to a committed absence boundary for rendered Figure 8
+    ablation-curve artifacts while keeping executed runs and plot generation
+    open.
+  - Verification: `py -3.12 -m pytest tests\test_ablation_exhibits.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\ablation_exhibits.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: actual benchmark scripts still need to emit Figure 8
+    reports, raw traces, curve summaries, rendered plot artifacts, and run
+    links.
+
 - [x] Emit Section 3.2 constructive-math boundary sidecars for roadmap evidence.
   - Status: `papers/math_outcome_boundary.json`,
     `papers/math_starting_construction_boundary.json`,

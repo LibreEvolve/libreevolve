@@ -6,6 +6,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit Figure 8 ablation-curve artifact sidecar.
+  - Paper evidence: AlphaEvolve Figure 8 presents rendered ablation curves for
+    matrix tensor decomposition and kissing-number sphere packing, with named
+    variants, compute-budget fractions, and standard-deviation bands.
+  - Status: `papers/figure8_ablation_artifacts.json` now carries the
+    paper-facing `libreevolve.alphaevolve_figure8_artifact_boundary.v1`
+    absence boundary for rendered Figure 8 visual artifacts. The
+    paper-manifest gate requires and validates the sidecar at the real repo
+    root.
+  - Verification: `py -3.12 -m pytest tests\test_ablation_exhibits.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\ablation_exhibits.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining paper gap: this is an absence boundary; executed ablation runs,
+    report/raw/curve artifacts, rendered plots, and run links remain open.
+
 - [x] Emit Section 3.2 constructive-math boundary sidecars.
   - Paper evidence: AlphaEvolve Section 3.2 ties mathematical breadth and
     SOTA-improvement claims to constructive problem instances, simple/random

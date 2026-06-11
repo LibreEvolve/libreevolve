@@ -26,6 +26,10 @@ from libreevolve.problems.benchmarks.ablation_registry import (
     REGISTRY_PATH as ABLATION_REGISTRY_PATH,
     validate_ablation_registry,
 )
+from libreevolve.problems.benchmarks.ablation_exhibits import (
+    figure8_artifact_boundary_record,
+    validate_figure8_artifact_boundary,
+)
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     REGISTRY_PATH as APPENDIX_A_MATRIX_REGISTRY_PATH,
     appendix_a_matrix_baseline_citation_boundary_record,
@@ -158,6 +162,7 @@ MATRIX_SUITE_PUBLICATION_ARTIFACTS_FILE = "papers/matrix_suite_publication_artif
 MATRIX_RANK_TABLE_ARTIFACTS_FILE = "papers/matrix_rank_table_artifacts.json"
 FIGURE9_MATRIX_DIFF_ARTIFACTS_FILE = "papers/figure9_matrix_diff_artifacts.json"
 FIGURE4_MATRIX_DISCOVERY_ARTIFACTS_FILE = "papers/figure4_matrix_discovery_artifacts.json"
+FIGURE8_ABLATION_ARTIFACTS_FILE = "papers/figure8_ablation_artifacts.json"
 MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE = "papers/matrix_headline_historicity_artifacts.json"
 APPENDIX_A_BASELINE_CITATIONS_FILE = "papers/appendix_a_matrix_baseline_citations.json"
 MATRIX_BASELINE_COMPONENT_RUNTIME_FILE = "papers/matrix_baseline_component_runtime_boundary.json"
@@ -531,6 +536,7 @@ def validate_paper_manifest(
     issues.extend(_validate_appendix_a_matrix_registry_if_present(root_path))
     issues.extend(_validate_appendix_b_registry_if_present(root_path))
     issues.extend(_validate_ablation_registry_if_present(root_path))
+    issues.extend(_validate_figure8_ablation_artifacts(root_path))
     issues.extend(_validate_example_benchmark_scope_records(root_path))
     issues.extend(_validate_math_outcome_boundaries(root_path))
 
@@ -1148,6 +1154,35 @@ def _validate_ablation_registry_if_present(root_path: Path) -> list[PaperManifes
             f"ablation_{issue.code}",
             issue.message,
             _safe_manifest_label(issue.variant_id) if issue.variant_id else None,
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_figure8_ablation_artifacts(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / FIGURE8_ABLATION_ARTIFACTS_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = figure8_artifact_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "figure8_ablation_artifact_manifest_missing",
+                    f"{FIGURE8_ABLATION_ARTIFACTS_FILE} must emit Figure 8 ablation-curve artifact availability",
+                    "figure8_ablation_curves",
+                )
+            ]
+    report = validate_figure8_artifact_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"figure8_ablation_artifact_{issue.code}",
+            issue.message,
+            "figure8_ablation_curves",
         )
         for issue in report.issues
     ]

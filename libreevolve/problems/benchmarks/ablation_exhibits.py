@@ -12,6 +12,7 @@ from .ablation_results import FIGURE8_TARGET_FAMILIES, validate_ablation_result_
 
 
 FIGURE8_EXHIBIT_SCHEMA = "libreevolve.alphaevolve_figure8_exhibit.v1"
+FIGURE8_ARTIFACT_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_figure8_artifact_boundary.v1"
 EXPECTED_EXHIBIT_ID = "figure8_ablation_curves"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_FIGURE = "Figure 8"
@@ -32,6 +33,21 @@ EXPECTED_SERIES_COLORS = {
     "no_full_file_evolution": "#9467bd",
     "small_base_llm_only": "#8c564b",
 }
+FIGURE8_ARTIFACT_STATUSES = frozenset({"not_emitted_by_local_report_export", "emitted"})
+FIGURE8_ARTIFACT_REQUIRED_FIELDS = (
+    "exhibit_id",
+    "source_figure",
+    "source_caption_ref",
+    "rendered_artifact",
+    "ablation_report_artifact",
+    "curve_summary_artifact",
+    "raw_seed_trace_artifact",
+    "rendering_parameters",
+    "run_links",
+    "panels",
+    "artifact_paths",
+    "artifact_sha256",
+)
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
 
 
@@ -47,6 +63,36 @@ class Figure8ExhibitValidation:
     panel_count: int
     series_count: int
     issues: list[Figure8ExhibitIssue]
+
+
+@dataclass(frozen=True)
+class Figure8ArtifactBoundaryValidation:
+    ok: bool
+    artifact_status: str | None
+    emitted_artifact_count: int
+    required_field_count: int
+    issues: list[Figure8ExhibitIssue]
+
+
+def figure8_artifact_boundary_record() -> dict[str, Any]:
+    """Return the current Figure 8 rendered-artifact absence boundary."""
+
+    return {
+        "schema": FIGURE8_ARTIFACT_BOUNDARY_SCHEMA,
+        "exhibit_schema": FIGURE8_EXHIBIT_SCHEMA,
+        "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "source_figure": EXPECTED_SOURCE_FIGURE,
+        "artifact_status": "not_emitted_by_local_report_export",
+        "local_export_scope": "figure8_ablation_curve_report_export",
+        "required_artifact_fields": list(FIGURE8_ARTIFACT_REQUIRED_FIELDS),
+        "emitted_artifacts": [],
+        "claim_boundary": (
+            "This is a Figure 8 ablation-curve artifact availability boundary. "
+            "It does not claim local report/export code emits rendered Figure 8 "
+            "curve images, source report links, raw seed traces, or run-link "
+            "metadata for executed equal-budget ablations."
+        ),
+    }
 
 
 def figure8_exhibit_from_ablation_report(
@@ -134,6 +180,58 @@ def validate_figure8_exhibit(exhibit: object | str | Path) -> Figure8ExhibitVali
     )
 
 
+def validate_figure8_artifact_boundary(
+    boundary: object | str | Path | None = None,
+) -> Figure8ArtifactBoundaryValidation:
+    if boundary is None:
+        boundary = figure8_artifact_boundary_record()
+    data, read_issues = _load_exhibit(boundary)
+    if read_issues:
+        return Figure8ArtifactBoundaryValidation(False, None, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[Figure8ExhibitIssue] = []
+    if data.get("schema") != FIGURE8_ARTIFACT_BOUNDARY_SCHEMA:
+        issues.append(Figure8ExhibitIssue("invalid_schema", "unsupported Figure 8 artifact boundary schema"))
+    if data.get("exhibit_schema") != FIGURE8_EXHIBIT_SCHEMA:
+        issues.append(Figure8ExhibitIssue("invalid_exhibit_schema", "exhibit_schema must identify Figure 8 exhibit records"))
+    if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
+        issues.append(Figure8ExhibitIssue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("source_figure") != EXPECTED_SOURCE_FIGURE:
+        issues.append(Figure8ExhibitIssue("invalid_source_figure", "source_figure must be Figure 8"))
+    status = data.get("artifact_status")
+    if status not in FIGURE8_ARTIFACT_STATUSES:
+        issues.append(Figure8ExhibitIssue("invalid_artifact_status", "artifact_status must be a known Figure 8 artifact status"))
+    if not isinstance(data.get("local_export_scope"), str) or not data["local_export_scope"].strip():
+        issues.append(Figure8ExhibitIssue("missing_local_export_scope", "local_export_scope is required"))
+    required_field_count = _validate_figure8_artifact_required_fields(
+        data.get("required_artifact_fields"), issues
+    )
+    artifacts = data.get("emitted_artifacts")
+    if not isinstance(artifacts, list):
+        issues.append(Figure8ExhibitIssue("invalid_emitted_artifacts", "emitted_artifacts must be a list"))
+        artifact_count = 0
+    else:
+        artifact_count = len(artifacts)
+        if status == "not_emitted_by_local_report_export":
+            if artifacts:
+                issues.append(Figure8ExhibitIssue("unexpected_emitted_artifacts", "absence boundary must not include emitted Figure 8 artifacts"))
+            boundary_text = data.get("claim_boundary")
+            if not isinstance(boundary_text, str) or "does not claim" not in boundary_text:
+                issues.append(Figure8ExhibitIssue("missing_claim_boundary", "absence boundary must state that it does not claim local artifact emission"))
+        elif status == "emitted":
+            if not artifacts:
+                issues.append(Figure8ExhibitIssue("missing_figure8_artifacts", "emitted status requires Figure 8 artifact records"))
+            for artifact in artifacts:
+                _validate_figure8_artifact_record(artifact, issues)
+    return Figure8ArtifactBoundaryValidation(
+        ok=not issues,
+        artifact_status=status if isinstance(status, str) else None,
+        emitted_artifact_count=artifact_count,
+        required_field_count=required_field_count,
+        issues=issues,
+    )
+
+
 def render_figure8_exhibit_summary(exhibit: dict[str, Any]) -> str:
     validation = validate_figure8_exhibit(exhibit)
     status = "ok" if validation.ok else "invalid"
@@ -146,6 +244,25 @@ def render_figure8_exhibit_summary(exhibit: dict[str, Any]) -> str:
         f"| panel_count | {validation.panel_count} |",
         f"| series_count | {validation.series_count} |",
         f"| source_figure | {exhibit.get('source_figure', '<unknown>')} |",
+    ]
+    if validation.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(f"- {issue.code}: {issue.message}" for issue in validation.issues)
+    return "\n".join(lines)
+
+
+def render_figure8_artifact_boundary_summary(boundary: dict[str, Any]) -> str:
+    validation = validate_figure8_artifact_boundary(boundary)
+    status = "ok" if validation.ok else "invalid"
+    lines = [
+        "AlphaEvolve Figure 8 artifact boundary",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| artifact_status | {validation.artifact_status or '<unknown>'} |",
+        f"| emitted_artifact_count | {validation.emitted_artifact_count} |",
+        f"| required_field_count | {validation.required_field_count} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -167,6 +284,73 @@ def _load_exhibit(exhibit: object | str | Path) -> tuple[dict[str, Any] | None, 
         if isinstance(loaded, dict):
             return loaded, []
     return None, [Figure8ExhibitIssue("invalid_shape", "Figure 8 exhibit must be a JSON object")]
+
+
+def _validate_figure8_artifact_required_fields(
+    value: object,
+    issues: list[Figure8ExhibitIssue],
+) -> int:
+    if not isinstance(value, list):
+        issues.append(Figure8ExhibitIssue("invalid_required_artifact_fields", "required_artifact_fields must be a list"))
+        return 0
+    seen = {item for item in value if isinstance(item, str)}
+    missing = sorted(set(FIGURE8_ARTIFACT_REQUIRED_FIELDS) - seen)
+    extra = sorted(seen - set(FIGURE8_ARTIFACT_REQUIRED_FIELDS))
+    if missing:
+        issues.append(Figure8ExhibitIssue("missing_required_artifact_field", f"missing required Figure 8 artifact fields: {', '.join(missing)}"))
+    if extra:
+        issues.append(Figure8ExhibitIssue("extra_required_artifact_field", f"unknown Figure 8 artifact fields: {', '.join(extra)}"))
+    if len(seen) != len(value):
+        issues.append(Figure8ExhibitIssue("invalid_required_artifact_field", "required artifact fields must be strings"))
+    return len(seen)
+
+
+def _validate_figure8_artifact_record(
+    value: object,
+    issues: list[Figure8ExhibitIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(Figure8ExhibitIssue("invalid_figure8_artifact", "Figure 8 artifact record must be an object"))
+        return
+    missing = sorted(set(FIGURE8_ARTIFACT_REQUIRED_FIELDS) - set(value))
+    if missing:
+        issues.append(Figure8ExhibitIssue("missing_figure8_artifact_field", f"Figure 8 artifact is missing fields: {', '.join(missing)}"))
+        return
+    if value.get("exhibit_id") != EXPECTED_EXHIBIT_ID:
+        issues.append(Figure8ExhibitIssue("invalid_artifact_exhibit_id", "artifact exhibit_id must identify Figure 8 ablation curves"))
+    if value.get("source_figure") != EXPECTED_SOURCE_FIGURE:
+        issues.append(Figure8ExhibitIssue("invalid_artifact_source_figure", "artifact source_figure must be Figure 8"))
+    if not isinstance(value.get("source_caption_ref"), str) or not value["source_caption_ref"].strip():
+        issues.append(Figure8ExhibitIssue("missing_artifact_source_caption_ref", "artifact source_caption_ref is required"))
+    _validate_rendered_artifact(value.get("rendered_artifact"), "artifact_rendered_artifact", issues)
+    _validate_rendered_artifact(value.get("ablation_report_artifact"), "artifact_ablation_report", issues)
+    _validate_rendered_artifact(value.get("curve_summary_artifact"), "artifact_curve_summary", issues)
+    _validate_rendered_artifact(value.get("raw_seed_trace_artifact"), "artifact_raw_seed_trace", issues)
+    if not isinstance(value.get("rendering_parameters"), dict):
+        issues.append(Figure8ExhibitIssue("invalid_artifact_rendering_parameters", "artifact rendering_parameters must be an object"))
+    if not isinstance(value.get("run_links"), list):
+        issues.append(Figure8ExhibitIssue("invalid_artifact_run_links", "artifact run_links must be a list"))
+    panel_count, series_count = _validate_panels(value.get("panels"), issues)
+    if panel_count != len(EXPECTED_PANEL_IDS) or series_count != len(EXPECTED_PANEL_IDS) * len(EXPECTED_VARIANT_IDS):
+        issues.append(Figure8ExhibitIssue("invalid_artifact_panel_shape", "artifact panels must preserve both Figure 8 panels and all series"))
+    artifact_paths = value.get("artifact_paths")
+    if not isinstance(artifact_paths, list) or not artifact_paths:
+        issues.append(Figure8ExhibitIssue("invalid_artifact_paths", "artifact_paths must be a non-empty list"))
+    else:
+        for path in artifact_paths:
+            path_obj = Path(path) if isinstance(path, str) else None
+            if (
+                path_obj is None
+                or not path
+                or path_obj.is_absolute()
+                or path.startswith(("/", "\\"))
+                or ".." in path_obj.parts
+            ):
+                issues.append(Figure8ExhibitIssue("invalid_artifact_path", "artifact_paths entries must be safe and relative"))
+                break
+    sha = value.get("artifact_sha256")
+    if not isinstance(sha, str) or _SHA256_RE.fullmatch(sha) is None:
+        issues.append(Figure8ExhibitIssue("invalid_artifact_sha256", "artifact_sha256 must be a lowercase SHA-256 hex digest"))
 
 
 def _load_valid_report_data(report: object | str | Path) -> dict[str, Any]:

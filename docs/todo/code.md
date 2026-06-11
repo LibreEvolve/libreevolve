@@ -4355,6 +4355,9 @@ Primary evidence:
     `figure8_exhibit_from_ablation_report()` now builds the two-panel exhibit
     from a validated equal-budget ablation report plus declared rendered/source
     artifacts, rejecting invalid reports and missing curve/raw trace links.
+    The committed `papers/figure8_ablation_artifacts.json` sidecar now emits
+    the current `not_emitted_by_local_report_export` boundary for
+    paper-manifest validation.
   - Required result: add emitted Figure 8 exhibit records and rendered visual
     artifacts from real ablation benchmark scripts, with source PDF/caption
     page location, concrete report/raw-trace/curve artifact hashes, rendering

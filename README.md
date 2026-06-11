@@ -4362,7 +4362,9 @@ rendered artifact hashes, and links to report/curve/raw-trace artifacts. It
 also exposes `figure8_exhibit_from_ablation_report()` to build the two-panel
 exhibit from a validated equal-budget ablation report plus declared rendered
 and source artifacts. It does not render a plot or prove that benchmark scripts
-emitted the linked artifacts.
+emitted the linked artifacts. The committed
+`papers/figure8_ablation_artifacts.json` sidecar now emits that
+`not_emitted_by_local_report_export` boundary for paper-manifest validation.
 Figure 4 matrix-discovery exhibit metadata uses
 `libreevolve.alphaevolve_figure4_matrix_discovery_exhibit.v1`; it validates
 the main-text Figure 4 exhibit id, paper page 11, caption linkage, 15-mutation

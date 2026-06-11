@@ -878,6 +878,36 @@ EXPECTED_SUM_OF_RADII_IDS = {
     family_id: tuple(row["result_id"] for row in rows)
     for family_id, rows in EXPECTED_SUM_OF_RADII_ROWS.items()
 }
+EXPECTED_FIGURE5_B12_PRECISION_BOUNDARY = {
+    "status": "not_reconciled_locally",
+    "source_section_id": "B.12",
+    "appendix_b_result_id": "b12_unit_square_n26",
+    "source_problem_name": "Packing circles inside a unit square to maximize sum of radii",
+    "figure5_display_prior_sum_of_radii": "2.6340",
+    "figure5_display_reported_sum_of_radii": "2.6358",
+    "appendix_b12_text_prior_sum_of_radii": "2.634",
+    "appendix_b12_text_reported_sum_of_radii": "2.635",
+    "figure14_caption_sum_of_radii_relation": "sum_of_radii >= 2.635",
+    "precision_gap": "figure5_reports_2_6358_but_appendix_b12_boundary_records_2_635",
+    "required_reconciliation_fields": [
+        "figure5_source_locator",
+        "appendix_b12_source_locator",
+        "figure14_source_locator",
+        "displayed_value_strings",
+        "normalized_numeric_values",
+        "rounding_or_truncation_policy",
+        "selected_canonical_report_value",
+        "recomputed_sum_of_radii",
+        "companion_colab_artifact_link",
+    ],
+    "source_locator_status": "not_recorded_locally",
+    "normalization_policy_status": "not_recorded_locally",
+    "rounding_policy_status": "not_recorded_locally",
+    "canonical_value_selection_status": "not_recorded_locally",
+    "recomputed_sum_status": "not_recorded_locally",
+    "companion_colab_link_status": "not_recorded_locally",
+    "claim_boundary": "The registry preserves the Figure 5 and Appendix B.12/Figure 14 display strings as a precision mismatch, but does not claim source locators, a canonicalization policy, recomputed sum, or companion Colab artifact link.",
+}
 STATUSES = frozenset({"implemented", "implemented_smoke", "planned", "background_only", "out_of_scope"})
 DIRECTIONS = frozenset({"maximize", "minimize", "satisfy", "prove"})
 _ID_RE = re.compile(r"[a-z][a-z0-9_]{1,79}")
@@ -1042,6 +1072,7 @@ def _validate_family(
     _validate_heilbronn_boundary(family, family_id, issues)
     _validate_b11_kissing_boundary(family, family_id, issues)
     _validate_sum_of_radii_boundary(family, family_id, issues)
+    _validate_figure5_b12_precision_boundary(family, family_id, issues)
     status = family.get("status")
     if status not in STATUSES:
         issues.append(AppendixBRegistryIssue("invalid_status", "invalid implementation status", family_id))
@@ -2075,6 +2106,38 @@ def _validate_sum_of_radii_boundary(
         result_id = witness.get("result_id")
         if result_id not in expected_ids:
             issues.append(AppendixBRegistryIssue("invalid_sum_of_radii_missing_witness_id", "sum-of-radii missing witness result_id must match the expected Figure 14 rows", family_id))
+
+
+def _validate_figure5_b12_precision_boundary(
+    family: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    if family_id != "circle_packing_unit_square":
+        return
+    boundary = family.get("figure5_b12_precision_boundary")
+    if not isinstance(boundary, dict):
+        issues.append(AppendixBRegistryIssue("missing_figure5_b12_precision_boundary", "B.12 requires a Figure 5 versus appendix precision boundary", family_id))
+        return
+    for field, expected_value in EXPECTED_FIGURE5_B12_PRECISION_BOUNDARY.items():
+        actual = boundary.get(field)
+        if actual != expected_value:
+            issues.append(AppendixBRegistryIssue(f"invalid_figure5_b12_precision_{field}", f"figure5_b12_precision_boundary.{field} must preserve the source-specific display precision boundary", family_id))
+    if boundary.get("status") != "not_reconciled_locally":
+        issues.append(AppendixBRegistryIssue("invalid_figure5_b12_precision_status", "Figure 5 versus B.12 precision boundary must remain not_reconciled_locally until source locators and canonicalization policy exist", family_id))
+    for field in (
+        "source_locator_status",
+        "normalization_policy_status",
+        "rounding_policy_status",
+        "canonical_value_selection_status",
+        "recomputed_sum_status",
+        "companion_colab_link_status",
+    ):
+        if boundary.get(field) != "not_recorded_locally":
+            issues.append(AppendixBRegistryIssue(f"invalid_figure5_b12_precision_{field}", f"Figure 5 versus B.12 precision {field} must be not_recorded_locally", family_id))
+    claim_boundary = boundary.get("claim_boundary")
+    if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary:
+        issues.append(AppendixBRegistryIssue("missing_figure5_b12_precision_claim_boundary", "Figure 5 versus B.12 precision boundary must state that local reconciliation evidence is not claimed", family_id))
 
 
 def _family_id(family: object, index: int) -> str:

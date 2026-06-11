@@ -1015,6 +1015,36 @@
           }
         ]
       },
+      "figure5_b12_precision_boundary": {
+        "status": "not_reconciled_locally",
+        "source_section_id": "B.12",
+        "appendix_b_result_id": "b12_unit_square_n26",
+        "source_problem_name": "Packing circles inside a unit square to maximize sum of radii",
+        "figure5_display_prior_sum_of_radii": "2.6340",
+        "figure5_display_reported_sum_of_radii": "2.6358",
+        "appendix_b12_text_prior_sum_of_radii": "2.634",
+        "appendix_b12_text_reported_sum_of_radii": "2.635",
+        "figure14_caption_sum_of_radii_relation": "sum_of_radii >= 2.635",
+        "precision_gap": "figure5_reports_2_6358_but_appendix_b12_boundary_records_2_635",
+        "required_reconciliation_fields": [
+          "figure5_source_locator",
+          "appendix_b12_source_locator",
+          "figure14_source_locator",
+          "displayed_value_strings",
+          "normalized_numeric_values",
+          "rounding_or_truncation_policy",
+          "selected_canonical_report_value",
+          "recomputed_sum_of_radii",
+          "companion_colab_artifact_link"
+        ],
+        "source_locator_status": "not_recorded_locally",
+        "normalization_policy_status": "not_recorded_locally",
+        "rounding_policy_status": "not_recorded_locally",
+        "canonical_value_selection_status": "not_recorded_locally",
+        "recomputed_sum_status": "not_recorded_locally",
+        "companion_colab_link_status": "not_recorded_locally",
+        "claim_boundary": "The registry preserves the Figure 5 and Appendix B.12/Figure 14 display strings as a precision mismatch, but does not claim source locators, a canonicalization policy, recomputed sum, or companion Colab artifact link."
+      },
       "artifact_schema": {"construction": "circle_center_radius_list", "certificate": "container_and_pairwise_non_overlap"},
       "certification": "local_float_feasibility_smoke",
       "rationale": "The checked-in fixture validates a fixed 26-circle smoke task, not the full Appendix B benchmark result contract.",

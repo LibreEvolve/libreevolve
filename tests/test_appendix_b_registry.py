@@ -28,6 +28,7 @@ from libreevolve.problems.benchmarks.appendix_b_registry import (
     EXPECTED_B4_REVISION_RESULT,
     EXPECTED_B4_SIMILARITY_EVIDENCE,
     EXPECTED_B4_SOURCE_FORMULATION,
+    EXPECTED_FIGURE5_B12_PRECISION_BOUNDARY,
     EXPECTED_B11_KISSING_IDS,
     EXPECTED_B11_KISSING_REQUIRED_FIELDS,
     EXPECTED_B11_KISSING_ROWS,
@@ -159,6 +160,8 @@ def test_appendix_b_registry_enumerates_all_alphaevolve_families():
         for witness, expected in zip(boundary["missing_witnesses"], EXPECTED_SUM_OF_RADII_ROWS[family_id], strict=True):
             for field, expected_value in expected.items():
                 assert witness[field] == expected_value
+    b12_precision = next(family for family in data["families"] if family["id"] == "circle_packing_unit_square")
+    assert b12_precision["figure5_b12_precision_boundary"] == EXPECTED_FIGURE5_B12_PRECISION_BOUNDARY
 
 
 def test_appendix_b_registry_requires_result_row_boundary(tmp_path):
@@ -915,4 +918,46 @@ def test_appendix_b_registry_requires_sum_of_radii_boundary_object(tmp_path):
 
     assert report.ok is False
     assert [issue.code for issue in report.issues] == ["missing_sum_of_radii_boundary"]
+    assert report.issues[0].family_id == "circle_packing_unit_square"
+
+
+def test_appendix_b_registry_requires_figure5_b12_precision_boundary(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    family = next(family for family in data["families"] if family["id"] == "circle_packing_unit_square")
+    boundary = family["figure5_b12_precision_boundary"]
+    boundary["status"] = "reconciled"
+    boundary["figure5_display_reported_sum_of_radii"] = "2.635"
+    boundary["required_reconciliation_fields"] = ["figure5_source_locator"]
+    boundary["source_locator_status"] = "recorded"
+    boundary["rounding_policy_status"] = "recorded"
+    boundary["canonical_value_selection_status"] = "recorded"
+    boundary["claim_boundary"] = "The values are reconciled."
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_figure5_b12_precision_status" in codes
+    assert "invalid_figure5_b12_precision_figure5_display_reported_sum_of_radii" in codes
+    assert "invalid_figure5_b12_precision_required_reconciliation_fields" in codes
+    assert "invalid_figure5_b12_precision_source_locator_status" in codes
+    assert "invalid_figure5_b12_precision_rounding_policy_status" in codes
+    assert "invalid_figure5_b12_precision_canonical_value_selection_status" in codes
+    assert "missing_figure5_b12_precision_claim_boundary" in codes
+    assert report.issues[0].family_id == "circle_packing_unit_square"
+
+
+def test_appendix_b_registry_requires_figure5_b12_precision_boundary_object(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    family = next(family for family in data["families"] if family["id"] == "circle_packing_unit_square")
+    del family["figure5_b12_precision_boundary"]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+
+    assert report.ok is False
+    assert [issue.code for issue in report.issues] == ["missing_figure5_b12_precision_boundary"]
     assert report.issues[0].family_id == "circle_packing_unit_square"

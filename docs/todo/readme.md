@@ -1616,16 +1616,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Spec evidence: AlphaEvolve Figure 5 displays a sum-of-radii improvement
     `2.6340 -> 2.6358`, while Appendix B.12 and Figure 14 state the `n = 26`
     unit-square circle-packing result as `2.634` to `2.635`.
-  - Current evidence: README can point to broad Figure 5 exhibit and
-    B.12-B.13 packing TODOs, but it does not warn that the same visible result
-    currently has source-specific display precision. Existing wording follows
-    the Appendix B.12 `2.635` value and does not preserve the Figure 5
-    `2.6358` display.
-  - Required result: when source-specific precision provenance lands, update
-    README, ROADMAP, papers index, and code/paper TODOs so README records the
-    Figure 5, Appendix B.12, and Figure 14 value strings separately, explains
-    the rounding/canonicalization policy, and avoids treating `2.6358` and
-    `2.635` as interchangeable evidence.
+  - Current evidence: README now names `figure5_b12_precision_boundary`, which
+    preserves Figure 5's `2.6340 -> 2.6358` display separately from the
+    Appendix B.12/Figure 14 `2.634` to `2.635` strings.
+  - Remaining gap: README still cannot cite source-specific locators,
+    normalized values, a rounding/canonicalization policy, recomputed sum, or
+    companion Colab link.
+  - Required result: when that source-specific precision provenance lands,
+    update README, ROADMAP, papers index, and code/paper TODOs with the policy
+    artifacts and avoid treating `2.6358` and `2.635` as interchangeable
+    evidence.
 
 - [ ] Keep README Appendix B figure wording scoped until Figures 10-14
       provenance exists.

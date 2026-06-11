@@ -2403,17 +2403,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     sum-of-radii improvement as `2.6340 -> 2.6358`. Appendix B.12 and
     Figure 14 describe the `n = 26` unit-square circle-packing improvement as
     `2.634` to `2.635`.
-  - Current gap: paper-facing TODOs track broad Figure 5 exhibit provenance
-    and B.12-B.13 packing rows, but they do not force reports to preserve
-    source-specific numeric strings or reconcile the Figure 5 precision against
-    the appendix text/caption precision. README/ROADMAP wording currently
-    follows the Appendix B.12 `2.635` value and could lose the Figure 5
-    `2.6358` display.
-  - Required result: add paper/report evidence for this packing result with
-    per-source value records: source section/figure id, displayed previous and
-    current value strings, normalized numeric values, rounding or truncation
-    policy, chosen canonical claim value, and README/ROADMAP wording that keeps
-    Figure 5 display precision separate from Appendix B.12/Figure 14 wording.
+  - Current evidence: `figure5_b12_precision_boundary` now forces the registry
+    and docs to preserve the Figure 5 `2.6340 -> 2.6358` strings separately
+    from the Appendix B.12/Figure 14 `2.634` to `2.635` strings.
+  - Remaining gap: there are still no source-section locators, normalized
+    numeric values, rounding or truncation policy, chosen canonical claim
+    value, recomputed sum, or companion Colab artifact link.
+  - Required result: add those paper/report evidence fields and keep README
+    and ROADMAP wording from treating Figure 5 display precision as
+    interchangeable with Appendix B.12/Figure 14 wording.
 
 - [ ] Track Appendix B figure-level construction provenance for Figures 10-14.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B presents

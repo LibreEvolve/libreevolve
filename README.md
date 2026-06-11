@@ -3603,13 +3603,14 @@ complete B.8 point-set certificate surface: the registry now preserves the
 squared-ratio convention for Appendix B.8, including raw squared values
 `12.889266112` and `4.165849767`, their square-root-derived geometric ratios,
 point counts, dimensions, prior squared bounds, and comparison policy. It does
-not yet store the coordinate payloads or all-pairs distance certificates for
-those witnesses; a validated `witness_certificate_boundary` now records the
-required future coordinate-artifact, distance-certificate, min/max-distance,
-recomputed-ratio, and Figure 12 panel artifact path/hash fields while
-preserving the 16-point/2D and 14-point/3D Figure 12 witness rows and keeping
-both witnesses, including panel artifacts, marked `not_recorded_locally`. For
-Appendix B.5, the registry now preserves the
+not yet store the coordinate payloads, point-count/dimension certificates,
+pairwise distance matrix artifacts, min/max pair-witness certificates, or
+squared-ratio recomputation certificates for those witnesses; a validated
+`witness_certificate_boundary` now records those required future fields plus
+Figure 12 panel artifact path/hash fields while preserving the 16-point/2D and
+14-point/3D Figure 12 witness rows and keeping both witnesses, including panel
+artifacts, marked `not_recorded_locally`. For Appendix B.5, the registry now
+preserves the
 source Erdős minimum-overlap formulation with non-negative
 `f,g: [-1,1] -> [0,1]`, `f + g = 1`, `integral f = 1`, zero extension outside
 `[-1,1]`, the shift-supremum objective over `[-2,2]`, known lower/upper

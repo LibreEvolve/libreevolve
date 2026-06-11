@@ -1726,17 +1726,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: README now points to B.8 squared-ratio convention
     metadata with point counts, dimensions, prior squared bounds, and Figure 12
     panel linkage. It also points to a `witness_certificate_boundary` that
-    records required future coordinate/certificate fields plus Figure 12 panel
-    artifact fields, validates the 16-point/2D and 14-point/3D
+    records required future coordinate, point-count/dimension, pairwise
+    distance matrix, min/max pair-witness, squared-ratio recomputation, and
+    Figure 12 panel artifact fields, validates the 16-point/2D and 14-point/3D
     missing-witness rows, and keeps both witnesses `not_recorded_locally`. It
-    still warns that coordinate payloads, all-pairs min/max distance
-    recomputation, and rendered Figure 12 panel artifacts remain open.
+    still warns that coordinate payloads, point-count/dimension certificates,
+    all-pairs distance matrices, min/max pair-witness certificates,
+    squared-ratio recomputation, and rendered Figure 12 panel artifacts remain
+    open.
   - Required result: when Appendix B.8 distance-certificate metadata lands,
     update README, ROADMAP, papers index, and code/paper TODOs together so
     README distinguishes raw convention metadata from validated point-set
-    witness evidence with coordinate artifacts, recomputed distances,
-    prior/current squared ratios, Figure 12 panel artifact hashes, and Figure
-    12 panel linkage.
+    witness evidence with coordinate artifacts, point-count/dimension
+    certificates, pairwise distance matrix artifacts, recomputed distances,
+    min/max pair witnesses, prior/current squared ratios, Figure 12 panel
+    artifact hashes, and Figure 12 panel linkage.
 
 - [ ] Keep README Appendix B.5 minimum-overlap wording scoped until
       step-function provenance exists.

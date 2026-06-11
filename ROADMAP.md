@@ -702,11 +702,13 @@ is not yet an AlphaEvolve reproduction.
   until point-set certificates land: the registry now validates the squared
   raw values, square-root-derived ratios, point counts, dimensions, prior
   squared bounds, Figure 12 panel labels, and comparison policy, but not the
-  coordinate payloads or all-pairs distance certificates. A
-  `witness_certificate_boundary` now records the required future witness
-  fields including Figure 12 panel artifact path/hash fields, preserves the
-  16-point/2D and 14-point/3D missing-witness rows, and keeps both B.8
-  witnesses and panel artifacts explicitly `not_recorded_locally`.
+  coordinate payloads, point-count/dimension certificates, pairwise distance
+  matrix artifacts, min/max pair-witness certificates, or squared-ratio
+  recomputation certificates. A `witness_certificate_boundary` now records the
+  required future witness fields including those artifacts plus Figure 12
+  panel artifact path/hash fields, preserves the 16-point/2D and 14-point/3D
+  missing-witness rows, and keeps both B.8 witnesses and panel artifacts
+  explicitly `not_recorded_locally`.
 - Keep Appendix B.5 source-problem and construction evidence separated: the
   registry now validates the original paired-function Erdős formulation,
   zero-extension convention, shift-supremum objective, known bounds, `[40]`

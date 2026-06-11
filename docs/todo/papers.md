@@ -2536,20 +2536,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     squared-ratio convention, point count, dimension, prior value/source, and
     left/right Figure 12 panel linkage. A validated
     `witness_certificate_boundary` now records required future fields for
-    coordinate artifacts, distance certificates, min/max distances, recomputed
-    ratio, figure panel ids, and Figure 12 panel artifact path/hash fields. It
-    also validates both missing-witness rows:
+    coordinate artifacts, point-count/dimension certificates, pairwise
+    distance matrix artifacts, distance certificates, min/max distances,
+    min/max pair-witness certificates, squared-ratio recomputation
+    certificates, figure panel ids, and Figure 12 panel artifact path/hash
+    fields. It also validates both missing-witness rows:
     the 16-point 2D/Figure 12 left row with squared ratio `12.889266112`
     versus prior `12.890`, and the 14-point 3D/Figure 12 right row with
     squared ratio `4.165849767` versus prior `4.168`, while keeping both
     witnesses explicitly `not_recorded_locally`. The registry still does not
     prove the actual coordinate witnesses: finite coordinate payload hash,
-    all-pairs minimum/maximum distance certificate, recomputed squared ratio
-    from coordinates, or rendered Figure 12 panel artifacts.
+    point-count/dimension certificates, pairwise distance matrix artifact,
+    all-pairs minimum/maximum distance certificate, min/max pair-witness
+    certificates, recomputed squared ratio from coordinates, or rendered
+    Figure 12 panel artifacts.
   - Required result: add paper/report evidence for Appendix B.8 witness rows:
-    coordinate artifact hash, pairwise-distance certificate hash, recomputed
-    min and max distances, squared ratio from coordinates, and Figure 12 panel
-    artifact hashes.
+    coordinate artifact hash, point-count/dimension certificates, pairwise
+    distance matrix hash, pairwise-distance certificate hash, recomputed min
+    and max distances, min/max pair-witness certificates, squared ratio from
+    coordinates, and Figure 12 panel artifact hashes.
 
 - [ ] Track Appendix B.5 minimum-overlap step-function evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.5 reports that

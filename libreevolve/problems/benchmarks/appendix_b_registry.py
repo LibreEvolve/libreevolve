@@ -391,11 +391,23 @@ EXPECTED_B8_WITNESS_REQUIRED_FIELDS = (
     "coordinate_artifact_path",
     "coordinate_artifact_sha256",
     "coordinate_payload_schema",
+    "point_count_certificate_path",
+    "point_count_certificate_sha256",
+    "coordinate_dimension_certificate_path",
+    "coordinate_dimension_certificate_sha256",
+    "pairwise_distance_matrix_artifact_path",
+    "pairwise_distance_matrix_artifact_sha256",
     "distance_certificate_path",
     "distance_certificate_sha256",
     "minimum_pairwise_distance",
+    "minimum_pair_witness_certificate_path",
+    "minimum_pair_witness_certificate_sha256",
     "maximum_pairwise_distance",
+    "maximum_pair_witness_certificate_path",
+    "maximum_pair_witness_certificate_sha256",
     "recomputed_squared_ratio",
+    "squared_ratio_recomputation_certificate_path",
+    "squared_ratio_recomputation_certificate_sha256",
     "figure_panel_id",
     "figure_panel_artifact_path",
     "figure_panel_artifact_sha256",
@@ -410,10 +422,16 @@ EXPECTED_B8_WITNESS_ROWS = (
         "raw_reported_squared_ratio": 12.889266112,
         "prior_best_squared_ratio": 12.890,
         "coordinate_artifact_status": "not_recorded_locally",
+        "point_count_certificate_status": "not_recorded_locally",
+        "coordinate_dimension_certificate_status": "not_recorded_locally",
+        "pairwise_distance_matrix_artifact_status": "not_recorded_locally",
         "distance_certificate_status": "not_recorded_locally",
+        "minimum_pair_witness_certificate_status": "not_recorded_locally",
+        "maximum_pair_witness_certificate_status": "not_recorded_locally",
+        "squared_ratio_recomputation_certificate_status": "not_recorded_locally",
         "recomputed_ratio_status": "not_recorded_locally",
         "figure_panel_artifact_status": "not_recorded_locally",
-        "claim_boundary": "The registry records the paper's squared-ratio convention but does not claim local coordinates, all-pairs distance certificates, or Figure 12 panel artifacts for the 16-point 2D witness.",
+        "claim_boundary": "The registry records the paper's squared-ratio convention but does not claim local coordinates, point-count/dimension certificates, all-pairs distance matrix artifacts, min/max pair witness certificates, squared-ratio recomputation certificates, or Figure 12 panel artifacts for the 16-point 2D witness.",
     },
     {
         "result_id": "b8_14_points_3d",
@@ -424,10 +442,16 @@ EXPECTED_B8_WITNESS_ROWS = (
         "raw_reported_squared_ratio": 4.165849767,
         "prior_best_squared_ratio": 4.168,
         "coordinate_artifact_status": "not_recorded_locally",
+        "point_count_certificate_status": "not_recorded_locally",
+        "coordinate_dimension_certificate_status": "not_recorded_locally",
+        "pairwise_distance_matrix_artifact_status": "not_recorded_locally",
         "distance_certificate_status": "not_recorded_locally",
+        "minimum_pair_witness_certificate_status": "not_recorded_locally",
+        "maximum_pair_witness_certificate_status": "not_recorded_locally",
+        "squared_ratio_recomputation_certificate_status": "not_recorded_locally",
         "recomputed_ratio_status": "not_recorded_locally",
         "figure_panel_artifact_status": "not_recorded_locally",
-        "claim_boundary": "The registry records the paper's squared-ratio convention but does not claim local coordinates, all-pairs distance certificates, or Figure 12 panel artifacts for the 14-point 3D witness.",
+        "claim_boundary": "The registry records the paper's squared-ratio convention but does not claim local coordinates, point-count/dimension certificates, all-pairs distance matrix artifacts, min/max pair witness certificates, squared-ratio recomputation certificates, or Figure 12 panel artifacts for the 14-point 3D witness.",
     },
 )
 EXPECTED_B8_WITNESS_IDS = tuple(row["result_id"] for row in EXPECTED_B8_WITNESS_ROWS)
@@ -1576,7 +1600,18 @@ def _validate_b8_witness_boundary(
                         issues.append(AppendixBRegistryIssue(f"invalid_b8_witness_{field}", f"B.8 witness {field} must match the Figure 12 missing-evidence row", family_id))
                 elif actual != expected_value:
                     issues.append(AppendixBRegistryIssue(f"invalid_b8_witness_{field}", f"B.8 witness {field} must match the Figure 12 missing-evidence row", family_id))
-        for field in ("coordinate_artifact_status", "distance_certificate_status", "recomputed_ratio_status", "figure_panel_artifact_status"):
+        for field in (
+            "coordinate_artifact_status",
+            "point_count_certificate_status",
+            "coordinate_dimension_certificate_status",
+            "pairwise_distance_matrix_artifact_status",
+            "distance_certificate_status",
+            "minimum_pair_witness_certificate_status",
+            "maximum_pair_witness_certificate_status",
+            "squared_ratio_recomputation_certificate_status",
+            "recomputed_ratio_status",
+            "figure_panel_artifact_status",
+        ):
             if witness.get(field) != "not_recorded_locally":
                 issues.append(AppendixBRegistryIssue(f"invalid_b8_{field}", f"B.8 {field} must be not_recorded_locally in the absence boundary", family_id))
         raw = witness.get("raw_reported_squared_ratio")

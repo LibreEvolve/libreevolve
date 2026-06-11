@@ -2829,16 +2829,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     convention metadata with point counts, dimensions, prior squared bounds,
     and Figure 12 panel linkage. It also cites a
     `witness_certificate_boundary` listing the required future coordinate,
-    distance-certificate, and Figure 12 panel artifact fields, validating the
-    16-point/2D and 14-point/3D missing-witness rows, and keeping both
-    witnesses `not_recorded_locally`. It still does not include coordinate
-    payloads, all-pairs min/max distance certificates, recomputed squared
-    ratios from coordinates, or rendered Figure 12 panel artifacts.
+    point-count/dimension certificate, pairwise distance matrix, min/max
+    pair-witness, squared-ratio recomputation, and Figure 12 panel artifact
+    fields, validating the 16-point/2D and 14-point/3D missing-witness rows,
+    and keeping both witnesses `not_recorded_locally`. It still does not
+    include coordinate payloads, all-pairs distance matrix artifacts, min/max
+    pair-witness certificates, recomputed squared ratios from coordinates, or
+    rendered Figure 12 panel artifacts.
   - Required result: when Appendix B.8 witness validators land, update ROADMAP,
     README, papers index, and code/paper TODOs together so roadmap claims
     separate convention-safe quoting from actual reproduced point-set
-    certificates and panel artifacts for the 2D and 3D Figure 12
-    constructions.
+    coordinate artifacts, pairwise-distance matrices, min/max pair witnesses,
+    squared-ratio recomputation certificates, and panel artifacts for the 2D
+    and 3D Figure 12 constructions.
 
 - [ ] Keep Appendix B.5 roadmap wording scoped until minimum-overlap
       step-function provenance exists.

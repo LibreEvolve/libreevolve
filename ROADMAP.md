@@ -628,10 +628,15 @@ is not yet an AlphaEvolve reproduction.
   construction artifacts. For Appendix B-style constructive-math claims, add
   Colab-equivalent construction-data exports and runnable verifier-code
   artifacts rather than only family/status registry entries.
-- Add constructive-math aggregate outcome ledgers before making Section 3.2-
-  style breadth claims: per-problem/per-parameter rows, mathematical branch
-  labels, prior-best references, matched/improved/fell-behind status, and
-  validated percentages for dozens-problem coverage.
+- Keep constructive-math aggregate outcome claims scoped to the Section 3.2
+  absence boundary until per-instance rows land:
+  `libreevolve.problems.benchmarks.math_outcomes` now validates the paper's
+  over-50-problem, more-than-five-branch, roughly 75% best-known rediscovery,
+  roughly 20% SOTA-improvement, and verification-claim source facts plus the
+  required future per-instance and aggregate fields. Per-problem/per-parameter
+  rows, mathematical branch labels, prior-best references,
+  matched/improved/fell-behind status, construction/verifier artifacts, and
+  recomputed aggregate percentages remain open.
 - Add Appendix B result-version provenance before quoting paper-level
   constructive-math constants: source manuscript version, reported value,
   superseded/current status, update note, attribution, and verifier/Colab

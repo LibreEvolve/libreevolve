@@ -2782,17 +2782,20 @@ Primary evidence:
     constructions rediscovered in roughly 75% of cases and new SOTA
     constructions in roughly 20% of cases. That is an aggregate outcome claim
     over problem instances, not only a family-level Appendix B artifact list.
-  - Current evidence: `alphaevolve_appendix_b.json` enumerates thirteen
-    constructive-math families and records planned/smoke status plus expected
-    construction/certificate artifact shapes. It does not enumerate the
-    underlying per-problem/per-parameter instances, branch taxonomy, previous
-    best references, matched-versus-improved outcome counts, or aggregate
-    percentages needed to support Section 3.2-style breadth claims.
-  - Required result: add a constructive-math outcome ledger/report with
-    problem-instance ids, branch labels, parameter settings, prior-best
-    references, discovered construction links, matched/improved/failed status,
-    and validated aggregate counts/percentages before claiming AlphaEvolve-
-    style breadth across dozens of mathematical problems.
+  - Current evidence: `libreevolve.problems.benchmarks.math_outcomes` now
+    records a Section 3.2 absence boundary with source facts for over 50
+    mathematical problems, more than five branches, roughly 75% best-known
+    rediscovery, roughly 20% SOTA improvement, and the paper's verification
+    claim. It validates required future per-instance and aggregate fields while
+    keeping per-problem rows, branch taxonomy, prior-best references,
+    construction/verifier artifacts, aggregate counts, and percentage
+    recomputation `not_recorded_locally`.
+  - Required result: replace the absence boundary with an actual
+    constructive-math outcome ledger/report containing problem-instance ids,
+    branch labels, parameter settings, prior-best references, discovered
+    construction links, matched/improved/failed status, and validated aggregate
+    counts/percentages before claiming AlphaEvolve-style breadth across dozens
+    of mathematical problems.
 
 - [ ] Add simple/random starting-construction provenance for constructive-math
       benchmarks.

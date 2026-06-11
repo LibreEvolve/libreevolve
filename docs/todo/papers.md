@@ -2826,13 +2826,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     AlphaEvolve was applied to a curated set of over 50 mathematical problems
     spanning more than five branches, rediscovered the best known
     constructions in about 75% of cases, and improved the SOTA in about 20%.
-  - Current evidence: the Appendix B registry is a thirteen-family coverage
-    ledger with planned/smoke statuses, expected artifact kinds, and citation
-    metadata. Existing TODOs require construction-data exports, verifier code,
-    target baselines, incumbent handoff, and expert-formulation provenance.
-    They do not yet require a per-problem/per-parameter outcome ledger whose
-    branch labels and matched/improved/failed counts reproduce the Section 3.2
-    aggregate claims.
+  - Current evidence: paper-facing coverage now includes a Section 3.2
+    aggregate-outcome absence boundary in
+    `libreevolve.problems.benchmarks.math_outcomes`. It preserves the
+    over-50-problem, more-than-five-branch, roughly 75% best-known
+    rediscovery, roughly 20% SOTA-improvement, and verification-claim source
+    facts plus the required future per-instance and aggregate fields. It does
+    not yet provide the per-problem/per-parameter outcome ledger whose branch
+    labels and matched/improved/failed counts reproduce the aggregate claims.
   - Required result: add paper/report evidence for constructive-math problem
     instances, branch taxonomy, parameter settings, previous-best references,
     AlphaEvolve/LibreEvolve result status, construction/verifier links, and

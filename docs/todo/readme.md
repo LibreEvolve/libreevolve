@@ -1568,16 +1568,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Spec evidence: AlphaEvolve Section 3.2 reports over 50 mathematical
     problems across more than five branches, with roughly 75% matching best
     known constructions and roughly 20% improving SOTA.
-  - Current evidence: README describes the Appendix B registry as thirteen
-    constructive-math families with one smoke fixture and planned entries for
-    the rest. That is a family/status and expected-artifact ledger, not a
-    per-problem/per-parameter outcome report with branch taxonomy, previous
-    best references, construction links, and matched/improved aggregate
-    percentages.
+  - Current evidence: README now points to
+    `libreevolve.problems.benchmarks.math_outcomes`, which records the
+    Section 3.2 aggregate-outcome absence boundary and validates the future
+    per-instance and aggregate fields. README still says per-problem rows,
+    branch taxonomy, construction/verifier artifacts, outcome counts, and
+    percentage recomputation are `not_recorded_locally`.
   - Required result: when constructive-math outcome reports land, update
     README, ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes Appendix B family coverage from AlphaEvolve-style aggregate
-    mathematical breadth and SOTA-rate claims.
+    distinguishes Appendix B family coverage and Section 3.2 absence-boundary
+    metadata from AlphaEvolve-style aggregate mathematical breadth and
+    SOTA-rate claims.
 
 - [ ] Keep README constructive-math starting-point wording scoped until
       simple/random construction provenance exists.

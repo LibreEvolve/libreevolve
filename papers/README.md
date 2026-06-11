@@ -146,12 +146,14 @@ Appendix B says reported construction data and verification code
 appear in an accompanying Google Colab; this registry is not that
 Colab-equivalent evidence surface and does not yet store construction-data
 exports or runnable verifier-code artifacts.
-It also is not the Section 3.2 aggregate mathematical-outcome evidence: the
-paper reports over 50 problems across more than five branches, with roughly
-75% matching best known constructions and roughly 20% improving SOTA.
-LibreEvolve still needs per-problem/per-parameter rows, branch labels,
-previous-best references, construction/verifier links, outcome statuses, and
-validated aggregate percentages before making that class of breadth claim.
+For Section 3.2 aggregate mathematical-outcome evidence,
+`libreevolve.problems.benchmarks.math_outcomes` now records an absence boundary
+for the paper's over-50-problem, more-than-five-branch, roughly 75%
+best-known rediscovery, roughly 20% SOTA-improvement, and verification-claim
+source facts. It validates the required future per-instance and aggregate
+fields, but per-problem/per-parameter rows, branch labels, previous-best
+references, construction/verifier links, outcome statuses, and recomputed
+aggregate percentages remain absent.
 For Appendix B.4 uncertainty-inequality evidence, the registry now records the
 source formulation, the `[33]` prior-bound rounding distinction (`0.353`
 stated versus `0.3523` rounded), the first-version Hermite-polynomial result

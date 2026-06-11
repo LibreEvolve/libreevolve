@@ -189,6 +189,11 @@ from libreevolve.problems.benchmarks.matrix_results import (
     validate_matrix_tensor_rank_runtime_boundary,
     write_strassen_2x2_publication_bundle,
 )
+from libreevolve.problems.benchmarks.math_outcomes import (
+    MATH_OUTCOME_BOUNDARY_SCHEMA,
+    alphaevolve_math_outcome_boundary,
+    validate_math_outcome_boundary,
+)
 from libreevolve.problems.benchmarks.paper_artifact_roles import (
     PAPER_ARTIFACT_LINKAGE_SCHEMA,
     PAPER_ARTIFACT_ROLE_SCHEMA,
@@ -296,6 +301,7 @@ __all__ = [
     "MATRIX_SWEEP_SPACE_RUNTIME_SCHEMA",
     "MATRIX_TENSOR_RANK_SCHEMA",
     "MATRIX_TENSOR_RANK_RUNTIME_SCHEMA",
+    "MATH_OUTCOME_BOUNDARY_SCHEMA",
     "STRASSEN_2X2_PUBLICATION_BUNDLE_ROOT",
     "STRASSEN_2X2_PUBLICATION_BUNDLE_SEEDS",
     "PAPER_ARTIFACT_ROLE_SCHEMA",
@@ -320,6 +326,7 @@ __all__ = [
     "appendix_a_matrix_subset_scope_record",
     "alphaevolve_companion_colab_source_record",
     "alphaevolve_follow_on_math_source_record",
+    "alphaevolve_math_outcome_boundary",
     "alphaevolve_follow_on_problem_coverage_record",
     "alphaevolve_paper_artifact_role_records",
     "alphaevolve_paper_artifact_linkage_record",
@@ -444,6 +451,7 @@ __all__ = [
     "validate_strassen_2x2_publication_bundle",
     "validate_matrix_tensor_rank_evidence",
     "validate_matrix_tensor_rank_runtime_boundary",
+    "validate_math_outcome_boundary",
     "validate_paper_artifact_roles",
     "validate_paper_artifact_linkage",
     "validate_paper_result_certification",

@@ -3674,9 +3674,11 @@ middle, and `n = 21` circles in a perimeter-4 rectangle improving `2.364` to
 display `sum_of_radii >= 2.365`, distinct from the text value `2.3658`. The
 unit-square row keeps the checked-in 26-circle fixture scoped as smoke-only.
 Validated `sum_of_radii_result_boundary` entries record future placement,
-container, containment, non-overlap, perimeter, recomputed-sum, and
-figure-panel fields required before local reproduction can be claimed. The
-actual B.12-B.13 placement payloads and exact certificates remain absent.
+container, containment, non-overlap, perimeter, recomputed-sum, and Figure 14
+panel artifact path/hash fields required before local reproduction can be
+claimed, with container and panel artifacts explicitly `not_recorded_locally`.
+The actual B.12-B.13 container artifacts, placement payloads, panel artifacts,
+and exact certificates remain absent.
 `libreevolve.problems.benchmarks.math_outcomes` now records a Section 3.2
 aggregate-outcome absence boundary: over 50 mathematical problems, more than
 five branches, roughly 75% best-known rediscovery, roughly 20% SOTA

@@ -772,6 +772,8 @@ EXPECTED_B12_SUM_OF_RADII_REQUIRED_FIELDS = (
     "non_overlap_certificate_sha256",
     "recomputed_sum_of_radii",
     "figure_panel_id",
+    "figure_panel_artifact_path",
+    "figure_panel_artifact_sha256",
 )
 EXPECTED_B13_SUM_OF_RADII_REQUIRED_FIELDS = (
     "result_id",
@@ -791,6 +793,8 @@ EXPECTED_B13_SUM_OF_RADII_REQUIRED_FIELDS = (
     "non_overlap_certificate_sha256",
     "recomputed_sum_of_radii",
     "figure_panel_id",
+    "figure_panel_artifact_path",
+    "figure_panel_artifact_sha256",
 )
 EXPECTED_SUM_OF_RADII_SUMMARIES = {
     "circle_packing_unit_square": {
@@ -827,6 +831,8 @@ EXPECTED_SUM_OF_RADII_ROWS = {
             "reported_sum_of_radii": 2.635,
             "caption_sum_of_radii_relation": "sum_of_radii >= 2.635",
             "reported_improvement_direction": "larger_sum_of_radii",
+            "container_artifact_status": "not_recorded_locally",
+            "figure_panel_artifact_status": "not_recorded_locally",
         },
         {
             "result_id": "b12_unit_square_n32",
@@ -836,6 +842,8 @@ EXPECTED_SUM_OF_RADII_ROWS = {
             "reported_sum_of_radii": 2.937,
             "caption_sum_of_radii_relation": "sum_of_radii >= 2.937",
             "reported_improvement_direction": "larger_sum_of_radii",
+            "container_artifact_status": "not_recorded_locally",
+            "figure_panel_artifact_status": "not_recorded_locally",
         },
     ),
     "circle_packing_perimeter4_rectangle": (
@@ -847,6 +855,9 @@ EXPECTED_SUM_OF_RADII_ROWS = {
             "reported_sum_of_radii": 2.3658,
             "caption_sum_of_radii_relation": "sum_of_radii >= 2.365",
             "reported_improvement_direction": "larger_sum_of_radii",
+            "container_artifact_status": "not_recorded_locally",
+            "rectangle_dimensions_status": "not_recorded_locally",
+            "figure_panel_artifact_status": "not_recorded_locally",
         },
     ),
 }
@@ -1993,13 +2004,20 @@ def _validate_sum_of_radii_boundary(
             elif actual != expected_value:
                 issues.append(AppendixBRegistryIssue(f"invalid_sum_of_radii_witness_{field}", f"sum-of-radii witness {field} must match the AlphaEvolve result summary", family_id))
         required_status_fields = [
+            "container_artifact_status",
             "circle_placement_artifact_status",
             "containment_certificate_status",
             "non_overlap_certificate_status",
             "recomputed_sum_of_radii_status",
+            "figure_panel_artifact_status",
         ]
         if family_id == "circle_packing_perimeter4_rectangle":
-            required_status_fields.append("rectangle_perimeter_certificate_status")
+            required_status_fields.extend(
+                [
+                    "rectangle_dimensions_status",
+                    "rectangle_perimeter_certificate_status",
+                ]
+            )
         for field in required_status_fields:
             if witness.get(field) != "not_recorded_locally":
                 issues.append(AppendixBRegistryIssue(f"invalid_sum_of_radii_{field}", f"sum-of-radii {field} must be not_recorded_locally in the absence boundary", family_id))

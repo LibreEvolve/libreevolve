@@ -156,7 +156,8 @@ sum-of-radii boundaries: `n = 26` unit-square circles improving `2.634` to
 14 maps these to left, middle, and right panels; the B.13 row also preserves
 the caption display `sum_of_radii >= 2.365` separately from the text value
 `2.3658`. The unit-square boundary keeps the checked-in 26-circle fixture
-scoped as smoke-only, while the AlphaEvolve placement payloads remain absent.
+scoped as smoke-only, while the AlphaEvolve container artifacts, placement
+payloads, Figure 14 panel artifacts, and exact certificates remain absent.
 Appendix B says reported construction data and verification code
 appear in an accompanying Google Colab; this registry is not that
 Colab-equivalent evidence surface and does not yet store construction-data

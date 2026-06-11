@@ -825,7 +825,9 @@ def test_appendix_b_registry_requires_sum_of_radii_boundary(tmp_path):
     first = boundary["missing_witnesses"][0]
     first["circle_count"] = 25
     first["reported_sum_of_radii"] = 2.0
+    first["container_artifact_status"] = "recorded"
     first["circle_placement_artifact_status"] = "recorded"
+    first["figure_panel_artifact_status"] = "recorded"
     first["claim_boundary"] = "Placement exists."
     boundary["missing_witnesses"] = boundary["missing_witnesses"][:1]
     registry = tmp_path / "registry.json"
@@ -842,7 +844,9 @@ def test_appendix_b_registry_requires_sum_of_radii_boundary(tmp_path):
     assert "invalid_sum_of_radii_missing_witness_count" in codes
     assert "invalid_sum_of_radii_witness_circle_count" in codes
     assert "invalid_sum_of_radii_witness_reported_sum_of_radii" in codes
+    assert "invalid_sum_of_radii_container_artifact_status" in codes
     assert "invalid_sum_of_radii_circle_placement_artifact_status" in codes
+    assert "invalid_sum_of_radii_figure_panel_artifact_status" in codes
     assert "missing_sum_of_radii_claim_boundary" in codes
     assert "invalid_sum_of_radii_improvement_direction" in codes
     assert "missing_sum_of_radii_witness_id" in codes
@@ -852,14 +856,17 @@ def test_appendix_b_registry_requires_rectangle_sum_of_radii_boundary(tmp_path):
     data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
     family = next(family for family in data["families"] if family["id"] == "circle_packing_perimeter4_rectangle")
     boundary = family["sum_of_radii_result_boundary"]
+    boundary["missing_witnesses"][0]["rectangle_dimensions_status"] = "recorded"
     boundary["missing_witnesses"][0]["rectangle_perimeter_certificate_status"] = "recorded"
     registry = tmp_path / "registry.json"
     registry.write_text(json.dumps(data), encoding="utf-8")
 
     report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+    codes = {issue.code for issue in report.issues}
 
     assert report.ok is False
-    assert [issue.code for issue in report.issues] == ["invalid_sum_of_radii_rectangle_perimeter_certificate_status"]
+    assert "invalid_sum_of_radii_rectangle_dimensions_status" in codes
+    assert "invalid_sum_of_radii_rectangle_perimeter_certificate_status" in codes
     assert report.issues[0].family_id == "circle_packing_perimeter4_rectangle"
 
 

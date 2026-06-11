@@ -2718,16 +2718,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     prior/current values, Figure 14 panel linkage, B.13 caption display, and
     the smoke-only boundary for the checked-in 26-circle fixture through
     validated `sum_of_radii_result_boundary` entries. It still does not retain
-    real circle-center/radius payloads, payload hashes, exact-count checks,
-    containment certificates, pairwise non-overlap certificates,
-    rectangle-perimeter proof, recomputed sums of radii, or rendered Figure 14
-    artifacts.
-  - Required result: add paper/report evidence for the missing Appendix
-    B.12-B.13 witness artifacts: circle center/radius artifact hashes,
+    real container artifacts, circle-center/radius payloads, payload hashes,
     exact-count checks, containment certificates, pairwise non-overlap
-    certificates, rectangle-perimeter proof, recomputed sums of radii, source
-    section location, and README/ROADMAP text that keeps the smoke fixture
-    distinct from full Appendix B packing evidence.
+    certificates, rectangle dimensions, rectangle-perimeter proof, recomputed
+    sums of radii, or rendered Figure 14 artifacts.
+  - Required result: add paper/report evidence for the missing Appendix
+    B.12-B.13 witness artifacts: container artifact hashes, circle
+    center/radius artifact hashes, exact-count checks, containment
+    certificates, pairwise non-overlap certificates, rectangle dimensions,
+    rectangle-perimeter proof, recomputed sums of radii, Figure 14 panel
+    artifacts, source section location, and README/ROADMAP text that keeps the
+    smoke fixture distinct from full Appendix B packing evidence.
 
 - [ ] Track initial-program idea provenance for human-seeded benchmark claims.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.1 identifies the

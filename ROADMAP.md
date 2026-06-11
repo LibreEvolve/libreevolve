@@ -755,9 +755,10 @@ is not yet an AlphaEvolve reproduction.
   rectangle row, prior and reported sums of radii, Figure 14 panel links, the
   B.13 caption display `sum_of_radii >= 2.365` versus text value `2.3658`,
   and required future placement, containment, non-overlap, perimeter,
-  recomputed-sum, and figure-panel fields. The checked-in 26-circle fixture
-  remains explicitly smoke-only, and the actual AlphaEvolve placement payloads
-  and exact certificates remain open.
+  recomputed-sum, container-artifact, and Figure 14 panel artifact path/hash
+  fields. The checked-in 26-circle fixture remains explicitly smoke-only, and
+  the actual AlphaEvolve container artifacts, placement payloads, panel
+  artifacts, and exact certificates remain open.
 - Keep paper artifact-role attribution separate from artifact availability:
   `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
   AlphaEvolve PDF contribution records for figure creators and companion

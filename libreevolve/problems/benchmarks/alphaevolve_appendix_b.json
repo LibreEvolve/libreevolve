@@ -963,7 +963,9 @@
           "non_overlap_certificate_path",
           "non_overlap_certificate_sha256",
           "recomputed_sum_of_radii",
-          "figure_panel_id"
+          "figure_panel_id",
+          "figure_panel_artifact_path",
+          "figure_panel_artifact_sha256"
         ],
         "missing_witnesses": [
           {
@@ -974,11 +976,13 @@
             "reported_sum_of_radii": 2.635,
             "caption_sum_of_radii_relation": "sum_of_radii >= 2.635",
             "reported_improvement_direction": "larger_sum_of_radii",
+            "container_artifact_status": "not_recorded_locally",
             "circle_placement_artifact_status": "not_recorded_locally",
             "containment_certificate_status": "not_recorded_locally",
             "non_overlap_certificate_status": "not_recorded_locally",
             "recomputed_sum_of_radii_status": "not_recorded_locally",
-            "claim_boundary": "The registry records the paper's B.12 n=26 unit-square summary but does not claim a local AlphaEvolve placement payload, containment certificate, non-overlap certificate, or recomputed sum of radii."
+            "figure_panel_artifact_status": "not_recorded_locally",
+            "claim_boundary": "The registry records the paper's B.12 n=26 unit-square summary but does not claim a local AlphaEvolve container artifact, placement payload, containment certificate, non-overlap certificate, Figure 14 panel artifact, or recomputed sum of radii."
           },
           {
             "result_id": "b12_unit_square_n32",
@@ -988,11 +992,13 @@
             "reported_sum_of_radii": 2.937,
             "caption_sum_of_radii_relation": "sum_of_radii >= 2.937",
             "reported_improvement_direction": "larger_sum_of_radii",
+            "container_artifact_status": "not_recorded_locally",
             "circle_placement_artifact_status": "not_recorded_locally",
             "containment_certificate_status": "not_recorded_locally",
             "non_overlap_certificate_status": "not_recorded_locally",
             "recomputed_sum_of_radii_status": "not_recorded_locally",
-            "claim_boundary": "The registry records the paper's B.12 n=32 unit-square summary but does not claim a local AlphaEvolve placement payload, containment certificate, non-overlap certificate, or recomputed sum of radii."
+            "figure_panel_artifact_status": "not_recorded_locally",
+            "claim_boundary": "The registry records the paper's B.12 n=32 unit-square summary but does not claim a local AlphaEvolve container artifact, placement payload, containment certificate, non-overlap certificate, Figure 14 panel artifact, or recomputed sum of radii."
           }
         ]
       },
@@ -1034,7 +1040,9 @@
           "non_overlap_certificate_path",
           "non_overlap_certificate_sha256",
           "recomputed_sum_of_radii",
-          "figure_panel_id"
+          "figure_panel_id",
+          "figure_panel_artifact_path",
+          "figure_panel_artifact_sha256"
         ],
         "missing_witnesses": [
           {
@@ -1045,12 +1053,15 @@
             "reported_sum_of_radii": 2.3658,
             "caption_sum_of_radii_relation": "sum_of_radii >= 2.365",
             "reported_improvement_direction": "larger_sum_of_radii",
+            "container_artifact_status": "not_recorded_locally",
+            "rectangle_dimensions_status": "not_recorded_locally",
             "circle_placement_artifact_status": "not_recorded_locally",
             "rectangle_perimeter_certificate_status": "not_recorded_locally",
             "containment_certificate_status": "not_recorded_locally",
             "non_overlap_certificate_status": "not_recorded_locally",
             "recomputed_sum_of_radii_status": "not_recorded_locally",
-            "claim_boundary": "The registry records the paper's B.13 n=21 perimeter-4 rectangle summary but does not claim a local placement payload, rectangle-perimeter certificate, containment certificate, non-overlap certificate, or recomputed sum of radii."
+            "figure_panel_artifact_status": "not_recorded_locally",
+            "claim_boundary": "The registry records the paper's B.13 n=21 perimeter-4 rectangle summary but does not claim a local container artifact, rectangle dimensions, placement payload, rectangle-perimeter certificate, containment certificate, non-overlap certificate, Figure 14 panel artifact, or recomputed sum of radii."
           }
         ]
       },

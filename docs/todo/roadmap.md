@@ -2167,7 +2167,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     Appendix B crosswalk from `19` original result ids across `13` families to
     follow-on problem pages and notebook-link statuses without claiming
     normalized result rows, construction payloads, verifier artifacts, or
-    recomputed values.
+    recomputed values. ROADMAP now also records follow-on artifact-rights
+    templates for local generated outputs, adapted verification code, and
+    copied problem statements while preserving the zero-current copied/adapted
+    generated-artifact boundary.
   - Required result: keep ROADMAP, README, papers index, and code/paper TODOs
     snapshot-scoped for the counted 67-versus-68 source mismatch and avoid
     claiming full notebook cell inventories.

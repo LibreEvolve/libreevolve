@@ -7,6 +7,7 @@ from libreevolve.problems.benchmarks.appendix_b_registry import (
 )
 from libreevolve.problems.benchmarks.follow_on_sources import (
     ALPHAEVOLVE_FOLLOW_ON_MATH_SOURCE_SCHEMA,
+    alphaevolve_follow_on_artifact_rights_record,
     alphaevolve_follow_on_math_source_record,
     alphaevolve_follow_on_repository_rights_manifest_record,
     alphaevolve_follow_on_repository_rights_record,
@@ -16,6 +17,7 @@ from libreevolve.problems.benchmarks.follow_on_sources import (
     alphaevolve_follow_on_tao_blog_manifest_record,
     alphaevolve_follow_on_tao_blog_record,
     render_alphaevolve_follow_on_math_source_summary,
+    validate_alphaevolve_follow_on_artifact_rights,
     validate_alphaevolve_follow_on_math_source,
     validate_alphaevolve_follow_on_repository_rights,
     validate_alphaevolve_follow_on_repository_rights_manifest,
@@ -82,6 +84,7 @@ def test_validate_alphaevolve_follow_on_math_source_accepts_builtin_record():
     )
     assert b8_row["follow_on_problem_page_ids"] == [50]
     assert b8_row["notebook_mapping_statuses"] == ["external_alphaevolve_results_colab"]
+    assert recordset["required_follow_on_work"] == []
 
 
 def test_validate_alphaevolve_follow_on_math_source_loads_json_file(tmp_path):
@@ -151,6 +154,16 @@ def test_validate_alphaevolve_follow_on_repository_rights_accepts_builtin_record
     assert validation.citation_required is True
     assert validation.artifact_license_mapping_count == 11
     assert validation.issues == []
+    generated_rights = recordset["generated_artifact_rights"]
+    assert generated_rights["current_local_generated_artifact_count"] == 0
+    assert len(generated_rights["record_templates"]) == 3
+    assert generated_rights["record_templates"][0] == alphaevolve_follow_on_artifact_rights_record(
+        "generated_artifact"
+    )
+    assert generated_rights["record_templates"][1]["material_type"] == "verification_code"
+    assert generated_rights["record_templates"][1]["license"] == "Apache-2.0"
+    assert generated_rights["record_templates"][2]["material_type"] == "problem_statements"
+    assert generated_rights["record_templates"][2]["license"] == "CC-BY-4.0"
 
 
 def test_validate_alphaevolve_follow_on_repository_rights_manifest_accepts_builtin_record():
@@ -177,6 +190,61 @@ def test_validate_alphaevolve_follow_on_repository_rights_loads_json_file(tmp_pa
     assert validation.ok is True
 
 
+def test_validate_alphaevolve_follow_on_artifact_rights_accepts_local_generated_artifact():
+    recordset = alphaevolve_follow_on_artifact_rights_record("notebook")
+
+    validation = validate_alphaevolve_follow_on_artifact_rights(recordset)
+
+    assert validation.ok is True
+    assert validation.rights_count == 1
+    assert validation.citation_required is False
+    assert recordset["license"] == "local_project_license"
+    assert recordset["rights_holder"] is None
+    assert validation.issues == []
+
+
+def test_validate_alphaevolve_follow_on_artifact_rights_accepts_repository_material():
+    recordset = alphaevolve_follow_on_artifact_rights_record(
+        "verifier",
+        material_type="verification_code",
+        source_relationship="adapted_from_follow_on_repository",
+    )
+
+    validation = validate_alphaevolve_follow_on_artifact_rights(recordset)
+
+    assert validation.ok is True
+    assert validation.rights_count == 1
+    assert validation.citation_required is True
+    assert recordset["license"] == "Apache-2.0"
+    assert recordset["rights_holder"] == "Google LLC"
+    assert validation.issues == []
+
+
+def test_validate_alphaevolve_follow_on_artifact_rights_rejects_license_and_boundary_drift():
+    recordset = alphaevolve_follow_on_artifact_rights_record(
+        "problem_statement",
+        material_type="problem_statements",
+        source_relationship="copied_from_follow_on_repository",
+    )
+    recordset["license"] = "MIT"
+    recordset["rights_holder"] = "LibreEvolve"
+    recordset["citation_required"] = False
+    recordset["as_is_disclaimer_applies"] = False
+    recordset["must_keep_original_pdf_rights_separate"] = False
+    recordset["official_google_product"] = True
+
+    validation = validate_alphaevolve_follow_on_artifact_rights(recordset)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_follow_on_material_license" in codes
+    assert "invalid_follow_on_rights_holder" in codes
+    assert "invalid_follow_on_citation_required" in codes
+    assert "missing_follow_on_as_is_disclaimer" in codes
+    assert "invalid_must_keep_original_pdf_rights_separate" in codes
+    assert "invalid_follow_on_official_google_product" in codes
+
+
 def test_validate_alphaevolve_follow_on_repository_rights_rejects_source_use_drift():
     recordset = copy.deepcopy(alphaevolve_follow_on_repository_rights_record())
     recordset["repository"]["commit"] = "0" * 40
@@ -188,6 +256,7 @@ def test_validate_alphaevolve_follow_on_repository_rights_rejects_source_use_dri
     recordset["role_attribution"]["contributors"][0]["roles"] = ["review"]
     recordset["third_party_origins"][0]["url"] = "https://example.com"
     recordset["boundary"]["distinct_from_libreevolve_mit_license"] = False
+    recordset["generated_artifact_rights"]["record_templates"][0]["rights_holder"] = "Google LLC"
 
     validation = validate_alphaevolve_follow_on_repository_rights(recordset)
     codes = {issue.code for issue in validation.issues}
@@ -202,6 +271,7 @@ def test_validate_alphaevolve_follow_on_repository_rights_rejects_source_use_dri
     assert "repository_rights_contributor_roles_mismatch" in codes
     assert "invalid_repository_rights_third_party_origin_url" in codes
     assert "invalid_repository_rights_boundary_distinct_from_libreevolve_mit_license" in codes
+    assert "follow_on_local_rights_holder_overclaim" in codes
 
 
 def test_validate_alphaevolve_follow_on_repository_rights_manifest_rejects_surface_and_policy_drift():
@@ -213,6 +283,7 @@ def test_validate_alphaevolve_follow_on_repository_rights_manifest_rejects_surfa
     source["claim_artifact_links"]["repository_rights_used_by"] = ["README.md"]
     source["claim_artifact_links"]["policy"] = "same_as_libreevolve_license"
     source["reuse_policy"]["publication_ready_without_rights_review"] = True
+    source["reuse_policy"]["artifact_rights_templates_attached"] = False
     source["reuse_policy"]["scope"] = "LibreEvolve project licensing"
 
     validation = validate_alphaevolve_follow_on_repository_rights_manifest(recordset)
@@ -225,6 +296,7 @@ def test_validate_alphaevolve_follow_on_repository_rights_manifest_rejects_surfa
     assert "repository_rights_claim_surface_mismatch" in codes
     assert "invalid_repository_rights_claim_policy" in codes
     assert "invalid_repository_rights_reuse_policy_publication_ready_without_rights_review" in codes
+    assert "invalid_repository_rights_reuse_policy_artifact_rights_templates_attached" in codes
     assert "invalid_repository_rights_reuse_policy_scope" in codes
 
 
@@ -558,7 +630,7 @@ def test_validate_alphaevolve_follow_on_math_source_rejects_scope_and_source_use
     assert "invalid_source_use_repository_software_license" in codes
     assert "invalid_source_use_repository_materials_license" in codes
     assert "invalid_source_use_citation_required" in codes
-    assert "missing_required_follow_on_work" in codes
+    assert "required_follow_on_work_mismatch" in codes
 
 
 def test_validate_alphaevolve_follow_on_math_source_rejects_appendix_b_mapping_drift():

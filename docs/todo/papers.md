@@ -3277,6 +3277,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     problem pages and notebook-link statuses while leaving normalized result
     rows, construction payloads, verifier artifacts, recomputed values, and
     full notebook cell inventories outside the claim.
+    `papers/follow_on_repository_rights.json` now also attaches validated
+    follow-on artifact-rights templates for local generated outputs, adapted
+    verification code, and copied problem statements, while preserving
+    zero-current-local-generated-artifact evidence for copied/adapted follow-on
+    repository material.
   - Completed result: source-manifest validation now covers numbered problem
     pages with artifact-presence flags and README/ROADMAP/papers wording keeps
     problem-count and full-cell-inventory claims snapshot-scoped.

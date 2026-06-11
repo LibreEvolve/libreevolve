@@ -23,6 +23,9 @@ ALPHAEVOLVE_FOLLOW_ON_REPOSITORY_RIGHTS_SCHEMA = (
 ALPHAEVOLVE_FOLLOW_ON_REPOSITORY_RIGHTS_MANIFEST_SCHEMA = (
     "libreevolve.alphaevolve_follow_on_repository_rights_manifest.v1"
 )
+ALPHAEVOLVE_FOLLOW_ON_ARTIFACT_RIGHTS_SCHEMA = (
+    "libreevolve.alphaevolve_follow_on_artifact_rights.v1"
+)
 ALPHAEVOLVE_FOLLOW_ON_RUNTIME_ABSENCE_SCHEMA = (
     "libreevolve.alphaevolve_follow_on_runtime_absence.v1"
 )
@@ -118,6 +121,22 @@ EXPECTED_FOLLOW_ON_REPOSITORY_LICENSE_MAPPING = {
     "notebook_prompt_text": "CC-BY-4.0",
     "status_artifacts": "CC-BY-4.0",
     "result_distribution_artifacts": "CC-BY-4.0",
+}
+FOLLOW_ON_ARTIFACT_MATERIAL_TYPES = frozenset(
+    {"local_generated_no_follow_on_repository_material"}
+    | set(EXPECTED_FOLLOW_ON_REPOSITORY_LICENSE_MAPPING)
+)
+FOLLOW_ON_ARTIFACT_SOURCE_RELATIONSHIPS = frozenset(
+    {
+        "local_generated_no_follow_on_repository_material_copied",
+        "copied_from_follow_on_repository",
+        "adapted_from_follow_on_repository",
+        "references_follow_on_repository_only",
+    }
+)
+FOLLOW_ON_RIGHTS_LICENSE_BY_MATERIAL_TYPE = {
+    "local_generated_no_follow_on_repository_material": "local_project_license",
+    **EXPECTED_FOLLOW_ON_REPOSITORY_LICENSE_MAPPING,
 }
 EXPECTED_FOLLOW_ON_RUNTIME_SURFACES = {
     "README.md",
@@ -641,8 +660,46 @@ def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
             "citation_arxiv_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
         },
         "required_follow_on_work": [
-            "attach_rights_attribution_to_generated_artifacts",
         ],
+    }
+
+
+def alphaevolve_follow_on_artifact_rights_record(
+    artifact_kind: str,
+    *,
+    material_type: str = "local_generated_no_follow_on_repository_material",
+    source_relationship: str = "local_generated_no_follow_on_repository_material_copied",
+) -> dict[str, Any]:
+    expected_license = FOLLOW_ON_RIGHTS_LICENSE_BY_MATERIAL_TYPE.get(
+        material_type,
+        "unknown",
+    )
+    is_local = material_type == "local_generated_no_follow_on_repository_material"
+    return {
+        "schema": ALPHAEVOLVE_FOLLOW_ON_ARTIFACT_RIGHTS_SCHEMA,
+        "source_paper_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
+        "source_manifest": EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE,
+        "repository_rights_manifest": EXPECTED_FOLLOW_ON_REPOSITORY_RIGHTS_MANIFEST_FILE,
+        "repository_source_id": "alphaevolve_repository_of_problems",
+        "repository_commit": EXPECTED_REPOSITORY_COMMIT,
+        "artifact_kind": artifact_kind,
+        "material_type": material_type,
+        "source_relationship": source_relationship,
+        "license": expected_license,
+        "rights_holder": None if is_local else "Google LLC",
+        "source_rights_holder_required": not is_local,
+        "citation_required": not is_local,
+        "reuse_policy": (
+            "local_project_terms_apply_no_follow_on_repository_material_copied"
+            if is_local
+            else "follow_on_repository_terms_apply"
+        ),
+        "must_keep_original_pdf_rights_separate": True,
+        "must_keep_companion_repository_rights_separate": True,
+        "must_keep_libreevolve_mit_license_separate": True,
+        "as_is_disclaimer_applies": not is_local,
+        "official_google_product": False,
+        "local_project_endorsement": False,
     }
 
 
@@ -726,6 +783,36 @@ def alphaevolve_follow_on_repository_rights_record() -> dict[str, Any]:
             "generated_artifacts_need_source_relationship": True,
             "local_project_endorsement": False,
         },
+        "generated_artifact_rights": {
+            "schema": ALPHAEVOLVE_FOLLOW_ON_ARTIFACT_RIGHTS_SCHEMA,
+            "attachment_policy": (
+                "generated_follow_on_artifacts_must_attach_source_rights_"
+                "records_that_distinguish_local_outputs_from_copied_or_"
+                "adapted_repository_material"
+            ),
+            "current_local_generated_artifact_count": 0,
+            "record_templates": [
+                alphaevolve_follow_on_artifact_rights_record(
+                    "generated_artifact"
+                ),
+                alphaevolve_follow_on_artifact_rights_record(
+                    "verification_code",
+                    material_type="verification_code",
+                    source_relationship="adapted_from_follow_on_repository",
+                ),
+                alphaevolve_follow_on_artifact_rights_record(
+                    "problem_statement",
+                    material_type="problem_statements",
+                    source_relationship="copied_from_follow_on_repository",
+                ),
+            ],
+            "claim_boundary": (
+                "The templates attach rights attribution policy for any future "
+                "generated follow-on artifacts, but do not claim that copied "
+                "or adapted repository material is currently checked into "
+                "LibreEvolve generated artifacts."
+            ),
+        },
     }
 
 
@@ -751,6 +838,9 @@ def alphaevolve_follow_on_repository_rights_manifest_record() -> dict[str, Any]:
                 "reuse_policy": {
                     "copied_repository_material_requires_source_attribution": True,
                     "generated_local_artifacts_require_source_relationship": True,
+                    "artifact_rights_record_schema": ALPHAEVOLVE_FOLLOW_ON_ARTIFACT_RIGHTS_SCHEMA,
+                    "artifact_rights_templates_attached": True,
+                    "current_local_generated_artifact_count": 0,
                     "publication_ready_without_rights_review": False,
                     "scope": (
                         "follow-on problem repository source-use terms, not original "
@@ -1042,9 +1132,7 @@ def alphaevolve_follow_on_source_manifest_record() -> dict[str, Any]:
                         "or per-problem inventory"
                     ),
                 },
-                "remaining_work": [
-                    "attach_rights_attribution_to_generated_artifacts",
-                ],
+                "remaining_work": [],
             }
         ],
     }
@@ -1148,6 +1236,7 @@ def validate_alphaevolve_follow_on_repository_rights(
     _validate_repository_rights_role_attribution(data.get("role_attribution"), issues)
     _validate_repository_rights_third_party_origins(data.get("third_party_origins"), issues)
     _validate_repository_rights_boundary(data.get("boundary"), issues)
+    _validate_repository_generated_artifact_rights(data.get("generated_artifact_rights"), issues)
     return AlphaEvolveFollowOnRepositoryRightsValidation(
         ok=not issues,
         rights_count=1 if isinstance(data.get("rights"), dict) else 0,
@@ -1187,6 +1276,24 @@ def validate_alphaevolve_follow_on_repository_rights_manifest(
         rights_count=rights_count,
         citation_required=citation_required,
         artifact_license_mapping_count=mapping_count,
+        issues=issues,
+    )
+
+
+def validate_alphaevolve_follow_on_artifact_rights(
+    recordset: object | str | Path | None = None,
+) -> AlphaEvolveFollowOnRepositoryRightsValidation:
+    data, read_issues = _load_follow_on_artifact_rights_recordset(recordset)
+    if read_issues:
+        return AlphaEvolveFollowOnRepositoryRightsValidation(False, 0, False, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[AlphaEvolveFollowOnMathSourceIssue] = []
+    _validate_follow_on_artifact_rights_record(data, issues)
+    return AlphaEvolveFollowOnRepositoryRightsValidation(
+        ok=not issues,
+        rights_count=1 if isinstance(data.get("artifact_kind"), str) and data.get("artifact_kind").strip() else 0,
+        citation_required=data.get("citation_required") is True,
+        artifact_license_mapping_count=1,
         issues=issues,
     )
 
@@ -1383,6 +1490,14 @@ def _load_repository_rights_manifest_recordset(
 ) -> tuple[dict[str, Any] | None, list[AlphaEvolveFollowOnMathSourceIssue]]:
     if recordset is None:
         return alphaevolve_follow_on_repository_rights_manifest_record(), []
+    return _load_recordset(recordset)
+
+
+def _load_follow_on_artifact_rights_recordset(
+    recordset: object | str | Path | None,
+) -> tuple[dict[str, Any] | None, list[AlphaEvolveFollowOnMathSourceIssue]]:
+    if recordset is None:
+        return alphaevolve_follow_on_artifact_rights_record("generated_artifact"), []
     return _load_recordset(recordset)
 
 
@@ -1698,15 +1813,11 @@ def _validate_source_use(value: object, issues: list[AlphaEvolveFollowOnMathSour
 
 
 def _validate_required_follow_on_work(value: object, issues: list[AlphaEvolveFollowOnMathSourceIssue]) -> None:
-    required = {
-        "attach_rights_attribution_to_generated_artifacts",
-    }
     if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
         issues.append(_issue("invalid_required_follow_on_work", "required_follow_on_work must be a list of remaining work ids"))
         return
-    missing = sorted(required - set(value))
-    for work_id in missing:
-        issues.append(_issue("missing_required_follow_on_work", f"required_follow_on_work is missing {work_id}"))
+    if value != []:
+        issues.append(_issue("required_follow_on_work_mismatch", "required_follow_on_work must be empty once source mapping and artifact-rights templates are recorded"))
 
 
 def _validate_follow_on_source_manifest_source(
@@ -1782,15 +1893,11 @@ def _validate_follow_on_manifest_remaining_work(
     value: object,
     issues: list[AlphaEvolveFollowOnMathSourceIssue],
 ) -> None:
-    expected = {
-        "attach_rights_attribution_to_generated_artifacts",
-    }
     if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
         issues.append(_issue("invalid_manifest_remaining_work", "remaining_work must list unsatisfied follow-on work ids"))
         return
-    actual = set(value)
-    if actual != expected:
-        issues.append(_issue("manifest_remaining_work_mismatch", "remaining_work must preserve only unsatisfied follow-on inventory, mapping, and rights work"))
+    if value != []:
+        issues.append(_issue("manifest_remaining_work_mismatch", "remaining_work must be empty once follow-on source mapping and artifact-rights templates are recorded"))
 
 
 def _validate_repository_rights_repository(
@@ -1961,6 +2068,132 @@ def _validate_repository_rights_boundary(
             issues.append(_issue(f"invalid_repository_rights_boundary_{field}", f"boundary.{field} must preserve repository rights separation", EXPECTED_REPOSITORY_NAME))
 
 
+def _validate_follow_on_artifact_rights_record(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_follow_on_artifact_rights", "follow-on artifact rights record must be an object", EXPECTED_REPOSITORY_NAME))
+        return
+    expected = {
+        "schema": ALPHAEVOLVE_FOLLOW_ON_ARTIFACT_RIGHTS_SCHEMA,
+        "source_paper_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
+        "source_manifest": EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE,
+        "repository_rights_manifest": EXPECTED_FOLLOW_ON_REPOSITORY_RIGHTS_MANIFEST_FILE,
+        "repository_source_id": "alphaevolve_repository_of_problems",
+        "repository_commit": EXPECTED_REPOSITORY_COMMIT,
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_follow_on_artifact_rights_{field}", f"{field} must identify the pinned follow-on repository rights source", EXPECTED_REPOSITORY_NAME))
+    artifact_kind = value.get("artifact_kind")
+    if not isinstance(artifact_kind, str) or not artifact_kind.strip():
+        issues.append(_issue("invalid_follow_on_artifact_kind", "artifact_kind must identify the generated artifact kind", EXPECTED_REPOSITORY_NAME))
+    material_type = value.get("material_type")
+    if material_type not in FOLLOW_ON_ARTIFACT_MATERIAL_TYPES:
+        issues.append(_issue("invalid_follow_on_material_type", "material_type must identify follow-on software/materials or local-generated scope", EXPECTED_REPOSITORY_NAME))
+        material_type = None
+    relationship = value.get("source_relationship")
+    if relationship not in FOLLOW_ON_ARTIFACT_SOURCE_RELATIONSHIPS:
+        issues.append(_issue("invalid_follow_on_source_relationship", "source_relationship must describe copied/adapted/reference/local scope", EXPECTED_REPOSITORY_NAME))
+    if material_type is not None:
+        expected_license = FOLLOW_ON_RIGHTS_LICENSE_BY_MATERIAL_TYPE[material_type]
+        if value.get("license") != expected_license:
+            issues.append(_issue("invalid_follow_on_material_license", "license must match the follow-on repository material type", EXPECTED_REPOSITORY_NAME))
+        is_local = material_type == "local_generated_no_follow_on_repository_material"
+        if is_local:
+            if relationship != "local_generated_no_follow_on_repository_material_copied":
+                issues.append(_issue("invalid_follow_on_local_source_relationship", "local generated artifacts must not claim copied follow-on repository material", EXPECTED_REPOSITORY_NAME))
+            if value.get("rights_holder") is not None:
+                issues.append(_issue("follow_on_local_rights_holder_overclaim", "local generated artifacts must not claim Google rights holder", EXPECTED_REPOSITORY_NAME))
+            if value.get("source_rights_holder_required") is not False:
+                issues.append(_issue("invalid_follow_on_local_source_rights_holder_required", "local generated artifacts must not require source rights holder attribution", EXPECTED_REPOSITORY_NAME))
+            if value.get("citation_required") is not False:
+                issues.append(_issue("follow_on_local_citation_overclaim", "local generated artifacts with no copied repository material must not claim follow-on citation is required", EXPECTED_REPOSITORY_NAME))
+            if value.get("as_is_disclaimer_applies") is not False:
+                issues.append(_issue("follow_on_local_disclaimer_overclaim", "local generated artifacts must not apply the follow-on repository AS-IS disclaimer", EXPECTED_REPOSITORY_NAME))
+            if value.get("reuse_policy") != "local_project_terms_apply_no_follow_on_repository_material_copied":
+                issues.append(_issue("invalid_follow_on_local_reuse_policy", "local generated artifacts must preserve local-project reuse scope", EXPECTED_REPOSITORY_NAME))
+        else:
+            if relationship not in {
+                "copied_from_follow_on_repository",
+                "adapted_from_follow_on_repository",
+                "references_follow_on_repository_only",
+            }:
+                issues.append(_issue("invalid_follow_on_repository_source_relationship", "follow-on material artifacts must identify copied, adapted, or reference-only scope", EXPECTED_REPOSITORY_NAME))
+            if value.get("rights_holder") != "Google LLC":
+                issues.append(_issue("invalid_follow_on_rights_holder", "follow-on material artifacts must preserve Google LLC rights holder", EXPECTED_REPOSITORY_NAME))
+            if value.get("source_rights_holder_required") is not True:
+                issues.append(_issue("invalid_follow_on_source_rights_holder_required", "follow-on material artifacts must require source rights holder attribution", EXPECTED_REPOSITORY_NAME))
+            if value.get("citation_required") is not True:
+                issues.append(_issue("invalid_follow_on_citation_required", "follow-on material artifacts must preserve the repository citation requirement", EXPECTED_REPOSITORY_NAME))
+            if value.get("as_is_disclaimer_applies") is not True:
+                issues.append(_issue("missing_follow_on_as_is_disclaimer", "follow-on material artifacts must preserve the AS-IS disclaimer boundary", EXPECTED_REPOSITORY_NAME))
+            if value.get("reuse_policy") != "follow_on_repository_terms_apply":
+                issues.append(_issue("invalid_follow_on_repository_reuse_policy", "follow-on material artifacts must preserve follow-on repository reuse terms", EXPECTED_REPOSITORY_NAME))
+    for field in (
+        "must_keep_original_pdf_rights_separate",
+        "must_keep_companion_repository_rights_separate",
+        "must_keep_libreevolve_mit_license_separate",
+    ):
+        if value.get(field) is not True:
+            issues.append(_issue(f"invalid_{field}", f"{field} must be true for follow-on artifact rights rows", EXPECTED_REPOSITORY_NAME))
+    for field in ("official_google_product", "local_project_endorsement"):
+        if value.get(field) is not False:
+            issues.append(_issue(f"invalid_follow_on_{field}", f"{field} must preserve the non-official/non-endorsement boundary", EXPECTED_REPOSITORY_NAME))
+
+
+def _validate_repository_generated_artifact_rights(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_repository_generated_artifact_rights", "generated_artifact_rights must be an object", EXPECTED_REPOSITORY_NAME))
+        return
+    expected = {
+        "schema": ALPHAEVOLVE_FOLLOW_ON_ARTIFACT_RIGHTS_SCHEMA,
+        "attachment_policy": (
+            "generated_follow_on_artifacts_must_attach_source_rights_"
+            "records_that_distinguish_local_outputs_from_copied_or_"
+            "adapted_repository_material"
+        ),
+        "current_local_generated_artifact_count": 0,
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_repository_generated_artifact_rights_{field}", f"generated_artifact_rights.{field} must preserve the follow-on artifact-rights attachment boundary", EXPECTED_REPOSITORY_NAME))
+    templates = value.get("record_templates")
+    if not isinstance(templates, list):
+        issues.append(_issue("invalid_repository_generated_artifact_rights_templates", "generated_artifact_rights.record_templates must be a list", EXPECTED_REPOSITORY_NAME))
+        return
+    if len(templates) != 3:
+        issues.append(_issue("invalid_repository_generated_artifact_rights_template_count", "generated_artifact_rights must include local, adapted-code, and copied-material templates", EXPECTED_REPOSITORY_NAME))
+    expected_templates = [
+        alphaevolve_follow_on_artifact_rights_record("generated_artifact"),
+        alphaevolve_follow_on_artifact_rights_record(
+            "verification_code",
+            material_type="verification_code",
+            source_relationship="adapted_from_follow_on_repository",
+        ),
+        alphaevolve_follow_on_artifact_rights_record(
+            "problem_statement",
+            material_type="problem_statements",
+            source_relationship="copied_from_follow_on_repository",
+        ),
+    ]
+    for index, template in enumerate(templates):
+        _validate_follow_on_artifact_rights_record(template, issues)
+        if index < len(expected_templates) and template != expected_templates[index]:
+            issues.append(_issue("repository_generated_artifact_rights_template_mismatch", "generated_artifact_rights templates must match the pinned local/adapted/copied examples", EXPECTED_REPOSITORY_NAME))
+    claim_boundary = value.get("claim_boundary")
+    if (
+        not isinstance(claim_boundary, str)
+        or "do not claim" not in claim_boundary
+        or "currently checked into" not in claim_boundary
+    ):
+        issues.append(_issue("missing_repository_generated_artifact_rights_boundary", "generated_artifact_rights must avoid claiming current copied/adapted generated artifacts", EXPECTED_REPOSITORY_NAME))
+
+
 def _validate_repository_rights_manifest_source(
     value: object,
     issues: list[AlphaEvolveFollowOnMathSourceIssue],
@@ -2013,6 +2246,9 @@ def _validate_repository_rights_reuse_policy(
     expected = {
         "copied_repository_material_requires_source_attribution": True,
         "generated_local_artifacts_require_source_relationship": True,
+        "artifact_rights_record_schema": ALPHAEVOLVE_FOLLOW_ON_ARTIFACT_RIGHTS_SCHEMA,
+        "artifact_rights_templates_attached": True,
+        "current_local_generated_artifact_count": 0,
         "publication_ready_without_rights_review": False,
     }
     for field, expected_value in expected.items():

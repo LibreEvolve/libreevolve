@@ -1488,7 +1488,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     also names the Appendix B crosswalk from `19` original result ids across
     `13` families to follow-on problem pages and notebook-link statuses without
     treating it as normalized result rows, construction payloads, verifier
-    artifacts, or recomputed values.
+    artifacts, or recomputed values. README now also names the follow-on
+    artifact-rights templates for local generated outputs, adapted verification
+    code, and copied problem statements while preserving the zero-current
+    copied/adapted generated-artifact boundary.
   - Required result: keep README wording explicit that completed follow-on
     evidence covers problem-page, status-bucket, link, hash, notebook-link,
     absence-reason, notebook-hash, scoped artifact-flag, and row evidence, not

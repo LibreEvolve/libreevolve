@@ -161,10 +161,11 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     `2506.13131` versus later-source boundary, records an explicit no-cache
     policy for `2511.02864`, and still rejects a false download-manifest cache
     row until a real cached PDF row is implemented.
-  - Remaining gap: per-problem repository inventory, numbered-page
+  - Later status: per-problem repository inventory, numbered-page
     reconciliation, notebook/prompt/verifier/initial/final artifact metadata,
-    Appendix B claim mapping, generated-artifact rights rows, and cached PDF
-    digest work remain active follow-on TODOs.
+    Appendix B claim mapping, and generated-artifact rights templates have
+    since been recorded; cached PDF digest work remains separate follow-on
+    TODO evidence.
 
 - [x] Add companion-result repository rights and disclaimer provenance.
   - Spec evidence: the `google-deepmind/alphaevolve_results` README declares

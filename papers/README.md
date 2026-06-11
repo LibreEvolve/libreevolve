@@ -1750,9 +1750,13 @@ Implemented:
   requirement, Google LLC copyright, Apache-2.0 software / CC-BY-4.0 materials
   split, artifact-type license mapping, AS-IS and non-official-product
   disclaimers, Gómez-Serrano/Tao role attribution, Problem 65's official IMO
-  origin, docs/TODO claim-surface links, and reuse policy. It is source-use
-  provenance for the later problem repository, not original AlphaEvolve PDF
-  rights, `alphaevolve_results` companion rights, or LibreEvolve licensing.
+  origin, docs/TODO claim-surface links, reuse policy, and validated
+  artifact-rights templates for local generated outputs, adapted verification
+  code, and copied problem statements. It is source-use provenance for the
+  later problem repository, not original AlphaEvolve PDF rights,
+  `alphaevolve_results` companion rights, or LibreEvolve licensing, and it
+  records zero current copied/adapted follow-on repository material in
+  LibreEvolve generated artifacts.
 - `papers/follow_on_runtime_absence.json`: follow-on problem-repository
   runtime-absence sidecar. It records the pinned README/tree evidence for 28
   notebook paths, Git blob ids, byte counts, raw SHA-256 hashes,

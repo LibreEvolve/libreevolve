@@ -887,7 +887,11 @@ is not yet an AlphaEvolve reproduction.
   CC-BY-4.0 materials split, artifact-type license mapping, AS-IS and
   non-official-product disclaimers, Gómez-Serrano/Tao role attribution, Problem
   65's official IMO origin, docs/TODO claim-surface links, and reuse policy for
-  copied source material versus generated local artifacts.
+  copied source material versus generated local artifacts. It now attaches
+  validated follow-on artifact-rights templates for local generated outputs,
+  adapted verification code, and copied problem statements while preserving a
+  zero-current-local-generated-artifact boundary for copied/adapted follow-on
+  repository material.
 - Keep follow-on problem-repository runtime availability scoped:
   `papers/follow_on_runtime_absence.json` now records the pinned repository
   README/tree evidence for 28 notebooks, including paths, Git blob ids, byte

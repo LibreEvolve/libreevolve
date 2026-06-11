@@ -535,9 +535,7 @@
           "citation_required": true,
           "citation_arxiv_id": "2511.02864"
         },
-        "required_follow_on_work": [
-          "attach_rights_attribution_to_generated_artifacts"
-        ]
+        "required_follow_on_work": []
       },
       "claim_artifact_links": {
         "follow_on_source_used_by": [
@@ -558,9 +556,7 @@
         "local_cache_status_field": "source_record.paper.local_cache",
         "scope": "committed follow-on source provenance, not cached PDF or per-problem inventory"
       },
-      "remaining_work": [
-        "attach_rights_attribution_to_generated_artifacts"
-      ]
+      "remaining_work": []
     }
   ]
 }

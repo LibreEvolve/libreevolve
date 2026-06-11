@@ -4041,7 +4041,11 @@ repository's source-use terms separately from both the original PDF and
 Apache-2.0 software / CC-BY-4.0 materials split, artifact-type license mapping,
 AS-IS and non-official-product disclaimers, Gómez-Serrano/Tao role
 attribution, Problem 65's official IMO origin, and the boundary between copied
-source material, generated local artifacts, and LibreEvolve's own license.
+source material, generated local artifacts, and LibreEvolve's own license. It
+now also carries validated follow-on artifact-rights templates for local
+generated outputs, adapted verification code, and copied problem statements,
+while recording that no copied/adapted follow-on repository material is
+currently checked into LibreEvolve generated artifacts.
 `papers/follow_on_runtime_absence.json` records the same pinned problem
 repository's runtime-availability boundary: 28 notebook paths with Git blob
 ids, byte counts, and raw SHA-256 hashes from the pinned tree, prompt/verifier/

@@ -2342,6 +2342,11 @@ Primary evidence:
     problem pages and notebook-link statuses while leaving normalized result
     rows, construction payloads, verifier artifacts, recomputed values, and
     full notebook cell inventories outside the claim.
+    `papers/follow_on_repository_rights.json` now also attaches validated
+    follow-on artifact-rights templates for local generated outputs, adapted
+    verification code, and copied problem statements, while preserving
+    zero-current-local-generated-artifact evidence for copied/adapted follow-on
+    repository material.
   - Completed result: repository-page inventory validation now records prompt/
     verifier/initial/final/visualization flags for linked pinned notebooks and
     README/ROADMAP wording distinguishes paper-declared problem count from full

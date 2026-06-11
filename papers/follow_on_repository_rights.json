@@ -103,6 +103,80 @@
           "source_rights_holder_required_for_copied_material": true,
           "generated_artifacts_need_source_relationship": true,
           "local_project_endorsement": false
+        },
+        "generated_artifact_rights": {
+          "schema": "libreevolve.alphaevolve_follow_on_artifact_rights.v1",
+          "attachment_policy": "generated_follow_on_artifacts_must_attach_source_rights_records_that_distinguish_local_outputs_from_copied_or_adapted_repository_material",
+          "current_local_generated_artifact_count": 0,
+          "record_templates": [
+            {
+              "schema": "libreevolve.alphaevolve_follow_on_artifact_rights.v1",
+              "source_paper_id": "2511.02864",
+              "source_manifest": "papers/follow_on_sources.json",
+              "repository_rights_manifest": "papers/follow_on_repository_rights.json",
+              "repository_source_id": "alphaevolve_repository_of_problems",
+              "repository_commit": "bfd224d0e7763f89eb4a8efe93ac126091f85ed9",
+              "artifact_kind": "generated_artifact",
+              "material_type": "local_generated_no_follow_on_repository_material",
+              "source_relationship": "local_generated_no_follow_on_repository_material_copied",
+              "license": "local_project_license",
+              "rights_holder": null,
+              "source_rights_holder_required": false,
+              "citation_required": false,
+              "reuse_policy": "local_project_terms_apply_no_follow_on_repository_material_copied",
+              "must_keep_original_pdf_rights_separate": true,
+              "must_keep_companion_repository_rights_separate": true,
+              "must_keep_libreevolve_mit_license_separate": true,
+              "as_is_disclaimer_applies": false,
+              "official_google_product": false,
+              "local_project_endorsement": false
+            },
+            {
+              "schema": "libreevolve.alphaevolve_follow_on_artifact_rights.v1",
+              "source_paper_id": "2511.02864",
+              "source_manifest": "papers/follow_on_sources.json",
+              "repository_rights_manifest": "papers/follow_on_repository_rights.json",
+              "repository_source_id": "alphaevolve_repository_of_problems",
+              "repository_commit": "bfd224d0e7763f89eb4a8efe93ac126091f85ed9",
+              "artifact_kind": "verification_code",
+              "material_type": "verification_code",
+              "source_relationship": "adapted_from_follow_on_repository",
+              "license": "Apache-2.0",
+              "rights_holder": "Google LLC",
+              "source_rights_holder_required": true,
+              "citation_required": true,
+              "reuse_policy": "follow_on_repository_terms_apply",
+              "must_keep_original_pdf_rights_separate": true,
+              "must_keep_companion_repository_rights_separate": true,
+              "must_keep_libreevolve_mit_license_separate": true,
+              "as_is_disclaimer_applies": true,
+              "official_google_product": false,
+              "local_project_endorsement": false
+            },
+            {
+              "schema": "libreevolve.alphaevolve_follow_on_artifact_rights.v1",
+              "source_paper_id": "2511.02864",
+              "source_manifest": "papers/follow_on_sources.json",
+              "repository_rights_manifest": "papers/follow_on_repository_rights.json",
+              "repository_source_id": "alphaevolve_repository_of_problems",
+              "repository_commit": "bfd224d0e7763f89eb4a8efe93ac126091f85ed9",
+              "artifact_kind": "problem_statement",
+              "material_type": "problem_statements",
+              "source_relationship": "copied_from_follow_on_repository",
+              "license": "CC-BY-4.0",
+              "rights_holder": "Google LLC",
+              "source_rights_holder_required": true,
+              "citation_required": true,
+              "reuse_policy": "follow_on_repository_terms_apply",
+              "must_keep_original_pdf_rights_separate": true,
+              "must_keep_companion_repository_rights_separate": true,
+              "must_keep_libreevolve_mit_license_separate": true,
+              "as_is_disclaimer_applies": true,
+              "official_google_product": false,
+              "local_project_endorsement": false
+            }
+          ],
+          "claim_boundary": "The templates attach rights attribution policy for any future generated follow-on artifacts, but do not claim that copied or adapted repository material is currently checked into LibreEvolve generated artifacts."
         }
       },
       "claim_artifact_links": {
@@ -120,6 +194,9 @@
       "reuse_policy": {
         "copied_repository_material_requires_source_attribution": true,
         "generated_local_artifacts_require_source_relationship": true,
+        "artifact_rights_record_schema": "libreevolve.alphaevolve_follow_on_artifact_rights.v1",
+        "artifact_rights_templates_attached": true,
+        "current_local_generated_artifact_count": 0,
         "publication_ready_without_rights_review": false,
         "scope": "follow-on problem repository source-use terms, not original AlphaEvolve PDF rights or LibreEvolve project licensing"
       }

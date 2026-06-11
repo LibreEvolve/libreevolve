@@ -135,9 +135,9 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     fields, license URLs, artifact-type license mapping, source-origin notes,
     docs/TODO claim-surface links, and reuse policy. The paper-manifest gate
     requires and validates this sidecar at repo root.
-  - Remaining gap: none for this bounded source-use slice; notebook/runtime
-    absence, per-problem inventory, and generated-artifact source-relationship
-    rows remain separate active paper work.
+  - Later status: notebook/runtime absence, per-problem inventory, and
+    generated-artifact source-relationship templates have since been recorded;
+    this bounded source-use slice remains complete.
 
 - [x] Track follow-on AlphaEvolve mathematical-discovery paper and repository.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says more
@@ -151,9 +151,9 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     coverage boundary, runtime-code absence, source-use licenses, citation
     boundary, docs/TODO claim-surface links, and explicit no-cache policy. The
     standard paper-manifest validation requires the sidecar at repo root.
-  - Remaining gap: no cached `2511.02864` PDF/digest row exists yet, and
-    problem inventory, notebook hash/readability matrices, Appendix B claim
-    mappings, and generated-artifact rights rows remain active paper work.
+  - Later status: problem inventory, notebook hash/readability matrices,
+    Appendix B claim mappings, and generated-artifact rights templates have
+    since been recorded; no cached `2511.02864` PDF/digest row exists yet.
 
 - [x] Track companion-result repository rights and disclaimer evidence.
   - Paper evidence: the `google-deepmind/alphaevolve_results` README declares

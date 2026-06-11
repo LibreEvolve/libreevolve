@@ -6,6 +6,25 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit independent evaluator-oracle boundary sidecar.
+  - Paper evidence: AlphaEvolve describes continuous feedback from one or more
+    evaluators and separates the user-provided evaluation function from
+    optional cascades and LLM-generated feedback.
+  - Status: `papers/evaluator_oracle_boundary.json` now carries the
+    paper-facing `libreevolve.alphaevolve_evaluator_oracle_boundary.v1`
+    absence boundary. The paper-manifest gate requires and validates the
+    sidecar at the real repo root.
+  - Verification: `py -3.12 -m pytest
+    tests\test_evaluator_oracle_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\evaluator_oracle_boundary.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining paper gap: this is an absence boundary; independent
+    reference/statistical oracles, benchmark sufficiency evidence,
+    independent disagreement outcomes, and cross-run oracle tables remain
+    open.
+
 - [x] Emit controller backtracking policy boundary sidecar.
   - Paper evidence: AlphaEvolve describes discovery as ideation, exploration,
     backtracking on unpromising hypotheses, experimentation, and validation.

@@ -4,6 +4,23 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README evaluator-oracle wording tied to committed sidecar.
+  - Spec evidence: AlphaEvolve multi-evaluator wording needs independent
+    reference/statistical-oracle evidence beyond local cascade and feedback
+    grader arbitration.
+  - Status: README now names `papers/evaluator_oracle_boundary.json` as the
+    committed sidecar for the independent evaluator-oracle absence boundary,
+    with paper-manifest validation.
+  - Verification: `py -3.12 -m pytest
+    tests\test_evaluator_oracle_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\evaluator_oracle_boundary.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: none for README sidecar scoping; real independent
+    reference/statistical oracle and disagreement-outcome evidence remain
+    active code/paper gaps.
+
 - [x] Keep README controller-backtracking wording tied to committed sidecar.
   - Spec evidence: AlphaEvolve backtracking wording needs explicit controller-
     policy evidence beyond observed parent-selection redirects.

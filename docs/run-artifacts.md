@@ -1869,7 +1869,9 @@ into independent reference/statistical oracles. The registry intentionally keeps
 `claim_ready: false` for independent multi-evaluator/oracle composition because
 current behavior is a single local cascade plus optional post-evaluator
 synchronous feedback graders, not an independent reference/statistical oracle
-system with benchmark-sufficient arbitration.
+system with benchmark-sufficient arbitration. The committed
+`papers/evaluator_oracle_boundary.json` sidecar preserves the same independent
+evaluator-oracle absence boundary for paper-manifest validation.
 Completed manifests also include
 `runtime.history.embedded_evaluator_entrypoint_report` with schema
 `libreevolve.embedded_evaluator_entrypoint_report.v1`. This report summarizes

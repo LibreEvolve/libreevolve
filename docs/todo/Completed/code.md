@@ -4,6 +4,26 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit independent evaluator-oracle boundary sidecar.
+  - Spec evidence: AlphaEvolve Section 2.4 distinguishes the user-provided
+    evaluation function from optional cascades and generated feedback, so
+    independent multi-oracle claims need reference/statistical-oracle and
+    disagreement-outcome evidence beyond local arbitration metadata.
+  - Status: `papers/evaluator_oracle_boundary.json` now emits the
+    `libreevolve.alphaevolve_evaluator_oracle_boundary.v1`
+    `local_arbitration_without_independent_oracle_evidence` boundary, and
+    `validate_paper_manifest()` requires and validates it at the real repo
+    root.
+  - Verification: `py -3.12 -m pytest
+    tests\test_evaluator_oracle_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\evaluator_oracle_boundary.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: no independent reference/statistical oracle records,
+    benchmark-sufficiency proof, independent disagreement outcomes affecting
+    validity/score/admission, or cross-run oracle table exists.
+
 - [x] Emit controller backtracking policy boundary sidecar.
   - Spec evidence: AlphaEvolve frames discovery as including backtracking on
     unpromising hypotheses, which needs controller-owned suppression/retry,

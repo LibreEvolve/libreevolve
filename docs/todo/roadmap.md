@@ -71,7 +71,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `arbitration_policy` authority metadata, benchmark-sufficiency labels,
     conflict roles, failure effects, bounded local `disagreement_outcomes` for
     validator-versus-feedback cases, and an explicit limitation for independent
-    multi-oracle arbitration.
+    multi-oracle arbitration. ROADMAP now also names
+    `papers/evaluator_oracle_boundary.json` as the committed paper-manifest-
+    validated independent-oracle absence boundary.
   - Required result: when independent reference/statistical oracles,
     per-benchmark sufficiency evidence, and independent disagreement outcome
     records land, update ROADMAP, README, papers index, and code/paper TODOs

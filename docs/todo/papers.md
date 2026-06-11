@@ -22,7 +22,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `disagreement_outcomes` now records bounded local
     validator-versus-feedback outcomes, including feedback discards after an
     evaluator pass, final local validity effects, and an explicit
-    post-evaluator/non-independent authority boundary.
+    post-evaluator/non-independent authority boundary. The committed
+    `papers/evaluator_oracle_boundary.json` sidecar now preserves the
+    paper-manifest-validated independent-oracle absence boundary.
   - Current gap: the registry preserves current composition evidence, but it
     does not prove multiple independent evaluator/oracle sources, reference/
     statistical oracle support, per-benchmark sufficiency evidence, or

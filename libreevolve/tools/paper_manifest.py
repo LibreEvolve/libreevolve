@@ -60,6 +60,10 @@ from libreevolve.problems.benchmarks.evaluation_cascade_boundary import (
     evaluation_cascade_boundary_record,
     validate_evaluation_cascade_boundary,
 )
+from libreevolve.problems.benchmarks.evaluator_oracle_boundary import (
+    evaluator_oracle_boundary_record,
+    validate_evaluator_oracle_boundary,
+)
 from libreevolve.problems.benchmarks.example_scope import (
     example_benchmark_scope_records,
     validate_example_benchmark_scope,
@@ -185,6 +189,7 @@ FIGURE4_MATRIX_DISCOVERY_ARTIFACTS_FILE = "papers/figure4_matrix_discovery_artif
 FIGURE8_ABLATION_ARTIFACTS_FILE = "papers/figure8_ablation_artifacts.json"
 EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integration_boundary.json"
 CANDIDATE_ABSTRACTION_BOUNDARY_FILE = "papers/candidate_abstraction_boundary.json"
+EVALUATOR_ORACLE_BOUNDARY_FILE = "papers/evaluator_oracle_boundary.json"
 PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_FILE = "papers/proposal_lifecycle_audit_boundary.json"
 EVALUATION_CASCADE_BOUNDARY_FILE = "papers/evaluation_cascade_boundary.json"
 CONTROLLER_BACKTRACKING_BOUNDARY_FILE = "papers/controller_backtracking_boundary.json"
@@ -564,6 +569,7 @@ def validate_paper_manifest(
     issues.extend(_validate_figure8_ablation_artifacts(root_path))
     issues.extend(_validate_existing_codebase_integration_boundary(root_path))
     issues.extend(_validate_candidate_abstraction_boundary(root_path))
+    issues.extend(_validate_evaluator_oracle_boundary(root_path))
     issues.extend(_validate_proposal_lifecycle_audit_boundary(root_path))
     issues.extend(_validate_evaluation_cascade_boundary(root_path))
     issues.extend(_validate_controller_backtracking_boundary(root_path))
@@ -1309,6 +1315,38 @@ def _validate_proposal_lifecycle_audit_boundary(root_path: Path) -> list[PaperMa
             f"proposal_lifecycle_audit_boundary_{issue.code}",
             issue.message,
             "proposal_lifecycle_audit",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_evaluator_oracle_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / EVALUATOR_ORACLE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = evaluator_oracle_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "evaluator_oracle_boundary_manifest_missing",
+                    (
+                        f"{EVALUATOR_ORACLE_BOUNDARY_FILE} must emit "
+                        "independent evaluator-oracle evidence availability"
+                    ),
+                    "evaluator_oracle",
+                )
+            ]
+    report = validate_evaluator_oracle_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"evaluator_oracle_boundary_{issue.code}",
+            issue.message,
+            "evaluator_oracle",
         )
         for issue in report.issues
     ]

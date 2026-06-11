@@ -635,7 +635,10 @@ than independent reference/statistical-oracle arbitration. The report keeps
 `claim_ready: false` because this is a registry for the current local cascade
 and post-evaluator grader boundary, not yet proof of independent reference/
 statistical oracles, independent disagreement outcome evidence, or per-oracle
-benchmark sufficiency.
+benchmark sufficiency. The committed `papers/evaluator_oracle_boundary.json`
+sidecar now emits that
+`local_arbitration_without_independent_oracle_evidence` boundary, and
+`validate_paper_manifest()` requires and validates it at the real repo root.
 
 AlphaEvolve cascade-report note: completed manifests now include
 `runtime.history.evaluation_cascade_report` with schema

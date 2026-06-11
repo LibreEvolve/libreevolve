@@ -2438,7 +2438,9 @@ independent reference-oracle arbitration. That registry is provenance for the
 current local composition boundary; it remains `claim_ready: false` for general
 independent multi-oracle arbitration because LibreEvolve still lacks
 independent reference/statistical oracles and independent cross-oracle
-disagreement evidence.
+disagreement evidence. The committed `papers/evaluator_oracle_boundary.json`
+sidecar now records that paper-manifest-validated independent-oracle absence
+boundary.
 The intended public call shapes are `evaluate(code)`,
 `evaluate(code, workspace_path)`, and `evaluate(code, workspace_path, stage)`;
 async and generator-style `evaluate` functions are rejected during startup

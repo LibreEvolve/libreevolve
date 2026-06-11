@@ -1263,7 +1263,9 @@ Primary evidence:
     such as feedback discards after evaluator pass, with final local validity
     effects and a post-evaluator/non-independent authority boundary. It
     explicitly keeps `claim_ready: false` for independent multi-oracle
-    composition.
+    composition. The committed `papers/evaluator_oracle_boundary.json` sidecar
+    now records the paper-manifest-validated independent-oracle absence
+    boundary.
   - Remaining gap: the registry documents current local composition but does
     not yet provide independent reference-checker/statistical-test oracles,
     per-benchmark sufficiency evidence, or independent cross-oracle

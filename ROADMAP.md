@@ -106,7 +106,11 @@ LibreEvolve has:
   `arbitration_policy` authority matrix, benchmark-sufficiency labels,
   conflict roles, failure effects, bounded local `disagreement_outcomes` for
   validator-versus-feedback discard cases, and an explicit limitation for
-  independent multi-oracle arbitration
+  independent multi-oracle arbitration, with
+  `papers/evaluator_oracle_boundary.json` now carrying the paper-manifest-
+  validated absence boundary for reference/statistical oracles, benchmark
+  sufficiency proof, independent disagreement outcomes, and cross-run oracle
+  tables
 - proposal lifecycle reports under
   `runtime.history.proposal_lifecycle_report`, merging generated-candidate
   history with failure records to show backend/call summaries, mutation hashes,

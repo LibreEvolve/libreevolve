@@ -4,6 +4,20 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Keep Appendix A row-note roadmap wording scoped until emitted
+      concurrent-work caveat artifacts exist.
+  - Spec evidence: AlphaEvolve Appendix A Table 3 says concurrent work `[49]`
+    also found a rank-90 algorithm for the `<4, 5, 6>` matrix target.
+  - Status: ROADMAP now documents
+    `papers/appendix_a_matrix_row_note_artifacts.json` as the emitted
+    row-note caveat artifact, with nested evidence and digest validation,
+    while keeping automatic report/table exporter attachment open.
+  - Verification: `py -3.12 -m pytest tests\test_appendix_a_matrix_registry.py
+    tests\test_paper_manifest.py -q` and `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs` passed.
+  - Remaining gap: none for roadmap scoping; exporter integration remains an
+    active code/paper gap.
+
 - [x] Keep stochastic-formatting roadmap wording scoped to marker mechanics
       until distribution provenance exists.
   - Spec evidence: AlphaEvolve Section 2.2 says stochastic formatting uses
@@ -8329,6 +8343,9 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`,
     scopes it to the current `not_emitted_by_local_report_export` state, and
     keeps real row-note caveat artifact emission open.
+  - Later status: ROADMAP now points to
+    `papers/appendix_a_matrix_row_note_artifacts.json` as the emitted sidecar;
+    automatic report/table exporter attachment remains open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
 
 - [x] Document the Appendix A matrix baseline-citation boundary in ROADMAP.

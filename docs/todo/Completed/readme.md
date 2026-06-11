@@ -4,6 +4,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README Appendix A row-note wording scoped until emitted
+      concurrent-work caveat artifacts exist.
+  - Spec evidence: AlphaEvolve Appendix A Table 3 says concurrent work `[49]`
+    also found a rank-90 algorithm for the `<4, 5, 6>` matrix target.
+  - Status: README now documents
+    `papers/appendix_a_matrix_row_note_artifacts.json` as the committed
+    emitted row-note caveat artifact and keeps automatic report/table exporter
+    attachment as the remaining boundary.
+  - Verification: `py -3.12 -m pytest tests\test_appendix_a_matrix_registry.py
+    tests\test_paper_manifest.py -q` and `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs` passed.
+  - Remaining gap: none for README scoping; exporter integration remains an
+    active code/paper gap.
+
 - [x] Keep README stochastic-formatting wording scoped until distribution
       provenance exists.
   - Spec evidence: AlphaEvolve Section 2.2 describes stochastic formatting as
@@ -10905,6 +10919,9 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     lists required future emitted-artifact fields for note identity, target/
     rank/reference values, source text, caveat flags, nested row-note evidence,
     artifact paths, and hashes.
+  - Later status: README now points to
+    `papers/appendix_a_matrix_row_note_artifacts.json` as the emitted sidecar;
+    automatic report/table exporter attachment remains open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
 
 - [x] Document the Appendix A matrix baseline-citation boundary in README.

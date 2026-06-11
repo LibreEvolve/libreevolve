@@ -3265,20 +3265,20 @@ Primary evidence:
     cited reference id `49`, note text/source page/table, affected target id,
     AlphaEvolve rank, concurrent rank, independently matched relationship, and
     a docs caveat that marks exclusive-priority claims unsafe unless the
-    concurrent work is mentioned. This is built-in metadata only:
+    concurrent work is mentioned.
+    `papers/appendix_a_matrix_row_note_artifacts.json` now emits the caveat
+    artifact for `concurrent_work_rank90_mm_4x5x6`, with nested row-note
+    evidence, artifact path, and SHA-256 digest.
     `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`
-    now validates the current `not_emitted_by_local_report_export` state and
-    emitted-artifact fields.
+    now validates the emitted sidecar and required artifact fields.
     `appendix_a_matrix_row_note_artifact_boundary_from_records()` builds
     emitted artifacts from validated row-note evidence and validates nested
     row-note linkage, but matrix reports, table exhibits, and generated
-    artifacts do not emit or consume the row-note caveat.
-  - Required result: wire Appendix A table/report artifact generation to emit
-    row-level note provenance: note type, cited reference id, note text/source
-    location, affected target id, relationship to AlphaEvolve's result
-    (for example independently matched, superseded, or caveated), and
-    report/docs validation so matrix claims do not overstate exclusive SOTA
-    priority when the paper itself records concurrent matching work.
+    artifacts still do not consume the row-note caveat automatically.
+  - Required result: wire Appendix A table/report artifact generation to attach
+    the emitted row-level note provenance automatically so matrix claims do not
+    overstate exclusive SOTA priority when the paper itself records concurrent
+    matching work.
 
 - [ ] Add Appendix A matrix target-suite curation provenance.
   - Spec evidence: AlphaEvolve Appendix A says the 54 matrix multiplication

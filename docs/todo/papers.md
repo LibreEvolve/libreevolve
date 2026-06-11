@@ -3201,20 +3201,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     preserves row-level notes, concurrent-work attribution, independently
     matched result flags, note source location, and docs caveats for
     `mm_4x5x6`. It records that reference `[49]` also found a rank-90
-    algorithm for `<4, 5, 6>`, independently matching AlphaEvolve's rank. No
-    emitted paper artifact or rendered table export currently carries this
-    row-note caveat. `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`
-    now validates that absence boundary and emitted-artifact fields for note
+    algorithm for `<4, 5, 6>`, independently matching AlphaEvolve's rank.
+    `papers/appendix_a_matrix_row_note_artifacts.json` now carries this
+    row-note caveat as a paper-facing artifact with nested row-note evidence,
+    artifact path, and SHA-256 digest.
+    `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`
+    now validates the emitted sidecar and emitted-artifact fields for note
     identity, target/rank/reference values, source text, caveat flags, nested
     row-note evidence, paths, and hashes.
     `appendix_a_matrix_row_note_artifact_boundary_from_records()` builds
     emitted artifacts from validated row-note evidence and checks nested
-    linkage, but no paper artifact currently carries the caveat.
-  - Required result: emit paper-facing row-note metadata for Appendix A matrix
-    targets: affected target id, note type, cited reference id, note text/source
-    location, relationship to the AlphaEvolve result, and validation that
-    README/ROADMAP/papers wording qualifies SOTA-priority claims when the
-    paper records concurrent matching work.
+    linkage, but rendered table/report exports still do not attach the caveat
+    automatically.
+  - Required result: connect rendered table/report exports to the committed
+    row-note artifact so Appendix A matrix claims carry the concurrent-work
+    caveat wherever rank/outcome rows are published.
 
 - [ ] Track follow-on problem-repository coverage-state evidence.
   - Paper/source evidence: the

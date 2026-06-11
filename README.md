@@ -3896,17 +3896,19 @@ algorithm for `mm_4x5x6` (`<4, 5, 6>`), matching AlphaEvolve's rank for that
 row. It validates the target, dimensions, AlphaEvolve rank, concurrent rank,
 reference id, source page/table, note text, relationship, and a docs caveat
 that marks exclusive-priority claims unsafe unless the concurrent work is
-mentioned. It is row-note metadata only; local table exports and matrix reports
-still do not emit this caveat artifact. The companion artifact boundary
+mentioned. The committed `papers/appendix_a_matrix_row_note_artifacts.json`
+sidecar now emits the caveat artifact for `concurrent_work_rank90_mm_4x5x6`,
+including nested row-note evidence, artifact path, and SHA-256 digest. The
+companion artifact boundary
 `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`
-validates the current `not_emitted_by_local_report_export` state and required
-future emitted-artifact fields for note id/type, target/rank/reference values,
-source table/page/text, exclusive-priority caveat flags, nested row-note
-evidence, artifact paths, and hashes.
+validates the emitted sidecar and required artifact fields for note id/type,
+target/rank/reference values, source table/page/text, exclusive-priority caveat
+flags, nested row-note evidence, artifact paths, and hashes. Local table
+exports and matrix reports still do not consume this caveat automatically.
 `appendix_a_matrix_row_note_artifact_boundary_from_records()` builds emitted
 artifacts from validated row-note evidence, generates safe artifact refs, and
 validation checks that artifact fields match their nested row-note evidence.
-Local table exports and matrix reports still do not emit this caveat artifact.
+Local table exports and matrix reports still need automatic row-note attachment.
 Appendix A matrix resource-frontier provenance uses
 `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1`; the built-in
 record preserves the paper's page 34 statement that sizes beyond `<5,5,5>`

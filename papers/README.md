@@ -1359,16 +1359,17 @@ Implemented:
   Appendix A Table 3 concurrent-work note for `mm_4x5x6`: reference `[49]`
   also found a rank-90 algorithm for `<4, 5, 6>`, independently matching
   AlphaEvolve's rank. It validates the target, source page/table, note text,
-  relationship, and non-exclusive-priority docs caveat, but no local
-  report/export emits that row-note caveat yet.
+  relationship, and non-exclusive-priority docs caveat.
+  `papers/appendix_a_matrix_row_note_artifacts.json` now emits the row-note
+  caveat artifact for `concurrent_work_rank90_mm_4x5x6`, with nested row-note
+  evidence, artifact path, and SHA-256 digest.
   `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`
-  records the current `not_emitted_by_local_report_export` boundary and
-  validates required future emitted-artifact fields for note identity,
+  validates the emitted sidecar and required artifact fields for note identity,
   target/rank/reference values, source text, caveat flags, nested row-note
   evidence, artifact paths, and hashes.
   `appendix_a_matrix_row_note_artifact_boundary_from_records()` can build
   emitted artifacts from row-note evidence and validates nested linkage, but
-  local report/table exports still do not emit those caveat artifacts.
+  local report/table exports still need automatic row-note attachment.
   `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1` records the
   paper-source larger-target boundary for sizes beyond `<5,5,5>`, 1000 random
   seeds, single-GPU evaluators, frequent OOM, and further-optimization need.

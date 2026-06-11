@@ -6,6 +6,20 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit Appendix A matrix row-note caveat artifact sidecar.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A Table 3 says
+    concurrent work `[49]` also found a rank-90 algorithm for `<4, 5, 6>`.
+  - Status: `papers/appendix_a_matrix_row_note_artifacts.json` now carries
+    the paper-facing row-note artifact for `mm_4x5x6`, including the cited
+    reference, source location, matching-rank relationship, caveat text,
+    nested row-note evidence, artifact path, and digest. The paper-manifest
+    gate validates that sidecar when Appendix A registry evidence is present.
+  - Verification: `py -3.12 -m pytest tests\test_appendix_a_matrix_registry.py
+    tests\test_paper_manifest.py -q` and `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs` passed.
+  - Remaining gap: rendered table/report exports still need automatic
+    propagation of the caveat wherever rank/outcome rows are published.
+
 - [x] Track stochastic prompt-format probability provenance.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.2 says stochastic
     formatting uses template placeholders with human-provided alternatives for
@@ -10842,6 +10856,9 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     target/rank/reference values, source text, caveat flags, nested row-note
     evidence, artifact paths, and hashes. The paper-manifest gate validates
     this boundary with the Appendix A matrix checks.
+  - Later status: `papers/appendix_a_matrix_row_note_artifacts.json` now emits
+    the row-note caveat sidecar; automatic rendered table/report propagation
+    remains open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
 
 - [x] Track Appendix A matrix best-known-rank citation absence separately from

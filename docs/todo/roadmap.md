@@ -2382,29 +2382,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     matrix figure evidence, mutation-sequence evidence, general matrix
     benchmark coverage, and Appendix A Figure 9 sweep evidence.
 
-- [ ] Keep Appendix A row-note roadmap wording scoped until emitted
-      concurrent-work caveat artifacts exist.
-  - Spec evidence: AlphaEvolve Appendix A Table 3 includes row-level notes,
-    including the note that concurrent work [49] also found a rank-90 algorithm
-    for the `<4, 5, 6>` matrix target.
-  - Current evidence: roadmap/README/paper-index status now points to
-    `libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1`, which validates
-    per-target result notes, concurrent-work attributions, independently
-    matched result flags, note source locations, and report-visible caveats for
-    `mm_4x5x6`. It records that reference `[49]` also found a rank-90
-    algorithm for `<4, 5, 6>`, independently matching AlphaEvolve's rank. No
-    emitted report/table artifact carries that row-note caveat yet.
-    `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`
-    now documents and validates that roadmap-scoped absence boundary plus
-    emitted-artifact fields. The row-note artifact builder can create emitted
-    records from validated row-note evidence and checks nested linkage, but
-    report/table exports still do not emit them automatically.
-  - Required result: when Appendix A row-note artifacts land, update ROADMAP,
-    README, papers index, and code/paper TODOs together so roadmap text
-    distinguishes rank/outcome registry coverage from paper-faithful
-    row-note/concurrent-work evidence and avoids overclaiming exclusive SOTA
-    priority.
-
 - [ ] Keep matrix roadmap wording scoped to result-report validation versus
       search-time near-integrality evidence.
   - Spec evidence: AlphaEvolve Section 3.1 describes prompting for

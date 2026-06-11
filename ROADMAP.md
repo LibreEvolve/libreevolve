@@ -1252,17 +1252,18 @@ is not yet an AlphaEvolve reproduction.
   `libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1` now validates the
   `mm_4x5x6` concurrent-work note that reference `[49]` also found a rank-90
   algorithm for `<4, 5, 6>`, including source page/table, rank relationship,
-  and a non-exclusive-priority docs caveat. Runtime reports and rendered table
-  artifacts still do not emit that row-note caveat.
+  and a non-exclusive-priority docs caveat. The committed
+  `papers/appendix_a_matrix_row_note_artifacts.json` sidecar now emits that
+  caveat artifact with nested row-note evidence, artifact path, and SHA-256
+  digest.
   `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`
-  now records the current `not_emitted_by_local_report_export` boundary and
-  required future emitted-artifact fields for note identity, target/rank/
-  reference values, source text, caveat flags, nested row-note evidence,
-  artifact paths, and hashes.
+  now validates the emitted sidecar and required artifact fields for note
+  identity, target/rank/reference values, source text, caveat flags, nested
+  row-note evidence, artifact paths, and hashes.
   `appendix_a_matrix_row_note_artifact_boundary_from_records()` builds emitted
   artifacts from validated row-note evidence and validation checks nested
   evidence linkage. Runtime reports and rendered table artifacts still need to
-  emit that row-note caveat automatically.
+  attach that row-note caveat automatically.
 - Keep Table 2/Table 3 matrix-rank claims scoped to declared exhibit evidence:
   `libreevolve.alphaevolve_matrix_rank_table_exhibit.v1` now validates stable
   table ids, selected/full-table membership, row ordering, rank values, outcome

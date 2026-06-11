@@ -4,6 +4,23 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit Appendix A matrix row-note caveat artifact sidecar.
+  - Spec evidence: AlphaEvolve Appendix A Table 3 records that concurrent
+    work `[49]` also found a rank-90 algorithm for `<4, 5, 6>`, so local
+    matrix rank/status artifacts must not imply exclusive SOTA priority for
+    `mm_4x5x6` without that caveat.
+  - Status: `papers/appendix_a_matrix_row_note_artifacts.json` now emits the
+    `concurrent_work_rank90_mm_4x5x6` artifact with note type, target id,
+    dimensions, AlphaEvolve/concurrent ranks, reference id, source table/page,
+    note text, non-exclusive-priority caveat, nested row-note evidence,
+    artifact path, and SHA-256 digest. `validate_paper_manifest()` consumes
+    the sidecar when the Appendix A registry is in scope.
+  - Verification: `py -3.12 -m pytest tests\test_appendix_a_matrix_registry.py
+    tests\test_paper_manifest.py -q` and `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs` passed.
+  - Remaining gap: rendered matrix reports/table exports still need automatic
+    attachment of the row-note caveat.
+
 - [x] Add stochastic prompt-format distribution provenance.
   - Spec evidence: AlphaEvolve Section 2.2 says stochastic formatting uses
     template placeholders with human-provided alternatives for increased
@@ -16053,6 +16070,9 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     target/rank/reference values, source table/page/text, exclusive-priority
     caveat flags, artifact paths, and artifact hashes. Local report/export
     code still does not emit the row-note caveat artifact.
+  - Later status: `papers/appendix_a_matrix_row_note_artifacts.json` now emits
+    the row-note caveat sidecar; automatic report/export attachment remains
+    open.
   - Verification: focused Appendix A registry and paper-manifest tests cover
     the absence boundary, emitted-artifact validation, invalid nested evidence,
     and manifest hook.

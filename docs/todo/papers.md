@@ -430,7 +430,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     non-Python text members as workspace-only/no-runner records, unsupported
     arbitrary-language and build-system runner contracts, unsupported task
     candidate-abstraction hooks, and the remaining contract gaps for
-    AlphaEvolve-style language/build parity.
+    AlphaEvolve-style language/build parity. The committed
+    `papers/candidate_language_runner_boundary.json` sidecar now preserves the
+    paper-manifest-validated arbitrary-language/build-runner absence boundary.
   - Current gap: this is an honest boundary record, not non-Python or
     arbitrary-codebase support. There are no configured language runners,
     build-system contracts, language-aware marker grammars, or task-defined

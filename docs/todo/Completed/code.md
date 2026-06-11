@@ -4,6 +4,28 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit candidate language/build runner boundary sidecar.
+  - Spec evidence: AlphaEvolve Sections 2.1-2.2 treat the program artifact,
+    evaluator interface, and task representation as user/task-defined surfaces,
+    so arbitrary-language and build-runner claims need configured runner
+    contracts beyond the current Python-primary workspace.
+  - Status: `papers/candidate_language_runner_boundary.json` now emits the
+    `libreevolve.alphaevolve_candidate_language_runner_boundary.v1`
+    `python_primary_without_arbitrary_language_runner_evidence` boundary, and
+    `validate_paper_manifest()` requires and validates it at the real repo
+    root.
+  - Verification: `py -3.12 -m pytest
+    tests\test_candidate_language_runner_boundary.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`,
+    `py -3.12 -m libreevolve.tools.paper_manifest --require-local-pdfs`, and
+    `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\candidate_language_runner_boundary.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: no configured non-Python language runners, build-system
+    runner contracts, language-aware marker grammars, arbitrary-language
+    validator contracts, runner environment artifacts, or generated build
+    artifact records exist.
+
 - [x] Emit independent evaluator-oracle boundary sidecar.
   - Spec evidence: AlphaEvolve Section 2.4 distinguishes the user-provided
     evaluation function from optional cascades and generated feedback, so

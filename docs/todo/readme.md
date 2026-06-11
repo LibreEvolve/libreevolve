@@ -385,7 +385,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     diagnostics, and `best_workspace/` export. It should not imply those
     mechanics prove AlphaEvolve-scale large-codebase behavior. Current
     machine-readable example scope records mark `workspace_math` as a smoke
-    `workspace_packaging_fixture` and not AlphaEvolve-comparable.
+    `workspace_packaging_fixture` and not AlphaEvolve-comparable. README now
+    also names `papers/candidate_language_runner_boundary.json` as the
+    committed paper-manifest-validated arbitrary-language/build-runner absence
+    boundary.
   - Required result: when a codebase-scale benchmark/report lands, update
     README, ROADMAP, papers index, and code/paper TODO entries with the
     generated-line/component counts, cross-file dependency edit evidence,

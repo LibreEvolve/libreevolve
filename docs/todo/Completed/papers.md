@@ -6,6 +6,28 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit candidate language/build runner boundary sidecar.
+  - Paper evidence: AlphaEvolve Sections 2.1-2.2 frame the initial program,
+    evaluator interface, prompt/configuration, LLM choice, and optional
+    background knowledge as task-defined inputs rather than a fixed
+    Python-primary workspace only.
+  - Status: `papers/candidate_language_runner_boundary.json` now carries the
+    paper-facing
+    `libreevolve.alphaevolve_candidate_language_runner_boundary.v1` absence
+    boundary. The paper-manifest gate requires and validates the sidecar at
+    the real repo root.
+  - Verification: `py -3.12 -m pytest
+    tests\test_candidate_language_runner_boundary.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`,
+    `py -3.12 -m libreevolve.tools.paper_manifest --require-local-pdfs`, and
+    `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\candidate_language_runner_boundary.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining paper gap: this is an absence boundary; configured non-Python
+    runners, build-system contracts, language-aware marker grammars,
+    task-defined abstraction hooks, and runner artifact provenance remain
+    open.
+
 - [x] Emit independent evaluator-oracle boundary sidecar.
   - Paper evidence: AlphaEvolve describes continuous feedback from one or more
     evaluators and separates the user-provided evaluation function from

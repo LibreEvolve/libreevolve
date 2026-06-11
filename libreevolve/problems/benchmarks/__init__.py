@@ -83,6 +83,12 @@ from libreevolve.problems.benchmarks.candidate_abstraction import (
     render_candidate_abstraction_boundary_summary,
     validate_candidate_abstraction_boundary,
 )
+from libreevolve.problems.benchmarks.candidate_language_runner_boundary import (
+    CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_SCHEMA,
+    candidate_language_runner_boundary_record,
+    render_candidate_language_runner_boundary_summary,
+    validate_candidate_language_runner_boundary,
+)
 from libreevolve.problems.benchmarks.companion_sources import (
     ALPHAEVOLVE_COMPANION_COLAB_SCHEMA,
     alphaevolve_companion_colab_source_record,
@@ -331,6 +337,7 @@ __all__ = [
     "BENCHMARK_EVIDENCE_SCOPE_SCHEMA",
     "BENCHMARK_HARDENING_SCHEMA",
     "CANDIDATE_ABSTRACTION_BOUNDARY_SCHEMA",
+    "CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_SCHEMA",
     "CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA",
     "CONTROLLER_BACKTRACKING_BOUNDARY_SCHEMA",
     "EVALUATOR_ORACLE_BOUNDARY_SCHEMA",
@@ -403,6 +410,7 @@ __all__ = [
     "alphaevolve_source_pdf_version_record",
     "benchmark_hardening_artifact_inventory",
     "candidate_abstraction_boundary_record",
+    "candidate_language_runner_boundary_record",
     "certification_artifact_inventory",
     "controller_backtracking_boundary_record",
     "evaluation_cascade_boundary_record",
@@ -460,6 +468,7 @@ __all__ = [
     "render_alphaevolve_source_pdf_version_summary",
     "render_benchmark_hardening_summary",
     "render_candidate_abstraction_boundary_summary",
+    "render_candidate_language_runner_boundary_summary",
     "render_certification_summary",
     "render_controller_backtracking_boundary_summary",
     "render_evaluation_cascade_boundary_summary",
@@ -514,6 +523,7 @@ __all__ = [
     "validate_benchmark_evidence_scope",
     "validate_benchmark_hardening_report",
     "validate_candidate_abstraction_boundary",
+    "validate_candidate_language_runner_boundary",
     "validate_certification_evidence_bundle",
     "validate_controller_backtracking_boundary",
     "validate_evaluation_cascade_boundary",

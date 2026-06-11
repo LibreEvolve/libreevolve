@@ -1,0 +1,41 @@
+{
+  "schema": "libreevolve.alphaevolve_candidate_language_runner_boundary.v1",
+  "policy_schema": "libreevolve.candidate_language_policy.v1",
+  "runtime_report_schema": "libreevolve.candidate_language_runner_contract_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "2.1",
+    "2.2"
+  ],
+  "source_claim": "tasks define the program artifact and evaluator interface, and AlphaEvolve can operate on existing codebases and task-specific program representations rather than only one Python-primary workspace shape",
+  "boundary_status": "python_primary_without_arbitrary_language_runner_evidence",
+  "runtime_report_status": "candidate_language_runner_contract_report_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "candidate_language",
+    "runner_id",
+    "runner_kind",
+    "marker_grammar_id",
+    "validator_runner_contract",
+    "build_system_contract",
+    "build_command",
+    "runtime_command",
+    "dependency_manifest",
+    "generated_artifact_path",
+    "generated_artifact_hash",
+    "language_runner_ready",
+    "build_runner_ready",
+    "task_abstraction_hook",
+    "runner_environment_provenance"
+  ],
+  "missing_evidence": {
+    "configured_non_python_language_runners": "not_recorded_locally",
+    "build_system_runner_contracts": "not_recorded_locally",
+    "language_aware_marker_grammars": "not_recorded_locally",
+    "arbitrary_language_validator_contracts": "not_recorded_locally",
+    "task_defined_candidate_abstraction_hooks": "not_recorded_locally",
+    "runner_environment_artifacts": "not_recorded_locally",
+    "generated_build_artifact_records": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has a validated Python-primary candidate-language policy and runtime runner contract report, but does not claim AlphaEvolve-style arbitrary language or build-system runner evidence with configured non-Python runners, language-aware marker grammars, build contracts, task-defined abstraction hooks, runner environment provenance, or generated build artifacts."
+}

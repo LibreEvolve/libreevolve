@@ -448,7 +448,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     shipped examples, including `workspace_math`, as smoke fixtures with
     `alphaevolve_comparable: False`. Those features do not yet prove large
     multi-component generated-code performance, arbitrary-language execution,
-    or build-runner parity.
+    or build-runner parity. ROADMAP now also names
+    `papers/candidate_language_runner_boundary.json` as the committed
+    paper-manifest-validated arbitrary-language/build-runner absence boundary.
   - Required result: when large-codebase benchmarks or reports land, update
     roadmap, README, papers index, and code/paper TODO entries together so the
     roadmap separates current workspace mechanics from AlphaEvolve Table 1

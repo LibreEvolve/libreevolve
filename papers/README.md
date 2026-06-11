@@ -739,7 +739,10 @@ as workspace-only/no-runner members, unsupported arbitrary-language and
 build-system runner contracts, unsupported task candidate-abstraction hooks,
 and the remaining contract gaps for configured non-Python runners,
 language-aware evolve-block grammars, build-system runners, task-defined
-abstraction hooks, and runner environment/artifact provenance.
+abstraction hooks, and runner environment/artifact provenance. The committed
+`papers/candidate_language_runner_boundary.json` sidecar now emits that
+`python_primary_without_arbitrary_language_runner_evidence` boundary, and
+`validate_paper_manifest()` requires and validates it at the real repo root.
 
 AlphaEvolve rendered-evaluation-result prompt note: completed manifests now
 include `runtime.history.prompt_prior_score_provenance_report`, which links

@@ -2,6 +2,20 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Emit candidate language/build runner boundary sidecar for roadmap evidence.
+  - Status: `papers/candidate_language_runner_boundary.json` now lets roadmap
+    wording point to a committed absence boundary for configured non-Python
+    runners, language-aware marker grammars, build-system contracts, runner
+    environment provenance, and generated build artifacts.
+  - Verification: `py -3.12 -m pytest
+    tests\test_candidate_language_runner_boundary.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`,
+    `py -3.12 -m libreevolve.tools.paper_manifest --require-local-pdfs`, and
+    `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\candidate_language_runner_boundary.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: real arbitrary-language/build-runner evidence remains open.
+
 - [x] Emit evaluator-oracle boundary sidecar for roadmap evidence.
   - Status: `papers/evaluator_oracle_boundary.json` now lets roadmap wording
     point to a committed absence boundary for independent reference/statistical

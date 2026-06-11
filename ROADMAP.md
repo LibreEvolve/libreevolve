@@ -264,7 +264,11 @@ LibreEvolve has:
   current Python subprocess validator runner, non-Python text files as
   workspace-only/no-runner members, unsupported arbitrary-language and
   build-system runner contracts, unsupported task-abstraction hooks, and exact
-  remaining gaps before AlphaEvolve-grade language/build parity
+  remaining gaps before AlphaEvolve-grade language/build parity, with
+  `papers/candidate_language_runner_boundary.json` now carrying the
+  paper-manifest-validated absence boundary for configured non-Python runners,
+  language-aware marker grammars, build-system contracts, runner environment
+  provenance, and generated build artifacts
 - runtime candidate-abstraction choice reports under
   `runtime.history.candidate_abstraction_choice_report`, recording the current
   code-file-set selection, policy/runner linkage, runtime workspace shape,

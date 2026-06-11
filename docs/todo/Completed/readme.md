@@ -4,6 +4,21 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README Appendix A best-known-rank wording scoped until baseline
+      citation provenance exists.
+  - Spec evidence: AlphaEvolve Table 2 and Appendix A Table 3 use a
+    `best known [reference]` column.
+  - Status: README now documents
+    `papers/appendix_a_matrix_baseline_citations.json` as the committed
+    per-target baseline-citation sidecar and keeps automatic report/table
+    exporter attachment as the remaining boundary.
+  - Verification: `py -3.12 -m pytest
+    tests\test_appendix_a_matrix_registry.py tests\test_paper_manifest.py -q`,
+    `py -3.12 -m pytest tests\test_agents_docs.py -q`, and `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs` passed.
+  - Remaining gap: none for README scoping; exporter integration remains an
+    active code/paper gap.
+
 - [x] Keep README matrix headline wording scoped until emitted 4x4 rank-48
       historicity artifacts exist.
   - Spec evidence: AlphaEvolve's abstract and Section 3.1 headline the 4x4

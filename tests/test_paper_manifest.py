@@ -36,6 +36,7 @@ from libreevolve.problems.benchmarks.official_deepmind_blog import (
     alphaevolve_official_blog_manifest_record,
 )
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
+    appendix_a_matrix_baseline_citation_boundary_from_builtin_citations,
     appendix_a_matrix_row_note_artifact_boundary_from_records,
     appendix_a_matrix_subset_scope_artifact_boundary_from_records,
 )
@@ -1516,6 +1517,55 @@ def test_validate_paper_manifest_checks_matrix_baseline_citation_boundary(
     codes = {issue.code for issue in report.issues}
     assert report.ok is False
     assert "appendix_a_baseline_citation_missing_baseline_citations" in codes
+
+
+def test_validate_paper_manifest_accepts_committed_matrix_baseline_citation_sidecar(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        Path(paper_manifest.APPENDIX_A_MATRIX_REGISTRY_PATH).read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    sidecar = tmp_path / paper_manifest.APPENDIX_A_BASELINE_CITATIONS_FILE
+    sidecar.write_text(
+        json.dumps(
+            appendix_a_matrix_baseline_citation_boundary_from_builtin_citations(),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_matrix_baseline_citation_sidecar_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        Path(paper_manifest.APPENDIX_A_MATRIX_REGISTRY_PATH).read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    record = appendix_a_matrix_baseline_citation_boundary_from_builtin_citations()
+    record["baseline_citations"][0]["cited_reference_id"] = "999"
+    sidecar = tmp_path / paper_manifest.APPENDIX_A_BASELINE_CITATIONS_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "appendix_a_baseline_citation_invalid_cited_reference_id" in codes
 
 
 def test_validate_paper_manifest_checks_matrix_scalar_field_runtime_boundary(

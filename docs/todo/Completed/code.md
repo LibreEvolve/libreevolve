@@ -4,6 +4,24 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit Appendix A matrix baseline-citation sidecar.
+  - Spec evidence: AlphaEvolve Table 2 and Appendix A Table 3 include a
+    `best known [reference]` column for matrix targets.
+  - Status: `papers/appendix_a_matrix_baseline_citations.json` now emits
+    per-target best-known-rank citation records for all 54 Appendix A matrix
+    targets, including dimensions, ranks, Table 3 reference ids, source
+    table/page, source artifact path/hash, applicability caveats,
+    field/characteristic scope, and report-visible baseline-source refs. The
+    multi-reference `<4,4,7>` row preserves the additional `[95]` reference.
+    `validate_paper_manifest()` consumes the sidecar when the Appendix A
+    registry is in scope.
+  - Verification: `py -3.12 -m pytest
+    tests\test_appendix_a_matrix_registry.py tests\test_paper_manifest.py -q`,
+    `py -3.12 -m pytest tests\test_agents_docs.py -q`, and `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs` passed.
+  - Remaining gap: matrix reports/table exporters still need automatic
+    attachment of the emitted baseline-citation records.
+
 - [x] Emit matrix headline historicity artifact sidecar.
   - Spec evidence: AlphaEvolve's abstract and Section 3.1 say the agent found
     a 4x4 complex matrix multiplication procedure using 48 scalar

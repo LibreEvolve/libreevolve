@@ -15,6 +15,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     SUBSET_SCOPE_SCHEMA,
     TARGET_SUITE,
     appendix_a_matrix_baseline_citation_boundary_from_citations,
+    appendix_a_matrix_baseline_citation_boundary_from_builtin_citations,
     appendix_a_matrix_baseline_citation_boundary_record,
     appendix_a_matrix_curation_record,
     appendix_a_matrix_excluded_target_curation_boundary_from_records,
@@ -383,6 +384,24 @@ def test_appendix_a_matrix_baseline_citation_boundary_accepts_recorded_rows():
         boundary["baseline_citations"][0]["report_baseline_source_ref"]
         == f"baseline:{matrix_target_records()[0]['id']}:ref95"
     )
+
+
+def test_appendix_a_matrix_baseline_citation_boundary_accepts_builtin_table3_references():
+    boundary = appendix_a_matrix_baseline_citation_boundary_from_builtin_citations()
+
+    report = validate_appendix_a_matrix_baseline_citation_boundary(boundary)
+    citations = {
+        citation["target_id"]: citation for citation in boundary["baseline_citations"]
+    }
+
+    assert report.ok is True
+    assert report.citation_status == "recorded"
+    assert report.citation_count == EXPECTED_TARGET_COUNT
+    assert report.issues == []
+    assert citations["mm_2x4x5"]["cited_reference_id"] == "42"
+    assert citations["mm_4x4x7"]["cited_reference_id"] == "93"
+    assert citations["mm_4x4x7"]["additional_cited_reference_ids"] == ["95"]
+    assert citations["mm_6x6x6"]["cited_reference_id"] == "72"
 
 
 def test_appendix_a_matrix_baseline_citation_boundary_rejects_invalid_citation_fields():

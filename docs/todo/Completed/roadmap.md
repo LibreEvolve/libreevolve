@@ -4,6 +4,21 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Keep Appendix A matrix-baseline roadmap wording scoped until
+      best-known-rank citation provenance exists.
+  - Spec evidence: AlphaEvolve Table 2 and Appendix A Table 3 include
+    best-known matrix ranks with bracketed reference ids.
+  - Status: ROADMAP now documents
+    `papers/appendix_a_matrix_baseline_citations.json` as the committed
+    per-target baseline-citation sidecar and keeps automatic report/table
+    exporter attachment open.
+  - Verification: `py -3.12 -m pytest
+    tests\test_appendix_a_matrix_registry.py tests\test_paper_manifest.py -q`,
+    `py -3.12 -m pytest tests\test_agents_docs.py -q`, and `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs` passed.
+  - Remaining gap: none for roadmap scoping; exporter integration remains an
+    active code/paper gap.
+
 - [x] Keep matrix headline roadmap wording scoped until emitted 4x4 rank-48
       historicity artifacts exist.
   - Spec evidence: AlphaEvolve's abstract and Section 3.1 say AlphaEvolve

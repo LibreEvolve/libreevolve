@@ -142,6 +142,7 @@ APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE = "papers/appendix_a_matrix_subset_scope_
 APPENDIX_A_ROW_NOTE_ARTIFACTS_FILE = "papers/appendix_a_matrix_row_note_artifacts.json"
 MATRIX_RANK_TABLE_ARTIFACTS_FILE = "papers/matrix_rank_table_artifacts.json"
 MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE = "papers/matrix_headline_historicity_artifacts.json"
+APPENDIX_A_BASELINE_CITATIONS_FILE = "papers/appendix_a_matrix_baseline_citations.json"
 SHA256_RE = re.compile(r"[0-9a-f]{64}")
 PAPER_ID_RE = re.compile(r"(?:\d{4}\.\d{5}|[a-z0-9][a-z0-9-]{0,94}[a-z0-9])")
 ARXIV_ID_RE = re.compile(r"\d{4}\.\d{5}(?:v\d+)?")
@@ -609,8 +610,28 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
         )
         for issue in excluded_curation_report.issues
     )
+    baseline_citations_path = root_path / APPENDIX_A_BASELINE_CITATIONS_FILE
+    if baseline_citations_path.exists():
+        baseline_citation_recordset: object | str | Path = baseline_citations_path
+    else:
+        baseline_citation_recordset = appendix_a_matrix_baseline_citation_boundary_record()
+        try:
+            is_repo_root = root_path.resolve() == _repo_root().resolve()
+        except OSError:
+            is_repo_root = False
+        if is_repo_root:
+            issues.append(
+                PaperManifestIssue(
+                    "appendix_a_baseline_citation_manifest_missing",
+                    (
+                        f"{APPENDIX_A_BASELINE_CITATIONS_FILE} must record "
+                        "Appendix A Table 3 best-known-rank reference ids"
+                    ),
+                    "appendix_a_matrix_baseline_citations",
+                )
+            )
     baseline_citation_report = validate_appendix_a_matrix_baseline_citation_boundary(
-        appendix_a_matrix_baseline_citation_boundary_record()
+        baseline_citation_recordset
     )
     issues.extend(
         PaperManifestIssue(

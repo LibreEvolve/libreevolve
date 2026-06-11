@@ -977,14 +977,15 @@ is not yet an AlphaEvolve reproduction.
   remain open.
 - Keep Appendix A best-known-rank citation claims scoped:
   `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`
-  now validates the current `not_recorded_locally` boundary and required
-  future per-target fields for cited reference id, source table/page, source
+  now validates the committed
+  `papers/appendix_a_matrix_baseline_citations.json` sidecar for per-target
+  Table 3 best-known-rank references, including source table/page, source
   artifact path/hash, applicability caveats, field/characteristic scope, and
   report-visible baseline-source refs.
   `appendix_a_matrix_baseline_citation_boundary_from_citations()` builds
   recorded boundaries from supplied citation rows and validates registry rank,
-  dimension, target-id, and report-source-ref linkage. Real per-target cited
-  source metadata still needs to be collected and emitted.
+  dimension, target-id, and report-source-ref linkage. Local matrix reports
+  still need to attach those baseline-source records automatically.
 - Keep matrix target-scaling claims scoped to paper-source frontier evidence:
   `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1` now
   validates the Appendix A page 34 boundary for sizes beyond `<5,5,5>`, 1000

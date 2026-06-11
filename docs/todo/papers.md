@@ -3056,29 +3056,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     bundle wrapper, emitting one checked Strassen baseline once those files
     exist, or declaring the suite-wide publication artifact boundary.
 
-- [ ] Track best-known-rank citation provenance for Appendix A comparisons.
+- [ ] Wire best-known-rank citation provenance into Appendix A exports.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 presents matrix
     targets with a `best known [reference]` column, and Appendix A Table 3
     extends the matrix target-suite rank comparisons.
   - Current evidence: the checked Appendix A matrix registry records
     best-known rank numbers, AlphaEvolve ranks, outcomes, and exact-algorithm
     flags, and matrix reports can validate target identities and dimensions
-    against that registry. The paper-facing evidence does not yet preserve the
+    against that registry.
+    `papers/appendix_a_matrix_baseline_citations.json` now preserves the
     cited prior-work source for each best-known baseline rank, source
     page/table, reference id, source artifact digest, finite-field or
-    characteristic caveat, or baseline-source field in generated result
-    reports. `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`
-    now validates the current `not_recorded_locally` boundary and recorded
-    per-target citation fields.
-    `appendix_a_matrix_baseline_citation_boundary_from_citations()` builds
-    recorded boundaries from supplied rows and validates registry/source-ref
-    linkage, but no emitted paper artifact currently carries those source
-    records.
-  - Required result: add paper-facing baseline-rank provenance before using
-    Appendix A best-known-rank comparisons as fully traceable evidence:
-    per-target cited-source metadata, manifest/companion-artifact validation,
-    report-visible baseline-source fields, and docs that distinguish cited
-    prior baselines from LibreEvolve-generated constructions.
+    characteristic caveat, and baseline-source field.
+    `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`
+    validates the emitted sidecar and per-target citation fields.
+  - Required result: wire the paper-facing baseline-rank provenance into
+    exports before using Appendix A best-known-rank comparisons as fully
+    traceable generated evidence: report-visible baseline-source fields and
+    docs that distinguish cited prior baselines from LibreEvolve-generated
+    constructions.
 
 - [ ] Track matrix cascade-run evidence behind repeated-seed rank claims.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 says the matrix

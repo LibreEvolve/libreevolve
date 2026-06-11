@@ -3142,27 +3142,23 @@ Primary evidence:
     hand-authored matrix reports plus separately supplied stage traces. Keep
     this separate from generic cascade semantics.
 
-- [ ] Add best-known-rank citation provenance for Appendix A matrix baselines.
+- [ ] Wire Appendix A best-known-rank citation provenance into reports.
   - Spec evidence: AlphaEvolve Table 2 reports matrix targets with a
     `best known [reference]` column, and Appendix A Table 3 extends those
     best-known-rank comparisons across the matrix target suite.
   - Current evidence: `libreevolve.alphaevolve_appendix_a_matrix_registry.v1`
     records target ids, dimensions, best-known rank values, AlphaEvolve ranks,
     outcomes, and exact-algorithm flags, and reports reject unknown target ids
-    and dimension mismatches. The registry does not store which cited prior
-    work supports each best-known rank, the bibliography/reference id, source
-    page/table location, finite-field or characteristic caveats, companion
-    artifact links, or a digestible source record for baseline-rank claims.
+    and dimension mismatches.
+    `papers/appendix_a_matrix_baseline_citations.json` now records which cited
+    prior work supports each best-known rank, the bibliography/reference id,
+    source page/table location, finite-field or characteristic caveats, source
+    artifact path/hash, and a report-visible baseline-source ref.
     `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`
-    now validates the current `not_recorded_locally` state and recorded
-    per-target citation fields.
-    `appendix_a_matrix_baseline_citation_boundary_from_citations()` can build
-    recorded boundaries from supplied citation rows and validates target,
-    dimension, rank, cited-reference, and report-source-ref linkage, but local
-    report/export code does not emit or consume real citation records.
-  - Required result: extend the Appendix A registry or companion metadata with
-    per-target prior-baseline citation provenance and validation: reference id,
-    source artifact/page/table, applicability caveats, and report-visible
+    validates the emitted sidecar and recorded per-target citation fields.
+  - Required result: wire the committed per-target prior-baseline citation
+    provenance into matrix report/export outputs: reference id, source
+    artifact/page/table, applicability caveats, and report-visible
     baseline-source fields. Keep this distinct from target-suite curation,
     tensor/decomposition construction artifacts, and baseline solver-component
     provenance.

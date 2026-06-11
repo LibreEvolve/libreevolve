@@ -6,6 +6,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit Appendix A matrix baseline-citation sidecar.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 and Appendix A
+    Table 3 include best-known matrix ranks with bracketed reference ids.
+  - Status: `papers/appendix_a_matrix_baseline_citations.json` now carries
+    paper-facing best-known-rank citation records for all 54 Appendix A matrix
+    targets, including source table/page, reference ids, source artifact
+    paths/hashes, caveats, and report-visible baseline-source refs. The
+    paper-manifest gate validates that sidecar when Appendix A registry
+    evidence is present.
+  - Verification: `py -3.12 -m pytest
+    tests\test_appendix_a_matrix_registry.py tests\test_paper_manifest.py -q`,
+    `py -3.12 -m pytest tests\test_agents_docs.py -q`, and `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs` passed.
+  - Remaining gap: paper-facing report/table exports still need automatic
+    attachment of those baseline-source rows.
+
 - [x] Emit matrix headline historicity artifact sidecar.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` reports the 4x4 complex
     rank-48 result in the abstract and Section 3.1, and distinguishes it from

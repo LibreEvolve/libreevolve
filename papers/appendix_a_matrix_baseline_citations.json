@@ -1,0 +1,944 @@
+{
+  "schema": "libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1",
+  "registry_schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1",
+  "source_paper_id": "2506.13131",
+  "target_suite": "alphaevolve_appendix_a",
+  "citation_status": "recorded",
+  "required_citation_fields": [
+    "target_id",
+    "dimensions",
+    "best_known_rank",
+    "cited_reference_id",
+    "source_table",
+    "source_pdf_page",
+    "source_artifact_path",
+    "source_artifact_sha256",
+    "applicability_caveats",
+    "finite_field_or_characteristic_scope",
+    "report_baseline_source_ref"
+  ],
+  "baseline_citations": [
+    {
+      "target_id": "mm_2x2x2",
+      "dimensions": [
+        2,
+        2,
+        2
+      ],
+      "best_known_rank": 7,
+      "cited_reference_id": "95",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "789c15b17afbc498084e0e497fcb02ad7bf603f003c1e22cc7f695b642ad83aa",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x2x2:ref95"
+    },
+    {
+      "target_id": "mm_2x2x3",
+      "dimensions": [
+        2,
+        2,
+        3
+      ],
+      "best_known_rank": 11,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "65588e93e124ccd9440bf345bf5162afbcbf32dff60677fb584a894cfab51d0d",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x2x3:ref93"
+    },
+    {
+      "target_id": "mm_2x2x4",
+      "dimensions": [
+        2,
+        2,
+        4
+      ],
+      "best_known_rank": 14,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "21a673985ce03145298f8dfed83ec15ef621adccd81150700f2437ab7cd81df8",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x2x4:ref93"
+    },
+    {
+      "target_id": "mm_2x2x5",
+      "dimensions": [
+        2,
+        2,
+        5
+      ],
+      "best_known_rank": 18,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "1e155bae5d8a31f2188b607bad0f9d656222ec4b5b13387cb3562be414d0faa1",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x2x5:ref93"
+    },
+    {
+      "target_id": "mm_2x2x6",
+      "dimensions": [
+        2,
+        2,
+        6
+      ],
+      "best_known_rank": 21,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "73d27971258e2ab893d67c846039951e3a45ada1e5967fe40091bc0e666dd0dd",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x2x6:ref93"
+    },
+    {
+      "target_id": "mm_2x2x7",
+      "dimensions": [
+        2,
+        2,
+        7
+      ],
+      "best_known_rank": 25,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "084771f28bdfc9f94fa8db52318e97fa24f3e451a26df156289d9cac75821ca6",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x2x7:ref93"
+    },
+    {
+      "target_id": "mm_2x2x8",
+      "dimensions": [
+        2,
+        2,
+        8
+      ],
+      "best_known_rank": 28,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "c4f1701a34b1691a65339c24822ad282c1eef1bd1dd966ab53092bd4b60be26a",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x2x8:ref93"
+    },
+    {
+      "target_id": "mm_2x2x9",
+      "dimensions": [
+        2,
+        2,
+        9
+      ],
+      "best_known_rank": 32,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "d569631946b9d10d03fe79043c2d67568d6674d3d7b9b361d6814c58e7f3ffa4",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x2x9:ref93"
+    },
+    {
+      "target_id": "mm_2x2x10",
+      "dimensions": [
+        2,
+        2,
+        10
+      ],
+      "best_known_rank": 35,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "830cf9909ba8d21df730b02045241c0a7accdbcc26ec86b698b34b5eed85ceb2",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x2x10:ref93"
+    },
+    {
+      "target_id": "mm_2x2x11",
+      "dimensions": [
+        2,
+        2,
+        11
+      ],
+      "best_known_rank": 39,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "811561cbff1bd07984c9678d5ecd09aca1b71f169ecf2e691d69d57ad14c5e04",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x2x11:ref93"
+    },
+    {
+      "target_id": "mm_2x2x12",
+      "dimensions": [
+        2,
+        2,
+        12
+      ],
+      "best_known_rank": 42,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "2ba3853725c6a1b1435cb3cebaa01fa187062c95b220f572d5cdac5b82582955",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x2x12:ref93"
+    },
+    {
+      "target_id": "mm_2x2x13",
+      "dimensions": [
+        2,
+        2,
+        13
+      ],
+      "best_known_rank": 46,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "122587a5520338997038ae66f7bb4eaab841d4afeade5069bf6cf48269668d66",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x2x13:ref93"
+    },
+    {
+      "target_id": "mm_2x2x14",
+      "dimensions": [
+        2,
+        2,
+        14
+      ],
+      "best_known_rank": 49,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "5f7d6ebf4819b4e33773cc76eeacbd79f4f302224d8ddd220773a331e470e496",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x2x14:ref93"
+    },
+    {
+      "target_id": "mm_2x2x15",
+      "dimensions": [
+        2,
+        2,
+        15
+      ],
+      "best_known_rank": 53,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "b21822fac13b766d417fea21ec57230e8ac3cd8d3c11f4a73cd581ca959dd910",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x2x15:ref93"
+    },
+    {
+      "target_id": "mm_2x2x16",
+      "dimensions": [
+        2,
+        2,
+        16
+      ],
+      "best_known_rank": 56,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "8e8f82b6eaa47d81e2dfbf17334d7e75cf29ab0f40e87315052d73fc46a6404c",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x2x16:ref93"
+    },
+    {
+      "target_id": "mm_2x3x3",
+      "dimensions": [
+        2,
+        3,
+        3
+      ],
+      "best_known_rank": 15,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "da079833f1c6f7577152ab4a3ac8c17e99b607e4de443ba5afe0fab9d971e15e",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x3x3:ref93"
+    },
+    {
+      "target_id": "mm_2x3x4",
+      "dimensions": [
+        2,
+        3,
+        4
+      ],
+      "best_known_rank": 20,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "bc7be02b7ab0465f6caa6f662a32334243b3c624b15e3043ee0b15b50cbd6877",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x3x4:ref93"
+    },
+    {
+      "target_id": "mm_2x3x5",
+      "dimensions": [
+        2,
+        3,
+        5
+      ],
+      "best_known_rank": 25,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "b44589c32c788025cdacfd922ad5c1ecc9acd977eeaba0f62bbe0edf910f176d",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x3x5:ref93"
+    },
+    {
+      "target_id": "mm_2x3x6",
+      "dimensions": [
+        2,
+        3,
+        6
+      ],
+      "best_known_rank": 30,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "0f7415c40529ee7f6cceba24fa1b65ddfc69c807173b831ea724ad2ffe4e146f",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x3x6:ref93"
+    },
+    {
+      "target_id": "mm_2x3x7",
+      "dimensions": [
+        2,
+        3,
+        7
+      ],
+      "best_known_rank": 35,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "82c835eecf9d542f9878c6273a8c44e40752025c66481a031c1f41fe159f2fe9",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x3x7:ref93"
+    },
+    {
+      "target_id": "mm_2x3x8",
+      "dimensions": [
+        2,
+        3,
+        8
+      ],
+      "best_known_rank": 40,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "90af705d242405f2747239000445ba4781d49efc6ba1ae3b86776c265f895c2b",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x3x8:ref93"
+    },
+    {
+      "target_id": "mm_2x3x9",
+      "dimensions": [
+        2,
+        3,
+        9
+      ],
+      "best_known_rank": 45,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "4adf55506cd921e31f61429a64e3a90b73e702198fce076b48f66afe5d1af263",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x3x9:ref93"
+    },
+    {
+      "target_id": "mm_2x3x10",
+      "dimensions": [
+        2,
+        3,
+        10
+      ],
+      "best_known_rank": 50,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "96c21c37d20e6ca79ccabbd49c491e8bfa9708c2ce1d7975078f432cec2c25d0",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x3x10:ref93"
+    },
+    {
+      "target_id": "mm_2x4x4",
+      "dimensions": [
+        2,
+        4,
+        4
+      ],
+      "best_known_rank": 26,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "da7e8b092b45d9a3a4b66c4574ca3b8e6c4d4c79f9babb22114626f1363031b4",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x4x4:ref93"
+    },
+    {
+      "target_id": "mm_2x4x5",
+      "dimensions": [
+        2,
+        4,
+        5
+      ],
+      "best_known_rank": 33,
+      "cited_reference_id": "42",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "f62b873f0da8eb8134a3dfd1a0be595cbe35b353c13fa749fe2f26c66fc47a2a",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x4x5:ref42"
+    },
+    {
+      "target_id": "mm_2x4x6",
+      "dimensions": [
+        2,
+        4,
+        6
+      ],
+      "best_known_rank": 39,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "41b9687bf3ab96684149292d7742b246e6806d5eb766d7b22499f3ff2e824b85",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x4x6:ref93"
+    },
+    {
+      "target_id": "mm_2x4x7",
+      "dimensions": [
+        2,
+        4,
+        7
+      ],
+      "best_known_rank": 46,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "3640f77f146fe1c999822d07a844dd1d10d979369581311fb33fd6e55ca0c044",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x4x7:ref93"
+    },
+    {
+      "target_id": "mm_2x4x8",
+      "dimensions": [
+        2,
+        4,
+        8
+      ],
+      "best_known_rank": 52,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "1672877db2b612156988fcf174996dedea704030cca625c0b12706e9887aa89b",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x4x8:ref93"
+    },
+    {
+      "target_id": "mm_2x5x5",
+      "dimensions": [
+        2,
+        5,
+        5
+      ],
+      "best_known_rank": 40,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "6f0cdaeff088543f0b954230c2d6b237ec85d36fb4cf7250ad33b97fd3b8c216",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x5x5:ref93"
+    },
+    {
+      "target_id": "mm_2x5x6",
+      "dimensions": [
+        2,
+        5,
+        6
+      ],
+      "best_known_rank": 48,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "2144780fde4b2ff570d8e2dc51a45102d5df76ea1daf5ce3c088c587a599bf67",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_2x5x6:ref93"
+    },
+    {
+      "target_id": "mm_3x3x3",
+      "dimensions": [
+        3,
+        3,
+        3
+      ],
+      "best_known_rank": 23,
+      "cited_reference_id": "52",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "53d16699ee59100f38e1d9582041f934c64e74e6419a3cab766c352dcd58a804",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_3x3x3:ref52"
+    },
+    {
+      "target_id": "mm_3x3x4",
+      "dimensions": [
+        3,
+        3,
+        4
+      ],
+      "best_known_rank": 29,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "e8825518f31e0a1feb004f26e757683100583fced66a2d4c94d2c18674ffda49",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_3x3x4:ref93"
+    },
+    {
+      "target_id": "mm_3x3x5",
+      "dimensions": [
+        3,
+        3,
+        5
+      ],
+      "best_known_rank": 36,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "a9af3509f7ea1a6bd0841a0494b54819ad9768948bd75a048c48f5b1e23d217b",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_3x3x5:ref93"
+    },
+    {
+      "target_id": "mm_3x3x6",
+      "dimensions": [
+        3,
+        3,
+        6
+      ],
+      "best_known_rank": 40,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "99aa8f8e861a5156b9a4c6c701c93f6c268364178651ce9a9bb8ed9be720a445",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_3x3x6:ref93"
+    },
+    {
+      "target_id": "mm_3x3x7",
+      "dimensions": [
+        3,
+        3,
+        7
+      ],
+      "best_known_rank": 49,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "1cc878b3e1f2065faafc55741b15a0d8411603d029553c4d9c17dd722bf1b077",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_3x3x7:ref93"
+    },
+    {
+      "target_id": "mm_3x3x8",
+      "dimensions": [
+        3,
+        3,
+        8
+      ],
+      "best_known_rank": 55,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "c9e7f04acb72aeb47095a755db5713e99543a0608c093bffc0a7e7b8d7df4425",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_3x3x8:ref93"
+    },
+    {
+      "target_id": "mm_3x4x4",
+      "dimensions": [
+        3,
+        4,
+        4
+      ],
+      "best_known_rank": 38,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "7a5a7a2a48b044e21800be064088236e58209fd126ddca6e08989ae82a616a56",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_3x4x4:ref93"
+    },
+    {
+      "target_id": "mm_3x4x5",
+      "dimensions": [
+        3,
+        4,
+        5
+      ],
+      "best_known_rank": 47,
+      "cited_reference_id": "26",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "5711f6826c04237bb15e8762d621211775f7e597361c2666c702517d6bfcdbc5",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_3x4x5:ref26"
+    },
+    {
+      "target_id": "mm_3x4x6",
+      "dimensions": [
+        3,
+        4,
+        6
+      ],
+      "best_known_rank": 56,
+      "cited_reference_id": "48",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "0958922e305d96fe3214f8ab5ffb3de191357eadec56a8436ad77193336d9947",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_3x4x6:ref48"
+    },
+    {
+      "target_id": "mm_3x4x7",
+      "dimensions": [
+        3,
+        4,
+        7
+      ],
+      "best_known_rank": 66,
+      "cited_reference_id": "91",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "8f01f051ab876c0043e085122610b4219b2dd48b0063be245cafe31deb58720a",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_3x4x7:ref91"
+    },
+    {
+      "target_id": "mm_3x4x8",
+      "dimensions": [
+        3,
+        4,
+        8
+      ],
+      "best_known_rank": 75,
+      "cited_reference_id": "91",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "ccaeedcf4ff60d9eb5d99b41fcabff5cee721477109d2012658403d826c52e9b",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_3x4x8:ref91"
+    },
+    {
+      "target_id": "mm_3x5x5",
+      "dimensions": [
+        3,
+        5,
+        5
+      ],
+      "best_known_rank": 58,
+      "cited_reference_id": "91",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "b9cd4c00c9cbc5bf1d1c58aa7788fb9368f9bcfb075dfe4f0f281bcdaccfa1f7",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_3x5x5:ref91"
+    },
+    {
+      "target_id": "mm_3x5x6",
+      "dimensions": [
+        3,
+        5,
+        6
+      ],
+      "best_known_rank": 70,
+      "cited_reference_id": "48",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "8568ffbefdb4b7bc5105f233ff2c880ddfc4c73adff90f94af6f66e68ff3c564",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_3x5x6:ref48"
+    },
+    {
+      "target_id": "mm_3x5x7",
+      "dimensions": [
+        3,
+        5,
+        7
+      ],
+      "best_known_rank": 82,
+      "cited_reference_id": "91",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "7885d732d02625ff3b320199582d0ed346afd2d8e9617ba8ae30017c09bed284",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_3x5x7:ref91"
+    },
+    {
+      "target_id": "mm_4x4x4",
+      "dimensions": [
+        4,
+        4,
+        4
+      ],
+      "best_known_rank": 49,
+      "cited_reference_id": "95",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "dc0f9bc7edb8ade8b37a81ece1e69ca5bb02a09aeaaf5ce81f4467f57ce96eab",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_4x4x4:ref95"
+    },
+    {
+      "target_id": "mm_4x4x5",
+      "dimensions": [
+        4,
+        4,
+        5
+      ],
+      "best_known_rank": 62,
+      "cited_reference_id": "47",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "4cfb7948c71ef71ac49507adef47fd2c550827009e13941218d44d154efd6270",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_4x4x5:ref47"
+    },
+    {
+      "target_id": "mm_4x4x6",
+      "dimensions": [
+        4,
+        4,
+        6
+      ],
+      "best_known_rank": 73,
+      "cited_reference_id": "48",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "96dfa7d6cb1b12ad2a86845ed9f4aee370bd7a102afcd1cbd9f2fedca0fc6d0b",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_4x4x6:ref48"
+    },
+    {
+      "target_id": "mm_4x4x7",
+      "dimensions": [
+        4,
+        4,
+        7
+      ],
+      "best_known_rank": 87,
+      "cited_reference_id": "93",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "83c82dffa8c2c46bcb2b7173f271403978275db76e0cdf7133163f5c7bb06210",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction. Table 3 also cites reference(s) 95.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_4x4x7:ref93",
+      "additional_cited_reference_ids": [
+        "95"
+      ]
+    },
+    {
+      "target_id": "mm_4x4x8",
+      "dimensions": [
+        4,
+        4,
+        8
+      ],
+      "best_known_rank": 98,
+      "cited_reference_id": "95",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "6c359033f494cbca27f821a4a2ca4f370bf4fbd43413578ceeba757653eef7eb",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_4x4x8:ref95"
+    },
+    {
+      "target_id": "mm_4x4x9",
+      "dimensions": [
+        4,
+        4,
+        9
+      ],
+      "best_known_rank": 104,
+      "cited_reference_id": "92",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "e4c9bbee7b19760229765652045c5cdab53973481e6e67cce7aaeedd96fb8a78",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_4x4x9:ref92"
+    },
+    {
+      "target_id": "mm_4x5x5",
+      "dimensions": [
+        4,
+        5,
+        5
+      ],
+      "best_known_rank": 76,
+      "cited_reference_id": "26",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "c6c6193c336bc1422e7298468b1a581723aac9734d3f5e1a6cfff6cc467b151f",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_4x5x5:ref26"
+    },
+    {
+      "target_id": "mm_4x5x6",
+      "dimensions": [
+        4,
+        5,
+        6
+      ],
+      "best_known_rank": 93,
+      "cited_reference_id": "48",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "5cba9a630a7f78ea3835cabc5d296072420fc1d139b06ade5d054ae715ef5aeb",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_4x5x6:ref48"
+    },
+    {
+      "target_id": "mm_5x5x5",
+      "dimensions": [
+        5,
+        5,
+        5
+      ],
+      "best_known_rank": 93,
+      "cited_reference_id": "72",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "73e5281af6bd9aa445ebb0397dfd6b286254741c99593d03299fc412336ef2a7",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_5x5x5:ref72"
+    },
+    {
+      "target_id": "mm_6x6x6",
+      "dimensions": [
+        6,
+        6,
+        6
+      ],
+      "best_known_rank": 153,
+      "cited_reference_id": "72",
+      "source_table": "Appendix A Table 3",
+      "source_pdf_page": 34,
+      "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+      "source_artifact_sha256": "4398379aaec00e8744de289a6128309cc2fbded8d0e196cc1353c2a4adaca0cc",
+      "applicability_caveats": "Best-known rank and reference ids are transcribed from AlphaEvolve Appendix A Table 3; this does not independently rederive the prior construction.",
+      "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+      "report_baseline_source_ref": "baseline:mm_6x6x6:ref72"
+    }
+  ],
+  "claim_boundary": "Recorded metadata links each Appendix A matrix target to the cited prior-work source behind its best-known-rank baseline."
+}

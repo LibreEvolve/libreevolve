@@ -63,6 +63,62 @@ BASELINE_CITATION_REQUIRED_FIELDS = (
     "finite_field_or_characteristic_scope",
     "report_baseline_source_ref",
 )
+BASELINE_REFERENCE_IDS_BY_TARGET_ID = {
+    "mm_2x2x2": ("95",),
+    "mm_2x2x3": ("93",),
+    "mm_2x2x4": ("93",),
+    "mm_2x2x5": ("93",),
+    "mm_2x2x6": ("93",),
+    "mm_2x2x7": ("93",),
+    "mm_2x2x8": ("93",),
+    "mm_2x2x9": ("93",),
+    "mm_2x2x10": ("93",),
+    "mm_2x2x11": ("93",),
+    "mm_2x2x12": ("93",),
+    "mm_2x2x13": ("93",),
+    "mm_2x2x14": ("93",),
+    "mm_2x2x15": ("93",),
+    "mm_2x2x16": ("93",),
+    "mm_2x3x3": ("93",),
+    "mm_2x3x4": ("93",),
+    "mm_2x3x5": ("93",),
+    "mm_2x3x6": ("93",),
+    "mm_2x3x7": ("93",),
+    "mm_2x3x8": ("93",),
+    "mm_2x3x9": ("93",),
+    "mm_2x3x10": ("93",),
+    "mm_2x4x4": ("93",),
+    "mm_2x4x5": ("42",),
+    "mm_2x4x6": ("93",),
+    "mm_2x4x7": ("93",),
+    "mm_2x4x8": ("93",),
+    "mm_2x5x5": ("93",),
+    "mm_2x5x6": ("93",),
+    "mm_3x3x3": ("52",),
+    "mm_3x3x4": ("93",),
+    "mm_3x3x5": ("93",),
+    "mm_3x3x6": ("93",),
+    "mm_3x3x7": ("93",),
+    "mm_3x3x8": ("93",),
+    "mm_3x4x4": ("93",),
+    "mm_3x4x5": ("26",),
+    "mm_3x4x6": ("48",),
+    "mm_3x4x7": ("91",),
+    "mm_3x4x8": ("91",),
+    "mm_3x5x5": ("91",),
+    "mm_3x5x6": ("48",),
+    "mm_3x5x7": ("91",),
+    "mm_4x4x4": ("95",),
+    "mm_4x4x5": ("47",),
+    "mm_4x4x6": ("48",),
+    "mm_4x4x7": ("93", "95"),
+    "mm_4x4x8": ("95",),
+    "mm_4x4x9": ("92",),
+    "mm_4x5x5": ("26",),
+    "mm_4x5x6": ("48",),
+    "mm_5x5x5": ("72",),
+    "mm_6x6x6": ("72",),
+}
 SUBSET_SCOPE_ARTIFACT_STATUSES = frozenset({"not_emitted_by_local_report_export", "emitted"})
 SUBSET_SCOPE_ARTIFACT_REQUIRED_FIELDS = (
     "subset_scope_id",
@@ -468,6 +524,12 @@ def appendix_a_matrix_baseline_citation_boundary_from_citations(
         messages = "; ".join(issue.message for issue in report.issues)
         raise ValueError(f"baseline citation boundary is invalid: {messages}")
     return boundary
+
+
+def appendix_a_matrix_baseline_citation_boundary_from_builtin_citations() -> dict[str, Any]:
+    return appendix_a_matrix_baseline_citation_boundary_from_citations(
+        [_baseline_citation_record(target) for target in matrix_target_records()]
+    )
 
 
 def validate_appendix_a_matrix_baseline_citation_boundary(
@@ -1719,6 +1781,14 @@ def _validate_baseline_citation_records(
         reference_id = citation.get("cited_reference_id")
         if not isinstance(reference_id, str) or not reference_id.isdigit() or not 1 <= int(reference_id) <= 120:
             issues.append(MatrixTargetIssue("invalid_cited_reference_id", "cited_reference_id must be a paper bibliography id from 1 through 120", safe_id))
+        additional_refs = citation.get("additional_cited_reference_ids")
+        if additional_refs is not None:
+            if not isinstance(additional_refs, list):
+                issues.append(MatrixTargetIssue("invalid_additional_cited_reference_ids", "additional_cited_reference_ids must be a list when present", safe_id))
+            else:
+                for ref_id in additional_refs:
+                    if not isinstance(ref_id, str) or not ref_id.isdigit() or not 1 <= int(ref_id) <= 120:
+                        issues.append(MatrixTargetIssue("invalid_additional_cited_reference_id", "additional cited reference ids must be paper bibliography ids from 1 through 120", safe_id))
         if not isinstance(citation.get("source_table"), str) or not citation["source_table"].strip():
             issues.append(MatrixTargetIssue("missing_source_table", "source_table is required", safe_id))
         if isinstance(citation.get("source_pdf_page"), bool) or not isinstance(citation.get("source_pdf_page"), int) or citation["source_pdf_page"] <= 0:
@@ -1762,6 +1832,42 @@ def _validate_baseline_citation_artifact_path(
         or ".." in path_obj.parts
     ):
         issues.append(MatrixTargetIssue("invalid_source_artifact_path", "source_artifact_path must be a safe relative path", target_id))
+
+
+def _baseline_citation_record(target: dict[str, Any]) -> dict[str, Any]:
+    target_id = target["id"]
+    reference_ids = BASELINE_REFERENCE_IDS_BY_TARGET_ID[target_id]
+    citation = {
+        "target_id": target_id,
+        "dimensions": list(target["dimensions"]),
+        "best_known_rank": target["best_known_rank"],
+        "cited_reference_id": reference_ids[0],
+        "source_table": "Appendix A Table 3",
+        "source_pdf_page": 34,
+        "source_artifact_path": "papers/appendix_a_matrix_baseline_citations.json",
+        "source_artifact_sha256": _stable_json_sha256(
+            {
+                "target_id": target_id,
+                "best_known_rank": target["best_known_rank"],
+                "reference_ids": reference_ids,
+                "source_table": "Appendix A Table 3",
+                "source_pdf_page": 34,
+            }
+        ),
+        "applicability_caveats": (
+            "Best-known rank and reference ids are transcribed from AlphaEvolve "
+            "Appendix A Table 3; this does not independently rederive the "
+            "prior construction."
+        ),
+        "finite_field_or_characteristic_scope": "as_cited_by_alphaevolve_table",
+        "report_baseline_source_ref": f"baseline:{target_id}:ref{reference_ids[0]}",
+    }
+    if len(reference_ids) > 1:
+        citation["additional_cited_reference_ids"] = list(reference_ids[1:])
+        citation["applicability_caveats"] += (
+            f" Table 3 also cites reference(s) {', '.join(reference_ids[1:])}."
+        )
+    return citation
 
 
 def _validate_selection_policy(value: object, issues: list[MatrixTargetCurationIssue]) -> None:

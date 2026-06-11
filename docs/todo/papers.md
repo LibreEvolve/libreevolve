@@ -2610,19 +2610,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     witness identities, set cardinalities, reported lower bounds, source
     section, theorem linkage, and required future finite-set witness fields
     through a validated `finite_set_witness_boundary`. The required fields now
-    separate contains-zero and non-negative certificate hashes, and each
-    missing witness has explicit `not_recorded_locally` statuses for
-    integer-set payloads, contains-zero certificates, non-negative
-    certificates, admissibility certificates, sum/difference certificates, and
-    recomputed lower bounds. It still does not retain real `U1`/`U2`
-    payloads, `|U-U|`/`|U+U|` cardinalities, max elements, or recomputed lower
-    bounds.
+    separate contains-zero, non-negative, sumset-cardinality, difference-set-
+    cardinality, max-element, and lower-bound formula-substitution certificate
+    hashes, and each missing witness has explicit `not_recorded_locally`
+    statuses for those categories. It still does not retain real `U1`/`U2`
+    payloads, `|U-U|`/`|U+U|` cardinalities, max elements, formula
+    substitutions, or recomputed lower bounds.
   - Required result: add paper/report evidence for the missing Appendix B.6
     witness artifacts: sorted integer payload hashes, max elements,
-    contains-zero and non-negativity certificates, feasibility checks,
-    `|U-U|`, `|U+U|`, denominator, derived lower-bound value, source section
-    linkage, and README/ROADMAP text that separates the two finite-set
-    witnesses from broad Appendix B family coverage.
+    contains-zero and non-negativity certificates, sumset/difference-set
+    cardinality certificates, max-element certificates, feasibility checks,
+    `|U-U|`, `|U+U|`, denominator, formula-substitution certificate, derived
+    lower-bound value, source section linkage, and README/ROADMAP text that
+    separates the two finite-set witnesses from broad Appendix B family
+    coverage.
 
 - [x] Track Appendix B.6 theorem-condition evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.6 first defines

@@ -2893,15 +2893,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `finite_set_witness_boundary`, including `U1`/`U2`, sizes `2003` and
     `54265`, reported lower bounds `1.1479 <= C6` and `1.1584 <= C6`,
     theorem linkage, and required future finite-set payload and certificate
-    fields. It now separates contains-zero and non-negative certificate
-    hashes/statuses from the broader admissibility certificate. It still does
-    not claim integer-set payload hashes, feasibility certificates, recomputed
-    arithmetic counts, or derived lower-bound recomputation.
+    fields. It now separates contains-zero, non-negative, sumset-cardinality,
+    difference-set-cardinality, max-element, and lower-bound formula-
+    substitution certificate hashes/statuses from the broader admissibility
+    certificate. It still does not claim integer-set payload hashes,
+    feasibility certificates, set-algebra certificates, formula-substitution
+    certificates, recomputed arithmetic counts, or derived lower-bound
+    recomputation.
   - Required result: when the actual Appendix B.6 witness payloads and
     certificates land, update ROADMAP, README, papers index, and code/paper
     TODOs so roadmap claims distinguish `U1` and `U2`, their sizes,
-    feasibility evidence, derived lower-bound values, payload hashes, and
-    source links from aggregate Appendix B coverage.
+    feasibility evidence, set-algebra certificates, formula-substitution
+    certificates, derived lower-bound values, payload hashes, and source links
+    from aggregate Appendix B coverage.
 
 - [x] Keep Appendix B.6 roadmap wording scoped until theorem-condition
       provenance exists.

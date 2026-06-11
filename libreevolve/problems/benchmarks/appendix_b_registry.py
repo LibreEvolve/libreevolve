@@ -545,8 +545,16 @@ EXPECTED_B6_WITNESS_REQUIRED_FIELDS = (
     "admissibility_certificate_path",
     "admissibility_certificate_sha256",
     "sumset_cardinality",
+    "sumset_cardinality_certificate_path",
+    "sumset_cardinality_certificate_sha256",
     "difference_set_cardinality",
+    "difference_set_cardinality_certificate_path",
+    "difference_set_cardinality_certificate_sha256",
     "max_element",
+    "max_element_certificate_path",
+    "max_element_certificate_sha256",
+    "lower_bound_formula_substitution_certificate_path",
+    "lower_bound_formula_substitution_certificate_sha256",
     "recomputed_lower_bound",
     "reported_bound_relation",
 )
@@ -559,6 +567,10 @@ EXPECTED_B6_WITNESS_ROWS = (
         "reported_bound_relation": "1.1479 <= C6",
         "contains_zero_certificate_status": "not_recorded_locally",
         "non_negative_certificate_status": "not_recorded_locally",
+        "sumset_cardinality_certificate_status": "not_recorded_locally",
+        "difference_set_cardinality_certificate_status": "not_recorded_locally",
+        "max_element_certificate_status": "not_recorded_locally",
+        "lower_bound_formula_substitution_certificate_status": "not_recorded_locally",
     },
     {
         "result_id": "b6_u2_size_54265",
@@ -568,6 +580,10 @@ EXPECTED_B6_WITNESS_ROWS = (
         "reported_bound_relation": "1.1584 <= C6",
         "contains_zero_certificate_status": "not_recorded_locally",
         "non_negative_certificate_status": "not_recorded_locally",
+        "sumset_cardinality_certificate_status": "not_recorded_locally",
+        "difference_set_cardinality_certificate_status": "not_recorded_locally",
+        "max_element_certificate_status": "not_recorded_locally",
+        "lower_bound_formula_substitution_certificate_status": "not_recorded_locally",
     },
 )
 EXPECTED_B6_WITNESS_IDS = tuple(row["result_id"] for row in EXPECTED_B6_WITNESS_ROWS)
@@ -1757,6 +1773,10 @@ def _validate_b6_witness_boundary(
             "non_negative_certificate_status",
             "admissibility_certificate_status",
             "sum_difference_certificate_status",
+            "sumset_cardinality_certificate_status",
+            "difference_set_cardinality_certificate_status",
+            "max_element_certificate_status",
+            "lower_bound_formula_substitution_certificate_status",
             "recomputed_lower_bound_status",
         ):
             if witness.get(field) != "not_recorded_locally":

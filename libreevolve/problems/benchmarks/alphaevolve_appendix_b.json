@@ -532,8 +532,16 @@
           "admissibility_certificate_path",
           "admissibility_certificate_sha256",
           "sumset_cardinality",
+          "sumset_cardinality_certificate_path",
+          "sumset_cardinality_certificate_sha256",
           "difference_set_cardinality",
+          "difference_set_cardinality_certificate_path",
+          "difference_set_cardinality_certificate_sha256",
           "max_element",
+          "max_element_certificate_path",
+          "max_element_certificate_sha256",
+          "lower_bound_formula_substitution_certificate_path",
+          "lower_bound_formula_substitution_certificate_sha256",
           "recomputed_lower_bound",
           "reported_bound_relation"
         ],
@@ -549,8 +557,12 @@
             "non_negative_certificate_status": "not_recorded_locally",
             "admissibility_certificate_status": "not_recorded_locally",
             "sum_difference_certificate_status": "not_recorded_locally",
+            "sumset_cardinality_certificate_status": "not_recorded_locally",
+            "difference_set_cardinality_certificate_status": "not_recorded_locally",
+            "max_element_certificate_status": "not_recorded_locally",
+            "lower_bound_formula_substitution_certificate_status": "not_recorded_locally",
             "recomputed_lower_bound_status": "not_recorded_locally",
-            "claim_boundary": "The registry records the paper's B.6 U1 witness summary but does not claim a local integer-set payload, admissibility certificate, sum/difference certificate, or recomputed lower bound."
+            "claim_boundary": "The registry records the paper's B.6 U1 witness summary but does not claim a local integer-set payload, admissibility certificate, sumset/difference-set cardinality certificates, max-element certificate, lower-bound formula substitution certificate, or recomputed lower bound."
           },
           {
             "result_id": "b6_u2_size_54265",
@@ -563,8 +575,12 @@
             "non_negative_certificate_status": "not_recorded_locally",
             "admissibility_certificate_status": "not_recorded_locally",
             "sum_difference_certificate_status": "not_recorded_locally",
+            "sumset_cardinality_certificate_status": "not_recorded_locally",
+            "difference_set_cardinality_certificate_status": "not_recorded_locally",
+            "max_element_certificate_status": "not_recorded_locally",
+            "lower_bound_formula_substitution_certificate_status": "not_recorded_locally",
             "recomputed_lower_bound_status": "not_recorded_locally",
-            "claim_boundary": "The registry records the paper's B.6 U2 witness summary but does not claim a local integer-set payload, admissibility certificate, sum/difference certificate, or recomputed lower bound."
+            "claim_boundary": "The registry records the paper's B.6 U2 witness summary but does not claim a local integer-set payload, admissibility certificate, sumset/difference-set cardinality certificates, max-element certificate, lower-bound formula substitution certificate, or recomputed lower bound."
           }
         ]
       },

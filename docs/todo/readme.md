@@ -1793,14 +1793,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `finite_set_witness_boundary`, including `U1`/`U2`, set sizes `2003` and
     `54265`, reported lower bounds `1.1479 <= C6` and `1.1584 <= C6`, theorem
     linkage, and required future payload/certificate fields. It now separates
-    contains-zero and non-negative certificate hashes/statuses from the broader
-    admissibility certificate. It still warns that the actual finite-set
-    payloads, feasibility certificates, sum/difference certificates, and
-    recomputed lower bounds are absent.
+    contains-zero, non-negative, sumset-cardinality, difference-set-
+    cardinality, max-element, and lower-bound formula-substitution certificate
+    hashes/statuses from the broader admissibility certificate. It still warns
+    that the actual finite-set payloads, feasibility certificates, set-algebra
+    certificates, formula-substitution certificates, and recomputed lower
+    bounds are absent.
   - Required result: when the actual Appendix B.6 witness payloads and
     certificates land, update README, ROADMAP, papers index, and code/paper
     TODOs together so README names both witness sets, payload hashes,
-    feasibility checks, derived lower-bound values, and source links without
+    feasibility checks, set-algebra certificates, formula-substitution
+    certificates, derived lower-bound values, and source links without
     collapsing the result to one aggregate finite-set claim.
 
 - [x] Keep README Appendix B.6 theorem wording scoped until admissibility

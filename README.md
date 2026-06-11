@@ -3633,9 +3633,11 @@ finite-set admissibility condition, and lower-bound formula. A validated
 `U1` of size `2003` with `1.1479 <= C6` and `U2` of size `54265` with
 `1.1584 <= C6`, plus the future integer-set payload, contains-zero and
 non-negative certificates, admissibility certificate, sum/difference
-cardinality certificate, max-element, and recomputed-bound fields required
-before local reproduction can be claimed.
-The actual B.6 finite-set payloads and recomputation certificates remain
+cardinality certificates, max-element certificate, lower-bound formula
+substitution certificate, and recomputed-bound fields required before local
+reproduction can be claimed.
+The actual B.6 finite-set payloads, set-cardinality/max-element certificates,
+formula-substitution certificates, and recomputation certificates remain
 absent. For Appendix B.7, the registry now preserves the unit-regular-hexagon
 packing objective, Figure 11 linkage, prior `[29]` outer side lengths, and
 two paper-reported improvements: `n = 11` from `3.943` to `3.931` in the left

@@ -123,8 +123,10 @@ condition, and lower-bound formula. Its `finite_set_witness_boundary` records
 the paper's two witness summaries, `U1` of size `2003` with
 `1.1479 <= C6` and `U2` of size `54265` with `1.1584 <= C6`, plus the
 integer-set payload, contains-zero, non-negative, admissibility,
-sum/difference, and recomputation fields required before local reproduction
-can be claimed, while the finite-set construction payloads remain absent.
+sumset-cardinality, difference-set-cardinality, max-element,
+lower-bound-formula substitution, and recomputation fields required before
+local reproduction can be claimed, while the finite-set construction payloads,
+set-algebra certificates, and formula-substitution artifacts remain absent.
 For B.7 regular-hexagon packing, the registry now records the
 unit-regular-hexagon objective, Figure 11 linkage, prior `[29]` values, and
 two paper-reported improvements: `n = 11` from outer side length `3.943` to

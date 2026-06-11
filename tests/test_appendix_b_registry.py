@@ -662,6 +662,10 @@ def test_appendix_b_registry_requires_b6_witness_boundary(tmp_path):
     first["integer_set_artifact_status"] = "recorded"
     first["contains_zero_certificate_status"] = "recorded"
     first["non_negative_certificate_status"] = "recorded"
+    first["sumset_cardinality_certificate_status"] = "recorded"
+    first["difference_set_cardinality_certificate_status"] = "recorded"
+    first["max_element_certificate_status"] = "recorded"
+    first["lower_bound_formula_substitution_certificate_status"] = "recorded"
     first["claim_boundary"] = "Finite-set payload exists."
     boundary["missing_witnesses"] = boundary["missing_witnesses"][:1]
     registry = tmp_path / "registry.json"
@@ -681,6 +685,10 @@ def test_appendix_b_registry_requires_b6_witness_boundary(tmp_path):
     assert "invalid_b6_integer_set_artifact_status" in codes
     assert "invalid_b6_contains_zero_certificate_status" in codes
     assert "invalid_b6_non_negative_certificate_status" in codes
+    assert "invalid_b6_sumset_cardinality_certificate_status" in codes
+    assert "invalid_b6_difference_set_cardinality_certificate_status" in codes
+    assert "invalid_b6_max_element_certificate_status" in codes
+    assert "invalid_b6_lower_bound_formula_substitution_certificate_status" in codes
     assert "missing_b6_witness_claim_boundary" in codes
     assert "invalid_b6_witness_bound_order" in codes
     assert "missing_b6_witness_id" in codes

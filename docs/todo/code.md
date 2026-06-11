@@ -2662,18 +2662,20 @@ Primary evidence:
     set sizes `2003` and `54265`, reported lower bounds `1.1479 <= C6` and
     `1.1584 <= C6`, source section, theorem linkage, and required future
     payload/certificate fields. The required fields now include separate
-    contains-zero and non-negative certificate hashes, and each missing witness
-    has explicit `not_recorded_locally` statuses for integer-set payloads,
-    contains-zero certificates, non-negative certificates, admissibility
-    certificates, sum/difference certificates, and recomputed lower bounds.
-    No real `|U-U|`/`|U+U|` cardinalities, max elements, or recomputed lower
-    bounds exist.
+    contains-zero, non-negative, sumset-cardinality, difference-set-
+    cardinality, max-element, and lower-bound formula-substitution certificate
+    hashes, and each missing witness has explicit `not_recorded_locally`
+    statuses for integer-set payloads, those certificate categories,
+    admissibility certificates, and recomputed lower bounds. No real
+    `|U-U|`/`|U+U|` cardinalities, max elements, formula substitutions, or
+    recomputed lower bounds exist.
   - Required result: replace the `not_recorded_locally` boundary with real
     Appendix B.6 `U1` and `U2` witness artifacts: sorted integer payload
     hashes, max elements, contains-zero checks, non-negativity checks,
-    `|U-U|` and `|U+U|`, feasibility inequality status, recomputed
-    lower-bound values, source section linkage, and README/ROADMAP wording
-    that distinguishes the two witness sets from aggregate Appendix B
+    `|U-U|` and `|U+U|` cardinality certificates, max-element certificates,
+    feasibility inequality status, formula-substitution certificates,
+    recomputed lower-bound values, source section linkage, and README/ROADMAP
+    wording that distinguishes the two witness sets from aggregate Appendix B
     coverage.
 
 - [x] Add Appendix B.6 finite-set theorem/admissibility provenance.

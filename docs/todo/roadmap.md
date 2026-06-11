@@ -3034,7 +3034,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     now cite validated B.4 prior-bound rounding evidence: `[33]` source-stated
     `0.353`, rounded `0.3523` baseline, lower-bound context `0.2025`, and
     comparison to AlphaEvolve's first-version `0.3521`. The precise `[33]`
-    source locator and source-solution artifact remain absent.
+    source locator, source-solution artifact, and rounding-audit certificate
+    remain absent.
   - Required result: when Appendix B.4 prior-source artifacts or locators land,
     update ROADMAP, README, papers index, and code/paper TODOs so roadmap
     claims can cite the rounding evidence directly without treating it as a

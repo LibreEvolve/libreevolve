@@ -3708,6 +3708,8 @@ Hermite-polynomial result boundary (`C4 <= 0.3521` with coefficients
 `[0.32925, -0.01159, -8.9216e-5]`), the qualitative similarity claim against
 `[33]`, and the post-first-version revision note (`0.3284` from `[18]`, then
 AlphaEvolve `0.3216`). These are validated absence boundaries: the local
+[33] source locator, prior-solution rounding artifact, rounding-audit
+certificate,
 coefficient payloads, Hermite/Fourier/root certificates, coefficient-level
 comparison artifacts (prior and AlphaEvolve coefficient payloads,
 basis-alignment certificate, similarity metric, and hypothesis-source

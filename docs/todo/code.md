@@ -2875,11 +2875,14 @@ Primary evidence:
     `[33]`: lower bound `0.2025`, source-stated upper bound `0.353`, rounded
     comparison baseline `0.3523`, and the comparison policy against
     AlphaEvolve's first-version `0.3521`. `appendix_b_registry.py` validates
-    those values and their ordering.
+    those values and their ordering, while keeping the prior source locator,
+    prior-solution rounding artifact, and rounding-audit certificate statuses
+    `not_recorded_locally`.
   - Required result: add the actual prior-source solution citation/artifact
-    details and any page/section locator needed to audit the `[33]` rounding
-    statement, while keeping this caveat distinct from the later `0.3216`
-    revision and from Hermite certificate verification.
+    details, page/section locator, rounded-solution artifact, and audit
+    certificate needed to audit the `[33]` rounding statement, while keeping
+    this caveat distinct from the later `0.3216` revision and from Hermite
+    certificate verification.
 
 - [ ] Add Appendix B.4 Hermite-polynomial certificate provenance.
   - Spec evidence: AlphaEvolve Appendix B.4 derives `C4 <= 0.3521` from a

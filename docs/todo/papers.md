@@ -2913,13 +2913,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     source's stated value versus rounded value, lower-bound context, rounding
     policy, and comparison baseline through validated B.4
     `source_formulation_evidence` and `prior_bound_rounding_evidence`. It does
-    not yet retain a `[33]` page/section locator or source-solution artifact
-    that would independently audit the rounding statement.
+    not yet retain a `[33]` page/section locator, source-solution artifact, or
+    rounding-audit certificate that would independently audit the rounding
+    statement.
   - Required result: add B.4 paper-evidence records for the prior `[33]`
-    source locator/artifact status and any source-solution evidence needed to
-    audit the stated `0.353` versus rounded `0.3523` distinction, while keeping
-    README/ROADMAP wording separate from the later `0.3216` revision and from
-    Hermite-polynomial certificate evidence.
+    source locator/artifact status, rounded-solution artifact, and
+    rounding-audit certificate needed to audit the stated `0.353` versus
+    rounded `0.3523` distinction, while keeping README/ROADMAP wording
+    separate from the later `0.3216` revision and from Hermite-polynomial
+    certificate evidence.
 
 - [ ] Track Appendix B.4 Hermite-polynomial certificate evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.4 derives

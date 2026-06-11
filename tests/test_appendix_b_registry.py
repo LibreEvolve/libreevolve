@@ -344,7 +344,11 @@ def test_appendix_b_registry_requires_b4_uncertainty_boundaries(tmp_path):
     data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
     b4 = next(family for family in data["families"] if family["id"] == "uncertainty_inequality")
     b4["source_formulation_evidence"]["known_upper_bound_after_four_digit_rounding"] = 0.354
+    b4["source_formulation_evidence"]["construction_payload_status"] = "recorded"
     b4["prior_bound_rounding_evidence"]["prior_upper_bound_rounded_solution"] = 0.353
+    b4["prior_bound_rounding_evidence"]["prior_source_locator_status"] = "recorded"
+    b4["prior_bound_rounding_evidence"]["prior_solution_rounding_artifact_status"] = "recorded"
+    b4["prior_bound_rounding_evidence"]["rounding_audit_certificate_status"] = "recorded"
     b4["hermite_result_boundary"]["reported_upper_bound"] = 0.36
     b4["hermite_result_boundary"]["coefficient_payload_status"] = "recorded"
     b4["hermite_result_boundary"]["hermite_basis_certificate_status"] = "recorded"
@@ -373,8 +377,12 @@ def test_appendix_b_registry_requires_b4_uncertainty_boundaries(tmp_path):
 
     assert report.ok is False
     assert "invalid_b4_source_known_upper_bound_after_four_digit_rounding" in codes
+    assert "invalid_b4_source_construction_payload_status" in codes
     assert "invalid_b4_source_bound_order" in codes
     assert "invalid_b4_prior_prior_upper_bound_rounded_solution" in codes
+    assert "invalid_b4_prior_prior_source_locator_status" in codes
+    assert "invalid_b4_prior_prior_solution_rounding_artifact_status" in codes
+    assert "invalid_b4_prior_rounding_audit_certificate_status" in codes
     assert "invalid_b4_prior_rounding_order" in codes
     assert "invalid_b4_hermite_reported_upper_bound" in codes
     assert "invalid_b4_hermite_coefficient_payload_status" in codes

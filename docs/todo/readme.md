@@ -1929,7 +1929,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     statement, the rounded `0.3523` comparison baseline, AlphaEvolve's
     `0.3521` first-version bound, the later `0.3216` revision, and the
     separate Hermite certificate boundary. The underlying `[33]`
-    source-solution artifact and page/section locator remain absent.
+    source-solution artifact, page/section locator, and rounding-audit
+    certificate remain absent.
   - Required result: when B.4 prior-source artifacts or precise source locators
     land, update README, ROADMAP, papers index, and code/paper TODOs together
     so README can cite the rounding evidence directly without treating it as a

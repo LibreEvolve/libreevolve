@@ -680,8 +680,9 @@ is not yet an AlphaEvolve reproduction.
   `[0.32925, -0.01159, -8.9216e-5]`, `P(x)/x^2`, and `r_max^2 / (2*pi)`), the
   qualitative similarity/hypothesis claim against `[33]`, and the
   post-first-version revision note (`[18]` at `0.3284`, AlphaEvolve at
-  `0.3216`). Actual coefficient payloads, Hermite/Fourier/root certificates,
-  origin-condition certificates, eventual-nonnegative certificates,
+  `0.3216`). Actual `[33]` source locators, prior-solution rounding artifacts,
+  rounding-audit certificates, coefficient payloads, Hermite/Fourier/root
+  certificates, origin-condition certificates, eventual-nonnegative certificates,
   coefficient-comparison artifacts (prior and AlphaEvolve payloads,
   basis-alignment certificate, similarity metric, and hypothesis-source
   artifact), Colab/verifier linkage, comparison-to-`0.3284` certificates, and

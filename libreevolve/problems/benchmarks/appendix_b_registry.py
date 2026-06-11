@@ -253,6 +253,9 @@ EXPECTED_B4_PRIOR_BOUND_ROUNDING = {
     "prior_upper_bound_rounded_solution": 0.3523,
     "rounding_note": "The paper states that [33] gives 0.353, but rounding that solution to the fourth digit gives 0.3523.",
     "comparison_policy": "compare AlphaEvolve 0.3521 against rounded 0.3523 while preserving the source-stated 0.353 display",
+    "prior_source_locator_status": "not_recorded_locally",
+    "prior_solution_rounding_artifact_status": "not_recorded_locally",
+    "rounding_audit_certificate_status": "not_recorded_locally",
 }
 EXPECTED_B4_HERMITE_REQUIRED_FIELDS = (
     "result_id",
@@ -1272,6 +1275,13 @@ def _validate_b4_prior_rounding(
         and float(rounded) >= float(stated)
     ):
         issues.append(AppendixBRegistryIssue("invalid_b4_prior_rounding_order", "B.4 rounded prior upper bound must remain below the source-stated display value", family_id))
+    for field in (
+        "prior_source_locator_status",
+        "prior_solution_rounding_artifact_status",
+        "rounding_audit_certificate_status",
+    ):
+        if evidence.get(field) != "not_recorded_locally":
+            issues.append(AppendixBRegistryIssue(f"invalid_b4_prior_{field}", f"B.4 prior rounding {field} must be not_recorded_locally in the absence boundary", family_id))
 
 
 def _validate_b4_hermite_result(

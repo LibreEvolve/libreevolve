@@ -68,7 +68,7 @@ EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS = {
     "diagnostic_scope": "all_numbered_pages_resource_links",
     "diagnosed_page_count": EXPECTED_OBSERVED_NUMBERED_HTML_COUNT,
     "resource_link_diagnostics_complete": True,
-    "page_hash_inventory_complete": False,
+    "page_hash_inventory_complete": True,
     "colab_link_status_counts": {
         "generic_colab_landing_page": 1,
         "github_notebook_blob_url": 36,
@@ -116,6 +116,85 @@ EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS = {
         {"paper_section": "6.6", "page_ids": (11, 12, 13)},
         {"paper_section": "6.7", "page_ids": (14, 15, 16, 17, 18)},
         {"paper_section": "6.9", "page_ids": (20, 21, 22, 23, 24)},
+    ),
+}
+EXPECTED_ALL_PAGE_HASH_INVENTORY = {
+    "diagnostic_scope": "all_numbered_pages_raw_html_hashes",
+    "page_count": EXPECTED_OBSERVED_NUMBERED_HTML_COUNT,
+    "declared_problem_page_count": EXPECTED_DECLARED_PROBLEM_COUNT,
+    "extra_numbered_page_ids": EXPECTED_EXTRA_NUMBERED_PAGE_IDS,
+    "page_hash_inventory_complete": True,
+    "notebook_mapping_complete": False,
+    "artifact_presence_matrix_complete": False,
+    "pages": (
+        (1, 13949, "b89661360a9be3913286bda2115bd00db8ec57cbd01a364c3d9e9d58f30cf0bf"),
+        (2, 15197, "646585d70e1605f6c8693450ec7921b8b38313ebd0f18a5f1b8da565a3bbd3d1"),
+        (3, 14141, "ec6e9ad7e42f71456cba200070899e007126d5436fe771d7a0d0220a01cb6feb"),
+        (4, 12693, "a0c53173c842a90801f8d8187ffd065355a4ad4c3256768df47eb027caed8221"),
+        (5, 13982, "237765d9009c938a6bb101e0d7e11e10fb3e8c270cc485e71f822d4e9d60bb25"),
+        (6, 12213, "1a015ed57fde3b2117d43ada01f7168b6ce323d1f8be33f837681e8ee96c5656"),
+        (7, 12524, "a41d53032e293a190a6069603c2b25be7f04dfb7fa80675a29ac25d41beb9169"),
+        (8, 12752, "ce81f9adaab67df783dfc587b0f457493e5eeff31c818881084da715468cad6b"),
+        (9, 14171, "401d94597707a735a75f86597d90a52ebb2b11ef2f5d04808d361cc258f687f0"),
+        (10, 12827, "b0f013739a79ead72e305f6098ffaf940ffe49d4b86e9a9b6940a048b33bae92"),
+        (11, 14433, "b0b30a161c5870cba1fcc5aaf2789f84a6512525aec5052d0642b00a9df7e9b5"),
+        (12, 12330, "6c946e1577113386b20b0177fd03020218d32258f36e4dc640fd06265d4cabc6"),
+        (13, 12601, "46e6c69cb09f94fdc5f67083d0c513d63e9b07d5acc2ff59bc1c479e4e3ca50a"),
+        (14, 10595, "1ba6026cb829469078afb2d71fc30ba0ae2d8457e1e9b520812820f8e9cc718a"),
+        (15, 12818, "e558f5ed9f1a91a3d918a3324b2f31a525e93a39f45cc3534939c7db50bcb31b"),
+        (16, 10564, "49eae5bdb9746302e4ac7908df2ee052c77f4d3ff817fe128847f6db58bf64d6"),
+        (17, 10522, "b6c37b7cf63391cf07ee10449d1f02359241ec9ed9ab43c1db411b2fc251c58a"),
+        (18, 10572, "b99f1130ab0a8ff5c058a632c86db21935a147fb6afaa8a55af317dcd145f76a"),
+        (19, 12429, "db8b81c74c700e8c4e95a746926262d44150b7b12d6fc66334f29652b089df2a"),
+        (20, 12255, "15ccbb11a5758674b0c290b667480445c71f7856bb13e62f748dec00ef5f857d"),
+        (21, 12383, "025b412a3c279815d375826e19bb79639e7eaf4a69598d8bfa40f282d92ba748"),
+        (22, 12300, "e7b2e82471c900c27eace5b095d7ffd6d83548bca5f7ab618df88fe797756b84"),
+        (23, 12269, "526df2c71cb27be4b779dfb65b8b17acc9068a1421f60c79d300876c95029025"),
+        (24, 12595, "ef7172f43de90ab18778bd2c8461e80838ff23ca04f95eee6f3ec9d0d62a1f19"),
+        (25, 12356, "dee73d2bae90e8fc64cfcaeaf2a7b453fb9deb814fff2d4789cbb7f22a43ad38"),
+        (26, 12436, "78b946f2c2697eebc6de1f63c1d6d92d82f215bd6f59d688df3c3471619bd386"),
+        (27, 12354, "0e63e2b650f3298232f2cde14927baa9f15638954c79b115f20cb4f9124732c8"),
+        (28, 12855, "bdf43f5b97b550f6db3a0c56c0d78fb70f37db08b25b0758da1c35ecae4e9823"),
+        (29, 12417, "c83e89bc2f4961d3c3d323798cbc2425ecf18638e8af8a3d37502699799318ab"),
+        (30, 12987, "968ab0775746a3559c15a8495c193afb2cfdb162f67a7e161866e851bb6506d5"),
+        (31, 12253, "eb9a6548be484d663443b9f1baa9a6e56541ff6d93a1784ba63a685eabd29964"),
+        (32, 12511, "c1d6aa9cdffad09f00fdd9c733aa52c24fdd6a649692beae6a805899529ab481"),
+        (33, 10709, "9e9b1a714e31d03d85fc118ebf271fda0ee7b45b04e299349e4b0e822881fc10"),
+        (34, 10687, "0013bad821be12af5008d59d3da0e840c68d3ae429afd047622ee734136e2c57"),
+        (35, 12438, "e9ad9635b199548429a5f3b8d0b01afc82a4d44bc9f17a73b71d5aa03803b32d"),
+        (36, 12875, "7d2b14a0b7cecff708531b79a1e07bcd6f0e18bdb506d87555ee59a81897743c"),
+        (37, 12225, "63eff7836816c34d9a454636a753b8cecf38aa3a3d5cdf9ead92e7bdeb4a3b45"),
+        (38, 12263, "31a37a7368df5ba826642a6bc5abdbea24e54eadc67a95e8c85afb7450e71acd"),
+        (39, 12287, "89ef3ea763d96f3f008da618cc5038b54bd72191e5b04d0575d4ca1815293e8e"),
+        (40, 12380, "c5db0d89612f3fe6357d149f4c724f79b2b78f04e28caa52e2c020b5a641a56b"),
+        (41, 12185, "dbd01612a65e855e646c1f90414757741cb14cc7d18bd643fd19949daf0f41ed"),
+        (42, 11949, "3a93d8c92c5bf6e6c41204c7460cc0771d59a8ed1f43199a9fe71272230cdfa0"),
+        (43, 12159, "fb056e5a5197dc5e157df08a1c7162455ab4fdcc9c463837d4c4c355f0976b83"),
+        (44, 12679, "02dc537e628c97d9ae4dfb4fc79dce49c1659933190406df1bbd6f2a698bbab4"),
+        (45, 12401, "bacde1f9b91f9ff005a066a4eaa38403040177ad21efc70c609848eb61823802"),
+        (46, 12339, "a69cc1fdb1e113df11aa2d2f7b170567bbead5c05957af3f102791d35ff9360f"),
+        (47, 12570, "750df57c49a70731f764273d07675734838b68743743f5011e986d3250900aa6"),
+        (48, 12395, "6b17136dc53788a0c919e428e8aaef0d9d825cd332939d930cf6607a8023912d"),
+        (49, 12384, "534da6cc9c9c300d10c7deb671be23a10522a8261c52e3e343de77bf2f319b37"),
+        (50, 12517, "67244e697c8a4705dace5530c26c9e1a987a7fc33eaa47e288519e592d4f1d32"),
+        (51, 12100, "2ee6b87e1c2fbe84aff1953259ccd889e188fc425964843d5a74ee647a88b268"),
+        (52, 12435, "c758a3f7bf832b011dc071ade466245c6863375a771557d1761bd934e3c87ec6"),
+        (53, 12246, "608b53f2e266fbdc7a73275ebef023c5037aff04e276474524fa7906ee3f180b"),
+        (54, 12210, "834fc2d23c51eb1dc6b5d0f7292c0ccadff7c7d37d24f6c2101c653c0f23a10c"),
+        (55, 12206, "ddfe754d5870a5d8826db36e8165abc9d3fa4ba8ab40472949b89ea76158be42"),
+        (56, 12225, "d41a6eaa47878d82725fea021ef8d26054fb48d336ef9b574ce3641097036deb"),
+        (57, 12386, "0e20f7353adf24ee7fc7702a134a55aafb013e69a31a263660d8e72a1bc07c12"),
+        (58, 12367, "fad463b4f9de97726b9862ca9fe2d8b2d9e2b7196abaec1dba24d55143f3d3d1"),
+        (59, 12557, "b7ab2d01acdb79e46872cac716b84c6310cb678d870fc317696c2001fabf0dd3"),
+        (60, 12329, "0c77502c6361596d1866f8b4c8cc839919ce19eee9f62e62e9fd137e0e76448e"),
+        (61, 12552, "94f9081ea0678e8511a5f8a4111d26e1c5bcf5fbaca77452ea44c810e58bd540"),
+        (62, 12333, "89fa7520206a164fe6dbe31c00724de565fa80b1092faf3e8fb8498cd59afd84"),
+        (63, 12436, "2ea7bb0f780aa31148c300ef2d890a2c76aa75cc12f09a719d9a8863e8d20d9d"),
+        (64, 12426, "0c6ed4813ee0423dd5de551639d3b107b4f376ae136c8dfcb984346625b2ee3f"),
+        (65, 12553, "e45c057cbe4a20d48aafad1591b1c910d15100ca30d757c6a96ecfc01677ff93"),
+        (66, 12688, "70f58325370bc172548b8f95c04efaca81a93e9540233433213f2fd148618784"),
+        (67, 12428, "bd265b4b409493956a3d577bccd17325c468f66a695efc1dffc67dc7e5f468d8"),
+        (68, 9253, "51eda861f49691d2db5b1ec2775dbd77c5cc47afde791416c9283c23de2ca75d"),
     ),
 }
 EXPECTED_STATUS_BUCKETS = {
@@ -247,6 +326,27 @@ class AlphaEvolveFollowOnProblemCoverageValidation:
     issues: list[AlphaEvolveFollowOnProblemCoverageIssue]
 
 
+def _expected_all_page_hash_records() -> list[dict[str, Any]]:
+    return [
+        {
+            "page_id": page_id,
+            "path": f"problems/{page_id}.html",
+            "hosted_url": (
+                "https://google-deepmind.github.io/"
+                f"alphaevolve_repository_of_problems/problems/{page_id}.html"
+            ),
+            "raw_url": (
+                "https://raw.githubusercontent.com/google-deepmind/"
+                f"alphaevolve_repository_of_problems/{EXPECTED_REPOSITORY_COMMIT}/"
+                f"problems/{page_id}.html"
+            ),
+            "bytes": byte_count,
+            "sha256": sha256,
+        }
+        for page_id, byte_count, sha256 in EXPECTED_ALL_PAGE_HASH_INVENTORY["pages"]
+    ]
+
+
 def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
     return {
         "schema": ALPHAEVOLVE_FOLLOW_ON_PROBLEM_COVERAGE_SCHEMA,
@@ -266,7 +366,7 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
             "problem_page_access_mode": "browser_page",
             "notebook_access_mode": "colab_notebook_many_not_all",
             "notebook_inventory_complete": False,
-            "page_hash_inventory_complete": False,
+            "page_hash_inventory_complete": True,
             "notebook_hash_inventory_complete": False,
             "artifact_presence_matrix_complete": False,
         },
@@ -357,8 +457,34 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
             ],
             "claim_boundary": (
                 "All 68 numbered pages have resource-link diagnostics, but "
-                "this does not claim complete per-page hashes, notebook "
-                "mapping, or artifact-presence rows."
+                "this does not claim notebook mapping or artifact-presence "
+                "rows."
+            ),
+        },
+        "all_page_hash_inventory": {
+            "diagnostic_scope": EXPECTED_ALL_PAGE_HASH_INVENTORY["diagnostic_scope"],
+            "page_count": EXPECTED_ALL_PAGE_HASH_INVENTORY["page_count"],
+            "declared_problem_page_count": EXPECTED_ALL_PAGE_HASH_INVENTORY[
+                "declared_problem_page_count"
+            ],
+            "extra_numbered_page_ids": list(
+                EXPECTED_ALL_PAGE_HASH_INVENTORY["extra_numbered_page_ids"]
+            ),
+            "page_hash_inventory_complete": EXPECTED_ALL_PAGE_HASH_INVENTORY[
+                "page_hash_inventory_complete"
+            ],
+            "notebook_mapping_complete": EXPECTED_ALL_PAGE_HASH_INVENTORY[
+                "notebook_mapping_complete"
+            ],
+            "artifact_presence_matrix_complete": EXPECTED_ALL_PAGE_HASH_INVENTORY[
+                "artifact_presence_matrix_complete"
+            ],
+            "pages": _expected_all_page_hash_records(),
+            "claim_boundary": (
+                "All 68 numbered raw HTML pages are byte-counted and "
+                "SHA-256 pinned at the repository commit; this does not "
+                "claim notebook mapping, absence reasons, or "
+                "artifact-presence rows."
             ),
         },
         "notebook_inventory_link": {
@@ -396,7 +522,6 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
             "bucket_semantics": "repository_status_json_explicit_buckets",
         },
         "remaining_coverage_work": [
-            "hash_each_problem_page",
             "discover_notebook_paths_and_absence_reasons",
             "validate_prompt_verifier_initial_final_visualization_flags",
             "attach_status_to_emitted_source_manifest_rows",
@@ -421,6 +546,7 @@ def validate_alphaevolve_follow_on_problem_coverage(
     observed_numbered_html_count = _validate_numbered_page_inventory(data.get("numbered_page_inventory"), issues)
     _validate_page_discrepancy_diagnostics(data.get("page_discrepancy_diagnostics"), issues)
     _validate_all_page_resource_link_diagnostics(data.get("all_page_resource_link_diagnostics"), issues)
+    _validate_all_page_hash_inventory(data.get("all_page_hash_inventory"), issues)
     _validate_notebook_inventory_link(data.get("notebook_inventory_link"), issues)
     status_artifact_count = _validate_status_artifacts(data.get("status_artifacts"), issues)
     listed_status_count = _validate_status_buckets(data.get("status_buckets"), issues)
@@ -513,7 +639,7 @@ def _validate_coverage_scope(value: object, issues: list[AlphaEvolveFollowOnProb
         "problem_page_access_mode": "browser_page",
         "notebook_access_mode": "colab_notebook_many_not_all",
         "notebook_inventory_complete": False,
-        "page_hash_inventory_complete": False,
+        "page_hash_inventory_complete": True,
         "notebook_hash_inventory_complete": False,
         "artifact_presence_matrix_complete": False,
     }
@@ -629,7 +755,7 @@ def _validate_all_page_resource_link_diagnostics(
         "diagnostic_scope": EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS["diagnostic_scope"],
         "diagnosed_page_count": EXPECTED_OBSERVED_NUMBERED_HTML_COUNT,
         "resource_link_diagnostics_complete": True,
-        "page_hash_inventory_complete": False,
+        "page_hash_inventory_complete": True,
         "colab_link_status_counts": EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS["colab_link_status_counts"],
         "paper_link_status_counts": EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS["paper_link_status_counts"],
         "navigation_total_problem_counts": EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS["navigation_total_problem_counts"],
@@ -641,7 +767,7 @@ def _validate_all_page_resource_link_diagnostics(
         if value.get(field) != expected_value:
             code = f"invalid_all_page_resource_link_diagnostics_{field}"
             if field == "page_hash_inventory_complete":
-                code = "all_page_resource_link_page_hash_inventory_overclaim"
+                code = "invalid_all_page_resource_link_page_hash_inventory_complete"
             issues.append(_issue(code, f"all_page_resource_link_diagnostics.{field} must match the pinned all-page link evidence"))
     expected_colab_ids = {
         status: list(page_ids)
@@ -675,9 +801,69 @@ def _validate_all_page_resource_link_diagnostics(
     if (
         not isinstance(claim_boundary, str)
         or "does not claim" not in claim_boundary
-        or "complete per-page hashes" not in claim_boundary
+        or "artifact-presence rows" not in claim_boundary
     ):
-        issues.append(_issue("missing_all_page_resource_link_claim_boundary", "all-page link diagnostics must preserve page-hash and artifact-row gaps"))
+        issues.append(_issue("missing_all_page_resource_link_claim_boundary", "all-page link diagnostics must preserve artifact-row gaps"))
+
+
+def _validate_all_page_hash_inventory(
+    value: object,
+    issues: list[AlphaEvolveFollowOnProblemCoverageIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_all_page_hash_inventory", "all_page_hash_inventory must be an object"))
+        return
+    expected = {
+        "diagnostic_scope": EXPECTED_ALL_PAGE_HASH_INVENTORY["diagnostic_scope"],
+        "page_count": EXPECTED_OBSERVED_NUMBERED_HTML_COUNT,
+        "declared_problem_page_count": EXPECTED_DECLARED_PROBLEM_COUNT,
+        "extra_numbered_page_ids": list(EXPECTED_EXTRA_NUMBERED_PAGE_IDS),
+        "page_hash_inventory_complete": True,
+        "notebook_mapping_complete": False,
+        "artifact_presence_matrix_complete": False,
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            code = f"invalid_all_page_hash_inventory_{field}"
+            if field in {"notebook_mapping_complete", "artifact_presence_matrix_complete"}:
+                code = f"all_page_hash_inventory_{field}_overclaim"
+            issues.append(_issue(code, f"all_page_hash_inventory.{field} must match the pinned raw-page hash evidence"))
+    pages = value.get("pages")
+    if not isinstance(pages, list):
+        issues.append(_issue("invalid_all_page_hash_inventory_pages", "all_page_hash_inventory.pages must be a list"))
+        return
+    expected_pages = {record["page_id"]: record for record in _expected_all_page_hash_records()}
+    actual_pages = {
+        record.get("page_id"): record
+        for record in pages
+        if isinstance(record, dict) and isinstance(record.get("page_id"), int)
+    }
+    if set(actual_pages) != set(expected_pages):
+        issues.append(_issue("all_page_hash_inventory_page_id_mismatch", "all-page hash inventory must contain exactly pages 1..68"))
+    for page_id, expected_page in expected_pages.items():
+        record = actual_pages.get(page_id)
+        if not isinstance(record, dict):
+            issues.append(_issue("missing_all_page_hash_inventory_page", "page hash inventory record is missing", page_id))
+            continue
+        for field, expected_value in expected_page.items():
+            if record.get(field) != expected_value:
+                issues.append(
+                    _issue(
+                        f"invalid_all_page_hash_inventory_page_{field}",
+                        f"page {page_id} hash inventory field {field} must match the pinned raw HTML source",
+                        page_id,
+                    )
+                )
+        sha256 = record.get("sha256")
+        if not isinstance(sha256, str) or _SHA256_RE.fullmatch(sha256) is None:
+            issues.append(_issue("invalid_all_page_hash_inventory_page_sha256_format", "page hash must be lowercase 64-hex", page_id))
+    claim_boundary = value.get("claim_boundary")
+    if (
+        not isinstance(claim_boundary, str)
+        or "does not claim" not in claim_boundary
+        or "artifact-presence rows" not in claim_boundary
+    ):
+        issues.append(_issue("missing_all_page_hash_inventory_claim_boundary", "all-page hash inventory must preserve notebook and artifact-row gaps"))
 
 
 def _validate_notebook_inventory_link(value: object, issues: list[AlphaEvolveFollowOnProblemCoverageIssue]) -> None:
@@ -775,7 +961,6 @@ def _validate_status_summary(value: object, issues: list[AlphaEvolveFollowOnProb
 
 def _validate_remaining_coverage_work(value: object, issues: list[AlphaEvolveFollowOnProblemCoverageIssue]) -> None:
     required = {
-        "hash_each_problem_page",
         "discover_notebook_paths_and_absence_reasons",
         "validate_prompt_verifier_initial_final_visualization_flags",
         "attach_status_to_emitted_source_manifest_rows",

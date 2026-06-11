@@ -1482,11 +1482,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     versus observed-68 numbered HTML page boundary. README now also names the
     linked runtime-absence notebook inventory with `28` pinned notebook paths,
     while per-problem notebook mapping, notebook SHA-256 hashes, and absence
-    reasons remain incomplete. README still cannot point to per-problem page
-    hashes, prompt/verifier/initial/final/visualization flags, page-68
-    classification, or emitted source-manifest rows.
+    reasons remain incomplete. README now points to page-68 classification and
+    all-page raw HTML hashes, but still cannot point to emitted per-problem
+    source rows, prompt/verifier/initial/final/visualization flags, or
+    emitted source-manifest rows.
   - Required result: after per-problem source-coverage metadata lands, update
-    README so AlphaEvolve follow-on claims name hosted page URL/hash per
+    README so AlphaEvolve follow-on claims name hosted page URL/hash rows per
     problem, partial notebook/artifact coverage, notebook absence reasons,
     emitted status/source rows, and explicit wording that avoids implying
     notebook or artifact coverage is complete when only problem-page and
@@ -1506,8 +1507,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     that evidence. README now also documents page 68 as an extra numbered
     duplicate-title `Logic puzzles` page outside the declared 67-page
     navigation range, plus all-page resource-link diagnostics. README still
-    does not list emitted per-page source rows with page hash, notebook mapping,
-    and artifact flags.
+    does not list emitted per-page source rows with pinned page-hash
+    references, notebook mapping, and artifact flags.
   - Required result: after per-page source rows land, update README so
     follow-on source claims distinguish paper/README problem count from full
     live repository HTML-page inventory, list duplicate or placeholder pages as

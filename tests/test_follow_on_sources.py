@@ -45,7 +45,7 @@ def test_validate_alphaevolve_follow_on_math_source_accepts_builtin_record():
     assert coverage["resource_link_diagnostics_complete_for_pages_67_68"] is True
     assert coverage["all_page_resource_link_diagnostics_complete"] is True
     assert coverage["per_problem_inventory_validated"] is False
-    assert coverage["page_hash_inventory_complete"] is False
+    assert coverage["page_hash_inventory_complete"] is True
 
 
 def test_validate_alphaevolve_follow_on_math_source_loads_json_file(tmp_path):
@@ -431,7 +431,7 @@ def test_validate_alphaevolve_follow_on_math_source_rejects_repository_claim_ove
     coverage["resource_link_diagnostics_complete_for_pages_67_68"] = False
     coverage["all_page_resource_link_diagnostics_complete"] = False
     coverage["per_problem_inventory_validated"] = True
-    coverage["page_hash_inventory_complete"] = True
+    coverage["page_hash_inventory_complete"] = False
     coverage["claim_boundary"] = "Every numbered page is classified and hashed."
 
     validation = validate_alphaevolve_follow_on_math_source(recordset)
@@ -451,7 +451,7 @@ def test_validate_alphaevolve_follow_on_math_source_rejects_repository_claim_ove
     assert "invalid_problem_coverage_evidence_resource_link_diagnostics_complete_for_pages_67_68" in codes
     assert "invalid_problem_coverage_evidence_all_page_resource_link_diagnostics_complete" in codes
     assert "problem_coverage_evidence_per_problem_inventory_validated_overclaim" in codes
-    assert "problem_coverage_evidence_page_hash_inventory_complete_overclaim" in codes
+    assert "invalid_problem_coverage_evidence_page_hash_inventory_complete" in codes
     assert "missing_problem_coverage_claim_boundary" in codes
 
 

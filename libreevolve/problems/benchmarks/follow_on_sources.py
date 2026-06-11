@@ -314,13 +314,14 @@ def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
             "resource_link_diagnostics_complete_for_pages_67_68": True,
             "all_page_resource_link_diagnostics_complete": True,
             "per_problem_inventory_validated": False,
-            "page_hash_inventory_complete": False,
+            "page_hash_inventory_complete": True,
             "claim_boundary": (
                 "The follow-on coverage record reconciles the declared "
                 "67-problem count against 68 observed numbered HTML pages, "
-                "classifies page 68, and records all-page resource-link "
-                "diagnostics, but does not claim complete per-problem page "
-                "hashes or emitted per-page inventory rows."
+                "classifies page 68, records all-page resource-link "
+                "diagnostics, and pins raw-page hashes, but does not claim "
+                "emitted per-page inventory rows, notebook mapping, or "
+                "artifact flags."
             ),
         },
         "source_use": {
@@ -1268,12 +1269,12 @@ def _validate_problem_coverage_evidence(value: object, issues: list[AlphaEvolveF
         "resource_link_diagnostics_complete_for_pages_67_68": True,
         "all_page_resource_link_diagnostics_complete": True,
         "per_problem_inventory_validated": False,
-        "page_hash_inventory_complete": False,
+        "page_hash_inventory_complete": True,
     }
     for field, expected_value in expected.items():
         if value.get(field) != expected_value:
             code = f"invalid_problem_coverage_evidence_{field}"
-            if field in {"per_problem_inventory_validated", "page_hash_inventory_complete"}:
+            if field == "per_problem_inventory_validated":
                 code = f"problem_coverage_evidence_{field}_overclaim"
             issues.append(_issue(code, f"problem_coverage_evidence.{field} must link only the validated numbered-page boundary", EXPECTED_REPOSITORY_NAME))
     claim_boundary = value.get("claim_boundary")
@@ -1282,7 +1283,7 @@ def _validate_problem_coverage_evidence(value: object, issues: list[AlphaEvolveF
         or "does not claim" not in claim_boundary
         or "emitted per-page inventory rows" not in claim_boundary
     ):
-        issues.append(_issue("missing_problem_coverage_claim_boundary", "problem_coverage_evidence must preserve full page-hash and emitted-row gaps", EXPECTED_REPOSITORY_NAME))
+        issues.append(_issue("missing_problem_coverage_claim_boundary", "problem_coverage_evidence must preserve emitted-row, notebook, and artifact gaps", EXPECTED_REPOSITORY_NAME))
 
 
 def _validate_source_use(value: object, issues: list[AlphaEvolveFollowOnMathSourceIssue]) -> None:

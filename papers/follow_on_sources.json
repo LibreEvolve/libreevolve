@@ -86,8 +86,8 @@
           "resource_link_diagnostics_complete_for_pages_67_68": true,
           "all_page_resource_link_diagnostics_complete": true,
           "per_problem_inventory_validated": false,
-          "page_hash_inventory_complete": false,
-          "claim_boundary": "The follow-on coverage record reconciles the declared 67-problem count against 68 observed numbered HTML pages, classifies page 68, and records all-page resource-link diagnostics, but does not claim complete per-problem page hashes or emitted per-page inventory rows."
+          "page_hash_inventory_complete": true,
+          "claim_boundary": "The follow-on coverage record reconciles the declared 67-problem count against 68 observed numbered HTML pages, classifies page 68, records all-page resource-link diagnostics, and pins raw-page hashes, but does not claim emitted per-page inventory rows, notebook mapping, or artifact flags."
         },
         "source_use": {
           "repository_software_license": "Apache-2.0",

@@ -36,7 +36,7 @@ def test_validate_alphaevolve_follow_on_problem_coverage_accepts_builtin_record(
     all_pages = recordset["all_page_resource_link_diagnostics"]
     assert all_pages["diagnosed_page_count"] == 68
     assert all_pages["resource_link_diagnostics_complete"] is True
-    assert all_pages["page_hash_inventory_complete"] is False
+    assert all_pages["page_hash_inventory_complete"] is True
     assert all_pages["colab_link_status_counts"] == {
         "generic_colab_landing_page": 1,
         "github_notebook_blob_url": 36,
@@ -48,6 +48,29 @@ def test_validate_alphaevolve_follow_on_problem_coverage_accepts_builtin_record(
         "valid_follow_on_arxiv": 67,
     }
     assert all_pages["paper_link_status_page_ids"]["placeholder"] == [68]
+    hashes = recordset["all_page_hash_inventory"]
+    assert hashes["page_count"] == 68
+    assert hashes["declared_problem_page_count"] == 67
+    assert hashes["extra_numbered_page_ids"] == [68]
+    assert hashes["page_hash_inventory_complete"] is True
+    assert hashes["notebook_mapping_complete"] is False
+    assert hashes["artifact_presence_matrix_complete"] is False
+    assert len(hashes["pages"]) == 68
+    assert hashes["pages"][0] == {
+        "page_id": 1,
+        "path": "problems/1.html",
+        "hosted_url": "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/1.html",
+        "raw_url": (
+            "https://raw.githubusercontent.com/google-deepmind/"
+            "alphaevolve_repository_of_problems/"
+            "bfd224d0e7763f89eb4a8efe93ac126091f85ed9/problems/1.html"
+        ),
+        "bytes": 13949,
+        "sha256": "b89661360a9be3913286bda2115bd00db8ec57cbd01a364c3d9e9d58f30cf0bf",
+    }
+    assert hashes["pages"][-1]["page_id"] == 68
+    assert hashes["pages"][-1]["bytes"] == 9253
+    assert hashes["pages"][-1]["sha256"] == "51eda861f49691d2db5b1ec2775dbd77c5cc47afde791416c9283c23de2ca75d"
     link = recordset["notebook_inventory_link"]
     assert link["source_manifest"] == "papers/follow_on_runtime_absence.json"
     assert link["pinned_notebook_path_count"] == 28
@@ -123,7 +146,7 @@ def test_validate_alphaevolve_follow_on_problem_coverage_rejects_inventory_overc
     recordset = copy.deepcopy(alphaevolve_follow_on_problem_coverage_record())
     scope = recordset["coverage_scope"]
     scope["notebook_inventory_complete"] = True
-    scope["page_hash_inventory_complete"] = True
+    scope["page_hash_inventory_complete"] = False
     scope["notebook_hash_inventory_complete"] = True
     scope["artifact_presence_matrix_complete"] = True
     link = recordset["notebook_inventory_link"]
@@ -144,11 +167,20 @@ def test_validate_alphaevolve_follow_on_problem_coverage_rejects_inventory_overc
     diagnostics["pages"][1]["paper_link_status"] = "valid"
     all_pages = recordset["all_page_resource_link_diagnostics"]
     all_pages["diagnosed_page_count"] = 67
-    all_pages["page_hash_inventory_complete"] = True
+    all_pages["page_hash_inventory_complete"] = False
     all_pages["colab_link_status_counts"]["under_construction_placeholder"] = 0
     all_pages["colab_link_status_page_ids"]["under_construction_placeholder"] = []
     all_pages["paper_link_status_page_ids"]["placeholder"] = []
     all_pages["claim_boundary"] = "All pages are fully inventoried."
+    hashes = recordset["all_page_hash_inventory"]
+    hashes["page_count"] = 67
+    hashes["page_hash_inventory_complete"] = False
+    hashes["notebook_mapping_complete"] = True
+    hashes["artifact_presence_matrix_complete"] = True
+    hashes["pages"][0]["bytes"] = 1
+    hashes["pages"][0]["sha256"] = "0" * 64
+    hashes["pages"] = hashes["pages"][:-1]
+    hashes["claim_boundary"] = "All notebooks and artifacts are mapped."
     recordset["remaining_coverage_work"] = ["classify_extra_numbered_page_68"]
 
     validation = validate_alphaevolve_follow_on_problem_coverage(recordset)
@@ -156,7 +188,7 @@ def test_validate_alphaevolve_follow_on_problem_coverage_rejects_inventory_overc
 
     assert validation.ok is False
     assert "notebook_inventory_complete_overclaim" in codes
-    assert "page_hash_inventory_complete_overclaim" in codes
+    assert "invalid_coverage_scope_page_hash_inventory_complete" in codes
     assert "notebook_hash_inventory_complete_overclaim" in codes
     assert "artifact_presence_matrix_complete_overclaim" in codes
     assert "invalid_notebook_inventory_link_pinned_notebook_path_count" in codes
@@ -173,11 +205,19 @@ def test_validate_alphaevolve_follow_on_problem_coverage_rejects_inventory_overc
     assert "invalid_page_discrepancy_page_colab_link_status" in codes
     assert "invalid_page_discrepancy_page_paper_link_status" in codes
     assert "invalid_all_page_resource_link_diagnostics_diagnosed_page_count" in codes
-    assert "all_page_resource_link_page_hash_inventory_overclaim" in codes
+    assert "invalid_all_page_resource_link_page_hash_inventory_complete" in codes
     assert "invalid_all_page_resource_link_diagnostics_colab_link_status_counts" in codes
     assert "invalid_all_page_colab_link_status_page_ids" in codes
     assert "invalid_all_page_paper_link_status_page_ids" in codes
     assert "missing_all_page_resource_link_claim_boundary" in codes
+    assert "invalid_all_page_hash_inventory_page_count" in codes
+    assert "invalid_all_page_hash_inventory_page_hash_inventory_complete" in codes
+    assert "all_page_hash_inventory_notebook_mapping_complete_overclaim" in codes
+    assert "all_page_hash_inventory_artifact_presence_matrix_complete_overclaim" in codes
+    assert "all_page_hash_inventory_page_id_mismatch" in codes
+    assert "invalid_all_page_hash_inventory_page_bytes" in codes
+    assert "invalid_all_page_hash_inventory_page_sha256" in codes
+    assert "missing_all_page_hash_inventory_claim_boundary" in codes
     assert "missing_remaining_coverage_work" in codes
 
 

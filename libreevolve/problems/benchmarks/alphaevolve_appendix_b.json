@@ -918,11 +918,12 @@
             "vector_artifact_status": "not_recorded_locally",
             "integral_coordinate_certificate_status": "not_recorded_locally",
             "nonzero_certificate_status": "not_recorded_locally",
-            "norm_distance_certificate_status": "not_recorded_locally",
+            "max_norm_certificate_status": "not_recorded_locally",
+            "min_pairwise_distance_certificate_status": "not_recorded_locally",
             "lemma_applicability_certificate_status": "not_recorded_locally",
             "transformed_center_certificate_status": "not_recorded_locally",
             "recomputed_lower_bound_status": "not_recorded_locally",
-            "claim_boundary": "The registry records the paper's B.11 kissing-number summary but does not claim a local 593-vector payload, exact norm/distance certificate, Lemma 1 applicability certificate, transformed-center certificate, or recomputed lower bound."
+            "claim_boundary": "The registry records the paper's B.11 kissing-number summary but does not claim a local 593-vector payload, exact max-norm certificate, exact minimum-pairwise-distance certificate, Lemma 1 applicability certificate, transformed-center certificate, or recomputed lower bound."
           }
         ]
       },

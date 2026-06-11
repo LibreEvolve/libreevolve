@@ -1859,15 +1859,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
       evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.11 derives the dimension-11 kissing
     number lower bound of 593 from 593 nonzero integral-coordinate points plus
-    an exact norm/distance condition and Lemma 1's transformation into a valid
-    kissing configuration.
+    exact max-norm versus minimum-pairwise-distance condition and Lemma 1's
+    transformation into a valid kissing configuration.
   - Current evidence: README now names the B.11 `kissing_result_boundary`,
     including dimension, prior/reported lower bounds, 593-vector witness count,
-    coordinate domain, exact norm/distance condition, Lemma 1 applicability,
-    transformed sphere-center formula, and required future vector/certificate
-    fields. It still warns that the actual 593-vector payload, exact
-    norm/distance certificate, transformed-center certificate, and recomputed
-    lower bound are absent.
+    coordinate domain, exact max-norm versus minimum-pairwise-distance
+    condition, Lemma 1 applicability, transformed sphere-center formula, and
+    required future vector/certificate fields. It still warns that the actual
+    593-vector payload, exact max-norm
+    certificate, exact minimum-pairwise-distance certificate,
+    transformed-center certificate, and recomputed lower bound are absent.
   - Required result: when the actual Appendix B.11 vector payload and
     certificates land, update README, ROADMAP, papers index, and code/paper
     TODOs together so README distinguishes visual Appendix B construction

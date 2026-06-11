@@ -2967,11 +2967,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current evidence: roadmap/README/paper-index wording now cites the B.11
     `kissing_result_boundary`, including dimension, prior/reported lower
     bounds, 593-vector witness count, integral-coordinate and nonzero
-    requirements, exact norm/distance condition, Lemma 1 applicability,
-    transformed sphere-center formula, and required future vector/certificate
-    fields. It still does not claim a real vector payload, exact
-    norm/distance certificate, transformed-center certificate, or recomputed
-    lower bound.
+    requirements, exact max-norm versus minimum-pairwise-distance condition,
+    Lemma 1 applicability, transformed sphere-center formula, and required
+    future vector/certificate fields. It still does not claim a real vector
+    payload, exact max-norm
+    certificate, exact minimum-pairwise-distance certificate,
+    transformed-center certificate, or recomputed lower bound.
   - Required result: when the actual Appendix B.11 proof payload and
     certificates land, update ROADMAP, README, papers index, and code/paper
     TODOs so roadmap wording distinguishes rendered construction/figure

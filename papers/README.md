@@ -147,7 +147,8 @@ lower bound `592`, reported lower bound `593`, 593 nonzero integral
 distance requirement, and Lemma 1 transformation to sphere centers
 `{2 x / ||x||}`. Its `kissing_result_boundary` records the vector payload and
 exact certificate fields required before local reproduction can be claimed,
-while the vector payload remains absent.
+including separate max-norm and minimum-pairwise-distance certificate statuses,
+while the vector payload and those exact proof artifacts remain absent.
 For B.12-B.13 circle and rectangle packing, the registry now records three
 sum-of-radii boundaries: `n = 26` unit-square circles improving `2.634` to
 `2.635`, `n = 32` unit-square circles improving `2.936` to `2.937`, and

@@ -752,6 +752,8 @@ EXPECTED_B11_KISSING_ROWS = (
         "vector_count": 593,
         "reported_lower_bound": 593,
         "reported_bound_relation": "kissing_number_11 >= 593",
+        "max_norm_certificate_status": "not_recorded_locally",
+        "min_pairwise_distance_certificate_status": "not_recorded_locally",
     },
 )
 EXPECTED_B11_KISSING_IDS = tuple(row["result_id"] for row in EXPECTED_B11_KISSING_ROWS)
@@ -1879,7 +1881,7 @@ def _validate_b11_kissing_boundary(
     if boundary.get("status") != "not_recorded_locally":
         issues.append(AppendixBRegistryIssue("invalid_b11_kissing_boundary_status", "B.11 kissing boundary must remain not_recorded_locally until vector and certificate artifacts exist", family_id))
     if boundary.get("required_witness_fields") != list(EXPECTED_B11_KISSING_REQUIRED_FIELDS):
-        issues.append(AppendixBRegistryIssue("invalid_b11_kissing_required_fields", "B.11 boundary must enumerate required future vector, norm/distance, and lemma-certificate fields", family_id))
+        issues.append(AppendixBRegistryIssue("invalid_b11_kissing_required_fields", "B.11 boundary must enumerate required future vector, max-norm, minimum-pairwise-distance, and lemma-certificate fields", family_id))
     prior = boundary.get("prior_lower_bound")
     reported = boundary.get("reported_lower_bound")
     if (
@@ -1918,7 +1920,8 @@ def _validate_b11_kissing_boundary(
             "vector_artifact_status",
             "integral_coordinate_certificate_status",
             "nonzero_certificate_status",
-            "norm_distance_certificate_status",
+            "max_norm_certificate_status",
+            "min_pairwise_distance_certificate_status",
             "lemma_applicability_certificate_status",
             "transformed_center_certificate_status",
             "recomputed_lower_bound_status",

@@ -3659,10 +3659,13 @@ summary: prior lower bound `592`, reported lower bound `593`, the 593
 nonzero integral 11-dimensional vector witness condition, the max-norm versus
 minimum-pairwise-distance requirement, and Lemma 1's transformation
 `{2 x / ||x||}` to unit-sphere centers. A validated `kissing_result_boundary`
-records future vector payload, integral-coordinate, nonzero, norm/distance,
-lemma-applicability, transformed-center, and recomputed-lower-bound fields
-required before local reproduction can be claimed. The actual B.11 vector
-payload and exact proof certificates remain absent. For Appendix B.12-B.13,
+records future vector payload, integral-coordinate, nonzero, max-norm,
+minimum-pairwise-distance, lemma-applicability, transformed-center, and
+recomputed-lower-bound fields, including separate max-norm and
+minimum-pairwise-distance certificate statuses, required before local
+reproduction can be claimed. The actual B.11 vector
+payload, max-norm proof, minimum-pairwise-distance proof, and exact proof
+certificates remain absent. For Appendix B.12-B.13,
 the registry now preserves three sum-of-radii result boundaries: `n = 26`
 circles in a unit square improving `2.634` to `2.635` with Figure 14 left,
 `n = 32` circles in a unit square improving `2.936` to `2.937` with Figure 14

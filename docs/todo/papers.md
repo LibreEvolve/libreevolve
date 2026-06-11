@@ -2690,17 +2690,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     kissing configuration and lower bound of at least 593.
   - Current gap: paper-facing Appendix B coverage now retains the B.11
     dimension, prior/reported lower bounds, 593-vector witness count,
-    integral-coordinate and nonzero requirements, exact norm/distance
-    condition, Lemma 1 input condition, and transformed-center formula through
+    integral-coordinate and nonzero requirements, exact max-norm versus
+    minimum-pairwise-distance condition, Lemma 1 input condition, and
+    transformed-center formula through
     a validated `kissing_result_boundary`. It still does not retain a real
     593-vector payload, payload hash, integral-coordinate certificate,
-    nonzero certificate, norm/distance certificate, Lemma 1 applicability
-    certificate, transformed sphere-center verification, or recomputed lower
-    bound.
+    nonzero certificate, separate max-norm certificate, separate
+    minimum-pairwise-distance certificate, Lemma 1 applicability certificate,
+    transformed sphere-center verification, or recomputed lower bound.
   - Required result: add paper/report evidence for the missing Appendix B.11
     witness artifacts: point-set artifact hash, exact coordinate and dimension
-    metadata, cardinality check, norm/distance certificate, Lemma 1 proof-step
-    record, transformed sphere-center verification, lower-bound claim id, and
+    metadata, cardinality check, max-norm certificate,
+    minimum-pairwise-distance certificate, Lemma 1 proof-step record,
+    transformed sphere-center verification, lower-bound claim id, and
     README/ROADMAP wording that distinguishes visual construction evidence
     from proof-grade kissing-configuration certification.
 

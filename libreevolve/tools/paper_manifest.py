@@ -152,6 +152,7 @@ MATRIX_CASCADE_RUN_RUNTIME_FILE = "papers/matrix_cascade_run_runtime_boundary.js
 MATRIX_NEAR_INTEGRALITY_RUNTIME_FILE = "papers/matrix_near_integrality_runtime_boundary.json"
 MATRIX_SCALAR_FIELD_RUNTIME_FILE = "papers/matrix_scalar_field_runtime_boundary.json"
 MATRIX_SWEEP_SPACE_RUNTIME_FILE = "papers/matrix_sweep_space_runtime_boundary.json"
+MATRIX_TENSOR_RANK_RUNTIME_FILE = "papers/matrix_tensor_rank_runtime_boundary.json"
 PAPER_ARTIFACT_ROLES_FILE = "papers/paper_artifact_roles.json"
 PAPER_ARTIFACT_LINKAGE_FILE = "papers/paper_artifact_linkage.json"
 SHA256_RE = re.compile(r"[0-9a-f]{64}")
@@ -939,8 +940,24 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
         )
         for issue in sweep_space_runtime_report.issues
     )
+    tensor_rank_runtime_path = root_path / MATRIX_TENSOR_RANK_RUNTIME_FILE
+    if tensor_rank_runtime_path.exists():
+        tensor_rank_runtime_recordset: object | str | Path = tensor_rank_runtime_path
+    else:
+        tensor_rank_runtime_recordset = matrix_tensor_rank_runtime_boundary_record()
+        if is_repo_root:
+            issues.append(
+                PaperManifestIssue(
+                    "matrix_tensor_rank_runtime_manifest_missing",
+                    (
+                        f"{MATRIX_TENSOR_RANK_RUNTIME_FILE} must emit the "
+                        "matrix tensor-rank runtime boundary"
+                    ),
+                    "matrix_tensor_rank_runtime_boundary",
+                )
+            )
     tensor_rank_runtime_report = validate_matrix_tensor_rank_runtime_boundary(
-        matrix_tensor_rank_runtime_boundary_record()
+        tensor_rank_runtime_recordset
     )
     issues.extend(
         PaperManifestIssue(

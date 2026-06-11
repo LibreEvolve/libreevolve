@@ -4,6 +4,27 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit matrix tensor-rank runtime boundary sidecar.
+  - Spec evidence: AlphaEvolve Section 3.1 reports matrix multiplication
+    improvements as low-rank tensor decompositions, and footnote 3 says some
+    fewer-than-49 multiplication algorithms are not matrix-multiplication
+    tensor decompositions and cannot be applied recursively.
+  - Status: `papers/matrix_tensor_rank_runtime_boundary.json` now emits the
+    `not_emitted_by_local_runner` absence/readiness boundary for run, target,
+    candidate, seed, algorithm-kind, rank, recursive-applicability,
+    certificate-scope, tensor-identity, target-tensor, exactness-certificate,
+    matrix-result, artifact-path, and artifact-hash provenance.
+    `validate_paper_manifest()` requires and validates the sidecar at the real
+    repo root when the Appendix A registry is in scope.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\matrix_results.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: local matrix benchmark runners still do not emit
+    target-tensor identity, exactness-certificate, recursive-applicability, or
+    footnote-level non-tensor caveat artifacts from actual runs.
+
 - [x] Emit matrix sweep-space runtime boundary sidecar.
   - Spec evidence: AlphaEvolve Appendix A Figures 9a-9c show an evolved
     matrix search program with a `sweep()` function over user-provided `hyper`

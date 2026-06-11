@@ -3545,7 +3545,9 @@ Primary evidence:
     run/target/candidate ids, seeds, algorithm kind, rank, recursive
     applicability, certificate scope, tensor-identity status, target-tensor
     refs, exactness-certificate refs, matrix-result refs, artifact paths, and
-    artifact hashes. `matrix_tensor_rank_runtime_boundary_from_evidence()`
+    artifact hashes. `papers/matrix_tensor_rank_runtime_boundary.json` now
+    emits that absence/readiness boundary as a committed sidecar.
+    `matrix_tensor_rank_runtime_boundary_from_evidence()`
     builds a runtime row from validated tensor-rank evidence and validation
     checks linkage to nested target, rank claim, recursive-applicability,
     tensor-identity, target-tensor, and certificate evidence. Local matrix

@@ -3835,7 +3835,9 @@ the current `not_emitted_by_local_runner` state and emitted records for
 run/target/candidate ids, seeds, algorithm kind, rank, recursive applicability,
 certificate scope, tensor-identity status, target-tensor refs,
 exactness-certificate refs, matrix-result refs, artifact paths, and artifact
-hashes. The helper `matrix_tensor_rank_runtime_boundary_from_evidence()` builds
+hashes. `papers/matrix_tensor_rank_runtime_boundary.json` emits that
+absence/readiness boundary as a committed sidecar. The helper
+`matrix_tensor_rank_runtime_boundary_from_evidence()` builds
 an emitted runtime row from validated tensor-rank evidence and validation links
 every row back to its nested target, rank claim, recursive-applicability,
 tensor-identity, target-tensor, and certificate evidence.

@@ -6,6 +6,25 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit matrix tensor-rank runtime boundary sidecar.
+  - Paper evidence: Section 3.1 frames matrix results as low-rank tensor
+    decompositions, while footnote 3 excludes some fewer-than-49
+    multiplication algorithms from recursive tensor-decomposition comparisons.
+  - Status: `papers/matrix_tensor_rank_runtime_boundary.json` now carries the
+    paper-facing absence/readiness boundary for algorithm kind, rank,
+    recursive applicability, certificate scope, tensor identity, target tensor,
+    exactness certificate, matrix-result, and artifact provenance. The
+    paper-manifest gate requires and validates the sidecar at the real repo
+    root.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\matrix_results.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: emitted run artifacts for target-tensor identity,
+    recursive applicability, exactness certificates, and source-note caveats
+    remain open.
+
 - [x] Emit matrix sweep-space runtime boundary sidecar.
   - Paper evidence: Appendix A Figures 9a-9c show matrix search programs
     evolving a `sweep()` function with `hyper.uniform(...)` ranges and sampled

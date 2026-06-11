@@ -4,6 +4,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README matrix outcome wording scoped until emitted target-subset
+      artifacts exist.
+  - Spec evidence: AlphaEvolve Table 2 scopes the all-matched-or-surpassed
+    matrix statement to `m, n, p <= 5`, while Appendix A Table 3 is broader.
+  - Status: README now documents
+    `papers/appendix_a_matrix_subset_scope_artifacts.json` as the committed
+    emitted subset-scope artifact sidecar and keeps automatic report/table
+    exporter attachment as the remaining boundary.
+  - Verification: `py -3.12 -m pytest tests\test_appendix_a_matrix_registry.py
+    tests\test_paper_manifest.py -q` and `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs` passed.
+  - Remaining gap: none for README scoping; exporter integration remains an
+    active code/paper gap.
+
 - [x] Keep README Appendix A row-note wording scoped until emitted
       concurrent-work caveat artifacts exist.
   - Spec evidence: AlphaEvolve Appendix A Table 3 says concurrent work `[49]`
@@ -10907,6 +10921,9 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     required future emitted-artifact fields for subset ids, inclusion
     predicates, source linkage, counts, fell-behind/out-of-scope ids, nested
     subset evidence, artifact paths, and hashes.
+  - Later status: README now points to
+    `papers/appendix_a_matrix_subset_scope_artifacts.json` as the emitted
+    sidecar; automatic report/table exporter attachment remains open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
 
 - [x] Document the Appendix A matrix row-note artifact boundary in README.

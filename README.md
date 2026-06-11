@@ -3878,17 +3878,20 @@ behind), and `table_2_selected` (`16` displayed rows: `2` matched, `14`
 surpassed, `0` fell behind). It validates inclusion predicates, exact target
 ids, outcome counts, out-of-scope rows, and Table 2/Table 3 source linkage so
 the main-text all-matched-or-surpassed claim is not confused with the full
-Appendix A aggregate. It is subset metadata only; local reports and rendered
-table artifacts still do not emit these scope records. The companion artifact
-boundary `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1`
-validates the current `not_emitted_by_local_report_export` state and required
-future emitted-artifact fields for subset ids, inclusion predicates, source
-table/page/phrase linkage, row and outcome counts, fell-behind and
-out-of-scope ids, nested subset-scope evidence, artifact paths, and hashes.
+Appendix A aggregate. The committed
+`papers/appendix_a_matrix_subset_scope_artifacts.json` sidecar now emits the
+three subset-scope artifacts with nested subset evidence, artifact path, and
+SHA-256 digests. The companion artifact boundary
+`libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1` validates
+the emitted sidecar and required artifact fields for subset ids, inclusion
+predicates, source table/page/phrase linkage, row and outcome counts,
+fell-behind and out-of-scope ids, nested subset-scope evidence, artifact paths,
+and hashes. Local reports and rendered table artifacts still do not consume
+these scope records automatically.
 `appendix_a_matrix_subset_scope_artifact_boundary_from_records()` builds
 emitted artifacts from validated subset-scope evidence and validation checks
 that artifact rows match their nested subset evidence. Local reports and
-rendered table artifacts still do not emit these scope records automatically.
+rendered table artifacts still need automatic subset-scope attachment.
 Appendix A matrix row-note evidence uses
 `libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1`; the built-in record
 preserves the Table 3 note that concurrent work `[49]` also found a rank-90

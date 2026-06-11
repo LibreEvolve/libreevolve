@@ -1237,17 +1237,18 @@ is not yet an AlphaEvolve reproduction.
   `appendix_a_full`, `main_text_mnp_le_5`, and `table_2_selected` membership,
   outcome counts, out-of-scope rows, and Table 2/Table 3 source linkage. The
   scoped `m,n,p <= 5` subset has `20` rows with `0` fell behind, while the full
-  Appendix A table has `54` rows with `2` fell behind. Runtime reports and
-  rendered table artifacts still do not emit those subset-scope records.
+  Appendix A table has `54` rows with `2` fell behind. The committed
+  `papers/appendix_a_matrix_subset_scope_artifacts.json` sidecar now emits the
+  three subset-scope artifacts with nested subset evidence, artifact path, and
+  SHA-256 digests.
   `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1` now
-  records the current `not_emitted_by_local_report_export` boundary and
-  required future emitted-artifact fields for subset identity, inclusion
-  predicates, source linkage, counts, fell-behind/out-of-scope ids, nested
-  subset-scope evidence, artifact paths, and hashes.
+  validates the emitted sidecar and required artifact fields for subset
+  identity, inclusion predicates, source linkage, counts, fell-behind/
+  out-of-scope ids, nested subset-scope evidence, artifact paths, and hashes.
   `appendix_a_matrix_subset_scope_artifact_boundary_from_records()` builds
   emitted artifacts from validated subset-scope evidence and validation checks
   nested evidence linkage. Runtime reports and rendered table artifacts still
-  need to emit those subset-scope records automatically.
+  need automatic subset-scope attachment.
 - Keep Appendix A matrix row-note claims scoped to declared evidence:
   `libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1` now validates the
   `mm_4x5x6` concurrent-work note that reference `[49]` also found a rank-90

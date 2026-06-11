@@ -742,30 +742,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes reproduced paper-table exhibits from general
     Appendix A registry and matrix report-contract coverage.
 
-- [ ] Keep README matrix outcome wording scoped until emitted target-subset
-      artifacts exist.
-  - Spec evidence: AlphaEvolve Table 2 says all parameters `m, n, p <= 5`
-    matched or surpassed best-known ranks, while Appendix A Table 3 is a
-    broader 54-target table that includes targets outside that subset.
-  - Current evidence: README now documents
-    `libreevolve.alphaevolve_matrix_subset_scope.v1`, which validates named
-    target subsets for `appendix_a_full`, `main_text_mnp_le_5`, and
-    `table_2_selected`, including inclusion predicates, row counts, outcome
-    counts, out-of-scope row ids, and source-caption/table linkage. README can
-    distinguish the full 54-target Appendix A table from the narrower
-    all-matched-or-surpassed `m,n,p <= 5` main-text claim, but no emitted
-    report/table artifact carries that subset-scope evidence yet.
-    `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1` now
-    documents and validates that README-scoped absence boundary plus
-    emitted-artifact fields. README also documents the builder from subset
-    evidence and nested-linkage validation, but no report/table exporter emits
-    the records automatically.
-  - Required result: when matrix subset-scope artifacts land, update README,
-    ROADMAP, papers index, and code/paper TODOs with named target subsets,
-    inclusion predicates, row counts, outcome counts, out-of-scope row ids,
-    source-caption/table linkage, and wording checks that separate Table 2's
-    scoped main-text claim from Appendix A full-table aggregates.
-
 - [ ] Keep README matrix headline wording scoped until emitted 4x4 rank-48
       historicity artifacts exist.
   - Spec evidence: AlphaEvolve's abstract and Section 3.1 headline the 4x4

@@ -37,6 +37,7 @@ from libreevolve.problems.benchmarks.official_deepmind_blog import (
 )
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     appendix_a_matrix_row_note_artifact_boundary_from_records,
+    appendix_a_matrix_subset_scope_artifact_boundary_from_records,
 )
 from libreevolve.tools.paper_manifest import main, rehydrate_paper_cache, validate_paper_manifest
 
@@ -1781,6 +1782,67 @@ def test_validate_paper_manifest_checks_matrix_subset_scope_artifact_boundary(
     codes = {issue.code for issue in report.issues}
     assert report.ok is False
     assert "appendix_a_subset_scope_artifact_missing_subset_scope_artifacts" in codes
+
+
+def test_validate_paper_manifest_accepts_committed_matrix_subset_scope_artifact_sidecar(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        Path(paper_manifest.APPENDIX_A_MATRIX_REGISTRY_PATH).read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    sidecar = tmp_path / paper_manifest.APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE
+    sidecar.write_text(
+        json.dumps(
+            appendix_a_matrix_subset_scope_artifact_boundary_from_records(
+                artifact_paths_by_subset_id={
+                    "appendix_a_full": [paper_manifest.APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE],
+                    "main_text_mnp_le_5": [paper_manifest.APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE],
+                    "table_2_selected": [paper_manifest.APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE],
+                }
+            ),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_matrix_subset_scope_artifact_sidecar_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        Path(paper_manifest.APPENDIX_A_MATRIX_REGISTRY_PATH).read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    record = appendix_a_matrix_subset_scope_artifact_boundary_from_records(
+        artifact_paths_by_subset_id={
+            "appendix_a_full": [paper_manifest.APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE],
+            "main_text_mnp_le_5": [paper_manifest.APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE],
+            "table_2_selected": [paper_manifest.APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE],
+        }
+    )
+    record["emitted_artifacts"][0]["row_count"] = 999
+    sidecar = tmp_path / paper_manifest.APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "appendix_a_subset_scope_artifact_invalid_artifact_row_count" in codes
 
 
 def test_validate_paper_manifest_checks_matrix_row_note_artifact_boundary(

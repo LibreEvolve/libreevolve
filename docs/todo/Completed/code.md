@@ -4,6 +4,23 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit Appendix A matrix subset-scope artifact sidecar.
+  - Spec evidence: AlphaEvolve Table 2 scopes the all-matched-or-surpassed
+    matrix statement to `m, n, p <= 5`, while Appendix A Table 3 is the full
+    54-target table with two fell-behind rows outside that main-text subset.
+  - Status: `papers/appendix_a_matrix_subset_scope_artifacts.json` now emits
+    the `appendix_a_full`, `main_text_mnp_le_5`, and `table_2_selected`
+    subset-scope artifacts with inclusion predicates, source table/page/
+    phrase linkage, row counts, outcome counts, fell-behind and out-of-scope
+    ids, nested subset evidence, artifact paths, and SHA-256 digests.
+    `validate_paper_manifest()` consumes the sidecar when the Appendix A
+    registry is in scope.
+  - Verification: `py -3.12 -m pytest tests\test_appendix_a_matrix_registry.py
+    tests\test_paper_manifest.py -q` and `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs` passed.
+  - Remaining gap: rendered matrix reports/table exports still need automatic
+    attachment of the subset-scope artifacts.
+
 - [x] Emit Appendix A matrix row-note caveat artifact sidecar.
   - Spec evidence: AlphaEvolve Appendix A Table 3 records that concurrent
     work `[49]` also found a rank-90 algorithm for `<4, 5, 6>`, so local
@@ -16055,6 +16072,9 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     counts, fell-behind and out-of-scope ids, artifact paths, and artifact
     hashes. Local report/export code still does not emit those subset-scope
     artifacts.
+  - Later status: `papers/appendix_a_matrix_subset_scope_artifacts.json` now
+    emits the subset-scope sidecar; automatic report/export attachment remains
+    open.
   - Verification: focused Appendix A registry and paper-manifest tests cover
     the absence boundary, emitted-artifact validation, invalid nested evidence,
     and manifest hook.

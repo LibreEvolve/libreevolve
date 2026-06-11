@@ -6,6 +6,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit Appendix A matrix subset-scope artifact sidecar.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 scopes the
+    all-matched-or-surpassed matrix statement to `m, n, p <= 5`; Appendix A
+    Table 3 is broader and includes two fell-behind rows.
+  - Status: `papers/appendix_a_matrix_subset_scope_artifacts.json` now carries
+    paper-facing subset-scope artifacts for `appendix_a_full`,
+    `main_text_mnp_le_5`, and `table_2_selected`, including source linkage,
+    inclusion predicates, counts, out-of-scope/fell-behind ids, nested subset
+    evidence, artifact paths, and digests. The paper-manifest gate validates
+    that sidecar when Appendix A registry evidence is present.
+  - Verification: `py -3.12 -m pytest tests\test_appendix_a_matrix_registry.py
+    tests\test_paper_manifest.py -q` and `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs` passed.
+  - Remaining gap: rendered table/report exports still need automatic
+    propagation of the subset-scope artifacts wherever rank/outcome rows are
+    published.
+
 - [x] Emit Appendix A matrix row-note caveat artifact sidecar.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A Table 3 says
     concurrent work `[49]` also found a rank-90 algorithm for `<4, 5, 6>`.
@@ -10843,6 +10860,9 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     out-of-scope ids, nested subset-scope evidence, artifact paths, and hashes.
     The paper-manifest gate validates this boundary with the Appendix A matrix
     checks.
+  - Later status: `papers/appendix_a_matrix_subset_scope_artifacts.json` now
+    emits the subset-scope sidecar; automatic rendered table/report
+    propagation remains open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
 
 - [x] Track Appendix A matrix row-note artifact-emission absence separately

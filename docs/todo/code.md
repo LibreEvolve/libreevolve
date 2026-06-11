@@ -3241,19 +3241,20 @@ Primary evidence:
     row counts, outcome counts, out-of-scope/fell-behind row ids, and
     source-caption/table linkage. It preserves that the `m,n,p <= 5` subset has
     `20` rows with `0` fell behind while the full Appendix A table has `54`
-    rows with `2` fell behind (`mm_4x4x9` and `mm_6x6x6`). This is still
-    built-in metadata only; `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1`
-    now validates the current `not_emitted_by_local_report_export` state and
-    emitted-artifact fields.
+    rows with `2` fell behind (`mm_4x4x9` and `mm_6x6x6`).
+    `papers/appendix_a_matrix_subset_scope_artifacts.json` now emits the
+    `appendix_a_full`, `main_text_mnp_le_5`, and `table_2_selected`
+    subset-scope artifacts with nested subset evidence, artifact path, and
+    SHA-256 digests. `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1`
+    now validates the emitted sidecar and emitted-artifact fields.
     `appendix_a_matrix_subset_scope_artifact_boundary_from_records()` builds
     emitted artifacts from validated subset-scope evidence and checks nested
     linkage, but local matrix reports, table exhibits, and run artifacts do
-    not emit or consume the subset-scope record.
-  - Required result: wire matrix report/table-exhibit generation to emit and
-    commit subset-scope artifacts for `main_text_mnp_le_5`, `table_2_selected`,
-    and `appendix_a_full`, with source-caption linkage and docs validation so
-    README/ROADMAP/papers wording neither treats the full Appendix A registry
-    as all matched/surpassed nor treats larger-target `fell_behind` rows as
+    not consume the subset-scope record automatically.
+  - Required result: wire matrix report/table-exhibit generation to attach the
+    committed subset-scope artifacts automatically so README/ROADMAP/papers
+    wording neither treats the full Appendix A registry as all
+    matched/surpassed nor treats larger-target `fell_behind` rows as
     contradicting the scoped main-text claim.
 
 - [ ] Add Appendix A matrix row-note and concurrent-work provenance.

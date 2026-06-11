@@ -2292,29 +2292,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     so roadmap wording distinguishes reproduced paper-table exhibits from
     general Appendix A registry and matrix result-report coverage.
 
-- [ ] Keep matrix outcome roadmap wording scoped until emitted target-subset
-      artifacts exist.
-  - Spec evidence: AlphaEvolve Table 2 scopes its all-matched-or-surpassed
-    statement to parameters `m, n, p <= 5`, while Appendix A Table 3 is a
-    broader 54-target matrix table.
-  - Current evidence: roadmap/README/paper-index status now cites
-    `libreevolve.alphaevolve_matrix_subset_scope.v1`, which ties prose claims
-    to named target subsets and prevents mixing the `m,n,p <= 5` main-text
-    subset with the full Appendix A table. It validates `appendix_a_full`,
-    `main_text_mnp_le_5`, and `table_2_selected` membership, counts,
-    out-of-scope rows, and Table 2/Table 3 source linkage. Runtime reports and
-    rendered table artifacts still do not emit those subset-scope records.
-    `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1` now
-    documents and validates that roadmap-scoped absence boundary plus
-    emitted-artifact fields. The subset-scope artifact builder can create
-    emitted records from validated subset evidence and checks nested linkage,
-    but report/table exports still do not emit them automatically.
-  - Required result: when matrix subset-scope artifacts land, update ROADMAP,
-    README, papers index, and code/paper TODOs with named target subsets,
-    inclusion predicates, row counts, outcome counts, out-of-scope row ids,
-    source-caption/table linkage, and validation that keeps scoped Table 2
-    outcome wording separate from full Appendix A aggregate outcomes.
-
 - [ ] Keep matrix headline roadmap wording scoped until emitted 4x4 rank-48
       historicity artifacts exist.
   - Spec evidence: AlphaEvolve's abstract and Section 3.1 say AlphaEvolve

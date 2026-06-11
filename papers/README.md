@@ -1345,16 +1345,17 @@ Implemented:
   matched, `3` surpassed, `0` fell behind), and `table_2_selected` (`16`
   displayed rows: `2` matched, `14` surpassed, `0` fell behind). It validates
   inclusion predicates, target ids, outcome counts, out-of-scope rows, and
-  Table 2/Table 3 source linkage, but no local report/export emits those
-  subset-scope records yet.
+  Table 2/Table 3 source linkage.
+  `papers/appendix_a_matrix_subset_scope_artifacts.json` now emits the three
+  subset-scope artifacts with nested subset evidence, artifact path, and
+  SHA-256 digests.
   `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1` records
-  the current `not_emitted_by_local_report_export` boundary and validates
-  required future emitted-artifact fields for subset identity, inclusion
-  predicates, source linkage, counts, fell-behind/out-of-scope ids, nested
-  subset-scope evidence, artifact paths, and hashes.
+  the emitted sidecar and validates required artifact fields for subset
+  identity, inclusion predicates, source linkage, counts, fell-behind/
+  out-of-scope ids, nested subset-scope evidence, artifact paths, and hashes.
   `appendix_a_matrix_subset_scope_artifact_boundary_from_records()` can build
   emitted artifacts from subset evidence and validates nested linkage, but
-  local report/table exports still do not emit those subset records.
+  local report/table exports still need automatic subset-scope attachment.
   `libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1` records the
   Appendix A Table 3 concurrent-work note for `mm_4x5x6`: reference `[49]`
   also found a rank-90 algorithm for `<4, 5, 6>`, independently matching

@@ -3143,21 +3143,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     main-text claim, which rows are selected for Table 2, and why the
     larger-target `fell_behind` rows do not contradict the scoped Table 2
     statement. It validates inclusion predicates, row counts, outcome counts,
-    out-of-scope row ids, and source-caption/table linkage. No emitted paper
-    artifact or rendered table export currently carries this subset-scope
-    record. `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1`
-    now validates that absence boundary and emitted-artifact fields for subset
+    out-of-scope row ids, and source-caption/table linkage.
+    `papers/appendix_a_matrix_subset_scope_artifacts.json` now carries the
+    three subset-scope artifacts as paper-facing records with nested subset
+    evidence, artifact path, and SHA-256 digests.
+    `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1` now
+    validates the emitted sidecar and emitted-artifact fields for subset
     identity, inclusion predicates, source linkage, counts, fell-behind/
     out-of-scope ids, nested subset evidence, paths, and hashes.
     `appendix_a_matrix_subset_scope_artifact_boundary_from_records()` builds
     emitted artifacts from validated subset evidence and checks nested linkage,
-    but no paper artifact currently carries the subset-scope records.
-  - Required result: emit paper-facing subset-scope artifacts for named target
-    sets such as `main_text_mnp_le_5`, `table_2_selected`, and
-    `appendix_a_full`, including inclusion predicates, row counts, outcome
-    counts, out-of-scope row ids, source-caption/table linkage, and
-    README/ROADMAP validation that keeps scoped main-text claims distinct from
-    full Appendix A aggregate outcomes.
+    but rendered table/report exports still do not attach the subset-scope
+    records automatically.
+  - Required result: connect rendered table/report exports to the committed
+    subset-scope artifacts so scoped main-text claims remain distinct from
+    full Appendix A aggregate outcomes wherever matrix rank rows are
+    published.
 
 - [ ] Track matrix headline historicity evidence for the 4x4 complex rank-48
       result.

@@ -138,6 +138,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
 
 
 REQUIRED_FIELDS = ("id", "title", "url", "file", "ok", "bytes", "sha256", "message")
+APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE = "papers/appendix_a_matrix_subset_scope_artifacts.json"
 APPENDIX_A_ROW_NOTE_ARTIFACTS_FILE = "papers/appendix_a_matrix_row_note_artifacts.json"
 SHA256_RE = re.compile(r"[0-9a-f]{64}")
 PAPER_ID_RE = re.compile(r"(?:\d{4}\.\d{5}|[a-z0-9][a-z0-9-]{0,94}[a-z0-9])")
@@ -639,8 +640,25 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
         )
         for issue in local_resource_frontier_report.issues
     )
+    subset_scope_artifacts_path = root_path / APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE
+    if subset_scope_artifacts_path.exists():
+        subset_scope_artifact_recordset: object | str | Path = subset_scope_artifacts_path
+    else:
+        subset_scope_artifact_recordset = appendix_a_matrix_subset_scope_artifact_boundary_record()
+        try:
+            is_repo_root = root_path.resolve() == _repo_root().resolve()
+        except OSError:
+            is_repo_root = False
+        if is_repo_root:
+            issues.append(
+                PaperManifestIssue(
+                    "appendix_a_subset_scope_artifact_manifest_missing",
+                    f"{APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE} must emit the Appendix A matrix subset-scope artifacts",
+                    "appendix_a_full",
+                )
+            )
     subset_scope_artifact_report = validate_appendix_a_matrix_subset_scope_artifact_boundary(
-        appendix_a_matrix_subset_scope_artifact_boundary_record()
+        subset_scope_artifact_recordset
     )
     issues.extend(
         PaperManifestIssue(

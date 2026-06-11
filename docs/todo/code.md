@@ -2685,19 +2685,21 @@ Primary evidence:
     an outer regular hexagon improves the side length from `3.943` to `3.931`,
     and packing `n = 12` improves the side length from `4.0` to `3.942`.
     Figure 11 shows the two constructions as left/right panels.
-  - Current evidence: the broad Appendix B per-result TODO names regular
-    hexagon outer side lengths and Figure 11 visual provenance, but no
-    code/report schema separately records the two B.7 parameter rows, unit
-    hexagon geometry, outer-hexagon side-length convention, placement payload
-    hashes, containment/non-overlap certificates, prior values, or Figure 11
-    panel linkage. A generated report could quote one "hexagon packing"
-    improvement without proving both `n = 11` and `n = 12` constructions.
-  - Required result: add Appendix B.7-specific result rows and validators for
-    `n`, inner unit-hexagon convention, outer side-length unit, placement
-    artifact hash, containment certificate, pairwise non-overlap certificate,
-    prior value/source, reported side length, Figure 11 panel linkage, and
-    README/ROADMAP wording that distinguishes both hexagon-packing witnesses
-    from aggregate Appendix B coverage.
+  - Current evidence: `alphaevolve_appendix_b.json` now records a B.7
+    `packing_result_boundary` for both rows: `n = 11` improves from `3.943`
+    to `3.931` in Figure 11 left, and `n = 12` improves from `4.0` to
+    `3.942` in Figure 11 right. The boundary also records the unit inner
+    regular-hexagon convention, outer regular-hexagon side-length objective,
+    prior source `[29]`, and required future geometry witness fields. It
+    still marks both witnesses `not_recorded_locally`: no placement payload
+    hashes, containment certificates, pairwise non-overlap certificates,
+    recomputed outer side lengths, or Figure 11 panel artifacts exist.
+  - Required result: replace the `not_recorded_locally` boundary with real
+    Appendix B.7 witness artifacts: placement payload hashes, containment
+    certificates, pairwise non-overlap certificates, recomputed outer side
+    lengths, Figure 11 panel artifacts, and README/ROADMAP wording that
+    distinguishes both hexagon-packing witnesses from aggregate Appendix B
+    coverage.
 
 - [ ] Add Appendix B.9-B.10 Heilbronn minimum-area provenance.
   - Spec evidence: AlphaEvolve Appendix B.9-B.10 reports three Heilbronn

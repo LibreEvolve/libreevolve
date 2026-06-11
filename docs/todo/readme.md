@@ -1812,16 +1812,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     packing improvements: `n = 11` improves the outer regular-hexagon side
     length from `3.943` to `3.931`, and `n = 12` improves it from `4.0` to
     `3.942`.
-  - Current evidence: README can point to broad Appendix B per-result
-    metric/value and Figure 11 visual gaps, but it does not separately warn
-    that B.7 needs per-`n` geometry conventions, placement payload,
-    containment/non-overlap certificates, prior/current side lengths, and
-    Figure 11 panel linkage before quoting those bounds.
-  - Required result: when Appendix B.7 regular-hexagon metadata lands, update
-    README, ROADMAP, papers index, and code/paper TODOs together so README
-    names both `n` values, unit/outer hexagon conventions, side-length
-    improvements, certificates, Figure 11 panel links, and artifact hashes
-    without merging them into one generic hexagon-packing claim.
+  - Current evidence: README now names the B.7
+    `packing_result_boundary`, including both `n` values, unit/outer hexagon
+    conventions, side-length improvements, Figure 11 panel links, prior
+    source, and required future placement/certificate fields. It still warns
+    that the actual placement payloads, containment certificates,
+    non-overlap certificates, and recomputed side lengths are absent.
+  - Required result: when the actual Appendix B.7 placement payloads and
+    certificates land, update README, ROADMAP, papers index, and code/paper
+    TODOs together so README names placement hashes, containment/non-overlap
+    certificates, recomputed side lengths, Figure 11 panel artifacts, and
+    source links without merging them into one generic hexagon-packing claim.
 
 - [ ] Keep README Appendix B.9-B.10 Heilbronn wording scoped until
       minimum-area provenance exists.

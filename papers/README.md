@@ -111,6 +111,13 @@ the paper's two witness summaries, `U1` of size `2003` with
 `1.1479 <= C6` and `U2` of size `54265` with `1.1584 <= C6`, plus the
 integer-set payload and certificate fields required before local reproduction
 can be claimed, while the finite-set construction payloads remain absent.
+For B.7 regular-hexagon packing, the registry now records the
+unit-regular-hexagon objective, Figure 11 linkage, prior `[29]` values, and
+two paper-reported improvements: `n = 11` from outer side length `3.943` to
+`3.931` in the left panel, and `n = 12` from `4.0` to `3.942` in the right
+panel. Its `packing_result_boundary` records the placement payload and
+geometry-certificate fields required before local reproduction can be claimed,
+while the placement payloads remain absent.
 Appendix B says reported construction data and verification code
 appear in an accompanying Google Colab; this registry is not that
 Colab-equivalent evidence surface and does not yet store construction-data

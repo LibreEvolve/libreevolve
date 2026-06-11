@@ -670,6 +670,13 @@ is not yet an AlphaEvolve reproduction.
   reported lower bounds `1.1479 <= C6` and `1.1584 <= C6`, and required
   future finite-set payload and certificate fields, while the actual set
   payloads and recomputation certificates remain open.
+- Keep Appendix B.7 regular-hexagon packing claims scoped to result-boundary
+  evidence until geometry certificates land: the registry now validates the
+  unit-regular-hexagon objective, Figure 11 linkage, prior `[29]` values,
+  `n = 11` improvement from `3.943` to `3.931`, `n = 12` improvement from
+  `4.0` to `3.942`, and required future placement, containment,
+  non-overlap, recomputed-side-length, and figure-panel fields. The actual
+  placement payloads and geometry certificates remain open.
 - Keep paper artifact-role attribution separate from artifact availability:
   `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
   AlphaEvolve PDF contribution records for figure creators and companion

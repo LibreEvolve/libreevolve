@@ -3619,7 +3619,15 @@ finite-set admissibility condition, and lower-bound formula. A validated
 certificate, sum/difference cardinality certificate, max-element, and
 recomputed-bound fields required before local reproduction can be claimed.
 The actual B.6 finite-set payloads and recomputation certificates remain
-absent. It is also not a
+absent. For Appendix B.7, the registry now preserves the unit-regular-hexagon
+packing objective, Figure 11 linkage, prior `[29]` outer side lengths, and
+two paper-reported improvements: `n = 11` from `3.943` to `3.931` in the left
+panel and `n = 12` from `4.0` to `3.942` in the right panel. A validated
+`packing_result_boundary` records the future placement payload, containment
+certificate, non-overlap certificate, recomputed outer side length, and
+figure-panel fields required before local reproduction can be claimed. The
+actual B.7 placement payloads and geometry certificates remain absent. It is
+also not a
 Section 3.2 aggregate outcome ledger: LibreEvolve does not yet enumerate the
 paper's over-50 mathematical problem instances, branch taxonomy, previous-best
 references, matched/improved/failed statuses, or aggregate percentages for

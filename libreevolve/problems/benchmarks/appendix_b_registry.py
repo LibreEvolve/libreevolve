@@ -260,6 +260,52 @@ EXPECTED_B6_WITNESS_ROWS = (
     },
 )
 EXPECTED_B6_WITNESS_IDS = tuple(row["result_id"] for row in EXPECTED_B6_WITNESS_ROWS)
+EXPECTED_B7_PACKING_REQUIRED_FIELDS = (
+    "result_id",
+    "hexagon_count",
+    "inner_side_length",
+    "outer_side_length",
+    "placement_artifact_path",
+    "placement_artifact_sha256",
+    "placement_payload_schema",
+    "containment_certificate_path",
+    "containment_certificate_sha256",
+    "non_overlap_certificate_path",
+    "non_overlap_certificate_sha256",
+    "recomputed_outer_side_length",
+    "figure_panel_id",
+)
+EXPECTED_B7_PACKING_SUMMARY = {
+    "status": "not_recorded_locally",
+    "source_section_id": "B.7",
+    "source_problem_name": "Packing unit regular hexagons inside a regular hexagon",
+    "inner_shape": "regular_hexagon",
+    "inner_side_length": 1.0,
+    "outer_shape": "regular_hexagon",
+    "objective": "minimize_outer_regular_hexagon_side_length",
+    "source_figure": "Figure 11",
+    "prior_best_source": "[29]",
+    "required_witness_fields": list(EXPECTED_B7_PACKING_REQUIRED_FIELDS),
+}
+EXPECTED_B7_PACKING_ROWS = (
+    {
+        "result_id": "b7_11_unit_hexagons",
+        "hexagon_count": 11,
+        "source_figure_panel": "Figure 11 left",
+        "prior_outer_side_length": 3.943,
+        "reported_outer_side_length": 3.931,
+        "reported_improvement_direction": "smaller_outer_side_length",
+    },
+    {
+        "result_id": "b7_12_unit_hexagons",
+        "hexagon_count": 12,
+        "source_figure_panel": "Figure 11 right",
+        "prior_outer_side_length": 4.0,
+        "reported_outer_side_length": 3.942,
+        "reported_improvement_direction": "smaller_outer_side_length",
+    },
+)
+EXPECTED_B7_PACKING_IDS = tuple(row["result_id"] for row in EXPECTED_B7_PACKING_ROWS)
 STATUSES = frozenset({"implemented", "implemented_smoke", "planned", "background_only", "out_of_scope"})
 DIRECTIONS = frozenset({"maximize", "minimize", "satisfy", "prove"})
 _ID_RE = re.compile(r"[a-z][a-z0-9_]{1,79}")
@@ -361,6 +407,7 @@ def _validate_family(
     _validate_b5_step_function_boundary(family, family_id, issues)
     _validate_b6_theorem_condition(family, family_id, issues)
     _validate_b6_witness_boundary(family, family_id, issues)
+    _validate_b7_packing_boundary(family, family_id, issues)
     status = family.get("status")
     if status not in STATUSES:
         issues.append(AppendixBRegistryIssue("invalid_status", "invalid implementation status", family_id))
@@ -744,6 +791,86 @@ def _validate_b6_witness_boundary(
             issues.append(AppendixBRegistryIssue("invalid_b6_missing_witness_id", "B.6 missing witness result_id must match U1 or U2", family_id))
     if len(reported_bounds) == len(EXPECTED_B6_WITNESS_ROWS) and reported_bounds != sorted(reported_bounds):
         issues.append(AppendixBRegistryIssue("invalid_b6_witness_bound_progression", "B.6 U2 reported lower bound must improve on U1", family_id))
+
+
+def _validate_b7_packing_boundary(
+    family: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    if family_id != "regular_hexagon_packing":
+        return
+    boundary = family.get("packing_result_boundary")
+    if not isinstance(boundary, dict):
+        issues.append(AppendixBRegistryIssue("missing_b7_packing_boundary", "B.7 requires packing_result_boundary", family_id))
+        return
+    for field, expected_value in EXPECTED_B7_PACKING_SUMMARY.items():
+        actual = boundary.get(field)
+        if isinstance(expected_value, float):
+            if isinstance(actual, bool) or not isinstance(actual, (int, float)) or not math.isclose(float(actual), expected_value, rel_tol=0.0, abs_tol=1e-12):
+                issues.append(AppendixBRegistryIssue(f"invalid_b7_packing_{field}", f"B.7 packing_result_boundary.{field} must match the AlphaEvolve source summary", family_id))
+        elif actual != expected_value:
+            issues.append(AppendixBRegistryIssue(f"invalid_b7_packing_{field}", f"B.7 packing_result_boundary.{field} must match the AlphaEvolve source summary", family_id))
+    if boundary.get("status") != "not_recorded_locally":
+        issues.append(AppendixBRegistryIssue("invalid_b7_packing_boundary_status", "B.7 packing boundary must remain not_recorded_locally until placement and certificate artifacts exist", family_id))
+    if boundary.get("required_witness_fields") != list(EXPECTED_B7_PACKING_REQUIRED_FIELDS):
+        issues.append(AppendixBRegistryIssue("invalid_b7_packing_required_fields", "B.7 boundary must enumerate required future placement and geometry-certificate fields", family_id))
+    missing = boundary.get("missing_witnesses")
+    if not isinstance(missing, list):
+        issues.append(AppendixBRegistryIssue("invalid_b7_missing_witnesses", "B.7 missing_witnesses must be a list", family_id))
+        return
+    if len(missing) != len(EXPECTED_B7_PACKING_ROWS):
+        issues.append(AppendixBRegistryIssue("invalid_b7_missing_witness_count", "B.7 must track both n=11 and n=12 packing witnesses", family_id))
+    by_id = {
+        witness.get("result_id"): witness
+        for witness in missing
+        if isinstance(witness, dict)
+    }
+    seen: set[str] = set()
+    for expected in EXPECTED_B7_PACKING_ROWS:
+        result_id = expected["result_id"]
+        witness = by_id.get(result_id)
+        if not isinstance(witness, dict):
+            issues.append(AppendixBRegistryIssue("missing_b7_witness_id", "B.7 packing boundary must include both result ids", family_id))
+            continue
+        if result_id in seen:
+            issues.append(AppendixBRegistryIssue("duplicate_b7_witness_id", "B.7 packing witness ids must be unique", family_id))
+        seen.add(result_id)
+        for field, expected_value in expected.items():
+            actual = witness.get(field)
+            if isinstance(expected_value, float):
+                if isinstance(actual, bool) or not isinstance(actual, (int, float)) or not math.isclose(float(actual), expected_value, rel_tol=0.0, abs_tol=1e-12):
+                    issues.append(AppendixBRegistryIssue(f"invalid_b7_witness_{field}", f"B.7 witness {field} must match the AlphaEvolve result summary", family_id))
+            elif actual != expected_value:
+                issues.append(AppendixBRegistryIssue(f"invalid_b7_witness_{field}", f"B.7 witness {field} must match the AlphaEvolve result summary", family_id))
+        for field in (
+            "placement_artifact_status",
+            "containment_certificate_status",
+            "non_overlap_certificate_status",
+            "recomputed_outer_side_length_status",
+        ):
+            if witness.get(field) != "not_recorded_locally":
+                issues.append(AppendixBRegistryIssue(f"invalid_b7_{field}", f"B.7 {field} must be not_recorded_locally in the absence boundary", family_id))
+        claim_boundary = witness.get("claim_boundary")
+        if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary:
+            issues.append(AppendixBRegistryIssue("missing_b7_witness_claim_boundary", "B.7 missing witness rows must state that local placement/certificate evidence is not claimed", family_id))
+        prior = witness.get("prior_outer_side_length")
+        reported = witness.get("reported_outer_side_length")
+        if (
+            isinstance(prior, (int, float))
+            and not isinstance(prior, bool)
+            and isinstance(reported, (int, float))
+            and not isinstance(reported, bool)
+            and float(reported) >= float(prior)
+        ):
+            issues.append(AppendixBRegistryIssue("invalid_b7_improvement_direction", "B.7 reported outer side length must improve by being smaller than the prior side length", family_id))
+    for witness in missing:
+        if not isinstance(witness, dict):
+            issues.append(AppendixBRegistryIssue("invalid_b7_missing_witness", "B.7 missing witness rows must be objects", family_id))
+            continue
+        result_id = witness.get("result_id")
+        if result_id not in EXPECTED_B7_PACKING_IDS:
+            issues.append(AppendixBRegistryIssue("invalid_b7_missing_witness_id", "B.7 missing witness result_id must match n=11 or n=12", family_id))
 
 
 def _family_id(family: object, index: int) -> str:

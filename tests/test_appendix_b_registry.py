@@ -8,6 +8,10 @@ from libreevolve.problems.benchmarks.appendix_b_registry import (
     EXPECTED_B6_WITNESS_IDS,
     EXPECTED_B6_WITNESS_REQUIRED_FIELDS,
     EXPECTED_B6_WITNESS_ROWS,
+    EXPECTED_B7_PACKING_IDS,
+    EXPECTED_B7_PACKING_REQUIRED_FIELDS,
+    EXPECTED_B7_PACKING_ROWS,
+    EXPECTED_B7_PACKING_SUMMARY,
     EXPECTED_B8_METRIC_CONVENTIONS,
     EXPECTED_B8_WITNESS_IDS,
     EXPECTED_B8_WITNESS_REQUIRED_FIELDS,
@@ -68,6 +72,15 @@ def test_appendix_b_registry_enumerates_all_alphaevolve_families():
     assert b6_boundary["required_witness_fields"] == list(EXPECTED_B6_WITNESS_REQUIRED_FIELDS)
     assert [row["result_id"] for row in b6_boundary["missing_witnesses"]] == list(EXPECTED_B6_WITNESS_IDS)
     for witness, expected in zip(b6_boundary["missing_witnesses"], EXPECTED_B6_WITNESS_ROWS, strict=True):
+        for field, expected_value in expected.items():
+            assert witness[field] == expected_value
+    b7 = next(family for family in data["families"] if family["id"] == "regular_hexagon_packing")
+    b7_boundary = b7["packing_result_boundary"]
+    for field, expected_value in EXPECTED_B7_PACKING_SUMMARY.items():
+        assert b7_boundary[field] == expected_value
+    assert b7_boundary["required_witness_fields"] == list(EXPECTED_B7_PACKING_REQUIRED_FIELDS)
+    assert [row["result_id"] for row in b7_boundary["missing_witnesses"]] == list(EXPECTED_B7_PACKING_IDS)
+    for witness, expected in zip(b7_boundary["missing_witnesses"], EXPECTED_B7_PACKING_ROWS, strict=True):
         for field, expected_value in expected.items():
             assert witness[field] == expected_value
 
@@ -400,3 +413,49 @@ def test_appendix_b_registry_requires_b6_witness_boundary_object(tmp_path):
     assert report.ok is False
     assert [issue.code for issue in report.issues] == ["missing_b6_witness_boundary"]
     assert report.issues[0].family_id == "sums_differences_finite_sets"
+
+
+def test_appendix_b_registry_requires_b7_packing_boundary(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    b7 = next(family for family in data["families"] if family["id"] == "regular_hexagon_packing")
+    boundary = b7["packing_result_boundary"]
+    boundary["status"] = "recorded"
+    boundary["inner_side_length"] = 2.0
+    boundary["required_witness_fields"] = ["result_id"]
+    first = boundary["missing_witnesses"][0]
+    first["hexagon_count"] = 10
+    first["reported_outer_side_length"] = 3.95
+    first["placement_artifact_status"] = "recorded"
+    first["claim_boundary"] = "Placement exists."
+    boundary["missing_witnesses"] = boundary["missing_witnesses"][:1]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_b7_packing_boundary_status" in codes
+    assert "invalid_b7_packing_inner_side_length" in codes
+    assert "invalid_b7_packing_required_fields" in codes
+    assert "invalid_b7_missing_witness_count" in codes
+    assert "invalid_b7_witness_hexagon_count" in codes
+    assert "invalid_b7_witness_reported_outer_side_length" in codes
+    assert "invalid_b7_placement_artifact_status" in codes
+    assert "missing_b7_witness_claim_boundary" in codes
+    assert "invalid_b7_improvement_direction" in codes
+    assert "missing_b7_witness_id" in codes
+
+
+def test_appendix_b_registry_requires_b7_packing_boundary_object(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    b7 = next(family for family in data["families"] if family["id"] == "regular_hexagon_packing")
+    del b7["packing_result_boundary"]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+
+    assert report.ok is False
+    assert [issue.code for issue in report.issues] == ["missing_b7_packing_boundary"]
+    assert report.issues[0].family_id == "regular_hexagon_packing"

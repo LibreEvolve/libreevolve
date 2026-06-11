@@ -668,6 +668,7 @@ def test_appendix_b_registry_requires_b7_packing_boundary(tmp_path):
     first["hexagon_count"] = 10
     first["reported_outer_side_length"] = 3.95
     first["placement_artifact_status"] = "recorded"
+    first["figure_panel_artifact_status"] = "recorded"
     first["claim_boundary"] = "Placement exists."
     boundary["missing_witnesses"] = boundary["missing_witnesses"][:1]
     registry = tmp_path / "registry.json"
@@ -684,6 +685,7 @@ def test_appendix_b_registry_requires_b7_packing_boundary(tmp_path):
     assert "invalid_b7_witness_hexagon_count" in codes
     assert "invalid_b7_witness_reported_outer_side_length" in codes
     assert "invalid_b7_placement_artifact_status" in codes
+    assert "invalid_b7_figure_panel_artifact_status" in codes
     assert "missing_b7_witness_claim_boundary" in codes
     assert "invalid_b7_improvement_direction" in codes
     assert "missing_b7_witness_id" in codes

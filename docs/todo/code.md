@@ -2707,7 +2707,10 @@ Primary evidence:
     prior source `[29]`, and required future geometry witness fields. It
     still marks both witnesses `not_recorded_locally`: no placement payload
     hashes, containment certificates, pairwise non-overlap certificates,
-    recomputed outer side lengths, or Figure 11 panel artifacts exist.
+    recomputed outer side lengths, or Figure 11 panel artifacts exist. The
+    required fields now include explicit Figure 11 panel artifact path/hash
+    entries, and each witness keeps `figure_panel_artifact_status:
+    not_recorded_locally`.
   - Required result: replace the `not_recorded_locally` boundary with real
     Appendix B.7 witness artifacts: placement payload hashes, containment
     certificates, pairwise non-overlap certificates, recomputed outer side

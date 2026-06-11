@@ -563,6 +563,8 @@ EXPECTED_B7_PACKING_REQUIRED_FIELDS = (
     "non_overlap_certificate_sha256",
     "recomputed_outer_side_length",
     "figure_panel_id",
+    "figure_panel_artifact_path",
+    "figure_panel_artifact_sha256",
 )
 EXPECTED_B7_PACKING_SUMMARY = {
     "status": "not_recorded_locally",
@@ -1737,6 +1739,7 @@ def _validate_b7_packing_boundary(
             "containment_certificate_status",
             "non_overlap_certificate_status",
             "recomputed_outer_side_length_status",
+            "figure_panel_artifact_status",
         ):
             if witness.get(field) != "not_recorded_locally":
                 issues.append(AppendixBRegistryIssue(f"invalid_b7_{field}", f"B.7 {field} must be not_recorded_locally in the absence boundary", family_id))

@@ -1824,7 +1824,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     conventions, side-length improvements, Figure 11 panel links, prior
     source, and required future placement/certificate fields. It still warns
     that the actual placement payloads, containment certificates,
-    non-overlap certificates, and recomputed side lengths are absent.
+    non-overlap certificates, recomputed side lengths, and Figure 11 panel
+    artifacts are absent. The boundary now includes explicit Figure 11 panel
+    artifact path/hash fields and keeps those artifacts `not_recorded_locally`.
   - Required result: when the actual Appendix B.7 placement payloads and
     certificates land, update README, ROADMAP, papers index, and code/paper
     TODOs together so README names placement hashes, containment/non-overlap

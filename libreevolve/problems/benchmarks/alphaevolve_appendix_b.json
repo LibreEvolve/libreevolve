@@ -585,7 +585,9 @@
           "non_overlap_certificate_path",
           "non_overlap_certificate_sha256",
           "recomputed_outer_side_length",
-          "figure_panel_id"
+          "figure_panel_id",
+          "figure_panel_artifact_path",
+          "figure_panel_artifact_sha256"
         ],
         "missing_witnesses": [
           {
@@ -599,6 +601,7 @@
             "containment_certificate_status": "not_recorded_locally",
             "non_overlap_certificate_status": "not_recorded_locally",
             "recomputed_outer_side_length_status": "not_recorded_locally",
+            "figure_panel_artifact_status": "not_recorded_locally",
             "claim_boundary": "The registry records the paper's B.7 n=11 packing summary but does not claim a local placement payload, containment certificate, non-overlap certificate, or recomputed outer side length."
           },
           {
@@ -612,6 +615,7 @@
             "containment_certificate_status": "not_recorded_locally",
             "non_overlap_certificate_status": "not_recorded_locally",
             "recomputed_outer_side_length_status": "not_recorded_locally",
+            "figure_panel_artifact_status": "not_recorded_locally",
             "claim_boundary": "The registry records the paper's B.7 n=12 packing summary but does not claim a local placement payload, containment certificate, non-overlap certificate, or recomputed outer side length."
           }
         ]

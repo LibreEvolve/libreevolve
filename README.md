@@ -3639,7 +3639,8 @@ two paper-reported improvements: `n = 11` from `3.943` to `3.931` in the left
 panel and `n = 12` from `4.0` to `3.942` in the right panel. A validated
 `packing_result_boundary` records the future placement payload, containment
 certificate, non-overlap certificate, recomputed outer side length, and
-figure-panel fields required before local reproduction can be claimed. The
+Figure 11 panel artifact fields required before local reproduction can be
+claimed, with panel artifacts explicitly `not_recorded_locally`. The
 actual B.7 placement payloads and geometry certificates remain absent. For
 Appendix B.9-B.10, the registry now preserves three Heilbronn result
 boundaries: `n = 11` points in a unit-area triangle with minimum formed

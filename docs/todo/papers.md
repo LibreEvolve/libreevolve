@@ -2650,7 +2650,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     panel linkage through a validated `packing_result_boundary`. It still
     does not retain real placement payloads, placement hashes, containment
     certificates, pairwise-disjointness certificates, recomputed outer side
-    lengths, or rendered Figure 11 panel artifacts.
+    lengths, or rendered Figure 11 panel artifacts. The boundary now includes
+    explicit Figure 11 panel artifact path/hash fields and keeps each panel
+    artifact `not_recorded_locally`.
   - Required result: add paper/report evidence for the missing Appendix B.7
     witness artifacts: placement artifact hashes, containment certificates,
     non-overlap certificates, recomputed side lengths, rendered Figure 11

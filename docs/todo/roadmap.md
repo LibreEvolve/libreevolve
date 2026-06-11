@@ -2929,7 +2929,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     source, and required future placement/certificate fields. It still does
     not claim placement artifact hashes, containment certificates,
     non-overlap certificates, recomputed side lengths, or rendered Figure 11
-    panel artifacts.
+    panel artifacts. The boundary now includes explicit Figure 11 panel
+    artifact path/hash fields and keeps those artifacts `not_recorded_locally`.
   - Required result: when the actual Appendix B.7 placement payloads and
     certificates land, update ROADMAP, README, papers index, and code/paper
     TODOs so roadmap claims distinguish both `n` values, geometry

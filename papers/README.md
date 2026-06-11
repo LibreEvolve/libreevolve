@@ -127,8 +127,9 @@ unit-regular-hexagon objective, Figure 11 linkage, prior `[29]` values, and
 two paper-reported improvements: `n = 11` from outer side length `3.943` to
 `3.931` in the left panel, and `n = 12` from `4.0` to `3.942` in the right
 panel. Its `packing_result_boundary` records the placement payload and
-geometry-certificate fields required before local reproduction can be claimed,
-while the placement payloads remain absent.
+geometry-certificate fields plus Figure 11 panel artifact fields required
+before local reproduction can be claimed, while the placement payloads and
+panel artifacts remain absent.
 For B.9-B.10 Heilbronn variants, the registry now records three result
 boundaries: `n = 11` points in a unit-area triangle with minimum formed
 triangle area `> 0.0365` versus prior `0.036`, `n = 13` points in a

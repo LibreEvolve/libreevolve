@@ -4,6 +4,10 @@ from libreevolve.problems.benchmarks.appendix_b_registry import (
     EXPECTED_B5_SOURCE_FORMULATION,
     EXPECTED_B5_STEP_FUNCTION_BOUNDARY,
     EXPECTED_B5_STEP_FUNCTION_REQUIRED_FIELDS,
+    EXPECTED_B6_THEOREM_CONDITION,
+    EXPECTED_B6_WITNESS_IDS,
+    EXPECTED_B6_WITNESS_REQUIRED_FIELDS,
+    EXPECTED_B6_WITNESS_ROWS,
     EXPECTED_B8_METRIC_CONVENTIONS,
     EXPECTED_B8_WITNESS_IDS,
     EXPECTED_B8_WITNESS_REQUIRED_FIELDS,
@@ -57,6 +61,15 @@ def test_appendix_b_registry_enumerates_all_alphaevolve_families():
         "construction": "normalized_step_function",
         "certificate": "integral_and_shift_overlap_certificate",
     }
+    b6 = next(family for family in data["families"] if family["id"] == "sums_differences_finite_sets")
+    assert b6["theorem_condition_evidence"] == EXPECTED_B6_THEOREM_CONDITION
+    b6_boundary = b6["finite_set_witness_boundary"]
+    assert b6_boundary["status"] == "not_recorded_locally"
+    assert b6_boundary["required_witness_fields"] == list(EXPECTED_B6_WITNESS_REQUIRED_FIELDS)
+    assert [row["result_id"] for row in b6_boundary["missing_witnesses"]] == list(EXPECTED_B6_WITNESS_IDS)
+    for witness, expected in zip(b6_boundary["missing_witnesses"], EXPECTED_B6_WITNESS_ROWS, strict=True):
+        for field, expected_value in expected.items():
+            assert witness[field] == expected_value
 
 
 def test_appendix_b_registry_requires_advertised_fixtures_to_exist(tmp_path):
@@ -306,3 +319,84 @@ def test_appendix_b_registry_requires_b5_step_function_boundary_object(tmp_path)
     assert report.ok is False
     assert [issue.code for issue in report.issues] == ["missing_b5_step_function_boundary"]
     assert report.issues[0].family_id == "erdos_minimum_overlap"
+
+
+def test_appendix_b_registry_requires_b6_theorem_condition(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    b6 = next(family for family in data["families"] if family["id"] == "sums_differences_finite_sets")
+    theorem = b6["theorem_condition_evidence"]
+    theorem["known_lower_bound"] = 1.4
+    theorem["admissibility_condition"] = "|U - U| < 2 max(U)"
+    theorem["witness_must_contain_zero"] = False
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_b6_theorem_known_lower_bound" in codes
+    assert "invalid_b6_theorem_admissibility_condition" in codes
+    assert "invalid_b6_theorem_witness_must_contain_zero" in codes
+    assert "invalid_b6_theorem_bound_order" in codes
+
+
+def test_appendix_b_registry_requires_b6_theorem_condition_object(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    b6 = next(family for family in data["families"] if family["id"] == "sums_differences_finite_sets")
+    del b6["theorem_condition_evidence"]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+
+    assert report.ok is False
+    assert "missing_b6_theorem_condition" in [issue.code for issue in report.issues]
+    assert report.issues[0].family_id == "sums_differences_finite_sets"
+
+
+def test_appendix_b_registry_requires_b6_witness_boundary(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    b6 = next(family for family in data["families"] if family["id"] == "sums_differences_finite_sets")
+    boundary = b6["finite_set_witness_boundary"]
+    boundary["status"] = "recorded"
+    boundary["required_witness_fields"] = ["result_id"]
+    boundary["theorem_condition_evidence"] = "wrong_theorem"
+    first = boundary["missing_witnesses"][0]
+    first["set_size"] = 2002
+    first["reported_lower_bound"] = 1.1
+    first["integer_set_artifact_status"] = "recorded"
+    first["claim_boundary"] = "Finite-set payload exists."
+    boundary["missing_witnesses"] = boundary["missing_witnesses"][:1]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_b6_witness_boundary_status" in codes
+    assert "invalid_b6_witness_required_fields" in codes
+    assert "invalid_b6_witness_theorem_condition_evidence" in codes
+    assert "b6_witness_theorem_mapping_mismatch" in codes
+    assert "invalid_b6_missing_witness_count" in codes
+    assert "invalid_b6_witness_set_size" in codes
+    assert "invalid_b6_witness_reported_lower_bound" in codes
+    assert "invalid_b6_integer_set_artifact_status" in codes
+    assert "missing_b6_witness_claim_boundary" in codes
+    assert "invalid_b6_witness_bound_order" in codes
+    assert "missing_b6_witness_id" in codes
+
+
+def test_appendix_b_registry_requires_b6_witness_boundary_object(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    b6 = next(family for family in data["families"] if family["id"] == "sums_differences_finite_sets")
+    del b6["finite_set_witness_boundary"]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+
+    assert report.ok is False
+    assert [issue.code for issue in report.issues] == ["missing_b6_witness_boundary"]
+    assert report.issues[0].family_id == "sums_differences_finite_sets"

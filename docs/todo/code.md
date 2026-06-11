@@ -2642,20 +2642,23 @@ Primary evidence:
     `1.1584 <= C6`. The result depends on the Gyarmati et al. inequality,
     the conditions that `U` contains zero and satisfies
     `|U - U| <= 2 max(U) + 1`, and computed `|U-U|` and `|U+U|` values.
-  - Current evidence: the broad Appendix B per-result TODO names finite-set
-    construction representations, but no code/report schema separately records
-    B.6 witness ids, set cardinalities, integer payload hashes, condition
-    checks, sumset/difference-set counts, denominator `2 max(U) + 1`, or the
-    two staged lower-bound values. A generated report could claim the final
-    `1.1584 <= C6` value without retaining the intermediate `U1` witness or
-    the inequality inputs that make either witness verifiable.
-  - Required result: add Appendix B.6-specific witness rows and validators for
-    `U1` and `U2`: set size, max element, contains-zero flag, sorted integer
-    payload hash, `|U-U|`, `|U+U|`, feasibility inequality status, derived
-    lower-bound value, source section linkage, and README/ROADMAP wording that
-    distinguishes the two witness sets from aggregate Appendix B coverage.
+  - Current evidence: `alphaevolve_appendix_b.json` now records a B.6
+    `finite_set_witness_boundary` for `U1` and `U2`, including result ids,
+    set sizes `2003` and `54265`, reported lower bounds `1.1479 <= C6` and
+    `1.1584 <= C6`, source section, theorem linkage, and required future
+    payload/certificate fields. The registry still marks both witnesses
+    `not_recorded_locally`: no integer-set payload hashes, contains-zero or
+    non-negative certificates, admissibility certificates, `|U-U|`/`|U+U|`
+    cardinalities, max elements, or recomputed lower bounds exist.
+  - Required result: replace the `not_recorded_locally` boundary with real
+    Appendix B.6 `U1` and `U2` witness artifacts: sorted integer payload
+    hashes, max elements, contains-zero checks, non-negativity checks,
+    `|U-U|` and `|U+U|`, feasibility inequality status, recomputed
+    lower-bound values, source section linkage, and README/ROADMAP wording
+    that distinguishes the two witness sets from aggregate Appendix B
+    coverage.
 
-- [ ] Add Appendix B.6 finite-set theorem/admissibility provenance.
+- [x] Add Appendix B.6 finite-set theorem/admissibility provenance.
   - Spec evidence: AlphaEvolve Appendix B.6 defines `C6` through arbitrarily
     large finite integer sets `A` and `B`, the sumset
     `A + B = {a + b : a in A, b in B}`, the difference set
@@ -2665,17 +2668,16 @@ Primary evidence:
     the prior lower bound, and the Gyarmati et al. finite-set theorem requiring
     `U` to be a finite set of non-negative integers containing zero with
     `|U - U| <= 2 max(U) + 1`.
-  - Current evidence: the B.6 witness TODO records `U1`/`U2`, arithmetic
-    counts, feasibility checks, and derived lower-bound values, but no
-    code/report schema separately records the theorem statement, asymptotic
-    quantifier scope, sumset/difference-set definitions, source theorem ids,
-    or admissibility preconditions that distinguish theorem-valid witnesses
-    from arbitrary finite-set payloads.
-  - Required result: add Appendix B.6 theorem metadata and validators for the
-    `C6` statement, `A+B`/`A-B` definitions, `<<`/`>>` constant-independence
-    notes, prior bound sources, Gyarmati theorem/corollary references,
-    admissible-`U` domain checks, and README/ROADMAP wording that keeps
-    theorem conditions separate from witness-payload provenance.
+  - Status: `alphaevolve_appendix_b.json` now records
+    `theorem_condition_evidence` for B.6: the `C6` statement,
+    `A+B`/`A-B` definitions, `<<`/`>>` constant-independence notes, prior
+    `1.14465 <= C6 <= 4/3` bounds and sources, Gyarmati theorem id,
+    admissible-`U` domain, zero-membership requirement, condition
+    `|U - U| <= 2 max(U) + 1`, and lower-bound formula. Registry validation
+    enforces those fields and keeps them separate from witness-payload
+    provenance.
+  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
+    passes.
 
 - [ ] Add Appendix B.7 regular-hexagon packing provenance.
   - Spec evidence: AlphaEvolve Appendix B.7 reports two regular-hexagon

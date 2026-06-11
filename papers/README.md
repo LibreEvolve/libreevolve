@@ -103,6 +103,14 @@ bounds, source figure, normalized-domain constraint, shift-objective
 expression, and the step-function payload and certificate fields required
 before local reproduction can be claimed, while the Figure 10 construction
 payload remains absent.
+For B.6 sums and differences of finite sets, the registry now records the
+source `C6` theorem statement, sumset/difference-set definitions, `<<`/`>>`
+notation, known `1.14465 <= C6 <= 4/3` bounds, Gyarmati admissibility
+condition, and lower-bound formula. Its `finite_set_witness_boundary` records
+the paper's two witness summaries, `U1` of size `2003` with
+`1.1479 <= C6` and `U2` of size `54265` with `1.1584 <= C6`, plus the
+integer-set payload and certificate fields required before local reproduction
+can be claimed, while the finite-set construction payloads remain absent.
 Appendix B says reported construction data and verification code
 appear in an accompanying Google Colab; this registry is not that
 Colab-equivalent evidence surface and does not yet store construction-data

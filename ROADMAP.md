@@ -661,6 +661,15 @@ is not yet an AlphaEvolve reproduction.
   constraint, shift-objective expression, and required future payload and
   certificate fields. The actual Figure 10 step-function payload and
   recomputation certificate remain open.
+- Keep Appendix B.6 theorem conditions and finite-set witnesses separated:
+  the registry now validates the source `C6` sums-and-differences statement,
+  sumset/difference-set definitions, `<<`/`>>` notation, known
+  `1.14465 <= C6 <= 4/3` bounds, Gyarmati admissibility condition, and
+  lower-bound formula. A `finite_set_witness_boundary` now validates the
+  paper's `U1` and `U2` witness summaries, set sizes `2003` and `54265`,
+  reported lower bounds `1.1479 <= C6` and `1.1584 <= C6`, and required
+  future finite-set payload and certificate fields, while the actual set
+  payloads and recomputation certificates remain open.
 - Keep paper artifact-role attribution separate from artifact availability:
   `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
   AlphaEvolve PDF contribution records for figure creators and companion

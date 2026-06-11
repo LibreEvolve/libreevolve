@@ -1778,17 +1778,19 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `1.1584 <= C6`. The derivation uses the Gyarmati et al. inequality with
     `U` containing zero, `|U - U| <= 2 max(U) + 1`, and recomputed
     `|U-U|`/`|U+U|` counts.
-  - Current evidence: README can point to broad Appendix B per-result
-    metric/value and finite-set payload gaps, but it does not separately warn
-    that B.6 needs two witness-specific records before quoting the lower-bound
-    improvements.
-  - Required result: when Appendix B.6 witness metadata lands, update README,
-    ROADMAP, papers index, and code/paper TODOs together so README names both
-    witness sets, cardinalities, feasibility checks, derived lower-bound
-    values, payload hashes, and source links without collapsing the result to
-    one aggregate finite-set claim.
+  - Current evidence: README now names the B.6
+    `finite_set_witness_boundary`, including `U1`/`U2`, set sizes `2003` and
+    `54265`, reported lower bounds `1.1479 <= C6` and `1.1584 <= C6`, theorem
+    linkage, and required future payload/certificate fields. It still warns
+    that the actual finite-set payloads, admissibility certificates,
+    sum/difference certificates, and recomputed lower bounds are absent.
+  - Required result: when the actual Appendix B.6 witness payloads and
+    certificates land, update README, ROADMAP, papers index, and code/paper
+    TODOs together so README names both witness sets, payload hashes,
+    feasibility checks, derived lower-bound values, and source links without
+    collapsing the result to one aggregate finite-set claim.
 
-- [ ] Keep README Appendix B.6 theorem wording scoped until admissibility
+- [x] Keep README Appendix B.6 theorem wording scoped until admissibility
       evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.6 defines `C6` via arbitrarily large
     finite sets `A` and `B`, explicit sumset/difference-set notation,
@@ -1796,15 +1798,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `[39, Corollary 3]` for the `4/3` upper bound, `[39, Theorem 1]` for the
     lower-bound method, and a Gyarmati finite-set admissibility condition for
     non-negative integer `U` containing zero.
-  - Current evidence: README can point to B.6 witness gaps, but it does not
-    separately warn that theorem definitions and admissibility conditions must
-    be present before presenting the witness rows as source-faithful evidence
-    for `C6`.
-  - Required result: when B.6 theorem-condition metadata lands, update README,
-    ROADMAP, papers index, and code/paper TODOs together so README distinguishes
-    theorem scope, notation, source theorem anchors, admissible-`U` checks,
-    and witness arithmetic instead of treating all B.6 evidence as payload
-    provenance alone.
+  - Status: README now distinguishes B.6 theorem-condition evidence from
+    witness payload provenance: it names the `C6` source theorem,
+    sumset/difference-set definitions, asymptotic notation, source theorem
+    anchors, admissible-`U` checks, lower-bound formula, and separate
+    `finite_set_witness_boundary`.
+  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
+    passes.
 
 - [ ] Keep README Appendix B.7 regular-hexagon wording scoped until packing
       provenance exists.

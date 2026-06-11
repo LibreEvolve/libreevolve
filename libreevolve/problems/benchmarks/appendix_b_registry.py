@@ -201,6 +201,65 @@ EXPECTED_B5_STEP_FUNCTION_BOUNDARY = {
     "required_payload_fields": list(EXPECTED_B5_STEP_FUNCTION_REQUIRED_FIELDS),
     "claim_boundary": "The registry records the paper's B.5 source/result summary but does not claim a local Figure 10 step-function payload, integral certificate, shift-objective certificate, or recomputed upper bound.",
 }
+EXPECTED_B6_THEOREM_CONDITION = {
+    "source_section_id": "B.6",
+    "constant_id": "C6",
+    "source_problem_name": "Sums and differences of finite sets",
+    "set_pair_symbols": ["A", "B"],
+    "set_pair_type": "arbitrarily_large_finite_integer_sets",
+    "sumset_definition": "A + B = {a + b : a in A, b in B}",
+    "difference_set_definition": "A - B = {a - b : a in A, b in B}",
+    "small_sumset_condition": "|A + B| << |A|",
+    "large_difference_condition": "|A - B| >> |A + B|^C6",
+    "ll_notation": "X << Y means X <= C Y for a constant C independent of A and B for sufficiently large sets",
+    "gg_notation": "X >> Y means X >= C' Y for a positive constant C' independent of A and B for sufficiently large sets",
+    "known_lower_bound": 1.14465,
+    "known_upper_bound": 1.333333333333,
+    "known_upper_bound_fraction": "4/3",
+    "upper_bound_source": "[39, Corollary 3]",
+    "lower_bound_source": "[39, Theorem 1]",
+    "finite_set_theorem_source": "[39, Theorem 1]",
+    "finite_set_theorem_id": "b6_gyarmati_finite_set_theorem",
+    "witness_set_symbol": "U",
+    "witness_set_type": "finite_set_of_non_negative_integers",
+    "witness_must_contain_zero": True,
+    "admissibility_condition": "|U - U| <= 2 max(U) + 1",
+    "lower_bound_formula": "C6 >= 1 + log(|U - U| / |U + U|) / log(2 max(U) + 1)",
+}
+EXPECTED_B6_WITNESS_REQUIRED_FIELDS = (
+    "result_id",
+    "witness_label",
+    "set_size",
+    "integer_set_artifact_path",
+    "integer_set_artifact_sha256",
+    "finite_set_payload_schema",
+    "contains_zero_certificate_path",
+    "non_negative_certificate_path",
+    "admissibility_certificate_path",
+    "admissibility_certificate_sha256",
+    "sumset_cardinality",
+    "difference_set_cardinality",
+    "max_element",
+    "recomputed_lower_bound",
+    "reported_bound_relation",
+)
+EXPECTED_B6_WITNESS_ROWS = (
+    {
+        "result_id": "b6_u1_size_2003",
+        "witness_label": "U1",
+        "set_size": 2003,
+        "reported_lower_bound": 1.1479,
+        "reported_bound_relation": "1.1479 <= C6",
+    },
+    {
+        "result_id": "b6_u2_size_54265",
+        "witness_label": "U2",
+        "set_size": 54265,
+        "reported_lower_bound": 1.1584,
+        "reported_bound_relation": "1.1584 <= C6",
+    },
+)
+EXPECTED_B6_WITNESS_IDS = tuple(row["result_id"] for row in EXPECTED_B6_WITNESS_ROWS)
 STATUSES = frozenset({"implemented", "implemented_smoke", "planned", "background_only", "out_of_scope"})
 DIRECTIONS = frozenset({"maximize", "minimize", "satisfy", "prove"})
 _ID_RE = re.compile(r"[a-z][a-z0-9_]{1,79}")
@@ -300,6 +359,8 @@ def _validate_family(
     _validate_b8_witness_boundary(family, family_id, issues)
     _validate_b5_source_formulation(family, family_id, issues)
     _validate_b5_step_function_boundary(family, family_id, issues)
+    _validate_b6_theorem_condition(family, family_id, issues)
+    _validate_b6_witness_boundary(family, family_id, issues)
     status = family.get("status")
     if status not in STATUSES:
         issues.append(AppendixBRegistryIssue("invalid_status", "invalid implementation status", family_id))
@@ -569,6 +630,120 @@ def _validate_b5_artifact_schema(
         issues.append(AppendixBRegistryIssue("invalid_b5_artifact_construction", "B.5 construction schema must be normalized_step_function", family_id))
     if artifact_schema.get("certificate") != "integral_and_shift_overlap_certificate":
         issues.append(AppendixBRegistryIssue("invalid_b5_artifact_certificate", "B.5 certificate schema must cover integral and shift-overlap verification", family_id))
+
+
+def _validate_b6_theorem_condition(
+    family: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    if family_id != "sums_differences_finite_sets":
+        return
+    evidence = family.get("theorem_condition_evidence")
+    if not isinstance(evidence, dict):
+        issues.append(AppendixBRegistryIssue("missing_b6_theorem_condition", "B.6 requires theorem_condition_evidence", family_id))
+        return
+    for field, expected_value in EXPECTED_B6_THEOREM_CONDITION.items():
+        actual = evidence.get(field)
+        if isinstance(expected_value, float):
+            if isinstance(actual, bool) or not isinstance(actual, (int, float)) or not math.isclose(float(actual), expected_value, rel_tol=0.0, abs_tol=1e-12):
+                issues.append(AppendixBRegistryIssue(f"invalid_b6_theorem_{field}", f"B.6 theorem_condition_evidence.{field} must match the AlphaEvolve source theorem", family_id))
+        elif actual != expected_value:
+            issues.append(AppendixBRegistryIssue(f"invalid_b6_theorem_{field}", f"B.6 theorem_condition_evidence.{field} must match the AlphaEvolve source theorem", family_id))
+    lower = evidence.get("known_lower_bound")
+    upper = evidence.get("known_upper_bound")
+    if (
+        isinstance(lower, (int, float))
+        and not isinstance(lower, bool)
+        and isinstance(upper, (int, float))
+        and not isinstance(upper, bool)
+        and float(lower) >= float(upper)
+    ):
+        issues.append(AppendixBRegistryIssue("invalid_b6_theorem_bound_order", "B.6 known lower bound must be below the known upper bound", family_id))
+
+
+def _validate_b6_witness_boundary(
+    family: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    if family_id != "sums_differences_finite_sets":
+        return
+    boundary = family.get("finite_set_witness_boundary")
+    if not isinstance(boundary, dict):
+        issues.append(AppendixBRegistryIssue("missing_b6_witness_boundary", "B.6 requires finite_set_witness_boundary", family_id))
+        return
+    if boundary.get("status") != "not_recorded_locally":
+        issues.append(AppendixBRegistryIssue("invalid_b6_witness_boundary_status", "B.6 finite-set witness boundary must remain not_recorded_locally until local set and certificate artifacts exist", family_id))
+    if boundary.get("source_section_id") != "B.6":
+        issues.append(AppendixBRegistryIssue("invalid_b6_witness_source_section_id", "B.6 witness boundary must retain the source section", family_id))
+    if boundary.get("constant_id") != "C6":
+        issues.append(AppendixBRegistryIssue("invalid_b6_witness_constant_id", "B.6 witness boundary must retain the constant id", family_id))
+    theorem = family.get("theorem_condition_evidence")
+    expected_theorem_id = EXPECTED_B6_THEOREM_CONDITION["finite_set_theorem_id"]
+    if boundary.get("theorem_condition_evidence") != expected_theorem_id:
+        issues.append(AppendixBRegistryIssue("invalid_b6_witness_theorem_condition_evidence", "B.6 witness boundary must link to the Gyarmati finite-set theorem id", family_id))
+    if isinstance(theorem, dict) and theorem.get("finite_set_theorem_id") != boundary.get("theorem_condition_evidence"):
+        issues.append(AppendixBRegistryIssue("b6_witness_theorem_mapping_mismatch", "B.6 theorem evidence and witness boundary must name the same theorem id", family_id))
+    if boundary.get("required_witness_fields") != list(EXPECTED_B6_WITNESS_REQUIRED_FIELDS):
+        issues.append(AppendixBRegistryIssue("invalid_b6_witness_required_fields", "B.6 boundary must enumerate required future finite-set payload and certificate fields", family_id))
+    missing = boundary.get("missing_witnesses")
+    if not isinstance(missing, list):
+        issues.append(AppendixBRegistryIssue("invalid_b6_missing_witnesses", "B.6 missing_witnesses must be a list", family_id))
+        return
+    if len(missing) != len(EXPECTED_B6_WITNESS_ROWS):
+        issues.append(AppendixBRegistryIssue("invalid_b6_missing_witness_count", "B.6 must track both U1 and U2 witnesses", family_id))
+    by_id = {
+        witness.get("result_id"): witness
+        for witness in missing
+        if isinstance(witness, dict)
+    }
+    seen: set[str] = set()
+    prior_lower = EXPECTED_B6_THEOREM_CONDITION["known_lower_bound"]
+    known_upper = EXPECTED_B6_THEOREM_CONDITION["known_upper_bound"]
+    reported_bounds: list[float] = []
+    for expected in EXPECTED_B6_WITNESS_ROWS:
+        result_id = expected["result_id"]
+        witness = by_id.get(result_id)
+        if not isinstance(witness, dict):
+            issues.append(AppendixBRegistryIssue("missing_b6_witness_id", "B.6 witness boundary must include U1 and U2 result ids", family_id))
+            continue
+        if result_id in seen:
+            issues.append(AppendixBRegistryIssue("duplicate_b6_witness_id", "B.6 witness ids must be unique", family_id))
+        seen.add(result_id)
+        for field, expected_value in expected.items():
+            actual = witness.get(field)
+            if isinstance(expected_value, float):
+                if isinstance(actual, bool) or not isinstance(actual, (int, float)) or not math.isclose(float(actual), expected_value, rel_tol=0.0, abs_tol=1e-12):
+                    issues.append(AppendixBRegistryIssue(f"invalid_b6_witness_{field}", f"B.6 witness {field} must match the AlphaEvolve result summary", family_id))
+            elif actual != expected_value:
+                issues.append(AppendixBRegistryIssue(f"invalid_b6_witness_{field}", f"B.6 witness {field} must match the AlphaEvolve result summary", family_id))
+        for field in (
+            "integer_set_artifact_status",
+            "admissibility_certificate_status",
+            "sum_difference_certificate_status",
+            "recomputed_lower_bound_status",
+        ):
+            if witness.get(field) != "not_recorded_locally":
+                issues.append(AppendixBRegistryIssue(f"invalid_b6_{field}", f"B.6 {field} must be not_recorded_locally in the absence boundary", family_id))
+        claim_boundary = witness.get("claim_boundary")
+        if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary:
+            issues.append(AppendixBRegistryIssue("missing_b6_witness_claim_boundary", "B.6 missing witness rows must state that local finite-set/certificate evidence is not claimed", family_id))
+        reported = witness.get("reported_lower_bound")
+        if isinstance(reported, (int, float)) and not isinstance(reported, bool):
+            reported_value = float(reported)
+            reported_bounds.append(reported_value)
+            if not (float(prior_lower) < reported_value < float(known_upper)):
+                issues.append(AppendixBRegistryIssue("invalid_b6_witness_bound_order", "B.6 reported witness lower bounds must improve the prior lower bound and stay below the known upper bound", family_id))
+    for witness in missing:
+        if not isinstance(witness, dict):
+            issues.append(AppendixBRegistryIssue("invalid_b6_missing_witness", "B.6 missing witness rows must be objects", family_id))
+            continue
+        result_id = witness.get("result_id")
+        if result_id not in EXPECTED_B6_WITNESS_IDS:
+            issues.append(AppendixBRegistryIssue("invalid_b6_missing_witness_id", "B.6 missing witness result_id must match U1 or U2", family_id))
+    if len(reported_bounds) == len(EXPECTED_B6_WITNESS_ROWS) and reported_bounds != sorted(reported_bounds):
+        issues.append(AppendixBRegistryIssue("invalid_b6_witness_bound_progression", "B.6 U2 reported lower bound must improve on U1", family_id))
 
 
 def _family_id(family: object, index: int) -> str:

@@ -2876,17 +2876,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `1.1584 <= C6`. The claim is tied to the Gyarmati et al. inequality and
     requires set-level checks for zero membership, `|U - U| <= 2 max(U) + 1`,
     `|U-U|`, `|U+U|`, and the denominator `2 max(U) + 1`.
-  - Current evidence: roadmap/README/paper-index wording can cite the broad
-    Appendix B per-result metric/value gap, but it does not require B.6-
-    specific witness ids, cardinalities, integer-set payload hashes, condition
-    checks, or separate lower-bound values for the two found sets.
-  - Required result: when Appendix B.6 witness metadata and validators land,
-    update ROADMAP, README, papers index, and code/paper TODOs so roadmap
-    claims distinguish `U1` and `U2`, their sizes, feasibility evidence,
-    derived lower-bound values, payload hashes, and source links from aggregate
-    Appendix B coverage.
+  - Current evidence: roadmap/README/paper-index wording now cites the B.6
+    `finite_set_witness_boundary`, including `U1`/`U2`, sizes `2003` and
+    `54265`, reported lower bounds `1.1479 <= C6` and `1.1584 <= C6`,
+    theorem linkage, and required future finite-set payload and certificate
+    fields. It still does not claim integer-set payload hashes, feasibility
+    certificates, recomputed arithmetic counts, or derived lower-bound
+    recomputation.
+  - Required result: when the actual Appendix B.6 witness payloads and
+    certificates land, update ROADMAP, README, papers index, and code/paper
+    TODOs so roadmap claims distinguish `U1` and `U2`, their sizes,
+    feasibility evidence, derived lower-bound values, payload hashes, and
+    source links from aggregate Appendix B coverage.
 
-- [ ] Keep Appendix B.6 roadmap wording scoped until theorem-condition
+- [x] Keep Appendix B.6 roadmap wording scoped until theorem-condition
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.6 defines the `C6` problem through
     arbitrarily large finite integer sets `A` and `B`, explicit
@@ -2896,14 +2899,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     Gyarmati lower-bound theorem. The finite-set theorem applies only to
     non-negative integer `U` containing zero and satisfying
     `|U - U| <= 2 max(U) + 1`.
-  - Current evidence: roadmap/README/paper-index wording can cite B.6 witness
-    provenance, but it does not separately require the theorem definitions,
-    asymptotic-notation scope, cited source theorem/corollary ids, or
-    admissible-`U` preconditions that make finite-set witnesses meaningful.
-  - Required result: when B.6 theorem-condition metadata lands, update ROADMAP,
-    README, papers index, and code/paper TODOs so roadmap claims distinguish
-    theorem scope and admissibility evidence from `U1`/`U2` witness payloads,
-    arithmetic counts, and derived lower-bound values.
+  - Status: ROADMAP, README, and papers index now distinguish B.6 theorem
+    scope and admissibility evidence from `U1`/`U2` witness payloads:
+    theorem-condition evidence records the `C6` statement,
+    sumset/difference-set definitions, asymptotic-notation scope, cited
+    theorem/corollary ids, admissible-`U` preconditions, and lower-bound
+    formula, while witness payloads remain explicitly absent.
+  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
+    passes.
 
 - [ ] Keep Appendix B.7 roadmap wording scoped until regular-hexagon packing
       provenance exists.

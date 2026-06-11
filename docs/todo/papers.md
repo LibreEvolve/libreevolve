@@ -2592,19 +2592,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     inequality, requiring `U` to contain zero and satisfy
     `|U - U| <= 2 max(U) + 1`, with the lower bound derived from
     `|U-U|`, `|U+U|`, and `2 max(U) + 1`.
-  - Current gap: paper-facing Appendix B TODOs require normalized result rows
-    and finite-set construction payloads in general, but they do not force B.6
-    reports to retain both witness identities, the two cardinalities, the
-    intermediate and final lower-bound values, or the set-specific arithmetic
-    evidence needed to recompute the Gyarmati-bound expression.
-  - Required result: add paper/report evidence for Appendix B.6 witness rows:
-    `U1`/`U2` ids, set cardinality, max element, contains-zero and feasibility
-    checks, sorted integer payload hash, `|U-U|`, `|U+U|`, denominator,
-    derived lower-bound value, source section linkage, and README/ROADMAP text
-    that separates the two finite-set witnesses from broad Appendix B family
-    coverage.
+  - Current gap: paper-facing Appendix B coverage now retains both B.6
+    witness identities, set cardinalities, reported lower bounds, source
+    section, theorem linkage, and required future finite-set witness fields
+    through a validated `finite_set_witness_boundary`. It still does not
+    retain real `U1`/`U2` integer-set payloads, payload hashes, contains-zero
+    or non-negative certificates, admissibility certificates, `|U-U|`/`|U+U|`
+    cardinalities, max elements, or recomputed lower bounds.
+  - Required result: add paper/report evidence for the missing Appendix B.6
+    witness artifacts: sorted integer payload hashes, max elements,
+    contains-zero and non-negativity certificates, feasibility checks,
+    `|U-U|`, `|U+U|`, denominator, derived lower-bound value, source section
+    linkage, and README/ROADMAP text that separates the two finite-set
+    witnesses from broad Appendix B family coverage.
 
-- [ ] Track Appendix B.6 theorem-condition evidence.
+- [x] Track Appendix B.6 theorem-condition evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.6 first defines
     `C6` using arbitrarily large finite integer sets `A` and `B`, with
     `A+B` and `A-B` explicitly defined as sumset and difference set. The
@@ -2613,17 +2615,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     `[39, Theorem 1]` for the lower-bound framework, then applies the
     Gyarmati et al. result for finite `U` consisting of non-negative integers
     containing zero and satisfying `|U - U| <= 2 max(U) + 1`.
-  - Current gap: paper-facing B.6 TODOs retain witness identities and
-    recomputation inputs, but they do not require reports to preserve the
-    theorem-level definitions, asymptotic constant scope, cited theorem and
-    corollary anchors, or admissible-`U` domain statement. A report could
-    recompute `U1`/`U2` values while omitting the source theorem conditions
-    that justify using those finite sets for `C6`.
-  - Required result: add paper/report evidence for B.6 theorem rows:
-    theorem id, source location, sumset/difference-set definitions,
-    `<<`/`>>` semantics, lower/upper source references, admissible-`U`
-    conditions, formula linkage to witness rows, and README/ROADMAP text that
-    separates theorem-condition evidence from witness arithmetic.
+  - Status: paper-facing Appendix B coverage now preserves B.6
+    `theorem_condition_evidence`: theorem id, source location,
+    sumset/difference-set definitions, `<<`/`>>` semantics, lower/upper source
+    references, admissible-`U` conditions, lower-bound formula, and formula
+    linkage to witness rows. Registry validation keeps theorem-condition
+    evidence separate from witness arithmetic and payload evidence.
+  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
+    passes.
 
 - [ ] Track Appendix B.7 regular-hexagon packing evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.7 improves two

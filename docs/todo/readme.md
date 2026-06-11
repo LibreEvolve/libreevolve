@@ -137,7 +137,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     completed manifests at `runtime.history.embedded_evaluator_entrypoint_report`.
     README should still not imply full Figure 3 parity because the problem
     loader still requires `validate.py` by default and skeleton/block invocation
-    coupling is not yet evidenced.
+    coupling is not yet evidenced. README now also names
+    `papers/embedded_evaluator_boundary.json` as the committed paper-manifest-
+    validated full-Figure-3 evaluator absence boundary.
   - Required result: when skeleton/block invocation evidence, stronger callable
     isolation/build policy, and non-static/external-validator score-field
     linkage land, update README, ROADMAP, papers index, and code/paper TODOs

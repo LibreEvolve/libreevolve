@@ -682,6 +682,9 @@ import isolation, and broader non-static score-link resolution remain necessary
 before claiming Figure 3 evaluator parity. Supported embedded
 `evaluate(eval_inputs)` paths now record static AST score-field attribution
 when a returned metric expression depends on an EVOLVE block.
+The committed `papers/embedded_evaluator_boundary.json` sidecar now emits the
+`embedded_entrypoint_without_full_figure3_parity` boundary, and
+`validate_paper_manifest()` requires and validates it at the real repo root.
 
 AlphaEvolve evaluator-workload note: configured stages can now declare
 `workload.type` as `simple_check`, `inner_search`, `ml_training`, or `custom`,

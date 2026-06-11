@@ -155,7 +155,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     supported candidate-owned `evaluate` returns, but it still lacks
     skeleton-to-evolved-block invocation paths and stronger callable
     isolation/build policy. External `validate.py` remains the default problem
-    format outside all-embedded configs.
+    format outside all-embedded configs. The committed
+    `papers/embedded_evaluator_boundary.json` sidecar now preserves the
+    paper-manifest-validated full-Figure-3 evaluator absence boundary.
   - Required result: add paper-visible examples and reports proving callable
     isolation, callable discovery diagnostics, skeleton/block invocation
     evidence, and non-static/external-validator score linkage before treating

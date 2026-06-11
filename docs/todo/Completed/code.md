@@ -4,6 +4,25 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit embedded evaluator Figure 3 boundary sidecar.
+  - Spec evidence: AlphaEvolve Section 2.1 and Figure 3 show a candidate
+    codebase skeleton exposing `evaluate(eval_inputs) -> dict[str, float]`,
+    with evaluators invoking that function to score the modified program.
+  - Status: `papers/embedded_evaluator_boundary.json` now emits the
+    `libreevolve.alphaevolve_embedded_evaluator_entrypoint_boundary.v1`
+    `embedded_entrypoint_without_full_figure3_parity` boundary, and
+    `validate_paper_manifest()` requires and validates it at the real repo
+    root.
+  - Verification: `py -3.12 -m pytest
+    tests\test_embedded_evaluator_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\embedded_evaluator_boundary.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: skeleton-to-evolved-block invocation traces, stronger
+    callable/build isolation, non-static or external-validator score linkage,
+    and Figure 3 prompt/response exhibit artifacts remain open.
+
 - [x] Emit candidate language/build runner boundary sidecar.
   - Spec evidence: AlphaEvolve Sections 2.1-2.2 treat the program artifact,
     evaluator interface, and task representation as user/task-defined surfaces,

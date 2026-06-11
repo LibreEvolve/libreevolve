@@ -68,6 +68,10 @@ from libreevolve.problems.benchmarks.evaluator_oracle_boundary import (
     evaluator_oracle_boundary_record,
     validate_evaluator_oracle_boundary,
 )
+from libreevolve.problems.benchmarks.embedded_evaluator_boundary import (
+    embedded_evaluator_boundary_record,
+    validate_embedded_evaluator_boundary,
+)
 from libreevolve.problems.benchmarks.example_scope import (
     example_benchmark_scope_records,
     validate_example_benchmark_scope,
@@ -195,6 +199,7 @@ EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integrat
 CANDIDATE_ABSTRACTION_BOUNDARY_FILE = "papers/candidate_abstraction_boundary.json"
 CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_FILE = "papers/candidate_language_runner_boundary.json"
 EVALUATOR_ORACLE_BOUNDARY_FILE = "papers/evaluator_oracle_boundary.json"
+EMBEDDED_EVALUATOR_BOUNDARY_FILE = "papers/embedded_evaluator_boundary.json"
 PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_FILE = "papers/proposal_lifecycle_audit_boundary.json"
 EVALUATION_CASCADE_BOUNDARY_FILE = "papers/evaluation_cascade_boundary.json"
 CONTROLLER_BACKTRACKING_BOUNDARY_FILE = "papers/controller_backtracking_boundary.json"
@@ -576,6 +581,7 @@ def validate_paper_manifest(
     issues.extend(_validate_candidate_language_runner_boundary(root_path))
     issues.extend(_validate_candidate_abstraction_boundary(root_path))
     issues.extend(_validate_evaluator_oracle_boundary(root_path))
+    issues.extend(_validate_embedded_evaluator_boundary(root_path))
     issues.extend(_validate_proposal_lifecycle_audit_boundary(root_path))
     issues.extend(_validate_evaluation_cascade_boundary(root_path))
     issues.extend(_validate_controller_backtracking_boundary(root_path))
@@ -1385,6 +1391,38 @@ def _validate_evaluator_oracle_boundary(root_path: Path) -> list[PaperManifestIs
             f"evaluator_oracle_boundary_{issue.code}",
             issue.message,
             "evaluator_oracle",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_embedded_evaluator_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / EMBEDDED_EVALUATOR_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = embedded_evaluator_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "embedded_evaluator_boundary_manifest_missing",
+                    (
+                        f"{EMBEDDED_EVALUATOR_BOUNDARY_FILE} must emit "
+                        "embedded evaluator Figure 3 parity evidence availability"
+                    ),
+                    "embedded_evaluator",
+                )
+            ]
+    report = validate_embedded_evaluator_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"embedded_evaluator_boundary_{issue.code}",
+            issue.message,
+            "embedded_evaluator",
         )
         for issue in report.issues
     ]

@@ -119,6 +119,12 @@ from libreevolve.problems.benchmarks.evaluator_oracle_boundary import (
     render_evaluator_oracle_boundary_summary,
     validate_evaluator_oracle_boundary,
 )
+from libreevolve.problems.benchmarks.embedded_evaluator_boundary import (
+    EMBEDDED_EVALUATOR_BOUNDARY_SCHEMA,
+    embedded_evaluator_boundary_record,
+    render_embedded_evaluator_boundary_summary,
+    validate_embedded_evaluator_boundary,
+)
 from libreevolve.problems.benchmarks.existing_codebase_integration import (
     EXISTING_CODEBASE_INTEGRATION_BOUNDARY_SCHEMA,
     existing_codebase_integration_boundary_record,
@@ -340,6 +346,7 @@ __all__ = [
     "CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_SCHEMA",
     "CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA",
     "CONTROLLER_BACKTRACKING_BOUNDARY_SCHEMA",
+    "EMBEDDED_EVALUATOR_BOUNDARY_SCHEMA",
     "EVALUATOR_ORACLE_BOUNDARY_SCHEMA",
     "EXPECTED_TARGET_COUNT",
     "EVALUATION_CASCADE_BOUNDARY_SCHEMA",
@@ -413,6 +420,7 @@ __all__ = [
     "candidate_language_runner_boundary_record",
     "certification_artifact_inventory",
     "controller_backtracking_boundary_record",
+    "embedded_evaluator_boundary_record",
     "evaluation_cascade_boundary_record",
     "evaluator_oracle_boundary_record",
     "example_benchmark_scope_records",
@@ -471,6 +479,7 @@ __all__ = [
     "render_candidate_language_runner_boundary_summary",
     "render_certification_summary",
     "render_controller_backtracking_boundary_summary",
+    "render_embedded_evaluator_boundary_summary",
     "render_evaluation_cascade_boundary_summary",
     "render_evaluator_oracle_boundary_summary",
     "render_example_benchmark_scope_summary",
@@ -526,6 +535,7 @@ __all__ = [
     "validate_candidate_language_runner_boundary",
     "validate_certification_evidence_bundle",
     "validate_controller_backtracking_boundary",
+    "validate_embedded_evaluator_boundary",
     "validate_evaluation_cascade_boundary",
     "validate_evaluator_oracle_boundary",
     "validate_example_benchmark_scope",

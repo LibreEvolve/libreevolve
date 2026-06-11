@@ -1,0 +1,35 @@
+{
+  "schema": "libreevolve.alphaevolve_embedded_evaluator_entrypoint_boundary.v1",
+  "runtime_report_schema": "libreevolve.embedded_evaluator_entrypoint_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_section_id": "2.1",
+  "source_figure_id": "Figure 3",
+  "source_claim": "AlphaEvolve Figure 3 shows a candidate codebase skeleton exposing evaluate(eval_inputs) -> dict[str, float], with evaluators invoking that function to score the modified program",
+  "boundary_status": "embedded_entrypoint_without_full_figure3_parity",
+  "runtime_report_status": "embedded_evaluator_entrypoint_report_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "candidate_primary_file",
+    "evaluate_signature",
+    "eval_inputs_schema",
+    "evolved_block_span_id",
+    "skeleton_invocation_trace",
+    "score_field_name",
+    "returned_metric_name",
+    "score_to_block_link",
+    "callable_isolation_policy",
+    "build_isolation_policy",
+    "external_validator_score_linkage",
+    "figure3_prompt_exhibit_ref",
+    "figure3_response_exhibit_ref"
+  ],
+  "missing_evidence": {
+    "skeleton_to_evolved_block_invocation_trace": "not_recorded_locally",
+    "stronger_callable_isolation_policy": "not_recorded_locally",
+    "build_isolation_policy": "not_recorded_locally",
+    "non_static_score_field_causality": "not_recorded_locally",
+    "external_validator_score_linkage": "not_recorded_locally",
+    "figure3_prompt_and_response_exhibits": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has opt-in candidate-owned evaluate(eval_inputs) runtime evidence and static score-field attribution for supported embedded returns, but does not claim full AlphaEvolve Figure 3 evaluator parity with skeleton-to-evolved-block invocation traces, stronger callable/build isolation, non-static or external-validator score linkage, or prompt/response exhibit artifacts."
+}

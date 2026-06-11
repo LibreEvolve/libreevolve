@@ -145,6 +145,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `runtime.history.embedded_evaluator_entrypoint_report`. External
     `validate.py` remains the default path, the problem loader still requires
     `validate.py`, and skeleton-to-block invocation evidence is not yet present.
+    ROADMAP now also names `papers/embedded_evaluator_boundary.json` as the
+    committed paper-manifest-validated full-Figure-3 evaluator absence boundary.
   - Required result: when skeleton-to-block invocation evidence, stronger
     callable isolation/build policy, and non-static/external-validator
     score-field linkage land, update ROADMAP, README, papers index, and

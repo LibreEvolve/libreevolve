@@ -1886,7 +1886,9 @@ names, pass/score evidence, and explicit readiness gaps. It is evidence for
 the opt-in candidate-owned evaluator entrypoint, not full Figure 3 parity:
 embedded-only problem loading and static score-field-to-code-path attribution
 are supported for the embedded path, while skeleton-to-evolved-block invocation
-traces and stronger callable isolation/build policy remain open.
+traces and stronger callable isolation/build policy remain open. The committed
+`papers/embedded_evaluator_boundary.json` sidecar preserves the same full
+Figure 3 evaluator absence boundary for paper-manifest validation.
 
 Prompt metadata is stored for auditability. Mutation prompts are persisted
 according to `mutation_prompt_retention_mode`: `redacted` by default, with

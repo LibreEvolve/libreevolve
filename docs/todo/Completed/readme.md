@@ -4,6 +4,23 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README embedded-evaluator wording tied to committed sidecar.
+  - Spec evidence: AlphaEvolve Figure 3 parity needs evidence that the
+    candidate skeleton's `evaluate(eval_inputs)` entrypoint invokes evolved
+    blocks and returns scores under stronger isolation/linkage evidence than
+    the current opt-in path.
+  - Status: README now names `papers/embedded_evaluator_boundary.json` as the
+    committed sidecar for the full-Figure-3 evaluator absence boundary, with
+    paper-manifest validation.
+  - Verification: `py -3.12 -m pytest
+    tests\test_embedded_evaluator_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\embedded_evaluator_boundary.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: none for README sidecar scoping; real Figure 3 parity
+    evidence remains an active code/paper gap.
+
 - [x] Keep README language/build-runner wording tied to committed sidecar.
   - Spec evidence: AlphaEvolve Table 1 and Section 2.1 include arbitrary
     language/codebase scope that needs runner/build evidence beyond

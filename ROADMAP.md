@@ -44,7 +44,11 @@ LibreEvolve has:
   candidate-owned `evaluate(eval_inputs)` stages, eval-input provenance,
   dependency scope, metric names, per-metric candidate path/block-span link
   candidates, embedded-only problem loading via all-`embedded_evaluate`
-  `config.yaml` stages, and remaining Figure 3 parity gaps
+  `config.yaml` stages, and remaining Figure 3 parity gaps, with
+  `papers/embedded_evaluator_boundary.json` now carrying the paper-manifest-
+  validated absence boundary for skeleton invocation traces, callable/build
+  isolation, non-static score causality, external-validator score linkage, and
+  prompt/response exhibit artifacts
 - AlphaEvolve Figure 1/Figure 2 process-exhibit reports under
   `runtime.history.alphaevolve_process_exhibit_report`, preserving stable
   figure IDs, node/edge-to-component mappings, Figure 2 pseudocode-step

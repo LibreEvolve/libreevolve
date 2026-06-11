@@ -2,6 +2,19 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Emit embedded evaluator Figure 3 boundary sidecar for roadmap evidence.
+  - Status: `papers/embedded_evaluator_boundary.json` now lets roadmap wording
+    point to a committed absence boundary for skeleton invocation traces,
+    callable/build isolation, non-static score causality, external-validator
+    score linkage, and prompt/response exhibit artifacts.
+  - Verification: `py -3.12 -m pytest
+    tests\test_embedded_evaluator_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\embedded_evaluator_boundary.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: real full-Figure-3 evaluator parity evidence remains open.
+
 - [x] Emit candidate language/build runner boundary sidecar for roadmap evidence.
   - Status: `papers/candidate_language_runner_boundary.json` now lets roadmap
     wording point to a committed absence boundary for configured non-Python

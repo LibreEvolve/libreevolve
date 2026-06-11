@@ -117,7 +117,9 @@ Primary evidence:
     `load_problem()` now permits missing `validate.py` only when `config.yaml`
     declares a non-empty all-`embedded_evaluate` stage list; the
     `embedded_evaluate_math` fixture proves the checked-in embedded-only problem
-    format and CLI path.
+    format and CLI path. The committed `papers/embedded_evaluator_boundary.json`
+    sidecar now records the paper-manifest-validated full-Figure-3 evaluator
+    absence boundary.
   - Required result: finish skeleton-to-block invocation coupling and stronger
     candidate callable build/import isolation beyond the local subprocess
     boundary; extend score-link causality beyond the current static embedded

@@ -2550,17 +2550,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     formulation uses `h: [0, 2] -> [0, 1]`, requires
     `integral_0^2 h(x) dx = 1`, and minimizes
     `max_k integral h(x) * (1 - h(x + k)) dx`.
-  - Current gap: paper-facing Appendix B TODOs require normalized result rows,
-    step-function payloads, and Figure 10 exhibit provenance in general, but
-    they do not force B.5 reports to retain the normalized `[0, 2]`
-    step-function formulation, value-range and integral certificates,
-    shift-objective recomputation, prior lower/upper values, or the improved
-    upper-bound comparison.
-  - Required result: add paper/report evidence for Appendix B.5 rows: result
-    id, constant id, function domain and value range, step-function payload
-    hash, integral-normalization certificate, shift/objective recomputation,
-    prior lower/upper values and sources, reported upper bound, Figure 10
-    linkage, source section location, and README/ROADMAP text that keeps the
+  - Current gap: paper-facing Appendix B coverage now retains the B.5
+    normalized `[0, 2]` step-function formulation, source section, Figure 10
+    result id, prior lower/upper values, and improved `C5 <= 0.380924`
+    upper-bound comparison through a validated
+    `step_function_result_boundary`. It still does not retain a real Figure
+    10 step-function payload, payload hash, value-range certificate,
+    integral-normalization certificate, shift-objective recomputation,
+    recomputed upper bound, or rendered figure-panel artifact.
+  - Required result: add paper/report evidence for the missing Appendix B.5
+    Figure 10 witness artifacts: step-function payload hash, value-range
+    certificate, integral-normalization certificate, shift/objective
+    recomputation, recomputed upper bound, rendered Figure 10 panel artifact,
+    source section location, and README/ROADMAP text that keeps the
     minimum-overlap witness distinct from broad Appendix B family coverage.
 
 - [x] Track Appendix B.5 source-formulation and equivalence evidence.

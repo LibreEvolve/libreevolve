@@ -96,7 +96,12 @@ can be claimed, while both B.8 witnesses remain `not_recorded_locally`.
 For B.5 Erdős minimum overlap, the registry now records the source
 paired-function formulation, zero-extension convention, shift-supremum
 objective, known lower/upper bounds, `[40]` equivalence, and mapping to the
-normalized `[0,2]` step-function formulation, while the Figure 10 construction
+normalized `[0,2]` step-function formulation. Its
+`step_function_result_boundary` records the paper's Figure 10 result id,
+`C5 <= 0.380924` reported upper bound, prior `0.379005 <= C5 <= 0.380927`
+bounds, source figure, normalized-domain constraint, shift-objective
+expression, and the step-function payload and certificate fields required
+before local reproduction can be claimed, while the Figure 10 construction
 payload remains absent.
 Appendix B says reported construction data and verification code
 appear in an accompanying Google Colab; this registry is not that

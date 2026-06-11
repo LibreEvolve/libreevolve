@@ -3602,8 +3602,14 @@ source Erdős minimum-overlap formulation with non-negative
 `f,g: [-1,1] -> [0,1]`, `f + g = 1`, `integral f = 1`, zero extension outside
 `[-1,1]`, the shift-supremum objective over `[-2,2]`, known lower/upper
 bounds, and the `[40]` equivalence to normalized step functions `h` on
-`[0,2]`. The actual Figure 10 step-function payload and recomputation
-certificate remain absent. It is also not a
+`[0,2]`. A validated `step_function_result_boundary` also records the
+paper-reported Figure 10 result id, `C5 <= 0.380924` upper bound, prior
+`0.379005 <= C5 <= 0.380927` bounds, source figure, normalized-domain
+constraint, shift-objective expression, and the future step-function payload,
+integral-certificate, shift-objective-certificate, recomputed-bound, and
+figure-panel fields required before local reproduction can be claimed. The
+actual Figure 10 step-function payload and recomputation certificate remain
+absent. It is also not a
 Section 3.2 aggregate outcome ledger: LibreEvolve does not yet enumerate the
 paper's over-50 mathematical problem instances, branch taxonomy, previous-best
 references, matched/improved/failed statuses, or aggregate percentages for

@@ -2597,19 +2597,21 @@ Primary evidence:
     step functions `h` on `[0, 2]` with values in `[0, 1]`,
     integral normalization `integral_0^2 h(x) dx = 1`, and the objective
     `max_k integral h(x) * (1 - h(x + k)) dx`.
-  - Current evidence: the broad Appendix B per-result TODO names Erdos minimum
-    overlap and step-function payloads, and the figure-level TODO names
-    Figure 10, but no code/report schema separately records B.5's function
-    domain, value bounds, normalization certificate, convolution/shift
-    objective, prior lower/upper bounds, improved upper bound, or Figure 10
-    construction payload. A generated report could quote the improved bound
-    without proving the step function satisfies the normalized formulation.
-  - Required result: add Appendix B.5-specific result rows and validators for
-    step-function domain, interval/value payload hash, value-range check,
-    integral-normalization certificate, objective recomputation over shifts,
-    prior lower/upper values and sources, reported upper bound, Figure 10
-    linkage, and README/ROADMAP wording that distinguishes B.5 minimum-overlap
-    evidence from aggregate Appendix B coverage.
+  - Current evidence: `alphaevolve_appendix_b.json` now records B.5's source
+    formulation and a `step_function_result_boundary` for the Figure 10
+    result id, normalized `[0, 2]` domain, `[0, 1]` range, integral
+    normalization, shift objective, prior `0.379005 <= C5 <= 0.380927`
+    bounds, and reported `C5 <= 0.380924` upper bound. The registry still
+    marks the result `not_recorded_locally`: no step-function payload hash,
+    value-range certificate, integral-normalization certificate,
+    shift-objective recomputation certificate, recomputed upper bound, or
+    Figure 10 panel artifact exists.
+  - Required result: replace the `not_recorded_locally` boundary with real
+    Appendix B.5 Figure 10 witness artifacts: step-function payload hash,
+    value-range check, integral-normalization certificate, objective
+    recomputation over shifts, recomputed upper bound, Figure 10 panel
+    artifact, and README/ROADMAP wording that distinguishes validated B.5
+    minimum-overlap evidence from aggregate Appendix B coverage.
 
 - [x] Add Appendix B.5 original-formulation and equivalence provenance.
   - Spec evidence: AlphaEvolve Appendix B.5 defines `C5` as the largest

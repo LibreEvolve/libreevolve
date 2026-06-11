@@ -2837,15 +2837,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     The Figure 10 construction is a step function on `[0, 2]` with values in
     `[0, 1]`, integral normalization `integral_0^2 h(x) dx = 1`, and an
     objective that minimizes the maximum shifted overlap integral.
-  - Current evidence: roadmap/README/paper-index wording can cite the broad
-    Appendix B per-result and Figure 10 visual gaps, but it does not require
-    B.5-specific function-domain metadata, value-range and normalization
-    certificates, shift-objective recomputation, prior lower/upper bounds,
-    reported upper bound, or construction payload hash.
-  - Required result: when Appendix B.5 minimum-overlap metadata and validators
-    land, update ROADMAP, README, papers index, and code/paper TODOs so roadmap
-    claims distinguish B.5's step-function domain, normalization, objective,
-    prior/current bounds, Figure 10 link, payload hash, and source location
+  - Current evidence: roadmap/README/paper-index wording now cites the B.5
+    `step_function_result_boundary`, including the Figure 10 result id,
+    normalized-domain constraint, shift objective, prior
+    `0.379005 <= C5 <= 0.380927` bounds, reported `C5 <= 0.380924` upper
+    bound, and required future step-function payload and certificate fields.
+    It still does not claim a real construction payload hash, value-range
+    certificate, integral-normalization certificate, shift-objective
+    recomputation certificate, recomputed upper bound, or Figure 10 panel
+    artifact.
+  - Required result: when the actual Appendix B.5 Figure 10 payload and
+    certificates land, update ROADMAP, README, papers index, and code/paper
+    TODOs so roadmap claims distinguish B.5's payload hash,
+    value-range/integral certificates, shift-objective recomputation,
+    recomputed upper bound, Figure 10 panel artifact, and source location
     from aggregate Appendix B coverage.
 
 - [x] Keep Appendix B.5 roadmap wording scoped until source-formulation

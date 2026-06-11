@@ -2,6 +2,8 @@ import json
 
 from libreevolve.problems.benchmarks.appendix_b_registry import (
     EXPECTED_B5_SOURCE_FORMULATION,
+    EXPECTED_B5_STEP_FUNCTION_BOUNDARY,
+    EXPECTED_B5_STEP_FUNCTION_REQUIRED_FIELDS,
     EXPECTED_B8_METRIC_CONVENTIONS,
     EXPECTED_B8_WITNESS_IDS,
     EXPECTED_B8_WITNESS_REQUIRED_FIELDS,
@@ -49,6 +51,8 @@ def test_appendix_b_registry_enumerates_all_alphaevolve_families():
     assert [row["result_id"] for row in boundary["missing_witnesses"]] == list(EXPECTED_B8_WITNESS_IDS)
     b5 = next(family for family in data["families"] if family["id"] == "erdos_minimum_overlap")
     assert b5["source_formulation_evidence"] == EXPECTED_B5_SOURCE_FORMULATION
+    assert b5["step_function_result_boundary"] == EXPECTED_B5_STEP_FUNCTION_BOUNDARY
+    assert b5["step_function_result_boundary"]["required_payload_fields"] == list(EXPECTED_B5_STEP_FUNCTION_REQUIRED_FIELDS)
     assert b5["artifact_schema"] == {
         "construction": "normalized_step_function",
         "certificate": "integral_and_shift_overlap_certificate",
@@ -259,4 +263,46 @@ def test_appendix_b_registry_requires_b5_source_formulation_object(tmp_path):
 
     assert report.ok is False
     assert [issue.code for issue in report.issues] == ["missing_b5_source_formulation"]
+    assert report.issues[0].family_id == "erdos_minimum_overlap"
+
+
+def test_appendix_b_registry_requires_b5_step_function_boundary(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    b5 = next(family for family in data["families"] if family["id"] == "erdos_minimum_overlap")
+    boundary = b5["step_function_result_boundary"]
+    boundary["status"] = "recorded"
+    boundary["step_function_domain"] = "[-1, 1]"
+    boundary["prior_upper_bound"] = 0.3809
+    boundary["reported_upper_bound"] = 0.381
+    boundary["required_payload_fields"] = ["result_id"]
+    boundary["claim_boundary"] = "Figure 10 payload exists."
+    b5["source_formulation_evidence"]["mapping_to_step_function_evidence"] = "different_result"
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_b5_step_function_status" in codes
+    assert "invalid_b5_step_function_step_function_domain" in codes
+    assert "invalid_b5_step_function_prior_upper_bound" in codes
+    assert "invalid_b5_step_function_reported_upper_bound" in codes
+    assert "invalid_b5_step_function_required_payload_fields" in codes
+    assert "missing_b5_step_function_claim_boundary" in codes
+    assert "b5_step_function_source_mapping_mismatch" in codes
+    assert "invalid_b5_step_function_bound_order" in codes
+
+
+def test_appendix_b_registry_requires_b5_step_function_boundary_object(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    b5 = next(family for family in data["families"] if family["id"] == "erdos_minimum_overlap")
+    del b5["step_function_result_boundary"]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+
+    assert report.ok is False
+    assert [issue.code for issue in report.issues] == ["missing_b5_step_function_boundary"]
     assert report.issues[0].family_id == "erdos_minimum_overlap"

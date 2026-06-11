@@ -656,7 +656,11 @@ is not yet an AlphaEvolve reproduction.
   registry now validates the original paired-function Erdős formulation,
   zero-extension convention, shift-supremum objective, known bounds, `[40]`
   equivalence, and mapping to the normalized `[0,2]` step-function row; the
-  Figure 10 step-function payload and recomputation certificate remain open.
+  `step_function_result_boundary` now validates the paper's Figure 10
+  result id, `C5 <= 0.380924` upper bound, prior bounds, normalized-domain
+  constraint, shift-objective expression, and required future payload and
+  certificate fields. The actual Figure 10 step-function payload and
+  recomputation certificate remain open.
 - Keep paper artifact-role attribution separate from artifact availability:
   `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
   AlphaEvolve PDF contribution records for figure creators and companion

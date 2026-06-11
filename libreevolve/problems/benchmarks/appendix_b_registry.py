@@ -168,6 +168,39 @@ EXPECTED_B5_SOURCE_FORMULATION = {
     "mapping_to_step_function_evidence": "figure10_minimum_overlap_step_function",
     "construction_payload_status": "not_recorded_locally",
 }
+EXPECTED_B5_STEP_FUNCTION_REQUIRED_FIELDS = (
+    "result_id",
+    "step_function_artifact_path",
+    "step_function_artifact_sha256",
+    "step_function_payload_schema",
+    "integral_normalization_certificate_path",
+    "integral_normalization_certificate_sha256",
+    "shift_objective_certificate_path",
+    "shift_objective_certificate_sha256",
+    "recomputed_upper_bound",
+    "figure_panel_artifact_path",
+    "figure_panel_artifact_sha256",
+)
+EXPECTED_B5_STEP_FUNCTION_BOUNDARY = {
+    "status": "not_recorded_locally",
+    "result_id": "figure10_minimum_overlap_step_function",
+    "source_section_id": "B.5",
+    "source_figure": "Figure 10",
+    "constant_id": "C5",
+    "step_function_domain": "[0, 2]",
+    "step_function_range": "[0, 1]",
+    "integral_constraint": "integral_0^2 h(x) dx = 1",
+    "objective_expression": "max_k integral h(x) * (1 - h(x + k)) dx",
+    "objective_direction": "minimize",
+    "prior_lower_bound": 0.379005,
+    "prior_upper_bound": 0.380927,
+    "prior_lower_bound_source": "[107]",
+    "prior_upper_bound_source": "[40]",
+    "reported_upper_bound": 0.380924,
+    "reported_bound_relation": "C5 <= 0.380924",
+    "required_payload_fields": list(EXPECTED_B5_STEP_FUNCTION_REQUIRED_FIELDS),
+    "claim_boundary": "The registry records the paper's B.5 source/result summary but does not claim a local Figure 10 step-function payload, integral certificate, shift-objective certificate, or recomputed upper bound.",
+}
 STATUSES = frozenset({"implemented", "implemented_smoke", "planned", "background_only", "out_of_scope"})
 DIRECTIONS = frozenset({"maximize", "minimize", "satisfy", "prove"})
 _ID_RE = re.compile(r"[a-z][a-z0-9_]{1,79}")
@@ -266,6 +299,7 @@ def _validate_family(
     _validate_b8_metric_conventions(family, family_id, issues)
     _validate_b8_witness_boundary(family, family_id, issues)
     _validate_b5_source_formulation(family, family_id, issues)
+    _validate_b5_step_function_boundary(family, family_id, issues)
     status = family.get("status")
     if status not in STATUSES:
         issues.append(AppendixBRegistryIssue("invalid_status", "invalid implementation status", family_id))
@@ -477,6 +511,51 @@ def _validate_b5_source_formulation(
         and float(lower) >= float(upper)
     ):
         issues.append(AppendixBRegistryIssue("invalid_b5_bound_order", "B.5 lower bound must be below the upper bound", family_id))
+
+
+def _validate_b5_step_function_boundary(
+    family: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    if family_id != "erdos_minimum_overlap":
+        return
+    boundary = family.get("step_function_result_boundary")
+    if not isinstance(boundary, dict):
+        issues.append(AppendixBRegistryIssue("missing_b5_step_function_boundary", "B.5 requires step_function_result_boundary", family_id))
+        return
+    for field, expected_value in EXPECTED_B5_STEP_FUNCTION_BOUNDARY.items():
+        if field in {"status", "required_payload_fields", "claim_boundary"}:
+            continue
+        actual = boundary.get(field)
+        if isinstance(expected_value, float):
+            if isinstance(actual, bool) or not isinstance(actual, (int, float)) or not math.isclose(float(actual), expected_value, rel_tol=0.0, abs_tol=1e-12):
+                issues.append(AppendixBRegistryIssue(f"invalid_b5_step_function_{field}", f"B.5 step_function_result_boundary.{field} must match the AlphaEvolve result summary", family_id))
+        elif actual != expected_value:
+            issues.append(AppendixBRegistryIssue(f"invalid_b5_step_function_{field}", f"B.5 step_function_result_boundary.{field} must match the AlphaEvolve result summary", family_id))
+    if boundary.get("status") != "not_recorded_locally":
+        issues.append(AppendixBRegistryIssue("invalid_b5_step_function_status", "B.5 Figure 10 payload boundary must remain not_recorded_locally until local artifacts exist", family_id))
+    if boundary.get("required_payload_fields") != list(EXPECTED_B5_STEP_FUNCTION_REQUIRED_FIELDS):
+        issues.append(AppendixBRegistryIssue("invalid_b5_step_function_required_payload_fields", "B.5 boundary must enumerate required future step-function payload and certificate fields", family_id))
+    source = family.get("source_formulation_evidence")
+    if isinstance(source, dict) and source.get("mapping_to_step_function_evidence") != boundary.get("result_id"):
+        issues.append(AppendixBRegistryIssue("b5_step_function_source_mapping_mismatch", "B.5 source formulation must map to the same Figure 10 result boundary", family_id))
+    claim_boundary = boundary.get("claim_boundary")
+    if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary:
+        issues.append(AppendixBRegistryIssue("missing_b5_step_function_claim_boundary", "B.5 boundary must state that local Figure 10 payload/certificate evidence is not claimed", family_id))
+    lower = boundary.get("prior_lower_bound")
+    prior_upper = boundary.get("prior_upper_bound")
+    reported = boundary.get("reported_upper_bound")
+    if (
+        isinstance(lower, (int, float))
+        and not isinstance(lower, bool)
+        and isinstance(prior_upper, (int, float))
+        and not isinstance(prior_upper, bool)
+        and isinstance(reported, (int, float))
+        and not isinstance(reported, bool)
+        and not (float(lower) < float(reported) < float(prior_upper))
+    ):
+        issues.append(AppendixBRegistryIssue("invalid_b5_step_function_bound_order", "B.5 reported upper bound must lie between the prior lower and prior upper bound", family_id))
 
 
 def _validate_b5_artifact_schema(

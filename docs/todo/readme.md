@@ -1740,15 +1740,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     using a Figure 10 step function on `[0, 2]` with values in `[0, 1]`,
     integral normalization `integral_0^2 h(x) dx = 1`, and a shift-overlap
     objective.
-  - Current evidence: README can point to broad Appendix B per-result and
-    Figure 10 visual gaps, but it does not separately warn that B.5 needs
-    domain/value-range, normalization, objective recomputation, prior-bound,
-    improved-bound, and construction-payload evidence before quoting the
-    minimum-overlap result.
-  - Required result: when Appendix B.5 minimum-overlap metadata lands, update
-    README, ROADMAP, papers index, and code/paper TODOs together so README
-    names the domain, normalization, step-function payload, objective
-    certificate, prior/current bounds, Figure 10 link, and source location
+  - Current evidence: README now names the B.5
+    `step_function_result_boundary`, including the Figure 10 result id,
+    normalized-domain constraint, shift objective, prior
+    `0.379005 <= C5 <= 0.380927` bounds, reported `C5 <= 0.380924` upper
+    bound, and required future step-function payload and certificate fields.
+    It still warns that the actual Figure 10 construction payload,
+    integral/shift certificates, and recomputed upper bound are absent.
+  - Required result: when the actual Appendix B.5 Figure 10 payload and
+    certificates land, update README, ROADMAP, papers index, and code/paper
+    TODOs together so README names the payload hash, value-range and
+    integral-normalization certificates, shift-objective recomputation,
+    recomputed upper bound, Figure 10 panel artifact, and source location
     without merging B.5 into generic step-function Appendix B coverage.
 
 - [x] Keep README Appendix B.5 source-formulation wording scoped until

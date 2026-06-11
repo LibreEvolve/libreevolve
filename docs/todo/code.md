@@ -2299,19 +2299,22 @@ Primary evidence:
     follow-on runtime-absence notebook inventory, preserving `28` pinned
     notebook paths while keeping per-problem mapping, notebook SHA-256 hashes,
     and absence reasons incomplete. The standard paper-manifest gate validates
-    the built-in coverage record. It still does not hash every problem page,
-    map notebooks or absence reasons to problem ids, validate prompt/verifier/
-    initial/final/visualization flags per problem, classify page 68, or emit
-    those rows into paper/source manifests.
+    the built-in coverage record. It now classifies page 68 as an extra
+    numbered duplicate-title `Logic puzzles` page outside the declared
+    67-page navigation range, records page 67/68 resource-link diagnostics, and
+    pins SHA-256 digests for those two diagnostic pages. It still does not hash
+    every problem page, map notebooks or absence reasons to problem ids,
+    validate prompt/verifier/initial/final/visualization flags per problem, or
+    emit those rows into paper/source manifests.
   - Required result: extend the follow-on repository coverage manifest and
     validators with per-problem hosted page URL and page hash, notebook
     path/hash or absence reason, artifact presence flags for prompt/verifier/
-    initial/final/visualization/analysis, page-68 classification, emitted
-    source-manifest rows, and README/ROADMAP wording that separates complete
-    declared problem-page coverage from partial notebook/artifact/status
-    coverage at a pinned snapshot.
+    initial/final/visualization/analysis, emitted source-manifest rows, and
+    README/ROADMAP wording that separates complete declared problem-page
+    coverage from partial notebook/artifact/status coverage at a pinned
+    snapshot.
 
-- [ ] Classify follow-on extra numbered page 68 after count reconciliation.
+- [ ] Extend follow-on numbered-page diagnostics beyond pages 67/68.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
     README says the repository contains problem descriptions for 67
     mathematical problems, but the current `problems/` directory exposes 68
@@ -2322,15 +2325,18 @@ Primary evidence:
   - Current evidence: `libreevolve.alphaevolve_follow_on_problem_coverage.v1`
     now reconciles the README/paper declared `67` problem count with `68`
     observed numbered HTML pages, and `papers/follow_on_sources.json` links
-    that numbered-page evidence boundary. The coverage still does not classify
-    page 68, detect duplicate titles/sections, or flag placeholder/generic
-    resource links in individual pages.
+    that numbered-page evidence boundary. The coverage now classifies page 68
+    as an extra numbered duplicate-title `Logic puzzles` page outside the
+    declared 67-page navigation range, records page 67's Colab placeholder and
+    page 68's generic Colab plus paper-link placeholder diagnostics, and pins
+    SHA-256 digests for pages 67 and 68 only. It still does not run duplicate,
+    section, or resource-link diagnostics across every numbered page.
   - Required result: extend repository-page inventory validation with page
-    id/title/section mapping, duplicate title/section detection,
-    placeholder/generic link diagnostics for Colab and paper links, explicit
-    page-68 classification, and README/ROADMAP wording that distinguishes
-    paper-declared problem count from live repository page inventory now that
-    the source discrepancy is counted but not yet classified.
+    id/title/section mapping for all numbered pages, duplicate title/section
+    detection beyond pages 67/68, placeholder/generic link diagnostics for
+    Colab and paper links across the full page set, and README/ROADMAP wording
+    that distinguishes paper-declared problem count from full live repository
+    page inventory.
 
 - [ ] Add paper-artifact creator and assembler provenance for figures and
       companion notebooks.

@@ -41,6 +41,8 @@ def test_validate_alphaevolve_follow_on_math_source_accepts_builtin_record():
     assert coverage["schema"] == "libreevolve.alphaevolve_follow_on_problem_coverage.v1"
     assert coverage["observed_numbered_html_count"] == 68
     assert coverage["extra_numbered_page_ids"] == [68]
+    assert coverage["page_68_classification_complete"] is True
+    assert coverage["resource_link_diagnostics_complete_for_pages_67_68"] is True
     assert coverage["per_problem_inventory_validated"] is False
     assert coverage["page_hash_inventory_complete"] is False
 
@@ -424,6 +426,8 @@ def test_validate_alphaevolve_follow_on_math_source_rejects_repository_claim_ove
     coverage = recordset["problem_coverage_evidence"]
     coverage["observed_numbered_html_count"] = 67
     coverage["extra_numbered_page_ids"] = []
+    coverage["page_68_classification_complete"] = False
+    coverage["resource_link_diagnostics_complete_for_pages_67_68"] = False
     coverage["per_problem_inventory_validated"] = True
     coverage["page_hash_inventory_complete"] = True
     coverage["claim_boundary"] = "Every numbered page is classified and hashed."
@@ -441,6 +445,8 @@ def test_validate_alphaevolve_follow_on_math_source_rejects_repository_claim_ove
     assert "invalid_notebook_artifact_kinds" in codes
     assert "invalid_problem_coverage_evidence_observed_numbered_html_count" in codes
     assert "invalid_problem_coverage_evidence_extra_numbered_page_ids" in codes
+    assert "invalid_problem_coverage_evidence_page_68_classification_complete" in codes
+    assert "invalid_problem_coverage_evidence_resource_link_diagnostics_complete_for_pages_67_68" in codes
     assert "problem_coverage_evidence_per_problem_inventory_validated_overclaim" in codes
     assert "problem_coverage_evidence_page_hash_inventory_complete_overclaim" in codes
     assert "missing_problem_coverage_claim_boundary" in codes

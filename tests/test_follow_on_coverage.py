@@ -22,6 +22,17 @@ def test_validate_alphaevolve_follow_on_problem_coverage_accepts_builtin_record(
     assert validation.status_artifact_count == 3
     assert validation.observed_numbered_html_count == 68
     assert validation.issues == []
+    diagnostics = recordset["page_discrepancy_diagnostics"]
+    assert diagnostics["classification"] == "page_68_extra_numbered_duplicate_title_outside_declared_67_navigation"
+    assert diagnostics["classification_complete"] is True
+    assert diagnostics["all_page_diagnostics_complete"] is False
+    assert diagnostics["duplicate_title_groups"] == [
+        {"title": "Logic puzzles", "page_ids": [67, 68], "paper_section": "6.44"}
+    ]
+    page68 = diagnostics["pages"][1]
+    assert page68["page_id"] == 68
+    assert page68["colab_link_status"] == "generic_colab_landing_page"
+    assert page68["paper_link_status"] == "placeholder"
     link = recordset["notebook_inventory_link"]
     assert link["source_manifest"] == "papers/follow_on_runtime_absence.json"
     assert link["pinned_notebook_path_count"] == 28
@@ -110,6 +121,13 @@ def test_validate_alphaevolve_follow_on_problem_coverage_rejects_inventory_overc
     inventory["observed_numbered_html_count"] = 67
     inventory["extra_numbered_page_ids"] = []
     inventory["full_page_link_diagnostics_complete"] = True
+    diagnostics = recordset["page_discrepancy_diagnostics"]
+    diagnostics["classification"] = "complete_declared_problem"
+    diagnostics["all_page_diagnostics_complete"] = True
+    diagnostics["duplicate_title_groups"] = []
+    diagnostics["pages"][1]["colab_link_status"] = "valid_notebook"
+    diagnostics["pages"][1]["paper_link_status"] = "valid"
+    recordset["remaining_coverage_work"] = ["classify_extra_numbered_page_68"]
 
     validation = validate_alphaevolve_follow_on_problem_coverage(recordset)
     codes = {issue.code for issue in validation.issues}
@@ -127,6 +145,12 @@ def test_validate_alphaevolve_follow_on_problem_coverage_rejects_inventory_overc
     assert "invalid_numbered_page_inventory_observed_numbered_html_count" in codes
     assert "invalid_numbered_page_inventory_extra_numbered_page_ids" in codes
     assert "full_page_link_diagnostics_overclaim" in codes
+    assert "invalid_page_discrepancy_diagnostics_classification" in codes
+    assert "page_discrepancy_all_page_diagnostics_overclaim" in codes
+    assert "invalid_page_discrepancy_duplicate_title_groups" in codes
+    assert "invalid_page_discrepancy_page_colab_link_status" in codes
+    assert "invalid_page_discrepancy_page_paper_link_status" in codes
+    assert "missing_remaining_coverage_work" in codes
 
 
 def test_render_alphaevolve_follow_on_problem_coverage_summary_reports_shape():

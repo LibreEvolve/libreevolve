@@ -1742,8 +1742,8 @@ Implemented:
   linked problem-coverage evidence for the declared-67 versus observed-68
   numbered-page boundary, and an explicit no-cache policy. It is later
   math-source evidence, not the original `2506.13131` specification, not a
-  cached PDF row, and not a per-problem page-hash, page-68 classification, or
-  complete notebook/artifact inventory.
+  cached PDF row, and not a complete per-problem page-hash, all-page
+  diagnostic, or notebook/artifact inventory.
 - `papers/follow_on_repository_rights.json`: follow-on problem-repository
   source-use sidecar. It records the pinned repository's citation/BibTeX
   requirement, Google LLC copyright, Apache-2.0 software / CC-BY-4.0 materials
@@ -1787,10 +1787,12 @@ Implemented:
   listed problem ids, preserves 24 `not_listed_in_status_json` ids, records
   browser-page and many-but-not-all Colab access modes, and keeps the declared
   67-problem count separate from the observed 68 numbered HTML pages. It is
-  status-artifact and bucket-membership evidence. It links to the
-  runtime-absence record's 28 pinned notebook paths, but it is not complete
-  per-page source inventory, per-problem notebook mapping, notebook SHA-256
-  inventory, or notebook-absence evidence.
+  status-artifact and bucket-membership evidence. It now classifies page 68 as
+  an extra numbered duplicate-title `Logic puzzles` page outside the declared
+  67-page navigation range, records page 67/68 resource-link diagnostics, and
+  links to the runtime-absence record's 28 pinned notebook paths, but it is not
+  complete per-page source inventory, all-page diagnostics, per-problem
+  notebook mapping, notebook SHA-256 inventory, or notebook-absence evidence.
 - `libreevolve/llm/budget_report.py`: LLM role/retry budget report contract.
   It validates mutation, critique, and feedback role budgets, provider-internal
   retry attempts, token/cost/wall-clock limits and usage, persisted

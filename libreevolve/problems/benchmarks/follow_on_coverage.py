@@ -21,6 +21,49 @@ EXPECTED_SNAPSHOT_DATE = "2026-06-08"
 EXPECTED_PROBLEM_IDS = tuple(range(1, EXPECTED_DECLARED_PROBLEM_COUNT + 1))
 EXPECTED_EXTRA_NUMBERED_PAGE_IDS = (68,)
 EXPECTED_OBSERVED_NUMBERED_HTML_COUNT = 68
+EXPECTED_PAGE_DISCREPANCY_DIAGNOSTICS = {
+    "diagnostic_scope": "extra_numbered_page_68_and_duplicate_logic_puzzles_context",
+    "diagnosed_page_ids": (67, 68),
+    "classification": "page_68_extra_numbered_duplicate_title_outside_declared_67_navigation",
+    "classification_complete": True,
+    "all_page_diagnostics_complete": False,
+    "resource_link_diagnostics_complete_for_diagnosed_pages": True,
+    "duplicate_title_groups": (
+        {"title": "Logic puzzles", "page_ids": (67, 68), "paper_section": "6.44"},
+    ),
+    "pages": (
+        {
+            "page_id": 67,
+            "path": "problems/67.html",
+            "title": "67. Logic puzzles",
+            "title_key": "Logic puzzles",
+            "bytes": 12428,
+            "sha256": "bd265b4b409493956a3d577bccd17325c468f66a695efc1dffc67dc7e5f468d8",
+            "declared_navigation_total_problems": 67,
+            "paper_section": "6.44",
+            "colab_url": "#",
+            "colab_link_status": "under_construction_placeholder",
+            "paper_url": "https://arxiv.org/abs/2511.02864",
+            "paper_link_status": "valid_follow_on_arxiv",
+            "classification": "declared_range_duplicate_title_context_page",
+        },
+        {
+            "page_id": 68,
+            "path": "problems/68.html",
+            "title": "68. Logic puzzles",
+            "title_key": "Logic puzzles",
+            "bytes": 9253,
+            "sha256": "51eda861f49691d2db5b1ec2775dbd77c5cc47afde791416c9283c23de2ca75d",
+            "declared_navigation_total_problems": None,
+            "paper_section": "6.44",
+            "colab_url": "https://colab.research.google.com/",
+            "colab_link_status": "generic_colab_landing_page",
+            "paper_url": "#",
+            "paper_link_status": "placeholder",
+            "classification": "extra_numbered_page_duplicate_title_outside_declared_67_navigation",
+        },
+    ),
+}
 EXPECTED_STATUS_BUCKETS = {
     "world_record": (1, 2, 4, 5, 7, 8, 9, 10, 30, 32, 35, 42, 48, 49, 50, 59, 60, 61, 64),
     "former_record": (3, 36, 38, 44),
@@ -181,6 +224,38 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
             "count_reconciliation_status": "declared_67_with_extra_numbered_page_68_observed",
             "full_page_link_diagnostics_complete": False,
         },
+        "page_discrepancy_diagnostics": {
+            "diagnostic_scope": EXPECTED_PAGE_DISCREPANCY_DIAGNOSTICS["diagnostic_scope"],
+            "diagnosed_page_ids": list(EXPECTED_PAGE_DISCREPANCY_DIAGNOSTICS["diagnosed_page_ids"]),
+            "classification": EXPECTED_PAGE_DISCREPANCY_DIAGNOSTICS["classification"],
+            "classification_complete": EXPECTED_PAGE_DISCREPANCY_DIAGNOSTICS["classification_complete"],
+            "all_page_diagnostics_complete": EXPECTED_PAGE_DISCREPANCY_DIAGNOSTICS["all_page_diagnostics_complete"],
+            "resource_link_diagnostics_complete_for_diagnosed_pages": (
+                EXPECTED_PAGE_DISCREPANCY_DIAGNOSTICS["resource_link_diagnostics_complete_for_diagnosed_pages"]
+            ),
+            "duplicate_title_groups": [
+                {
+                    "title": group["title"],
+                    "page_ids": list(group["page_ids"]),
+                    "paper_section": group["paper_section"],
+                }
+                for group in EXPECTED_PAGE_DISCREPANCY_DIAGNOSTICS["duplicate_title_groups"]
+            ],
+            "pages": [
+                {
+                    **page,
+                    "hosted_url": (
+                        "https://google-deepmind.github.io/"
+                        f"alphaevolve_repository_of_problems/{page['path']}"
+                    ),
+                    "raw_url": (
+                        "https://raw.githubusercontent.com/google-deepmind/"
+                        f"alphaevolve_repository_of_problems/{EXPECTED_REPOSITORY_COMMIT}/{page['path']}"
+                    ),
+                }
+                for page in EXPECTED_PAGE_DISCREPANCY_DIAGNOSTICS["pages"]
+            ],
+        },
         "notebook_inventory_link": {
             "source_manifest": EXPECTED_FOLLOW_ON_RUNTIME_ABSENCE_MANIFEST_FILE,
             "source_boundary": "alphaevolve_follow_on_runtime_absence",
@@ -219,7 +294,7 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
             "hash_each_problem_page",
             "discover_notebook_paths_and_absence_reasons",
             "validate_prompt_verifier_initial_final_visualization_flags",
-            "classify_extra_numbered_page_68",
+            "extend_page_diagnostics_beyond_67_68",
             "attach_status_to_emitted_source_manifest_rows",
         ],
     }
@@ -240,6 +315,7 @@ def validate_alphaevolve_follow_on_problem_coverage(
     _validate_repository(data.get("repository"), issues)
     declared_problem_count = _validate_coverage_scope(data.get("coverage_scope"), issues)
     observed_numbered_html_count = _validate_numbered_page_inventory(data.get("numbered_page_inventory"), issues)
+    _validate_page_discrepancy_diagnostics(data.get("page_discrepancy_diagnostics"), issues)
     _validate_notebook_inventory_link(data.get("notebook_inventory_link"), issues)
     status_artifact_count = _validate_status_artifacts(data.get("status_artifacts"), issues)
     listed_status_count = _validate_status_buckets(data.get("status_buckets"), issues)
@@ -367,6 +443,76 @@ def _validate_numbered_page_inventory(value: object, issues: list[AlphaEvolveFol
     return observed if isinstance(observed, int) else None
 
 
+def _validate_page_discrepancy_diagnostics(
+    value: object,
+    issues: list[AlphaEvolveFollowOnProblemCoverageIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_page_discrepancy_diagnostics", "page_discrepancy_diagnostics must be an object"))
+        return
+    expected = {
+        "diagnostic_scope": EXPECTED_PAGE_DISCREPANCY_DIAGNOSTICS["diagnostic_scope"],
+        "diagnosed_page_ids": list(EXPECTED_PAGE_DISCREPANCY_DIAGNOSTICS["diagnosed_page_ids"]),
+        "classification": EXPECTED_PAGE_DISCREPANCY_DIAGNOSTICS["classification"],
+        "classification_complete": True,
+        "all_page_diagnostics_complete": False,
+        "resource_link_diagnostics_complete_for_diagnosed_pages": True,
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            code = f"invalid_page_discrepancy_diagnostics_{field}"
+            if field == "all_page_diagnostics_complete":
+                code = "page_discrepancy_all_page_diagnostics_overclaim"
+            issues.append(_issue(code, f"page_discrepancy_diagnostics.{field} must preserve the page-68 diagnostic boundary"))
+    expected_groups = [
+        {
+            "title": group["title"],
+            "page_ids": list(group["page_ids"]),
+            "paper_section": group["paper_section"],
+        }
+        for group in EXPECTED_PAGE_DISCREPANCY_DIAGNOSTICS["duplicate_title_groups"]
+    ]
+    if value.get("duplicate_title_groups") != expected_groups:
+        issues.append(_issue("invalid_page_discrepancy_duplicate_title_groups", "page 67 and 68 must remain a duplicate-title diagnostic group"))
+    pages = value.get("pages")
+    if not isinstance(pages, list):
+        issues.append(_issue("invalid_page_discrepancy_pages", "page_discrepancy_diagnostics.pages must be a list"))
+        return
+    pages_by_id = {
+        record.get("page_id"): record
+        for record in pages
+        if isinstance(record, dict)
+    }
+    for expected_page in EXPECTED_PAGE_DISCREPANCY_DIAGNOSTICS["pages"]:
+        page_id = expected_page["page_id"]
+        record = pages_by_id.get(page_id)
+        if not isinstance(record, dict):
+            issues.append(_issue("missing_page_discrepancy_page", "diagnosed page is missing", page_id))
+            continue
+        for field, expected_value in expected_page.items():
+            if record.get(field) != expected_value:
+                issues.append(
+                    _issue(
+                        f"invalid_page_discrepancy_page_{field}",
+                        f"page {page_id} diagnostic field {field} must match the pinned source",
+                        page_id,
+                    )
+                )
+        hosted_url = record.get("hosted_url")
+        raw_url = record.get("raw_url")
+        if not isinstance(hosted_url, str) or f"/{expected_page['path']}" not in hosted_url:
+            issues.append(_issue("invalid_page_discrepancy_hosted_url", "diagnosed page must include its hosted URL", page_id))
+        if (
+            not isinstance(raw_url, str)
+            or EXPECTED_REPOSITORY_COMMIT not in raw_url
+            or f"/{expected_page['path']}" not in raw_url
+        ):
+            issues.append(_issue("invalid_page_discrepancy_raw_url", "diagnosed page must include its pinned raw URL", page_id))
+    unexpected_page_ids = sorted(page_id for page_id in pages_by_id if page_id not in {67, 68})
+    for page_id in unexpected_page_ids:
+        issues.append(_issue("unexpected_page_discrepancy_page", "diagnostics are scoped only to pages 67 and 68", page_id))
+
+
 def _validate_notebook_inventory_link(value: object, issues: list[AlphaEvolveFollowOnProblemCoverageIssue]) -> None:
     if not isinstance(value, dict):
         issues.append(_issue("invalid_notebook_inventory_link", "notebook_inventory_link must be an object"))
@@ -465,7 +611,7 @@ def _validate_remaining_coverage_work(value: object, issues: list[AlphaEvolveFol
         "hash_each_problem_page",
         "discover_notebook_paths_and_absence_reasons",
         "validate_prompt_verifier_initial_final_visualization_flags",
-        "classify_extra_numbered_page_68",
+        "extend_page_diagnostics_beyond_67_68",
         "attach_status_to_emitted_source_manifest_rows",
     }
     if not isinstance(value, list) or not all(isinstance(item, str) for item in value):

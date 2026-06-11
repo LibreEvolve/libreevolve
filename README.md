@@ -4032,8 +4032,8 @@ row with docs/TODO claim-surface links, a linked
 boundary, and an explicit no-cache policy: it is later math-source evidence for
 the original paper's Section 3.2 handoff, not the original `2506.13131`
 AlphaEvolve specification, not a local cached PDF row, and not proof of
-per-problem page hashes, page-68 classification, or complete notebook/artifact
-coverage yet.
+complete per-problem page hashes, all-page diagnostics, or complete
+notebook/artifact coverage yet.
 `papers/follow_on_repository_rights.json` records the pinned problem
 repository's source-use terms separately from both the original PDF and
 `alphaevolve_results`: citation/BibTeX requirement, Google LLC copyright,
@@ -4100,12 +4100,14 @@ pins the same repository snapshot and validates root-level `status.json`,
 not listed in `status.json` as `not_listed_in_status_json`, records browser
 problem-page and many-but-not-all Colab notebook access modes, and captures the
 snapshot boundary that the repository declares 67 problems while 68 numbered
-HTML pages are present. It also links to the runtime-absence notebook inventory
-with 28 pinned notebook paths, while per-problem mapping, notebook SHA-256
-hashes, and notebook absence reasons remain incomplete. This is
-status-artifact and bucket-membership evidence; per-page hashes,
-prompt/verifier/final artifact flags, and classification of page 68 remain
-open work.
+HTML pages are present. It now classifies page 68 as an extra numbered
+duplicate-title `Logic puzzles` page outside the declared 67-page navigation
+range, records page 67/68 resource-link diagnostics, and links to the
+runtime-absence notebook inventory with 28 pinned notebook paths, while
+per-problem mapping, notebook SHA-256 hashes, and notebook absence reasons
+remain incomplete. This is status-artifact, bucket-membership, and scoped
+page-discrepancy evidence; complete per-page hashes, all-page diagnostics, and
+prompt/verifier/final artifact flags remain open work.
 Matrix headline historicity evidence uses
 `libreevolve.matrix_headline_historicity_evidence.v1`; it validates declared
 provenance for the `mm_4x4x4` complex rank-48 headline, including dimensions,

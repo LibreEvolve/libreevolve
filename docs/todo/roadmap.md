@@ -2163,14 +2163,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current evidence: ROADMAP now documents the follow-on coverage boundary
     that reconciles the README/paper declared `67` problem count with `68`
     observed numbered HTML pages, and the follow-on source manifest now links
-    that evidence. ROADMAP still lacks page-68 classification plus duplicate
-    title, repeated section-mapping, and placeholder/generic resource-link
-    diagnostics.
-  - Required result: when page-68 classification and resource-link diagnostics
-    land, update ROADMAP, README, papers index, and code/paper TODOs so
-    follow-on coverage gates include page id/title/section mapping, duplicate
-    diagnostics, resource-link validity, discrepancy classification, and
-    snapshot-scoped wording for the counted 67-versus-68 source mismatch.
+    that evidence. ROADMAP now also documents page 68 as an extra numbered
+    duplicate-title `Logic puzzles` page outside the declared 67-page
+    navigation range, plus page 67/68 resource-link diagnostics. ROADMAP still
+    lacks duplicate title, repeated section-mapping, and placeholder/generic
+    resource-link diagnostics across the full numbered page set.
+  - Required result: when all-page resource-link diagnostics land, update
+    ROADMAP, README, papers index, and code/paper TODOs so follow-on coverage
+    gates include page id/title/section mapping, duplicate diagnostics,
+    resource-link validity across the full page set, and snapshot-scoped
+    wording for the counted 67-versus-68 source mismatch.
 
 - [ ] Keep paper-artifact roadmap wording scoped until creator/assembler role
       records are bound to artifacts.

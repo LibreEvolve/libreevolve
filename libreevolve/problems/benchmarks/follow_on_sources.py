@@ -310,13 +310,16 @@ def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
             "observed_numbered_html_count": 68,
             "extra_numbered_page_ids": [68],
             "numbered_page_inventory_validated": True,
+            "page_68_classification_complete": True,
+            "resource_link_diagnostics_complete_for_pages_67_68": True,
             "per_problem_inventory_validated": False,
             "page_hash_inventory_complete": False,
             "claim_boundary": (
                 "The follow-on coverage record reconciles the declared "
                 "67-problem count against 68 observed numbered HTML pages, "
-                "but does not claim per-problem page hashes or page-68 "
-                "classification."
+                "classifies page 68, and records page 67/68 resource-link "
+                "diagnostics, but does not claim complete per-problem page "
+                "hashes or all-page diagnostics."
             ),
         },
         "source_use": {
@@ -329,7 +332,7 @@ def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
         },
         "required_follow_on_work": [
             "build_per_problem_repository_inventory",
-            "classify_extra_numbered_page_68",
+            "extend_page_diagnostics_beyond_67_68",
             "validate_notebook_prompt_verifier_initial_final_artifacts",
             "map_original_appendix_b_claims_to_follow_on_problem_records",
             "attach_rights_attribution_to_generated_artifacts",
@@ -735,7 +738,7 @@ def alphaevolve_follow_on_source_manifest_record() -> dict[str, Any]:
                 },
                 "remaining_work": [
                     "build_per_problem_repository_inventory",
-                    "classify_extra_numbered_page_68",
+                    "extend_page_diagnostics_beyond_67_68",
                     "validate_notebook_prompt_verifier_initial_final_artifacts",
                     "map_original_appendix_b_claims_to_follow_on_problem_records",
                     "attach_rights_attribution_to_generated_artifacts",
@@ -1262,6 +1265,8 @@ def _validate_problem_coverage_evidence(value: object, issues: list[AlphaEvolveF
         "observed_numbered_html_count": 68,
         "extra_numbered_page_ids": [68],
         "numbered_page_inventory_validated": True,
+        "page_68_classification_complete": True,
+        "resource_link_diagnostics_complete_for_pages_67_68": True,
         "per_problem_inventory_validated": False,
         "page_hash_inventory_complete": False,
     }
@@ -1275,9 +1280,9 @@ def _validate_problem_coverage_evidence(value: object, issues: list[AlphaEvolveF
     if (
         not isinstance(claim_boundary, str)
         or "does not claim" not in claim_boundary
-        or "page-68 classification" not in claim_boundary
+        or "all-page diagnostics" not in claim_boundary
     ):
-        issues.append(_issue("missing_problem_coverage_claim_boundary", "problem_coverage_evidence must preserve page-hash and page-68 classification gaps", EXPECTED_REPOSITORY_NAME))
+        issues.append(_issue("missing_problem_coverage_claim_boundary", "problem_coverage_evidence must preserve full page-hash and all-page diagnostic gaps", EXPECTED_REPOSITORY_NAME))
 
 
 def _validate_source_use(value: object, issues: list[AlphaEvolveFollowOnMathSourceIssue]) -> None:
@@ -1300,7 +1305,7 @@ def _validate_source_use(value: object, issues: list[AlphaEvolveFollowOnMathSour
 def _validate_required_follow_on_work(value: object, issues: list[AlphaEvolveFollowOnMathSourceIssue]) -> None:
     required = {
         "build_per_problem_repository_inventory",
-        "classify_extra_numbered_page_68",
+        "extend_page_diagnostics_beyond_67_68",
         "validate_notebook_prompt_verifier_initial_final_artifacts",
         "map_original_appendix_b_claims_to_follow_on_problem_records",
         "attach_rights_attribution_to_generated_artifacts",
@@ -1388,7 +1393,7 @@ def _validate_follow_on_manifest_remaining_work(
 ) -> None:
     expected = {
         "build_per_problem_repository_inventory",
-        "classify_extra_numbered_page_68",
+        "extend_page_diagnostics_beyond_67_68",
         "validate_notebook_prompt_verifier_initial_final_artifacts",
         "map_original_appendix_b_claims_to_follow_on_problem_records",
         "attach_rights_attribution_to_generated_artifacts",

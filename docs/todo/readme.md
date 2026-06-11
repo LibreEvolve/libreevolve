@@ -1503,15 +1503,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: README now documents the follow-on coverage boundary
     that reconciles the README/paper declared `67` problem count with `68`
     observed numbered HTML pages, and the follow-on source manifest now links
-    that evidence. README still does not classify page 68 or include
-    duplicate-title, repeated-section, generic-Colab, or placeholder-link
-    diagnostics.
-  - Required result: after page-68 classification and resource-link diagnostics
-    land, update README so follow-on source claims distinguish paper/README
-    problem count from live repository HTML-page count, list any duplicate or
+    that evidence. README now also documents page 68 as an extra numbered
+    duplicate-title `Logic puzzles` page outside the declared 67-page
+    navigation range, plus page 67/68 resource-link diagnostics. README still
+    does not include duplicate-title, repeated-section, generic-Colab, or
+    placeholder-link diagnostics across the full numbered page set.
+  - Required result: after all-page resource-link diagnostics land, update
+    README so follow-on source claims distinguish paper/README problem count
+    from full live repository HTML-page inventory, list any duplicate or
     placeholder pages as snapshot diagnostics, and avoid treating every
     numbered page as a complete problem/notebook/paper-linked source artifact
-    until classified.
+    until full-page diagnostics exist.
 
 - [ ] Keep README figure/notebook provenance wording scoped until paper
       artifact-role records are bound to artifacts.

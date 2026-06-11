@@ -25,6 +25,66 @@ EXPECTED_FAMILY_IDS = (
     "circle_packing_unit_square",
     "circle_packing_perimeter4_rectangle",
 )
+EXPECTED_APPENDIX_B_RESULT_ROW_REQUIRED_FIELDS = (
+    "result_id",
+    "family_id",
+    "source_section_id",
+    "source_location",
+    "metric_name",
+    "metric_definition",
+    "optimization_direction",
+    "bound_direction",
+    "parameter_tuple",
+    "previous_best_value",
+    "previous_best_source",
+    "alphaevolve_reported_value",
+    "displayed_relation",
+    "result_version_status",
+    "construction_representation_schema",
+    "construction_artifact_path",
+    "construction_artifact_sha256",
+    "verifier_artifact_path",
+    "verifier_artifact_sha256",
+    "recomputed_value",
+    "recomputation_status",
+)
+EXPECTED_APPENDIX_B_RESULT_ROW_MISSING_EVIDENCE_KEYS = (
+    "normalized_result_rows",
+    "metric_definitions",
+    "parameter_tuple_rows",
+    "previous_best_attribution",
+    "construction_payloads",
+    "verifier_artifacts",
+    "recomputed_values",
+    "source_location_mapping",
+    "result_version_status_rows",
+)
+EXPECTED_APPENDIX_B_RESULT_ROW_BOUNDARY = {
+    "status": "not_recorded_locally",
+    "source_section_range": "Appendix B.1-B.13",
+    "source_section_ids": [
+        "B.1",
+        "B.2",
+        "B.3",
+        "B.4",
+        "B.5",
+        "B.6",
+        "B.7",
+        "B.8",
+        "B.9",
+        "B.10",
+        "B.11",
+        "B.12",
+        "B.13",
+    ],
+    "source_claim": "Appendix B reports heterogeneous text-level mathematical result claims with family-specific metrics, parameters, prior bounds, reported values, and construction representations.",
+    "required_result_row_fields": list(EXPECTED_APPENDIX_B_RESULT_ROW_REQUIRED_FIELDS),
+    "missing_evidence": {
+        key: "not_recorded_locally"
+        for key in EXPECTED_APPENDIX_B_RESULT_ROW_MISSING_EVIDENCE_KEYS
+    },
+    "scope_boundary": "The registry records Appendix B family/status and selected family-specific boundaries, but does not claim a normalized per-result metric/value ledger, construction payload hashes, verifier artifacts, or recomputed values for every B.1-B.13 text-level claim.",
+}
 EXPECTED_AUTOCORRELATION_LABELS = {
     "autocorrelation_bounds_k3": {
         "source_section_id": "B.1",
@@ -713,6 +773,7 @@ def validate_appendix_b_registry(
         issues.append(AppendixBRegistryIssue("invalid_schema", "unsupported registry schema"))
     if data.get("source_paper_id") != "2506.13131":
         issues.append(AppendixBRegistryIssue("invalid_source", "source_paper_id must be 2506.13131"))
+    _validate_result_row_boundary(data, issues)
     families = data.get("families")
     if not isinstance(families, list):
         return AppendixBRegistryReport(False, 0, 0, 0, 0, issues + [
@@ -747,6 +808,62 @@ def validate_appendix_b_registry(
         unsupported_count=status_counts["background_only"] + status_counts["out_of_scope"],
         issues=issues,
     )
+
+
+def _validate_result_row_boundary(
+    data: dict[str, Any],
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    boundary = data.get("result_row_boundary")
+    if not isinstance(boundary, dict):
+        issues.append(AppendixBRegistryIssue(
+            "missing_appendix_b_result_row_boundary",
+            "Appendix B registry requires result_row_boundary",
+        ))
+        return
+    for field, expected_value in EXPECTED_APPENDIX_B_RESULT_ROW_BOUNDARY.items():
+        if field in {"required_result_row_fields", "missing_evidence"}:
+            continue
+        if boundary.get(field) != expected_value:
+            issues.append(AppendixBRegistryIssue(
+                f"invalid_result_row_boundary_{field}",
+                f"result_row_boundary.{field} must match the Appendix B absence boundary",
+            ))
+    if boundary.get("status") != "not_recorded_locally":
+        issues.append(AppendixBRegistryIssue(
+            "invalid_result_row_boundary_status",
+            "Appendix B result-row boundary must remain not_recorded_locally until normalized result rows and artifacts exist",
+        ))
+    if boundary.get("required_result_row_fields") != list(EXPECTED_APPENDIX_B_RESULT_ROW_REQUIRED_FIELDS):
+        issues.append(AppendixBRegistryIssue(
+            "invalid_result_row_required_fields",
+            "Appendix B result-row boundary must enumerate the required future result-row fields",
+        ))
+    missing = boundary.get("missing_evidence")
+    if not isinstance(missing, dict):
+        issues.append(AppendixBRegistryIssue(
+            "invalid_result_row_missing_evidence",
+            "result_row_boundary.missing_evidence must be an object",
+        ))
+        return
+    expected_keys = set(EXPECTED_APPENDIX_B_RESULT_ROW_MISSING_EVIDENCE_KEYS)
+    if set(missing) != expected_keys:
+        issues.append(AppendixBRegistryIssue(
+            "invalid_result_row_missing_evidence_keys",
+            "result_row_boundary.missing_evidence must enumerate every required evidence category",
+        ))
+    for key in EXPECTED_APPENDIX_B_RESULT_ROW_MISSING_EVIDENCE_KEYS:
+        if missing.get(key) != "not_recorded_locally":
+            issues.append(AppendixBRegistryIssue(
+                f"invalid_result_row_missing_{key}",
+                f"Appendix B result-row missing evidence {key} must be not_recorded_locally",
+            ))
+    scope_boundary = boundary.get("scope_boundary")
+    if not isinstance(scope_boundary, str) or "does not claim" not in scope_boundary:
+        issues.append(AppendixBRegistryIssue(
+            "missing_result_row_scope_boundary",
+            "Appendix B result-row boundary must state that normalized per-result evidence is not claimed",
+        ))
 
 
 def _validate_family(

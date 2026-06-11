@@ -660,6 +660,13 @@ is not yet an AlphaEvolve reproduction.
   fine-tuning stages near optimal configurations. Per-stage ordering records,
   stage roles, input/output construction artifacts, improvement deltas, and
   verifier evidence remain open.
+- Keep Appendix B per-result metric/value claims scoped to the registry's
+  result-row absence boundary: `alphaevolve_appendix_b.json` now validates the
+  missing cross-family layer for B.1-B.13 text-level result rows, including
+  stable result ids, metric definitions, parameter tuples, prior-value
+  attribution, source locations, construction payload hashes, verifier
+  artifacts, result-version status, and recomputed values. The actual
+  normalized rows and artifacts remain open.
 - Add Appendix B result-version provenance before quoting paper-level
   constructive-math constants: source manuscript version, reported value,
   superseded/current status, update note, attribution, and verifier/Colab

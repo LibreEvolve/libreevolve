@@ -1,6 +1,9 @@
 import json
 
 from libreevolve.problems.benchmarks.appendix_b_registry import (
+    EXPECTED_APPENDIX_B_RESULT_ROW_BOUNDARY,
+    EXPECTED_APPENDIX_B_RESULT_ROW_MISSING_EVIDENCE_KEYS,
+    EXPECTED_APPENDIX_B_RESULT_ROW_REQUIRED_FIELDS,
     EXPECTED_B5_SOURCE_FORMULATION,
     EXPECTED_B5_STEP_FUNCTION_BOUNDARY,
     EXPECTED_B5_STEP_FUNCTION_REQUIRED_FIELDS,
@@ -44,6 +47,7 @@ def test_appendix_b_registry_enumerates_all_alphaevolve_families():
     report = validate_appendix_b_registry()
     data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
     family_ids = [family["id"] for family in data["families"]]
+    result_boundary = data["result_row_boundary"]
 
     assert report.ok is True
     assert report.family_count == 13
@@ -52,6 +56,15 @@ def test_appendix_b_registry_enumerates_all_alphaevolve_families():
     assert report.planned_count == 12
     assert report.unsupported_count == 0
     assert family_ids.count("circle_packing_unit_square") == 1
+    for field, expected in EXPECTED_APPENDIX_B_RESULT_ROW_BOUNDARY.items():
+        assert result_boundary[field] == expected
+    assert result_boundary["required_result_row_fields"] == list(EXPECTED_APPENDIX_B_RESULT_ROW_REQUIRED_FIELDS)
+    assert set(result_boundary["missing_evidence"]) == set(EXPECTED_APPENDIX_B_RESULT_ROW_MISSING_EVIDENCE_KEYS)
+    assert set(result_boundary["source_section_ids"]) == {f"B.{index}" for index in range(1, 14)}
+    assert all(
+        value == "not_recorded_locally"
+        for value in result_boundary["missing_evidence"].values()
+    )
     autocorrelation = {
         family["id"]: family
         for family in data["families"][:3]
@@ -135,6 +148,52 @@ def test_appendix_b_registry_enumerates_all_alphaevolve_families():
         for witness, expected in zip(boundary["missing_witnesses"], EXPECTED_SUM_OF_RADII_ROWS[family_id], strict=True):
             for field, expected_value in expected.items():
                 assert witness[field] == expected_value
+
+
+def test_appendix_b_registry_requires_result_row_boundary(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    del data["result_row_boundary"]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+
+    assert report.ok is False
+    assert [issue.code for issue in report.issues] == ["missing_appendix_b_result_row_boundary"]
+
+
+def test_appendix_b_registry_rejects_result_row_boundary_overclaim(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    boundary = data["result_row_boundary"]
+    boundary["status"] = "recorded"
+    boundary["source_section_ids"] = ["B.1"]
+    boundary["required_result_row_fields"] = ["result_id"]
+    boundary["missing_evidence"]["previous_best_attribution"] = "recorded"
+    boundary["scope_boundary"] = "Normalized Appendix B result rows are verified."
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_result_row_boundary_status" in codes
+    assert "invalid_result_row_boundary_source_section_ids" in codes
+    assert "invalid_result_row_required_fields" in codes
+    assert "invalid_result_row_missing_previous_best_attribution" in codes
+    assert "missing_result_row_scope_boundary" in codes
+
+
+def test_appendix_b_registry_requires_result_row_missing_evidence_object(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    data["result_row_boundary"]["missing_evidence"] = ["normalized_result_rows"]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+
+    assert report.ok is False
+    assert [issue.code for issue in report.issues] == ["invalid_result_row_missing_evidence"]
 
 
 def test_appendix_b_registry_requires_advertised_fixtures_to_exist(tmp_path):

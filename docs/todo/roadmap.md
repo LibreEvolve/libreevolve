@@ -2755,15 +2755,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     finite-set ratios, lower/upper bounds, prior references, parameter tuples,
     and section/figure/caption locations.
   - Current evidence: `ROADMAP.md`, README, papers index, and code evidence
-    describe Appendix B family/status coverage, construction/verifier export
-    gaps, aggregate constructive-math outcomes, result-version gaps, Figure 5
-    exhibit gaps, Figures 10-14 visual provenance, and the kissing-number
-    certificate gap. They do not require a normalized result-row layer that
-    maps every Appendix B text-level numeric claim to an exact metric
-    definition, parameter tuple, bound direction or optimization direction,
-    previous-best value and source, AlphaEvolve reported value, source
-    location, construction-representation schema, and construction/verifier
-    artifact hash.
+    now describe a validated Appendix B `result_row_boundary` in
+    `alphaevolve_appendix_b.json`. The boundary names the missing normalized
+    result-row layer for every B.1-B.13 text-level numeric claim, including
+    metric definitions, parameter tuples, bound direction or optimization
+    direction, previous-best value/source, AlphaEvolve reported value, source
+    location, construction-representation schema, construction/verifier
+    artifact hashes, result-version status, recomputed values, and
+    recomputation status. The actual rows and artifacts remain
+    `not_recorded_locally`.
   - Required result: when Appendix B per-result metric/value provenance lands,
     update ROADMAP, README, papers index, and code/paper TODO entries together
     with result-row metadata and validators so roadmap text distinguishes

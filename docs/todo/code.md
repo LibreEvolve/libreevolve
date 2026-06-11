@@ -2487,16 +2487,18 @@ Primary evidence:
     representation also varies by family: step functions over fixed intervals,
     polynomial or coefficient lists, finite integer sets, point coordinates,
     sphere/kissing configurations, and geometric packing placements.
-  - Current evidence: the Appendix B registry is family/status coverage, and
-    existing TODOs require construction-data/verifier exports, aggregate
-    outcome reports, result-version provenance, Figure 5 exhibit mapping,
-    Figures 10-14 visual provenance, and the kissing-number proof certificate.
-    They do not require a normalized per-result table that binds every
-    Appendix B text-level claim to its exact metric formula or definition,
-    parameter tuple, maximize/minimize or upper/lower-bound direction, prior
-    value and source, reported AlphaEvolve value, manuscript section or figure
-    location, construction representation schema, and verifier/construction
-    artifact.
+  - Current evidence: `alphaevolve_appendix_b.json` now has a validated
+    top-level `result_row_boundary` for the missing cross-family B.1-B.13
+    layer. It enumerates required future fields for stable result ids,
+    family/source locations, metric definitions, parameter tuples,
+    optimization and bound direction, previous-best attribution, reported
+    AlphaEvolve values, displayed relations, result-version status,
+    construction representation schemas, construction/verifier artifact
+    hashes, recomputed values, and recomputation status. The boundary keeps
+    normalized result rows, metric definitions, parameter rows,
+    previous-best attribution, construction payloads, verifier artifacts,
+    recomputed values, source-location mapping, and result-version rows
+    `not_recorded_locally`.
   - Required result: add Appendix B result-row metadata and validators for
     all B.1-B.13 claims: stable result ids, family/parameter rows, metric
     names and formulas, units or bound semantics, optimization direction,

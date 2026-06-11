@@ -3578,7 +3578,13 @@ example only, and requires unimplemented families to carry explicit objective,
 target/baseline, construction-artifact, certification, rationale, and citation
 coverage. It is a coverage ledger, not the paper's accompanying-Colab evidence:
 it does not yet export the reported construction data or runnable verification
-code needed to reproduce Appendix B construction claims. For the first three
+code needed to reproduce Appendix B construction claims. A top-level
+`result_row_boundary` now records the separate missing cross-family layer for
+Appendix B.1-B.13 text-level numeric claims: stable result ids, metric
+definitions, parameter tuples, prior-value attribution, reported
+AlphaEvolve values, source locations, construction payload hashes, verifier
+artifacts, result-version state, and recomputed values all remain
+`not_recorded_locally`. For the first three
 autocorrelation rows, the registry now preserves paper-facing labels
 separately from internal ids: `B.1. First autocorrelation inequality (C1)`,
 `B.2. Second autocorrelation inequality (C2)`, and

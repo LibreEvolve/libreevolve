@@ -2447,15 +2447,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     construction representations, including step functions, polynomial or
     coefficient lists, finite integer sets, point coordinates, kissing
     configurations, and geometric packing placements.
-  - Current gap: paper-facing Appendix B status is family/status coverage, and
-    existing TODOs ask for construction-data/verifier exports, aggregate
-    outcomes, result-version rows, Figure 5 and Figures 10-14 exhibit
-    mappings, and the kissing-number proof certificate. There is no normalized
-    paper-evidence table that maps each text-level Appendix B claim to its
-    metric formula or definition, parameter tuple, upper/lower or
-    maximize/minimize semantics, previous-best value and source, reported
-    AlphaEvolve value, manuscript section/figure location, and linked
-    construction representation schema plus construction/verifier artifact.
+  - Current gap: paper-facing Appendix B status now includes a validated
+    `result_row_boundary` in `alphaevolve_appendix_b.json`. It records the
+    required future fields for stable result ids, family/source locations,
+    metric definitions, parameter tuples, upper/lower or maximize/minimize
+    semantics, previous-best value/source, reported AlphaEvolve value,
+    displayed relation, result-version status, construction representation
+    schema, construction/verifier artifact hashes, and recomputed values.
+    The normalized result rows, metric definitions, parameter rows,
+    previous-best attribution, construction payloads, verifier artifacts,
+    recomputed values, source-location mapping, and result-version rows remain
+    `not_recorded_locally`.
   - Required result: add paper/report evidence for Appendix B.1-B.13 result
     rows with stable result ids, family and parameter metadata, exact metric
     names/formulas, units or bound semantics, optimization direction,

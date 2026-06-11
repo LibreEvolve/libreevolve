@@ -1653,14 +1653,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     source citations, section/figure/caption locations, and heterogeneous
     construction representations such as step functions, coefficients, finite
     sets, coordinates, kissing configurations, and packing placements.
-  - Current evidence: README describes Appendix B family/status coverage,
-    construction/verifier export gaps, aggregate outcome/report gaps,
-    result-version gaps, Figure 5 exhibit gaps, and Appendix B figure gaps. It
-    does not document per-result rows tying every Appendix B text-level numeric
-    claim to exact metric formulas, parameter tuples, upper/lower or
-    maximize/minimize semantics, previous-best values and sources,
-    AlphaEvolve reported values, source locations, construction-representation
-    schemas, or artifact hashes.
+  - Current evidence: README now describes the Appendix B registry's validated
+    `result_row_boundary`, which records the missing per-result row layer for
+    every B.1-B.13 text-level numeric claim. The boundary names metric
+    definitions, parameter tuples, upper/lower or maximize/minimize
+    semantics, previous-best values/sources, AlphaEvolve reported values,
+    source locations, construction-representation schemas, construction/
+    verifier artifact hashes, result-version status, recomputed values, and
+    recomputation status as required future evidence. The actual rows and
+    artifacts remain `not_recorded_locally`.
   - Required result: when Appendix B per-result metric/value provenance lands,
     update README, ROADMAP, papers index, and code/paper TODOs together so
     README distinguishes family coverage, aggregate outcomes, figure

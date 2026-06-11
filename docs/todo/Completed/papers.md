@@ -6,6 +6,24 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit Figure 9 matrix-diff artifact sidecar.
+  - Paper evidence: Appendix A Figures 9a-9c are the magnified panel set for
+    the Figure 4 left diff and preserve concrete source/diff changes for the
+    `mm_4x4x4` rank-48 matrix-search program.
+  - Status: `papers/figure9_matrix_diff_artifacts.json` now carries the
+    paper-facing absence/readiness boundary for panel ids/order/pages, code
+    spans, source-diff excerpts, rendered image/text/OCR artifacts, aggregate
+    panel-set artifacts, artifact paths/hashes, and nested Figure 9 exhibit
+    metadata. The paper-manifest gate requires and validates the sidecar at
+    the real repo root.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\matrix_results.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: concrete rendered/OCR/source-diff artifacts for the three
+    Appendix A Figure 9 panels remain open.
+
 - [x] Emit matrix tensor-rank runtime boundary sidecar.
   - Paper evidence: Section 3.1 frames matrix results as low-rank tensor
     decompositions, while footnote 3 excludes some fewer-than-49

@@ -3440,6 +3440,8 @@ Primary evidence:
     emitted fields for panel ids/order/pages, line spans, source-diff
     excerpts, rendered panel images, OCR text, aggregate panel-set artifacts,
     artifact paths/hashes, and nested Figure 9 exhibit metadata.
+    `papers/figure9_matrix_diff_artifacts.json` now emits that
+    absence/readiness boundary as a committed sidecar.
     `figure9_matrix_diff_artifact_boundary_from_exhibit()` builds emitted
     artifacts from validated Figure 9 exhibit metadata and checks nested panel
     linkage. No local generator emits or checks in the rendered/OCR/source-diff

@@ -4,6 +4,27 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit Figure 9 matrix-diff artifact sidecar.
+  - Spec evidence: AlphaEvolve Appendix A Figures 9a-9c present magnified
+    source/diff panels for the `mm_4x4x4` rank-48 matrix-search program,
+    including optimizer, initialization, noise, clipping, loss,
+    discretization, and sweep edits.
+  - Status: `papers/figure9_matrix_diff_artifacts.json` now emits the
+    `not_emitted_by_local_report_export` absence/readiness boundary for
+    Figure 9a-9c panel ids/order/pages, code spans, source-diff excerpts,
+    rendered image/text/OCR artifacts, aggregate panel-set artifacts, artifact
+    paths/hashes, and nested Figure 9 exhibit metadata. `validate_paper_manifest()`
+    requires and validates the sidecar at the real repo root when the Appendix
+    A registry is in scope.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\matrix_results.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: local report/export code still does not render or check in
+    the actual Figure 9 panel images, OCR text, source-diff excerpts, or
+    panel-set artifacts.
+
 - [x] Emit matrix tensor-rank runtime boundary sidecar.
   - Spec evidence: AlphaEvolve Section 3.1 reports matrix multiplication
     improvements as low-rank tensor decompositions, and footnote 3 says some

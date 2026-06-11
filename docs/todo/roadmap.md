@@ -2398,6 +2398,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `libreevolve.alphaevolve_figure9_matrix_diff_artifact_boundary.v1`, which
     validates the current `not_emitted_by_local_report_export` boundary and
     emitted panel-artifact fields.
+    `papers/figure9_matrix_diff_artifacts.json` now emits that
+    absence/readiness boundary as a committed sidecar.
     `figure9_matrix_diff_artifact_boundary_from_exhibit()` builds emitted
     artifacts from validated Figure 9 exhibit metadata and checks nested panel
     linkage, but it does not emit or check in the actual panel artifacts.

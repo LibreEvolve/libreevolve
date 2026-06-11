@@ -1218,6 +1218,8 @@ is not yet an AlphaEvolve reproduction.
   required future fields for panel ids/order/pages, code line spans,
   source-diff excerpts, rendered panel images, OCR text, aggregate panel-set
   artifacts, artifact paths/hashes, and nested Figure 9 exhibit metadata.
+  `papers/figure9_matrix_diff_artifacts.json` now emits that
+  absence/readiness boundary as a committed sidecar.
   `figure9_matrix_diff_artifact_boundary_from_exhibit()` builds emitted panel
   artifacts from validated Figure 9 exhibit metadata and validation checks
   nested panel linkage. Rendered appendix panel artifacts are still not

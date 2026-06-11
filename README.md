@@ -4392,6 +4392,8 @@ the current `not_emitted_by_local_report_export` state and required future
 artifact fields for Figure 9a-9c panel ids/order/pages, code line spans,
 source-diff excerpts, rendered panel images, OCR text, aggregate panel-set
 artifacts, artifact paths/hashes, and nested Figure 9 exhibit metadata.
+`papers/figure9_matrix_diff_artifacts.json` emits that absence/readiness
+boundary as a committed sidecar.
 `figure9_matrix_diff_artifact_boundary_from_exhibit()` builds emitted panel
 artifact records from validated Figure 9 exhibit metadata and validation
 checks that artifact rows match their nested panel evidence. Local report

@@ -145,6 +145,7 @@ APPENDIX_A_LOCAL_RESOURCE_FRONTIER_FILE = "papers/appendix_a_matrix_local_resour
 APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE = "papers/appendix_a_matrix_subset_scope_artifacts.json"
 APPENDIX_A_ROW_NOTE_ARTIFACTS_FILE = "papers/appendix_a_matrix_row_note_artifacts.json"
 MATRIX_RANK_TABLE_ARTIFACTS_FILE = "papers/matrix_rank_table_artifacts.json"
+FIGURE9_MATRIX_DIFF_ARTIFACTS_FILE = "papers/figure9_matrix_diff_artifacts.json"
 MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE = "papers/matrix_headline_historicity_artifacts.json"
 APPENDIX_A_BASELINE_CITATIONS_FILE = "papers/appendix_a_matrix_baseline_citations.json"
 MATRIX_BASELINE_COMPONENT_RUNTIME_FILE = "papers/matrix_baseline_component_runtime_boundary.json"
@@ -1025,8 +1026,24 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
         )
         for issue in rank_table_artifact_report.issues
     )
+    figure9_artifacts_path = root_path / FIGURE9_MATRIX_DIFF_ARTIFACTS_FILE
+    if figure9_artifacts_path.exists():
+        figure9_artifact_recordset: object | str | Path = figure9_artifacts_path
+    else:
+        figure9_artifact_recordset = figure9_matrix_diff_artifact_boundary_record()
+        if is_repo_root:
+            issues.append(
+                PaperManifestIssue(
+                    "figure9_matrix_diff_artifact_manifest_missing",
+                    (
+                        f"{FIGURE9_MATRIX_DIFF_ARTIFACTS_FILE} must emit "
+                        "Figure 9 matrix-diff artifact availability"
+                    ),
+                    "figure9_matrix_diff_magnified",
+                )
+            )
     figure9_artifact_report = validate_figure9_matrix_diff_artifact_boundary(
-        figure9_matrix_diff_artifact_boundary_record()
+        figure9_artifact_recordset
     )
     issues.extend(
         PaperManifestIssue(

@@ -3479,6 +3479,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     validates the current `not_emitted_by_local_report_export` boundary and
     emitted panel, source-diff, rendered image, OCR, aggregate panel, artifact
     path/hash, and nested exhibit fields.
+    `papers/figure9_matrix_diff_artifacts.json` now emits that
+    absence/readiness boundary as a committed sidecar.
     `figure9_matrix_diff_artifact_boundary_from_exhibit()` builds emitted
     artifacts from validated Figure 9 exhibit metadata and checks nested panel
     linkage, but it does not render or commit those appendix panel artifacts.

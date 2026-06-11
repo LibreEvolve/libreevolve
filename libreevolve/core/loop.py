@@ -12792,6 +12792,11 @@ def _alphaevolve_process_exhibit_report(
     async_topology_record = _process_exhibit_async_topology_record(
         distributed_pipeline_topology
     )
+    evaluator_pool_parallelism_record = (
+        _process_exhibit_evaluator_pool_parallelism_record(
+            distributed_pipeline_topology
+        )
+    )
     candidate_semantic_traces = _process_candidate_semantic_traces(
         run_dir,
         programs,
@@ -12845,6 +12850,7 @@ def _alphaevolve_process_exhibit_report(
         "candidate_semantic_trace_count": len(candidate_semantic_traces),
         "durable_candidate_stream_join_count": durable_candidate_stream_join_count,
         "async_topology_record": async_topology_record,
+        "evaluator_pool_parallelism_record": evaluator_pool_parallelism_record,
         "component_todo_links": component_todo_links,
         "component_todo_link_count": len(component_todo_links),
         "claim_ready": False,
@@ -12862,6 +12868,11 @@ def _alphaevolve_process_exhibit_report(
                 async_topology_record.get("record_status") == "recorded"
             ),
             "alphaevolve_async_pipeline_topology": False,
+            "evaluator_pool_parallelism_record": (
+                evaluator_pool_parallelism_record.get("record_status")
+                == "recorded"
+            ),
+            "independent_evaluator_pool_parallelism": False,
             "component_todo_links": True,
             "rendered_diagram_artifacts": rendered_count == len(figures),
             "accessibility_exports": accessibility_count == len(figures),
@@ -12874,7 +12885,7 @@ def _alphaevolve_process_exhibit_report(
             "remaining_gap": [
                 "exact_source_diagram_text_reproduction",
                 "alphaevolve_async_pipeline_topology_implementation",
-                "independent_evaluator_pool_parallelism",
+                "independent_evaluator_pool_parallelism_implementation",
             ],
         },
     }
@@ -13241,6 +13252,68 @@ def _process_exhibit_async_topology_record(
         "worker_identity_and_fanout": readiness.get("worker_identity_and_fanout"),
         "topology_boundary": (
             "validated_current_synchronous_topology_not_alphaevolve_async_pipeline"
+        ),
+    }
+
+
+def _process_exhibit_evaluator_pool_parallelism_record(
+    topology_report: Mapping[str, object],
+) -> dict:
+    validation = (
+        topology_report.get("validation")
+        if isinstance(topology_report.get("validation"), Mapping)
+        else validate_distributed_pipeline_topology_report(dict(topology_report))
+    )
+    dispatch = (
+        topology_report.get("dispatch_policy")
+        if isinstance(topology_report.get("dispatch_policy"), Mapping)
+        else {}
+    )
+    throughput = (
+        topology_report.get("throughput_budget_linkage")
+        if isinstance(topology_report.get("throughput_budget_linkage"), Mapping)
+        else {}
+    )
+    nodes = topology_report.get("nodes") if isinstance(topology_report.get("nodes"), list) else []
+    evaluator_nodes = [
+        node
+        for node in nodes
+        if isinstance(node, Mapping) and node.get("role") == "evaluation_node"
+    ]
+    evaluator_node_ids = [
+        node.get("node_id")
+        for node in evaluator_nodes
+        if isinstance(node.get("node_id"), str)
+    ]
+    worker_identities = sorted(
+        {
+            node.get("worker_identity")
+            for node in evaluator_nodes
+            if isinstance(node.get("worker_identity"), str)
+        }
+    )
+    return {
+        "schema": "libreevolve.process_exhibit_evaluator_pool_parallelism_record.v1",
+        "record_status": "recorded",
+        "source_report_ref": "runtime.history.distributed_pipeline_topology_report",
+        "source_report_schema": topology_report.get("schema"),
+        "source_report_validation_ok": validation.get("ok") is True,
+        "figure_node_id": "fig1.evaluator_pool",
+        "figure_step_id": "fig2.step_5_execute_evaluator",
+        "evaluator_node_count": len(evaluator_node_ids),
+        "evaluator_node_ids": evaluator_node_ids,
+        "worker_identities": worker_identities,
+        "queue_count": topology_report.get("queue_count"),
+        "blocking_edge_count": topology_report.get("blocking_edge_count"),
+        "evaluation_dispatch": dispatch.get("evaluation_dispatch"),
+        "asyncio_pipeline": dispatch.get("asyncio_pipeline"),
+        "worker_fanout_accounted": throughput.get("worker_fanout_accounted"),
+        "queued_work_accounted": throughput.get("queued_work_accounted"),
+        "parallel_evaluator_workers": False,
+        "independent_evaluator_pool_parallelism": False,
+        "compute_hour_wall_clock_compression": False,
+        "parallelism_boundary": (
+            "validated_current_inline_evaluator_dispatch_not_independent_pool"
         ),
     }
 
@@ -13715,7 +13788,7 @@ def _process_exhibit_component_todo_links() -> list[dict]:
             "claim_surface_paths": claim_surfaces,
         },
         {
-            "gap_id": "independent_evaluator_pool_parallelism",
+            "gap_id": "independent_evaluator_pool_parallelism_implementation",
             "status": "open",
             "component_ids": [
                 "fig1.evaluator_pool",
@@ -13827,6 +13900,7 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
         "candidate_semantic_trace_count",
         "durable_candidate_stream_join_count",
         "async_topology_record",
+        "evaluator_pool_parallelism_record",
         "component_todo_links",
         "component_todo_link_count",
         "claim_ready",
@@ -14220,6 +14294,11 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
                 issues.append({"code": "invalid_llm_call_stream_join_flag", "message": "llm call stream join flag must be boolean"})
     async_topology_record = report.get("async_topology_record")
     _validate_process_exhibit_async_topology_record(async_topology_record, issues)
+    evaluator_pool_parallelism_record = report.get("evaluator_pool_parallelism_record")
+    _validate_process_exhibit_evaluator_pool_parallelism_record(
+        evaluator_pool_parallelism_record,
+        issues,
+    )
     component_todo_links = report.get("component_todo_links")
     if not isinstance(component_todo_links, list):
         issues.append({"code": "invalid_component_todo_links", "message": "component_todo_links must be a list"})
@@ -14266,6 +14345,15 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
             issues.append({"code": "async_topology_record_overclaim", "message": "async topology record readiness requires a recorded topology record"})
         if readiness.get("alphaevolve_async_pipeline_topology") is not False:
             issues.append({"code": "async_topology_overclaim", "message": "process exhibit must not claim AlphaEvolve async pipeline topology"})
+        if readiness.get("evaluator_pool_parallelism_record") not in {True, False}:
+            issues.append({"code": "invalid_evaluator_pool_record_readiness", "message": "evaluator pool record readiness must be boolean"})
+        elif readiness.get("evaluator_pool_parallelism_record") is True and not (
+            isinstance(evaluator_pool_parallelism_record, Mapping)
+            and evaluator_pool_parallelism_record.get("record_status") == "recorded"
+        ):
+            issues.append({"code": "evaluator_pool_record_overclaim", "message": "evaluator pool record readiness requires a recorded parallelism boundary"})
+        if readiness.get("independent_evaluator_pool_parallelism") is not False:
+            issues.append({"code": "evaluator_pool_parallelism_overclaim", "message": "process exhibit must not claim independent evaluator-pool parallelism"})
         if readiness.get("component_todo_links") not in {True, False}:
             issues.append({"code": "invalid_component_todo_readiness", "message": "component TODO link readiness must be boolean"})
         if readiness.get("rendered_diagram_artifacts") not in {True, False}:
@@ -14343,6 +14431,60 @@ def _validate_process_exhibit_async_topology_record(
             issues.append({"code": f"{field}_overclaim", "message": f"async topology record must keep {field} false"})
     if value.get("topology_boundary") != "validated_current_synchronous_topology_not_alphaevolve_async_pipeline":
         issues.append({"code": "invalid_async_topology_boundary", "message": "async topology boundary label is invalid"})
+
+
+def _validate_process_exhibit_evaluator_pool_parallelism_record(
+    value: object,
+    issues: list[dict],
+) -> None:
+    if not isinstance(value, Mapping):
+        issues.append({"code": "invalid_evaluator_pool_parallelism_record", "message": "evaluator_pool_parallelism_record must be an object"})
+        return
+    if value.get("schema") != "libreevolve.process_exhibit_evaluator_pool_parallelism_record.v1":
+        issues.append({"code": "invalid_evaluator_pool_parallelism_schema", "message": "evaluator pool parallelism record schema is unsupported"})
+    if value.get("record_status") != "recorded":
+        issues.append({"code": "invalid_evaluator_pool_parallelism_status", "message": "evaluator pool parallelism record must be recorded"})
+    if value.get("source_report_ref") != "runtime.history.distributed_pipeline_topology_report":
+        issues.append({"code": "invalid_evaluator_pool_source_ref", "message": "evaluator pool record must cite distributed pipeline topology report"})
+    if value.get("source_report_schema") != "libreevolve.distributed_pipeline_topology_report.v1":
+        issues.append({"code": "invalid_evaluator_pool_source_schema", "message": "evaluator pool source schema must match distributed pipeline topology report"})
+    if value.get("source_report_validation_ok") is not True:
+        issues.append({"code": "evaluator_pool_source_invalid", "message": "evaluator pool source report must validate"})
+    if value.get("figure_node_id") != "fig1.evaluator_pool":
+        issues.append({"code": "invalid_evaluator_pool_figure_node", "message": "evaluator pool record must reference Figure 1 evaluator pool"})
+    if value.get("figure_step_id") != "fig2.step_5_execute_evaluator":
+        issues.append({"code": "invalid_evaluator_pool_figure_step", "message": "evaluator pool record must reference Figure 2 evaluator step"})
+    node_count = value.get("evaluator_node_count")
+    node_ids = value.get("evaluator_node_ids")
+    if not isinstance(node_count, int) or isinstance(node_count, bool) or node_count < 0:
+        issues.append({"code": "invalid_evaluator_pool_node_count", "message": "evaluator node count must be a non-negative integer"})
+        node_count = 0
+    if not isinstance(node_ids, list) or not all(isinstance(node_id, str) and node_id for node_id in node_ids):
+        issues.append({"code": "invalid_evaluator_pool_node_ids", "message": "evaluator node ids must be text"})
+        node_ids = []
+    elif node_count != len(node_ids):
+        issues.append({"code": "evaluator_pool_node_count_mismatch", "message": "evaluator node count must match node ids"})
+    identities = value.get("worker_identities")
+    if not isinstance(identities, list) or not all(isinstance(identity, str) and identity for identity in identities):
+        issues.append({"code": "invalid_evaluator_pool_worker_identities", "message": "evaluator pool worker identities must be text"})
+    for field in ("queue_count", "blocking_edge_count"):
+        if not isinstance(value.get(field), int) or isinstance(value.get(field), bool) or value.get(field) < 0:
+            issues.append({"code": f"invalid_evaluator_pool_{field}", "message": f"evaluator pool {field} must be a non-negative integer"})
+    if value.get("evaluation_dispatch") != "inline_blocking_local_subprocess":
+        issues.append({"code": "invalid_evaluator_pool_dispatch", "message": "current evaluator pool record must preserve inline blocking dispatch"})
+    if value.get("asyncio_pipeline") is not False:
+        issues.append({"code": "evaluator_pool_async_pipeline_overclaim", "message": "evaluator pool record must not claim asyncio pipeline support"})
+    for field in (
+        "worker_fanout_accounted",
+        "queued_work_accounted",
+        "parallel_evaluator_workers",
+        "independent_evaluator_pool_parallelism",
+        "compute_hour_wall_clock_compression",
+    ):
+        if value.get(field) is not False:
+            issues.append({"code": f"{field}_overclaim", "message": f"evaluator pool record must keep {field} false"})
+    if value.get("parallelism_boundary") != "validated_current_inline_evaluator_dispatch_not_independent_pool":
+        issues.append({"code": "invalid_evaluator_pool_boundary", "message": "evaluator pool parallelism boundary label is invalid"})
 
 
 def _validate_process_status(value: object, issues: list[dict], owner: str) -> None:

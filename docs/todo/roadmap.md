@@ -184,6 +184,7 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     semantic traces with durable LLM and archive-admission stream rows,
     a validated current synchronous topology boundary linked to
     `runtime.history.distributed_pipeline_topology_report`,
+    a validated current inline evaluator-pool parallelism boundary,
     component-to-TODO links, and explicit remaining
     process-parity gaps. It now also names
     `papers/process_exhibit_boundary.json` as the committed sidecar for the
@@ -194,8 +195,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     README, papers index, and code/paper TODOs so roadmap wording
     distinguishes local workflow documentation, generated Mermaid artifacts,
     artifact-link records, row summaries, semantic candidate traces, and
-    current-topology boundary evidence from full reproduced AlphaEvolve
-    process-diagram evidence.
+    current-topology/evaluator-pool boundary evidence from full reproduced
+    AlphaEvolve process-diagram evidence.
 
 - [ ] Keep evaluator-workload roadmap wording scoped until inner-search and
       ML-training execution contracts exist.

@@ -4,6 +4,25 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add process-exhibit evaluator-pool parallelism boundary.
+  - Spec evidence: AlphaEvolve Figure 1 names an evaluator pool and Section
+    2.4/2.6 describe parallelized evaluator work in the broader async
+    pipeline, so the process exhibit should expose whether local evaluator
+    pool parallelism evidence exists instead of leaving it as an unrecorded
+    process gap.
+  - Status: `runtime.history.alphaevolve_process_exhibit_report` now records
+    `evaluator_pool_parallelism_record`, linking the Figure 1 evaluator pool
+    and Figure 2 evaluator step to
+    `runtime.history.distributed_pipeline_topology_report`. The record
+    preserves evaluator node ids, worker identities, zero queues, inline
+    blocking local-subprocess dispatch, no worker fan-out accounting, and
+    explicit false readiness for independent evaluator-pool parallelism.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4638 passed, 21 skipped, 2 deselected.
+  - Remaining gap: exact source-diagram reproduction, actual AlphaEvolve async
+    pipeline implementation, and independent evaluator-pool implementation
+    remain open.
+
 - [x] Add process-exhibit async topology boundary joins.
   - Spec evidence: AlphaEvolve Section 2.6 says the implementation is an
     asynchronous pipeline with controller, LLM samplers, and evaluation nodes,

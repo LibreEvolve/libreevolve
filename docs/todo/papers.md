@@ -250,18 +250,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     cited streams, records bounded generated-candidate semantic traces with
     durable LLM and archive-admission stream rows, records a validated current
     synchronous topology boundary linked to
-    `runtime.history.distributed_pipeline_topology_report`, and records
+    `runtime.history.distributed_pipeline_topology_report`, records a
+    validated current inline evaluator-pool parallelism boundary, and records
     component-to-TODO links for the remaining process gaps.
   - Current gap: paper-facing evidence still lacks exact source-diagram
     reproduction, AlphaEvolve-style async controller/sampler/evaluator
-    implementation, and independent evaluator-pool parallelism strong enough
+    implementation, and independent evaluator-pool implementation strong enough
     to treat the local mapping as full reproduced AlphaEvolve architecture
     evidence.
   - Required result: add exact diagram text/source reproduction, async
-    topology implementation evidence, and README/ROADMAP wording that separates local
+    topology implementation evidence, independent evaluator-pool
+    implementation evidence, and README/ROADMAP wording that separates local
     workflow diagrams, generated Mermaid artifacts, artifact-link records, row
-    summaries, semantic candidate traces, and current-topology boundaries from
-    full reproduced AlphaEvolve architecture evidence.
+    summaries, semantic candidate traces, and current-topology/evaluator-pool
+    boundaries from full reproduced AlphaEvolve architecture evidence.
 
 - [ ] Extend unified task-specification provenance beyond field-level artifact
       resolution.

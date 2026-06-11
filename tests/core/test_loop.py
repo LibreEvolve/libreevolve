@@ -5945,6 +5945,8 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert report["claim_readiness"]["component_todo_links"] is True
     assert report["claim_readiness"]["async_topology_record"] is True
     assert report["claim_readiness"]["alphaevolve_async_pipeline_topology"] is False
+    assert report["claim_readiness"]["evaluator_pool_parallelism_record"] is True
+    assert report["claim_readiness"]["independent_evaluator_pool_parallelism"] is False
     assert report["claim_readiness"]["rendered_diagram_artifacts"] is True
     assert report["claim_readiness"]["accessibility_exports"] is True
     assert report["claim_readiness"]["exact_diagram_text_reproduction"] is False
@@ -5955,7 +5957,13 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert "alphaevolve_async_pipeline_topology_implementation" in (
         report["claim_readiness"]["remaining_gap"]
     )
+    assert "independent_evaluator_pool_parallelism_implementation" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
     assert "async_controller_sampler_evaluator_topology" not in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    assert "independent_evaluator_pool_parallelism" not in (
         report["claim_readiness"]["remaining_gap"]
     )
     assert "durable_llm_stream_candidate_joins" not in (
@@ -6062,6 +6070,26 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
         "llm_sampler",
         "program_database",
     }
+    evaluator_pool = report["evaluator_pool_parallelism_record"]
+    assert evaluator_pool["schema"] == (
+        "libreevolve.process_exhibit_evaluator_pool_parallelism_record.v1"
+    )
+    assert evaluator_pool["record_status"] == "recorded"
+    assert evaluator_pool["source_report_ref"] == (
+        "runtime.history.distributed_pipeline_topology_report"
+    )
+    assert evaluator_pool["source_report_validation_ok"] is True
+    assert evaluator_pool["figure_node_id"] == "fig1.evaluator_pool"
+    assert evaluator_pool["figure_step_id"] == "fig2.step_5_execute_evaluator"
+    assert evaluator_pool["evaluator_node_count"] == 1
+    assert evaluator_pool["evaluator_node_ids"] == [
+        "evaluation_node:default_validator"
+    ]
+    assert evaluator_pool["queue_count"] == 0
+    assert evaluator_pool["evaluation_dispatch"] == "inline_blocking_local_subprocess"
+    assert evaluator_pool["parallel_evaluator_workers"] is False
+    assert evaluator_pool["independent_evaluator_pool_parallelism"] is False
+    assert evaluator_pool["compute_hour_wall_clock_compression"] is False
     assert report["candidate_semantic_trace_count"] == 1
     assert report["durable_candidate_stream_join_count"] == 1
     assert report["claim_readiness"]["candidate_semantic_trace_records"] is True
@@ -6103,7 +6131,7 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
         link["gap_id"]: link for link in report["component_todo_links"]
     }
     assert "fig2.step_5_execute_evaluator" in todo_links_by_gap[
-        "independent_evaluator_pool_parallelism"
+        "independent_evaluator_pool_parallelism_implementation"
     ]["component_ids"]
     assert "fig2.step_3_generate" in todo_links_by_gap[
         "alphaevolve_async_pipeline_topology_implementation"
@@ -6158,6 +6186,22 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     validation = validate_alphaevolve_process_exhibit_report(edited)
     assert validation["ok"] is False
     assert "async_topology_pipeline_overclaim" in {
+        issue["code"] for issue in validation["issues"]
+    }
+
+    edited = copy.deepcopy(report)
+    edited["claim_readiness"]["independent_evaluator_pool_parallelism"] = True
+    validation = validate_alphaevolve_process_exhibit_report(edited)
+    assert validation["ok"] is False
+    assert "evaluator_pool_parallelism_overclaim" in {
+        issue["code"] for issue in validation["issues"]
+    }
+
+    edited = copy.deepcopy(report)
+    edited["evaluator_pool_parallelism_record"]["parallel_evaluator_workers"] = True
+    validation = validate_alphaevolve_process_exhibit_report(edited)
+    assert validation["ok"] is False
+    assert "parallel_evaluator_workers_overclaim" in {
         issue["code"] for issue in validation["issues"]
     }
 

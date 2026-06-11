@@ -63,11 +63,12 @@ LibreEvolve has:
   summaries, generated candidate semantic traces with durable LLM and
   archive-admission stream rows, validated current synchronous topology
   boundary evidence linked to `runtime.history.distributed_pipeline_topology_report`,
+  validated current inline evaluator-pool boundary evidence,
   component-to-TODO links, and explicit gaps for exact source-diagram
   reproduction and full process parity, with
   `papers/process_exhibit_boundary.json` now carrying the manifest-validated
   boundary for exact source-diagram reproduction, AlphaEvolve async topology
-  implementation, and evaluator-pool parallelism
+  implementation, and independent evaluator-pool implementation
 - distributed-pipeline topology boundary reports under
   `runtime.history.distributed_pipeline_topology_report`, naming the current
   single-process controller, in-process database, configured LLM sampler

@@ -7,7 +7,7 @@
     "Figure 2"
   ],
   "source_claim": "AlphaEvolve Figure 1 presents the high-level discovery loop and Figure 2 expands it into database sampling, prompt construction, LLM generation, diff application, evaluator execution, and database admission",
-  "boundary_status": "process_mapping_with_async_topology_boundary_without_full_parity",
+  "boundary_status": "process_mapping_with_process_boundaries_without_full_parity",
   "runtime_report_status": "alphaevolve_process_exhibit_report_available",
   "claim_ready": false,
   "required_evidence_fields": [
@@ -31,7 +31,7 @@
   "missing_evidence": {
     "exact_source_diagram_text_reproduction": "not_recorded_locally",
     "alphaevolve_async_pipeline_topology_implementation": "not_implemented_locally",
-    "independent_evaluator_pool_parallelism": "not_recorded_locally"
+    "independent_evaluator_pool_parallelism_implementation": "not_implemented_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has a validated runtime mapping from AlphaEvolve Figure 1/Figure 2 process nodes, edges, and pseudocode steps to local components and artifacts, plus generated Mermaid/text accessibility artifacts, step-stream artifact-link validation, strict JSONL row summaries, generated candidate semantic traces with durable LLM and archive admission stream joins, a validated current synchronous topology boundary linked to the distributed-pipeline topology report, and component-to-TODO links. It does not claim exact source-diagram reproduction, AlphaEvolve async controller/sampler/evaluator implementation, independent evaluator-pool parallelism, or full AlphaEvolve process parity."
+  "claim_boundary": "This boundary records that LibreEvolve has a validated runtime mapping from AlphaEvolve Figure 1/Figure 2 process nodes, edges, and pseudocode steps to local components and artifacts, plus generated Mermaid/text accessibility artifacts, step-stream artifact-link validation, strict JSONL row summaries, generated candidate semantic traces with durable LLM and archive admission stream joins, a validated current synchronous topology boundary linked to the distributed-pipeline topology report, a validated current inline evaluator-pool parallelism boundary, and component-to-TODO links. It does not claim exact source-diagram reproduction, AlphaEvolve async controller/sampler/evaluator implementation, independent evaluator-pool implementation, or full AlphaEvolve process parity."
 }

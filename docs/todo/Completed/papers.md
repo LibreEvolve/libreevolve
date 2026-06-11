@@ -6,6 +6,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Record process-exhibit evaluator-pool parallelism boundary.
+  - Paper evidence: AlphaEvolve Figure 1 names an evaluator pool, and the
+    process-exhibit sidecar already requires an
+    `evaluator_pool_parallelism_record` field before narrowing the remaining
+    gap to actual independent pool implementation.
+  - Status: paper-facing manifests now preserve
+    `evaluator_pool_parallelism_record` inside
+    `runtime.history.alphaevolve_process_exhibit_report`, linked to
+    `runtime.history.distributed_pipeline_topology_report`. The process
+    boundary status is now
+    `process_mapping_with_process_boundaries_without_full_parity`.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4638 passed, 21 skipped, 2 deselected.
+  - Remaining paper gap: exact source-diagram reproduction, actual
+    AlphaEvolve async pipeline implementation, and independent evaluator-pool
+    implementation remain open.
+
 - [x] Record process-exhibit async topology boundary.
   - Paper evidence: AlphaEvolve Figure 1/2 process evidence intersects Section
     2.6's controller, LLM sampler, and evaluation-node topology, so the
@@ -15,8 +32,8 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     `async_topology_record` inside
     `runtime.history.alphaevolve_process_exhibit_report`, linked to
     `runtime.history.distributed_pipeline_topology_report`. The process
-    boundary status is now
-    `process_mapping_with_async_topology_boundary_without_full_parity`.
+    boundary status subsequently advanced to
+    `process_mapping_with_process_boundaries_without_full_parity`.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4638 passed, 21 skipped, 2 deselected.
   - Remaining paper gap: exact source-diagram reproduction, actual

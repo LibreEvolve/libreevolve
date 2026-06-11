@@ -4,6 +4,27 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit matrix near-integrality runtime boundary sidecar.
+  - Spec evidence: AlphaEvolve Section 3.1 says matrix candidates were
+    prompted to generate near-integral decompositions and final entries were
+    rounded to integers or half-integers before exactness checking.
+  - Status: `papers/matrix_near_integrality_runtime_boundary.json` now emits
+    the `not_emitted_by_local_runner` absence/readiness boundary for
+    search-time near-integrality prompt and rounding diagnostics, including
+    required future fields for run/target/candidate ids, seeds, prompt hashes,
+    raw and rounded coefficients, rounding error, exactness-certificate refs,
+    matrix-result refs, artifact paths, and hashes. `validate_paper_manifest()`
+    requires and validates the sidecar at the real repo root when the Appendix
+    A registry is in scope.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\matrix_results.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: local matrix benchmark runners still do not emit
+    near-integrality prompt, raw/rounded coefficient, rounding-error, or
+    certificate-link diagnostics from actual runs.
+
 - [x] Emit matrix cascade-run runtime boundary sidecar.
   - Spec evidence: AlphaEvolve Section 3.1 reports matrix experiments over
     multiple random seeds using the evaluation cascade, with best rank and

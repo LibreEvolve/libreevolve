@@ -3795,7 +3795,8 @@ companion runtime boundary
 `not_emitted_by_local_runner` state and emitted records for run/target/candidate
 ids, seeds, prompt hashes/instructions, raw and rounded coefficients, rounding
 error, exactness-certificate links, matrix-result refs, artifact paths, and
-artifact hashes. The helper
+artifact hashes. `papers/matrix_near_integrality_runtime_boundary.json` emits
+that absence/readiness boundary as a committed sidecar. The helper
 `matrix_near_integrality_runtime_boundary_from_evidence()` builds emitted
 records from validated near-integrality evidence and validation links every
 runtime row back to its nested target, prompt, candidate, rounding, and

@@ -1047,6 +1047,8 @@ is not yet an AlphaEvolve reproduction.
   run/target/candidate ids, seeds, prompt hashes/instructions, raw and rounded
   coefficients, rounding error, exactness-certificate links, matrix-result
   refs, artifact paths, and artifact hashes.
+  `papers/matrix_near_integrality_runtime_boundary.json` now emits that
+  absence/readiness boundary as a committed sidecar.
   `matrix_near_integrality_runtime_boundary_from_evidence()` builds emitted
   runtime rows from validated near-integrality evidence and validation links
   each row back to the nested target, prompt, candidate, rounding, and

@@ -6,6 +6,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit matrix near-integrality runtime boundary sidecar.
+  - Paper evidence: Section 3.1 says candidates were prompted for
+    near-integral matrix decompositions and rounded to integer or half-integer
+    entries for exactness verification.
+  - Status: `papers/matrix_near_integrality_runtime_boundary.json` now carries
+    the paper-facing absence/readiness boundary for near-integrality prompt and
+    rounding diagnostics. The paper-manifest gate requires and validates the
+    sidecar at the real repo root.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\matrix_results.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: emitted run artifacts for actual prompt instructions,
+    raw/rounded coefficients, rounding error, and exactness-certificate links
+    remain open.
+
 - [x] Emit matrix cascade-run runtime boundary sidecar.
   - Paper evidence: Section 3.1 says matrix performance is evaluated across
     multiple random seeds using the evaluation cascade and reported as best

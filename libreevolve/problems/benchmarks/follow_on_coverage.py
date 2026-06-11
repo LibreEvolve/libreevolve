@@ -8,6 +8,8 @@ from typing import Any
 
 from libreevolve.problems.benchmarks.follow_on_sources import (
     EXPECTED_DECLARED_PROBLEM_COUNT,
+    EXPECTED_FOLLOW_ON_NOTEBOOKS,
+    EXPECTED_FOLLOW_ON_RUNTIME_ABSENCE_MANIFEST_FILE,
     EXPECTED_REPOSITORY_COMMIT,
     EXPECTED_REPOSITORY_NAME,
     EXPECTED_REPOSITORY_URL,
@@ -179,6 +181,20 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
             "count_reconciliation_status": "declared_67_with_extra_numbered_page_68_observed",
             "full_page_link_diagnostics_complete": False,
         },
+        "notebook_inventory_link": {
+            "source_manifest": EXPECTED_FOLLOW_ON_RUNTIME_ABSENCE_MANIFEST_FILE,
+            "source_boundary": "alphaevolve_follow_on_runtime_absence",
+            "pinned_notebook_path_count": len(EXPECTED_FOLLOW_ON_NOTEBOOKS),
+            "path_inventory_status": "pinned_git_blob_inventory_recorded",
+            "problem_id_mapping_complete": False,
+            "sha256_inventory_complete": False,
+            "absence_reason_inventory_complete": False,
+            "claim_boundary": (
+                "The follow-on runtime-absence record pins notebook paths and "
+                "git blob ids, but does not claim per-problem notebook mapping, "
+                "SHA-256 notebook hashes, or absence reasons."
+            ),
+        },
         "status_artifacts": [
             {
                 "path": path,
@@ -224,6 +240,7 @@ def validate_alphaevolve_follow_on_problem_coverage(
     _validate_repository(data.get("repository"), issues)
     declared_problem_count = _validate_coverage_scope(data.get("coverage_scope"), issues)
     observed_numbered_html_count = _validate_numbered_page_inventory(data.get("numbered_page_inventory"), issues)
+    _validate_notebook_inventory_link(data.get("notebook_inventory_link"), issues)
     status_artifact_count = _validate_status_artifacts(data.get("status_artifacts"), issues)
     listed_status_count = _validate_status_buckets(data.get("status_buckets"), issues)
     unclassified_problem_count = _validate_status_summary(data.get("status_summary"), issues)
@@ -348,6 +365,30 @@ def _validate_numbered_page_inventory(value: object, issues: list[AlphaEvolveFol
             issues.append(_issue(code, f"numbered_page_inventory.{field} must preserve the pinned page-count boundary"))
     observed = value.get("observed_numbered_html_count")
     return observed if isinstance(observed, int) else None
+
+
+def _validate_notebook_inventory_link(value: object, issues: list[AlphaEvolveFollowOnProblemCoverageIssue]) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_notebook_inventory_link", "notebook_inventory_link must be an object"))
+        return
+    expected = {
+        "source_manifest": EXPECTED_FOLLOW_ON_RUNTIME_ABSENCE_MANIFEST_FILE,
+        "source_boundary": "alphaevolve_follow_on_runtime_absence",
+        "pinned_notebook_path_count": len(EXPECTED_FOLLOW_ON_NOTEBOOKS),
+        "path_inventory_status": "pinned_git_blob_inventory_recorded",
+        "problem_id_mapping_complete": False,
+        "sha256_inventory_complete": False,
+        "absence_reason_inventory_complete": False,
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            code = f"invalid_notebook_inventory_link_{field}"
+            if field.endswith("_complete") and expected_value is False:
+                code = f"notebook_inventory_link_{field}_overclaim"
+            issues.append(_issue(code, f"notebook_inventory_link.{field} must preserve the pinned notebook-inventory boundary"))
+    claim_boundary = value.get("claim_boundary")
+    if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary:
+        issues.append(_issue("missing_notebook_inventory_link_claim_boundary", "notebook_inventory_link must state that per-problem notebook coverage is not claimed"))
 
 
 def _validate_status_artifacts(value: object, issues: list[AlphaEvolveFollowOnProblemCoverageIssue]) -> int:

@@ -1785,8 +1785,10 @@ Implemented:
   listed problem ids, preserves 24 `not_listed_in_status_json` ids, records
   browser-page and many-but-not-all Colab access modes, and keeps the declared
   67-problem count separate from the observed 68 numbered HTML pages. It is
-  status-artifact and bucket-membership evidence, not complete per-page or
-  per-notebook source inventory.
+  status-artifact and bucket-membership evidence. It links to the
+  runtime-absence record's 28 pinned notebook paths, but it is not complete
+  per-page source inventory, per-problem notebook mapping, notebook SHA-256
+  inventory, or notebook-absence evidence.
 - `libreevolve/llm/budget_report.py`: LLM role/retry budget report contract.
   It validates mutation, critique, and feedback role budgets, provider-internal
   retry attempts, token/cost/wall-clock limits and usage, persisted

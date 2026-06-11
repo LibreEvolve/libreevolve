@@ -22,6 +22,12 @@ def test_validate_alphaevolve_follow_on_problem_coverage_accepts_builtin_record(
     assert validation.status_artifact_count == 3
     assert validation.observed_numbered_html_count == 68
     assert validation.issues == []
+    link = recordset["notebook_inventory_link"]
+    assert link["source_manifest"] == "papers/follow_on_runtime_absence.json"
+    assert link["pinned_notebook_path_count"] == 28
+    assert link["problem_id_mapping_complete"] is False
+    assert link["sha256_inventory_complete"] is False
+    assert link["absence_reason_inventory_complete"] is False
 
 
 def test_validate_alphaevolve_follow_on_problem_coverage_loads_json_file(tmp_path):
@@ -94,6 +100,12 @@ def test_validate_alphaevolve_follow_on_problem_coverage_rejects_inventory_overc
     scope["page_hash_inventory_complete"] = True
     scope["notebook_hash_inventory_complete"] = True
     scope["artifact_presence_matrix_complete"] = True
+    link = recordset["notebook_inventory_link"]
+    link["pinned_notebook_path_count"] = 67
+    link["problem_id_mapping_complete"] = True
+    link["sha256_inventory_complete"] = True
+    link["absence_reason_inventory_complete"] = True
+    link["claim_boundary"] = "Every problem has a mapped notebook."
     inventory = recordset["numbered_page_inventory"]
     inventory["observed_numbered_html_count"] = 67
     inventory["extra_numbered_page_ids"] = []
@@ -107,6 +119,11 @@ def test_validate_alphaevolve_follow_on_problem_coverage_rejects_inventory_overc
     assert "page_hash_inventory_complete_overclaim" in codes
     assert "notebook_hash_inventory_complete_overclaim" in codes
     assert "artifact_presence_matrix_complete_overclaim" in codes
+    assert "invalid_notebook_inventory_link_pinned_notebook_path_count" in codes
+    assert "notebook_inventory_link_problem_id_mapping_complete_overclaim" in codes
+    assert "notebook_inventory_link_sha256_inventory_complete_overclaim" in codes
+    assert "notebook_inventory_link_absence_reason_inventory_complete_overclaim" in codes
+    assert "missing_notebook_inventory_link_claim_boundary" in codes
     assert "invalid_numbered_page_inventory_observed_numbered_html_count" in codes
     assert "invalid_numbered_page_inventory_extra_numbered_page_ids" in codes
     assert "full_page_link_diagnostics_overclaim" in codes

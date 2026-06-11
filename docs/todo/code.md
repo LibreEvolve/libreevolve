@@ -2295,11 +2295,14 @@ Primary evidence:
     access modes, root-level `status.json`, `status_grid.png`, and
     `result_distribution.png` paths/hashes, parsed status bucket membership,
     43 listed ids, 24 `not_listed_in_status_json` ids, and the declared-67
-    versus observed-68 numbered HTML page boundary. The standard paper-manifest
-    gate validates the built-in coverage record. It still does not hash every
-    problem page, discover notebook paths or absence reasons, validate prompt/
-    verifier/initial/final/visualization flags per problem, classify page 68,
-    or emit those rows into paper/source manifests.
+    versus observed-68 numbered HTML page boundary. It now also links to the
+    follow-on runtime-absence notebook inventory, preserving `28` pinned
+    notebook paths while keeping per-problem mapping, notebook SHA-256 hashes,
+    and absence reasons incomplete. The standard paper-manifest gate validates
+    the built-in coverage record. It still does not hash every problem page,
+    map notebooks or absence reasons to problem ids, validate prompt/verifier/
+    initial/final/visualization flags per problem, classify page 68, or emit
+    those rows into paper/source manifests.
   - Required result: extend the follow-on repository coverage manifest and
     validators with per-problem hosted page URL and page hash, notebook
     path/hash or absence reason, artifact presence flags for prompt/verifier/

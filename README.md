@@ -4097,9 +4097,12 @@ pins the same repository snapshot and validates root-level `status.json`,
 not listed in `status.json` as `not_listed_in_status_json`, records browser
 problem-page and many-but-not-all Colab notebook access modes, and captures the
 snapshot boundary that the repository declares 67 problems while 68 numbered
-HTML pages are present. This is status-artifact and bucket-membership evidence;
-per-page hashes, notebook path/hash or absence reasons, prompt/verifier/final
-artifact flags, and classification of page 68 remain open work.
+HTML pages are present. It also links to the runtime-absence notebook inventory
+with 28 pinned notebook paths, while per-problem mapping, notebook SHA-256
+hashes, and notebook absence reasons remain incomplete. This is
+status-artifact and bucket-membership evidence; per-page hashes,
+prompt/verifier/final artifact flags, and classification of page 68 remain
+open work.
 Matrix headline historicity evidence uses
 `libreevolve.matrix_headline_historicity_evidence.v1`; it validates declared
 provenance for the `mm_4x4x4` complex rank-48 headline, including dimensions,

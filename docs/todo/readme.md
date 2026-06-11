@@ -1479,10 +1479,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     root-level status artifact paths/hashes for `status.json`,
     `status_grid.png`, and `result_distribution.png`, parsed status buckets,
     43 listed ids, 24 `not_listed_in_status_json` ids, and the declared-67
-    versus observed-68 numbered HTML page boundary. README still cannot point
-    to per-problem page hashes, notebook paths/hashes or absence reasons,
-    prompt/verifier/initial/final/visualization flags, page-68 classification,
-    or emitted source-manifest rows.
+    versus observed-68 numbered HTML page boundary. README now also names the
+    linked runtime-absence notebook inventory with `28` pinned notebook paths,
+    while per-problem notebook mapping, notebook SHA-256 hashes, and absence
+    reasons remain incomplete. README still cannot point to per-problem page
+    hashes, prompt/verifier/initial/final/visualization flags, page-68
+    classification, or emitted source-manifest rows.
   - Required result: after per-problem source-coverage metadata lands, update
     README so AlphaEvolve follow-on claims name hosted page URL/hash per
     problem, partial notebook/artifact coverage, notebook absence reasons,

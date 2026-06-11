@@ -3238,11 +3238,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     access modes, root-level status artifact paths/hashes for `status.json`,
     `status_grid.png`, and `result_distribution.png`, parsed status bucket
     membership, 43 listed ids, 24 `not_listed_in_status_json` ids, and the
-    declared-67 versus observed-68 numbered HTML page boundary. The standard
-    paper-manifest gate validates the built-in coverage record. Paper-facing
-    rows are still missing: no per-problem page hashes, notebook paths/hashes
-    or absence reasons, prompt/verifier/initial/final/visualization flags,
-    page-68 classification, or emitted source-manifest rows.
+    declared-67 versus observed-68 numbered HTML page boundary. It also links
+    to the runtime-absence notebook inventory with `28` pinned notebook paths,
+    while per-problem notebook mapping, notebook SHA-256 hashes, and absence
+    reasons remain incomplete. The standard paper-manifest gate validates the
+    built-in coverage record. Paper-facing rows are still missing: no
+    per-problem page hashes, prompt/verifier/initial/final/visualization
+    flags, page-68 classification, or emitted source-manifest rows.
   - Required result: add source-manifest rows and checks for the problem
     repository snapshot: hosted page URL and page hash per problem, notebook
     path/hash or explicit absence reason, prompt/verifier/initial/final/

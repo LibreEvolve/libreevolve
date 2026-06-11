@@ -4,6 +4,24 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README Section 3.2 constructive-math boundary wording tied to
+      committed sidecars.
+  - Spec evidence: AlphaEvolve Section 3.2 constructive-math claims cover
+    aggregate outcomes, simple/random starts, heuristic handoff, and staged
+    heuristic sequences.
+  - Status: README now names `papers/math_outcome_boundary.json`,
+    `papers/math_starting_construction_boundary.json`,
+    `papers/math_heuristic_handoff_boundary.json`, and
+    `papers/math_heuristic_stage_sequence_boundary.json` as the committed
+    sidecars for those absence boundaries, with paper-manifest validation.
+  - Verification: `py -3.12 -m pytest tests\test_math_outcomes.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\math_outcomes.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: none for README sidecar scoping; actual constructive-math
+    construction/verifier artifacts remain active code/paper gaps.
+
 - [x] Keep README Appendix A best-known-rank wording scoped until baseline
       citation provenance exists.
   - Spec evidence: AlphaEvolve Table 2 and Appendix A Table 3 use a

@@ -3726,7 +3726,12 @@ the paper's claim that final constructions often came from specialized
 heuristic chains: early broad-gain stages from random/simple states and later
 fine-tuning stages near optimal configurations. Per-stage ordering, roles,
 construction transitions, improvement deltas, and verifier artifacts remain
-`not_recorded_locally`. For Appendix B.4, the registry now
+`not_recorded_locally`. The committed `papers/math_outcome_boundary.json`,
+`papers/math_starting_construction_boundary.json`,
+`papers/math_heuristic_handoff_boundary.json`, and
+`papers/math_heuristic_stage_sequence_boundary.json` sidecars emit those four
+Section 3.2 absence boundaries, and the paper-manifest gate validates them.
+For Appendix B.4, the registry now
 preserves the uncertainty-inequality formulation, the `[33]` prior-bound
 rounding distinction (`0.353` stated versus `0.3523` rounded), the first-version
 Hermite-polynomial result boundary (`C4 <= 0.3521` with coefficients

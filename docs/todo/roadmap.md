@@ -2590,7 +2590,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     simple-or-random source statement and required future fields for starting
     class, construction artifact, random generator/seed, baseline metric, and
     prior-best visibility/seeding policy, while the actual rows and artifacts
-    remain absent.
+    remain absent. The committed `papers/math_starting_construction_boundary.json`
+    sidecar now emits this boundary for paper-manifest validation alongside the
+    related Section 3.2 outcome, heuristic-handoff, and stage-sequence boundary
+    sidecars.
   - Required result: when constructive-math reports validate simple/random
     starting-construction provenance, update ROADMAP, README, papers index, and
     code/paper TODOs so roadmap wording distinguishes aggregate Appendix B

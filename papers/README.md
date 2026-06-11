@@ -178,7 +178,13 @@ companion Colab link remain absent.
 Appendix B says reported construction data and verification code
 appear in an accompanying Google Colab; this registry is not that
 Colab-equivalent evidence surface and does not yet store construction-data
-exports or runnable verifier-code artifacts.
+exports or runnable verifier-code artifacts. The committed
+`papers/math_outcome_boundary.json`,
+`papers/math_starting_construction_boundary.json`,
+`papers/math_heuristic_handoff_boundary.json`, and
+`papers/math_heuristic_stage_sequence_boundary.json` sidecars emit the current
+Section 3.2 constructive-math absence boundaries and are validated by
+`validate_paper_manifest()`.
 The top-level Appendix B `figure_exhibit_boundary` now records the missing
 Figures 10-14 exhibit layer separately from family/result boundaries. It
 requires future figure/subfigure ids, caption values, previous/current metric

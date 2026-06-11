@@ -86,6 +86,20 @@ def _write_manifest(root, rows):
             writer.writerow(row)
 
 
+def _write_math_outcome_boundary_sidecars(root):
+    sidecars = {
+        paper_manifest.MATH_OUTCOME_BOUNDARY_FILE: paper_manifest.alphaevolve_math_outcome_boundary(),
+        paper_manifest.MATH_STARTING_CONSTRUCTION_BOUNDARY_FILE: paper_manifest.alphaevolve_math_starting_construction_boundary(),
+        paper_manifest.MATH_HEURISTIC_HANDOFF_BOUNDARY_FILE: paper_manifest.alphaevolve_math_heuristic_handoff_boundary(),
+        paper_manifest.MATH_HEURISTIC_STAGE_SEQUENCE_BOUNDARY_FILE: paper_manifest.alphaevolve_math_heuristic_stage_sequence_boundary(),
+    }
+    for relative_path, boundary in sidecars.items():
+        (root / relative_path).write_text(
+            json.dumps(boundary, indent=2),
+            encoding="utf-8",
+        )
+
+
 def _write_status_table(root, row_ids):
     rows = "\n".join(
         f"| {row_id} | Paper {index} | Primary specification target | "
@@ -727,6 +741,59 @@ def test_validate_paper_manifest_reports_invalid_ablation_registry(tmp_path):
     assert report.ok is False
     assert "ablation_invalid_schema" in issue_codes
     assert "ablation_missing_variant" in issue_codes
+
+
+def test_validate_paper_manifest_accepts_math_outcome_boundary_sidecars(monkeypatch, tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_math_outcome_boundary_sidecars(tmp_path)
+    drifted = paper_manifest.alphaevolve_math_starting_construction_boundary()
+    drifted["status"] = "recorded"
+    monkeypatch.setattr(
+        paper_manifest,
+        "alphaevolve_math_starting_construction_boundary",
+        lambda: drifted,
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_math_outcome_boundary_sidecar_drift(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_math_outcome_boundary_sidecars(tmp_path)
+    starting_path = tmp_path / paper_manifest.MATH_STARTING_CONSTRUCTION_BOUNDARY_FILE
+    starting = json.loads(starting_path.read_text(encoding="utf-8"))
+    starting["status"] = "recorded"
+    starting["missing_evidence"]["baseline_metric_values"] = "recorded"
+    starting_path.write_text(json.dumps(starting, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "math_starting_construction_invalid_starting_status" in codes
+    assert "math_starting_construction_invalid_starting_missing_baseline_metric_values" in codes
+
+
+def test_validate_paper_manifest_requires_math_outcome_boundary_sidecars_at_repo_root(
+    monkeypatch, tmp_path
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "math_outcome_boundary_manifest_missing" in codes
+    assert "math_starting_construction_boundary_manifest_missing" in codes
+    assert "math_heuristic_handoff_boundary_manifest_missing" in codes
+    assert "math_heuristic_stage_sequence_boundary_manifest_missing" in codes
 
 
 def test_rehydrate_paper_cache_downloads_missing_pdf_and_validates_hash(tmp_path, monkeypatch):

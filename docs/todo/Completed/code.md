@@ -4,6 +4,28 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit Section 3.2 constructive-math boundary sidecars.
+  - Spec evidence: AlphaEvolve Section 3.2 reports broad constructive-math
+    outcomes, simple/random starts, heuristic-to-construction handoff, and
+    specialized heuristic sequences; those claims need per-instance
+    construction, verifier, metric, and stage evidence before they can be
+    implemented locally.
+  - Status: `papers/math_outcome_boundary.json`,
+    `papers/math_starting_construction_boundary.json`,
+    `papers/math_heuristic_handoff_boundary.json`, and
+    `papers/math_heuristic_stage_sequence_boundary.json` now emit the existing
+    `math_outcomes` absence boundaries, and `validate_paper_manifest()` requires
+    and validates them at the real repo root.
+  - Verification: `py -3.12 -m pytest tests\test_math_outcomes.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\math_outcomes.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: local constructive-math runners still do not emit
+    per-instance outcome rows, starting construction payloads, heuristic
+    program artifacts, stage sequences, construction outputs, or verifier
+    artifacts.
+
 - [x] Emit shipped-example benchmark scope sidecar.
   - Spec evidence: AlphaEvolve-style benchmark claims require target-family
     experiments, repeated runs, and evidence artifacts; shipped smoke examples

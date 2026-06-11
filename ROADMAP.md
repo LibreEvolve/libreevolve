@@ -660,7 +660,11 @@ is not yet an AlphaEvolve reproduction.
   heuristics, with early broad-gain stages from random/simple states and later
   fine-tuning stages near optimal configurations. Per-stage ordering records,
   stage roles, input/output construction artifacts, improvement deltas, and
-  verifier evidence remain open.
+  verifier evidence remain open. The committed `papers/math_outcome_boundary.json`,
+  `papers/math_starting_construction_boundary.json`,
+  `papers/math_heuristic_handoff_boundary.json`, and
+  `papers/math_heuristic_stage_sequence_boundary.json` sidecars now emit these
+  absence boundaries for paper-manifest validation.
 - Keep Appendix B per-result metric/value claims scoped to the registry's
   result-row absence boundary: `alphaevolve_appendix_b.json` now validates the
   missing cross-family layer for B.1-B.13 text-level result rows, including

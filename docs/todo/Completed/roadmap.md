@@ -2,6 +2,23 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Emit Section 3.2 constructive-math boundary sidecars for roadmap evidence.
+  - Status: `papers/math_outcome_boundary.json`,
+    `papers/math_starting_construction_boundary.json`,
+    `papers/math_heuristic_handoff_boundary.json`, and
+    `papers/math_heuristic_stage_sequence_boundary.json` now let roadmap
+    wording point to committed absence boundaries for AlphaEvolve Section 3.2
+    constructive-math outcome, starting-point, handoff, and stage-sequence
+    claims.
+  - Verification: `py -3.12 -m pytest tests\test_math_outcomes.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\math_outcomes.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: the active roadmap TODOs still track actual per-instance
+    constructive-math artifacts, verifier exports, handoff reports, and stage
+    sequence evidence.
+
 - [x] Emit shipped-example benchmark scope sidecar for roadmap evidence.
   - Status: `papers/example_benchmark_scope.json` now lets roadmap wording
     point to a committed `libreevolve.example_benchmark_scope.v1` boundary for

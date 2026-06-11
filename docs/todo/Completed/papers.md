@@ -6,6 +6,26 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit Section 3.2 constructive-math boundary sidecars.
+  - Paper evidence: AlphaEvolve Section 3.2 ties mathematical breadth and
+    SOTA-improvement claims to constructive problem instances, simple/random
+    starting points, evolved search heuristics, fixed-time handoff, and
+    specialized heuristic sequences.
+  - Status: `papers/math_outcome_boundary.json`,
+    `papers/math_starting_construction_boundary.json`,
+    `papers/math_heuristic_handoff_boundary.json`, and
+    `papers/math_heuristic_stage_sequence_boundary.json` now carry the
+    paper-facing absence boundaries for those claims. The paper-manifest gate
+    requires and validates the sidecars at the real repo root.
+  - Verification: `py -3.12 -m pytest tests\test_math_outcomes.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\math_outcomes.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining paper gap: these are absence boundaries; construction-data
+    exports, verifier-code artifacts, per-instance metrics, handoff rows, and
+    stage-sequence reports remain open.
+
 - [x] Emit shipped-example benchmark scope sidecar.
   - Paper evidence: AlphaEvolve distinguishes benchmark-quality experiments
     from illustrative examples through reported target families, comparable

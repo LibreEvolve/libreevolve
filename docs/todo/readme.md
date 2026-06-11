@@ -1476,7 +1476,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     absence boundary in `libreevolve.problems.benchmarks.math_outcomes`. It
     documents the simple-or-random source statement and says per-instance
     starting construction artifacts, generator/seed records, baseline metrics,
-    and prior-best seeding policies remain `not_recorded_locally`.
+    and prior-best seeding policies remain `not_recorded_locally`. The
+    committed `papers/math_starting_construction_boundary.json` sidecar now
+    emits this boundary for paper-manifest validation alongside the related
+    Section 3.2 outcome, heuristic-handoff, and stage-sequence boundary
+    sidecars.
   - Required result: when constructive-math starting-construction provenance
     lands, update README, ROADMAP, papers index, and code/paper TODOs together
     so README distinguishes Appendix B family coverage and aggregate outcomes

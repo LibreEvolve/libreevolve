@@ -2904,7 +2904,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     simple-or-random source statement and required future fields for
     per-instance starting class, artifact hash, generator/random seed,
     baseline metric, and prior-best visibility/seeding policy. It does not yet
-    provide those rows or artifacts.
+    provide those rows or artifacts. The committed
+    `papers/math_starting_construction_boundary.json` sidecar now emits this
+    boundary for paper-manifest validation alongside the related Section 3.2
+    outcome, heuristic-handoff, and stage-sequence boundary sidecars.
   - Required result: add paper/report evidence for each constructive-math
     problem instance: starting-construction class (`simple`, `random`,
     `human_seeded`, or `prior_art_seeded`), construction artifact/hash,

@@ -2885,7 +2885,10 @@ Primary evidence:
     construction." It validates required future per-instance fields for
     starting class, construction artifact, generator/random seed, baseline
     metric, prior-best visibility, and prior-best seeding policy, while keeping
-    that evidence `not_recorded_locally`.
+    that evidence `not_recorded_locally`. The committed
+    `papers/math_starting_construction_boundary.json` sidecar now emits this
+    boundary for paper-manifest validation alongside the related Section 3.2
+    outcome, heuristic-handoff, and stage-sequence boundary sidecars.
   - Required result: replace the absence boundary with constructive-math
     benchmark/report fields for starting-construction class (`simple`,
     `random`, or explicitly `human_seeded`/`prior_art_seeded` where

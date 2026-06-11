@@ -52,6 +52,16 @@ from libreevolve.problems.benchmarks.example_scope import (
     example_benchmark_scope_records,
     validate_example_benchmark_scope,
 )
+from libreevolve.problems.benchmarks.math_outcomes import (
+    alphaevolve_math_heuristic_handoff_boundary,
+    alphaevolve_math_heuristic_stage_sequence_boundary,
+    alphaevolve_math_outcome_boundary,
+    alphaevolve_math_starting_construction_boundary,
+    validate_math_heuristic_handoff_boundary,
+    validate_math_heuristic_stage_sequence_boundary,
+    validate_math_outcome_boundary,
+    validate_math_starting_construction_boundary,
+)
 from libreevolve.problems.benchmarks.follow_on_sources import (
     EXPECTED_FOLLOW_ON_REPOSITORY_RIGHTS_MANIFEST_FILE,
     EXPECTED_FOLLOW_ON_RUNTIME_ABSENCE_MANIFEST_FILE,
@@ -157,6 +167,10 @@ MATRIX_SCALAR_FIELD_RUNTIME_FILE = "papers/matrix_scalar_field_runtime_boundary.
 MATRIX_SWEEP_SPACE_RUNTIME_FILE = "papers/matrix_sweep_space_runtime_boundary.json"
 MATRIX_TENSOR_RANK_RUNTIME_FILE = "papers/matrix_tensor_rank_runtime_boundary.json"
 EXAMPLE_BENCHMARK_SCOPE_FILE = "papers/example_benchmark_scope.json"
+MATH_OUTCOME_BOUNDARY_FILE = "papers/math_outcome_boundary.json"
+MATH_STARTING_CONSTRUCTION_BOUNDARY_FILE = "papers/math_starting_construction_boundary.json"
+MATH_HEURISTIC_HANDOFF_BOUNDARY_FILE = "papers/math_heuristic_handoff_boundary.json"
+MATH_HEURISTIC_STAGE_SEQUENCE_BOUNDARY_FILE = "papers/math_heuristic_stage_sequence_boundary.json"
 PAPER_ARTIFACT_ROLES_FILE = "papers/paper_artifact_roles.json"
 PAPER_ARTIFACT_LINKAGE_FILE = "papers/paper_artifact_linkage.json"
 SHA256_RE = re.compile(r"[0-9a-f]{64}")
@@ -518,6 +532,7 @@ def validate_paper_manifest(
     issues.extend(_validate_appendix_b_registry_if_present(root_path))
     issues.extend(_validate_ablation_registry_if_present(root_path))
     issues.extend(_validate_example_benchmark_scope_records(root_path))
+    issues.extend(_validate_math_outcome_boundaries(root_path))
 
     if set(csv_by_id) - seen_ids:
         for row_id in sorted(set(csv_by_id) - seen_ids):
@@ -1173,6 +1188,87 @@ def _validate_example_benchmark_scope_records(root_path: Path) -> list[PaperMani
         )
         for issue in report.issues
     ]
+
+
+def _validate_math_outcome_boundaries(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+
+    specs = (
+        (
+            MATH_OUTCOME_BOUNDARY_FILE,
+            alphaevolve_math_outcome_boundary,
+            validate_math_outcome_boundary,
+            "math_outcome_boundary",
+            "math_outcome_boundary_manifest_missing",
+            "math_outcome",
+            "Section 3.2 aggregate constructive-math outcome boundary",
+        ),
+        (
+            MATH_STARTING_CONSTRUCTION_BOUNDARY_FILE,
+            alphaevolve_math_starting_construction_boundary,
+            validate_math_starting_construction_boundary,
+            "math_starting_construction_boundary",
+            "math_starting_construction_boundary_manifest_missing",
+            "math_starting_construction",
+            "Section 3.2 simple-or-random starting-construction boundary",
+        ),
+        (
+            MATH_HEURISTIC_HANDOFF_BOUNDARY_FILE,
+            alphaevolve_math_heuristic_handoff_boundary,
+            validate_math_heuristic_handoff_boundary,
+            "math_heuristic_handoff_boundary",
+            "math_heuristic_handoff_boundary_manifest_missing",
+            "math_heuristic_handoff",
+            "Section 3.2 heuristic-to-construction handoff boundary",
+        ),
+        (
+            MATH_HEURISTIC_STAGE_SEQUENCE_BOUNDARY_FILE,
+            alphaevolve_math_heuristic_stage_sequence_boundary,
+            validate_math_heuristic_stage_sequence_boundary,
+            "math_heuristic_stage_sequence_boundary",
+            "math_heuristic_stage_sequence_boundary_manifest_missing",
+            "math_heuristic_stage_sequence",
+            "Section 3.2 staged-heuristic sequence boundary",
+        ),
+    )
+    issues: list[PaperManifestIssue] = []
+    for relative_file, factory, validator, label, missing_code, issue_prefix, description in specs:
+        boundary_path = root_path / relative_file
+        if boundary_path.exists():
+            try:
+                boundary: object = json.loads(boundary_path.read_text(encoding="utf-8"))
+            except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+                issues.append(
+                    PaperManifestIssue(
+                        f"{issue_prefix}_manifest_unreadable",
+                        _manifest_diagnostic(boundary_path, root_path, exc),
+                        label,
+                    )
+                )
+                continue
+        else:
+            boundary = factory()
+            if is_repo_root:
+                issues.append(
+                    PaperManifestIssue(
+                        missing_code,
+                        f"{relative_file} must emit the {description}",
+                        label,
+                    )
+                )
+        report = validator(boundary)
+        issues.extend(
+            PaperManifestIssue(
+                f"{issue_prefix}_{issue.code}",
+                issue.message,
+                label,
+            )
+            for issue in report.issues
+        )
+    return issues
 
 
 def _validate_paper_source_identity_manifest(

@@ -2947,10 +2947,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current evidence: roadmap/README/paper-index wording now cites B.9-B.10
     `heilbronn_result_boundary` entries for the three `n` values, domains,
     prior and reported values, comparison policies, Figure 13 panel links, and
-    required future point/domain/certificate fields. It still does not claim
-    point/region artifact hashes, unit-area proofs, convexity proofs,
-    all-triples minimum-area certificates, recomputed values, or rendered
-    Figure 13 panel artifacts.
+    required future point/domain/certificate fields plus Figure 13 panel
+    artifact path/hash fields. It still keeps `figure_panel_artifact_status`
+    at `not_recorded_locally` and does not claim point/region artifact hashes,
+    unit-area proofs, convexity proofs, all-triples minimum-area certificates,
+    recomputed values, or rendered Figure 13 panel artifacts.
   - Required result: when the actual Appendix B.9-B.10 Heilbronn payloads and
     certificates land, update ROADMAP, README, papers index, and code/paper
     TODOs so roadmap claims distinguish the three `n` values, domains,

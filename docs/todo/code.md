@@ -2732,11 +2732,12 @@ Primary evidence:
     convex region with minimum area `0.0309`, and `n = 14` in a unit-area
     convex region with minimum area `0.0278`. The boundaries record prior
     values, comparison policy, Figure 13 left/middle/right linkage, and
-    required future point/domain/certificate fields. They still mark the
-    witnesses `not_recorded_locally`: no point-coordinate hashes, domain
-    artifacts, unit-area certificates, convexity certificates,
-    all-triples-area certificates, recomputed minimum areas, or Figure 13
-    panel artifacts exist.
+    required future point/domain/certificate fields plus Figure 13 panel
+    artifact path/hash fields. They still mark the witnesses
+    `not_recorded_locally`, including `figure_panel_artifact_status`: no
+    point-coordinate hashes, domain artifacts, unit-area certificates,
+    convexity certificates, all-triples-area certificates, recomputed minimum
+    areas, or Figure 13 panel artifacts exist.
   - Required result: replace the `not_recorded_locally` boundaries with real
     Appendix B.9-B.10 witness artifacts: point-set and region artifact hashes,
     domain-membership proofs, unit-area scaling proofs, convexity proofs for

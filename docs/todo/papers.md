@@ -2670,10 +2670,12 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current gap: paper-facing Appendix B coverage now retains the three
     B.9-B.10 parameter/domain rows, unit-area normalization requirement,
     prior/current values, comparison policy, source section, and Figure 13
-    panel linkage through validated `heilbronn_result_boundary` entries. It
-    still does not retain real point-coordinate payloads, domain artifacts,
-    unit-area proofs, convexity proofs for B.10, all-triples minimum-area
-    certificates, recomputed minimum areas, or rendered Figure 13 artifacts.
+    panel linkage plus required future panel artifact path/hash fields through
+    validated `heilbronn_result_boundary` entries. It still marks
+    `figure_panel_artifact_status` as `not_recorded_locally` and does not
+    retain real point-coordinate payloads, domain artifacts, unit-area proofs,
+    convexity proofs for B.10, all-triples minimum-area certificates,
+    recomputed minimum areas, or rendered Figure 13 artifacts.
   - Required result: add paper/report evidence for the missing Appendix
     B.9-B.10 witness artifacts: point and region artifact hashes, domain
     membership proofs, unit-area normalization proof, convexity proof,

@@ -3649,9 +3649,11 @@ unit-area convex region improving `0.0306` to `0.0309`, and `n = 14` points
 in a unit-area convex region improving `0.0277` to `0.0278`, mapped to
 Figure 13 left/middle/right. Validated `heilbronn_result_boundary` entries
 record future point-coordinate, domain, membership, unit-area,
-all-triples-area, convexity, recomputed-minimum-area, and figure-panel fields
-required before local reproduction can be claimed. The actual B.9-B.10
-coordinate/domain payloads and area certificates remain absent. For Appendix
+all-triples-area, convexity, recomputed-minimum-area, and Figure 13 panel
+artifact path/hash fields required before local reproduction can be claimed,
+with panel artifacts explicitly `not_recorded_locally`. The actual B.9-B.10
+coordinate/domain payloads, area certificates, and panel artifacts remain
+absent. For Appendix
 B.11, the registry now preserves the dimension-11 kissing-number result
 summary: prior lower bound `592`, reported lower bound `593`, the 593
 nonzero integral 11-dimensional vector witness condition, the max-norm versus

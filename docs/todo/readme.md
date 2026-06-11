@@ -1843,10 +1843,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: README now names B.9-B.10
     `heilbronn_result_boundary` entries for the three `n` values, domains,
     prior and reported values, comparison policies, Figure 13 panel links, and
-    required future point/domain/certificate fields. It still warns that the
-    actual coordinate payloads, domain artifacts, unit-area proofs,
-    convexity proofs, all-triples certificates, and recomputed minimum areas
-    are absent.
+    required future point/domain/certificate fields plus Figure 13 panel
+    artifact path/hash fields. It still warns that `figure_panel_artifact_status`
+    is `not_recorded_locally` and that the actual coordinate payloads, domain
+    artifacts, unit-area proofs, convexity proofs, all-triples certificates,
+    recomputed minimum areas, and panel artifacts are absent.
   - Required result: when the actual Appendix B.9-B.10 Heilbronn payloads and
     certificates land, update README, ROADMAP, papers index, and code/paper
     TODOs together so README names point/domain artifact hashes, unit-area and

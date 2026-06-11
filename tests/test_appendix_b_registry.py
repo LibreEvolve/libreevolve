@@ -716,6 +716,7 @@ def test_appendix_b_registry_requires_heilbronn_boundary(tmp_path):
     first["point_count"] = 10
     first["reported_minimum_area"] = 0.035
     first["point_coordinate_artifact_status"] = "recorded"
+    first["figure_panel_artifact_status"] = "recorded"
     first["claim_boundary"] = "Coordinates exist."
     registry = tmp_path / "registry.json"
     registry.write_text(json.dumps(data), encoding="utf-8")
@@ -730,6 +731,7 @@ def test_appendix_b_registry_requires_heilbronn_boundary(tmp_path):
     assert "invalid_heilbronn_witness_point_count" in codes
     assert "invalid_heilbronn_witness_reported_minimum_area" in codes
     assert "invalid_heilbronn_point_coordinate_artifact_status" in codes
+    assert "invalid_heilbronn_figure_panel_artifact_status" in codes
     assert "missing_heilbronn_witness_claim_boundary" in codes
     assert "invalid_heilbronn_improvement_direction" in codes
 

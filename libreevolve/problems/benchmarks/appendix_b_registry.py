@@ -614,6 +614,8 @@ EXPECTED_B9_HEILBRONN_REQUIRED_FIELDS = (
     "all_triples_area_certificate_sha256",
     "recomputed_minimum_area",
     "figure_panel_id",
+    "figure_panel_artifact_path",
+    "figure_panel_artifact_sha256",
 )
 EXPECTED_B10_HEILBRONN_REQUIRED_FIELDS = (
     "result_id",
@@ -634,6 +636,8 @@ EXPECTED_B10_HEILBRONN_REQUIRED_FIELDS = (
     "all_triples_area_certificate_sha256",
     "recomputed_minimum_area",
     "figure_panel_id",
+    "figure_panel_artifact_path",
+    "figure_panel_artifact_sha256",
 )
 EXPECTED_HEILBRONN_SUMMARIES = {
     "heilbronn_triangle": {
@@ -668,6 +672,7 @@ EXPECTED_HEILBRONN_ROWS = {
             "reported_value_relation": "minimum_area > 0.0365",
             "comparison_policy": "strictly_greater_than_reported_threshold",
             "prior_best_source": "[29]",
+            "figure_panel_artifact_status": "not_recorded_locally",
         },
     ),
     "heilbronn_convex_region": (
@@ -680,6 +685,7 @@ EXPECTED_HEILBRONN_ROWS = {
             "reported_value_relation": "minimum_area >= 0.0309",
             "comparison_policy": "at_least_reported_value",
             "prior_best_source": "[29]",
+            "figure_panel_artifact_status": "not_recorded_locally",
         },
         {
             "result_id": "b10_convex_region_n14",
@@ -690,6 +696,7 @@ EXPECTED_HEILBRONN_ROWS = {
             "reported_value_relation": "minimum_area >= 0.0278",
             "comparison_policy": "at_least_reported_value",
             "prior_best_source": "[29]",
+            "figure_panel_artifact_status": "not_recorded_locally",
         },
     ),
 }
@@ -1825,6 +1832,7 @@ def _validate_heilbronn_boundary(
             "unit_area_certificate_status",
             "all_triples_area_certificate_status",
             "recomputed_minimum_area_status",
+            "figure_panel_artifact_status",
         ]
         if family_id == "heilbronn_convex_region":
             required_status_fields.append("convexity_certificate_status")

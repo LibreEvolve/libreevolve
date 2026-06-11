@@ -749,7 +749,9 @@
           "all_triples_area_certificate_path",
           "all_triples_area_certificate_sha256",
           "recomputed_minimum_area",
-          "figure_panel_id"
+          "figure_panel_id",
+          "figure_panel_artifact_path",
+          "figure_panel_artifact_sha256"
         ],
         "missing_witnesses": [
           {
@@ -767,6 +769,7 @@
             "unit_area_certificate_status": "not_recorded_locally",
             "all_triples_area_certificate_status": "not_recorded_locally",
             "recomputed_minimum_area_status": "not_recorded_locally",
+            "figure_panel_artifact_status": "not_recorded_locally",
             "claim_boundary": "The registry records the paper's B.9 n=11 Heilbronn triangle summary but does not claim local point coordinates, domain artifacts, unit-area proof, all-triples area certificate, or recomputed minimum area."
           }
         ]
@@ -809,7 +812,9 @@
           "all_triples_area_certificate_path",
           "all_triples_area_certificate_sha256",
           "recomputed_minimum_area",
-          "figure_panel_id"
+          "figure_panel_id",
+          "figure_panel_artifact_path",
+          "figure_panel_artifact_sha256"
         ],
         "missing_witnesses": [
           {
@@ -828,6 +833,7 @@
             "unit_area_certificate_status": "not_recorded_locally",
             "all_triples_area_certificate_status": "not_recorded_locally",
             "recomputed_minimum_area_status": "not_recorded_locally",
+            "figure_panel_artifact_status": "not_recorded_locally",
             "claim_boundary": "The registry records the paper's B.10 n=13 Heilbronn convex-region summary but does not claim local point coordinates, domain artifacts, convexity proof, unit-area proof, all-triples area certificate, or recomputed minimum area."
           },
           {
@@ -846,6 +852,7 @@
             "unit_area_certificate_status": "not_recorded_locally",
             "all_triples_area_certificate_status": "not_recorded_locally",
             "recomputed_minimum_area_status": "not_recorded_locally",
+            "figure_panel_artifact_status": "not_recorded_locally",
             "claim_boundary": "The registry records the paper's B.10 n=14 Heilbronn convex-region summary but does not claim local point coordinates, domain artifacts, convexity proof, unit-area proof, all-triples area certificate, or recomputed minimum area."
           }
         ]

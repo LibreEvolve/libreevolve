@@ -590,12 +590,14 @@ stable Figure 1/Figure 2 IDs, local PDF page/caption locations, process
 node/edge mappings to LibreEvolve components, Figure 2 pseudocode-step
 mappings, and run-artifact cross-links for prompt history, LLM calls,
 candidate history, evaluator artifacts, archive events, controller-budget
-events, and best exports. It remains `claim_ready: false` because rendered
-diagram artifacts and hashes, exact diagram text/accessibility export,
-async controller/sampler/evaluator topology, independent evaluator-pool
-parallelism, and artifact-level step validation remain open.
+events, and best exports. It also records generated Mermaid/text
+accessibility artifacts with hashes, per-step artifact-stream validation
+records, and component-to-TODO links for the remaining process gaps. It
+remains `claim_ready: false` because exact source-diagram reproduction, async
+controller/sampler/evaluator topology, independent evaluator-pool
+parallelism, and row-level step-stream validation remain open.
 The committed `papers/process_exhibit_boundary.json` sidecar emits the
-`process_mapping_without_rendered_diagram_parity` boundary, and
+`process_mapping_with_step_artifact_links_without_full_parity` boundary, and
 `validate_paper_manifest()` requires it at the real repo root.
 
 AlphaEvolve distributed-pipeline topology note: completed manifests now include

@@ -245,16 +245,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     caption locations, artifact cross-links, and validation that keeps
     `claim_ready: false`. The report now also writes generated Mermaid source
     and text accessibility artifacts under `paper_artifacts/process_exhibit/`
-    with SHA-256 hashes.
+    with SHA-256 hashes, validates each displayed Figure 2 step against the
+    artifact-inventory paths it cites, and records component-to-TODO links for
+    the remaining process gaps.
   - Current gap: paper-facing evidence still lacks exact source-diagram
     reproduction, async controller/sampler/evaluator topology, independent
-    evaluator-pool parallelism, artifact-level per-step validation, and
-    component-to-TODO links strong enough to treat the local mapping as full
-    reproduced AlphaEvolve architecture evidence.
-  - Required result: add exact diagram text/source reproduction, step-level
-    stream validation, topology evidence, component-to-evidence/TODO links, and
-    README/ROADMAP wording that separates local workflow diagrams and generated
-    Mermaid artifacts from full reproduced AlphaEvolve architecture evidence.
+    evaluator-pool parallelism, and row-level per-step validation inside each
+    cited stream strong enough to treat the local mapping as full reproduced
+    AlphaEvolve architecture evidence.
+  - Required result: add exact diagram text/source reproduction, row-level
+    stream validation, topology evidence, and README/ROADMAP wording that
+    separates local workflow diagrams, generated Mermaid artifacts, and
+    artifact-link records from full reproduced AlphaEvolve architecture
+    evidence.
 
 - [ ] Extend unified task-specification provenance beyond field-level artifact
       resolution.
@@ -723,18 +726,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     `runtime.history.alphaevolve_process_exhibit_report`, with stable figure
     IDs, diagram-node labels, edge/process-flow ordering, Figure 2
     pseudocode-step mappings, source/caption locations, artifact cross-links,
-    and row/linkage from each displayed process step to implementation status.
+    generated Mermaid/text artifacts and hashes, per-step artifact-stream
+    validation records, component-to-TODO links, and row/linkage from each
+    displayed process step to implementation status.
     The committed `papers/process_exhibit_boundary.json` sidecar now records
-    the manifest-validated absence boundary for rendered process-diagram
-    parity evidence.
+    the manifest-validated absence boundary for full process-diagram parity
+    evidence.
   - Current gap: paper-facing evidence still lacks exact diagram/pseudocode
-    text or accessibility export, rendered diagram artifact hashes,
-    component-to-evidence/TODO links, and artifact-level per-step validation.
-    Existing component-level implementation evidence is still not a complete
-    reproduced paper process exhibit.
-  - Required result: add exact diagram text, rendered/text artifact paths and
-    hashes, component-to-evidence/TODO links, per-stream step validators, and
-    README/ROADMAP wording that separates reproducing the paper process
+    text or accessibility reproduction, async topology evidence, independent
+    evaluator-pool evidence, and row-level per-step validation inside each
+    cited stream. Existing component-level implementation evidence is still
+    not a complete reproduced paper process exhibit.
+  - Required result: add exact diagram text, async topology evidence,
+    independent evaluator-pool evidence, row-level per-stream step validators,
+    and README/ROADMAP wording that separates reproducing the paper process
     diagrams from implementing each underlying AlphaEvolve workflow capability.
 
 - [ ] Track evaluator workload provenance for inner-search and ML-training

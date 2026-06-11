@@ -4,6 +4,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document process-exhibit step-stream artifact links.
+  - Status: README now documents per-step artifact-stream validation records
+    and component-to-TODO links in the process-exhibit report while preserving
+    exact source-diagram, async-topology, evaluator-pool, and row-level
+    stream-validation gaps.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4636 passed, 21 skipped, 2 deselected.
+  - Remaining gap: full AlphaEvolve process-diagram parity remains open.
+
 - [x] Document process-exhibit diagram text artifacts.
   - Status: README now documents generated Mermaid/text accessibility artifacts
     and hashes under `paper_artifacts/process_exhibit/` while preserving the

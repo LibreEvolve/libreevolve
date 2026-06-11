@@ -12775,6 +12775,11 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
     _attach_process_figure_artifacts(run_dir, figures)
     artifacts = _process_exhibit_artifact_evidence(run_dir)
     artifact_paths = [artifact["path"] for artifact in artifacts]
+    step_stream_validations = _process_step_stream_validations(
+        figure_2_steps,
+        artifacts,
+    )
+    component_todo_links = _process_exhibit_component_todo_links()
     rendered_count = sum(
         1
         for figure in figures
@@ -12802,21 +12807,30 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
         "accessibility_export_count": accessibility_count,
         "artifact_evidence": artifacts,
         "artifact_evidence_paths": artifact_paths,
+        "step_stream_validations": step_stream_validations,
+        "step_stream_validation_count": len(step_stream_validations),
+        "component_todo_links": component_todo_links,
+        "component_todo_link_count": len(component_todo_links),
         "claim_ready": False,
         "claim_readiness": {
             "stable_figure_ids": True,
             "node_edge_component_mappings": True,
             "figure_2_pseudocode_step_mappings": True,
             "artifact_path_cross_links": True,
+            "step_artifact_stream_validation_records": _process_step_streams_resolved(
+                step_stream_validations
+            ),
+            "component_todo_links": True,
             "rendered_diagram_artifacts": rendered_count == len(figures),
             "accessibility_exports": accessibility_count == len(figures),
             "exact_diagram_text_reproduction": False,
+            "row_level_step_stream_validation": False,
             "full_alphaevolve_process_parity": False,
             "remaining_gap": [
                 "exact_source_diagram_text_reproduction",
                 "async_controller_sampler_evaluator_topology",
                 "independent_evaluator_pool_parallelism",
-                "artifact_level_step_validation_against_each_stream",
+                "row_level_step_stream_validation_against_each_stream",
             ],
         },
     }
@@ -13022,6 +13036,149 @@ def _process_mermaid_label(value: str) -> str:
     return value.replace('"', "'").replace("\r", " ").replace("\n", "<br/>")
 
 
+def _process_step_stream_validations(
+    steps: list[dict],
+    artifacts: list[dict],
+) -> list[dict]:
+    artifact_by_path = {
+        artifact.get("path"): artifact
+        for artifact in artifacts
+        if isinstance(artifact, Mapping) and isinstance(artifact.get("path"), str)
+    }
+    validations = []
+    for step in steps:
+        if not isinstance(step, Mapping):
+            continue
+        stream_records = []
+        evidence_paths = step.get("evidence_paths")
+        if not isinstance(evidence_paths, list):
+            evidence_paths = []
+        for path in evidence_paths:
+            if not isinstance(path, str) or not path:
+                continue
+            artifact = artifact_by_path.get(path)
+            record = {
+                "path": path,
+                "artifact_record_present": isinstance(artifact, Mapping),
+                "present": bool(
+                    isinstance(artifact, Mapping) and artifact.get("present") is True
+                ),
+                "row_level_join": False,
+                "validation_status": (
+                    "artifact_record_resolved"
+                    if isinstance(artifact, Mapping)
+                    else "artifact_record_missing"
+                ),
+            }
+            if isinstance(artifact, Mapping):
+                record["kind"] = artifact.get("kind")
+                roles = artifact.get("roles")
+                record["roles"] = roles if isinstance(roles, list) else []
+                if _is_sha256_hex(artifact.get("sha256")):
+                    record["sha256"] = artifact["sha256"]
+                    record["hash_scope"] = artifact.get("hash_scope")
+                if _is_sha256_hex(artifact.get("tree_hash")):
+                    record["tree_hash"] = artifact["tree_hash"]
+                    record["hash_scope"] = artifact.get("hash_scope")
+                if isinstance(artifact.get("bytes"), int):
+                    record["bytes"] = artifact["bytes"]
+            stream_records.append(record)
+        validations.append(
+            {
+                "step_id": step.get("step_id"),
+                "displayed_call": step.get("displayed_call"),
+                "artifact_paths": [
+                    record["path"]
+                    for record in stream_records
+                    if isinstance(record.get("path"), str)
+                ],
+                "stream_records": stream_records,
+                "all_artifact_records_resolved": all(
+                    record["artifact_record_present"] for record in stream_records
+                ),
+                "all_streams_present": all(
+                    record["present"] for record in stream_records
+                ),
+                "row_level_join": False,
+            }
+        )
+    return validations
+
+
+def _process_step_streams_resolved(validations: list[dict]) -> bool:
+    return bool(validations) and all(
+        isinstance(validation, Mapping)
+        and validation.get("all_artifact_records_resolved") is True
+        for validation in validations
+    )
+
+
+def _process_exhibit_component_todo_links() -> list[dict]:
+    active_todos = [
+        "docs/todo/code.md",
+        "docs/todo/roadmap.md",
+        "docs/todo/readme.md",
+        "docs/todo/papers.md",
+    ]
+    claim_surfaces = [
+        "README.md",
+        "ROADMAP.md",
+        "papers/README.md",
+        "docs/run-artifacts.md",
+    ]
+    return [
+        {
+            "gap_id": "exact_source_diagram_text_reproduction",
+            "status": "open",
+            "component_ids": [
+                "alphaevolve_figure_1",
+                "alphaevolve_figure_2",
+            ],
+            "active_todo_paths": active_todos,
+            "claim_surface_paths": claim_surfaces,
+        },
+        {
+            "gap_id": "async_controller_sampler_evaluator_topology",
+            "status": "open",
+            "component_ids": [
+                "fig1.llm_ensemble",
+                "fig1.prompt_sampler",
+                "fig1.evaluator_pool",
+                "fig2.step_1_sample",
+                "fig2.step_2_build_prompt",
+                "fig2.step_3_generate",
+            ],
+            "active_todo_paths": active_todos,
+            "claim_surface_paths": claim_surfaces,
+        },
+        {
+            "gap_id": "independent_evaluator_pool_parallelism",
+            "status": "open",
+            "component_ids": [
+                "fig1.evaluator_pool",
+                "fig2.evaluation",
+                "fig2.step_5_execute_evaluator",
+            ],
+            "active_todo_paths": active_todos,
+            "claim_surface_paths": claim_surfaces,
+        },
+        {
+            "gap_id": "row_level_step_stream_validation_against_each_stream",
+            "status": "open",
+            "component_ids": [
+                "fig2.step_1_sample",
+                "fig2.step_2_build_prompt",
+                "fig2.step_3_generate",
+                "fig2.step_4_apply_diff",
+                "fig2.step_5_execute_evaluator",
+                "fig2.step_6_add_database",
+            ],
+            "active_todo_paths": active_todos,
+            "claim_surface_paths": claim_surfaces,
+        },
+    ]
+
+
 def _process_exhibit_artifact_evidence(run_dir: Path) -> list[dict]:
     artifact_roles = {
         "manifest.json": ["run_manifest", "task_specification", "runtime_history"],
@@ -13112,6 +13269,10 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
         "accessibility_export_count",
         "artifact_evidence",
         "artifact_evidence_paths",
+        "step_stream_validations",
+        "step_stream_validation_count",
+        "component_todo_links",
+        "component_todo_link_count",
         "claim_ready",
         "claim_readiness",
     }
@@ -13145,6 +13306,7 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
     if figure_ids != expected_ids:
         issues.append({"code": "invalid_figure_ids", "message": "figure ids must cover AlphaEvolve figures 1 and 2"})
     nodes_seen: set[str] = set()
+    step_ids_seen: set[str] = set()
     edge_count = 0
     step_count = 0
     rendered_count = 0
@@ -13195,6 +13357,8 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
                     continue
                 if not isinstance(step.get("step_id"), str) or not step.get("step_id"):
                     issues.append({"code": "invalid_step_id", "message": "step_id must be non-empty text"})
+                else:
+                    step_ids_seen.add(step["step_id"])
                 if not isinstance(step.get("displayed_call"), str) or not step.get("displayed_call"):
                     issues.append({"code": "invalid_displayed_call", "message": "displayed_call must be non-empty text"})
                 _validate_process_status(step.get("status"), issues, "step")
@@ -13270,16 +13434,99 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
             issues.append({"code": "invalid_artifact_roles", "message": "artifact roles must be non-empty text"})
         if not isinstance(artifact.get("present"), bool):
             issues.append({"code": "invalid_artifact_present", "message": "artifact present must be boolean"})
+    step_stream_validations = report.get("step_stream_validations")
+    if not isinstance(step_stream_validations, list):
+        issues.append({"code": "invalid_step_stream_validations", "message": "step_stream_validations must be a list"})
+        step_stream_validations = []
+    elif {item.get("step_id") for item in step_stream_validations if isinstance(item, Mapping)} != step_ids_seen:
+        issues.append({"code": "step_stream_validation_step_mismatch", "message": "step stream validations must cover pseudocode steps"})
+    _validate_report_count(
+        report,
+        "step_stream_validation_count",
+        len(step_stream_validations),
+        issues,
+    )
+    artifact_path_set = set(artifact_paths)
+    for validation in step_stream_validations:
+        if not isinstance(validation, Mapping):
+            issues.append({"code": "invalid_step_stream_validation", "message": "step stream validation records must be objects"})
+            continue
+        if not isinstance(validation.get("step_id"), str) or not validation.get("step_id"):
+            issues.append({"code": "invalid_step_stream_validation_id", "message": "step stream validation must name a step"})
+        paths = validation.get("artifact_paths")
+        streams = validation.get("stream_records")
+        if not isinstance(paths, list) or not all(isinstance(path, str) and path for path in paths):
+            issues.append({"code": "invalid_step_stream_validation_paths", "message": "step stream artifact_paths must be text"})
+            paths = []
+        if not isinstance(streams, list):
+            issues.append({"code": "invalid_step_stream_records", "message": "stream_records must be a list"})
+            streams = []
+        if [stream.get("path") for stream in streams if isinstance(stream, Mapping)] != paths:
+            issues.append({"code": "step_stream_path_mismatch", "message": "stream_records must match artifact_paths"})
+        for stream in streams:
+            if not isinstance(stream, Mapping):
+                issues.append({"code": "invalid_step_stream_record", "message": "stream record must be an object"})
+                continue
+            path = stream.get("path")
+            if not isinstance(path, str) or path not in artifact_path_set:
+                issues.append({"code": "invalid_step_stream_validation_path", "message": "stream path must reference artifact_evidence_paths"})
+            if not isinstance(stream.get("artifact_record_present"), bool):
+                issues.append({"code": "invalid_step_stream_record_present", "message": "artifact_record_present must be boolean"})
+            if not isinstance(stream.get("present"), bool):
+                issues.append({"code": "invalid_step_stream_present", "message": "present must be boolean"})
+            if stream.get("row_level_join") is not False:
+                issues.append({"code": "step_stream_row_level_overclaim", "message": "row-level step stream joins are not claimed"})
+            if stream.get("validation_status") not in {"artifact_record_resolved", "artifact_record_missing"}:
+                issues.append({"code": "invalid_step_stream_validation_status", "message": "invalid stream validation status"})
+        if validation.get("row_level_join") is not False:
+            issues.append({"code": "step_validation_row_level_overclaim", "message": "row-level step validation is not claimed"})
+        if not isinstance(validation.get("all_artifact_records_resolved"), bool):
+            issues.append({"code": "invalid_step_artifact_resolution_flag", "message": "all_artifact_records_resolved must be boolean"})
+        if not isinstance(validation.get("all_streams_present"), bool):
+            issues.append({"code": "invalid_step_stream_presence_flag", "message": "all_streams_present must be boolean"})
+    component_todo_links = report.get("component_todo_links")
+    if not isinstance(component_todo_links, list):
+        issues.append({"code": "invalid_component_todo_links", "message": "component_todo_links must be a list"})
+        component_todo_links = []
+    _validate_report_count(
+        report,
+        "component_todo_link_count",
+        len(component_todo_links),
+        issues,
+    )
+    for link in component_todo_links:
+        if not isinstance(link, Mapping):
+            issues.append({"code": "invalid_component_todo_link", "message": "component TODO links must be objects"})
+            continue
+        if not isinstance(link.get("gap_id"), str) or not link.get("gap_id"):
+            issues.append({"code": "invalid_component_todo_gap", "message": "component TODO link must name a gap"})
+        if link.get("status") != "open":
+            issues.append({"code": "invalid_component_todo_status", "message": "component TODO link status must remain open"})
+        components = link.get("component_ids")
+        if not isinstance(components, list) or not all(isinstance(component, str) and component for component in components):
+            issues.append({"code": "invalid_component_todo_components", "message": "component TODO link must name components"})
+        active_paths = link.get("active_todo_paths")
+        if not isinstance(active_paths, list) or not all(isinstance(path, str) and path.startswith("docs/todo/") for path in active_paths):
+            issues.append({"code": "invalid_component_todo_paths", "message": "active TODO paths must reference docs/todo"})
+        claim_paths = link.get("claim_surface_paths")
+        if not isinstance(claim_paths, list) or not all(isinstance(path, str) and path for path in claim_paths):
+            issues.append({"code": "invalid_component_claim_paths", "message": "claim surface paths must be text"})
     readiness = report.get("claim_readiness")
     if not isinstance(readiness, Mapping):
         issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
     else:
+        if readiness.get("step_artifact_stream_validation_records") not in {True, False}:
+            issues.append({"code": "invalid_step_stream_readiness", "message": "step stream validation readiness must be boolean"})
+        if readiness.get("component_todo_links") not in {True, False}:
+            issues.append({"code": "invalid_component_todo_readiness", "message": "component TODO link readiness must be boolean"})
         if readiness.get("rendered_diagram_artifacts") not in {True, False}:
             issues.append({"code": "invalid_rendered_diagram_readiness", "message": "rendered diagram readiness must be boolean"})
         if readiness.get("accessibility_exports") not in {True, False}:
             issues.append({"code": "invalid_accessibility_export_readiness", "message": "accessibility export readiness must be boolean"})
         if readiness.get("exact_diagram_text_reproduction") is not False:
             issues.append({"code": "exact_diagram_text_overclaim", "message": "exact source diagram text reproduction must remain false"})
+        if readiness.get("row_level_step_stream_validation") is not False:
+            issues.append({"code": "row_level_step_stream_overclaim", "message": "row-level step stream validation must remain false"})
         if readiness.get("full_alphaevolve_process_parity") is not False:
             issues.append({"code": "process_parity_overclaim", "message": "full AlphaEvolve process parity must remain false"})
     if report.get("claim_ready") is not False:

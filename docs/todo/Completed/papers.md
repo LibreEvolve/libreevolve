@@ -6,6 +6,21 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Record process-exhibit step-stream artifact links.
+  - Paper evidence: AlphaEvolve Figure 2 names concrete loop steps, so
+    paper-facing process evidence needs step-level links from those displayed
+    calls to local artifact streams before the remaining gap can be narrowed to
+    row-level validation.
+  - Status: paper-facing manifests now validate the six Figure 2 displayed
+    calls against the artifact inventory and include component-to-TODO links
+    for the process-exhibit gaps. `papers/process_exhibit_boundary.json` now
+    preserves the narrower row-level step-stream validation absence boundary.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4636 passed, 21 skipped, 2 deselected.
+  - Remaining paper gap: exact source-diagram reproduction, async topology,
+    evaluator-pool parallelism, and row-level step-stream validation remain
+    open.
+
 - [x] Record process-exhibit diagram text artifacts.
   - Paper evidence: AlphaEvolve Figure 1/Figure 2 are process exhibits, so
     artifact-backed local Figure 1/2 mappings need diagram source/export files

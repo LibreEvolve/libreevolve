@@ -179,16 +179,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     1/Figure 2 exhibit IDs, node/edge-to-component mappings, implemented
     versus unsupported status per diagram node, Figure 2 pseudocode-step
     mappings, source PDF/caption locations, artifact cross-links, generated
-    Mermaid/text accessibility artifacts and hashes, and explicit remaining
+    Mermaid/text accessibility artifacts and hashes, per-step artifact-stream
+    validation records, component-to-TODO links, and explicit remaining
     process-parity gaps. It now also names
     `papers/process_exhibit_boundary.json` as the committed sidecar for the
     paper-manifest-validated absence boundary.
   - Required result: when exact source-diagram reproduction, async
     controller/sampler/evaluator topology, independent evaluator-pool
-    parallelism, and artifact-level per-step validation land, update ROADMAP,
-    README, papers index, and code/paper TODOs so roadmap wording distinguishes
-    local workflow documentation and generated Mermaid artifacts from full
-    reproduced AlphaEvolve process-diagram evidence.
+    parallelism, and row-level per-step stream validation land, update
+    ROADMAP, README, papers index, and code/paper TODOs so roadmap wording
+    distinguishes local workflow documentation, generated Mermaid artifacts,
+    and artifact-link records from full reproduced AlphaEvolve process-diagram
+    evidence.
 
 - [ ] Keep evaluator-workload roadmap wording scoped until inner-search and
       ML-training execution contracts exist.
@@ -541,15 +543,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `runtime.history.alphaevolve_process_exhibit_report` with stable figure
     IDs, diagram-node and edge records, Figure 2 pseudocode-step mappings,
     source PDF/caption locations, artifact cross-links, step-level status, and
-    validation that keeps full process-diagram parity false. ROADMAP now names
-    `papers/process_exhibit_boundary.json` as the committed sidecar for that
-    absence boundary.
-  - Required result: when exact diagram text or accessibility export, rendered
-    artifact hashes, component-to-code/report/TODO links, stronger topology
-    evidence, and artifact-level per-step validators land, update ROADMAP,
-    README, papers index, and code/paper TODO entries together so roadmap
-    wording separates paper process-diagram reproduction from delivering each
-    underlying AlphaEvolve workflow capability.
+    validation that keeps full process-diagram parity false. The report also
+    includes generated Mermaid/text artifacts and hashes, per-step
+    artifact-stream validation records, and component-to-TODO links. ROADMAP
+    now names `papers/process_exhibit_boundary.json` as the committed sidecar
+    for that absence boundary.
+  - Required result: when exact diagram text or accessibility reproduction,
+    stronger topology evidence, independent evaluator-pool evidence, and
+    row-level per-step stream validators land, update ROADMAP, README, papers
+    index, and code/paper TODO entries together so roadmap wording separates
+    paper process-diagram reproduction from delivering each underlying
+    AlphaEvolve workflow capability.
 
 - [ ] Extend task-specification roadmap wording beyond field-level artifact
       resolution.

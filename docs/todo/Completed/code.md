@@ -4,6 +4,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add process-exhibit step-stream artifact links.
+  - Spec evidence: AlphaEvolve Figure 2 is a stepwise controller loop, so a
+    local process exhibit needs per-step evidence records that resolve the
+    cited run-artifact streams and point remaining component gaps back to the
+    active TODO ledgers.
+  - Status: `runtime.history.alphaevolve_process_exhibit_report` now records
+    `step_stream_validations` for all six displayed Figure 2 calls, resolves
+    each cited evidence path against the artifact inventory, validates those
+    records, and emits component-to-TODO links for exact source-diagram,
+    async-topology, evaluator-pool, and row-level stream-validation gaps.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4636 passed, 21 skipped, 2 deselected.
+  - Remaining gap: exact source-diagram reproduction, async topology,
+    independent evaluator-pool parallelism, and row-level per-stream joins
+    remain open.
+
 - [x] Generate process-exhibit diagram text artifacts.
   - Spec evidence: AlphaEvolve Figure 1/Figure 2 are process diagrams, so a
     local process mapping needs artifact files and hashes before it can move

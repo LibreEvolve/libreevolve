@@ -5934,10 +5934,19 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert report["pseudocode_step_count"] == 6
     assert report["claim_ready"] is False
     assert report["claim_readiness"]["stable_figure_ids"] is True
+    assert report["claim_readiness"]["step_artifact_stream_validation_records"] is True
+    assert report["claim_readiness"]["component_todo_links"] is True
     assert report["claim_readiness"]["rendered_diagram_artifacts"] is True
     assert report["claim_readiness"]["accessibility_exports"] is True
     assert report["claim_readiness"]["exact_diagram_text_reproduction"] is False
+    assert report["claim_readiness"]["row_level_step_stream_validation"] is False
     assert "exact_source_diagram_text_reproduction" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    assert "row_level_step_stream_validation_against_each_stream" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    assert "artifact_level_step_validation_against_each_stream" not in (
         report["claim_readiness"]["remaining_gap"]
     )
     assert "rendered_process_diagram_artifacts_and_hashes" not in (
@@ -5981,6 +5990,37 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
         "llm_calls.jsonl",
         "controller_budget_events.jsonl",
     ]
+    assert report["step_stream_validation_count"] == 6
+    step_validation_by_id = {
+        validation["step_id"]: validation
+        for validation in report["step_stream_validations"]
+    }
+    generate_validation = step_validation_by_id["fig2.step_3_generate"]
+    assert generate_validation["all_artifact_records_resolved"] is True
+    assert generate_validation["artifact_paths"] == [
+        "llm_calls.jsonl",
+        "controller_budget_events.jsonl",
+    ]
+    assert generate_validation["stream_records"][0]["artifact_record_present"] is True
+    assert generate_validation["stream_records"][0]["row_level_join"] is False
+    evaluator_validation = step_validation_by_id["fig2.step_5_execute_evaluator"]
+    assert "evaluator_artifacts" in evaluator_validation["artifact_paths"]
+    assert evaluator_validation["all_artifact_records_resolved"] is True
+    assert report["component_todo_link_count"] == 4
+    todo_links_by_gap = {
+        link["gap_id"]: link for link in report["component_todo_links"]
+    }
+    assert "fig2.step_5_execute_evaluator" in todo_links_by_gap[
+        "independent_evaluator_pool_parallelism"
+    ]["component_ids"]
+    assert todo_links_by_gap["row_level_step_stream_validation_against_each_stream"][
+        "active_todo_paths"
+    ] == [
+        "docs/todo/code.md",
+        "docs/todo/roadmap.md",
+        "docs/todo/readme.md",
+        "docs/todo/papers.md",
+    ]
     artifact_by_path = {
         artifact["path"]: artifact for artifact in report["artifact_evidence"]
     }
@@ -6014,6 +6054,14 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     validation = validate_alphaevolve_process_exhibit_report(edited)
     assert validation["ok"] is False
     assert "invalid_rendered_artifact_hash" in {
+        issue["code"] for issue in validation["issues"]
+    }
+
+    edited = copy.deepcopy(report)
+    edited["step_stream_validations"][2]["stream_records"][0]["path"] = "missing.jsonl"
+    validation = validate_alphaevolve_process_exhibit_report(edited)
+    assert validation["ok"] is False
+    assert "step_stream_path_mismatch" in {
         issue["code"] for issue in validation["issues"]
     }
 

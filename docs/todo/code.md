@@ -167,16 +167,18 @@ Primary evidence:
     ids, source PDF page/caption locations, node/edge-to-component mappings,
     Figure 2 pseudocode-step mappings, artifact cross-links, and
     generated Mermaid/accessibility text artifacts under
-    `paper_artifacts/process_exhibit/` with SHA-256 hashes. The report still
-    carries `claim_ready: false` readiness gaps. The committed
-    `papers/process_exhibit_boundary.json` sidecar now records that
-    paper-manifest-validated process-exhibit parity boundary.
+    `paper_artifacts/process_exhibit/` with SHA-256 hashes. It now also
+    validates each Figure 2 pseudocode step against the artifact-inventory
+    paths it cites and records component-to-TODO links for the remaining
+    process gaps. The report still carries `claim_ready: false` readiness
+    gaps. The committed `papers/process_exhibit_boundary.json` sidecar now
+    records that paper-manifest-validated process-exhibit parity boundary.
   - Required result: add exact source-diagram text reproduction, async
     controller/sampler/evaluator topology records, independent evaluator-pool
-    parallelism evidence, artifact-level per-step validation against each
-    stream, and docs checks so local workflow diagrams and generated Mermaid
-    artifacts are not mistaken for full reproduced AlphaEvolve process-diagram
-    evidence.
+    parallelism evidence, row-level per-step validation inside each cited
+    stream, and docs checks so local workflow diagrams, generated Mermaid
+    artifacts, and artifact-link records are not mistaken for full reproduced
+    AlphaEvolve process-diagram evidence.
 
 - [ ] Extend unified AlphaEvolve task-specification reports into full
       artifact-level parity.
@@ -498,12 +500,15 @@ Primary evidence:
     `runtime.history.alphaevolve_process_exhibit_report`, including stable
     figure IDs, diagram-node and edge labels, source/caption locations,
     Figure 2 pseudocode-step mappings, component mappings, artifact
-    cross-links, and explicit `claim_ready: false` gaps.
-  - Required result: add exact diagram/pseudocode text or accessibility export,
-    rendered/text artifact paths and hashes, component-to-code/report/TODO
-    mappings, per-stream step validation, and docs checks that prevent README,
-    ROADMAP, or papers-index wording from treating component-level support as
-    full reproduction of the AlphaEvolve process diagrams.
+    cross-links, generated Mermaid/text artifacts and hashes, per-step
+    artifact-stream validation records, component-to-TODO links, and explicit
+    `claim_ready: false` gaps.
+  - Required result: add exact diagram/pseudocode text or accessibility
+    reproduction, async topology evidence, independent evaluator-pool
+    evidence, row-level per-stream step validation, and docs checks that
+    prevent README, ROADMAP, or papers-index wording from treating
+    component-level support as full reproduction of the AlphaEvolve process
+    diagrams.
 
 - [ ] Add self-improvement and distillation evidence boundaries for
       infrastructure-facing claims.

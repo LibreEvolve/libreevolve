@@ -4,6 +4,24 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit matrix headline historicity artifact sidecar.
+  - Spec evidence: AlphaEvolve's abstract and Section 3.1 say the agent found
+    a 4x4 complex matrix multiplication procedure using 48 scalar
+    multiplications and frame it as the first characteristic-zero rank-below-49
+    result after 56 years.
+  - Status: `papers/matrix_headline_historicity_artifacts.json` now emits the
+    paper-facing `mm_4x4x4` rank-48 headline historicity record with target
+    id, dimensions, scalar field/characteristic, prior Strassen/Fawzi
+    comparisons, source refs, evidence links, nested headline evidence,
+    artifact path, and SHA-256 digest. `validate_paper_manifest()` consumes
+    the sidecar when the Appendix A registry is in scope.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py -q`, `py -3.12 -m pytest
+    tests\test_agents_docs.py -q`, and `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs` passed.
+  - Remaining gap: matrix runners/report exporters still need automatic
+    attachment of the emitted headline historicity artifact.
+
 - [x] Emit Table 2/Table 3 matrix-rank table artifact sidecar.
   - Spec evidence: AlphaEvolve Table 2 displays selected matrix tensor-rank
     comparisons, while Appendix A Table 3 expands this to all 54 considered

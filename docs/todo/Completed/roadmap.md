@@ -4,6 +4,22 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Keep matrix headline roadmap wording scoped until emitted 4x4 rank-48
+      historicity artifacts exist.
+  - Spec evidence: AlphaEvolve's abstract and Section 3.1 say AlphaEvolve
+    found a 4x4 complex rank-48 procedure and frame it as a
+    characteristic-zero rank-below-49 result after 56 years.
+  - Status: ROADMAP now documents
+    `papers/matrix_headline_historicity_artifacts.json` as the emitted matrix
+    headline historicity sidecar, with nested evidence and digest validation,
+    while keeping automatic runner/export attachment open.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py -q`, `py -3.12 -m pytest
+    tests\test_agents_docs.py -q`, and `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs` passed.
+  - Remaining gap: none for roadmap scoping; runner/export integration remains
+    an active code/paper gap.
+
 - [x] Keep Table 2/Table 3 matrix-rank table roadmap wording scoped until
       emitted table exhibit artifacts exist.
   - Spec evidence: AlphaEvolve Table 2 presents selected matrix tensor-rank

@@ -18,6 +18,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
 )
 from libreevolve.problems.benchmarks.companion_sources import (
     alphaevolve_companion_artifact_rights_record,
+    alphaevolve_companion_selection_scope_record,
     validate_alphaevolve_companion_selection_scope,
     validate_alphaevolve_companion_artifact_rights,
 )
@@ -2288,6 +2289,89 @@ def validate_matrix_headline_historicity_evidence(
     )
 
 
+def matrix_headline_historicity_evidence_record() -> dict[str, Any]:
+    return {
+        "schema": MATRIX_HEADLINE_HISTORICITY_SCHEMA,
+        "target_suite": APPENDIX_A_TARGET_SUITE,
+        "target_id": MATRIX_HEADLINE_TARGET_ID,
+        "dimensions": list(MATRIX_HEADLINE_DIMENSIONS),
+        "source_refs": [
+            {
+                "source": "AlphaEvolve abstract",
+                "page": 1,
+                "span": "abstract matrix multiplication sentence",
+                "claim": (
+                    "4x4 complex-valued matrices using 48 scalar "
+                    "multiplications"
+                ),
+            },
+            {
+                "source": "AlphaEvolve Section 3.1",
+                "page": 10,
+                "span": "matrix multiplication historicity paragraph",
+                "claim": (
+                    "first method in 56 years to find rank below 49 over a "
+                    "characteristic-zero field"
+                ),
+            },
+        ],
+        "headline_claim": {
+            "target_id": MATRIX_HEADLINE_TARGET_ID,
+            "rank": MATRIX_HEADLINE_RANK,
+            "multiplication_count": MATRIX_HEADLINE_RANK,
+            "scalar_field": "complex",
+            "characteristic": "zero",
+            "first_characteristic_zero_rank_below_49": True,
+            "rank_below_strassen_recursive": True,
+            "finite_field_only_prior_distinguished": True,
+            "claim_text": (
+                "AlphaEvolve is the first method in 56 years to find rank "
+                "below 49 over a characteristic-zero field."
+            ),
+            "source_ref": "AlphaEvolve Section 3.1 page 10",
+        },
+        "prior_comparisons": [
+            {
+                "prior_id": "strassen_recursive",
+                "rank": MATRIX_HEADLINE_BASELINE_RANKS["strassen_recursive"],
+                "field_scope": "any_field",
+                "characteristic_scope": "any_characteristic",
+                "recursive_applicable": True,
+                "reference_id": "95",
+            },
+            {
+                "prior_id": "fawzi_f2",
+                "rank": MATRIX_HEADLINE_BASELINE_RANKS["fawzi_f2"],
+                "field_scope": "finite_field_2",
+                "characteristic_scope": "positive",
+                "alphaevolve_comparable_characteristic_zero": False,
+                "reference_id": "26",
+            },
+        ],
+        "evidence_links": {
+            "matrix_result_ref": "reports/mm_4x4x4_result.json",
+            "scalar_field_evidence_ref": (
+                "libreevolve.matrix_scalar_field_evidence.v1:mm_4x4x4"
+            ),
+            "tensor_rank_evidence_ref": (
+                "libreevolve.matrix_tensor_rank_evidence.v1:mm_4x4x4"
+            ),
+            "figure4_exhibit_ref": (
+                "libreevolve.figure4_matrix_discovery_exhibit.v1:mm_4x4x4"
+            ),
+            "figure9_exhibit_ref": (
+                "libreevolve.figure9_matrix_diff_exhibit.v1:mm_4x4x4"
+            ),
+            "companion_colab_ref": (
+                "external/alphaevolve_results/mathematical_results.ipynb"
+            ),
+        },
+        "companion_selection_scope": alphaevolve_companion_selection_scope_record(
+            MATRIX_HEADLINE_COMPANION_CLAIM_ID
+        ),
+    }
+
+
 def matrix_headline_historicity_runtime_boundary_record() -> dict[str, Any]:
     return {
         "schema": MATRIX_HEADLINE_HISTORICITY_RUNTIME_SCHEMA,
@@ -2302,6 +2386,21 @@ def matrix_headline_historicity_runtime_boundary_record() -> dict[str, Any]:
             "claim local matrix runners emit AlphaEvolve Section 3.1 headline historicity evidence."
         ),
     }
+
+
+def matrix_headline_historicity_runtime_boundary_from_builtin_evidence() -> dict[str, Any]:
+    evidence = matrix_headline_historicity_evidence_record()
+    links = evidence["evidence_links"]
+    assert isinstance(links, dict)
+    matrix_result_ref = links["matrix_result_ref"]
+    assert isinstance(matrix_result_ref, str)
+    return matrix_headline_historicity_runtime_boundary_from_evidence(
+        run_id="paper_2506_13131",
+        candidate_id="mm_4x4x4_rank48_headline",
+        matrix_result_ref=matrix_result_ref,
+        headline_historicity_evidence=evidence,
+        artifact_paths=["papers/matrix_headline_historicity_artifacts.json"],
+    )
 
 
 def matrix_headline_historicity_runtime_boundary_from_evidence(

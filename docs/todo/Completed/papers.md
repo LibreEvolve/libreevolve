@@ -6,6 +6,24 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit matrix headline historicity artifact sidecar.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` reports the 4x4 complex
+    rank-48 result in the abstract and Section 3.1, and distinguishes it from
+    recursive Strassen rank 49 and Fawzi et al. rank 47 over the field with
+    two elements.
+  - Status: `papers/matrix_headline_historicity_artifacts.json` now carries
+    the paper-facing `mm_4x4x4` rank-48 headline historicity artifact,
+    including target/dimension/rank/field values, prior comparisons, source
+    refs, evidence links, nested headline evidence, artifact path, and digest.
+    The paper-manifest gate validates that sidecar when Appendix A registry
+    evidence is present.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py -q`, `py -3.12 -m pytest
+    tests\test_agents_docs.py -q`, and `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs` passed.
+  - Remaining gap: paper-facing exports still need automatic attachment of
+    that artifact.
+
 - [x] Emit Table 2/Table 3 matrix-rank table artifact sidecar.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 is the selected
     matrix-rank comparison table, and Appendix A Table 3 is the full

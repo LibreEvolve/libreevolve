@@ -4,6 +4,22 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README matrix headline wording scoped until emitted 4x4 rank-48
+      historicity artifacts exist.
+  - Spec evidence: AlphaEvolve's abstract and Section 3.1 headline the 4x4
+    complex rank-48 result and distinguish the characteristic-zero claim from
+    finite-field and Strassen prior results.
+  - Status: README now documents
+    `papers/matrix_headline_historicity_artifacts.json` as the committed
+    emitted matrix headline historicity artifact sidecar and keeps automatic
+    runner/export attachment as the remaining boundary.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py -q`, `py -3.12 -m pytest
+    tests\test_agents_docs.py -q`, and `py -3.12 -m
+    libreevolve.tools.paper_manifest --require-local-pdfs` passed.
+  - Remaining gap: none for README scoping; runner/export integration remains
+    an active code/paper gap.
+
 - [x] Keep README Table 2/Table 3 matrix-rank table wording scoped until
       emitted table exhibit artifacts exist.
   - Spec evidence: AlphaEvolve Table 2 is the selected main-text matrix-rank

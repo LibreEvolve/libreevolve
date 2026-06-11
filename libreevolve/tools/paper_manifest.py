@@ -141,6 +141,7 @@ REQUIRED_FIELDS = ("id", "title", "url", "file", "ok", "bytes", "sha256", "messa
 APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE = "papers/appendix_a_matrix_subset_scope_artifacts.json"
 APPENDIX_A_ROW_NOTE_ARTIFACTS_FILE = "papers/appendix_a_matrix_row_note_artifacts.json"
 MATRIX_RANK_TABLE_ARTIFACTS_FILE = "papers/matrix_rank_table_artifacts.json"
+MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE = "papers/matrix_headline_historicity_artifacts.json"
 SHA256_RE = re.compile(r"[0-9a-f]{64}")
 PAPER_ID_RE = re.compile(r"(?:\d{4}\.\d{5}|[a-z0-9][a-z0-9-]{0,94}[a-z0-9])")
 ARXIV_ID_RE = re.compile(r"\d{4}\.\d{5}(?:v\d+)?")
@@ -775,8 +776,30 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
         )
         for issue in tensor_rank_runtime_report.issues
     )
+    headline_historicity_artifacts_path = root_path / MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE
+    if headline_historicity_artifacts_path.exists():
+        headline_historicity_recordset: object | str | Path = (
+            headline_historicity_artifacts_path
+        )
+    else:
+        headline_historicity_recordset = matrix_headline_historicity_runtime_boundary_record()
+        try:
+            is_repo_root = root_path.resolve() == _repo_root().resolve()
+        except OSError:
+            is_repo_root = False
+        if is_repo_root:
+            issues.append(
+                PaperManifestIssue(
+                    "matrix_headline_historicity_artifact_manifest_missing",
+                    (
+                        f"{MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE} must "
+                        "emit the 4x4 complex rank-48 headline historicity artifact"
+                    ),
+                    "mm_4x4x4",
+                )
+            )
     headline_runtime_report = validate_matrix_headline_historicity_runtime_boundary(
-        matrix_headline_historicity_runtime_boundary_record()
+        headline_historicity_recordset
     )
     issues.extend(
         PaperManifestIssue(

@@ -4138,16 +4138,19 @@ tensor-rank, Figure 4, Figure 9, and companion Colab evidence. It also
 validates the companion notebook selection-scope record for that headline
 claim. It validates the declared evidence shape; local matrix benchmark runners
 still do not emit the headline record or the linked decomposition/certificate/
-source artifacts. The companion runtime boundary
+source artifacts. The committed sidecar
+`papers/matrix_headline_historicity_artifacts.json` preserves the paper-facing
+rank-48 headline historicity record with source refs, prior comparisons,
+evidence links, artifact path, and digest. The companion runtime boundary
 `libreevolve.matrix_headline_historicity_runtime_boundary.v1` validates the
-current `not_emitted_by_local_runner` state and emitted records for
-run/target/candidate ids, dimensions, headline rank/field values, source refs,
-prior comparisons, evidence links, matrix-result refs, artifact paths, and
-artifact hashes. The helper
+emitted sidecar and emitted records for run/target/candidate ids, dimensions,
+headline rank/field values, source refs, prior comparisons, evidence links,
+matrix-result refs, artifact paths, and artifact hashes. The helper
 `matrix_headline_historicity_runtime_boundary_from_evidence()` builds an
 emitted runtime row from validated headline evidence and validation links every
 row back to nested target, dimensions, headline claim, source refs, prior
-comparisons, evidence links, and matrix-result provenance.
+comparisons, evidence links, and matrix-result provenance. Local runners still
+do not automatically attach that sidecar to matrix run outputs.
 Matrix-rank table exhibit evidence uses
 `libreevolve.alphaevolve_matrix_rank_table_exhibit.v1`; it validates declared
 Table 2 and Appendix A Table 3 table exhibits, including stable table ids,

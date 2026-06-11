@@ -1223,15 +1223,18 @@ is not yet an AlphaEvolve reproduction.
   source refs, and links to result, scalar-field, tensor-rank, Figure 4,
   Figure 9, and companion Colab evidence. The runner still does not emit the
   headline record or linked decomposition/certificate/source artifacts.
+  `papers/matrix_headline_historicity_artifacts.json` now emits the
+  paper-facing rank-48 headline historicity sidecar with nested evidence,
+  source refs, prior comparisons, evidence links, artifact path, and digest.
   `libreevolve.matrix_headline_historicity_runtime_boundary.v1` now validates
-  the current `not_emitted_by_local_runner` boundary and emitted records for
-  run/target/candidate ids, dimensions, headline rank/field values, source
-  refs, prior comparisons, evidence links, matrix-result refs, artifact paths,
-  and artifact hashes.
+  that emitted sidecar and emitted records for run/target/candidate ids,
+  dimensions, headline rank/field values, source refs, prior comparisons,
+  evidence links, matrix-result refs, artifact paths, and artifact hashes.
   `matrix_headline_historicity_runtime_boundary_from_evidence()` builds an
   emitted runtime row from validated headline evidence and validation links it
   back to nested target, dimensions, headline claim, source refs, prior
-  comparisons, evidence links, and matrix-result provenance.
+  comparisons, evidence links, and matrix-result provenance. Local runners
+  still do not automatically attach that sidecar to matrix run outputs.
 - Keep matrix outcome claims scoped to named target subsets:
   `libreevolve.alphaevolve_matrix_subset_scope.v1` now validates
   `appendix_a_full`, `main_text_mnp_le_5`, and `table_2_selected` membership,

@@ -716,37 +716,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     distinguishes post-hoc per-seed report validation from AlphaEvolve
     Section 3.1-style repeated-seed cascade execution evidence.
 
-- [ ] Keep README matrix headline wording scoped until emitted 4x4 rank-48
-      historicity artifacts exist.
-  - Spec evidence: AlphaEvolve's abstract and Section 3.1 headline the 4x4
-    complex matrix result as a rank-48 procedure using 48 scalar
-    multiplications and the first characteristic-zero rank-below-49
-    improvement after 56 years, while Section 3.1 separately notes recursive
-    Strassen rank 49 over any field and Fawzi et al. rank 47 over the field
-    with two elements.
-  - Current evidence: README now documents
-    `libreevolve.matrix_headline_historicity_evidence.v1`, which validates a
-    declared source-backed headline record for target id, dimensions,
-    field/characteristic, rank, 56-year first-below-49 flags, Strassen/Fawzi
-    prior comparisons, source refs, and links to result, scalar-field,
-    tensor-rank, Figure 4, Figure 9, and companion Colab evidence. README now
-    also documents `libreevolve.matrix_headline_historicity_runtime_boundary.v1`
-    as the current `not_emitted_by_local_runner` boundary plus emitted-record
-    validation for run/target/candidate ids, dimensions, headline
-    rank/field values, source refs, prior comparisons, evidence links,
-    matrix-result refs, artifact paths, and artifact hashes. It also documents
-    the builder that turns validated headline evidence into a linked runtime
-    row. That contract distinguishes the complex/characteristic-zero headline
-    from the finite-field caveat, but it does not prove the claim until
-    concrete emitted artifacts and source-span/decomposition/certificate links
-    exist.
-  - Required result: when matrix-headline historicity artifacts land, update
-    README, ROADMAP, papers index, and code/paper TODOs with target id,
-    dimensions, field/characteristic, rank, prior-algorithm comparison,
-    bibliography references, source page/spans, certificate/Colab links, and
-    wording checks so README does not overclaim a first-improvement result
-    from rank-row metadata alone.
-
 - [ ] Keep README Appendix A target-suite wording scoped to registry coverage
       versus curation provenance.
   - Spec evidence: AlphaEvolve Appendix A says the 54 reported matrix sizes

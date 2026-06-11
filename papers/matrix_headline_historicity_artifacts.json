@@ -1,0 +1,166 @@
+{
+  "schema": "libreevolve.matrix_headline_historicity_runtime_boundary.v1",
+  "target_suite": "alphaevolve_appendix_a",
+  "evidence_schema": "libreevolve.matrix_headline_historicity_evidence.v1",
+  "runtime_emission_status": "emitted",
+  "local_runner_scope": "matrix_benchmark_runner",
+  "required_emission_fields": [
+    "run_id",
+    "candidate_id",
+    "target_id",
+    "dimensions",
+    "rank",
+    "multiplication_count",
+    "scalar_field",
+    "characteristic",
+    "source_refs",
+    "prior_comparisons",
+    "evidence_links",
+    "matrix_result_ref",
+    "artifact_paths",
+    "artifact_sha256"
+  ],
+  "emitted_records": [
+    {
+      "run_id": "paper_2506_13131",
+      "candidate_id": "mm_4x4x4_rank48_headline",
+      "target_id": "mm_4x4x4",
+      "dimensions": [
+        4,
+        4,
+        4
+      ],
+      "rank": 48,
+      "multiplication_count": 48,
+      "scalar_field": "complex",
+      "characteristic": "zero",
+      "source_refs": [
+        {
+          "source": "AlphaEvolve abstract",
+          "page": 1,
+          "span": "abstract matrix multiplication sentence",
+          "claim": "4x4 complex-valued matrices using 48 scalar multiplications"
+        },
+        {
+          "source": "AlphaEvolve Section 3.1",
+          "page": 10,
+          "span": "matrix multiplication historicity paragraph",
+          "claim": "first method in 56 years to find rank below 49 over a characteristic-zero field"
+        }
+      ],
+      "prior_comparisons": [
+        {
+          "prior_id": "strassen_recursive",
+          "rank": 49,
+          "field_scope": "any_field",
+          "characteristic_scope": "any_characteristic",
+          "recursive_applicable": true,
+          "reference_id": "95"
+        },
+        {
+          "prior_id": "fawzi_f2",
+          "rank": 47,
+          "field_scope": "finite_field_2",
+          "characteristic_scope": "positive",
+          "alphaevolve_comparable_characteristic_zero": false,
+          "reference_id": "26"
+        }
+      ],
+      "evidence_links": {
+        "matrix_result_ref": "reports/mm_4x4x4_result.json",
+        "scalar_field_evidence_ref": "libreevolve.matrix_scalar_field_evidence.v1:mm_4x4x4",
+        "tensor_rank_evidence_ref": "libreevolve.matrix_tensor_rank_evidence.v1:mm_4x4x4",
+        "figure4_exhibit_ref": "libreevolve.figure4_matrix_discovery_exhibit.v1:mm_4x4x4",
+        "figure9_exhibit_ref": "libreevolve.figure9_matrix_diff_exhibit.v1:mm_4x4x4",
+        "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+      },
+      "matrix_result_ref": "reports/mm_4x4x4_result.json",
+      "artifact_paths": [
+        "papers/matrix_headline_historicity_artifacts.json"
+      ],
+      "artifact_sha256": "d6dbc8d732af3b9e03f39ec2cc76eb901ebb8ac77b84a912cd7d6fcfbb833a30",
+      "headline_historicity_evidence": {
+        "schema": "libreevolve.matrix_headline_historicity_evidence.v1",
+        "target_suite": "alphaevolve_appendix_a",
+        "target_id": "mm_4x4x4",
+        "dimensions": [
+          4,
+          4,
+          4
+        ],
+        "source_refs": [
+          {
+            "source": "AlphaEvolve abstract",
+            "page": 1,
+            "span": "abstract matrix multiplication sentence",
+            "claim": "4x4 complex-valued matrices using 48 scalar multiplications"
+          },
+          {
+            "source": "AlphaEvolve Section 3.1",
+            "page": 10,
+            "span": "matrix multiplication historicity paragraph",
+            "claim": "first method in 56 years to find rank below 49 over a characteristic-zero field"
+          }
+        ],
+        "headline_claim": {
+          "target_id": "mm_4x4x4",
+          "rank": 48,
+          "multiplication_count": 48,
+          "scalar_field": "complex",
+          "characteristic": "zero",
+          "first_characteristic_zero_rank_below_49": true,
+          "rank_below_strassen_recursive": true,
+          "finite_field_only_prior_distinguished": true,
+          "claim_text": "AlphaEvolve is the first method in 56 years to find rank below 49 over a characteristic-zero field.",
+          "source_ref": "AlphaEvolve Section 3.1 page 10"
+        },
+        "prior_comparisons": [
+          {
+            "prior_id": "strassen_recursive",
+            "rank": 49,
+            "field_scope": "any_field",
+            "characteristic_scope": "any_characteristic",
+            "recursive_applicable": true,
+            "reference_id": "95"
+          },
+          {
+            "prior_id": "fawzi_f2",
+            "rank": 47,
+            "field_scope": "finite_field_2",
+            "characteristic_scope": "positive",
+            "alphaevolve_comparable_characteristic_zero": false,
+            "reference_id": "26"
+          }
+        ],
+        "evidence_links": {
+          "matrix_result_ref": "reports/mm_4x4x4_result.json",
+          "scalar_field_evidence_ref": "libreevolve.matrix_scalar_field_evidence.v1:mm_4x4x4",
+          "tensor_rank_evidence_ref": "libreevolve.matrix_tensor_rank_evidence.v1:mm_4x4x4",
+          "figure4_exhibit_ref": "libreevolve.figure4_matrix_discovery_exhibit.v1:mm_4x4x4",
+          "figure9_exhibit_ref": "libreevolve.figure9_matrix_diff_exhibit.v1:mm_4x4x4",
+          "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb"
+        },
+        "companion_selection_scope": {
+          "schema": "libreevolve.alphaevolve_companion_selection_scope.v1",
+          "source_paper_id": "2506.13131",
+          "source_manifest": "papers/companion_sources.json",
+          "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+          "claim_id": "appendix_a_matrix_improved_decompositions",
+          "source_artifact_ref": "mathematical_results.ipynb",
+          "paper_result_relation": "improved_over_sota",
+          "companion_notebook_coverage": "included",
+          "absence_reason": null,
+          "coverage_status": "covered_improved_results_only",
+          "verifier_code_available": true,
+          "alphaevolve_runtime_code_available": false,
+          "selection_policy": {
+            "inclusion_rule": "outperformed_sota_only",
+            "excluded_result_policy": "matched_but_not_outperformed_results_excluded_to_avoid_clutter",
+            "runtime_absence_policy": "companion_repository_does_not_contain_alphaevolve_runtime_code"
+          }
+        }
+      }
+    }
+  ],
+  "claim_boundary": "Emitted records link matrix candidates to headline rank, source, prior-comparison, evidence-link, and artifact provenance; this still does not claim local runners automatically emit those records."
+}

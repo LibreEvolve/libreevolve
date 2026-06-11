@@ -34,6 +34,8 @@ from libreevolve.problems.benchmarks.matrix_results import (
     matrix_baseline_component_runtime_boundary_record,
     matrix_cascade_run_runtime_boundary_from_matrix_result,
     matrix_cascade_run_runtime_boundary_record,
+    matrix_headline_historicity_evidence_record,
+    matrix_headline_historicity_runtime_boundary_from_builtin_evidence,
     matrix_headline_historicity_runtime_boundary_from_evidence,
     matrix_headline_historicity_runtime_boundary_record,
     matrix_near_integrality_runtime_boundary_from_evidence,
@@ -2374,6 +2376,18 @@ def test_matrix_headline_historicity_evidence_accepts_rank48_context():
     assert validation.issues == []
 
 
+def test_matrix_headline_historicity_evidence_record_validates_builtin_context():
+    validation = validate_matrix_headline_historicity_evidence(
+        matrix_headline_historicity_evidence_record()
+    )
+
+    assert validation.ok is True
+    assert validation.target_id == "mm_4x4x4"
+    assert validation.prior_comparison_count == 2
+    assert validation.source_ref_count == 2
+    assert validation.issues == []
+
+
 def test_matrix_headline_historicity_evidence_rejects_headline_scope_drift():
     evidence = _valid_headline_historicity_evidence()
     evidence["target_id"] = "mm_4x4x8"
@@ -2532,6 +2546,23 @@ def test_matrix_headline_historicity_runtime_boundary_accepts_emitted_evidence()
     assert len(record["source_refs"]) == 2
     assert len(record["prior_comparisons"]) == 2
     assert record["evidence_links"]["matrix_result_ref"] == "matrix/mm_4x4x4/report.json"
+
+
+def test_matrix_headline_historicity_runtime_boundary_from_builtin_evidence_accepts_sidecar_shape():
+    boundary = matrix_headline_historicity_runtime_boundary_from_builtin_evidence()
+
+    validation = validate_matrix_headline_historicity_runtime_boundary(boundary)
+    record = boundary["emitted_records"][0]
+
+    assert validation.ok is True
+    assert validation.runtime_emission_status == "emitted"
+    assert validation.emitted_record_count == 1
+    assert validation.issues == []
+    assert record["target_id"] == "mm_4x4x4"
+    assert record["rank"] == 48
+    assert record["artifact_paths"] == [
+        "papers/matrix_headline_historicity_artifacts.json",
+    ]
 
 
 def test_matrix_headline_historicity_runtime_boundary_builder_rejects_invalid_evidence():

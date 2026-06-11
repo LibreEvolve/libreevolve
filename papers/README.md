@@ -1470,17 +1470,20 @@ Implemented:
   characteristic-zero scope, 56-year first-below-49 wording flags, recursive
   Strassen rank-49 comparison, finite-field-only Fawzi rank-47 caveat, source
   refs, and links to result, scalar-field, tensor-rank, Figure 4, Figure 9,
-  and companion Colab evidence. No local matrix benchmark runner emits those
-  headline/source/decomposition/certificate artifacts yet.
+  and companion Colab evidence.
+  `papers/matrix_headline_historicity_artifacts.json` now emits the
+  paper-facing rank-48 headline historicity sidecar with nested evidence,
+  source refs, prior comparisons, evidence links, artifact path, and digest.
   `libreevolve.matrix_headline_historicity_runtime_boundary.v1` now records the
-  current `not_emitted_by_local_runner` boundary and validates emitted records
-  for run/target/candidate ids, dimensions, headline rank/field values, source
-  refs, prior comparisons, evidence links, matrix-result refs, artifact paths,
-  and artifact hashes.
+  emitted sidecar and validates emitted records for run/target/candidate ids,
+  dimensions, headline rank/field values, source refs, prior comparisons,
+  evidence links, matrix-result refs, artifact paths, and artifact hashes.
   `matrix_headline_historicity_runtime_boundary_from_evidence()` builds a
   runtime row from validated headline evidence and checks linkage back to
   nested target, dimensions, headline claim, source refs, prior comparisons,
-  evidence links, and matrix-result provenance.
+  evidence links, and matrix-result provenance. Local matrix benchmark runners
+  still do not automatically attach those headline/source/decomposition/
+  certificate artifacts to run outputs.
   `libreevolve.alphaevolve_matrix_rank_table_exhibit.v1` validates declared
   Table 2 and Appendix A Table 3 matrix-rank table exhibits, including stable
   table ids, source page/caption links, selected/full-table membership, row

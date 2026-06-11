@@ -3155,8 +3155,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     full Appendix A aggregate outcomes wherever matrix rank rows are
     published.
 
-- [ ] Track matrix headline historicity evidence for the 4x4 complex rank-48
-      result.
+- [ ] Wire matrix headline historicity artifacts into paper exports.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` abstract reports a procedure
     for multiplying two 4x4 complex-valued matrices using 48 scalar
     multiplications. Section 3.1 adds that recursive Strassen gives rank 49
@@ -3169,25 +3168,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     first-below-49 flags, Strassen/Fawzi prior comparisons, bibliography-style
     reference ids, source refs, and links to result, scalar-field, tensor-rank,
     Figure 4, Figure 9, and companion Colab evidence.
-    `libreevolve.matrix_headline_historicity_runtime_boundary.v1` now validates
-    the current `not_emitted_by_local_runner` boundary and emitted records for
-    run/target/candidate ids, dimensions, headline rank/field values, source
-    refs, prior comparisons, evidence links, matrix-result refs, artifact
-    paths, and artifact hashes.
+    `papers/matrix_headline_historicity_artifacts.json` now emits the
+    paper-facing rank-48 headline historicity sidecar, and
+    `libreevolve.matrix_headline_historicity_runtime_boundary.v1` validates
+    that emitted sidecar plus emitted records for run/target/candidate ids,
+    dimensions, headline rank/field values, source refs, prior comparisons,
+    evidence links, matrix-result refs, artifact paths, and artifact hashes.
     `matrix_headline_historicity_runtime_boundary_from_evidence()` builds a
     runtime row from validated headline evidence and validation checks linkage
     to nested target, dimensions, headline claim, source refs, prior
     comparisons, evidence links, and matrix-result provenance. A table row or
     scalar-field record alone still would not prove the "first improvement
-    after 56 years" claim, and no emitted artifact currently preserves the
-    abstract/Section 3.1 source spans, decomposition/certificate links, or
-    companion-notebook digest.
-  - Required result: emit paper-facing matrix-headline provenance artifacts
-    with target id, dimensions, scalar field/characteristic, reported rank,
-    Strassen baseline rank and scope, finite-field Fawzi caveat, bibliography
-    reference ids, abstract and Section 3.1 page/span locations,
-    decomposition/certificate/Colab links, and validation that docs distinguish
-    rank/certificate evidence from historicity and field-scope claims.
+    after 56 years" claim, and paper-facing exports still do not automatically
+    attach the committed source-span/decomposition/certificate/Colab evidence.
+  - Required result: wire the paper-facing matrix-headline provenance artifact
+    into export outputs with target id, dimensions, scalar field/
+    characteristic, reported rank, Strassen baseline rank and scope,
+    finite-field Fawzi caveat, bibliography reference ids, abstract and
+    Section 3.1 page/span locations, decomposition/certificate/Colab links,
+    and validation that docs distinguish rank/certificate evidence from
+    historicity and field-scope claims.
 
 - [ ] Track Appendix A matrix row-note and concurrent-work provenance.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A Table 3 includes

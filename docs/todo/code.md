@@ -3167,8 +3167,7 @@ Primary evidence:
     tensor/decomposition construction artifacts, and baseline solver-component
     provenance.
 
-- [ ] Add matrix headline historicity provenance for the 4x4 complex rank-48
-      result.
+- [ ] Wire matrix headline historicity artifacts into runner/export outputs.
   - Spec evidence: AlphaEvolve's abstract and Section 3.1 say the agent found
     a procedure for multiplying two 4x4 complex-valued matrices using 48
     scalar multiplications. Section 3.1 frames this as the first method, after
@@ -3181,25 +3180,26 @@ Primary evidence:
     56-year first-below-49 flags, Strassen/Fawzi prior comparisons, source
     refs, and links to result, scalar-field, tensor-rank, Figure 4, Figure 9,
     and companion Colab evidence.
-    `libreevolve.matrix_headline_historicity_runtime_boundary.v1` now validates
-    the current `not_emitted_by_local_runner` boundary and emitted records for
-    run/target/candidate ids, dimensions, headline rank/field values, source
-    refs, prior comparisons, evidence links, matrix-result refs, artifact
-    paths, and artifact hashes.
+    `papers/matrix_headline_historicity_artifacts.json` now emits the
+    paper-facing rank-48 headline historicity sidecar, and
+    `libreevolve.matrix_headline_historicity_runtime_boundary.v1` validates
+    that emitted sidecar plus emitted records for run/target/candidate ids,
+    dimensions, headline rank/field values, source refs, prior comparisons,
+    evidence links, matrix-result refs, artifact paths, and artifact hashes.
     `matrix_headline_historicity_runtime_boundary_from_evidence()` builds a
     runtime row from validated headline evidence and validation checks linkage
     to nested target, dimensions, headline claim, source refs, prior
-    comparisons, evidence links, and matrix-result provenance. It is still a
-    schema contract only: local matrix benchmark runners do not emit the headline JSON, source-ref
-    extraction, decomposition/certificate links, or companion-notebook digest
-    needed to prove the stronger historicity claim from concrete artifacts.
-  - Required result: emit and commit matrix-headline provenance artifacts with
-    target id, dimensions, scalar field/characteristic, reported rank, prior
-    Strassen rank and scope, finite-field Fawzi-rank caveat, bibliography
-    reference ids, source page/span locations for the abstract and Section 3.1,
-    decomposition/certificate/Colab linkage, and README/ROADMAP/papers
-    validation that keeps rank-value evidence separate from historicity and
-    field-scope claims.
+    comparisons, evidence links, and matrix-result provenance. Local matrix
+    benchmark runners still do not automatically attach the headline JSON,
+    source-ref extraction, decomposition/certificate links, or companion
+    notebook digest to run outputs.
+  - Required result: wire the committed matrix-headline provenance artifact
+    into runner/export outputs with target id, dimensions, scalar field/
+    characteristic, reported rank, prior Strassen rank and scope, finite-field
+    Fawzi-rank caveat, bibliography reference ids, source page/span locations
+    for the abstract and Section 3.1, decomposition/certificate/Colab linkage,
+    and README/ROADMAP/papers validation that keeps rank-value evidence
+    separate from historicity and field-scope claims.
 
 - [ ] Wire Table 2/Table 3 matrix-rank table artifacts into report/export.
   - Spec evidence: AlphaEvolve Table 2 displays selected matrix tensor-rank

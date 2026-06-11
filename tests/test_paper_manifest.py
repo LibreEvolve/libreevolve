@@ -42,6 +42,9 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
 from libreevolve.problems.benchmarks.matrix_exhibits import (
     matrix_rank_table_artifact_boundary_from_builtin_exhibit,
 )
+from libreevolve.problems.benchmarks.matrix_results import (
+    matrix_headline_historicity_runtime_boundary_from_builtin_evidence,
+)
 from libreevolve.tools.paper_manifest import main, rehydrate_paper_cache, validate_paper_manifest
 
 PARTIAL_FIXTURE_STATUS = (
@@ -1649,6 +1652,58 @@ def test_validate_paper_manifest_checks_matrix_headline_historicity_runtime_boun
     codes = {issue.code for issue in report.issues}
     assert report.ok is False
     assert "matrix_headline_historicity_runtime_missing_runtime_headline_historicity_records" in codes
+
+
+def test_validate_paper_manifest_accepts_committed_matrix_headline_historicity_sidecar(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        Path(paper_manifest.APPENDIX_A_MATRIX_REGISTRY_PATH).read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    sidecar = tmp_path / paper_manifest.MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE
+    sidecar.write_text(
+        json.dumps(
+            matrix_headline_historicity_runtime_boundary_from_builtin_evidence(),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_matrix_headline_historicity_sidecar_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        Path(paper_manifest.APPENDIX_A_MATRIX_REGISTRY_PATH).read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    record = matrix_headline_historicity_runtime_boundary_from_builtin_evidence()
+    record["emitted_records"][0]["rank"] = 49
+    sidecar = tmp_path / paper_manifest.MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert (
+        "matrix_headline_historicity_runtime_runtime_record_0_headline_historicity_rank_mismatch"
+        in codes
+    )
 
 
 def test_validate_paper_manifest_checks_matrix_rank_table_artifact_boundary(

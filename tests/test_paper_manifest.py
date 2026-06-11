@@ -1887,6 +1887,101 @@ def test_validate_paper_manifest_checks_matrix_suite_publication_artifact_bounda
     assert "matrix_suite_publication_artifact_missing_suite_publication_artifacts" in codes
 
 
+def test_validate_paper_manifest_accepts_committed_matrix_suite_publication_artifact_sidecar(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        Path(paper_manifest.APPENDIX_A_MATRIX_REGISTRY_PATH).read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    sidecar = tmp_path / paper_manifest.MATRIX_SUITE_PUBLICATION_ARTIFACTS_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.matrix_suite_publication_artifact_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_matrix_suite_publication_artifact_sidecar_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        Path(paper_manifest.APPENDIX_A_MATRIX_REGISTRY_PATH).read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    record = paper_manifest.matrix_suite_publication_artifact_boundary_record()
+    record["artifact_status"] = "generated"
+    sidecar = tmp_path / paper_manifest.MATRIX_SUITE_PUBLICATION_ARTIFACTS_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "matrix_suite_publication_artifact_missing_suite_publication_artifacts" in codes
+
+
+def test_validate_paper_manifest_requires_matrix_suite_publication_artifact_sidecar_at_repo_root(
+    tmp_path,
+    monkeypatch,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        Path(paper_manifest.APPENDIX_A_MATRIX_REGISTRY_PATH).read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    (tmp_path / paper_manifest.APPENDIX_A_CURATION_FILE).write_text(
+        json.dumps(appendix_a_matrix_curation_record(), indent=2),
+        encoding="utf-8",
+    )
+    (tmp_path / paper_manifest.APPENDIX_A_EXCLUDED_TARGET_CURATION_FILE).write_text(
+        json.dumps(appendix_a_matrix_excluded_target_curation_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+    (tmp_path / paper_manifest.APPENDIX_A_BASELINE_CITATIONS_FILE).write_text(
+        json.dumps(appendix_a_matrix_baseline_citation_boundary_from_builtin_citations(), indent=2),
+        encoding="utf-8",
+    )
+    (tmp_path / paper_manifest.APPENDIX_A_RESOURCE_FRONTIER_FILE).write_text(
+        json.dumps(appendix_a_matrix_resource_frontier_record(), indent=2),
+        encoding="utf-8",
+    )
+    (tmp_path / paper_manifest.APPENDIX_A_LOCAL_RESOURCE_FRONTIER_FILE).write_text(
+        json.dumps(appendix_a_matrix_local_resource_frontier_record(), indent=2),
+        encoding="utf-8",
+    )
+    (tmp_path / paper_manifest.APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE).write_text(
+        json.dumps(paper_manifest.appendix_a_matrix_subset_scope_artifact_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+    (tmp_path / paper_manifest.APPENDIX_A_ROW_NOTE_ARTIFACTS_FILE).write_text(
+        json.dumps(paper_manifest.appendix_a_matrix_row_note_artifact_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "matrix_suite_publication_artifact_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_checks_matrix_near_integrality_runtime_boundary(
     monkeypatch,
     tmp_path,

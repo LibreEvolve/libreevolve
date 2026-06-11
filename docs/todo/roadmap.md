@@ -2511,6 +2511,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     validates the current `not_generated_locally` boundary for suite-wide
     target tensors, algorithms, certificates, notebooks, per-seed reports, and
     publication-bundle refs.
+    `papers/matrix_suite_publication_artifacts.json` now emits that
+    absence/readiness boundary as a committed sidecar.
     `matrix_suite_publication_artifact_boundary_from_artifacts()` can build the
     generated boundary from one record per registered target and validation
     checks nested matrix-result report linkage, but it does not yet provide a non-toy

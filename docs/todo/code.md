@@ -3079,6 +3079,8 @@ Primary evidence:
     exactness certificates, notebooks, per-seed reports, embedded
     matrix-result reports, artifact inventories, publication-bundle refs,
     artifact paths, and hashes.
+    `papers/matrix_suite_publication_artifacts.json` now emits that
+    absence/readiness boundary as a committed sidecar.
     `matrix_suite_publication_artifact_boundary_from_artifacts()` builds a
     generated boundary from one record per registered target and validation
     checks nested matrix-result report linkage, but no local runner generates

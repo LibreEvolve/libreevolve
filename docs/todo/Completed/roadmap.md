@@ -2,6 +2,20 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Emit matrix suite publication-artifact sidecar for roadmap evidence.
+  - Status: `papers/matrix_suite_publication_artifacts.json` now lets roadmap
+    wording point to a committed absence/readiness boundary for full Appendix
+    A target-suite publication artifacts, while keeping the checked Strassen
+    baseline scoped as a single baseline artifact.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\matrix_results.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: the active roadmap TODO still tracks actual full-suite
+    generated target tensors, algorithms, certificates, notebooks, per-seed
+    reports, and publication bundles.
+
 - [x] Emit Figure 4 matrix-discovery artifact sidecar for roadmap evidence.
   - Status: `papers/figure4_matrix_discovery_artifacts.json` now lets roadmap
     wording point to a committed absence/readiness boundary for rendered

@@ -6,6 +6,24 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit matrix suite publication-artifact sidecar.
+  - Paper evidence: Appendix A matrix claims require concrete target-suite
+    artifacts: target tensors, algorithms, coefficient data, exactness
+    certificates, notebooks, and per-seed reports across the registered suite.
+  - Status: `papers/matrix_suite_publication_artifacts.json` now carries the
+    paper-facing absence/readiness boundary for suite-wide publication
+    artifacts and keeps the checked Strassen baseline separate from generated
+    Appendix A suite evidence. The paper-manifest gate requires and validates
+    the sidecar at the real repo root.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\matrix_results.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: full-suite generated target tensors, discovered algorithms,
+    certificates, notebooks, per-seed reports, and publication bundles remain
+    open.
+
 - [x] Emit Figure 4 matrix-discovery artifact sidecar.
   - Paper evidence: Figure 4 is the main-text matrix discovery exhibit for the
     `mm_4x4x4` rank-48 program, and its caption ties the discovery to 15

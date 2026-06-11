@@ -4209,6 +4209,8 @@ generated artifact record per registered Appendix A target, including target
 tensors, algorithms, coefficient data, exactness certificates, notebooks,
 per-seed reports, embedded matrix-result reports, artifact inventories,
 publication-bundle refs, artifact paths, and hashes.
+`papers/matrix_suite_publication_artifacts.json` emits that absence/readiness
+boundary as a committed sidecar.
 `matrix_suite_publication_artifact_boundary_from_artifacts()` can build a
 generated boundary from one record per registered target, and validation checks
 that nested matrix-result reports keep target, dimensions, coefficient-domain,

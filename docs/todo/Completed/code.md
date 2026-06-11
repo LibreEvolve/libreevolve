@@ -4,6 +4,26 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit matrix suite publication-artifact sidecar.
+  - Spec evidence: AlphaEvolve Appendix A reports matrix results as a target
+    suite with per-target ranks, exact algorithms, certificates, notebooks,
+    and repeated-seed result context, not only the checked Strassen baseline.
+  - Status: `papers/matrix_suite_publication_artifacts.json` now emits the
+    `not_generated_locally` absence/readiness boundary for target tensors,
+    algorithms, coefficient data, exactness certificates, notebooks, per-seed
+    reports, embedded matrix-result reports, artifact inventories,
+    publication-bundle refs, artifact paths, and hashes for every registered
+    Appendix A target. `validate_paper_manifest()` requires and validates the
+    sidecar at the real repo root when the Appendix A registry is in scope.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\matrix_results.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: local runners still do not generate discovered exact
+    algorithms, coefficient data, certificates, notebooks, per-seed reports,
+    and publication bundles across the full Appendix A target suite.
+
 - [x] Emit Figure 4 matrix-discovery artifact sidecar.
   - Spec evidence: AlphaEvolve Figure 4 presents the main-text 4x4 matrix
     discovery exhibit, and its caption says the discovery required 15 accepted

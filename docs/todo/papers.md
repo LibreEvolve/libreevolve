@@ -3043,6 +3043,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     notebook, per-seed report, embedded matrix-result report, artifact
     inventory, publication-bundle refs, artifact paths, and hashes. The
     paper-manifest gate validates this boundary.
+    `papers/matrix_suite_publication_artifacts.json` now emits that
+    absence/readiness boundary as a committed sidecar.
     `matrix_suite_publication_artifact_boundary_from_artifacts()` can build the
     generated boundary from one record per registered target and validation
     checks nested matrix-result report linkage, but no paper-facing exporter

@@ -1406,6 +1406,8 @@ Implemented:
   exactness certificate, notebook, per-seed report, embedded matrix-result
   report, artifact inventory, publication-bundle refs, artifact paths, and
   hashes. The paper-manifest gate validates this boundary.
+  `papers/matrix_suite_publication_artifacts.json` emits that
+  absence/readiness boundary as a committed sidecar.
   `matrix_suite_publication_artifact_boundary_from_artifacts()` can build the
   generated boundary from one record per registered target, with nested
   matrix-result report linkage checks, but no local process generates the full

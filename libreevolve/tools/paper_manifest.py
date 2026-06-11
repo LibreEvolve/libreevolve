@@ -144,6 +144,7 @@ APPENDIX_A_RESOURCE_FRONTIER_FILE = "papers/appendix_a_matrix_resource_frontier.
 APPENDIX_A_LOCAL_RESOURCE_FRONTIER_FILE = "papers/appendix_a_matrix_local_resource_frontier.json"
 APPENDIX_A_SUBSET_SCOPE_ARTIFACTS_FILE = "papers/appendix_a_matrix_subset_scope_artifacts.json"
 APPENDIX_A_ROW_NOTE_ARTIFACTS_FILE = "papers/appendix_a_matrix_row_note_artifacts.json"
+MATRIX_SUITE_PUBLICATION_ARTIFACTS_FILE = "papers/matrix_suite_publication_artifacts.json"
 MATRIX_RANK_TABLE_ARTIFACTS_FILE = "papers/matrix_rank_table_artifacts.json"
 FIGURE9_MATRIX_DIFF_ARTIFACTS_FILE = "papers/figure9_matrix_diff_artifacts.json"
 FIGURE4_MATRIX_DISCOVERY_ARTIFACTS_FILE = "papers/figure4_matrix_discovery_artifacts.json"
@@ -798,8 +799,24 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
         )
         for issue in strassen_bundle_report.issues
     )
+    suite_publication_path = root_path / MATRIX_SUITE_PUBLICATION_ARTIFACTS_FILE
+    if suite_publication_path.exists():
+        suite_publication_recordset: object | str | Path = suite_publication_path
+    else:
+        suite_publication_recordset = matrix_suite_publication_artifact_boundary_record()
+        if is_repo_root:
+            issues.append(
+                PaperManifestIssue(
+                    "matrix_suite_publication_artifact_manifest_missing",
+                    (
+                        f"{MATRIX_SUITE_PUBLICATION_ARTIFACTS_FILE} must emit "
+                        "the matrix suite publication-artifact boundary"
+                    ),
+                    "matrix_suite_publication_artifacts",
+                )
+            )
     suite_publication_report = validate_matrix_suite_publication_artifact_boundary(
-        matrix_suite_publication_artifact_boundary_record()
+        suite_publication_recordset
     )
     issues.extend(
         PaperManifestIssue(

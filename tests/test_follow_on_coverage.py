@@ -71,6 +71,24 @@ def test_validate_alphaevolve_follow_on_problem_coverage_accepts_builtin_record(
     assert hashes["pages"][-1]["page_id"] == 68
     assert hashes["pages"][-1]["bytes"] == 9253
     assert hashes["pages"][-1]["sha256"] == "51eda861f49691d2db5b1ec2775dbd77c5cc47afde791416c9283c23de2ca75d"
+    source_rows = recordset["all_page_source_inventory"]
+    assert source_rows["row_count"] == 68
+    assert source_rows["source_inventory_rows_emitted"] is True
+    assert source_rows["page_url_hash_link_status_rows_complete"] is True
+    assert source_rows["status_bucket_membership_attached"] is True
+    assert source_rows["notebook_mapping_complete"] is False
+    assert source_rows["artifact_presence_matrix_complete"] is False
+    assert len(source_rows["rows"]) == 68
+    assert source_rows["rows"][0]["title"] == "1. Kakeya and Nikodym sets in finite fields"
+    assert source_rows["rows"][0]["status_bucket"] == "world_record"
+    assert source_rows["rows"][0]["colab_link_status"] == "github_notebook_blob_url"
+    assert source_rows["rows"][30]["page_id"] == 31
+    assert source_rows["rows"][30]["title"] == "32. Furstenberg-S\u00e1rk\u00f6zy Problem"
+    assert source_rows["rows"][56]["page_id"] == 57
+    assert source_rows["rows"][56]["title"] == "58. Rudin problem for polynomials"
+    assert source_rows["rows"][-1]["page_classification"] == "extra_numbered_page_duplicate_title_outside_declared_67_navigation"
+    assert source_rows["rows"][-1]["status_bucket"] == "extra_numbered_page"
+    assert source_rows["rows"][-1]["paper_link_status"] == "placeholder"
     link = recordset["notebook_inventory_link"]
     assert link["source_manifest"] == "papers/follow_on_runtime_absence.json"
     assert link["pinned_notebook_path_count"] == 28
@@ -181,6 +199,16 @@ def test_validate_alphaevolve_follow_on_problem_coverage_rejects_inventory_overc
     hashes["pages"][0]["sha256"] = "0" * 64
     hashes["pages"] = hashes["pages"][:-1]
     hashes["claim_boundary"] = "All notebooks and artifacts are mapped."
+    source_rows = recordset["all_page_source_inventory"]
+    source_rows["row_count"] = 67
+    source_rows["source_inventory_rows_emitted"] = False
+    source_rows["status_bucket_membership_attached"] = False
+    source_rows["notebook_mapping_complete"] = True
+    source_rows["artifact_presence_matrix_complete"] = True
+    source_rows["rows"][0]["status_bucket"] = "unknown"
+    source_rows["rows"][0]["sha256"] = "0" * 64
+    source_rows["rows"] = source_rows["rows"][:-1]
+    source_rows["claim_boundary"] = "Every notebook and artifact is mapped."
     recordset["remaining_coverage_work"] = ["classify_extra_numbered_page_68"]
 
     validation = validate_alphaevolve_follow_on_problem_coverage(recordset)
@@ -218,6 +246,15 @@ def test_validate_alphaevolve_follow_on_problem_coverage_rejects_inventory_overc
     assert "invalid_all_page_hash_inventory_page_bytes" in codes
     assert "invalid_all_page_hash_inventory_page_sha256" in codes
     assert "missing_all_page_hash_inventory_claim_boundary" in codes
+    assert "invalid_all_page_source_inventory_row_count" in codes
+    assert "invalid_all_page_source_inventory_source_inventory_rows_emitted" in codes
+    assert "invalid_all_page_source_inventory_status_bucket_membership_attached" in codes
+    assert "all_page_source_inventory_notebook_mapping_complete_overclaim" in codes
+    assert "all_page_source_inventory_artifact_presence_matrix_complete_overclaim" in codes
+    assert "all_page_source_inventory_page_id_mismatch" in codes
+    assert "invalid_all_page_source_inventory_row_status_bucket" in codes
+    assert "invalid_all_page_source_inventory_row_sha256" in codes
+    assert "missing_all_page_source_inventory_claim_boundary" in codes
     assert "missing_remaining_coverage_work" in codes
 
 

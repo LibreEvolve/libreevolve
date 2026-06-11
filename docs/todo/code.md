@@ -2305,19 +2305,19 @@ Primary evidence:
     `36` GitHub notebook blob URLs, `6` direct Google Colab URLs, `25`
     under-construction Colab placeholders, `1` generic Colab landing URL, and
     `1` paper-link placeholder. It also pins raw-page byte counts and SHA-256
-    hashes for all `68` numbered HTML pages. It still does not map notebooks
-    or absence reasons to problem ids, validate prompt/verifier/initial/final/
-    visualization flags per problem, or emit those rows into paper/source
-    manifests.
+    hashes for all `68` numbered HTML pages and emits per-page source rows
+    with titles, paper sections, page URLs, hashes, link-status diagnostics,
+    and status-bucket labels. It still does not map notebooks or absence
+    reasons to problem ids or validate prompt/verifier/initial/final/
+    visualization flags per problem.
   - Required result: extend the follow-on repository coverage manifest and
-    validators with per-problem hosted page URL rows that reference the pinned
-    page hashes, notebook path/hash or absence reason, artifact presence flags
-    for prompt/verifier/initial/final/visualization/analysis, emitted
-    source-manifest rows, and README/ROADMAP wording that separates complete
-    declared problem-page coverage from partial notebook/artifact/status
-    coverage at a pinned snapshot.
+    validators with notebook path/hash or absence reason and artifact presence
+    flags for prompt/verifier/initial/final/visualization/analysis on the
+    emitted per-page source rows, plus README/ROADMAP wording that separates
+    complete declared problem-page coverage from partial notebook/artifact/
+    status coverage at a pinned snapshot.
 
-- [ ] Emit full follow-on per-page inventory rows after link diagnostics.
+- [ ] Complete follow-on notebook and artifact mapping on emitted per-page rows.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
     README says the repository contains problem descriptions for 67
     mathematical problems, but the current `problems/` directory exposes 68
@@ -2333,16 +2333,16 @@ Primary evidence:
     declared 67-page navigation range and records all-page resource-link
     diagnostics, including the `25` under-construction Colab placeholders and
     the page-68 generic Colab plus paper-link placeholder. It also pins raw
-    byte counts and SHA-256 hashes for every numbered page. It still does not
-    emit a per-page source manifest row with URL, section, link status, the
-    pinned page hash, notebook mapping, and artifact flags for every numbered
-    page.
+    byte counts and SHA-256 hashes for every numbered page and emits per-page
+    source rows with URL, section, link status, pinned page hash, and
+    status-bucket membership. It still does not attach notebook mapping,
+    notebook absence reasons, notebook SHA-256 hashes, or artifact flags for
+    every numbered page.
   - Required result: extend repository-page inventory validation with page
-    id/title/section rows for all numbered pages, references to the pinned
-    per-page hash fields, notebook path or absence reason, prompt/verifier/
-    initial/final/visualization flags, emitted source-manifest rows, and
-    README/ROADMAP wording that distinguishes paper-declared problem count
-    from full live repository page inventory.
+    notebook path or absence reason, notebook hash fields, prompt/verifier/
+    initial/final/visualization flags, and README/ROADMAP wording that
+    distinguishes paper-declared problem count from full live repository page
+    inventory.
 
 - [ ] Add paper-artifact creator and assembler provenance for figures and
       companion notebooks.

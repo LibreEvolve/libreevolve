@@ -313,15 +313,17 @@ def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
             "page_68_classification_complete": True,
             "resource_link_diagnostics_complete_for_pages_67_68": True,
             "all_page_resource_link_diagnostics_complete": True,
+            "source_inventory_rows_emitted": True,
+            "source_inventory_row_count": 68,
             "per_problem_inventory_validated": False,
             "page_hash_inventory_complete": True,
             "claim_boundary": (
                 "The follow-on coverage record reconciles the declared "
                 "67-problem count against 68 observed numbered HTML pages, "
                 "classifies page 68, records all-page resource-link "
-                "diagnostics, and pins raw-page hashes, but does not claim "
-                "emitted per-page inventory rows, notebook mapping, or "
-                "artifact flags."
+                "diagnostics, pins raw-page hashes, and emits per-page "
+                "source rows with status buckets, but does not claim notebook "
+                "mapping, notebook absence reasons, or artifact flags."
             ),
         },
         "source_use": {
@@ -333,7 +335,7 @@ def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
             "citation_arxiv_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
         },
         "required_follow_on_work": [
-            "build_per_problem_repository_inventory",
+            "complete_per_problem_notebook_and_artifact_inventory",
             "validate_notebook_prompt_verifier_initial_final_artifacts",
             "map_original_appendix_b_claims_to_follow_on_problem_records",
             "attach_rights_attribution_to_generated_artifacts",
@@ -738,7 +740,7 @@ def alphaevolve_follow_on_source_manifest_record() -> dict[str, Any]:
                     ),
                 },
                 "remaining_work": [
-                    "build_per_problem_repository_inventory",
+                    "complete_per_problem_notebook_and_artifact_inventory",
                     "validate_notebook_prompt_verifier_initial_final_artifacts",
                     "map_original_appendix_b_claims_to_follow_on_problem_records",
                     "attach_rights_attribution_to_generated_artifacts",
@@ -1268,6 +1270,8 @@ def _validate_problem_coverage_evidence(value: object, issues: list[AlphaEvolveF
         "page_68_classification_complete": True,
         "resource_link_diagnostics_complete_for_pages_67_68": True,
         "all_page_resource_link_diagnostics_complete": True,
+        "source_inventory_rows_emitted": True,
+        "source_inventory_row_count": 68,
         "per_problem_inventory_validated": False,
         "page_hash_inventory_complete": True,
     }
@@ -1281,9 +1285,10 @@ def _validate_problem_coverage_evidence(value: object, issues: list[AlphaEvolveF
     if (
         not isinstance(claim_boundary, str)
         or "does not claim" not in claim_boundary
-        or "emitted per-page inventory rows" not in claim_boundary
+        or "notebook mapping" not in claim_boundary
+        or "artifact flags" not in claim_boundary
     ):
-        issues.append(_issue("missing_problem_coverage_claim_boundary", "problem_coverage_evidence must preserve emitted-row, notebook, and artifact gaps", EXPECTED_REPOSITORY_NAME))
+        issues.append(_issue("missing_problem_coverage_claim_boundary", "problem_coverage_evidence must preserve notebook and artifact gaps", EXPECTED_REPOSITORY_NAME))
 
 
 def _validate_source_use(value: object, issues: list[AlphaEvolveFollowOnMathSourceIssue]) -> None:
@@ -1305,7 +1310,7 @@ def _validate_source_use(value: object, issues: list[AlphaEvolveFollowOnMathSour
 
 def _validate_required_follow_on_work(value: object, issues: list[AlphaEvolveFollowOnMathSourceIssue]) -> None:
     required = {
-        "build_per_problem_repository_inventory",
+        "complete_per_problem_notebook_and_artifact_inventory",
         "validate_notebook_prompt_verifier_initial_final_artifacts",
         "map_original_appendix_b_claims_to_follow_on_problem_records",
         "attach_rights_attribution_to_generated_artifacts",
@@ -1392,7 +1397,7 @@ def _validate_follow_on_manifest_remaining_work(
     issues: list[AlphaEvolveFollowOnMathSourceIssue],
 ) -> None:
     expected = {
-        "build_per_problem_repository_inventory",
+        "complete_per_problem_notebook_and_artifact_inventory",
         "validate_notebook_prompt_verifier_initial_final_artifacts",
         "map_original_appendix_b_claims_to_follow_on_problem_records",
         "attach_rights_attribution_to_generated_artifacts",

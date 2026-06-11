@@ -4032,8 +4032,8 @@ row with docs/TODO claim-surface links, a linked
 boundary, and an explicit no-cache policy: it is later math-source evidence for
 the original paper's Section 3.2 handoff, not the original `2506.13131`
 AlphaEvolve specification, not a local cached PDF row, and not proof of
-emitted per-page inventory rows, notebook mapping, or complete
-notebook/artifact coverage yet.
+notebook mapping, notebook absence reasons, or complete notebook/artifact
+coverage yet.
 `papers/follow_on_repository_rights.json` records the pinned problem
 repository's source-use terms separately from both the original PDF and
 `alphaevolve_results`: citation/BibTeX requirement, Google LLC copyright,
@@ -4106,12 +4106,13 @@ range, records all-page resource-link diagnostics (`36` GitHub notebook blob
 URLs, `6` direct Google Colab URLs, `25` under-construction Colab
 placeholders, `1` generic Colab landing URL, and `1` paper-link placeholder),
 pins raw-page byte counts and SHA-256 hashes for all 68 numbered HTML pages,
+emits per-page source rows with titles, paper sections, page URLs, hashes,
+link-status diagnostics, and status-bucket labels,
 and links to the runtime-absence notebook inventory with 28 pinned notebook
 paths, while per-problem notebook mapping, notebook SHA-256 hashes, and
 notebook absence reasons remain incomplete. This is status-artifact,
-bucket-membership, resource-link, and raw-page-hash evidence; emitted
-per-page inventory rows and prompt/verifier/final artifact flags remain open
-work.
+bucket-membership, resource-link, raw-page-hash, and source-row evidence;
+prompt/verifier/final artifact flags remain open work.
 Matrix headline historicity evidence uses
 `libreevolve.matrix_headline_historicity_evidence.v1`; it validates declared
 provenance for the `mm_4x4x4` complex rank-48 headline, including dimensions,

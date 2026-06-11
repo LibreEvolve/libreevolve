@@ -197,6 +197,76 @@ EXPECTED_ALL_PAGE_HASH_INVENTORY = {
         (68, 9253, "51eda861f49691d2db5b1ec2775dbd77c5cc47afde791416c9283c23de2ca75d"),
     ),
 }
+EXPECTED_ALL_PAGE_TITLE_SECTION_ROWS = (
+    (1, '1. Kakeya and Nikodym sets in finite fields', 'Kakeya and Nikodym sets in finite fields', '6.1', 67),
+    (2, '2. An autocorrelation problem related to Sidon sets', 'An autocorrelation problem related to Sidon sets', '6.2', 67),
+    (3, '3. How much can an autocorrelation of a non-negative function resemble an indicator function? ', 'How much can an autocorrelation of a non-negative function resemble an indicator function? ', '6.2', 67),
+    (4, '4. An autocorrelation problem with functions that can take negative values', 'An autocorrelation problem with functions that can take negative values', '6.2', 67),
+    (5, '5. Erd\u0151s minimum overlap problem', 'Erd\u0151s minimum overlap problem', '6.2', 67),
+    (6, '6. An autocorrelation problem related to difference bases', 'An autocorrelation problem related to difference bases', '6.2', 67),
+    (7, '7. Difference Bases', 'Difference Bases', '6.3', 67),
+    (8, '8. Kissing numbers', 'Kissing numbers', '6.4', 67),
+    (9, '9. Kakeya needle problem', 'Kakeya needle problem', '6.5', 67),
+    (10, '10. 3D Kakeya problem', '3D Kakeya problem', '6.5', 67),
+    (11, '11. Uncertainty principle', 'Uncertainty principle', '6.6', 67),
+    (12, '12. Sphere Packing', 'Sphere Packing', '6.6', 67),
+    (13, '13. A Linear Programming Bound', 'A Linear Programming Bound', '6.6', 67),
+    (14, '14. Hausdorff-Young Inequality', 'Hausdorff-Young Inequality', '6.7', 67),
+    (15, '15. Gagliardo-Nirenberg Inequality', 'Gagliardo-Nirenberg Inequality', '6.7', 67),
+    (16, '16. Special Case of Gagliardo-Nirenberg Inequality', 'Special Case of Gagliardo-Nirenberg Inequality', '6.7', 67),
+    (17, "17. Young's Convolution Inequality", "Young's Convolution Inequality", '6.7', 67),
+    (18, '18. Hardy-Littlewood Maximal Inequality', 'Hardy-Littlewood Maximal Inequality', '6.7', 67),
+    (19, '19. The Ovals Problem', 'The Ovals Problem', '6.8', 67),
+    (20, "20. Sendov's Conjecture", "Sendov's Conjecture", '6.9', 67),
+    (21, "21. Schmeisser's Conjecture", "Schmeisser's Conjecture", '6.9', 67),
+    (22, "22. Borcea's Conjecture", "Borcea's Conjecture", '6.9', 67),
+    (23, "23. Smale's Problem", "Smale's Problem", '6.9', 67),
+    (24, '24. de Bruin-Sharma Problem', 'de Bruin-Sharma Problem', '6.9', 67),
+    (25, "25. Crouzeix's Conjecture", "Crouzeix's Conjecture", '6.10', 67),
+    (26, "26. Sidorenko's Conjecture", "Sidorenko's Conjecture", '6.11', 67),
+    (27, '27. The Prime Number Theorem', 'The Prime Number Theorem', '6.12', 67),
+    (28, "28. Golay's Merit Factor", "Golay's Merit Factor", '6.13', 67),
+    (29, '29. Block Stacking Problem', 'Block Stacking Problem', '6.14', 67),
+    (30, '30. The Arithmetic Kakeya Conjecture', 'The Arithmetic Kakeya Conjecture', '6.15', 67),
+    (31, '32. Furstenberg-S\xe1rk\xf6zy Problem', 'Furstenberg-S\xe1rk\xf6zy Problem', '6.16', 67),
+    (32, '32. Spherical Designs', 'Spherical Designs', '6.17', 67),
+    (33, '33. The Thomson Problem', 'The Thomson Problem', '6.18', 67),
+    (34, '34. Tammes problem', 'Tammes problem', '6.18', 67),
+    (35, '35. Packing in a dilate', 'Packing in a dilate', '6.19', 67),
+    (36, '36. Circle packing in a square / rectangle', 'Circle packing in a square / rectangle', '6.19', 67),
+    (37, '37. The hypergraph Tur\xe1n number of the tetrahedron', 'The hypergraph Tur\xe1n number of the tetrahedron', '6.20', 67),
+    (38, '38. Factoring $N!$ into $N$ numbers', 'Factoring $N!$ into $N$ numbers', '6.21', 67),
+    (39, '39. Beat the average game', 'Beat the average game', '6.22', 67),
+    (40, '40. Erd\u0151s discrepancy problem', 'Erd\u0151s discrepancy problem', '6.23', 67),
+    (41, '41. Points on sphere maximizing the volume', 'Points on sphere maximizing the volume', '6.24', 67),
+    (42, '42. Sum-difference problem I', 'Sum-difference problem I', '6.25', 67),
+    (43, '43. Sum-difference problem II', 'Sum-difference problem II', '6.25', 67),
+    (44, '44. Sum-difference problem III', 'Sum-difference problem III', '6.25', 67),
+    (45, '45. Sum-product problems', 'Sum-product problems', '6.26', 67),
+    (46, '46. Minimal triangle density in graphs', 'Minimal triangle density in graphs', '6.27', 67),
+    (47, '47. Matrix multiplications and AM-GM inequalities', 'Matrix multiplications and AM-GM inequalities', '6.28', 67),
+    (48, '48. Heilbronn problem in a fixed bounding box', 'Heilbronn problem in a fixed bounding box', '6.29', 67),
+    (49, '49. Heilbronn problem in an arbitrary convex bounding box', 'Heilbronn problem in an arbitrary convex bounding box', '6.29', 67),
+    (50, '50. Max to min ratios', 'Max to min ratios', '6.30', 67),
+    (51, '51. Erd\u0151s\u2013Gy\xe1rf\xe1s conjecture', 'Erd\u0151s\u2013Gy\xe1rf\xe1s conjecture', '6.31', 67),
+    (52, '52. Erd\u0151s squarefree problem', 'Erd\u0151s squarefree problem', '6.32', 67),
+    (53, '53. Equidistant points in convex polygons', 'Equidistant points in convex polygons', '6.33', 67),
+    (54, '54. Pairwise touching cylinders', 'Pairwise touching cylinders', '6.34', 67),
+    (55, '55. Erd\u0151s squares in a square problem', 'Erd\u0151s squares in a square problem', '6.35', 67),
+    (56, '56. Good asymptotic constructions of Szemer\xe9di--Trotter', 'Good asymptotic constructions of Szemer\xe9di--Trotter', '6.36', 67),
+    (57, '58. Rudin problem for polynomials', 'Rudin problem for polynomials', '6.37', 67),
+    (58, '58. Erd\u0151s--Szekeres Happy Ending problem', 'Erd\u0151s--Szekeres Happy Ending problem', '6.38', 67),
+    (59, '59. Subsets of the grid with no isosceles triangles', 'Subsets of the grid with no isosceles triangles', '6.39', 67),
+    (60, '60. The no 5 on a sphere problem', 'The no 5 on a sphere problem', '6.40', 67),
+    (61, '61. The Ring Loading Problem', 'The Ring Loading Problem', '6.41', 67),
+    (62, '62. The moving sofa problem', 'The moving sofa problem', '6.42', 67),
+    (63, '63. The ambidextrous moving sofa problem', 'The ambidextrous moving sofa problem', '6.42', 67),
+    (64, '64. The three-dimensional moving sofa problem with two perpendicular turns', 'The three-dimensional moving sofa problem with two perpendicular turns', '6.42', 67),
+    (65, '65. Variant of IMO 2025, Problem 6', 'Variant of IMO 2025, Problem 6', '6.43', 67),
+    (66, '66. The function guessing game', 'The function guessing game', '6.44', 67),
+    (67, '67. Logic puzzles', 'Logic puzzles', '6.44', 67),
+    (68, '68. Logic puzzles', 'Logic puzzles', '6.44', None),
+)
 EXPECTED_STATUS_BUCKETS = {
     "world_record": (1, 2, 4, 5, 7, 8, 9, 10, 30, 32, 35, 42, 48, 49, 50, 59, 60, 61, 64),
     "former_record": (3, 36, 38, 44),
@@ -347,6 +417,60 @@ def _expected_all_page_hash_records() -> list[dict[str, Any]]:
     ]
 
 
+def _status_bucket_for_page(page_id: int) -> str:
+    if page_id in EXPECTED_EXTRA_NUMBERED_PAGE_IDS:
+        return "extra_numbered_page"
+    for bucket, problem_ids in EXPECTED_STATUS_BUCKETS.items():
+        if page_id in problem_ids:
+            return bucket
+    return "not_listed_in_status_json"
+
+
+def _link_status_for_page(page_id: int, key: str) -> str:
+    page_ids_by_status = EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS[key]
+    for status, page_ids in page_ids_by_status.items():
+        if page_id in page_ids:
+            return status
+    return "missing"
+
+
+def _expected_all_page_source_inventory_rows() -> list[dict[str, Any]]:
+    hash_records = {
+        record["page_id"]: record
+        for record in _expected_all_page_hash_records()
+    }
+    rows = []
+    for page_id, title, title_key, paper_section, navigation_total in EXPECTED_ALL_PAGE_TITLE_SECTION_ROWS:
+        hash_record = hash_records[page_id]
+        rows.append(
+            {
+                "page_id": page_id,
+                "problem_id": page_id if page_id in EXPECTED_PROBLEM_IDS else None,
+                "declared_problem_page": page_id in EXPECTED_PROBLEM_IDS,
+                "page_classification": (
+                    "extra_numbered_page_duplicate_title_outside_declared_67_navigation"
+                    if page_id in EXPECTED_EXTRA_NUMBERED_PAGE_IDS
+                    else "declared_problem_page"
+                ),
+                "title": title,
+                "title_key": title_key,
+                "paper_section": paper_section,
+                "declared_navigation_total_problems": navigation_total,
+                "status_bucket": _status_bucket_for_page(page_id),
+                "path": hash_record["path"],
+                "hosted_url": hash_record["hosted_url"],
+                "raw_url": hash_record["raw_url"],
+                "bytes": hash_record["bytes"],
+                "sha256": hash_record["sha256"],
+                "colab_link_status": _link_status_for_page(page_id, "colab_link_status_page_ids"),
+                "paper_link_status": _link_status_for_page(page_id, "paper_link_status_page_ids"),
+                "notebook_mapping_status": "not_mapped",
+                "artifact_presence_status": "not_validated",
+            }
+        )
+    return rows
+
+
 def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
     return {
         "schema": ALPHAEVOLVE_FOLLOW_ON_PROBLEM_COVERAGE_SCHEMA,
@@ -367,6 +491,7 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
             "notebook_access_mode": "colab_notebook_many_not_all",
             "notebook_inventory_complete": False,
             "page_hash_inventory_complete": True,
+            "source_inventory_rows_emitted": True,
             "notebook_hash_inventory_complete": False,
             "artifact_presence_matrix_complete": False,
         },
@@ -487,6 +612,25 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
                 "artifact-presence rows."
             ),
         },
+        "all_page_source_inventory": {
+            "diagnostic_scope": "all_numbered_pages_source_inventory_rows",
+            "row_count": EXPECTED_OBSERVED_NUMBERED_HTML_COUNT,
+            "declared_problem_page_count": EXPECTED_DECLARED_PROBLEM_COUNT,
+            "extra_numbered_page_ids": list(EXPECTED_EXTRA_NUMBERED_PAGE_IDS),
+            "source_inventory_rows_emitted": True,
+            "page_url_hash_link_status_rows_complete": True,
+            "status_bucket_membership_attached": True,
+            "notebook_mapping_complete": False,
+            "artifact_presence_matrix_complete": False,
+            "rows": _expected_all_page_source_inventory_rows(),
+            "claim_boundary": (
+                "All 68 numbered pages have emitted source rows with page "
+                "URLs, raw-page hashes, section ids, link-status diagnostics, "
+                "and status-bucket labels; this does not claim per-problem "
+                "notebook mapping, notebook absence reasons, or "
+                "prompt/verifier/initial/final/visualization artifact flags."
+            ),
+        },
         "notebook_inventory_link": {
             "source_manifest": EXPECTED_FOLLOW_ON_RUNTIME_ABSENCE_MANIFEST_FILE,
             "source_boundary": "alphaevolve_follow_on_runtime_absence",
@@ -524,7 +668,6 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
         "remaining_coverage_work": [
             "discover_notebook_paths_and_absence_reasons",
             "validate_prompt_verifier_initial_final_visualization_flags",
-            "attach_status_to_emitted_source_manifest_rows",
         ],
     }
 
@@ -547,6 +690,7 @@ def validate_alphaevolve_follow_on_problem_coverage(
     _validate_page_discrepancy_diagnostics(data.get("page_discrepancy_diagnostics"), issues)
     _validate_all_page_resource_link_diagnostics(data.get("all_page_resource_link_diagnostics"), issues)
     _validate_all_page_hash_inventory(data.get("all_page_hash_inventory"), issues)
+    _validate_all_page_source_inventory(data.get("all_page_source_inventory"), issues)
     _validate_notebook_inventory_link(data.get("notebook_inventory_link"), issues)
     status_artifact_count = _validate_status_artifacts(data.get("status_artifacts"), issues)
     listed_status_count = _validate_status_buckets(data.get("status_buckets"), issues)
@@ -640,6 +784,7 @@ def _validate_coverage_scope(value: object, issues: list[AlphaEvolveFollowOnProb
         "notebook_access_mode": "colab_notebook_many_not_all",
         "notebook_inventory_complete": False,
         "page_hash_inventory_complete": True,
+        "source_inventory_rows_emitted": True,
         "notebook_hash_inventory_complete": False,
         "artifact_presence_matrix_complete": False,
     }
@@ -866,6 +1011,69 @@ def _validate_all_page_hash_inventory(
         issues.append(_issue("missing_all_page_hash_inventory_claim_boundary", "all-page hash inventory must preserve notebook and artifact-row gaps"))
 
 
+def _validate_all_page_source_inventory(
+    value: object,
+    issues: list[AlphaEvolveFollowOnProblemCoverageIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_all_page_source_inventory", "all_page_source_inventory must be an object"))
+        return
+    expected = {
+        "diagnostic_scope": "all_numbered_pages_source_inventory_rows",
+        "row_count": EXPECTED_OBSERVED_NUMBERED_HTML_COUNT,
+        "declared_problem_page_count": EXPECTED_DECLARED_PROBLEM_COUNT,
+        "extra_numbered_page_ids": list(EXPECTED_EXTRA_NUMBERED_PAGE_IDS),
+        "source_inventory_rows_emitted": True,
+        "page_url_hash_link_status_rows_complete": True,
+        "status_bucket_membership_attached": True,
+        "notebook_mapping_complete": False,
+        "artifact_presence_matrix_complete": False,
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            code = f"invalid_all_page_source_inventory_{field}"
+            if field in {"notebook_mapping_complete", "artifact_presence_matrix_complete"}:
+                code = f"all_page_source_inventory_{field}_overclaim"
+            issues.append(_issue(code, f"all_page_source_inventory.{field} must match the emitted row evidence boundary"))
+    rows = value.get("rows")
+    if not isinstance(rows, list):
+        issues.append(_issue("invalid_all_page_source_inventory_rows", "all_page_source_inventory.rows must be a list"))
+        return
+    expected_rows = {
+        record["page_id"]: record
+        for record in _expected_all_page_source_inventory_rows()
+    }
+    actual_rows = {
+        record.get("page_id"): record
+        for record in rows
+        if isinstance(record, dict) and isinstance(record.get("page_id"), int)
+    }
+    if set(actual_rows) != set(expected_rows):
+        issues.append(_issue("all_page_source_inventory_page_id_mismatch", "all-page source inventory must contain exactly pages 1..68"))
+    for page_id, expected_row in expected_rows.items():
+        record = actual_rows.get(page_id)
+        if not isinstance(record, dict):
+            issues.append(_issue("missing_all_page_source_inventory_row", "page source inventory row is missing", page_id))
+            continue
+        for field, expected_value in expected_row.items():
+            if record.get(field) != expected_value:
+                issues.append(
+                    _issue(
+                        f"invalid_all_page_source_inventory_row_{field}",
+                        f"page {page_id} source inventory field {field} must match the pinned source row",
+                        page_id,
+                    )
+                )
+    claim_boundary = value.get("claim_boundary")
+    if (
+        not isinstance(claim_boundary, str)
+        or "does not claim" not in claim_boundary
+        or "notebook mapping" not in claim_boundary
+        or "artifact flags" not in claim_boundary
+    ):
+        issues.append(_issue("missing_all_page_source_inventory_claim_boundary", "all-page source inventory must preserve notebook and artifact gaps"))
+
+
 def _validate_notebook_inventory_link(value: object, issues: list[AlphaEvolveFollowOnProblemCoverageIssue]) -> None:
     if not isinstance(value, dict):
         issues.append(_issue("invalid_notebook_inventory_link", "notebook_inventory_link must be an object"))
@@ -963,7 +1171,6 @@ def _validate_remaining_coverage_work(value: object, issues: list[AlphaEvolveFol
     required = {
         "discover_notebook_paths_and_absence_reasons",
         "validate_prompt_verifier_initial_final_visualization_flags",
-        "attach_status_to_emitted_source_manifest_rows",
     }
     if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
         issues.append(_issue("invalid_remaining_coverage_work", "remaining_coverage_work must be a list of remaining work ids"))

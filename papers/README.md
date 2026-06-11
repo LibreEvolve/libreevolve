@@ -1742,7 +1742,7 @@ Implemented:
   linked problem-coverage evidence for the declared-67 versus observed-68
   numbered-page boundary, and an explicit no-cache policy. It is later
   math-source evidence, not the original `2506.13131` specification, not a
-  cached PDF row, and not emitted per-page inventory, notebook mapping, or
+  cached PDF row, and not notebook mapping, notebook absence-reason, or
   notebook/artifact inventory.
 - `papers/follow_on_repository_rights.json`: follow-on problem-repository
   source-use sidecar. It records the pinned repository's citation/BibTeX
@@ -1793,10 +1793,11 @@ Implemented:
   GitHub notebook blob URLs, `6` direct Google Colab URLs, `25`
   under-construction Colab placeholders, `1` generic Colab landing URL, and
   `1` paper-link placeholder), pins raw-page byte counts and SHA-256 hashes
-  for all 68 numbered HTML pages, and links to the runtime-absence record's
-  28 pinned notebook paths, but it is not complete per-page source inventory,
-  per-problem notebook mapping, notebook SHA-256 inventory, or
-  notebook-absence evidence.
+  for all 68 numbered HTML pages, emits per-page source rows with titles,
+  paper sections, page URLs, hashes, link-status diagnostics, and
+  status-bucket labels, and links to the runtime-absence record's 28 pinned
+  notebook paths, but it is not per-problem notebook mapping, notebook
+  SHA-256 inventory, notebook-absence evidence, or artifact-flag evidence.
 - `libreevolve/llm/budget_report.py`: LLM role/retry budget report contract.
   It validates mutation, critique, and feedback role budgets, provider-internal
   retry attempts, token/cost/wall-clock limits and usage, persisted

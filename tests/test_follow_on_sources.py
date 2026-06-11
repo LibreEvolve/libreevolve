@@ -44,6 +44,8 @@ def test_validate_alphaevolve_follow_on_math_source_accepts_builtin_record():
     assert coverage["page_68_classification_complete"] is True
     assert coverage["resource_link_diagnostics_complete_for_pages_67_68"] is True
     assert coverage["all_page_resource_link_diagnostics_complete"] is True
+    assert coverage["source_inventory_rows_emitted"] is True
+    assert coverage["source_inventory_row_count"] == 68
     assert coverage["per_problem_inventory_validated"] is False
     assert coverage["page_hash_inventory_complete"] is True
 
@@ -430,6 +432,8 @@ def test_validate_alphaevolve_follow_on_math_source_rejects_repository_claim_ove
     coverage["page_68_classification_complete"] = False
     coverage["resource_link_diagnostics_complete_for_pages_67_68"] = False
     coverage["all_page_resource_link_diagnostics_complete"] = False
+    coverage["source_inventory_rows_emitted"] = False
+    coverage["source_inventory_row_count"] = 67
     coverage["per_problem_inventory_validated"] = True
     coverage["page_hash_inventory_complete"] = False
     coverage["claim_boundary"] = "Every numbered page is classified and hashed."
@@ -450,6 +454,8 @@ def test_validate_alphaevolve_follow_on_math_source_rejects_repository_claim_ove
     assert "invalid_problem_coverage_evidence_page_68_classification_complete" in codes
     assert "invalid_problem_coverage_evidence_resource_link_diagnostics_complete_for_pages_67_68" in codes
     assert "invalid_problem_coverage_evidence_all_page_resource_link_diagnostics_complete" in codes
+    assert "invalid_problem_coverage_evidence_source_inventory_rows_emitted" in codes
+    assert "invalid_problem_coverage_evidence_source_inventory_row_count" in codes
     assert "problem_coverage_evidence_per_problem_inventory_validated_overclaim" in codes
     assert "invalid_problem_coverage_evidence_page_hash_inventory_complete" in codes
     assert "missing_problem_coverage_claim_boundary" in codes

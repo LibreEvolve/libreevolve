@@ -2301,11 +2301,13 @@ Primary evidence:
     and absence reasons incomplete. The standard paper-manifest gate validates
     the built-in coverage record. It now classifies page 68 as an extra
     numbered duplicate-title `Logic puzzles` page outside the declared
-    67-page navigation range, records page 67/68 resource-link diagnostics, and
-    pins SHA-256 digests for those two diagnostic pages. It still does not hash
-    every problem page, map notebooks or absence reasons to problem ids,
-    validate prompt/verifier/initial/final/visualization flags per problem, or
-    emit those rows into paper/source manifests.
+    67-page navigation range and records all-page resource-link diagnostics:
+    `36` GitHub notebook blob URLs, `6` direct Google Colab URLs, `25`
+    under-construction Colab placeholders, `1` generic Colab landing URL, and
+    `1` paper-link placeholder. It still does not hash every problem page, map
+    notebooks or absence reasons to problem ids, validate prompt/verifier/
+    initial/final/visualization flags per problem, or emit those rows into
+    paper/source manifests.
   - Required result: extend the follow-on repository coverage manifest and
     validators with per-problem hosted page URL and page hash, notebook
     path/hash or absence reason, artifact presence flags for prompt/verifier/
@@ -2314,7 +2316,7 @@ Primary evidence:
     coverage from partial notebook/artifact/status coverage at a pinned
     snapshot.
 
-- [ ] Extend follow-on numbered-page diagnostics beyond pages 67/68.
+- [ ] Emit full follow-on per-page inventory rows after link diagnostics.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
     README says the repository contains problem descriptions for 67
     mathematical problems, but the current `problems/` directory exposes 68
@@ -2327,16 +2329,17 @@ Primary evidence:
     observed numbered HTML pages, and `papers/follow_on_sources.json` links
     that numbered-page evidence boundary. The coverage now classifies page 68
     as an extra numbered duplicate-title `Logic puzzles` page outside the
-    declared 67-page navigation range, records page 67's Colab placeholder and
-    page 68's generic Colab plus paper-link placeholder diagnostics, and pins
-    SHA-256 digests for pages 67 and 68 only. It still does not run duplicate,
-    section, or resource-link diagnostics across every numbered page.
+    declared 67-page navigation range and records all-page resource-link
+    diagnostics, including the `25` under-construction Colab placeholders and
+    the page-68 generic Colab plus paper-link placeholder. It still does not
+    emit a per-page source manifest row with URL, section, link status, page
+    hash, notebook mapping, and artifact flags for every numbered page.
   - Required result: extend repository-page inventory validation with page
-    id/title/section mapping for all numbered pages, duplicate title/section
-    detection beyond pages 67/68, placeholder/generic link diagnostics for
-    Colab and paper links across the full page set, and README/ROADMAP wording
-    that distinguishes paper-declared problem count from full live repository
-    page inventory.
+    id/title/section rows for all numbered pages, per-page hash fields,
+    notebook path or absence reason, prompt/verifier/initial/final/
+    visualization flags, emitted source-manifest rows, and README/ROADMAP
+    wording that distinguishes paper-declared problem count from full live
+    repository page inventory.
 
 - [ ] Add paper-artifact creator and assembler provenance for figures and
       companion notebooks.

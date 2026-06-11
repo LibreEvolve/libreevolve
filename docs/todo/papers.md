@@ -3244,16 +3244,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     reasons remain incomplete. The standard paper-manifest gate validates the
     built-in coverage record. Paper-facing rows are still missing: no
     per-problem page hashes, prompt/verifier/initial/final/visualization
-    flags, all-page diagnostics, or emitted source-manifest rows.
+    flags, or emitted source-manifest rows.
   - Required result: add source-manifest rows and checks for the problem
     repository snapshot: hosted page URL and page hash per problem, notebook
     path/hash or explicit absence reason, prompt/verifier/initial/final/
-    visualization/analysis presence flags, all-page diagnostics, emitted
-    status/source rows, and citation wording that avoids implying notebook or
-    artifact coverage is complete when only problem-page, status-bucket, and
-    scoped page-discrepancy evidence is currently available.
+    visualization/analysis presence flags, emitted status/source rows, and
+    citation wording that avoids implying notebook or artifact coverage is
+    complete when only problem-page, status-bucket, and resource-link evidence
+    is currently available.
 
-- [ ] Extend follow-on numbered-page diagnostics beyond pages 67/68.
+- [ ] Emit full follow-on per-page source-manifest rows after link diagnostics.
   - Paper/source evidence: the
     `google-deepmind/alphaevolve_repository_of_problems` README says the
     repository contains problem descriptions for 67 mathematical problems, but
@@ -3266,18 +3266,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     observed numbered HTML pages, and `papers/follow_on_sources.json` links
     that numbered-page evidence boundary. It now classifies page 68 as an
     extra numbered duplicate-title `Logic puzzles` page outside the declared
-    67-page navigation range, records page 67's Colab placeholder and page
-    68's generic Colab plus paper-link placeholder diagnostics, and pins
-    SHA-256 digests for pages 67 and 68 only. Paper-facing diagnostics still
-    do not cover duplicate titles, repeated paper-section mappings,
-    under-construction links, generic Colab links, or placeholder paper links
-    across every numbered page.
+    67-page navigation range and records all-page resource-link diagnostics:
+    `36` GitHub notebook blob URLs, `6` direct Google Colab URLs, `25`
+    under-construction Colab placeholders, `1` generic Colab landing URL, and
+    `1` paper-link placeholder. Paper-facing rows still do not emit per-page
+    URL, section, link-status, hash, notebook mapping, or artifact-presence
+    fields.
   - Required result: extend source-manifest validation for numbered problem
-    pages with page id/title, paper section mapping, duplicate-title/section
-    diagnostics beyond pages 67/68, resource-link status (`valid`,
-    `placeholder`, `generic`, `under_construction`, or absent) across the full
-    page set, and README/ROADMAP/papers wording that keeps problem-count
-    claims snapshot-scoped.
+    pages with page id/title, paper section mapping, resource-link status,
+    page hashes, notebook path or explicit absence reason, artifact-presence
+    flags, emitted status/source rows, and README/ROADMAP/papers wording that
+    keeps problem-count claims snapshot-scoped.
 
 - [ ] Track paper-artifact creator and assembler roles for figures and Colab.
   - Paper evidence: the Contributions section of

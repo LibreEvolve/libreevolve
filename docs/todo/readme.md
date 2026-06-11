@@ -1505,15 +1505,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     observed numbered HTML pages, and the follow-on source manifest now links
     that evidence. README now also documents page 68 as an extra numbered
     duplicate-title `Logic puzzles` page outside the declared 67-page
-    navigation range, plus page 67/68 resource-link diagnostics. README still
-    does not include duplicate-title, repeated-section, generic-Colab, or
-    placeholder-link diagnostics across the full numbered page set.
-  - Required result: after all-page resource-link diagnostics land, update
-    README so follow-on source claims distinguish paper/README problem count
-    from full live repository HTML-page inventory, list any duplicate or
-    placeholder pages as snapshot diagnostics, and avoid treating every
-    numbered page as a complete problem/notebook/paper-linked source artifact
-    until full-page diagnostics exist.
+    navigation range, plus all-page resource-link diagnostics. README still
+    does not list emitted per-page source rows with page hash, notebook mapping,
+    and artifact flags.
+  - Required result: after per-page source rows land, update README so
+    follow-on source claims distinguish paper/README problem count from full
+    live repository HTML-page inventory, list duplicate or placeholder pages as
+    snapshot diagnostics, and avoid treating every numbered page as a complete
+    problem/notebook/paper-linked source artifact until row-level provenance
+    exists.
 
 - [ ] Keep README figure/notebook provenance wording scoped until paper
       artifact-role records are bound to artifacts.

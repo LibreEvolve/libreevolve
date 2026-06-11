@@ -874,9 +874,8 @@ is not yet an AlphaEvolve reproduction.
   `papers/follow_on_sources.json` now emits the committed follow-on source row
   with docs/TODO claim-surface links, linked problem-coverage evidence for the
   declared-67 versus observed-68 numbered-page boundary, and an explicit
-  no-cache policy. Cached PDF rows, per-problem inventory, all-page
-  diagnostics, notebook artifact hashes, and Appendix B claim mappings remain
-  open.
+  no-cache policy. Cached PDF rows, emitted per-problem inventory rows,
+  notebook artifact hashes, and Appendix B claim mappings remain open.
 - Keep follow-on problem-repository rights separate from the original PDF,
   `alphaevolve_results`, and LibreEvolve licensing:
   `papers/follow_on_repository_rights.json` now records the pinned repository's
@@ -941,11 +940,14 @@ is not yet an AlphaEvolve reproduction.
   Colab access modes, and captures the declared-67 versus observed-68 numbered
   HTML page boundary. It now classifies page 68 as an extra numbered
   duplicate-title `Logic puzzles` page outside the declared 67-page navigation
-  range, records page 67/68 resource-link diagnostics, and links to the
-  runtime-absence notebook inventory with 28 pinned notebook paths, while
-  per-problem mapping, notebook SHA-256 hashes, and notebook absence reasons
-  remain incomplete. Complete per-page hashes, all-page diagnostics, and
-  prompt/verifier/initial/final/visualization flags remain open.
+  range, records all-page resource-link diagnostics (`36` GitHub notebook blob
+  URLs, `6` direct Google Colab URLs, `25` under-construction Colab
+  placeholders, `1` generic Colab landing URL, and `1` paper-link placeholder),
+  and links to the runtime-absence notebook inventory with 28 pinned notebook
+  paths, while per-problem mapping, notebook SHA-256 hashes, and notebook
+  absence reasons remain incomplete. Complete per-page hashes, emitted
+  per-page inventory rows, and prompt/verifier/initial/final/visualization
+  flags remain open.
 - Keep Appendix A matrix target-suite curation scoped to reported-suite
   provenance: `libreevolve.alphaevolve_appendix_a_matrix_curation.v1` now
   validates the rough size-selection wording, sorted representative policy,

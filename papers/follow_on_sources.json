@@ -84,9 +84,10 @@
           "numbered_page_inventory_validated": true,
           "page_68_classification_complete": true,
           "resource_link_diagnostics_complete_for_pages_67_68": true,
+          "all_page_resource_link_diagnostics_complete": true,
           "per_problem_inventory_validated": false,
           "page_hash_inventory_complete": false,
-          "claim_boundary": "The follow-on coverage record reconciles the declared 67-problem count against 68 observed numbered HTML pages, classifies page 68, and records page 67/68 resource-link diagnostics, but does not claim complete per-problem page hashes or all-page diagnostics."
+          "claim_boundary": "The follow-on coverage record reconciles the declared 67-problem count against 68 observed numbered HTML pages, classifies page 68, and records all-page resource-link diagnostics, but does not claim complete per-problem page hashes or emitted per-page inventory rows."
         },
         "source_use": {
           "repository_software_license": "Apache-2.0",
@@ -98,7 +99,6 @@
         },
         "required_follow_on_work": [
           "build_per_problem_repository_inventory",
-          "extend_page_diagnostics_beyond_67_68",
           "validate_notebook_prompt_verifier_initial_final_artifacts",
           "map_original_appendix_b_claims_to_follow_on_problem_records",
           "attach_rights_attribution_to_generated_artifacts"
@@ -125,7 +125,6 @@
       },
       "remaining_work": [
         "build_per_problem_repository_inventory",
-        "extend_page_diagnostics_beyond_67_68",
         "validate_notebook_prompt_verifier_initial_final_artifacts",
         "map_original_appendix_b_claims_to_follow_on_problem_records",
         "attach_rights_attribution_to_generated_artifacts"

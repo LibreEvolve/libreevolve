@@ -33,6 +33,21 @@ def test_validate_alphaevolve_follow_on_problem_coverage_accepts_builtin_record(
     assert page68["page_id"] == 68
     assert page68["colab_link_status"] == "generic_colab_landing_page"
     assert page68["paper_link_status"] == "placeholder"
+    all_pages = recordset["all_page_resource_link_diagnostics"]
+    assert all_pages["diagnosed_page_count"] == 68
+    assert all_pages["resource_link_diagnostics_complete"] is True
+    assert all_pages["page_hash_inventory_complete"] is False
+    assert all_pages["colab_link_status_counts"] == {
+        "generic_colab_landing_page": 1,
+        "github_notebook_blob_url": 36,
+        "google_colab_url": 6,
+        "under_construction_placeholder": 25,
+    }
+    assert all_pages["paper_link_status_counts"] == {
+        "placeholder": 1,
+        "valid_follow_on_arxiv": 67,
+    }
+    assert all_pages["paper_link_status_page_ids"]["placeholder"] == [68]
     link = recordset["notebook_inventory_link"]
     assert link["source_manifest"] == "papers/follow_on_runtime_absence.json"
     assert link["pinned_notebook_path_count"] == 28
@@ -120,13 +135,20 @@ def test_validate_alphaevolve_follow_on_problem_coverage_rejects_inventory_overc
     inventory = recordset["numbered_page_inventory"]
     inventory["observed_numbered_html_count"] = 67
     inventory["extra_numbered_page_ids"] = []
-    inventory["full_page_link_diagnostics_complete"] = True
+    inventory["full_page_link_diagnostics_complete"] = False
     diagnostics = recordset["page_discrepancy_diagnostics"]
     diagnostics["classification"] = "complete_declared_problem"
     diagnostics["all_page_diagnostics_complete"] = True
     diagnostics["duplicate_title_groups"] = []
     diagnostics["pages"][1]["colab_link_status"] = "valid_notebook"
     diagnostics["pages"][1]["paper_link_status"] = "valid"
+    all_pages = recordset["all_page_resource_link_diagnostics"]
+    all_pages["diagnosed_page_count"] = 67
+    all_pages["page_hash_inventory_complete"] = True
+    all_pages["colab_link_status_counts"]["under_construction_placeholder"] = 0
+    all_pages["colab_link_status_page_ids"]["under_construction_placeholder"] = []
+    all_pages["paper_link_status_page_ids"]["placeholder"] = []
+    all_pages["claim_boundary"] = "All pages are fully inventoried."
     recordset["remaining_coverage_work"] = ["classify_extra_numbered_page_68"]
 
     validation = validate_alphaevolve_follow_on_problem_coverage(recordset)
@@ -150,6 +172,12 @@ def test_validate_alphaevolve_follow_on_problem_coverage_rejects_inventory_overc
     assert "invalid_page_discrepancy_duplicate_title_groups" in codes
     assert "invalid_page_discrepancy_page_colab_link_status" in codes
     assert "invalid_page_discrepancy_page_paper_link_status" in codes
+    assert "invalid_all_page_resource_link_diagnostics_diagnosed_page_count" in codes
+    assert "all_page_resource_link_page_hash_inventory_overclaim" in codes
+    assert "invalid_all_page_resource_link_diagnostics_colab_link_status_counts" in codes
+    assert "invalid_all_page_colab_link_status_page_ids" in codes
+    assert "invalid_all_page_paper_link_status_page_ids" in codes
+    assert "missing_all_page_resource_link_claim_boundary" in codes
     assert "missing_remaining_coverage_work" in codes
 
 

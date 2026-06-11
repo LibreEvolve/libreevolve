@@ -64,6 +64,60 @@ EXPECTED_PAGE_DISCREPANCY_DIAGNOSTICS = {
         },
     ),
 }
+EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS = {
+    "diagnostic_scope": "all_numbered_pages_resource_links",
+    "diagnosed_page_count": EXPECTED_OBSERVED_NUMBERED_HTML_COUNT,
+    "resource_link_diagnostics_complete": True,
+    "page_hash_inventory_complete": False,
+    "colab_link_status_counts": {
+        "generic_colab_landing_page": 1,
+        "github_notebook_blob_url": 36,
+        "google_colab_url": 6,
+        "under_construction_placeholder": 25,
+    },
+    "colab_link_status_page_ids": {
+        "generic_colab_landing_page": (68,),
+        "github_notebook_blob_url": (
+            1, 2, 3, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 27, 28,
+            32, 33, 34, 35, 36, 42, 44, 45, 46, 53, 54, 58, 59, 60, 61,
+            62, 63, 64, 65,
+        ),
+        "google_colab_url": (4, 5, 8, 48, 49, 50),
+        "under_construction_placeholder": (
+            6, 20, 21, 22, 23, 24, 25, 26, 29, 30, 31, 37, 38, 39, 40, 41,
+            43, 47, 51, 52, 55, 56, 57, 66, 67,
+        ),
+    },
+    "paper_link_status_counts": {
+        "placeholder": 1,
+        "valid_follow_on_arxiv": 67,
+    },
+    "paper_link_status_page_ids": {
+        "placeholder": (68,),
+        "valid_follow_on_arxiv": tuple(range(1, 68)),
+    },
+    "navigation_total_problem_counts": {
+        "67": 67,
+        "missing": 1,
+    },
+    "missing_navigation_total_problem_page_ids": (68,),
+    "duplicate_title_groups": (
+        {"title": "Logic puzzles", "page_ids": (67, 68)},
+    ),
+    "multi_page_paper_section_groups": (
+        {"paper_section": "6.18", "page_ids": (33, 34)},
+        {"paper_section": "6.19", "page_ids": (35, 36)},
+        {"paper_section": "6.2", "page_ids": (2, 3, 4, 5, 6)},
+        {"paper_section": "6.25", "page_ids": (42, 43, 44)},
+        {"paper_section": "6.29", "page_ids": (48, 49)},
+        {"paper_section": "6.42", "page_ids": (62, 63, 64)},
+        {"paper_section": "6.44", "page_ids": (66, 67, 68)},
+        {"paper_section": "6.5", "page_ids": (9, 10)},
+        {"paper_section": "6.6", "page_ids": (11, 12, 13)},
+        {"paper_section": "6.7", "page_ids": (14, 15, 16, 17, 18)},
+        {"paper_section": "6.9", "page_ids": (20, 21, 22, 23, 24)},
+    ),
+}
 EXPECTED_STATUS_BUCKETS = {
     "world_record": (1, 2, 4, 5, 7, 8, 9, 10, 30, 32, 35, 42, 48, 49, 50, 59, 60, 61, 64),
     "former_record": (3, 36, 38, 44),
@@ -222,7 +276,7 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
             "included_problem_ids": list(EXPECTED_PROBLEM_IDS),
             "extra_numbered_page_ids": list(EXPECTED_EXTRA_NUMBERED_PAGE_IDS),
             "count_reconciliation_status": "declared_67_with_extra_numbered_page_68_observed",
-            "full_page_link_diagnostics_complete": False,
+            "full_page_link_diagnostics_complete": True,
         },
         "page_discrepancy_diagnostics": {
             "diagnostic_scope": EXPECTED_PAGE_DISCREPANCY_DIAGNOSTICS["diagnostic_scope"],
@@ -255,6 +309,57 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
                 }
                 for page in EXPECTED_PAGE_DISCREPANCY_DIAGNOSTICS["pages"]
             ],
+        },
+        "all_page_resource_link_diagnostics": {
+            "diagnostic_scope": EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS["diagnostic_scope"],
+            "diagnosed_page_count": EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS["diagnosed_page_count"],
+            "resource_link_diagnostics_complete": EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS[
+                "resource_link_diagnostics_complete"
+            ],
+            "page_hash_inventory_complete": EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS[
+                "page_hash_inventory_complete"
+            ],
+            "colab_link_status_counts": dict(
+                EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS["colab_link_status_counts"]
+            ),
+            "colab_link_status_page_ids": {
+                status: list(page_ids)
+                for status, page_ids in EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS[
+                    "colab_link_status_page_ids"
+                ].items()
+            },
+            "paper_link_status_counts": dict(
+                EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS["paper_link_status_counts"]
+            ),
+            "paper_link_status_page_ids": {
+                status: list(page_ids)
+                for status, page_ids in EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS[
+                    "paper_link_status_page_ids"
+                ].items()
+            },
+            "navigation_total_problem_counts": dict(
+                EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS["navigation_total_problem_counts"]
+            ),
+            "missing_navigation_total_problem_page_ids": list(
+                EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS[
+                    "missing_navigation_total_problem_page_ids"
+                ]
+            ),
+            "duplicate_title_groups": [
+                {"title": group["title"], "page_ids": list(group["page_ids"])}
+                for group in EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS["duplicate_title_groups"]
+            ],
+            "multi_page_paper_section_groups": [
+                {"paper_section": group["paper_section"], "page_ids": list(group["page_ids"])}
+                for group in EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS[
+                    "multi_page_paper_section_groups"
+                ]
+            ],
+            "claim_boundary": (
+                "All 68 numbered pages have resource-link diagnostics, but "
+                "this does not claim complete per-page hashes, notebook "
+                "mapping, or artifact-presence rows."
+            ),
         },
         "notebook_inventory_link": {
             "source_manifest": EXPECTED_FOLLOW_ON_RUNTIME_ABSENCE_MANIFEST_FILE,
@@ -294,7 +399,6 @@ def alphaevolve_follow_on_problem_coverage_record() -> dict[str, Any]:
             "hash_each_problem_page",
             "discover_notebook_paths_and_absence_reasons",
             "validate_prompt_verifier_initial_final_visualization_flags",
-            "extend_page_diagnostics_beyond_67_68",
             "attach_status_to_emitted_source_manifest_rows",
         ],
     }
@@ -316,6 +420,7 @@ def validate_alphaevolve_follow_on_problem_coverage(
     declared_problem_count = _validate_coverage_scope(data.get("coverage_scope"), issues)
     observed_numbered_html_count = _validate_numbered_page_inventory(data.get("numbered_page_inventory"), issues)
     _validate_page_discrepancy_diagnostics(data.get("page_discrepancy_diagnostics"), issues)
+    _validate_all_page_resource_link_diagnostics(data.get("all_page_resource_link_diagnostics"), issues)
     _validate_notebook_inventory_link(data.get("notebook_inventory_link"), issues)
     status_artifact_count = _validate_status_artifacts(data.get("status_artifacts"), issues)
     listed_status_count = _validate_status_buckets(data.get("status_buckets"), issues)
@@ -431,7 +536,7 @@ def _validate_numbered_page_inventory(value: object, issues: list[AlphaEvolveFol
         "included_problem_ids": list(EXPECTED_PROBLEM_IDS),
         "extra_numbered_page_ids": list(EXPECTED_EXTRA_NUMBERED_PAGE_IDS),
         "count_reconciliation_status": "declared_67_with_extra_numbered_page_68_observed",
-        "full_page_link_diagnostics_complete": False,
+        "full_page_link_diagnostics_complete": True,
     }
     for field, expected_value in expected.items():
         if value.get(field) != expected_value:
@@ -511,6 +616,68 @@ def _validate_page_discrepancy_diagnostics(
     unexpected_page_ids = sorted(page_id for page_id in pages_by_id if page_id not in {67, 68})
     for page_id in unexpected_page_ids:
         issues.append(_issue("unexpected_page_discrepancy_page", "diagnostics are scoped only to pages 67 and 68", page_id))
+
+
+def _validate_all_page_resource_link_diagnostics(
+    value: object,
+    issues: list[AlphaEvolveFollowOnProblemCoverageIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_all_page_resource_link_diagnostics", "all_page_resource_link_diagnostics must be an object"))
+        return
+    expected = {
+        "diagnostic_scope": EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS["diagnostic_scope"],
+        "diagnosed_page_count": EXPECTED_OBSERVED_NUMBERED_HTML_COUNT,
+        "resource_link_diagnostics_complete": True,
+        "page_hash_inventory_complete": False,
+        "colab_link_status_counts": EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS["colab_link_status_counts"],
+        "paper_link_status_counts": EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS["paper_link_status_counts"],
+        "navigation_total_problem_counts": EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS["navigation_total_problem_counts"],
+        "missing_navigation_total_problem_page_ids": list(
+            EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS["missing_navigation_total_problem_page_ids"]
+        ),
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            code = f"invalid_all_page_resource_link_diagnostics_{field}"
+            if field == "page_hash_inventory_complete":
+                code = "all_page_resource_link_page_hash_inventory_overclaim"
+            issues.append(_issue(code, f"all_page_resource_link_diagnostics.{field} must match the pinned all-page link evidence"))
+    expected_colab_ids = {
+        status: list(page_ids)
+        for status, page_ids in EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS[
+            "colab_link_status_page_ids"
+        ].items()
+    }
+    if value.get("colab_link_status_page_ids") != expected_colab_ids:
+        issues.append(_issue("invalid_all_page_colab_link_status_page_ids", "all-page Colab link page-id buckets must match the pinned source"))
+    expected_paper_ids = {
+        status: list(page_ids)
+        for status, page_ids in EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS[
+            "paper_link_status_page_ids"
+        ].items()
+    }
+    if value.get("paper_link_status_page_ids") != expected_paper_ids:
+        issues.append(_issue("invalid_all_page_paper_link_status_page_ids", "all-page paper link page-id buckets must match the pinned source"))
+    expected_title_groups = [
+        {"title": group["title"], "page_ids": list(group["page_ids"])}
+        for group in EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS["duplicate_title_groups"]
+    ]
+    if value.get("duplicate_title_groups") != expected_title_groups:
+        issues.append(_issue("invalid_all_page_duplicate_title_groups", "all-page duplicate-title groups must match the pinned source"))
+    expected_section_groups = [
+        {"paper_section": group["paper_section"], "page_ids": list(group["page_ids"])}
+        for group in EXPECTED_ALL_PAGE_RESOURCE_LINK_DIAGNOSTICS["multi_page_paper_section_groups"]
+    ]
+    if value.get("multi_page_paper_section_groups") != expected_section_groups:
+        issues.append(_issue("invalid_all_page_multi_page_paper_section_groups", "multi-page paper-section groups must match the pinned source"))
+    claim_boundary = value.get("claim_boundary")
+    if (
+        not isinstance(claim_boundary, str)
+        or "does not claim" not in claim_boundary
+        or "complete per-page hashes" not in claim_boundary
+    ):
+        issues.append(_issue("missing_all_page_resource_link_claim_boundary", "all-page link diagnostics must preserve page-hash and artifact-row gaps"))
 
 
 def _validate_notebook_inventory_link(value: object, issues: list[AlphaEvolveFollowOnProblemCoverageIssue]) -> None:
@@ -611,7 +778,6 @@ def _validate_remaining_coverage_work(value: object, issues: list[AlphaEvolveFol
         "hash_each_problem_page",
         "discover_notebook_paths_and_absence_reasons",
         "validate_prompt_verifier_initial_final_visualization_flags",
-        "extend_page_diagnostics_beyond_67_68",
         "attach_status_to_emitted_source_manifest_rows",
     }
     if not isinstance(value, list) or not all(isinstance(item, str) for item in value):

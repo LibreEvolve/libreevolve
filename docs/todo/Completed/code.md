@@ -4,6 +4,27 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit Figure 1/Figure 2 process-exhibit boundary sidecar.
+  - Spec evidence: AlphaEvolve Figure 1 shows the high-level discovery loop,
+    and Figure 2 expands it into database sampling, prompt construction, LLM
+    generation, diff application, evaluator execution, and database admission.
+  - Status: `papers/process_exhibit_boundary.json` now emits the
+    `libreevolve.alphaevolve_process_exhibit_boundary.v1`
+    `process_mapping_without_rendered_diagram_parity` boundary, and
+    `validate_paper_manifest()` requires and validates it at the real repo
+    root.
+  - Verification: `py -3.12 -m pytest
+    tests\test_process_exhibit_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\process_exhibit_boundary.py
+    libreevolve\problems\benchmarks\__init__.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: rendered diagram artifacts/hashes, exact diagram text or
+    accessibility export, async controller/sampler/evaluator topology,
+    independent evaluator-pool parallelism, and artifact-level per-step
+    validation remain open.
+
 - [x] Emit embedded evaluator Figure 3 boundary sidecar.
   - Spec evidence: AlphaEvolve Section 2.1 and Figure 3 show a candidate
     codebase skeleton exposing `evaluate(eval_inputs) -> dict[str, float]`,

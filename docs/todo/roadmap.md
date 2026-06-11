@@ -177,7 +177,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     1/Figure 2 exhibit IDs, node/edge-to-component mappings, implemented
     versus unsupported status per diagram node, Figure 2 pseudocode-step
     mappings, source PDF/caption locations, artifact cross-links, and explicit
-    remaining process-parity gaps.
+    remaining process-parity gaps. It now also names
+    `papers/process_exhibit_boundary.json` as the committed sidecar for the
+    paper-manifest-validated absence boundary.
   - Required result: when rendered diagram artifacts and hashes, exact diagram
     text or accessibility export, async controller/sampler/evaluator topology,
     independent evaluator-pool parallelism, and artifact-level per-step
@@ -531,7 +533,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `runtime.history.alphaevolve_process_exhibit_report` with stable figure
     IDs, diagram-node and edge records, Figure 2 pseudocode-step mappings,
     source PDF/caption locations, artifact cross-links, step-level status, and
-    validation that keeps full process-diagram parity false.
+    validation that keeps full process-diagram parity false. ROADMAP now names
+    `papers/process_exhibit_boundary.json` as the committed sidecar for that
+    absence boundary.
   - Required result: when exact diagram text or accessibility export, rendered
     artifact hashes, component-to-code/report/TODO links, stronger topology
     evidence, and artifact-level per-step validators land, update ROADMAP,

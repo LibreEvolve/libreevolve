@@ -710,6 +710,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     IDs, diagram-node labels, edge/process-flow ordering, Figure 2
     pseudocode-step mappings, source/caption locations, artifact cross-links,
     and row/linkage from each displayed process step to implementation status.
+    The committed `papers/process_exhibit_boundary.json` sidecar now records
+    the manifest-validated absence boundary for rendered process-diagram
+    parity evidence.
   - Current gap: paper-facing evidence still lacks exact diagram/pseudocode
     text or accessibility export, rendered diagram artifact hashes,
     component-to-evidence/TODO links, and artifact-level per-step validation.

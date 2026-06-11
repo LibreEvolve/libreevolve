@@ -296,6 +296,12 @@ from libreevolve.problems.benchmarks.paper_source_identity import (
     paper_source_identity_manifest_record,
     validate_paper_source_identity_manifest,
 )
+from libreevolve.problems.benchmarks.process_exhibit_boundary import (
+    PROCESS_EXHIBIT_BOUNDARY_SCHEMA,
+    process_exhibit_boundary_record,
+    render_process_exhibit_boundary_summary,
+    validate_process_exhibit_boundary,
+)
 from libreevolve.problems.benchmarks.proposal_lifecycle_audit import (
     PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_SCHEMA,
     proposal_lifecycle_audit_boundary_record,
@@ -384,6 +390,7 @@ __all__ = [
     "PAPER_ARTIFACT_ROLE_SCHEMA",
     "PAPER_ARTIFACT_LINKAGE_SCHEMA",
     "PAPER_CERTIFICATION_SCHEMA",
+    "PROCESS_EXHIBIT_BOUNDARY_SCHEMA",
     "PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_SCHEMA",
     "SYSTEMS_ARTIFACT_INVENTORY_SCHEMA",
     "SYSTEMS_RESULT_SCHEMA",
@@ -425,6 +432,7 @@ __all__ = [
     "evaluator_oracle_boundary_record",
     "example_benchmark_scope_records",
     "existing_codebase_integration_boundary_record",
+    "process_exhibit_boundary_record",
     "proposal_lifecycle_audit_boundary_record",
     "figure4_matrix_discovery_artifact_boundary_from_exhibit",
     "figure8_exhibit_from_ablation_report",
@@ -508,6 +516,7 @@ __all__ = [
     "render_matrix_tensor_rank_runtime_boundary_summary",
     "render_paper_artifact_role_summary",
     "render_paper_artifact_linkage_summary",
+    "render_process_exhibit_boundary_summary",
     "render_proposal_lifecycle_audit_boundary_summary",
     "render_systems_result_summary",
     "systems_result_artifact_inventory",
@@ -570,6 +579,7 @@ __all__ = [
     "validate_paper_artifact_roles",
     "validate_paper_artifact_linkage",
     "validate_paper_result_certification",
+    "validate_process_exhibit_boundary",
     "validate_proposal_lifecycle_audit_boundary",
     "validate_systems_evidence_bundle",
     "validate_systems_result_report",

@@ -1395,6 +1395,8 @@ source PDF page/caption locations, current single-process controller scope,
 artifact cross-links, and `claim_ready: false` limitations for rendered
 diagram hashes, exact diagram text, async controller topology, independent
 evaluator-pool parallelism, and artifact-level step validation.
+The committed `papers/process_exhibit_boundary.json` sidecar now records that
+paper-manifest-validated rendered process-diagram absence boundary.
 Accepted archive admissions prevalidate their strict history record before
 mutating the live MAP-Elites/island archive, and direct admission thresholds
 must be finite non-boolean numbers. Direct `ProgramDatabase.add()`/`admit()`

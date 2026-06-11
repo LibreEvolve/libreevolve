@@ -130,6 +130,10 @@ from libreevolve.problems.benchmarks.paper_source_identity import (
     PAPER_SOURCE_IDENTITY_MANIFEST_FILE,
     validate_paper_source_identity_manifest,
 )
+from libreevolve.problems.benchmarks.process_exhibit_boundary import (
+    process_exhibit_boundary_record,
+    validate_process_exhibit_boundary,
+)
 from libreevolve.problems.benchmarks.proposal_lifecycle_audit import (
     proposal_lifecycle_audit_boundary_record,
     validate_proposal_lifecycle_audit_boundary,
@@ -200,6 +204,7 @@ CANDIDATE_ABSTRACTION_BOUNDARY_FILE = "papers/candidate_abstraction_boundary.jso
 CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_FILE = "papers/candidate_language_runner_boundary.json"
 EVALUATOR_ORACLE_BOUNDARY_FILE = "papers/evaluator_oracle_boundary.json"
 EMBEDDED_EVALUATOR_BOUNDARY_FILE = "papers/embedded_evaluator_boundary.json"
+PROCESS_EXHIBIT_BOUNDARY_FILE = "papers/process_exhibit_boundary.json"
 PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_FILE = "papers/proposal_lifecycle_audit_boundary.json"
 EVALUATION_CASCADE_BOUNDARY_FILE = "papers/evaluation_cascade_boundary.json"
 CONTROLLER_BACKTRACKING_BOUNDARY_FILE = "papers/controller_backtracking_boundary.json"
@@ -582,6 +587,7 @@ def validate_paper_manifest(
     issues.extend(_validate_candidate_abstraction_boundary(root_path))
     issues.extend(_validate_evaluator_oracle_boundary(root_path))
     issues.extend(_validate_embedded_evaluator_boundary(root_path))
+    issues.extend(_validate_process_exhibit_boundary(root_path))
     issues.extend(_validate_proposal_lifecycle_audit_boundary(root_path))
     issues.extend(_validate_evaluation_cascade_boundary(root_path))
     issues.extend(_validate_controller_backtracking_boundary(root_path))
@@ -1423,6 +1429,38 @@ def _validate_embedded_evaluator_boundary(root_path: Path) -> list[PaperManifest
             f"embedded_evaluator_boundary_{issue.code}",
             issue.message,
             "embedded_evaluator",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_process_exhibit_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / PROCESS_EXHIBIT_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = process_exhibit_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "process_exhibit_boundary_manifest_missing",
+                    (
+                        f"{PROCESS_EXHIBIT_BOUNDARY_FILE} must emit "
+                        "Figure 1/Figure 2 process exhibit parity evidence availability"
+                    ),
+                    "process_exhibit",
+                )
+            ]
+    report = validate_process_exhibit_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"process_exhibit_boundary_{issue.code}",
+            issue.message,
+            "process_exhibit",
         )
         for issue in report.issues
     ]

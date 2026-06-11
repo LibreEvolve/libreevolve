@@ -1743,6 +1743,8 @@ AlphaEvolve diagram reproduction: rendered diagram artifacts/hashes, exact
 diagram text or accessibility export, async controller/sampler/evaluator
 topology, independent evaluator-pool parallelism, and artifact-level
 per-step validation remain open.
+The committed `papers/process_exhibit_boundary.json` sidecar preserves that
+absence boundary for paper-manifest validation at the repo root.
 Retained elite-only candidates can still resurface through best/exploit,
 metric, novelty, recency, selection, mixed inspiration, and migration paths.
 They remain excluded from occupied-cell explore and random inspiration pools

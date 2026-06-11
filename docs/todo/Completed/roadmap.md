@@ -2,6 +2,21 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Emit process-exhibit boundary sidecar for roadmap evidence.
+  - Status: `papers/process_exhibit_boundary.json` now lets roadmap wording
+    point to a committed absence boundary for rendered process-diagram
+    artifacts/hashes, exact diagram text/accessibility export, async topology,
+    evaluator-pool parallelism, and artifact-level step validation.
+  - Verification: `py -3.12 -m pytest
+    tests\test_process_exhibit_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\process_exhibit_boundary.py
+    libreevolve\problems\benchmarks\__init__.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: real full Figure 1/Figure 2 process-diagram parity evidence
+    remains open.
+
 - [x] Emit embedded evaluator Figure 3 boundary sidecar for roadmap evidence.
   - Status: `papers/embedded_evaluator_boundary.json` now lets roadmap wording
     point to a committed absence boundary for skeleton invocation traces,

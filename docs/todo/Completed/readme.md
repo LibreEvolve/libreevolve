@@ -4,6 +4,24 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README process-exhibit wording tied to committed sidecar.
+  - Spec evidence: AlphaEvolve Figure 1/Figure 2 process-diagram parity needs
+    rendered artifacts, exact diagram text/accessibility export, topology
+    evidence, evaluator-pool parallelism evidence, and per-step validation
+    beyond the current runtime process map.
+  - Status: README now names `papers/process_exhibit_boundary.json` as the
+    committed sidecar for the rendered process-diagram absence boundary, with
+    paper-manifest validation.
+  - Verification: `py -3.12 -m pytest
+    tests\test_process_exhibit_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\process_exhibit_boundary.py
+    libreevolve\problems\benchmarks\__init__.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: none for README sidecar scoping; real process-diagram
+    parity evidence remains an active code/paper gap.
+
 - [x] Keep README embedded-evaluator wording tied to committed sidecar.
   - Spec evidence: AlphaEvolve Figure 3 parity needs evidence that the
     candidate skeleton's `evaluate(eval_inputs)` entrypoint invokes evolved

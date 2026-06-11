@@ -594,6 +594,9 @@ events, and best exports. It remains `claim_ready: false` because rendered
 diagram artifacts and hashes, exact diagram text/accessibility export,
 async controller/sampler/evaluator topology, independent evaluator-pool
 parallelism, and artifact-level step validation remain open.
+The committed `papers/process_exhibit_boundary.json` sidecar emits the
+`process_mapping_without_rendered_diagram_parity` boundary, and
+`validate_paper_manifest()` requires it at the real repo root.
 
 AlphaEvolve distributed-pipeline topology note: completed manifests now include
 `runtime.history.distributed_pipeline_topology_report` with schema

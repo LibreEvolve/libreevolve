@@ -153,7 +153,9 @@ Primary evidence:
     `libreevolve.alphaevolve_process_exhibit_report.v1`, stable Figure 1/2
     ids, source PDF page/caption locations, node/edge-to-component mappings,
     Figure 2 pseudocode-step mappings, artifact cross-links, and
-    `claim_ready: false` readiness gaps.
+    `claim_ready: false` readiness gaps. The committed
+    `papers/process_exhibit_boundary.json` sidecar now records that
+    paper-manifest-validated rendered process-diagram absence boundary.
   - Required result: add rendered/text process-diagram artifacts with hashes,
     exact diagram text or accessibility export, async controller/sampler/
     evaluator topology records, independent evaluator-pool parallelism

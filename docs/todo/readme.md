@@ -169,7 +169,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     divergent node status, Figure 2 pseudocode-step mappings, source
     PDF/caption locations, and links from displayed steps to prompt-history,
     LLM-call, evaluator, candidate-history, database, and controller-state
-    artifacts.
+    artifacts. README now also names `papers/process_exhibit_boundary.json` as
+    the committed sidecar for the paper-manifest-validated absence boundary.
   - Required result: when rendered diagram artifacts/hashes, exact diagram
     text or accessibility export, async controller topology, independent
     evaluator-pool parallelism, and artifact-level step validation land, update
@@ -432,9 +433,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `runtime.history.alphaevolve_process_exhibit_report`, which records Figure
     1/2 exhibit IDs, diagram-node/edge labels, source page/caption locations,
     Figure 2 pseudocode-step mappings, artifact cross-links, and
-    `claim_ready: false` process-parity gaps. README workflow text should
-    still remain local documentation, not a validated reproduction of the
-    paper process diagrams.
+    `claim_ready: false` process-parity gaps. It also names
+    `papers/process_exhibit_boundary.json` as the committed sidecar for that
+    absence boundary. README workflow text should still remain local
+    documentation, not a validated reproduction of the paper process diagrams.
   - Required result: when exact diagram/pseudocode text, rendered artifact
     hashes, component-to-code/TODO evidence links, and artifact-level step
     validation land, update README, ROADMAP, papers index, and code/paper TODOs

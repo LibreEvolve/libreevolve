@@ -6,6 +6,24 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit Figure 1/Figure 2 process-exhibit boundary sidecar.
+  - Paper evidence: AlphaEvolve Figure 1 and Figure 2 define the paper's
+    high-level discovery process and expanded controller flow.
+  - Status: `papers/process_exhibit_boundary.json` now carries the
+    paper-facing `libreevolve.alphaevolve_process_exhibit_boundary.v1`
+    absence boundary. The paper-manifest gate requires and validates the
+    sidecar at the real repo root.
+  - Verification: `py -3.12 -m pytest
+    tests\test_process_exhibit_boundary.py tests\test_paper_manifest.py
+    tests\test_agents_docs.py -q`, `py -3.12 -m libreevolve.tools.paper_manifest
+    --require-local-pdfs`, and `py -3.12 -m compileall -q
+    libreevolve\problems\benchmarks\process_exhibit_boundary.py
+    libreevolve\problems\benchmarks\__init__.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining paper gap: this is an absence boundary; rendered process
+    diagrams, exact diagram text/accessibility export, topology evidence,
+    evaluator-pool parallelism evidence, and per-step validation remain open.
+
 - [x] Emit embedded evaluator Figure 3 boundary sidecar.
   - Paper evidence: AlphaEvolve Figure 3 and Section 2.1 describe
     `evaluate(eval_inputs) -> dict[str, float]` inside the candidate codebase

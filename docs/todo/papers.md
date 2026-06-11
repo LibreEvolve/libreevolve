@@ -467,18 +467,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/existing_codebase_integration_boundary.json` sidecar now preserves
     the source-setup-level `not_recorded_at_source_setup_level` boundary, and
     the paper manifest requires and validates it at the real repo root.
+    Problem fixtures and direct callers now also support optional
+    `codebase_integration.yaml` / `Problem.codebase_integration_metadata`,
+    normalized `problem.codebase_integration_metadata`, and
+    `source_setup_metadata` in the runtime report for source/upstream identity,
+    pre-marker hashes, marker-only setup diff status, evaluator-call
+    continuity, copied static-asset identity, and source-setup completeness.
   - Current gap: paper-facing evidence still does not prove that a real
     pre-existing codebase was integrated with a marker-only or minimal setup
     diff, that pre-marker source hashes and upstream identity are preserved,
     that evaluator invocation worked through the existing codebase structure
     before and after marker insertion, or that copied static assets have
     portable source-root/release identities.
-  - Required result: add paper-facing integration records with original
-    codebase id, pre-marker source hashes, marker-added setup diff summary,
-    evaluator invocation path before/after marker insertion, setup-change
-    counts, portable source-root/release identity, and wording that
-    distinguishes runtime evolve-block inventory from AlphaEvolve-style
-    minimal-change integration evidence.
+  - Required result: add a populated paper-facing codebase-scale fixture and
+    evidence bundle with original codebase id, pre-marker source hashes,
+    marker-added setup diff summary, evaluator invocation path before/after
+    marker insertion, setup-change counts, portable source-root/release
+    identity, and wording that distinguishes declared source-setup metadata
+    from AlphaEvolve-style minimal-change integration evidence.
 
 - [ ] Track candidate-abstraction choice and bias evidence.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Discussion.

@@ -6,6 +6,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Record source-setup existing-codebase integration metadata.
+  - Paper evidence: AlphaEvolve Section 2.1 says existing-codebase
+    integration requires only minimal marker insertion into existing code,
+    which needs provenance for the source setup rather than only runtime marker
+    inventory.
+  - Status: paper-facing manifests can now preserve normalized
+    `problem.codebase_integration_metadata` and runtime
+    `source_setup_metadata` for upstream identity, pre-marker hashes,
+    setup-diff/count evidence, evaluator-call continuity, copied static-asset
+    identity, and fixture scale metadata while still rejecting full
+    paper-parity overclaims.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4636 passed, 21 skipped, 2 deselected.
+  - Remaining paper gap: a populated codebase-scale fixture/evidence bundle
+    remains required.
+
 - [x] Record metadata-only candidate language/build runner declarations.
   - Paper evidence: AlphaEvolve Sections 2.1-2.2 leave the program artifact,
     evaluator interface, and solution representation task-defined rather than

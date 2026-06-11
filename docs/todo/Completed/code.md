@@ -4,6 +4,27 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add source-setup existing-codebase integration metadata.
+  - Spec evidence: AlphaEvolve Section 2.1 frames existing-codebase
+    integration as minimal marker insertion into a pre-existing codebase, so
+    runtime marker inventory alone needs source-setup provenance before it can
+    approach that claim.
+  - Status: problem loading now accepts optional `codebase_integration.yaml` /
+    `.yml` and direct `Problem.codebase_integration_metadata`. Startup
+    manifests normalize it as
+    `problem.codebase_integration_metadata` with schema
+    `libreevolve.existing_codebase_setup_metadata.v1`, validated source and
+    upstream identity fields, pre-marker hashes, setup diff/count records,
+    evaluator call paths, copied static-asset source identities, fixture scale
+    metadata, and review status. Runtime
+    `existing_codebase_integration_report` now includes
+    `source_setup_metadata`, source-setup readiness booleans, and conservative
+    validation that still rejects full paper-parity claims.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4636 passed, 21 skipped, 2 deselected.
+  - Remaining gap: a populated codebase-scale fixture/evidence bundle is still
+    required before claiming AlphaEvolve-style minimal-change integration.
+
 - [x] Add metadata-only candidate language/build runner declarations.
   - Spec evidence: AlphaEvolve Sections 2.1-2.2 treat task code and evaluator
     interfaces as task-defined surfaces, so future arbitrary-language/build

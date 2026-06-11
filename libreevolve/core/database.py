@@ -167,6 +167,9 @@ _SEED_IDEA_TEXT_MAX_CHARS = 512
 _SEED_IDEA_LABEL_MAX_CHARS = 160
 _SEED_BACKGROUND_REF_MAX_CHARS = 160
 PROBLEM_FORMULATION_METADATA_SCHEMA = "libreevolve.problem_formulation_metadata.v1"
+CODEBASE_INTEGRATION_METADATA_SCHEMA = (
+    "libreevolve.existing_codebase_setup_metadata.v1"
+)
 COLLABORATOR_FEEDBACK_METADATA_SCHEMA = (
     "libreevolve.collaborator_feedback_metadata.v1"
 )
@@ -184,6 +187,19 @@ _FORMULATION_ALLOWED_KEYS = {
     "evaluator_rationale",
     "parameter_scope",
     "background_knowledge_refs",
+    "review",
+}
+_CODEBASE_INTEGRATION_ALLOWED_KEYS = {
+    "schema",
+    "original_codebase_id",
+    "upstream_release_artifact",
+    "pre_marker_source_sha256",
+    "marker_added_setup_diff",
+    "setup_change_counts",
+    "evaluator_call_path_before_marker_insertion",
+    "evaluator_call_path_after_marker_insertion",
+    "copied_static_asset_source_identity",
+    "codebase_scale_fixture",
     "review",
 }
 _FORMULATION_ORIGINS = {
@@ -210,6 +226,14 @@ _FORMULATION_REVIEW_STATUSES = {
 }
 _FORMULATION_TEXT_MAX_CHARS = 1024
 _FORMULATION_LABEL_MAX_CHARS = 160
+_CODEBASE_INTEGRATION_REVIEW_STATUSES = {
+    "not_reviewed",
+    "self_reviewed",
+    "source_owner_reviewed",
+    "upstream_owner_signed_off",
+}
+_CODEBASE_INTEGRATION_TEXT_MAX_CHARS = 1024
+_CODEBASE_INTEGRATION_LABEL_MAX_CHARS = 200
 _COLLABORATOR_FEEDBACK_ALLOWED_KEYS = {
     "cohorts",
     "feedback_events",
@@ -409,6 +433,7 @@ class ProgramDatabase:
         paper_author_metadata: Mapping[str, object] | None = None,
         title_page_metadata: Mapping[str, object] | None = None,
         system_contribution_metadata: Mapping[str, object] | None = None,
+        codebase_integration_metadata: Mapping[str, object] | None = None,
     ):
         config.validate()
         objective_schema = validate_objective_schema(objective_schema)
@@ -460,6 +485,9 @@ class ProgramDatabase:
         formulation_metadata = validate_problem_formulation_metadata(
             formulation_metadata or {}
         )
+        codebase_integration_metadata = validate_codebase_integration_metadata(
+            codebase_integration_metadata or {}
+        )
         collaborator_feedback_metadata = validate_collaborator_feedback_metadata(
             collaborator_feedback_metadata or {}
         )
@@ -485,6 +513,7 @@ class ProgramDatabase:
             seed_skipped,
             seed_policy,
             formulation_metadata,
+            codebase_integration_metadata,
             collaborator_feedback_metadata,
             acknowledgement_metadata,
             paper_author_metadata,
@@ -5440,6 +5469,406 @@ def _normalize_formulation_text(label: str, value: object, *, max_chars: int) ->
     return redacted
 
 
+def validate_codebase_integration_metadata(value: object) -> dict:
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError("codebase_integration_metadata must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError("codebase_integration_metadata keys must be strings")
+    unsupported = sorted(
+        redact_sensitive_text(key)
+        for key in set(value) - _CODEBASE_INTEGRATION_ALLOWED_KEYS
+    )
+    if unsupported:
+        raise StrictJsonlError(
+            f"codebase_integration_metadata has unsupported fields {unsupported}"
+        )
+    if "schema" in value and value["schema"] != CODEBASE_INTEGRATION_METADATA_SCHEMA:
+        raise StrictJsonlError(
+            "codebase_integration_metadata.schema must be "
+            f"{CODEBASE_INTEGRATION_METADATA_SCHEMA!r}"
+        )
+    normalized: dict = {
+        "schema": CODEBASE_INTEGRATION_METADATA_SCHEMA,
+        "status": "provided" if value else "not_provided",
+        "original_codebase_id": None,
+        "upstream_release_artifact": None,
+        "pre_marker_source_sha256": [],
+        "marker_added_setup_diff": None,
+        "setup_change_counts": None,
+        "evaluator_call_path_before_marker_insertion": [],
+        "evaluator_call_path_after_marker_insertion": [],
+        "copied_static_asset_source_identity": [],
+        "codebase_scale_fixture": None,
+        "review": {
+            "status": "not_reviewed",
+            "reviewer_labels": [],
+            "notes": None,
+        },
+    }
+    if "original_codebase_id" in value:
+        normalized["original_codebase_id"] = _normalize_codebase_integration_text(
+            "codebase_integration_metadata.original_codebase_id",
+            value["original_codebase_id"],
+            max_chars=_CODEBASE_INTEGRATION_LABEL_MAX_CHARS,
+        )
+    if "upstream_release_artifact" in value:
+        normalized["upstream_release_artifact"] = (
+            _normalize_codebase_upstream_release_artifact(
+                value["upstream_release_artifact"]
+            )
+        )
+    if "pre_marker_source_sha256" in value:
+        normalized["pre_marker_source_sha256"] = _normalize_codebase_hash_records(
+            "codebase_integration_metadata.pre_marker_source_sha256",
+            value["pre_marker_source_sha256"],
+        )
+    if "marker_added_setup_diff" in value:
+        normalized["marker_added_setup_diff"] = _normalize_codebase_setup_diff(
+            value["marker_added_setup_diff"]
+        )
+    if "setup_change_counts" in value:
+        normalized["setup_change_counts"] = _normalize_codebase_change_counts(
+            "codebase_integration_metadata.setup_change_counts",
+            value["setup_change_counts"],
+        )
+    for field_name in (
+        "evaluator_call_path_before_marker_insertion",
+        "evaluator_call_path_after_marker_insertion",
+    ):
+        if field_name in value:
+            normalized[field_name] = _normalize_codebase_text_list(
+                f"codebase_integration_metadata.{field_name}",
+                value[field_name],
+            )
+    if "copied_static_asset_source_identity" in value:
+        normalized["copied_static_asset_source_identity"] = (
+            _normalize_codebase_static_asset_records(
+                value["copied_static_asset_source_identity"]
+            )
+        )
+    if "codebase_scale_fixture" in value:
+        normalized["codebase_scale_fixture"] = _normalize_codebase_scale_fixture(
+            value["codebase_scale_fixture"]
+        )
+    if "review" in value:
+        normalized["review"] = _normalize_codebase_integration_review(value["review"])
+    normalized["metadata_complete"] = _codebase_integration_metadata_complete(
+        normalized
+    )
+    _validate_context_provenance_json_size(
+        "codebase_integration_metadata",
+        normalized,
+    )
+    return normalized
+
+
+def _normalize_codebase_upstream_release_artifact(value: object) -> dict:
+    label = "codebase_integration_metadata.upstream_release_artifact"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(set(value) - {"id", "version", "source", "url", "path", "sha256"})
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    record = {
+        "id": _normalize_codebase_integration_text(
+            f"{label}.id",
+            value.get("id"),
+            max_chars=_CODEBASE_INTEGRATION_LABEL_MAX_CHARS,
+        ),
+    }
+    for field_name in ("version", "source", "url"):
+        if field_name in value:
+            record[field_name] = _normalize_codebase_integration_text(
+                f"{label}.{field_name}",
+                value[field_name],
+                max_chars=_CODEBASE_INTEGRATION_LABEL_MAX_CHARS,
+            )
+    if "path" in value:
+        record["path"] = _normalize_codebase_path(f"{label}.path", value["path"])
+    if "sha256" in value:
+        record["sha256"] = _normalize_codebase_sha256(
+            f"{label}.sha256",
+            value["sha256"],
+        )
+    return record
+
+
+def _normalize_codebase_hash_records(label: str, value: object) -> list[dict]:
+    if not isinstance(value, list):
+        raise StrictJsonlError(f"{label} must be a list")
+    records = []
+    seen_paths: set[str] = set()
+    for index, item in enumerate(value):
+        item_label = f"{label}[{index}]"
+        if not isinstance(item, Mapping):
+            raise StrictJsonlError(f"{item_label} must be a mapping")
+        if not all(isinstance(key, str) for key in item):
+            raise StrictJsonlError(f"{item_label} keys must be strings")
+        unsupported = sorted(set(item) - {"path", "sha256"})
+        if unsupported:
+            raise StrictJsonlError(f"{item_label} has unsupported fields {unsupported}")
+        path = _normalize_codebase_path(f"{item_label}.path", item.get("path"))
+        if path in seen_paths:
+            raise StrictJsonlError(f"{label} must have unique path values")
+        seen_paths.add(path)
+        records.append(
+            {
+                "path": path,
+                "sha256": _normalize_codebase_sha256(
+                    f"{item_label}.sha256",
+                    item.get("sha256"),
+                ),
+            }
+        )
+    return records
+
+
+def _normalize_codebase_setup_diff(value: object) -> dict:
+    label = "codebase_integration_metadata.marker_added_setup_diff"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(
+        set(value)
+        - {"summary", "files_changed", "markers_added", "non_marker_lines_changed"}
+    )
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    return {
+        "summary": _normalize_codebase_integration_text(
+            f"{label}.summary",
+            value.get("summary"),
+            max_chars=_CODEBASE_INTEGRATION_TEXT_MAX_CHARS,
+        ),
+        "files_changed": _normalize_codebase_nonnegative_int(
+            f"{label}.files_changed",
+            value.get("files_changed"),
+        ),
+        "markers_added": _normalize_codebase_nonnegative_int(
+            f"{label}.markers_added",
+            value.get("markers_added"),
+        ),
+        "non_marker_lines_changed": _normalize_codebase_nonnegative_int(
+            f"{label}.non_marker_lines_changed",
+            value.get("non_marker_lines_changed"),
+        ),
+    }
+
+
+def _normalize_codebase_change_counts(label: str, value: object) -> dict:
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(
+        set(value) - {"files_changed", "markers_added", "non_marker_lines_changed"}
+    )
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    return {
+        "files_changed": _normalize_codebase_nonnegative_int(
+            f"{label}.files_changed",
+            value.get("files_changed"),
+        ),
+        "markers_added": _normalize_codebase_nonnegative_int(
+            f"{label}.markers_added",
+            value.get("markers_added"),
+        ),
+        "non_marker_lines_changed": _normalize_codebase_nonnegative_int(
+            f"{label}.non_marker_lines_changed",
+            value.get("non_marker_lines_changed"),
+        ),
+    }
+
+
+def _normalize_codebase_static_asset_records(value: object) -> list[dict]:
+    label = "codebase_integration_metadata.copied_static_asset_source_identity"
+    if not isinstance(value, list):
+        raise StrictJsonlError(f"{label} must be a list")
+    records = []
+    seen_paths: set[str] = set()
+    for index, item in enumerate(value):
+        item_label = f"{label}[{index}]"
+        if not isinstance(item, Mapping):
+            raise StrictJsonlError(f"{item_label} must be a mapping")
+        if not all(isinstance(key, str) for key in item):
+            raise StrictJsonlError(f"{item_label} keys must be strings")
+        unsupported = sorted(set(item) - {"path", "source_root", "sha256"})
+        if unsupported:
+            raise StrictJsonlError(f"{item_label} has unsupported fields {unsupported}")
+        path = _normalize_codebase_path(f"{item_label}.path", item.get("path"))
+        if path in seen_paths:
+            raise StrictJsonlError(f"{label} must have unique path values")
+        seen_paths.add(path)
+        records.append(
+            {
+                "path": path,
+                "source_root": _normalize_codebase_integration_text(
+                    f"{item_label}.source_root",
+                    item.get("source_root"),
+                    max_chars=_CODEBASE_INTEGRATION_LABEL_MAX_CHARS,
+                ),
+                "sha256": _normalize_codebase_sha256(
+                    f"{item_label}.sha256",
+                    item.get("sha256"),
+                ),
+            }
+        )
+    return records
+
+
+def _normalize_codebase_scale_fixture(value: object) -> dict:
+    label = "codebase_integration_metadata.codebase_scale_fixture"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(
+        set(value) - {"status", "file_count", "component_count", "upstream_identity_present"}
+    )
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    upstream_identity_present = value.get("upstream_identity_present", False)
+    if not isinstance(upstream_identity_present, bool):
+        raise StrictJsonlError(f"{label}.upstream_identity_present must be boolean")
+    return {
+        "status": _normalize_codebase_integration_text(
+            f"{label}.status",
+            value.get("status"),
+            max_chars=_CODEBASE_INTEGRATION_LABEL_MAX_CHARS,
+        ),
+        "file_count": _normalize_codebase_nonnegative_int(
+            f"{label}.file_count",
+            value.get("file_count"),
+        ),
+        "component_count": _normalize_codebase_nonnegative_int(
+            f"{label}.component_count",
+            value.get("component_count"),
+        ),
+        "upstream_identity_present": upstream_identity_present,
+    }
+
+
+def _normalize_codebase_integration_review(value: object) -> dict:
+    label = "codebase_integration_metadata.review"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(set(value) - {"status", "reviewer_labels", "notes"})
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    status = value.get("status", "not_reviewed")
+    if (
+        not isinstance(status, str)
+        or status not in _CODEBASE_INTEGRATION_REVIEW_STATUSES
+    ):
+        raise StrictJsonlError(
+            f"{label}.status must be one of "
+            f"{sorted(_CODEBASE_INTEGRATION_REVIEW_STATUSES)}"
+        )
+    reviewers = value.get("reviewer_labels", [])
+    if reviewers is None:
+        reviewers = []
+    if not isinstance(reviewers, list):
+        raise StrictJsonlError(f"{label}.reviewer_labels must be a list")
+    reviewer_labels = []
+    for index, reviewer in enumerate(reviewers):
+        reviewer_label = _normalize_codebase_integration_text(
+            f"{label}.reviewer_labels[{index}]",
+            reviewer,
+            max_chars=_CODEBASE_INTEGRATION_LABEL_MAX_CHARS,
+        )
+        if reviewer_label not in reviewer_labels:
+            reviewer_labels.append(reviewer_label)
+    notes = None
+    if "notes" in value:
+        notes = _normalize_codebase_integration_text(
+            f"{label}.notes",
+            value["notes"],
+            max_chars=_CODEBASE_INTEGRATION_TEXT_MAX_CHARS,
+        )
+    return {"status": status, "reviewer_labels": reviewer_labels, "notes": notes}
+
+
+def _normalize_codebase_text_list(label: str, value: object) -> list[str]:
+    if not isinstance(value, list):
+        raise StrictJsonlError(f"{label} must be a list")
+    normalized = []
+    for index, item in enumerate(value):
+        text = _normalize_codebase_integration_text(
+            f"{label}[{index}]",
+            item,
+            max_chars=_CODEBASE_INTEGRATION_LABEL_MAX_CHARS,
+        )
+        if text not in normalized:
+            normalized.append(text)
+    return normalized
+
+
+def _normalize_codebase_path(label: str, value: object) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise StrictJsonlError(f"{label} must be non-empty text")
+    try:
+        return normalize_candidate_path(value)
+    except ValueError as exc:
+        raise StrictJsonlError(f"{label} must be a safe relative path") from exc
+
+
+def _normalize_codebase_sha256(label: str, value: object) -> str:
+    if not _is_sha256_hex(value):
+        raise StrictJsonlError(f"{label} must be sha256 hex")
+    return value
+
+
+def _normalize_codebase_nonnegative_int(label: str, value: object) -> int:
+    if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+        raise StrictJsonlError(f"{label} must be a non-negative integer")
+    return value
+
+
+def _normalize_codebase_integration_text(
+    label: str,
+    value: object,
+    *,
+    max_chars: int,
+) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise StrictJsonlError(f"{label} must be non-empty text")
+    text = value.strip()
+    if len(text) > max_chars:
+        raise StrictJsonlError(f"{label} must be <= {max_chars} characters")
+    redacted = redact_sensitive_text(text)
+    if redacted != text:
+        raise StrictJsonlError(f"{label} must not contain secret-like text")
+    if any(ord(char) < 32 or ord(char) == 127 for char in redacted):
+        raise StrictJsonlError(f"{label} must not contain control characters")
+    return redacted
+
+
+def _codebase_integration_metadata_complete(metadata: Mapping[str, object]) -> bool:
+    before = metadata.get("evaluator_call_path_before_marker_insertion")
+    after = metadata.get("evaluator_call_path_after_marker_insertion")
+    scale_fixture = metadata.get("codebase_scale_fixture")
+    return (
+        bool(metadata.get("original_codebase_id"))
+        and isinstance(metadata.get("upstream_release_artifact"), Mapping)
+        and bool(metadata.get("pre_marker_source_sha256"))
+        and isinstance(metadata.get("marker_added_setup_diff"), Mapping)
+        and isinstance(metadata.get("setup_change_counts"), Mapping)
+        and isinstance(before, list)
+        and bool(before)
+        and isinstance(after, list)
+        and bool(after)
+        and bool(metadata.get("copied_static_asset_source_identity"))
+        and isinstance(scale_fixture, Mapping)
+        and scale_fixture.get("upstream_identity_present") is True
+    )
+
+
 def validate_collaborator_feedback_metadata(value: object) -> dict:
     if not isinstance(value, Mapping):
         raise StrictJsonlError("collaborator_feedback_metadata must be a mapping")
@@ -7210,6 +7639,7 @@ def _startup_manifest_payload(
     seed_skipped: list[dict],
     seed_policy: dict,
     formulation_metadata: dict,
+    codebase_integration_metadata: dict,
     collaborator_feedback_metadata: dict,
     acknowledgement_metadata: dict,
     paper_author_metadata: dict,
@@ -7365,6 +7795,7 @@ def _startup_manifest_payload(
             "seed_skipped": seed_skipped,
             "seed_policy": seed_policy,
             "formulation_metadata": formulation_metadata,
+            "codebase_integration_metadata": codebase_integration_metadata,
             "collaborator_feedback_metadata": collaborator_feedback_metadata,
             "acknowledgement_metadata": acknowledgement_metadata,
             "paper_author_metadata": paper_author_metadata,

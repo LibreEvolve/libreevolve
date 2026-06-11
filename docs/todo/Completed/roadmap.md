@@ -2,6 +2,16 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Record source-setup existing-codebase integration metadata for roadmap evidence.
+  - Status: ROADMAP now describes optional
+    `problem.codebase_integration_metadata` source-setup records feeding the
+    runtime existing-codebase report while keeping a populated codebase-scale
+    fixture/evidence bundle as the remaining claim gate.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4636 passed, 21 skipped, 2 deselected.
+  - Remaining gap: full paper-faithful minimal-change integration evidence
+    remains open.
+
 - [x] Record metadata-only candidate runner declarations for roadmap evidence.
   - Status: ROADMAP now describes `candidate_language_runners` and
     `candidate_build_systems` as manifest-preserved, non-executed declaration

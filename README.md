@@ -2301,6 +2301,15 @@ decisions, background-knowledge linkage, and expert review or domain-owner
 signoff are present before marking AlphaEvolve-style expert-guided formulation
 parity claim-ready. Context-source provenance alone is still not treated as
 expert formulation evidence.
+Problem fixtures can also optionally add `codebase_integration.yaml` or
+`codebase_integration.yml`; direct callers can set
+`Problem.codebase_integration_metadata`. The manifest normalizes this to
+`problem.codebase_integration_metadata` with schema
+`libreevolve.existing_codebase_setup_metadata.v1`, source/upstream identity,
+pre-marker source hashes, marker-added setup-diff counts, evaluator call paths
+before and after marker insertion, copied static-asset source identities, and
+codebase-scale fixture metadata. This is validated source-setup provenance; it
+does not by itself make existing-codebase integration paper-faithful.
 Problem fixtures can also optionally add `collaborator_feedback.yaml` or
 `collaborator_feedback.yml`; direct callers can set
 `Problem.collaborator_feedback_metadata`. The manifest normalizes this to
@@ -2842,14 +2851,18 @@ Completed manifests include
 `runtime.history.existing_codebase_integration_report`, which inventories
 runtime candidate workspaces for Python marker spans, stable span ids, skeleton
 hashes with evolved block content replaced by placeholders, unmarked-file
-hashes, seed-source references, and the current marker grammar. The report is
-bounded evidence for local workspace marker preservation, not proof of
-AlphaEvolve's existing-codebase integration claim. The committed
+hashes, seed-source references, and the current marker grammar. If
+`problem.codebase_integration_metadata` is present, the report also surfaces
+`source_setup_metadata`, source/upstream identities, pre-marker hash counts,
+marker-only setup-diff status, evaluator-call-path continuity, copied
+static-asset source identity counts, and a separate
+`source_setup_metadata_complete` readiness flag. The report is bounded
+evidence for local workspace marker preservation and declared source setup,
+not proof of AlphaEvolve's existing-codebase integration claim. The committed
 `papers/existing_codebase_integration_boundary.json` sidecar now records that
-paper-manifest-validated source-setup-level absence boundary: original
-upstream codebase identity, pre-marker source hashes, marker-only setup diffs,
-evaluator call paths before/after marker insertion, portable release/source-
-root identity, and setup-change counts remain open.
+paper-manifest-validated boundary; a populated codebase-scale fixture and
+evidence bundle are still required before the full minimal-change integration
+claim can become `claim_ready`.
 Completed manifests also include
 `runtime.history.candidate_abstraction_choice_report`, which keeps the current
 candidate representation scoped to direct Python workspace solutions while

@@ -4,6 +4,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document source-setup existing-codebase integration metadata.
+  - Status: README now documents optional `codebase_integration.yaml` /
+    `Problem.codebase_integration_metadata`, normalized
+    `problem.codebase_integration_metadata`, and
+    `source_setup_metadata` in the runtime existing-codebase report while
+    keeping full AlphaEvolve integration parity false.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4636 passed, 21 skipped, 2 deselected.
+  - Remaining gap: a populated codebase-scale fixture/evidence bundle remains
+    open.
+
 - [x] Document metadata-only candidate runner declarations.
   - Spec evidence: AlphaEvolve arbitrary-language/build claims need a
     task-defined runner surface, but declaration metadata alone must not imply

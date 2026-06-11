@@ -33,6 +33,14 @@ my_problem/
         └── extra.md
 ```
 
+Optional source-setup metadata for existing-codebase integration can be placed
+at the problem root:
+
+```text
+my_problem/
+└── codebase_integration.yaml
+```
+
 The problem root itself must be a real directory, not a symlink or Windows
 junction. `task_description.txt`, `metrics.yaml`, and `validate.py` must be
 regular problem-local files. Optional `context/context.yaml` or
@@ -185,6 +193,64 @@ context handling rather than semantic ranking or summarization.
 For each include pattern, `matches` counts supported candidate files before
 hidden, exclude, stat, and resource filters; `selected_matches` counts files
 that survived those filters and were selected for prompt context.
+
+## `codebase_integration.yaml`
+
+Use either `codebase_integration.yaml` or `codebase_integration.yml`, not both.
+The file is optional. Direct callers can supply the same mapping through
+`Problem.codebase_integration_metadata`.
+
+This metadata records source-setup provenance for AlphaEvolve-style
+existing-codebase integration. It supports:
+
+```yaml
+original_codebase_id: fixture-lib-1
+upstream_release_artifact:
+  id: fixture-lib-v1
+  version: "1.0.0"
+  source: local_fixture
+pre_marker_source_sha256:
+  - path: src/main.py
+    sha256: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+marker_added_setup_diff:
+  summary: Added evolve-block markers without changing executable code.
+  files_changed: 1
+  markers_added: 2
+  non_marker_lines_changed: 0
+setup_change_counts:
+  files_changed: 1
+  markers_added: 2
+  non_marker_lines_changed: 0
+evaluator_call_path_before_marker_insertion:
+  - validate.py
+  - src/main.py:solve
+evaluator_call_path_after_marker_insertion:
+  - validate.py
+  - src/main.py:solve
+copied_static_asset_source_identity:
+  - path: data/config.json
+    source_root: fixture-lib-v1
+    sha256: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+codebase_scale_fixture:
+  status: smoke
+  file_count: 3
+  component_count: 1
+  upstream_identity_present: true
+review:
+  status: self_reviewed
+  notes: Fixture metadata only.
+```
+
+Startup manifest validation normalizes this into
+`problem.codebase_integration_metadata` with schema
+`libreevolve.existing_codebase_setup_metadata.v1`. Text fields are bounded and
+must not contain secret-like values. Paths must be safe relative candidate
+paths, SHA-256 fields must be lowercase 64-character hashes, and count fields
+must be non-negative integers. Completed run manifests surface the normalized
+record in `runtime.history.existing_codebase_integration_report` as
+`source_setup_metadata`, where it can make source-setup readiness visible
+without setting `paper_faithful_existing_codebase_integration` or `claim_ready`
+to true.
 
 ## `task_description.txt`
 

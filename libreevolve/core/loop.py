@@ -809,6 +809,7 @@ def evolve(
         seed_skipped=_problem_seed_skipped(problem),
         seed_policy=_problem_seed_policy(problem),
         formulation_metadata=_problem_formulation_metadata(problem),
+        codebase_integration_metadata=_problem_codebase_integration_metadata(problem),
         collaborator_feedback_metadata=_problem_collaborator_feedback_metadata(problem),
         acknowledgement_metadata=_problem_acknowledgement_metadata(problem),
         paper_author_metadata=_problem_paper_author_metadata(problem),
@@ -10654,6 +10655,8 @@ def _existing_codebase_integration_report(
     programs: list[Program],
 ) -> dict:
     seed_sources = _existing_codebase_seed_sources(startup_manifest)
+    source_setup_metadata = _existing_codebase_source_setup_metadata(startup_manifest)
+    source_setup_complete = source_setup_metadata.get("metadata_complete") is True
     program_records = [
         record
         for program in programs
@@ -10662,9 +10665,56 @@ def _existing_codebase_integration_report(
     marked_file_count = sum(record["marked_python_file_count"] for record in program_records)
     evolved_block_count = sum(record["evolved_block_count"] for record in program_records)
     unmarked_file_count = sum(record["unmarked_file_count"] for record in program_records)
+    upstream_release = (
+        source_setup_metadata.get("upstream_release_artifact")
+        if isinstance(source_setup_metadata.get("upstream_release_artifact"), Mapping)
+        else {}
+    )
+    setup_counts = (
+        source_setup_metadata.get("setup_change_counts")
+        if isinstance(source_setup_metadata.get("setup_change_counts"), Mapping)
+        else "not_recorded"
+    )
+    setup_diff = (
+        source_setup_metadata.get("marker_added_setup_diff")
+        if isinstance(source_setup_metadata.get("marker_added_setup_diff"), Mapping)
+        else {}
+    )
+    before_call_path = source_setup_metadata.get(
+        "evaluator_call_path_before_marker_insertion"
+    )
+    after_call_path = source_setup_metadata.get(
+        "evaluator_call_path_after_marker_insertion"
+    )
+    evaluator_continuity = (
+        "declared_before_and_after_marker_insertion"
+        if before_call_path and after_call_path
+        else ("startup_evaluator_sources_present" if seed_sources else "not_recorded")
+    )
+    copied_static_assets = source_setup_metadata.get(
+        "copied_static_asset_source_identity"
+    )
+    if not isinstance(copied_static_assets, list):
+        copied_static_assets = []
+    pre_marker_hashes = source_setup_metadata.get("pre_marker_source_sha256")
+    if not isinstance(pre_marker_hashes, list):
+        pre_marker_hashes = []
+    scale_fixture = (
+        source_setup_metadata.get("codebase_scale_fixture")
+        if isinstance(source_setup_metadata.get("codebase_scale_fixture"), Mapping)
+        else {}
+    )
+    original_codebase_id = source_setup_metadata.get("original_codebase_id")
+    upstream_release_id = upstream_release.get("id") if isinstance(upstream_release, Mapping) else None
+    marker_only_setup_diff = (
+        isinstance(setup_diff, Mapping)
+        and setup_diff.get("non_marker_lines_changed") == 0
+        and setup_diff.get("markers_added", 0) > 0
+    )
     report = {
         "schema": "libreevolve.existing_codebase_integration_report.v1",
         "source": "runtime_candidate_workspaces_and_seed_sources",
+        "source_setup_metadata": source_setup_metadata,
         "seed_source_count": len(seed_sources),
         "seed_sources": seed_sources[:50],
         "seed_sources_truncated": len(seed_sources) > 50,
@@ -10685,36 +10735,88 @@ def _existing_codebase_integration_report(
             "skeleton_hash_policy": "sha256_python_file_with_evolved_block_content_placeholders",
         },
         "integration_boundary": {
-            "original_codebase_identity": "not_recorded",
-            "marker_added_diff_summary": "not_recorded",
-            "setup_change_counts": "not_recorded",
-            "upstream_release_artifact_identity": "not_recorded",
-            "evaluator_entrypoint_continuity": (
-                "startup_evaluator_sources_present"
-                if seed_sources
-                else "not_recorded"
-            ),
+            "original_codebase_identity": original_codebase_id or "not_recorded",
+            "marker_added_diff_summary": setup_diff.get("summary", "not_recorded"),
+            "setup_change_counts": setup_counts,
+            "upstream_release_artifact_identity": upstream_release_id or "not_recorded",
+            "evaluator_entrypoint_continuity": evaluator_continuity,
+            "pre_marker_source_hash_count": len(pre_marker_hashes),
+            "copied_static_asset_source_identity_count": len(copied_static_assets),
+            "codebase_scale_fixture": scale_fixture or "not_recorded",
         },
         "claim_ready": False,
         "claim_readiness": {
             "marker_span_inventory": evolved_block_count > 0,
             "skeleton_hashes_recorded": marked_file_count > 0,
             "unmarked_file_inventory": unmarked_file_count > 0,
-            "original_codebase_identity": False,
-            "marker_only_setup_diff": False,
+            "source_setup_metadata_recorded": (
+                source_setup_metadata.get("status") == "provided"
+            ),
+            "original_codebase_identity": bool(original_codebase_id),
+            "upstream_release_artifact_identity": bool(upstream_release_id),
+            "pre_marker_source_hashes": bool(pre_marker_hashes),
+            "marker_only_setup_diff": marker_only_setup_diff,
+            "setup_change_counts": isinstance(setup_counts, Mapping),
+            "evaluator_call_path_before_after_marker_insertion": (
+                bool(before_call_path) and bool(after_call_path)
+            ),
+            "copied_static_asset_source_identity": bool(copied_static_assets),
+            "codebase_scale_fixture_with_upstream_identity": (
+                isinstance(scale_fixture, Mapping)
+                and scale_fixture.get("upstream_identity_present") is True
+            ),
+            "source_setup_metadata_complete": source_setup_complete,
             "paper_faithful_existing_codebase_integration": False,
             "remaining_gap": [
-                "original_codebase_or_release_artifact_id",
-                "pre_marker_source_hashes",
-                "marker_added_setup_diff_summary",
-                "evaluator_call_path_before_after_marker_insertion",
-                "setup_change_counts",
-                "codebase_scale_fixture_with_upstream_identity",
+                gap
+                for gap, ready in (
+                    ("original_codebase_or_release_artifact_id", bool(original_codebase_id) and bool(upstream_release_id)),
+                    ("pre_marker_source_hashes", bool(pre_marker_hashes)),
+                    ("marker_added_setup_diff_summary", marker_only_setup_diff),
+                    ("evaluator_call_path_before_after_marker_insertion", bool(before_call_path) and bool(after_call_path)),
+                    ("setup_change_counts", isinstance(setup_counts, Mapping)),
+                    (
+                        "copied_static_asset_source_identity",
+                        bool(copied_static_assets),
+                    ),
+                    (
+                        "codebase_scale_fixture_with_upstream_identity",
+                        isinstance(scale_fixture, Mapping)
+                        and scale_fixture.get("upstream_identity_present") is True,
+                    ),
+                    (
+                        "paper_faithful_existing_codebase_claim_gate",
+                        False,
+                    ),
+                )
+                if not ready
             ],
         },
     }
     report["validation"] = validate_existing_codebase_integration_report(report)
     return report
+
+
+def _existing_codebase_source_setup_metadata(
+    startup_manifest: Mapping[str, object],
+) -> dict:
+    problem = (
+        startup_manifest.get("problem")
+        if isinstance(startup_manifest.get("problem"), Mapping)
+        else {}
+    )
+    metadata = (
+        problem.get("codebase_integration_metadata")
+        if isinstance(problem.get("codebase_integration_metadata"), Mapping)
+        else {}
+    )
+    if not isinstance(metadata, Mapping) or not metadata:
+        return {
+            "schema": "libreevolve.existing_codebase_setup_metadata.v1",
+            "status": "not_provided",
+            "metadata_complete": False,
+        }
+    return dict(metadata)
 
 
 def _existing_codebase_seed_sources(
@@ -10863,6 +10965,7 @@ def validate_existing_codebase_integration_report(report: object) -> dict:
     required = {
         "schema",
         "source",
+        "source_setup_metadata",
         "seed_source_count",
         "seed_sources",
         "program_count",
@@ -10883,6 +10986,17 @@ def validate_existing_codebase_integration_report(report: object) -> dict:
         issues.append({"code": "invalid_schema", "message": "unsupported integration report schema"})
     if report.get("source") != "runtime_candidate_workspaces_and_seed_sources":
         issues.append({"code": "invalid_source", "message": "unsupported integration report source"})
+    source_setup_metadata = report.get("source_setup_metadata")
+    if not isinstance(source_setup_metadata, Mapping):
+        issues.append({"code": "invalid_source_setup_metadata", "message": "source_setup_metadata must be an object"})
+        source_setup_metadata = {}
+    else:
+        if source_setup_metadata.get("schema") != "libreevolve.existing_codebase_setup_metadata.v1":
+            issues.append({"code": "invalid_source_setup_schema", "message": "unsupported source setup metadata schema"})
+        if source_setup_metadata.get("status") not in {"provided", "not_provided"}:
+            issues.append({"code": "invalid_source_setup_status", "message": "source setup status must be provided or not_provided"})
+        if not isinstance(source_setup_metadata.get("metadata_complete"), bool):
+            issues.append({"code": "invalid_source_setup_complete", "message": "source setup metadata_complete must be boolean"})
     seed_sources = report.get("seed_sources")
     if not isinstance(seed_sources, list):
         issues.append({"code": "invalid_seed_sources", "message": "seed_sources must be a list"})
@@ -10950,16 +11064,24 @@ def validate_existing_codebase_integration_report(report: object) -> dict:
     boundary = report.get("integration_boundary")
     if not isinstance(boundary, Mapping):
         issues.append({"code": "invalid_integration_boundary", "message": "integration_boundary must be an object"})
-    elif boundary.get("original_codebase_identity") != "not_recorded":
-        issues.append({"code": "codebase_identity_overclaim", "message": "original codebase identity must remain not_recorded"})
+    elif (
+        boundary.get("original_codebase_identity") != "not_recorded"
+        and source_setup_metadata.get("status") != "provided"
+    ):
+        issues.append({"code": "codebase_identity_without_metadata", "message": "original codebase identity requires source setup metadata"})
     readiness = report.get("claim_readiness")
     if not isinstance(readiness, Mapping):
         issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
     else:
         if readiness.get("paper_faithful_existing_codebase_integration") is not False:
             issues.append({"code": "integration_parity_overclaim", "message": "paper-faithful integration must remain false"})
-        if readiness.get("marker_only_setup_diff") is not False:
-            issues.append({"code": "marker_diff_overclaim", "message": "marker-only setup diff must remain false"})
+        if (
+            readiness.get("marker_only_setup_diff") is True
+            and source_setup_metadata.get("status") != "provided"
+        ):
+            issues.append({"code": "marker_diff_without_metadata", "message": "marker-only setup diff requires source setup metadata"})
+        if readiness.get("source_setup_metadata_complete") is True and source_setup_metadata.get("metadata_complete") is not True:
+            issues.append({"code": "source_setup_complete_mismatch", "message": "claim readiness must match source setup metadata completeness"})
     if report.get("claim_ready") is not False:
         issues.append({"code": "claim_ready_overclaim", "message": "existing-codebase integration report must not claim full parity"})
     return {
@@ -29125,6 +29247,10 @@ def _problem_seed_policy(problem: Problem) -> dict:
 
 def _problem_formulation_metadata(problem: Problem) -> dict:
     return dict(getattr(problem, "formulation_metadata", {}) or {})
+
+
+def _problem_codebase_integration_metadata(problem: Problem) -> dict:
+    return dict(getattr(problem, "codebase_integration_metadata", {}) or {})
 
 
 def _problem_collaborator_feedback_metadata(problem: Problem) -> dict:

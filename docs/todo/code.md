@@ -75,17 +75,25 @@ Primary evidence:
     `libreevolve.existing_codebase_integration_report.v1`, inventorying
     runtime candidate workspace marker spans, stable span ids, skeleton hashes,
     unmarked-file hashes, seed-source references, marker grammar, and explicit
-    claim-readiness gaps. The committed
+    claim-readiness gaps. Problem fixtures and direct callers now support
+    optional `codebase_integration.yaml` /
+    `Problem.codebase_integration_metadata`, normalized into
+    `problem.codebase_integration_metadata` with schema
+    `libreevolve.existing_codebase_setup_metadata.v1`; the runtime report
+    includes it as `source_setup_metadata` and exposes source/upstream
+    identity, pre-marker hash count, marker-only setup-diff status,
+    evaluator-call continuity, copied static-asset source identity, and
+    `source_setup_metadata_complete` without flipping full paper parity. The
+    committed
     `papers/existing_codebase_integration_boundary.json` sidecar now records
     the paper-manifest-validated `not_recorded_at_source_setup_level` boundary
     for source-setup-level integration evidence that is still absent.
-  - Required result: add integration metadata and validators for original
-    codebase/artifact id, pre-marker source hashes, marker-added setup diff
-    summary, evaluator-call path before/after marker insertion, setup-change
-    counts, source-root/release-artifact identity for copied static assets, a
-    codebase-scale fixture with upstream identity, and README/ROADMAP wording
-    that separates runtime evolve-block inventory from paper-faithful
-    minimal-change codebase integration evidence.
+  - Required result: populate a real codebase-scale fixture/evidence bundle
+    with upstream identity, pre-marker source hashes, marker-only setup diff,
+    evaluator-call path before/after marker insertion, setup-change counts, and
+    portable static-source identities, then update the paper boundary and
+    docs/TODO wording so the project can distinguish declared source-setup
+    metadata from proven AlphaEvolve-style minimal-change integration.
 
 - [ ] Finish candidate-embedded `evaluate(eval_inputs)` entrypoint support and
       evidence.

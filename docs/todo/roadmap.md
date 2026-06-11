@@ -259,16 +259,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `runtime.history.existing_codebase_integration_report`, which records
     runtime candidate workspace marker spans, stable span ids, skeleton hashes,
     unmarked-file hashes, seed-source references, marker grammar, and explicit
-    upstream-integration gaps. ROADMAP now also names
+    upstream-integration gaps. ROADMAP now also reflects optional
+    `problem.codebase_integration_metadata` source-setup records and
+    `source_setup_metadata` report evidence for upstream identity, pre-marker
+    hashes, marker-only setup diffs, evaluator-call continuity, copied static
+    assets, and source-setup completeness, while keeping full paper parity
+    false. ROADMAP now also names
     `papers/existing_codebase_integration_boundary.json` as the committed
     paper-manifest-validated source-setup-level absence boundary.
-  - Required result: when upstream codebase identity, pre-marker hashes,
-    marker-only setup diffs, evaluator-call paths before/after marker
-    insertion, setup-change counts, and portable static-source identities land,
-    update ROADMAP, README, papers index, and code/paper TODO entries together
-    so roadmap wording separates runtime marker inventory from AlphaEvolve-
-    style minimal-change integration evidence and does not treat local
-    workspace smoke tests as codebase-integration proof.
+  - Required result: when a populated codebase-scale fixture/evidence bundle
+    lands, update ROADMAP, README, papers index, and code/paper TODO entries
+    together so roadmap wording separates declared source-setup metadata from
+    proven AlphaEvolve-style minimal-change integration evidence and does not
+    treat local workspace smoke tests as codebase-integration proof.
 
 - [ ] Keep candidate-abstraction roadmap wording scoped beyond the current
       abstraction-choice report.

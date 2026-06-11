@@ -55,6 +55,53 @@ def test_reads_task_description():
         assert load_problem(_make(t)).task_description == "test task"
 
 
+def test_reads_codebase_integration_metadata():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        (d / "codebase_integration.yaml").write_text(
+            yaml.dump(
+                {
+                    "original_codebase_id": "fixture-lib-1",
+                    "pre_marker_source_sha256": [
+                        {
+                            "path": "src/main.py",
+                            "sha256": "a" * 64,
+                        }
+                    ],
+                }
+            ),
+            encoding="utf-8",
+        )
+
+        problem = load_problem(d)
+
+        assert problem.codebase_integration_metadata == {
+            "original_codebase_id": "fixture-lib-1",
+            "pre_marker_source_sha256": [
+                {
+                    "path": "src/main.py",
+                    "sha256": "a" * 64,
+                }
+            ],
+        }
+
+
+def test_rejects_duplicate_codebase_integration_metadata_files():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        (d / "codebase_integration.yaml").write_text(
+            "original_codebase_id: fixture-lib-1\n",
+            encoding="utf-8",
+        )
+        (d / "codebase_integration.yml").write_text(
+            "original_codebase_id: fixture-lib-2\n",
+            encoding="utf-8",
+        )
+
+        with pytest.raises(ValueError, match="use only one codebase integration"):
+            load_problem(d)
+
+
 def test_preserves_task_description_text_after_non_empty_validation():
     with tempfile.TemporaryDirectory() as t:
         d = _make(t)

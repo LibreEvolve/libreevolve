@@ -212,18 +212,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     documents `runtime.history.existing_codebase_integration_report`, which
     records runtime candidate workspace marker spans, stable span ids, skeleton
     hashes, unmarked-file hashes, seed-source references, marker grammar, and
-    explicit upstream-integration gaps. README now also names
+    explicit upstream-integration gaps. README now documents optional
+    `codebase_integration.yaml` / `Problem.codebase_integration_metadata`,
+    normalized `problem.codebase_integration_metadata`, and
+    `source_setup_metadata` in the runtime report for source/upstream identity,
+    pre-marker hashes, marker-only setup diff status, evaluator-call-path
+    continuity, copied static-asset identity, and source-setup completeness,
+    while keeping full integration parity false. README now also names
     `papers/existing_codebase_integration_boundary.json` as the committed
     paper-manifest-validated source-setup-level absence boundary. Static
     copy-only assets are verified by local `source_copy_path` hash/byte-count
     checks, but README wording should not treat that as portable
     codebase/release-artifact integration until source roots or artifact
     identities can replay across machines.
-  - Required result: when upstream codebase identity, pre-marker hashes,
-    marker-only setup diffs, evaluator-call paths before/after marker
-    insertion, setup-change counts, and portable static-source identities land,
-    update README, ROADMAP, papers index, and code/paper TODO entries together
-    so README distinguishes runtime marker/workspace inventory from
+  - Required result: when a populated codebase-scale fixture/evidence bundle
+    lands, update README, ROADMAP, papers index, and code/paper TODO entries
+    together so README distinguishes declared source-setup metadata from proven
     AlphaEvolve-style existing-codebase integration evidence.
 
 - [ ] Keep README candidate-abstraction wording scoped beyond the current

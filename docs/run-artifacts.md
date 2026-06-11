@@ -89,6 +89,16 @@ whether expert contributor roles, objective/evaluator rationale,
 parameter-scope decisions, background-knowledge linkage, and expert review or
 domain-owner signoff are present before marking expert-guided formulation
 parity claim-ready.
+Problem fixtures can also optionally include `codebase_integration.yaml` or
+`codebase_integration.yml`; direct callers can set
+`Problem.codebase_integration_metadata`. Startup manifest validation
+normalizes this into `problem.codebase_integration_metadata` with schema
+`libreevolve.existing_codebase_setup_metadata.v1`, bounded non-secret source
+identity text, upstream release/artifact identity, pre-marker source hashes,
+marker-added setup-diff summaries, setup-change counts, evaluator call paths
+before and after marker insertion, copied static-asset source roots, and
+codebase-scale fixture metadata. This is source-setup provenance, not proof by
+itself that a run has paper-faithful existing-codebase integration.
 Problem fixtures can also optionally include `collaborator_feedback.yaml` or
 `collaborator_feedback.yml`; direct callers can set
 `Problem.collaborator_feedback_metadata`. Startup manifest validation
@@ -207,13 +217,18 @@ runtime candidate workspaces for Python `# EVOLVE-BLOCK-START/END` markers and
 records seed-source references, per-program workspace hashes, marked Python
 files, stable evolved-block span ids, marker line spans, block-content hashes,
 skeleton hashes with evolved content replaced by placeholders, and unmarked
-file hashes. The committed
+file hashes. When `problem.codebase_integration_metadata` is present, the
+report includes it as `source_setup_metadata`, reflects source identity,
+pre-marker hash count, marker-only setup-diff status, evaluator-call-path
+continuity, and copied static-asset identity in `integration_boundary`, and
+records `source_setup_metadata_complete` separately from full paper parity.
+The committed
 `papers/existing_codebase_integration_boundary.json` sidecar preserves the
 same source-setup-level absence boundary for paper-manifest validation. The
-report is intentionally scoped to runtime workspace evidence: original
-upstream codebase identity, pre-marker source hashes, marker-added setup diffs,
-evaluator call paths before/after marker insertion, portable release/source-
-root identity, and setup-change counts remain open.
+report remains intentionally conservative: `claim_ready` and
+`paper_faithful_existing_codebase_integration` stay false until a populated
+codebase-scale fixture and evidence bundle support the full AlphaEvolve
+minimal-change integration claim.
 Completed manifests also include
 `runtime.history.marker_spelling_provenance_report` with schema
 `libreevolve.marker_spelling_provenance_report.v1`. This report records

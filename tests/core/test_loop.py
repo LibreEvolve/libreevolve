@@ -6035,8 +6035,10 @@ def test_runtime_history_reports_existing_codebase_marker_inventory():
     assert report["integration_boundary"]["original_codebase_identity"] == (
         "not_recorded"
     )
+    assert report["source_setup_metadata"]["status"] == "not_provided"
     assert report["claim_ready"] is False
     assert report["claim_readiness"]["marker_span_inventory"] is True
+    assert report["claim_readiness"]["source_setup_metadata_recorded"] is False
     assert report["claim_readiness"]["marker_only_setup_diff"] is False
     assert "pre_marker_source_hashes" in report["claim_readiness"]["remaining_gap"]
 
@@ -6063,6 +6065,131 @@ def test_runtime_history_reports_existing_codebase_marker_inventory():
         "claim_ready_overclaim",
         "integration_parity_overclaim",
     }
+
+
+def test_existing_codebase_setup_metadata_reaches_manifest_and_report():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(code, workspace):\n"
+        "    return {'score': 1.0, 'is_valid': True}\n"
+    )
+    problem.initial_programs = []
+    problem.initial_workspaces = [
+        {
+            "primary_file": "src/main.py",
+            "files": {
+                "src/main.py": (
+                    "# EVOLVE-BLOCK-START solve\n"
+                    "def solve():\n"
+                    "    return 1\n"
+                    "# EVOLVE-BLOCK-END\n"
+                ),
+                "data/config.json": '{"mode": "fixture"}\n',
+            },
+        }
+    ]
+    problem.codebase_integration_metadata = {
+        "original_codebase_id": "fixture-lib-1",
+        "upstream_release_artifact": {
+            "id": "fixture-lib-v1",
+            "version": "1.0.0",
+            "source": "local_fixture",
+        },
+        "pre_marker_source_sha256": [
+            {"path": "src/main.py", "sha256": "a" * 64},
+        ],
+        "marker_added_setup_diff": {
+            "summary": "Added one evolve block marker pair.",
+            "files_changed": 1,
+            "markers_added": 2,
+            "non_marker_lines_changed": 0,
+        },
+        "setup_change_counts": {
+            "files_changed": 1,
+            "markers_added": 2,
+            "non_marker_lines_changed": 0,
+        },
+        "evaluator_call_path_before_marker_insertion": [
+            "validate.py",
+            "src/main.py:solve",
+        ],
+        "evaluator_call_path_after_marker_insertion": [
+            "validate.py",
+            "src/main.py:solve",
+        ],
+        "copied_static_asset_source_identity": [
+            {
+                "path": "data/config.json",
+                "source_root": "fixture-lib-v1",
+                "sha256": "b" * 64,
+            }
+        ],
+        "codebase_scale_fixture": {
+            "status": "smoke",
+            "file_count": 3,
+            "component_count": 1,
+            "upstream_identity_present": True,
+        },
+        "review": {
+            "status": "self_reviewed",
+            "notes": "Fixture metadata only.",
+        },
+    }
+
+    evolve(
+        problem,
+        Config(max_generations=0, log_dir=tmpdir, problem_name="t"),
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    metadata = manifest["problem"]["codebase_integration_metadata"]
+    report = manifest["runtime"]["history"]["existing_codebase_integration_report"]
+
+    assert metadata["schema"] == "libreevolve.existing_codebase_setup_metadata.v1"
+    assert metadata["status"] == "provided"
+    assert metadata["metadata_complete"] is True
+    assert metadata["original_codebase_id"] == "fixture-lib-1"
+    assert report["validation"]["ok"] is True
+    assert validate_existing_codebase_integration_report(report)["ok"] is True
+    assert report["source_setup_metadata"]["status"] == "provided"
+    assert report["source_setup_metadata"]["metadata_complete"] is True
+    assert report["integration_boundary"]["original_codebase_identity"] == "fixture-lib-1"
+    assert report["integration_boundary"]["upstream_release_artifact_identity"] == (
+        "fixture-lib-v1"
+    )
+    assert report["integration_boundary"]["pre_marker_source_hash_count"] == 1
+    assert report["integration_boundary"]["evaluator_entrypoint_continuity"] == (
+        "declared_before_and_after_marker_insertion"
+    )
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["source_setup_metadata_recorded"] is True
+    assert report["claim_readiness"]["source_setup_metadata_complete"] is True
+    assert report["claim_readiness"]["marker_only_setup_diff"] is True
+    assert report["claim_readiness"]["paper_faithful_existing_codebase_integration"] is False
+    assert "paper_faithful_existing_codebase_claim_gate" in report["claim_readiness"]["remaining_gap"]
+
+    edited = copy.deepcopy(report)
+    edited["claim_ready"] = True
+    edited["claim_readiness"]["paper_faithful_existing_codebase_integration"] = True
+    validation = validate_existing_codebase_integration_report(edited)
+    assert validation["ok"] is False
+    assert {issue["code"] for issue in validation["issues"]} >= {
+        "claim_ready_overclaim",
+        "integration_parity_overclaim",
+    }
+
+
+def test_codebase_setup_metadata_rejects_secret_like_text(tmp_path):
+    problem = _problem()
+    problem.codebase_integration_metadata = {
+        "original_codebase_id": "api_key=sk-proj_secret1234567890",
+    }
+
+    with pytest.raises(StrictJsonlError, match="secret-like text"):
+        evolve(
+            problem,
+            Config(max_generations=0, log_dir=str(tmp_path), problem_name="t"),
+        )
 
 
 def test_runtime_history_reports_marker_spelling_provenance():

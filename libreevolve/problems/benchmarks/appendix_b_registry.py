@@ -448,6 +448,8 @@ EXPECTED_B5_STEP_FUNCTION_REQUIRED_FIELDS = (
     "step_function_artifact_path",
     "step_function_artifact_sha256",
     "step_function_payload_schema",
+    "value_range_certificate_path",
+    "value_range_certificate_sha256",
     "integral_normalization_certificate_path",
     "integral_normalization_certificate_sha256",
     "shift_objective_certificate_path",
@@ -474,6 +476,12 @@ EXPECTED_B5_STEP_FUNCTION_BOUNDARY = {
     "reported_upper_bound": 0.380924,
     "reported_bound_relation": "C5 <= 0.380924",
     "required_payload_fields": list(EXPECTED_B5_STEP_FUNCTION_REQUIRED_FIELDS),
+    "step_function_payload_status": "not_recorded_locally",
+    "value_range_certificate_status": "not_recorded_locally",
+    "integral_normalization_certificate_status": "not_recorded_locally",
+    "shift_objective_certificate_status": "not_recorded_locally",
+    "recomputed_upper_bound_status": "not_recorded_locally",
+    "figure_panel_artifact_status": "not_recorded_locally",
     "claim_boundary": "The registry records the paper's B.5 source/result summary but does not claim a local Figure 10 step-function payload, integral certificate, shift-objective certificate, or recomputed upper bound.",
 }
 EXPECTED_B6_THEOREM_CONDITION = {
@@ -1508,6 +1516,16 @@ def _validate_b5_step_function_boundary(
         issues.append(AppendixBRegistryIssue("invalid_b5_step_function_status", "B.5 Figure 10 payload boundary must remain not_recorded_locally until local artifacts exist", family_id))
     if boundary.get("required_payload_fields") != list(EXPECTED_B5_STEP_FUNCTION_REQUIRED_FIELDS):
         issues.append(AppendixBRegistryIssue("invalid_b5_step_function_required_payload_fields", "B.5 boundary must enumerate required future step-function payload and certificate fields", family_id))
+    for field in (
+        "step_function_payload_status",
+        "value_range_certificate_status",
+        "integral_normalization_certificate_status",
+        "shift_objective_certificate_status",
+        "recomputed_upper_bound_status",
+        "figure_panel_artifact_status",
+    ):
+        if boundary.get(field) != "not_recorded_locally":
+            issues.append(AppendixBRegistryIssue(f"invalid_b5_step_function_{field}", f"B.5 {field} must be not_recorded_locally in the absence boundary", family_id))
     source = family.get("source_formulation_evidence")
     if isinstance(source, dict) and source.get("mapping_to_step_function_evidence") != boundary.get("result_id"):
         issues.append(AppendixBRegistryIssue("b5_step_function_source_mapping_mismatch", "B.5 source formulation must map to the same Figure 10 result boundary", family_id))

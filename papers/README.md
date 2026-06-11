@@ -110,8 +110,9 @@ normalized `[0,2]` step-function formulation. Its
 `C5 <= 0.380924` reported upper bound, prior `0.379005 <= C5 <= 0.380927`
 bounds, source figure, normalized-domain constraint, shift-objective
 expression, and the step-function payload and certificate fields required
-before local reproduction can be claimed, while the Figure 10 construction
-payload remains absent.
+before local reproduction can be claimed. It keeps the payload, value-range
+certificate, integral-normalization certificate, shift-objective certificate,
+recomputed upper bound, and Figure 10 panel artifact `not_recorded_locally`.
 For B.6 sums and differences of finite sets, the registry now records the
 source `C6` theorem statement, sumset/difference-set definitions, `<<`/`>>`
 notation, known `1.14465 <= C6 <= 4/3` bounds, Gyarmati admissibility

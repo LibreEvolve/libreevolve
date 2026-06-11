@@ -527,6 +527,12 @@ def test_appendix_b_registry_requires_b5_step_function_boundary(tmp_path):
     boundary["prior_upper_bound"] = 0.3809
     boundary["reported_upper_bound"] = 0.381
     boundary["required_payload_fields"] = ["result_id"]
+    boundary["step_function_payload_status"] = "recorded"
+    boundary["value_range_certificate_status"] = "recorded"
+    boundary["integral_normalization_certificate_status"] = "recorded"
+    boundary["shift_objective_certificate_status"] = "recorded"
+    boundary["recomputed_upper_bound_status"] = "recorded"
+    boundary["figure_panel_artifact_status"] = "recorded"
     boundary["claim_boundary"] = "Figure 10 payload exists."
     b5["source_formulation_evidence"]["mapping_to_step_function_evidence"] = "different_result"
     registry = tmp_path / "registry.json"
@@ -541,6 +547,12 @@ def test_appendix_b_registry_requires_b5_step_function_boundary(tmp_path):
     assert "invalid_b5_step_function_prior_upper_bound" in codes
     assert "invalid_b5_step_function_reported_upper_bound" in codes
     assert "invalid_b5_step_function_required_payload_fields" in codes
+    assert "invalid_b5_step_function_step_function_payload_status" in codes
+    assert "invalid_b5_step_function_value_range_certificate_status" in codes
+    assert "invalid_b5_step_function_integral_normalization_certificate_status" in codes
+    assert "invalid_b5_step_function_shift_objective_certificate_status" in codes
+    assert "invalid_b5_step_function_recomputed_upper_bound_status" in codes
+    assert "invalid_b5_step_function_figure_panel_artifact_status" in codes
     assert "missing_b5_step_function_claim_boundary" in codes
     assert "b5_step_function_source_mapping_mismatch" in codes
     assert "invalid_b5_step_function_bound_order" in codes

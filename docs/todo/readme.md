@@ -1748,8 +1748,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     normalized-domain constraint, shift objective, prior
     `0.379005 <= C5 <= 0.380927` bounds, reported `C5 <= 0.380924` upper
     bound, and required future step-function payload and certificate fields.
-    It still warns that the actual Figure 10 construction payload,
-    integral/shift certificates, and recomputed upper bound are absent.
+    It now names the missing payload, value-range certificate,
+    integral-normalization certificate, shift-objective certificate,
+    recomputed upper bound, and Figure 10 panel artifact statuses as
+    `not_recorded_locally`.
   - Required result: when the actual Appendix B.5 Figure 10 payload and
     certificates land, update README, ROADMAP, papers index, and code/paper
     TODOs together so README names the payload hash, value-range and

@@ -709,8 +709,9 @@ is not yet an AlphaEvolve reproduction.
   `step_function_result_boundary` now validates the paper's Figure 10
   result id, `C5 <= 0.380924` upper bound, prior bounds, normalized-domain
   constraint, shift-objective expression, and required future payload and
-  certificate fields. The actual Figure 10 step-function payload and
-  recomputation certificate remain open.
+  certificate fields. It now keeps the payload, value-range certificate,
+  integral-normalization certificate, shift-objective certificate, recomputed
+  upper bound, and Figure 10 panel artifact explicitly `not_recorded_locally`.
 - Keep Appendix B.6 theorem conditions and finite-set witnesses separated:
   the registry now validates the source `C6` sums-and-differences statement,
   sumset/difference-set definitions, `<<`/`>>` notation, known

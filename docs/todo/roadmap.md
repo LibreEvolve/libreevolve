@@ -2850,10 +2850,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     normalized-domain constraint, shift objective, prior
     `0.379005 <= C5 <= 0.380927` bounds, reported `C5 <= 0.380924` upper
     bound, and required future step-function payload and certificate fields.
-    It still does not claim a real construction payload hash, value-range
-    certificate, integral-normalization certificate, shift-objective
-    recomputation certificate, recomputed upper bound, or Figure 10 panel
-    artifact.
+    It now keeps the payload, value-range certificate,
+    integral-normalization certificate, shift-objective certificate,
+    recomputed upper bound, and Figure 10 panel artifact statuses
+    `not_recorded_locally`.
   - Required result: when the actual Appendix B.5 Figure 10 payload and
     certificates land, update ROADMAP, README, papers index, and code/paper
     TODOs so roadmap claims distinguish B.5's payload hash,

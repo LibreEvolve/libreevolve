@@ -440,6 +440,8 @@
           "step_function_artifact_path",
           "step_function_artifact_sha256",
           "step_function_payload_schema",
+          "value_range_certificate_path",
+          "value_range_certificate_sha256",
           "integral_normalization_certificate_path",
           "integral_normalization_certificate_sha256",
           "shift_objective_certificate_path",
@@ -448,6 +450,12 @@
           "figure_panel_artifact_path",
           "figure_panel_artifact_sha256"
         ],
+        "step_function_payload_status": "not_recorded_locally",
+        "value_range_certificate_status": "not_recorded_locally",
+        "integral_normalization_certificate_status": "not_recorded_locally",
+        "shift_objective_certificate_status": "not_recorded_locally",
+        "recomputed_upper_bound_status": "not_recorded_locally",
+        "figure_panel_artifact_status": "not_recorded_locally",
         "claim_boundary": "The registry records the paper's B.5 source/result summary but does not claim a local Figure 10 step-function payload, integral certificate, shift-objective certificate, or recomputed upper bound."
       },
       "artifact_schema": {"construction": "normalized_step_function", "certificate": "integral_and_shift_overlap_certificate"},

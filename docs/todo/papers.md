@@ -2563,10 +2563,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     normalized `[0, 2]` step-function formulation, source section, Figure 10
     result id, prior lower/upper values, and improved `C5 <= 0.380924`
     upper-bound comparison through a validated
-    `step_function_result_boundary`. It still does not retain a real Figure
-    10 step-function payload, payload hash, value-range certificate,
-    integral-normalization certificate, shift-objective recomputation,
-    recomputed upper bound, or rendered figure-panel artifact.
+    `step_function_result_boundary`. The boundary now explicitly requires
+    future step-function artifact path/hash/schema, value-range certificate,
+    integral-normalization certificate, shift-objective recomputation
+    certificate, recomputed upper bound, and rendered Figure 10 panel artifact
+    fields, while keeping those statuses `not_recorded_locally`.
   - Required result: add paper/report evidence for the missing Appendix B.5
     Figure 10 witness artifacts: step-function payload hash, value-range
     certificate, integral-normalization certificate, shift/objective

@@ -6,6 +6,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit matrix baseline-component runtime boundary sidecar.
+  - Paper evidence: Section 3.1 describes the matrix workflow as starting
+    from a standard gradient-based algorithm with initializer, reconstruction
+    loss, and Adam optimizer.
+  - Status: `papers/matrix_baseline_component_runtime_boundary.json` now
+    carries the paper-facing absence/readiness boundary for baseline component
+    provenance. The paper-manifest gate requires and validates the sidecar at
+    the real repo root.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\matrix_results.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: emitted run artifacts for actual baseline components,
+    generation-0 outcomes, and mutation lineage remain open.
+
 - [x] Emit Appendix A matrix resource-frontier sidecars.
   - Paper evidence: Appendix A states that larger matrix sizes beyond
     `<5,5,5>` often ran out of memory under the paper's 1000-random-seed,

@@ -4,6 +4,27 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit matrix baseline-component runtime boundary sidecar.
+  - Spec evidence: AlphaEvolve Section 3.1 starts matrix-decomposition search
+    from a standard gradient-based algorithm with initializer,
+    reconstruction loss, and Adam optimizer before evolving more sophisticated
+    tensor-search programs.
+  - Status: `papers/matrix_baseline_component_runtime_boundary.json` now
+    emits the `not_emitted_by_local_runner` absence/readiness boundary for
+    Section 3.1 baseline component provenance, including required future
+    fields for baseline components, optimizer metadata, generation-0 metrics,
+    mutation lineage, matrix-result refs, artifact paths, and hashes.
+    `validate_paper_manifest()` requires and validates the sidecar at the real
+    repo root when the Appendix A registry is in scope.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\matrix_results.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: local matrix benchmark runners still do not emit baseline
+    component inventory, generation-0 outcomes, mutable-scope declarations, or
+    mutation lineage from actual runs.
+
 - [x] Emit Appendix A matrix resource-frontier sidecars.
   - Spec evidence: AlphaEvolve Appendix A says sizes beyond `<5,5,5>` with
     1000 random seeds on single-GPU evaluators often ran out of memory and

@@ -1417,6 +1417,8 @@ Implemented:
   optimizer component records, Adam optimizer name/version/config, mutable
   component scopes, fixed component hashes, generation-0 metrics, mutation
   lineage, matrix-result refs, artifact paths, and artifact hashes.
+  `papers/matrix_baseline_component_runtime_boundary.json` emits that
+  absence/readiness boundary as a committed sidecar.
   `matrix_baseline_component_runtime_boundary_from_components()` can build an
   emitted boundary from a component inventory and validates ref/scope/hash
   linkage, but local matrix runs still do not emit those baseline component

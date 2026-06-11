@@ -3761,7 +3761,9 @@ starting-algorithm records and the required future emitted-record fields for
 run/target ids, baseline program ids, initializer/reconstruction-loss/optimizer
 component records, Adam optimizer name/version/config, mutable component
 scopes, fixed component hashes, generation-0 metrics, mutation lineage,
-matrix-result refs, artifact paths, and artifact hashes. The helper
+matrix-result refs, artifact paths, and artifact hashes. The committed
+`papers/matrix_baseline_component_runtime_boundary.json` sidecar emits that
+absence/readiness boundary. The helper
 `matrix_baseline_component_runtime_boundary_from_components()` builds emitted
 records from a component inventory and validates that top-level refs, mutable
 scopes, and fixed hashes match the component records. Local matrix benchmark

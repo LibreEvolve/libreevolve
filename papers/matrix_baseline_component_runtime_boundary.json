@@ -1,0 +1,28 @@
+{
+  "schema": "libreevolve.matrix_baseline_component_runtime_boundary.v1",
+  "target_suite": "alphaevolve_appendix_a",
+  "result_schema": "libreevolve.matrix_result_report.v1",
+  "runtime_emission_status": "not_emitted_by_local_runner",
+  "local_runner_scope": "matrix_benchmark_runner",
+  "required_emission_fields": [
+    "run_id",
+    "target_id",
+    "baseline_program_id",
+    "component_records",
+    "initializer_ref",
+    "reconstruction_loss_ref",
+    "optimizer_ref",
+    "optimizer_name",
+    "optimizer_version",
+    "optimizer_config",
+    "mutable_component_scopes",
+    "fixed_component_hashes",
+    "generation0_metrics",
+    "mutation_lineage",
+    "matrix_result_ref",
+    "artifact_paths",
+    "artifact_sha256"
+  ],
+  "emitted_records": [],
+  "claim_boundary": "This is a matrix baseline-component absence/readiness boundary. It does not claim local matrix runners emit AlphaEvolve Section 3.1 initializer, reconstruction-loss, and Adam-optimizer provenance."
+}

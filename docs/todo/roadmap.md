@@ -2413,8 +2413,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     resource frontiers. It now points to
     `libreevolve.matrix_baseline_component_runtime_boundary.v1`, which
     validates the current `not_emitted_by_local_runner` boundary and required
-    future fields for Section 3.1 starting-algorithm records. The boundary now
-    has a builder for emitted component-inventory records and strict ref,
+    future fields for Section 3.1 starting-algorithm records.
+    `papers/matrix_baseline_component_runtime_boundary.json` now emits that
+    absence/readiness boundary as a committed sidecar. The boundary now has a
+    builder for emitted component-inventory records and strict ref,
     mutable-scope, and fixed-hash linkage checks, but roadmap work still needs
     emitted run artifacts from the benchmark runner itself.
   - Required result: when matrix benchmark runners persist baseline component

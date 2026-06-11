@@ -3532,7 +3532,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve.matrix_baseline_component_runtime_boundary.v1` now validates
     the current `not_emitted_by_local_runner` boundary and required future
     baseline component, optimizer, generation-0, lineage, result, artifact, and
-    hash fields. The builder can create emitted records from a component
+    hash fields. `papers/matrix_baseline_component_runtime_boundary.json` now
+    emits that absence/readiness boundary as committed paper-facing evidence.
+    The builder can create emitted records from a component
     inventory and validate ref/scope/hash linkage, but local runs still do not
     provide a paper-facing emitted record for the generation-0 matrix solver
     components or mutation lineage showing how later accepted candidates

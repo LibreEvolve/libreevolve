@@ -1017,7 +1017,10 @@ is not yet an AlphaEvolve reproduction.
   initializer/reconstruction-loss/optimizer component records, Adam optimizer
   name/version/config, mutable component scopes, fixed component hashes,
   generation-0 metrics, mutation lineage, matrix-result refs, artifact paths,
-  and artifact hashes. `matrix_baseline_component_runtime_boundary_from_components()`
+  and artifact hashes.
+  `papers/matrix_baseline_component_runtime_boundary.json` now emits that
+  absence/readiness boundary as a committed sidecar.
+  `matrix_baseline_component_runtime_boundary_from_components()`
   builds emitted records from component inventories and validates top-level
   ref, mutable-scope, and fixed-hash linkage. Local benchmark runners still
   need to emit those baseline component records.

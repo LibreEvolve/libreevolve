@@ -1684,6 +1684,69 @@ def test_validate_paper_manifest_checks_matrix_baseline_component_runtime_bounda
     assert "matrix_baseline_component_runtime_missing_runtime_baseline_component_records" in codes
 
 
+def test_validate_paper_manifest_accepts_committed_matrix_baseline_component_runtime_sidecar(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        Path(paper_manifest.APPENDIX_A_MATRIX_REGISTRY_PATH).read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    sidecar = tmp_path / paper_manifest.MATRIX_BASELINE_COMPONENT_RUNTIME_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.matrix_baseline_component_runtime_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_matrix_baseline_component_runtime_sidecar_drift(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        Path(paper_manifest.APPENDIX_A_MATRIX_REGISTRY_PATH).read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    record = paper_manifest.matrix_baseline_component_runtime_boundary_record()
+    record["runtime_emission_status"] = "emitted"
+    sidecar = tmp_path / paper_manifest.MATRIX_BASELINE_COMPONENT_RUNTIME_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "matrix_baseline_component_runtime_missing_runtime_baseline_component_records" in codes
+
+
+def test_validate_paper_manifest_requires_matrix_baseline_component_runtime_sidecar_at_repo_root(
+    tmp_path,
+    monkeypatch,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        Path(paper_manifest.APPENDIX_A_MATRIX_REGISTRY_PATH).read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "matrix_baseline_component_runtime_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_checks_pinned_strassen_bundle(
     monkeypatch,
     tmp_path,

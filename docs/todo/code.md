@@ -3108,6 +3108,8 @@ Primary evidence:
     the current `not_emitted_by_local_runner` boundary and required future
     fields for baseline component records, optimizer metadata, generation-0
     metrics, mutation lineage, matrix-result refs, artifact paths, and hashes.
+    `papers/matrix_baseline_component_runtime_boundary.json` now emits that
+    absence/readiness boundary as a committed sidecar.
     `matrix_baseline_component_runtime_boundary_from_components()` can build
     emitted records from a component inventory and validates ref/scope/hash
     linkage, but no matrix benchmark runner or report field yet emits the

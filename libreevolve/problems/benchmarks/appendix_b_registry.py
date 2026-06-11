@@ -337,7 +337,8 @@ EXPECTED_B4_REVISION_RESULT = {
     "revision_artifact_status": "not_recorded_locally",
     "colab_reference_status": "not_recorded_locally",
     "recomputed_revised_constant_status": "not_recorded_locally",
-    "claim_boundary": "The registry records the B.4 post-first-version 0.3216 note but does not claim local revision artifacts or recomputation.",
+    "comparison_to_0_3284_certificate_status": "not_recorded_locally",
+    "claim_boundary": "The registry records the B.4 post-first-version 0.3216 note but does not claim local revision artifacts, comparison-to-0.3284 certificates, or recomputation.",
 }
 EXPECTED_B8_METRIC_CONVENTIONS = (
     {
@@ -1354,7 +1355,12 @@ def _validate_b4_revision_result(
         issues.append(AppendixBRegistryIssue("invalid_b4_revision_status", "B.4 revision boundary must remain not_recorded_locally until revision artifacts exist", family_id))
     if boundary.get("required_revision_fields") != list(EXPECTED_B4_REVISION_REQUIRED_FIELDS):
         issues.append(AppendixBRegistryIssue("invalid_b4_revision_required_fields", "B.4 revision boundary must enumerate required future revision artifacts", family_id))
-    for field in ("revision_artifact_status", "colab_reference_status", "recomputed_revised_constant_status"):
+    for field in (
+        "revision_artifact_status",
+        "colab_reference_status",
+        "recomputed_revised_constant_status",
+        "comparison_to_0_3284_certificate_status",
+    ):
         if boundary.get(field) != "not_recorded_locally":
             issues.append(AppendixBRegistryIssue(f"invalid_b4_revision_{field}", f"B.4 {field} must be not_recorded_locally in the absence boundary", family_id))
     claim_boundary = boundary.get("claim_boundary")

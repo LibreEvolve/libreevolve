@@ -1908,8 +1908,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: README now describes the B.4
     `revision_result_boundary`: first-version `C4 <= 0.3521`, Henry Cohn's
     pointer to `[18]`, external `0.3284`, and AlphaEvolve's revised `0.3216`
-    note. It also says local revision artifacts, Colab/verifier linkage, and
-    recomputed constants remain absent.
+    note. It also says local revision artifacts, Colab/verifier linkage,
+    comparison-to-`0.3284` certificates, and recomputed constants remain
+    absent.
   - Required result: when actual Appendix B result-version artifacts land,
     update README, ROADMAP, papers index, and code/paper TODOs together so
     README does not imply the family registry is enough to reproduce current

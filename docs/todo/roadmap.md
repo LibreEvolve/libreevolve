@@ -3014,7 +3014,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     registry now cite a validated B.4 `revision_result_boundary` for the
     first-version `C4 <= 0.3521`, Henry Cohn's pointer to `[18]`, external
     `0.3284`, and AlphaEvolve's revised `0.3216`. Local revision artifacts,
-    Colab/verifier linkage, and recomputation remain absent.
+    Colab/verifier linkage, comparison-to-`0.3284` certificates, and
+    recomputation remain absent.
   - Required result: when actual Appendix B result-version artifacts land,
     update ROADMAP, README, papers index, and code/paper TODO entries together
     with revision-aware artifacts and validation so roadmap wording cannot

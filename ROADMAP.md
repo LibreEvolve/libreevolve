@@ -681,8 +681,9 @@ is not yet an AlphaEvolve reproduction.
   qualitative similarity/hypothesis claim against `[33]`, and the
   post-first-version revision note (`[18]` at `0.3284`, AlphaEvolve at
   `0.3216`). Actual coefficient payloads, Hermite/Fourier/root certificates,
-  coefficient-comparison artifacts, Colab/verifier linkage, and recomputation
-  certificates remain open.
+  coefficient-comparison artifacts, Colab/verifier linkage,
+  comparison-to-`0.3284` certificates, and recomputation certificates remain
+  open.
 - Keep Appendix B.1-B.3 public labels tied to paper terminology: the registry
   now validates exact paper-facing labels for `B.1`/`C1`, `B.2`/`C2`, and
   `B.3`/`C3`, while treating `autocorrelation_bounds_k*` as internal ids only.

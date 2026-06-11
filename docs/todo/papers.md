@@ -2893,14 +2893,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     first-version `C4 <= 0.3521` result, Henry Cohn's pointer to `[18]`, the
     external refined `0.3284`, and AlphaEvolve's revised `0.3216` through a
     validated `revision_result_boundary`. It still does not include the
-    revision artifact, Colab/verifier reference, source manuscript date, or
-    recomputed revised constant.
+    revision artifact, Colab/verifier reference, source manuscript date,
+    comparison-to-`0.3284` certificate, or recomputed revised constant.
   - Required result: add paper/report evidence for the missing result revision
     artifacts: manuscript/source version, superseded/current status,
-    verifier/Colab linkage, recomputed revised constants, and artifact hashes
-    before claiming Appendix B result parity. README, ROADMAP, papers index,
-    and code TODOs should keep Appendix B wording scoped until versioned
-    artifacts prevent mixing stale and current mathematical claims.
+    verifier/Colab linkage, comparison-to-`0.3284` certificate, recomputed
+    revised constants, and artifact hashes before claiming Appendix B result
+    parity. README, ROADMAP, papers index, and code TODOs should keep Appendix
+    B wording scoped until versioned artifacts prevent mixing stale and current
+    mathematical claims.
 
 - [ ] Track Appendix B.4 prior-bound rounding evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.4 gives the known

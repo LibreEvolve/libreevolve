@@ -352,6 +352,7 @@ def test_appendix_b_registry_requires_b4_uncertainty_boundaries(tmp_path):
     b4["prior_construction_similarity_evidence"]["claim_boundary"] = "Local comparison is verified."
     b4["revision_result_boundary"]["revised_reported_constant"] = 0.4
     b4["revision_result_boundary"]["revision_artifact_status"] = "recorded"
+    b4["revision_result_boundary"]["comparison_to_0_3284_certificate_status"] = "recorded"
     b4["revision_result_boundary"]["claim_boundary"] = "Local revision is verified."
     registry = tmp_path / "registry.json"
     registry.write_text(json.dumps(data), encoding="utf-8")
@@ -372,6 +373,7 @@ def test_appendix_b_registry_requires_b4_uncertainty_boundaries(tmp_path):
     assert "missing_b4_similarity_claim_boundary" in codes
     assert "invalid_b4_revision_revised_reported_constant" in codes
     assert "invalid_b4_revision_revision_artifact_status" in codes
+    assert "invalid_b4_revision_comparison_to_0_3284_certificate_status" in codes
     assert "missing_b4_revision_claim_boundary" in codes
     assert "invalid_b4_revision_improvement_direction" in codes
 

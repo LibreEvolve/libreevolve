@@ -3709,8 +3709,9 @@ Hermite-polynomial result boundary (`C4 <= 0.3521` with coefficients
 `[33]`, and the post-first-version revision note (`0.3284` from `[18]`, then
 AlphaEvolve `0.3216`). These are validated absence boundaries: the local
 coefficient payloads, Hermite/Fourier/root certificates, coefficient-level
-comparison artifacts, Colab/verifier linkage, and recomputed constants remain
-absent. Matrix-result publication metadata has a separate
+comparison artifacts, Colab/verifier linkage, comparison-to-`0.3284`
+certificates, and recomputed constants remain absent. Matrix-result
+publication metadata has a separate
 `libreevolve.matrix_result_report.v1` contract in
 `libreevolve/problems/benchmarks/matrix_results.py`; it validates target
 identity, dimensions, seed count, best rank, hit fraction, per-seed best-rank

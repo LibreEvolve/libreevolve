@@ -194,7 +194,8 @@ boundary (`C4 <= 0.3521` using coefficients
 `[33]`, and the post-first-version revision note (`[18]` at `0.3284`, then
 AlphaEvolve at `0.3216`). These rows are still absence boundaries: coefficient
 payloads, Hermite/Fourier/root certificates, coefficient-comparison artifacts,
-Colab/verifier linkage, and recomputed constants are not recorded locally.
+Colab/verifier linkage, comparison-to-`0.3284` certificates, and recomputed
+constants are not recorded locally.
 It also checks `libreevolve/problems/benchmarks/alphaevolve_ablations.json`,
 which defines the AlphaEvolve Figure 8 ablation report contract for the full
 system, `No evolution`, `No context in the prompt`, `No meta prompt evolution`,

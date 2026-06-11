@@ -2854,12 +2854,14 @@ Primary evidence:
     `C4 <= 0.3521` result, Henry Cohn's pointer to `[18]`, the external
     refined constant `0.3284`, and AlphaEvolve's revised `0.3216` note. The
     registry validator enforces those fields and keeps revision artifacts,
-    Colab/verifier references, and recomputation status `not_recorded_locally`.
+    Colab/verifier references, recomputation status, and
+    comparison-to-`0.3284` certificate status `not_recorded_locally`.
   - Required result: add the actual result-version artifacts for Appendix B
     benchmark rows, including paper revision/source date, superseded/current
     status, verifier/Colab artifact linkage, recomputed revised constants, and
-    validation that docs do not mix first-version and updated bounds when
-    claiming AlphaEvolve-style mathematical result parity.
+    comparison-to-`0.3284` certificates. Also add validation that docs do not
+    mix first-version and updated bounds when claiming AlphaEvolve-style
+    mathematical result parity.
 
 - [ ] Add Appendix B.4 prior-bound rounding provenance.
   - Spec evidence: AlphaEvolve Appendix B.4 states the known uncertainty

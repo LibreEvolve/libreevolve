@@ -379,7 +379,8 @@
         "revision_artifact_status": "not_recorded_locally",
         "colab_reference_status": "not_recorded_locally",
         "recomputed_revised_constant_status": "not_recorded_locally",
-        "claim_boundary": "The registry records the B.4 post-first-version 0.3216 note but does not claim local revision artifacts or recomputation."
+        "comparison_to_0_3284_certificate_status": "not_recorded_locally",
+        "claim_boundary": "The registry records the B.4 post-first-version 0.3216 note but does not claim local revision artifacts, comparison-to-0.3284 certificates, or recomputation."
       },
       "artifact_schema": {"construction": "function_or_coefficient_certificate", "certificate": "symbolic_or_exact_verification"},
       "certification": "exact_or_symbolic",

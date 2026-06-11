@@ -163,6 +163,11 @@ programs instead of direct constructions, gave them fixed budgets such as
 `1000` seconds, showed them the previous best heuristic's construction, and
 selected for better produced constructions. Local heuristic program artifacts,
 incumbent/produced construction artifacts, before/after metrics, scores, and
+verifier evidence remain absent. A separate staged-heuristic absence boundary
+preserves the paper's claim that final constructions often came from sequences
+of specialized heuristics, with early broad-gain stages from random/simple
+states and later fine-tuning stages near optimal configurations. Per-stage
+ordering, roles, input/output construction artifacts, improvement deltas, and
 verifier evidence remain absent.
 For Appendix B.4 uncertainty-inequality evidence, the registry now records the
 source formulation, the `[33]` prior-bound rounding distinction (`0.353`

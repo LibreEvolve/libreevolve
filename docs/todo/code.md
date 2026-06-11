@@ -2928,17 +2928,21 @@ Primary evidence:
     constructions often came from a sequence of different specialized
     heuristics: early heuristics made large gains from random or simple initial
     states, while later heuristics fine-tuned near-optimal configurations.
-  - Current evidence: existing TODOs cover simple/random starting construction
-    provenance and the single-step incumbent handoff contract. They do not yet
-    require a stage-level heuristic chain that records the exact allotted
-    budget, previous-best source, heuristic identity, produced construction,
-    improvement delta, and broad-gain versus fine-tuning role for each stage.
-  - Required result: add constructive-math benchmark/report records for
-    heuristic stage index, fixed budget seconds, incumbent construction
-    artifact/hash, candidate heuristic artifact/hash, output construction
-    artifact/hash, score before/after, improvement status, and stage role
-    classification. Keep this separate from generic runtime-budget accounting
-    until a report can prove AlphaEvolve-style multi-stage adaptive search.
+  - Current evidence: `libreevolve.problems.benchmarks.math_outcomes` now
+    records a Section 3.2 stage-sequence absence boundary. It preserves the
+    claim that final constructions often came from sequences of specialized
+    heuristics, with early broad-gain stages from random/simple states and
+    later fine-tuning stages near optimal configurations. It validates required
+    future stage fields while keeping per-stage rows, ordering, heuristic
+    artifacts, input/output construction artifacts, stage roles, improvement
+    deltas, and verifier artifacts `not_recorded_locally`.
+  - Required result: replace the absence boundary with constructive-math
+    benchmark/report records for heuristic stage index, fixed budget seconds,
+    incumbent construction artifact/hash, candidate heuristic artifact/hash,
+    output construction artifact/hash, score before/after, improvement status,
+    and stage role classification. Keep this separate from generic
+    runtime-budget accounting until a report can prove AlphaEvolve-style
+    multi-stage adaptive search.
 
 - [ ] Generate suite matrix tensor artifacts and per-seed hit-rate reports.
   - Spec evidence: AlphaEvolve Section 3.1 and Appendix A evaluate low-rank

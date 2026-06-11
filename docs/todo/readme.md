@@ -1554,11 +1554,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     constructions often resulted from a sequence of specialized heuristics:
     early broad-gain stages from random/simple starts and later fine-tuning
     stages near optimal configurations.
-  - Current evidence: README can describe runtime budgets, static context,
-    simple/random starting-point gaps, incumbent handoff gaps, and aggregate
-    outcome gaps. It should not imply the current reports prove a
-    stage-by-stage adaptive heuristic chain with exact per-stage budget,
-    incumbent lineage, produced construction, improvement delta, and stage role.
+  - Current evidence: README now points to the Section 3.2 stage-sequence
+    absence boundary in `libreevolve.problems.benchmarks.math_outcomes`. It
+    documents early broad-gain and later fine-tuning roles while saying
+    per-stage ordering, roles, construction transitions, improvement deltas,
+    and verifier artifacts remain `not_recorded_locally`.
   - Required result: when heuristic-stage sequence reports land, update README,
     ROADMAP, papers index, and code/paper TODO entries together so README
     distinguishes one-shot heuristic handoff support from AlphaEvolve-style

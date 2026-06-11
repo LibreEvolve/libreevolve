@@ -1,18 +1,23 @@
 from libreevolve.problems.benchmarks.math_outcomes import (
     EXPECTED_HEURISTIC_HANDOFF_SUMMARY,
+    EXPECTED_HEURISTIC_STAGE_SEQUENCE_SUMMARY,
     EXPECTED_REQUIRED_AGGREGATE_FIELDS,
     EXPECTED_REQUIRED_HEURISTIC_HANDOFF_FIELDS,
+    EXPECTED_REQUIRED_HEURISTIC_STAGE_FIELDS,
     EXPECTED_REQUIRED_INSTANCE_FIELDS,
     EXPECTED_REQUIRED_STARTING_CONSTRUCTION_FIELDS,
     EXPECTED_SOURCE_SUMMARY,
     EXPECTED_STARTING_CONSTRUCTION_SUMMARY,
     MATH_HEURISTIC_HANDOFF_BOUNDARY_SCHEMA,
+    MATH_HEURISTIC_STAGE_SEQUENCE_BOUNDARY_SCHEMA,
     MATH_OUTCOME_BOUNDARY_SCHEMA,
     MATH_STARTING_CONSTRUCTION_BOUNDARY_SCHEMA,
     alphaevolve_math_heuristic_handoff_boundary,
+    alphaevolve_math_heuristic_stage_sequence_boundary,
     alphaevolve_math_outcome_boundary,
     alphaevolve_math_starting_construction_boundary,
     validate_math_heuristic_handoff_boundary,
+    validate_math_heuristic_stage_sequence_boundary,
     validate_math_outcome_boundary,
     validate_math_starting_construction_boundary,
 )
@@ -31,6 +36,9 @@ def test_math_outcome_boundary_is_exported_from_benchmark_package():
     handoff = benchmarks.alphaevolve_math_heuristic_handoff_boundary()
     assert handoff["schema"] == benchmarks.MATH_HEURISTIC_HANDOFF_BOUNDARY_SCHEMA
     assert benchmarks.validate_math_heuristic_handoff_boundary(handoff).ok is True
+    stages = benchmarks.alphaevolve_math_heuristic_stage_sequence_boundary()
+    assert stages["schema"] == benchmarks.MATH_HEURISTIC_STAGE_SEQUENCE_BOUNDARY_SCHEMA
+    assert benchmarks.validate_math_heuristic_stage_sequence_boundary(stages).ok is True
 
 
 def test_alphaevolve_math_outcome_boundary_preserves_section_3_2_claim():
@@ -77,6 +85,24 @@ def test_alphaevolve_math_heuristic_handoff_boundary_preserves_section_3_2_claim
     assert boundary["required_handoff_fields"] == list(EXPECTED_REQUIRED_HEURISTIC_HANDOFF_FIELDS)
     assert set(boundary["missing_evidence"].values()) == {"not_recorded_locally"}
     assert "does not claim local heuristic program artifacts" in boundary["scope_boundary"]
+
+
+def test_alphaevolve_math_heuristic_stage_sequence_boundary_preserves_section_3_2_claim():
+    boundary = alphaevolve_math_heuristic_stage_sequence_boundary()
+    validation = validate_math_heuristic_stage_sequence_boundary(boundary)
+
+    assert validation.ok is True
+    assert validation.status == "not_recorded_locally"
+    assert boundary["schema"] == MATH_HEURISTIC_STAGE_SEQUENCE_BOUNDARY_SCHEMA
+    for field, expected_value in EXPECTED_HEURISTIC_STAGE_SEQUENCE_SUMMARY.items():
+        assert boundary[field] == expected_value
+    assert boundary["minimum_stage_roles"] == [
+        "early_large_gains_from_random_or_simple_initial_states",
+        "later_fine_tuning_near_optimal_configurations",
+    ]
+    assert boundary["required_stage_fields"] == list(EXPECTED_REQUIRED_HEURISTIC_STAGE_FIELDS)
+    assert set(boundary["missing_evidence"].values()) == {"not_recorded_locally"}
+    assert "does not claim local per-stage heuristic artifacts" in boundary["scope_boundary"]
 
 
 def test_math_outcome_boundary_rejects_premature_aggregate_claims():
@@ -147,6 +173,26 @@ def test_math_heuristic_handoff_boundary_rejects_premature_handoff_claims():
     assert "missing_handoff_scope_boundary" in codes
 
 
+def test_math_heuristic_stage_sequence_boundary_rejects_premature_stage_claims():
+    boundary = alphaevolve_math_heuristic_stage_sequence_boundary()
+    boundary["status"] = "recorded"
+    boundary["minimum_stage_roles"] = ["early_large_gains_from_random_or_simple_initial_states"]
+    boundary["required_stage_fields"] = ["stage_index"]
+    boundary["missing_evidence"]["improvement_delta_records"] = "recorded"
+    boundary["scope_boundary"] = "Local stage sequence evidence is verified."
+
+    validation = validate_math_heuristic_stage_sequence_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_stage_sequence_status" in codes
+    assert "invalid_stage_sequence_minimum_stage_roles" in codes
+    assert "invalid_stage_sequence_roles" in codes
+    assert "invalid_required_stage_fields" in codes
+    assert "invalid_stage_sequence_missing_improvement_delta_records" in codes
+    assert "missing_stage_sequence_scope_boundary" in codes
+
+
 def test_math_outcome_boundary_rejects_missing_evidence_shape():
     boundary = alphaevolve_math_outcome_boundary()
     boundary["missing_evidence"] = []
@@ -175,3 +221,13 @@ def test_math_heuristic_handoff_boundary_rejects_missing_evidence_shape():
 
     assert validation.ok is False
     assert [issue.code for issue in validation.issues] == ["invalid_handoff_missing_evidence"]
+
+
+def test_math_heuristic_stage_sequence_boundary_rejects_missing_evidence_shape():
+    boundary = alphaevolve_math_heuristic_stage_sequence_boundary()
+    boundary["missing_evidence"] = []
+
+    validation = validate_math_heuristic_stage_sequence_boundary(boundary)
+
+    assert validation.ok is False
+    assert [issue.code for issue in validation.issues] == ["invalid_stage_sequence_missing_evidence"]

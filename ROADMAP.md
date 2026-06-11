@@ -653,6 +653,13 @@ is not yet an AlphaEvolve reproduction.
   heuristic program artifacts, incumbent/produced construction artifacts,
   before/after metric values, evaluator scores, and verifier evidence remain
   open.
+- Keep constructive-math stage-sequence claims scoped to the Section 3.2
+  staged-heuristic absence boundary: `math_outcomes` now validates the paper's
+  claim that final constructions often came from sequences of specialized
+  heuristics, with early broad-gain stages from random/simple states and later
+  fine-tuning stages near optimal configurations. Per-stage ordering records,
+  stage roles, input/output construction artifacts, improvement deltas, and
+  verifier evidence remain open.
 - Add Appendix B result-version provenance before quoting paper-level
   constructive-math constants: source manuscript version, reported value,
   superseded/current status, update note, attribution, and verifier/Colab

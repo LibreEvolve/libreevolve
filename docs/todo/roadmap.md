@@ -2644,11 +2644,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     constructions often came from a sequence of specialized heuristics: early
     broad-gain heuristics from random/simple states and later fine-tuning
     heuristics near optimal configurations.
-  - Current evidence: roadmap/README/paper-index wording can cite runtime
-    budgets, simple/random starting-construction gaps, aggregate outcome gaps,
-    and single-step incumbent handoff gaps. It does not require per-stage
-    budget seconds, incumbent lineage, heuristic artifact identity, output
-    construction, improvement delta, or stage-role classification.
+  - Current evidence: roadmap/README/paper-index wording now cites the Section
+    3.2 stage-sequence absence boundary in
+    `libreevolve.problems.benchmarks.math_outcomes`. It validates early
+    broad-gain and later fine-tuning roles plus required future stage fields,
+    while per-stage ordering, budget seconds, incumbent lineage, heuristic
+    artifact identity, output construction, improvement delta, and
+    stage-role evidence remain absent.
   - Required result: when heuristic-stage sequence reports land, update
     ROADMAP, README, papers index, and code/paper TODOs together so roadmap
     wording distinguishes one-step incumbent handoff support from

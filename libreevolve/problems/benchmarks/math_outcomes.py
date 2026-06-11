@@ -7,6 +7,7 @@ from typing import Any
 MATH_OUTCOME_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_math_outcome_boundary.v1"
 MATH_STARTING_CONSTRUCTION_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_math_starting_construction_boundary.v1"
 MATH_HEURISTIC_HANDOFF_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_math_heuristic_handoff_boundary.v1"
+MATH_HEURISTIC_STAGE_SEQUENCE_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_math_heuristic_stage_sequence_boundary.v1"
 EXPECTED_REQUIRED_INSTANCE_FIELDS = (
     "instance_id",
     "problem_family_id",
@@ -64,6 +65,22 @@ EXPECTED_REQUIRED_HEURISTIC_HANDOFF_FIELDS = (
     "verifier_artifact_path",
     "verifier_artifact_sha256",
 )
+EXPECTED_REQUIRED_HEURISTIC_STAGE_FIELDS = (
+    "instance_id",
+    "stage_index",
+    "heuristic_program_id",
+    "stage_role",
+    "input_construction_artifact_path",
+    "input_construction_artifact_sha256",
+    "output_construction_artifact_path",
+    "output_construction_artifact_sha256",
+    "fixed_time_budget_seconds",
+    "before_metric_value",
+    "after_metric_value",
+    "improvement_delta",
+    "verifier_artifact_path",
+    "verifier_artifact_sha256",
+)
 EXPECTED_SOURCE_SUMMARY = {
     "source_paper_id": "2506.13131",
     "source_section_id": "3.2",
@@ -95,6 +112,17 @@ EXPECTED_HEURISTIC_HANDOFF_SUMMARY = {
     "incumbent_input_text": "shown the best construction found by the previous best heuristic",
     "goal_text": "leverage this starting point and the allotted time to find an even better construction",
     "selection_target": "heuristics effective at improving already high-quality solutions",
+}
+EXPECTED_HEURISTIC_STAGE_SEQUENCE_SUMMARY = {
+    "source_paper_id": "2506.13131",
+    "source_section_id": "3.2",
+    "source_claim": "final constructions often result from a sequence of specialized heuristics",
+    "sequence_text": "The final constructions were often the result of a sequence of different, specialized heuristics discovered by AlphaEvolve",
+    "early_stage_role": "early_large_gains_from_random_or_simple_initial_states",
+    "early_stage_text": "early heuristics proficient at making large gains from random or simple initial states",
+    "later_stage_role": "later_fine_tuning_near_optimal_configurations",
+    "later_stage_text": "later heuristics adept at fine-tuning near-optimal configurations",
+    "minimum_stage_roles": ["early_large_gains_from_random_or_simple_initial_states", "later_fine_tuning_near_optimal_configurations"],
 }
 EXPECTED_MATH_OUTCOME_BOUNDARY = {
     "schema": MATH_OUTCOME_BOUNDARY_SCHEMA,
@@ -145,9 +173,26 @@ EXPECTED_HEURISTIC_HANDOFF_BOUNDARY = {
         "verifier_artifacts": "not_recorded_locally",
     },
 }
+EXPECTED_HEURISTIC_STAGE_SEQUENCE_BOUNDARY = {
+    "schema": MATH_HEURISTIC_STAGE_SEQUENCE_BOUNDARY_SCHEMA,
+    **EXPECTED_HEURISTIC_STAGE_SEQUENCE_SUMMARY,
+    "status": "not_recorded_locally",
+    "scope_boundary": "This boundary records the paper's Section 3.2 multi-stage heuristic sequence claim, but does not claim local per-stage heuristic artifacts, ordered construction transitions, stage roles, improvement deltas, or verifier evidence.",
+    "required_stage_fields": list(EXPECTED_REQUIRED_HEURISTIC_STAGE_FIELDS),
+    "missing_evidence": {
+        "per_stage_rows": "not_recorded_locally",
+        "stage_ordering_records": "not_recorded_locally",
+        "heuristic_program_artifacts": "not_recorded_locally",
+        "input_output_construction_artifacts": "not_recorded_locally",
+        "stage_role_labels": "not_recorded_locally",
+        "improvement_delta_records": "not_recorded_locally",
+        "verifier_artifacts": "not_recorded_locally",
+    },
+}
 _MISSING_EVIDENCE_KEYS = tuple(EXPECTED_MATH_OUTCOME_BOUNDARY["missing_evidence"].keys())
 _STARTING_MISSING_EVIDENCE_KEYS = tuple(EXPECTED_STARTING_CONSTRUCTION_BOUNDARY["missing_evidence"].keys())
 _HANDOFF_MISSING_EVIDENCE_KEYS = tuple(EXPECTED_HEURISTIC_HANDOFF_BOUNDARY["missing_evidence"].keys())
+_STAGE_SEQUENCE_MISSING_EVIDENCE_KEYS = tuple(EXPECTED_HEURISTIC_STAGE_SEQUENCE_BOUNDARY["missing_evidence"].keys())
 
 
 @dataclass(frozen=True)
@@ -195,6 +240,17 @@ def alphaevolve_math_heuristic_handoff_boundary() -> dict[str, Any]:
         **EXPECTED_HEURISTIC_HANDOFF_BOUNDARY,
         "required_handoff_fields": list(EXPECTED_REQUIRED_HEURISTIC_HANDOFF_FIELDS),
         "missing_evidence": dict(EXPECTED_HEURISTIC_HANDOFF_BOUNDARY["missing_evidence"]),
+    }
+
+
+def alphaevolve_math_heuristic_stage_sequence_boundary() -> dict[str, Any]:
+    """Return the Section 3.2 multi-stage heuristic sequence absence boundary."""
+
+    return {
+        **EXPECTED_HEURISTIC_STAGE_SEQUENCE_BOUNDARY,
+        "minimum_stage_roles": list(EXPECTED_HEURISTIC_STAGE_SEQUENCE_SUMMARY["minimum_stage_roles"]),
+        "required_stage_fields": list(EXPECTED_REQUIRED_HEURISTIC_STAGE_FIELDS),
+        "missing_evidence": dict(EXPECTED_HEURISTIC_STAGE_SEQUENCE_BOUNDARY["missing_evidence"]),
     }
 
 
@@ -341,6 +397,49 @@ def validate_math_heuristic_handoff_boundary(boundary: object | None = None) -> 
     scope_boundary = data.get("scope_boundary")
     if not isinstance(scope_boundary, str) or "does not claim" not in scope_boundary:
         issues.append(MathOutcomeBoundaryIssue("missing_handoff_scope_boundary", "scope_boundary must state that local heuristic-handoff evidence is not claimed"))
+    return MathOutcomeBoundaryValidation(
+        ok=not issues,
+        status=status if isinstance(status, str) else None,
+        minimum_problem_instances=None,
+        minimum_branch_count=None,
+        issues=issues,
+    )
+
+
+def validate_math_heuristic_stage_sequence_boundary(boundary: object | None = None) -> MathOutcomeBoundaryValidation:
+    """Validate Section 3.2 staged heuristic sequence metadata."""
+
+    data = alphaevolve_math_heuristic_stage_sequence_boundary() if boundary is None else boundary
+    if not isinstance(data, dict):
+        return MathOutcomeBoundaryValidation(False, None, None, None, [MathOutcomeBoundaryIssue("invalid_boundary", "boundary must be an object")])
+    issues: list[MathOutcomeBoundaryIssue] = []
+    for field, expected_value in EXPECTED_HEURISTIC_STAGE_SEQUENCE_BOUNDARY.items():
+        if field in {"required_stage_fields", "missing_evidence"}:
+            continue
+        actual = data.get(field)
+        if actual != expected_value:
+            issues.append(MathOutcomeBoundaryIssue(f"invalid_stage_sequence_{field}", f"{field} must match the AlphaEvolve Section 3.2 stage-sequence claim"))
+    status = data.get("status")
+    if status != "not_recorded_locally":
+        issues.append(MathOutcomeBoundaryIssue("invalid_stage_sequence_status", "stage-sequence boundary must remain not_recorded_locally until per-stage artifacts exist"))
+    if data.get("required_stage_fields") != list(EXPECTED_REQUIRED_HEURISTIC_STAGE_FIELDS):
+        issues.append(MathOutcomeBoundaryIssue("invalid_required_stage_fields", "required_stage_fields must enumerate future stage, construction transition, metric, and verifier fields"))
+    roles = data.get("minimum_stage_roles")
+    if roles != list(EXPECTED_HEURISTIC_STAGE_SEQUENCE_SUMMARY["minimum_stage_roles"]):
+        issues.append(MathOutcomeBoundaryIssue("invalid_stage_sequence_roles", "stage-sequence boundary must preserve early broad-gain and later fine-tuning roles"))
+    missing = data.get("missing_evidence")
+    if not isinstance(missing, dict):
+        issues.append(MathOutcomeBoundaryIssue("invalid_stage_sequence_missing_evidence", "missing_evidence must be an object"))
+    else:
+        for key in _STAGE_SEQUENCE_MISSING_EVIDENCE_KEYS:
+            if missing.get(key) != "not_recorded_locally":
+                issues.append(MathOutcomeBoundaryIssue(f"invalid_stage_sequence_missing_{key}", f"{key} must remain not_recorded_locally until stage-sequence evidence artifacts exist"))
+        extra = set(missing) - set(_STAGE_SEQUENCE_MISSING_EVIDENCE_KEYS)
+        if extra:
+            issues.append(MathOutcomeBoundaryIssue("extra_stage_sequence_missing_evidence", "stage-sequence missing_evidence contains unknown keys"))
+    scope_boundary = data.get("scope_boundary")
+    if not isinstance(scope_boundary, str) or "does not claim" not in scope_boundary:
+        issues.append(MathOutcomeBoundaryIssue("missing_stage_sequence_scope_boundary", "scope_boundary must state that local stage-sequence evidence is not claimed"))
     return MathOutcomeBoundaryValidation(
         ok=not issues,
         status=status if isinstance(status, str) else None,

@@ -3673,7 +3673,12 @@ final constructions, run under fixed budgets such as `1000` seconds, receive
 the previous best heuristic's construction, and are selected for producing a
 better construction. Local heuristic program artifacts, incumbent and produced
 construction artifacts, before/after metrics, scores, and verifier evidence
-remain `not_recorded_locally`. For Appendix B.4, the registry now
+remain `not_recorded_locally`. A separate stage-sequence boundary preserves
+the paper's claim that final constructions often came from specialized
+heuristic chains: early broad-gain stages from random/simple states and later
+fine-tuning stages near optimal configurations. Per-stage ordering, roles,
+construction transitions, improvement deltas, and verifier artifacts remain
+`not_recorded_locally`. For Appendix B.4, the registry now
 preserves the uncertainty-inequality formulation, the `[33]` prior-bound
 rounding distinction (`0.353` stated versus `0.3523` rounded), the first-version
 Hermite-polynomial result boundary (`C4 <= 0.3521` with coefficients

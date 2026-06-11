@@ -2807,12 +2807,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     constructions were often produced by a sequence of different specialized
     heuristics, with early stages making large gains from random/simple initial
     states and later stages fine-tuning near-optimal configurations.
-  - Current gap: paper-facing TODOs already require single-step incumbent
-    handoff evidence, simple/random starting construction provenance, and
-    aggregate outcome rows. They do not require stage-by-stage evidence that a
-    constructive-math result came from multiple heuristic generations with
-    explicit budgets, incumbent lineage, stage roles, and per-stage improvement
-    deltas.
+  - Current gap: paper-facing coverage now includes a Section 3.2
+    stage-sequence absence boundary in
+    `libreevolve.problems.benchmarks.math_outcomes`. It preserves the
+    specialized-heuristic sequence statement, early broad-gain role, and later
+    fine-tuning role, while marking per-stage rows, ordering, heuristic
+    artifacts, input/output constructions, improvement deltas, and verifier
+    evidence absent.
   - Required result: add paper/report evidence for heuristic stage index,
     allotted budget seconds, previous-best construction id, candidate heuristic
     id, produced construction id, score before/after, improvement delta, stage

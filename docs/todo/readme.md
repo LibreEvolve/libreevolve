@@ -1428,7 +1428,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     previous-best construction input, and better-construction selection, while
     saying local heuristic program artifacts, incumbent/produced construction
     artifacts, before/after metrics, scores, and verifier evidence remain
-    `not_recorded_locally`.
+    `not_recorded_locally`. The committed
+    `papers/math_heuristic_handoff_boundary.json` sidecar now emits this
+    boundary for paper-manifest validation alongside the related Section 3.2
+    outcome, starting-construction, and stage-sequence boundary sidecars.
   - Required result: when real heuristic-search handoff support lands, update
     README, ROADMAP, papers index, and code/paper TODO entries together so
     README distinguishes static problem context and post-run artifacts from
@@ -1445,7 +1448,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     absence boundary in `libreevolve.problems.benchmarks.math_outcomes`. It
     documents early broad-gain and later fine-tuning roles while saying
     per-stage ordering, roles, construction transitions, improvement deltas,
-    and verifier artifacts remain `not_recorded_locally`.
+    and verifier artifacts remain `not_recorded_locally`. The committed
+    `papers/math_heuristic_stage_sequence_boundary.json` sidecar now emits
+    this boundary for paper-manifest validation alongside the related Section
+    3.2 outcome, starting-construction, and heuristic-handoff boundary
+    sidecars.
   - Required result: when heuristic-stage sequence reports land, update README,
     ROADMAP, papers index, and code/paper TODO entries together so README
     distinguishes one-shot heuristic handoff support from AlphaEvolve-style
@@ -1461,7 +1468,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     Section 3.2 aggregate-outcome absence boundary and validates the future
     per-instance and aggregate fields. README still says per-problem rows,
     branch taxonomy, construction/verifier artifacts, outcome counts, and
-    percentage recomputation are `not_recorded_locally`.
+    percentage recomputation are `not_recorded_locally`. The committed
+    `papers/math_outcome_boundary.json` sidecar now emits this boundary for
+    paper-manifest validation alongside the related Section 3.2 starting-
+    construction, heuristic-handoff, and stage-sequence boundary sidecars.
   - Required result: when constructive-math outcome reports land, update
     README, ROADMAP, papers index, and code/paper TODOs together so README
     distinguishes Appendix B family coverage and Section 3.2 absence-boundary

@@ -2847,7 +2847,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     search-heuristic-not-direct-construction method, fixed-budget example,
     previous-best construction input, and better-construction selection target,
     while marking heuristic programs, incumbent/produced construction
-    artifacts, before/after metrics, scores, and verifier evidence absent.
+    artifacts, before/after metrics, scores, and verifier evidence absent. The
+    committed `papers/math_heuristic_handoff_boundary.json` sidecar now emits
+    this boundary for paper-manifest validation alongside the related Section
+    3.2 outcome, starting-construction, and stage-sequence boundary sidecars.
   - Required result: before claiming Section 3.2-style constructive-math
     alignment, add paper/report evidence for incumbent identity, budget,
     heuristic output construction, verifier/certificate inputs, and improvement
@@ -2866,7 +2869,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     specialized-heuristic sequence statement, early broad-gain role, and later
     fine-tuning role, while marking per-stage rows, ordering, heuristic
     artifacts, input/output constructions, improvement deltas, and verifier
-    evidence absent.
+    evidence absent. The committed
+    `papers/math_heuristic_stage_sequence_boundary.json` sidecar now emits
+    this boundary for paper-manifest validation alongside the related Section
+    3.2 outcome, starting-construction, and heuristic-handoff boundary
+    sidecars.
   - Required result: add paper/report evidence for heuristic stage index,
     allotted budget seconds, previous-best construction id, candidate heuristic
     id, produced construction id, score before/after, improvement delta, stage
@@ -2887,6 +2894,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     facts plus the required future per-instance and aggregate fields. It does
     not yet provide the per-problem/per-parameter outcome ledger whose branch
     labels and matched/improved/failed counts reproduce the aggregate claims.
+    The committed `papers/math_outcome_boundary.json` sidecar now emits this
+    boundary for paper-manifest validation alongside the related Section 3.2
+    starting-construction, heuristic-handoff, and stage-sequence boundary
+    sidecars.
   - Required result: add paper/report evidence for constructive-math problem
     instances, branch taxonomy, parameter settings, previous-best references,
     AlphaEvolve/LibreEvolve result status, construction/verifier links, and

@@ -2535,7 +2535,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     summary and required future fields for heuristic programs, fixed budgets,
     incumbent construction input, produced construction output, before/after
     metrics, scores, and verifier artifacts, while the actual rows and
-    artifacts remain absent.
+    artifacts remain absent. The committed
+    `papers/math_heuristic_handoff_boundary.json` sidecar now emits this
+    boundary for paper-manifest validation alongside the related Section 3.2
+    outcome, starting-construction, and stage-sequence boundary sidecars.
   - Required result: when heuristic-search benchmark runners land, update
     roadmap, README, papers index, and code/paper TODO entries together with
     the incumbent-construction schema, budget policy, result-artifact paths,
@@ -2555,7 +2558,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     broad-gain and later fine-tuning roles plus required future stage fields,
     while per-stage ordering, budget seconds, incumbent lineage, heuristic
     artifact identity, output construction, improvement delta, and
-    stage-role evidence remain absent.
+    stage-role evidence remain absent. The committed
+    `papers/math_heuristic_stage_sequence_boundary.json` sidecar now emits
+    this boundary for paper-manifest validation alongside the related Section
+    3.2 outcome, starting-construction, and heuristic-handoff boundary
+    sidecars.
   - Required result: when heuristic-stage sequence reports land, update
     ROADMAP, README, papers index, and code/paper TODOs together so roadmap
     wording distinguishes one-step incumbent handoff support from
@@ -2573,7 +2580,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and required future fields, but per-problem/per-parameter outcome rows,
     branch labels, prior-best references, matched/improved/fell-behind status,
     construction/verifier artifacts, and aggregate percentage recomputation
-    remain absent.
+    remain absent. The committed `papers/math_outcome_boundary.json` sidecar
+    now emits this boundary for paper-manifest validation alongside the related
+    Section 3.2 starting-construction, heuristic-handoff, and stage-sequence
+    boundary sidecars.
   - Required result: when constructive-math outcome ledgers and validators
     land, update roadmap, README, papers index, and code/paper TODOs together
     so roadmap wording neither underclaims the current Appendix B family and

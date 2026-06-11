@@ -2866,7 +2866,10 @@ Primary evidence:
     claim. It validates required future per-instance and aggregate fields while
     keeping per-problem rows, branch taxonomy, prior-best references,
     construction/verifier artifacts, aggregate counts, and percentage
-    recomputation `not_recorded_locally`.
+    recomputation `not_recorded_locally`. The committed
+    `papers/math_outcome_boundary.json` sidecar now emits this boundary for
+    paper-manifest validation alongside the related Section 3.2 starting-
+    construction, heuristic-handoff, and stage-sequence boundary sidecars.
   - Required result: replace the absence boundary with an actual
     constructive-math outcome ledger/report containing problem-instance ids,
     branch labels, parameter settings, prior-best references, discovered
@@ -3002,7 +3005,10 @@ Primary evidence:
     better produced construction. It validates required future handoff fields
     while keeping heuristic program artifacts, incumbent/produced construction
     artifacts, before/after metrics, scores, and verifier artifacts
-    `not_recorded_locally`.
+    `not_recorded_locally`. The committed
+    `papers/math_heuristic_handoff_boundary.json` sidecar now emits this
+    boundary for paper-manifest validation alongside the related Section 3.2
+    outcome, starting-construction, and stage-sequence boundary sidecars.
   - Required result: replace the absence boundary with a benchmark-grade
     heuristic-search fixture contract that makes incumbent construction,
     budget, candidate-produced construction, verifier/certificate artifacts,
@@ -3025,7 +3031,11 @@ Primary evidence:
     later fine-tuning stages near optimal configurations. It validates required
     future stage fields while keeping per-stage rows, ordering, heuristic
     artifacts, input/output construction artifacts, stage roles, improvement
-    deltas, and verifier artifacts `not_recorded_locally`.
+    deltas, and verifier artifacts `not_recorded_locally`. The committed
+    `papers/math_heuristic_stage_sequence_boundary.json` sidecar now emits
+    this boundary for paper-manifest validation alongside the related Section
+    3.2 outcome, starting-construction, and heuristic-handoff boundary
+    sidecars.
   - Required result: replace the absence boundary with constructive-math
     benchmark/report records for heuristic stage index, fixed budget seconds,
     incumbent construction artifact/hash, candidate heuristic artifact/hash,

@@ -93,6 +93,440 @@
           "page_hash_inventory_complete": true,
           "claim_boundary": "The follow-on coverage record reconciles the declared 67-problem count against 68 observed numbered HTML pages, classifies page 68, records all-page resource-link diagnostics, pins raw-page hashes, and emits per-page source rows with status buckets, notebook-link mappings, absence reasons, and pinned notebook SHA-256 hashes, but does not claim full notebook cell inventories."
         },
+        "appendix_b_claim_mapping": {
+          "schema": "libreevolve.alphaevolve_follow_on_appendix_b_claim_mapping.v1",
+          "source_boundary": "appendix_b_result_ids_to_follow_on_problem_pages",
+          "source_result_inventory": {
+            "registry_file": "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+            "registry_boundary": "result_row_boundary",
+            "expected_result_count": 19,
+            "expected_result_ids": [
+              "b1_c1_600_interval_step_function",
+              "b2_c2_50_interval_step_function",
+              "b3_c3_400_interval_step_function",
+              "b4_uncertainty_hermite_c012",
+              "b4_uncertainty_revision_c4_0_3216",
+              "figure10_minimum_overlap_step_function",
+              "b6_u1_size_2003",
+              "b6_u2_size_54265",
+              "b7_11_unit_hexagons",
+              "b7_12_unit_hexagons",
+              "b8_16_points_2d",
+              "b8_14_points_3d",
+              "b9_triangle_n11",
+              "b10_convex_region_n13",
+              "b10_convex_region_n14",
+              "b11_kissing_d11_593",
+              "b12_unit_square_n26",
+              "b12_unit_square_n32",
+              "b13_perimeter4_rectangle_n21"
+            ],
+            "expected_family_ids": [
+              "autocorrelation_bounds_k3",
+              "autocorrelation_bounds_k4",
+              "autocorrelation_bounds_k5",
+              "uncertainty_inequality",
+              "erdos_minimum_overlap",
+              "sums_differences_finite_sets",
+              "regular_hexagon_packing",
+              "max_min_distance_point_sets",
+              "heilbronn_triangle",
+              "heilbronn_convex_region",
+              "kissing_number_d11",
+              "circle_packing_unit_square",
+              "circle_packing_perimeter4_rectangle"
+            ],
+            "result_row_boundary": {
+              "status": "not_recorded_locally",
+              "source_section_range": "Appendix B.1-B.13",
+              "source_section_ids": [
+                "B.1",
+                "B.2",
+                "B.3",
+                "B.4",
+                "B.5",
+                "B.6",
+                "B.7",
+                "B.8",
+                "B.9",
+                "B.10",
+                "B.11",
+                "B.12",
+                "B.13"
+              ],
+              "source_claim": "Appendix B reports heterogeneous text-level mathematical result claims with family-specific metrics, parameters, prior bounds, reported values, and construction representations.",
+              "expected_result_count": 19,
+              "expected_result_ids": [
+                "b1_c1_600_interval_step_function",
+                "b2_c2_50_interval_step_function",
+                "b3_c3_400_interval_step_function",
+                "b4_uncertainty_hermite_c012",
+                "b4_uncertainty_revision_c4_0_3216",
+                "figure10_minimum_overlap_step_function",
+                "b6_u1_size_2003",
+                "b6_u2_size_54265",
+                "b7_11_unit_hexagons",
+                "b7_12_unit_hexagons",
+                "b8_16_points_2d",
+                "b8_14_points_3d",
+                "b9_triangle_n11",
+                "b10_convex_region_n13",
+                "b10_convex_region_n14",
+                "b11_kissing_d11_593",
+                "b12_unit_square_n26",
+                "b12_unit_square_n32",
+                "b13_perimeter4_rectangle_n21"
+              ],
+              "required_result_row_fields": [
+                "result_id",
+                "family_id",
+                "source_section_id",
+                "source_location",
+                "metric_name",
+                "metric_definition",
+                "optimization_direction",
+                "bound_direction",
+                "parameter_tuple",
+                "previous_best_value",
+                "previous_best_source",
+                "alphaevolve_reported_value",
+                "displayed_relation",
+                "result_version_status",
+                "construction_representation_schema",
+                "construction_artifact_path",
+                "construction_artifact_sha256",
+                "verifier_artifact_path",
+                "verifier_artifact_sha256",
+                "recomputed_value",
+                "recomputation_status"
+              ],
+              "missing_evidence": {
+                "normalized_result_rows": "not_recorded_locally",
+                "metric_definitions": "not_recorded_locally",
+                "parameter_tuple_rows": "not_recorded_locally",
+                "previous_best_attribution": "not_recorded_locally",
+                "construction_payloads": "not_recorded_locally",
+                "verifier_artifacts": "not_recorded_locally",
+                "recomputed_values": "not_recorded_locally",
+                "source_location_mapping": "not_recorded_locally",
+                "result_version_status_rows": "not_recorded_locally"
+              },
+              "scope_boundary": "The registry records Appendix B family/status and selected family-specific boundaries, but does not claim a normalized per-result metric/value ledger, construction payload hashes, verifier artifacts, or recomputed values for every B.1-B.13 text-level claim."
+            }
+          },
+          "follow_on_problem_coverage_schema": "libreevolve.alphaevolve_follow_on_problem_coverage.v1",
+          "mapping_complete": true,
+          "family_mapping_complete": true,
+          "result_id_mapping_complete": true,
+          "normalized_result_rows_complete": false,
+          "construction_payloads_complete": false,
+          "verifier_artifacts_complete": false,
+          "recomputed_values_complete": false,
+          "full_notebook_cell_inventory_complete": false,
+          "claim_boundary": "This maps original AlphaEvolve Appendix B result ids and family ids to follow-on repository problem pages and notebook-link statuses, but does not claim normalized result rows, construction payload hashes, verifier artifacts, recomputed values, or full notebook cell inventories.",
+          "rows": [
+            {
+              "family_id": "autocorrelation_bounds_k3",
+              "source_section_id": "B.1",
+              "appendix_b_result_ids": [
+                "b1_c1_600_interval_step_function"
+              ],
+              "follow_on_problem_page_ids": [
+                2
+              ],
+              "follow_on_paper_sections": [
+                "6.2"
+              ],
+              "follow_on_status_buckets": [
+                "world_record"
+              ],
+              "notebook_mapping_statuses": [
+                "repository_notebook_path"
+              ],
+              "repository_notebook_paths": [
+                "experiments/autocorrelation_problems/autocorrelation_problems.ipynb"
+              ],
+              "mapping_status": "mapped_to_follow_on_repository_problem_page"
+            },
+            {
+              "family_id": "autocorrelation_bounds_k4",
+              "source_section_id": "B.2",
+              "appendix_b_result_ids": [
+                "b2_c2_50_interval_step_function"
+              ],
+              "follow_on_problem_page_ids": [
+                3
+              ],
+              "follow_on_paper_sections": [
+                "6.2"
+              ],
+              "follow_on_status_buckets": [
+                "former_record"
+              ],
+              "notebook_mapping_statuses": [
+                "repository_notebook_path"
+              ],
+              "repository_notebook_paths": [
+                "experiments/autocorrelation_problems/autocorrelation_problems.ipynb"
+              ],
+              "mapping_status": "mapped_to_follow_on_repository_problem_page"
+            },
+            {
+              "family_id": "autocorrelation_bounds_k5",
+              "source_section_id": "B.3",
+              "appendix_b_result_ids": [
+                "b3_c3_400_interval_step_function"
+              ],
+              "follow_on_problem_page_ids": [
+                4
+              ],
+              "follow_on_paper_sections": [
+                "6.2"
+              ],
+              "follow_on_status_buckets": [
+                "world_record"
+              ],
+              "notebook_mapping_statuses": [
+                "external_alphaevolve_results_colab"
+              ],
+              "repository_notebook_paths": [],
+              "mapping_status": "mapped_to_follow_on_problem_page_external_colab"
+            },
+            {
+              "family_id": "uncertainty_inequality",
+              "source_section_id": "B.4",
+              "appendix_b_result_ids": [
+                "b4_uncertainty_hermite_c012",
+                "b4_uncertainty_revision_c4_0_3216"
+              ],
+              "follow_on_problem_page_ids": [
+                11,
+                12
+              ],
+              "follow_on_paper_sections": [
+                "6.6"
+              ],
+              "follow_on_status_buckets": [
+                "worse_than_record",
+                "not_listed_in_status_json"
+              ],
+              "notebook_mapping_statuses": [
+                "repository_notebook_path"
+              ],
+              "repository_notebook_paths": [
+                "experiments/sphere_packing_uncertainty_principles/sphere_packing_uncertainty_principles.ipynb"
+              ],
+              "mapping_status": "mapped_to_follow_on_repository_problem_pages"
+            },
+            {
+              "family_id": "erdos_minimum_overlap",
+              "source_section_id": "B.5",
+              "appendix_b_result_ids": [
+                "figure10_minimum_overlap_step_function"
+              ],
+              "follow_on_problem_page_ids": [
+                5
+              ],
+              "follow_on_paper_sections": [
+                "6.2"
+              ],
+              "follow_on_status_buckets": [
+                "world_record"
+              ],
+              "notebook_mapping_statuses": [
+                "external_alphaevolve_results_colab"
+              ],
+              "repository_notebook_paths": [],
+              "mapping_status": "mapped_to_follow_on_problem_page_external_colab"
+            },
+            {
+              "family_id": "sums_differences_finite_sets",
+              "source_section_id": "B.6",
+              "appendix_b_result_ids": [
+                "b6_u1_size_2003",
+                "b6_u2_size_54265"
+              ],
+              "follow_on_problem_page_ids": [
+                42,
+                43,
+                44
+              ],
+              "follow_on_paper_sections": [
+                "6.25"
+              ],
+              "follow_on_status_buckets": [
+                "world_record",
+                "worse_than_record",
+                "former_record"
+              ],
+              "notebook_mapping_statuses": [
+                "repository_notebook_path_not_in_pinned_tree",
+                "under_construction_placeholder"
+              ],
+              "repository_notebook_paths": [
+                "experiments/sums_differences_problems/sums_differences_problem.ipynb"
+              ],
+              "mapping_status": "mapped_to_follow_on_repository_problem_pages_with_missing_notebook_target"
+            },
+            {
+              "family_id": "regular_hexagon_packing",
+              "source_section_id": "B.7",
+              "appendix_b_result_ids": [
+                "b7_11_unit_hexagons",
+                "b7_12_unit_hexagons"
+              ],
+              "follow_on_problem_page_ids": [
+                35
+              ],
+              "follow_on_paper_sections": [
+                "6.19"
+              ],
+              "follow_on_status_buckets": [
+                "world_record"
+              ],
+              "notebook_mapping_statuses": [
+                "repository_notebook_path"
+              ],
+              "repository_notebook_paths": [
+                "experiments/packing_unit_cubes/packing_unit_cubes.ipynb"
+              ],
+              "mapping_status": "mapped_to_follow_on_repository_problem_page"
+            },
+            {
+              "family_id": "max_min_distance_point_sets",
+              "source_section_id": "B.8",
+              "appendix_b_result_ids": [
+                "b8_16_points_2d",
+                "b8_14_points_3d"
+              ],
+              "follow_on_problem_page_ids": [
+                50
+              ],
+              "follow_on_paper_sections": [
+                "6.30"
+              ],
+              "follow_on_status_buckets": [
+                "world_record"
+              ],
+              "notebook_mapping_statuses": [
+                "external_alphaevolve_results_colab"
+              ],
+              "repository_notebook_paths": [],
+              "mapping_status": "mapped_to_follow_on_problem_page_external_colab"
+            },
+            {
+              "family_id": "heilbronn_triangle",
+              "source_section_id": "B.9",
+              "appendix_b_result_ids": [
+                "b9_triangle_n11"
+              ],
+              "follow_on_problem_page_ids": [
+                48
+              ],
+              "follow_on_paper_sections": [
+                "6.29"
+              ],
+              "follow_on_status_buckets": [
+                "world_record"
+              ],
+              "notebook_mapping_statuses": [
+                "external_alphaevolve_results_colab"
+              ],
+              "repository_notebook_paths": [],
+              "mapping_status": "mapped_to_follow_on_problem_page_external_colab"
+            },
+            {
+              "family_id": "heilbronn_convex_region",
+              "source_section_id": "B.10",
+              "appendix_b_result_ids": [
+                "b10_convex_region_n13",
+                "b10_convex_region_n14"
+              ],
+              "follow_on_problem_page_ids": [
+                49
+              ],
+              "follow_on_paper_sections": [
+                "6.29"
+              ],
+              "follow_on_status_buckets": [
+                "world_record"
+              ],
+              "notebook_mapping_statuses": [
+                "external_alphaevolve_results_colab"
+              ],
+              "repository_notebook_paths": [],
+              "mapping_status": "mapped_to_follow_on_problem_page_external_colab"
+            },
+            {
+              "family_id": "kissing_number_d11",
+              "source_section_id": "B.11",
+              "appendix_b_result_ids": [
+                "b11_kissing_d11_593"
+              ],
+              "follow_on_problem_page_ids": [
+                8
+              ],
+              "follow_on_paper_sections": [
+                "6.4"
+              ],
+              "follow_on_status_buckets": [
+                "world_record"
+              ],
+              "notebook_mapping_statuses": [
+                "external_alphaevolve_results_colab"
+              ],
+              "repository_notebook_paths": [],
+              "mapping_status": "mapped_to_follow_on_problem_page_external_colab"
+            },
+            {
+              "family_id": "circle_packing_unit_square",
+              "source_section_id": "B.12",
+              "appendix_b_result_ids": [
+                "b12_unit_square_n26",
+                "b12_unit_square_n32"
+              ],
+              "follow_on_problem_page_ids": [
+                36
+              ],
+              "follow_on_paper_sections": [
+                "6.19"
+              ],
+              "follow_on_status_buckets": [
+                "former_record"
+              ],
+              "notebook_mapping_statuses": [
+                "repository_notebook_path_not_in_pinned_tree"
+              ],
+              "repository_notebook_paths": [
+                "experiments/packing_circles_max_sum_of_radii/packing_circles_max_sum_of_radii.ipynb"
+              ],
+              "mapping_status": "mapped_to_follow_on_repository_problem_page_with_missing_notebook_target"
+            },
+            {
+              "family_id": "circle_packing_perimeter4_rectangle",
+              "source_section_id": "B.13",
+              "appendix_b_result_ids": [
+                "b13_perimeter4_rectangle_n21"
+              ],
+              "follow_on_problem_page_ids": [
+                36
+              ],
+              "follow_on_paper_sections": [
+                "6.19"
+              ],
+              "follow_on_status_buckets": [
+                "former_record"
+              ],
+              "notebook_mapping_statuses": [
+                "repository_notebook_path_not_in_pinned_tree"
+              ],
+              "repository_notebook_paths": [
+                "experiments/packing_circles_max_sum_of_radii/packing_circles_max_sum_of_radii.ipynb"
+              ],
+              "mapping_status": "mapped_to_follow_on_repository_problem_page_with_missing_notebook_target"
+            }
+          ]
+        },
         "source_use": {
           "repository_software_license": "Apache-2.0",
           "repository_materials_license": "CC-BY-4.0",
@@ -102,7 +536,6 @@
           "citation_arxiv_id": "2511.02864"
         },
         "required_follow_on_work": [
-          "map_original_appendix_b_claims_to_follow_on_problem_records",
           "attach_rights_attribution_to_generated_artifacts"
         ]
       },
@@ -126,7 +559,6 @@
         "scope": "committed follow-on source provenance, not cached PDF or per-problem inventory"
       },
       "remaining_work": [
-        "map_original_appendix_b_claims_to_follow_on_problem_records",
         "attach_rights_attribution_to_generated_artifacts"
       ]
     }

@@ -2163,7 +2163,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     that evidence. ROADMAP now also documents page 68 as an extra numbered
     duplicate-title `Logic puzzles` page outside the declared 67-page
     navigation range, plus all-page resource-link diagnostics and scoped
-    artifact flags for linked pinned notebooks.
+    artifact flags for linked pinned notebooks. ROADMAP now records the
+    Appendix B crosswalk from `19` original result ids across `13` families to
+    follow-on problem pages and notebook-link statuses without claiming
+    normalized result rows, construction payloads, verifier artifacts, or
+    recomputed values.
   - Required result: keep ROADMAP, README, papers index, and code/paper TODOs
     snapshot-scoped for the counted 67-versus-68 source mismatch and avoid
     claiming full notebook cell inventories.

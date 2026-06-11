@@ -1484,7 +1484,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and validated notebook-link/absence-reason mapping. README now points to
     page-68 classification, all-page raw HTML hashes, and emitted per-page
     source rows with scoped prompt/verifier/initial/final/visualization flags,
-    while keeping full notebook cell inventories outside the claim.
+    while keeping full notebook cell inventories outside the claim. README now
+    also names the Appendix B crosswalk from `19` original result ids across
+    `13` families to follow-on problem pages and notebook-link statuses without
+    treating it as normalized result rows, construction payloads, verifier
+    artifacts, or recomputed values.
   - Required result: keep README wording explicit that completed follow-on
     evidence covers problem-page, status-bucket, link, hash, notebook-link,
     absence-reason, notebook-hash, scoped artifact-flag, and row evidence, not

@@ -3272,6 +3272,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     section, link-status, pinned hash reference, status-bucket membership,
     notebook-link mappings, absence reasons, and scoped artifact-presence
     fields for linked pinned notebooks.
+    `papers/follow_on_sources.json` also now maps the `19` original Appendix B
+    result ids across the `13` Appendix B families to follow-on repository
+    problem pages and notebook-link statuses while leaving normalized result
+    rows, construction payloads, verifier artifacts, recomputed values, and
+    full notebook cell inventories outside the claim.
   - Completed result: source-manifest validation now covers numbered problem
     pages with artifact-presence flags and README/ROADMAP/papers wording keeps
     problem-count and full-cell-inventory claims snapshot-scoped.

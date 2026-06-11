@@ -1,6 +1,10 @@
 import copy
 import json
 
+from libreevolve.problems.benchmarks.appendix_b_registry import (
+    EXPECTED_APPENDIX_B_RESULT_IDS,
+    EXPECTED_FAMILY_IDS,
+)
 from libreevolve.problems.benchmarks.follow_on_sources import (
     ALPHAEVOLVE_FOLLOW_ON_MATH_SOURCE_SCHEMA,
     alphaevolve_follow_on_math_source_record,
@@ -50,6 +54,34 @@ def test_validate_alphaevolve_follow_on_math_source_accepts_builtin_record():
     assert coverage["notebook_absence_reason_inventory_complete"] is True
     assert coverage["per_problem_inventory_validated"] is False
     assert coverage["page_hash_inventory_complete"] is True
+    appendix_b_mapping = recordset["appendix_b_claim_mapping"]
+    assert appendix_b_mapping["mapping_complete"] is True
+    assert appendix_b_mapping["normalized_result_rows_complete"] is False
+    assert appendix_b_mapping["recomputed_values_complete"] is False
+    assert appendix_b_mapping["source_result_inventory"]["expected_result_count"] == 19
+    assert appendix_b_mapping["source_result_inventory"]["expected_result_ids"] == list(
+        EXPECTED_APPENDIX_B_RESULT_IDS
+    )
+    assert appendix_b_mapping["source_result_inventory"]["expected_family_ids"] == list(
+        EXPECTED_FAMILY_IDS
+    )
+    mapped_result_ids = {
+        result_id
+        for row in appendix_b_mapping["rows"]
+        for result_id in row["appendix_b_result_ids"]
+    }
+    assert mapped_result_ids == set(EXPECTED_APPENDIX_B_RESULT_IDS)
+    assert {
+        row["family_id"]
+        for row in appendix_b_mapping["rows"]
+    } == set(EXPECTED_FAMILY_IDS)
+    b8_row = next(
+        row
+        for row in appendix_b_mapping["rows"]
+        if row["family_id"] == "max_min_distance_point_sets"
+    )
+    assert b8_row["follow_on_problem_page_ids"] == [50]
+    assert b8_row["notebook_mapping_statuses"] == ["external_alphaevolve_results_colab"]
 
 
 def test_validate_alphaevolve_follow_on_math_source_loads_json_file(tmp_path):
@@ -527,6 +559,31 @@ def test_validate_alphaevolve_follow_on_math_source_rejects_scope_and_source_use
     assert "invalid_source_use_repository_materials_license" in codes
     assert "invalid_source_use_citation_required" in codes
     assert "missing_required_follow_on_work" in codes
+
+
+def test_validate_alphaevolve_follow_on_math_source_rejects_appendix_b_mapping_drift():
+    recordset = copy.deepcopy(alphaevolve_follow_on_math_source_record())
+    mapping = recordset["appendix_b_claim_mapping"]
+    mapping["mapping_complete"] = False
+    mapping["normalized_result_rows_complete"] = True
+    mapping["claim_boundary"] = "Appendix B mapping is complete."
+    mapping["source_result_inventory"]["expected_result_ids"] = ["b1_c1_600_interval_step_function"]
+    mapping["rows"][0]["follow_on_problem_page_ids"] = [67]
+    mapping["rows"][1]["family_id"] = "unknown_family"
+    mapping["rows"][2]["appendix_b_result_ids"] = []
+
+    validation = validate_alphaevolve_follow_on_math_source(recordset)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_appendix_b_claim_mapping_mapping_complete" in codes
+    assert "invalid_appendix_b_claim_mapping_normalized_result_rows_complete" in codes
+    assert "invalid_appendix_b_claim_mapping_source_result_inventory_expected_result_ids" in codes
+    assert "invalid_appendix_b_claim_mapping_row_follow_on_problem_page_ids" in codes
+    assert "unknown_appendix_b_claim_mapping_family" in codes
+    assert "appendix_b_claim_mapping_family_mismatch" in codes
+    assert "appendix_b_claim_mapping_result_id_mismatch" in codes
+    assert "missing_appendix_b_claim_mapping_boundary" in codes
 
 
 def test_render_alphaevolve_follow_on_math_source_summary_reports_shape():

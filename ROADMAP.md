@@ -874,8 +874,12 @@ is not yet an AlphaEvolve reproduction.
   `papers/follow_on_sources.json` now emits the committed follow-on source row
   with docs/TODO claim-surface links, linked problem-coverage evidence for the
   declared-67 versus observed-68 numbered-page boundary, and an explicit
-  no-cache policy. Cached PDF rows, full notebook cell inventories, and
-  Appendix B claim mappings remain open.
+  no-cache policy. It also maps the `19` original Appendix B result ids across
+  the `13` Appendix B families to follow-on repository problem pages and
+  notebook-link statuses without claiming normalized result rows, construction
+  payloads, verifier artifacts, recomputed values, or full notebook cell
+  inventories. Cached PDF rows and deeper per-claim artifact/recomputation
+  ledgers remain open.
 - Keep follow-on problem-repository rights separate from the original PDF,
   `alphaevolve_results`, and LibreEvolve licensing:
   `papers/follow_on_repository_rights.json` now records the pinned repository's

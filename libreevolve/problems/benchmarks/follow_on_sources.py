@@ -6,6 +6,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from libreevolve.problems.benchmarks.appendix_b_registry import (
+    EXPECTED_APPENDIX_B_RESULT_IDS,
+    EXPECTED_APPENDIX_B_RESULT_ROW_BOUNDARY,
+    EXPECTED_FAMILY_IDS,
+)
+
 
 ALPHAEVOLVE_FOLLOW_ON_MATH_SOURCE_SCHEMA = "libreevolve.alphaevolve_follow_on_math_source.v1"
 ALPHAEVOLVE_FOLLOW_ON_SOURCE_MANIFEST_SCHEMA = (
@@ -276,6 +282,176 @@ EXPECTED_TAO_BLOG_SURFACES = {
     "docs/todo/roadmap.md",
 }
 
+EXPECTED_APPENDIX_B_FOLLOW_ON_CLAIM_ROWS = (
+    {
+        "family_id": "autocorrelation_bounds_k3",
+        "source_section_id": "B.1",
+        "appendix_b_result_ids": ("b1_c1_600_interval_step_function",),
+        "follow_on_problem_page_ids": (2,),
+        "follow_on_paper_sections": ("6.2",),
+        "follow_on_status_buckets": ("world_record",),
+        "notebook_mapping_statuses": ("repository_notebook_path",),
+        "repository_notebook_paths": (
+            "experiments/autocorrelation_problems/autocorrelation_problems.ipynb",
+        ),
+        "mapping_status": "mapped_to_follow_on_repository_problem_page",
+    },
+    {
+        "family_id": "autocorrelation_bounds_k4",
+        "source_section_id": "B.2",
+        "appendix_b_result_ids": ("b2_c2_50_interval_step_function",),
+        "follow_on_problem_page_ids": (3,),
+        "follow_on_paper_sections": ("6.2",),
+        "follow_on_status_buckets": ("former_record",),
+        "notebook_mapping_statuses": ("repository_notebook_path",),
+        "repository_notebook_paths": (
+            "experiments/autocorrelation_problems/autocorrelation_problems.ipynb",
+        ),
+        "mapping_status": "mapped_to_follow_on_repository_problem_page",
+    },
+    {
+        "family_id": "autocorrelation_bounds_k5",
+        "source_section_id": "B.3",
+        "appendix_b_result_ids": ("b3_c3_400_interval_step_function",),
+        "follow_on_problem_page_ids": (4,),
+        "follow_on_paper_sections": ("6.2",),
+        "follow_on_status_buckets": ("world_record",),
+        "notebook_mapping_statuses": ("external_alphaevolve_results_colab",),
+        "repository_notebook_paths": (),
+        "mapping_status": "mapped_to_follow_on_problem_page_external_colab",
+    },
+    {
+        "family_id": "uncertainty_inequality",
+        "source_section_id": "B.4",
+        "appendix_b_result_ids": (
+            "b4_uncertainty_hermite_c012",
+            "b4_uncertainty_revision_c4_0_3216",
+        ),
+        "follow_on_problem_page_ids": (11, 12),
+        "follow_on_paper_sections": ("6.6",),
+        "follow_on_status_buckets": ("worse_than_record", "not_listed_in_status_json"),
+        "notebook_mapping_statuses": ("repository_notebook_path",),
+        "repository_notebook_paths": (
+            "experiments/sphere_packing_uncertainty_principles/sphere_packing_uncertainty_principles.ipynb",
+        ),
+        "mapping_status": "mapped_to_follow_on_repository_problem_pages",
+    },
+    {
+        "family_id": "erdos_minimum_overlap",
+        "source_section_id": "B.5",
+        "appendix_b_result_ids": ("figure10_minimum_overlap_step_function",),
+        "follow_on_problem_page_ids": (5,),
+        "follow_on_paper_sections": ("6.2",),
+        "follow_on_status_buckets": ("world_record",),
+        "notebook_mapping_statuses": ("external_alphaevolve_results_colab",),
+        "repository_notebook_paths": (),
+        "mapping_status": "mapped_to_follow_on_problem_page_external_colab",
+    },
+    {
+        "family_id": "sums_differences_finite_sets",
+        "source_section_id": "B.6",
+        "appendix_b_result_ids": ("b6_u1_size_2003", "b6_u2_size_54265"),
+        "follow_on_problem_page_ids": (42, 43, 44),
+        "follow_on_paper_sections": ("6.25",),
+        "follow_on_status_buckets": (
+            "world_record",
+            "worse_than_record",
+            "former_record",
+        ),
+        "notebook_mapping_statuses": (
+            "repository_notebook_path_not_in_pinned_tree",
+            "under_construction_placeholder",
+        ),
+        "repository_notebook_paths": (
+            "experiments/sums_differences_problems/sums_differences_problem.ipynb",
+        ),
+        "mapping_status": "mapped_to_follow_on_repository_problem_pages_with_missing_notebook_target",
+    },
+    {
+        "family_id": "regular_hexagon_packing",
+        "source_section_id": "B.7",
+        "appendix_b_result_ids": ("b7_11_unit_hexagons", "b7_12_unit_hexagons"),
+        "follow_on_problem_page_ids": (35,),
+        "follow_on_paper_sections": ("6.19",),
+        "follow_on_status_buckets": ("world_record",),
+        "notebook_mapping_statuses": ("repository_notebook_path",),
+        "repository_notebook_paths": (
+            "experiments/packing_unit_cubes/packing_unit_cubes.ipynb",
+        ),
+        "mapping_status": "mapped_to_follow_on_repository_problem_page",
+    },
+    {
+        "family_id": "max_min_distance_point_sets",
+        "source_section_id": "B.8",
+        "appendix_b_result_ids": ("b8_16_points_2d", "b8_14_points_3d"),
+        "follow_on_problem_page_ids": (50,),
+        "follow_on_paper_sections": ("6.30",),
+        "follow_on_status_buckets": ("world_record",),
+        "notebook_mapping_statuses": ("external_alphaevolve_results_colab",),
+        "repository_notebook_paths": (),
+        "mapping_status": "mapped_to_follow_on_problem_page_external_colab",
+    },
+    {
+        "family_id": "heilbronn_triangle",
+        "source_section_id": "B.9",
+        "appendix_b_result_ids": ("b9_triangle_n11",),
+        "follow_on_problem_page_ids": (48,),
+        "follow_on_paper_sections": ("6.29",),
+        "follow_on_status_buckets": ("world_record",),
+        "notebook_mapping_statuses": ("external_alphaevolve_results_colab",),
+        "repository_notebook_paths": (),
+        "mapping_status": "mapped_to_follow_on_problem_page_external_colab",
+    },
+    {
+        "family_id": "heilbronn_convex_region",
+        "source_section_id": "B.10",
+        "appendix_b_result_ids": ("b10_convex_region_n13", "b10_convex_region_n14"),
+        "follow_on_problem_page_ids": (49,),
+        "follow_on_paper_sections": ("6.29",),
+        "follow_on_status_buckets": ("world_record",),
+        "notebook_mapping_statuses": ("external_alphaevolve_results_colab",),
+        "repository_notebook_paths": (),
+        "mapping_status": "mapped_to_follow_on_problem_page_external_colab",
+    },
+    {
+        "family_id": "kissing_number_d11",
+        "source_section_id": "B.11",
+        "appendix_b_result_ids": ("b11_kissing_d11_593",),
+        "follow_on_problem_page_ids": (8,),
+        "follow_on_paper_sections": ("6.4",),
+        "follow_on_status_buckets": ("world_record",),
+        "notebook_mapping_statuses": ("external_alphaevolve_results_colab",),
+        "repository_notebook_paths": (),
+        "mapping_status": "mapped_to_follow_on_problem_page_external_colab",
+    },
+    {
+        "family_id": "circle_packing_unit_square",
+        "source_section_id": "B.12",
+        "appendix_b_result_ids": ("b12_unit_square_n26", "b12_unit_square_n32"),
+        "follow_on_problem_page_ids": (36,),
+        "follow_on_paper_sections": ("6.19",),
+        "follow_on_status_buckets": ("former_record",),
+        "notebook_mapping_statuses": ("repository_notebook_path_not_in_pinned_tree",),
+        "repository_notebook_paths": (
+            "experiments/packing_circles_max_sum_of_radii/packing_circles_max_sum_of_radii.ipynb",
+        ),
+        "mapping_status": "mapped_to_follow_on_repository_problem_page_with_missing_notebook_target",
+    },
+    {
+        "family_id": "circle_packing_perimeter4_rectangle",
+        "source_section_id": "B.13",
+        "appendix_b_result_ids": ("b13_perimeter4_rectangle_n21",),
+        "follow_on_problem_page_ids": (36,),
+        "follow_on_paper_sections": ("6.19",),
+        "follow_on_status_buckets": ("former_record",),
+        "notebook_mapping_statuses": ("repository_notebook_path_not_in_pinned_tree",),
+        "repository_notebook_paths": (
+            "experiments/packing_circles_max_sum_of_radii/packing_circles_max_sum_of_radii.ipynb",
+        ),
+        "mapping_status": "mapped_to_follow_on_repository_problem_page_with_missing_notebook_target",
+    },
+)
+
 
 @dataclass(frozen=True)
 class AlphaEvolveFollowOnMathSourceIssue:
@@ -320,6 +496,50 @@ class AlphaEvolveFollowOnTaoBlogValidation:
     linked_repository_pinned: bool
     commentary_secondary: bool
     issues: list[AlphaEvolveFollowOnMathSourceIssue]
+
+
+def _appendix_b_follow_on_claim_mapping_record() -> dict[str, Any]:
+    rows = [
+        {
+            **row,
+            "appendix_b_result_ids": list(row["appendix_b_result_ids"]),
+            "follow_on_problem_page_ids": list(row["follow_on_problem_page_ids"]),
+            "follow_on_paper_sections": list(row["follow_on_paper_sections"]),
+            "follow_on_status_buckets": list(row["follow_on_status_buckets"]),
+            "notebook_mapping_statuses": list(row["notebook_mapping_statuses"]),
+            "repository_notebook_paths": list(row["repository_notebook_paths"]),
+        }
+        for row in EXPECTED_APPENDIX_B_FOLLOW_ON_CLAIM_ROWS
+    ]
+    return {
+        "schema": "libreevolve.alphaevolve_follow_on_appendix_b_claim_mapping.v1",
+        "source_boundary": "appendix_b_result_ids_to_follow_on_problem_pages",
+        "source_result_inventory": {
+            "registry_file": "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+            "registry_boundary": "result_row_boundary",
+            "expected_result_count": len(EXPECTED_APPENDIX_B_RESULT_IDS),
+            "expected_result_ids": list(EXPECTED_APPENDIX_B_RESULT_IDS),
+            "expected_family_ids": list(EXPECTED_FAMILY_IDS),
+            "result_row_boundary": dict(EXPECTED_APPENDIX_B_RESULT_ROW_BOUNDARY),
+        },
+        "follow_on_problem_coverage_schema": EXPECTED_FOLLOW_ON_PROBLEM_COVERAGE_SCHEMA,
+        "mapping_complete": True,
+        "family_mapping_complete": True,
+        "result_id_mapping_complete": True,
+        "normalized_result_rows_complete": False,
+        "construction_payloads_complete": False,
+        "verifier_artifacts_complete": False,
+        "recomputed_values_complete": False,
+        "full_notebook_cell_inventory_complete": False,
+        "claim_boundary": (
+            "This maps original AlphaEvolve Appendix B result ids and family "
+            "ids to follow-on repository problem pages and notebook-link "
+            "statuses, but does not claim normalized result rows, construction "
+            "payload hashes, verifier artifacts, recomputed values, or full "
+            "notebook cell inventories."
+        ),
+        "rows": rows,
+    }
 
 
 def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
@@ -411,6 +631,7 @@ def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
                 "does not claim full notebook cell inventories."
             ),
         },
+        "appendix_b_claim_mapping": _appendix_b_follow_on_claim_mapping_record(),
         "source_use": {
             "repository_software_license": "Apache-2.0",
             "repository_materials_license": "CC-BY-4.0",
@@ -420,7 +641,6 @@ def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
             "citation_arxiv_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
         },
         "required_follow_on_work": [
-            "map_original_appendix_b_claims_to_follow_on_problem_records",
             "attach_rights_attribution_to_generated_artifacts",
         ],
     }
@@ -823,7 +1043,6 @@ def alphaevolve_follow_on_source_manifest_record() -> dict[str, Any]:
                     ),
                 },
                 "remaining_work": [
-                    "map_original_appendix_b_claims_to_follow_on_problem_records",
                     "attach_rights_attribution_to_generated_artifacts",
                 ],
             }
@@ -850,6 +1069,7 @@ def validate_alphaevolve_follow_on_math_source(
     repository_ref_pinned = _validate_repository(data.get("repository"), issues)
     _validate_repository_claims(data.get("repository_claims"), issues)
     _validate_problem_coverage_evidence(data.get("problem_coverage_evidence"), issues)
+    _validate_appendix_b_claim_mapping(data.get("appendix_b_claim_mapping"), issues)
     _validate_source_use(data.get("source_use"), issues)
     _validate_required_follow_on_work(data.get("required_follow_on_work"), issues)
     source_count = sum(
@@ -1373,6 +1593,93 @@ def _validate_problem_coverage_evidence(value: object, issues: list[AlphaEvolveF
         issues.append(_issue("missing_problem_coverage_claim_boundary", "problem_coverage_evidence must preserve full-cell-inventory boundary", EXPECTED_REPOSITORY_NAME))
 
 
+def _validate_appendix_b_claim_mapping(value: object, issues: list[AlphaEvolveFollowOnMathSourceIssue]) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_appendix_b_claim_mapping", "appendix_b_claim_mapping must be an object", EXPECTED_REPOSITORY_NAME))
+        return
+    expected = {
+        "schema": "libreevolve.alphaevolve_follow_on_appendix_b_claim_mapping.v1",
+        "source_boundary": "appendix_b_result_ids_to_follow_on_problem_pages",
+        "follow_on_problem_coverage_schema": EXPECTED_FOLLOW_ON_PROBLEM_COVERAGE_SCHEMA,
+        "mapping_complete": True,
+        "family_mapping_complete": True,
+        "result_id_mapping_complete": True,
+        "normalized_result_rows_complete": False,
+        "construction_payloads_complete": False,
+        "verifier_artifacts_complete": False,
+        "recomputed_values_complete": False,
+        "full_notebook_cell_inventory_complete": False,
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_appendix_b_claim_mapping_{field}", f"appendix_b_claim_mapping.{field} must match the scoped Appendix B crosswalk boundary", EXPECTED_REPOSITORY_NAME))
+    source_inventory = value.get("source_result_inventory")
+    if not isinstance(source_inventory, dict):
+        issues.append(_issue("invalid_appendix_b_claim_mapping_source_result_inventory", "appendix_b_claim_mapping.source_result_inventory must be an object", EXPECTED_REPOSITORY_NAME))
+    else:
+        expected_inventory = {
+            "registry_file": "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+            "registry_boundary": "result_row_boundary",
+            "expected_result_count": len(EXPECTED_APPENDIX_B_RESULT_IDS),
+            "expected_result_ids": list(EXPECTED_APPENDIX_B_RESULT_IDS),
+            "expected_family_ids": list(EXPECTED_FAMILY_IDS),
+            "result_row_boundary": EXPECTED_APPENDIX_B_RESULT_ROW_BOUNDARY,
+        }
+        for field, expected_value in expected_inventory.items():
+            if source_inventory.get(field) != expected_value:
+                issues.append(_issue(f"invalid_appendix_b_claim_mapping_source_result_inventory_{field}", f"appendix_b_claim_mapping.source_result_inventory.{field} must match the Appendix B registry boundary", EXPECTED_REPOSITORY_NAME))
+    rows = value.get("rows")
+    if not isinstance(rows, list):
+        issues.append(_issue("invalid_appendix_b_claim_mapping_rows", "appendix_b_claim_mapping.rows must be a list", EXPECTED_REPOSITORY_NAME))
+        return
+    expected_rows = {
+        row["family_id"]: row
+        for row in EXPECTED_APPENDIX_B_FOLLOW_ON_CLAIM_ROWS
+    }
+    actual_family_ids: list[str] = []
+    actual_result_ids: list[str] = []
+    if len(rows) != len(expected_rows):
+        issues.append(_issue("invalid_appendix_b_claim_mapping_row_count", "appendix_b_claim_mapping must contain one row for each expected Appendix B family", EXPECTED_REPOSITORY_NAME))
+    for row in rows:
+        if not isinstance(row, dict):
+            issues.append(_issue("invalid_appendix_b_claim_mapping_row", "appendix_b_claim_mapping rows must be objects", EXPECTED_REPOSITORY_NAME))
+            continue
+        family_id = row.get("family_id")
+        if isinstance(family_id, str):
+            actual_family_ids.append(family_id)
+        expected_row = expected_rows.get(family_id)
+        if expected_row is None:
+            issues.append(_issue("unknown_appendix_b_claim_mapping_family", "appendix_b_claim_mapping row has an unknown family id", EXPECTED_REPOSITORY_NAME))
+            continue
+        row_expected = {
+            **expected_row,
+            "appendix_b_result_ids": list(expected_row["appendix_b_result_ids"]),
+            "follow_on_problem_page_ids": list(expected_row["follow_on_problem_page_ids"]),
+            "follow_on_paper_sections": list(expected_row["follow_on_paper_sections"]),
+            "follow_on_status_buckets": list(expected_row["follow_on_status_buckets"]),
+            "notebook_mapping_statuses": list(expected_row["notebook_mapping_statuses"]),
+            "repository_notebook_paths": list(expected_row["repository_notebook_paths"]),
+        }
+        for field, expected_value in row_expected.items():
+            if row.get(field) != expected_value:
+                issues.append(_issue(f"invalid_appendix_b_claim_mapping_row_{field}", f"appendix_b_claim_mapping row field {field} must match the pinned follow-on coverage mapping", str(family_id)))
+        result_ids = row.get("appendix_b_result_ids")
+        if isinstance(result_ids, list):
+            actual_result_ids.extend(result_id for result_id in result_ids if isinstance(result_id, str))
+    if sorted(actual_family_ids) != sorted(EXPECTED_FAMILY_IDS):
+        issues.append(_issue("appendix_b_claim_mapping_family_mismatch", "appendix_b_claim_mapping must cover exactly the expected Appendix B families", EXPECTED_REPOSITORY_NAME))
+    if sorted(actual_result_ids) != sorted(EXPECTED_APPENDIX_B_RESULT_IDS):
+        issues.append(_issue("appendix_b_claim_mapping_result_id_mismatch", "appendix_b_claim_mapping must cover exactly the expected Appendix B result ids", EXPECTED_REPOSITORY_NAME))
+    claim_boundary = value.get("claim_boundary")
+    if (
+        not isinstance(claim_boundary, str)
+        or "does not claim" not in claim_boundary
+        or "recomputed values" not in claim_boundary
+        or "full notebook cell inventories" not in claim_boundary
+    ):
+        issues.append(_issue("missing_appendix_b_claim_mapping_boundary", "appendix_b_claim_mapping must preserve the no-overclaim boundary", EXPECTED_REPOSITORY_NAME))
+
+
 def _validate_source_use(value: object, issues: list[AlphaEvolveFollowOnMathSourceIssue]) -> None:
     if not isinstance(value, dict):
         issues.append(_issue("invalid_source_use", "source_use must be an object", EXPECTED_REPOSITORY_NAME))
@@ -1392,7 +1699,6 @@ def _validate_source_use(value: object, issues: list[AlphaEvolveFollowOnMathSour
 
 def _validate_required_follow_on_work(value: object, issues: list[AlphaEvolveFollowOnMathSourceIssue]) -> None:
     required = {
-        "map_original_appendix_b_claims_to_follow_on_problem_records",
         "attach_rights_attribution_to_generated_artifacts",
     }
     if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
@@ -1477,7 +1783,6 @@ def _validate_follow_on_manifest_remaining_work(
     issues: list[AlphaEvolveFollowOnMathSourceIssue],
 ) -> None:
     expected = {
-        "map_original_appendix_b_claims_to_follow_on_problem_records",
         "attach_rights_attribution_to_generated_artifacts",
     }
     if not isinstance(value, list) or not all(isinstance(item, str) for item in value):

@@ -2337,6 +2337,11 @@ Primary evidence:
     reasons, plus raw SHA-256 hashes for linked pinned notebooks. It still
     records explicit non-applicable statuses for pages without pinned
     repository notebooks.
+    `papers/follow_on_sources.json` also now maps the `19` original Appendix B
+    result ids across the `13` Appendix B families to follow-on repository
+    problem pages and notebook-link statuses while leaving normalized result
+    rows, construction payloads, verifier artifacts, recomputed values, and
+    full notebook cell inventories outside the claim.
   - Completed result: repository-page inventory validation now records prompt/
     verifier/initial/final/visualization flags for linked pinned notebooks and
     README/ROADMAP wording distinguishes paper-declared problem count from full

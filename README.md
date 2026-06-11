@@ -4029,10 +4029,12 @@ license split, citation requirement, and live-repository snapshot policy. The
 committed `papers/follow_on_sources.json` sidecar emits the follow-on source
 row with docs/TODO claim-surface links, a linked
 `libreevolve.alphaevolve_follow_on_problem_coverage.v1` numbered-page evidence
-boundary, and an explicit no-cache policy: it is later math-source evidence for
-the original paper's Section 3.2 handoff, not the original `2506.13131`
-AlphaEvolve specification, not a local cached PDF row, and not a full notebook
-cell inventory.
+boundary, an Appendix B crosswalk mapping the `19` original result ids across
+`13` families to follow-on problem pages and notebook-link statuses, and an
+explicit no-cache policy: it is later math-source evidence for the original
+paper's Section 3.2 handoff, not the original `2506.13131` AlphaEvolve
+specification, not a local cached PDF row, not a normalized Appendix B result
+ledger, and not a full notebook cell inventory.
 `papers/follow_on_repository_rights.json` records the pinned problem
 repository's source-use terms separately from both the original PDF and
 `alphaevolve_results`: citation/BibTeX requirement, Google LLC copyright,

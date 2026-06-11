@@ -3987,12 +3987,15 @@ preserves the PDF page 23 contribution evidence for the paper-figure creator
 initials and the accompanying Google Colab assembler initials. It validates
 artifact ids, artifact types, creator/assembler roles, exact initials and
 ordering, source section/page metadata, and the role source phrases. The
+committed `papers/paper_artifact_roles.json` sidecar emits the same role
+records as paper-facing evidence. The
 companion `libreevolve.alphaevolve_paper_artifact_linkage.v1` record keeps
 that attribution separate from artifact availability: both paper-figure and
 companion-notebook linkages are currently marked `not_yet_linked` with the
 digest, source-locator, and source-to-artifact-map fields required before they
-can be treated as concrete rendered or notebook artifacts. The standard
-paper-manifest gate validates both records.
+can be treated as concrete rendered or notebook artifacts. The committed
+`papers/paper_artifact_linkage.json` sidecar emits that boundary, and the
+standard paper-manifest gate validates both sidecars in the real checkout.
 AlphaEvolve companion Colab source evidence uses
 `libreevolve.alphaevolve_companion_colab_source.v1` in
 `libreevolve/problems/benchmarks/companion_sources.py`; the built-in record

@@ -1671,11 +1671,14 @@ Implemented:
   PDF page 23 contribution records for the paper-figure creator initials and
   the accompanying Google Colab assembler initials, with stable artifact ids,
   artifact types, creator/assembler roles, exact initials and ordering, source
-  section/page metadata, and source phrases. The companion
-  `libreevolve.alphaevolve_paper_artifact_linkage.v1` record marks rendered
-  figure files and companion notebook/export artifacts as `not_yet_linked`
-  while validating the digest/link/source-map fields required before artifact
-  availability can be claimed.
+  section/page metadata, and source phrases. `papers/paper_artifact_roles.json`
+  emits those records as a committed paper-facing sidecar. The companion
+  `libreevolve.alphaevolve_paper_artifact_linkage.v1` record is emitted in
+  `papers/paper_artifact_linkage.json`; it marks rendered figure files and
+  companion notebook/export artifacts as `not_yet_linked` while validating the
+  digest/link/source-map fields required before artifact availability can be
+  claimed. The paper-manifest gate requires both sidecars at the real repo
+  root.
 - `libreevolve/problems/benchmarks/paper_source_versions.py`: AlphaEvolve
   source-PDF version contract. It validates the cached `2506.13131` source row
   against the audited first-page header `arXiv:2506.13131v1 [cs.AI] 16 Jun

@@ -4,6 +4,24 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit paper artifact-role/linkage sidecars.
+  - Spec evidence: AlphaEvolve's Contributions section attributes paper
+    figure creation to N.V., E.D., M.E., S.C., A.N., and A.Z.W., and the
+    accompanying Google Colab assembly to F.J.R.R., A.M., and A.Z.W.
+  - Status: `papers/paper_artifact_roles.json` now emits the validated
+    creator/assembler role records, and `papers/paper_artifact_linkage.json`
+    now emits the `not_yet_linked` availability boundary for rendered figure
+    and companion-notebook artifacts. `validate_paper_manifest()` requires and
+    validates both sidecars at the real repo root.
+  - Verification: `py -3.12 -m pytest tests\test_paper_artifact_roles.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\paper_artifact_roles.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: rendered figure files, companion-notebook URL/digest/cell
+    maps, and source-to-artifact maps remain open under the active artifact
+    linkage TODO.
+
 - [x] Emit Appendix A matrix baseline-citation sidecar.
   - Spec evidence: AlphaEvolve Table 2 and Appendix A Table 3 include a
     `best known [reference]` column for matrix targets.

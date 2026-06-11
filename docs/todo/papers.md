@@ -3306,15 +3306,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve.alphaevolve_paper_artifact_roles.v1` now records and validates
     the required paper-artifact role attribution for the figure set and
     companion notebook: artifact id/type, creator or assembler role,
-    responsible initials/names, source section/page, and source phrases. It
-    does not yet bind those role records to concrete rendered figure files,
-    companion notebook URLs, retrieval digests, artifact hashes, or notebook
-    cell/source maps. `libreevolve.alphaevolve_paper_artifact_linkage.v1` now
-    machine-validates that absence as a `not_yet_linked` availability boundary
-    with expected digest/link/source-map fields for future concrete artifacts,
-    and the companion Colab source mapping now preserves the Appendix B
-    `result_row_boundary` inventory of `19` expected result ids. The
-    paper-manifest gate validates that boundary.
+    responsible initials/names, source section/page, and source phrases.
+    `papers/paper_artifact_roles.json` now commits those records as
+    paper-facing evidence. It does not yet bind those role records to concrete
+    rendered figure files, companion notebook URLs, retrieval digests, artifact
+    hashes, or notebook cell/source maps.
+    `libreevolve.alphaevolve_paper_artifact_linkage.v1` now machine-validates
+    that absence as a `not_yet_linked` availability boundary with expected
+    digest/link/source-map fields for future concrete artifacts, and
+    `papers/paper_artifact_linkage.json` commits that boundary. The companion
+    Colab source mapping now preserves the Appendix B `result_row_boundary`
+    inventory of `19` expected result ids. The paper-manifest gate validates
+    both committed sidecars at the real repo root.
   - Required result: connect paper-facing artifact-role records to rendered
     figures and companion notebook source artifacts with digest/link metadata
     and README/ROADMAP wording that separates artifact availability from

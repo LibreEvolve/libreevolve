@@ -143,6 +143,8 @@ APPENDIX_A_ROW_NOTE_ARTIFACTS_FILE = "papers/appendix_a_matrix_row_note_artifact
 MATRIX_RANK_TABLE_ARTIFACTS_FILE = "papers/matrix_rank_table_artifacts.json"
 MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE = "papers/matrix_headline_historicity_artifacts.json"
 APPENDIX_A_BASELINE_CITATIONS_FILE = "papers/appendix_a_matrix_baseline_citations.json"
+PAPER_ARTIFACT_ROLES_FILE = "papers/paper_artifact_roles.json"
+PAPER_ARTIFACT_LINKAGE_FILE = "papers/paper_artifact_linkage.json"
 SHA256_RE = re.compile(r"[0-9a-f]{64}")
 PAPER_ID_RE = re.compile(r"(?:\d{4}\.\d{5}|[a-z0-9][a-z0-9-]{0,94}[a-z0-9])")
 ARXIV_ID_RE = re.compile(r"\d{4}\.\d{5}(?:v\d+)?")
@@ -547,7 +549,7 @@ def validate_paper_manifest(
     issues.extend(_validate_alphaevolve_references_bibliography(root_path, manifest_rows_by_id, json_rows))
     issues.extend(_validate_alphaevolve_references_section_record(root_path, manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_companion_source_manifest(root_path))
-    issues.extend(_validate_alphaevolve_paper_artifact_role_linkage())
+    issues.extend(_validate_alphaevolve_paper_artifact_role_linkage(root_path))
     issues.extend(_validate_alphaevolve_follow_on_source_manifest(root_path))
     issues.extend(_validate_alphaevolve_follow_on_repository_rights_manifest(root_path))
     issues.extend(_validate_alphaevolve_follow_on_runtime_absence_manifest(root_path))
@@ -1439,8 +1441,18 @@ def _validate_alphaevolve_follow_on_math_source_record(
     return issues
 
 
-def _validate_alphaevolve_paper_artifact_role_linkage() -> list[PaperManifestIssue]:
-    role_recordset = alphaevolve_paper_artifact_role_records()
+def _validate_alphaevolve_paper_artifact_role_linkage(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+
+    role_path = root_path / PAPER_ARTIFACT_ROLES_FILE
+    if role_path.exists():
+        role_recordset: object | str | Path = role_path
+    else:
+        role_recordset = alphaevolve_paper_artifact_role_records()
+
     role_report = validate_paper_artifact_roles(role_recordset)
     issues = [
         PaperManifestIssue(
@@ -1450,10 +1462,23 @@ def _validate_alphaevolve_paper_artifact_role_linkage() -> list[PaperManifestIss
         )
         for issue in role_report.issues
     ]
-    linkage_report = validate_paper_artifact_linkage(
-        alphaevolve_paper_artifact_linkage_record(role_recordset),
-        role_recordset,
-    )
+    if not role_path.exists() and is_repo_root:
+        issues.append(
+            PaperManifestIssue(
+                "alphaevolve_paper_artifact_roles_manifest_missing",
+                f"{PAPER_ARTIFACT_ROLES_FILE} must emit the AlphaEvolve paper artifact-role records",
+                "paper_artifact_roles",
+            )
+        )
+
+    linkage_path = root_path / PAPER_ARTIFACT_LINKAGE_FILE
+    if linkage_path.exists():
+        linkage_recordset: object | str | Path = linkage_path
+    else:
+        linkage_recordset = alphaevolve_paper_artifact_linkage_record(
+            alphaevolve_paper_artifact_role_records()
+        )
+    linkage_report = validate_paper_artifact_linkage(linkage_recordset, role_recordset)
     issues.extend(
         PaperManifestIssue(
             f"alphaevolve_paper_artifact_linkage_{issue.code}",
@@ -1462,6 +1487,14 @@ def _validate_alphaevolve_paper_artifact_role_linkage() -> list[PaperManifestIss
         )
         for issue in linkage_report.issues
     )
+    if not linkage_path.exists() and is_repo_root:
+        issues.append(
+            PaperManifestIssue(
+                "alphaevolve_paper_artifact_linkage_manifest_missing",
+                f"{PAPER_ARTIFACT_LINKAGE_FILE} must emit the AlphaEvolve paper artifact-linkage boundary",
+                "paper_artifact_linkage",
+            )
+        )
     return issues
 
 

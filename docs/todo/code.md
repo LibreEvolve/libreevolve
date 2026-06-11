@@ -2365,14 +2365,17 @@ Primary evidence:
     accompanying Google Colab assembler initials, with stable artifact ids,
     artifact types, creator/assembler roles, exact initials and ordering,
     source section/page metadata, and source phrases.
+    `papers/paper_artifact_roles.json` now commits those role records as a
+    paper-facing sidecar.
     `libreevolve.alphaevolve_paper_artifact_linkage.v1` now validates the
     current `not_yet_linked` availability boundary for rendered figure and
     companion-notebook artifacts, plus the digest/link/source-map fields
-    required before concrete artifacts can be claimed. The companion Colab
-    source mapping for constructive math now also preserves the Appendix B
-    `result_row_boundary` inventory of `19` expected result ids. The
-    paper-manifest gate validates both the role record and the
-    linkage-boundary record.
+    required before concrete artifacts can be claimed.
+    `papers/paper_artifact_linkage.json` now commits that boundary as a
+    paper-facing sidecar. The companion Colab source mapping for constructive
+    math now also preserves the Appendix B `result_row_boundary` inventory of
+    `19` expected result ids. The paper-manifest gate validates both committed
+    sidecars at the real repo root.
   - Required result: connect those role records to concrete rendered figure or
     companion-notebook artifacts with digest/link metadata, retrieval
     provenance, and source-to-artifact maps, while keeping docs wording clear

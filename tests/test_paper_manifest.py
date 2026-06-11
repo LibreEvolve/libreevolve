@@ -23,6 +23,10 @@ from libreevolve.problems.benchmarks.paper_source_identity import (
 from libreevolve.problems.benchmarks.companion_sources import (
     alphaevolve_companion_source_manifest_record,
 )
+from libreevolve.problems.benchmarks.paper_artifact_roles import (
+    alphaevolve_paper_artifact_linkage_record,
+    alphaevolve_paper_artifact_role_records,
+)
 from libreevolve.problems.benchmarks.follow_on_sources import (
     alphaevolve_follow_on_repository_rights_manifest_record,
     alphaevolve_follow_on_runtime_absence_manifest_record,
@@ -363,6 +367,96 @@ def test_validate_paper_manifest_rejects_companion_source_manifest_drift(tmp_pat
 
     assert report.ok is False
     assert "alphaevolve_companion_source_manifest_invalid_notebook_sha256" in codes
+
+
+def test_validate_paper_manifest_accepts_committed_paper_artifact_role_sidecars(tmp_path):
+    source_record = alphaevolve_source_pdf_version_record()
+    row = dict(source_record["manifest_row"])
+    row.pop("url_kind")
+    row.update({"ok": True, "message": "downloaded"})
+    _write_manifest(tmp_path, [row])
+    roles = alphaevolve_paper_artifact_role_records()
+    (tmp_path / paper_manifest.PAPER_ARTIFACT_ROLES_FILE).write_text(
+        json.dumps(roles, indent=2),
+        encoding="utf-8",
+    )
+    (tmp_path / paper_manifest.PAPER_ARTIFACT_LINKAGE_FILE).write_text(
+        json.dumps(alphaevolve_paper_artifact_linkage_record(roles), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_paper_artifact_role_sidecar_drift(tmp_path):
+    source_record = alphaevolve_source_pdf_version_record()
+    row = dict(source_record["manifest_row"])
+    row.pop("url_kind")
+    row.update({"ok": True, "message": "downloaded"})
+    _write_manifest(tmp_path, [row])
+    roles = alphaevolve_paper_artifact_role_records()
+    roles["artifacts"][0]["contributors"] = ["N.V."]
+    (tmp_path / paper_manifest.PAPER_ARTIFACT_ROLES_FILE).write_text(
+        json.dumps(roles, indent=2),
+        encoding="utf-8",
+    )
+    (tmp_path / paper_manifest.PAPER_ARTIFACT_LINKAGE_FILE).write_text(
+        json.dumps(alphaevolve_paper_artifact_linkage_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "alphaevolve_paper_artifact_roles_invalid_contributors" in codes
+
+
+def test_validate_paper_manifest_rejects_paper_artifact_linkage_sidecar_drift(tmp_path):
+    source_record = alphaevolve_source_pdf_version_record()
+    row = dict(source_record["manifest_row"])
+    row.pop("url_kind")
+    row.update({"ok": True, "message": "downloaded"})
+    _write_manifest(tmp_path, [row])
+    roles = alphaevolve_paper_artifact_role_records()
+    linkage = alphaevolve_paper_artifact_linkage_record(roles)
+    linkage["artifact_linkages"][0]["artifact_availability"] = "linked"
+    (tmp_path / paper_manifest.PAPER_ARTIFACT_ROLES_FILE).write_text(
+        json.dumps(roles, indent=2),
+        encoding="utf-8",
+    )
+    (tmp_path / paper_manifest.PAPER_ARTIFACT_LINKAGE_FILE).write_text(
+        json.dumps(linkage, indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "alphaevolve_paper_artifact_linkage_missing_linked_artifacts" in codes
+
+
+def test_validate_paper_manifest_requires_paper_artifact_role_sidecars_at_repo_root(
+    tmp_path,
+    monkeypatch,
+):
+    source_record = alphaevolve_source_pdf_version_record()
+    row = dict(source_record["manifest_row"])
+    row.pop("url_kind")
+    row.update({"ok": True, "message": "downloaded"})
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "alphaevolve_paper_artifact_roles_manifest_missing" in codes
+    assert "alphaevolve_paper_artifact_linkage_manifest_missing" in codes
 
 
 def test_validate_paper_manifest_accepts_matching_follow_on_source_manifest(tmp_path):

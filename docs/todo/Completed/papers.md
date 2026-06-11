@@ -6,6 +6,24 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit paper artifact-role/linkage sidecars.
+  - Paper evidence: the AlphaEvolve Contributions section names the initials
+    responsible for creating the figures and assembling the accompanying
+    Google Colab.
+  - Status: `papers/paper_artifact_roles.json` now carries the paper-facing
+    figure-creator and Colab-assembler records, while
+    `papers/paper_artifact_linkage.json` carries the explicit
+    `not_yet_linked` boundary for concrete rendered figure and companion
+    notebook artifacts. The paper-manifest gate requires and validates both
+    sidecars at the real repo root.
+  - Verification: `py -3.12 -m pytest tests\test_paper_artifact_roles.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\paper_artifact_roles.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: paper-facing rendered figures, notebook retrieval digests,
+    cell/source maps, and concrete source-to-artifact maps remain open.
+
 - [x] Emit Appendix A matrix baseline-citation sidecar.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 and Appendix A
     Table 3 include best-known matrix ranks with bracketed reference ids.

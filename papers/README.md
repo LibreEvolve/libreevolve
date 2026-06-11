@@ -1429,6 +1429,8 @@ Implemented:
   run/target/seed ids, cascade ids and versions, stage traces with
   threshold/rank/exactness/stop diagnostics, accepted final rank, candidate and
   matrix-result refs, artifact paths, and artifact hashes.
+  `papers/matrix_cascade_run_runtime_boundary.json` emits that
+  absence/readiness boundary as a committed sidecar.
   `matrix_cascade_run_runtime_boundary_from_matrix_result()` can build emitted
   records from declared seed rows plus per-seed stage traces, with final-stage
   linkage checks and aggregate best-rank/hit-fraction recomputation. Local

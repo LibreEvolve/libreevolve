@@ -4,6 +4,26 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit matrix cascade-run runtime boundary sidecar.
+  - Spec evidence: AlphaEvolve Section 3.1 reports matrix experiments over
+    multiple random seeds using the evaluation cascade, with best rank and
+    hit fraction derived from those runs.
+  - Status: `papers/matrix_cascade_run_runtime_boundary.json` now emits the
+    `not_emitted_by_local_runner` absence/readiness boundary for Section 3.1
+    per-seed cascade trace provenance, including required future fields for
+    run/target/seed ids, cascade ids/versions, stage traces, final rank,
+    candidate/result refs, artifact paths, and hashes.
+    `validate_paper_manifest()` requires and validates the sidecar at the real
+    repo root when the Appendix A registry is in scope.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\matrix_results.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: local matrix benchmark runners still do not emit executed
+    per-seed cascade traces, pruning/early-stop decisions, or candidate
+    lineage for actual matrix runs.
+
 - [x] Emit matrix baseline-component runtime boundary sidecar.
   - Spec evidence: AlphaEvolve Section 3.1 starts matrix-decomposition search
     from a standard gradient-based algorithm with initializer,

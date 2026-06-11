@@ -6,6 +6,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit matrix cascade-run runtime boundary sidecar.
+  - Paper evidence: Section 3.1 says matrix performance is evaluated across
+    multiple random seeds using the evaluation cascade and reported as best
+    rank plus fraction of seeds reaching it.
+  - Status: `papers/matrix_cascade_run_runtime_boundary.json` now carries the
+    paper-facing absence/readiness boundary for executed per-seed matrix
+    cascade traces. The paper-manifest gate requires and validates the sidecar
+    at the real repo root.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\matrix_results.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: emitted run artifacts for actual matrix per-seed cascade
+    traces, stop/pruning decisions, and candidate lineage remain open.
+
 - [x] Emit matrix baseline-component runtime boundary sidecar.
   - Paper evidence: Section 3.1 describes the matrix workflow as starting
     from a standard gradient-based algorithm with initializer, reconstruction

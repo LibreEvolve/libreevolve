@@ -1030,6 +1030,8 @@ is not yet an AlphaEvolve reproduction.
   per-seed records for run/target/seed ids, cascade ids and versions, stage
   traces with threshold/rank/exactness/stop diagnostics, accepted final rank,
   candidate and matrix-result refs, artifact paths, and artifact hashes.
+  `papers/matrix_cascade_run_runtime_boundary.json` now emits that
+  absence/readiness boundary as a committed sidecar.
   `matrix_cascade_run_runtime_boundary_from_matrix_result()` builds emitted
   records from matrix result seed rows plus per-seed stage traces and validates
   final-stage/result-row linkage plus best-rank, hit-count, and hit-fraction

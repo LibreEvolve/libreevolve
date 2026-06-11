@@ -148,6 +148,7 @@ MATRIX_RANK_TABLE_ARTIFACTS_FILE = "papers/matrix_rank_table_artifacts.json"
 MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE = "papers/matrix_headline_historicity_artifacts.json"
 APPENDIX_A_BASELINE_CITATIONS_FILE = "papers/appendix_a_matrix_baseline_citations.json"
 MATRIX_BASELINE_COMPONENT_RUNTIME_FILE = "papers/matrix_baseline_component_runtime_boundary.json"
+MATRIX_CASCADE_RUN_RUNTIME_FILE = "papers/matrix_cascade_run_runtime_boundary.json"
 PAPER_ARTIFACT_ROLES_FILE = "papers/paper_artifact_roles.json"
 PAPER_ARTIFACT_LINKAGE_FILE = "papers/paper_artifact_linkage.json"
 SHA256_RE = re.compile(r"[0-9a-f]{64}")
@@ -829,8 +830,24 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
         )
         for issue in baseline_component_runtime_report.issues
     )
+    cascade_run_runtime_path = root_path / MATRIX_CASCADE_RUN_RUNTIME_FILE
+    if cascade_run_runtime_path.exists():
+        cascade_run_runtime_recordset: object | str | Path = cascade_run_runtime_path
+    else:
+        cascade_run_runtime_recordset = matrix_cascade_run_runtime_boundary_record()
+        if is_repo_root:
+            issues.append(
+                PaperManifestIssue(
+                    "matrix_cascade_run_runtime_manifest_missing",
+                    (
+                        f"{MATRIX_CASCADE_RUN_RUNTIME_FILE} must emit the "
+                        "matrix cascade-run runtime boundary"
+                    ),
+                    "matrix_cascade_run_runtime_boundary",
+                )
+            )
     cascade_run_runtime_report = validate_matrix_cascade_run_runtime_boundary(
-        matrix_cascade_run_runtime_boundary_record()
+        cascade_run_runtime_recordset
     )
     issues.extend(
         PaperManifestIssue(

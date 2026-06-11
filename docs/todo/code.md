@@ -3135,6 +3135,8 @@ Primary evidence:
     the current `not_emitted_by_local_runner` boundary and emitted per-seed
     trace records for run/target/seed ids, cascade ids/versions, stage traces,
     accepted final ranks, candidate/result refs, artifact paths, and hashes.
+    `papers/matrix_cascade_run_runtime_boundary.json` now emits that
+    absence/readiness boundary as a committed sidecar.
     `matrix_cascade_run_runtime_boundary_from_matrix_result()` builds emitted
     records from matrix result seed rows plus per-seed stage traces and
     validates final-stage rank/candidate linkage plus best-rank, hit-count,

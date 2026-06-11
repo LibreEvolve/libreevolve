@@ -2237,7 +2237,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     rows and hit-fraction checks. It now also points to
     `libreevolve.matrix_cascade_run_runtime_boundary.v1`, which validates the
     current `not_emitted_by_local_runner` boundary and emitted repeated-seed
-    matrix cascade traces. It also points to
+    matrix cascade traces. `papers/matrix_cascade_run_runtime_boundary.json`
+    now emits that absence/readiness boundary as a committed sidecar. It also
+    points to
     `matrix_cascade_run_runtime_boundary_from_matrix_result()`, which builds
     emitted records from seed rows plus per-seed stage traces and checks final
     stage/result-row linkage plus best-rank/hit-fraction aggregation. It does

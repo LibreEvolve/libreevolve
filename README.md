@@ -3771,7 +3771,9 @@ runners still do not emit those baseline component records.
 Matrix cascade-run provenance uses
 `libreevolve.matrix_cascade_run_runtime_boundary.v1`; it validates the current
 `not_emitted_by_local_runner` state and can also validate emitted AlphaEvolve
-Section 3.1-style repeated-seed matrix cascade traces. The helper
+Section 3.1-style repeated-seed matrix cascade traces.
+`papers/matrix_cascade_run_runtime_boundary.json` emits that absence/readiness
+boundary as a committed sidecar. The helper
 `matrix_cascade_run_runtime_boundary_from_matrix_result()` builds emitted
 records from a matrix result report plus per-seed stage traces, linking
 run/target/seed ids, cascade ids and versions, stage traces with

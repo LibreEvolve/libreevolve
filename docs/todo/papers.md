@@ -3088,6 +3088,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     current `not_emitted_by_local_runner` boundary and emitted target/seed,
     cascade, stage-trace, final-rank, candidate/result reference,
     artifact-path, and hash fields.
+    `papers/matrix_cascade_run_runtime_boundary.json` now emits that
+    absence/readiness boundary as committed paper-facing evidence.
     `matrix_cascade_run_runtime_boundary_from_matrix_result()` builds one
     emitted record per seed row from per-seed stage traces and checks final
     stage/result-row linkage plus best-rank/hit-fraction aggregation. It does

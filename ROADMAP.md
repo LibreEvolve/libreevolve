@@ -1119,6 +1119,8 @@ is not yet an AlphaEvolve reproduction.
   identity, hyper-library and hyperparameter declarations, sampled
   configurations, winning configuration, certificate/decomposition refs,
   matrix-result refs, artifact paths, and artifact hashes.
+  `papers/matrix_sweep_space_runtime_boundary.json` now emits that
+  absence/readiness boundary as a committed sidecar.
   `matrix_sweep_space_runtime_boundary_from_evidence()` builds an emitted
   runtime row from validated sweep-space evidence and validation links it back
   to the nested target, search program, `sweep` function, hyper-library,

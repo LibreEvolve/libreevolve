@@ -4,6 +4,27 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit matrix sweep-space runtime boundary sidecar.
+  - Spec evidence: AlphaEvolve Appendix A Figures 9a-9c show an evolved
+    matrix search program with a `sweep()` function over user-provided `hyper`
+    ranges for optimizer, discretization, noise, clipping, and related search
+    parameters.
+  - Status: `papers/matrix_sweep_space_runtime_boundary.json` now emits the
+    `not_emitted_by_local_runner` absence/readiness boundary for run, target,
+    candidate, seed, search-program, `sweep`, hyper-library, hyperparameter,
+    sampled-configuration, winning-configuration, decomposition, certificate,
+    matrix-result, artifact-path, and artifact-hash provenance.
+    `validate_paper_manifest()` requires and validates the sidecar at the real
+    repo root when the Appendix A registry is in scope.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\matrix_results.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: local matrix benchmark runners still do not emit evolved
+    sweep functions, sampled hyperparameter configurations, per-sweep
+    diagnostics, or selected decomposition/certificate links from actual runs.
+
 - [x] Emit matrix scalar-field runtime boundary sidecar.
   - Spec evidence: AlphaEvolve Table 2 and Section 3.1 distinguish
     complex-valued matrix multiplication algorithms, exact real/complex

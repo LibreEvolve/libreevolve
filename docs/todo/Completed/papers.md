@@ -6,6 +6,24 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit matrix sweep-space runtime boundary sidecar.
+  - Paper evidence: Appendix A Figures 9a-9c show matrix search programs
+    evolving a `sweep()` function with `hyper.uniform(...)` ranges and sampled
+    search outcomes, not just final tensor-decomposition artifacts.
+  - Status: `papers/matrix_sweep_space_runtime_boundary.json` now carries the
+    paper-facing absence/readiness boundary for search-program, `sweep`,
+    hyperparameter, sampled-configuration, selected-decomposition,
+    certificate, and artifact provenance. The paper-manifest gate requires and
+    validates the sidecar at the real repo root.
+  - Verification: `py -3.12 -m pytest tests\test_matrix_results.py
+    tests\test_paper_manifest.py tests\test_agents_docs.py -q`, `py -3.12
+    -m libreevolve.tools.paper_manifest --require-local-pdfs`, and `py -3.12
+    -m compileall -q libreevolve\problems\benchmarks\matrix_results.py
+    libreevolve\tools\paper_manifest.py` passed.
+  - Remaining gap: emitted run artifacts for evolved sweep functions,
+    hyperparameter ranges, sampled sweep outcomes, and final certificate
+    linkage remain open.
+
 - [x] Emit matrix scalar-field runtime boundary sidecar.
   - Paper evidence: Table 2 and Section 3.1 distinguish complex-valued matrix
     algorithms, exact real/complex applicability, characteristic-0 claims, and

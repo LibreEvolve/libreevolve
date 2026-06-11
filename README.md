@@ -3853,7 +3853,8 @@ The companion runtime boundary
 ids, seeds, search-program refs, sweep function identity, hyper-library and
 hyperparameter declarations, sampled configurations, winning configuration,
 certificate/decomposition refs, matrix-result refs, artifact paths, and
-artifact hashes. The helper
+artifact hashes. `papers/matrix_sweep_space_runtime_boundary.json` emits that
+absence/readiness boundary as a committed sidecar. The helper
 `matrix_sweep_space_runtime_boundary_from_evidence()` builds an emitted runtime
 row from validated sweep-space evidence and validation links every row back to
 the nested target, search program, `sweep` function, hyper-library,

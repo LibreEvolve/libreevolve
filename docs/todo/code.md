@@ -3400,6 +3400,8 @@ Primary evidence:
     identity, hyper-library and hyperparameter declarations, sampled
     configurations, winning configuration, certificate/decomposition refs,
     matrix-result refs, artifact paths, and artifact hashes.
+    `papers/matrix_sweep_space_runtime_boundary.json` now emits that
+    absence/readiness boundary as a committed sidecar.
     `matrix_sweep_space_runtime_boundary_from_evidence()` builds a runtime row
     from validated sweep-space evidence and validation checks linkage to nested
     target, search program, `sweep` function, hyper-library, hyperparameters,

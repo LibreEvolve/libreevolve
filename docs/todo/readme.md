@@ -1864,14 +1864,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     required future point/domain/certificate fields plus Figure 13 panel
     artifact path/hash fields. It still warns that `figure_panel_artifact_status`
     is `not_recorded_locally` and that the actual coordinate payloads, domain
-    artifacts, unit-area proofs, convexity proofs, all-triples certificates,
-    recomputed minimum areas, and panel artifacts are absent.
+    artifacts, unit-area proofs, convexity proofs, triple-count enumeration
+    certificates, all-triples certificates, minimum-witness-triangle
+    certificates, reported-value comparison certificates, recomputed minimum
+    areas, and panel artifacts are absent.
   - Required result: when the actual Appendix B.9-B.10 Heilbronn payloads and
     certificates land, update README, ROADMAP, papers index, and code/paper
     TODOs together so README names point/domain artifact hashes, unit-area and
-    convexity certificates, all-triples minimum-area certificates, recomputed
-    values, Figure 13 panel artifacts, and source links without merging them
-    into one generic Heilbronn claim.
+    convexity certificates, triple-count enumeration certificates,
+    all-triples minimum-area certificates, minimum-witness-triangle
+    certificates, reported-value comparison certificates, recomputed values,
+    Figure 13 panel artifacts, and source links without merging them into one
+    generic Heilbronn claim.
 
 - [ ] Keep README kissing-number wording scoped until Lemma 1 certificate
       evidence exists.

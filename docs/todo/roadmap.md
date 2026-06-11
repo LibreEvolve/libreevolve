@@ -2966,13 +2966,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     required future point/domain/certificate fields plus Figure 13 panel
     artifact path/hash fields. It still keeps `figure_panel_artifact_status`
     at `not_recorded_locally` and does not claim point/region artifact hashes,
-    unit-area proofs, convexity proofs, all-triples minimum-area certificates,
-    recomputed values, or rendered Figure 13 panel artifacts.
+    unit-area proofs, convexity proofs, triple-count enumeration certificates,
+    all-triples minimum-area certificates, minimum-witness-triangle
+    certificates, reported-value comparison certificates, recomputed values,
+    or rendered Figure 13 panel artifacts.
   - Required result: when the actual Appendix B.9-B.10 Heilbronn payloads and
     certificates land, update ROADMAP, README, papers index, and code/paper
     TODOs so roadmap claims distinguish the three `n` values, domains,
-    certificate evidence, prior/current values, Figure 13 artifacts, payload
-    hashes, and source locations from aggregate Appendix B coverage.
+    certificate evidence, triple enumeration, witness-triangle evidence,
+    reported-value comparisons, prior/current values, Figure 13 artifacts,
+    payload hashes, and source locations from aggregate Appendix B coverage.
 
 - [ ] Keep kissing-number roadmap wording scoped until Lemma 1 certificate
       evidence exists.

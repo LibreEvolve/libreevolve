@@ -2689,14 +2689,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     validated `heilbronn_result_boundary` entries. It still marks
     `figure_panel_artifact_status` as `not_recorded_locally` and does not
     retain real point-coordinate payloads, domain artifacts, unit-area proofs,
-    convexity proofs for B.10, all-triples minimum-area certificates,
-    recomputed minimum areas, or rendered Figure 13 artifacts.
+    convexity proofs for B.10, triple-count enumeration certificates,
+    all-triples minimum-area certificates, minimum-witness-triangle
+    certificates, reported-value comparison certificates, recomputed minimum
+    areas, or rendered Figure 13 artifacts.
   - Required result: add paper/report evidence for the missing Appendix
     B.9-B.10 witness artifacts: point and region artifact hashes, domain
     membership proofs, unit-area normalization proof, convexity proof,
-    minimum triangle area certificate over all triples, recomputed minimum
-    area, source section location, and README/ROADMAP text that separates the
-    three Heilbronn witnesses from broad Appendix B family coverage.
+    triple-count enumeration certificate, minimum triangle area certificate
+    over all triples, minimum-witness-triangle certificate, reported-value
+    comparison certificate, recomputed minimum area, source section location,
+    and README/ROADMAP text that separates the three Heilbronn witnesses from
+    broad Appendix B family coverage.
 
 - [ ] Track kissing-number lemma certificate evidence for Appendix B.11.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.11 reports 593

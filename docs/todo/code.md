@@ -2749,14 +2749,18 @@ Primary evidence:
     artifact path/hash fields. They still mark the witnesses
     `not_recorded_locally`, including `figure_panel_artifact_status`: no
     point-coordinate hashes, domain artifacts, unit-area certificates,
-    convexity certificates, all-triples-area certificates, recomputed minimum
-    areas, or Figure 13 panel artifacts exist.
+    convexity certificates, triple-count enumeration certificates,
+    all-triples-area certificates, minimum-witness-triangle certificates,
+    reported-value comparison certificates, recomputed minimum areas, or
+    Figure 13 panel artifacts exist.
   - Required result: replace the `not_recorded_locally` boundaries with real
     Appendix B.9-B.10 witness artifacts: point-set and region artifact hashes,
     domain-membership proofs, unit-area scaling proofs, convexity proofs for
-    B.10, all-triples minimum-area certificates, recomputed minimum areas,
-    Figure 13 panel artifacts, and README/ROADMAP wording that distinguishes
-    the three Heilbronn constructions from aggregate Appendix B coverage.
+    B.10, triple-count enumeration certificates, all-triples minimum-area
+    certificates, minimum-witness-triangle certificates, reported-value
+    comparison certificates, recomputed minimum areas, Figure 13 panel
+    artifacts, and README/ROADMAP wording that distinguishes the three
+    Heilbronn constructions from aggregate Appendix B coverage.
 
 - [ ] Add kissing-number lemma certificate provenance for Appendix B.11.
   - Spec evidence: AlphaEvolve Appendix B.11 improves the dimension-11 kissing

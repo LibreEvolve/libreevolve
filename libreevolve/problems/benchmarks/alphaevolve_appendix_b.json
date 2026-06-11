@@ -825,8 +825,14 @@
           "domain_membership_certificate_sha256",
           "unit_area_certificate_path",
           "unit_area_certificate_sha256",
+          "triple_count_enumeration_certificate_path",
+          "triple_count_enumeration_certificate_sha256",
           "all_triples_area_certificate_path",
           "all_triples_area_certificate_sha256",
+          "minimum_area_witness_triangle_certificate_path",
+          "minimum_area_witness_triangle_certificate_sha256",
+          "reported_value_comparison_certificate_path",
+          "reported_value_comparison_certificate_sha256",
           "recomputed_minimum_area",
           "figure_panel_id",
           "figure_panel_artifact_path",
@@ -846,10 +852,13 @@
             "domain_artifact_status": "not_recorded_locally",
             "domain_membership_certificate_status": "not_recorded_locally",
             "unit_area_certificate_status": "not_recorded_locally",
+            "triple_count_enumeration_certificate_status": "not_recorded_locally",
             "all_triples_area_certificate_status": "not_recorded_locally",
+            "minimum_area_witness_triangle_certificate_status": "not_recorded_locally",
+            "reported_value_comparison_certificate_status": "not_recorded_locally",
             "recomputed_minimum_area_status": "not_recorded_locally",
             "figure_panel_artifact_status": "not_recorded_locally",
-            "claim_boundary": "The registry records the paper's B.9 n=11 Heilbronn triangle summary but does not claim local point coordinates, domain artifacts, unit-area proof, all-triples area certificate, or recomputed minimum area."
+            "claim_boundary": "The registry records the paper's B.9 n=11 Heilbronn triangle summary but does not claim local point coordinates, domain artifacts, unit-area proof, triple-count enumeration, all-triples area certificate, minimum witness triangle, reported-value comparison certificate, or recomputed minimum area."
           }
         ]
       },
@@ -888,8 +897,14 @@
           "convexity_certificate_sha256",
           "unit_area_certificate_path",
           "unit_area_certificate_sha256",
+          "triple_count_enumeration_certificate_path",
+          "triple_count_enumeration_certificate_sha256",
           "all_triples_area_certificate_path",
           "all_triples_area_certificate_sha256",
+          "minimum_area_witness_triangle_certificate_path",
+          "minimum_area_witness_triangle_certificate_sha256",
+          "reported_value_comparison_certificate_path",
+          "reported_value_comparison_certificate_sha256",
           "recomputed_minimum_area",
           "figure_panel_id",
           "figure_panel_artifact_path",
@@ -910,10 +925,13 @@
             "domain_membership_certificate_status": "not_recorded_locally",
             "convexity_certificate_status": "not_recorded_locally",
             "unit_area_certificate_status": "not_recorded_locally",
+            "triple_count_enumeration_certificate_status": "not_recorded_locally",
             "all_triples_area_certificate_status": "not_recorded_locally",
+            "minimum_area_witness_triangle_certificate_status": "not_recorded_locally",
+            "reported_value_comparison_certificate_status": "not_recorded_locally",
             "recomputed_minimum_area_status": "not_recorded_locally",
             "figure_panel_artifact_status": "not_recorded_locally",
-            "claim_boundary": "The registry records the paper's B.10 n=13 Heilbronn convex-region summary but does not claim local point coordinates, domain artifacts, convexity proof, unit-area proof, all-triples area certificate, or recomputed minimum area."
+            "claim_boundary": "The registry records the paper's B.10 n=13 Heilbronn convex-region summary but does not claim local point coordinates, domain artifacts, convexity proof, unit-area proof, triple-count enumeration, all-triples area certificate, minimum witness triangle, reported-value comparison certificate, or recomputed minimum area."
           },
           {
             "result_id": "b10_convex_region_n14",
@@ -929,10 +947,13 @@
             "domain_membership_certificate_status": "not_recorded_locally",
             "convexity_certificate_status": "not_recorded_locally",
             "unit_area_certificate_status": "not_recorded_locally",
+            "triple_count_enumeration_certificate_status": "not_recorded_locally",
             "all_triples_area_certificate_status": "not_recorded_locally",
+            "minimum_area_witness_triangle_certificate_status": "not_recorded_locally",
+            "reported_value_comparison_certificate_status": "not_recorded_locally",
             "recomputed_minimum_area_status": "not_recorded_locally",
             "figure_panel_artifact_status": "not_recorded_locally",
-            "claim_boundary": "The registry records the paper's B.10 n=14 Heilbronn convex-region summary but does not claim local point coordinates, domain artifacts, convexity proof, unit-area proof, all-triples area certificate, or recomputed minimum area."
+            "claim_boundary": "The registry records the paper's B.10 n=14 Heilbronn convex-region summary but does not claim local point coordinates, domain artifacts, convexity proof, unit-area proof, triple-count enumeration, all-triples area certificate, minimum witness triangle, reported-value comparison certificate, or recomputed minimum area."
           }
         ]
       },

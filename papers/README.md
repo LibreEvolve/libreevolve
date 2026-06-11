@@ -144,10 +144,11 @@ unit-area convex region improving `0.0306` to `0.0309`, and `n = 14` points
 in a unit-area convex region improving `0.0277` to `0.0278`. The
 `heilbronn_result_boundary` entries preserve Figure 13 left/middle/right
 links and the point-coordinate, domain, unit-area, convexity, all-triples area,
+triple-count enumeration, minimum-witness-triangle, reported-value comparison,
 recomputed-minimum-area, and Figure 13 panel artifact path/hash fields required
 before local reproduction can be claimed, with panel artifacts explicitly
-`not_recorded_locally`, while the coordinate/domain payloads and panel
-artifacts remain absent.
+`not_recorded_locally`, while the coordinate/domain payloads, triple
+enumeration, area certificates, and panel artifacts remain absent.
 For B.11 kissing number in dimension 11, the registry now records the prior
 lower bound `592`, reported lower bound `593`, 593 nonzero integral
 11-dimensional vector witness condition, max-norm versus minimum-pairwise

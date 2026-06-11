@@ -748,11 +748,13 @@ is not yet an AlphaEvolve reproduction.
   unit-area triangle row for `n = 11` with minimum area `> 0.0365`, the
   convex-region rows for `n = 13` and `n = 14` with minimum areas `0.0309`
   and `0.0278`, their prior `[29]` values, Figure 13 panel links, and
-  required future point-coordinate, domain, unit-area, convexity, all-triples
-  area, recomputed-minimum-area, and Figure 13 panel artifact path/hash
-  fields, with panel artifacts explicitly `not_recorded_locally`. The actual
-  coordinate/domain payloads, area certificates, and panel artifacts remain
-  open.
+  required future point-coordinate, domain, unit-area, triple-count
+  enumeration, convexity, all-triples area, minimum-witness-triangle,
+  reported-value comparison, recomputed-minimum-area, and Figure 13 panel
+  artifact path/hash fields, with panel artifacts explicitly
+  `not_recorded_locally`. The actual coordinate/domain payloads, triple
+  enumeration, area certificates, reported-value comparison certificates, and
+  panel artifacts remain open.
 - Keep Appendix B.11 kissing-number claims scoped to lemma-boundary evidence
   until the 593-vector certificate lands: the registry now validates the
   dimension-11 target, prior lower bound `592`, reported lower bound `593`,

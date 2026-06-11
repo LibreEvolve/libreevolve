@@ -4,6 +4,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add process-exhibit durable LLM stream joins.
+  - Spec evidence: AlphaEvolve Figure 2's `llm.generate(...)` step should be
+    tied to durable local generation-call evidence before the local process
+    exhibit stops listing candidate-level LLM stream joins as an open gap.
+  - Status: the process-exhibit regression now runs through `LLMEnsemble`,
+    writes `llm_calls.jsonl`, and verifies generated-candidate traces join the
+    Figure 2 generation step to durable `llm-call-*` rows and archive-admission
+    rows. `runtime.history.alphaevolve_process_exhibit_report` now records
+    `durable_candidate_stream_join_count` and sets
+    `durable_every_stream_candidate_join` only when every generated-candidate
+    trace has durable stream joins.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4638 passed, 21 skipped, 2 deselected.
+  - Remaining gap: exact source-diagram reproduction, async topology, and
+    independent evaluator-pool parallelism remain open.
+
 - [x] Add process-exhibit archive-admission stream joins.
   - Spec evidence: AlphaEvolve Figure 2 ends each candidate loop with
     `database.add(...)`, so generated-candidate traces should cite a durable
@@ -18,8 +34,8 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4638 passed, 21 skipped, 2 deselected.
   - Remaining gap: exact source-diagram reproduction, async topology,
-    independent evaluator-pool parallelism, and durable LLM stream joins for
-    every generated step remain open.
+    independent evaluator-pool parallelism, and durable LLM stream joins
+    remained open until the follow-up durable LLM stream-join slice.
 
 - [x] Add process-exhibit generated-candidate semantic traces.
   - Spec evidence: AlphaEvolve Figure 2 is a candidate-producing loop, so
@@ -33,9 +49,8 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     payload hashes, evaluator-result rows, and archive-admission metadata.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4636 passed, 21 skipped, 2 deselected.
-  - Remaining gap: exact source-diagram reproduction, async topology,
-    independent evaluator-pool parallelism, and durable LLM stream candidate
-    joins remain open.
+  - Remaining gap: exact source-diagram reproduction, async topology, and
+    independent evaluator-pool parallelism remain open.
 
 - [x] Add process-exhibit stream row summaries.
   - Spec evidence: AlphaEvolve Figure 2 names controller-loop steps that map
@@ -49,9 +64,8 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     candidate-level joins as an open process-parity gap.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4636 passed, 21 skipped, 2 deselected.
-  - Remaining gap: exact source-diagram reproduction, async topology,
-    independent evaluator-pool parallelism, and durable LLM stream candidate
-    joins remain open.
+  - Remaining gap: exact source-diagram reproduction, async topology, and
+    independent evaluator-pool parallelism remain open.
 
 - [x] Add process-exhibit step-stream artifact links.
   - Spec evidence: AlphaEvolve Figure 2 is a stepwise controller loop, so a
@@ -65,9 +79,8 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     async-topology, evaluator-pool, and durable stream-join gaps.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4636 passed, 21 skipped, 2 deselected.
-  - Remaining gap: exact source-diagram reproduction, async topology,
-    independent evaluator-pool parallelism, and durable LLM stream joins remain
-    open.
+  - Remaining gap: exact source-diagram reproduction, async topology, and
+    independent evaluator-pool parallelism remain open.
 
 - [x] Generate process-exhibit diagram text artifacts.
   - Spec evidence: AlphaEvolve Figure 1/Figure 2 are process diagrams, so a

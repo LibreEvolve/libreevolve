@@ -248,15 +248,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     with SHA-256 hashes, validates each displayed Figure 2 step against the
     artifact-inventory paths it cites, records strict JSONL row summaries for
     cited streams, records bounded generated-candidate semantic traces with
-    archive-admission stream rows, and records component-to-TODO links for the
+    durable LLM and archive-admission stream rows, and records component-to-TODO links for the
     remaining process gaps.
   - Current gap: paper-facing evidence still lacks exact source-diagram
-    reproduction, async controller/sampler/evaluator topology, independent
-    evaluator-pool parallelism, and durable LLM stream joins for every
-    generated step strong enough to treat the local mapping as full reproduced
+    reproduction, async controller/sampler/evaluator topology, and independent
+    evaluator-pool parallelism strong enough to treat the local mapping as full reproduced
     AlphaEvolve architecture evidence.
-  - Required result: add exact diagram text/source reproduction, durable LLM
-    stream joins, topology evidence, and README/ROADMAP wording that separates local
+  - Required result: add exact diagram text/source reproduction, topology
+    evidence, and README/ROADMAP wording that separates local
     workflow diagrams, generated Mermaid artifacts, artifact-link records, row
     summaries, and semantic candidate traces from full reproduced AlphaEvolve
     architecture evidence.
@@ -737,11 +736,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     evidence.
   - Current gap: paper-facing evidence still lacks exact diagram/pseudocode
     text or accessibility reproduction, async topology evidence, independent
-    evaluator-pool evidence, and durable LLM stream joins for every generated
-    step. Existing component-level implementation evidence is
+    evaluator-pool evidence. Existing component-level implementation evidence is
     still not a complete reproduced paper process exhibit.
   - Required result: add exact diagram text, async topology evidence,
-    independent evaluator-pool evidence, durable LLM stream joins, and
+    independent evaluator-pool evidence, and
     README/ROADMAP wording that separates reproducing the paper process
     diagrams from implementing each underlying AlphaEvolve workflow
     capability.

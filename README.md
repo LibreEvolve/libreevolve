@@ -1395,11 +1395,10 @@ source PDF page/caption locations, current single-process controller scope,
 artifact cross-links, generated Mermaid/text accessibility artifacts under
 `paper_artifacts/process_exhibit/`, per-step artifact-stream validation
 records, strict JSONL row summaries for cited streams, generated candidate
-semantic traces with archive-admission stream rows, component-to-TODO links
-for the remaining process gaps, and `claim_ready: false` limitations for
-exact source-diagram reproduction, async controller topology, independent
-evaluator-pool parallelism, and durable LLM stream joins for every generated
-step.
+semantic traces with durable LLM and archive-admission stream rows,
+component-to-TODO links for the remaining process gaps, and `claim_ready:
+false` limitations for exact source-diagram reproduction, async controller
+topology, and independent evaluator-pool parallelism.
 The committed `papers/process_exhibit_boundary.json` sidecar now records that
 paper-manifest-validated process-exhibit parity boundary.
 Accepted archive admissions prevalidate their strict history record before

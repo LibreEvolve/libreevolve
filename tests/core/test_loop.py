@@ -5915,7 +5915,14 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
         "def evaluate(code):\n"
         "    return {'score': 1.0 if 'x=2' in code else 0.1, 'is_valid': True}\n"
     )
-    llm = _TelemetryLLM("<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE")
+
+    class ProcessExhibitBackend:
+        name = "process-exhibit/model"
+
+        def generate(self, prompt, **kwargs):
+            return "<<<<<<< SEARCH\nx=1\n=======\nx=2\n>>>>>>> REPLACE"
+
+    llm = LLMEnsemble([ProcessExhibitBackend()])
 
     with patch("libreevolve.core.loop.build_llm", return_value=llm):
         evolve(
@@ -5939,11 +5946,11 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert report["claim_readiness"]["rendered_diagram_artifacts"] is True
     assert report["claim_readiness"]["accessibility_exports"] is True
     assert report["claim_readiness"]["exact_diagram_text_reproduction"] is False
-    assert report["claim_readiness"]["durable_every_stream_candidate_join"] is False
+    assert report["claim_readiness"]["durable_every_stream_candidate_join"] is True
     assert "exact_source_diagram_text_reproduction" in (
         report["claim_readiness"]["remaining_gap"]
     )
-    assert "durable_llm_stream_candidate_joins" in (
+    assert "durable_llm_stream_candidate_joins" not in (
         report["claim_readiness"]["remaining_gap"]
     )
     assert "semantic_candidate_level_step_stream_join_against_each_stream" not in (
@@ -6008,7 +6015,7 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     )
     assert stream_rows_by_path["prompt_history.jsonl"]["row_count"] >= 1
     assert stream_rows_by_path["controller_budget_events.jsonl"]["row_count"] >= 1
-    assert stream_rows_by_path["llm_calls.jsonl"]["status"] in {"absent", "rows_recorded"}
+    assert stream_rows_by_path["llm_calls.jsonl"]["status"] == "rows_recorded"
     step_validation_by_id = {
         validation["step_id"]: validation
         for validation in report["step_stream_validations"]
@@ -6020,10 +6027,7 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
         "controller_budget_events.jsonl",
     ]
     assert generate_validation["stream_records"][0]["artifact_record_present"] is True
-    assert generate_validation["stream_records"][0]["row_summary_recorded"] in {
-        True,
-        False,
-    }
+    assert generate_validation["stream_records"][0]["row_summary_recorded"] is True
     assert generate_validation["stream_records"][0]["row_level_join"] is False
     assert generate_validation["stream_records"][1]["row_summary_recorded"] is True
     assert generate_validation["stream_records"][1]["row_line_numbers"]
@@ -6031,14 +6035,16 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert "evaluator_artifacts" in evaluator_validation["artifact_paths"]
     assert evaluator_validation["all_artifact_records_resolved"] is True
     assert evaluator_validation["row_summary_record_count"] >= 1
-    assert report["component_todo_link_count"] == 4
+    assert report["component_todo_link_count"] == 3
     assert report["candidate_semantic_trace_count"] == 1
+    assert report["durable_candidate_stream_join_count"] == 1
     assert report["claim_readiness"]["candidate_semantic_trace_records"] is True
-    assert report["claim_readiness"]["durable_every_stream_candidate_join"] is False
+    assert report["claim_readiness"]["durable_every_stream_candidate_join"] is True
     [trace] = report["candidate_semantic_traces"]
     assert trace["candidate_type"] == "generated"
     assert trace["semantic_trace_ready"] is True
-    assert trace["durable_every_stream_join"] is False
+    assert trace["durable_every_stream_join"] is True
+    assert trace["remaining_gap"] == []
     assert trace["step_join_count"] == 6
     trace_steps = {step["step_id"]: step for step in trace["step_joins"]}
     assert trace_steps["fig2.step_2_build_prompt"][
@@ -6047,7 +6053,13 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert trace_steps["fig2.step_2_build_prompt"][
         "prompt_history_score_line_number"
     ] == 2
-    assert trace_steps["fig2.step_3_generate"]["llm_call_ids"] == ["call-0"]
+    assert len(trace_steps["fig2.step_3_generate"]["llm_call_ids"]) == 1
+    llm_call_id = trace_steps["fig2.step_3_generate"]["llm_call_ids"][0]
+    assert llm_call_id.startswith("llm-call-")
+    assert trace_steps["fig2.step_3_generate"]["llm_call_stream_joined"] is True
+    assert trace_steps["fig2.step_3_generate"]["llm_call_stream_rows"][0][
+        "call_id"
+    ] == llm_call_id
     assert trace_steps["fig2.step_3_generate"][
         "controller_llm_call_event_rows"
     ][0]["kind"] == "llm_call"
@@ -6067,14 +6079,7 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert "fig2.step_5_execute_evaluator" in todo_links_by_gap[
         "independent_evaluator_pool_parallelism"
     ]["component_ids"]
-    assert todo_links_by_gap["durable_llm_stream_candidate_joins"][
-        "active_todo_paths"
-    ] == [
-        "docs/todo/code.md",
-        "docs/todo/roadmap.md",
-        "docs/todo/readme.md",
-        "docs/todo/papers.md",
-    ]
+    assert "durable_llm_stream_candidate_joins" not in todo_links_by_gap
     artifact_by_path = {
         artifact["path"]: artifact for artifact in report["artifact_evidence"]
     }

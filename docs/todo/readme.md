@@ -176,13 +176,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     artifacts. README now also documents generated Mermaid/text accessibility
     artifacts and hashes under `paper_artifacts/process_exhibit/`, per-step
     artifact-stream validation records, strict JSONL row summaries,
-    generated candidate semantic traces with archive-admission stream rows,
-    component-to-TODO links, and names
+    generated candidate semantic traces with durable LLM and archive-admission
+    stream rows, component-to-TODO links, and names
     `papers/process_exhibit_boundary.json` as the committed sidecar for the
     paper-manifest-validated absence boundary.
   - Required result: when exact source-diagram reproduction, async controller
-    topology, independent evaluator-pool parallelism, and durable LLM stream
-    joins land, update README, ROADMAP, papers index, and matching TODOs
+    topology and independent evaluator-pool parallelism land, update README,
+    ROADMAP, papers index, and matching TODOs
     so README distinguishes local workflow explanation, generated Mermaid
     artifacts, artifact-link records, row summaries, and semantic candidate
     traces from full reproduced AlphaEvolve architecture/process exhibit
@@ -450,15 +450,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     Figure 2 pseudocode-step mappings, artifact cross-links, generated
     Mermaid/text artifacts and hashes, per-step artifact-stream validation
     records, strict JSONL row summaries, generated candidate semantic traces
-    with archive-admission stream rows, component-to-TODO links, and
+    with durable LLM and archive-admission stream rows, component-to-TODO links, and
     `claim_ready: false` process-parity gaps. It
     also names
     `papers/process_exhibit_boundary.json` as the committed sidecar for that
     absence boundary. README workflow text should still remain local
     documentation, not a validated reproduction of the paper process diagrams.
   - Required result: when exact diagram/pseudocode text, rendered artifact
-    parity, async topology evidence, independent evaluator-pool evidence, and
-    durable LLM stream joins land, update README, ROADMAP, papers
+    parity, async topology evidence and independent evaluator-pool evidence
+    land, update README, ROADMAP, papers
     index, and code/paper TODOs together so README can explain which
     process-diagram steps LibreEvolve implements, which are partial or
     missing, and why process-diagram reproduction is separate from satisfying

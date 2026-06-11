@@ -6,6 +6,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Record process-exhibit durable LLM stream joins.
+  - Paper evidence: AlphaEvolve Figure 2's `llm.generate(...)` step should be
+    backed by durable local generation-call evidence before paper-facing
+    process exhibits stop listing candidate-level LLM stream joins as missing.
+  - Status: paper-facing manifests now preserve generated-candidate process
+    traces with durable `llm_calls.jsonl` rows and archive-admission rows.
+    `papers/process_exhibit_boundary.json` now preserves the narrower
+    diagram/topology/evaluator-pool absence boundary.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4638 passed, 21 skipped, 2 deselected.
+  - Remaining paper gap: exact source-diagram reproduction, async topology,
+    and evaluator-pool parallelism remain open.
+
 - [x] Record process-exhibit archive-admission stream joins.
   - Paper evidence: AlphaEvolve Figure 2's final displayed step is
     `database.add(...)`, so paper-facing generated-candidate traces need a
@@ -13,12 +26,12 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Status: paper-facing manifests now preserve archive-admission rows in
     `archive_events.jsonl` and join generated-candidate process traces to
     those rows. `papers/process_exhibit_boundary.json` now preserves the
-    narrower durable LLM-stream candidate-join gap.
+    then-open durable LLM-stream candidate-join gap.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4638 passed, 21 skipped, 2 deselected.
   - Remaining paper gap: exact source-diagram reproduction, async topology,
-    evaluator-pool parallelism, and durable LLM stream joins for every
-    generated step remain open.
+    evaluator-pool parallelism, and durable LLM stream joins remained open
+    until the follow-up durable LLM stream-join slice.
 
 - [x] Record process-exhibit generated-candidate semantic traces.
   - Paper evidence: AlphaEvolve Figure 2 traces a generated program through
@@ -26,13 +39,13 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     database admission.
   - Status: paper-facing manifests now preserve bounded generated-candidate
     semantic traces for the displayed Figure 2 process steps, and
-    `papers/process_exhibit_boundary.json` now preserves the narrower durable
+    `papers/process_exhibit_boundary.json` preserved the then-open durable
     LLM stream candidate-join gap.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4636 passed, 21 skipped, 2 deselected.
   - Remaining paper gap: exact source-diagram reproduction, async topology,
-    evaluator-pool parallelism, and durable LLM stream joins for every
-    generated step remain open.
+    evaluator-pool parallelism, and durable LLM stream joins remained open
+    until the follow-up durable LLM stream-join slice.
 
 - [x] Record process-exhibit stream row summaries.
   - Paper evidence: AlphaEvolve Figure 2 is a stepwise process exhibit, so
@@ -40,12 +53,12 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     before claiming deeper per-step stream linkage.
   - Status: paper-facing manifests now preserve strict JSONL row summaries for
     cited process streams, with bounded line numbers and row identifiers, and
-    `papers/process_exhibit_boundary.json` now preserves the durable
+    `papers/process_exhibit_boundary.json` preserved the then-open durable
     LLM stream candidate-join gap.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4636 passed, 21 skipped, 2 deselected.
   - Remaining paper gap: exact source-diagram reproduction, async topology,
-    evaluator-pool parallelism, and durable LLM stream joins remain open.
+    evaluator-pool parallelism, and durable LLM stream joins remained open.
 
 - [x] Record process-exhibit step-stream artifact links.
   - Paper evidence: AlphaEvolve Figure 2 names concrete loop steps, so
@@ -54,8 +67,8 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     durable stream joins.
   - Status: paper-facing manifests now validate the six Figure 2 displayed
     calls against the artifact inventory and include component-to-TODO links
-    for the process-exhibit gaps. `papers/process_exhibit_boundary.json` now
-    preserves the durable LLM stream candidate-join gap.
+    for the process-exhibit gaps. `papers/process_exhibit_boundary.json`
+    preserved the then-open durable LLM stream candidate-join gap.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4636 passed, 21 skipped, 2 deselected.
   - Remaining paper gap: exact source-diagram reproduction, async topology,

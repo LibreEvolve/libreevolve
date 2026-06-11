@@ -181,13 +181,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     mappings, source PDF/caption locations, artifact cross-links, generated
     Mermaid/text accessibility artifacts and hashes, per-step artifact-stream
     validation records, strict JSONL row summaries, generated candidate
-    semantic traces with archive-admission stream rows, component-to-TODO links, and explicit remaining
+    semantic traces with durable LLM and archive-admission stream rows,
+    component-to-TODO links, and explicit remaining
     process-parity gaps. It now also names
     `papers/process_exhibit_boundary.json` as the committed sidecar for the
     paper-manifest-validated absence boundary.
   - Required result: when exact source-diagram reproduction, async
-    controller/sampler/evaluator topology, independent evaluator-pool
-    parallelism, and durable LLM stream joins land, update ROADMAP,
+    controller/sampler/evaluator topology and independent evaluator-pool
+    parallelism land, update ROADMAP,
     README, papers index, and code/paper TODOs so roadmap wording
     distinguishes local workflow documentation, generated Mermaid artifacts,
     artifact-link records, row summaries, and semantic candidate traces from
@@ -547,13 +548,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     validation that keeps full process-diagram parity false. The report also
     includes generated Mermaid/text artifacts and hashes, per-step
     artifact-stream validation records, strict JSONL row summaries, generated
-    candidate semantic traces with archive-admission stream rows, and
+    candidate semantic traces with durable LLM and archive-admission stream rows, and
     component-to-TODO links. ROADMAP now names
     `papers/process_exhibit_boundary.json` as the committed sidecar for that
     absence boundary.
   - Required result: when exact diagram text or accessibility reproduction,
-    stronger topology evidence, independent evaluator-pool evidence, and
-    durable LLM stream joins land, update ROADMAP, README, papers index,
+    stronger topology evidence and independent evaluator-pool evidence land,
+    update ROADMAP, README, papers index,
     and code/paper TODO entries together so roadmap wording separates paper
     process-diagram reproduction from delivering each underlying AlphaEvolve
     workflow capability.

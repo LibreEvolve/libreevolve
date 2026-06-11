@@ -4,11 +4,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document process-exhibit durable LLM stream joins.
+  - Status: README now documents generated-candidate semantic traces with
+    durable LLM and archive-admission stream rows in the process-exhibit
+    report while preserving exact source-diagram, async-topology, and
+    evaluator-pool gaps.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4638 passed, 21 skipped, 2 deselected.
+  - Remaining gap: full AlphaEvolve process-diagram parity remains open.
+
 - [x] Document process-exhibit archive-admission stream joins.
   - Status: README now documents generated-candidate semantic traces with
     archive-admission stream rows in the process-exhibit report while
-    preserving exact source-diagram, async-topology, evaluator-pool, and
-    durable LLM stream-join gaps.
+    preserving exact source-diagram, async-topology, evaluator-pool, and the
+    then-open durable LLM stream-join gap.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4638 passed, 21 skipped, 2 deselected.
   - Remaining gap: full AlphaEvolve process-diagram parity remains open.
@@ -16,7 +25,8 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 - [x] Document process-exhibit generated-candidate semantic traces.
   - Status: README now documents bounded generated-candidate semantic traces
     in the process-exhibit report while preserving exact source-diagram,
-    async-topology, evaluator-pool, and durable LLM stream-join gaps.
+    async-topology, evaluator-pool, and the then-open durable LLM stream-join
+    gap.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4636 passed, 21 skipped, 2 deselected.
   - Remaining gap: full AlphaEvolve process-diagram parity remains open.
@@ -24,7 +34,8 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 - [x] Document process-exhibit stream row summaries.
   - Status: README now documents strict JSONL row summaries for cited
     process-exhibit streams while preserving exact source-diagram,
-    async-topology, evaluator-pool, and durable LLM stream-join gaps.
+    async-topology, evaluator-pool, and the then-open durable LLM stream-join
+    gap.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4636 passed, 21 skipped, 2 deselected.
   - Remaining gap: full AlphaEvolve process-diagram parity remains open.

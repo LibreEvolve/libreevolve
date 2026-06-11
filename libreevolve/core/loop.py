@@ -12786,6 +12786,12 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
         run_dir,
         programs,
     )
+    durable_candidate_stream_join_count = sum(
+        1
+        for trace in candidate_semantic_traces
+        if isinstance(trace, Mapping)
+        and trace.get("durable_every_stream_join") is True
+    )
     step_stream_row_summary_count = sum(
         1
         for validation in step_stream_validations
@@ -12827,6 +12833,7 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
         "step_stream_row_summary_count": step_stream_row_summary_count,
         "candidate_semantic_traces": candidate_semantic_traces,
         "candidate_semantic_trace_count": len(candidate_semantic_traces),
+        "durable_candidate_stream_join_count": durable_candidate_stream_join_count,
         "component_todo_links": component_todo_links,
         "component_todo_link_count": len(component_todo_links),
         "claim_ready": False,
@@ -12844,13 +12851,15 @@ def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) 
             "rendered_diagram_artifacts": rendered_count == len(figures),
             "accessibility_exports": accessibility_count == len(figures),
             "exact_diagram_text_reproduction": False,
-            "durable_every_stream_candidate_join": False,
+            "durable_every_stream_candidate_join": (
+                bool(candidate_semantic_traces)
+                and durable_candidate_stream_join_count == len(candidate_semantic_traces)
+            ),
             "full_alphaevolve_process_parity": False,
             "remaining_gap": [
                 "exact_source_diagram_text_reproduction",
                 "async_controller_sampler_evaluator_topology",
                 "independent_evaluator_pool_parallelism",
-                "durable_llm_stream_candidate_joins",
             ],
         },
     }
@@ -13637,15 +13646,6 @@ def _process_exhibit_component_todo_links() -> list[dict]:
             "active_todo_paths": active_todos,
             "claim_surface_paths": claim_surfaces,
         },
-        {
-            "gap_id": "durable_llm_stream_candidate_joins",
-            "status": "open",
-            "component_ids": [
-                "fig2.step_3_generate",
-            ],
-            "active_todo_paths": active_todos,
-            "claim_surface_paths": claim_surfaces,
-        },
     ]
 
 
@@ -13746,6 +13746,7 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
         "step_stream_row_summary_count",
         "candidate_semantic_traces",
         "candidate_semantic_trace_count",
+        "durable_candidate_stream_join_count",
         "component_todo_links",
         "component_todo_link_count",
         "claim_ready",
@@ -14061,6 +14062,18 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
         len(candidate_semantic_traces),
         issues,
     )
+    durable_trace_count = sum(
+        1
+        for trace in candidate_semantic_traces
+        if isinstance(trace, Mapping)
+        and trace.get("durable_every_stream_join") is True
+    )
+    _validate_report_count(
+        report,
+        "durable_candidate_stream_join_count",
+        durable_trace_count,
+        issues,
+    )
     for trace in candidate_semantic_traces:
         if not isinstance(trace, Mapping):
             issues.append({"code": "invalid_candidate_semantic_trace", "message": "candidate semantic traces must be objects"})
@@ -14170,8 +14183,15 @@ def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
             issues.append({"code": "invalid_accessibility_export_readiness", "message": "accessibility export readiness must be boolean"})
         if readiness.get("exact_diagram_text_reproduction") is not False:
             issues.append({"code": "exact_diagram_text_overclaim", "message": "exact source diagram text reproduction must remain false"})
-        if readiness.get("durable_every_stream_candidate_join") is not False:
-            issues.append({"code": "durable_every_stream_overclaim", "message": "durable every-stream candidate joins must remain false"})
+        durable_candidate_ready = readiness.get("durable_every_stream_candidate_join")
+        if durable_candidate_ready not in {True, False}:
+            issues.append({"code": "invalid_durable_every_stream_readiness", "message": "durable every-stream candidate join readiness must be boolean"})
+        elif durable_candidate_ready is True and not (
+            candidate_semantic_traces
+            and report.get("durable_candidate_stream_join_count")
+            == len(candidate_semantic_traces)
+        ):
+            issues.append({"code": "durable_every_stream_overclaim", "message": "durable candidate stream joins require every candidate trace to be joined"})
         if readiness.get("full_alphaevolve_process_parity") is not False:
             issues.append({"code": "process_parity_overclaim", "message": "full AlphaEvolve process parity must remain false"})
     if report.get("claim_ready") is not False:

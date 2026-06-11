@@ -2,11 +2,20 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Record process-exhibit durable LLM stream joins for roadmap evidence.
+  - Status: ROADMAP now lists generated candidate semantic traces with durable
+    LLM and archive-admission stream rows as current Figure 1/Figure 2
+    process-exhibit evidence, while keeping full process parity open.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4638 passed, 21 skipped, 2 deselected.
+  - Remaining gap: exact source-diagram reproduction, async topology, and
+    evaluator-pool parallelism remain open.
+
 - [x] Record process-exhibit archive-admission stream joins for roadmap evidence.
   - Status: ROADMAP now lists generated candidate semantic traces with
     archive-admission stream rows as current Figure 1/Figure 2 process-exhibit
-    evidence, while keeping durable LLM stream joins and full process parity
-    open.
+    evidence, while durable LLM stream joins remained open until the follow-up
+    durable LLM stream-join slice.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4638 passed, 21 skipped, 2 deselected.
   - Remaining gap: exact source-diagram reproduction, async topology, and
@@ -15,7 +24,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 - [x] Record process-exhibit generated-candidate semantic traces for roadmap evidence.
   - Status: ROADMAP now lists bounded generated-candidate semantic traces as
     current Figure 1/Figure 2 process-exhibit evidence, while keeping durable
-    LLM stream joins and full process parity open.
+    full process parity open.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4636 passed, 21 skipped, 2 deselected.
   - Remaining gap: exact source-diagram reproduction, async topology, and
@@ -24,8 +33,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 - [x] Record process-exhibit stream row summaries for roadmap evidence.
   - Status: ROADMAP now lists strict JSONL row summaries and generated
     candidate traces as current Figure 1/Figure 2 process-exhibit evidence,
-    while keeping durable LLM candidate joins and full process parity
-    open.
+    while keeping full process parity open.
   - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
     passed with 4636 passed, 21 skipped, 2 deselected.
   - Remaining gap: exact source-diagram reproduction, async topology, and

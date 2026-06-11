@@ -60,12 +60,12 @@ LibreEvolve has:
   figure IDs, node/edge-to-component mappings, Figure 2 pseudocode-step
   mappings, artifact cross-links, generated Mermaid/accessibility text
   artifacts, step-stream artifact validation records, strict JSONL row
-  summaries, generated candidate semantic traces with archive-admission stream
-  rows, component-to-TODO links, and explicit gaps for exact source-diagram
-  reproduction and full process parity, with
+  summaries, generated candidate semantic traces with durable LLM and
+  archive-admission stream rows, component-to-TODO links, and explicit gaps
+  for exact source-diagram reproduction and full process parity, with
   `papers/process_exhibit_boundary.json` now carrying the manifest-validated
   boundary for exact source-diagram reproduction, async topology,
-  evaluator-pool parallelism, and durable LLM stream joins
+  and evaluator-pool parallelism
 - distributed-pipeline topology boundary reports under
   `runtime.history.distributed_pipeline_topology_report`, naming the current
   single-process controller, in-process database, configured LLM sampler

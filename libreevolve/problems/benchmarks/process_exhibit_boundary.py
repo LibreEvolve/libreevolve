@@ -10,7 +10,7 @@ PROCESS_EXHIBIT_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_process_exhibit_bound
 PROCESS_EXHIBIT_RUNTIME_REPORT_SCHEMA = "libreevolve.alphaevolve_process_exhibit_report.v1"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_FIGURE_IDS = ("Figure 1", "Figure 2")
-EXPECTED_BOUNDARY_STATUS = "process_mapping_with_archive_admission_traces_without_full_parity"
+EXPECTED_BOUNDARY_STATUS = "process_mapping_with_durable_candidate_traces_without_full_parity"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "figure_id",
     "source_page",
@@ -27,12 +27,12 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "evaluator_pool_parallelism_record",
     "artifact_step_validation_record",
     "candidate_semantic_trace_record",
+    "durable_candidate_stream_join_record",
 )
 EXPECTED_MISSING_EVIDENCE = {
     "exact_source_diagram_text_reproduction": "not_recorded_locally",
     "async_controller_sampler_evaluator_topology": "not_recorded_locally",
     "independent_evaluator_pool_parallelism": "not_recorded_locally",
-    "durable_llm_stream_candidate_joins": "not_recorded_locally",
 }
 
 
@@ -76,11 +76,11 @@ def process_exhibit_boundary_record() -> dict[str, Any]:
             "and pseudocode steps to local components and artifacts, plus "
             "generated Mermaid/text accessibility artifacts, step-stream "
             "artifact-link validation, strict JSONL row summaries, generated "
-            "candidate semantic traces with archive admission stream joins, "
-            "and component-to-TODO links. It does not claim exact "
+            "candidate semantic traces with durable LLM and archive admission "
+            "stream joins, and component-to-TODO links. It does not claim exact "
             "source-diagram reproduction, async controller/sampler/evaluator "
-            "topology, independent evaluator-pool parallelism, or durable LLM "
-            "stream candidate joins for every generated step."
+            "topology, independent evaluator-pool parallelism, or full "
+            "AlphaEvolve process parity."
         ),
     }
 

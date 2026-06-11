@@ -3618,12 +3618,14 @@ bounds, and the `[40]` equivalence to normalized step functions `h` on
 paper-reported Figure 10 result id, `C5 <= 0.380924` upper bound, prior
 `0.379005 <= C5 <= 0.380927` bounds, source figure, normalized-domain
 constraint, shift-objective expression, and the future step-function payload,
-value-range-certificate, integral-certificate, shift-objective-certificate,
-recomputed-bound, and figure-panel artifact fields required before local
-reproduction can be claimed. Those fields are explicitly
-`not_recorded_locally`. The
-actual Figure 10 step-function payload and recomputation certificate remain
-absent. For Appendix B.6, the registry now preserves the source `C6`
+source-formulation mapping certificate, `[40]` equivalence-reference artifact,
+shift-domain certificate, value-range-certificate, integral-certificate,
+shift-objective-certificate, recomputed-bound, and figure-panel artifact
+fields required before local reproduction can be claimed. Those fields are
+explicitly `not_recorded_locally`. The actual Figure 10 step-function payload,
+mapping/equivalence artifacts, shift-domain certificate, and recomputation
+certificate remain absent. For Appendix B.6, the registry now preserves the
+source `C6`
 sums-and-differences theorem statement, sumset/difference-set definitions,
 `<<`/`>>` asymptotic notation, known `1.14465 <= C6 <= 4/3` bounds, Gyarmati
 finite-set admissibility condition, and lower-bound formula. A validated

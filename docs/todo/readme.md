@@ -1749,17 +1749,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `step_function_result_boundary`, including the Figure 10 result id,
     normalized-domain constraint, shift objective, prior
     `0.379005 <= C5 <= 0.380927` bounds, reported `C5 <= 0.380924` upper
-    bound, and required future step-function payload and certificate fields.
-    It now names the missing payload, value-range certificate,
-    integral-normalization certificate, shift-objective certificate,
-    recomputed upper bound, and Figure 10 panel artifact statuses as
-    `not_recorded_locally`.
+    bound, and required future mapping, equivalence-reference, shift-domain,
+    step-function payload, and certificate fields. It now names the missing
+    payload, original-formulation mapping certificate, `[40]`
+    equivalence-reference artifact, shift-domain certificate, value-range
+    certificate, integral-normalization certificate, shift-objective
+    certificate, recomputed upper bound, and Figure 10 panel artifact statuses
+    as `not_recorded_locally`.
   - Required result: when the actual Appendix B.5 Figure 10 payload and
     certificates land, update README, ROADMAP, papers index, and code/paper
-    TODOs together so README names the payload hash, value-range and
-    integral-normalization certificates, shift-objective recomputation,
-    recomputed upper bound, Figure 10 panel artifact, and source location
-    without merging B.5 into generic step-function Appendix B coverage.
+    TODOs together so README names the payload hash, original-formulation
+    mapping certificate, `[40]` equivalence-reference artifact, shift-domain
+    certificate, value-range and integral-normalization certificates,
+    shift-objective recomputation, recomputed upper bound, Figure 10 panel
+    artifact, and source location without merging B.5 into generic
+    step-function Appendix B coverage.
 
 - [x] Keep README Appendix B.5 source-formulation wording scoped until
       equivalence evidence exists.

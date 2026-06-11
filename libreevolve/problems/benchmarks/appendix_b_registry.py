@@ -461,6 +461,12 @@ EXPECTED_B5_STEP_FUNCTION_REQUIRED_FIELDS = (
     "step_function_artifact_path",
     "step_function_artifact_sha256",
     "step_function_payload_schema",
+    "source_formulation_mapping_certificate_path",
+    "source_formulation_mapping_certificate_sha256",
+    "equivalence_reference_artifact_path",
+    "equivalence_reference_artifact_sha256",
+    "shift_parameter_domain_certificate_path",
+    "shift_parameter_domain_certificate_sha256",
     "value_range_certificate_path",
     "value_range_certificate_sha256",
     "integral_normalization_certificate_path",
@@ -489,13 +495,16 @@ EXPECTED_B5_STEP_FUNCTION_BOUNDARY = {
     "reported_upper_bound": 0.380924,
     "reported_bound_relation": "C5 <= 0.380924",
     "required_payload_fields": list(EXPECTED_B5_STEP_FUNCTION_REQUIRED_FIELDS),
+    "source_formulation_mapping_certificate_status": "not_recorded_locally",
+    "equivalence_reference_artifact_status": "not_recorded_locally",
+    "shift_parameter_domain_certificate_status": "not_recorded_locally",
     "step_function_payload_status": "not_recorded_locally",
     "value_range_certificate_status": "not_recorded_locally",
     "integral_normalization_certificate_status": "not_recorded_locally",
     "shift_objective_certificate_status": "not_recorded_locally",
     "recomputed_upper_bound_status": "not_recorded_locally",
     "figure_panel_artifact_status": "not_recorded_locally",
-    "claim_boundary": "The registry records the paper's B.5 source/result summary but does not claim a local Figure 10 step-function payload, integral certificate, shift-objective certificate, or recomputed upper bound.",
+    "claim_boundary": "The registry records the paper's B.5 source/result summary but does not claim a local original-formulation mapping certificate, equivalence-reference artifact, shift-domain certificate, Figure 10 step-function payload, integral certificate, shift-objective certificate, or recomputed upper bound.",
 }
 EXPECTED_B6_THEOREM_CONDITION = {
     "source_section_id": "B.6",
@@ -1610,6 +1619,9 @@ def _validate_b5_step_function_boundary(
     if boundary.get("required_payload_fields") != list(EXPECTED_B5_STEP_FUNCTION_REQUIRED_FIELDS):
         issues.append(AppendixBRegistryIssue("invalid_b5_step_function_required_payload_fields", "B.5 boundary must enumerate required future step-function payload and certificate fields", family_id))
     for field in (
+        "source_formulation_mapping_certificate_status",
+        "equivalence_reference_artifact_status",
+        "shift_parameter_domain_certificate_status",
         "step_function_payload_status",
         "value_range_certificate_status",
         "integral_normalization_certificate_status",

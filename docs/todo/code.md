@@ -2614,16 +2614,19 @@ Primary evidence:
     normalization, shift objective, prior `0.379005 <= C5 <= 0.380927`
     bounds, and reported `C5 <= 0.380924` upper bound. The boundary now
     explicitly requires future step-function artifact path/hash/schema,
-    value-range certificate, integral-normalization certificate,
-    shift-objective recomputation certificate, recomputed upper bound, and
-    Figure 10 panel artifact fields, while keeping each corresponding status
-    `not_recorded_locally`.
+    original-formulation mapping certificate, `[40]` equivalence-reference
+    artifact, shift-domain certificate, value-range certificate,
+    integral-normalization certificate, shift-objective recomputation
+    certificate, recomputed upper bound, and Figure 10 panel artifact fields,
+    while keeping each corresponding status `not_recorded_locally`.
   - Required result: replace the `not_recorded_locally` boundary with real
     Appendix B.5 Figure 10 witness artifacts: step-function payload hash,
-    value-range check, integral-normalization certificate, objective
-    recomputation over shifts, recomputed upper bound, Figure 10 panel
-    artifact, and README/ROADMAP wording that distinguishes validated B.5
-    minimum-overlap evidence from aggregate Appendix B coverage.
+    original-formulation mapping certificate, `[40]` equivalence-reference
+    artifact, shift-domain certificate, value-range check,
+    integral-normalization certificate, objective recomputation over shifts,
+    recomputed upper bound, Figure 10 panel artifact, and README/ROADMAP
+    wording that distinguishes validated B.5 minimum-overlap evidence from
+    aggregate Appendix B coverage.
 
 - [x] Add Appendix B.5 original-formulation and equivalence provenance.
   - Spec evidence: AlphaEvolve Appendix B.5 defines `C5` as the largest

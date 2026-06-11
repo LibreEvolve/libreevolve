@@ -564,6 +564,9 @@ def test_appendix_b_registry_requires_b5_step_function_boundary(tmp_path):
     boundary["prior_upper_bound"] = 0.3809
     boundary["reported_upper_bound"] = 0.381
     boundary["required_payload_fields"] = ["result_id"]
+    boundary["source_formulation_mapping_certificate_status"] = "recorded"
+    boundary["equivalence_reference_artifact_status"] = "recorded"
+    boundary["shift_parameter_domain_certificate_status"] = "recorded"
     boundary["step_function_payload_status"] = "recorded"
     boundary["value_range_certificate_status"] = "recorded"
     boundary["integral_normalization_certificate_status"] = "recorded"
@@ -584,6 +587,9 @@ def test_appendix_b_registry_requires_b5_step_function_boundary(tmp_path):
     assert "invalid_b5_step_function_prior_upper_bound" in codes
     assert "invalid_b5_step_function_reported_upper_bound" in codes
     assert "invalid_b5_step_function_required_payload_fields" in codes
+    assert "invalid_b5_step_function_source_formulation_mapping_certificate_status" in codes
+    assert "invalid_b5_step_function_equivalence_reference_artifact_status" in codes
+    assert "invalid_b5_step_function_shift_parameter_domain_certificate_status" in codes
     assert "invalid_b5_step_function_step_function_payload_status" in codes
     assert "invalid_b5_step_function_value_range_certificate_status" in codes
     assert "invalid_b5_step_function_integral_normalization_certificate_status" in codes

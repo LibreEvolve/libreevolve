@@ -2564,16 +2564,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     result id, prior lower/upper values, and improved `C5 <= 0.380924`
     upper-bound comparison through a validated
     `step_function_result_boundary`. The boundary now explicitly requires
-    future step-function artifact path/hash/schema, value-range certificate,
-    integral-normalization certificate, shift-objective recomputation
-    certificate, recomputed upper bound, and rendered Figure 10 panel artifact
-    fields, while keeping those statuses `not_recorded_locally`.
+    future step-function artifact path/hash/schema, original-formulation
+    mapping certificate, `[40]` equivalence-reference artifact, shift-domain
+    certificate, value-range certificate, integral-normalization certificate,
+    shift-objective recomputation certificate, recomputed upper bound, and
+    rendered Figure 10 panel artifact fields, while keeping those statuses
+    `not_recorded_locally`.
   - Required result: add paper/report evidence for the missing Appendix B.5
     Figure 10 witness artifacts: step-function payload hash, value-range
-    certificate, integral-normalization certificate, shift/objective
-    recomputation, recomputed upper bound, rendered Figure 10 panel artifact,
-    source section location, and README/ROADMAP text that keeps the
-    minimum-overlap witness distinct from broad Appendix B family coverage.
+    certificate, original-formulation mapping certificate, `[40]`
+    equivalence-reference artifact, shift-domain certificate,
+    integral-normalization certificate, shift/objective recomputation,
+    recomputed upper bound, rendered Figure 10 panel artifact, source section
+    location, and README/ROADMAP text that keeps the minimum-overlap witness
+    distinct from broad Appendix B family coverage.
 
 - [x] Track Appendix B.5 source-formulation and equivalence evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.5 defines the

@@ -2851,17 +2851,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `step_function_result_boundary`, including the Figure 10 result id,
     normalized-domain constraint, shift objective, prior
     `0.379005 <= C5 <= 0.380927` bounds, reported `C5 <= 0.380924` upper
-    bound, and required future step-function payload and certificate fields.
-    It now keeps the payload, value-range certificate,
+    bound, and required future mapping, equivalence-reference, shift-domain,
+    step-function payload, and certificate fields. It now keeps the payload,
+    original-formulation mapping certificate, `[40]` equivalence-reference
+    artifact, shift-domain certificate, value-range certificate,
     integral-normalization certificate, shift-objective certificate,
     recomputed upper bound, and Figure 10 panel artifact statuses
     `not_recorded_locally`.
   - Required result: when the actual Appendix B.5 Figure 10 payload and
     certificates land, update ROADMAP, README, papers index, and code/paper
     TODOs so roadmap claims distinguish B.5's payload hash,
-    value-range/integral certificates, shift-objective recomputation,
-    recomputed upper bound, Figure 10 panel artifact, and source location
-    from aggregate Appendix B coverage.
+    original-formulation mapping certificate, `[40]` equivalence-reference
+    artifact, shift-domain certificate, value-range/integral certificates,
+    shift-objective recomputation, recomputed upper bound, Figure 10 panel
+    artifact, and source location from aggregate Appendix B coverage.
 
 - [x] Keep Appendix B.5 roadmap wording scoped until source-formulation
       equivalence exists.

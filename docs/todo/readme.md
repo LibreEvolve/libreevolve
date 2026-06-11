@@ -1678,8 +1678,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: README now says the Appendix B registry validates
     B.1-B.3 step-function summary metadata: interval counts, common domain,
     sign policy, bound direction, previous bound/source, and reported bound.
-    It still warns that the actual step-function payloads and recomputation
-    certificates remain absent.
+    It also says each row has a validated `step_function_payload_boundary`
+    for the future payload hash, domain/spacing/sign-policy certificates,
+    verifier artifact, and recomputed-bound fields. The actual step-function
+    payloads and recomputation certificates remain absent.
   - Required result: when Appendix B.1-B.3 autocorrelation metadata lands,
     update README, ROADMAP, papers index, and code/paper TODOs together so
     README names the three constants, step-function payload hashes, verifier

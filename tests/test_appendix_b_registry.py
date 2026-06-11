@@ -38,6 +38,8 @@ from libreevolve.problems.benchmarks.appendix_b_registry import (
     EXPECTED_SUM_OF_RADII_IDS,
     EXPECTED_SUM_OF_RADII_ROWS,
     EXPECTED_SUM_OF_RADII_SUMMARIES,
+    EXPECTED_AUTOCORRELATION_STEP_BOUNDARIES,
+    EXPECTED_AUTOCORRELATION_STEP_REQUIRED_FIELDS,
     REGISTRY_PATH,
     validate_appendix_b_registry,
 )
@@ -81,6 +83,11 @@ def test_appendix_b_registry_enumerates_all_alphaevolve_families():
         evidence = autocorrelation[family_id]["step_function_evidence"]
         for field, expected_value in EXPECTED_AUTOCORRELATION_STEP_EVIDENCE[family_id].items():
             assert evidence[field] == expected_value
+        boundary = autocorrelation[family_id]["step_function_payload_boundary"]
+        for field, expected_value in EXPECTED_AUTOCORRELATION_STEP_BOUNDARIES[family_id].items():
+            assert boundary[field] == expected_value
+        assert boundary["required_payload_fields"] == list(EXPECTED_AUTOCORRELATION_STEP_REQUIRED_FIELDS)
+        assert boundary["status"] == "not_recorded_locally"
     b4 = next(family for family in data["families"] if family["id"] == "uncertainty_inequality")
     assert b4["source_formulation_evidence"] == EXPECTED_B4_SOURCE_FORMULATION
     assert b4["prior_bound_rounding_evidence"] == EXPECTED_B4_PRIOR_BOUND_ROUNDING
@@ -288,6 +295,45 @@ def test_appendix_b_registry_requires_autocorrelation_step_evidence_object(tmp_p
     assert report.ok is False
     assert [issue.code for issue in report.issues] == ["missing_step_function_evidence"]
     assert report.issues[0].family_id == "autocorrelation_bounds_k5"
+
+
+def test_appendix_b_registry_requires_autocorrelation_step_boundary(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    del data["families"][0]["step_function_payload_boundary"]
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+
+    assert report.ok is False
+    assert [issue.code for issue in report.issues] == ["missing_autocorrelation_step_boundary"]
+    assert report.issues[0].family_id == "autocorrelation_bounds_k3"
+
+
+def test_appendix_b_registry_rejects_autocorrelation_step_boundary_overclaim(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    first = data["families"][0]
+    boundary = first["step_function_payload_boundary"]
+    boundary["status"] = "recorded"
+    boundary["interval_count"] = 50
+    boundary["required_payload_fields"] = ["result_id"]
+    boundary["step_function_payload_status"] = "recorded"
+    boundary["verifier_artifact_status"] = "recorded"
+    boundary["claim_boundary"] = "Local step-function payload is verified."
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_appendix_b_registry(registry, repo_root=REGISTRY_PATH.parents[3])
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_autocorrelation_step_boundary_status" in codes
+    assert "invalid_autocorrelation_step_boundary_interval_count" in codes
+    assert "invalid_autocorrelation_step_required_payload_fields" in codes
+    assert "invalid_autocorrelation_step_step_function_payload_status" in codes
+    assert "invalid_autocorrelation_step_verifier_artifact_status" in codes
+    assert "autocorrelation_step_boundary_interval_count_mismatch" in codes
+    assert "missing_autocorrelation_step_claim_boundary" in codes
 
 
 def test_appendix_b_registry_requires_b4_uncertainty_boundaries(tmp_path):

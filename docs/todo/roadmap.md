@@ -2782,8 +2782,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     B.1-B.3 step-function summary metadata in the Appendix B registry:
     interval counts, common domain, sign policy, previous bound/source, bound
     direction, reported bound, and explicit missing construction-payload
-    status. It still does not require step-function payload hashes, verifier
-    artifacts, or recomputation evidence.
+    status. It now also cites the validated `step_function_payload_boundary`
+    rows that require future payload hashes, domain/spacing/sign-policy
+    certificates, verifier artifacts, and recomputed-bound fields while
+    keeping those artifacts `not_recorded_locally`.
   - Required result: when Appendix B.1-B.3 autocorrelation metadata and
     validators land, update ROADMAP, README, papers index, and code/paper
     TODOs so roadmap claims distinguish payload hashes, verifier artifacts,

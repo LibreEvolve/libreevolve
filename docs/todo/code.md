@@ -2526,8 +2526,12 @@ Primary evidence:
     previous bound/source, reported bound, and
     `construction_payload_status: not_recorded_locally`. The registry
     validator rejects missing summaries and drifted domain, interval,
-    sign-policy, or reported-bound fields. It still does not record the actual
-    step-function value payload hash, verifier artifact, or recomputed bound.
+    sign-policy, or reported-bound fields. It also now records a validated
+    `step_function_payload_boundary` for each of B.1-B.3, enumerating the
+    future metric formula id, payload path/hash/schema, interval value count,
+    domain/spacing/sign-policy certificates, verifier artifact, and
+    recomputed-bound field. Those payloads, certificates, verifier artifacts,
+    and recomputed values remain `not_recorded_locally`.
   - Required result: add Appendix B.1-B.3-specific result rows and validators
     for step-function value payload hash, metric formula id, verifier artifact,
     recomputed bound, and README/ROADMAP wording that distinguishes the three

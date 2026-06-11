@@ -152,6 +152,82 @@ EXPECTED_AUTOCORRELATION_STEP_EVIDENCE = {
         "construction_payload_status": "not_recorded_locally",
     },
 }
+EXPECTED_AUTOCORRELATION_STEP_REQUIRED_FIELDS = (
+    "result_id",
+    "metric_formula_id",
+    "step_function_payload_path",
+    "step_function_payload_sha256",
+    "step_function_payload_schema",
+    "interval_value_count",
+    "domain_certificate_path",
+    "domain_certificate_sha256",
+    "spacing_certificate_path",
+    "spacing_certificate_sha256",
+    "sign_policy_certificate_path",
+    "sign_policy_certificate_sha256",
+    "autocorrelation_verifier_artifact_path",
+    "autocorrelation_verifier_artifact_sha256",
+    "recomputed_bound",
+)
+EXPECTED_AUTOCORRELATION_STEP_BOUNDARIES = {
+    "autocorrelation_bounds_k3": {
+        "status": "not_recorded_locally",
+        "result_id": "b1_c1_600_interval_step_function",
+        "source_section_id": "B.1",
+        "constant_id": "C1",
+        "metric_formula_id": "appendix_b_autocorrelation_c1_upper_bound",
+        "domain": "[-1/4, 1/4]",
+        "interval_count": 600,
+        "interval_spacing": "equally_spaced",
+        "function_sign_policy": "non_negative",
+        "reported_bound_relation": "C1 <= 1.5053",
+        "required_payload_fields": list(EXPECTED_AUTOCORRELATION_STEP_REQUIRED_FIELDS),
+        "step_function_payload_status": "not_recorded_locally",
+        "domain_spacing_certificate_status": "not_recorded_locally",
+        "sign_policy_certificate_status": "not_recorded_locally",
+        "verifier_artifact_status": "not_recorded_locally",
+        "recomputed_bound_status": "not_recorded_locally",
+        "claim_boundary": "The registry records the paper's B.1 600-interval step-function summary but does not claim a local payload, certificate, verifier artifact, or recomputed C1 bound.",
+    },
+    "autocorrelation_bounds_k4": {
+        "status": "not_recorded_locally",
+        "result_id": "b2_c2_50_interval_step_function",
+        "source_section_id": "B.2",
+        "constant_id": "C2",
+        "metric_formula_id": "appendix_b_autocorrelation_c2_lower_bound",
+        "domain": "[-1/4, 1/4]",
+        "interval_count": 50,
+        "interval_spacing": "equally_spaced",
+        "function_sign_policy": "non_negative",
+        "reported_bound_relation": "0.8962 <= C2",
+        "required_payload_fields": list(EXPECTED_AUTOCORRELATION_STEP_REQUIRED_FIELDS),
+        "step_function_payload_status": "not_recorded_locally",
+        "domain_spacing_certificate_status": "not_recorded_locally",
+        "sign_policy_certificate_status": "not_recorded_locally",
+        "verifier_artifact_status": "not_recorded_locally",
+        "recomputed_bound_status": "not_recorded_locally",
+        "claim_boundary": "The registry records the paper's B.2 50-interval step-function summary but does not claim a local payload, certificate, verifier artifact, or recomputed C2 bound.",
+    },
+    "autocorrelation_bounds_k5": {
+        "status": "not_recorded_locally",
+        "result_id": "b3_c3_400_interval_step_function",
+        "source_section_id": "B.3",
+        "constant_id": "C3",
+        "metric_formula_id": "appendix_b_autocorrelation_c3_upper_bound",
+        "domain": "[-1/4, 1/4]",
+        "interval_count": 400,
+        "interval_spacing": "equally_spaced",
+        "function_sign_policy": "signed_real",
+        "reported_bound_relation": "C3 <= 1.4557",
+        "required_payload_fields": list(EXPECTED_AUTOCORRELATION_STEP_REQUIRED_FIELDS),
+        "step_function_payload_status": "not_recorded_locally",
+        "domain_spacing_certificate_status": "not_recorded_locally",
+        "sign_policy_certificate_status": "not_recorded_locally",
+        "verifier_artifact_status": "not_recorded_locally",
+        "recomputed_bound_status": "not_recorded_locally",
+        "claim_boundary": "The registry records the paper's B.3 400-interval step-function summary but does not claim a local payload, certificate, verifier artifact, or recomputed C3 bound.",
+    },
+}
 EXPECTED_B4_SOURCE_FORMULATION = {
     "source_section_id": "B.4",
     "constant_id": "C4",
@@ -877,6 +953,7 @@ def _validate_family(
     _require_text(family, "name", family_id, issues)
     _validate_autocorrelation_paper_label(family, family_id, issues)
     _validate_autocorrelation_step_evidence(family, family_id, issues)
+    _validate_autocorrelation_step_boundary(family, family_id, issues)
     _validate_b4_uncertainty_evidence(family, family_id, issues)
     _validate_b8_metric_conventions(family, family_id, issues)
     _validate_b8_witness_boundary(family, family_id, issues)
@@ -972,6 +1049,82 @@ def _validate_autocorrelation_step_evidence(
             issues.append(AppendixBRegistryIssue("step_function_label_section_mismatch", "step_function_evidence source section must match paper_label", family_id))
         if evidence.get("constant_id") != label.get("constant_id"):
             issues.append(AppendixBRegistryIssue("step_function_label_constant_mismatch", "step_function_evidence constant id must match paper_label", family_id))
+
+
+def _validate_autocorrelation_step_boundary(
+    family: dict[str, Any],
+    family_id: str,
+    issues: list[AppendixBRegistryIssue],
+) -> None:
+    expected = EXPECTED_AUTOCORRELATION_STEP_BOUNDARIES.get(family_id)
+    if expected is None:
+        return
+    boundary = family.get("step_function_payload_boundary")
+    if not isinstance(boundary, dict):
+        issues.append(AppendixBRegistryIssue(
+            "missing_autocorrelation_step_boundary",
+            "B.1-B.3 autocorrelation rows require step_function_payload_boundary",
+            family_id,
+        ))
+        return
+    for field, expected_value in expected.items():
+        if field in {"status", "required_payload_fields", "claim_boundary"}:
+            continue
+        if boundary.get(field) != expected_value:
+            issues.append(AppendixBRegistryIssue(
+                f"invalid_autocorrelation_step_boundary_{field}",
+                f"step_function_payload_boundary.{field} must match the AlphaEvolve B.1-B.3 payload boundary",
+                family_id,
+            ))
+    if boundary.get("status") != "not_recorded_locally":
+        issues.append(AppendixBRegistryIssue(
+            "invalid_autocorrelation_step_boundary_status",
+            "B.1-B.3 step-function payload boundary must remain not_recorded_locally until payload and verifier artifacts exist",
+            family_id,
+        ))
+    if boundary.get("required_payload_fields") != list(EXPECTED_AUTOCORRELATION_STEP_REQUIRED_FIELDS):
+        issues.append(AppendixBRegistryIssue(
+            "invalid_autocorrelation_step_required_payload_fields",
+            "B.1-B.3 step-function payload boundary must enumerate required future payload and certificate fields",
+            family_id,
+        ))
+    for field in (
+        "step_function_payload_status",
+        "domain_spacing_certificate_status",
+        "sign_policy_certificate_status",
+        "verifier_artifact_status",
+        "recomputed_bound_status",
+    ):
+        if boundary.get(field) != "not_recorded_locally":
+            issues.append(AppendixBRegistryIssue(
+                f"invalid_autocorrelation_step_{field}",
+                f"B.1-B.3 {field} must be not_recorded_locally in the absence boundary",
+                family_id,
+            ))
+    evidence = family.get("step_function_evidence")
+    if isinstance(evidence, dict):
+        for field in (
+            "source_section_id",
+            "constant_id",
+            "domain",
+            "interval_count",
+            "interval_spacing",
+            "function_sign_policy",
+            "reported_bound_relation",
+        ):
+            if boundary.get(field) != evidence.get(field):
+                issues.append(AppendixBRegistryIssue(
+                    f"autocorrelation_step_boundary_{field}_mismatch",
+                    f"step_function_payload_boundary.{field} must match step_function_evidence.{field}",
+                    family_id,
+                ))
+    claim_boundary = boundary.get("claim_boundary")
+    if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary:
+        issues.append(AppendixBRegistryIssue(
+            "missing_autocorrelation_step_claim_boundary",
+            "B.1-B.3 step-function payload boundary must state that local payload/certificate evidence is not claimed",
+            family_id,
+        ))
 
 
 def _validate_b4_uncertainty_evidence(

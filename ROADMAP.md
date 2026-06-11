@@ -689,8 +689,11 @@ is not yet an AlphaEvolve reproduction.
 - Keep Appendix B.1-B.3 step-function evidence scoped to summary metadata
   until construction payloads land: the registry now validates the paper's
   interval counts, common domain, sign policy, bound direction, previous
-  bound/source, and reported bound for C1-C3, but not the actual step-function
-  payloads or recomputation certificates.
+  bound/source, and reported bound for C1-C3. A validated
+  `step_function_payload_boundary` also records the required future payload,
+  domain/spacing/sign-policy certificate, verifier-artifact, and
+  recomputed-bound fields, but the actual step-function payloads and
+  recomputation certificates remain open.
 - Keep Appendix B.8 distance-ratio claims scoped to metric convention evidence
   until point-set certificates land: the registry now validates the squared
   raw values, square-root-derived ratios, point counts, dimensions, prior

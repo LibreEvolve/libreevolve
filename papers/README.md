@@ -90,7 +90,10 @@ labels for `B.1. First autocorrelation inequality (C1)`,
 `autocorrelation_bounds_k*` ids. It also validates B.1-B.3 step-function
 summary metadata: interval counts `600`, `50`, and `400`, the common
 `[-1/4, 1/4]` domain, non-negative versus signed function policy, proof
-direction, previous bound/source, and reported bound. For B.8 max/min-distance
+direction, previous bound/source, and reported bound. Each B.1-B.3 row now
+also has a validated `step_function_payload_boundary` that keeps the required
+payload hash, domain/spacing/sign-policy certificates, verifier artifact, and
+recomputed-bound fields `not_recorded_locally`. For B.8 max/min-distance
 point sets, the registry now preserves the paper's squared-ratio convention:
 16 points in 2D report squared value `12.889266112` with derived ratio
 `3.590162407468`, and 14 points in 3D report squared value `4.165849767` with

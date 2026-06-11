@@ -2481,9 +2481,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     domain, interval counts `600`/`50`/`400`, equal spacing, non-negative
     versus signed function assumptions, prior bound/source, upper/lower-bound
     direction, reported bound, and an explicit `not_recorded_locally`
-    construction-payload status. It still does not retain the actual
-    step-function payload hash, verifier artifact, or individual recomputation
-    evidence for each autocorrelation witness.
+    construction-payload status. It now also retains a validated
+    `step_function_payload_boundary` for each autocorrelation witness,
+    enumerating required future metric-formula id, step-function payload
+    hash/schema, interval count, domain/spacing/sign-policy certificates,
+    verifier artifact, and recomputed-bound fields. The actual payloads,
+    certificates, verifier artifacts, and recomputation evidence remain
+    `not_recorded_locally`.
   - Required result: add paper/report evidence for Appendix B.1-B.3 rows:
     result id, metric formula id, step-function payload hash, verifier
     artifact, reported/recomputed value, and README/ROADMAP text that keeps

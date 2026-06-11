@@ -3594,7 +3594,11 @@ than AlphaEvolve terminology. It also validates B.1-B.3 step-function summary
 metadata from the paper: interval counts `600`/`50`/`400`, common domain
 `[-1/4, 1/4]`, non-negative versus signed function policy, upper/lower-bound
 direction, previous bound/source, and reported bound. The actual step-function
-payloads and recomputation certificates remain absent. It is also not a
+payloads and recomputation certificates remain absent. A validated
+`step_function_payload_boundary` for each of B.1-B.3 now records the future
+payload hash, domain/spacing/sign-policy certificates, verifier artifact, and
+recomputed-bound fields required before local reproduction can be claimed.
+It is also not a
 complete B.8 point-set certificate surface: the registry now preserves the
 squared-ratio convention for Appendix B.8, including raw squared values
 `12.889266112` and `4.165849767`, their square-root-derived geometric ratios,

@@ -2531,6 +2531,12 @@ sample or stage budget, stops additional retries/samples once the relevant
 budget is exhausted, and records `sample_budget_exhausted` /
 `stage_budget_exhausted` plus `metadata.sample_budget` or
 `metadata.stage_budget` when a wall-clock budget determines the stop.
+Configured stages can also set `sample_workers` greater than `1` to evaluate
+planned samples through a local thread pool while preserving deterministic
+sample-index result order. This is local configured-stage fan-out, not async
+LLM/controller scheduling or a distributed evaluator cluster. It is rejected
+with `hypothesis_test.sequential_stopping: true`, because early stopping
+requires serial sample decisions.
 Each structured evaluation also carries `accounting` counters for subprocess
 attempts, configured-stage samples, retry attempts, validator timeouts, and
 sample/stage budget exhaustions; these counters roll into candidate budget

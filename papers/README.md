@@ -611,11 +611,14 @@ AlphaEvolve distributed-pipeline topology note: completed manifests now include
 `libreevolve.distributed_pipeline_topology_report.v1`. The report names the
 current LibreEvolve controller, program database, configured LLM sampler
 backends, local evaluator nodes, zero queues, and blocking dependency edges,
-and links the topology to consumed runtime/controller-budget counters. It is
-`claim_ready: false` because it records a single-process synchronous topology;
-async controller queues, real sampler/evaluator worker fan-out, queue
-capacities, nonblocking dependency tracking, throughput dispatch telemetry,
-and pending-work checkpoints remain open before Section 2.6 topology parity.
+and links the topology to consumed runtime/controller-budget counters. When
+configured stages set `eval_stages[].sample_workers`, it also records local
+configured-stage sample-worker fan-out and deterministic sample-order merge
+scope. It is `claim_ready: false` because it records a single-process
+synchronous topology; async controller queues, distributed sampler/evaluator
+worker fan-out, queue capacities, nonblocking dependency tracking, throughput
+dispatch telemetry, and pending-work checkpoints remain open before Section
+2.6 topology parity.
 
 AlphaEvolve evaluator-metric note: LibreEvolve now reserves boolean `is_valid`
 as a local admission gate outside declared `metrics.yaml` objectives and stores

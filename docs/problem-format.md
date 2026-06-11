@@ -553,8 +553,8 @@ prefilter.
 `Config.eval_stages` can run configured validator stages with per-stage
 `validate_path`, per-attempt `timeout_sec`, per-sample `max_sample_seconds`,
 stage-level `max_stage_seconds`, `min_score`, `metric_thresholds`, `samples`,
-`seeds`, `retries`, `metric_aggregation`, `require_program_output`, and
-`min_artifacts`.
+`sample_workers`, `seeds`, `retries`, `metric_aggregation`,
+`require_program_output`, and `min_artifacts`.
 `min_score` is a threshold on normalized primary fitness.
 `metric_thresholds` can require declared metrics to satisfy finite `min` and/or
 `max` bounds. `metric_aggregation` can choose `mean`, `min`, `max`, `last`,
@@ -578,7 +578,10 @@ non-negative, `timeout_sec` positive, `max_sample_seconds` and
 manifest-safe metric, `require_program_output` boolean, `min_artifacts`
 non-negative, `program_output_checks` path/value checked, `required_artifacts`
 path-safe, and explicit `seeds` must be JSON-safe scalar values and match
-`samples`. Every configured stage must have an explicit manifest-safe `name`
+`samples`. `sample_workers` must be a positive integer when set and enables
+local thread-pool sample fan-out for that configured stage; it is incompatible
+with `hypothesis_test.sequential_stopping: true`. Every configured stage must
+have an explicit manifest-safe `name`
 matching
 `[A-Za-z0-9][A-Za-z0-9_.-]{0,127}`. Configured names must be unique, must not
 look like secrets, and must not use the built-in `diff`, `syntax`, or

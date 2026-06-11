@@ -3973,6 +3973,59 @@ def test_configured_stage_aggregates_seeded_samples():
         shutil.rmtree(d)
 
 
+def test_configured_stage_parallel_sample_workers_preserve_sample_order():
+    p, d = _problem(
+        "import time\n"
+        "def evaluate(code, workspace, stage):\n"
+        "    time.sleep(0.25)\n"
+        "    return {'score': stage['sample_index'] / 10, 'is_valid': True}\n"
+    )
+    try:
+        serial = CascadeEvaluator(
+            p,
+            stages=[{"name": "serial", "samples": 3}],
+        )
+        serial_started = time.perf_counter()
+        serial_result = serial.evaluate("x=1", None)
+        serial_elapsed = time.perf_counter() - serial_started
+
+        parallel = CascadeEvaluator(
+            p,
+            stages=[
+                {
+                    "name": "parallel",
+                    "samples": 3,
+                    "sample_workers": 3,
+                }
+            ],
+        )
+        parallel_started = time.perf_counter()
+        parallel_result = parallel.evaluate("x=1", None)
+        parallel_elapsed = time.perf_counter() - parallel_started
+
+        assert serial_result.is_valid is True
+        assert parallel_result.is_valid is True
+        assert parallel_elapsed < serial_elapsed * 0.85
+        assert parallel_result.metadata["sample_execution"] == {
+            "mode": "thread_pool",
+            "requested_workers": 3,
+            "effective_workers": 3,
+            "planned_samples": 3,
+            "completed_samples": 3,
+            "deterministic_result_order": "sample_index",
+        }
+        assert [
+            sample["metadata"]["stage"]["sample_index"]
+            for sample in parallel_result.metadata["samples"]
+        ] == [0, 1, 2]
+        assert [
+            sample["metrics"]["score"]
+            for sample in parallel_result.metadata["samples"]
+        ] == [0.0, 0.1, 0.2]
+    finally:
+        shutil.rmtree(d)
+
+
 def test_configured_stage_seed_controls_validator_rng_state():
     p, d = _problem(
         "import os, random\n"

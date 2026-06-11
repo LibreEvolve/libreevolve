@@ -558,8 +558,9 @@ is not yet an AlphaEvolve reproduction.
 - Add a controller with bounded queues for LLM proposals and evaluator workers;
   the current loop reports its synchronous topology under
   `runtime.history.distributed_pipeline_topology_report` and supports
-  sequential `proposals_per_generation` batches, but not concurrent
-  proposal/evaluation queues.
+  sequential `proposals_per_generation` batches plus opt-in local
+  `eval_stages[].sample_workers` fan-out for configured-stage samples, but not
+  concurrent proposal/evaluation queues.
 - Compose the current restored LLM scheduler, prompt-history, RNG, archive, and
   budget snapshots with controller and pending-evaluation checkpoint state so
   long runs can resume from more than a terminal drained boundary.

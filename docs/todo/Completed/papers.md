@@ -11766,3 +11766,14 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: marker provenance tests validate artifact attachment,
     artifact paths/hashes, marker-presence metadata, final classification, and
     overclaim rejection when parser compatibility is toggled.
+
+- [x] Record local evaluator sample-worker fan-out as partial parallelism
+      evidence.
+  - Spec evidence: AlphaEvolve Sections 2.4 and 2.6 describe parallelized
+    evaluator work and an async controller/sampler/evaluation-node pipeline.
+  - Status: paper TODOs and `papers/README.md` now distinguish
+    `eval_stages[].sample_workers` local configured-stage fan-out from
+    distributed evaluator-node fan-out, async queues, nonblocking dependencies,
+    throughput dispatch telemetry, and pending-work checkpoints.
+  - Verification: focused config, evaluator, and topology tests validate the
+    implemented behavior and manifest fields.

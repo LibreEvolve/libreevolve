@@ -826,6 +826,13 @@ attempt is clipped to the smallest remaining attempt, sample, or stage budget;
 later retries or samples stop after exhaustion; and the result records
 `sample_budget_exhausted` or `stage_budget_exhausted` plus
 `evaluation.metadata.sample_budget` / `evaluation.metadata.stage_budget`.
+Set `eval_stages[].sample_workers` above `1` to run planned samples for that
+configured stage through a local thread pool. Results are merged in
+sample-index order and recorded under `evaluation.metadata.sample_execution`.
+This is local sample fan-out for configured stages, not async controller or
+distributed evaluator-node execution. It cannot be combined with
+`hypothesis_test.sequential_stopping: true`, because sequential stopping must
+observe each sample before deciding whether to launch the next one.
 `eval_stages[].retries` is capped at `10`; configured stages therefore have an
 explicit retry ceiling. When `min_score` or `metric_thresholds` is configured,
 retries are threshold-aware: a locally valid attempt below a minimum threshold

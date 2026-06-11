@@ -1123,7 +1123,14 @@ configured `llm_sampler:backend_*` nodes, configured or default
 `evaluation_node:*` nodes, zero queues, and blocking dependency edges for
 sampling, mutation generation, evaluation, and archive admission. Its
 `throughput_budget_linkage` points at consumed runtime and controller-budget
-events while marking queued-work and worker-fanout accounting unsupported.
+events while marking queued-work accounting unsupported. When a configured
+stage sets `eval_stages[].sample_workers` above `1`, the topology records
+`dispatch_policy.evaluator_sample_workers`, changes evaluation dispatch to
+`blocking_stage_sample_thread_pool_local_subprocess`, exposes the local
+thread-pool worker identity on the evaluation node, and marks worker fan-out
+accounting scoped to `configured_stage_sample_workers`. Runs without configured
+sample workers keep `evaluation_dispatch: inline_blocking_local_subprocess`
+and `worker_fanout_accounted: false`.
 `validate_distributed_pipeline_topology_report()` keeps `claim_ready: false`
 and fails async-pipeline, async-worker, pending-checkpoint, or AlphaEvolve
 async-topology overclaims.

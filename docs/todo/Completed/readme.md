@@ -11454,3 +11454,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     enabling that syntax.
   - Verification: marker provenance runtime tests validate attached source
     artifacts and final classification.
+
+- [x] Document local configured-stage sample-worker fan-out in README.
+  - Spec evidence: README parallelized-evaluation wording needed to distinguish
+    implemented local sample fan-out from AlphaEvolve-scale async/distributed
+    evaluator throughput.
+  - Status: README now documents `eval_stages[].sample_workers`, deterministic
+    sample-index merge order, incompatibility with sequential hypothesis
+    stopping, and the boundary that this is not async LLM/controller scheduling
+    or a distributed evaluator cluster.
+  - Verification: focused config, evaluator, and topology tests validate the
+    implemented behavior and manifest fields.

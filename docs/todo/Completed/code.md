@@ -17121,3 +17121,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: `py -3.12 -m pytest
     tests/core/test_loop.py::test_runtime_history_reports_marker_spelling_provenance
     -q` passes.
+
+- [x] Add opt-in local evaluator sample-worker fan-out for configured stages.
+  - Spec evidence: AlphaEvolve Section 2.4 describes expensive evaluations
+    being parallelized so slow evaluator feedback does not dominate
+    throughput.
+  - Status: `eval_stages[].sample_workers` now validates as a positive integer
+    and runs planned configured-stage samples through a local thread pool when
+    greater than `1`. Results are merged deterministically by sample index,
+    evaluation metadata records `sample_execution`, and runtime topology
+    reports expose configured sample-worker fan-out without claiming async
+    controller or distributed evaluator-node parity.
+  - Remaining gap: candidate-level async queues, distributed evaluator nodes,
+    compute-hour wall-clock compression reports, mutation-depth throughput
+    evidence, and pending-work resume remain open.
+  - Verification: focused config, evaluator, and topology tests pass.

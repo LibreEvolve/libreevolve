@@ -1421,7 +1421,12 @@ Primary evidence:
     evaluated sibling candidates, not an adaptive chain of unevaluated or
     partially evaluated consecutive mutations from a slow-feedback parent.
     `CascadeEvaluator` remains a local staged subprocess evaluator, not
-    distributed workers, and
+    distributed workers. It now supports opt-in
+    `eval_stages[].sample_workers` local thread-pool fan-out for planned
+    configured-stage samples, with deterministic sample-index merge order and
+    runtime topology fields scoped to configured-stage sample workers.
+    This still does not provide async candidate queues, distributed evaluator
+    nodes, or mutation-depth throughput under slow evaluator feedback.
     `RunBudget` explicitly tracks synchronous local consumption; controller
     budget-state validators exist only for future async/resume events.
     Completed manifests now embed

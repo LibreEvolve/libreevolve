@@ -177,12 +177,17 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Partial status: `proposals_per_generation` can now create, evaluate,
     reward, and log multiple sequential sibling candidates inside one
     generation with per-proposal batch metadata and deterministic ids.
+    Configured evaluator stages can also set `sample_workers` above `1` to run
+    planned stage samples through a local thread pool with deterministic
+    sample-index result order and manifest topology evidence scoped to
+    configured-stage sample workers.
     Completed manifests also embed
     `libreevolve.controller_state_validation.v1` to verify the current
     controller boundary is terminal, synchronous, and drained rather than an
     async queue checkpoint.
   - Current gap: `evolve()` is still synchronous and evaluates one candidate at
-    a time; there are no async LLM sampler queues, parallel evaluator nodes, or
+    a time; local stage sample workers are not async LLM sampler queues,
+    distributed evaluator nodes, or
     explicit mutation-chain-depth policy for expensive/slow-feedback
     evaluations. Sequential sibling proposal batches are accounting evidence,
     not AlphaEvolve-style throughput depth.

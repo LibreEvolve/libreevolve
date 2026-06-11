@@ -13383,7 +13383,7 @@ def _process_exhibit_async_topology_record(
             "alphaevolve_async_pipeline_topology"
         ),
         "queue_dependency_graph": readiness.get("queue_dependency_graph"),
-        "worker_identity_and_fanout": readiness.get("worker_identity_and_fanout"),
+        "worker_identity_and_fanout": False,
         "topology_boundary": (
             "validated_current_synchronous_topology_not_alphaevolve_async_pipeline"
         ),
@@ -13426,6 +13426,11 @@ def _process_exhibit_evaluator_pool_parallelism_record(
             if isinstance(node.get("worker_identity"), str)
         }
     )
+    local_sample_worker_fanout = (
+        dispatch.get("evaluation_dispatch")
+        == "blocking_stage_sample_thread_pool_local_subprocess"
+        and throughput.get("worker_fanout_accounted") is True
+    )
     return {
         "schema": "libreevolve.process_exhibit_evaluator_pool_parallelism_record.v1",
         "record_status": "recorded",
@@ -13443,11 +13448,18 @@ def _process_exhibit_evaluator_pool_parallelism_record(
         "asyncio_pipeline": dispatch.get("asyncio_pipeline"),
         "worker_fanout_accounted": throughput.get("worker_fanout_accounted"),
         "queued_work_accounted": throughput.get("queued_work_accounted"),
-        "parallel_evaluator_workers": False,
+        "parallel_evaluator_workers": local_sample_worker_fanout,
+        "parallelism_scope": (
+            "configured_stage_sample_workers"
+            if local_sample_worker_fanout
+            else "none"
+        ),
         "independent_evaluator_pool_parallelism": False,
         "compute_hour_wall_clock_compression": False,
         "parallelism_boundary": (
-            "validated_current_inline_evaluator_dispatch_not_independent_pool"
+            "validated_local_stage_sample_worker_fanout_not_independent_pool"
+            if local_sample_worker_fanout
+            else "validated_current_inline_evaluator_dispatch_not_independent_pool"
         ),
     }
 
@@ -14729,20 +14741,35 @@ def _validate_process_exhibit_evaluator_pool_parallelism_record(
     for field in ("queue_count", "blocking_edge_count"):
         if not isinstance(value.get(field), int) or isinstance(value.get(field), bool) or value.get(field) < 0:
             issues.append({"code": f"invalid_evaluator_pool_{field}", "message": f"evaluator pool {field} must be a non-negative integer"})
-    if value.get("evaluation_dispatch") != "inline_blocking_local_subprocess":
-        issues.append({"code": "invalid_evaluator_pool_dispatch", "message": "current evaluator pool record must preserve inline blocking dispatch"})
+    dispatch = value.get("evaluation_dispatch")
+    if dispatch not in {
+        "inline_blocking_local_subprocess",
+        "blocking_stage_sample_thread_pool_local_subprocess",
+    }:
+        issues.append({"code": "invalid_evaluator_pool_dispatch", "message": "current evaluator pool record has unsupported dispatch"})
     if value.get("asyncio_pipeline") is not False:
         issues.append({"code": "evaluator_pool_async_pipeline_overclaim", "message": "evaluator pool record must not claim asyncio pipeline support"})
+    sample_worker_scope = (
+        dispatch == "blocking_stage_sample_thread_pool_local_subprocess"
+        and value.get("parallelism_scope") == "configured_stage_sample_workers"
+    )
+    if value.get("worker_fanout_accounted") is not sample_worker_scope:
+        issues.append({"code": "worker_fanout_accounted_mismatch", "message": "worker fanout accounting must match configured stage sample-worker scope"})
+    if value.get("parallel_evaluator_workers") is not sample_worker_scope:
+        issues.append({"code": "parallel_evaluator_workers_mismatch", "message": "parallel evaluator workers must match configured stage sample-worker scope"})
     for field in (
-        "worker_fanout_accounted",
         "queued_work_accounted",
-        "parallel_evaluator_workers",
         "independent_evaluator_pool_parallelism",
         "compute_hour_wall_clock_compression",
     ):
         if value.get(field) is not False:
             issues.append({"code": f"{field}_overclaim", "message": f"evaluator pool record must keep {field} false"})
-    if value.get("parallelism_boundary") != "validated_current_inline_evaluator_dispatch_not_independent_pool":
+    expected_boundary = (
+        "validated_local_stage_sample_worker_fanout_not_independent_pool"
+        if sample_worker_scope
+        else "validated_current_inline_evaluator_dispatch_not_independent_pool"
+    )
+    if value.get("parallelism_boundary") != expected_boundary:
         issues.append({"code": "invalid_evaluator_pool_boundary", "message": "evaluator pool parallelism boundary label is invalid"})
 
 
@@ -30326,6 +30353,7 @@ def _distributed_pipeline_topology_report(
         for index, backend in enumerate(backends)
         if isinstance(backend, Mapping)
     ]
+    evaluator_sample_workers = _pipeline_evaluator_sample_worker_summary(eval_stages)
     evaluator_nodes = _pipeline_evaluation_nodes(eval_stages)
     nodes = [
         {
@@ -30394,18 +30422,31 @@ def _distributed_pipeline_topology_report(
             "schema": "libreevolve.pipeline_dispatch_policy.v1",
             "controller": "single_process_serial_loop",
             "llm_sampler_dispatch": "inline_blocking_call",
-            "evaluation_dispatch": "inline_blocking_local_subprocess",
+            "evaluation_dispatch": (
+                "blocking_stage_sample_thread_pool_local_subprocess"
+                if evaluator_sample_workers["max_effective_workers"] > 1
+                else "inline_blocking_local_subprocess"
+            ),
             "database_admission": "synchronous_after_candidate_evaluation",
             "deterministic_merge_order": "loop_order",
             "asyncio_pipeline": False,
+            "evaluator_sample_workers": evaluator_sample_workers,
         },
         "throughput_budget_linkage": {
             "budget_source": "runtime.consumed_and_controller_budget_events",
             "generations_completed": budget.generations_completed,
             "evaluations": budget.evaluations,
+            "evaluator_stage_samples": budget.evaluator_stage_samples,
             "llm_calls": budget.llm_calls,
             "queued_work_accounted": False,
-            "worker_fanout_accounted": False,
+            "worker_fanout_accounted": (
+                evaluator_sample_workers["max_effective_workers"] > 1
+            ),
+            "worker_fanout_accounting_scope": (
+                "configured_stage_sample_workers"
+                if evaluator_sample_workers["max_effective_workers"] > 1
+                else "none"
+            ),
         },
         "pending_work_checkpoint": {
             "supported": False,
@@ -30421,12 +30462,18 @@ def _distributed_pipeline_topology_report(
             "alphaevolve_async_pipeline_topology": False,
             "controller_sampler_evaluator_roles_named": True,
             "queue_dependency_graph": False,
-            "worker_identity_and_fanout": False,
+            "worker_identity_and_fanout": (
+                evaluator_sample_workers["max_effective_workers"] > 1
+            ),
             "pending_work_checkpoint": False,
             "remaining_gap": [
                 "async_controller_queues",
                 "llm_sampler_worker_identities",
-                "evaluation_node_worker_identities",
+                *(
+                    []
+                    if evaluator_sample_workers["max_effective_workers"] > 1
+                    else ["evaluation_node_worker_identities"]
+                ),
                 "queue_capacities_and_dependency_edges",
                 "throughput_budget_dispatch_telemetry",
                 "pending_work_checkpoint_state",
@@ -30463,6 +30510,55 @@ def _pipeline_llm_sampler_node(
     }
 
 
+def _pipeline_evaluator_sample_worker_summary(eval_stages: list) -> dict:
+    records: list[dict] = []
+    for index, stage in enumerate(eval_stages):
+        if not isinstance(stage, Mapping):
+            continue
+        samples = _pipeline_stage_sample_count(stage)
+        requested_workers = stage.get("sample_workers", 1)
+        if not isinstance(requested_workers, int) or isinstance(requested_workers, bool):
+            requested_workers = 1
+        effective_workers = max(1, min(requested_workers, samples))
+        records.append(
+            {
+                "stage_index": index,
+                "stage_name": str(stage.get("name", f"stage_{index}")),
+                "samples": samples,
+                "requested_workers": requested_workers,
+                "effective_workers": effective_workers,
+                "dispatch": (
+                    "thread_pool"
+                    if effective_workers > 1
+                    else "serial"
+                ),
+            }
+        )
+    max_effective_workers = max(
+        (record["effective_workers"] for record in records),
+        default=1,
+    )
+    return {
+        "configured": max_effective_workers > 1,
+        "stage_count": len(records),
+        "parallel_stage_count": sum(
+            1 for record in records if record["effective_workers"] > 1
+        ),
+        "max_effective_workers": max_effective_workers,
+        "stages": records,
+    }
+
+
+def _pipeline_stage_sample_count(stage: Mapping[str, object]) -> int:
+    samples = stage.get("samples")
+    if isinstance(samples, int) and not isinstance(samples, bool):
+        return max(1, samples)
+    seeds = stage.get("seeds")
+    if isinstance(seeds, list) and seeds:
+        return len(seeds)
+    return 1
+
+
 def _pipeline_evaluation_nodes(eval_stages: list) -> list[dict]:
     if not eval_stages:
         return [
@@ -30476,6 +30572,11 @@ def _pipeline_evaluation_nodes(eval_stages: list) -> list[dict]:
                 "worker_identity": "process_main_thread_spawns_subprocess",
                 "async_worker": False,
                 "queue": None,
+                "sample_workers": {
+                    "requested_workers": 1,
+                    "effective_workers": 1,
+                    "dispatch": "serial",
+                },
             }
         ]
     nodes: list[dict] = []
@@ -30483,21 +30584,49 @@ def _pipeline_evaluation_nodes(eval_stages: list) -> list[dict]:
         if not isinstance(stage, Mapping):
             continue
         name = str(stage.get("name", f"stage_{index}"))
+        samples = _pipeline_stage_sample_count(stage)
+        requested_workers = stage.get("sample_workers", 1)
+        if not isinstance(requested_workers, int) or isinstance(requested_workers, bool):
+            requested_workers = 1
+        effective_workers = max(1, min(requested_workers, samples))
+        evaluator_mode = str(stage.get("mode", "external_validator"))
         nodes.append(
             {
                 "node_id": f"evaluation_node:stage_{index}:{name}",
                 "role": "evaluation_node",
                 "stage_index": index,
                 "stage_name": name,
-                "mode": str(stage.get("mode", "external_validator")),
+                "mode": evaluator_mode,
                 "implementation": (
-                    "candidate_embedded_evaluate_subprocess"
-                    if stage.get("mode") == "embedded_evaluate"
-                    else "local_subprocess_validator"
+                    (
+                        "candidate_embedded_evaluate_subprocess_with_stage_sample_thread_pool"
+                        if evaluator_mode == "embedded_evaluate"
+                        else "local_subprocess_validator_with_stage_sample_thread_pool"
+                    )
+                    if effective_workers > 1
+                    else (
+                        "candidate_embedded_evaluate_subprocess"
+                        if evaluator_mode == "embedded_evaluate"
+                        else "local_subprocess_validator"
+                    )
                 ),
-                "worker_identity": "process_main_thread_spawns_subprocess",
+                "worker_identity": (
+                    "process_main_thread_spawns_subprocess_thread_pool"
+                    if effective_workers > 1
+                    else "process_main_thread_spawns_subprocess"
+                ),
                 "async_worker": False,
                 "queue": None,
+                "sample_workers": {
+                    "requested_workers": requested_workers,
+                    "effective_workers": effective_workers,
+                    "samples": samples,
+                    "dispatch": (
+                        "thread_pool"
+                        if effective_workers > 1
+                        else "serial"
+                    ),
+                },
             }
         )
     return nodes

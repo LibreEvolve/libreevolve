@@ -484,11 +484,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     work so wall-clock latency does not stall multiple consecutive mutations.
   - Current evidence: ROADMAP lists bounded queues for LLM proposals and
     evaluator workers as future work and notes current sequential
-    `proposals_per_generation` batches. Code/paper TODO evidence already
-    tracks local evaluator-second counters and expensive-evaluation budget
-    gaps. The roadmap should not treat generic async queues as sufficient
-    without compute-hour, wall-clock compression, worker fan-out, and
-    mutation-depth evidence.
+    `proposals_per_generation` batches plus opt-in local
+    `eval_stages[].sample_workers` fan-out for configured-stage samples.
+    Code/paper TODO evidence already tracks local evaluator-second counters,
+    configured-stage sample counters, and expensive-evaluation budget gaps.
+    The roadmap should not treat local sample-worker fan-out or generic async
+    queues as sufficient without compute-hour, wall-clock compression,
+    distributed evaluator-worker fan-out, and mutation-depth evidence.
   - Required result: when parallel evaluator execution or reports land, update
     ROADMAP, README, papers index, and code/paper TODOs with per-candidate
     compute-hour budgets, evaluator-worker fan-out, randomized-initialization
@@ -496,24 +498,26 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     identity, wall-clock versus compute-hour compression, mutation-chain-depth
     impact, pending-work resume behavior, and equal-budget report links.
 
-- [ ] Keep distributed-pipeline roadmap wording scoped until topology evidence
-      exists.
+- [ ] Keep distributed-pipeline roadmap wording scoped until async topology
+      implementation exists.
   - Spec evidence: AlphaEvolve Section 2.6 says the system is an asynchronous
     pipeline made of a controller, LLM samplers, and evaluation nodes; work can
     run concurrently, block on unfinished dependencies, and is optimized for
     throughput under an overall computation budget.
   - Current evidence: ROADMAP can cite terminal controller-state snapshots,
-    controller-budget events, future bounded queues, and async-worker gaps.
-    Runtime manifests explicitly validate the current controller as
-    `single_process_serial_loop` with zero queued/running work and limitations
-    that it is not an async queue checkpoint. The roadmap does not yet require
-    a topology artifact that names controller/sampler/evaluation-node roles,
-    queue capacities, dependency edges, worker ownership, or throughput-budget
-    linkage.
-  - Required result: when distributed-pipeline topology reports land, update
-    ROADMAP, README, papers index, and code/paper TODOs together so roadmap
-    wording distinguishes the synchronous controller boundary from
-    AlphaEvolve-style controller/sampler/evaluation-node topology evidence.
+    controller-budget events, future bounded queues, async-worker gaps, and
+    `runtime.history.distributed_pipeline_topology_report`. Runtime manifests
+    explicitly validate the current controller as `single_process_serial_loop`
+    with zero queued/running work and limitations that it is not an async queue
+    checkpoint. The topology artifact names controller/sampler/evaluation-node
+    roles, blocking dependency edges, local sample-worker fan-out when
+    configured, and runtime-budget linkage, while keeping queues and async
+    pipeline readiness false.
+  - Required result: when async distributed-pipeline implementation lands,
+    update ROADMAP, README, papers index, and code/paper TODOs together so
+    roadmap wording distinguishes the current synchronous/local-sample-worker
+    boundary from AlphaEvolve-style controller/sampler/evaluation-node topology
+    execution.
 
 - [ ] Keep Table 1 roadmap wording scoped until capability-table exhibit
       provenance exists.

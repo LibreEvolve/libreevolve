@@ -1133,6 +1133,7 @@ def _validate_eval_stages(stages: object) -> None:
             "require_program_output",
             "required_artifacts",
             "samples",
+            "sample_workers",
             "seeds",
             "retries",
             "artifact_include",
@@ -1185,6 +1186,8 @@ def _validate_eval_stages(stages: object) -> None:
             _require_positive_number(f"{label}.max_stage_seconds", stage["max_stage_seconds"])
         if "samples" in stage:
             _require_int(f"{label}.samples", stage["samples"], minimum=1)
+        if "sample_workers" in stage:
+            _require_int(f"{label}.sample_workers", stage["sample_workers"], minimum=1)
         if "retries" in stage:
             _require_int(f"{label}.retries", stage["retries"], minimum=0)
             if stage["retries"] > MAX_EVAL_STAGE_RETRIES:
@@ -1201,6 +1204,15 @@ def _validate_eval_stages(stages: object) -> None:
                 stage["hypothesis_test"],
                 stage.get("samples"),
             )
+            if (
+                stage.get("sample_workers", 1) > 1
+                and isinstance(stage["hypothesis_test"], dict)
+                and stage["hypothesis_test"].get("sequential_stopping") is True
+            ):
+                raise ConfigError(
+                    f"{label}.sample_workers is incompatible with "
+                    "hypothesis_test.sequential_stopping"
+                )
         if "min_artifacts" in stage:
             _require_int(f"{label}.min_artifacts", stage["min_artifacts"], minimum=0)
         if "require_program_output" in stage:

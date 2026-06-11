@@ -667,6 +667,8 @@ def test_accepts_maximum_llm_call_attempt_cap():
     [
         ({}, "name is required"),
         ({"samples": 0}, "samples"),
+        ({"sample_workers": 0}, "sample_workers"),
+        ({"sample_workers": True}, "sample_workers"),
         ({"retries": -1}, "retries"),
         ({"retries": 11}, "retries"),
         ({"timeout_sec": 0}, "timeout_sec"),
@@ -762,6 +764,19 @@ def test_accepts_maximum_llm_call_attempt_cap():
                 },
             },
             "sequential_stopping",
+        ),
+        (
+            {
+                "name": "gate",
+                "samples": 2,
+                "sample_workers": 2,
+                "hypothesis_test": {
+                    "type": "one_sided_lower_confidence_bound",
+                    "min": 0.5,
+                    "sequential_stopping": True,
+                },
+            },
+            "sample_workers.*sequential_stopping",
         ),
         (
             {

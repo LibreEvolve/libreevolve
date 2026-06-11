@@ -1562,6 +1562,68 @@ def test_completed_runtime_persists_archive_state_cursor_snapshot():
     }.issubset({issue["code"] for issue in topology_validation["issues"]})
 
 
+def test_pipeline_topology_records_configured_evaluator_sample_workers(tmp_path):
+    problem = _problem(
+        "def evaluate(code, workspace, stage):\n"
+        "    return {'score': (stage['sample_index'] + 1) / 3, 'is_valid': True}\n",
+    )
+
+    evolve(
+        problem,
+        Config(
+            max_generations=0,
+            log_dir=str(tmp_path),
+            problem_name="sample_workers",
+            eval_stages=[
+                {
+                    "name": "sampled",
+                    "samples": 2,
+                    "sample_workers": 2,
+                }
+            ],
+        ),
+    )
+
+    manifest = json.loads(
+        (tmp_path / "sample_workers" / "manifest.json").read_text(encoding="utf-8")
+    )
+    topology = manifest["runtime"]["history"]["distributed_pipeline_topology_report"]
+
+    assert topology["validation"]["ok"] is True
+    assert topology["dispatch_policy"]["evaluation_dispatch"] == (
+        "blocking_stage_sample_thread_pool_local_subprocess"
+    )
+    assert topology["dispatch_policy"]["evaluator_sample_workers"]["configured"] is True
+    assert topology["dispatch_policy"]["evaluator_sample_workers"]["max_effective_workers"] == 2
+    assert topology["throughput_budget_linkage"]["worker_fanout_accounted"] is True
+    assert topology["throughput_budget_linkage"]["worker_fanout_accounting_scope"] == (
+        "configured_stage_sample_workers"
+    )
+    assert topology["throughput_budget_linkage"]["evaluator_stage_samples"] == 2
+    assert topology["claim_readiness"]["worker_identity_and_fanout"] is True
+    evaluator_nodes = [
+        node for node in topology["nodes"] if node["role"] == "evaluation_node"
+    ]
+    assert evaluator_nodes[0]["worker_identity"] == (
+        "process_main_thread_spawns_subprocess_thread_pool"
+    )
+    assert evaluator_nodes[0]["sample_workers"] == {
+        "requested_workers": 2,
+        "effective_workers": 2,
+        "samples": 2,
+        "dispatch": "thread_pool",
+    }
+    process_report = manifest["runtime"]["history"]["alphaevolve_process_exhibit_report"]
+    assert process_report["validation"]["ok"] is True
+    evaluator_pool = process_report["evaluator_pool_parallelism_record"]
+    assert evaluator_pool["evaluation_dispatch"] == (
+        "blocking_stage_sample_thread_pool_local_subprocess"
+    )
+    assert evaluator_pool["parallel_evaluator_workers"] is True
+    assert evaluator_pool["parallelism_scope"] == "configured_stage_sample_workers"
+    assert evaluator_pool["independent_evaluator_pool_parallelism"] is False
+
+
 def test_validate_controller_state_snapshot_reports_overclaims_and_pending_work():
     controller_state = {
         "schema": "libreevolve.controller_state.v1",
@@ -6121,6 +6183,7 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert evaluator_pool["queue_count"] == 0
     assert evaluator_pool["evaluation_dispatch"] == "inline_blocking_local_subprocess"
     assert evaluator_pool["parallel_evaluator_workers"] is False
+    assert evaluator_pool["parallelism_scope"] == "none"
     assert evaluator_pool["independent_evaluator_pool_parallelism"] is False
     assert evaluator_pool["compute_hour_wall_clock_compression"] is False
     assert report["candidate_semantic_trace_count"] == 1
@@ -6251,7 +6314,7 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     edited["evaluator_pool_parallelism_record"]["parallel_evaluator_workers"] = True
     validation = validate_alphaevolve_process_exhibit_report(edited)
     assert validation["ok"] is False
-    assert "parallel_evaluator_workers_overclaim" in {
+    assert "parallel_evaluator_workers_mismatch" in {
         issue["code"] for issue in validation["issues"]
     }
 

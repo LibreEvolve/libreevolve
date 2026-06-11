@@ -8986,3 +8986,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     compatibility decision.
   - Verification: marker provenance runtime tests validate attached source
     artifacts and final classification.
+
+- [x] Scope ROADMAP async/evaluator wording after local sample-worker fan-out.
+  - Spec evidence: AlphaEvolve Section 2.4/2.6 require parallel evaluator
+    throughput and an async controller/sampler/evaluation-node pipeline.
+  - Status: ROADMAP now names opt-in `eval_stages[].sample_workers` as local
+    configured-stage sample fan-out while still keeping bounded proposal/
+    evaluation queues, async controller state, and distributed evaluator-node
+    execution as mid-term work.
+  - Verification: focused config, evaluator, and topology tests validate the
+    implemented behavior and manifest fields.

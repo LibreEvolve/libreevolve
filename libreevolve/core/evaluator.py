@@ -1,4 +1,5 @@
 from __future__ import annotations
+from concurrent.futures import ThreadPoolExecutor
 import copy
 import ctypes
 import hashlib
@@ -704,87 +705,154 @@ class CascadeEvaluator:
         )
         seeds = list(stage.get("seeds", []))
         samples = int(stage.get("samples", len(seeds) or 1))
+        sample_workers = min(int(stage.get("sample_workers", 1)), samples)
         retries = int(stage.get("retries", 0))
         artifact_policy = self._artifact_policy(stage)
         results: list[EvaluationResult] = []
         sequential_stop_decision: dict | None = None
-        for sample_index in range(samples):
-            sample_deadline = _StageDeadline.from_config(stage.get("max_sample_seconds"))
-            seed = seeds[sample_index] if sample_index < len(seeds) else None
-            if "stdin_text" in stage or "stdin_file" in stage:
-                stdin_text = stage.get("stdin_text")
-                stdin_file = stage.get("stdin_file")
-            else:
-                stdin_text = self._stdin_text
-                stdin_file = self._stdin_file
-            context = {
-                "name": stage_name,
-                "stage_index": stage_index,
-                "sample_index": sample_index,
-                "seed": seed,
-                "mode": evaluator_mode,
-                "config": _stage_context_config(
-                    stage,
-                    stdin_text,
-                    stdin_file,
-                    self._problem.problem_dir,
-                ),
-                "evaluator_data": data_policy["context"],
-            }
-            if "workload" in stage:
-                context["workload"] = copy.deepcopy(stage["workload"])
-            if evaluator_mode == "embedded_evaluate":
-                context["eval_inputs"] = stage.get("eval_inputs", {})
-            if stage_deadline.exhausted():
-                results.append(
-                    _stage_budget_exhausted_result(
-                        workspace,
-                        validate_path,
-                        self._problem,
-                        f"{stage_name}[{sample_index}]" if samples > 1 else stage_name,
-                        context,
-                        stage_deadline,
-                        self._validator_network_policy,
+        if sample_workers > 1:
+            with ThreadPoolExecutor(
+                max_workers=sample_workers,
+                thread_name_prefix=f"libreevolve-eval-{stage_name}",
+            ) as executor:
+                futures = [
+                    executor.submit(
+                        self._run_stage_sample,
+                        workspace=workspace,
+                        validate_path=validate_path,
+                        evaluator_mode=evaluator_mode,
+                        stage=stage,
+                        stage_index=stage_index,
+                        stage_name=stage_name,
+                        sample_index=sample_index,
+                        samples=samples,
+                        seed=seeds[sample_index] if sample_index < len(seeds) else None,
+                        timeout=timeout,
+                        retries=retries,
+                        artifact_policy=artifact_policy,
+                        data_policy=data_policy,
+                        stage_deadline=stage_deadline,
                     )
+                    for sample_index in range(samples)
+                ]
+                results = [future.result() for future in futures]
+        else:
+            for sample_index in range(samples):
+                result = self._run_stage_sample(
+                    workspace=workspace,
+                    validate_path=validate_path,
+                    evaluator_mode=evaluator_mode,
+                    stage=stage,
+                    stage_index=stage_index,
+                    stage_name=stage_name,
+                    sample_index=sample_index,
+                    samples=samples,
+                    seed=seeds[sample_index] if sample_index < len(seeds) else None,
+                    timeout=timeout,
+                    retries=retries,
+                    artifact_policy=artifact_policy,
+                    data_policy=data_policy,
+                    stage_deadline=stage_deadline,
                 )
-                break
-            result = self._run_sample_with_retries(
-                workspace=workspace,
-                validate_path=validate_path,
-                evaluator_mode=evaluator_mode,
-                stage_name=f"{stage_name}[{sample_index}]" if samples > 1 else stage_name,
-                timeout_sec=timeout,
-                stage_context=context,
-                stdin_text=stdin_text,
-                stdin_file=stdin_file,
-                retries=retries,
-                artifact_policy=artifact_policy,
-                min_score=stage.get("min_score"),
-                metric_thresholds=stage.get("metric_thresholds"),
-                stage_deadline=stage_deadline,
-                sample_deadline=sample_deadline,
-            )
-            results.append(result)
-            if result.error == "stage_budget_exhausted":
-                break
-            sequential_stop = self._hypothesis_test_sequential_stop(
-                stage_name,
-                results,
-                validate_path,
-                stage,
-                planned_samples=samples,
-            )
-            if sequential_stop is not None:
-                sequential_stop_decision = sequential_stop
-                break
+                results.append(result)
+                if result.error == "stage_budget_exhausted":
+                    break
+                sequential_stop = self._hypothesis_test_sequential_stop(
+                    stage_name,
+                    results,
+                    validate_path,
+                    stage,
+                    planned_samples=samples,
+                )
+                if sequential_stop is not None:
+                    sequential_stop_decision = sequential_stop
+                    break
         if len(results) == 1:
             return results[0]
         aggregate = self._aggregate_sample_results(stage_name, results, validate_path, stage)
+        aggregate.metadata["sample_execution"] = {
+            "mode": "thread_pool" if sample_workers > 1 else "serial",
+            "requested_workers": int(stage.get("sample_workers", 1)),
+            "effective_workers": sample_workers,
+            "planned_samples": samples,
+            "completed_samples": len(results),
+            "deterministic_result_order": "sample_index",
+        }
         if sequential_stop_decision is not None:
             aggregate.metadata["hypothesis_test_sequential_stopping"] = (
                 sequential_stop_decision
             )
         return aggregate
+
+    def _run_stage_sample(
+        self,
+        *,
+        workspace: CandidateWorkspace,
+        validate_path: Path | None,
+        evaluator_mode: str,
+        stage: dict,
+        stage_index: int,
+        stage_name: str,
+        sample_index: int,
+        samples: int,
+        seed: object,
+        timeout: float,
+        retries: int,
+        artifact_policy: dict,
+        data_policy: dict,
+        stage_deadline: "_StageDeadline | None",
+    ) -> "EvaluationResult":
+        sample_deadline = _StageDeadline.from_config(stage.get("max_sample_seconds"))
+        if "stdin_text" in stage or "stdin_file" in stage:
+            stdin_text = stage.get("stdin_text")
+            stdin_file = stage.get("stdin_file")
+        else:
+            stdin_text = self._stdin_text
+            stdin_file = self._stdin_file
+        context = {
+            "name": stage_name,
+            "stage_index": stage_index,
+            "sample_index": sample_index,
+            "seed": seed,
+            "mode": evaluator_mode,
+            "config": _stage_context_config(
+                stage,
+                stdin_text,
+                stdin_file,
+                self._problem.problem_dir,
+            ),
+            "evaluator_data": data_policy["context"],
+        }
+        if "workload" in stage:
+            context["workload"] = copy.deepcopy(stage["workload"])
+        if evaluator_mode == "embedded_evaluate":
+            context["eval_inputs"] = stage.get("eval_inputs", {})
+        if stage_deadline.exhausted():
+            return _stage_budget_exhausted_result(
+                workspace,
+                validate_path,
+                self._problem,
+                f"{stage_name}[{sample_index}]" if samples > 1 else stage_name,
+                context,
+                stage_deadline,
+                self._validator_network_policy,
+            )
+        return self._run_sample_with_retries(
+            workspace=workspace,
+            validate_path=validate_path,
+            evaluator_mode=evaluator_mode,
+            stage_name=f"{stage_name}[{sample_index}]" if samples > 1 else stage_name,
+            timeout_sec=timeout,
+            stage_context=context,
+            stdin_text=stdin_text,
+            stdin_file=stdin_file,
+            retries=retries,
+            artifact_policy=artifact_policy,
+            min_score=stage.get("min_score"),
+            metric_thresholds=stage.get("metric_thresholds"),
+            stage_deadline=stage_deadline,
+            sample_deadline=sample_deadline,
+        )
 
     def _hypothesis_test_sequential_stop(
         self,

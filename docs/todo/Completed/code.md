@@ -4,6 +4,24 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add static embedded evaluator invocation traces.
+  - Spec evidence: AlphaEvolve Figure 3 shows candidate-owned
+    `evaluate(eval_inputs)` invoking evolved code to produce returned scores,
+    so the embedded evaluator report needs more than callable execution and
+    score-field names.
+  - Status: `runtime.history.embedded_evaluator_entrypoint_report` records
+    bounded static primary-file invocation traces from `evaluate()` through
+    local direct-name function calls to functions containing EVOLVE blocks.
+    The report exposes
+    `claim_readiness.skeleton_to_evolved_block_invocation_trace`, validates
+    trace schema/method/policy/hash/count fields, and still leaves stronger
+    callable/build isolation plus non-static or external-validator score
+    linkage open.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4636 passed, 21 skipped, 2 deselected.
+  - Remaining gap: stronger callable/build isolation and non-static or
+    external-validator score linkage remain open before Figure 3 parity.
+
 - [x] Add source-setup existing-codebase integration metadata.
   - Spec evidence: AlphaEvolve Section 2.1 frames existing-codebase
     integration as minimal marker insertion into a pre-existing codebase, so

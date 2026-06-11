@@ -2,6 +2,16 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Record static embedded evaluator invocation traces for roadmap evidence.
+  - Status: ROADMAP now includes static local invocation traces from
+    `evaluate()` to EVOLVE-block-backed functions as current embedded
+    evaluator evidence, while keeping callable/build isolation and
+    non-static/external-validator score linkage as the remaining Figure 3
+    claim gate.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4636 passed, 21 skipped, 2 deselected.
+  - Remaining gap: full Figure 3 evaluator parity remains open.
+
 - [x] Record source-setup existing-codebase integration metadata for roadmap evidence.
   - Status: ROADMAP now describes optional
     `problem.codebase_integration_metadata` source-setup records feeding the

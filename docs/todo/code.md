@@ -117,7 +117,10 @@ Primary evidence:
     `runtime.history.embedded_evaluator_entrypoint_report` with executed
     embedded entrypoint records, dependency scope, eval-input provenance,
     metric names, per-metric candidate path/block-span link candidates, and
-    explicit remaining Figure 3 parity gaps. For supported embedded
+    explicit remaining Figure 3 parity gaps. The report now also records
+    static primary-file invocation traces from `evaluate()` through local
+    functions that contain EVOLVE blocks when AST direct-call evidence is
+    present. For supported embedded
     `evaluate` return expressions, score-field links now include static AST
     causal attribution to EVOLVE blocks through local candidate functions or
     direct block expressions. Tests cover successful
@@ -130,10 +133,10 @@ Primary evidence:
     format and CLI path. The committed `papers/embedded_evaluator_boundary.json`
     sidecar now records the paper-manifest-validated full-Figure-3 evaluator
     absence boundary.
-  - Required result: finish skeleton-to-block invocation coupling and stronger
-    candidate callable build/import isolation beyond the local subprocess
-    boundary; extend score-link causality beyond the current static embedded
-    AST path before claiming arbitrary evaluator parity.
+  - Required result: finish stronger candidate callable build/import isolation
+    beyond the local subprocess boundary; extend score-link causality beyond
+    the current static embedded AST path to non-static and external-validator
+    cases before claiming arbitrary evaluator parity.
 
 - [ ] Extend Figure 1/Figure 2 process-exhibit report into rendered diagram
       parity.

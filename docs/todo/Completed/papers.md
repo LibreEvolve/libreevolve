@@ -6,6 +6,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Record static embedded evaluator invocation traces.
+  - Paper evidence: AlphaEvolve Figure 3 ties the candidate-owned
+    `evaluate(eval_inputs)` function to evolved blocks in the skeleton.
+  - Status: paper-facing manifests can now preserve static local invocation
+    traces from `evaluate()` through direct-name primary-file function calls to
+    EVOLVE-block-backed functions, with validated trace shape and conservative
+    readiness.
+  - Verification: `py -3.12 -m pytest tests/ -m "not integration" --tb=short`
+    passed with 4636 passed, 21 skipped, 2 deselected.
+  - Remaining paper gap: stronger callable/build isolation plus non-static or
+    external-validator score linkage remain absent.
+
 - [x] Record source-setup existing-codebase integration metadata.
   - Paper evidence: AlphaEvolve Section 2.1 says existing-codebase
     integration requires only minimal marker insertion into existing code,

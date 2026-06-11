@@ -135,16 +135,20 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     configured inputs, maps the returned dictionary through the local metrics
     contract, records candidate callable plus eval-input provenance, and points
     completed manifests at `runtime.history.embedded_evaluator_entrypoint_report`.
+    README now also documents static primary-file invocation traces from
+    `evaluate()` through EVOLVE-block-backed local functions when AST evidence
+    is available.
     README should still not imply full Figure 3 parity because the problem
-    loader still requires `validate.py` by default and skeleton/block invocation
-    coupling is not yet evidenced. README now also names
+    loader still requires `validate.py` by default and stronger callable/build
+    isolation plus non-static/external-validator score linkage are not yet
+    evidenced. README now also names
     `papers/embedded_evaluator_boundary.json` as the committed paper-manifest-
     validated full-Figure-3 evaluator absence boundary.
-  - Required result: when skeleton/block invocation evidence, stronger callable
-    isolation/build policy, and non-static/external-validator score-field
-    linkage land, update README, ROADMAP, papers index, and code/paper TODOs
-    together so README can make the stronger Figure 3 evaluator claim without
-    overclaiming the current opt-in report.
+  - Required result: when stronger callable isolation/build policy and
+    non-static/external-validator score-field linkage land, update README,
+    ROADMAP, papers index, and code/paper TODOs together so README can make the
+    stronger Figure 3 evaluator claim without overclaiming the current opt-in
+    report.
 
 - [ ] Extend README Figure 1/Figure 2 architecture wording from process
       mappings to full diagram parity.

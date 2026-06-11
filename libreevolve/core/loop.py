@@ -24491,10 +24491,15 @@ def _embedded_evaluator_entrypoint_report(
         _embedded_entrypoint_record_has_score_field_causality(record)
         for record in records
     )
+    has_invocation_trace = any(
+        _embedded_entrypoint_record_has_invocation_trace(record)
+        for record in records
+    )
     remaining_gap = [
-        "skeleton_to_evolved_block_invocation_trace",
         "stronger_callable_isolation_or_build_policy",
     ]
+    if not has_invocation_trace:
+        remaining_gap.insert(0, "skeleton_to_evolved_block_invocation_trace")
     if not has_score_field_causality:
         remaining_gap.insert(1, "score_field_to_evolved_code_path_causal_attribution")
     if not embedded_only_problem_definition:
@@ -24525,6 +24530,7 @@ def _embedded_evaluator_entrypoint_report(
                 _embedded_entrypoint_record_has_block_links(record)
                 for record in records
             ),
+            "skeleton_to_evolved_block_invocation_trace": has_invocation_trace,
             "score_field_to_evolved_code_path_causal_attribution": (
                 has_score_field_causality
             ),
@@ -24609,6 +24615,7 @@ def _embedded_entrypoint_record(
         ),
         "metric_names": metric_names,
         "score_field_links": _embedded_score_field_links(program, metric_names),
+        "invocation_traces": _embedded_invocation_traces(program),
         "validator_boundary": "temporary_local_subprocess",
         "raw_eval_inputs_retained": (
             candidate.get("eval_inputs", {}).get("retained")
@@ -24643,6 +24650,22 @@ def _embedded_entrypoint_record_has_score_field_causality(
         and link.get("causal_attribution_claimed") is True
         for link in links
     )
+
+
+def _embedded_entrypoint_record_has_invocation_trace(
+    record: Mapping[str, object],
+) -> bool:
+    traces = record.get("invocation_traces")
+    if not isinstance(traces, list):
+        return False
+    for trace in traces:
+        if (
+            isinstance(trace, Mapping)
+            and isinstance(trace.get("evolved_block_dependencies"), list)
+            and bool(trace.get("evolved_block_dependencies"))
+        ):
+            return True
+    return False
 
 
 def _embedded_score_field_links(
@@ -24683,6 +24706,106 @@ def _embedded_score_field_links(
             link["causal_attribution"] = copy.deepcopy(causal_attribution)
         links.append(link)
     return links
+
+
+def _embedded_invocation_traces(program: Program) -> list[dict]:
+    workspace = program.workspace()
+    primary_file = workspace.primary_file
+    content = workspace.files.get(primary_file)
+    if not isinstance(content, str):
+        return []
+    block_candidates = [
+        block
+        for block in _embedded_workspace_block_candidates(workspace)
+        if block.get("path") == primary_file
+    ]
+    if not block_candidates:
+        return []
+    try:
+        tree = ast.parse(content)
+    except SyntaxError:
+        return []
+    functions = {
+        node.name: node
+        for node in tree.body
+        if isinstance(node, ast.FunctionDef)
+    }
+    evaluate = functions.get("evaluate")
+    if evaluate is None:
+        return []
+    function_blocks = {
+        name: _embedded_blocks_inside_function(node, block_candidates)
+        for name, node in functions.items()
+    }
+    reachable = _embedded_reachable_functions_from_evaluate(evaluate, functions)
+    called_functions = []
+    block_dependencies: dict[str, dict] = {}
+    for name in sorted(reachable, key=lambda item: (reachable[item], item)):
+        node = functions[name]
+        blocks = function_blocks.get(name, [])
+        for block in blocks:
+            block_dependencies[block["span_id"]] = block
+        called_functions.append(
+            {
+                "name": name,
+                "depth": reachable[name],
+                "start_line": int(getattr(node, "lineno", 0)),
+                "end_line": int(getattr(node, "end_lineno", getattr(node, "lineno", 0))),
+                "evolved_block_dependencies": copy.deepcopy(blocks),
+                "evolved_block_dependency_count": len(blocks),
+            }
+        )
+    if not block_dependencies:
+        return []
+    dependencies = [
+        copy.deepcopy(block_dependencies[key])
+        for key in sorted(block_dependencies)
+    ]
+    return [
+        {
+            "schema": "libreevolve.embedded_evaluator_invocation_trace.v1",
+            "method": "static_ast_evaluate_call_graph_to_evolved_blocks",
+            "trace_policy": "candidate_primary_file_direct_name_calls_only",
+            "candidate_primary_file": primary_file,
+            "candidate_primary_file_sha256": hashlib.sha256(
+                content.encode("utf-8")
+            ).hexdigest(),
+            "evaluate_function": {
+                "name": "evaluate",
+                "start_line": int(getattr(evaluate, "lineno", 0)),
+                "end_line": int(getattr(evaluate, "end_lineno", 0)),
+            },
+            "called_functions": called_functions[:50],
+            "called_function_count": len(called_functions),
+            "called_functions_truncated": len(called_functions) > 50,
+            "evolved_block_dependencies": dependencies[:50],
+            "evolved_block_dependency_count": len(dependencies),
+            "evolved_block_dependencies_truncated": len(dependencies) > 50,
+            "confidence": "static_local_candidate_source_trace",
+        }
+    ]
+
+
+def _embedded_reachable_functions_from_evaluate(
+    evaluate: ast.FunctionDef,
+    functions: Mapping[str, ast.FunctionDef],
+) -> dict[str, int]:
+    reachable: dict[str, int] = {}
+    pending = [
+        (name, 1)
+        for name in _embedded_called_function_names(evaluate)
+        if name in functions and name != "evaluate"
+    ]
+    while pending:
+        name, depth = pending.pop(0)
+        previous_depth = reachable.get(name)
+        if previous_depth is not None and previous_depth <= depth:
+            continue
+        reachable[name] = depth
+        for called in _embedded_called_function_names(functions[name]):
+            if called in functions and called != "evaluate":
+                pending.append((called, depth + 1))
+    return reachable
 
 
 def _embedded_score_field_causal_attributions(
@@ -24970,6 +25093,7 @@ def validate_embedded_evaluator_entrypoint_report(report: object) -> dict:
         if not isinstance(record.get("metric_names"), list):
             issues.append({"code": "invalid_metric_names", "message": f"record {index} metric_names must be a list"})
         _validate_embedded_score_field_links(record, index, issues)
+        _validate_embedded_invocation_traces(record, index, issues)
     if report.get("records_truncated") is not True:
         if report.get("embedded_entrypoint_count") != len(records):
             issues.append({"code": "invalid_entrypoint_count", "message": "embedded_entrypoint_count must match records when not truncated"})
@@ -24987,6 +25111,8 @@ def validate_embedded_evaluator_entrypoint_report(report: object) -> dict:
         issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
     elif not isinstance(readiness.get("embedded_only_problem_definition"), bool):
         issues.append({"code": "invalid_embedded_only_problem_definition", "message": "embedded-only problem definition readiness must be boolean"})
+    elif readiness.get("skeleton_to_evolved_block_invocation_trace") not in {True, False}:
+        issues.append({"code": "invalid_invocation_trace_readiness", "message": "invocation-trace readiness must be boolean"})
     elif readiness.get("score_field_to_evolved_code_path_causal_attribution") not in {True, False}:
         issues.append({"code": "invalid_score_field_causal_readiness", "message": "score-field causal readiness must be boolean"})
     return {
@@ -25051,6 +25177,87 @@ def _validate_embedded_score_field_links(
                 issues.append({"code": "invalid_score_field_block_hash", "message": f"record {index} score field block content hash is invalid"})
     if sorted(linked_names) != sorted(metric_names):
         issues.append({"code": "score_field_link_metric_mismatch", "message": f"record {index} score field links must cover metric_names"})
+
+
+def _validate_embedded_invocation_traces(
+    record: Mapping[str, object],
+    index: int,
+    issues: list[dict],
+) -> None:
+    traces = record.get("invocation_traces")
+    if not isinstance(traces, list):
+        issues.append({"code": "invalid_invocation_traces", "message": f"record {index} invocation_traces must be a list"})
+        return
+    for trace in traces:
+        if not isinstance(trace, Mapping):
+            issues.append({"code": "invalid_invocation_trace", "message": f"record {index} invocation trace entries must be objects"})
+            continue
+        if trace.get("schema") != "libreevolve.embedded_evaluator_invocation_trace.v1":
+            issues.append({"code": "invalid_invocation_trace_schema", "message": f"record {index} invocation trace schema is invalid"})
+        if trace.get("method") != "static_ast_evaluate_call_graph_to_evolved_blocks":
+            issues.append({"code": "invalid_invocation_trace_method", "message": f"record {index} invocation trace method is invalid"})
+        if trace.get("trace_policy") != "candidate_primary_file_direct_name_calls_only":
+            issues.append({"code": "invalid_invocation_trace_policy", "message": f"record {index} invocation trace policy is invalid"})
+        if not isinstance(trace.get("candidate_primary_file"), str) or not trace.get("candidate_primary_file"):
+            issues.append({"code": "invalid_invocation_trace_primary_file", "message": f"record {index} invocation trace primary file is invalid"})
+        if not _is_sha256_hex(trace.get("candidate_primary_file_sha256")):
+            issues.append({"code": "invalid_invocation_trace_primary_hash", "message": f"record {index} invocation trace primary file hash is invalid"})
+        evaluate = trace.get("evaluate_function")
+        if not isinstance(evaluate, Mapping) or evaluate.get("name") != "evaluate":
+            issues.append({"code": "invalid_invocation_trace_evaluate", "message": f"record {index} invocation trace evaluate function is invalid"})
+        else:
+            for field in ("start_line", "end_line"):
+                if not isinstance(evaluate.get(field), int) or isinstance(evaluate.get(field), bool) or evaluate.get(field) <= 0:
+                    issues.append({"code": "invalid_invocation_trace_evaluate_line", "message": f"record {index} invocation trace evaluate line is invalid"})
+        called = trace.get("called_functions")
+        if not isinstance(called, list):
+            issues.append({"code": "invalid_invocation_trace_functions", "message": f"record {index} invocation trace called_functions must be a list"})
+            called = []
+        if not isinstance(trace.get("called_function_count"), int) or isinstance(trace.get("called_function_count"), bool) or trace.get("called_function_count") < len(called):
+            issues.append({"code": "invalid_invocation_trace_function_count", "message": f"record {index} invocation trace called_function_count is invalid"})
+        if trace.get("called_functions_truncated") not in {True, False}:
+            issues.append({"code": "invalid_invocation_trace_functions_truncated", "message": f"record {index} invocation trace called_functions_truncated must be boolean"})
+        dependency_span_ids = set()
+        for function in called:
+            if not isinstance(function, Mapping):
+                issues.append({"code": "invalid_invocation_trace_function", "message": f"record {index} invocation trace functions must be objects"})
+                continue
+            if not isinstance(function.get("name"), str) or not function.get("name"):
+                issues.append({"code": "invalid_invocation_trace_function_name", "message": f"record {index} invocation trace function name is invalid"})
+            if not isinstance(function.get("depth"), int) or isinstance(function.get("depth"), bool) or function.get("depth") <= 0:
+                issues.append({"code": "invalid_invocation_trace_function_depth", "message": f"record {index} invocation trace function depth is invalid"})
+            for field in ("start_line", "end_line"):
+                if not isinstance(function.get(field), int) or isinstance(function.get(field), bool) or function.get(field) <= 0:
+                    issues.append({"code": "invalid_invocation_trace_function_line", "message": f"record {index} invocation trace function line is invalid"})
+            blocks = function.get("evolved_block_dependencies")
+            if not isinstance(blocks, list):
+                issues.append({"code": "invalid_invocation_trace_function_blocks", "message": f"record {index} invocation trace function blocks must be a list"})
+                blocks = []
+            if function.get("evolved_block_dependency_count") != len(blocks):
+                issues.append({"code": "invocation_trace_function_block_count_mismatch", "message": f"record {index} invocation trace function block count must match blocks"})
+            for block in blocks:
+                if isinstance(block, Mapping) and isinstance(block.get("span_id"), str):
+                    dependency_span_ids.add(block.get("span_id"))
+        dependencies = trace.get("evolved_block_dependencies")
+        if not isinstance(dependencies, list) or not dependencies:
+            issues.append({"code": "invalid_invocation_trace_dependencies", "message": f"record {index} invocation trace dependencies must be non-empty"})
+            dependencies = []
+        if not isinstance(trace.get("evolved_block_dependency_count"), int) or isinstance(trace.get("evolved_block_dependency_count"), bool) or trace.get("evolved_block_dependency_count") < len(dependencies):
+            issues.append({"code": "invalid_invocation_trace_dependency_count", "message": f"record {index} invocation trace dependency count is invalid"})
+        if trace.get("evolved_block_dependencies_truncated") not in {True, False}:
+            issues.append({"code": "invalid_invocation_trace_dependencies_truncated", "message": f"record {index} invocation trace dependencies_truncated must be boolean"})
+        for dependency in dependencies:
+            if not isinstance(dependency, Mapping):
+                issues.append({"code": "invalid_invocation_trace_dependency", "message": f"record {index} invocation trace dependencies must be objects"})
+                continue
+            if not isinstance(dependency.get("span_id"), str) or len(dependency.get("span_id", "")) != 24:
+                issues.append({"code": "invalid_invocation_trace_dependency_span", "message": f"record {index} invocation trace dependency span_id is invalid"})
+            elif dependency_span_ids and dependency.get("span_id") not in dependency_span_ids:
+                issues.append({"code": "invocation_trace_dependency_not_called_function", "message": f"record {index} invocation trace dependency must be linked from a called function"})
+            if not isinstance(dependency.get("path"), str) or not dependency.get("path"):
+                issues.append({"code": "invalid_invocation_trace_dependency_path", "message": f"record {index} invocation trace dependency path is invalid"})
+            if not _is_sha256_hex(dependency.get("content_sha256")):
+                issues.append({"code": "invalid_invocation_trace_dependency_hash", "message": f"record {index} invocation trace dependency hash is invalid"})
 
 
 def _validate_score_field_causal_attribution(

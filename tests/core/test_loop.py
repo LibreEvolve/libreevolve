@@ -6764,8 +6764,14 @@ def test_runtime_history_reports_embedded_evaluator_entrypoint():
     assert report["claim_readiness"]["embedded_only_problem_definition"] is True
     assert report["claim_readiness"]["evolved_block_to_score_path_mapping"] is True
     assert report["claim_readiness"][
+        "skeleton_to_evolved_block_invocation_trace"
+    ] is True
+    assert report["claim_readiness"][
         "score_field_to_evolved_code_path_causal_attribution"
     ] is True
+    assert "skeleton_to_evolved_block_invocation_trace" not in (
+        report["claim_readiness"]["remaining_gap"]
+    )
     assert "load_problem_without_external_validate_py" not in (
         report["claim_readiness"]["remaining_gap"]
     )
@@ -6786,6 +6792,24 @@ def test_runtime_history_reports_embedded_evaluator_entrypoint():
     )
     assert record["raw_eval_inputs_retained"] is False
     assert record["metric_names"] == ["score"]
+    assert len(record["invocation_traces"]) == 1
+    invocation_trace = record["invocation_traces"][0]
+    assert invocation_trace["schema"] == (
+        "libreevolve.embedded_evaluator_invocation_trace.v1"
+    )
+    assert invocation_trace["method"] == (
+        "static_ast_evaluate_call_graph_to_evolved_blocks"
+    )
+    assert invocation_trace["trace_policy"] == (
+        "candidate_primary_file_direct_name_calls_only"
+    )
+    assert invocation_trace["called_function_count"] == 1
+    assert invocation_trace["called_functions"][0]["name"] == "transform"
+    assert invocation_trace["called_functions"][0]["depth"] == 1
+    assert invocation_trace["called_functions"][0][
+        "evolved_block_dependency_count"
+    ] == 1
+    assert invocation_trace["evolved_block_dependency_count"] == 1
     assert len(record["score_field_links"]) == 1
     score_link = record["score_field_links"][0]
     assert score_link["metric_name"] == "score"
@@ -6801,6 +6825,9 @@ def test_runtime_history_reports_embedded_evaluator_entrypoint():
     assert block_link["name"] == "scoring_rule"
     assert len(block_link["span_id"]) == 24
     assert len(block_link["content_sha256"]) == 64
+    assert invocation_trace["evolved_block_dependencies"][0]["span_id"] == (
+        block_link["span_id"]
+    )
     attribution = score_link["causal_attribution"]
     assert attribution["schema"] == "libreevolve.score_field_causal_attribution.v1"
     assert attribution["method"] == "static_ast_evaluate_return_metric_dependency_trace"
@@ -6817,6 +6844,14 @@ def test_runtime_history_reports_embedded_evaluator_entrypoint():
     validation = validate_embedded_evaluator_entrypoint_report(edited)
     assert validation["ok"] is False
     assert "invalid_score_field_causal_dependency_policy" in {
+        issue["code"] for issue in validation["issues"]
+    }
+
+    edited = copy.deepcopy(report)
+    edited["records"][0]["invocation_traces"][0]["method"] = "dynamic_probe"
+    validation = validate_embedded_evaluator_entrypoint_report(edited)
+    assert validation["ok"] is False
+    assert "invalid_invocation_trace_method" in {
         issue["code"] for issue in validation["issues"]
     }
 

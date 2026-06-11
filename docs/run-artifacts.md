@@ -1909,8 +1909,10 @@ signature, eval-input type/size/SHA-256 provenance, dependency scope, metric
 names, pass/score evidence, and explicit readiness gaps. It is evidence for
 the opt-in candidate-owned evaluator entrypoint, not full Figure 3 parity:
 embedded-only problem loading and static score-field-to-code-path attribution
-are supported for the embedded path, while skeleton-to-evolved-block invocation
-traces and stronger callable isolation/build policy remain open. The committed
+are supported for the embedded path, and static primary-file invocation traces
+now link `evaluate()` call graph functions to EVOLVE-block dependencies when
+that local AST evidence is present. Stronger callable isolation/build policy
+and non-static or external-validator score causality remain open. The committed
 `papers/embedded_evaluator_boundary.json` sidecar preserves the same full
 Figure 3 evaluator absence boundary for paper-manifest validation.
 

@@ -149,19 +149,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     `runtime.history.embedded_evaluator_entrypoint_report` with schema
     `libreevolve.embedded_evaluator_entrypoint_report.v1`, summarizing executed
     embedded entrypoints, dependency scope, eval-input provenance, metric
-    names, and readiness gaps.
+    names, static primary-file invocation traces from `evaluate()` through
+    EVOLVE-block-backed local functions when AST evidence is present, and
+    readiness gaps.
   - Current gap: paper-facing evidence now covers embedded-only problem loading
-    and static score-field mapping back to specific evolved code paths for
-    supported candidate-owned `evaluate` returns, but it still lacks
-    skeleton-to-evolved-block invocation paths and stronger callable
-    isolation/build policy. External `validate.py` remains the default problem
-    format outside all-embedded configs. The committed
+    static score-field mapping back to specific evolved code paths for
+    supported candidate-owned `evaluate` returns, and static local
+    skeleton-to-evolved-block invocation paths for direct-name function calls.
+    It still lacks stronger callable isolation/build policy, non-static score
+    causality, and external-validator score linkage. External `validate.py`
+    remains the default problem format outside all-embedded configs. The
+    committed
     `papers/embedded_evaluator_boundary.json` sidecar now preserves the
     paper-manifest-validated full-Figure-3 evaluator absence boundary.
-  - Required result: add paper-visible examples and reports proving callable
-    isolation, callable discovery diagnostics, skeleton/block invocation
-    evidence, and non-static/external-validator score linkage before treating
-    local validator execution as AlphaEvolve Figure 3 evaluator parity.
+  - Required result: add paper-visible examples and reports proving stronger
+    callable isolation/build policy and non-static/external-validator score
+    linkage before treating local validator execution as AlphaEvolve Figure 3
+    evaluator parity.
 
 - [ ] Parallelized evaluation and asynchronous throughput.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 2.6.

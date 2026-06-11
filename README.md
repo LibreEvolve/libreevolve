@@ -2505,9 +2505,12 @@ Completed manifests summarize executed embedded stages under
 ids, entrypoint, callable, signature, eval-input provenance, dependency scope,
 metric names, per-metric candidate path/block-span link candidates, and
 static AST causal attribution when a returned metric expression depends on a
-local EVOLVE-block-backed function or expression. Remaining Figure 3 gaps cover
-skeleton-to-block invocation traces and stronger callable isolation/build
-policy. The committed `papers/embedded_evaluator_boundary.json` sidecar now
+local EVOLVE-block-backed function or expression. It also records static
+primary-file invocation traces from `evaluate()` through local functions that
+contain EVOLVE blocks when that AST evidence is available. Remaining Figure 3
+gaps cover stronger callable isolation/build policy plus non-static or
+external-validator score linkage. The committed
+`papers/embedded_evaluator_boundary.json` sidecar now
 records that paper-manifest-validated full-Figure-3 evaluator absence boundary.
 Embedded-only problems may omit `validate.py` when `config.yaml` declares a
 non-empty stage list where every stage uses `mode: embedded_evaluate`.

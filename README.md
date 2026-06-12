@@ -1890,11 +1890,14 @@ provider-failure category counts by role. Snapshots also include
 `role_scheduler_state`, an audit/restoration record of per-role backend counts,
 wins, total pulls, and rewarded/unrewarded call ids, plus `role_call_limits`
 with configured per-role logical-call quotas and consumed logical role calls.
-The global ensemble state remains the authoritative selection policy; role
-routing can narrow eligible backends and role budget maps can stop matching
-roles before later calls, but this per-role state does not yet implement
-independent per-role scheduler configuration, reward calibration, or
-quota/budget ownership. Runs
+By default, `llm_role_scheduler_scope="shared"` keeps the global ensemble state
+as the authoritative selection policy. Setting
+`llm_role_scheduler_scope="role_scoped"` makes reward-accounted roles select
+from their own restorable `role_scheduler_state` counts, wins, and total pulls
+while still maintaining aggregate scheduler counters. Role routing can narrow
+eligible backends and role budget maps can stop matching roles before later
+calls, but calibrated reward contracts, role-owned quota/budget policy, and
+experiment-backed fast/strong model-mix validation remain open. Runs
 without a mutation LLM record `not_initialized`; non-ensemble LLM objects
 without scheduler state record `unavailable`; and unvalidated or malformed
 state records `invalid`. Direct callers can pass a validated scheduler snapshot

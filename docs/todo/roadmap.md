@@ -1443,19 +1443,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     papers index, and code/paper TODO entries together so they do not
     underclaim current configurability or overclaim fixed five-island policy.
 
-- [ ] Keep per-role scheduler roadmap wording scoped to role-scoped backend
-  eligibility and role budget maps versus independent live scheduler state.
+- [ ] Keep per-role scheduler roadmap wording scoped to opt-in role-owned
+  selection state versus calibrated AlphaEvolve scheduler policy.
   - Spec evidence: AlphaEvolve-scale LLM orchestration needs role-specific
     model-selection behavior for mutation generation, critique, feedback, and
     prompt-improvement calls, with budgets and rewards that can be evaluated
     independently.
-  - Current evidence: the roadmap now distinguishes configured
-    reward-accounted roles, role-scoped backend eligibility, logical call caps,
-    and role budget maps from still-open independent per-role live scheduler
-    state, calibrated reward signals, quota ownership, and budget policy.
-  - Required result: when independent per-role scheduler state lands, update
+  - Current evidence: the roadmap now names opt-in
+    `llm_role_scheduler_scope="role_scoped"` live per-role selection state,
+    configured reward-accounted roles, role-scoped backend eligibility, logical
+    call caps, and role budget maps, while keeping calibrated reward signals,
+    quota ownership, and budget policy open.
+  - Required result: when calibrated per-role scheduler policy lands, update
     the roadmap, README, papers index, and code/paper TODO entries together so
-    they neither underclaim current role routing and budget maps nor overclaim
+    they neither underclaim current role-owned selection state nor overclaim
     AlphaEvolve-style per-role scheduling.
 
 - [ ] Keep UCB scheduler roadmap wording scoped to heuristic backend routing.

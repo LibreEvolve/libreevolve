@@ -4231,17 +4231,20 @@ Primary evidence:
     logical call caps, role-scoped provider/token/configured-cost/latency
     budget maps in `RunBudget`, configured reward-accounted roles, feedback
     reward wiring for exact configured feedback roles, scheduler-policy
-    telemetry, and restorable `role_scheduler_state` audit records. However,
-    `_ucb1_select()` still uses the shared `_counts`, `_wins`, and `_total`
-    arrays as the authoritative live selection state; role matches only narrow
-    eligible backend indices, and `role_scheduler_state` records counts/wins
-    after selection instead of owning independent per-role bandit state,
-    exploration coefficients, budgets, or calibrated reward contracts.
-  - Required result: add explicit per-role scheduler policies for mutation,
-    critique, feedback, and meta-prompt calls, including independent live
-    selection state, role-specific reward calibration, quota/budget ownership,
-    restore validation, and experiment-level reports proving that role
-    selection behavior is not just shared global-bandit telemetry.
+    telemetry, and restorable `role_scheduler_state` records. The opt-in
+    `llm_role_scheduler_scope="role_scoped"` now makes reward-accounted roles
+    use their own `role_scheduler_state` counts, wins, and total pulls for UCB
+    selection while preserving aggregate scheduler counters and restore
+    validation.
+  - Remaining gap: role-scoped selection still shares the global exploration
+    coefficient and backend set unless role routing narrows it, and it does not
+    yet provide role-specific reward calibration, quota/budget ownership, or
+    experiment-level reports proving AlphaEvolve-style role behavior.
+  - Required result: add explicit calibrated per-role scheduler policies for
+    mutation, critique, feedback, and meta-prompt calls, including
+    role-specific reward contracts, quota/budget ownership, restore validation
+    across real run resumes, and experiment-level reports proving that role
+    selection behavior improves over shared global-bandit telemetry.
 
 - [ ] Complete hard cancellation, async/accelerator budgets, and executed
       ablation scripts beyond current live LLM budget stops.

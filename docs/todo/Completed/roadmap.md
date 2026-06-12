@@ -9016,3 +9016,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     artifacts open.
   - Verification: focused critique reviewer runtime tests validate the
     implemented behavior and metadata fields.
+
+- [x] Scope ROADMAP per-role scheduler wording after role-owned selection
+      landed.
+  - Spec evidence: AlphaEvolve-style orchestration requires role-specific
+    model-selection behavior for mutation, critique, feedback, and
+    prompt-improvement work classes.
+  - Status: ROADMAP now names opt-in `llm_role_scheduler_scope="role_scoped"`
+    live per-role selection state while keeping calibrated reward signals,
+    quota ownership, budget policy, and experiment reports open.
+  - Verification: focused config and ensemble scheduler tests validate the
+    implemented behavior and telemetry fields.

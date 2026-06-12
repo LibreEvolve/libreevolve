@@ -17164,3 +17164,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     calibrated reviewer scoring, reviewer reliability reports, async overlap,
     or external timeout/failure artifacts.
   - Verification: focused critique reviewer runtime tests pass.
+
+- [x] Add opt-in role-owned scheduler selection state for LLM roles.
+  - Spec evidence: AlphaEvolve-style orchestration separates mutation,
+    critique, feedback, and prompt-improvement work classes with independently
+    auditable model-selection behavior.
+  - Status: `llm_role_scheduler_scope="role_scoped"` now makes
+    reward-accounted roles use their own restorable `role_scheduler_state`
+    counts, wins, and total pulls for UCB selection while preserving aggregate
+    scheduler counters. Scheduler snapshots persist the scope and restore it
+    with validation.
+  - Remaining gap: this is local role-owned UCB state, not calibrated
+    AlphaEvolve scheduler policy. Role-specific reward contracts,
+    quota/budget ownership, fast/strong model-mix proof, and experiment reports
+    remain open.
+  - Verification: focused config and ensemble scheduler tests pass.

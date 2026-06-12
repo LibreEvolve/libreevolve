@@ -11799,3 +11799,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     external timeout/failure artifacts.
   - Verification: focused critique reviewer runtime tests validate the
     implemented behavior and metadata fields.
+
+- [x] Record opt-in role-owned scheduler selection as partial per-role
+      orchestration evidence.
+  - Spec evidence: AlphaEvolve Sections 2.1 and 2.6 separate generation,
+    critique, feedback, and prompt-improvement work into auditable model-call
+    classes.
+  - Status: paper-facing TODOs now distinguish implemented
+    `llm_role_scheduler_scope="role_scoped"` live per-role UCB state from
+    missing calibrated reward contracts, quota ownership, fast/strong model-mix
+    evidence, and experiment reports.
+  - Verification: focused config and ensemble scheduler tests validate the
+    implemented behavior and telemetry fields.

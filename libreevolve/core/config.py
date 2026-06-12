@@ -153,6 +153,7 @@ class Config:
     llm_role_cost_microusd_limits: dict[str, int] = field(default_factory=dict)
     llm_role_seconds_limits: dict[str, float] = field(default_factory=dict)
     llm_reward_accounted_roles: list[str] = field(default_factory=lambda: ["mutation"])
+    llm_role_scheduler_scope: str = "shared"
     llm_role_backend_indices: dict[str, list[int]] = field(default_factory=dict)
     llm_role_failure_quarantine_after: dict[str, int] = field(default_factory=dict)
     llm_prompt_roles:       dict  = field(default_factory=dict)
@@ -372,6 +373,9 @@ class Config:
         )
         self.llm_reward_accounted_roles = _validate_llm_reward_accounted_roles(
             self.llm_reward_accounted_roles
+        )
+        self.llm_role_scheduler_scope = _validate_llm_role_scheduler_scope(
+            self.llm_role_scheduler_scope
         )
         self.llm_prompt_roles = _validate_llm_prompt_roles(self.llm_prompt_roles)
         _validate_eval_stages(self.eval_stages)
@@ -1936,6 +1940,15 @@ def _validate_llm_reward_accounted_roles(value: object) -> list[str]:
             seen.add(role)
             normalized.append(role)
     return normalized
+
+
+def _validate_llm_role_scheduler_scope(value: object) -> str:
+    if value not in {"shared", "role_scoped"}:
+        raise ConfigError(
+            "llm_role_scheduler_scope must be one of ['role_scoped', 'shared']"
+        )
+    assert isinstance(value, str)
+    return value
 
 
 def _validate_llm_role_backend_indices(

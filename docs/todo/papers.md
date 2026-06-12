@@ -320,15 +320,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     backend-metadata role matching, configured reward-accounted roles,
     per-role logical call limits, role-scoped provider/token/configured-cost/
     latency budget maps, feedback reward wiring for exact configured feedback
-    roles, scheduler-policy telemetry, and restorable per-role scheduler audit
-    records.
-  - Current gap: the live selection state is still the shared ensemble bandit;
-    role routing only narrows eligible backend indices, and
-    `role_scheduler_state` is audit/restore evidence rather than independent
-    per-role scheduler ownership with calibrated rewards and quotas.
-  - Required result: add independent per-role scheduler policies for mutation,
-    critique, feedback, and meta-prompt calls, plus restore validation and
-    experiment reports proving role-specific selection and budget behavior.
+    roles, scheduler-policy telemetry, restorable per-role scheduler records,
+    and opt-in `llm_role_scheduler_scope="role_scoped"` live selection that
+    uses reward-accounted roles' own counts, wins, and total pulls.
+  - Current gap: role-scoped selection is local UCB state ownership, not a
+    calibrated AlphaEvolve scheduler: reward contracts, quota ownership,
+    fast/strong model-mix evidence, and experiment reports proving
+    role-specific selection and budget behavior remain absent.
+  - Required result: add calibrated per-role scheduler policies for mutation,
+    critique, feedback, and meta-prompt calls, plus restore validation across
+    real run resumes and experiment reports proving role-specific selection and
+    budget behavior.
 
 - [ ] Validate fast/strong model-mix scheduling beyond local metadata tests.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4, "Models used".

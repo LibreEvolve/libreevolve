@@ -11486,3 +11486,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     reviewer elapsed seconds.
   - Verification: focused critique reviewer runtime tests validate the
     implemented behavior and metadata fields.
+
+- [x] Document opt-in role-owned LLM scheduler selection in README.
+  - Spec evidence: README scheduler wording needed to separate implemented
+    per-role live selection state from unsupported calibrated AlphaEvolve
+    scheduler claims.
+  - Status: README now documents `llm_role_scheduler_scope="role_scoped"` as an
+    opt-in mode where reward-accounted roles select from their own restorable
+    counts, wins, and total pulls, while keeping calibrated reward contracts,
+    role-owned quota/budget policy, and fast/strong model-mix validation open.
+  - Verification: focused config and ensemble scheduler tests validate the
+    implemented behavior and telemetry fields.

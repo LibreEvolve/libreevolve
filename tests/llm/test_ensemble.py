@@ -437,6 +437,59 @@ def test_configured_reward_accounted_roles_advance_scheduler_counts():
     assert role_state["rewarded_call_ids"] == [ens.last_call["id"]]
 
 
+def test_shared_role_scheduler_scope_uses_global_selection_state():
+    b1 = _b("b1", "mutation answer")
+    b2 = _b("b2", "critique answer")
+    ens = LLMEnsemble(
+        [b1, b2],
+        reward_accounted_roles=["mutation", "critique"],
+    )
+    _, mutation_idx = ens.generate("mutation prompt", role="mutation")
+    ens.record_reward(mutation_idx, 1.0, call_id=ens.last_call["id"])
+
+    _, critique_idx = ens.generate("critique prompt", role="critique")
+
+    assert mutation_idx == 0
+    assert critique_idx == 1
+    assert ens.scheduler_state["role_scheduler_scope"] == "shared"
+    assert ens.last_call["scheduler_policy"]["selection_scope"] == "global_backend_bandit"
+    role_state = ens.scheduler_state["role_scheduler_state"]["critique"]
+    assert role_state["selection_policy"] == (
+        "backend_metadata_role_scoped_when_configured_else_global"
+    )
+    assert role_state["counts"] == [0, 1]
+
+
+def test_role_scoped_scheduler_scope_uses_independent_role_counts():
+    b1 = _b("b1", "mutation and critique answer")
+    b2 = _b("b2", "unused shared-state exploration")
+    ens = LLMEnsemble(
+        [b1, b2],
+        reward_accounted_roles=["mutation", "critique"],
+        role_scheduler_scope="role_scoped",
+    )
+    _, mutation_idx = ens.generate("mutation prompt", role="mutation")
+    ens.record_reward(mutation_idx, 1.0, call_id=ens.last_call["id"])
+
+    _, critique_idx = ens.generate("critique prompt", role="critique")
+
+    assert mutation_idx == 0
+    assert critique_idx == 0
+    assert ens.counts == [2, 0]
+    assert ens.total == 2
+    assert ens.scheduler_state["role_scheduler_scope"] == "role_scoped"
+    policy = ens.last_call["scheduler_policy"]
+    assert policy["selection_scope"] == "role_owned_backend_bandit"
+    assert policy["role_selection_policy"] == (
+        "role_owned_counts_global_backend_eligibility"
+    )
+    role_state = ens.scheduler_state["role_scheduler_state"]["critique"]
+    assert role_state["selection_policy"] == "role_owned_bandit_selection_state"
+    assert role_state["counts"] == [1, 0]
+    assert role_state["wins"] == [0.0, 0.0]
+    assert role_state["total"] == 1
+
+
 def test_scheduler_state_restores_role_scheduler_state():
     source = LLMEnsemble(
         [_b("b1", "answer"), _b("b2", "other")],
@@ -467,6 +520,26 @@ def test_scheduler_state_restores_role_scheduler_state():
     assert restored.scheduler_state["role_scheduler_state"]["critique"][
         "rewarded_call_ids"
     ] == [call_id]
+
+
+def test_scheduler_state_restores_role_scoped_scheduler_scope():
+    source = LLMEnsemble(
+        [_b("b1", "answer"), _b("b2", "other")],
+        reward_accounted_roles=["mutation", "critique"],
+        role_scheduler_scope="role_scoped",
+    )
+    source.generate("critique prompt", role="critique")
+
+    restored = LLMEnsemble(
+        [_b("b1", "answer"), _b("b2", "other")],
+        reward_accounted_roles=["mutation"],
+    )
+    restored.restore_scheduler_state(source.scheduler_state)
+
+    assert restored.scheduler_state["role_scheduler_scope"] == "role_scoped"
+    assert restored.scheduler_state["role_scheduler_state"]["critique"][
+        "selection_policy"
+    ] == "role_owned_bandit_selection_state"
 
 
 def test_scheduler_state_restores_all_loop_llm_roles():
@@ -1005,6 +1078,27 @@ def test_build_llm_passes_reward_accounted_roles(mocker):
         "policy": "configured_reward_accounted_roles_v1",
         "reward_accounted_roles": ["critique", "mutation"],
     }
+
+
+def test_build_llm_passes_role_scheduler_scope(mocker):
+    backend = _b("configured", "answer")
+    mocker.patch(
+        "libreevolve.llm.backend_registry.build_registry_backends",
+        return_value=([backend], [{}]),
+    )
+    config = Config(
+        llm_reward_accounted_roles=["mutation", "critique"],
+        llm_role_scheduler_scope="role_scoped",
+        backends=[{"type": "anthropic", "model": "claude-sonnet-4-6"}],
+    )
+
+    ensemble = build_llm(config)
+    ensemble.generate("critique prompt", role="critique")
+
+    assert ensemble.scheduler_state["role_scheduler_scope"] == "role_scoped"
+    assert ensemble.last_call["scheduler_policy"]["selection_scope"] == (
+        "role_owned_backend_bandit"
+    )
 
 
 def test_build_llm_passes_role_call_limits(mocker):
@@ -1800,6 +1894,15 @@ def test_restore_scheduler_state_preserves_reward_call_ledger():
                 "counts": [0],
                 "wins": [0.0],
                 "total": 0,
+                "role_scheduler_scope": "global",
+            },
+            "role_scheduler_scope",
+        ),
+        (
+            {
+                "counts": [0],
+                "wins": [0.0],
+                "total": 0,
                 "role_accounting": "bad",
             },
             "role_accounting",
@@ -1916,6 +2019,7 @@ def test_restore_scheduler_state_rejects_malformed_state(state, message):
             "policy": "configured_reward_accounted_roles_v1",
             "reward_accounted_roles": ["mutation"],
         },
+        "role_scheduler_scope": "shared",
         "role_accounting": {},
         "role_scheduler_state": {},
         "role_call_limits": {
@@ -4205,6 +4309,7 @@ def test_throughput_depth_call_telemetry_records_effective_policy():
         "selection_scope": "global_backend_bandit",
         "role_selection_policy": "shared_selection_reward_accounting_configurable_by_role",
         "reward_accounted_roles": ["mutation"],
+        "role_scheduler_scope": "shared",
         "explore_coeff": 1.0,
         "max_retries": 0,
         "max_call_attempts": 32,

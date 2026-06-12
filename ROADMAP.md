@@ -599,11 +599,11 @@ is not yet an AlphaEvolve reproduction.
 
 - Normalize/document UCB rewards against bounded assumptions or rename the
   current policy as a heuristic.
-- Extend configured reward-accounted role selection, role-scoped backend
-  eligibility, logical call caps, and role budget maps into separate per-role
-  live scheduler state, calibrated reward signals, quota ownership, and budget
-  policy for mutation generation, critique, feedback grading, and meta-prompt
-  mutation calls.
+- Extend opt-in `llm_role_scheduler_scope="role_scoped"` live per-role
+  selection state, configured reward-accounted role selection, role-scoped
+  backend eligibility, logical call caps, and role budget maps into calibrated
+  reward signals, quota ownership, and budget policy for mutation generation,
+  critique, feedback grading, and meta-prompt mutation calls.
 - Extend current run-scoped call telemetry beyond provider usage, configured
   cost estimates, request ids, finish reasons, adapter-internal retry
   summaries, and token/cost/latency budget stops to include raw provider

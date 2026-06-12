@@ -78,6 +78,7 @@ _CUSTOM_BACKEND_CLASS_PATH_RE = re.compile(
 )
 _CUSTOM_BACKEND_KWARG_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_]{0,127}")
 _ENSEMBLE_STRATEGIES = {"ucb1", "throughput_depth"}
+_ROLE_SCHEDULER_SCOPES = {"shared", "role_scoped"}
 _OPENAI_REASONING_EFFORTS = OPENAI_REASONING_EFFORTS
 _OPENAI_API_MODES = OPENAI_API_MODES
 _THROUGHPUT_DEPTH_WEIGHTS = {"depth": 0.10, "cost": -0.05, "latency": -0.05}
@@ -116,6 +117,7 @@ class LLMEnsemble:
         max_prompt_chars: int | None = DEFAULT_MAX_PROMPT_CHARS,
         max_prompt_estimated_tokens: int | None = None,
         reward_accounted_roles: list[str] | tuple[str, ...] = DEFAULT_REWARD_ACCOUNTED_ROLES,
+        role_scheduler_scope: str = "shared",
         max_calls_by_role: Mapping[str, int] | None = None,
         role_backend_indices: Mapping[str, list[int] | tuple[int, ...]] | None = None,
         role_failure_quarantine_after: Mapping[str, int] | None = None,
@@ -147,6 +149,7 @@ class LLMEnsemble:
         self._reward_accounted_roles = _validate_reward_accounted_roles(
             reward_accounted_roles
         )
+        self.role_scheduler_scope = _validate_role_scheduler_scope(role_scheduler_scope)
         self.max_calls_by_role = _validate_max_calls_by_role(max_calls_by_role)
         self.role_failure_quarantine_after = _validate_role_quarantine_thresholds(
             role_failure_quarantine_after
@@ -205,13 +208,22 @@ class LLMEnsemble:
                 role_backend_indices - excluded
             ):
                 break
+            selection_record = (
+                self._role_scheduler_record(role)
+                if reward_accounted and self.role_scheduler_scope == "role_scoped"
+                else None
+            )
             idx = self._ucb1_select(
                 exclude=excluded,
                 allowed_indices=role_backend_indices,
                 account_selection=reward_accounted,
+                selection_record=selection_record,
             )
             if reward_accounted:
-                self._record_role_scheduler_selection(role, idx)
+                if selection_record is None:
+                    self._record_role_scheduler_selection(role, idx)
+                else:
+                    self._total += 1
             backend = self.backends[idx]
             for retry_attempt in range(self.max_retries + 1):
                 if attempt_index >= self.max_call_attempts:
@@ -427,6 +439,7 @@ class LLMEnsemble:
                 "policy": "configured_reward_accounted_roles_v1",
                 "reward_accounted_roles": sorted(self._reward_accounted_roles),
             },
+            "role_scheduler_scope": self.role_scheduler_scope,
             "role_accounting": deepcopy(self._role_accounting),
             "role_scheduler_state": deepcopy(self._role_scheduler_state),
             "role_call_limits": {
@@ -462,6 +475,7 @@ class LLMEnsemble:
             role_accounting,
             role_scheduler_state,
             reward_accounted_roles,
+            role_scheduler_scope,
             max_calls_by_role,
             logical_role_calls,
             role_failure_quarantine_after,
@@ -478,6 +492,7 @@ class LLMEnsemble:
         self._role_accounting = role_accounting
         self._role_scheduler_state = role_scheduler_state
         self._reward_accounted_roles = reward_accounted_roles
+        self.role_scheduler_scope = role_scheduler_scope
         if has_role_call_limits:
             self.max_calls_by_role = max_calls_by_role
         self._logical_role_calls = logical_role_calls
@@ -615,7 +630,14 @@ class LLMEnsemble:
         role = validate_llm_call_role(role)
         return self._role_scheduler_state.setdefault(
             role,
-            _empty_role_scheduler_record(len(self.backends)),
+            _empty_role_scheduler_record(
+                len(self.backends),
+                selection_policy=(
+                    "role_owned_bandit_selection_state"
+                    if self.role_scheduler_scope == "role_scoped"
+                    else "backend_metadata_role_scoped_when_configured_else_global"
+                ),
+            ),
         )
 
     def _ucb1_select(
@@ -624,6 +646,7 @@ class LLMEnsemble:
         *,
         allowed_indices: set[int] | None = None,
         account_selection: bool = True,
+        selection_record: dict | None = None,
     ) -> int:
         _validate_scheduler_state(self.scheduler_state, len(self.backends))
         exclude = exclude or set()
@@ -635,12 +658,18 @@ class LLMEnsemble:
         eligible -= exclude
         if not eligible:
             raise ValueError("no eligible LLM backend remains for selection")
-        effective_total = self._total + 1
+        counts = self._counts if selection_record is None else selection_record["counts"]
+        wins = self._wins if selection_record is None else selection_record["wins"]
+        current_total = self._total if selection_record is None else selection_record["total"]
+        effective_total = current_total + 1
         if account_selection:
-            self._total = effective_total
+            if selection_record is None:
+                self._total = effective_total
+            else:
+                selection_record["total"] = effective_total
         untried = [
             i for i in range(len(self.backends))
-            if i in eligible and self._counts[i] == 0
+            if i in eligible and counts[i] == 0
         ]
         if untried:
             return untried[0]
@@ -651,15 +680,15 @@ class LLMEnsemble:
                 scores.append(float("-inf"))
                 continue
             scores.append(
-                (self._wins[i] / max(self._counts[i], 1))
-                + self.c * math.sqrt(math.log(effective_total) / max(self._counts[i], 1))
+                (wins[i] / max(counts[i], 1))
+                + self.c * math.sqrt(math.log(effective_total) / max(counts[i], 1))
             )
         # Tiebreaker: prefer arms with fewer pulls (argmax breaks ties by first index,
         # so we use a tuple (score, -count) to prefer lower counts on ties)
         best_idx = 0
-        best_score = (scores[0], -self._counts[0])
+        best_score = (scores[0], -counts[0])
         for i in range(1, len(self.backends)):
-            current_score = (scores[i], -self._counts[i])
+            current_score = (scores[i], -counts[i])
             if current_score > best_score:
                 best_score = current_score
                 best_idx = i
@@ -1028,6 +1057,7 @@ class LLMEnsemble:
             "selection_scope": "global_backend_bandit",
             "role_selection_policy": "shared_selection_reward_accounting_configurable_by_role",
             "reward_accounted_roles": sorted(self._reward_accounted_roles),
+            "role_scheduler_scope": self.role_scheduler_scope,
             "explore_coeff": self.c,
             "max_retries": self.max_retries,
             "max_call_attempts": self.max_call_attempts,
@@ -1044,6 +1074,15 @@ class LLMEnsemble:
                 if configured
                 else "backend_metadata_role_match_when_available"
             )
+            if (
+                role is not None
+                and role in self._reward_accounted_roles
+                and self.role_scheduler_scope == "role_scoped"
+            ):
+                policy["selection_scope"] = "role_owned_backend_bandit"
+                policy["role_selection_policy"] = (
+                    f"{policy['role_selection_policy']}_with_role_owned_counts"
+                )
             policy["role"] = role
             policy["role_matched_backend_indices"] = sorted(role_backend_indices)
             policy["role_backend_policy"] = (
@@ -1058,6 +1097,15 @@ class LLMEnsemble:
             policy["metadata_normalization"] = _THROUGHPUT_DEPTH_NORMALIZATION
             policy["metadata_weights"] = dict(_THROUGHPUT_DEPTH_WEIGHTS)
             policy["neutral_normalized_metadata"] = _NEUTRAL_NORMALIZED_METADATA
+        if (
+            role is not None
+            and role in self._reward_accounted_roles
+            and self.role_scheduler_scope == "role_scoped"
+            and role_backend_indices is None
+        ):
+            policy["selection_scope"] = "role_owned_backend_bandit"
+            policy["role_selection_policy"] = "role_owned_counts_global_backend_eligibility"
+            policy["role"] = role
         return policy
 
 
@@ -2917,6 +2965,14 @@ def _validate_strategy(strategy: object) -> str:
     return strategy
 
 
+def _validate_role_scheduler_scope(scope: object) -> str:
+    if not isinstance(scope, str) or scope not in _ROLE_SCHEDULER_SCOPES:
+        raise ValueError(
+            "llm role_scheduler_scope must be one of ['role_scoped', 'shared']"
+        )
+    return scope
+
+
 def _validate_explore_coeff(explore_coeff: object) -> float:
     if isinstance(explore_coeff, bool) or not isinstance(explore_coeff, (int, float)):
         raise ValueError("ensemble exploration coefficient must be a finite non-negative number")
@@ -3092,6 +3148,7 @@ def _validate_scheduler_state(
     dict[str, dict[str, int | float]],
     dict[str, dict],
     set[str],
+    str,
     dict[str, int],
     dict[str, int],
     dict[str, int],
@@ -3107,6 +3164,7 @@ def _validate_scheduler_state(
         "rewarded_call_ids",
         "call_history_retention",
         "reward_accounting_policy",
+        "role_scheduler_scope",
         "role_accounting",
         "role_scheduler_state",
         "role_call_limits",
@@ -3144,6 +3202,9 @@ def _validate_scheduler_state(
     reward_accounted_roles = _validate_reward_accounting_policy(
         state.get("reward_accounting_policy")
     )
+    role_scheduler_scope = _validate_role_scheduler_scope(
+        state.get("role_scheduler_scope", "shared")
+    )
     role_accounting = _validate_role_accounting_state(state.get("role_accounting"))
     role_scheduler_state = _validate_role_scheduler_state(
         state.get("role_scheduler_state"),
@@ -3172,6 +3233,7 @@ def _validate_scheduler_state(
         role_accounting,
         role_scheduler_state,
         reward_accounted_roles,
+        role_scheduler_scope,
         max_calls_by_role,
         logical_role_calls,
         role_failure_quarantine_after,
@@ -3222,10 +3284,14 @@ def _validate_scheduler_win_vector(
     return wins
 
 
-def _empty_role_scheduler_record(backend_count: int) -> dict:
+def _empty_role_scheduler_record(
+    backend_count: int,
+    *,
+    selection_policy: str = "backend_metadata_role_scoped_when_configured_else_global",
+) -> dict:
     return {
         "policy": "per_role_scheduler_audit_state_not_selection_policy",
-        "selection_policy": "backend_metadata_role_scoped_when_configured_else_global",
+        "selection_policy": selection_policy,
         "counts": [0] * backend_count,
         "wins": [0.0] * backend_count,
         "total": 0,
@@ -3758,6 +3824,7 @@ def _validate_role_scheduler_state(raw: object, backend_count: int) -> dict[str,
         if selection_policy not in {
             "backend_metadata_role_scoped_when_configured_else_global",
             "global_ensemble_selection_state_is_authoritative",
+            "role_owned_bandit_selection_state",
         }:
             raise ValueError(
                 "scheduler role_scheduler_state"
@@ -3804,9 +3871,7 @@ def _validate_role_scheduler_state(raw: object, backend_count: int) -> dict[str,
             )
         normalized[role] = {
             "policy": value["policy"],
-            "selection_policy": (
-                "backend_metadata_role_scoped_when_configured_else_global"
-            ),
+            "selection_policy": selection_policy,
             "counts": counts,
             "wins": wins,
             "total": total,
@@ -4686,6 +4751,7 @@ def build_llm(config) -> LLMEnsemble:
         max_prompt_chars=config.prompt_max_chars,
         max_prompt_estimated_tokens=config.prompt_max_estimated_tokens,
         reward_accounted_roles=config.llm_reward_accounted_roles,
+        role_scheduler_scope=config.llm_role_scheduler_scope,
         max_calls_by_role=config.llm_role_call_limits,
         role_backend_indices=config.llm_role_backend_indices,
         role_failure_quarantine_after=config.llm_role_failure_quarantine_after,

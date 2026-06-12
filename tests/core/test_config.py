@@ -1463,6 +1463,14 @@ def test_accepts_llm_reward_accounted_roles():
     assert config.llm_reward_accounted_roles == ["mutation", "critique"]
 
 
+def test_accepts_llm_role_scheduler_scope():
+    assert Config(llm_role_scheduler_scope="shared").llm_role_scheduler_scope == "shared"
+    assert (
+        Config(llm_role_scheduler_scope="role_scoped").llm_role_scheduler_scope
+        == "role_scoped"
+    )
+
+
 def test_accepts_llm_role_call_limits():
     config = Config(
         llm_role_call_limits={
@@ -1617,6 +1625,18 @@ def test_rejects_invalid_llm_role_failure_quarantine_after(policy, message):
 def test_rejects_invalid_llm_reward_accounted_roles(roles, message):
     with pytest.raises(ConfigError, match=message):
         Config(llm_reward_accounted_roles=roles)
+
+
+@pytest.mark.parametrize(
+    ("scope", "message"),
+    [
+        ("global", "llm_role_scheduler_scope"),
+        (None, "llm_role_scheduler_scope"),
+    ],
+)
+def test_rejects_invalid_llm_role_scheduler_scope(scope, message):
+    with pytest.raises(ConfigError, match=message):
+        Config(llm_role_scheduler_scope=scope)
 
 
 def test_accepts_llm_prompt_role_policy():

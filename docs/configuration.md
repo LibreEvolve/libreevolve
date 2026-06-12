@@ -526,6 +526,11 @@ than it.
   can be listed here; successful feedback calls then reward the scheduler with
   the grader's normalized score. Labels use the same manifest-safe role grammar
   and secret-like value rejection as call roles.
+- `llm_role_scheduler_scope` (`"shared"`): controls which scheduler counts and
+  wins are used for reward-accounted role selection. `shared` preserves the
+  historical global ensemble bandit. `role_scoped` uses each reward-accounted
+  role's restorable `role_scheduler_state` counts, wins, and total pulls for
+  UCB selection while still maintaining aggregate scheduler counters.
 - `llm_prompt_roles` (`{}`): optional mapping from LLM call role to structured
   prompt-message instructions. Each role entry may define `system` and/or
   `developer` text, capped at 4000 characters per field. Omitted roles keep

@@ -322,7 +322,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     latency budget maps, feedback reward wiring for exact configured feedback
     roles, scheduler-policy telemetry, restorable per-role scheduler records,
     and opt-in `llm_role_scheduler_scope="role_scoped"` live selection that
-    uses reward-accounted roles' own counts, wins, and total pulls.
+    uses reward-accounted roles' own counts, wins, and total pulls. Startup
+    manifests, scheduler snapshots, runtime accounting, and per-call policy
+    telemetry expose the effective scheduler scope.
   - Current gap: role-scoped selection is local UCB state ownership, not a
     calibrated AlphaEvolve scheduler: reward contracts, quota ownership,
     fast/strong model-mix evidence, and experiment reports proving

@@ -1293,10 +1293,12 @@ aggregate `scheduler_totals`, and current LLM-related limits such as
 `llm_role_cost_microusd_limits`,
 `llm_max_retries`, `llm_max_call_attempts`, `llm_fallback`,
 `llm_call_timeout_sec`, `llm_max_response_chars`, `prompt_max_chars`,
-`prompt_max_estimated_tokens`, `llm_reward_accounted_roles`, and
-`llm_role_backend_indices`. Snapshot rows also copy the scheduler
+`prompt_max_estimated_tokens`, `llm_reward_accounted_roles`,
+`llm_role_scheduler_scope`, and `llm_role_backend_indices`. Snapshot rows also
+copy the scheduler
 `reward_accounting_policy`, which records the configured reward-accounted roles
-separately from telemetry-only roles, and `role_call_limits`, which records
+separately from telemetry-only roles, `role_scheduler_scope`, and
+`role_call_limits`, which records
 configured per-role logical-call limits plus consumed logical calls by role.
 They also copy `role_backend_policy`, which records explicit configured
 role-to-backend lanes, backend metadata role lanes, and the fallback policy.

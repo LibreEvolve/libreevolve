@@ -2256,6 +2256,7 @@ def _runtime_llm_accounting(config: Config, scheduler_record: dict) -> dict:
                 "prompt_max_chars": config.prompt_max_chars,
                 "prompt_max_estimated_tokens": config.prompt_max_estimated_tokens,
                 "llm_reward_accounted_roles": list(config.llm_reward_accounted_roles),
+                "llm_role_scheduler_scope": config.llm_role_scheduler_scope,
             },
             "reward_accounting_policy": state.get(
                 "reward_accounting_policy",
@@ -2264,6 +2265,7 @@ def _runtime_llm_accounting(config: Config, scheduler_record: dict) -> dict:
                     "reward_accounted_roles": ["mutation"],
                 },
             ),
+            "role_scheduler_scope": state.get("role_scheduler_scope", "shared"),
             "role_accounting": role_accounting,
             "role_scheduler_state": role_scheduler_state,
             "role_call_limits": role_call_limits,

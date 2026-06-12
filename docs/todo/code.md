@@ -4235,7 +4235,8 @@ Primary evidence:
     `llm_role_scheduler_scope="role_scoped"` now makes reward-accounted roles
     use their own `role_scheduler_state` counts, wins, and total pulls for UCB
     selection while preserving aggregate scheduler counters and restore
-    validation.
+    validation. Startup manifests and `runtime.llm_accounting` now preserve the
+    configured and effective scheduler scope for run-artifact audits.
   - Remaining gap: role-scoped selection still shares the global exploration
     coefficient and backend set unless role routing narrows it, and it does not
     yet provide role-specific reward calibration, quota/budget ownership, or

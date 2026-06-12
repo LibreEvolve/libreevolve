@@ -125,6 +125,11 @@ Current behavior:
   `["mutation"]`, so critique, feedback, and meta-prompt calls remain
   telemetry-only unless explicitly configured otherwise. Scheduler snapshots
   expose the effective `reward_accounting_policy`.
+- `llm_role_scheduler_scope` selects the scheduler state used for
+  reward-accounted role selection. `shared` preserves the global ensemble
+  bandit; `role_scoped` uses each role's restorable `role_scheduler_state`.
+  Startup manifests, scheduler snapshots, runtime accounting, and per-call
+  `scheduler_policy` records expose the effective scope.
 - `llm_role_backend_indices` can route a validated call role to an explicit
   backend-index lane before scheduler selection. Roles without an explicit
   route can still use backend metadata `role` lanes; roles without either route

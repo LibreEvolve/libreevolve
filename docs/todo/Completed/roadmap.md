@@ -9027,3 +9027,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     quota ownership, budget policy, and experiment reports open.
   - Verification: focused config and ensemble scheduler tests validate the
     implemented behavior and telemetry fields.
+
+- [x] Preserve role scheduler scope in runtime artifact documentation.
+  - Spec evidence: Roadmap-facing scheduler claims need durable run-artifact
+    evidence for whether selection used shared or role-owned scheduler state.
+  - Status: docs now record that startup manifests, scheduler snapshots, and
+    runtime accounting preserve `llm_role_scheduler_scope`, while roadmap
+    future work remains scoped to calibrated reward signals, quota ownership,
+    budget policy, and experiment reports.
+  - Verification: focused runtime manifest/accounting tests validate the
+    implemented fields.

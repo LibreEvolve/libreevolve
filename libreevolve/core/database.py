@@ -8009,6 +8009,7 @@ def _startup_manifest_payload(
             ),
             "llm_role_seconds_limits": dict(config.llm_role_seconds_limits),
             "llm_reward_accounted_roles": list(config.llm_reward_accounted_roles),
+            "llm_role_scheduler_scope": config.llm_role_scheduler_scope,
             "llm_role_backend_indices": {
                 role: list(indices)
                 for role, indices in config.llm_role_backend_indices.items()

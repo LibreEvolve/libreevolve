@@ -1801,6 +1801,7 @@ def test_completed_runtime_persists_llm_scheduler_state_snapshot():
         "policy": "configured_reward_accounted_roles_v1",
         "reward_accounted_roles": ["mutation"],
     }
+    assert scheduler["state"]["role_scheduler_scope"] == "shared"
     assert scheduler["state"]["role_call_limits"] == {
         "policy": "logical_generate_call_limits_by_role_v1",
         "max_calls_by_role": {},
@@ -1834,10 +1835,12 @@ def test_completed_runtime_persists_llm_scheduler_state_snapshot():
     assert accounting["limits"]["llm_fallback"] is True
     assert accounting["limits"]["prompt_max_chars"] is None
     assert accounting["limits"]["llm_reward_accounted_roles"] == ["mutation"]
+    assert accounting["limits"]["llm_role_scheduler_scope"] == "shared"
     assert accounting["reward_accounting_policy"] == {
         "policy": "configured_reward_accounted_roles_v1",
         "reward_accounted_roles": ["mutation"],
     }
+    assert accounting["role_scheduler_scope"] == "shared"
     assert accounting["role_accounting"]["mutation"]["calls"] == 1
     assert accounting["role_accounting"]["mutation"]["reward_accounted_calls"] == 1
     assert accounting["role_accounting"]["mutation"]["provider_internal_attempts"] == 0
@@ -1869,27 +1872,27 @@ def test_completed_runtime_persists_llm_scheduler_state_snapshot():
     assert budget_validation.ok is True
     assert budget_validation.paper_budget_ready is False
     assert budget_report["role_budgets"] == [
-            {
-                "role": "mutation",
-                "logical_call_limit": 1,
-                "retry_attempt_limit": 31,
-                "adapter_attempt_limit": 0,
-                "configured_adapter_attempt_limit": None,
-                "configured_token_limit": None,
-                "configured_cost_limit_usd": None,
-                "configured_wall_clock_limit_seconds": None,
-                "limit_source": {
-                    "logical_call_limit": "observed_role_calls",
-                    "retry_attempt_limit": (
-                        "config.llm_max_call_attempts_times_observed_role_calls"
-                    ),
-                    "adapter_attempt_limit": "observed_provider_internal_attempts",
-                    "token_limit": "not_configured",
-                    "cost_limit_usd": "not_configured",
-                    "wall_clock_limit_seconds": "not_configured",
-                },
-            }
-        ]
+        {
+            "role": "mutation",
+            "logical_call_limit": 1,
+            "retry_attempt_limit": 31,
+            "adapter_attempt_limit": 0,
+            "configured_adapter_attempt_limit": None,
+            "configured_token_limit": None,
+            "configured_cost_limit_usd": None,
+            "configured_wall_clock_limit_seconds": None,
+            "limit_source": {
+                "logical_call_limit": "observed_role_calls",
+                "retry_attempt_limit": (
+                    "config.llm_max_call_attempts_times_observed_role_calls"
+                ),
+                "adapter_attempt_limit": "observed_provider_internal_attempts",
+                "token_limit": "not_configured",
+                "cost_limit_usd": "not_configured",
+                "wall_clock_limit_seconds": "not_configured",
+            },
+        }
+    ]
     role_usage = budget_report["role_usage"]
     assert len(role_usage) == 1
     assert role_usage[0].pop("wall_clock_seconds") >= 0.0
@@ -1911,6 +1914,35 @@ def test_completed_runtime_persists_llm_scheduler_state_snapshot():
     assert budget_report["resume_state"]["persisted"] is True
     assert budget_report["resume_state"]["restored"] is False
     assert len(budget_report["resume_state"]["state_sha256"]) == 64
+
+
+def test_runtime_persists_role_scoped_llm_scheduler_scope():
+    tmpdir = tempfile.mkdtemp()
+    backend = MagicMock()
+    backend.name = "scheduler/model"
+    backend.api_mode = None
+    backend.generate.return_value = "<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE"
+    llm = LLMEnsemble([backend], role_scheduler_scope="role_scoped")
+
+    config = Config(
+        max_generations=1,
+        log_dir=tmpdir,
+        problem_name="t",
+        llm_role_scheduler_scope="role_scoped",
+    )
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(_problem(), config)
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    assert manifest["config"]["llm_role_scheduler_scope"] == "role_scoped"
+    scheduler = manifest["runtime"]["llm_scheduler"]
+    assert scheduler["state"]["role_scheduler_scope"] == "role_scoped"
+    assert scheduler["state"]["role_scheduler_state"]["mutation"][
+        "selection_policy"
+    ] == "role_owned_bandit_selection_state"
+    accounting = manifest["runtime"]["llm_accounting"]
+    assert accounting["limits"]["llm_role_scheduler_scope"] == "role_scoped"
+    assert accounting["role_scheduler_scope"] == "role_scoped"
 
 
 def test_runtime_llm_budget_report_retains_provider_retry_attempts_by_role():

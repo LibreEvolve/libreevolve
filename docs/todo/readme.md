@@ -2566,9 +2566,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     reward-accounted roles use their own counts, wins, and total pulls for
     selection. It also states that calibrated reward contracts, role-owned
     quota/budget policy, and experiment-backed fast/strong model-mix validation
-    remain open. README should likewise avoid implying that backend metadata or
-    `throughput_depth` unit coverage proves a Flash/Pro-style fast-breadth plus
-    strong-depth scheduling policy.
+    remain open, and that runtime accounting copies the effective scheduler
+    scope for audit. README should likewise avoid implying that backend
+    metadata or `throughput_depth` unit coverage proves a Flash/Pro-style
+    fast-breadth plus strong-depth scheduling policy.
   - Required result: once calibrated reward semantics, quota/budget ownership,
     and experiment-backed fast/
     strong model-mix scheduling land, update the README and matching

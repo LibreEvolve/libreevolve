@@ -11497,3 +11497,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     role-owned quota/budget policy, and fast/strong model-mix validation open.
   - Verification: focused config and ensemble scheduler tests validate the
     implemented behavior and telemetry fields.
+
+- [x] Document role scheduler scope in runtime accounting artifacts.
+  - Spec evidence: README artifact wording needed to identify where shared
+    versus role-owned scheduler selection can be audited after a run.
+  - Status: README now states that `runtime.llm_accounting` copies
+    `role_scheduler_scope` alongside `role_call_limits` and
+    `reward_accounting_policy`.
+  - Verification: focused runtime manifest/accounting tests validate the
+    implemented fields.

@@ -11811,3 +11811,13 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     evidence, and experiment reports.
   - Verification: focused config and ensemble scheduler tests validate the
     implemented behavior and telemetry fields.
+
+- [x] Record role scheduler scope as persisted per-role orchestration
+      artifact evidence.
+  - Spec evidence: AlphaEvolve Sections 2.1 and 2.6 require model-call
+    orchestration evidence to remain inspectable in run artifacts.
+  - Status: paper-facing docs now state that startup manifests, scheduler
+    snapshots, runtime accounting, and per-call policy telemetry expose the
+    effective `llm_role_scheduler_scope`.
+  - Verification: focused runtime manifest/accounting tests validate the
+    implemented fields.

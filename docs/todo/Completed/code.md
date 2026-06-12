@@ -17179,3 +17179,16 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     quota/budget ownership, fast/strong model-mix proof, and experiment reports
     remain open.
   - Verification: focused config and ensemble scheduler tests pass.
+
+- [x] Persist role scheduler scope through manifest and runtime accounting
+      artifacts.
+  - Spec evidence: AlphaEvolve-style per-role orchestration evidence needs the
+    selected scheduler policy to be recoverable from run artifacts, not only
+    visible inside the live ensemble object.
+  - Status: startup manifests now record `config.llm_role_scheduler_scope`, and
+    `runtime.llm_accounting` records both the configured limit value and the
+    scheduler snapshot's effective `role_scheduler_scope`.
+  - Remaining gap: this preserves the selection-scope audit trail; calibrated
+    reward contracts, quota/budget ownership, and experiment reports remain
+    open.
+  - Verification: focused runtime manifest/accounting tests pass.

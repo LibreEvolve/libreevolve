@@ -1914,7 +1914,8 @@ role-accounting counters into a compact manifest summary, adds aggregate totals,
 copies `role_scheduler_state` plus aggregate scheduler totals, records the
 active logical-call, per-role logical-call, retry/fallback, timeout, prompt,
 accepted-output, and reward-accounted-role caps, copies the scheduler
-`role_call_limits`, and copies the scheduler `reward_accounting_policy`.
+`role_call_limits`, and copies the scheduler `reward_accounting_policy` plus
+`role_scheduler_scope`.
 Its policy is `audit_summary_not_budget_enforced`.
 Scheduler metadata and counter reads return defensive copies; use
 `restore_scheduler_state()` for validated direct bandit-state restoration,

@@ -848,7 +848,10 @@ retry/fallback attempts, and adapter-internal provider attempts, plus
 provider-reported token totals, provider-failure category counts, and the
 effective `reward_accounting_policy`. Scheduler snapshots now also include
 `role_scheduler_state`, which keeps per-role backend counts, wins, total pulls,
-and rewarded/unrewarded call ids for audit and validated restore. Per-call
+and rewarded/unrewarded call ids for audit and validated restore. The configured
+`llm_role_scheduler_scope` is preserved in startup manifests, scheduler
+snapshots, and runtime accounting so shared versus role-owned selection is
+auditable after the run. Per-call
 `scheduler_policy` records whether selection used the global bandit, an
 explicit `llm_role_backend_indices` backend lane, or backend `role` metadata.
 Configured `llm_role_call_limits` enforce logical `generate()` call quotas by

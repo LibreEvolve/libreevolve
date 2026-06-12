@@ -10088,6 +10088,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     root and focused system-contribution tests reject git-history,
     package-authorship, validation, or deployment scope drift.
 
+- [x] Keep roadmap initial-program idea boundary tied to sidecar.
+  - Status: ROADMAP now links initial-program idea provenance reports to
+    `papers/initial_program_idea_provenance_boundary.json`, preserving the
+    paper-facing metadata-contract-only boundary until equal-budget seed-
+    variant result tables and human contribution signoff exist.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused initial-program idea tests reject premature parity
+    claims.
+
 - [x] Preserve `2603.28052` Meta-Harness paper-cache scope in roadmap.
   - Status: ROADMAP now identifies arXiv `2603.28052`, `Meta-Harness:
     End-to-End Optimization of Model Harnesses`, as background outer-loop

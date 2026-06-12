@@ -2958,7 +2958,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     manifests include `runtime.history.initial_program_idea_provenance_report`,
     which links those fields to generation-0 history rows and declared metric
     names while keeping equal-budget result evidence and human-seeded parity
-    false.
+    false. `papers/initial_program_idea_provenance_boundary.json` now
+    preserves this metadata-contract-only boundary as paper-manifest evidence.
   - Required result: add paper/report evidence for prompt/context linkage,
     equal-budget seed-variant outcomes, simple/random/researcher-idea seed
     comparisons, matrix and constructive-math seed-variant result tables, and

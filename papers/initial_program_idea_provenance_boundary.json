@@ -1,0 +1,36 @@
+{
+  "schema": "libreevolve.alphaevolve_initial_program_idea_provenance_boundary.v1",
+  "runtime_report_schema": "libreevolve.initial_program_idea_provenance_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve Section 2.1 identifies the initial program and optional background knowledge as user inputs, while Section 3.1 reports matrix runs that improved when researchers seeded initial programs with ideas such as stochastic evaluation or evolutionary approaches",
+  "boundary_status": "metadata_contract_only",
+  "runtime_report_status": "initial_program_idea_provenance_report_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "seed_source_identity_recorded",
+    "generation_zero_history_linked",
+    "idea_origin_metadata_present",
+    "human_or_background_contribution_labels",
+    "seed_variant_ids_recorded",
+    "evaluator_metric_linkage",
+    "equal_budget_seed_variant_results",
+    "alphaevolve_human_seeded_benchmark_parity",
+    "prompt_context_to_seed_idea_linkage",
+    "simple_random_researcher_seed_comparison",
+    "matrix_seed_variant_result_tables",
+    "constructive_math_seed_variant_result_tables",
+    "human_contribution_review_or_signoff",
+    "paper_facing_certification_rows"
+  ],
+  "missing_evidence": {
+    "equal_budget_seed_variant_results": "not_recorded_locally",
+    "simple_random_researcher_seed_comparison": "not_recorded_locally",
+    "matrix_seed_variant_result_tables": "not_recorded_locally",
+    "constructive_math_seed_variant_result_tables": "not_recorded_locally",
+    "human_contribution_review_or_signoff": "not_recorded_locally",
+    "prompt_context_to_seed_idea_linkage": "not_recorded_locally",
+    "paper_facing_certification_rows": "not_recorded_locally",
+    "alphaevolve_human_seeded_benchmark_parity": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has optional seed idea metadata fields under problem.seed_sources and a runtime report linking seed sources to generation-zero history, seed variant ids, idea-origin classes, contribution roles, prior-technique labels, background references, and evaluator metrics, but does not claim equal-budget seed-variant result tables, simple/random/researcher seed comparisons, matrix or constructive-math seed-variant reports, human contribution review/signoff, prompt-context-to-seed linkage, paper-facing certification rows, or AlphaEvolve human-seeded benchmark parity."
+}

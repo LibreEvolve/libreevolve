@@ -63,7 +63,9 @@ optional seed idea metadata from `problem.seed_sources`, links seed sources to
 generation-0 history rows, records seed variant ids, idea-origin class,
 contribution roles, prior-technique and background-reference labels, declared
 metric linkage, and explicit `claim_ready: false` gaps for equal-budget seed
-variant result tables and human contribution review/signoff.
+variant result tables and human contribution review/signoff. The paper-facing
+sidecar `papers/initial_program_idea_provenance_boundary.json` preserves this
+metadata-contract-only boundary.
 Completed manifests also include
 `runtime.history.initial_program_validity_report` with schema
 `libreevolve.initial_program_validity_report.v1`. This report records the

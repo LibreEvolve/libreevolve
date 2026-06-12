@@ -345,6 +345,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and `runtime.history.initial_program_idea_provenance_report` with seed
     variant ids, idea-origin labels, contribution roles, prior-technique/
     background refs, history linkage, and metric linkage.
+    `papers/initial_program_idea_provenance_boundary.json` now preserves the
+    roadmap-visible metadata-contract-only boundary for this runtime surface.
   - Required result: when seed-variant result tables, prompt/context linkage,
     equal-budget simple/random/researcher-idea comparisons, and contribution
     review/signoff land, update roadmap, README, papers index, and code/paper

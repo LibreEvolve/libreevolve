@@ -18321,3 +18321,12 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     claim-ready underclaiming, invalid boundary status, missing phases or
     evidence fields, and git-history scope drift.
+
+- [x] Add initial-program idea provenance sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/initial_program_idea_provenance_boundary.py`
+    now emits and validates the initial-program idea metadata-contract-only
+    boundary, and `libreevolve/tools/paper_manifest.py` requires the committed
+    paper sidecar at the repo root.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    claim-ready overclaims, invalid boundary status, missing evidence fields,
+    and premature AlphaEvolve human-seeded benchmark parity.

@@ -493,7 +493,9 @@ metadata to generation-0 history rows and declared metric names. AlphaEvolve
 Section 3.1 reports matrix runs boosted by human ideas in the initial program,
 such as stochastic evaluation or evolutionary approaches; LibreEvolve still
 needs equal-budget seed-variant result evidence and contribution review/signoff
-before making that class of paper claim.
+before making that class of paper claim. The committed
+`papers/initial_program_idea_provenance_boundary.json` sidecar preserves this
+metadata-contract-only boundary for paper-manifest validation.
 
 AlphaEvolve initial-pool divergence note: completed manifests now include
 `runtime.history.initial_pool_divergence_report`, which compares generated

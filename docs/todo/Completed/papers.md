@@ -12888,6 +12888,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     package-authorship, publication-author, acknowledgement, validation, and
     deployment scope drift.
 
+- [x] Record initial-program idea provenance paper-facing sidecar.
+  - Status: `libreevolve/problems/benchmarks/initial_program_idea_provenance_boundary.py`
+    and `papers/initial_program_idea_provenance_boundary.json` now preserve
+    that optional seed idea metadata and runtime provenance reports exist,
+    while equal-budget seed-variant result tables, simple/random/researcher
+    seed comparisons, matrix and constructive-math seed-variant reports,
+    prompt-context linkage, human contribution review/signoff, paper-facing
+    certification rows, and AlphaEvolve human-seeded benchmark parity remain
+    absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused initial-program idea boundary tests reject premature
+    parity claims.
+
 - [x] Add `2603.28052` Meta-Harness paper-cache coverage.
   - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
     `papers/row_identity.json`, and `papers/README.md` now include

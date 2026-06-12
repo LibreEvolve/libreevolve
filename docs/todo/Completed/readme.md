@@ -12552,3 +12552,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused system-contribution tests reject git-history, package-authorship,
     validation, or deployment scope drift.
+
+- [x] Keep README initial-program idea boundary tied to paper-index sidecar.
+  - Status: README now states that initial-program idea provenance remains a
+    metadata/report contract until equal-budget seed-variant result tables,
+    prompt-context linkage, and human contribution review exist, with the
+    boundary tracked by
+    `papers/initial_program_idea_provenance_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused initial-program idea tests reject premature human-seeded benchmark
+    parity claims.

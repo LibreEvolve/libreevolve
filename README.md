@@ -76,6 +76,10 @@ Important limits:
   records; the boundary is tracked by
   `papers/system_contribution_provenance_boundary.json` and does not claim git
   history, package authorship, local validation, or deployment evidence.
+- Initial-program idea provenance is a metadata/report contract until
+  equal-budget seed-variant result tables, prompt-context linkage, and
+  human contribution review exist; the boundary is tracked by
+  `papers/initial_program_idea_provenance_boundary.json`.
 - The included examples are smoke fixtures and small demos unless explicitly
   documented otherwise.
 - Paper and blog claims are tracked as source boundaries unless local benchmark

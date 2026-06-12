@@ -297,6 +297,8 @@ Primary evidence:
     metric names, seed variant ids, idea-origin classes, contribution roles,
     and background/prior-technique labels while keeping AlphaEvolve
     human-seeded benchmark parity false.
+    `papers/initial_program_idea_provenance_boundary.json` now preserves this
+    metadata-contract-only boundary as paper-manifest evidence.
   - Required result: add prompt/run linkage to exact rendered context,
     benchmark-level seed-variant result tables, equal-budget comparisons of
     simple/random/researcher-idea starts, matrix and constructive-math seed

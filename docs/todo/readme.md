@@ -430,7 +430,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     mark `workspace_math` as a smoke `workspace_packaging_fixture` and not
     AlphaEvolve-comparable. README also names
     `papers/candidate_language_runner_boundary.json` as the committed
-    paper-manifest-validated arbitrary-language/build-runner absence boundary.
+    paper-manifest-validated arbitrary-language/build-runner absence boundary,
+    and `papers/codebase_scale_benchmark_boundary.json` as the committed
+    code-scale absence boundary.
   - Required result: when realistic codebase-scale benchmark fixtures land,
     update README, ROADMAP, papers index, and code/paper TODO entries with
     cross-file dependency edit evidence, evaluator budget, quality-progress

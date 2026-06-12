@@ -1863,6 +1863,10 @@ current run, not a codebase-scale benchmark result: cross-file dependency-edit
 evidence, realistic codebase fixtures, arbitrary-language/build-runner
 execution, long-horizon quality progress, and Table 1 code-scale parity remain
 explicitly false.
+The paper-facing counterpart is
+`papers/codebase_scale_benchmark_boundary.json`, which manifest validation
+requires at the repository root so this telemetry cannot drift into a Table 1
+code-scale parity claim.
 Retained elite-only candidates can still resurface through best/exploit,
 metric, novelty, recency, selection, mixed inspiration, and migration paths.
 They remain excluded from occupied-cell explore and random inspiration pools

@@ -759,7 +759,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     programs. The example scope registry still marks `workspace_math` as
     `alphaevolve_comparable: False` with current role
     `workspace_packaging_fixture`, so it is evidence for mechanics rather than
-    Table 1-scale performance.
+    Table 1-scale performance. The committed
+    `papers/codebase_scale_benchmark_boundary.json` sidecar preserves this
+    absence boundary for paper-manifest validation.
   - Current gap: there is no realistic benchmark fixture that demonstrates
     hundreds-line generated programs, coupled multi-component edits,
     non-Python or build-runner execution, realistic codebase dependency edits,

@@ -149,6 +149,12 @@ from libreevolve.problems.benchmarks.distributed_pipeline_topology_boundary impo
     render_distributed_pipeline_topology_boundary_summary,
     validate_distributed_pipeline_topology_boundary,
 )
+from libreevolve.problems.benchmarks.codebase_scale_benchmark_boundary import (
+    CODEBASE_SCALE_BENCHMARK_BOUNDARY_SCHEMA,
+    codebase_scale_benchmark_boundary_record,
+    render_codebase_scale_benchmark_boundary_summary,
+    validate_codebase_scale_benchmark_boundary,
+)
 from libreevolve.problems.benchmarks.codeevolve_boundary import (
     CODEEVOLVE_BOUNDARY_SCHEMA,
     codeevolve_boundary_record,
@@ -533,6 +539,7 @@ __all__ = [
     "CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_SCHEMA",
     "CAUSALEVOLVE_BOUNDARY_SCHEMA",
     "CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA",
+    "CODEBASE_SCALE_BENCHMARK_BOUNDARY_SCHEMA",
     "CODEEVOLVE_BOUNDARY_SCHEMA",
     "COMBINATORICS_BERCZY_BOUNDARY_SCHEMA",
     "CONTROLLER_BACKTRACKING_BOUNDARY_SCHEMA",
@@ -638,6 +645,7 @@ __all__ = [
     "candidate_language_runner_boundary_record",
     "causalevolve_boundary_record",
     "certification_artifact_inventory",
+    "codebase_scale_benchmark_boundary_record",
     "codeevolve_boundary_record",
     "combinatorics_berczy_boundary_record",
     "controller_backtracking_boundary_record",
@@ -721,6 +729,7 @@ __all__ = [
     "render_candidate_language_runner_boundary_summary",
     "render_causalevolve_boundary_summary",
     "render_certification_summary",
+    "render_codebase_scale_benchmark_boundary_summary",
     "render_codeevolve_boundary_summary",
     "render_combinatorics_berczy_boundary_summary",
     "render_controller_backtracking_boundary_summary",
@@ -812,6 +821,7 @@ __all__ = [
     "validate_candidate_language_runner_boundary",
     "validate_causalevolve_boundary",
     "validate_certification_evidence_bundle",
+    "validate_codebase_scale_benchmark_boundary",
     "validate_codeevolve_boundary",
     "validate_combinatorics_berczy_boundary",
     "validate_controller_backtracking_boundary",

@@ -9260,6 +9260,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: focused runtime codebase-scale benchmark boundary test
     validates the implemented report.
 
+- [x] Preserve codebase-scale benchmark paper-facing sidecar.
+  - Status: ROADMAP and TODO wording now link current run-local
+    codebase-scale telemetry to `papers/codebase_scale_benchmark_boundary.json`,
+    while preserving realistic fixture, dependency-edit, language/build-runner,
+    long-horizon progress, rate-summary, and Table 1 parity gaps.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused manifest tests reject drifted Table 1 readiness claims.
+
 - [x] Preserve incorrect-suggestion audit boundary.
   - Spec evidence: roadmap execution-grounding claims need to separate local
     evaluator filtering evidence from independent audit evidence.

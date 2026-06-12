@@ -82,7 +82,9 @@ LibreEvolve has:
   files/lines, multi-file and hundreds-line threshold evidence, and explicit
   false readiness for realistic codebase fixtures, arbitrary-language/build
   runners, cross-file dependency-edit evidence, long-horizon quality progress,
-  and Table 1 code-scale parity
+  and Table 1 code-scale parity, with
+  `papers/codebase_scale_benchmark_boundary.json` preserving the paper-facing
+  absence boundary
 - distributed-pipeline topology boundary reports under
   `runtime.history.distributed_pipeline_topology_report`, naming the current
   single-process controller, in-process database, configured LLM sampler
@@ -383,7 +385,9 @@ is not yet an AlphaEvolve reproduction.
   `runtime.history.alphaevolve_table1_capability_exhibit_report` preserves the
   comparison table as provenance, and
   `runtime.history.codebase_scale_benchmark_report` measures current run scale
-  without proving each row is satisfied.
+  without proving each row is satisfied. The committed
+  `papers/codebase_scale_benchmark_boundary.json` sidecar keeps that
+  Table 1 code-scale absence boundary machine-validated.
 - Extend `runtime.history.mutation_operator_boundary_report` beyond the
   current fixed diff/full/file/block/topology parser-surface evidence into
   proposal-level operator-family provenance, task/failure-aware operator

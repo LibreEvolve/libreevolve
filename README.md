@@ -39,6 +39,10 @@ Important limits:
   tracked by `runtime.history.parallel_evaluation_readiness_report` and
   `papers/parallel_evaluation_readiness_boundary.json`, while topology parity
   is bounded by `papers/distributed_pipeline_topology_boundary.json`.
+- Codebase-scale telemetry exists for current runs, but it is not
+  AlphaEvolve Table 1 code-scale parity; the boundary is tracked by
+  `runtime.history.codebase_scale_benchmark_report` and
+  `papers/codebase_scale_benchmark_boundary.json`.
 - The included examples are smoke fixtures and small demos unless explicitly
   documented otherwise.
 - Paper and blog claims are tracked as source boundaries unless local benchmark

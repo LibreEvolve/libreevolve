@@ -11695,6 +11695,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: focused runtime codebase-scale benchmark boundary test
     validates the implemented report.
 
+- [x] Document codebase-scale benchmark paper-facing sidecar.
+  - Status: README, papers index, run-artifact docs, and TODO ledgers now point
+    to `papers/codebase_scale_benchmark_boundary.json` as the committed
+    sidecar that preserves the Table 1 code-scale absence boundary.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused manifest tests reject premature Table 1 readiness claims.
+
 - [x] Document incorrect-suggestion audit boundary report.
   - Spec evidence: README execution-grounding wording needed to distinguish
     local evaluator filtering from independent false-acceptance/

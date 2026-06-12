@@ -471,6 +471,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     records still mark shipped examples, including `workspace_math`, as smoke
     fixtures with `alphaevolve_comparable: False`, and ROADMAP still names the
     arbitrary-language/build-runner absence boundary.
+    `papers/codebase_scale_benchmark_boundary.json` now preserves the
+    paper-facing absence boundary for current run-local scale telemetry versus
+    Table 1 code-scale parity.
   - Required result: when realistic large-codebase benchmark fixtures land,
     update roadmap, README, papers index, and code/paper TODO entries together
     so the roadmap separates current workspace mechanics and run-local scale

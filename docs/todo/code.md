@@ -462,7 +462,9 @@ Primary evidence:
     long-horizon quality progress, and Table 1 code-scale parity. Code
     evidence still marks `workspace_math` as `level: "smoke"`,
     `alphaevolve_comparable: False`, and
-    `current_role: "workspace_packaging_fixture"`.
+    `current_role: "workspace_packaging_fixture"`. The committed
+    `papers/codebase_scale_benchmark_boundary.json` sidecar keeps that
+    paper-facing absence boundary validated.
   - Required result: add realistic benchmark fixtures that exercise hundreds
     of generated lines, multiple coupled components, language/build runners if
     claimed, cross-file dependency edits, evaluator runtime, validity/admission

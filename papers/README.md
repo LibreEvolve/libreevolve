@@ -1271,7 +1271,9 @@ prompt/export paths, and a small `workspace_math` smoke fixture, but it lacks a
 paper-facing benchmark/report with hundreds-line generated programs, coupled
 cross-file/component edits, non-Python or build-runner execution, evaluator
 budget evidence, validity/admission rates, and score progress on a realistic
-codebase-scale task.
+codebase-scale task. The committed
+`papers/codebase_scale_benchmark_boundary.json` sidecar preserves this Table 1
+code-scale absence boundary for paper-manifest validation.
 
 LLM feedback artifact note: successful and failed feedback records can keep
 compatibility `raw_response` and parsed `feedback` previews, suppress them to

@@ -1,0 +1,35 @@
+{
+  "schema": "libreevolve.alphaevolve_codebase_scale_benchmark_boundary.v1",
+  "runtime_report_schema": "libreevolve.codebase_scale_benchmark_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve Table 1 and Section 2.1 report whole-code-file, hundreds-line, arbitrary-language, multi-component algorithm evolution, so local parity needs benchmark-backed codebase-scale evidence rather than only current-run workspace telemetry",
+  "boundary_status": "runtime_scale_telemetry_only",
+  "runtime_report_status": "codebase_scale_benchmark_report_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "retained_program_file_line_scale",
+    "generated_program_count",
+    "multi_file_program_count",
+    "hundreds_line_program_count",
+    "parent_relative_changed_files",
+    "parent_relative_changed_lines",
+    "static_file_references",
+    "realistic_codebase_benchmark_fixture",
+    "cross_file_dependency_edit_evidence",
+    "arbitrary_language_runner_execution",
+    "build_runner_execution_contract",
+    "long_horizon_quality_progress",
+    "valid_admitted_retained_rate_summary",
+    "table1_code_scale_parity"
+  ],
+  "missing_evidence": {
+    "large_multi_component_benchmark_fixture": "not_recorded_locally",
+    "hundreds_line_generated_program_success_curve": "not_recorded_locally",
+    "cross_file_dependency_edit_evidence": "not_recorded_locally",
+    "arbitrary_language_runner_execution": "not_recorded_locally",
+    "build_runner_execution_contract": "not_recorded_locally",
+    "long_horizon_quality_progress_on_codebase_task": "not_recorded_locally",
+    "benchmark_valid_admitted_retained_rate_summary": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has runtime telemetry for retained program file/line scale, generated candidate counts, multi-file and hundreds-line observations, parent-relative changed files/lines, static-file references, and threshold evidence, but does not claim realistic codebase fixtures, cross-file dependency edit evidence, arbitrary-language runner execution, build-runner contracts, long-horizon quality progress, benchmark valid/admitted/retained-rate summaries, or AlphaEvolve Table 1 code-scale parity."
+}

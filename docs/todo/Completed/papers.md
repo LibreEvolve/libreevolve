@@ -12077,6 +12077,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: focused runtime codebase-scale benchmark boundary test
     validates the implemented report.
 
+- [x] Record codebase-scale benchmark paper-facing sidecar.
+  - Status: `libreevolve/problems/benchmarks/codebase_scale_benchmark_boundary.py`
+    and `papers/codebase_scale_benchmark_boundary.json` now preserve that
+    current runtime scale telemetry exists, while realistic codebase fixtures,
+    cross-file dependency edit evidence, arbitrary-language/build-runner
+    execution, long-horizon quality progress, benchmark valid/admitted/retained
+    rate summaries, and Table 1 code-scale parity remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused codebase-scale boundary tests reject premature Table 1
+    parity claims.
+
 - [x] Record incorrect-suggestion audit boundary.
   - Spec evidence: AlphaEvolve frames automatic evaluation as the grounding
     mechanism that filters incorrect base-LLM suggestions.

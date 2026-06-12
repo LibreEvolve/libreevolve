@@ -101,6 +101,10 @@ from libreevolve.problems.benchmarks.distributed_pipeline_topology_boundary impo
     distributed_pipeline_topology_boundary_record,
     validate_distributed_pipeline_topology_boundary,
 )
+from libreevolve.problems.benchmarks.codebase_scale_benchmark_boundary import (
+    codebase_scale_benchmark_boundary_record,
+    validate_codebase_scale_benchmark_boundary,
+)
 from libreevolve.problems.benchmarks.codeevolve_boundary import (
     codeevolve_boundary_record,
     validate_codeevolve_boundary,
@@ -328,6 +332,7 @@ SAMPLE_EFFICIENCY_BOUNDARY_FILE = "papers/sample_efficiency_boundary.json"
 PARALLEL_EVALUATION_READINESS_BOUNDARY_FILE = "papers/parallel_evaluation_readiness_boundary.json"
 DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_FILE = "papers/distributed_pipeline_topology_boundary.json"
 WHOLE_RUN_SOURCE_WORKSPACE_INTEGRITY_BOUNDARY_FILE = "papers/whole_run_source_workspace_integrity_boundary.json"
+CODEBASE_SCALE_BENCHMARK_BOUNDARY_FILE = "papers/codebase_scale_benchmark_boundary.json"
 EVALUATION_CASCADE_BOUNDARY_FILE = "papers/evaluation_cascade_boundary.json"
 CONTROLLER_BACKTRACKING_BOUNDARY_FILE = "papers/controller_backtracking_boundary.json"
 MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE = "papers/matrix_headline_historicity_artifacts.json"
@@ -792,6 +797,7 @@ def validate_paper_manifest(
     issues.extend(_validate_parallel_evaluation_readiness_boundary(root_path))
     issues.extend(_validate_distributed_pipeline_topology_boundary(root_path))
     issues.extend(_validate_whole_run_source_workspace_integrity_boundary(root_path))
+    issues.extend(_validate_codebase_scale_benchmark_boundary(root_path))
     issues.extend(_validate_evaluation_cascade_boundary(root_path))
     issues.extend(_validate_controller_backtracking_boundary(root_path))
     issues.extend(_validate_example_benchmark_scope_records(root_path))
@@ -1752,6 +1758,38 @@ def _validate_whole_run_source_workspace_integrity_boundary(root_path: Path) -> 
             f"whole_run_source_workspace_integrity_boundary_{issue.code}",
             issue.message,
             "whole_run_source_workspace_integrity",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_codebase_scale_benchmark_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / CODEBASE_SCALE_BENCHMARK_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = codebase_scale_benchmark_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "codebase_scale_benchmark_boundary_manifest_missing",
+                    (
+                        f"{CODEBASE_SCALE_BENCHMARK_BOUNDARY_FILE} must emit "
+                        "codebase-scale benchmark availability"
+                    ),
+                    "codebase_scale_benchmark",
+                )
+            ]
+    report = validate_codebase_scale_benchmark_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"codebase_scale_benchmark_boundary_{issue.code}",
+            issue.message,
+            "codebase_scale_benchmark",
         )
         for issue in report.issues
     ]

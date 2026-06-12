@@ -4022,6 +4022,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     embedded systems report and inventory records with stable embedded-record
     hashes, inventory-record hash linkage, benchmark/candidate/domain identity
     checks, and readiness consistency validation.
+    `papers/systems_result_readiness_boundary.json` now preserves a
+    manifest-checked paper-facing boundary for these report, inventory, and
+    bundle contracts without claiming real scheduling, kernel, compiler, or
+    hardware fixture runs, deployment measurements, expert confirmations, or
+    domain-specific result artifacts.
   - Required result: connect compiler, hardware, kernel, scheduling, or systems
     fixtures to this report format, implement real unseen evaluation cases and
     randomized/reference-correctness checks, and emit report artifacts that

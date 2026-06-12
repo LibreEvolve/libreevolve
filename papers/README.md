@@ -589,6 +589,13 @@ The committed `papers/benchmark_fixture_readiness_boundary.json` sidecar
 preserves the related smoke-fixture readiness boundary for repeated-seed
 protocols, SOTA/target baselines, emitted result artifacts, anti-gaming
 negative fixtures, and paper-claim-ready benchmark scope.
+The committed `papers/systems_result_readiness_boundary.json` sidecar
+preserves the systems-result boundary: LibreEvolve has schemas and validators
+for systems reports, artifact inventories, evidence bundles, domain-specific
+gate policy, claim calibration, application provenance, scheduling readiness,
+compiler provenance, and hardware provenance, but it does not claim real
+scheduling, kernel, compiler, or hardware fixture runs, deployment
+measurements, expert confirmations, or domain-specific result artifacts.
 
 AlphaEvolve collaborator-feedback note: LibreEvolve now has optional
 `collaborator_feedback.yaml` / `Problem.collaborator_feedback_metadata` records
@@ -2313,6 +2320,14 @@ Implemented:
   all-role provider-token section packing, exact non-OpenAI provider counters,
   registry/custom role section packing, retrieval/context/plugin/failure-
   memory section packing, or full validator-metadata prompt policy.
+- `papers/systems_result_readiness_boundary.json`: systems-result readiness
+  sidecar for AlphaEvolve Section 3.3. It records the systems-result report
+  schema, artifact-inventory schema, evidence-bundle schema, optimization,
+  held-out, reference-correctness, passed-artifact, domain-gate,
+  claim-calibration, application-provenance, scheduling, compiler, and
+  hardware readiness surfaces. It is not evidence of real scheduling, kernel,
+  compiler, or hardware fixture runs, deployment measurements, expert
+  confirmation, or domain-specific result artifacts.
 - `papers/documentation_truthfulness_boundary.json`: documentation
   truthfulness sidecar for the AlphaEvolve-alignment docs process. It records
   README, ROADMAP, papers-index, active/completed TODO-ledger, docs/README

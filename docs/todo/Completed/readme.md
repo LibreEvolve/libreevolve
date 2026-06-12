@@ -12865,3 +12865,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     `papers/feedback_calibration_boundary.json`.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused feedback-calibration tests reject executed-calibration overclaims.
+- [x] Add README boundary for systems-result report contracts versus real
+      emitted systems evidence.
+  - Spec evidence: AlphaEvolve Section 3.3 systems claims combine optimizer
+    feedback with held-out, deployment, randomized-reference, and expert
+    confirmation evidence.
+  - Status: README now states that systems-result validation is a report,
+    artifact-inventory, and evidence-bundle contract with domain-specific
+    readiness gates, not proof that real compiler, hardware, kernel, or
+    scheduling fixtures have emitted held-out, deployment, expert-confirmation,
+    or domain-specific result artifacts. It points to
+    `papers/systems_result_readiness_boundary.json`.
+  - Remaining documentation gap: real systems fixtures still need to emit the
+    evidence before README can claim AlphaEvolve-style systems results.
+  - Verification: focused boundary and paper-manifest tests cover the sidecar
+    and its overclaim rejection.

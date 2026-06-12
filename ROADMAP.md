@@ -1963,12 +1963,16 @@ resumed-trace proof are still open.
   claim: model-family relationship, AlphaEvolve run/backend identity, TPU
   generation, circuit identity, novelty basis, first-direct-contribution
   scope, integration milestone, hardware review scope, synthesis rediscovery
-  distinction, confirmation flags, and artifact refs. Real scheduling resource
-  recovery, kernel/training-time speedup, RTL PPA, compiler speedup fixtures,
-  emitted compiler-stack artifacts, real compiler adoption/integration
-  artifacts, real hardware RTL/EDA artifacts, real hardware rewrite artifacts,
-  and real Gemini-to-TPU attribution artifacts still need to populate those
-  records.
+  distinction, confirmation flags, and artifact refs.
+  `papers/systems_result_readiness_boundary.json` now preserves the manifest-
+  checked boundary that those schemas and validators are report contracts
+  without real emitted scheduling, kernel, compiler, or hardware fixture runs,
+  deployment measurements, expert confirmations, or domain-specific result
+  artifacts. Real scheduling resource recovery, kernel/training-time speedup,
+  RTL PPA, compiler speedup fixtures, emitted compiler-stack artifacts, real
+  compiler adoption/integration artifacts, real hardware RTL/EDA artifacts,
+  real hardware rewrite artifacts, and real Gemini-to-TPU attribution artifacts
+  still need to populate those records.
 - Populate real hardware-adoption and rewrite evidence for TPU RTL-style
   reports before claiming Section 3.3.3 parity: emitted RTL, before/after
   Verilog diffs, removed-bit inventories, synthesis/PPA, verification,

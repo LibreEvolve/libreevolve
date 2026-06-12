@@ -51,6 +51,10 @@ from libreevolve.problems.benchmarks.benchmark_fixture_readiness_boundary import
     benchmark_fixture_readiness_boundary_record,
     validate_benchmark_fixture_readiness_boundary,
 )
+from libreevolve.problems.benchmarks.systems_result_readiness_boundary import (
+    systems_result_readiness_boundary_record,
+    validate_systems_result_readiness_boundary,
+)
 from libreevolve.problems.benchmarks.collaborator_feedback_provenance_boundary import (
     collaborator_feedback_provenance_boundary_record,
     validate_collaborator_feedback_provenance_boundary,
@@ -489,6 +493,7 @@ FIGURE9_MATRIX_DIFF_ARTIFACTS_FILE = "papers/figure9_matrix_diff_artifacts.json"
 FIGURE4_MATRIX_DISCOVERY_ARTIFACTS_FILE = "papers/figure4_matrix_discovery_artifacts.json"
 FIGURE8_ABLATION_ARTIFACTS_FILE = "papers/figure8_ablation_artifacts.json"
 BENCHMARK_FIXTURE_READINESS_BOUNDARY_FILE = "papers/benchmark_fixture_readiness_boundary.json"
+SYSTEMS_RESULT_READINESS_BOUNDARY_FILE = "papers/systems_result_readiness_boundary.json"
 ACKNOWLEDGEMENT_ROLE_PROVENANCE_BOUNDARY_FILE = "papers/acknowledgement_role_provenance_boundary.json"
 PAPER_AUTHOR_METADATA_BOUNDARY_FILE = "papers/paper_author_metadata_boundary.json"
 TITLE_PAGE_AFFILIATION_BOUNDARY_FILE = "papers/title_page_affiliation_boundary.json"
@@ -996,6 +1001,7 @@ def validate_paper_manifest(
     issues.extend(_validate_ablation_registry_if_present(root_path))
     issues.extend(_validate_figure8_ablation_artifacts(root_path))
     issues.extend(_validate_benchmark_fixture_readiness_boundary(root_path))
+    issues.extend(_validate_systems_result_readiness_boundary(root_path))
     issues.extend(_validate_acknowledgement_role_provenance_boundary(root_path))
     issues.extend(_validate_paper_author_metadata_boundary(root_path))
     issues.extend(_validate_title_page_affiliation_boundary(root_path))
@@ -1754,6 +1760,38 @@ def _validate_benchmark_fixture_readiness_boundary(root_path: Path) -> list[Pape
             f"benchmark_fixture_readiness_boundary_{issue.code}",
             issue.message,
             "benchmark_fixture_readiness",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_systems_result_readiness_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / SYSTEMS_RESULT_READINESS_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = systems_result_readiness_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "systems_result_readiness_boundary_manifest_missing",
+                    (
+                        f"{SYSTEMS_RESULT_READINESS_BOUNDARY_FILE} must emit "
+                        "systems-result report-contract versus real-fixture readiness"
+                    ),
+                    "systems_result_readiness",
+                )
+            ]
+    report = validate_systems_result_readiness_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"systems_result_readiness_boundary_{issue.code}",
+            issue.message,
+            "systems_result_readiness",
         )
         for issue in report.issues
     ]

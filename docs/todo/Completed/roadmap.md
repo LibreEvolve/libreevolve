@@ -10633,3 +10633,21 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     grader ablations, and independent feedback-quality validation open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused feedback-calibration tests reject executed-calibration overclaims.
+- [x] Keep systems-result roadmap wording scoped to report contracts versus
+      real systems fixture evidence.
+  - Spec evidence: AlphaEvolve Section 3.3 uses different evidence by domain:
+    unseen scheduling workloads and deployment measurements, held-out
+    kernel-shape evaluation, randomized compiler reference-code checks, and
+    expert confirmation.
+  - Status: ROADMAP now points to
+    `papers/systems_result_readiness_boundary.json`, which preserves the
+    manifest-checked boundary that systems report, inventory, bundle,
+    claim-calibration, application-provenance, scheduling, compiler, and
+    hardware validators are not real emitted systems fixtures, deployment
+    measurements, expert confirmations, or domain-specific result artifacts.
+  - Remaining roadmap gap: real scheduling resource recovery,
+    kernel/training-time speedup, RTL PPA, compiler speedup, compiler-stack,
+    compiler-adoption, hardware RTL/EDA, hardware rewrite, and
+    Gemini-to-TPU attribution artifacts still need to populate those records.
+  - Verification: focused boundary and paper-manifest tests cover overclaim
+    rejection and repo-root sidecar presence.

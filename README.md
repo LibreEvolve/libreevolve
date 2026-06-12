@@ -124,6 +124,12 @@ Important limits:
   counters, registry/custom role section packing, retrieval/context/plugin/
   failure-memory packing, or full validator-metadata prompt policy; that
   boundary is tracked by `papers/prompt_section_packing_boundary.json`.
+- Systems-result validation is a report, artifact-inventory, and
+  evidence-bundle contract with domain-specific readiness gates, not proof
+  that real compiler, hardware, kernel, or scheduling fixtures have emitted
+  held-out, deployment, expert-confirmation, or domain-specific result
+  artifacts; that boundary is tracked by
+  `papers/systems_result_readiness_boundary.json`.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

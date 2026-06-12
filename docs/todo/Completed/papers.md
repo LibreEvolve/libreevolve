@@ -13880,3 +13880,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused feedback-calibration tests reject executed-calibration
     overclaims.
+- [x] Add paper-facing systems-result readiness sidecar.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3 reports
+    domain-specific systems evidence: unseen scheduling workloads and
+    deployment measurements, held-out kernel shapes, randomized compiler
+    reference checks, and expert confirmation.
+  - Status: `papers/systems_result_readiness_boundary.json` now records the
+    report-contract boundary for `libreevolve.systems_result_report.v1`,
+    `libreevolve.systems_result_artifact_inventory.v1`, and
+    `libreevolve.systems_evidence_bundle.v1`, including claim calibration,
+    application provenance, scheduling readiness, compiler provenance, and
+    hardware provenance surfaces.
+  - Remaining paper gap: the sidecar does not claim real scheduling, kernel,
+    compiler, or hardware fixture runs; deployment measurements; expert
+    confirmations; or domain-specific result artifacts.
+  - Verification: focused systems-result readiness boundary and paper-manifest
+    tests cover valid, overclaim, and missing-root-sidecar cases.

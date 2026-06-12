@@ -3810,6 +3810,11 @@ Primary evidence:
     systems report and inventory records with benchmark/candidate/domain
     identity checks, stable embedded-record hashes, inventory-record hash
     linkage, and readiness consistency validation.
+    `libreevolve.alphaevolve_systems_result_readiness_boundary.v1` now emits a
+    manifest-checked sidecar preserving the boundary that these are report,
+    inventory, and bundle contracts, not evidence that real systems fixtures
+    have emitted held-out, deployment, expert-confirmation, or
+    domain-specific result artifacts.
   - Required result: connect real compiler, hardware, kernel, scheduling, or
     systems benchmark fixtures to the report contract and implement the actual
     held-out/generalization case sets, randomized/reference-correctness checks,

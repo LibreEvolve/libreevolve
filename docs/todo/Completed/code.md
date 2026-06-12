@@ -18784,3 +18784,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     executed-calibration overclaims, invalid boundary status, missing evidence
     drift, and incomplete required evidence fields.
+- [x] Add systems-result readiness boundary sidecar validation.
+  - Spec evidence: AlphaEvolve Section 3.3 systems-result claims depend on
+    domain-specific evidence beyond report metadata: unseen scheduling
+    workloads, held-out kernel shapes, randomized compiler reference checks,
+    deployment measurements, and expert confirmation.
+  - Status: `libreevolve.alphaevolve_systems_result_readiness_boundary.v1` now
+    records the boundary between systems report/inventory/evidence-bundle
+    contracts and real emitted systems fixture evidence. The paper manifest now
+    requires `papers/systems_result_readiness_boundary.json` at the repo root
+    and rejects premature readiness claims or missing-evidence drift.
+  - Remaining gap: real scheduling, kernel, compiler, and hardware fixtures
+    still need to emit held-out, deployment, expert-confirmation, and
+    domain-specific result artifacts.
+  - Verification: focused boundary and paper-manifest tests cover the accepted
+    sidecar, overclaim rejection, and repo-root sidecar requirement.

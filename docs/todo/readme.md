@@ -1067,7 +1067,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README now also documents that ready scheduling/kernel reports require
     passed held-out gates, ready compiler/hardware reports require passed
     reference-correctness gates, and generic ready systems reports require
-    both rather than accepting generic `not_applicable` rationales.
+    both rather than accepting generic `not_applicable` rationales. README now
+    also points to `papers/systems_result_readiness_boundary.json` as the
+    manifest-checked boundary separating report/inventory/bundle validation
+    from real systems fixtures, deployment measurements, expert confirmation,
+    and domain-specific result artifacts.
   - Required result: when benchmark runs emit real certification reports,
     deployment/reviewer evidence, held-out systems reports, or reference-code
     checks, update README, ROADMAP, papers index, and code/paper TODO entries

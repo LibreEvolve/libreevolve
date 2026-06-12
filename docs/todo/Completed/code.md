@@ -18098,3 +18098,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     checker outputs remain open.
   - Verification: Autoconvolution boundary tests and paper-manifest tests cover
     the sidecar, drift rejection, and repo-root sidecar requirement.
+
+- [x] Add Sums and Differences `2505.16105` source-boundary gate.
+  - Status: `libreevolve.problems.benchmarks.sums_differences_boundary` now
+    emits and validates `papers/sums_differences_boundary.json` with cached
+    PDF digest, arXiv v1 identity, source-license absence, reference-only
+    source links, reported AlphaEvolve/prior/paper bounds, small and large
+    parameter metadata, rounded exact-value summaries, required future
+    evidence fields, missing-evidence keys, and overclaim rejection.
+  - Remaining gap: explicit U-set schemas, `W(m,L,B)` formula checking,
+    base-(2B+1) encoding checks, sumset/difference-set cardinality verifiers,
+    max-element/q-value checks, theta recomputation, GMP records, exact-value
+    artifact snapshots, AlphaEvolve baseline artifacts, huge-set compression,
+    and independent checker outputs remain open.
+  - Verification: Sums and Differences boundary tests and paper-manifest tests
+    cover the sidecar, drift rejection, and repo-root sidecar requirement.

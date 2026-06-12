@@ -4545,8 +4545,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `coeffBL.txt`, and `Verify.nb`, and documentation separating theorem
     certificates from search-procedure provenance.
 
-- [ ] Add post-AlphaEvolve sums-and-differences construction gates before
-      roadmap promotion.
+- [ ] Implement post-AlphaEvolve sums-and-differences gates beyond
+      source-boundary roadmap promotion.
   - Spec evidence: arXiv `2505.16105`, submitted May 22, 2025, introduces
     `Sums and differences of sets (improvement over AlphaEvolve)` by Robert
     Gerbicz. The abstract says AlphaEvolve used a `54265`-integer set to
@@ -4561,13 +4561,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `|U + U| = 3.208492702e61228`, `|U - U| = 6.587554451e75899`, and
     `2 max(U) + 1 = 6.605282799e84780`. It cites GMP code and exact computed
     values at `https://bit.ly/43mWCVC`.
-  - Current evidence: ROADMAP tracks AlphaEvolve Appendix B sums-and-
-    differences gaps and broad constructive-math fixture needs, but it does
-    not promote `2505.16105` beyond potential-future-benchmark status. It
-    does not define a huge explicit `U`-set construction gate, compressed set
-    artifact representation, `W(m, L, B)` formula fixture, base-`2B + 1`
-    encoding checker, sumset/difference-set verifier, max-element/q-value
-    verifier, `theta` recomputation report, exact-value artifact retrieval,
+  - Current evidence: ROADMAP and `papers/sums_differences_boundary.json` now
+    keep `2505.16105` source-scoped and do not promote it beyond
+    potential-future-benchmark status. They still do not define a huge
+    explicit `U`-set construction gate, compressed set artifact
+    representation, `W(m, L, B)` formula fixture, base-`2B + 1` encoding
+    checker, sumset/difference-set verifier, max-element/q-value verifier,
+    `theta` recomputation report, exact-value artifact retrieval,
     AlphaEvolve `54265`-integer baseline comparison, GMP arithmetic
     provenance, or documentation rule that separates AlphaEvolve's
     LLM-generated construction from later explicit improvements.

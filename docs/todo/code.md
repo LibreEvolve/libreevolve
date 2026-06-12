@@ -6371,7 +6371,8 @@ Primary evidence:
     documentation that the authors say the example was found in November 2024
     before they were aware of AlphaEvolve's result.
 
-- [ ] Add post-AlphaEvolve sums-and-differences construction boundary.
+- [ ] Implement post-AlphaEvolve sums-and-differences construction beyond the
+      source boundary.
   - Spec evidence: arXiv `2505.16105`, `Sums and differences of sets
     (improvement over AlphaEvolve)`, by Robert Gerbicz was submitted May 22,
     2025 as arXiv v1; the cached PDF hash is
@@ -6390,15 +6391,14 @@ Primary evidence:
     `|U + U| = 3.208492702e61228`, `|U - U| = 6.587554451e75899`, and
     `2 max(U) + 1 = 6.605282799e84780`, with GMP code and exact computed
     values cited at `https://bit.ly/43mWCVC`.
-  - Current evidence: `papers/README.md` lists `2505.16105` only as a
-    constructive math benchmark candidate with `Not implemented; potential
-    future benchmark`. LibreEvolve has broad Appendix B sums-and-differences
-    TODOs, but no implemented source-boundary gate for this source, no explicit
+  - Current evidence: `papers/sums_differences_boundary.json` and
+    `papers/README.md` now record the `2505.16105` source-boundary gate while
+    keeping the improvement source-scoped. LibreEvolve still has no explicit
     large `U`-set construction schema, no `W(m, L, B)` parameter fixture, no
     base-`2B + 1` integer-encoding checker, no compressed artifact format for
     a set with more than `10^43546` elements, no sumset/difference-set
-    verifier, no max-element/q-value verifier, no `theta` recomputation
-    report for `1.173050`, no `(80, 64, 5)` small-search regression case, no
+    verifier, no max-element/q-value verifier, no `theta` recomputation report
+    for `1.173050`, no `(80, 64, 5)` small-search regression case, no
     exact-value artifact retrieval from the cited code URL, no AlphaEvolve
     `54265`-integer `1.1584` baseline row, no GMP dependency/provenance
     record, and no artifact policy that separates AlphaEvolve LLM-generated

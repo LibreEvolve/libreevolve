@@ -12149,3 +12149,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     snapshots, and independent checker evidence explicit as missing.
   - Verification: Autoconvolution boundary and paper-manifest tests validate
     the sidecar that README now references.
+
+- [x] Document Sums and Differences `2505.16105` source boundary in README.
+  - Status: README now names `papers/sums_differences_boundary.json` in the
+    source reference table while keeping Sums and Differences as
+    post-AlphaEvolve constructive-math improvement context only, with U-set and
+    `W(m,L,B)` schemas, base-(2B+1) encoding checks, sumset/difference-set
+    cardinality verifiers, theta recomputation, GMP records, exact-value
+    snapshots, AlphaEvolve baseline rows, huge-set compression policy, and
+    independent checker evidence explicit as missing.
+  - Verification: Sums and Differences boundary and paper-manifest tests
+    validate the sidecar that README now references.

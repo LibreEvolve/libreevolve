@@ -12648,3 +12648,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     checks, and independent reproduction outputs remain open.
   - Verification: Autoconvolution boundary tests and paper-manifest tests
     validate the sidecar and reject checker-readiness overclaims.
+
+- [x] Record Sums and Differences `2505.16105` source boundary.
+  - Status: `papers/sums_differences_boundary.json` now carries the
+    source-specific Sums and Differences boundary with cached PDF digest, arXiv
+    v1 identity, source-license absence, reference links, reported
+    AlphaEvolve/prior/paper bounds, `(80,64,5)` and `(81411,65536,5)`
+    parameter records, rounded large-value summaries, required evidence
+    fields, and missing-evidence keys.
+  - Remaining paper gap: local U-set construction artifacts, `W(m,L,B)`
+    formula records, base-(2B+1) encoding/injectivity evidence, cardinality
+    recomputation, q/theta outputs, exact-value artifact hashes, GMP
+    provenance, baseline comparison rows, huge-set compression metadata, and
+    independent reproduction outputs remain open.
+  - Verification: Sums and Differences boundary tests and paper-manifest tests
+    validate the sidecar and reject theta-readiness overclaims.

@@ -1821,6 +1821,58 @@ def test_validate_paper_manifest_requires_autoconvolution_boundary_at_repo_root(
     assert "autoconvolution_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_sums_differences_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.SUMS_DIFFERENCES_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.sums_differences_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_sums_differences_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.sums_differences_boundary_record()
+    record["claim_ready"] = True
+    record["local_evidence"]["theta_recomputation_ready"] = True
+    sidecar = tmp_path / paper_manifest.SUMS_DIFFERENCES_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "sums_differences_boundary_claim_ready_overclaim" in codes
+    assert (
+        "sums_differences_boundary_local_evidence_theta_recomputation_ready_overclaim"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_sums_differences_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "sums_differences_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_bilateral_trade_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

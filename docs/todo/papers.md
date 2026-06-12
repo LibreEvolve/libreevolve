@@ -5862,7 +5862,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     coefficient payload hashes, and checker parity between Python and
     Mathematica artifacts.
 
-- [ ] Track post-AlphaEvolve sums-and-differences construction paper evidence.
+- [ ] Implement post-AlphaEvolve sums-and-differences construction paper
+      evidence beyond the source boundary.
   - Paper/source evidence: arXiv `2505.16105`, submitted May 22, 2025, is
     titled `Sums and differences of sets (improvement over AlphaEvolve)` and
     authored by Robert Gerbicz; the cached PDF hash is
@@ -5881,18 +5882,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     `|U - U| = 6.587554451e75899`, and `2 max(U) + 1 =
     6.605282799e84780`, with GMP code and exact computed values cited at
     `https://bit.ly/43mWCVC`.
-  - Current gap: `papers/README.md` lists `2505.16105` as a constructive math
-    benchmark candidate with `Not implemented; potential future benchmark`,
-    but the current implementation and paper index do not yet provide local
-    source-boundary artifacts or implementation evidence for this paper.
-    Existing Appendix B sums-and-differences gaps do not capture
-    this later explicit `U` construction, compressed representation needs for
-    extremely large sets, `W(m, L, B)` formula evidence, base-`2B + 1`
-    injectivity evidence, the `(80, 64, 5)` small-search result, exact
-    computed-value retrieval from the cited code URL, GMP arithmetic
-    provenance, `theta = 1.173050` recomputation, or side-by-side comparison
-    against AlphaEvolve's `54265`-integer `1.1584` construction and the
-    earlier `1.14465` bound.
+  - Current gap: `papers/sums_differences_boundary.json` and
+    `papers/README.md` now provide the local source-boundary artifact for this
+    paper, but they do not provide local construction artifacts or
+    implementation evidence. Existing Appendix B sums-and-differences gaps do
+    not capture this later explicit `U` construction, compressed
+    representation needs for extremely large sets, `W(m, L, B)` formula
+    evidence, base-`2B + 1` injectivity evidence, the `(80, 64, 5)`
+    small-search result, exact computed-value retrieval from the cited code
+    URL, GMP arithmetic provenance, `theta = 1.173050` recomputation, or
+    side-by-side comparison against AlphaEvolve's `54265`-integer `1.1584`
+    construction and the earlier `1.14465` bound.
   - Required result: add paper-manifest and paper-index coverage updates for
     `2505.16105`: title/author/arXiv version/date/PDF digest, source license,
     code/artifact URL/status, relation to AlphaEvolve Appendix B and

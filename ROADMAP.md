@@ -625,7 +625,7 @@ is not yet an AlphaEvolve reproduction.
 - Continue labeling CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve,
   TTT Discover, Bruhat Intervals, GigaEvo, CodeEvolve, MadEvolve, Magellan,
   ArchAgent, Multiagent Learning, Bilateral Trade, Fault2Flow, Global NLP
-  Optimization, Autoconvolution, Ramsey Numbers, and Berczy
+  Optimization, Autoconvolution, Sums and Differences, Ramsey Numbers, and Berczy
   local-correction combinatorics
   features as inspired, candidate benchmark, or
   application context unless paper behavior is actually implemented. The committed
@@ -754,6 +754,15 @@ is not yet an AlphaEvolve reproduction.
   provenance, row-major coefficient parsing, public GitHub artifact snapshots,
   Mathematica `Verify.nb` evidence, support-normalization records, NCSU HPC
   resource provenance, and independent checker outputs.
+  The committed `papers/sums_differences_boundary.json` sidecar records the
+  post-AlphaEvolve Sums and Differences source-specific boundary for explicit
+  U-set construction schemas, `W(m,L,B)` inclusion-exclusion records,
+  base-(2B+1) injective encoding checks, sumset/difference-set cardinality
+  verifiers, max-element/q-value records, theta recomputation, GMP exact
+  arithmetic provenance, small and large parameter rows, exact-value artifact
+  snapshots, AlphaEvolve 54265-integer baseline evidence, huge-set compression
+  policy, lineage comparison rows, tolerance policy, and independent checker
+  outputs.
 
 ## Mid Term
 

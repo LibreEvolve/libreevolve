@@ -9708,3 +9708,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     records, NCSU HPC resource provenance, and independent checker outputs.
   - Verification: Autoconvolution boundary tests and paper-manifest tests
     validate the sidecar and repo-root requirement.
+
+- [x] Preserve Sums and Differences `2505.16105` boundary scope in roadmap.
+  - Status: ROADMAP and roadmap TODO wording now identify
+    `papers/sums_differences_boundary.json` as the source-specific boundary
+    for explicit U-set construction schemas, `W(m,L,B)` formula records,
+    base-(2B+1) encoding checks, sumset/difference-set cardinality verifiers,
+    max-element/q-value records, theta recomputation, GMP exact arithmetic
+    provenance, small and large parameter rows, exact-value artifact
+    snapshots, AlphaEvolve baseline evidence, huge-set compression policy,
+    lineage comparison rows, tolerance policy, and independent checker outputs.
+  - Verification: Sums and Differences boundary tests and paper-manifest tests
+    validate the sidecar and repo-root requirement.

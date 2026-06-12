@@ -182,6 +182,10 @@ from libreevolve.problems.benchmarks.ramsey_numbers_boundary import (
     ramsey_numbers_boundary_record,
     validate_ramsey_numbers_boundary,
 )
+from libreevolve.problems.benchmarks.sums_differences_boundary import (
+    sums_differences_boundary_record,
+    validate_sums_differences_boundary,
+)
 from libreevolve.problems.benchmarks.paper_bibliography import (
     EXPECTED_REFERENCES_BIBLIOGRAPHY_FILE,
     alphaevolve_references_section_record,
@@ -310,6 +314,7 @@ BRUHAT_INTERVALS_BOUNDARY_FILE = "papers/bruhat_intervals_boundary.json"
 FAULT2FLOW_BOUNDARY_FILE = "papers/fault2flow_boundary.json"
 GLOBAL_NLP_OPTIMIZATION_BOUNDARY_FILE = "papers/global_nlp_optimization_boundary.json"
 AUTOCONVOLUTION_BOUNDARY_FILE = "papers/autoconvolution_boundary.json"
+SUMS_DIFFERENCES_BOUNDARY_FILE = "papers/sums_differences_boundary.json"
 BILATERAL_TRADE_BOUNDARY_FILE = "papers/bilateral_trade_boundary.json"
 EXAMPLE_BENCHMARK_SCOPE_FILE = "papers/example_benchmark_scope.json"
 MATH_OUTCOME_BOUNDARY_FILE = "papers/math_outcome_boundary.json"
@@ -706,6 +711,7 @@ def validate_paper_manifest(
     issues.extend(_validate_fault2flow_boundary(root_path))
     issues.extend(_validate_global_nlp_optimization_boundary(root_path))
     issues.extend(_validate_autoconvolution_boundary(root_path))
+    issues.extend(_validate_sums_differences_boundary(root_path))
     issues.extend(_validate_bilateral_trade_boundary(root_path))
 
     if set(csv_by_id) - seen_ids:
@@ -2215,6 +2221,38 @@ def _validate_autoconvolution_boundary(root_path: Path) -> list[PaperManifestIss
             f"autoconvolution_boundary_{issue.code}",
             issue.message,
             "autoconvolution",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_sums_differences_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / SUMS_DIFFERENCES_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = sums_differences_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "sums_differences_boundary_manifest_missing",
+                    (
+                        f"{SUMS_DIFFERENCES_BOUNDARY_FILE} must emit "
+                        "post-AlphaEvolve sums-and-differences evidence availability"
+                    ),
+                    "sums_differences",
+                )
+            ]
+    report = validate_sums_differences_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"sums_differences_boundary_{issue.code}",
+            issue.message,
+            "sums_differences",
         )
         for issue in report.issues
     ]

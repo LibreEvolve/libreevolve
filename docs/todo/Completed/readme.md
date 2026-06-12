@@ -11774,3 +11774,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     role-specific quarantine/cross-run-resume gaps.
   - Verification: ensemble ledger tests validate generic and quarantine
     remaining-gap summaries.
+
+- [x] Document non-mutation prompt-packing overclaim guards.
+  - Spec evidence: README prompt-packing wording needed to distinguish
+    mutation section packing from final-prompt token counting for other roles.
+  - Status: README and TODO wording now state that runtime prompt-section
+    coverage rejects complete and role-level provider-token section-packing
+    overclaims for critique, feedback, and meta-prompt.
+  - Verification: runtime prompt-section coverage tests validate forged
+    non-mutation role overclaims.

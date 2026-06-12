@@ -12166,3 +12166,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     provider-output replay, or hard provider cancellation.
   - Verification: ensemble ledger tests validate generic and quarantine
     remaining-gap summaries.
+
+- [x] Record non-mutation prompt-packing overclaim guards.
+  - Spec evidence: AlphaEvolve-scale prompt construction needs token-aware
+    section packing across roles and context surfaces, not just final-prompt
+    counting.
+  - Status: paper-facing TODOs and runtime validators now reject complete and
+    role-level provider-token section-packing overclaims for critique,
+    feedback, and meta-prompt.
+  - Remaining paper gap: this does not implement selected-backend provider-
+    token section packing across all prompt roles, context surfaces, or
+    provider families.
+  - Verification: runtime prompt-section coverage tests validate forged
+    non-mutation role overclaims.

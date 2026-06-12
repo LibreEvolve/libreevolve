@@ -2821,6 +2821,23 @@ def _validate_prompt_section_packing_roles(
                     "message": "section_packing_status must be supported or unsupported",
                 }
             )
+        role = item.get("role")
+        if role == "mutation" and item.get("section_packing_status") != "supported":
+            issues.append(
+                {
+                    "code": "mutation_section_packing_not_supported",
+                    "message": "mutation must remain the only currently section-packed role",
+                }
+            )
+        if role in {"critique", "feedback:*", "meta_prompt"} and (
+            item.get("section_packing_status") != "unsupported"
+        ):
+            issues.append(
+                {
+                    "code": "non_mutation_section_packing_overclaim",
+                    "message": "non-mutation roles must remain final-prompt-boundary-only",
+                }
+            )
         if not isinstance(item.get("provider_token_section_packing_ready"), bool):
             issues.append(
                 {

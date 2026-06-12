@@ -13046,6 +13046,31 @@ def test_runtime_prompt_section_packing_coverage_scopes_non_mutation_roles():
         for issue in invalid["issues"]
     )
 
+    role_overclaim = copy.deepcopy(coverage)
+    role_overclaim.pop("validation")
+    role_overclaim["roles"][1]["section_packing_status"] = "supported"
+    role_overclaim["roles"][1]["section_packing_boundary"] = (
+        "pre_llm_promptsampler_optional_section_packing"
+    )
+    role_overclaim["roles"][1]["provider_token_section_packing_ready"] = True
+    role_overclaim["section_packing_roles"] = ["mutation", "critique"]
+    role_overclaim["provider_token_section_packing_ready_roles"] = [
+        "mutation",
+        "critique",
+    ]
+    role_overclaim["provider_token_section_packing_missing_roles"] = [
+        "feedback:*",
+        "meta_prompt",
+    ]
+
+    invalid_role = validate_prompt_section_packing_coverage(role_overclaim)
+
+    assert invalid_role["ok"] is False
+    assert any(
+        issue["code"] == "non_mutation_section_packing_overclaim"
+        for issue in invalid_role["issues"]
+    )
+
 
 def test_loop_logs_stochastic_prompt_format_selection_metadata():
     tmpdir = tempfile.mkdtemp()

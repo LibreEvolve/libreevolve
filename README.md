@@ -684,8 +684,10 @@ inspiration sets are packed by section priority under those configured caps,
 and mutation prompts can use automatic exact counts when all eligible mutation
 backends share a local OpenAI tokenizer. Exact final-prompt counting is also
 automatic at the ensemble boundary for roles whose eligible backends share that
-counter; provider-token section-priority packing outside mutation prompts and
-non-OpenAI exact counters remain open.
+counter. Runtime prompt-section coverage rejects complete and role-level
+provider-token section-packing overclaims for critique, feedback, and
+meta-prompt; provider-token section-priority packing outside mutation prompts
+and non-OpenAI exact counters remain open.
 The current synchronous loop can generate and evaluate a sequential
 `proposals_per_generation` batch inside each generation, with sibling-candidate
 history accounting. Parallel LLM or evaluator workers remain future runtime

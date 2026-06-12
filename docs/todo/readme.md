@@ -579,7 +579,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     Code evidence includes `core.loop.discover_prompt_token_counter(...)`
     before `PromptSampler` construction, `LLMEnsemble._prompt_token_counter_for_role(...)`
     before final prompt validation, and tests covering mutation diagnostics and
-    critique-role final-prompt counter telemetry.
+    critique-role final-prompt counter telemetry. Runtime prompt-section
+    coverage validation now also rejects complete and role-level overclaims
+    that mark critique, feedback, or meta-prompt as section-packed.
   - Required result: when selected-backend provider-token section packing
     covers critique, feedback, meta-prompt, registry-created, custom, and
     retrieval/context/plugin/failure-memory sections across provider families,

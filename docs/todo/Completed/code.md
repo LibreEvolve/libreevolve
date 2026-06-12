@@ -17567,3 +17567,16 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     provider-output replay, and hard SDK cancellation remain open.
   - Verification: ensemble ledger tests cover generic and quarantine-specific
     remaining-gap summaries.
+
+- [x] Reject non-mutation prompt section-packing overclaims.
+  - Spec evidence: AlphaEvolve-style prompt fitting needs token-aware section
+    packing across roles, but LibreEvolve currently section-packs only mutation
+    prompts.
+  - Status: `validate_prompt_section_packing_coverage()` now rejects role-level
+    coverage records that mark critique, feedback, or meta-prompt as
+    section-packed.
+  - Remaining gap: selected-backend provider-token section packing across
+    critique, feedback, meta-prompt, retrieval/context/plugin/failure-memory,
+    and non-OpenAI/custom provider families remains open.
+  - Verification: runtime prompt-section coverage tests cover forged
+    non-mutation role overclaims.

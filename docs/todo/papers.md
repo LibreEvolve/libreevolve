@@ -1956,7 +1956,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `runtime.prompt_section_packing` with schema
     `libreevolve.prompt_section_packing_coverage.v1` and embedded validation,
     making the mutation-only section-packing boundary and critique/feedback/
-    meta-prompt final-boundary-only roles explicit.
+    meta-prompt final-boundary-only roles explicit. Validation rejects complete
+    provider-token section-packing overclaims and role-level overclaims that
+    mark critique, feedback, or meta-prompt as section-packed.
   - Required result: add configurable/full validator-metadata prompt policy
     and automatic selected-backend provider-token section-priority packing
     across evaluator, feedback, artifact, and context prompt sections. The

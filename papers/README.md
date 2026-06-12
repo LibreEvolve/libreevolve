@@ -922,9 +922,11 @@ packing sections. `LLMEnsemble.generate()` also performs role-scoped common
 counter discovery at the final prompt boundary for mutation, critique,
 feedback, meta-prompt, registry-created, and custom roles, while backend
 metadata can derive heuristic prompt-token capacity from `context_window_tokens`
-minus `reserved_output_tokens`. The remaining gap is automatic selected-backend
-provider-token section packing across all prompt roles/provider families and
-context surfaces, plus context-policy evolution.
+minus `reserved_output_tokens`. Runtime prompt-section coverage rejects
+complete and role-level provider-token section-packing overclaims for
+critique, feedback, and meta-prompt. The remaining gap is automatic selected-
+backend provider-token section packing across all prompt roles/provider
+families and context surfaces, plus context-policy evolution.
 
 AlphaEvolve island-state note: retained archive-state changes advance the
 island round-robin assignment cursor. Non-admitted MAP-Elites attempts, such as

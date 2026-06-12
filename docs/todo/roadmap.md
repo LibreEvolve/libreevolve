@@ -780,9 +780,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     can be rendered from stored excerpts or reopened under bounded-file policy,
     binary/non-UTF-8 artifacts are explicitly non-renderable, mutation prompts
     have deterministic section budgets, and final prompts get role-scoped
-    prompt-token cap checks. The remaining gap is automatic provider-token
-    section-priority packing outside mutation prompts and exact counters across
-    non-OpenAI/custom provider families, not bounded artifact-content rendering
+    prompt-token cap checks. Runtime prompt-section coverage now rejects
+    complete and role-level section-packing overclaims for critique, feedback,
+    and meta-prompt. The remaining gap is automatic provider-token section-
+    priority packing outside mutation prompts and exact counters across non-
+    OpenAI/custom provider families, not bounded artifact-content rendering
     itself.
   - Required result: when selected-backend provider-token section packing covers
     critique, feedback, meta-prompt, retrieval/context/plugin/failure-memory,

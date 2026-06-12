@@ -9304,3 +9304,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     quarantine/resume, hard cancellation, and provider replay open.
   - Verification: ensemble ledger tests validate generic and quarantine
     remaining-gap summaries.
+
+- [x] Preserve non-mutation prompt-packing boundary.
+  - Spec evidence: roadmap prompt-fitting claims need to distinguish current
+    mutation-only section packing from full AlphaEvolve-style role coverage.
+  - Status: ROADMAP and TODO wording now recognize role-level prompt-section
+    packing overclaim guards while keeping selected-backend provider-token
+    section packing across all roles open.
+  - Verification: runtime prompt-section coverage tests validate forged
+    non-mutation role overclaims.

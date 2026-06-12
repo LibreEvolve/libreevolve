@@ -526,8 +526,8 @@ is not yet an AlphaEvolve reproduction.
   summarization/ranking for local PDFs and extracted text.
 - Extend current prompt caps, mutation-path provider-token section packing,
   role-scoped final-prompt token counting, and backend context-window metadata
-  into selected-backend provider-token section packing across all prompt roles
-  and context surfaces.
+  plus role-level section-packing overclaim guards into selected-backend
+  provider-token section packing across all prompt roles and context surfaces.
 - Extend current prompt/history retention controls into replay-retention
   policy and richer context-policy ownership. Mutation prompts, explicit
   context spans, critique prompts/mutations, feedback raw/parsed fields,

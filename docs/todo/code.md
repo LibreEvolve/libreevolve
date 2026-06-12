@@ -664,8 +664,10 @@ Primary evidence:
     `libreevolve.prompt_section_packing_coverage_validation.v1`. The record
     identifies mutation as the only current section-packed prompt role, lists
     critique, feedback, and meta-prompt as final-prompt-boundary-only, includes
-    static-role token-counter capability diagnostics, and rejects complete
-    provider-token section-packing overclaims.
+    static-role token-counter capability diagnostics, rejects complete
+    provider-token section-packing overclaims, and rejects role-level
+    section-packing overclaims that mark critique, feedback, or meta-prompt as
+    section-packed.
   - Required result: make selected-backend exact token counters automatic for
     parent code, inspirations, explicit context, plugin context, evaluator
     feedback, and failure memory section-packing across all prompt roles,

@@ -50,6 +50,9 @@ Important limits:
 - Benchmark-fixture readiness is smoke/example-scope telemetry until
   repeated-seed, baseline, emitted-artifact, and anti-gaming evidence exists;
   the boundary is tracked by `papers/benchmark_fixture_readiness_boundary.json`.
+- Expert-guided problem formulation is a metadata/report contract until real
+  benchmark fixtures carry populated review/signoff evidence; the boundary is
+  tracked by `papers/problem_formulation_provenance_boundary.json`.
 - The included examples are smoke fixtures and small demos unless explicitly
   documented otherwise.
 - Paper and blog claims are tracked as source boundaries unless local benchmark

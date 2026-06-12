@@ -89,6 +89,10 @@ whether expert contributor roles, objective/evaluator rationale,
 parameter-scope decisions, background-knowledge linkage, and expert review or
 domain-owner signoff are present before marking expert-guided formulation
 parity claim-ready.
+The paper-facing counterpart is
+`papers/problem_formulation_provenance_boundary.json`, which manifest
+validation requires at the repository root so formulation metadata/report
+support cannot drift into populated expert-guided benchmark formulation parity.
 Completed manifests also include
 `runtime.history.benchmark_fixture_readiness_report` with schema
 `libreevolve.benchmark_fixture_readiness_report.v1`. It joins startup problem

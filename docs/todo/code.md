@@ -360,7 +360,9 @@ Primary evidence:
     `runtime.history.problem_formulation_provenance_report` with readiness
     checks for expert roles, formulation notes, objective/evaluator rationale,
     parameter-scope decisions, background-knowledge linkage, and expert review
-    or domain-owner signoff. Runtime histories now also include
+    or domain-owner signoff. The committed
+    `papers/problem_formulation_provenance_boundary.json` sidecar now
+    preserves this metadata-contract-only boundary. Runtime histories now also include
     `runtime.history.benchmark_fixture_readiness_report`, which joins startup
     problem metadata to the example-scope registry, records smoke-only versus
     benchmark/paper-claim fixture scope, hardening references, and explicit
@@ -368,7 +370,8 @@ Primary evidence:
     fixture-emitted result artifacts, and anti-gaming negative-fixture
     evidence. The committed
     `papers/benchmark_fixture_readiness_boundary.json` sidecar now preserves
-    this smoke-fixture readiness boundary. Existing benchmark fixtures have not yet been populated with
+    this smoke-fixture readiness boundary. Existing benchmark fixtures have
+    not yet been populated with
     real expert-formulation records or paper-claim-ready benchmark evidence.
   - Required result: populate matrix and constructive-math benchmark fixtures
     with expert-reviewed formulation metadata, link those records to evaluator

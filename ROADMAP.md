@@ -274,7 +274,8 @@ LibreEvolve has:
   `runtime.history.problem_formulation_provenance_report` for expert
   contributor roles, problem origin, formulation notes, objective/evaluator
   rationale, parameter-scope decisions, background refs, and review/signoff
-  readiness
+  readiness, with `papers/problem_formulation_provenance_boundary.json`
+  preserving the paper-facing metadata-contract-only boundary
 - benchmark-fixture readiness reports under
   `runtime.history.benchmark_fixture_readiness_report`, joining startup
   problem metadata to the example-scope registry and preserving explicit false

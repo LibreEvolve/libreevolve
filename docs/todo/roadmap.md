@@ -389,7 +389,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     field, and
     `runtime.history.problem_formulation_provenance_report` for roles,
     rationale, parameter-scope, background refs, and review/signoff readiness.
-    Runtime evidence can now identify the declared formulation metadata.
+    Runtime evidence can now identify the declared formulation metadata, and
+    `papers/problem_formulation_provenance_boundary.json` preserves the
+    paper-facing metadata-contract-only boundary.
     `runtime.history.benchmark_fixture_readiness_report` also joins startup
     problem metadata to the example-scope registry and records when a problem
     remains smoke-only, lacks AlphaEvolve-comparable scope, repeated-seed

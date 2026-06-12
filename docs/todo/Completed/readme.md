@@ -11744,6 +11744,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     root and focused manifest tests reject premature benchmark-fixture
     readiness claims.
 
+- [x] Document problem-formulation provenance paper-facing sidecar.
+  - Status: README, papers index, run-artifact docs, and TODO ledgers now point
+    to `papers/problem_formulation_provenance_boundary.json` as the committed
+    sidecar that preserves the metadata-contract-only formulation boundary.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused manifest tests reject premature expert-formulation parity
+    claims.
+
 - [x] Document qualitative-feedback prompt-history audit report.
   - Spec evidence: README qualitative-feedback wording needed to distinguish
     declared hard-to-code criteria from audited feedback records and from

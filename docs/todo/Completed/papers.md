@@ -12143,6 +12143,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     root and focused benchmark-fixture boundary tests reject premature
     paper-claim readiness.
 
+- [x] Record problem-formulation provenance paper-facing sidecar.
+  - Status: `libreevolve/problems/benchmarks/problem_formulation_provenance_boundary.py`
+    and `papers/problem_formulation_provenance_boundary.json` now preserve that
+    optional formulation metadata and runtime provenance reports exist, while
+    populated expert-reviewed matrix or constructive-math fixture records,
+    paper-facing certification rows, review/signoff artifact links,
+    benchmark-result linkage, and AlphaEvolve expert-guided formulation parity
+    remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused formulation-boundary tests reject premature parity claims.
+
 - [x] Record qualitative-feedback prompt-history audit boundary.
   - Spec evidence: AlphaEvolve paper-facing qualitative-feedback claims depend
     on traceable LLM-feedback evidence, not only declared grader metadata.

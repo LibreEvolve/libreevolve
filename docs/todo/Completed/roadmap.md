@@ -9313,6 +9313,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     root and focused manifest tests reject drifted benchmark-fixture readiness
     claims.
 
+- [x] Preserve problem-formulation provenance paper-facing sidecar.
+  - Status: ROADMAP and TODO wording now link formulation metadata/report
+    availability to `papers/problem_formulation_provenance_boundary.json`,
+    while preserving populated expert-reviewed benchmark records,
+    paper-facing certification rows, review/signoff artifact links,
+    benchmark-result linkage, and AlphaEvolve expert-guided formulation gaps.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused manifest tests reject drifted formulation-parity claims.
+
 - [x] Preserve qualitative-feedback prompt-history audit boundary.
   - Spec evidence: roadmap qualitative-feedback claims need to separate
     configured criterion metadata and prompt-history row joins from calibrated

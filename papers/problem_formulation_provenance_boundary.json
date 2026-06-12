@@ -1,0 +1,34 @@
+{
+  "schema": "libreevolve.alphaevolve_problem_formulation_provenance_boundary.v1",
+  "runtime_report_schema": "libreevolve.problem_formulation_provenance_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve Section 3.2 reports external mathematicians suggesting problems and advising how to formulate them, so paper-facing mathematical benchmark claims need populated expert-guided formulation evidence rather than only a metadata schema",
+  "boundary_status": "metadata_contract_only",
+  "runtime_report_status": "problem_formulation_provenance_report_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "metadata_present",
+    "expert_contributor_roles_recorded",
+    "formulation_notes_recorded",
+    "objective_rationale_recorded",
+    "evaluator_rationale_recorded",
+    "parameter_scope_recorded",
+    "background_knowledge_linkage_recorded",
+    "expert_review_or_domain_owner_signoff",
+    "alphaevolve_expert_guided_formulation_parity",
+    "benchmark_fixture_linkage",
+    "paper_facing_certification_rows",
+    "constructive_math_fixture_formulation_records",
+    "matrix_fixture_formulation_records",
+    "review_signoff_artifact_links"
+  ],
+  "missing_evidence": {
+    "matrix_fixture_expert_reviewed_formulation": "not_recorded_locally",
+    "constructive_math_fixture_expert_reviewed_formulation": "not_recorded_locally",
+    "paper_facing_certification_rows": "not_recorded_locally",
+    "review_signoff_artifact_links": "not_recorded_locally",
+    "benchmark_fixture_formulation_result_linkage": "not_recorded_locally",
+    "alphaevolve_expert_guided_formulation_parity": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has an optional formulation metadata contract and runtime provenance report for contributor roles, formulation notes, objective/evaluator rationale, parameter scope, background references, and review/signoff readiness, but does not claim populated expert-reviewed matrix or constructive-math benchmark formulation records, paper-facing certification rows, review/signoff artifact links, benchmark-result linkage, or AlphaEvolve expert-guided formulation parity."
+}

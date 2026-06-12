@@ -3004,7 +3004,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     contributor roles, problem-origin and formulation notes,
     objective/evaluator rationale, parameter-scope decisions,
     background-knowledge refs, and review/signoff readiness. Current
-    paper-facing status also includes
+    paper-facing status now includes
+    `papers/problem_formulation_provenance_boundary.json` as the committed
+    metadata-contract-only sidecar for expert-guided formulation claims. It also includes
     `runtime.history.benchmark_fixture_readiness_report` for run-level
     smoke-only scope, missing AlphaEvolve-comparable benchmark scope,
     hardening references, and explicit false readiness for repeated-seed
@@ -3012,7 +3014,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     anti-gaming negative-fixture evidence. The committed
     `papers/benchmark_fixture_readiness_boundary.json` sidecar now preserves
     this smoke-fixture readiness boundary for paper-manifest validation.
-    Current mathematical benchmark fixtures still lack real populated expert-reviewed records,
+    Current mathematical benchmark fixtures still lack real populated
+    expert-reviewed records,
     paper-facing certification examples, and paper-claim-ready benchmark
     evidence.
   - Required result: populate matrix and constructive-math benchmark fixtures

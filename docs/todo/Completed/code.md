@@ -17532,6 +17532,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and rejects drifted records that claim benchmark-fixture readiness.
 
+- [x] Add problem-formulation provenance paper-facing sidecar.
+  - Status: `libreevolve/problems/benchmarks/problem_formulation_provenance_boundary.py`
+    and `papers/problem_formulation_provenance_boundary.json` now preserve
+    formulation metadata/report availability while keeping populated
+    expert-reviewed benchmark fixture records, paper-facing certification rows,
+    review/signoff artifact links, benchmark-result linkage, and AlphaEvolve
+    expert-guided formulation parity absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and rejects drifted records that claim expert-guided formulation
+    parity.
+
 - [x] Add qualitative-feedback prompt-history audit report.
   - Spec evidence: AlphaEvolve uses LLM feedback for hard-to-code criteria,
     so local qualitative-feedback records need auditable linkage to the

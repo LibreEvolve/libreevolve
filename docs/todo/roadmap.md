@@ -4417,8 +4417,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     documentation that TTT-Discover is not supported by LibreEvolve until
     weight-updating test-time-training artifacts exist locally.
 
-- [ ] Add AlphaEvolve Bruhat-interval hypercube gates before roadmap
-      promotion.
+- [ ] Implement AlphaEvolve Bruhat-interval hypercube gates beyond
+      source-boundary roadmap promotion.
   - Spec evidence: arXiv `2601.01235`, submitted January 3, 2026, introduces
     `Bruhat intervals that are large hypercubes`. The abstract says
     AlphaEvolve-suggested permutations led to a pattern that worked for tested
@@ -4432,10 +4432,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     Bruhat-order matrices, complementary blocks and flips, a poset isomorphism
     `phi: D_m -> S_2^{C_m}`, and Theorem 2.21's `D_m = [x_m, y_m]` rank
     `m * 2^(m-1)` hypercube.
-  - Current evidence: ROADMAP tracks broad constructive-math and Appendix B
-    fixture gaps plus background paper-index rows, but it does not promote
-    `2601.01235` beyond potential-future-benchmark status. It does not define
-    permutation candidate schemas, Bruhat order/interval verifiers, poset-
+  - Current evidence: ROADMAP now keeps `2601.01235` behind the committed
+    `papers/bruhat_intervals_boundary.json` source-specific absence boundary.
+    It tracks broad constructive-math and Appendix B fixture gaps plus
+    background paper-index rows, but it still does not define permutation
+    candidate schemas, Bruhat order/interval verifiers, poset-
     hypercube isomorphism checks, dyadic well-distribution predicates, power-
     of-two `S_n` benchmark rows, Kazhdan-Lusztig coefficient linkage, cluster-
     algebra consequence records, or finite-pattern versus proof-status gates.
@@ -4444,9 +4445,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     scoring across `n = 10..50`, Gemini 2.5 Flash/Pro model-call provenance,
     evaluated-program counts, public repository artifact status, and
     recurrence/proof checks for `alpha(2n)=2 alpha(n)+n`.
-  - Required result: add roadmap gates for `2601.01235`: paper/source
-    manifest entry, PDF/cache hash, source-license and code-artifact status,
-    permutation candidate schema, Bruhat interval witness artifacts, poset-
+  - Required result: implement roadmap promotion gates beyond the
+    source-boundary sidecar for `2601.01235`: permutation candidate schema,
+    Bruhat interval witness artifacts, poset-
     hypercube verifier, dyadic well-distribution checker, power-of-two `S_n`
     benchmark records, dimension and asymptotic-bound calculations,
     Kazhdan-Lusztig `R`-polynomial coefficient metadata, cluster-algebra and

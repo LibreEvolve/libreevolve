@@ -6203,7 +6203,8 @@ Primary evidence:
     submission IDs, and explicit documentation that LibreEvolve's current
     provider calls and feedback graders are not test-time model training.
 
-- [ ] Add AlphaEvolve Bruhat-interval hypercube construction boundary.
+- [ ] Implement AlphaEvolve Bruhat-interval hypercube construction beyond the
+      source boundary.
   - Spec evidence: arXiv `2601.01235`, `Bruhat intervals that are large
     hypercubes`, was submitted January 3, 2026. Its abstract studies large
     Bruhat intervals that are poset hypercubes in the symmetric group `S_n`.
@@ -6221,10 +6222,11 @@ Primary evidence:
     complementary blocks `C_m`, the map `phi: D_m -> S_2^{C_m}`, local flips
     that toggle one complementary block while changing length by `+/-1`, and
     proves `D_m = [x_m, y_m]` with hypercube rank `m * 2^(m-1)`.
-  - Current evidence: `papers/README.md` lists `2601.01235` only as a
-    constructive math benchmark candidate with `Not implemented; potential
-    future benchmark`. LibreEvolve has no implemented source-boundary gate for
-    this source, no permutation-generator candidate schema, no Bruhat order or
+  - Current evidence: `papers/bruhat_intervals_boundary.json` now records the
+    source-specific absence boundary for `2601.01235`, including PDF hash,
+    public artifact URLs, AlphaEvolve experiment provenance requirements, and
+    missing local verifier evidence. LibreEvolve still has no permutation-
+    generator candidate schema, no Bruhat order or
     interval verifier, no poset-hypercube isomorphism checker, no dyadically
     well-distributed permutation checker, no `S_n` power-of-two benchmark
     rows, no Kazhdan-Lusztig `R`-polynomial coefficient metadata, no cluster-
@@ -6239,11 +6241,10 @@ Primary evidence:
     `alpha(2n) = 2 alpha(n) + n` and `alpha(2^m) = m * 2^(m-1)` result checks,
     non-functional evolved-code caveats, and log/lineage evidence separating
     bit-reversal discovery from known low-discrepancy-sequence literature.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2601.01235`: arXiv id/version/date/PDF hash, authors, source
-    license, code/artifact availability, relation to AlphaEvolve and
-    LibreEvolve constructive-math fixtures, permutation candidate schema,
-    Bruhat interval input/output records, power-of-two `S_n` benchmark rows,
+  - Required result: implement runtime evidence beyond the source-boundary
+    record for `2601.01235`: relation to AlphaEvolve and LibreEvolve
+    constructive-math fixtures, permutation candidate schema, Bruhat interval
+    input/output records, power-of-two `S_n` benchmark rows,
     poset-hypercube verifier, dyadic well-distribution checker, dimension
     computation and asymptotic-bound records, Kazhdan-Lusztig `R`-polynomial
     coefficient linkage metadata, cluster-algebra and Bruhat-graph consequence

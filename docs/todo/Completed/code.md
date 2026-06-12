@@ -18038,3 +18038,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     reproduction outputs remain open.
   - Verification: TTT Discover boundary tests and paper-manifest tests cover
     the sidecar, drift rejection, and repo-root sidecar requirement.
+
+- [x] Add Bruhat Intervals `2601.01235` source-boundary gate.
+  - Status: `libreevolve.problems.benchmarks.bruhat_intervals_boundary` now
+    emits and validates `papers/bruhat_intervals_boundary.json` with cached PDF
+    digest, arXiv v1 identity, nonexclusive arXiv license metadata, public
+    artifact links, reported AlphaEvolve/FunSearch method details, required
+    future evidence fields, missing-evidence keys, and overclaim rejection.
+  - Remaining gap: permutation schemas, simple-reflection decoding,
+    d-invariant evaluation, Bruhat/Ehresmann verification, x_m/y_m witness
+    generation, dyadic and block validators, poset-hypercube isomorphism,
+    consequence rows, artifact hashes, and independent checker outputs remain
+    open.
+  - Verification: Bruhat Intervals boundary tests and paper-manifest tests cover
+    the sidecar, drift rejection, and repo-root sidecar requirement.

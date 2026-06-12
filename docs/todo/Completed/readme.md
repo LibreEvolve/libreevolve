@@ -12109,3 +12109,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     reproduction outputs explicit as missing.
   - Verification: TTT Discover boundary and paper-manifest tests validate the
     sidecar that README now references.
+
+- [x] Document Bruhat Intervals `2601.01235` source boundary in README.
+  - Status: README now names `papers/bruhat_intervals_boundary.json` in the
+    source reference table while keeping Bruhat Intervals as a constructive
+    math benchmark candidate only, with permutation schemas, Bruhat/Ehresmann
+    verifiers, dyadic witness checks, hypercube isomorphism evidence,
+    AlphaEvolve provenance, public artifact hashes, and independent checker
+    outputs explicit as missing.
+  - Verification: Bruhat Intervals boundary and paper-manifest tests validate
+    the sidecar that README now references.

@@ -3950,8 +3950,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     result reproduction, official score/runtime submissions, and source
     caveats for paper-text inconsistencies.
 
-- [ ] Keep README AlphaEvolve Bruhat-interval claims absent or source-scoped
-      until permutation and interval-verifier evidence exists.
+- [ ] Implement README AlphaEvolve Bruhat-interval claims beyond source-scoped
+      absence.
   - Spec evidence: arXiv `2601.01235`, `Bruhat intervals that are large
     hypercubes`, says AlphaEvolve-suggested permutations revealed a pattern
     for large Bruhat intervals that are poset hypercubes in `S_n`, later
@@ -3964,10 +3964,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     dyadically well-distributed permutations `D_m`, with verification through
     Ehresmann matrices, complementary-block flips, and a poset isomorphism to
     a rank `m * 2^(m-1)` hypercube.
-  - Current evidence: README documents constructive-math gaps, benchmark-
-    report contracts, paper-cache status, and smoke fixtures. It does not
-    mention `2601.01235`, define permutation generators for `S_n`, verify
-    Bruhat intervals, check poset-hypercube structure, compute dyadic well-
+  - Current evidence: README now keeps `2601.01235` source-scoped through
+    `papers/bruhat_intervals_boundary.json`, which records the missing local
+    Bruhat verifier evidence. README documents constructive-math gaps,
+    benchmark-report contracts, paper-cache status, and smoke fixtures, but it
+    still does not define permutation generators for `S_n`, verify Bruhat
+    intervals, check poset-hypercube structure, compute dyadic well-
     distribution predicates, record power-of-two benchmark rows, connect
     outputs to Kazhdan-Lusztig coefficients or cluster-algebra consequences,
     or preserve finite-search versus general-proof status. README also lacks
@@ -3976,12 +3978,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     metadata, bit-reversal lineage and low-discrepancy-literature caveats,
     `R`-polynomial/d-invariant checker formulas, and PDF/arXiv metadata
     caveats.
-  - Required result: if README mentions Bruhat intervals, poset hypercubes in
-    `S_n`, dyadically well-distributed permutations, AlphaEvolve-suggested
+  - Required result: before README can promote Bruhat intervals, poset
+    hypercubes in `S_n`, dyadically well-distributed permutations,
+    AlphaEvolve-suggested
     permutation patterns, Kazhdan-Lusztig `R`-polynomials, open Richardson
     cluster-algebra frozen variables, Bruhat graph embeddings, or
-    `2601.01235`, keep the wording source-scoped until local artifacts can
-    show the paper in the manifest, permutation schemas, interval witness
+    `2601.01235` beyond the source-scoped boundary, local artifacts must show
+    permutation schemas, interval witness
     artifacts, hypercube verifier outputs, dyadic checker records, benchmark
     rows, proof-status fields, independent checker outputs, and benchmark
     reports. Avoid implying LibreEvolve supports AlphaEvolve-style Bruhat-

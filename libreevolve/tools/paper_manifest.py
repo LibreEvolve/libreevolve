@@ -30,6 +30,10 @@ from libreevolve.problems.benchmarks.bilateral_trade_boundary import (
     bilateral_trade_boundary_record,
     validate_bilateral_trade_boundary,
 )
+from libreevolve.problems.benchmarks.bruhat_intervals_boundary import (
+    bruhat_intervals_boundary_record,
+    validate_bruhat_intervals_boundary,
+)
 from libreevolve.problems.benchmarks.ablation_exhibits import (
     figure8_artifact_boundary_record,
     validate_figure8_artifact_boundary,
@@ -290,6 +294,7 @@ ARCHAGENT_BOUNDARY_FILE = "papers/archagent_boundary.json"
 MULTIAGENT_LEARNING_BOUNDARY_FILE = "papers/multiagent_learning_boundary.json"
 RAMSEY_NUMBERS_BOUNDARY_FILE = "papers/ramsey_numbers_boundary.json"
 COMBINATORICS_BERCZY_BOUNDARY_FILE = "papers/combinatorics_berczy_boundary.json"
+BRUHAT_INTERVALS_BOUNDARY_FILE = "papers/bruhat_intervals_boundary.json"
 BILATERAL_TRADE_BOUNDARY_FILE = "papers/bilateral_trade_boundary.json"
 EXAMPLE_BENCHMARK_SCOPE_FILE = "papers/example_benchmark_scope.json"
 MATH_OUTCOME_BOUNDARY_FILE = "papers/math_outcome_boundary.json"
@@ -682,6 +687,7 @@ def validate_paper_manifest(
     issues.extend(_validate_ramsey_numbers_boundary(root_path))
     issues.extend(_validate_combinatorics_berczy_boundary(root_path))
     issues.extend(_validate_ttt_discover_boundary(root_path))
+    issues.extend(_validate_bruhat_intervals_boundary(root_path))
     issues.extend(_validate_bilateral_trade_boundary(root_path))
 
     if set(csv_by_id) - seen_ids:
@@ -2063,6 +2069,38 @@ def _validate_ttt_discover_boundary(root_path: Path) -> list[PaperManifestIssue]
             f"ttt_discover_boundary_{issue.code}",
             issue.message,
             "ttt_discover",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_bruhat_intervals_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / BRUHAT_INTERVALS_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = bruhat_intervals_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "bruhat_intervals_boundary_manifest_missing",
+                    (
+                        f"{BRUHAT_INTERVALS_BOUNDARY_FILE} must emit "
+                        "Bruhat interval hypercube evidence availability"
+                    ),
+                    "bruhat_intervals",
+                )
+            ]
+    report = validate_bruhat_intervals_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"bruhat_intervals_boundary_{issue.code}",
+            issue.message,
+            "bruhat_intervals",
         )
         for issue in report.issues
     ]

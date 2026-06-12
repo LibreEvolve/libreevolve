@@ -5707,7 +5707,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     official/retrospective evaluation status, and source-scoped caveats for
     any internally inconsistent sampling-budget text.
 
-- [ ] Track AlphaEvolve Bruhat-interval hypercube paper evidence.
+- [ ] Implement AlphaEvolve Bruhat-interval hypercube paper evidence beyond the
+      source boundary.
   - Paper/source evidence: arXiv `2601.01235`, submitted January 3, 2026, is
     titled `Bruhat intervals that are large hypercubes`. Its abstract studies
     big Bruhat intervals that are poset hypercubes in the symmetric group
@@ -5723,11 +5724,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     complementary blocks, the order-preserving map `phi` to `S_2^{C_m}`, local
     flips, Proposition 2.20's poset isomorphism, and Theorem 2.21's
     `D_m = [x_m, y_m]` hypercube of rank `m * 2^(m-1)`.
-  - Current gap: `papers/README.md` lists `2601.01235` as a constructive math
-    benchmark candidate with `Not implemented; potential future benchmark`,
-    but the current implementation and paper index do not yet provide local
-    source-boundary artifacts or implementation evidence for this paper.
-    Broad Appendix B and constructive-math gaps do not capture
+  - Current gap: `papers/bruhat_intervals_boundary.json` now records the
+    source-specific absence boundary for `2601.01235`, including source
+    identity, public artifact links, AlphaEvolve/FunSearch provenance, and the
+    current missing-evidence contract. The current implementation and paper
+    index still do not provide executable implementation evidence for this
+    paper. Broad Appendix B and constructive-math gaps do not capture
     permutation generator schemas, Bruhat interval verification, hypercube
     isomorphism checks, dyadic well-distribution predicates, `S_n` power-of-
     two benchmark rows, Kazhdan-Lusztig coefficient linkage, cluster-algebra
@@ -5741,10 +5743,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     public code/prompt/output URL, the observed recurrence
     `alpha(2n)=2 alpha(n)+n`, and the note that the evolved program contained
     likely unused simulated-annealing/search code.
-  - Required result: add paper-manifest and paper-index coverage updates for
-    `2601.01235`: title/authors/arXiv version/date/PDF digest, source
-    license, code/artifact URL/status, relation to AlphaEvolve and
-    LibreEvolve constructive-math assumptions, permutation candidate schemas,
+  - Required result: implement paper-evidence records beyond the source-boundary
+    sidecar for `2601.01235`: relation to AlphaEvolve and LibreEvolve
+    constructive-math assumptions, permutation candidate schemas,
     Bruhat interval records, poset-hypercube witness artifacts, dyadic well-
     distribution checker metadata, dimension/asymptotic-bound records,
     Kazhdan-Lusztig `R`-polynomial coefficient metadata, cluster-algebra and

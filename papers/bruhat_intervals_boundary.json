@@ -1,0 +1,188 @@
+{
+  "schema": "libreevolve.bruhat_intervals_boundary.v1",
+  "source_paper_id": "2601.01235",
+  "source_title": "Bruhat intervals that are large hypercubes",
+  "source_authors": [
+    "Jordan Ellenberg",
+    "Nicolas Libedinsky",
+    "David Plaza",
+    "Jose Simental",
+    "Geordie Williamson"
+  ],
+  "source_version": "v1",
+  "source_submitted_date": "2026-01-03",
+  "source_last_revised_date": "2026-01-03",
+  "source_pdf_date": "2026-01-06",
+  "source_url": "https://arxiv.org/pdf/2601.01235.pdf",
+  "source_file": "papers/2601.01235__Bruhat_Intervals.pdf",
+  "source_sha256": "a5ff203da843a73bc0b6f5568be7320963e5f4f45bff11f5d2ce39ec08b0ef64",
+  "source_bytes": 735975,
+  "source_license": "http://arxiv.org/licenses/nonexclusive-distrib/1.0/",
+  "boundary_status": "constructive_math_context_without_local_bruhat_hypercube_benchmark",
+  "claim_ready": false,
+  "source_links": [
+    {
+      "url": "https://arxiv.org/abs/2601.01235v1",
+      "status": "source_version_reference_only"
+    },
+    {
+      "url": "https://github.com/kitft/funsearch",
+      "status": "related_funsearch_reference_only"
+    },
+    {
+      "url": "https://github.com/JSEllenberg/Bruhat-hypercubes/tree/main",
+      "status": "public_artifact_reference_only"
+    }
+  ],
+  "framework_components": [
+    {
+      "component_id": "permutation_pair_candidate_schema",
+      "paper_role": "candidate programs emit permutation pairs in symmetric groups",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "simple_reflection_word_decoder",
+      "paper_role": "FunSearch experiments decode lists of simple reflections into permutations",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "d_invariant_evaluator",
+      "paper_role": "score pairs by the Kazhdan-Lusztig d-invariant",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "bruhat_order_ehresmann_matrix",
+      "paper_role": "compare permutations with Ehresmann matrix inequalities",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "bruhat_interval_witness_generator",
+      "paper_role": "generate x_m and y_m bit-reversal affine endpoints",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "dyadic_basic_interval_checker",
+      "paper_role": "check basic intervals in [2^m] and exact-one block conditions",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "dyadically_well_distributed_checker",
+      "paper_role": "recognize D_m vertices by digitwise distribution",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "fundamental_block_validator",
+      "paper_role": "verify each fundamental block has exactly one permutation-matrix entry",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "complementary_block_flip_validator",
+      "paper_role": "verify complementary-block flips and length changes",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "poset_hypercube_isomorphism_checker",
+      "paper_role": "validate phi: D_m -> S_2^C_m as a poset isomorphism",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "kazhdan_lusztig_r_polynomial_linkage",
+      "paper_role": "connect interval dimension to R-polynomial coefficient bounds",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "cluster_algebra_consequence_rows",
+      "paper_role": "record frozen-variable lower-bound consequences",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "alphaevolve_experiment_provenance",
+      "paper_role": "record AlphaEvolve prompt, model calls, program counts, and cost",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "public_artifact_snapshot",
+      "paper_role": "snapshot the public program, output, and prompt repository",
+      "local_status": "not_recorded"
+    }
+  ],
+  "local_evidence": {
+    "current_bruhat_runner": "<none>",
+    "current_candidate_scope": "python_primary_generic_workspace_not_bruhat_interval_api",
+    "permutation_pair_schema_ready": false,
+    "simple_reflection_decoder_ready": false,
+    "d_invariant_evaluator_ready": false,
+    "bruhat_order_verifier_ready": false,
+    "ehresmann_matrix_records_ready": false,
+    "x_y_generator_ready": false,
+    "dyadic_checker_ready": false,
+    "hypercube_isomorphism_ready": false,
+    "dimension_formula_ready": false,
+    "alphaevolve_provenance_ready": false,
+    "public_artifact_snapshot_ready": false,
+    "independent_checker_ready": false,
+    "repository_runtime_verified": false
+  },
+  "reported_result": {
+    "group_family": "S_{2^m}",
+    "main_interval": "D_m = [x_m, y_m]",
+    "vertex_characterization": "dyadically well-distributed permutations",
+    "hypercube_dimension": "m * 2^(m-1)",
+    "upper_bound_context": "within a constant factor of m * 2^m",
+    "alpha_recurrence": "alpha(2n) = 2 alpha(n) + n",
+    "tested_power_formula": "alpha(2^m) = m * 2^(m-1)",
+    "alphaevolve_program_count": "3000-5000",
+    "alphaevolve_models": "Gemini 2.5 Flash and Gemini 2.5 Pro",
+    "alphaevolve_estimated_cost_usd": 70,
+    "funsearch_estimated_cost_usd": 10
+  },
+  "required_evidence_fields": [
+    "source_license_and_repository_status",
+    "alphaevolve_relation",
+    "constructive_math_fixture_policy",
+    "permutation_pair_schema",
+    "simple_reflection_word_schema",
+    "bruhat_order_definition_records",
+    "ehresmann_matrix_comparison_records",
+    "x_m_y_m_generator_records",
+    "dyadic_basic_interval_records",
+    "dyadically_well_distributed_records",
+    "fundamental_block_validation_records",
+    "complementary_block_flip_records",
+    "poset_hypercube_isomorphism_records",
+    "dimension_formula_records",
+    "d_invariant_records",
+    "kazhdan_lusztig_r_polynomial_records",
+    "cluster_algebra_consequence_records",
+    "bruhat_graph_embedding_consequence_records",
+    "small_n_table_rows",
+    "alphaevolve_prompt_records",
+    "model_call_and_budget_records",
+    "public_artifact_hashes",
+    "finite_test_vs_general_proof_status",
+    "independent_checker_outputs"
+  ],
+  "missing_evidence": {
+    "permutation_pair_candidate_schema": "not_implemented_locally",
+    "simple_reflection_word_decoder": "not_implemented_locally",
+    "d_invariant_evaluator": "not_implemented_locally",
+    "bruhat_order_verifier": "not_implemented_locally",
+    "ehresmann_matrix_records": "not_recorded_locally",
+    "x_m_y_m_generator": "not_implemented_locally",
+    "dyadic_basic_interval_checker": "not_implemented_locally",
+    "dyadically_well_distributed_checker": "not_implemented_locally",
+    "fundamental_block_validator": "not_implemented_locally",
+    "complementary_block_flip_validator": "not_implemented_locally",
+    "bruhat_interval_witness_artifacts": "not_recorded_locally",
+    "poset_hypercube_isomorphism_checker": "not_implemented_locally",
+    "dimension_formula_verifier": "not_implemented_locally",
+    "kazhdan_lusztig_r_polynomial_linkage": "not_recorded_locally",
+    "cluster_algebra_consequence_rows": "not_recorded_locally",
+    "bruhat_graph_embedding_consequence_rows": "not_recorded_locally",
+    "alphaevolve_prompt_and_lineage_records": "not_recorded_locally",
+    "public_artifact_hashes": "not_recorded_locally",
+    "independent_checker_outputs": "not_recorded_locally",
+    "local_repository_or_notebook_snapshot": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records Bruhat Intervals as AlphaEvolve-discovered constructive math context only. LibreEvolve currently does not claim permutation-pair candidate schemas, simple-reflection decoding, d-invariant evaluation, Bruhat order or Ehresmann matrix verification, x_m/y_m witness generation, dyadic interval checks, dyadically well-distributed permutation checks, fundamental/complementary block validators, poset-hypercube isomorphism checks, Kazhdan-Lusztig R-polynomial linkage rows, cluster-algebra or Bruhat-graph consequence records, AlphaEvolve prompt/model/budget provenance, public artifact hashes, or independent checker outputs."
+}

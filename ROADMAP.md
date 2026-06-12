@@ -623,8 +623,8 @@ is not yet an AlphaEvolve reproduction.
   This remains audit consistency for the declared local-subprocess boundary,
   not OS/container sandbox or quota enforcement.
 - Continue labeling CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve,
-  TTT Discover, GigaEvo, CodeEvolve, MadEvolve, Magellan, ArchAgent,
-  Multiagent Learning, Bilateral Trade, Ramsey Numbers, and Berczy
+  TTT Discover, Bruhat Intervals, GigaEvo, CodeEvolve, MadEvolve, Magellan,
+  ArchAgent, Multiagent Learning, Bilateral Trade, Ramsey Numbers, and Berczy
   local-correction combinatorics
   features as inspired, candidate benchmark, or
   application context unless paper behavior is actually implemented. The committed
@@ -651,6 +651,15 @@ is not yet an AlphaEvolve reproduction.
   comparator rows, math/kernel/AtCoder/biology result rows, expert or
   organizer reviews, public-code artifact hashes, cost records, and
   independent reproduction outputs. The committed
+  `papers/bruhat_intervals_boundary.json` sidecar records the Bruhat Intervals
+  source-specific boundary for permutation-pair candidate schemas,
+  simple-reflection decoding, d-invariant evaluation, Bruhat order/Ehresmann
+  matrix verification, x_m/y_m witness generation, dyadic interval checks,
+  dyadically well-distributed permutation checks, fundamental/complementary
+  block validators, poset-hypercube isomorphism checks, Kazhdan-Lusztig
+  R-polynomial linkage rows, cluster-algebra and Bruhat-graph consequences,
+  AlphaEvolve prompt/model/budget provenance, public artifact hashes, and
+  independent checker outputs. The committed
   `papers/improvevolve_boundary.json` sidecar records the ImprovEvolve
   source-specific boundary for `generate_config`/`improve`/`perturb`
   interface enforcement, Stage A/B execution, basin hopping, perturbation

@@ -12591,3 +12591,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     reproduction outputs remain open.
   - Verification: TTT Discover boundary tests and paper-manifest tests validate
     the sidecar and reject policy-update readiness overclaims.
+
+- [x] Record Bruhat Intervals `2601.01235` source boundary.
+  - Status: `papers/bruhat_intervals_boundary.json` now carries the
+    source-specific Bruhat Intervals boundary with cached PDF digest, arXiv v1
+    identity, source license, FunSearch and Bruhat-hypercubes public links,
+    AlphaEvolve model/program/cost details, required evidence fields, and
+    missing-evidence keys.
+  - Remaining paper gap: executable permutation/witness schemas, interval
+    verifier outputs, d-invariant and R-polynomial calculators, hypercube
+    isomorphism reports, proof-status records, public artifact hashes, and
+    independent reproduction outputs remain open.
+  - Verification: Bruhat Intervals boundary tests and paper-manifest tests
+    validate the sidecar and reject verifier-readiness overclaims.

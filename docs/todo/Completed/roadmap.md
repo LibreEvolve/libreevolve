@@ -9653,3 +9653,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     outputs.
   - Verification: TTT Discover boundary tests and paper-manifest tests validate
     the sidecar and repo-root requirement.
+
+- [x] Preserve Bruhat Intervals `2601.01235` boundary scope in roadmap.
+  - Status: ROADMAP and roadmap TODO wording now identify
+    `papers/bruhat_intervals_boundary.json` as the source-specific boundary for
+    permutation-pair candidate schemas, simple-reflection decoding,
+    d-invariant evaluation, Bruhat order/Ehresmann matrix verification,
+    x_m/y_m witness generation, dyadic interval checks, dyadically
+    well-distributed permutation checks, fundamental/complementary block
+    validators, poset-hypercube isomorphism checks, Kazhdan-Lusztig
+    R-polynomial linkage rows, cluster-algebra and Bruhat-graph consequences,
+    AlphaEvolve prompt/model/budget provenance, public artifact hashes, and
+    independent checker outputs.
+  - Verification: Bruhat Intervals boundary tests and paper-manifest tests
+    validate the sidecar and repo-root requirement.

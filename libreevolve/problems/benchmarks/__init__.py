@@ -83,6 +83,12 @@ from libreevolve.problems.benchmarks.bilateral_trade_boundary import (
     render_bilateral_trade_boundary_summary,
     validate_bilateral_trade_boundary,
 )
+from libreevolve.problems.benchmarks.bruhat_intervals_boundary import (
+    BRUHAT_INTERVALS_BOUNDARY_SCHEMA,
+    bruhat_intervals_boundary_record,
+    render_bruhat_intervals_boundary_summary,
+    validate_bruhat_intervals_boundary,
+)
 from libreevolve.problems.benchmarks.archagent_boundary import (
     ARCHAGENT_BOUNDARY_SCHEMA,
     archagent_boundary_record,
@@ -439,6 +445,7 @@ __all__ = [
     "BENCHMARK_EVIDENCE_SCOPE_SCHEMA",
     "BENCHMARK_HARDENING_SCHEMA",
     "BILATERAL_TRADE_BOUNDARY_SCHEMA",
+    "BRUHAT_INTERVALS_BOUNDARY_SCHEMA",
     "ARCHAGENT_BOUNDARY_SCHEMA",
     "CANDIDATE_ABSTRACTION_BOUNDARY_SCHEMA",
     "CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_SCHEMA",
@@ -530,6 +537,7 @@ __all__ = [
     "alphaevolve_source_pdf_version_record",
     "benchmark_hardening_artifact_inventory",
     "bilateral_trade_boundary_record",
+    "bruhat_intervals_boundary_record",
     "candidate_abstraction_boundary_record",
     "candidate_language_runner_boundary_record",
     "causalevolve_boundary_record",
@@ -603,6 +611,7 @@ __all__ = [
     "render_archagent_boundary_summary",
     "render_benchmark_hardening_summary",
     "render_bilateral_trade_boundary_summary",
+    "render_bruhat_intervals_boundary_summary",
     "render_candidate_abstraction_boundary_summary",
     "render_candidate_language_runner_boundary_summary",
     "render_causalevolve_boundary_summary",
@@ -677,6 +686,7 @@ __all__ = [
     "validate_benchmark_evidence_scope",
     "validate_benchmark_hardening_report",
     "validate_bilateral_trade_boundary",
+    "validate_bruhat_intervals_boundary",
     "validate_candidate_abstraction_boundary",
     "validate_candidate_language_runner_boundary",
     "validate_causalevolve_boundary",

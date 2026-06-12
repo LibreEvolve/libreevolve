@@ -3704,7 +3704,8 @@ explicit provider-output non-replay boundary as checked restore metadata.
 `libreevolve.full_resume_bundle_validation.v1` to revalidate the composed
 runtime RNG, LLM scheduler, archive restore, runtime budget, controller-budget
 replay, lineage boundary, and unsupported-surface list before returning the
-bundle. Full run replay still depends on controller pending-work restore,
+bundle, and it keeps `resumed_trace_proof_ready: false` with an overclaim
+guard. Full run replay still depends on controller pending-work restore,
 provider/plugin output replay, ordered migration-event replay, and
 resumed-trace lineage proof.
 `runtime.lineage_replay_policy` records the deterministic loop-owned candidate,

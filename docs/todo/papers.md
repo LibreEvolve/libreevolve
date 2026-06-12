@@ -1206,8 +1206,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve.full_resume_bundle_validation.v1`, validating the composed
     runtime RNG, LLM scheduler, archive restore, runtime budget,
     controller-budget replay, lineage boundary, and unsupported-surface list
-    while keeping full replay, provider-output replay, and pending-work resume
-    marked unavailable. But
+    while keeping full replay, provider-output replay, pending-work resume, and
+    resumed-trace proof marked unavailable, with validation rejecting forged
+    resumed-trace proof readiness. But
     this still stops short of an end-to-end replay trace that proves identical
     provider outputs or resumed lineage. Validator subprocesses now use an
     explicit

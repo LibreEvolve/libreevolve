@@ -9362,3 +9362,11 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     retrieval/context/plugin/failure-memory section packing.
   - Verification: prompt-section coverage tests validate forged readiness
     overclaims.
+
+- [x] Preserve full-resume resumed-trace boundary.
+  - Spec evidence: roadmap resume wording should not treat compatible
+    synchronous restore as full replay or end-to-end resumed-trace proof.
+  - Status: ROADMAP and TODO wording now recognize that full-runtime bundle
+    validation keeps resumed-trace proof readiness false.
+  - Verification: full-resume bundle tests validate forged resumed-trace proof
+    overclaim rejection.

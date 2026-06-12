@@ -4703,12 +4703,13 @@ Primary evidence:
     composed runtime RNG, LLM scheduler, archive restore, runtime budget,
     controller-budget replay, lineage boundary, and unsupported-surface list
     while preserving `full_replay_ready: false`, provider-output non-replay,
-    and no pending-work resume claim. Archive restore explicitly covers current
-    cell/elite placements without replaying migration events as an ordered
-    restore engine. Remaining gaps are no provider-output replay, no controller
-    queue or pending-evaluation state, no migration-event replay engine, and
-    no end-to-end resumed trace proving parent/inspiration/prompt/archive/
-    controller continuity.
+    no pending-work resume claim, and `resumed_trace_proof_ready: false`.
+    Validation rejects forged resumed-trace proof claims. Archive restore
+    explicitly covers current cell/elite placements without replaying migration
+    events as an ordered restore engine. Remaining gaps are no provider-output
+    replay, no controller queue or pending-evaluation state, no migration-event
+    replay engine, and no end-to-end resumed trace proving parent/inspiration/
+    prompt/archive/controller continuity.
   - Required result: add one direct and CLI resume entrypoint that validates
     and composes population/database state, backend bandit state, prompt
     database state, RNG state, provider-output boundaries, migration replay or

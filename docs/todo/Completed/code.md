@@ -17644,3 +17644,15 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     roles and provider families remains open.
   - Verification: prompt-section coverage tests cover forged readiness
     overclaims for those surfaces.
+
+- [x] Guard full-resume resumed-trace proof overclaims.
+  - Spec evidence: AlphaEvolve-scale replay requires an end-to-end resumed
+    trace, not only restored compatible terminal snapshots.
+  - Status: `load_full_resume_bundle()` now emits
+    `resumed_trace_proof_ready: false`, lists
+    `end_to_end_resumed_trace_proof` as an unsupported surface, and
+    `validate_full_resume_bundle()` rejects forged true readiness.
+  - Remaining gap: provider/plugin output replay, pending-work controller
+    restore, ordered migration replay, and resumed-trace proof remain open.
+  - Verification: full-resume bundle tests validate the false readiness field
+    and forged resumed-trace proof overclaim rejection.

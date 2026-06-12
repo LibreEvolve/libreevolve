@@ -12239,3 +12239,13 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Remaining paper gap: this does not implement those packing surfaces.
   - Verification: prompt-section coverage tests validate forged readiness
     overclaims.
+
+- [x] Record full-resume resumed-trace proof guard.
+  - Spec evidence: paper-facing resume claims need evidence that compatible
+    archive/RNG/budget restoration is not the same as AlphaEvolve-grade replay.
+  - Status: paper-facing TODOs and the papers overview now record that
+    full-resume bundle validation keeps resumed-trace proof readiness false.
+  - Remaining paper gap: provider/plugin output replay, pending-work restore,
+    ordered migration replay, and end-to-end resumed-trace proof remain open.
+  - Verification: full-resume bundle tests validate forged resumed-trace proof
+    overclaim rejection.

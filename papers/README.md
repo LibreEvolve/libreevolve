@@ -958,8 +958,9 @@ state with accepted `history.jsonl` records, and
 can restore both the cursor/counter subset and the cell/elite contents. CLI
 full-runtime restore now composes that compatible archive restore bundle with
 the runtime RNG, LLM scheduler, budget, and controller-budget replay surfaces;
-ordered migration-event replay plus async/provider-output/pending-work resume
-remain part of the broader resume gap.
+bundle validation keeps resumed-trace proof readiness false, and ordered
+migration-event replay plus async/provider-output/pending-work resume remain
+part of the broader resume gap.
 
 AlphaEvolve rejected-diagnostics note: rejected archive-admission metadata is
 kept JSON-safe, but hook-mutated/restored programs with non-finite top-level

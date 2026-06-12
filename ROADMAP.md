@@ -641,10 +641,11 @@ is not yet an AlphaEvolve reproduction.
 - Complete seeded replay semantics for run ids, candidate ids, prompt-program
   ids, restored archive/controller state, plugin/provider RNG boundaries, and
   provider nondeterminism. The framework RNG snapshot can already be restored
-  for direct `evolve()` calls and CLI runs, and the current full-runtime bundle
-  composes it with compatible LLM scheduler, archive, budget, controller-budget,
-  and lineage-boundary checks; provider/plugin output replay, controller
-  pending-work state, and end-to-end resumed-trace proof are still open.
+for direct `evolve()` calls and CLI runs, and the current full-runtime bundle
+composes it with compatible LLM scheduler, archive, budget, controller-budget,
+and lineage-boundary checks while keeping resumed-trace proof readiness false;
+provider/plugin output replay, controller pending-work state, and end-to-end
+resumed-trace proof are still open.
 - Extend budget accounting beyond the current local synchronous generation,
   evaluator-call, evaluator-second, wall-clock, LLM call/provider/token/
   configured-cost/latency, synchronous controller-budget event replay, and

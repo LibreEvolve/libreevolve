@@ -11831,3 +11831,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     plugin/failure-memory section packing readiness remain false.
   - Verification: prompt-section coverage tests validate forged readiness
     overclaims.
+
+- [x] Document full-resume resumed-trace proof guard.
+  - Spec evidence: README full-runtime restore wording needed to distinguish
+    compatible restore bundles from AlphaEvolve-grade resumed traces.
+  - Status: README and TODO wording now state that full-resume bundle
+    validation keeps `resumed_trace_proof_ready: false` and rejects overclaims.
+  - Verification: full-resume bundle tests validate forged resumed-trace proof
+    overclaim rejection.

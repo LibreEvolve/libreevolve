@@ -291,6 +291,7 @@ _FULL_RESUME_UNSUPPORTED_SURFACES = (
     "plugin_internal_state",
     "validator_subprocess_state",
     "ordered_migration_event_replay",
+    "end_to_end_resumed_trace_proof",
 )
 _RNG_REPLAY_OWNED_SURFACES = [
     "loop_parent_explore_exploit_choice",
@@ -3382,6 +3383,7 @@ def load_full_resume_bundle(
             "replay_entrypoint": "apply_controller_budget_event",
             "runtime_seconds_policy": "manifest_snapshot_authoritative",
         },
+        "resumed_trace_proof_ready": False,
         "unsupported_surfaces": list(_FULL_RESUME_UNSUPPORTED_SURFACES),
     }
     validation = validate_full_resume_bundle(bundle)
@@ -3406,6 +3408,7 @@ def validate_full_resume_bundle(bundle: object) -> dict:
             "full_replay_ready": False,
             "provider_output_replay_ready": False,
             "pending_work_resume_ready": False,
+            "resumed_trace_proof_ready": False,
             "unsupported_surface_count": 0,
             "issues": [
                 {
@@ -3448,6 +3451,13 @@ def validate_full_resume_bundle(bundle: object) -> dict:
     _validate_full_resume_bundle_kwargs(kwargs, issues)
     _validate_full_resume_bundle_boundaries(bundle, kwargs, issues)
     controller_event_count = _validate_full_resume_controller_state(bundle, issues)
+    if bundle.get("resumed_trace_proof_ready") is not False:
+        issues.append(
+            {
+                "code": "resumed_trace_proof_overclaim",
+                "message": "full resume bundle must not claim end-to-end resumed-trace proof",
+            }
+        )
     _validate_full_resume_unsupported_surfaces(bundle.get("unsupported_surfaces"), issues)
     return {
         "schema": FULL_RESUME_BUNDLE_VALIDATION_SCHEMA,
@@ -3457,6 +3467,7 @@ def validate_full_resume_bundle(bundle: object) -> dict:
         "full_replay_ready": False,
         "provider_output_replay_ready": False,
         "pending_work_resume_ready": False,
+        "resumed_trace_proof_ready": False,
         "controller_event_count": controller_event_count,
         "unsupported_surface_count": len(bundle.get("unsupported_surfaces", []))
         if isinstance(bundle.get("unsupported_surfaces"), list)
@@ -3468,6 +3479,7 @@ def validate_full_resume_bundle(bundle: object) -> dict:
             "plugin_internal_state_not_restored",
             "validator_subprocess_state_not_restored",
             "ordered_migration_event_replay_not_restore_engine",
+            "end_to_end_resumed_trace_proof_not_available",
         ],
     }
 

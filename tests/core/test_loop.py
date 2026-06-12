@@ -2435,6 +2435,8 @@ def test_load_full_resume_bundle_composes_checked_runtime_restore_surfaces(tmp_p
     assert bundle["bundle_validation"]["full_replay_ready"] is False
     assert bundle["bundle_validation"]["provider_output_replay_ready"] is False
     assert bundle["bundle_validation"]["pending_work_resume_ready"] is False
+    assert bundle["bundle_validation"]["resumed_trace_proof_ready"] is False
+    assert bundle["resumed_trace_proof_ready"] is False
     assert bundle["bundle_validation"]["controller_event_count"] == 6
     assert kwargs["runtime_rng_state_snapshot"]["seed"] == 99
     assert kwargs["runtime_llm_scheduler_state_snapshot"]["state"]["total"] == 1
@@ -2479,6 +2481,7 @@ def test_load_full_resume_bundle_composes_checked_runtime_restore_surfaces(tmp_p
     }
     assert bundle["lineage_replay_policy"]["full_replay_ready"] is False
     assert "provider_outputs" in bundle["unsupported_surfaces"]
+    assert "end_to_end_resumed_trace_proof" in bundle["unsupported_surfaces"]
 
 
 def test_full_resume_bundle_validation_rejects_replay_overclaims(tmp_path):
@@ -2507,6 +2510,7 @@ def test_full_resume_bundle_validation_rejects_replay_overclaims(tmp_path):
     ] = True
     edited["unsupported_surfaces"] = ["controller_pending_work"]
     edited["controller_budget_replay"]["event_count"] = 999
+    edited["resumed_trace_proof_ready"] = True
 
     validation = validate_full_resume_bundle(edited)
     codes = {issue["code"] for issue in validation["issues"]}
@@ -2516,8 +2520,10 @@ def test_full_resume_bundle_validation_rejects_replay_overclaims(tmp_path):
     assert validation["compatible_resume_ready"] is False
     assert validation["full_replay_ready"] is False
     assert validation["provider_output_replay_ready"] is False
+    assert validation["resumed_trace_proof_ready"] is False
     assert "invalid_lineage_replay_policy" in codes
     assert "provider_output_replay_overclaim" in codes
+    assert "resumed_trace_proof_overclaim" in codes
     assert "unsupported_surfaces_mismatch" in codes
     assert "controller_budget_replay_event_count_mismatch" in codes
 

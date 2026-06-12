@@ -2796,7 +2796,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     reseeding Python's process-global `random` module. Code TODO evidence still
     says direct UUID boundaries, plugin/provider RNG boundaries,
     provider-output replay, and end-to-end resumed-trace lineage proof remain
-    open.
+    open; full-resume bundle validation now also keeps
+    `resumed_trace_proof_ready: false` and rejects forged readiness.
   - Required result: when provider/plugin output replay, direct UUID replay
     contracts, plugin/provider RNG capture, ordered migration replay, or
     resumed-trace lineage proof lands, update README, AGENTS.md, ROADMAP,

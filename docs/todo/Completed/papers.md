@@ -12705,3 +12705,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     remain open before these claims are benchmark evidence.
   - Verification: AlphaEvolve 2026 impact boundary tests and paper-manifest
     tests validate the sidecar and reject local-evidence overclaims.
+
+- [x] Add `2605.14718` FHE-on-TPU paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2605.14718`, `Adapting AlphaEvolve to Optimize Fully Homomorphic
+    Encryption on TPUs`, cached locally as
+    `papers/2605.14718__FHE_on_TPU.pdf` with byte count `1695157` and
+    SHA-256 `cf3f6b443a3dc0faf17cc5ddee4297871d96a0b5170679a102470b2e77c85b06`.
+  - Remaining paper gap: source-license details, FHE scheme/primitive
+    taxonomy, Google Cloud TPUv5e hardware-execution provenance,
+    correctness-test metadata, baseline implementation identity, latency
+    benchmark rows, code/artifact availability, and independent reproduction
+    outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

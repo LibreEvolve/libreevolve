@@ -3368,24 +3368,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     snapshots, and independent verification must exist before roadmap wording
     promotes those impact domains as LibreEvolve-supported workflows.
 
-- [ ] Add FHE-on-TPU AlphaEvolve application gates before roadmap promotion.
+- [ ] Implement FHE-on-TPU AlphaEvolve application gates beyond paper cache
+      coverage.
   - Spec evidence: arXiv `2605.14718`, submitted May 14, 2026, reports using
     AlphaEvolve for hardware-aware Fully Homomorphic Encryption optimization
     on Google Cloud TPUv5e, with TFHE/Jaxite and CKKS/CROSS primitives,
     real-world hardware feedback, rigorous correctness tests, and latency
     speedups over human-engineered state of the art.
-  - Current evidence: ROADMAP has background-only gates for several
-    AlphaEvolve application-context rows and open hardware/compiler/system
-    benchmark gaps. It does not mention this FHE/cryptography-on-TPU paper,
-    define a source-manifest gate for it, or require local fixtures before
-    promoting FHE accelerator optimization as supported.
-  - Required result: add roadmap gates for `2605.14718`: paper/source
-    manifest entry, PDF/cache hash, FHE scheme/primitive taxonomy,
-    TPUv5e/hardware-execution provenance, baseline implementation identity,
-    correctness-test evidence, latency metric and speedup records,
-    code/artifact availability status, and a background-only or
-    benchmark-fixture status rule so roadmap claims do not outpace local FHE
-    kernel support.
+  - Current evidence: ROADMAP and paper manifests now include `2605.14718` as
+    FHE-on-TPU application context with a local PDF/cache hash and
+    background-only claim scope. ROADMAP still has open hardware/compiler/
+    system benchmark gaps and no FHE/cryptography-on-TPU fixture gate.
+  - Required result: add roadmap gates beyond paper cache coverage: FHE
+    scheme/primitive taxonomy, TPUv5e/hardware-execution provenance, baseline
+    implementation identity, correctness-test evidence, latency metric and
+    speedup records, code/artifact availability status, and benchmark-fixture
+    status rules so roadmap claims do not outpace local FHE kernel support.
 
 - [ ] Add AlphaEvolve intentmaking/sensemaking HCI gates before roadmap
       promotion.

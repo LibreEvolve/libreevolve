@@ -4933,7 +4933,8 @@ Primary evidence:
     customer, UI, API, linked-source snapshot, local fixture, benchmark report,
     and independent verification artifacts remain missing.
 
-- [ ] Add AlphaEvolve FHE-on-TPU application source and benchmark boundary.
+- [ ] Implement AlphaEvolve FHE-on-TPU benchmark boundary beyond paper cache
+      coverage.
   - Spec evidence: arXiv `2605.14718`, `Adapting AlphaEvolve to Optimize
     Fully Homomorphic Encryption on TPUs`, submitted May 14, 2026, frames
     AlphaEvolve optimization as hardware-aware cryptographic-kernel search for
@@ -4942,21 +4943,22 @@ Primary evidence:
     CKKS/CROSS primitives, reporting 2.5x TFHE bootstrap latency improvement
     and 1.31x/1.18x CKKS rotation/multiplication latency improvements over
     human-engineered state of the art.
-  - Current evidence: the local paper cache and implementation-status rows do
-    not include `2605.14718`; existing hardware/compiler TODOs cover original
-    AlphaEvolve Section 3.3 TPU/circuit/FlashAttention/compiler contexts and
-    2026 impact-source claims, but not FHE-specific cryptographic kernels,
-    TPUv5e execution, TFHE/Jaxite or CKKS/CROSS primitives, hardware feedback
-    traces, correctness-test provenance, or the reported FHE latency metrics.
-  - Required result: add paper/source manifest coverage and benchmark/report
-    boundaries for FHE-on-TPU work: arXiv id/version/date/PDF hash, authors,
+  - Current evidence: `papers/download_manifest.*` and `papers/README.md` now
+    include `2605.14718`, cached locally as
+    `papers/2605.14718__FHE_on_TPU.pdf` with byte count and SHA-256 digest.
+    README and ROADMAP keep it source-scoped/background-only. Existing
+    hardware/compiler TODOs cover original AlphaEvolve Section 3.3
+    TPU/circuit/FlashAttention/compiler contexts and 2026 impact-source
+    claims, but not FHE-specific cryptographic kernels, TPUv5e execution,
+    TFHE/Jaxite or CKKS/CROSS primitives, hardware feedback traces,
+    correctness-test provenance, or the reported FHE latency metrics.
+  - Required result: add benchmark/report boundaries for FHE-on-TPU work:
     source-license metadata, primitive/scheme ids, TPU version and execution
     environment, baseline implementation identity, generated optimization
     artifact hashes, hardware-feedback traces, correctness-test inputs and
     acceptance criteria, latency metric definitions, speedup values and units,
-    and README/ROADMAP wording that keeps this as a missing application-domain
-    benchmark until local FHE kernels, TPU execution, and correctness reports
-    exist.
+    and docs wording that keeps this as a missing application-domain benchmark
+    until local FHE kernels, TPU execution, and correctness reports exist.
 
 - [ ] Add AlphaEvolve intentmaking/sensemaking HCI source boundary.
   - Spec evidence: arXiv `2605.05921`, `Intentmaking and Sensemaking: Human

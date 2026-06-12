@@ -165,7 +165,7 @@ Common run options:
 
 ## Research Sources
 
-LibreEvolve is informed by a local cache of 25 papers on LLM-guided evolution,
+LibreEvolve is informed by a local cache of 26 papers on LLM-guided evolution,
 program synthesis, quality-diversity optimization, and related benchmarks. The
 PDF cache lives locally under `papers/`, but the PDFs themselves are gitignored.
 The committed repository tracks `papers/README.md`, download manifests, and
@@ -176,7 +176,7 @@ not authoritative bibliographic titles. Use `papers/README.md` for paper-facing
 titles, implementation status, and benchmark coverage decisions.
 
 The table below is a curated subset for README context. `papers/README.md` is
-the complete implementation-status index for all 25 manifest rows.
+the complete implementation-status index for all 26 manifest rows.
 
 | Source | Role in LibreEvolve |
 | --- | --- |
@@ -186,6 +186,7 @@ the complete implementation-status index for all 25 manifest rows.
 | [Finite-time Analysis of the Multiarmed Bandit Problem](https://homes.di.unimi.it/~cesabian/Pubblicazioni/ml-02.pdf) | UCB1 background for backend-selection boundaries. |
 | [CodeEvolve](https://arxiv.org/abs/2510.14150) | Related agentic code-evolution work. |
 | [DeepEvolve](https://arxiv.org/abs/2510.06056) | Related evolutionary coding-agent work. |
+| [FHE on TPU](https://arxiv.org/abs/2605.14718) | AlphaEvolve FHE/TPUv5e application context only; no local cryptographic-kernel or hardware-execution benchmark exists. |
 
 Rehydrate the ignored local PDF cache on a fresh checkout:
 

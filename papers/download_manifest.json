@@ -230,6 +230,16 @@
     "sha256": "3f04c75ccd850eb6e5c785e543f98d12446e9891399cc5246acae9335b4494c2"
   },
   {
+    "id": "2605.14718",
+    "title": "FHE_on_TPU",
+    "url": "https://arxiv.org/pdf/2605.14718.pdf",
+    "file": "papers/2605.14718__FHE_on_TPU.pdf",
+    "ok": true,
+    "bytes": 1695157,
+    "message": "downloaded",
+    "sha256": "cf3f6b443a3dc0faf17cc5ddee4297871d96a0b5170679a102470b2e77c85b06"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

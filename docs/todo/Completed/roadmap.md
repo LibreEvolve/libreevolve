@@ -764,7 +764,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     URL, and local PDF label describing the same source before version or
     rights evidence attaches.
   - Status: ROADMAP now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 25 cache
+    companion manifest that emits derived source identities for all 26 cache
     rows and links the AlphaEvolve row to `papers/source_versions.json`.
   - Remaining gap: none for this bounded roadmap wording slice.
 
@@ -9754,3 +9754,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     release/README boundaries.
   - Verification: AlphaEvolve 2026 impact boundary tests and paper-manifest
     tests validate the sidecar and repo-root requirement.
+
+- [x] Preserve `2605.14718` FHE-on-TPU paper-cache scope in roadmap.
+  - Status: ROADMAP now identifies arXiv `2605.14718`,
+    `Adapting AlphaEvolve to Optimize Fully Homomorphic Encryption on TPUs`,
+    as background AlphaEvolve FHE/TPUv5e application context only, with the
+    cached `papers/2605.14718__FHE_on_TPU.pdf` row and missing FHE
+    scheme/primitive taxonomy, TPUv5e execution provenance, correctness-test
+    evidence, baseline identity, generated-kernel artifacts, latency reports,
+    and independent reproduction outputs explicitly scoped as open.
+  - Verification: paper-manifest validation checks the 26-row manifest,
+    paper-index row, TODO coverage row, and source-identity sidecar.

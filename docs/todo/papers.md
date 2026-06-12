@@ -4490,7 +4490,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     verification outputs before the impact claims are treated as reproduced
     benchmark evidence or LibreEvolve feature support.
 
-- [ ] Track AlphaEvolve FHE-on-TPU paper and application evidence.
+- [ ] Reproduce AlphaEvolve FHE-on-TPU application evidence beyond paper
+      coverage.
   - Paper/source evidence: arXiv `2605.14718`, submitted May 14, 2026, is
     titled `Adapting AlphaEvolve to Optimize Fully Homomorphic Encryption on
     TPUs`. Its abstract says FHE deployment is limited by computational
@@ -4499,19 +4500,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     guide the search; and TFHE/Jaxite plus CKKS/CROSS primitives are evaluated
     on Google Cloud TPUv5e with reported 2.5x, 1.31x, and 1.18x latency
     improvements over human-engineered state of the art.
-  - Current gap: the paper manifest, paper index, and TODO coverage do not
-    include `2605.14718`. Existing AlphaEvolve application rows include
-    compiler, architecture, systems, mechanism-design, workflow, and
-    theoretical-CS contexts, but no FHE/cryptography-on-accelerator row, no
-    cached PDF/hash, no source-status table entry, and no benchmark/report
+  - Current gap: `papers/download_manifest.*` and `papers/README.md` now
+    include `2605.14718`, cached locally as
+    `papers/2605.14718__FHE_on_TPU.pdf` with byte count and SHA-256 digest,
+    and paper-index/TODO coverage treats it as a background-only application
+    context. Existing AlphaEvolve application rows include compiler,
+    architecture, systems, mechanism-design, workflow, and theoretical-CS
+    contexts, but there is still no FHE/cryptography-on-accelerator benchmark
     boundary for TPU-executed cryptographic kernels.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2605.14718`: title/authors/arXiv version/date/PDF digest, source license,
-    relation to AlphaEvolve, FHE scheme and primitive taxonomy, TPUv5e
-    hardware-execution evidence, correctness-test and benchmark metadata,
-    reported latency-speedup claims, linked code/artifact availability if any,
-    and TODO/README/ROADMAP wording that treats it as a missing application
-    benchmark rather than existing LibreEvolve support.
+  - Required result: add source-license metadata, relation-to-AlphaEvolve
+    details, FHE scheme and primitive taxonomy, TPUv5e hardware-execution
+    evidence, correctness-test and benchmark metadata, reported latency-
+    speedup claim records, linked code/artifact availability if any, and
+    docs wording that treats it as a missing application benchmark rather than
+    existing LibreEvolve support.
 
 - [ ] Track AlphaEvolve intentmaking/sensemaking HCI paper evidence.
   - Paper/source evidence: arXiv `2605.05921`, submitted May 7, 2026, is

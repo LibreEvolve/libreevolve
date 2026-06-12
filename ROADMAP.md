@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 25 cache rows and links the AlphaEvolve row to
+  identities for all 26 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1256,6 +1256,16 @@ resumed-trace proof are still open.
   compiler-storage, customer-case, public-gallery, UI, API, and independent
   verification evidence remains open before roadmap or release wording can
   treat those impact claims as LibreEvolve-supported workflows.
+- Keep FHE-on-TPU AlphaEvolve application claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2605.14718`, `Adapting AlphaEvolve to Optimize Fully Homomorphic
+  Encryption on TPUs`, cached locally as
+  `papers/2605.14718__FHE_on_TPU.pdf`. This is background application context
+  only; FHE scheme/primitive taxonomy, Google Cloud TPUv5e execution
+  provenance, TFHE/Jaxite and CKKS/CROSS fixtures, correctness-test evidence,
+  baseline implementation identity, generated-kernel artifacts, and latency
+  reports for the 2.5x, 1.31x, and 1.18x speedup claims remain open before
+  roadmap wording can promote FHE accelerator optimization as supported.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

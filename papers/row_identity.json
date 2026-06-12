@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.paper_source_identity_manifest.v1",
-  "source_identity_count": 25,
+  "source_identity_count": 26,
   "source_identity_policy": "manifest_id_url_source_id_and_file_source_prefix_must_match_before_source_version_or_rights_claims",
   "sources": [
     {
@@ -413,6 +413,24 @@
       "url_source_id": "2506.01896",
       "url_versioned_id": "2506.01896",
       "file_source_id": "2506.01896",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2605.14718",
+      "title": "FHE_on_TPU",
+      "url": "https://arxiv.org/pdf/2605.14718.pdf",
+      "file": "papers/2605.14718__FHE_on_TPU.pdf",
+      "sha256": "cf3f6b443a3dc0faf17cc5ddee4297871d96a0b5170679a102470b2e77c85b06",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2605.14718",
+      "url_versioned_id": "2605.14718",
+      "file_source_id": "2605.14718",
       "identity_checks": {
         "manifest_id_matches_url_source_id": true,
         "manifest_id_matches_file_source_id": true,

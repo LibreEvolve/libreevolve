@@ -5283,6 +5283,13 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "initial_pool_divergence_report": _initial_pool_divergence_report(
             programs
         ),
+        "whole_run_source_workspace_integrity_report": (
+            _whole_run_source_workspace_integrity_report(
+                startup_manifest,
+                programs,
+                run_dir,
+            )
+        ),
         "problem_formulation_provenance_report": (
             _problem_formulation_provenance_report(
                 db.startup_manifest_snapshot()
@@ -6580,6 +6587,437 @@ def validate_initial_pool_divergence_report(report: object) -> dict:
         )
     return {
         "schema": "libreevolve.initial_pool_divergence_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _whole_run_source_workspace_integrity_report(
+    startup_manifest: Mapping[str, object],
+    programs: list[Program],
+    run_dir: Path,
+) -> dict:
+    program_records = [
+        _whole_run_program_integrity_record(program)
+        for program in sorted(programs, key=lambda item: (item.generation, item.id))
+    ]
+    runtime_artifacts = _whole_run_runtime_artifact_records(run_dir)
+    startup_provenance = (
+        startup_manifest.get("provenance")
+        if isinstance(startup_manifest.get("provenance"), Mapping)
+        else {}
+    )
+    report = {
+        "schema": "libreevolve.whole_run_source_workspace_integrity_report.v1",
+        "source": "startup_manifest_runtime_artifacts_and_program_workspaces",
+        "startup_provenance": {
+            "has_git_record": isinstance(startup_provenance.get("git"), Mapping),
+            "has_source_record": isinstance(startup_provenance.get("source"), Mapping),
+            "has_problem_record": isinstance(startup_provenance.get("problem"), Mapping),
+            "has_environment_record": isinstance(
+                startup_provenance.get("environment"), Mapping
+            ),
+            "hash_policy": "reuse_startup_manifest_provenance_without_expanding_raw_paths",
+        },
+        "program_count": len(program_records),
+        "workspace_hash_count": sum(
+            1 for record in program_records if isinstance(record.get("workspace_sha256"), str)
+        ),
+        "primary_file_present_count": sum(
+            1 for record in program_records if record.get("primary_file_present") is True
+        ),
+        "legacy_code_only_count": sum(
+            1 for record in program_records if record.get("source_payload_kind") == "legacy_code"
+        ),
+        "static_file_reference_count": sum(
+            int(record.get("static_file_count", 0))
+            for record in program_records
+            if isinstance(record.get("static_file_count"), int)
+        ),
+        "program_records": program_records[:100],
+        "program_records_truncated": len(program_records) > 100,
+        "runtime_artifacts": runtime_artifacts,
+        "runtime_artifact_count": len(runtime_artifacts),
+        "runtime_artifact_present_count": sum(
+            1 for record in runtime_artifacts if record.get("present") is True
+        ),
+        "runtime_artifact_hash_count": sum(
+            1
+            for record in runtime_artifacts
+            if isinstance(record.get("sha256"), str)
+            or isinstance(record.get("tree_hash"), str)
+        ),
+        "integrity_scope": {
+            "program_workspace_hash_scope": "canonical_candidate_workspace_sha256",
+            "runtime_artifact_hash_scope": "file_bytes_or_directory_tree_hash",
+            "startup_source_scope": "startup_manifest_provenance_summary",
+            "raw_source_payload_replay": False,
+            "durable_query_surface": False,
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "all_retained_program_workspaces_hashed": len(program_records) == sum(
+                1
+                for record in program_records
+                if isinstance(record.get("workspace_sha256"), str)
+            ),
+            "primary_file_coherence_checked": len(program_records) == sum(
+                1 for record in program_records if record.get("primary_file_present") is True
+            ),
+            "runtime_artifact_pointer_hashes": True,
+            "whole_run_cli_query_surface": False,
+            "full_source_payload_replay": False,
+            "cross_run_workspace_dedup_index": False,
+            "static_file_content_replay": False,
+            "remaining_gap": [
+                "durable_whole_run_query_surface",
+                "full_source_payload_replay_artifacts",
+                "cross_run_workspace_dedup_index",
+                "static_file_content_replay_or_external_blob_store",
+                "selected_and_unselected_candidate_source_diff_views",
+            ],
+        },
+    }
+    report["validation"] = validate_whole_run_source_workspace_integrity_report(report)
+    return report
+
+
+def _whole_run_program_integrity_record(program: Program) -> dict:
+    workspace = program.workspace()
+    files = workspace.files
+    source_payload_kind = (
+        "workspace_files"
+        if program.files
+        else "legacy_code"
+        if program.code
+        else "empty_workspace"
+    )
+    evaluation = program.evaluation if isinstance(program.evaluation, Mapping) else {}
+    return {
+        "program_id": program.id,
+        "generation": program.generation,
+        "candidate_type": (
+            program.metadata.get("candidate_type")
+            if isinstance(program.metadata, Mapping)
+            else None
+        ),
+        "source_payload_kind": source_payload_kind,
+        "workspace_sha256": _workspace_sha256(workspace),
+        "workspace_hash_scope": "canonical_candidate_workspace_sha256",
+        "primary_file": workspace.primary_file,
+        "primary_file_present": workspace.primary_file in files,
+        "file_count": len(files),
+        "primary_file_chars": len(files.get(workspace.primary_file, "")),
+        "total_text_chars": sum(len(text) for text in files.values()),
+        "static_file_count": len(workspace.static_files),
+        "allowed_reserved_path_count": len(workspace.allowed_reserved_paths),
+        "lineage_depth": len(program.lineage),
+        "parent_id_present": program.parent_id is not None,
+        "evaluation_valid": evaluation.get("is_valid")
+        if isinstance(evaluation.get("is_valid"), bool)
+        else None,
+    }
+
+
+def _whole_run_runtime_artifact_records(run_dir: Path) -> list[dict]:
+    pointers = _runtime_artifact_pointers(run_dir)
+    selected = (
+        "history.jsonl",
+        "evaluator_results.jsonl",
+        "failure_history.jsonl",
+        "archive_events.jsonl",
+        "controller_budget_events.jsonl",
+        "llm_calls.jsonl",
+        "prompt_history.jsonl",
+        "best.py",
+        "best_workspace",
+    )
+    records: list[dict] = []
+    for name in selected:
+        pointer = pointers.get(name)
+        if not isinstance(pointer, Mapping):
+            continue
+        record = {
+            "name": name,
+            "path": pointer.get("path"),
+            "present": pointer.get("present"),
+            "kind": pointer.get("kind"),
+            "bytes": pointer.get("bytes"),
+            "sha256": pointer.get("sha256"),
+            "tree_hash": pointer.get("tree_hash"),
+            "tree_hash_status": pointer.get("tree_hash_status"),
+            "hash_scope": pointer.get("hash_scope")
+            or pointer.get("tree_hash_scope"),
+            "link_like": bool(pointer.get("is_symlink"))
+            or bool(pointer.get("is_junction")),
+            "target_scope": pointer.get("target_scope"),
+        }
+        records.append(record)
+    return records
+
+
+def validate_whole_run_source_workspace_integrity_report(report: object) -> dict:
+    issues: list[dict[str, str]] = []
+    if not isinstance(report, Mapping):
+        return {
+            "schema": "libreevolve.whole_run_source_workspace_integrity_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_report",
+                    "message": "whole-run integrity report must be a mapping",
+                }
+            ],
+        }
+    if report.get("schema") != "libreevolve.whole_run_source_workspace_integrity_report.v1":
+        issues.append({"code": "invalid_schema", "message": "unsupported schema"})
+    if report.get("source") != "startup_manifest_runtime_artifacts_and_program_workspaces":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "source must identify startup manifest, runtime artifacts, and workspaces",
+            }
+        )
+    programs = report.get("program_records")
+    if not isinstance(programs, list):
+        issues.append(
+            {
+                "code": "invalid_program_records",
+                "message": "program_records must be a list",
+            }
+        )
+        programs = []
+    for index, record in enumerate(programs):
+        if not isinstance(record, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_program_record",
+                    "message": "program records must be mappings",
+                }
+            )
+            continue
+        if not isinstance(record.get("program_id"), str):
+            issues.append(
+                {
+                    "code": "invalid_program_id",
+                    "message": f"program record {index} must include program_id",
+                }
+            )
+        digest = record.get("workspace_sha256")
+        if not isinstance(digest, str) or re.fullmatch(r"[0-9a-f]{64}", digest) is None:
+            issues.append(
+                {
+                    "code": "invalid_workspace_sha256",
+                    "message": f"program record {index} has invalid workspace hash",
+                }
+            )
+        if record.get("workspace_hash_scope") != "canonical_candidate_workspace_sha256":
+            issues.append(
+                {
+                    "code": "invalid_workspace_hash_scope",
+                    "message": "workspace hash scope is unsupported",
+                }
+            )
+        if record.get("primary_file_present") is not True:
+            issues.append(
+                {
+                    "code": "primary_file_missing",
+                    "message": f"program record {index} primary file is missing",
+                }
+            )
+        for field in (
+            "generation",
+            "file_count",
+            "primary_file_chars",
+            "total_text_chars",
+            "static_file_count",
+            "allowed_reserved_path_count",
+            "lineage_depth",
+        ):
+            if _sample_efficiency_non_negative_int(record.get(field)) is None:
+                issues.append(
+                    {
+                        "code": f"invalid_{field}",
+                        "message": f"{field} must be a non-negative integer",
+                    }
+                )
+    if report.get("program_records_truncated") is True:
+        program_count = _sample_efficiency_non_negative_int(report.get("program_count"))
+        if program_count is None or program_count < len(programs):
+            issues.append(
+                {
+                    "code": "invalid_program_count",
+                    "message": "program_count must cover retained records when truncated",
+                }
+            )
+    else:
+        _validate_report_count(report, "program_count", len(programs), issues)
+    retained_workspace_hash_count = sum(
+        1
+        for record in programs
+        if isinstance(record, Mapping)
+        and isinstance(record.get("workspace_sha256"), str)
+    )
+    retained_primary_present_count = sum(
+        1
+        for record in programs
+        if isinstance(record, Mapping)
+        and record.get("primary_file_present") is True
+    )
+    if report.get("program_records_truncated") is True:
+        for field, retained_count in (
+            ("workspace_hash_count", retained_workspace_hash_count),
+            ("primary_file_present_count", retained_primary_present_count),
+        ):
+            value = _sample_efficiency_non_negative_int(report.get(field))
+            if value is None or value < retained_count:
+                issues.append(
+                    {
+                        "code": f"invalid_{field}",
+                        "message": f"{field} must cover retained records when truncated",
+                    }
+                )
+    else:
+        _validate_report_count(
+            report,
+            "workspace_hash_count",
+            retained_workspace_hash_count,
+            issues,
+        )
+        _validate_report_count(
+            report,
+            "primary_file_present_count",
+            retained_primary_present_count,
+            issues,
+        )
+    artifacts = report.get("runtime_artifacts")
+    if not isinstance(artifacts, list):
+        issues.append(
+            {
+                "code": "invalid_runtime_artifacts",
+                "message": "runtime_artifacts must be a list",
+            }
+        )
+        artifacts = []
+    for index, artifact in enumerate(artifacts):
+        if not isinstance(artifact, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_runtime_artifact",
+                    "message": "runtime artifact records must be mappings",
+                }
+            )
+            continue
+        if not isinstance(artifact.get("name"), str) or not isinstance(
+            artifact.get("path"), str
+        ):
+            issues.append(
+                {
+                    "code": "invalid_runtime_artifact_identity",
+                    "message": f"runtime artifact {index} needs name and path",
+                }
+            )
+        if artifact.get("present") is True:
+            sha = artifact.get("sha256")
+            tree_hash = artifact.get("tree_hash")
+            if sha is not None and (
+                not isinstance(sha, str) or re.fullmatch(r"[0-9a-f]{64}", sha) is None
+            ):
+                issues.append(
+                    {
+                        "code": "invalid_artifact_sha256",
+                        "message": f"runtime artifact {index} has invalid sha256",
+                    }
+                )
+            if tree_hash is not None and (
+                not isinstance(tree_hash, str)
+                or re.fullmatch(r"[0-9a-f]{64}", tree_hash) is None
+            ):
+                issues.append(
+                    {
+                        "code": "invalid_artifact_tree_hash",
+                        "message": f"runtime artifact {index} has invalid tree hash",
+                    }
+                )
+    _validate_report_count(report, "runtime_artifact_count", len(artifacts), issues)
+    _validate_report_count(
+        report,
+        "runtime_artifact_present_count",
+        sum(
+            1
+            for artifact in artifacts
+            if isinstance(artifact, Mapping) and artifact.get("present") is True
+        ),
+        issues,
+    )
+    _validate_report_count(
+        report,
+        "runtime_artifact_hash_count",
+        sum(
+            1
+            for artifact in artifacts
+            if isinstance(artifact, Mapping)
+            and (
+                isinstance(artifact.get("sha256"), str)
+                or isinstance(artifact.get("tree_hash"), str)
+            )
+        ),
+        issues,
+    )
+    scope = report.get("integrity_scope")
+    if not isinstance(scope, Mapping):
+        issues.append(
+            {
+                "code": "invalid_integrity_scope",
+                "message": "integrity_scope must be a mapping",
+            }
+        )
+    else:
+        if scope.get("raw_source_payload_replay") is not False:
+            issues.append(
+                {
+                    "code": "raw_source_replay_overclaim",
+                    "message": "raw source payload replay must remain false",
+                }
+            )
+        if scope.get("durable_query_surface") is not False:
+            issues.append(
+                {
+                    "code": "query_surface_overclaim",
+                    "message": "durable query surface must remain false",
+                }
+            )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "claim_ready_overclaim",
+                "message": "whole-run integrity report must not claim full readiness",
+            }
+        )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be a mapping",
+            }
+        )
+    else:
+        for field in (
+            "whole_run_cli_query_surface",
+            "full_source_payload_replay",
+            "cross_run_workspace_dedup_index",
+            "static_file_content_replay",
+        ):
+            if readiness.get(field) is not False:
+                issues.append(
+                    {
+                        "code": f"{field}_overclaim",
+                        "message": f"{field} must remain false until implemented",
+                    }
+                )
+    return {
+        "schema": "libreevolve.whole_run_source_workspace_integrity_report.v1",
         "ok": not issues,
         "issues": issues,
     }

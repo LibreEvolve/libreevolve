@@ -1405,11 +1405,12 @@ is not yet an AlphaEvolve reproduction.
 - Extend strict finite JSONL coverage and diagnostics beyond current
   candidate, prompt, manifest, and GRPO-export writers as new run artifacts are
   added.
-- Improve `show` beyond the current validity/archive-aware selected-row view
-  with runtime status, lineage/prompt/evaluation/feedback/failure summaries,
-  bounded objective-vector metrics, and workspace-file display toward whole-run
-  source integrity reports, richer archive/prompt/failure drill-downs, and
-  durable query views over run artifacts.
+- Improve run inspection beyond the current validity/archive-aware selected-row
+  `show` view, streamed history source/workspace validation, bounded runtime
+  summaries, and manifest-level whole-run source/workspace integrity report
+  toward richer archive/prompt/failure drill-downs, durable query views over run
+  artifacts, full source-payload replay, and cross-run source/workspace
+  indexes.
 - Extend current `pyproject.toml` metadata, dev extras, and console-script
   packaging beyond editable/local use with wheel/sdist build checks,
   package-data validation, install-from-wheel smoke tests, and release-artifact

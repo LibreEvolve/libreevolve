@@ -64,6 +64,7 @@ from libreevolve.core.loop import (
     validate_evaluator_oracle_registry,
     validate_embedded_evaluator_entrypoint_report,
     validate_automated_evaluator_scope_report,
+    validate_whole_run_source_workspace_integrity_report,
     validate_qualitative_feedback_policy_report,
     validate_paper_evaluator_metric_contract,
     validate_paper_author_metadata_report,
@@ -1206,6 +1207,54 @@ def test_runtime_history_reports_initial_pool_divergence_boundary():
     assert closest["shared_metric_names"] == ["score"]
     assert closest["changed_components"]["modified_file_count"] == 1
     assert closest["changed_components"]["modified_files"] == ["main.py"]
+
+
+def test_runtime_history_records_whole_run_source_workspace_integrity():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem("def evaluate(c): return {'score': 0.5, 'is_valid': True}")
+    problem.initial_programs = ["x = 1\n", "x = 2\n"]
+
+    evolve(problem, Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"][
+        "whole_run_source_workspace_integrity_report"
+    ]
+
+    assert report["schema"] == (
+        "libreevolve.whole_run_source_workspace_integrity_report.v1"
+    )
+    assert report["validation"]["ok"] is True
+    assert validate_whole_run_source_workspace_integrity_report(report)["ok"] is True
+    assert report["program_count"] == 2
+    assert report["workspace_hash_count"] == 2
+    assert report["primary_file_present_count"] == 2
+    assert report["program_records_truncated"] is False
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["all_retained_program_workspaces_hashed"] is True
+    assert report["claim_readiness"]["primary_file_coherence_checked"] is True
+    assert report["claim_readiness"]["whole_run_cli_query_surface"] is False
+    assert report["claim_readiness"]["full_source_payload_replay"] is False
+
+    program_records = report["program_records"]
+    assert [record["candidate_type"] for record in program_records] == ["seed", "seed"]
+    assert all(record["primary_file_present"] is True for record in program_records)
+    assert all(len(record["workspace_sha256"]) == 64 for record in program_records)
+    assert len({record["workspace_sha256"] for record in program_records}) == 2
+    assert report["runtime_artifact_count"] >= 9
+    artifact_names = {record["name"] for record in report["runtime_artifacts"]}
+    assert {"history.jsonl", "best.py", "best_workspace"}.issubset(artifact_names)
+    assert report["runtime_artifact_hash_count"] >= 2
+
+    overclaimed = copy.deepcopy(report)
+    overclaimed["integrity_scope"]["raw_source_payload_replay"] = True
+    overclaimed["claim_readiness"]["whole_run_cli_query_surface"] = True
+    validation = validate_whole_run_source_workspace_integrity_report(overclaimed)
+    assert validation["ok"] is False
+    assert {
+        "raw_source_replay_overclaim",
+        "whole_run_cli_query_surface_overclaim",
+    }.issubset({issue["code"] for issue in validation["issues"]})
 
 
 def test_completed_runtime_records_no_llm_scheduler_for_zero_generation_run():

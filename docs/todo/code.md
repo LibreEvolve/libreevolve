@@ -1990,7 +1990,11 @@ Primary evidence:
     matches keyed by canonical workspace hash plus evaluator-contract hash.
     Cache hits emit `candidate_evaluation_cache_hit` controller events, do not
     consume evaluator-call budget, and are visible in generated-candidate
-    metadata and the duplicate-work report.
+    metadata and the duplicate-work report. Completed manifests also include
+    `runtime.history.whole_run_source_workspace_integrity_report`, which
+    records retained-program canonical workspace hashes and selected runtime
+    artifact hashes as inspection evidence without creating a durable
+    source/workspace dedup index.
   - Required result: add durable cross-run cache storage, resume-spanning cache
     replay, cache invalidation/migration policy, stochastic re-evaluation
     policy, semantic near-duplicate detection, and source/output-aware cache

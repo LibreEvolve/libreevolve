@@ -11580,3 +11580,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     and `claim_ready: false`.
   - Verification: focused runtime parallel-evaluation readiness test validates
     the implemented report.
+
+- [x] Document whole-run source/workspace integrity report.
+  - Spec evidence: README run-inspection wording needed to distinguish bounded
+    manifest integrity evidence from AlphaEvolve-grade generated-program
+    database inspection.
+  - Status: README and run-artifact docs now describe
+    `runtime.history.whole_run_source_workspace_integrity_report`, including
+    retained-program workspace hashes, primary-file coherence, source-payload
+    shape, static-file references, selected runtime artifact hashes, and the
+    excluded durable query/full replay/cross-run dedup claims.
+  - Verification: focused runtime whole-run source/workspace integrity test
+    validates the implemented report.

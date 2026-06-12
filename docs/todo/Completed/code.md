@@ -17284,3 +17284,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     mutation-depth impact, pending-work resume, and equal-budget parallelism
     reports remain open.
   - Verification: focused runtime parallel-evaluation readiness test passes.
+
+- [x] Add whole-run source/workspace integrity report.
+  - Spec evidence: AlphaEvolve-scale generated-program databases need
+    auditable whole-run source/workspace evidence, not only selected-row source
+    display.
+  - Status: runtime histories now include
+    `libreevolve.whole_run_source_workspace_integrity_report.v1`, derived from
+    startup provenance, retained program workspaces, and selected runtime
+    artifact pointers. It records canonical workspace hashes, primary-file
+    coherence, source-payload shape, static-file reference counts, selected
+    runtime file/tree hashes, and explicit false readiness for durable query,
+    full replay, cross-run dedup, and static-file content replay.
+  - Remaining gap: durable whole-run query surfaces, raw source-payload replay
+    artifacts, cross-run workspace dedup indexes, static-file content replay,
+    and selected/unselected source-diff views remain open.
+  - Verification: focused runtime whole-run source/workspace integrity test
+    passes.

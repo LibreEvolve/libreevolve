@@ -9114,3 +9114,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     mutation-depth, pending-work resume, and equal-budget evidence.
   - Verification: focused runtime parallel-evaluation readiness test validates
     the implemented report.
+
+- [x] Preserve whole-run source/workspace integrity boundary.
+  - Spec evidence: roadmap run-inspection claims need to separate bounded
+    manifest integrity summaries from durable AlphaEvolve-grade generated
+    program database views.
+  - Status: ROADMAP and TODO wording now recognize
+    `runtime.history.whole_run_source_workspace_integrity_report` as bounded
+    run-inspection evidence for retained-program workspace hashes,
+    primary-file coherence, source-payload shape, static-file references, and
+    selected runtime artifact hashes, while keeping durable query views, full
+    replay, cross-run dedup indexes, and richer drill-downs open.
+  - Verification: focused runtime whole-run source/workspace integrity test
+    validates the implemented report.

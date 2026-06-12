@@ -1596,6 +1596,13 @@ Important behavior:
   diagnostic limitations, count consistency, source records, summed
   contributions, and ranking order while keeping `durable_database_ready:
   false`.
+- `runtime.history.whole_run_source_workspace_integrity_report` stores a
+  bounded whole-run source/workspace integrity summary for retained programs.
+  It records canonical workspace hashes, source-payload shape, primary-file
+  coherence, static-file reference counts, startup provenance presence, and
+  selected runtime artifact file/tree hashes. This is run-inspection evidence,
+  not a durable query UI, full raw source replay store, cross-run workspace
+  dedup index, or static-file content replay surface.
 - `runtime.history.hypothesis_index` stores bounded proposal
   idea/rationale/hypothesis summaries for valid programs with captured
   proposal metadata. Text fields are redacted, hashed, and capped before

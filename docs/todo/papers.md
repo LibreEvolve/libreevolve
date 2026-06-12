@@ -4267,13 +4267,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     `history.jsonl` rows and validates source/workspace payload shape for every
     row before printing a best-looking candidate: legacy `code` must be text,
     workspace `files` must map safe candidate paths to text, and `primary_file`
-    must be a safe path present in `files`. This prevents malformed unselected,
-    invalid, or non-admitted rows from being hidden by the selected row.
-  - Required result: add whole-run source/workspace integrity summaries and
-    durable query/report surfaces over every candidate's source payloads,
-    workspace paths, source hashes, primary-file coherence, and display/truncation
-    policy. The remaining gap is not malformed unselected source-payload
-    validation or selected-row workspace display.
+    must be a safe path present in `files`. Completed manifests now include
+    `runtime.history.whole_run_source_workspace_integrity_report`, which
+    summarizes retained-program workspace hashes, source-payload shape,
+    primary-file coherence, static-file references, startup provenance
+    presence, and selected runtime artifact hashes.
+  - Required result: add durable query/report surfaces over every candidate's
+    source payloads, workspace paths, source hashes, primary-file coherence,
+    and display/truncation policy. The remaining gap is not malformed
+    unselected source-payload validation, selected-row workspace display, or
+    bounded retained-program integrity-report evidence.
 
 - [ ] Make DeepEvolve-inspired live retrieval transport audit-grade.
   - Paper evidence: retrieval-driven debugging/refinement treats external

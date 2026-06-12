@@ -520,6 +520,13 @@ Runtime artifact pointers for regular files also include SHA-256 hashes of
 file bytes, and directory artifact pointers include deterministic tree hashes
 over relative file paths plus per-file SHA-256 hashes, while link-like entries
 are reported without following their targets.
+Completed manifests also include
+`runtime.history.whole_run_source_workspace_integrity_report`, which summarizes
+every retained program's canonical workspace hash, primary-file coherence,
+source-payload shape, static-file references, and selected runtime artifact
+file/tree hashes. This is whole-run inspection evidence, not a durable query
+UI, full raw source replay store, cross-run dedup index, or static-blob
+content replay surface.
 Mixed legacy/current histories are rejected with a line-numbered diagnostic
 instead of treating one modern row as a migration for the whole file.
 `show` reads `manifest.json.runtime` when present and prints whether the

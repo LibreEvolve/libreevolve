@@ -745,14 +745,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     source integrity reports, richer archive/prompt/failure drill-downs, and
     durable query views. README and code evidence show that current `show`
     validates streamed current and legacy source/workspace payloads for every
-    row and prints selected-row workspace files, but does not emit whole-run
-    source-hash or workspace-integrity reports.
-  - Required result: when whole-run source/workspace integrity summaries,
-    durable query/report views, richer archive/prompt/failure drill-downs, or
-    every-candidate source-hash reports land, update the roadmap, README,
+    row and prints selected-row workspace files. Completed manifests now emit
+    `runtime.history.whole_run_source_workspace_integrity_report` with
+    retained-program workspace hashes, primary-file coherence, source-payload
+    shape, static-file reference counts, startup provenance presence, and
+    selected runtime artifact hashes.
+  - Required result: when durable query/report views, richer
+    archive/prompt/failure drill-downs, full source-payload replay, or
+    cross-run source/workspace indexes land, update the roadmap, README,
     papers index, and code/paper TODO entries together so roadmap wording
-    neither underclaims current selected-row/streamed-row validation nor
-    overclaims AlphaEvolve-grade run inspection.
+    neither underclaims current selected-row/streamed-row validation and
+    bounded manifest reports nor overclaims AlphaEvolve-grade run inspection.
 
 - [ ] Keep artifact-content/provider-token roadmap wording scoped to bounded
   artifact rendering plus mutation/final-prompt caps.

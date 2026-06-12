@@ -537,17 +537,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     history rows before printing. It also states that malformed unselected,
     invalid, or non-admitted rows fail inspection before any best-looking row
     is printed, with source/workspace paths, `files`, and `primary_file`
-    checked under the runtime candidate path grammar. The paper TODO still
-    requires whole-run source/workspace integrity summaries and durable
-    query/report surfaces over every candidate's source payloads, workspace
-    paths, source hashes, primary-file coherence, and display/truncation
-    policy.
-  - Required result: when whole-run source/workspace integrity reports, durable
-    run-artifact query views, richer archive/prompt/failure drill-downs, or
-    every-candidate source-hash summaries land, update README, ROADMAP, papers
+    checked under the runtime candidate path grammar. README now documents
+    `runtime.history.whole_run_source_workspace_integrity_report` as bounded
+    manifest evidence for retained-program workspace hashes, primary-file
+    coherence, source-payload shape, static-file references, and selected
+    runtime artifact hashes, while excluding durable query, full replay, and
+    cross-run dedup claims.
+  - Required result: when durable run-artifact query views, richer
+    archive/prompt/failure drill-downs, full source-payload replay, or
+    cross-run source/workspace indexes land, update README, ROADMAP, papers
     index, and code/paper TODO entries together so README neither underclaims
-    current streamed-row validation nor overclaims AlphaEvolve-grade run
-    inspection.
+    current streamed-row validation and bounded manifest reports nor overclaims
+    AlphaEvolve-grade run inspection.
 
 - [ ] Keep README provider-token prompt-packing wording scoped to implemented
   mutation and final-prompt boundaries.

@@ -11912,3 +11912,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     compute-hour budgets, or equal-budget parallelism evidence.
   - Verification: focused runtime parallel-evaluation readiness test validates
     the implemented report.
+
+- [x] Record whole-run source/workspace integrity boundary.
+  - Spec evidence: AlphaEvolve-scale runs require auditable generated-program
+    databases, not only compact selected-best source display.
+  - Status: paper-facing TODOs and runtime manifests now expose
+    `whole_run_source_workspace_integrity_report`, which summarizes retained
+    program workspace hashes, source-payload shape, primary-file coherence,
+    static-file references, startup provenance presence, selected runtime
+    artifact hashes, and false readiness for durable query, full replay,
+    cross-run dedup, and static content replay.
+  - Remaining paper gap: this does not provide a durable generated-program
+    database query UI, raw source-payload replay store, cross-run workspace
+    index, or full selected/unselected source-diff inspection surface.
+  - Verification: focused runtime whole-run source/workspace integrity test
+    validates the implemented report.

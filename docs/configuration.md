@@ -288,6 +288,9 @@ from `validate.py` unless explicitly allowlisted.
   reviewer revision is evaluated. `first_valid` keeps the first valid
   revision; `last_valid` keeps the last valid revision. Invalid revisions and
   provider failures are logged but do not replace a valid original mutation.
+  Reviewer-pool metadata records the synchronous execution model,
+  completed/failed/budget-skipped counts, pool elapsed seconds, summed reviewer
+  elapsed seconds, and per-reviewer outcome/timing fields.
 - `llm_feedback` (`[]`): optional LLM grader specs that score or discard
   evaluated candidates after local validation.
 - `feedback_retention_mode` (`"redacted"`): controls how candidate evaluation

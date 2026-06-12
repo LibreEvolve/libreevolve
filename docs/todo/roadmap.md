@@ -3254,13 +3254,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     apply to those roles; the loop runs a bounded synchronous reviewer pool;
     `critique_aggregation_policy` selects `first_valid` or `last_valid`
     revised mutations; and retained `metadata.critique.reviewer_pool` records
-    reviewer status, parser diagnostics, backend indices, selected reviewer,
-    and selection provenance. Reviewer calls are still sequential,
-    replacement-only, and chosen by first/last valid mutation rather than
-    calibrated reviewer score or benchmarked reviewer reliability.
+    reviewer status, parser diagnostics, backend indices, outcome/timing
+    telemetry, selected reviewer, and selection provenance. Reviewer calls are
+    still sequential, replacement-only, and chosen by first/last valid mutation
+    rather than calibrated reviewer score or benchmarked reviewer reliability.
   - Required result: when async reviewer overlap, calibrated reviewer scoring,
     reviewer-pool ablation reports, stronger per-reviewer provider isolation,
-    or richer reviewer-specific timeout/failure artifacts land, update the
+    or external reviewer-specific timeout/failure artifacts land, update the
     roadmap, README, papers index, and code/paper TODO entries together so
     roadmap wording neither underclaims current synchronous reviewer-pool
     metadata nor overclaims AlphaEvolve-grade critique orchestration.

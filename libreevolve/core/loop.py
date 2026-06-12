@@ -16,6 +16,7 @@ import math
 import random
 import re
 import stat as stat_module
+import time
 import unicodedata
 from pathlib import Path
 
@@ -33990,7 +33991,9 @@ def _run_critique_reviewers(
     reviewers = _critique_reviewer_specs(config)
     records: list[dict] = []
     valid_records: list[dict] = []
+    pool_started = time.perf_counter()
     for index, reviewer in enumerate(reviewers):
+        reviewer_started = time.perf_counter()
         reviewer_prompt = build_critique_prompt(
             base_prompt,
             original_diff,
@@ -34029,6 +34032,12 @@ def _run_critique_reviewers(
                 retention_mode=config.critique_retention_mode,
             )
             record.update(_critique_reviewer_record_fields(index, reviewer))
+            record.update(
+                _critique_reviewer_runtime_fields(
+                    reviewer_started,
+                    outcome="budget_skipped",
+                )
+            )
             records.append(record)
             break
         try:
@@ -34067,6 +34076,12 @@ def _run_critique_reviewers(
                 retention_mode=config.critique_retention_mode,
             )
             record.update(_critique_reviewer_record_fields(index, reviewer))
+            record.update(
+                _critique_reviewer_runtime_fields(
+                    reviewer_started,
+                    outcome="provider_failure",
+                )
+            )
             records.append(record)
             continue
 
@@ -34100,6 +34115,16 @@ def _run_critique_reviewers(
             retention_mode=config.critique_retention_mode,
         )
         record.update(_critique_reviewer_record_fields(index, reviewer))
+        record.update(
+            _critique_reviewer_runtime_fields(
+                reviewer_started,
+                outcome=(
+                    "accepted_revision"
+                    if status["accepted_revision"]
+                    else "rejected_revision"
+                ),
+            )
+        )
         record["selected_candidate_diff"] = selected_diff
         records.append(record)
         if status["accepted_revision"]:
@@ -34130,6 +34155,24 @@ def _run_critique_reviewers(
         "reviewer_count": len(reviewers),
         "completed_review_count": len(records),
         "valid_revision_count": len(valid_records),
+        "failed_review_count": sum(
+            1
+            for record in records
+            if record.get("reviewer_outcome") == "provider_failure"
+        ),
+        "budget_skipped_review_count": sum(
+            1
+            for record in records
+            if record.get("reviewer_outcome") == "budget_skipped"
+        ),
+        "pool_elapsed_sec": time.perf_counter() - pool_started,
+        "reviewer_elapsed_sec_sum": sum(
+            float(record.get("reviewer_elapsed_sec", 0.0))
+            for record in records
+            if isinstance(record.get("reviewer_elapsed_sec"), (int, float))
+            and not isinstance(record.get("reviewer_elapsed_sec"), bool)
+        ),
+        "execution_model": "synchronous_sequential",
         "selected_reviewer": selected.get("reviewer_name"),
         "selected_reviewer_role": selected.get("reviewer_role"),
         "reviewers": [
@@ -34164,6 +34207,16 @@ def _critique_reviewer_record_fields(index: int, reviewer: Mapping[str, object])
         "reviewer_index": index,
         "reviewer_name": reviewer["name"],
         "reviewer_role": reviewer["role"],
+    }
+
+
+def _critique_reviewer_runtime_fields(started: float, *, outcome: str) -> dict:
+    return {
+        "reviewer_outcome": outcome,
+        "reviewer_elapsed_sec": max(0.0, time.perf_counter() - started),
+        "reviewer_runtime_artifact_policy": (
+            "inline_timing_and_status_no_external_artifact"
+        ),
     }
 
 

@@ -4495,15 +4495,20 @@ Primary evidence:
     persists `metadata.critique.reviewer_pool` with schema
     `libreevolve.critique_reviewer_pool.v1`, reviewer roles, backend indices,
     parser status, valid-revision counts, aggregation policy, and selected
-    reviewer provenance. Existing `llm_role_backend_indices`, role accounting,
-    and timeout/cancellation policy records can route and account for exact
-    reviewer roles such as `critique:correctness`.
+    reviewer provenance. The pool summary now records
+    `execution_model="synchronous_sequential"`, completed/failed/budget-skipped
+    counts, pool elapsed seconds, summed reviewer elapsed seconds, and each
+    reviewer records outcome, elapsed seconds, and the inline runtime-artifact
+    policy. Existing `llm_role_backend_indices`, role accounting, and
+    timeout/cancellation policy records can route and account for exact reviewer
+    roles such as `critique:correctness`.
   - Remaining gap: reviewer calls are still sequential, replacement-only, and
     selected by first/last valid mutation rather than calibrated reviewer score
     or benchmarked reviewer reliability. Reviewer pools do not yet overlap
     asynchronously, do not produce calibrated reviewer-score reports, do not
     isolate provider-failure policy per reviewer beyond the current role label,
-    and do not emit richer reviewer-specific timeout/failure artifacts.
+    and do not emit external reviewer-specific timeout/failure artifacts beyond
+    the current inline outcome/timing telemetry.
   - Required result: add async or parallel reviewer execution where appropriate,
     calibrated reviewer scoring and ablation reports for reviewer pools,
     stronger per-reviewer provider isolation and budget policy, and

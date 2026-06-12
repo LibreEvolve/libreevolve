@@ -9005,3 +9005,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     distributed evaluator fan-out, and mutation-depth evidence open.
   - Verification: focused evaluator and process-exhibit topology tests validate
     the implemented behavior and manifest fields.
+
+- [x] Scope ROADMAP critique-reviewer wording after runtime telemetry landed.
+  - Spec evidence: AlphaEvolve-style reviewer pools need auditable
+    reviewer-specific status, timing, and failure evidence as a prerequisite to
+    calibrated or asynchronous critique orchestration.
+  - Status: ROADMAP TODO evidence now includes synchronous reviewer-pool
+    outcome/timing telemetry while keeping async overlap, calibrated scoring,
+    reviewer-pool ablations, provider isolation, and external timeout/failure
+    artifacts open.
+  - Verification: focused critique reviewer runtime tests validate the
+    implemented behavior and metadata fields.

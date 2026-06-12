@@ -1147,7 +1147,10 @@ reviewer pool. Each reviewer has a manifest-safe `name`, optional instruction
 different backends. `critique_aggregation_policy` selects the first or last
 valid revised mutation (`first_valid` by default); all reviewer records are
 retained under `metadata.critique.reviewer_pool.reviewers[]` with roles,
-backend indices, parser status, and selected-reviewer provenance. When
+backend indices, parser status, per-reviewer outcome/timing telemetry, and
+selected-reviewer provenance. The pool summary also records synchronous
+execution mode, completed/failed/budget-skipped reviewer counts, pool elapsed
+seconds, and summed reviewer elapsed seconds. When
 `capture_proposal_metadata` is enabled, candidate `metadata.proposal` reflects
 the selected post-critique mutation; `metadata.critique.original_proposal`,
 `metadata.critique.revised_proposal`, and `metadata.critique.proposal_source`

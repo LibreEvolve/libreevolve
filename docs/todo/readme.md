@@ -2680,13 +2680,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     role labels such as `critique:correctness`, existing backend routing and
     role budget telemetry, `first_valid` or `last_valid` aggregation, and
     retained `metadata.critique.reviewer_pool.reviewers[]` records with parser
-    status and selected-reviewer provenance. Matching code/roadmap TODOs still
-    say reviewer calls are sequential, replacement-only, and selected by
-    first/last valid mutation rather than calibrated reviewer score or
-    benchmarked reviewer reliability.
+    status, outcome/timing telemetry, and selected-reviewer provenance. Matching
+    code/roadmap TODOs still say reviewer calls are sequential,
+    replacement-only, and selected by first/last valid mutation rather than
+    calibrated reviewer score or benchmarked reviewer reliability.
   - Required result: when async reviewer overlap, calibrated reviewer scoring,
     reviewer-pool ablations, stronger per-reviewer provider isolation, or
-    richer reviewer-specific timeout/failure artifacts land, update README,
+    external reviewer-specific timeout/failure artifacts land, update README,
     ROADMAP, papers index, and code/paper TODO entries together so README
     neither underclaims the current synchronous reviewer-pool metadata nor
     overclaims AlphaEvolve-grade critique orchestration.

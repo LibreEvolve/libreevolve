@@ -11787,3 +11787,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     parity.
   - Verification: focused evaluator and process-exhibit topology tests validate
     the implemented behavior and manifest fields.
+
+- [x] Record critique reviewer pool runtime telemetry as partial reviewer
+      evidence.
+  - Spec evidence: AlphaEvolve-style critique and reviewer calls need
+    attributable per-call evidence before claiming calibrated reviewer-pool or
+    asynchronous reviewer-worker parity.
+  - Status: paper-facing TODOs now distinguish implemented synchronous
+    reviewer-pool outcome/timing telemetry from missing async reviewer overlap,
+    calibrated scoring, reviewer reliability reports, provider isolation, and
+    external timeout/failure artifacts.
+  - Verification: focused critique reviewer runtime tests validate the
+    implemented behavior and metadata fields.

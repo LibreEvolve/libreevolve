@@ -17150,3 +17150,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Remaining gap: this is local sample-worker compression evidence, not
     distributed evaluator-node compute-hour accounting or mutation-depth proof.
   - Verification: focused evaluator and process-exhibit topology tests pass.
+
+- [x] Add reviewer-specific runtime telemetry for critique reviewer pools.
+  - Spec evidence: AlphaEvolve-style multi-call critique/reviewer channels
+    need attributable reviewer signal and failure/timing evidence.
+  - Status: `metadata.critique.reviewer_pool` now records the synchronous
+    execution model, completed/valid/failed/budget-skipped counts, pool elapsed
+    seconds, summed reviewer elapsed seconds, and per-reviewer
+    `reviewer_outcome`, `reviewer_elapsed_sec`, and
+    `reviewer_runtime_artifact_policy` fields.
+  - Remaining gap: reviewer calls remain synchronous sequential,
+    replacement-only, and selected by first/last valid mutation, with no
+    calibrated reviewer scoring, reviewer reliability reports, async overlap,
+    or external timeout/failure artifacts.
+  - Verification: focused critique reviewer runtime tests pass.

@@ -11475,3 +11475,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     wall-clock seconds, and compression ratio.
   - Verification: focused evaluator and process-exhibit topology tests validate
     the implemented behavior and manifest fields.
+
+- [x] Document critique reviewer pool runtime telemetry in README.
+  - Spec evidence: AlphaEvolve-style critique/reviewer channels need
+    attributable reviewer status, timing, and failure evidence before stronger
+    reviewer-pool claims are made.
+  - Status: README now states that retained reviewer-pool metadata includes
+    per-reviewer outcome/timing telemetry plus synchronous execution mode,
+    completed/failed/budget-skipped counts, pool elapsed seconds, and summed
+    reviewer elapsed seconds.
+  - Verification: focused critique reviewer runtime tests validate the
+    implemented behavior and metadata fields.

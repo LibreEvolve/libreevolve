@@ -17102,13 +17102,32 @@ def test_critique_reviewer_pool_aggregates_valid_revisions_without_backend_corru
     assert critique["accepted_revision"] is True
     assert pool["schema"] == "libreevolve.critique_reviewer_pool.v1"
     assert pool["aggregation_policy"] == "last_valid"
+    assert pool["execution_model"] == "synchronous_sequential"
     assert pool["reviewer_count"] == 2
+    assert pool["completed_review_count"] == 2
     assert pool["valid_revision_count"] == 2
+    assert pool["failed_review_count"] == 0
+    assert pool["budget_skipped_review_count"] == 0
+    assert pool["pool_elapsed_sec"] >= 0.0
+    assert pool["reviewer_elapsed_sec_sum"] >= 0.0
     assert pool["selected_reviewer"] == "simplicity"
     assert [reviewer["reviewer_role"] for reviewer in pool["reviewers"]] == [
         "critique:correctness",
         "critique:simplicity",
     ]
+    assert [reviewer["reviewer_outcome"] for reviewer in pool["reviewers"]] == [
+        "accepted_revision",
+        "accepted_revision",
+    ]
+    assert all(
+        reviewer["reviewer_elapsed_sec"] >= 0.0
+        for reviewer in pool["reviewers"]
+    )
+    assert all(
+        reviewer["reviewer_runtime_artifact_policy"]
+        == "inline_timing_and_status_no_external_artifact"
+        for reviewer in pool["reviewers"]
+    )
     assert [call.kwargs["role"] for call in llm.generate.call_args_list] == [
         "mutation",
         "critique:correctness",
@@ -17155,6 +17174,12 @@ def test_critique_provider_failure_falls_back_to_original_mutation():
     assert critique["accepted_revision"] is False
     assert critique["selected_diff"] == "original"
     assert critique["fallback_reason"] == "critique_provider_failure_original_mutation"
+    pool = critique["reviewer_pool"]
+    assert pool["execution_model"] == "synchronous_sequential"
+    assert pool["failed_review_count"] == 1
+    assert pool["budget_skipped_review_count"] == 0
+    assert pool["reviewers"][0]["reviewer_outcome"] == "provider_failure"
+    assert pool["reviewers"][0]["reviewer_elapsed_sec"] >= 0.0
     assert secret not in serialized
     assert "[REDACTED]" in critique["message"]
 

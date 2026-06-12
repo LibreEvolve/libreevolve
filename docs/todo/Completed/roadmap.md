@@ -9450,3 +9450,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     comparison reports.
   - Verification: metric-diverse runtime tests validate forged readiness
     overclaim rejection.
+
+- [x] Preserve program-output index scope in database roadmap.
+  - Spec evidence: roadmap database wording should not treat bounded
+    program-output summaries as durable AlphaEvolve database retrieval.
+  - Status: ROADMAP and TODO wording now include run-local
+    feedback/artifact/program-output resurfacing in the current state while
+    preserving durable query indexes as follow-up work.
+  - Verification: database and loop tests validate emitted program-output
+    index records and manifest exposure.

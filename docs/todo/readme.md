@@ -2391,21 +2391,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     task-output distance measures where available, accepted/rejected outcomes,
     novelty contribution, and equal-budget/model ablation linkage.
 
-- [ ] Keep README database-output claims scoped to prompt-visible output
+- [x] Keep README database-output claims scoped to prompt-visible output
       capture versus queryable output indexes.
   - Spec evidence: AlphaEvolve's evolutionary database stores generated
     solutions with evaluation results and program outputs attached, then
     resurfaces useful prior ideas in later generations.
-  - Current evidence: README can describe strict evaluator `outputs` /
-    `program_output` capture, redaction, truncation, stage output checks, and
-    bounded prompt-visible program-output summaries. It should not imply those
-    outputs are yet indexed as a durable database dimension or used for
-    output-similarity/query-based resurfacing.
-  - Required result: when `program_output_index` records, output-aware
-    resurfacing APIs, durable output query tables, or semantic output
-    retrieval land, update README, ROADMAP, papers index, and code/paper TODO
-    entries together so README distinguishes prompt-visible program outputs
-    from AlphaEvolve-style queryable output-attached database evidence.
+  - Current evidence: README now describes strict evaluator `outputs` /
+    `program_output` capture, redaction, truncation, stage output checks,
+    bounded prompt-visible program-output summaries,
+    `runtime.history.program_output_index`, and valid output-bearing
+    candidates contributing to current-run `resurfacing_index`. It also states
+    that these indexes are not persisted database tables, semantic
+    output-similarity indexes, or replayable sampling engines.
+  - Required result: continue keeping README wording scoped when durable output
+    query tables, output-specific resurface APIs, schema-aware output
+    retrieval, or semantic output search land.
 
 - [ ] Keep README database-memory wording scoped until duplicate-work cache is
       durable and cross-run.

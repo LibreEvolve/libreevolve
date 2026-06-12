@@ -1860,12 +1860,16 @@ Primary evidence:
     `runtime.history.artifact_index` for bounded evaluator-artifact path/hash,
     redaction, skipped-file, stage, and content-excerpt evidence, includes valid
     artifact-bearing candidates in `resurfacing_index`, and can restore
-    cells/elites from a manifest plus accepted history bundle. Current
-    evaluator `outputs` / `program_output` payloads are validated, redacted,
-    truncated, can be required or checked by stage policies, and can be rendered
-    as bounded prompt feedback, but they do not have a dedicated
-    `program_output_index`, output-similarity query API, or resurfacing source
-    separate from evaluator-artifact metadata.
+    cells/elites from a manifest plus accepted history bundle.
+    `runtime.history.program_output_index` now persists bounded evaluator
+    `outputs` / `program_output` source/hash/preview summaries from
+    `evaluation.metadata.program_outputs`, and valid output-bearing candidates
+    now feed `resurfacing_index` through a `program_output` source. Current
+    evaluator output payloads are validated, redacted, truncated, can be
+    required or checked by stage policies, and can be rendered as bounded
+    prompt feedback, but there is still no output-similarity query API,
+    output-specific resurface method, durable output table, or semantic
+    cross-run retrieval.
     Current
     `manifest.json` files carry top-level `schema_version` and
     `artifact_schema` metadata, and current `history.jsonl`,
@@ -1882,7 +1886,7 @@ Primary evidence:
     rebuilt indexes, not a persisted query/index database. There is no durable
     index over full metric vectors, feedback embeddings/full-text ranking,
     cross-run failure fingerprints, full lineage subgraphs, semantic/cross-run
-    hypotheses, program-output values/schemas/similarity, full artifact
+    hypotheses, program-output similarity/schema retrieval, full artifact
     content, retrieval context, or learned/cross-run novelty; the
     resurfacing index is deterministic rank fusion over bounded current-history
     views, and
@@ -1904,10 +1908,10 @@ Primary evidence:
     run records,
     and tests proving resurfacing decisions can be rebuilt from persisted run
     artifacts rather than only from the live in-memory history/archive facade.
-    Include first-class program-output indexing and output-aware resurfacing so
-    AlphaEvolve-style program outputs attached to solutions are queryable
-    evolutionary evidence rather than only prompt text or stage-threshold
-    checks.
+    Extend the new first-class program-output index into output-specific
+    query/resurfacing APIs, durable output tables, schema-aware retrieval, and
+    similarity search so AlphaEvolve-style program outputs attached to
+    solutions are queryable beyond bounded current-run rank-fusion evidence.
 
 - [ ] Extend exploration/exploitation sampling-balance reports into calibrated
   database-resurfacing analysis.

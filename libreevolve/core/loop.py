@@ -5424,6 +5424,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "failure_index": db.failure_index_snapshot(),
         "hypothesis_index": db.hypothesis_index_snapshot(),
         "artifact_index": db.artifact_index_snapshot(),
+        "program_output_index": db.program_output_index_snapshot(),
         "evaluator_result_export": evaluator_result_export,
         "paper_evaluator_metric_contract": paper_metric_contract,
         "paper_metric_table_export": _paper_metric_table_export_report(

@@ -11918,3 +11918,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     false.
   - Verification: metric-diverse runtime tests validate forged readiness
     overclaim rejection.
+
+- [x] Document bounded program-output database indexing.
+  - Spec evidence: README database-output wording needed to distinguish
+    prompt-visible evaluator outputs, bounded current-run output indexing, and
+    AlphaEvolve-grade durable output retrieval.
+  - Status: README now documents `runtime.history.program_output_index`,
+    output-bearing candidates contributing to current-run
+    `resurfacing_index`, and the remaining absence of persisted database
+    tables, semantic output-similarity indexes, and replayable sampling
+    engines.
+  - Verification: database and loop tests validate emitted program-output
+    index records and manifest exposure.

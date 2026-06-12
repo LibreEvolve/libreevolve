@@ -1643,11 +1643,16 @@ full queryable local database; `runtime.history.lineage_index` is a bounded
 diagnostic view and `runtime.history.descriptor_index` is a bounded
 descriptor-coordinate view. `runtime.history.feedback_index` is a bounded
 feedback evidence view, and `runtime.history.score_index` is a bounded
-score-ranked view. `ProgramDatabase.resurface_by_metric()`,
+score-ranked view. `runtime.history.program_output_index` stores bounded
+hash/source/preview summaries for evaluator `outputs` / `program_output`
+payloads retained under `evaluation.metadata.program_outputs`, and valid
+output-bearing candidates can contribute to current-run
+`runtime.history.resurfacing_index`. `ProgramDatabase.resurface_by_metric()`,
 `resurface_by_lineage()`, `resurface_by_descriptor()`,
 `resurface_by_novelty()`, and `resurface_by_feedback()` can return defensive
 run-local snapshots from those current-history views, but those indexes are
-not persisted database tables or replayable sampling engines.
+not persisted database tables, semantic output-similarity indexes, or
+replayable sampling engines.
 Generated candidate ids include a workspace hash for identity provenance, and
 history/database paths reject duplicate program ids. Completed manifests also
 include `runtime.history.duplicate_work_policy_report`, which groups identical

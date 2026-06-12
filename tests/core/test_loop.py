@@ -4771,8 +4771,11 @@ x=2
 def test_loop_records_normalized_metrics_and_selection_score():
     tmpdir = tempfile.mkdtemp()
     d = Path(tempfile.mkdtemp())
+    output_payload = {"certificate": {"status": "ok"}}
+    output_text = json.dumps(output_payload, sort_keys=True, separators=(",", ":"))
     (d / "validate.py").write_text(
-        "def evaluate(c): return {'accuracy': 0.8, 'latency': 20.0, 'is_valid': True}\n",
+        "def evaluate(c): return {'accuracy': 0.8, 'latency': 20.0, "
+        "'is_valid': True, 'program_output': {'certificate': {'status': 'ok'}}}\n",
         encoding="utf-8",
     )
     problem = Problem(
@@ -4963,7 +4966,14 @@ def test_loop_records_normalized_metrics_and_selection_score():
     assert resurfacing_index["programs"][0]["program_id"] == record["id"]
     assert {
         source["source"] for source in resurfacing_index["programs"][0]["sources"]
-    } >= {"score", "frontier", "metric", "lineage", "descriptor"}
+    } >= {
+        "score",
+        "frontier",
+        "metric",
+        "lineage",
+        "descriptor",
+        "program_output",
+    }
     failure_index = manifest["runtime"]["history"]["failure_index"]
     assert failure_index["schema"] == "libreevolve.failure_index.v1"
     assert failure_index["failure_record_count"] == 0
@@ -4976,6 +4986,26 @@ def test_loop_records_normalized_metrics_and_selection_score():
     assert artifact_index["schema"] == "libreevolve.artifact_index.v1"
     assert artifact_index["program_count_considered"] == 0
     assert artifact_index["programs"] == []
+    program_output_index = manifest["runtime"]["history"]["program_output_index"]
+    assert program_output_index["schema"] == "libreevolve.program_output_index.v1"
+    assert program_output_index["policy"] == (
+        "top_programs_with_evaluator_program_output_evidence"
+    )
+    assert program_output_index["program_count_considered"] == 1
+    assert program_output_index["programs"][0]["program_id"] == record["id"]
+    assert program_output_index["programs"][0]["source_key"] == "program_output"
+    assert program_output_index["programs"][0]["sha256"] == hashlib.sha256(
+        output_text.encode("utf-8")
+    ).hexdigest()
+    assert program_output_index["programs"][0]["value_summary"] == {
+        "policy": "bounded_redacted_program_output_value_preview_v1",
+        "value_type": "object",
+        "chars": len(output_text),
+        "preview": output_text,
+        "preview_chars": len(output_text),
+        "truncated": False,
+        "redacted": False,
+    }
 
 
 def test_loop_uses_configured_metric_weights_for_selection_score():

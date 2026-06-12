@@ -17759,3 +17759,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     remain open.
   - Verification: metric-diverse runtime tests cover emitted readiness and
     forged equal-budget overclaim rejection.
+
+- [x] Add bounded program-output indexing and resurfacing evidence.
+  - Spec evidence: AlphaEvolve's evolutionary database stores generated
+    solutions with evaluation results and program outputs attached so useful
+    prior solutions can be resurfaced.
+  - Status: `ProgramDatabase.program_output_index_snapshot()` now emits
+    `libreevolve.program_output_index.v1` records with bounded
+    source/hash/preview summaries for evaluator `outputs` / `program_output`
+    payloads retained under `evaluation.metadata.program_outputs`. Valid
+    output-bearing candidates now feed `runtime.history.resurfacing_index`
+    through a `program_output` source, and completed manifests expose
+    `runtime.history.program_output_index`.
+  - Remaining gap: durable output tables, output-specific resurface APIs,
+    schema-aware output retrieval, semantic output similarity, and cross-run
+    output memory remain open.
+  - Verification: database and loop tests cover emitted output-index records,
+    bounded previews, omitted-output summaries, manifest exposure, and
+    current-run resurfacing source integration.

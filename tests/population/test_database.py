@@ -1065,6 +1065,133 @@ def test_artifact_index_snapshot_reports_evaluator_artifact_evidence(tmp_path):
     assert invalid.id not in surfaced
 
 
+def test_program_output_index_snapshot_reports_evaluator_output_evidence(tmp_path):
+    db = ProgramDatabase(Config(log_dir=str(tmp_path), problem_name="t"))
+    payload = {"answer": 42, "status": "ok"}
+    payload_text = json.dumps(payload, sort_keys=True, separators=(",", ":"))
+    strong = Program(
+        id="strong-output",
+        code="x = 1\n",
+        fitness=0.9,
+        evaluation={
+            "is_valid": True,
+            "metadata": {
+                "program_outputs": {
+                    "source_key": "program_output",
+                    "policy": "strict_json_redact_bound",
+                    "max_json_chars": 4000,
+                    "json_chars": len(payload_text),
+                    "sha256": hashlib.sha256(payload_text.encode("utf-8")).hexdigest(),
+                    "redacted": False,
+                    "truncated_strings": 0,
+                    "value": payload,
+                    "omitted": False,
+                }
+            },
+        },
+        metadata={"selection_score": 0.9},
+    )
+    omitted = Program(
+        id="omitted-output",
+        code="x = 2\n",
+        fitness=1.0,
+        evaluation={
+            "is_valid": True,
+            "metadata": {
+                "program_outputs": {
+                    "source_key": "outputs",
+                    "policy": "strict_json_redact_bound",
+                    "max_json_chars": 4000,
+                    "json_chars": 8001,
+                    "sha256": "a" * 64,
+                    "redacted": False,
+                    "truncated_strings": 0,
+                    "value": None,
+                    "omitted": True,
+                    "preview": '{"blob":"' + ("x" * 500) + '"}',
+                }
+            },
+        },
+        metadata={"selection_score": 1.0},
+    )
+    invalid = Program(
+        id="invalid-output",
+        code="x = 3\n",
+        fitness=0.1,
+        evaluation={
+            "is_valid": False,
+            "metadata": {
+                "program_outputs": {
+                    "source_key": "program_output",
+                    "policy": "strict_json_redact_bound",
+                    "max_json_chars": 4000,
+                    "json_chars": len(payload_text),
+                    "sha256": hashlib.sha256(payload_text.encode("utf-8")).hexdigest(),
+                    "redacted": False,
+                    "truncated_strings": 0,
+                    "value": payload,
+                    "omitted": False,
+                }
+            },
+        },
+        metadata={"selection_score": 0.1},
+    )
+    no_output = Program(
+        id="no-output",
+        code="x = 4\n",
+        fitness=0.2,
+        evaluation={"is_valid": True},
+        metadata={"selection_score": 0.2},
+    )
+    for candidate in (no_output, invalid, omitted, strong):
+        db.log(candidate)
+
+    snapshot = db.program_output_index_snapshot()
+
+    assert snapshot["schema"] == "libreevolve.program_output_index.v1"
+    assert snapshot["policy"] == "top_programs_with_evaluator_program_output_evidence"
+    assert snapshot["program_count_considered"] == 3
+    assert snapshot["limitations"] == [
+        "runtime_manifest_program_output_index_not_cross_run_database_table",
+        "uses_evaluation_metadata_program_outputs_only",
+        "bounded_output_metadata_not_full_output_similarity_search",
+        "rebuilt_from_current_runtime_history_records",
+    ]
+    assert [program["program_id"] for program in snapshot["programs"]] == [
+        strong.id,
+        invalid.id,
+        omitted.id,
+    ]
+    strong_record = snapshot["programs"][0]
+    assert strong_record["source_key"] == "program_output"
+    assert strong_record["sha256"] == hashlib.sha256(
+        payload_text.encode("utf-8")
+    ).hexdigest()
+    assert strong_record["omitted"] is False
+    assert strong_record["value_summary"] == {
+        "policy": "bounded_redacted_program_output_value_preview_v1",
+        "value_type": "object",
+        "chars": len(payload_text),
+        "preview": payload_text,
+        "preview_chars": len(payload_text),
+        "truncated": False,
+        "redacted": False,
+    }
+    omitted_record = snapshot["programs"][2]
+    assert omitted_record["omitted"] is True
+    assert omitted_record["value_summary"]["value_type"] == "omitted"
+    assert omitted_record["value_summary"]["truncated"] is True
+
+    resurfacing = db.resurfacing_index_snapshot()
+    surfaced = {
+        record["program_id"]: record for record in resurfacing["programs"]
+    }
+    assert {
+        source["source"] for source in surfaced[strong.id]["sources"]
+    } >= {"score", "program_output"}
+    assert invalid.id not in surfaced
+
+
 def test_resurface_candidates_returns_defensive_ranked_programs(tmp_path):
     db = ProgramDatabase(Config(log_dir=str(tmp_path), problem_name="t"))
     top = Program(

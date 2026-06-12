@@ -38,6 +38,7 @@ from libreevolve.core.jsonl import (
     iter_strict_jsonl_objects,
     load_strict_json_object,
     strict_json_dump,
+    strict_json_dumps,
     strict_json_text_for_path,
 )
 from libreevolve.llm.openai_compat import resolve_openai_api_mode
@@ -108,12 +109,14 @@ _MAX_ARTIFACT_INDEX_PROGRAMS = 50
 _MAX_ARTIFACT_INDEX_FILES_PER_PROGRAM = 10
 _MAX_ARTIFACT_INDEX_SKIPPED_PER_PROGRAM = 10
 _MAX_ARTIFACT_INDEX_TEXT_CHARS = 300
+_MAX_PROGRAM_OUTPUT_INDEX_PROGRAMS = 50
+_MAX_PROGRAM_OUTPUT_INDEX_TEXT_CHARS = 300
 CANDIDATE_LANGUAGE_POLICY_SCHEMA = "libreevolve.candidate_language_policy.v1"
 TASK_SPECIFICATION_BUNDLE_SCHEMA = "libreevolve.alphaevolve_task_specification_bundle.v1"
 RESURFACING_INDEX_SCHEMA = "libreevolve.resurfacing_index.v1"
 RESURFACING_INDEX_POLICY = (
     "deduplicated_ranked_programs_from_score_metric_frontier_lineage_"
-    "descriptor_feedback_hypothesis_artifact_indexes"
+    "descriptor_feedback_hypothesis_artifact_program_output_indexes"
 )
 _RESURFACING_INDEX_LIMITATIONS = (
     "manifest_visible_resurfacing_index_not_persisted_database_table",
@@ -130,6 +133,7 @@ _RESURFACING_INDEX_SOURCES = {
     "feedback",
     "hypothesis",
     "artifact",
+    "program_output",
 }
 _SEED_SOURCE_ALLOWED_KEYS = {
     "seed_index",
@@ -1052,6 +1056,12 @@ class ProgramDatabase:
             program_limit=_MAX_ARTIFACT_INDEX_PROGRAMS,
             files_per_program_limit=_MAX_ARTIFACT_INDEX_FILES_PER_PROGRAM,
             skipped_per_program_limit=_MAX_ARTIFACT_INDEX_SKIPPED_PER_PROGRAM,
+        )
+
+    def program_output_index_snapshot(self) -> dict:
+        return _program_output_index_snapshot(
+            self._all,
+            program_limit=_MAX_PROGRAM_OUTPUT_INDEX_PROGRAMS,
         )
 
     def resurface_candidates(
@@ -3812,6 +3822,20 @@ def _resurfacing_index_snapshot(
         if record.get("evaluation_is_valid") is True:
             add_source("artifact", "evaluator_artifacts", rank, record, 0.45)
 
+    program_output = _program_output_index_snapshot(
+        programs,
+        program_limit=limit,
+    )
+    for rank, record in enumerate(program_output["programs"]):
+        if record.get("evaluation_is_valid") is True:
+            add_source(
+                "program_output",
+                "evaluation.metadata.program_outputs",
+                rank,
+                record,
+                0.45,
+            )
+
     ranked = sorted(records.values(), key=_resurfacing_index_sort_key)
     retained = ranked[:limit]
     return {
@@ -4962,6 +4986,158 @@ def _artifact_index_sort_key(record: dict) -> tuple:
         -(float(selection_score) if _is_finite_real(selection_score) else float("-inf")),
         -(float(fitness) if _is_finite_real(fitness) else float("-inf")),
         -(int(generation) if isinstance(generation, int) and not isinstance(generation, bool) else -1),
+        str(program_id) if isinstance(program_id, str) else "",
+    )
+
+
+def _program_output_index_snapshot(
+    programs: list[Program],
+    *,
+    program_limit: int,
+) -> dict:
+    candidates = [
+        record
+        for program in programs
+        if (record := _program_output_index_program(program)) is not None
+    ]
+    candidates.sort(key=_program_output_index_sort_key)
+    retained = candidates[:program_limit]
+    return {
+        "schema": "libreevolve.program_output_index.v1",
+        "policy": "top_programs_with_evaluator_program_output_evidence",
+        "program_count_considered": len(candidates),
+        "retained_count": len(retained),
+        "program_retention_limit": program_limit,
+        "programs": retained,
+        "limitations": [
+            "runtime_manifest_program_output_index_not_cross_run_database_table",
+            "uses_evaluation_metadata_program_outputs_only",
+            "bounded_output_metadata_not_full_output_similarity_search",
+            "rebuilt_from_current_runtime_history_records",
+        ],
+    }
+
+
+def _program_output_index_program(program: Program) -> dict | None:
+    evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+    metadata = evaluation.get("metadata")
+    if not isinstance(metadata, Mapping):
+        return None
+    outputs = metadata.get("program_outputs")
+    if not isinstance(outputs, Mapping):
+        return None
+    source_key = outputs.get("source_key")
+    sha256 = outputs.get("sha256")
+    if not isinstance(source_key, str) or source_key not in {
+        "outputs",
+        "program_output",
+    }:
+        return None
+    if not _is_sha256_hex(sha256):
+        return None
+    record: dict[str, object] = {
+        "program_id": program.id,
+        "lineage_root_id": _program_lineage_root_id(program),
+        "generation": program.generation,
+        "evaluation_is_valid": evaluation.get("is_valid") is True,
+        "selection_score": _history_safe_selection_score(program),
+        "fitness": float(program.fitness),
+        "source_key": source_key,
+        "sha256": sha256,
+    }
+    for source, target in (
+        ("policy", "retention_policy"),
+        ("json_chars", "json_chars"),
+        ("max_json_chars", "max_json_chars"),
+        ("truncated_strings", "truncated_strings"),
+    ):
+        value = outputs.get(source)
+        if isinstance(value, str) and value:
+            record[target] = _program_output_index_string(value)
+        elif _is_non_negative_int(value):
+            record[target] = int(value)
+    for field in ("omitted", "redacted"):
+        value = outputs.get(field)
+        if isinstance(value, bool):
+            record[field] = value
+    value_summary = _program_output_index_value_summary(outputs)
+    if value_summary:
+        record["value_summary"] = value_summary
+    admission = _history_safe_archive_admission_summary(program)
+    if admission:
+        record["archive_admission"] = admission
+    objective_vector = _history_safe_objective_vector(program)
+    if objective_vector is not None:
+        record["objective_vector"] = objective_vector
+    else:
+        normalized_metrics = _history_safe_normalized_metrics(program)
+        if normalized_metrics:
+            record["normalized_metrics"] = normalized_metrics
+    return record
+
+
+def _program_output_index_value_summary(outputs: Mapping) -> dict:
+    value = outputs.get("value")
+    if value is not None:
+        text = strict_json_dumps(value, sort_keys=True, separators=(",", ":"))
+        redacted = redact_sensitive_text(text)
+        return {
+            "policy": "bounded_redacted_program_output_value_preview_v1",
+            "value_type": _program_output_value_type(value),
+            "chars": len(text),
+            "preview": redacted[:_MAX_PROGRAM_OUTPUT_INDEX_TEXT_CHARS],
+            "preview_chars": min(len(redacted), _MAX_PROGRAM_OUTPUT_INDEX_TEXT_CHARS),
+            "truncated": len(redacted) > _MAX_PROGRAM_OUTPUT_INDEX_TEXT_CHARS,
+            "redacted": redacted != text,
+        }
+    preview = outputs.get("preview")
+    if isinstance(preview, str) and preview:
+        redacted = redact_sensitive_text(preview)
+        return {
+            "policy": "bounded_redacted_program_output_omitted_preview_v1",
+            "value_type": "omitted",
+            "chars": len(preview),
+            "preview": redacted[:_MAX_PROGRAM_OUTPUT_INDEX_TEXT_CHARS],
+            "preview_chars": min(len(redacted), _MAX_PROGRAM_OUTPUT_INDEX_TEXT_CHARS),
+            "truncated": len(redacted) > _MAX_PROGRAM_OUTPUT_INDEX_TEXT_CHARS,
+            "redacted": redacted != preview,
+        }
+    return {}
+
+
+def _program_output_value_type(value: object) -> str:
+    if isinstance(value, dict):
+        return "object"
+    if isinstance(value, list):
+        return "array"
+    if isinstance(value, str):
+        return "string"
+    if isinstance(value, bool):
+        return "boolean"
+    if value is None:
+        return "null"
+    if isinstance(value, (int, float)):
+        return "number"
+    return "unknown"
+
+
+def _program_output_index_string(value: str) -> str:
+    return redact_sensitive_text(value)[:_MAX_PROGRAM_OUTPUT_INDEX_TEXT_CHARS]
+
+
+def _program_output_index_sort_key(record: dict) -> tuple:
+    omitted = record.get("omitted")
+    selection_score = record.get("selection_score")
+    fitness = record.get("fitness")
+    generation = record.get("generation")
+    program_id = record.get("program_id")
+    json_chars = record.get("json_chars")
+    return (
+        1 if omitted is True else 0,
+        -(float(selection_score) if _is_finite_real(selection_score) else float("-inf")),
+        -(float(fitness) if _is_finite_real(fitness) else float("-inf")),
+        -(int(generation) if isinstance(generation, int) and not isinstance(generation, bool) else -1),
+        -(int(json_chars) if _is_non_negative_int(json_chars) else 0),
         str(program_id) if isinstance(program_id, str) else "",
     )
 

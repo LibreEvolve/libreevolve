@@ -632,6 +632,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     that mark critique, feedback, or meta-prompt as section-packed, and keeps
     non-OpenAI/custom exact counters, registry/custom role section packing, and
     retrieval/context/plugin/failure-memory section packing readiness false.
+    README now points to `papers/prompt_section_packing_boundary.json`, which
+    preserves this mutation-section-packing boundary for manifest validation.
   - Required result: when selected-backend provider-token section packing
     covers critique, feedback, meta-prompt, registry-created, custom, and
     retrieval/context/plugin/failure-memory sections across provider families,

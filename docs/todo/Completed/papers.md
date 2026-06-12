@@ -13806,3 +13806,21 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused critique reviewer-pool tests reject calibrated reviewer
     orchestration overclaims.
+
+- [x] Record prompt section-packing paper-facing sidecar.
+  - Status: `papers/prompt_section_packing_boundary.json` now records the
+    mutation-section-packing boundary for AlphaEvolve Section 2.2: runtime
+    evidence can show prompt caps, heuristic token estimates, provider
+    token-counter hooks, mutation common-counter discovery, final-prompt
+    role-counter discovery, prompt section-budget records, section-priority
+    packing decisions, required-section fit status, provider-counter boundary
+    fields, runtime prompt-section-packing coverage, mutation as the
+    section-packed role, critique/feedback/meta-prompt as final-prompt-
+    boundary-only roles, bounded validator metadata summaries, and bounded
+    evaluator artifact excerpts, while all-role provider-token section packing,
+    exact non-OpenAI provider counters, registry/custom role section packing,
+    retrieval/context/plugin/failure-memory packing, and full validator-
+    metadata prompt policy remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused prompt section-packing tests reject all-role provider-token
+    prompt-packing overclaims.

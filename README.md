@@ -107,6 +107,11 @@ Important limits:
   reviewer scoring, reviewer reliability ablations, per-reviewer provider
   isolation, or external reviewer timeout artifacts; that boundary is tracked
   by `papers/critique_reviewer_pool_boundary.json`.
+- Prompt section packing is mutation-path and final-prompt-boundary evidence,
+  not all-role provider-token section packing, exact non-OpenAI provider
+  counters, registry/custom role section packing, retrieval/context/plugin/
+  failure-memory packing, or full validator-metadata prompt policy; that
+  boundary is tracked by `papers/prompt_section_packing_boundary.json`.
 - Database sampling reports are local strategy/count telemetry, not calibrated
   AlphaEvolve-style exploration/exploitation evidence; that boundary is tracked
   by `papers/sampling_balance_boundary.json`.

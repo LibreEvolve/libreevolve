@@ -18708,3 +18708,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     calibrated async reviewer-pool overclaims, invalid boundary status, missing
     evidence drift, and incomplete required evidence fields.
+
+- [x] Add prompt section-packing sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/prompt_section_packing_boundary.py`
+    now emits and validates the mutation-section-packing boundary, separating
+    prompt caps, heuristic token estimates, provider token-counter hooks,
+    mutation common-counter discovery, final-prompt role-counter discovery,
+    prompt section-budget records, section-priority packing decisions,
+    required-section fit status, provider-counter boundary fields, runtime
+    prompt-section-packing coverage, mutation as the section-packed role,
+    critique/feedback/meta-prompt as final-prompt-boundary-only roles, bounded
+    validator metadata summaries, and bounded evaluator artifact excerpts from
+    all-role provider-token section packing, exact non-OpenAI provider
+    counters, registry/custom role section packing, retrieval/context/plugin/
+    failure-memory packing, and full validator-metadata prompt policy.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    all-role provider-token prompt-packing overclaims, invalid boundary status,
+    missing evidence drift, and incomplete required evidence fields.

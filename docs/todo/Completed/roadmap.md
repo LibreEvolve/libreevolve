@@ -10583,3 +10583,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation requires the committed sidecar and
     focused critique reviewer-pool tests reject calibrated reviewer
     orchestration overclaims.
+
+- [x] Keep roadmap prompt section-packing boundary tied to sidecar.
+  - Status: ROADMAP now links current prompt caps, mutation-path provider-token
+    section packing, role-scoped final-prompt token counting, backend context-
+    window metadata, and role-level section-packing overclaim guards to
+    `papers/prompt_section_packing_boundary.json` while keeping all-role
+    provider-token section packing, exact non-OpenAI provider counters,
+    registry/custom role section packing, retrieval/context/plugin/failure-
+    memory packing, and full validator-metadata prompt policy open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused prompt section-packing tests reject all-role provider-token
+    prompt-packing overclaims.

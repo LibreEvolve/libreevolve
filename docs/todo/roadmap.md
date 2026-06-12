@@ -825,7 +825,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     failure-memory packing. The remaining gap is automatic provider-token section-
     priority packing outside mutation prompts and exact counters across non-
     OpenAI/custom provider families, not bounded artifact-content rendering
-    itself.
+    itself. The roadmap now points to
+    `papers/prompt_section_packing_boundary.json`, which preserves that
+    mutation-section-packing boundary for manifest validation.
   - Required result: when selected-backend provider-token section packing covers
     critique, feedback, meta-prompt, retrieval/context/plugin/failure-memory,
     and artifact-content sections across provider families, update the roadmap,

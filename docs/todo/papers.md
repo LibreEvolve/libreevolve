@@ -2128,7 +2128,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     provider-token section-packing overclaims and role-level overclaims that
     mark critique, feedback, or meta-prompt as section-packed, while keeping
     exact non-OpenAI/custom counters, registry/custom role packing, and
-    retrieval/context/plugin/failure-memory packing readiness false.
+    retrieval/context/plugin/failure-memory packing readiness false. The
+    committed `papers/prompt_section_packing_boundary.json` sidecar now
+    preserves this mutation-section-packing and bounded-validator-metadata
+    boundary for paper-manifest validation.
   - Required result: add configurable/full validator-metadata prompt policy
     and automatic selected-backend provider-token section-priority packing
     across evaluator, feedback, artifact, and context prompt sections. The

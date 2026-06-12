@@ -1025,7 +1025,10 @@ critique, feedback, and meta-prompt, while keeping exact non-OpenAI/custom
 counters, registry/custom role packing, and retrieval/context/plugin/failure-
 memory packing readiness false. The remaining gap is automatic selected-backend
 provider-token section packing across all prompt roles/provider
-families and context surfaces, plus context-policy evolution.
+families and context surfaces, plus context-policy evolution. The committed
+`papers/prompt_section_packing_boundary.json` sidecar preserves this
+mutation-section-packing and bounded-validator-metadata boundary for
+paper-manifest validation.
 
 Meta-prompt mutation history stores a compact
 `libreevolve.meta_prompt_context_policy_capability_summary.v1` with capability
@@ -2248,6 +2251,18 @@ Implemented:
   It is not evidence of async reviewer overlap, calibrated reviewer-score
   reports, reviewer reliability ablations, per-reviewer provider isolation, or
   external reviewer timeout artifacts.
+- `papers/prompt_section_packing_boundary.json`: prompt section-packing
+  sidecar for AlphaEvolve Section 2.2. It records prompt caps, heuristic
+  token estimates, provider token-counter hooks, mutation common-counter
+  discovery, final-prompt role-counter discovery, prompt section-budget
+  records, section-priority packing decisions, required-section fit status,
+  provider-counter boundary fields, runtime prompt-section-packing coverage,
+  mutation as the only current section-packed prompt role, critique/feedback/
+  meta-prompt as final-prompt-boundary-only roles, bounded validator metadata
+  summaries, and bounded evaluator artifact excerpts. It is not evidence of
+  all-role provider-token section packing, exact non-OpenAI provider counters,
+  registry/custom role section packing, retrieval/context/plugin/failure-
+  memory section packing, or full validator-metadata prompt policy.
 - `libreevolve/problems/examples/sorting`: neutral plateau/diversity smoke
   fixture. The bubble-sort seed already reaches `accuracy == 1.0`, so this
   example can demonstrate mutation handling and same-score implementation

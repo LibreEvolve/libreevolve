@@ -688,7 +688,9 @@ Primary evidence:
     static-role token-counter capability diagnostics, rejects complete
     provider-token section-packing overclaims, and rejects role-level
     section-packing overclaims that mark critique, feedback, or meta-prompt as
-    section-packed.
+    section-packed. The committed
+    `papers/prompt_section_packing_boundary.json` sidecar now validates this
+    mutation-section-packing boundary at the paper-manifest layer.
   - Required result: make selected-backend exact token counters automatic for
     parent code, inspirations, explicit context, plugin context, evaluator
     feedback, and failure memory section-packing across all prompt roles,

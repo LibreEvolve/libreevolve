@@ -610,7 +610,10 @@ is not yet an AlphaEvolve reproduction.
   provider-token section packing across all prompt roles and context surfaces.
   Runtime coverage keeps non-OpenAI/custom exact counters, registry/custom
   role packing, and retrieval/context/plugin/failure-memory packing readiness
-  false until those surfaces exist.
+  false until those surfaces exist. The current
+  `papers/prompt_section_packing_boundary.json` sidecar preserves this
+  mutation-section-packing boundary while keeping all-role provider-token
+  section packing and full validator-metadata prompt policy open.
 - Extend current prompt/history retention controls into replay-retention
   policy and richer context-policy ownership. Mutation prompts, explicit
   context spans, critique prompts/mutations, feedback raw/parsed fields,

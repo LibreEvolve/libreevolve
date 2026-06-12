@@ -83,6 +83,10 @@ from libreevolve.problems.benchmarks.critique_reviewer_pool_boundary import (
     critique_reviewer_pool_boundary_record,
     validate_critique_reviewer_pool_boundary,
 )
+from libreevolve.problems.benchmarks.prompt_section_packing_boundary import (
+    prompt_section_packing_boundary_record,
+    validate_prompt_section_packing_boundary,
+)
 from libreevolve.problems.benchmarks.release_artifact_reproducibility_boundary import (
     release_artifact_reproducibility_boundary_record,
     validate_release_artifact_reproducibility_boundary,
@@ -483,6 +487,7 @@ LLM_ROLE_SCHEDULER_BOUNDARY_FILE = "papers/llm_role_scheduler_boundary.json"
 FAST_STRONG_MODEL_MIX_BOUNDARY_FILE = "papers/fast_strong_model_mix_boundary.json"
 PROVIDER_CANCELLATION_BOUNDARY_FILE = "papers/provider_cancellation_boundary.json"
 CRITIQUE_REVIEWER_POOL_BOUNDARY_FILE = "papers/critique_reviewer_pool_boundary.json"
+PROMPT_SECTION_PACKING_BOUNDARY_FILE = "papers/prompt_section_packing_boundary.json"
 RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_FILE = "papers/release_artifact_reproducibility_boundary.json"
 RELATED_WORK_TAXONOMY_BOUNDARY_FILE = "papers/related_work_taxonomy_boundary.json"
 TASK_SPECIFICATION_BOUNDARY_FILE = "papers/task_specification_boundary.json"
@@ -985,6 +990,7 @@ def validate_paper_manifest(
     issues.extend(_validate_fast_strong_model_mix_boundary(root_path))
     issues.extend(_validate_provider_cancellation_boundary(root_path))
     issues.extend(_validate_critique_reviewer_pool_boundary(root_path))
+    issues.extend(_validate_prompt_section_packing_boundary(root_path))
     issues.extend(_validate_release_artifact_reproducibility_boundary(root_path))
     issues.extend(_validate_related_work_taxonomy_boundary(root_path))
     issues.extend(_validate_task_specification_boundary(root_path))
@@ -2140,6 +2146,38 @@ def _validate_critique_reviewer_pool_boundary(root_path: Path) -> list[PaperMani
             f"critique_reviewer_pool_boundary_{issue.code}",
             issue.message,
             "critique_reviewer_pool",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_prompt_section_packing_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / PROMPT_SECTION_PACKING_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = prompt_section_packing_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "prompt_section_packing_boundary_manifest_missing",
+                    (
+                        f"{PROMPT_SECTION_PACKING_BOUNDARY_FILE} must emit "
+                        "mutation section-packing versus all-role provider-token scope"
+                    ),
+                    "prompt_section_packing",
+                )
+            ]
+    report = validate_prompt_section_packing_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"prompt_section_packing_boundary_{issue.code}",
+            issue.message,
+            "prompt_section_packing",
         )
         for issue in report.issues
     ]

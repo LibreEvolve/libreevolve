@@ -12817,3 +12817,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused critique reviewer-pool tests reject calibrated reviewer
     orchestration overclaims.
+
+- [x] Keep README prompt section-packing boundary tied to sidecar.
+  - Status: README now states that prompt section packing is mutation-path and
+    final-prompt-boundary evidence, not all-role provider-token section
+    packing, exact non-OpenAI provider counters, registry/custom role section
+    packing, retrieval/context/plugin/failure-memory packing, or full
+    validator-metadata prompt policy, with the boundary tracked by
+    `papers/prompt_section_packing_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused prompt section-packing tests reject all-role provider-token
+    prompt-packing overclaims.

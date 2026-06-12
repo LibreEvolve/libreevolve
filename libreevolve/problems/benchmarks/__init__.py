@@ -149,6 +149,12 @@ from libreevolve.problems.benchmarks.critique_reviewer_pool_boundary import (
     render_critique_reviewer_pool_boundary_summary,
     validate_critique_reviewer_pool_boundary,
 )
+from libreevolve.problems.benchmarks.prompt_section_packing_boundary import (
+    PROMPT_SECTION_PACKING_BOUNDARY_SCHEMA,
+    prompt_section_packing_boundary_record,
+    render_prompt_section_packing_boundary_summary,
+    validate_prompt_section_packing_boundary,
+)
 from libreevolve.problems.benchmarks.release_artifact_reproducibility_boundary import (
     RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_SCHEMA,
     release_artifact_reproducibility_boundary_record,
@@ -939,6 +945,7 @@ __all__ = [
     "natural_language_preamble_boundary_record",
     "objective_archive_boundary_record",
     "prompt_example_copy_boundary_record",
+    "prompt_section_packing_boundary_record",
     "parallel_evaluation_readiness_boundary_record",
     "paper_author_metadata_boundary_record",
     "process_exhibit_boundary_record",
@@ -1062,6 +1069,7 @@ __all__ = [
     "render_natural_language_preamble_boundary_summary",
     "render_objective_archive_boundary_summary",
     "render_prompt_example_copy_boundary_summary",
+    "render_prompt_section_packing_boundary_summary",
     "render_matrix_baseline_component_runtime_boundary_summary",
     "render_matrix_cascade_run_runtime_boundary_summary",
     "render_matrix_rank_table_artifact_boundary_summary",
@@ -1192,6 +1200,7 @@ __all__ = [
     "validate_natural_language_preamble_boundary",
     "validate_objective_archive_boundary",
     "validate_prompt_example_copy_boundary",
+    "validate_prompt_section_packing_boundary",
     "validate_matrix_baseline_component_runtime_boundary",
     "validate_matrix_cascade_run_runtime_boundary",
     "validate_matrix_rank_table_artifact_boundary",

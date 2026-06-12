@@ -708,6 +708,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     a local adaptive TF-IDF novelty heuristic. The readiness guard is not a
     learned descriptor model, evaluator-provided descriptor contract with
     compatibility rules, or tested archive rebin engine.
+    `papers/map_elites_descriptor_boundary.json` now validates that local
+    descriptor/rebin absence boundary.
   - Required result: add stable task behavior descriptor contracts or learned
     descriptor models, tested rebin/snapshot compatibility semantics, restore
     validation across descriptor revisions, and paper-facing reports that do

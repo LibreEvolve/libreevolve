@@ -359,6 +359,12 @@ from libreevolve.problems.benchmarks.map_elites_illumination_boundary import (
     render_map_elites_illumination_boundary_summary,
     validate_map_elites_illumination_boundary,
 )
+from libreevolve.problems.benchmarks.map_elites_descriptor_boundary import (
+    MAP_ELITES_DESCRIPTOR_BOUNDARY_SCHEMA,
+    map_elites_descriptor_boundary_record,
+    render_map_elites_descriptor_boundary_summary,
+    validate_map_elites_descriptor_boundary,
+)
 from libreevolve.problems.benchmarks.matrix_exhibits import (
     FIGURE4_MATRIX_DISCOVERY_ARTIFACT_BOUNDARY_SCHEMA,
     FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA,
@@ -730,6 +736,7 @@ __all__ = [
     "MATRIX_SWEEP_SPACE_RUNTIME_SCHEMA",
     "MATRIX_TENSOR_RANK_SCHEMA",
     "MATRIX_TENSOR_RANK_RUNTIME_SCHEMA",
+    "MAP_ELITES_DESCRIPTOR_BOUNDARY_SCHEMA",
     "MAP_ELITES_ILLUMINATION_BOUNDARY_SCHEMA",
     "MATH_HEURISTIC_HANDOFF_BOUNDARY_SCHEMA",
     "MATH_HEURISTIC_STAGE_SEQUENCE_BOUNDARY_SCHEMA",
@@ -830,6 +837,8 @@ __all__ = [
     "improvevolve_boundary_record",
     "madevolve_boundary_record",
     "magellan_boundary_record",
+    "map_elites_descriptor_boundary_record",
+    "map_elites_illumination_boundary_record",
     "multiagent_learning_boundary_record",
     "mutation_consistency_boundary_record",
     "natural_language_preamble_boundary_record",
@@ -865,7 +874,6 @@ __all__ = [
     "matrix_headline_historicity_runtime_boundary_from_builtin_evidence",
     "matrix_headline_historicity_runtime_boundary_from_evidence",
     "matrix_headline_historicity_runtime_boundary_record",
-    "map_elites_illumination_boundary_record",
     "matrix_near_integrality_runtime_boundary_from_evidence",
     "matrix_near_integrality_runtime_boundary_record",
     "matrix_rank_table_artifact_boundary_record",
@@ -951,6 +959,7 @@ __all__ = [
     "render_matrix_rank_table_exhibit_summary",
     "render_matrix_headline_historicity_summary",
     "render_matrix_headline_historicity_runtime_boundary_summary",
+    "render_map_elites_descriptor_boundary_summary",
     "render_map_elites_illumination_boundary_summary",
     "render_matrix_near_integrality_summary",
     "render_matrix_near_integrality_runtime_boundary_summary",
@@ -1067,6 +1076,7 @@ __all__ = [
     "validate_matrix_rank_table_exhibit",
     "validate_matrix_headline_historicity_evidence",
     "validate_matrix_headline_historicity_runtime_boundary",
+    "validate_map_elites_descriptor_boundary",
     "validate_map_elites_illumination_boundary",
     "validate_matrix_near_integrality_evidence",
     "validate_matrix_near_integrality_runtime_boundary",

@@ -2646,7 +2646,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     descriptor training inputs, restore-compatible descriptor revisioning, and
     full/partial archive rebin engines false. Existing cells are not re-binned
     and diversity coordinates are local heuristic coordinates rather than
-    stable learned descriptors.
+    stable learned descriptors. README now ties that scope to
+    `papers/map_elites_descriptor_boundary.json`.
   - Required result: once evaluator-provided behavior descriptors, learned
     descriptor models, or tested archive rebin semantics land, update the
     README and matching code/paper TODO entries together so the README neither

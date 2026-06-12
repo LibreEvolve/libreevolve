@@ -1719,6 +1719,8 @@ Primary evidence:
     descriptor revisioning, and full/partial rebin engines. Restore validation
     rejects descriptor axes/model mismatches, rebin overclaims such as
     `full_rebin`, and forged descriptor-readiness overclaims.
+    `papers/map_elites_descriptor_boundary.json` now validates this as
+    insertion-time local descriptor snapshots only.
   - Required result: add evaluator-provided or learned descriptor models with
     stable versioning, explicit descriptor training inputs, tested full or
     partial archive rebin semantics, manifest-visible descriptor compatibility

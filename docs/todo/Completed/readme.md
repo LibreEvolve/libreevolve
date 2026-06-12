@@ -12684,3 +12684,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     tracked by `papers/duplicate_work_policy_boundary.json`.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused duplicate-work policy tests reject durable-memory overclaims.
+
+- [x] Keep README MAP-Elites descriptor boundary tied to sidecar.
+  - Status: README now states that MAP-Elites descriptor snapshots are
+    insertion-time local descriptor metadata, not stable learned/evaluator-
+    provided behavior descriptors or archive rebin semantics, with the
+    boundary tracked by `papers/map_elites_descriptor_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused MAP-Elites descriptor tests reject stable descriptor/rebin
+    overclaims.

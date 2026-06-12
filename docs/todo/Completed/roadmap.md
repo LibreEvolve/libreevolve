@@ -10446,3 +10446,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     aware cache indexes, and AlphaEvolve-grade fixed-budget memory open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused duplicate-work policy tests reject durable-memory overclaims.
+
+- [x] Keep roadmap MAP-Elites descriptor boundary tied to sidecar.
+  - Status: ROADMAP now links MAP-Elites `descriptor_model` snapshot readiness
+    to `papers/map_elites_descriptor_boundary.json`, preserving the current
+    insertion-time local descriptor metadata scope while keeping stable task
+    behavior descriptor contracts, learned/evaluator-provided descriptor
+    models, descriptor training inputs, restore-compatible descriptor
+    revisioning, and full/partial archive rebin engines open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused MAP-Elites descriptor tests reject stable descriptor/rebin
+    overclaims.

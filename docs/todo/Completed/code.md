@@ -18496,3 +18496,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     durable-memory overclaims, invalid boundary status, missing evidence drift,
     and incomplete required evidence fields.
+
+- [x] Add MAP-Elites descriptor sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/map_elites_descriptor_boundary.py`
+    now emits and validates the insertion-time-local-descriptor-snapshots-only
+    boundary for MAP-Elites archive `descriptor_model` records, separating
+    descriptor policy axes, revision metadata, dynamic diversity reference ids,
+    explicit no-rebin insertion-time coordinate policy, restore-time axes/model
+    validation, readiness overclaim rejection, and metric/metadata axis options
+    from stable task behavior descriptor contracts, learned/evaluator-provided
+    descriptor models, descriptor training inputs, restore-compatible
+    descriptor revisioning, and full/partial archive rebin engines.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    stable-descriptor/rebin overclaims, invalid boundary status, missing
+    evidence drift, and incomplete required evidence fields.

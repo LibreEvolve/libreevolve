@@ -1505,6 +1505,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     false readiness for stable behavior-descriptor contracts,
     learned/evaluator descriptor models, descriptor training inputs,
     restore-compatible descriptor revisioning, and full/partial rebin engines.
+    ROADMAP now ties that scope to
+    `papers/map_elites_descriptor_boundary.json`.
   - Required result: when learned/evaluator-provided descriptor models or
     archive rebin semantics land, update the roadmap, README, papers index,
     and code/paper TODO entries together so they neither underclaim current

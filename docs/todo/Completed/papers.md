@@ -13592,3 +13592,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused duplicate-work policy tests reject durable-memory
     overclaims.
+
+- [x] Record MAP-Elites descriptor paper-facing sidecar.
+  - Status: `papers/map_elites_descriptor_boundary.json` now records the
+    insertion-time descriptor snapshot boundary for MAP-Elites archive
+    descriptors: runtime snapshots can show descriptor policy axes,
+    descriptor-model revision metadata, dynamic diversity reference ids,
+    explicit no-rebin insertion-time coordinate policy, restore-time validation,
+    readiness overclaim rejection, and metric/metadata descriptor-axis options,
+    while stable task behavior descriptor contracts, learned/evaluator-provided
+    descriptor models, descriptor training inputs, restore-compatible
+    descriptor revisioning, and full/partial archive rebin engines remain
+    absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused MAP-Elites descriptor tests reject stable descriptor/rebin
+    overclaims.

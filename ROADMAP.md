@@ -494,8 +494,10 @@ is not yet an AlphaEvolve reproduction.
   `descriptor_model` snapshots carry
   `libreevolve.map_elites_descriptor_readiness.v1` with those readiness
   surfaces false and overclaim validation. The committed
-  `papers/map_elites_illumination_boundary.json` sidecar now records the
-  source-specific MAP-Elites illumination boundary, keeping explicit
+  `papers/map_elites_descriptor_boundary.json` sidecar keeps this
+  insertion-time descriptor snapshot scope machine-validated, while
+  `papers/map_elites_illumination_boundary.json` records the source-specific
+  MAP-Elites illumination boundary, keeping explicit
   `b(x)`/`f(x)` contracts, `P`/`X` map exports, illumination metrics,
   visualization/lineage artifacts, and paper-domain reproductions out of
   current archive claims.

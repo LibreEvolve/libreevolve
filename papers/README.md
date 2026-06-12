@@ -1031,7 +1031,9 @@ behavior descriptor contracts, learned/evaluator-provided descriptor models,
 descriptor training inputs, restore-compatible descriptor revisioning, and
 full/partial archive rebin engines false with restore-time overclaim
 validation. This is evidence for the current local boundary, not proof of
-AlphaEvolve-grade behavior descriptors or archive rebin semantics.
+AlphaEvolve-grade behavior descriptors or archive rebin semantics. The
+committed `papers/map_elites_descriptor_boundary.json` sidecar keeps this
+insertion-time descriptor snapshot scope machine-validated.
 
 AlphaEvolve island-state note: retained archive-state changes advance the
 island round-robin assignment cursor. Non-admitted MAP-Elites attempts, such as

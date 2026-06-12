@@ -71,6 +71,10 @@ Important limits:
 - Database sampling reports are local strategy/count telemetry, not calibrated
   AlphaEvolve-style exploration/exploitation evidence; that boundary is tracked
   by `papers/sampling_balance_boundary.json`.
+- MAP-Elites descriptor snapshots are insertion-time local descriptor metadata,
+  not stable learned/evaluator-provided behavior descriptors or archive rebin
+  semantics; that boundary is tracked by
+  `papers/map_elites_descriptor_boundary.json`.
 - The included examples are smoke fixtures and small demos unless a fixture
   explicitly documents stronger benchmark evidence.
 - Gemini/provider parity, benchmark-scale claims, paper-result reproduction,

@@ -5954,8 +5954,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     post-AlphaEvolve sums-and-differences improvement as missing paper
     evidence rather than implemented LibreEvolve support.
 
-- [ ] Track UCB1 finite-time bandit paper evidence before backend-routing
-      claims imply regret guarantees.
+- [ ] Implement UCB1 finite-time bandit paper evidence beyond the source
+      boundary.
   - Paper/source evidence: the local
     `auer-cesa-bianchi-fischer-2002__UCB1_Finite_Time_Analysis_Multiarmed_Bandit.pdf`
     is `Finite-time Analysis of the Multiarmed Bandit Problem` by Peter Auer,
@@ -5975,18 +5975,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     also gives adjacent UCB2, `epsilon_n`-GREEDY, UCB1-NORMAL, and
     UCB1-TUNED variants under separate assumptions, with UCB1-TUNED reported
     as empirically stronger but without a proven regret bound.
-  - Current gap: `papers/README.md` lists `auer-cesa-bianchi-fischer-2002` as
-    the foundational bandit-policy source for LibreEvolve's heuristic
-    UCB-style backend router, and README/ROADMAP/code wording says the router
-    is heuristic. The remaining paper-facing gap is that the paper index and
-    manifest do not yet preserve this UCB1 source row as an evidence boundary
-    with the bounded-support, iid-arm,
-    conditional-mean/stationarity, regret-definition, reward-normalization,
-    theorem-constant, and proof-scope assumptions needed to prevent backend-
-    routing telemetry from being read as canonical UCB1 finite-time analysis.
-    It also does not require variant-level status rows showing that UCB2,
-    `epsilon_n`-GREEDY, UCB1-NORMAL, and UCB1-TUNED are unsupported unless
-    separately implemented and validated.
+  - Current gap: `papers/ucb1_boundary.json` and `papers/README.md` now
+    preserve this UCB1 source row as an evidence boundary with the
+    bounded-support, conditional-mean/stationarity, regret-definition,
+    reward-normalization, theorem-constant, and proof-scope assumptions needed
+    to prevent backend-routing telemetry from being read as canonical UCB1
+    finite-time analysis. The remaining paper-facing gap is no implemented
+    scheduler evidence for those assumptions and no variant-level support
+    reports showing UCB2, `epsilon_n`-GREEDY, UCB1-NORMAL, and UCB1-TUNED are
+    implemented and validated.
   - Required result: add paper-manifest and paper-index coverage for
     `auer-cesa-bianchi-fischer-2002`: source URL/cache/hash, title/authors/
     venue/year, source-license or mirror status, UCB1 theorem-scope metadata,

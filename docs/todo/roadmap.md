@@ -4622,7 +4622,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     so roadmap claims do not outpace local further post-AlphaEvolve
     sums-and-differences sequence support.
 
-- [ ] Add UCB1 finite-time bandit gates before roadmap scheduler promotion.
+- [ ] Implement UCB1 finite-time bandit gates beyond source-boundary roadmap
+      promotion.
   - Spec evidence: the local `auer-cesa-bianchi-fischer-2002` PDF,
     `Finite-time Analysis of the Multiarmed Bandit Problem`, by Peter Auer,
     Nicolo Cesa-Bianchi, and Paul Fischer studies the exploration/
@@ -4636,14 +4637,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     conditional-mean assumption. UCB2, `epsilon_n`-GREEDY, UCB1-NORMAL, and
     UCB1-TUNED are separate variants, with UCB1-TUNED explicitly not given a
     regret proof.
-  - Current evidence: ROADMAP can describe LibreEvolve's heuristic UCB-style
-    backend routing and already warns that canonical UCB1 assumptions,
-    calibrated reward scaling, and regret bounds are not proven. The roadmap
-    does not yet tie that scheduler caveat to the local UCB1 paper source id,
-    PDF/cache hash, bounded-support and conditional-mean/stationarity
-    assumptions, theorem constants, reward normalization, stable arm identity,
-    selected-arm/index telemetry, coefficient mapping, role-scoped and
-    metadata-aware selection caveats, or proof-scope metadata.
+  - Current evidence: ROADMAP and `papers/ucb1_boundary.json` now keep
+    LibreEvolve's UCB-style backend routing source-scoped and warn that
+    canonical UCB1 assumptions, calibrated reward scaling, and regret bounds
+    are not proven. They still do not provide runtime scheduler evidence for
+    bounded-support and conditional-mean/stationarity assumptions, theorem
+    constants, reward normalization, stable arm identity, selected-arm/index
+    telemetry, coefficient mapping, role-scoped and metadata-aware selection
+    caveats, or proof-scope metadata.
   - Required result: add roadmap gates for `auer-cesa-bianchi-fischer-2002`:
     paper/source manifest entry, PDF/cache hash, source-license or mirror
     status, UCB1 theorem-scope fields, reward-support normalization,

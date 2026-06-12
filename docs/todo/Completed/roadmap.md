@@ -9733,3 +9733,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     checker outputs.
   - Verification: Sums and Differences II boundary tests and paper-manifest
     tests validate the sidecar and repo-root requirement.
+
+- [x] Preserve UCB1 `auer-cesa-bianchi-fischer-2002` boundary scope in roadmap.
+  - Status: ROADMAP and roadmap TODO wording now identify
+    `papers/ucb1_boundary.json` as the source-specific boundary for bounded
+    reward-support assumptions, conditional-mean/stationarity assumptions,
+    regret definitions, Theorem 1 and suboptimal-pull constants, canonical
+    confidence-index formulas, initialization semantics, backend-as-arm
+    identity, reward normalization, selected-index traces, unsupported
+    UCB-family variants, and `throughput_depth` non-proof status.
+  - Verification: UCB1 boundary tests and paper-manifest tests validate the
+    sidecar and repo-root requirement.

@@ -18130,3 +18130,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: Sums and Differences II boundary tests and paper-manifest
     tests cover the sidecar, drift rejection, and repo-root sidecar
     requirement.
+
+- [x] Add UCB1 `auer-cesa-bianchi-fischer-2002` source-boundary gate.
+  - Status: `libreevolve.problems.benchmarks.ucb1_boundary` now emits and
+    validates `papers/ucb1_boundary.json` with cached PDF digest, source mirror
+    URL, venue/year metadata, theorem-scope fields, local scheduler facts,
+    variant-support status, required future evidence fields, missing-evidence
+    keys, and overclaim rejection.
+  - Remaining gap: canonical UCB1 regret reports, bounded reward-distribution
+    evidence, conditional-mean/stationarity evidence, canonical confidence
+    radius equivalence, selected-index traces, stable arm identity audits,
+    UCB-family variant implementations, and throughput-depth proof status
+    remain open.
+  - Verification: UCB1 boundary tests and paper-manifest tests cover the
+    sidecar, drift rejection, and repo-root sidecar requirement.

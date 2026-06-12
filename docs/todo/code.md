@@ -6467,8 +6467,8 @@ Primary evidence:
     sums-and-differences improvement as missing evidence until local sequence
     artifacts and reports exist.
 
-- [ ] Add UCB1 finite-time bandit source boundary before scheduler claims
-      become regret claims.
+- [ ] Implement canonical UCB1 finite-time scheduler evidence beyond the
+      source boundary.
   - Spec evidence: the local `auer-cesa-bianchi-fischer-2002` PDF,
     `Finite-time Analysis of the Multiarmed Bandit Problem`, by Peter Auer,
     Nicolo Cesa-Bianchi, and Paul Fischer appeared in `Machine Learning`
@@ -6488,13 +6488,10 @@ Primary evidence:
     `E[X_i,t | X_i,1, ..., X_i,t-1] = mu_i`. It also presents UCB2,
     `epsilon_n`-GREEDY, UCB1-NORMAL, and UCB1-TUNED as separate variants,
     with UCB1-TUNED explicitly lacking a proven regret bound.
-  - Current evidence: `papers/README.md` marks the UCB1 row as a foundational
-    bandit-policy source, and LibreEvolve implements a heuristic UCB-style
-    backend router over archive-admitted valid fitness-improvement rewards
-    with call-id attribution. Existing roadmap/code caveats already say the
-    current scheduler is not canonical regret-analyzed UCB1, but there is no
-    source-specific code gate for the local UCB1 PDF id/hash, theorem-scope
-    constants, bounded-support assumptions, conditional-mean/stationarity
+  - Current evidence: `papers/ucb1_boundary.json` and `papers/README.md` now
+    record the UCB1 source-boundary gate while keeping LibreEvolve's scheduler
+    heuristic. LibreEvolve still has no canonical regret-analyzed UCB1
+    evidence for bounded-support assumptions, conditional-mean/stationarity
     assumptions, regret definition, reward normalization policy, stable arm
     identity, initialization semantics, selected-index formula, exploration
     coefficient mapping, role-scoped/backend-metadata selection caveats,

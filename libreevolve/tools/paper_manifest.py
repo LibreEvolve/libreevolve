@@ -190,6 +190,10 @@ from libreevolve.problems.benchmarks.sums_differences_sequence_boundary import (
     sums_differences_sequence_boundary_record,
     validate_sums_differences_sequence_boundary,
 )
+from libreevolve.problems.benchmarks.ucb1_boundary import (
+    ucb1_boundary_record,
+    validate_ucb1_boundary,
+)
 from libreevolve.problems.benchmarks.paper_bibliography import (
     EXPECTED_REFERENCES_BIBLIOGRAPHY_FILE,
     alphaevolve_references_section_record,
@@ -320,6 +324,7 @@ GLOBAL_NLP_OPTIMIZATION_BOUNDARY_FILE = "papers/global_nlp_optimization_boundary
 AUTOCONVOLUTION_BOUNDARY_FILE = "papers/autoconvolution_boundary.json"
 SUMS_DIFFERENCES_BOUNDARY_FILE = "papers/sums_differences_boundary.json"
 SUMS_DIFFERENCES_SEQUENCE_BOUNDARY_FILE = "papers/sums_differences_sequence_boundary.json"
+UCB1_BOUNDARY_FILE = "papers/ucb1_boundary.json"
 BILATERAL_TRADE_BOUNDARY_FILE = "papers/bilateral_trade_boundary.json"
 EXAMPLE_BENCHMARK_SCOPE_FILE = "papers/example_benchmark_scope.json"
 MATH_OUTCOME_BOUNDARY_FILE = "papers/math_outcome_boundary.json"
@@ -718,6 +723,7 @@ def validate_paper_manifest(
     issues.extend(_validate_autoconvolution_boundary(root_path))
     issues.extend(_validate_sums_differences_boundary(root_path))
     issues.extend(_validate_sums_differences_sequence_boundary(root_path))
+    issues.extend(_validate_ucb1_boundary(root_path))
     issues.extend(_validate_bilateral_trade_boundary(root_path))
 
     if set(csv_by_id) - seen_ids:
@@ -2293,6 +2299,38 @@ def _validate_sums_differences_sequence_boundary(
             f"sums_differences_sequence_boundary_{issue.code}",
             issue.message,
             "sums_differences_sequence",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_ucb1_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / UCB1_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = ucb1_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "ucb1_boundary_manifest_missing",
+                    (
+                        f"{UCB1_BOUNDARY_FILE} must emit UCB1 heuristic "
+                        "scheduler evidence availability"
+                    ),
+                    "ucb1",
+                )
+            ]
+    report = validate_ucb1_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"ucb1_boundary_{issue.code}",
+            issue.message,
+            "ucb1",
         )
         for issue in report.issues
     ]

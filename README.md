@@ -4860,7 +4860,7 @@ the complete implementation-status index for all 25 manifest rows.
 | Paper | Authors | Year | Role |
 |-------|---------|:----:|------|
 | **MAP-Elites** | Mouret & Clune | 2015 | Quality-diversity archive; local implementation remains scoped by `papers/map_elites_illumination_boundary.json` |
-| **UCB1** | Auer, Cesa-Bianchi & Fischer | 2002 | Inspiration for heuristic backend routing |
+| **UCB1** | Auer, Cesa-Bianchi & Fischer | 2002 | Inspiration for heuristic backend routing; `papers/ucb1_boundary.json` records the missing assumptions and reports before any canonical finite-time regret claim |
 
 The references above are summarized for context in this README. The codebase and
 tests should be treated as the source of truth for current implementation

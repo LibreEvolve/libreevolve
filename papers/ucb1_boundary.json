@@ -1,0 +1,188 @@
+{
+  "schema": "libreevolve.ucb1_boundary.v1",
+  "source_paper_id": "auer-cesa-bianchi-fischer-2002",
+  "source_title": "Finite-time Analysis of the Multiarmed Bandit Problem",
+  "source_authors": [
+    "Peter Auer",
+    "Nicolo Cesa-Bianchi",
+    "Paul Fischer"
+  ],
+  "source_venue": "Machine Learning 47:235-256",
+  "source_year": 2002,
+  "source_url": "https://web.engr.oregonstate.edu/~afern/classes/cs533/notes/ucb.pdf",
+  "source_file": "papers/auer-cesa-bianchi-fischer-2002__UCB1_Finite_Time_Analysis_Multiarmed_Bandit.pdf",
+  "source_sha256": "82c8a8192bdb425fbe7662c59ee85faf47f59901f1a4999a732d04db82702a5d",
+  "source_bytes": 207956,
+  "source_license": "<not declared in cached PDF metadata>",
+  "source_mirror_status": "downloaded_from_accessible_academic_mirror",
+  "boundary_status": "ucb1_foundational_source_without_canonical_regret_scheduler_claim",
+  "claim_ready": false,
+  "source_links": [
+    {
+      "url": "https://web.engr.oregonstate.edu/~afern/classes/cs533/notes/ucb.pdf",
+      "status": "download_manifest_mirror_reference_only"
+    },
+    {
+      "url": "https://doi.org/10.1023/A:1013689704352",
+      "status": "doi_reference_only"
+    }
+  ],
+  "framework_components": [
+    {
+      "component_id": "paper_source_identity",
+      "paper_role": "preserve cached PDF source identity and venue metadata",
+      "local_status": "recorded_boundary_only"
+    },
+    {
+      "component_id": "bounded_reward_support_assumption",
+      "paper_role": "UCB1 theorem assumes rewards supported in [0,1]",
+      "local_status": "not_validated"
+    },
+    {
+      "component_id": "conditional_mean_stationarity_assumption",
+      "paper_role": "requires per-arm conditional mean mu_i over plays",
+      "local_status": "not_validated"
+    },
+    {
+      "component_id": "regret_definition_record",
+      "paper_role": "define regret as expected loss versus always playing best arm",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "theorem1_regret_bound_record",
+      "paper_role": "record Theorem 1 finite-time regret constants",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "suboptimal_pull_bound_record",
+      "paper_role": "record E[T_i(n)] <= 8 ln(n)/Delta_i^2 + 1 + pi^2/3",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "canonical_index_formula_record",
+      "paper_role": "record empirical mean plus sqrt(2 ln t / T_i(t)) index",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "initialization_policy_record",
+      "paper_role": "try each arm once before confidence-index selection",
+      "local_status": "not_equivalent"
+    },
+    {
+      "component_id": "scheduler_reward_normalization_evidence",
+      "paper_role": "prove backend rewards satisfy UCB1 support assumptions",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "backend_arm_identity_evidence",
+      "paper_role": "prove stable backend-as-arm identity across runs and roles",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "explore_coefficient_mapping",
+      "paper_role": "map canonical sqrt(2) coefficient to configurable c",
+      "local_status": "not_equivalent"
+    },
+    {
+      "component_id": "selected_index_trace_records",
+      "paper_role": "emit selected arm/index calculation traces",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "variant_support_matrix",
+      "paper_role": "separate UCB2, epsilon_n-GREEDY, UCB1-NORMAL, UCB1-TUNED",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "throughput_depth_nonproof_status",
+      "paper_role": "mark metadata-weighted routing as outside UCB1 proof scope",
+      "local_status": "boundary_only"
+    }
+  ],
+  "local_evidence": {
+    "scheduler_module": "libreevolve.llm.ensemble.LLMEnsemble",
+    "scheduler_docstring_scope": "heuristic_adaptation_not_canonical_ucb1",
+    "default_strategy": "ucb1",
+    "alternative_strategy": "throughput_depth",
+    "reward_cap": 1.0,
+    "negative_rewards_rejected": true,
+    "untried_backend_policy": "select_untried_eligible_backends_first",
+    "current_index_formula": "wins_i / counts_i + c * sqrt(log(total) / counts_i)",
+    "default_explore_coeff": 1.0,
+    "canonical_confidence_radius_ready": false,
+    "bounded_distribution_evidence_ready": false,
+    "conditional_mean_evidence_ready": false,
+    "regret_report_ready": false,
+    "selected_index_trace_ready": false,
+    "variant_support_matrix_ready": false,
+    "throughput_depth_regret_claim_ready": false,
+    "repository_runtime_verified": false
+  },
+  "reported_theorem_scope": {
+    "arm_count_requirement": "K > 1",
+    "reward_support": "[0, 1]",
+    "regret_definition": "expected loss due to not always playing the best machine",
+    "theorem1_regret_bound": "8 * sum_i ln(n) / Delta_i + (1 + pi^2 / 3) * sum_j Delta_j",
+    "suboptimal_pull_bound": "E[T_i(n)] <= 8 ln(n) / Delta_i^2 + 1 + pi^2 / 3",
+    "canonical_index_confidence_term": "sqrt(2 ln(t) / T_i(t))",
+    "cross_machine_independence_required_for_theorems_1_to_3": false,
+    "conditional_mean_assumption": "E[X_i,t | X_i,1, ..., X_i,t-1] = mu_i",
+    "ucb1_tuned_proven_regret_bound": false
+  },
+  "variant_support": {
+    "UCB1": "heuristic_local_backend_router_only",
+    "UCB2": "not_implemented",
+    "epsilon_n_GREEDY": "not_implemented",
+    "UCB1_NORMAL": "not_implemented",
+    "UCB1_TUNED": "not_implemented_no_proof_claim"
+  },
+  "required_evidence_fields": [
+    "source_license_and_mirror_status",
+    "paper_title_authors_venue_year",
+    "ucb1_theorem_scope",
+    "arm_count_requirement",
+    "reward_support_assumptions",
+    "conditional_mean_stationarity_assumptions",
+    "regret_definition",
+    "theorem1_regret_bound_constants",
+    "suboptimal_pull_bound_constants",
+    "chernoff_hoeffding_confidence_term",
+    "canonical_index_formula",
+    "initial_arm_try_policy",
+    "stable_backend_as_arm_identity_records",
+    "reward_normalization_policy",
+    "reward_accounting_scope_records",
+    "explore_coefficient_mapping",
+    "selected_arm_index_trace_rows",
+    "stationary_reward_diagnostics",
+    "regret_baseline_reports",
+    "variant_support_matrix",
+    "ucb1_tuned_no_proof_status",
+    "throughput_depth_nonproof_status",
+    "scheduler_documentation_boundary",
+    "independent_checker_outputs"
+  ],
+  "missing_evidence": {
+    "canonical_ucb1_scheduler_claim": "not_claimed_locally",
+    "bounded_reward_distribution_evidence": "not_recorded_locally",
+    "conditional_mean_stationarity_evidence": "not_recorded_locally",
+    "regret_definition_runtime_report": "not_implemented_locally",
+    "theorem1_regret_bound_report": "not_implemented_locally",
+    "suboptimal_pull_bound_report": "not_implemented_locally",
+    "canonical_confidence_radius": "not_implemented_locally",
+    "canonical_initialization_policy": "not_implemented_locally",
+    "stable_arm_identity_audit": "not_recorded_locally",
+    "reward_normalization_audit": "not_recorded_locally",
+    "explore_coefficient_equivalence": "not_claimed_locally",
+    "selected_index_trace_rows": "not_recorded_locally",
+    "stationary_reward_diagnostics": "not_implemented_locally",
+    "regret_baseline_reports": "not_implemented_locally",
+    "ucb2_support": "not_implemented_locally",
+    "epsilon_n_greedy_support": "not_implemented_locally",
+    "ucb1_normal_support": "not_implemented_locally",
+    "ucb1_tuned_support": "not_implemented_locally",
+    "throughput_depth_regret_proof": "not_claimed_locally",
+    "independent_checker_outputs": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records UCB1 as foundational bandit-policy source evidence only. LibreEvolve currently does not claim canonical UCB1 finite-time regret guarantees, bounded reward-distribution evidence, conditional-mean stationarity evidence, theorem-bound reports, canonical sqrt(2 ln t / T_i(t)) index equivalence, selected-index traces, UCB2/epsilon_n-GREEDY/UCB1-NORMAL/UCB1-TUNED support, or a regret proof for throughput_depth metadata-weighted routing."
+}

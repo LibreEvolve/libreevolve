@@ -773,6 +773,13 @@ is not yet an AlphaEvolve reproduction.
   rows, finite-prefix artifact policy, AlphaEvolve and Gerbicz baseline rows,
   convergence/tail-bound checks, lineage comparison rows, and independent
   checker outputs.
+  The committed `papers/ucb1_boundary.json` sidecar records the UCB1
+  finite-time-analysis boundary for bounded reward-support assumptions,
+  conditional-mean/stationarity assumptions, regret definitions, Theorem 1 and
+  suboptimal-pull constants, canonical confidence-index formulas,
+  initialization semantics, backend-as-arm identity, reward normalization,
+  selected-index traces, unsupported UCB-family variants, and the
+  non-proof status of metadata-weighted `throughput_depth` routing.
 
 ## Mid Term
 

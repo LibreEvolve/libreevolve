@@ -4138,8 +4138,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     reports. Avoid implying LibreEvolve supports this further
     post-AlphaEvolve sums-and-differences improvement without those artifacts.
 
-- [ ] Keep README UCB-style scheduler wording scoped until UCB1 source
-      assumptions and regret evidence exist.
+- [ ] Implement README UCB-style scheduler claims beyond source-scoped
+      heuristic routing.
   - Spec evidence: the local `auer-cesa-bianchi-fischer-2002` paper,
     `Finite-time Analysis of the Multiarmed Bandit Problem`, by Peter Auer,
     Nicolo Cesa-Bianchi, and Paul Fischer analyzes UCB1 for arms with reward
@@ -4153,10 +4153,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     UCB1-TUNED are separate variants, and UCB1-TUNED has no proven regret
     bound in the paper.
   - Current evidence: README describes LibreEvolve's backend selector as
-    `UCB-style` and the paper table lists UCB1 as inspiration for heuristic
-    backend routing. ROADMAP/code caveats already warn against canonical UCB1
-    overclaims, but README does not require a source-specific boundary for the
-    local UCB1 PDF id/hash, reward-support assumptions,
+    `UCB-style`, lists UCB1 as inspiration for heuristic backend routing, and
+    points to `papers/ucb1_boundary.json`. README still does not provide local
+    scheduler evidence for reward-support assumptions,
     conditional-mean/stationarity assumptions, reward-normalization policy,
     backend-as-arm stability, selected-arm/index telemetry, coefficient
     mapping from canonical UCB1 to LibreEvolve's configurable exploration

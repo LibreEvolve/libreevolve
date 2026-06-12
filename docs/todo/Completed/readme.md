@@ -12171,3 +12171,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     lineage rows, and independent checker evidence explicit as missing.
   - Verification: Sums and Differences II boundary and paper-manifest tests
     validate the sidecar that README now references.
+
+- [x] Document UCB1 `auer-cesa-bianchi-fischer-2002` source boundary in README.
+  - Status: README now names `papers/ucb1_boundary.json` in the foundational
+    algorithms table while keeping UCB1 as inspiration for heuristic backend
+    routing only. The README points canonical finite-time regret claims to the
+    missing assumptions and reports recorded in the sidecar.
+  - Verification: UCB1 boundary and paper-manifest tests validate the sidecar
+    that README now references.

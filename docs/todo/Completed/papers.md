@@ -12678,3 +12678,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     rows, and independent reproduction outputs remain open.
   - Verification: Sums and Differences II boundary tests and paper-manifest
     tests validate the sidecar and reject theta0-readiness overclaims.
+
+- [x] Record UCB1 `auer-cesa-bianchi-fischer-2002` source boundary.
+  - Status: `papers/ucb1_boundary.json` now carries the source-specific UCB1
+    boundary with cached PDF digest, academic mirror URL, Kluwer/Springer
+    article metadata, theorem-scope assumptions, Theorem 1 and suboptimal-pull
+    constants, local heuristic scheduler facts, UCB-family variant status, and
+    missing-evidence keys.
+  - Remaining paper gap: local bounded-reward distribution evidence,
+    conditional-mean/stationarity evidence, canonical index traces, regret
+    reports, theorem-bound reports, UCB2/epsilon_n-GREEDY/UCB1-NORMAL/
+    UCB1-TUNED support evidence, and independent checker outputs remain open.
+  - Verification: UCB1 boundary tests and paper-manifest tests validate the
+    sidecar and reject canonical-regret overclaims.

@@ -13667,3 +13667,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     and cross-run failure-index migrations remain absent.
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused failure memory tests reject semantic memory overclaims.
+
+- [x] Record program-output paper-facing sidecar.
+  - Status: `papers/program_output_boundary.json` now records the exact
+    current-run output lookup boundary for AlphaEvolve-style attached program
+    outputs: runtime evidence can show evaluator output capture, strict JSON
+    redaction/truncation, bounded value previews, source-key and output-hash
+    records, runtime program-output indexes, valid output-bearing resurfacing
+    sources, exact source-key/hash queries, and defensive current-run
+    snapshots, while durable output query tables, schema-aware retrieval,
+    semantic output similarity search, cross-run output indexes, full
+    output-content ranking, and replayable output-driven sampling remain
+    absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused program-output tests reject semantic output-retrieval
+    overclaims.

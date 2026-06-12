@@ -18572,3 +18572,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     semantic failure-memory overclaims, invalid boundary status, missing
     evidence drift, and incomplete required evidence fields.
+
+- [x] Add program-output sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/program_output_boundary.py` now
+    emits and validates the exact-current-run-output-lookup-only boundary for
+    `runtime.history.program_output_index` and
+    `ProgramDatabase.resurface_by_program_output()`, separating captured
+    evaluator `outputs` / `program_output` payloads, strict JSON redaction and
+    truncation, bounded value previews, source-key/hash records, valid
+    output-bearing current-run resurfacing, exact source-key/hash query APIs,
+    and defensive snapshots from durable output query tables, schema-aware
+    retrieval, semantic output similarity search, cross-run output indexes,
+    full output-content ranking, and replayable output-driven sampling.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    semantic output-retrieval overclaims, invalid boundary status, missing
+    evidence drift, and incomplete required evidence fields.

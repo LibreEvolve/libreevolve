@@ -2459,7 +2459,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     documents `resurface_by_program_output()` as exact source-key/hash
     current-run querying, and states that these indexes are not persisted
     database tables, semantic output-similarity indexes, schema-aware output
-    retrieval, or replayable sampling engines.
+    retrieval, or replayable sampling engines. README now ties that boundary
+    to `papers/program_output_boundary.json`.
   - Required result: continue keeping README wording scoped when durable output
     query tables, schema-aware output retrieval, or semantic output search
     land.

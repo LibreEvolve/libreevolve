@@ -1566,6 +1566,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     exact source key and/or output hash. They are still not a durable or
     semantic resurfacing dimension despite AlphaEvolve's database storing
     solutions with attached evaluation results and program outputs.
+    `papers/program_output_boundary.json` now validates this exact current-run
+    output lookup boundary.
     `runtime.history.artifact_index`
     now exposes bounded evaluator-artifact path/hash, redaction, skipped-file,
     stage, and content-excerpt evidence, and valid artifact-bearing candidates

@@ -10495,3 +10495,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused failure memory tests reject semantic memory overclaims.
+
+- [x] Keep roadmap program-output boundary tied to sidecar.
+  - Status: ROADMAP now links current bounded evaluator program-output indexes
+    and exact source/hash query APIs to `papers/program_output_boundary.json`
+    while keeping durable output retrieval, schema-aware output retrieval,
+    semantic output similarity search, cross-run output indexes, and
+    replayable output-driven sampling open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused program-output tests reject semantic output-retrieval overclaims.

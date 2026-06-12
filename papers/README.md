@@ -1127,7 +1127,8 @@ summaries for evaluator `outputs` / `program_output` payloads retained under
 `evaluation.metadata.program_outputs`, and valid output-bearing candidates can
 feed current-run resurfacing evidence. `resurface_by_program_output()` can
 return defensive current-run candidates by exact output source key and/or
-output hash.
+output hash. The committed `papers/program_output_boundary.json` sidecar keeps
+this exact current-run output lookup scope machine-validated.
 `runtime.history.hypothesis_branch_report` now groups generated candidates by
 captured proposal text hashes and marks rejected/no-accepted branches as
 `abandoned_evidence` with fallback-parent inference and failure-memory linkage.

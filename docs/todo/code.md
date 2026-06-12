@@ -1911,7 +1911,8 @@ Primary evidence:
     be required or checked by stage policies, and can be rendered as bounded
     prompt feedback, but there is still no output-similarity query API,
     schema-aware retrieval, durable output table, or semantic cross-run
-    retrieval.
+    retrieval. `papers/program_output_boundary.json` now validates this exact
+    current-run output lookup boundary.
     Current
     `manifest.json` files carry top-level `schema_version` and
     `artifact_schema` metadata, and current `history.jsonl`,

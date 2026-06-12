@@ -389,6 +389,12 @@ from libreevolve.problems.benchmarks.failure_memory_boundary import (
     render_failure_memory_boundary_summary,
     validate_failure_memory_boundary,
 )
+from libreevolve.problems.benchmarks.program_output_boundary import (
+    PROGRAM_OUTPUT_BOUNDARY_SCHEMA,
+    program_output_boundary_record,
+    render_program_output_boundary_summary,
+    validate_program_output_boundary,
+)
 from libreevolve.problems.benchmarks.matrix_exhibits import (
     FIGURE4_MATRIX_DISCOVERY_ARTIFACT_BOUNDARY_SCHEMA,
     FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA,
@@ -781,6 +787,7 @@ __all__ = [
     "COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_SCHEMA",
     "PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_SCHEMA",
     "PROGRAMMATIC_REPRESENTATION_BOUNDARY_SCHEMA",
+    "PROGRAM_OUTPUT_BOUNDARY_SCHEMA",
     "RELATED_WORK_TAXONOMY_BOUNDARY_SCHEMA",
     "RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_SCHEMA",
     "TASK_SPECIFICATION_BOUNDARY_SCHEMA",
@@ -880,6 +887,7 @@ __all__ = [
     "proposal_score_boundary_record",
     "problem_formulation_provenance_boundary_record",
     "programmatic_representation_boundary_record",
+    "program_output_boundary_record",
     "related_work_taxonomy_boundary_record",
     "release_artifact_reproducibility_boundary_record",
     "task_specification_boundary_record",
@@ -1014,6 +1022,7 @@ __all__ = [
     "render_proposal_score_boundary_summary",
     "render_problem_formulation_provenance_boundary_summary",
     "render_programmatic_representation_boundary_summary",
+    "render_program_output_boundary_summary",
     "render_related_work_taxonomy_boundary_summary",
     "render_release_artifact_reproducibility_boundary_summary",
     "render_task_specification_boundary_summary",
@@ -1141,6 +1150,7 @@ __all__ = [
     "validate_proposal_score_boundary",
     "validate_problem_formulation_provenance_boundary",
     "validate_programmatic_representation_boundary",
+    "validate_program_output_boundary",
     "validate_related_work_taxonomy_boundary",
     "validate_release_artifact_reproducibility_boundary",
     "validate_task_specification_boundary",

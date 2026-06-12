@@ -87,6 +87,10 @@ Important limits:
   semantic idea-memory retrieval, calibrated proposal-quality models,
   cross-run proposal tables, or score-driven prompt/archive policy; that
   boundary is tracked by `papers/proposal_score_boundary.json`.
+- Program-output resurfacing is exact current-run source-key/hash lookup over
+  bounded output summaries, not durable output tables, schema-aware retrieval,
+  semantic output similarity search, or replayable output-driven sampling;
+  that boundary is tracked by `papers/program_output_boundary.json`.
 - MAP-Elites descriptor snapshots are insertion-time local descriptor metadata,
   not stable learned/evaluator-provided behavior descriptors or archive rebin
   semantics; that boundary is tracked by

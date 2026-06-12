@@ -12726,3 +12726,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     with the boundary tracked by `papers/failure_memory_boundary.json`.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused failure memory tests reject semantic memory overclaims.
+
+- [x] Keep README program-output boundary tied to sidecar.
+  - Status: README now states that program-output resurfacing is exact
+    current-run source-key/hash lookup over bounded output summaries, not
+    durable output tables, schema-aware retrieval, semantic output similarity
+    search, or replayable output-driven sampling, with the boundary tracked by
+    `papers/program_output_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused program-output tests reject semantic output-retrieval overclaims.

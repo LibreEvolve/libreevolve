@@ -4901,7 +4901,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     README/ROADMAP wording that treats G-Zero as missing implementation
     evidence rather than implemented LibreEvolve support.
 
-- [ ] Track GenEvolve multimodal trajectory-distillation paper evidence.
+- [ ] Reproduce GenEvolve multimodal trajectory-distillation evidence beyond
+      paper coverage.
   - Paper/source evidence: arXiv `2605.21605`, submitted May 20, 2026 and
     last revised May 22, 2026, is titled `GenEvolve: Self-Evolving Image
     Generation Agents via Tool-Orchestrated Visual Experience Distillation`.
@@ -4916,24 +4917,31 @@ directory and using the AlphaEvolve paper as the primary specification.
     Visual Experience Distillation to provide dense token-level supervision
     so the student internalizes better search, knowledge activation, reference
     selection, and prompt construction.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2605.21605`. Existing rows cover AlphaEvolve, text-program
-    evolution, evaluator-backed tasks, verifier-free self-play, autonomous
-    multi-agent search, and application papers, but not multimodal
-    image-generation agents, visual tool trajectories, prompt-reference
-    programs, structured visual experience, privileged teacher branches, dense
-    token-level distillation, image artifact lineage, or GenEvolve-Bench.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2605.21605`: title/authors/arXiv version/date/PDF digest, source license,
-    project/demo URL status, relation to AlphaEvolve and LibreEvolve,
-    tool-orchestrated visual trajectory schema, evidence/reference selection
-    metadata, prompt-reference program representation, best-worst comparison
-    records, structured visual experience taxonomy, privileged teacher/student
+  - Current gap: the paper cache, paper index, row identity, README, ROADMAP,
+    and TODO coverage now include `2605.21605`, cached locally as
+    `papers/2605.21605__GenEvolve.pdf` with byte count `23833361` and
+    SHA-256
+    `2e38145ffd81f1c2f67b9fe4ee9adeec6284796739616d2778c89600b4455d5c`.
+    Reproduction evidence remains absent: no source-license details,
+    project/demo URL status, linked-code audit, tool-orchestrated visual
+    trajectory schema, evidence/reference selection metadata,
+    prompt-reference program representation, best-worst comparison records,
+    structured visual experience taxonomy, privileged teacher/student
     distillation traces, token-level supervision artifacts, image artifact
     provenance, GenEvolve-Data/GenEvolve-Bench metadata, baseline identities,
-    code/artifact availability if any, reproducibility status, and README/
-    ROADMAP wording that treats GenEvolve as missing paper evidence rather
-    than implemented LibreEvolve support.
+    code/artifact availability status, reproducibility status, or independent
+    reproduction output exists.
+  - Required result: add reproduction-grade GenEvolve evidence: source
+    license, project/demo URL status, linked-code status, relation to
+    AlphaEvolve and LibreEvolve, tool-orchestrated visual trajectory schema,
+    evidence/reference selection metadata, prompt-reference program
+    representation, best-worst comparison records, structured visual
+    experience taxonomy, privileged teacher/student distillation traces,
+    token-level supervision artifacts, image artifact provenance,
+    GenEvolve-Data/GenEvolve-Bench metadata, baseline identities,
+    code/artifact reproducibility status, independent reproduction outputs,
+    and README/ROADMAP wording that treats GenEvolve as background context
+    until those artifacts exist.
 
 - [ ] Track EvoRubric self-evolving reward-rubric paper evidence.
   - Paper/source evidence: arXiv `2605.29847`, submitted May 28, 2026, is

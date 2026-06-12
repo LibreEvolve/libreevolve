@@ -12952,3 +12952,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2605.21605` GenEvolve paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2605.21605`, `GenEvolve: Self-Evolving Image Generation Agents via
+    Tool-Orchestrated Visual Experience Distillation`, cached locally as
+    `papers/2605.21605__GenEvolve.pdf` with byte count `23833361` and
+    SHA-256
+    `2e38145ffd81f1c2f67b9fe4ee9adeec6284796739616d2778c89600b4455d5c`.
+  - Remaining paper gap: source-license details, linked-code URL/status,
+    image-generation tool pipeline, visual-reference ingestion,
+    prompt-rewriting/layout-planning/image-generation/refinement trajectory
+    schemas, tool-call artifact lineage, Agentic Visual Experience
+    Distillation and Visual Experience Distillation targets, dense token-level
+    supervision records, multimodal policy-update loop, GenEvolve-Data
+    metadata, GenEvolve-Bench task/report, baseline identities, code/artifact
+    reproducibility status, and independent reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

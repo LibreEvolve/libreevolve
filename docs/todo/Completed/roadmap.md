@@ -764,7 +764,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     URL, and local PDF label describing the same source before version or
     rights evidence attaches.
   - Status: ROADMAP now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 39 cache
+    companion manifest that emits derived source identities for all 40 cache
     rows and links the AlphaEvolve row to `papers/source_versions.json`.
   - Remaining gap: none for this bounded roadmap wording slice.
 
@@ -9938,5 +9938,20 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     unverifiable-domain benchmarks, external-judge reward-hacking
     comparisons, linked-code audits, and independent reproduction outputs
     explicitly open.
-  - Verification: paper-manifest validation checks the 39-row manifest,
+  - Verification: paper-manifest validation checks the 40-row manifest,
+    paper-index row, TODO coverage row, and source-identity sidecar.
+
+- [x] Preserve `2605.21605` GenEvolve paper-cache scope in roadmap.
+  - Status: ROADMAP now identifies arXiv `2605.21605`, `GenEvolve:
+    Self-Evolving Image Generation Agents via Tool-Orchestrated Visual
+    Experience Distillation`, as background multimodal trajectory-distillation
+    context only, with the cached `papers/2605.21605__GenEvolve.pdf` row and
+    missing image-generation tool pipelines, visual-reference ingestion,
+    prompt-rewriting/layout-planning/image-generation/refinement trajectory
+    schemas, tool-call artifact lineage, Agentic Visual Experience
+    Distillation and Visual Experience Distillation targets, dense token-level
+    supervision records, multimodal policy-update loops, GenEvolve-Data
+    metadata, GenEvolve-Bench reports, baseline comparisons, linked-code
+    audits, and independent reproduction outputs explicitly open.
+  - Verification: paper-manifest validation checks the 40-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.

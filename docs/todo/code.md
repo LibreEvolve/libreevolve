@@ -5404,7 +5404,8 @@ Primary evidence:
     README/ROADMAP wording that keeps verifier-free co-evolution as missing
     evidence until local implementation and reports exist.
 
-- [ ] Add GenEvolve multimodal trajectory-distillation source boundary.
+- [ ] Implement GenEvolve multimodal trajectory-distillation evidence beyond
+      paper cache coverage.
   - Spec evidence: arXiv `2605.21605`, `GenEvolve: Self-Evolving Image
     Generation Agents via Tool-Orchestrated Visual Experience Distillation`,
     was submitted May 20, 2026 and revised May 22, 2026. Its abstract says
@@ -5418,25 +5419,30 @@ Primary evidence:
     Visual Experience Distillation to give dense token-level supervision so a
     student internalizes better search, knowledge activation, reference
     selection, and prompt construction.
-  - Current evidence: LibreEvolve evolves Python programs through text
-    SEARCH/REPLACE diffs with scalar evaluator scores, prompt history, and
-    run artifacts, but it has no GenEvolve source row or multimodal
-    image-generation agent pathway. There is no visual tool trajectory schema,
-    reference/evidence selection log, prompt-reference program artifact,
-    best-worst trajectory comparison, structured visual experience record,
-    privileged teacher branch, dense token-level distillation trace, student
-    policy update, image artifact lineage, or GenEvolve-Bench-style report.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2605.21605`: arXiv id/version/date/PDF hash, authors, source license,
-    project/demo URL status, relation to AlphaEvolve and LibreEvolve's
-    text-program search, tool-orchestrated trajectory schema, reference and
-    evidence selection artifacts, prompt-reference program representation,
-    best-worst trajectory comparison records, structured visual experience
-    taxonomy, privileged-teacher/student-distillation traces, token-level
-    supervision metadata, image artifact provenance, GenEvolve-Data/
-    GenEvolve-Bench task taxonomy, baseline identities, and README/ROADMAP
-    wording that keeps multimodal trajectory distillation as missing evidence
-    until local implementation and reports exist.
+  - Current evidence: `papers/download_manifest.*`, `papers/row_identity.json`,
+    `papers/README.md`, README, ROADMAP, and TODO coverage now include
+    `2605.21605`, cached locally as `papers/2605.21605__GenEvolve.pdf` with
+    byte count `23833361` and SHA-256
+    `2e38145ffd81f1c2f67b9fe4ee9adeec6284796739616d2778c89600b4455d5c`.
+    LibreEvolve still evolves Python programs through text SEARCH/REPLACE
+    diffs with scalar evaluator scores, prompt history, and run artifacts. It
+    has no multimodal image-generation agent pathway, visual tool trajectory
+    schema, reference/evidence selection log, prompt-reference program
+    artifact, best-worst trajectory comparison, structured visual experience
+    record, privileged teacher branch, dense token-level distillation trace,
+    student policy update, image artifact lineage, or GenEvolve-Bench-style
+    report.
+  - Required result: add implementation-boundary metadata beyond the paper
+    cache: source license, linked-code or project/demo URL status, relation to
+    AlphaEvolve and LibreEvolve's text-program search, tool-orchestrated
+    trajectory schema, reference and evidence selection artifacts,
+    prompt-reference program representation, best-worst trajectory comparison
+    records, structured visual experience taxonomy, privileged-teacher/
+    student-distillation traces, token-level supervision metadata, image
+    artifact provenance, GenEvolve-Data/GenEvolve-Bench task taxonomy,
+    baseline identities, and README/ROADMAP wording that keeps multimodal
+    trajectory distillation as missing implementation evidence until local
+    runtime artifacts and reports exist.
 
 - [ ] Add EvoRubric self-evolving reward-rubric source boundary.
   - Spec evidence: arXiv `2605.29847`, `EvoRubric: Self-Evolving

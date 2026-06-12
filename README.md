@@ -165,7 +165,7 @@ Common run options:
 
 ## Research Sources
 
-LibreEvolve is informed by a local cache of 39 papers on LLM-guided evolution,
+LibreEvolve is informed by a local cache of 40 papers on LLM-guided evolution,
 program synthesis, quality-diversity optimization, and related benchmarks. The
 PDF cache lives locally under `papers/`, but the PDFs themselves are gitignored.
 The committed repository tracks `papers/README.md`, download manifests, and
@@ -176,7 +176,7 @@ not authoritative bibliographic titles. Use `papers/README.md` for paper-facing
 titles, implementation status, and benchmark coverage decisions.
 
 The table below is a curated subset for README context. `papers/README.md` is
-the complete implementation-status index for all 39 manifest rows.
+the complete implementation-status index for all 40 manifest rows.
 
 | Source | Role in LibreEvolve |
 | --- | --- |
@@ -200,6 +200,7 @@ the complete implementation-status index for all 39 manifest rows.
 | [CORAL](https://arxiv.org/abs/2604.01658) | Autonomous multi-agent evolution context only; no local long-running agent sessions, shared persistent memory, heartbeat interventions, or isolated multi-agent workspace runtime exists. |
 | [AEvo](https://arxiv.org/abs/2605.13821) | Harnessed meta-editing context only; no local process-level state, meta-agent procedure editor, protected evaluator harness, or meta-edit benchmark report exists. |
 | [G-Zero](https://arxiv.org/abs/2605.09959) | Verifier-free co-evolution context only; no local Hint-delta intrinsic reward, Proposer/Generator co-training loop, GRPO/DPO trainer, or verifier-free self-evolution report exists. |
+| [GenEvolve](https://arxiv.org/abs/2605.21605) | Multimodal trajectory-distillation context only; no local image-generation tool pipeline, visual-reference trajectory store, Agentic Visual Experience Distillation, or GenEvolve-Bench report exists. |
 
 Rehydrate the ignored local PDF cache on a fresh checkout:
 

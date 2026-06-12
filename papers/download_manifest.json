@@ -370,6 +370,16 @@
     "sha256": "97ba152b7208e1d8d2f0f1bcf4fe293419e485a568217a6ed8ea50214f5357c9"
   },
   {
+    "id": "2605.21605",
+    "title": "GenEvolve",
+    "url": "https://arxiv.org/pdf/2605.21605.pdf",
+    "file": "papers/2605.21605__GenEvolve.pdf",
+    "ok": true,
+    "bytes": 23833361,
+    "message": "downloaded",
+    "sha256": "2e38145ffd81f1c2f67b9fe4ee9adeec6284796739616d2778c89600b4455d5c"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

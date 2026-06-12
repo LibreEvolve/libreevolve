@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 39 cache rows and links the AlphaEvolve row to
+  identities for all 40 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1418,6 +1418,19 @@ resumed-trace proof are still open.
   external-judge reward-hacking comparisons, linked-code audits, and
   independent reproduction outputs remain open before roadmap wording can
   promote G-Zero-style verifier-free self-evolution support.
+- Keep GenEvolve multimodal trajectory-distillation claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2605.21605`, `GenEvolve: Self-Evolving Image Generation Agents via
+  Tool-Orchestrated Visual Experience Distillation`, cached locally as
+  `papers/2605.21605__GenEvolve.pdf`. This is background multimodal
+  trajectory-distillation context only; image-generation tool pipelines,
+  visual-reference ingestion, prompt-rewriting/layout-planning/image-
+  generation/refinement trajectory schemas, tool-call artifact lineage,
+  Agentic Visual Experience Distillation/Visual Experience Distillation
+  targets, dense token-level supervision records, multimodal policy-update
+  loops, GenEvolve-Data metadata, GenEvolve-Bench reports, baseline
+  comparisons, linked-code audits, and independent reproduction outputs remain
+  open before roadmap wording can promote GenEvolve-style multimodal support.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

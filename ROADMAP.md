@@ -1277,9 +1277,13 @@ is not yet an AlphaEvolve reproduction.
   with IR origin/editability boundaries, compiler-generated baseline
   provenance, reference implementation and randomized input-generator hashes,
   numerical tolerance policy, final expert-confirmation scope, and per-edit
-  randomized reference-check records. Real scheduling resource recovery,
-  kernel/training-time speedup, RTL PPA, and compiler speedup fixtures still
-  need to populate those records.
+  randomized reference-check records. They also require
+  `compiler_stack_provenance` for FlashAttention/Pallas/JAX/XLA context:
+  workload/model configuration, kernel identity, JAX pre/postprocessing
+  boundaries, XLA lowering stage, hardware target, lowered-IR hash,
+  optimization decision category, and artifact refs. Real scheduling resource
+  recovery, kernel/training-time speedup, RTL PPA, compiler speedup fixtures,
+  and emitted compiler-stack artifacts still need to populate those records.
 - Add hardware-adoption evidence for TPU RTL-style reports before claiming
   Section 3.3.3 parity: RTL-stage workflow placement, standard-Verilog
   trust/adoption rationale, upcoming-chip integration, and time-to-market

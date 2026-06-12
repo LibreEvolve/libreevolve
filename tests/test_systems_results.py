@@ -267,6 +267,24 @@ def _valid_compiler_report() -> dict:
             }
         ],
     }
+    report["compiler_stack_provenance"] = {
+        "boundary_statement": (
+            "Compiler stack provenance is separate from per-edit reference checks."
+        ),
+        "workload_model_configuration": "FlashAttention inference workload",
+        "flashattention_kernel_identity": "flashattention_pallas_kernel_v1",
+        "pallas_kernel_source_identity": "pallas kernel source module",
+        "pallas_kernel_source_sha256": "3" * 64,
+        "jax_preprocessing_boundary": "JAX wrapper prepares attention inputs",
+        "jax_preprocessing_artifact_sha256": "4" * 64,
+        "jax_postprocessing_boundary": "JAX wrapper restores output layout",
+        "jax_postprocessing_artifact_sha256": "5" * 64,
+        "xla_lowering_stage": "XLA GPU lowered IR",
+        "hardware_target": "gpu inference configuration",
+        "lowered_ir_sha256": "6" * 64,
+        "optimization_decision_category": "memory_access_orchestration",
+        "artifact_refs": ["systems/flashattention/reference.json"],
+    }
     return report
 
 
@@ -631,6 +649,19 @@ def test_ready_compiler_report_requires_ir_provenance():
     assert "invalid_ready_compiler_ir_provenance" in codes
 
 
+def test_ready_compiler_report_requires_stack_provenance():
+    report = _valid_compiler_report()
+
+    report.pop("compiler_stack_provenance")
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "missing_compiler_stack_provenance" in codes
+    assert "invalid_ready_compiler_stack_provenance" in codes
+
+
 def test_compiler_ir_provenance_rejects_bad_edit_reference_checks():
     report = _valid_compiler_report()
     report["compiler_ir_provenance"]["reference_implementation_sha256"] = "bad"
@@ -657,6 +688,28 @@ def test_compiler_ir_provenance_rejects_bad_edit_reference_checks():
     assert "invalid_compiler_ir_randomized_seed_count" in codes
     assert "invalid_compiler_ir_reference_check" in codes
     assert "invalid_compiler_ir_artifact_ref" in codes
+
+
+def test_compiler_stack_provenance_rejects_bad_stack_context():
+    report = _valid_compiler_report()
+    report["compiler_stack_provenance"]["workload_model_configuration"] = ""
+    report["compiler_stack_provenance"]["pallas_kernel_source_sha256"] = "bad"
+    report["compiler_stack_provenance"][
+        "optimization_decision_category"
+    ] = "loop_unrolling"
+    report["compiler_stack_provenance"]["artifact_refs"] = [
+        "systems/flashattention/missing.json"
+    ]
+
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "invalid_compiler_stack_workload_model_configuration" in codes
+    assert "invalid_compiler_stack_pallas_kernel_source_sha256" in codes
+    assert "invalid_compiler_stack_decision_category" in codes
+    assert "invalid_compiler_stack_artifact_ref" in codes
 
 
 def test_ready_scheduling_report_requires_ranking_only_safety():

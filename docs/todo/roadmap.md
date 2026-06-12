@@ -2135,16 +2135,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     configuration on GPUs.
   - Current evidence: roadmap systems-result wording covers generic compiler
     readiness, reference-correctness gaps, expert signoff, and runtime speedup
-    calibration. It does not require compiler fixtures or report validators to
-    record workload/model configuration, FlashAttention/Pallas kernel identity,
-    JAX wrapper boundaries, XLA IR-stage identities, hardware target,
-    lowered-IR artifact hashes, or the memory-access/scheduling decision class
-    being optimized.
-  - Required result: when FlashAttention compiler-stack metadata and validators
-    land, update ROADMAP, README, papers index, and code/paper TODOs so roadmap
-    text separates generic compiler-report support from the specific
-    Pallas/JAX/XLA/FlashAttention stack context used for AlphaEvolve's
-    compiler-generated IR result.
+    calibration. ROADMAP now records that ready compiler reports require
+    `compiler_stack_provenance` with workload/model configuration,
+    FlashAttention/Pallas kernel identity, JAX wrapper boundaries, XLA lowering
+    stage, hardware target, lowered-IR hash, artifact refs, and the
+    memory-access/scheduling decision class being optimized.
+  - Required result: when compiler fixtures emit real Pallas/JAX/XLA/
+    FlashAttention stack artifacts and lowered-IR records, update ROADMAP,
+    README, papers index, and code/paper TODOs so roadmap text separates
+    report-contract metadata from AlphaEvolve-style compiler-stack traces.
 
 - [ ] Keep compiler-adoption roadmap wording scoped until integration-path
       evidence exists.

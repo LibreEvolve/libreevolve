@@ -1298,16 +1298,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     for particular hardware, and the optimized configuration is a high-impact
     inference workload on GPUs.
   - Current evidence: README documents generic systems reports and notes
-    compiler-IR reference-check and speedup gaps, but it does not document the
-    stack-context evidence needed to make a compiler claim AlphaEvolve-like:
+    compiler-IR reference-check and speedup gaps. It now documents the
+    `compiler_stack_provenance` metadata required for ready compiler reports:
     workload/model configuration, FlashAttention/Pallas kernel identity, JAX
-    wrapper boundaries, XLA lowering-stage identities, hardware target,
-    lowered-IR artifact hashes, or memory-orchestration versus scheduling
-    decision categories.
-  - Required result: once FlashAttention compiler-stack metadata lands, update
-    README, ROADMAP, papers index, and matching TODOs so README distinguishes
-    generic compiler readiness from the specific Pallas/JAX/XLA/FlashAttention
-    context behind AlphaEvolve's compiler-generated IR result.
+    wrapper boundaries, XLA lowering stage, hardware target, lowered-IR hash,
+    artifact refs, and memory-orchestration versus scheduling decision
+    categories.
+  - Required result: once compiler fixtures emit real FlashAttention stack
+    artifacts, update README, ROADMAP, papers index, and matching TODOs so
+    README distinguishes metadata-only compiler readiness from the concrete
+    Pallas/JAX/XLA/FlashAttention traces behind AlphaEvolve's
+    compiler-generated IR result.
 
 - [ ] Keep README compiler-adoption wording scoped until compiler integration
       path evidence exists.

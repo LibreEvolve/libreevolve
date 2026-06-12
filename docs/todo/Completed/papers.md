@@ -12035,3 +12035,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     all-input expert confirmation files.
   - Verification: systems-result regression tests validate valid, missing, and
     malformed compiler-IR provenance cases.
+
+- [x] Record compiler-stack provenance boundary.
+  - Spec evidence: AlphaEvolve Section 3.3.4 places the FlashAttention result
+    in a Pallas/JAX/XLA compiler stack for GPU inference and names
+    memory-access orchestration or computation scheduling as the optimization
+    decision class.
+  - Status: paper-facing TODOs and validators now require
+    `compiler_stack_provenance` for ready compiler reports, including
+    workload/model configuration, FlashAttention/Pallas kernel identity, JAX
+    pre/postprocessing boundaries, XLA lowering stage, hardware target,
+    lowered-IR hash, optimization decision category, and artifact refs.
+  - Remaining paper gap: this does not generate real Pallas source, JAX
+    wrapper, XLA lowering, hardware-target, lowered-IR, or decision-evidence
+    artifacts for FlashAttention.
+  - Verification: systems-result regression tests validate missing and
+    malformed compiler-stack provenance cases.

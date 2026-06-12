@@ -11677,3 +11677,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     policy, expert-confirmation scope, edit attribution, and artifact refs.
   - Verification: systems-result regression tests validate the documented
     report contract.
+
+- [x] Document compiler-stack provenance for ready compiler reports.
+  - Spec evidence: README compiler systems wording needed to preserve the
+    specific FlashAttention/Pallas/JAX/XLA stack context behind AlphaEvolve's
+    compiler-generated IR result without implying real fixture artifacts exist.
+  - Status: README and run-artifact docs now describe
+    `compiler_stack_provenance` for ready compiler reports, including
+    workload/model configuration, FlashAttention/Pallas kernel identity, JAX
+    pre/postprocessing boundaries, XLA lowering stage, hardware target,
+    lowered-IR hash, optimization decision category, and artifact refs.
+  - Verification: systems-result regression tests validate the documented
+    report contract.

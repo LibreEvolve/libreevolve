@@ -17427,3 +17427,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     expert/all-input confirmation files.
   - Verification: systems-result regression tests cover valid compiler IR
     provenance, missing ready provenance, and bad edit-reference metadata.
+
+- [x] Require compiler-stack provenance for ready compiler systems reports.
+  - Spec evidence: AlphaEvolve Section 3.3.4 situates the FlashAttention
+    compiler result inside a Pallas/JAX/XLA stack for a GPU inference workload,
+    with optimizations targeting memory-access orchestration or computation
+    scheduling.
+  - Status: `validate_systems_result_report()` now requires
+    `compiler_stack_provenance` before accepting `alphaevolve_ready` compiler
+    reports. The record validates workload/model configuration,
+    FlashAttention/Pallas kernel identity, JAX pre/postprocessing boundaries,
+    XLA lowering stage, hardware target, lowered-IR hash, optimization decision
+    category, and artifact refs.
+  - Remaining gap: real compiler fixtures still need to emit Pallas source,
+    JAX wrapper, XLA lowering, hardware-target, lowered-IR, and decision
+    evidence artifacts.
+  - Verification: systems-result regression tests cover missing ready
+    provenance and malformed compiler-stack context.

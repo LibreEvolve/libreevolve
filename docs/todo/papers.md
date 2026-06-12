@@ -4192,18 +4192,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     high-impact inference configuration on GPUs.
   - Current gap: paper-facing compiler TODOs require per-edit randomized
     reference checks, IR-origin/editability metadata, expert signoff, and
-    kernel-versus-pre/postprocessing speedup attribution. They do not require
-    the report to preserve the stack context that makes the claim specific:
+    kernel-versus-pre/postprocessing speedup attribution. Paper-facing TODOs
+    and validators now require `compiler_stack_provenance` with
     workload/model configuration, FlashAttention/Pallas kernel identity, JAX
-    wrapper boundaries, XLA lowering stage identities, hardware target,
-    lowered-IR artifacts, or optimization decision category.
-  - Required result: add paper/report evidence for FlashAttention compiler
-    stack context: Transformer/model or inference configuration id,
-    FlashAttention/Pallas kernel source hash, JAX pre/postprocessing wrapper
-    artifact hashes, XLA IR-stage and hardware-target records, lowered-IR
-    artifact hashes, memory-orchestration versus scheduling decision labels,
-    and README/ROADMAP wording that separates compiler-stack provenance from
-    per-edit reference-check evidence and final runtime-speedup claims.
+    pre/postprocessing boundaries, XLA lowering stage, hardware target,
+    lowered-IR hash, optimization decision category, and artifact refs.
+  - Required result: add real paper/report artifacts for FlashAttention
+    compiler stack context: Transformer/model or inference configuration
+    records, FlashAttention/Pallas kernel source files, JAX pre/postprocessing
+    wrapper artifacts, XLA IR-stage and hardware-target records, lowered-IR
+    artifacts, and memory-orchestration versus scheduling decision evidence
+    that remains separate from per-edit reference checks and final
+    runtime-speedup claims.
 
 - [ ] Record compiler-adoption path evidence for discovered optimizations.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.4 says future

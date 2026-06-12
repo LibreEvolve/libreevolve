@@ -9211,3 +9211,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     signoff remain open.
   - Verification: systems-result regression tests validate the implemented
     provenance requirement.
+
+- [x] Preserve compiler-stack provenance boundary.
+  - Spec evidence: roadmap compiler-stack claims need to distinguish generic
+    compiler readiness from the specific FlashAttention/Pallas/JAX/XLA context
+    used for AlphaEvolve's compiler-generated IR result.
+  - Status: ROADMAP and TODO wording now recognize that ready compiler systems
+    reports require `compiler_stack_provenance`, while real Pallas source, JAX
+    wrapper, XLA lowering, hardware-target, lowered-IR, and decision-evidence
+    artifacts remain open.
+  - Verification: systems-result regression tests validate the implemented
+    provenance requirement.

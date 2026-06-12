@@ -4036,18 +4036,16 @@ Primary evidence:
     configuration on GPUs.
   - Current evidence: the compiler-IR TODO above requires edit-by-edit
     randomized reference checks, IR-origin/editability metadata, baseline
-    provenance, and kernel-versus-pre/postprocessing attribution. It does not
-    require a systems report to preserve the surrounding stack context:
-    Transformer/attention workload identity, FlashAttention/Pallas kernel
-    identity, JAX wrapper boundaries, XLA lowering-stage identities,
-    hardware/configuration target, or the optimization decision class
-    (`memory_access_orchestration` versus `computation_scheduling`).
-  - Required result: add compiler/kernel report metadata and validators for
-    FlashAttention stack provenance: workload/model configuration, Pallas
-    kernel source identity, JAX pre/postprocessing wrapper artifacts, XLA IR
-    stage and hardware-target records, lowered-IR artifact hashes, optimization
-    decision-category labels, and docs that distinguish compiler-stack context
-    evidence from per-edit reference checks and final speedup metrics.
+    provenance, and kernel-versus-pre/postprocessing attribution. Ready
+    compiler reports now also require `compiler_stack_provenance` with
+    workload/model configuration, FlashAttention/Pallas kernel identity, JAX
+    pre/postprocessing boundaries, XLA lowering stage, hardware target,
+    lowered-IR hash, optimization decision category, and artifact refs.
+  - Required result: connect compiler/kernel fixtures to real emitted
+    FlashAttention stack artifacts: Pallas kernel source snapshots, JAX
+    pre/postprocessing wrapper artifacts, XLA IR-stage outputs, hardware-target
+    records, lowered-IR files, and decision-category evidence that remains
+    distinct from per-edit reference checks and final speedup metrics.
 
 - [ ] Add compiler-adoption path provenance for discovered optimizations.
   - Spec evidence: AlphaEvolve Section 3.3.4 says the FlashAttention result

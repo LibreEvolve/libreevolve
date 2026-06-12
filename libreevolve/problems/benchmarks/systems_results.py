@@ -44,6 +44,9 @@ APPLICATION_APPROVAL_STATES = frozenset(
 COMPILER_IR_ABSTRACTION_LEVELS = frozenset(
     {"kernel_ir", "preprocessing_ir", "postprocessing_ir"}
 )
+COMPILER_STACK_DECISION_CATEGORIES = frozenset(
+    {"memory_access_orchestration", "computation_scheduling"}
+)
 CLAIM_CALIBRATION_KINDS = frozenset(
     {
         "scheduling_resource_recovery",
@@ -143,6 +146,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
         data.get("alphaevolve_ready") is True,
         issues,
     )
+    compiler_stack_ready = _validate_compiler_stack_provenance(
+        data.get("compiler_stack_provenance"),
+        data,
+        domain,
+        data.get("alphaevolve_ready") is True,
+        issues,
+    )
     certification_ready = _validate_certification_reference(data.get("certification"), issues)
     if data.get("alphaevolve_ready") is True and not _gates_are_alphaevolve_ready(gate_statuses):
         issues.append(
@@ -194,6 +204,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
                 SystemsResultIssue(
                     "invalid_ready_compiler_ir_provenance",
                     "alphaevolve_ready compiler reports require compiler-IR provenance",
+                )
+            )
+        if domain == "compiler" and not compiler_stack_ready:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_ready_compiler_stack_provenance",
+                    "alphaevolve_ready compiler reports require compiler-stack provenance",
                 )
             )
         if certification_ready is False:
@@ -1556,6 +1573,94 @@ def _validate_compiler_ir_provenance(
         if len(issues) == before_issues:
             valid_records += 1
     return valid_records == len(records)
+
+
+def _validate_compiler_stack_provenance(
+    value: object,
+    report: dict[str, Any],
+    domain: str | None,
+    require_ready: bool,
+    issues: list[SystemsResultIssue],
+) -> bool:
+    if value is None:
+        if require_ready and domain == "compiler":
+            issues.append(
+                SystemsResultIssue(
+                    "missing_compiler_stack_provenance",
+                    "alphaevolve_ready compiler reports require compiler_stack_provenance",
+                )
+            )
+        return False
+    if domain not in {"compiler", "kernel"}:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_compiler_stack_domain",
+                "compiler_stack_provenance is only valid for compiler or kernel domains",
+            )
+        )
+        return False
+    if not isinstance(value, dict):
+        issues.append(
+            SystemsResultIssue(
+                "invalid_compiler_stack_provenance",
+                "compiler_stack_provenance must be an object",
+            )
+        )
+        return False
+    before_issues = len(issues)
+    artifact_paths = {
+        artifact.get("path")
+        for artifact in report.get("artifacts", [])
+        if isinstance(artifact, dict) and isinstance(artifact.get("path"), str)
+    }
+    for field in (
+        "boundary_statement",
+        "workload_model_configuration",
+        "flashattention_kernel_identity",
+        "pallas_kernel_source_identity",
+        "jax_preprocessing_boundary",
+        "jax_postprocessing_boundary",
+        "xla_lowering_stage",
+        "hardware_target",
+    ):
+        text = value.get(field)
+        if not isinstance(text, str) or not text.strip():
+            issues.append(
+                SystemsResultIssue(
+                    f"invalid_compiler_stack_{field}",
+                    f"compiler_stack_provenance.{field} must be non-empty text",
+                )
+            )
+    for field in (
+        "pallas_kernel_source_sha256",
+        "jax_preprocessing_artifact_sha256",
+        "jax_postprocessing_artifact_sha256",
+        "lowered_ir_sha256",
+    ):
+        _validate_sha(
+            value.get(field),
+            f"invalid_compiler_stack_{field}",
+            f"compiler_stack_provenance.{field}",
+            issues,
+        )
+    if value.get("optimization_decision_category") not in (
+        COMPILER_STACK_DECISION_CATEGORIES
+    ):
+        issues.append(
+            SystemsResultIssue(
+                "invalid_compiler_stack_decision_category",
+                "compiler_stack_provenance.optimization_decision_category is unsupported",
+            )
+        )
+    _validate_application_reference_list(
+        value.get("artifact_refs"),
+        artifact_paths,
+        "artifact_refs",
+        "invalid_compiler_stack_artifact_ref",
+        "compiler_stack_provenance",
+        issues,
+    )
+    return len(issues) == before_issues
 
 
 def _validate_application_provenance(

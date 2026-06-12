@@ -2305,6 +2305,12 @@ IR origin, debug-only/editability boundary, compiler-generated baseline
 provenance, reference implementation and randomized input-generator hashes,
 numerical tolerance policy, final expert-confirmation scope, and per-edit
 randomized reference-check records with artifact refs.
+Ready compiler reports also require `compiler_stack_provenance`, covering the
+surrounding FlashAttention/Pallas/JAX/XLA context: workload/model
+configuration, FlashAttention and Pallas kernel identity, JAX pre/postprocessing
+boundaries, XLA lowering stage, hardware target, lowered-IR hash, optimization
+decision category, and artifact refs. This records report metadata; it does
+not create the real lowered-IR artifacts or randomized reference checks.
 `libreevolve.systems_evidence_bundle.v1` is the portable wrapper for those
 records: it embeds the systems report and artifact inventory, records stable
 SHA-256 hashes for each embedded object plus the inventory records hash, checks

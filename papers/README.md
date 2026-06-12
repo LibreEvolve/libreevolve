@@ -1637,13 +1637,17 @@ Implemented:
   downstream synthesis-tool confirmation, nor hardware adoption evidence such
   as RTL-stage workflow placement, standard-Verilog trust/adoption rationale,
   upcoming-chip integration, or time-to-market impact. For compiler-generated
-  IR tasks, it
-  does not yet require per-edit randomized reference-check traces, reference
-  implementation hashes, input-generator provenance, IR-origin/editability
-  constraints, compiler-generated/already-optimized baseline provenance,
-  numerical tolerance policy, kernel versus pre/postprocessing attribution,
-  final expert all-input signoff scope, or calibrated result-claim records
-  mapping finite metrics to
+  IR tasks, ready compiler reports now require `compiler_ir_provenance` and
+  `compiler_stack_provenance` metadata for IR origin/editability constraints,
+  compiler-generated/already-optimized baseline provenance, reference and
+  input-generator hashes, numerical tolerance policy, per-edit reference-check
+  records, final expert all-input signoff scope, workload/model configuration,
+  FlashAttention/Pallas kernel identity, JAX pre/postprocessing boundaries,
+  XLA lowering stage, hardware target, lowered-IR hash, optimization decision
+  category, and artifact refs. The contract still does not emit real
+  FlashAttention/Pallas/JAX/XLA artifacts, lowered-IR files, randomized
+  reference-check outputs, or calibrated result-claim records mapping finite
+  metrics to
   AlphaEvolve Section 3.3 magnitudes such as scheduling resource-recovery
   percentages, kernel speedups and training-time reductions, RTL PPA deltas,
   or compiler kernel/pre/postprocessing speedups with explicit units,

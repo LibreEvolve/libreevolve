@@ -4465,12 +4465,18 @@ already-optimized baseline provenance, reference implementation hash,
 randomized input-generator identity/hash, numerical tolerance policy, final
 expert-confirmation scope, and per-edit randomized reference-check records
 with kernel/pre/postprocessing attribution and artifact refs.
+Ready compiler reports also require `compiler_stack_provenance` records for
+the surrounding FlashAttention/Pallas/JAX/XLA stack: workload/model
+configuration, FlashAttention and Pallas kernel identity, JAX pre/postprocessing
+boundaries, XLA lowering stage, hardware target, lowered-IR hash, optimization
+decision category, and artifact refs.
 The claim-calibration schema still does not create real scheduling, kernel,
 hardware, or compiler fixtures, nor does it populate calibrated evidence for
 AlphaEvolve Section 3.3 magnitudes such as resource recovery percentages,
 kernel speedups, training-time reductions, RTL PPA deltas, or compiler
-pre/postprocessing speedups. Compiler-IR provenance still does not generate
-real XLA/FlashAttention edit artifacts or run randomized reference checks.
+pre/postprocessing speedups. Compiler-IR and compiler-stack provenance still
+do not generate real XLA/FlashAttention edit artifacts, lowered-IR artifacts,
+or randomized reference checks.
 Hardware reports also do not yet identify RTL-stage workflow placement,
 standard-Verilog trust/adoption evidence, upcoming-chip integration, or
 time-to-market impact.

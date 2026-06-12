@@ -1424,7 +1424,11 @@ Primary evidence:
     distributed workers. It now supports opt-in
     `eval_stages[].sample_workers` local thread-pool fan-out for planned
     configured-stage samples, with deterministic sample-index merge order and
-    runtime topology fields scoped to configured-stage sample workers.
+    runtime topology fields scoped to configured-stage sample workers. It also
+    records `evaluation.metadata.sample_execution` with summed sample elapsed
+    seconds, observed wall-clock seconds, and compression ratio, and the
+    process-exhibit evaluator-pool record summarizes observed local
+    sample-worker wall-clock compression.
     This still does not provide async candidate queues, distributed evaluator
     nodes, or mutation-depth throughput under slow evaluator feedback.
     `RunBudget` explicitly tracks synchronous local consumption; controller

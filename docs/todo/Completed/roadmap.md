@@ -8996,3 +8996,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     execution as mid-term work.
   - Verification: focused config, evaluator, and topology tests validate the
     implemented behavior and manifest fields.
+
+- [x] Scope ROADMAP compute-hour wording after local compression telemetry.
+  - Spec evidence: AlphaEvolve Section 2.4 distinguishes parallel evaluator
+    throughput from ordinary serial evaluator timing.
+  - Status: roadmap TODO wording now acknowledges local sample-worker
+    compression telemetry while keeping cluster-scale compute-hour accounting,
+    distributed evaluator fan-out, and mutation-depth evidence open.
+  - Verification: focused evaluator and process-exhibit topology tests validate
+    the implemented behavior and manifest fields.

@@ -2599,11 +2599,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: README can describe the synchronous loop,
     `proposals_per_generation` sequential sibling batches, staged samples and
     retries, local `eval_stages[].sample_workers` fan-out for configured-stage
-    samples, stage/sample wall-clock budgets, evaluator-second accounting, and
-    future parallel LLM/evaluator workers. It should not imply that current
-    sequential batches or local sample workers prove evaluation-cluster
-    fan-out, compute-hour accounting, or preserved mutation-chain depth under
-    expensive evaluation.
+    samples, stage/sample wall-clock budgets, evaluator-second accounting,
+    sample-execution compression metadata, and future parallel LLM/evaluator
+    workers. It should not imply that current sequential batches or local
+    sample workers prove evaluation-cluster fan-out, cluster-scale compute-hour
+    accounting, or preserved mutation-chain depth under expensive evaluation.
   - Required result: when parallelized-evaluation reports land, update README,
     ROADMAP, papers index, and code/paper TODOs with per-candidate compute-hour
     budget, wall-clock duration, evaluator-worker fan-out, randomized

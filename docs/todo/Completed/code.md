@@ -17136,3 +17136,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     compute-hour wall-clock compression reports, mutation-depth throughput
     evidence, and pending-work resume remain open.
   - Verification: focused config, evaluator, and topology tests pass.
+
+- [x] Add wall-clock compression telemetry for local evaluator sample workers.
+  - Spec evidence: AlphaEvolve Section 2.4 parallelizes expensive evaluations
+    to reduce wall-clock latency relative to total evaluator work.
+  - Status: multi-sample configured-stage evaluations now record
+    `evaluation.metadata.sample_execution` with summed sample elapsed seconds,
+    observed stage wall-clock seconds, compression ratio, and an observed
+    compression flag. The process-exhibit evaluator-pool record summarizes
+    those records under `wall_clock_compression` and only sets
+    `compute_hour_wall_clock_compression` when local sample-worker compression
+    is actually observed.
+  - Remaining gap: this is local sample-worker compression evidence, not
+    distributed evaluator-node compute-hour accounting or mutation-depth proof.
+  - Verification: focused evaluator and process-exhibit topology tests pass.

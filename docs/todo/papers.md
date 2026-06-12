@@ -180,7 +180,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     Configured evaluator stages can also set `sample_workers` above `1` to run
     planned stage samples through a local thread pool with deterministic
     sample-index result order and manifest topology evidence scoped to
-    configured-stage sample workers.
+    configured-stage sample workers. Candidate evaluation metadata and the
+    process-exhibit evaluator-pool record now preserve observed local
+    wall-clock compression from those sample workers when present.
     Completed manifests also embed
     `libreevolve.controller_state_validation.v1` to verify the current
     controller boundary is terminal, synchronous, and drained rather than an

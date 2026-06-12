@@ -488,9 +488,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `eval_stages[].sample_workers` fan-out for configured-stage samples.
     Code/paper TODO evidence already tracks local evaluator-second counters,
     configured-stage sample counters, and expensive-evaluation budget gaps.
-    The roadmap should not treat local sample-worker fan-out or generic async
-    queues as sufficient without compute-hour, wall-clock compression,
-    distributed evaluator-worker fan-out, and mutation-depth evidence.
+    Local sample-worker evaluations now preserve summed sample elapsed seconds,
+    observed wall-clock seconds, and compression ratios, but the roadmap should
+    not treat local sample-worker compression or generic async queues as
+    sufficient without cluster-scale compute-hour accounting, distributed
+    evaluator-worker fan-out, and mutation-depth evidence.
   - Required result: when parallel evaluator execution or reports land, update
     ROADMAP, README, papers index, and code/paper TODOs with per-candidate
     compute-hour budgets, evaluator-worker fan-out, randomized-initialization

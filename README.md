@@ -2536,7 +2536,10 @@ planned samples through a local thread pool while preserving deterministic
 sample-index result order. This is local configured-stage fan-out, not async
 LLM/controller scheduling or a distributed evaluator cluster. It is rejected
 with `hypothesis_test.sequential_stopping: true`, because early stopping
-requires serial sample decisions.
+requires serial sample decisions. Multi-sample evaluations record
+`metadata.sample_execution` with requested/effective workers, summed sample
+elapsed seconds, observed stage wall-clock seconds, and a wall-clock
+compression ratio.
 Each structured evaluation also carries `accounting` counters for subprocess
 attempts, configured-stage samples, retry attempts, validator timeouts, and
 sample/stage budget exhaustions; these counters roll into candidate budget

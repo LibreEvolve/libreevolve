@@ -12798,7 +12798,8 @@ def _alphaevolve_process_exhibit_report(
     )
     evaluator_pool_parallelism_record = (
         _process_exhibit_evaluator_pool_parallelism_record(
-            distributed_pipeline_topology
+            distributed_pipeline_topology,
+            programs,
         )
     )
     candidate_semantic_traces = _process_candidate_semantic_traces(
@@ -13392,6 +13393,7 @@ def _process_exhibit_async_topology_record(
 
 def _process_exhibit_evaluator_pool_parallelism_record(
     topology_report: Mapping[str, object],
+    programs: list[Program],
 ) -> dict:
     validation = (
         topology_report.get("validation")
@@ -13431,6 +13433,7 @@ def _process_exhibit_evaluator_pool_parallelism_record(
         == "blocking_stage_sample_thread_pool_local_subprocess"
         and throughput.get("worker_fanout_accounted") is True
     )
+    compression = _process_exhibit_evaluator_compression_summary(programs)
     return {
         "schema": "libreevolve.process_exhibit_evaluator_pool_parallelism_record.v1",
         "record_status": "recorded",
@@ -13455,11 +13458,73 @@ def _process_exhibit_evaluator_pool_parallelism_record(
             else "none"
         ),
         "independent_evaluator_pool_parallelism": False,
-        "compute_hour_wall_clock_compression": False,
+        "compute_hour_wall_clock_compression": compression[
+            "wall_clock_compression_observed"
+        ],
+        "wall_clock_compression": compression,
         "parallelism_boundary": (
             "validated_local_stage_sample_worker_fanout_not_independent_pool"
             if local_sample_worker_fanout
             else "validated_current_inline_evaluator_dispatch_not_independent_pool"
+        ),
+    }
+
+
+def _process_exhibit_evaluator_compression_summary(programs: list[Program]) -> dict:
+    records: list[dict] = []
+    for program in programs:
+        evaluation = program.evaluation if isinstance(program.evaluation, Mapping) else {}
+        metadata = evaluation.get("metadata") if isinstance(evaluation.get("metadata"), Mapping) else {}
+        sample_execution = metadata.get("sample_execution")
+        if not isinstance(sample_execution, Mapping):
+            continue
+        ratio = sample_execution.get("wall_clock_compression_ratio")
+        if not isinstance(ratio, (int, float)) or isinstance(ratio, bool) or not math.isfinite(float(ratio)):
+            ratio = None
+        records.append(
+            {
+                "program_id": program.id,
+                "candidate_type": (
+                    program.metadata.get("candidate_type")
+                    if isinstance(program.metadata, Mapping)
+                    else None
+                ),
+                "mode": sample_execution.get("mode"),
+                "effective_workers": sample_execution.get("effective_workers"),
+                "completed_samples": sample_execution.get("completed_samples"),
+                "sample_elapsed_sec_sum": sample_execution.get("sample_elapsed_sec_sum"),
+                "wall_clock_elapsed_sec": sample_execution.get("wall_clock_elapsed_sec"),
+                "wall_clock_compression_ratio": ratio,
+                "wall_clock_compression_observed": (
+                    sample_execution.get("wall_clock_compression_observed") is True
+                ),
+            }
+        )
+    observed = [
+        record
+        for record in records
+        if record["wall_clock_compression_observed"] is True
+    ]
+    ratios = [
+        float(record["wall_clock_compression_ratio"])
+        for record in records
+        if isinstance(record.get("wall_clock_compression_ratio"), (int, float))
+        and not isinstance(record.get("wall_clock_compression_ratio"), bool)
+        and math.isfinite(float(record["wall_clock_compression_ratio"]))
+    ]
+    return {
+        "schema": "libreevolve.evaluator_wall_clock_compression_summary.v1",
+        "source": "candidate_evaluation_metadata_sample_execution",
+        "record_count": len(records),
+        "observed_record_count": len(observed),
+        "wall_clock_compression_observed": bool(observed),
+        "max_wall_clock_compression_ratio": max(ratios) if ratios else None,
+        "sample_records": records[:25],
+        "sample_records_truncated": len(records) > 25,
+        "claim_scope": (
+            "local_configured_stage_sample_worker_wall_clock_compression"
+            if observed
+            else "no_observed_local_sample_worker_compression"
         ),
     }
 
@@ -14757,10 +14822,21 @@ def _validate_process_exhibit_evaluator_pool_parallelism_record(
         issues.append({"code": "worker_fanout_accounted_mismatch", "message": "worker fanout accounting must match configured stage sample-worker scope"})
     if value.get("parallel_evaluator_workers") is not sample_worker_scope:
         issues.append({"code": "parallel_evaluator_workers_mismatch", "message": "parallel evaluator workers must match configured stage sample-worker scope"})
+    compression = value.get("wall_clock_compression")
+    if not isinstance(compression, Mapping):
+        issues.append({"code": "invalid_wall_clock_compression", "message": "wall_clock_compression must be an object"})
+        compression_observed = False
+    else:
+        if compression.get("schema") != "libreevolve.evaluator_wall_clock_compression_summary.v1":
+            issues.append({"code": "invalid_wall_clock_compression_schema", "message": "wall clock compression schema is unsupported"})
+        compression_observed = compression.get("wall_clock_compression_observed") is True
+        if value.get("compute_hour_wall_clock_compression") is not compression_observed:
+            issues.append({"code": "compute_hour_wall_clock_compression_mismatch", "message": "compute-hour compression flag must match observed compression summary"})
+        if compression_observed and not sample_worker_scope:
+            issues.append({"code": "compression_without_sample_worker_scope", "message": "observed compression requires configured stage sample-worker scope"})
     for field in (
         "queued_work_accounted",
         "independent_evaluator_pool_parallelism",
-        "compute_hour_wall_clock_compression",
     ):
         if value.get(field) is not False:
             issues.append({"code": f"{field}_overclaim", "message": f"evaluator pool record must keep {field} false"})

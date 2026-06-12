@@ -710,6 +710,7 @@ class CascadeEvaluator:
         artifact_policy = self._artifact_policy(stage)
         results: list[EvaluationResult] = []
         sequential_stop_decision: dict | None = None
+        stage_wall_clock_started = time.perf_counter()
         if sample_workers > 1:
             with ThreadPoolExecutor(
                 max_workers=sample_workers,
@@ -767,17 +768,26 @@ class CascadeEvaluator:
                 if sequential_stop is not None:
                     sequential_stop_decision = sequential_stop
                     break
+        stage_wall_clock_elapsed_sec = time.perf_counter() - stage_wall_clock_started
         if len(results) == 1:
+            results[0].metadata["sample_execution"] = _sample_execution_metadata(
+                requested_workers=int(stage.get("sample_workers", 1)),
+                effective_workers=sample_workers,
+                planned_samples=samples,
+                completed_samples=len(results),
+                sample_elapsed_sec_sum=results[0].elapsed_sec,
+                wall_clock_elapsed_sec=stage_wall_clock_elapsed_sec,
+            )
             return results[0]
         aggregate = self._aggregate_sample_results(stage_name, results, validate_path, stage)
-        aggregate.metadata["sample_execution"] = {
-            "mode": "thread_pool" if sample_workers > 1 else "serial",
-            "requested_workers": int(stage.get("sample_workers", 1)),
-            "effective_workers": sample_workers,
-            "planned_samples": samples,
-            "completed_samples": len(results),
-            "deterministic_result_order": "sample_index",
-        }
+        aggregate.metadata["sample_execution"] = _sample_execution_metadata(
+            requested_workers=int(stage.get("sample_workers", 1)),
+            effective_workers=sample_workers,
+            planned_samples=samples,
+            completed_samples=len(results),
+            sample_elapsed_sec_sum=sum(result.elapsed_sec for result in results),
+            wall_clock_elapsed_sec=stage_wall_clock_elapsed_sec,
+        )
         if sequential_stop_decision is not None:
             aggregate.metadata["hypothesis_test_sequential_stopping"] = (
                 sequential_stop_decision
@@ -1668,6 +1678,38 @@ class CascadeEvaluator:
             elapsed_sec=sum(r.elapsed_sec for r in results),
             metadata=metadata,
         )
+
+
+def _sample_execution_metadata(
+    *,
+    requested_workers: int,
+    effective_workers: int,
+    planned_samples: int,
+    completed_samples: int,
+    sample_elapsed_sec_sum: float,
+    wall_clock_elapsed_sec: float,
+) -> dict:
+    sample_elapsed_sec_sum = max(0.0, float(sample_elapsed_sec_sum))
+    wall_clock_elapsed_sec = max(0.0, float(wall_clock_elapsed_sec))
+    compression_ratio = (
+        sample_elapsed_sec_sum / wall_clock_elapsed_sec
+        if wall_clock_elapsed_sec > 0.0
+        else None
+    )
+    return {
+        "mode": "thread_pool" if effective_workers > 1 else "serial",
+        "requested_workers": requested_workers,
+        "effective_workers": effective_workers,
+        "planned_samples": planned_samples,
+        "completed_samples": completed_samples,
+        "deterministic_result_order": "sample_index",
+        "sample_elapsed_sec_sum": sample_elapsed_sec_sum,
+        "wall_clock_elapsed_sec": wall_clock_elapsed_sec,
+        "wall_clock_compression_ratio": compression_ratio,
+        "wall_clock_compression_observed": (
+            compression_ratio is not None and compression_ratio > 1.0
+        ),
+    }
 
 
 @dataclass

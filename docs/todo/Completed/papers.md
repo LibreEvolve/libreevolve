@@ -11777,3 +11777,13 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     throughput dispatch telemetry, and pending-work checkpoints.
   - Verification: focused config, evaluator, and topology tests validate the
     implemented behavior and manifest fields.
+
+- [x] Record local evaluator sample-worker wall-clock compression evidence.
+  - Spec evidence: AlphaEvolve Section 2.4 uses parallel evaluator work to
+    reduce slow evaluator wall-clock latency.
+  - Status: paper-facing docs and process-exhibit reports now distinguish
+    observed local configured-stage sample-worker wall-clock compression from
+    distributed evaluator-node compute-hour accounting and async topology
+    parity.
+  - Verification: focused evaluator and process-exhibit topology tests validate
+    the implemented behavior and manifest fields.

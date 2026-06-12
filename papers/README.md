@@ -614,9 +614,12 @@ backends, local evaluator nodes, zero queues, and blocking dependency edges,
 and links the topology to consumed runtime/controller-budget counters. When
 configured stages set `eval_stages[].sample_workers`, it also records local
 configured-stage sample-worker fan-out and deterministic sample-order merge
-scope. It is `claim_ready: false` because it records a single-process
-synchronous topology; async controller queues, distributed sampler/evaluator
-worker fan-out, queue capacities, nonblocking dependency tracking, throughput
+scope. Candidate evaluations retain summed sample elapsed time, observed
+wall-clock time, and compression ratio; process-exhibit evaluator-pool records
+summarize that as local sample-worker wall-clock compression when observed. It
+is `claim_ready: false` because it records a single-process synchronous
+topology; async controller queues, distributed sampler/evaluator worker
+fan-out, queue capacities, nonblocking dependency tracking, throughput
 dispatch telemetry, and pending-work checkpoints remain open before Section
 2.6 topology parity.
 

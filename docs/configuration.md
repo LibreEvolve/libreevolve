@@ -828,7 +828,9 @@ later retries or samples stop after exhaustion; and the result records
 `evaluation.metadata.sample_budget` / `evaluation.metadata.stage_budget`.
 Set `eval_stages[].sample_workers` above `1` to run planned samples for that
 configured stage through a local thread pool. Results are merged in
-sample-index order and recorded under `evaluation.metadata.sample_execution`.
+sample-index order and recorded under `evaluation.metadata.sample_execution`,
+including requested/effective workers, summed sample elapsed seconds, observed
+stage wall-clock seconds, and a wall-clock compression ratio.
 This is local sample fan-out for configured stages, not async controller or
 distributed evaluator-node execution. It cannot be combined with
 `hypothesis_test.sequential_stopping: true`, because sequential stopping must

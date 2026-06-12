@@ -1622,6 +1622,14 @@ def test_pipeline_topology_records_configured_evaluator_sample_workers(tmp_path)
     assert evaluator_pool["parallel_evaluator_workers"] is True
     assert evaluator_pool["parallelism_scope"] == "configured_stage_sample_workers"
     assert evaluator_pool["independent_evaluator_pool_parallelism"] is False
+    assert evaluator_pool["compute_hour_wall_clock_compression"] is True
+    compression = evaluator_pool["wall_clock_compression"]
+    assert compression["wall_clock_compression_observed"] is True
+    assert compression["observed_record_count"] >= 1
+    assert compression["max_wall_clock_compression_ratio"] > 1.0
+    assert compression["claim_scope"] == (
+        "local_configured_stage_sample_worker_wall_clock_compression"
+    )
 
 
 def test_validate_controller_state_snapshot_reports_overclaims_and_pending_work():
@@ -6186,6 +6194,8 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert evaluator_pool["parallelism_scope"] == "none"
     assert evaluator_pool["independent_evaluator_pool_parallelism"] is False
     assert evaluator_pool["compute_hour_wall_clock_compression"] is False
+    assert evaluator_pool["wall_clock_compression"]["record_count"] == 0
+    assert evaluator_pool["wall_clock_compression"]["wall_clock_compression_observed"] is False
     assert report["candidate_semantic_trace_count"] == 1
     assert report["durable_candidate_stream_join_count"] == 1
     assert report["claim_readiness"]["candidate_semantic_trace_records"] is True

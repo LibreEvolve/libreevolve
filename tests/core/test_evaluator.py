@@ -4006,7 +4006,18 @@ def test_configured_stage_parallel_sample_workers_preserve_sample_order():
         assert serial_result.is_valid is True
         assert parallel_result.is_valid is True
         assert parallel_elapsed < serial_elapsed * 0.85
-        assert parallel_result.metadata["sample_execution"] == {
+        sample_execution = parallel_result.metadata["sample_execution"]
+        assert {
+            key: sample_execution[key]
+            for key in (
+                "mode",
+                "requested_workers",
+                "effective_workers",
+                "planned_samples",
+                "completed_samples",
+                "deterministic_result_order",
+            )
+        } == {
             "mode": "thread_pool",
             "requested_workers": 3,
             "effective_workers": 3,
@@ -4014,6 +4025,10 @@ def test_configured_stage_parallel_sample_workers_preserve_sample_order():
             "completed_samples": 3,
             "deterministic_result_order": "sample_index",
         }
+        assert sample_execution["sample_elapsed_sec_sum"] >= 0.6
+        assert sample_execution["wall_clock_elapsed_sec"] < serial_elapsed
+        assert sample_execution["wall_clock_compression_ratio"] > 1.5
+        assert sample_execution["wall_clock_compression_observed"] is True
         assert [
             sample["metadata"]["stage"]["sample_index"]
             for sample in parallel_result.metadata["samples"]

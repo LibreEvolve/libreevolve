@@ -1128,9 +1128,14 @@ stage sets `eval_stages[].sample_workers` above `1`, the topology records
 `dispatch_policy.evaluator_sample_workers`, changes evaluation dispatch to
 `blocking_stage_sample_thread_pool_local_subprocess`, exposes the local
 thread-pool worker identity on the evaluation node, and marks worker fan-out
-accounting scoped to `configured_stage_sample_workers`. Runs without configured
-sample workers keep `evaluation_dispatch: inline_blocking_local_subprocess`
-and `worker_fanout_accounted: false`.
+accounting scoped to `configured_stage_sample_workers`. Candidate evaluations
+also retain `evaluation.metadata.sample_execution`, which records summed
+sample elapsed time, observed wall-clock time, and compression ratio. The
+process-exhibit evaluator-pool record summarizes that metadata under
+`wall_clock_compression` and sets `compute_hour_wall_clock_compression` only
+for observed local sample-worker compression. Runs without configured sample
+workers keep `evaluation_dispatch: inline_blocking_local_subprocess` and
+`worker_fanout_accounted: false`.
 `validate_distributed_pipeline_topology_report()` keeps `claim_ready: false`
 and fails async-pipeline, async-worker, pending-checkpoint, or AlphaEvolve
 async-topology overclaims.

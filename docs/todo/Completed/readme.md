@@ -11465,3 +11465,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     or a distributed evaluator cluster.
   - Verification: focused config, evaluator, and topology tests validate the
     implemented behavior and manifest fields.
+
+- [x] Document local evaluator sample-worker compression metadata in README.
+  - Spec evidence: README parallelized-evaluation wording needed a concrete
+    local wall-clock compression evidence surface without claiming distributed
+    AlphaEvolve evaluator throughput.
+  - Status: README now documents `metadata.sample_execution` fields for
+    requested/effective workers, summed sample elapsed seconds, observed
+    wall-clock seconds, and compression ratio.
+  - Verification: focused evaluator and process-exhibit topology tests validate
+    the implemented behavior and manifest fields.

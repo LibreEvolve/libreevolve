@@ -4841,6 +4841,7 @@ the complete implementation-status index for all 25 manifest rows.
 | [**MadEvolve**](https://arxiv.org/abs/2602.15951) | Li, Zang & Münchmeyer | 2026 | Domain-evolution inspiration only; `papers/madevolve_boundary.json` records missing free-parameter tracking, nested optimization, JAX/vmad compatibility, cosmology adapters, innovation reports, run/model statistics, and reward-hacking controls |
 | [**CausalEvolve**](https://arxiv.org/abs/2603.14575) | Chen et al. | 2026 | Causal-guidance inspiration only; `papers/causalevolve_boundary.json` records missing POMDP/SCM framing, causal scratchpad, LLM factor generation, executable factor code, interventions, treatment effects, surprise/abduction artifacts, and benchmark rows |
 | [**DeepEvolve**](https://arxiv.org/abs/2510.06056) | Liu et al. | 2025 | Inspiration for retrieval context; `papers/deepevolve_boundary.json` keeps cross-file debug-loop, benchmark, and ablation parity unclaimed |
+| [**Magellan**](https://arxiv.org/abs/2601.21096) | Chen et al. | 2026 | AlphaEvolve compiler-optimization application context only; `papers/magellan_boundary.json` records missing executable C++ decision logic, compiler-pass integration, EVOLVE-BLOCK compiler spans, compiler rebuild and macro-benchmark evaluation, Vizier-style autotuning, LLVM/register-allocation/XLA task rows, baseline/generalization rows, maintainability evidence, and a dedicated runtime repository |
 
 **Foundational algorithms:**
 

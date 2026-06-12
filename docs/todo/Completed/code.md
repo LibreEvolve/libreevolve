@@ -4,6 +4,14 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add Magellan `2601.21096` compiler-optimization source-boundary gate.
+  - Evidence: `libreevolve/problems/benchmarks/magellan_boundary.py` records
+    the Magellan compiler-optimization source boundary, validates the
+    background-only state, rejects premature runtime claims, and is required by
+    `libreevolve/tools/paper_manifest.py`. `tests/test_magellan_boundary.py`
+    and `tests/test_paper_manifest.py` cover the absence record, overclaim
+    rejection, and root-manifest sidecar requirement.
+
 - [x] Add process-exhibit source diagram text boundary.
   - Spec evidence: AlphaEvolve Figure 1 and Figure 2 are source-paper
     process exhibits, so the local process report should preserve source-PDF

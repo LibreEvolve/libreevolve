@@ -623,8 +623,9 @@ is not yet an AlphaEvolve reproduction.
   This remains audit consistency for the declared local-subprocess boundary,
   not OS/container sandbox or quota enforcement.
 - Continue labeling CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve,
-  GigaEvo, CodeEvolve, and MadEvolve features as inspired unless paper behavior
-  is actually implemented. The committed `papers/gigaevo_framework_boundary.json`
+  GigaEvo, CodeEvolve, MadEvolve, and Magellan features as inspired or
+  application context unless paper behavior is actually implemented. The committed
+  `papers/gigaevo_framework_boundary.json`
   sidecar records the GigaEvo source-specific boundary for Redis lifecycle
   storage, asyncio DAG execution, concurrent units, insight/lineage stages,
   LangGraph mutation, Hydra mapping, dual GitHub source disambiguation, and
@@ -663,7 +664,14 @@ is not yet an AlphaEvolve reproduction.
   checkpoints, debugging attempts, score-zero fallback, evolutionary database
   semantics, island/MAP-Elites inspiration sampling, nine-task benchmark rows,
   Table 2/Table 3/Table 4 records, Figure 3 judge rows, Appendix C query rows,
-  and 30-minute/single-GPU budget evidence.
+  and 30-minute/single-GPU budget evidence. The committed
+  `papers/magellan_boundary.json` sidecar records the Magellan source-specific
+  boundary for executable C++ decision logic, compiler-pass integration,
+  EVOLVE-BLOCK compiler spans, compiler rebuild and macro-benchmark evaluation,
+  Vizier-style autotuning, LLVM function-inlining rows, register-allocation
+  rows, XLA graph-extraction/auto-sharding rows, expert/neural baselines,
+  temporal/domain generalization, generated-policy maintainability evidence,
+  and dedicated Magellan runtime-repository status.
 
 ## Mid Term
 

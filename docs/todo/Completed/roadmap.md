@@ -2,6 +2,13 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Preserve Magellan `2601.21096` boundary scope in roadmap.
+  - Evidence: `ROADMAP.md` adds `papers/magellan_boundary.json` to the
+    inspired/application-context source-boundary list and keeps Magellan
+    compiler optimization out of promoted roadmap support until the compiler
+    runtime, benchmark, autotuning, baseline, and reproducibility evidence
+    exists.
+
 - [x] Record process-exhibit source diagram text boundary for roadmap evidence.
   - Status: ROADMAP now lists hashed source-PDF page text extracts for Figure
     1/Figure 2 as current process-exhibit evidence while keeping exact

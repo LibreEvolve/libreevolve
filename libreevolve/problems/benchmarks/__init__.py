@@ -179,6 +179,12 @@ from libreevolve.problems.benchmarks.madevolve_boundary import (
     render_madevolve_boundary_summary,
     validate_madevolve_boundary,
 )
+from libreevolve.problems.benchmarks.magellan_boundary import (
+    MAGELLAN_BOUNDARY_SCHEMA,
+    magellan_boundary_record,
+    render_magellan_boundary_summary,
+    validate_magellan_boundary,
+)
 from libreevolve.problems.benchmarks.map_elites_illumination_boundary import (
     MAP_ELITES_ILLUMINATION_BOUNDARY_SCHEMA,
     map_elites_illumination_boundary_record,
@@ -418,6 +424,7 @@ __all__ = [
     "GIGAEVO_FRAMEWORK_BOUNDARY_SCHEMA",
     "IMPROVEVOLVE_BOUNDARY_SCHEMA",
     "MADEVOLVE_BOUNDARY_SCHEMA",
+    "MAGELLAN_BOUNDARY_SCHEMA",
     "MATRIX_RANK_TABLE_ARTIFACT_BOUNDARY_SCHEMA",
     "MATRIX_RANK_TABLE_EXHIBIT_SCHEMA",
     "MATRIX_ARTIFACT_INVENTORY_SCHEMA",
@@ -494,6 +501,7 @@ __all__ = [
     "gigaevo_framework_boundary_record",
     "improvevolve_boundary_record",
     "madevolve_boundary_record",
+    "magellan_boundary_record",
     "process_exhibit_boundary_record",
     "proposal_lifecycle_audit_boundary_record",
     "figure4_matrix_discovery_artifact_boundary_from_exhibit",
@@ -567,6 +575,7 @@ __all__ = [
     "render_gigaevo_framework_boundary_summary",
     "render_improvevolve_boundary_summary",
     "render_madevolve_boundary_summary",
+    "render_magellan_boundary_summary",
     "render_matrix_baseline_component_runtime_boundary_summary",
     "render_matrix_cascade_run_runtime_boundary_summary",
     "render_matrix_rank_table_artifact_boundary_summary",
@@ -633,6 +642,7 @@ __all__ = [
     "validate_gigaevo_framework_boundary",
     "validate_improvevolve_boundary",
     "validate_madevolve_boundary",
+    "validate_magellan_boundary",
     "validate_matrix_baseline_component_runtime_boundary",
     "validate_matrix_cascade_run_runtime_boundary",
     "validate_matrix_rank_table_artifact_boundary",

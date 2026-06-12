@@ -4269,19 +4269,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     results. The design section specifies policy proposal, local evaluation,
     hyperparameter tuning, and feedback incorporation around compiler rebuilds
     and end-to-end macro-benchmark rewards.
-  - Current evidence: ROADMAP tracks AlphaEvolve systems fixtures,
-    FlashAttention/XLA IR provenance, and broad background paper-index rows,
-    but it does not promote `2601.21096` beyond background-only status. It
-    does not define a compiler-heuristic candidate schema, compiler pass
-    runner, macro-benchmark dataset contract, LLVM inlining benchmark,
-    register-allocation benchmark, XLA portability benchmark, autotuning loop
-    report, expert-baseline comparison, or production-style metric report for
-    binary size and end-to-end performance. It also lacks roadmap gates for
-    feature-based versus full-API inlining search modes, EVOLVE-BLOCK compiler
-    source insertion, compiler-flag hyperparameters, temporal/domain
-    generalization, generated-policy maintainability, XLA e-graph extraction,
-    auto-sharding contest-split evaluation, and explicit caveats for
-    preliminary or not-yet-integrated XLA pipeline results.
+  - Current evidence: ROADMAP now names `papers/magellan_boundary.json` as the
+    source-specific boundary for executable C++ decision logic,
+    compiler-pass integration, EVOLVE-BLOCK compiler spans, compiler
+    rebuild/macro-benchmark evaluation, autotuning, LLVM/register-allocation/
+    XLA rows, baselines, generalization, maintainability, and runtime-
+    repository status. It still does not define a compiler-heuristic candidate
+    schema, compiler pass runner, macro-benchmark dataset contract, LLVM
+    inlining benchmark, register-allocation benchmark, XLA portability
+    benchmark, autotuning loop report, expert-baseline comparison, or
+    production-style metric report for binary size and end-to-end performance.
   - Required result: add roadmap gates for `2601.21096`: paper/source
     manifest entry, PDF/cache hash, source-license and code-artifact status,
     executable C++ decision-logic candidate schema, compiler-pass integration

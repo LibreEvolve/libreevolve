@@ -3801,17 +3801,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     hyperparameters, rebuilds the toolchain, scores macro-benchmarks with
     binary-size or runtime signals, and feeds best scores, tuning logs, and
     profiling traces back into AlphaEvolve.
-  - Current evidence: README documents general AlphaEvolve systems gaps,
-    paper-cache status, benchmark-report contracts, and existing smoke
-    fixtures. It does not mention `2601.21096`, define compiler-heuristic
-    candidates, run compiler pass candidates, evaluate LLVM inlining, measure
-    register-allocation priority rules, test XLA portability, preserve macro-
-    benchmark provenance, compare expert compiler baselines, or report binary-
-    size and end-to-end-performance results. It also lacks README boundaries
-    for feature-based versus full-API inlining modes, autotuner-assisted
-    hyperparameter search, temporal/domain generalization, generated-policy
-    maintainability, and XLA graph-extraction or auto-sharding benchmark
-    caveats.
+  - Current evidence: README now lists `2601.21096` only as AlphaEvolve
+    compiler-optimization application context and points to
+    `papers/magellan_boundary.json` for the missing C++ decision-logic,
+    compiler-pass integration, EVOLVE-BLOCK compiler span, compiler
+    rebuild/macro-benchmark, autotuning, LLVM/register-allocation/XLA,
+    baseline/generalization, maintainability, and runtime-repository evidence.
+    It still does not define compiler-heuristic candidates, run compiler pass
+    candidates, evaluate LLVM inlining, measure register-allocation priority
+    rules, test XLA portability, preserve macro-benchmark provenance, compare
+    expert compiler baselines, or report binary-size and end-to-end-performance
+    results.
   - Required result: if README mentions Magellan, compiler-optimization
     heuristics, executable C++ compiler decision logic, compiler pass
     evolution, LLVM inlining, register-allocation priority rules, XLA

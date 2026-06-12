@@ -4,6 +4,13 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## Papers Todo: Reference and Specification Gaps
 
+- [x] Record Magellan `2601.21096` source boundary.
+  - Evidence: `papers/magellan_boundary.json` preserves the Magellan source
+    identity, cached PDF digest/license, source-link status, component rows,
+    current no-compiler-runner evidence, required evidence fields, and missing
+    runtime evidence. `papers/README.md` marks the paper as background-only
+    and links completed code/paper/README/roadmap evidence for this boundary.
+
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
 - [x] Record process-exhibit source diagram text boundary.

@@ -4,6 +4,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Magellan `2601.21096` source boundary in README.
+  - Evidence: `README.md` lists Magellan as AlphaEvolve compiler-optimization
+    application context only and points to `papers/magellan_boundary.json` for
+    the missing C++ decision-logic, compiler-pass integration,
+    macro-benchmark, autotuning, LLVM/register-allocation/XLA, baseline,
+    generalization, maintainability, and runtime-repository evidence.
+
 - [x] Document process-exhibit source diagram text boundary.
   - Status: README now documents hashed source-PDF page text extracts for
     Figure 1/Figure 2 in the process-exhibit report while preserving exact

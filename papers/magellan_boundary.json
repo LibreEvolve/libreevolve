@@ -1,0 +1,189 @@
+{
+  "schema": "libreevolve.magellan_boundary.v1",
+  "source_paper_id": "2601.21096",
+  "source_title": "Magellan: Autonomous Discovery of Novel Compiler Optimization Heuristics with AlphaEvolve",
+  "source_authors": [
+    "Hongzheng Chen",
+    "Alexander Novikov",
+    "Ngan Vu",
+    "Hanna Alam",
+    "Zhiru Zhang",
+    "Aiden Grossman",
+    "Mircea Trofin",
+    "Amir Yazdanbakhsh"
+  ],
+  "source_version": "v1",
+  "source_submitted_date": "2026-01-28",
+  "source_accepted_venue": "C4ML@CGO'26",
+  "source_url": "https://arxiv.org/pdf/2601.21096.pdf",
+  "source_file": "papers/2601.21096__Magellan.pdf",
+  "source_sha256": "4619366bb337eb723bbe882d9efd07d8f57dca53e95fb7e1de6788a011e7f8bb",
+  "source_bytes": 1483119,
+  "source_license": "http://creativecommons.org/licenses/by/4.0/",
+  "boundary_status": "compiler_optimization_context_without_magellan_runtime_parity",
+  "claim_ready": false,
+  "source_links": [
+    {
+      "url": "https://arxiv.org/abs/2601.21096v1",
+      "status": "source_version_reference_only"
+    },
+    {
+      "url": "https://github.com/llvm/llvm-project/blob/main/llvm/lib/Analysis/InlineCost.cpp",
+      "status": "paper_reference_only_not_magellan_runtime"
+    },
+    {
+      "url": "https://github.com/llvm/llvm-project/blob/main/llvm/lib/CodeGen/RegAllocGreedy.cpp",
+      "status": "paper_reference_only_not_magellan_runtime"
+    },
+    {
+      "url": "<no_dedicated_magellan_code_repository_extracted>",
+      "status": "not_found_in_extracted_links"
+    }
+  ],
+  "framework_components": [
+    {
+      "component_id": "cxx_decision_logic_candidates",
+      "paper_role": "executable C++ compiler-pass decision logic",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "compiler_pass_integration",
+      "paper_role": "candidate insertion into LLVM or XLA compiler passes",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "evolve_block_source_spans",
+      "paper_role": "EVOLVE-BLOCK-delimited compiler source regions",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "policy_proposal",
+      "paper_role": "LLM-proposed heuristic templates with symbolic parameters",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "local_compiler_evaluation",
+      "paper_role": "compiler rebuild plus macro-benchmark reward evaluation",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "hyperparameter_tuning",
+      "paper_role": "external autotuner fills compiler-flag hyperparameters",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "feedback_generation",
+      "paper_role": "best score, tuning logs, and profiling traces returned to AlphaEvolve",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "llvm_function_inlining_size",
+      "paper_role": "LLVM inlining binary-size optimization task",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "llvm_function_inlining_performance",
+      "paper_role": "LLVM inlining end-to-end performance optimization task",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "register_allocation_priority_rule",
+      "paper_role": "RegAllocGreedy live-range priority policy",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "xla_graph_extraction",
+      "paper_role": "XLA/e-graph extraction heuristic task",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "xla_auto_sharding",
+      "paper_role": "XLA auto-sharding contest-style task",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "macro_benchmark_provenance",
+      "paper_role": "production macro-benchmark and workload provenance",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "baseline_and_generalization_rows",
+      "paper_role": "expert/neural baselines, temporal/domain generalization, maintainability rows",
+      "local_status": "not_recorded"
+    }
+  ],
+  "local_evidence": {
+    "current_compiler_runner": "<none>",
+    "current_candidate_language_scope": "python_primary_text_workspace_not_cxx_compiler_pass",
+    "compiler_pass_runner_ready": false,
+    "cxx_decision_logic_ready": false,
+    "evolve_block_compiler_span_ready": false,
+    "compiler_rebuild_ready": false,
+    "macro_benchmark_ready": false,
+    "autotuning_ready": false,
+    "llvm_inlining_rows_ready": false,
+    "register_allocation_rows_ready": false,
+    "xla_rows_ready": false,
+    "baseline_generalization_rows_ready": false,
+    "repository_runtime_verified": false
+  },
+  "reported_tasks": [
+    "LLVM function inlining for binary size",
+    "LLVM function inlining for end-to-end performance",
+    "LLVM register-allocation live-range priority",
+    "XLA graph extraction",
+    "XLA auto-sharding"
+  ],
+  "required_evidence_fields": [
+    "source_license_and_repository_status",
+    "alphaevolve_relation",
+    "compiler_fixture_policy",
+    "cxx_decision_logic_candidate_schema",
+    "compiler_pass_integration_points",
+    "evolve_block_source_span_records",
+    "compiler_flag_hyperparameter_schema",
+    "policy_proposal_records",
+    "local_compiler_rebuild_records",
+    "macro_benchmark_dataset_provenance",
+    "binary_size_metric_definition",
+    "end_to_end_performance_metric_definition",
+    "autotuner_identity_and_batch_records",
+    "invalid_sample_rate_records",
+    "feedback_generation_records",
+    "llvm_partial_feature_inlining_rows",
+    "llvm_full_api_inlining_rows",
+    "register_allocation_priority_rule_rows",
+    "xla_graph_extraction_rows",
+    "xla_auto_sharding_rows",
+    "expert_baseline_identity_rows",
+    "neural_baseline_identity_rows",
+    "temporal_generalization_rows",
+    "domain_generalization_rows",
+    "generated_policy_maintainability_rows",
+    "compiler_environment_hashes",
+    "independent_checker_outputs"
+  ],
+  "missing_evidence": {
+    "cxx_decision_logic_candidate_schema": "not_implemented_locally",
+    "compiler_pass_runner": "not_implemented_locally",
+    "evolve_block_compiler_source_spans": "not_recorded_locally",
+    "compiler_flag_hyperparameter_schema": "not_recorded_locally",
+    "policy_proposal_records": "not_recorded_locally",
+    "local_compiler_rebuild_records": "not_recorded_locally",
+    "macro_benchmark_harness": "not_implemented_locally",
+    "binary_size_metric_records": "not_recorded_locally",
+    "end_to_end_performance_metric_records": "not_recorded_locally",
+    "vizier_autotuning_records": "not_recorded_locally",
+    "invalid_sample_rate_records": "not_recorded_locally",
+    "llvm_inlining_size_rows": "not_recorded_locally",
+    "llvm_inlining_performance_rows": "not_recorded_locally",
+    "register_allocation_rows": "not_recorded_locally",
+    "xla_graph_extraction_rows": "not_recorded_locally",
+    "xla_auto_sharding_rows": "not_recorded_locally",
+    "expert_neural_baseline_rows": "not_recorded_locally",
+    "temporal_domain_generalization_rows": "not_recorded_locally",
+    "generated_policy_maintainability_rows": "not_recorded_locally",
+    "dedicated_magellan_runtime_repository": "not_found_in_extracted_links"
+  },
+  "claim_boundary": "This boundary records Magellan as AlphaEvolve compiler-optimization application context only. LibreEvolve currently does not claim executable C++ decision-logic candidates, LLVM/XLA compiler-pass integration, compiler rebuilds, macro-benchmark evaluation, Vizier-style autotuning, EVOLVE-BLOCK compiler-source spans, function-inlining result rows, register-allocation rows, XLA portability rows, expert/neural baseline comparisons, temporal/domain generalization, or generated-policy maintainability evidence."
+}

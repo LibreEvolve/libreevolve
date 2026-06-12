@@ -213,6 +213,10 @@ from libreevolve.problems.benchmarks.madevolve_boundary import (
     madevolve_boundary_record,
     validate_madevolve_boundary,
 )
+from libreevolve.problems.benchmarks.magellan_boundary import (
+    magellan_boundary_record,
+    validate_magellan_boundary,
+)
 from libreevolve.problems.benchmarks.thetaevolve_boundary import (
     thetaevolve_boundary_record,
     validate_thetaevolve_boundary,
@@ -256,6 +260,7 @@ IMPROVEVOLVE_BOUNDARY_FILE = "papers/improvevolve_boundary.json"
 MADEVOLVE_BOUNDARY_FILE = "papers/madevolve_boundary.json"
 CAUSALEVOLVE_BOUNDARY_FILE = "papers/causalevolve_boundary.json"
 DEEPEVOLVE_BOUNDARY_FILE = "papers/deepevolve_boundary.json"
+MAGELLAN_BOUNDARY_FILE = "papers/magellan_boundary.json"
 EXAMPLE_BENCHMARK_SCOPE_FILE = "papers/example_benchmark_scope.json"
 MATH_OUTCOME_BOUNDARY_FILE = "papers/math_outcome_boundary.json"
 MATH_STARTING_CONSTRUCTION_BOUNDARY_FILE = "papers/math_starting_construction_boundary.json"
@@ -641,6 +646,7 @@ def validate_paper_manifest(
     issues.extend(_validate_madevolve_boundary(root_path))
     issues.extend(_validate_causalevolve_boundary(root_path))
     issues.extend(_validate_deepevolve_boundary(root_path))
+    issues.extend(_validate_magellan_boundary(root_path))
 
     if set(csv_by_id) - seen_ids:
         for row_id in sorted(set(csv_by_id) - seen_ids):
@@ -1829,6 +1835,38 @@ def _validate_deepevolve_boundary(root_path: Path) -> list[PaperManifestIssue]:
             f"deepevolve_boundary_{issue.code}",
             issue.message,
             "deepevolve",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_magellan_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / MAGELLAN_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = magellan_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "magellan_boundary_manifest_missing",
+                    (
+                        f"{MAGELLAN_BOUNDARY_FILE} must emit "
+                        "Magellan compiler-optimization evidence availability"
+                    ),
+                    "magellan",
+                )
+            ]
+    report = validate_magellan_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"magellan_boundary_{issue.code}",
+            issue.message,
+            "magellan",
         )
         for issue in report.issues
     ]

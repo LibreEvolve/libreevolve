@@ -6028,7 +6028,7 @@ Primary evidence:
     and caveats that the paper's rounded distribution is verified while the
     exact unrounded modulated-power-law ratio remains open.
 
-- [ ] Add AlphaEvolve Magellan compiler-optimization boundary.
+- [ ] Implement AlphaEvolve Magellan compiler-optimization parity beyond source boundary.
   - Spec evidence: arXiv `2601.21096`, `Magellan: Autonomous Discovery of
     Novel Compiler Optimization Heuristics with AlphaEvolve`, was submitted
     January 28, 2026 and accepted to `C4ML@CGO'26`. Its abstract says modern
@@ -6044,34 +6044,25 @@ Primary evidence:
     heuristic templates with compiler-flag hyperparameters, rebuilds the
     compiler, evaluates macro-benchmarks with signals such as `llvm-size` or
     `perf stat`, and can hand exposed parameters to Vizier.
-  - Current evidence: `papers/README.md` lists `2601.21096` only as
-    background AlphaEvolve compiler-optimization context with no
-    compiler-heuristic benchmark or compiler pass runner. LibreEvolve has no
-    implemented source-boundary gate for this source, no executable C++ decision-logic
-    candidate schema, no LLVM function-inlining benchmark, no register-
-    allocation workload fixture, no XLA portability fixture, no macro-
-    benchmark harness, no compiler integration/artifact policy, no expert-
-    baseline comparison table, no feature-based versus full-heuristic
-    inlining mode distinction, no autotuner batch/round telemetry, no
-    temporal/domain generalization report, no generated-policy maintainability
-    report, and no production-style binary-size, end-to-end-performance, or
-    large-workload validation reports.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2601.21096`: arXiv id/version/date/PDF hash, authors, source
-    license, code/artifact availability, relation to AlphaEvolve and
-    LibreEvolve compiler fixtures, C++ decision-logic candidate schemas,
-    compiler-pass integration points, EVOLVE-BLOCK source-span and insertion
-    records, compiler-flag hyperparameter schemas, LLVM inlining task records
-    for partial-feature and full-API heuristics, register-allocation
-    priority-rule records for `RegAllocGreedy`, XLA graph-extraction and
-    auto-sharding task records, macro-benchmark dataset provenance,
-    binary-size and performance metric definitions, autotuning loop metadata
-    including batch size/rounds and invalid-sample rate, expert and neural
-    baseline identities, temporal and domain generalization rows,
-    generated-code maintainability rows, seed/budget records, compiler
-    build/runtime environment hashes, independent checker outputs, and
-    README/ROADMAP wording that keeps Magellan-style compiler optimization as
-    missing evidence until local implementation and benchmark reports exist.
+  - Current evidence: `papers/magellan_boundary.json` now preserves the
+    source-specific boundary for `2601.21096`, including title/authors/arXiv
+    version/date, cached PDF digest/license, LLVM reference links, absence of
+    a dedicated Magellan runtime repository in extracted links, component rows,
+    current no-compiler-runner/local Python-primary scope, required evidence
+    fields, and missing-evidence keys. `papers/README.md`, `README.md`, and
+    `ROADMAP.md` keep Magellan compiler optimization source-scoped rather
+    than implemented.
+  - Required result: implement the missing runtime evidence for `2601.21096`:
+    executable C++ decision-logic schemas, compiler-pass runners,
+    EVOLVE-BLOCK compiler-source span records, compiler-flag hyperparameter
+    schemas, policy-proposal records, compiler rebuilds, macro-benchmark
+    harnesses, binary-size and end-to-end-performance metric records,
+    Vizier-style/autotuning records, invalid-sample-rate records, LLVM
+    inlining size/performance rows, register-allocation rows, XLA
+    graph-extraction and auto-sharding rows, expert/neural baseline rows,
+    temporal/domain generalization rows, generated-policy maintainability
+    rows, compiler environment hashes, independent checker outputs, and
+    benchmark reports before claiming Magellan-style compiler optimization.
 
 - [ ] Add AlphaEvolve ArchAgent computer-architecture boundary.
   - Spec evidence: arXiv `2602.22425`, `ArchAgent: Agentic AI-driven Computer

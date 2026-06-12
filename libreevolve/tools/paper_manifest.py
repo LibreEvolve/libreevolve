@@ -97,6 +97,10 @@ from libreevolve.problems.benchmarks.deepevolve_boundary import (
     deepevolve_boundary_record,
     validate_deepevolve_boundary,
 )
+from libreevolve.problems.benchmarks.distributed_pipeline_topology_boundary import (
+    distributed_pipeline_topology_boundary_record,
+    validate_distributed_pipeline_topology_boundary,
+)
 from libreevolve.problems.benchmarks.codeevolve_boundary import (
     codeevolve_boundary_record,
     validate_codeevolve_boundary,
@@ -318,6 +322,7 @@ PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_FILE = "papers/proposal_lifecycle_audit_bounda
 REPEATED_SAMPLING_BASELINE_BOUNDARY_FILE = "papers/repeated_sampling_baseline_boundary.json"
 SAMPLE_EFFICIENCY_BOUNDARY_FILE = "papers/sample_efficiency_boundary.json"
 PARALLEL_EVALUATION_READINESS_BOUNDARY_FILE = "papers/parallel_evaluation_readiness_boundary.json"
+DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_FILE = "papers/distributed_pipeline_topology_boundary.json"
 EVALUATION_CASCADE_BOUNDARY_FILE = "papers/evaluation_cascade_boundary.json"
 CONTROLLER_BACKTRACKING_BOUNDARY_FILE = "papers/controller_backtracking_boundary.json"
 MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE = "papers/matrix_headline_historicity_artifacts.json"
@@ -780,6 +785,7 @@ def validate_paper_manifest(
     issues.extend(_validate_repeated_sampling_baseline_boundary(root_path))
     issues.extend(_validate_sample_efficiency_boundary(root_path))
     issues.extend(_validate_parallel_evaluation_readiness_boundary(root_path))
+    issues.extend(_validate_distributed_pipeline_topology_boundary(root_path))
     issues.extend(_validate_evaluation_cascade_boundary(root_path))
     issues.extend(_validate_controller_backtracking_boundary(root_path))
     issues.extend(_validate_example_benchmark_scope_records(root_path))
@@ -1676,6 +1682,38 @@ def _validate_parallel_evaluation_readiness_boundary(root_path: Path) -> list[Pa
             f"parallel_evaluation_readiness_boundary_{issue.code}",
             issue.message,
             "parallel_evaluation_readiness",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_distributed_pipeline_topology_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = distributed_pipeline_topology_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "distributed_pipeline_topology_boundary_manifest_missing",
+                    (
+                        f"{DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_FILE} must emit "
+                        "distributed-pipeline topology availability"
+                    ),
+                    "distributed_pipeline_topology",
+                )
+            ]
+    report = validate_distributed_pipeline_topology_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"distributed_pipeline_topology_boundary_{issue.code}",
+            issue.message,
+            "distributed_pipeline_topology",
         )
         for issue in report.issues
     ]

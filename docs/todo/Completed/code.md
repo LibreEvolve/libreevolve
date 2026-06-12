@@ -17385,6 +17385,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     root and focused parallel-evaluation boundary tests validate the absence
     record.
 
+- [x] Emit distributed-pipeline topology paper-facing absence boundary sidecar.
+  - Status: `libreevolve/problems/benchmarks/distributed_pipeline_topology_boundary.py`
+    and `papers/distributed_pipeline_topology_boundary.json` now preserve that
+    LibreEvolve has a runtime topology report for the current local
+    controller, database, LLM sampler nodes, evaluator nodes, zero queues,
+    blocking dependency edges, synchronous dispatch, runtime-budget linkage,
+    and unsupported pending-work checkpoints, but no AlphaEvolve-style async
+    controller queues, queue capacities, nonblocking dependency graph,
+    distributed sampler/evaluator worker nodes, throughput dispatch telemetry,
+    or pending-work checkpoint state.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused topology boundary tests validate the absence record.
+
 - [x] Add whole-run source/workspace integrity report.
   - Spec evidence: AlphaEvolve-scale generated-program databases need
     auditable whole-run source/workspace evidence, not only selected-row source

@@ -87,7 +87,9 @@ LibreEvolve has:
   `runtime.history.distributed_pipeline_topology_report`, naming the current
   single-process controller, in-process database, configured LLM sampler
   backends, local evaluator nodes, zero queues, blocking dependency edges, and
-  runtime-budget linkage while keeping AlphaEvolve async pipeline parity
+  runtime-budget linkage, with
+  `papers/distributed_pipeline_topology_boundary.json` preserving the
+  paper-facing absence boundary while keeping AlphaEvolve async pipeline parity
   explicitly false
 - runtime cascade summaries that aggregate configured-stage promotion,
   attrition, threshold failures, work counters, bounded candidate-stage
@@ -789,8 +791,10 @@ is not yet an AlphaEvolve reproduction.
 
 - Add a controller with bounded queues for LLM proposals and evaluator workers;
   the current loop reports its synchronous topology under
-  `runtime.history.distributed_pipeline_topology_report` and supports
-  sequential `proposals_per_generation` batches plus opt-in local
+  `runtime.history.distributed_pipeline_topology_report`, with
+  `papers/distributed_pipeline_topology_boundary.json` preserving the
+  paper-facing single-process synchronous-topology absence boundary. It
+  supports sequential `proposals_per_generation` batches plus opt-in local
   `eval_stages[].sample_workers` fan-out for configured-stage samples, but not
   concurrent proposal/evaluation queues. Completed manifests also expose
   `runtime.history.parallel_evaluation_readiness_report`, which records local

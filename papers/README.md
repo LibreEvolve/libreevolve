@@ -659,6 +659,8 @@ topology; async controller queues, distributed sampler/evaluator worker
 fan-out, queue capacities, nonblocking dependency tracking, throughput
 dispatch telemetry, and pending-work checkpoints remain open before Section
 2.6 topology parity. The committed
+`papers/distributed_pipeline_topology_boundary.json` sidecar preserves this
+topology absence boundary for paper-manifest validation. The committed
 `papers/parallel_evaluation_readiness_boundary.json` sidecar preserves the
 parallel-evaluation readiness absence boundary for paper-manifest validation.
 

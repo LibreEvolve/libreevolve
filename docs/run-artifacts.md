@@ -1148,7 +1148,10 @@ workers keep `evaluation_dispatch: inline_blocking_local_subprocess` and
 `worker_fanout_accounted: false`.
 `validate_distributed_pipeline_topology_report()` keeps `claim_ready: false`
 and fails async-pipeline, async-worker, pending-checkpoint, or AlphaEvolve
-async-topology overclaims.
+async-topology overclaims. The committed
+`papers/distributed_pipeline_topology_boundary.json` sidecar preserves the
+same single-process synchronous-topology absence boundary for paper-manifest
+validation.
 Completed runtime history also records
 `runtime.history.parallel_evaluation_readiness_report` with schema
 `libreevolve.parallel_evaluation_readiness_report.v1`. It aggregates the

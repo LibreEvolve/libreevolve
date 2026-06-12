@@ -11644,6 +11644,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     root and focused parallel-evaluation boundary tests validate the absence
     record.
 
+- [x] Document distributed-pipeline topology sidecar boundary.
+  - Status: README and run-artifact docs now point to
+    `papers/distributed_pipeline_topology_boundary.json` as the paper-facing
+    sidecar for the single-process synchronous-topology absence boundary.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused topology boundary tests validate the absence record.
+
 - [x] Document whole-run source/workspace integrity report.
   - Spec evidence: README run-inspection wording needed to distinguish bounded
     manifest integrity evidence from AlphaEvolve-grade generated-program

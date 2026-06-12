@@ -519,7 +519,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     checkpoint. The topology artifact names controller/sampler/evaluation-node
     roles, blocking dependency edges, local sample-worker fan-out when
     configured, and runtime-budget linkage, while keeping queues and async
-    pipeline readiness false.
+    pipeline readiness false. `papers/distributed_pipeline_topology_boundary.json`
+    now preserves the same single-process synchronous-topology absence boundary
+    for manifest validation.
   - Required result: when async distributed-pipeline implementation lands,
     update ROADMAP, README, papers index, and code/paper TODOs together so
     roadmap wording distinguishes the current synchronous/local-sample-worker

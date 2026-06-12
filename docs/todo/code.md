@@ -1505,6 +1505,9 @@ Primary evidence:
     `validate_distributed_pipeline_topology_report()` verifies the counts and
     rejects async-pipeline, async-worker, pending-checkpoint, claim-ready, and
     AlphaEvolve async-topology overclaims.
+    `papers/distributed_pipeline_topology_boundary.json` now preserves the
+    same single-process synchronous-topology absence boundary for
+    paper-manifest validation.
   - Remaining gap: the topology report is still current-boundary evidence, not
     Section 2.6 parity. It does not implement async controller queues, queue
     capacities, nonblocking dependency edges, real sampler/evaluator worker

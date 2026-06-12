@@ -1,0 +1,31 @@
+{
+  "schema": "libreevolve.alphaevolve_distributed_pipeline_topology_boundary.v1",
+  "runtime_report_schema": "libreevolve.distributed_pipeline_topology_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve Section 2.6 describes an asynchronous controller, LLM-sampler, and evaluator-node pipeline optimized for throughput with computations that can block on unfinished dependencies",
+  "boundary_status": "single_process_synchronous_topology",
+  "runtime_report_status": "distributed_pipeline_topology_report_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "controller_node_identity",
+    "program_database_node_identity",
+    "llm_sampler_node_identity",
+    "evaluation_node_identity",
+    "queue_count",
+    "blocking_dependency_edges",
+    "dispatch_policy",
+    "throughput_budget_linkage",
+    "pending_work_checkpoint",
+    "async_topology_claim_readiness"
+  ],
+  "missing_evidence": {
+    "async_controller_queues": "not_recorded_locally",
+    "queue_capacity_records": "not_recorded_locally",
+    "nonblocking_dependency_graph": "not_recorded_locally",
+    "distributed_llm_sampler_worker_nodes": "not_recorded_locally",
+    "distributed_evaluator_worker_nodes": "not_recorded_locally",
+    "throughput_dispatch_telemetry": "not_recorded_locally",
+    "pending_work_checkpoint_state": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has a runtime topology report for the current local controller, program database, configured LLM sampler nodes, evaluator nodes, zero queues, blocking dependency edges, synchronous dispatch, runtime-budget linkage, and unsupported pending-work checkpoints, but does not claim AlphaEvolve-style async controller queues, queue capacities, nonblocking dependency graphs, distributed sampler/evaluator worker nodes, throughput dispatch telemetry, or pending-work checkpoint state."
+}

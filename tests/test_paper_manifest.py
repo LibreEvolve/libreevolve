@@ -1567,6 +1567,60 @@ def test_validate_paper_manifest_requires_parallel_evaluation_readiness_boundary
     assert "parallel_evaluation_readiness_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_distributed_pipeline_topology_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.distributed_pipeline_topology_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_distributed_pipeline_topology_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.distributed_pipeline_topology_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "async_distributed_topology_ready"
+    record["missing_evidence"]["async_controller_queues"] = "recorded"
+    sidecar = tmp_path / paper_manifest.DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "distributed_pipeline_topology_boundary_claim_ready_overclaim" in codes
+    assert "distributed_pipeline_topology_boundary_invalid_boundary_status" in codes
+    assert (
+        "distributed_pipeline_topology_boundary_invalid_missing_evidence_async_controller_queues"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_distributed_pipeline_topology_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "distributed_pipeline_topology_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_repeated_sampling_baseline_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

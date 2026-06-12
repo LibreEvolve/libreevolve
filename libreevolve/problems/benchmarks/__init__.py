@@ -143,6 +143,12 @@ from libreevolve.problems.benchmarks.deepevolve_boundary import (
     render_deepevolve_boundary_summary,
     validate_deepevolve_boundary,
 )
+from libreevolve.problems.benchmarks.distributed_pipeline_topology_boundary import (
+    DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_SCHEMA,
+    distributed_pipeline_topology_boundary_record,
+    render_distributed_pipeline_topology_boundary_summary,
+    validate_distributed_pipeline_topology_boundary,
+)
 from libreevolve.problems.benchmarks.codeevolve_boundary import (
     CODEEVOLVE_BOUNDARY_SCHEMA,
     codeevolve_boundary_record,
@@ -525,6 +531,7 @@ __all__ = [
     "COMBINATORICS_BERCZY_BOUNDARY_SCHEMA",
     "CONTROLLER_BACKTRACKING_BOUNDARY_SCHEMA",
     "DEEPEVOLVE_BOUNDARY_SCHEMA",
+    "DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_SCHEMA",
     "EMBEDDED_EVALUATOR_BOUNDARY_SCHEMA",
     "EVALUATOR_ORACLE_BOUNDARY_SCHEMA",
     "EXPECTED_TARGET_COUNT",
@@ -628,6 +635,7 @@ __all__ = [
     "combinatorics_berczy_boundary_record",
     "controller_backtracking_boundary_record",
     "deepevolve_boundary_record",
+    "distributed_pipeline_topology_boundary_record",
     "embedded_evaluator_boundary_record",
     "evaluation_cascade_boundary_record",
     "evaluator_oracle_boundary_record",
@@ -710,6 +718,7 @@ __all__ = [
     "render_combinatorics_berczy_boundary_summary",
     "render_controller_backtracking_boundary_summary",
     "render_deepevolve_boundary_summary",
+    "render_distributed_pipeline_topology_boundary_summary",
     "render_embedded_evaluator_boundary_summary",
     "render_evaluation_cascade_boundary_summary",
     "render_evaluator_oracle_boundary_summary",
@@ -798,6 +807,7 @@ __all__ = [
     "validate_combinatorics_berczy_boundary",
     "validate_controller_backtracking_boundary",
     "validate_deepevolve_boundary",
+    "validate_distributed_pipeline_topology_boundary",
     "validate_embedded_evaluator_boundary",
     "validate_evaluation_cascade_boundary",
     "validate_evaluator_oracle_boundary",

@@ -37,7 +37,8 @@ Important limits:
 - The archive and controller are local and synchronous, not a distributed
   asynchronous AlphaEvolve-style service; parallel-evaluation readiness is
   tracked by `runtime.history.parallel_evaluation_readiness_report` and
-  `papers/parallel_evaluation_readiness_boundary.json`.
+  `papers/parallel_evaluation_readiness_boundary.json`, while topology parity
+  is bounded by `papers/distributed_pipeline_topology_boundary.json`.
 - The included examples are smoke fixtures and small demos unless explicitly
   documented otherwise.
 - Paper and blog claims are tracked as source boundaries unless local benchmark

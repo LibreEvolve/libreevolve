@@ -2708,6 +2708,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     current local controller, database, configured LLM sampler backends, local
     evaluator nodes, zero queues, blocking edges, runtime-budget linkage, and
     validation overclaim guards while keeping `claim_ready: false`.
+    `papers/distributed_pipeline_topology_boundary.json` now preserves the
+    same single-process synchronous-topology absence boundary for manifest
+    validation.
   - Required result: when async topology implementation lands, update README,
     ROADMAP, papers index, and code/paper TODOs with real queue capacities,
     dependency edges, worker role ownership/fan-out, throughput dispatch

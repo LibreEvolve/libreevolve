@@ -12005,6 +12005,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     root and focused parallel-evaluation boundary tests reject premature
     readiness claims.
 
+- [x] Record distributed-pipeline topology paper-facing sidecar.
+  - Status: `libreevolve/problems/benchmarks/distributed_pipeline_topology_boundary.py`
+    and `papers/distributed_pipeline_topology_boundary.json` now preserve the
+    paper-facing boundary that the runtime topology report names local
+    controller/database/sampler/evaluator nodes, zero queues, blocking edges,
+    synchronous dispatch, and unsupported pending-work checkpoints, while
+    async queues, queue capacities, nonblocking dependencies, distributed
+    worker nodes, throughput dispatch telemetry, and pending-work checkpoints
+    remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused topology boundary tests reject premature topology parity
+    claims.
+
 - [x] Record whole-run source/workspace integrity boundary.
   - Spec evidence: AlphaEvolve-scale runs require auditable generated-program
     databases, not only compact selected-best source display.

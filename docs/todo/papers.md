@@ -235,7 +235,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     controller/database/LLM-sampler/evaluation-node ids, zero queues, blocking
     dependency edges, synchronous dispatch/admission policy, runtime-budget
     linkage, pending-work checkpoint unsupported status, and validator-backed
-    overclaim checks.
+    overclaim checks. `papers/distributed_pipeline_topology_boundary.json` now
+    preserves the same single-process synchronous-topology absence boundary for
+    paper-manifest validation.
   - Current gap: this is paper-facing negative boundary evidence, not Section
     2.6 topology parity. It does not implement or preserve async queues,
     queue capacities, nonblocking dependencies, real sampler/evaluator worker

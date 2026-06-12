@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.paper_source_identity_manifest.v1",
-  "source_identity_count": 27,
+  "source_identity_count": 28,
   "source_identity_policy": "manifest_id_url_source_id_and_file_source_prefix_must_match_before_source_version_or_rights_claims",
   "sources": [
     {
@@ -449,6 +449,24 @@
       "url_source_id": "2605.05921",
       "url_versioned_id": "2605.05921",
       "file_source_id": "2605.05921",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2605.01794",
+      "title": "Radar_Power_Allocation",
+      "url": "https://arxiv.org/pdf/2605.01794.pdf",
+      "file": "papers/2605.01794__Radar_Power_Allocation.pdf",
+      "sha256": "f5a249cb6b0f4b5c4f04487e8b6b236d3bd6be4d498f849892cd85926adb9fa7",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2605.01794",
+      "url_versioned_id": "2605.01794",
+      "file_source_id": "2605.01794",
       "identity_checks": {
         "manifest_id_matches_url_source_id": true,
         "manifest_id_matches_file_source_id": true,

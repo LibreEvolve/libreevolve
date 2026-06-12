@@ -764,7 +764,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     URL, and local PDF label describing the same source before version or
     rights evidence attaches.
   - Status: ROADMAP now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 27 cache
+    companion manifest that emits derived source identities for all 28 cache
     rows and links the AlphaEvolve row to `papers/source_versions.json`.
   - Remaining gap: none for this bounded roadmap wording slice.
 
@@ -9776,5 +9776,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     intentmaking/sensemaking event taxonomies, UI/dashboard artifact
     inventories, goal-revision records, privacy/redaction protocols, and local
     collaborative-workflow support explicitly scoped as open.
-  - Verification: paper-manifest validation checks the 27-row manifest,
+  - Verification: paper-manifest validation checks the current manifest,
+    paper-index row, TODO coverage row, and source-identity sidecar.
+
+- [x] Preserve `2605.01794` radar power-allocation paper-cache scope in
+      roadmap.
+  - Status: ROADMAP now identifies arXiv `2605.01794`, `Discover Fast Power
+    Allocation Solution for Multi-Target Tracking via AlphaEvolve Evolution`,
+    as background radar/resource-allocation context only, with the cached
+    `papers/2605.01794__Radar_Power_Allocation.pdf` row and missing radar
+    taxonomy, feature schema, transform, simulator, baseline,
+    performance-loss/speedup rows, generalization evidence, and independent
+    reproduction outputs explicitly open.
+  - Verification: paper-manifest validation checks the 28-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.

@@ -165,7 +165,7 @@ Common run options:
 
 ## Research Sources
 
-LibreEvolve is informed by a local cache of 27 papers on LLM-guided evolution,
+LibreEvolve is informed by a local cache of 28 papers on LLM-guided evolution,
 program synthesis, quality-diversity optimization, and related benchmarks. The
 PDF cache lives locally under `papers/`, but the PDFs themselves are gitignored.
 The committed repository tracks `papers/README.md`, download manifests, and
@@ -176,7 +176,7 @@ not authoritative bibliographic titles. Use `papers/README.md` for paper-facing
 titles, implementation status, and benchmark coverage decisions.
 
 The table below is a curated subset for README context. `papers/README.md` is
-the complete implementation-status index for all 27 manifest rows.
+the complete implementation-status index for all 28 manifest rows.
 
 | Source | Role in LibreEvolve |
 | --- | --- |
@@ -188,6 +188,7 @@ the complete implementation-status index for all 27 manifest rows.
 | [DeepEvolve](https://arxiv.org/abs/2510.06056) | Related evolutionary coding-agent work. |
 | [FHE on TPU](https://arxiv.org/abs/2605.14718) | AlphaEvolve FHE/TPUv5e application context only; no local cryptographic-kernel or hardware-execution benchmark exists. |
 | [Intentmaking and Sensemaking](https://arxiv.org/abs/2605.05921) | AlphaEvolve HCI/user-study context only; no local intentmaking/sensemaking session-trace workflow exists. |
+| [Radar Power Allocation](https://arxiv.org/abs/2605.01794) | AlphaEvolve radar resource-allocation application context only; no local multi-target tracking or power-allocation benchmark exists. |
 
 Rehydrate the ignored local PDF cache on a fresh checkout:
 

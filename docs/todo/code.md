@@ -4988,7 +4988,8 @@ Primary evidence:
     consent or redaction policy for study data, and docs wording that keeps HCI
     claims source-scoped until local interactive workflow evidence exists.
 
-- [ ] Add AlphaEvolve radar power-allocation application source boundary.
+- [ ] Implement AlphaEvolve radar power-allocation benchmark evidence beyond
+      paper cache coverage.
   - Spec evidence: arXiv `2605.01794`, `Discover Fast Power Allocation
     Solution for Multi-Target Tracking via AlphaEvolve Evolution`, submitted
     May 3, 2026, applies LLM-guided evolutionary search to radar resource
@@ -4999,20 +5000,25 @@ Primary evidence:
     performance loss of only 1.51%, reliable generalization across scenarios
     and target counts, and over three orders of magnitude speedup versus
     conventional iterative solvers.
-  - Current evidence: the local paper cache, source manifests, benchmark
-    contracts, and TODO coverage do not include `2605.01794`; existing
-    AlphaEvolve application rows cover compiler/hardware/systems/math/FHE/HCI
-    contexts but not radar multi-target tracking, power-allocation feasibility
-    transforms, closed-form symbolic search, scenario/target-count
-    generalization, or iterative-solver speedup baselines.
-  - Required result: add source-manifest and benchmark-boundary metadata for
-    `2605.01794`: arXiv id/version/date/PDF hash, authors, radar task and
-    scenario taxonomy, target-count ranges, state-feature schema, evolved
-    scoring-function artifact, deterministic feasibility transform,
-    constraints, iterative-solver baseline identity, tracking-accuracy metric,
-    relative-loss and speedup records, generalization split metadata, and
-    README/ROADMAP wording that keeps this as missing application-domain
-    evidence until local radar fixtures and reports exist.
+  - Current evidence: `papers/download_manifest.*`, `papers/row_identity.json`,
+    `papers/README.md`, README, ROADMAP, and TODO coverage now include
+    `2605.01794`, cached locally as
+    `papers/2605.01794__Radar_Power_Allocation.pdf` with byte count `959569`
+    and SHA-256
+    `f5a249cb6b0f4b5c4f04487e8b6b236d3bd6be4d498f849892cd85926adb9fa7`.
+    Existing wording keeps it background/source context only; LibreEvolve
+    still has no radar multi-target tracking simulator, power-allocation
+    feasibility transform, closed-form symbolic search artifact,
+    scenario/target-count generalization rows, or iterative-solver speedup
+    baseline evidence.
+  - Required result: add benchmark/report evidence beyond the paper cache:
+    radar task/scenario/target taxonomy, target-count ranges, physically
+    inspired feature schema, evolved scoring-function artifact, deterministic
+    feasibility transform and constraints, iterative-solver baseline identity,
+    tracking-accuracy metric, average relative-loss and speedup records,
+    generalization split metadata, independent checker output, and
+    README/ROADMAP wording that promotes radar support only after local
+    fixtures and reports exist.
 
 - [ ] Add EvoX meta-evolution source boundary before adaptive-search claims.
   - Spec evidence: arXiv `2602.23413`, `EvoX: Meta-Evolution for Automated

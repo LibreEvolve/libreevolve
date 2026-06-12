@@ -12737,3 +12737,20 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2605.01794` radar power-allocation paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2605.01794`, `Discover Fast Power Allocation Solution for Multi-Target
+    Tracking via AlphaEvolve Evolution`, cached locally as
+    `papers/2605.01794__Radar_Power_Allocation.pdf` with byte count `959569`
+    and SHA-256
+    `f5a249cb6b0f4b5c4f04487e8b6b236d3bd6be4d498f849892cd85926adb9fa7`.
+  - Remaining paper gap: source-license details, radar
+    task/scenario/target taxonomy, physically inspired feature schema,
+    deterministic feasibility-transform metadata, simulator/baseline records,
+    performance-loss and speedup rows, code/artifact availability, and
+    independent reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

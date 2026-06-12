@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 27 cache rows and links the AlphaEvolve row to
+  identities for all 28 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1277,6 +1277,17 @@ resumed-trace proof are still open.
   privacy/redaction protocol evidence, and local collaborative-workflow
   support remain open before roadmap wording can promote AlphaEvolve-style HCI
   workflows as supported.
+- Keep AlphaEvolve radar power-allocation claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2605.01794`, `Discover Fast Power Allocation Solution for Multi-Target
+  Tracking via AlphaEvolve Evolution`, cached locally as
+  `papers/2605.01794__Radar_Power_Allocation.pdf`. This is background
+  radar/resource-allocation context only; radar scenario/target taxonomy,
+  physically inspired feature schemas, deterministic feasibility transforms,
+  tracking simulator fixtures, baseline iterative solver identity, average
+  relative performance-loss rows, generalization evidence, speedup reports,
+  and independent reproduction outputs remain open before roadmap wording can
+  promote radar resource-allocation support.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

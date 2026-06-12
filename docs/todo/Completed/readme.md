@@ -643,7 +643,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Spec evidence: README points readers to the local paper cache as the source
     ledger for paper-facing implementation status and benchmark decisions.
   - Status: README now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 27 cache
+    companion manifest that emits derived source identities for all 28 cache
     rows, including URL source id, filename source prefix, validation booleans,
     and the AlphaEvolve row's source-version link.
   - Remaining gap: none for this bounded README wording slice.
@@ -1079,7 +1079,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     algorithm subset.
   - Status: corrected and guarded. README now states the visible paper tables
     are a curated subset and that `papers/README.md` is the complete
-    implementation-status index for all 27 manifest rows. The paper-manifest
+    implementation-status index for all 28 manifest rows. The paper-manifest
     validator now flags root README paper summaries that list only a subset of
     manifest ids without this curated-summary disclosure.
   - Verification: `tests/test_paper_manifest.py` covers accepted curated
@@ -12202,4 +12202,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     as AlphaEvolve HCI/user-study context only and states that no local
     intentmaking/sensemaking session-trace workflow exists.
   - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 27-row manifest.
+    count and curated-subset wording against the current manifest.
+
+- [x] Document `2605.01794` radar power-allocation paper coverage in README.
+  - Status: README now includes `2605.01794`, `Radar Power Allocation`, as
+    AlphaEvolve radar resource-allocation application context only and states
+    that no local multi-target tracking or power-allocation benchmark exists.
+  - Verification: paper-manifest validation checks README's local paper-cache
+    count and curated-subset wording against the 28-row manifest.

@@ -10523,3 +10523,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation requires the committed sidecar and
     focused cascade hypothesis-test tests reject benchmark-calibrated cascade
     overclaims.
+
+- [x] Keep roadmap qualitative-feedback boundary tied to sidecar.
+  - Status: ROADMAP now links current qualitative LLM-feedback criterion
+    policy and prompt-history audit evidence to
+    `papers/qualitative_feedback_boundary.json` while keeping executed
+    calibration task suites, criterion-quality ablations, hard-to-code
+    property fixtures, and independent feedback-quality validation open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused qualitative-feedback tests reject executed-calibration overclaims.

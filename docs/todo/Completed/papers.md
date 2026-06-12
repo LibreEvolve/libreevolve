@@ -13711,3 +13711,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused cascade hypothesis-test tests reject benchmark-calibrated
     cascade overclaims.
+
+- [x] Record qualitative-feedback paper-facing sidecar.
+  - Status: `papers/qualitative_feedback_boundary.json` now records the
+    declared qualitative LLM-feedback policy boundary for AlphaEvolve Section
+    2.4: runtime evidence can show configured graders, criterion metadata,
+    evaluator-gap rationales, rubric/prompt hashes, score-or-discard intent,
+    metric linkage, calibration-report-id metadata, bounded policy records,
+    observed feedback counts, and prompt-history joins, while executed
+    calibration task suites, criterion-quality ablations, hard-to-code
+    property fixtures, and independent feedback-quality validation remain
+    absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused qualitative-feedback tests reject executed-calibration
+    overclaims.

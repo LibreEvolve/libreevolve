@@ -1608,6 +1608,8 @@ Primary evidence:
   - Remaining gap: executed calibration/task-suite linkage and ablation
     examples are still missing, so criterion policy metadata plus prompt-row
     joins do not yet prove AlphaEvolve-style qualitative feedback quality.
+    `papers/qualitative_feedback_boundary.json` now validates this declared
+    qualitative-policy and prompt-history-audit scope.
   - Required result: add executed calibration/task-suite linkage and ablation
     examples proving hard-to-code criteria such as simplicity are governed and
     useful rather than merely declared.

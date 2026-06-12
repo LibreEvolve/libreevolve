@@ -119,6 +119,12 @@ from libreevolve.problems.benchmarks.programmatic_representation_boundary import
     render_programmatic_representation_boundary_summary,
     validate_programmatic_representation_boundary,
 )
+from libreevolve.problems.benchmarks.qualitative_feedback_boundary import (
+    QUALITATIVE_FEEDBACK_BOUNDARY_SCHEMA,
+    qualitative_feedback_boundary_record,
+    render_qualitative_feedback_boundary_summary,
+    validate_qualitative_feedback_boundary,
+)
 from libreevolve.problems.benchmarks.release_artifact_reproducibility_boundary import (
     RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_SCHEMA,
     release_artifact_reproducibility_boundary_record,
@@ -766,6 +772,7 @@ __all__ = [
     "NATURAL_LANGUAGE_PREAMBLE_BOUNDARY_SCHEMA",
     "OBJECTIVE_ARCHIVE_BOUNDARY_SCHEMA",
     "PROMPT_EXAMPLE_COPY_BOUNDARY_SCHEMA",
+    "QUALITATIVE_FEEDBACK_BOUNDARY_SCHEMA",
     "MATRIX_RANK_TABLE_ARTIFACT_BOUNDARY_SCHEMA",
     "MATRIX_RANK_TABLE_EXHIBIT_SCHEMA",
     "MATRIX_ARTIFACT_INVENTORY_SCHEMA",
@@ -904,6 +911,7 @@ __all__ = [
     "problem_formulation_provenance_boundary_record",
     "programmatic_representation_boundary_record",
     "program_output_boundary_record",
+    "qualitative_feedback_boundary_record",
     "related_work_taxonomy_boundary_record",
     "release_artifact_reproducibility_boundary_record",
     "task_specification_boundary_record",
@@ -1041,6 +1049,7 @@ __all__ = [
     "render_problem_formulation_provenance_boundary_summary",
     "render_programmatic_representation_boundary_summary",
     "render_program_output_boundary_summary",
+    "render_qualitative_feedback_boundary_summary",
     "render_related_work_taxonomy_boundary_summary",
     "render_release_artifact_reproducibility_boundary_summary",
     "render_task_specification_boundary_summary",
@@ -1171,6 +1180,7 @@ __all__ = [
     "validate_problem_formulation_provenance_boundary",
     "validate_programmatic_representation_boundary",
     "validate_program_output_boundary",
+    "validate_qualitative_feedback_boundary",
     "validate_related_work_taxonomy_boundary",
     "validate_release_artifact_reproducibility_boundary",
     "validate_task_specification_boundary",

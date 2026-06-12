@@ -41,6 +41,10 @@ Important limits:
   benchmark-calibrated AlphaEvolve Section 2.4 cascade proof with repeated-seed
   fixtures and empirical false-promotion/false-rejection validation; that
   boundary is tracked by `papers/cascade_hypothesis_test_boundary.json`.
+- Qualitative LLM-feedback records are declared criterion/rubric/intent
+  provenance and prompt-history audit evidence, not executed calibration,
+  task-suite, ablation, or independent feedback-quality validation; that
+  boundary is tracked by `papers/qualitative_feedback_boundary.json`.
 - Natural-language proposal metadata is context around executable code
   candidates, not AI-Co-Scientist-style hypothesis representation or
   hallucination-resistance evidence; that boundary is tracked by

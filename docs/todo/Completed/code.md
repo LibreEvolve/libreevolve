@@ -18616,3 +18616,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     benchmark-calibrated cascade overclaims, invalid boundary status, missing
     evidence drift, and incomplete required evidence fields.
+
+- [x] Add qualitative-feedback sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/qualitative_feedback_boundary.py`
+    now emits and validates the declared-qualitative-policy-only boundary for
+    `runtime.history.qualitative_feedback_policy_report` and
+    `runtime.history.qualitative_feedback_prompt_history_audit_report`,
+    separating configured LLM feedback graders, criterion metadata,
+    evaluator-gap rationales, rubric/prompt hashes, score-or-discard intent,
+    metric linkage, calibration-report-id metadata, observed feedback counts,
+    and prompt-history joins from executed calibration task suites,
+    criterion-quality ablations, hard-to-code property fixtures, and
+    independent feedback-quality validation.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    executed-calibration overclaims, invalid boundary status, missing evidence
+    drift, and incomplete required evidence fields.

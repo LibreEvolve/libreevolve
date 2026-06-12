@@ -1902,7 +1902,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `runtime.history.qualitative_feedback_prompt_history_audit_report`, which
     joins candidates with LLM-feedback records to prompt-history add/score row
     line numbers when prompt-program history exists. They still do not prove
-    calibration/task-suite linkage or criterion-quality ablations.
+    calibration/task-suite linkage or criterion-quality ablations. ROADMAP now
+    ties that declared-policy boundary to
+    `papers/qualitative_feedback_boundary.json`.
   - Required result: when calibration/task-suite and ablation evidence lands,
     update ROADMAP, README, papers index, and code/paper TODOs together so
     roadmap wording distinguishes audited declared qualitative criteria from

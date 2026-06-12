@@ -540,7 +540,8 @@ is not yet an AlphaEvolve reproduction.
   `runtime.history.qualitative_feedback_prompt_history_audit_report` beyond
   criterion/rubric/intent metadata and prompt-history row joins into executed
   calibration/task-suite evidence for hard-to-code properties such as
-  simplicity.
+  simplicity. The current declared-policy boundary is tracked by
+  `papers/qualitative_feedback_boundary.json`.
 - Add broader statistical hypothesis-test promotion policies for cascades,
   extending the current `one_sided_lower_confidence_bound` plus
   normal-approximation error-budget support and `binomial_success_rate`

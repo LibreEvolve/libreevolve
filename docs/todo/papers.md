@@ -1850,7 +1850,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     prompt-program history exists.
   - Current gap: paper-facing status still lacks executed calibration/task-suite
     linkage and ablation evidence that the declared criterion improves search
-    or filtering quality.
+    or filtering quality. `papers/qualitative_feedback_boundary.json` now
+    validates that current evidence remains declared-policy and prompt-history
+    audit scope, not executed qualitative-feedback calibration.
   - Required result: add calibration/task-suite linkage and validation
     examples for hard-to-code properties such as simplicity.
 

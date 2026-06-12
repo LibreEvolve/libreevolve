@@ -12755,3 +12755,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused cascade hypothesis-test tests reject benchmark-calibrated cascade
     overclaims.
+
+- [x] Keep README qualitative-feedback boundary tied to sidecar.
+  - Status: README now states that qualitative LLM-feedback records are
+    declared criterion/rubric/intent provenance and prompt-history audit
+    evidence, not executed calibration, task-suite, ablation, or independent
+    feedback-quality validation, with the boundary tracked by
+    `papers/qualitative_feedback_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused qualitative-feedback tests reject executed-calibration overclaims.

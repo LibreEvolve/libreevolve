@@ -356,7 +356,12 @@ configured/observed criteria under
 `runtime.history.qualitative_feedback_policy_report`. This records the
 hard-to-code criterion boundary for properties such as simplicity, but it is
 not yet AlphaEvolve-grade evidence because calibration/task-suite linkage and
-prompt-history row audits remain open.
+criterion-quality ablations remain open. Completed manifests also emit
+`runtime.history.qualitative_feedback_prompt_history_audit_report` for bounded
+prompt-history row joins. The committed
+`papers/qualitative_feedback_boundary.json` sidecar keeps this declared-policy
+and audit scope machine-validated apart from executed calibration/task-suite
+evidence and independent feedback-quality validation.
 Proposal metadata prompt context can now be narrowed with `proposal_fields`, a
 safe allowlist over idea, rationale, and hypothesis fields.
 Stage-summary prompt context can now be narrowed with `stage_summary_fields`,

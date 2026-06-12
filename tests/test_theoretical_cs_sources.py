@@ -58,6 +58,10 @@ def test_validate_alphaevolve_theoretical_cs_source_rejects_drift():
     recordset["source_claims"]["proof_elements_not_full_proofs"] = False
     recordset["applications"][0]["local_artifact_inventory_available"] = True
     recordset["claim_boundaries"]["not_formal_theorem_prover"] = False
+    recordset["proof_element_artifact_boundary"]["claim_ready"] = True
+    recordset["proof_element_artifact_boundary"]["missing_evidence"][
+        "independent_bruteforce_verification_outputs"
+    ] = "recorded"
     recordset["claim_categories"] = ["proof_element_application"]
 
     validation = validate_alphaevolve_theoretical_cs_source(recordset)
@@ -72,6 +76,11 @@ def test_validate_alphaevolve_theoretical_cs_source_rejects_drift():
     assert "invalid_source_claims_proof_elements_not_full_proofs" in codes
     assert "application_artifact_inventory_overclaim" in codes
     assert "invalid_claim_boundaries_not_formal_theorem_prover" in codes
+    assert "proof_element_artifact_boundary_claim_ready_overclaim" in codes
+    assert (
+        "invalid_proof_element_missing_evidence_independent_bruteforce_verification_outputs"
+        in codes
+    )
     assert "claim_category_mismatch" in codes
 
 

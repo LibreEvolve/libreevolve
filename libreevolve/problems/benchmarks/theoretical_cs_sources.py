@@ -13,6 +13,9 @@ ALPHAEVOLVE_THEORETICAL_CS_SOURCE_SCHEMA = (
 ALPHAEVOLVE_THEORETICAL_CS_SOURCE_MANIFEST_SCHEMA = (
     "libreevolve.alphaevolve_theoretical_cs_source_manifest.v1"
 )
+ALPHAEVOLVE_THEORETICAL_CS_PROOF_ELEMENT_BOUNDARY_SCHEMA = (
+    "libreevolve.alphaevolve_theoretical_cs_proof_element_artifact_boundary.v1"
+)
 EXPECTED_THEORETICAL_CS_SOURCE_MANIFEST_FILE = "papers/theoretical_cs_sources.json"
 EXPECTED_THEORETICAL_CS_ARXIV_ID = "2509.18057"
 EXPECTED_THEORETICAL_CS_VERSION = 7
@@ -60,6 +63,34 @@ EXPECTED_THEORETICAL_CS_CATEGORIES = (
     "final_independent_verification",
     "artifact_inventory_gap",
 )
+EXPECTED_PROOF_ELEMENT_REQUIRED_EVIDENCE_FIELDS = (
+    "ramanujan_graph_witness_schema",
+    "max_cut_independent_set_certification_rows",
+    "max_k_cut_gadget_edge_list_schema",
+    "metric_tsp_equation_gadget_schema",
+    "verifier_api_contract",
+    "synthetic_correctness_dataset",
+    "evolved_verifier_runtime_telemetry",
+    "judge_llm_records",
+    "human_inspection_records",
+    "independent_bruteforce_verification_outputs",
+    "theorem_lifting_metadata",
+    "baseline_sota_comparison_rows",
+    "source_repository_status",
+)
+EXPECTED_PROOF_ELEMENT_MISSING_EVIDENCE = {
+    "ramanujan_graph_witness_inventory": "not_recorded_locally",
+    "max_k_cut_gadget_inventory": "not_recorded_locally",
+    "metric_tsp_gadget_inventory": "not_recorded_locally",
+    "evolved_verifier_code": "not_recorded_locally",
+    "synthetic_correctness_dataset": "not_recorded_locally",
+    "judge_llm_records": "not_recorded_locally",
+    "human_inspection_records": "not_recorded_locally",
+    "independent_bruteforce_verification_outputs": "not_recorded_locally",
+    "theorem_lifting_metadata": "not_recorded_locally",
+    "baseline_sota_comparison_rows": "not_recorded_locally",
+    "source_repository_status": "not_pinned",
+}
 EXPECTED_THEORETICAL_CS_SURFACES = {
     "README.md",
     "ROADMAP.md",
@@ -185,6 +216,23 @@ def alphaevolve_theoretical_cs_source_record() -> dict[str, Any]:
             "source_code_or_repository_not_pinned": True,
             "proof_claims_require_external_paper_and_artifacts": True,
         },
+        "proof_element_artifact_boundary": {
+            "schema": ALPHAEVOLVE_THEORETICAL_CS_PROOF_ELEMENT_BOUNDARY_SCHEMA,
+            "boundary_status": "source_metadata_without_local_proof_element_artifacts",
+            "claim_ready": False,
+            "required_evidence_fields": list(
+                EXPECTED_PROOF_ELEMENT_REQUIRED_EVIDENCE_FIELDS
+            ),
+            "missing_evidence": dict(EXPECTED_PROOF_ELEMENT_MISSING_EVIDENCE),
+            "claim_boundary": (
+                "This boundary records article/arXiv/PDF source metadata for "
+                "AlphaEvolve-discovered hardness-of-approximation proof "
+                "elements, but does not claim local graph/gadget artifact "
+                "inventories, evolved verifier code, independent brute-force "
+                "verification outputs, theorem-lifting metadata, or baseline/"
+                "SOTA comparison rows."
+            ),
+        },
         "claim_categories": list(EXPECTED_THEORETICAL_CS_CATEGORIES),
         "remaining_work": [
             "locate_or_pin_source_repository_or_artifact_archive",
@@ -245,6 +293,13 @@ def validate_alphaevolve_theoretical_cs_source(
     _validate_source_claims(data.get("source_claims"), issues)
     application_count = _validate_applications(data.get("applications"), issues)
     proof_element_boundary = _validate_claim_boundaries(data.get("claim_boundaries"), issues)
+    proof_element_boundary = (
+        _validate_proof_element_artifact_boundary(
+            data.get("proof_element_artifact_boundary"),
+            issues,
+        )
+        and proof_element_boundary
+    )
     _validate_claim_categories(data.get("claim_categories"), issues)
     _validate_remaining_work(data.get("remaining_work"), issues)
     return AlphaEvolveTheoreticalCsValidation(
@@ -475,6 +530,99 @@ def _validate_claim_boundaries(
     }
     _validate_expected_fields(value, expected, "claim_boundaries", issues)
     return value.get("proof_claims_require_external_paper_and_artifacts") is True
+
+
+def _validate_proof_element_artifact_boundary(
+    value: object,
+    issues: list[AlphaEvolveTheoreticalCsIssue],
+) -> bool:
+    if not isinstance(value, dict):
+        issues.append(
+            _issue(
+                "invalid_proof_element_artifact_boundary",
+                "proof_element_artifact_boundary must be an object",
+            )
+        )
+        return False
+    if value.get("schema") != ALPHAEVOLVE_THEORETICAL_CS_PROOF_ELEMENT_BOUNDARY_SCHEMA:
+        issues.append(
+            _issue(
+                "invalid_proof_element_artifact_boundary_schema",
+                "proof_element_artifact_boundary schema is unsupported",
+            )
+        )
+    if value.get("boundary_status") != "source_metadata_without_local_proof_element_artifacts":
+        issues.append(
+            _issue(
+                "invalid_proof_element_artifact_boundary_status",
+                "proof_element_artifact_boundary must stay scoped to source metadata without local proof artifacts",
+            )
+        )
+    if value.get("claim_ready") is not False:
+        issues.append(
+            _issue(
+                "proof_element_artifact_boundary_claim_ready_overclaim",
+                "proof_element_artifact_boundary must not claim local artifact readiness",
+            )
+        )
+    required_fields = value.get("required_evidence_fields")
+    if not isinstance(required_fields, list):
+        issues.append(
+            _issue(
+                "invalid_proof_element_required_evidence_fields",
+                "proof_element_artifact_boundary.required_evidence_fields must be a list",
+            )
+        )
+    else:
+        seen = {item for item in required_fields if isinstance(item, str)}
+        expected = set(EXPECTED_PROOF_ELEMENT_REQUIRED_EVIDENCE_FIELDS)
+        if seen != expected:
+            issues.append(
+                _issue(
+                    "proof_element_required_evidence_field_mismatch",
+                    "proof_element_artifact_boundary.required_evidence_fields must preserve graph/gadget/verifier/theorem evidence fields",
+                )
+            )
+        if len(seen) != len(required_fields):
+            issues.append(
+                _issue(
+                    "invalid_proof_element_required_evidence_field",
+                    "proof_element required evidence fields must be strings",
+                )
+            )
+    missing_evidence = value.get("missing_evidence")
+    if not isinstance(missing_evidence, dict):
+        issues.append(
+            _issue(
+                "invalid_proof_element_missing_evidence",
+                "proof_element_artifact_boundary.missing_evidence must be an object",
+            )
+        )
+    else:
+        if set(missing_evidence) != set(EXPECTED_PROOF_ELEMENT_MISSING_EVIDENCE):
+            issues.append(
+                _issue(
+                    "proof_element_missing_evidence_key_mismatch",
+                    "proof_element_artifact_boundary.missing_evidence must preserve artifact-gap keys",
+                )
+            )
+        for key, expected_value in EXPECTED_PROOF_ELEMENT_MISSING_EVIDENCE.items():
+            if missing_evidence.get(key) != expected_value:
+                issues.append(
+                    _issue(
+                        f"invalid_proof_element_missing_evidence_{key}",
+                        f"proof_element_artifact_boundary.missing_evidence.{key} must be {expected_value}",
+                    )
+                )
+    boundary_text = value.get("claim_boundary")
+    if not isinstance(boundary_text, str) or "does not claim" not in boundary_text:
+        issues.append(
+            _issue(
+                "invalid_proof_element_claim_boundary",
+                "proof_element_artifact_boundary.claim_boundary must state that local proof-element artifacts are not claimed",
+            )
+        )
+    return value.get("claim_ready") is False
 
 
 def _validate_claim_categories(

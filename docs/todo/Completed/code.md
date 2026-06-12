@@ -17824,3 +17824,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: `tests/test_map_elites_illumination_boundary.py` and
     `tests/test_paper_manifest.py` cover the sidecar, drift rejection, and
     repo-root sidecar requirement.
+
+- [x] Tighten theoretical-CS proof-element artifact boundary.
+  - Spec evidence: `2509.18057v7` uses AlphaEvolve-discovered finite
+    structures plus evolved verifiers, final brute-force verification, and
+    theorem-lifting/proof arguments for hardness-of-approximation claims.
+  - Status: `libreevolve.problems.benchmarks.theoretical_cs_sources` now adds
+    `proof_element_artifact_boundary` to the source manifest with required
+    graph/gadget/verifier/theorem evidence fields, missing-evidence keys, and
+    overclaim rejection for local artifact readiness.
+  - Remaining gap: executable graph/gadget schemas, verifier contracts,
+    synthetic correctness datasets, evolved-verifier telemetry, independent
+    brute-force outputs, theorem-lifting metadata, and baseline/SOTA rows
+    remain open.
+  - Verification: theoretical-CS source tests and paper-manifest tests cover
+    the nested boundary and reject premature readiness claims.

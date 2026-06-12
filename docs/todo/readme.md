@@ -4459,19 +4459,20 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     synthetic correctness checks plus human inspection for fast verifiers, and
     separates proxy search scores, independent brute-force verification, human
     inspection, and mathematical lifting/proof arguments.
-  - Current evidence: README TODOs already say theoretical-CS AlphaEvolve
-    wording should remain scoped until proof-element source tracking exists,
-    and `papers/README.md` marks `2509.18057` as background only with no graph/
-    certification benchmark. README does not require a detailed source-specific
-    boundary for graph/gadget inventories, verifier runtime/correctness
-    artifacts, final brute-force verifier outputs, theorem/proof cross-links,
-    lifting-framework metadata, human-inspection attribution, or SOTA/baseline
-    comparison rows.
+  - Current evidence: README and `papers/README.md` mark `2509.18057` as
+    background only with no graph/certification benchmark.
+    `papers/theoretical_cs_sources.json` now includes
+    `proof_element_artifact_boundary` for graph/gadget inventories, verifier
+    runtime/correctness artifacts, final brute-force verifier outputs,
+    theorem/proof cross-links, lifting-framework metadata, human-inspection
+    attribution, SOTA/baseline comparison rows, and source-repository status.
+    README wording still must not imply those artifacts exist locally.
   - Required result: if README mentions AlphaEvolve complexity-theory results,
     hardness of approximation, MAX-k-CUT, metric TSP, random regular graph
     certification, Ramanujan graph witnesses, proof elements, verifier speedups,
     or theorem-lifting applications, keep wording source-scoped until manifests
-    and reports include the `2509.18057` source row, PDF/artifact hashes,
+    and reports include executable evidence beyond the `2509.18057` source row
+    and proof-element boundary: PDF/artifact hashes,
     graph/gadget schemas, verifier-speed and correctness records, judge-LLM and
     human-inspection records, brute-force verification outputs, theorem/proof
     cross-links, baseline/SOTA rows for `0.987`, `0.9649`, and `111/110`,

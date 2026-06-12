@@ -129,6 +129,40 @@
           "source_code_or_repository_not_pinned": true,
           "proof_claims_require_external_paper_and_artifacts": true
         },
+        "proof_element_artifact_boundary": {
+          "schema": "libreevolve.alphaevolve_theoretical_cs_proof_element_artifact_boundary.v1",
+          "boundary_status": "source_metadata_without_local_proof_element_artifacts",
+          "claim_ready": false,
+          "required_evidence_fields": [
+            "ramanujan_graph_witness_schema",
+            "max_cut_independent_set_certification_rows",
+            "max_k_cut_gadget_edge_list_schema",
+            "metric_tsp_equation_gadget_schema",
+            "verifier_api_contract",
+            "synthetic_correctness_dataset",
+            "evolved_verifier_runtime_telemetry",
+            "judge_llm_records",
+            "human_inspection_records",
+            "independent_bruteforce_verification_outputs",
+            "theorem_lifting_metadata",
+            "baseline_sota_comparison_rows",
+            "source_repository_status"
+          ],
+          "missing_evidence": {
+            "ramanujan_graph_witness_inventory": "not_recorded_locally",
+            "max_k_cut_gadget_inventory": "not_recorded_locally",
+            "metric_tsp_gadget_inventory": "not_recorded_locally",
+            "evolved_verifier_code": "not_recorded_locally",
+            "synthetic_correctness_dataset": "not_recorded_locally",
+            "judge_llm_records": "not_recorded_locally",
+            "human_inspection_records": "not_recorded_locally",
+            "independent_bruteforce_verification_outputs": "not_recorded_locally",
+            "theorem_lifting_metadata": "not_recorded_locally",
+            "baseline_sota_comparison_rows": "not_recorded_locally",
+            "source_repository_status": "not_pinned"
+          },
+          "claim_boundary": "This boundary records article/arXiv/PDF source metadata for AlphaEvolve-discovered hardness-of-approximation proof elements, but does not claim local graph/gadget artifact inventories, evolved verifier code, independent brute-force verification outputs, theorem-lifting metadata, or baseline/SOTA comparison rows."
+        },
         "claim_categories": [
           "proof_element_application",
           "lifting_framework",

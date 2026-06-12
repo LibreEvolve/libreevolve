@@ -1069,10 +1069,14 @@ resumed-trace proof are still open.
   2025 Google Research article, arXiv `2509.18057v7`, cached PDF metadata,
   MAX-k-CUT gadget, random-graph/Ramanujan, and metric-TSP application rows,
   lifting-framework and final-brute-force-verification boundaries, and
-  docs/TODO claim-surface links. Graph/gadget artifacts, AlphaEvolve search
-  code, verifier code, original brute-force verifier provenance, and local
-  graph-certification benchmarks remain open before roadmap claims can treat
-  this source as implemented benchmark parity.
+  docs/TODO claim-surface links. The same sidecar now includes a
+  `proof_element_artifact_boundary` that keeps Ramanujan witness inventories,
+  MAX-k-CUT and metric-TSP gadget inventories, evolved verifier code,
+  independent brute-force outputs, theorem-lifting metadata, baseline/SOTA
+  rows, and source-repository status explicitly missing. Graph/gadget
+  artifacts, AlphaEvolve search code, verifier code, original brute-force
+  verifier provenance, and local graph-certification benchmarks remain open
+  before roadmap claims can treat this source as implemented benchmark parity.
 - Keep official DeepMind announcement claims separated from white-paper spec
   parity: `papers/official_deepmind_blog.json` now records the May 14, 2025
   blog URL/date/title/team, retrieval hash, white-paper and Colab outbound

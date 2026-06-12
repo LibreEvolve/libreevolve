@@ -4972,17 +4972,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     gadgets, evolved faster verifier code, final brute-force verification of
     discovered gadgets, and mathematical lifting from finite structures to
     theorem statements.
-  - Current evidence: ROADMAP has a general theoretical-CS source-tracking TODO
-    and `papers/README.md` labels `2509.18057` background-only with no graph/
-    certification benchmark. Roadmap lacks `2509.18057`-specific gates for
-    graph/gadget artifact schemas, witness inventories, verifier APIs,
-    synthetic correctness datasets, evolved-verifier runtime telemetry,
+  - Current evidence: ROADMAP has a theoretical-CS source-tracking note and
+    `papers/README.md` labels `2509.18057` background-only with no graph/
+    certification benchmark. `papers/theoretical_cs_sources.json` now includes
+    a nested `proof_element_artifact_boundary` for the `2509.18057` graph/
+    gadget/verifier/theorem-lifting evidence still missing. Roadmap still lacks
+    executable graph/gadget artifact schemas, witness inventories, verifier
+    APIs, synthetic correctness datasets, evolved-verifier runtime telemetry,
     judge-LLM/human-inspection records, brute-force final verification outputs,
     theorem/lemma/proof cross-links, proof-lifting metadata, source/artifact
     status, and SOTA comparison rows.
-  - Required result: add roadmap gates for `2509.18057`: paper/source manifest
-    entry, PDF/cache hash, code/artifact availability, Ramanujan graph witness
-    schema and Table 1 certification rows, MAX-k-CUT gadget schema with
+  - Required result: implement roadmap gates beyond the source sidecar:
+    code/artifact availability, Ramanujan graph witness schema and Table 1
+    certification rows, MAX-k-CUT gadget schema with
     Appendix C edge lists, TSP/MWST equation-gadget schema with Appendix D edge
     lists, verifier contracts, evolved-verifier speedup reports, synthetic
     correctness-check dataset provenance, judge-LLM and human-inspection

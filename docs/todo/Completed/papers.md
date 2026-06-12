@@ -12399,3 +12399,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     benchmark-domain reproduction rows remain open.
   - Verification: MAP-Elites boundary tests and paper-manifest tests validate
     the sidecar and reject premature readiness claims.
+
+- [x] Record theoretical-CS proof-element artifact boundary.
+  - Spec evidence: paper-facing hardness-of-approximation claims need to
+    distinguish source metadata from local graph/gadget/verifier artifacts.
+  - Status: `papers/theoretical_cs_sources.json` now includes
+    `proof_element_artifact_boundary` for Ramanujan witness inventories,
+    MAX-k-CUT and metric-TSP gadget inventories, evolved verifier code,
+    synthetic correctness datasets, judge-LLM/human-inspection records,
+    independent brute-force outputs, theorem-lifting metadata, baseline/SOTA
+    rows, and source-repository status.
+  - Remaining paper gap: those proof-element artifacts are still missing as
+    local executable/reproducible evidence.
+  - Verification: theoretical-CS tests and paper-manifest tests validate the
+    sidecar and reject artifact-readiness overclaims.

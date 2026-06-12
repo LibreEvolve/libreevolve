@@ -6988,16 +6988,21 @@ Primary evidence:
   - Current evidence: `papers/README.md` marks `2509.18057` as background only
     with no graph/certification benchmark, while
     `libreevolve/problems/benchmarks/result_certification.py` provides a
-    generic paper-result certification schema. Existing TODOs ask for general
-    theoretical-CS proof-element source tracking, but there is no source-
-    specific code gate for graph/gadget artifact schemas, witness encoding,
-    Ramanujan checks, MAX-CUT/independent-set scoring, MAX-k-CUT
-    completeness/soundness verifier contracts, TSP/MWST gadget verification,
-    evolved-verifier runtime datasets, synthetic correctness datasets, judge-
-    LLM records, human-inspection records, final brute-force verification
-    provenance, or theorem-lifting boundaries.
-  - Required result: add implementation gates for `2509.18057`: arXiv version/
-    date/PDF hash, source/repository/artifact status, Ramanujan graph and
+    generic paper-result certification schema. `papers/theoretical_cs_sources.json`
+    now includes a nested `proof_element_artifact_boundary` with required
+    evidence fields and missing-evidence keys for graph/gadget inventories,
+    evolved verifier code, synthetic correctness datasets, judge-LLM and
+    human-inspection records, independent brute-force outputs,
+    theorem-lifting metadata, baseline/SOTA rows, and source-repository status.
+    The remaining code gap is no executable graph/gadget artifact schemas,
+    witness encoding, Ramanujan checks, MAX-CUT/independent-set scoring,
+    MAX-k-CUT completeness/soundness verifier contracts, TSP/MWST gadget
+    verification, evolved-verifier runtime datasets, synthetic correctness
+    datasets, judge-LLM records, human-inspection records, final brute-force
+    verification provenance, or theorem-lifting implementation.
+  - Required result: implement the gates named by
+    `proof_element_artifact_boundary`: source/repository/artifact status,
+    Ramanujan graph and
     witness schemas, Table 1 bound rows (`MAX-CUT d=3/4`,
     `MAX-IND-SET d=3/4` with LB/UB comparisons), MAX-3-CUT and MAX-4-CUT
     gadget edge-list/weight schemas including `m=14` and `m=19` verifier-size

@@ -9489,3 +9489,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     as future work.
   - Verification: MAP-Elites boundary tests and paper-manifest tests cover the
     sidecar and repo-root requirement.
+
+- [x] Preserve theoretical-CS proof-element boundary scope in roadmap.
+  - Spec evidence: roadmap theoretical-CS claims should not treat cached
+    article/arXiv/PDF metadata as local hardness-of-approximation artifact
+    parity.
+  - Status: ROADMAP and roadmap TODO wording now identify the nested
+    `proof_element_artifact_boundary` inside `papers/theoretical_cs_sources.json`
+    while preserving graph/gadget schemas, verifier APIs, brute-force outputs,
+    theorem-lifting metadata, source/artifact status, and SOTA rows as future
+    gates.
+  - Verification: theoretical-CS and paper-manifest tests validate the
+    sidecar boundary.

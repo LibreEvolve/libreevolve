@@ -6399,16 +6399,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     verifiers to search larger gadgets, and requires final brute-force
     verification plus human/proof arguments before theorem claims.
   - Current gap: the paper index labels `2509.18057` as AlphaEvolve
-    complexity-theory result context and background-only, while an active
-    theoretical-CS TODO asks for general source tracking. It does not preserve
-    this PDF as a detailed source-specific boundary with arXiv versioning,
-    result ids, graph/gadget artifact inventories, verifier-speedup evidence,
-    correctness-check records, final brute-force verification, proof-lifting
-    metadata, extracted-link/source-repository status, or claim boundaries
-    between finite constructions and universal theorem statements.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2509.18057`: title/authors/arXiv version/date/PDF digest, source/artifact
-    availability and rights, result table for MAX-CUT, MAX-Independent-Set,
+    complexity-theory result context and background-only. The committed
+    `papers/theoretical_cs_sources.json` sidecar preserves arXiv/article/PDF
+    source metadata and now includes a nested
+    `proof_element_artifact_boundary` for required graph/gadget inventories,
+    verifier code, synthetic correctness datasets, judge-LLM/human-inspection
+    records, independent brute-force outputs, theorem-lifting metadata,
+    baseline/SOTA rows, and source-repository status. It still does not provide
+    the actual result ids, graph/gadget artifact inventories, verifier-speedup
+    evidence, correctness-check records, final brute-force verification,
+    proof-lifting metadata, extracted-link/source-repository status, or claim
+    boundaries between finite constructions and universal theorem statements as
+    local executable/reproducible artifacts.
+  - Required result: implement paper-manifest evidence beyond the
+    `proof_element_artifact_boundary`: source/artifact availability and rights,
+    result table for MAX-CUT, MAX-Independent-Set,
     MAX-k-CUT, and metric TSP, Table 1 LB/UB values, Ramanujan graph witness
     metadata for graphs up to 163 vertices, MAX-k-CUT gadget schemas and
     Appendix C edge lists, TSP equation-gadget schemas and Appendix D edge

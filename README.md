@@ -4360,7 +4360,12 @@ gadget-reduction, average-case random-graph, and metric-TSP application rows,
 the lifting-framework and final-brute-force-verification boundaries, and the
 policy that graph/gadget benchmark claims still require pinned artifacts,
 search/verifier code, original brute-force verifier provenance, and local
-certification benchmarks. This is later proof-element source evidence, not the
+certification benchmarks. The sidecar now also carries
+`proof_element_artifact_boundary` with false readiness for Ramanujan witness
+inventories, MAX-k-CUT and metric-TSP gadget inventories, evolved verifier
+code, synthetic correctness datasets, judge-LLM/human-inspection records,
+independent brute-force outputs, theorem-lifting metadata, baseline/SOTA rows,
+and source-repository status. This is later proof-element source evidence, not the
 original AlphaEvolve specification, not the 67-problem constructive-math source,
 and not a local theorem prover or graph-certification implementation.
 Official DeepMind AlphaEvolve announcement evidence uses

@@ -11962,3 +11962,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     open.
   - Verification: MAP-Elites boundary and paper-manifest tests validate the
     sidecar that README now references.
+
+- [x] Document theoretical-CS proof-element artifact boundary.
+  - Spec evidence: README hardness-of-approximation wording needed to separate
+    AlphaEvolve source evidence from local proof-element implementation.
+  - Status: README now says `papers/theoretical_cs_sources.json` carries a
+    nested proof-element artifact boundary with missing graph/gadget
+    inventories, verifier artifacts, independent brute-force outputs,
+    theorem-lifting metadata, baseline/SOTA rows, and source-repository status.
+  - Verification: theoretical-CS source and paper-manifest tests validate the
+    sidecar that README now references.

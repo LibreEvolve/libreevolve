@@ -441,7 +441,7 @@ retention under that cap.
 | 2602.22425 | ArchAgent | AlphaEvolve computer-architecture application context | Background only; no architecture-design simulator or cache-policy benchmark. |
 | 2602.16928 | Multiagent Learning | AlphaEvolve MARL algorithm-discovery result context | Background only; no CFR/PSRO benchmark or game-theoretic evaluator. |
 | 2603.09172 | Ramsey Numbers | Constructive math benchmark candidate | Not implemented; potential future benchmark; no Ramsey construction verifier or certificate benchmark. |
-| 2509.18057 | Hardness of Approximation | AlphaEvolve complexity-theory result context | Background only; `papers/theoretical_cs_sources.json` records article/arXiv/PDF evidence and proof-element boundaries, but no graph/certification benchmark. |
+| 2509.18057 | Hardness of Approximation | AlphaEvolve complexity-theory result context | Background only; `papers/theoretical_cs_sources.json` records article/arXiv/PDF evidence and a nested proof-element artifact boundary for graph/gadget inventories, verifier code, independent brute-force outputs, theorem-lifting metadata, baseline/SOTA rows, and source-repository status, but no graph/certification benchmark. |
 | 2603.06692 | Combinatorics Berczy | Constructive math benchmark candidate | Not implemented; potential future benchmark; no constructive-combinatorics verifier or benchmark harness. |
 | 2601.16175 | TTT Discover | Test-time discovery context | Background only; no test-time discovery evaluator or adaptation benchmark. |
 | 2603.08679 | Bilateral Trade | AlphaEvolve mechanism-design result context | Background only; no bilateral-trade distribution benchmark. |
@@ -1375,7 +1375,7 @@ report, artifact, or evidence work from missing source-specific TODO coverage.
 | 2602.22425 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
 | 2602.16928 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
 | 2603.09172 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` |  |
-| 2509.18057 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
+| 2509.18057 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/code.md`; `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/roadmap.md` |
 | 2603.06692 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` |  |
 | 2601.16175 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` |  |
 | 2603.08679 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
@@ -1951,8 +1951,11 @@ Implemented:
   records the September 30, 2025 Google Research article, arXiv
   `2509.18057v7`, cached PDF metadata, MAX-k-CUT gadget, random-graph/
   Ramanujan, and metric-TSP application rows, lifting-framework boundaries,
-  verifier-speedup and final-brute-force-verification claims, and remaining
-  artifact/code/verifier inventory gaps.
+  verifier-speedup and final-brute-force-verification claims, and a
+  `proof_element_artifact_boundary` with missing graph/gadget inventories,
+  evolved verifier code, synthetic correctness datasets, judge-LLM/human
+  inspection records, independent brute-force outputs, theorem-lifting
+  metadata, baseline/SOTA rows, and source-repository status.
 - `papers/official_deepmind_blog.json`: official DeepMind AlphaEvolve
   announcement sidecar, not white-paper specification or reproduced local
   evidence. It records the May 14, 2025 blog URL/date/title/team, retrieval

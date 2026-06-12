@@ -458,7 +458,8 @@ Primary evidence:
     non-Python/build-runner scope if claimed, before README, ROADMAP, or
     paper-index wording claims AlphaEvolve Table 1 code-scale parity.
 
-- [ ] Add Table 1 capability-comparison exhibit provenance.
+- [ ] Keep Table 1 capability-comparison exhibit provenance scoped to row
+      evidence instead of capability parity.
   - Spec evidence: AlphaEvolve Table 1 is a compact comparison of FunSearch
     and AlphaEvolve capabilities and typical behavior, with rows for function
     versus file/codebase evolution, code length, programming languages,
@@ -471,20 +472,18 @@ Primary evidence:
     gaps, including codebase-scale benchmarks, arbitrary-language runners,
     evaluator workload/budget provenance, sample-efficiency reports,
     Google/Gemini model-mix parity, rich prompt context, and multi-objective
-    archive policy. README also has a high-level comparison table, but it is
-    prose/status documentation rather than a validated Table 1 exhibit. Current
-    code does not require Table 1 itself to be represented as a paper-facing
-    exhibit with stable row ids, source PDF/caption location, exact
-    FunSearch/AlphaEvolve cell text, row-to-gap mappings,
-    implemented/partial/missing status per row, rendered table artifact hashes,
-    or validation that README/ROADMAP summaries do not flatten the comparison
-    into one broad capability claim.
-  - Required result: add Table 1 exhibit metadata and validators with a stable
-    table id, row ids/order, FunSearch/AlphaEvolve comparison text, source
-    page/caption location, row-to-code/report/TODO mappings, implementation
-    status for each capability row, rendered artifact paths/hashes, and docs
-    checks that distinguish table-exhibit reproduction from satisfying each
-    Table 1 behavioral capability.
+    archive policy. Completed manifests now include
+    `runtime.history.alphaevolve_table1_capability_exhibit_report` with stable
+    table/row ids, source PDF/caption location, FunSearch/AlphaEvolve cell
+    text, row-to-gap/evidence mappings, per-row status, generated artifact
+    paths/hashes, and a validator that rejects full-table or per-row capability
+    overclaims.
+  - Required result: satisfy the individual Table 1 behavioral capability rows
+    with benchmark-backed code scale, arbitrary-language/build runners,
+    parallel/accelerator evaluator evidence, equal-budget sample-efficiency
+    curves, model-scale ablations, rich-context/feedback effectiveness, and
+    multi-metric benchmark outcomes. The remaining gap is row capability
+    evidence, not source-table exhibit provenance.
 
 - [ ] Extend Figure 1 and Figure 2 process-overview exhibit provenance.
   - Spec evidence: AlphaEvolve Figure 1 presents the high-level discovery loop

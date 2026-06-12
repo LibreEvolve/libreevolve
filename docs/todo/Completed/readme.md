@@ -11592,3 +11592,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     excluded durable query/full replay/cross-run dedup claims.
   - Verification: focused runtime whole-run source/workspace integrity test
     validates the implemented report.
+
+- [x] Document Table 1 capability-comparison exhibit report.
+  - Spec evidence: README Table 1 wording needed to distinguish a reproduced
+    source-table exhibit from satisfying each AlphaEvolve capability row.
+  - Status: README and run-artifact docs now describe
+    `runtime.history.alphaevolve_table1_capability_exhibit_report`, including
+    stable row ids, source page/caption location, row-to-evidence mappings,
+    generated Markdown/accessibility artifacts, artifact hashes, per-row local
+    status, and false capability-parity readiness.
+  - Verification: focused runtime Table 1 capability-exhibit test validates
+    the implemented report.

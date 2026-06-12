@@ -17301,3 +17301,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     and selected/unselected source-diff views remain open.
   - Verification: focused runtime whole-run source/workspace integrity test
     passes.
+
+- [x] Add Table 1 capability-comparison exhibit provenance.
+  - Spec evidence: AlphaEvolve Table 1 is a row-level comparison between
+    FunSearch and AlphaEvolve capabilities, and source-table provenance should
+    not be flattened into broad capability parity.
+  - Status: runtime histories now include
+    `libreevolve.alphaevolve_table1_capability_exhibit_report.v1`, with a
+    stable table id, eight ordered row ids, source page/caption location,
+    FunSearch/AlphaEvolve cell text, per-row local status, row-to-evidence
+    mappings, generated Markdown/accessibility artifacts, artifact hashes, and
+    validators that reject full-table or per-row capability overclaims.
+  - Remaining gap: the individual Table 1 capability rows still require
+    benchmark-backed code scale, arbitrary-language/build runners,
+    parallel/accelerator evaluator evidence, equal-budget sample-efficiency
+    curves, model-scale ablations, rich-context/feedback effectiveness, and
+    multi-metric benchmark outcomes.
+  - Verification: focused runtime Table 1 capability-exhibit test passes.

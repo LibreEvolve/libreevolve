@@ -5352,6 +5352,9 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 distributed_pipeline_topology,
             )
         ),
+        "alphaevolve_table1_capability_exhibit_report": (
+            _alphaevolve_table1_capability_exhibit_report(run_dir)
+        ),
         "evaluator_oracle_registry": _evaluator_oracle_registry_report(
             db,
             programs,
@@ -13448,6 +13451,414 @@ def _write_process_exhibit_artifact(
         "hash_scope": "generated_process_exhibit_text_artifact",
         "source": "runtime_history_static_figure_mapping",
     }
+
+
+def _alphaevolve_table1_capability_exhibit_report(run_dir: Path) -> dict:
+    rows = _alphaevolve_table1_rows()
+    artifacts = _write_alphaevolve_table1_artifacts(run_dir, rows)
+    report = {
+        "schema": "libreevolve.alphaevolve_table1_capability_exhibit_report.v1",
+        "source": "runtime_history_static_table1_mapping",
+        "table_id": "alphaevolve_table_1_capability_comparison",
+        "source_paper": "papers/2506.13131__AlphaEvolve.pdf",
+        "source_paper_id": "2506.13131",
+        "local_pdf_page": 2,
+        "source_table_label": "Table 1",
+        "caption": (
+            "Capabilities and typical behaviours of AlphaEvolve and our previous agent."
+        ),
+        "caption_location": "local_pdf_page_2",
+        "row_count": len(rows),
+        "rows": rows,
+        "rendered_artifacts": artifacts,
+        "rendered_artifact_count": len(artifacts),
+        "claim_ready": False,
+        "claim_readiness": {
+            "stable_table_id": True,
+            "stable_row_ids": len({row["row_id"] for row in rows}) == len(rows),
+            "source_page_caption_location": True,
+            "funsearch_alphaevolve_cell_text": all(
+                row.get("funsearch_cell") and row.get("alphaevolve_cell")
+                for row in rows
+            ),
+            "row_to_todo_report_mapping": all(row.get("evidence_refs") for row in rows),
+            "rendered_artifact_hashes": all(
+                _is_sha256_hex(artifact.get("sha256")) for artifact in artifacts
+            ),
+            "table_exhibit_record_ready": True,
+            "individual_capability_rows_satisfied": False,
+            "full_table1_parity": False,
+            "remaining_gap": [
+                "satisfy_each_table1_capability_row",
+                "benchmark_backed_code_scale_parity",
+                "arbitrary_language_runner_parity",
+                "parallel_accelerator_evaluator_parity",
+                "equal_budget_sample_efficiency_parity",
+                "sota_model_scale_parity",
+                "full_rich_context_feedback_parity",
+                "multi_metric_benchmark_parity",
+            ],
+        },
+    }
+    report["validation"] = validate_alphaevolve_table1_capability_exhibit_report(report)
+    return report
+
+
+def _alphaevolve_table1_rows() -> list[dict]:
+    return [
+        _alphaevolve_table1_row(
+            1,
+            "function_vs_file_scope",
+            "evolves single function",
+            "evolves entire code file",
+            "partial",
+            [
+                "runtime.history.candidate_abstraction_choice_report",
+                "runtime.history.whole_run_source_workspace_integrity_report",
+                "docs/todo/papers.md#table-1-code-scale",
+            ],
+        ),
+        _alphaevolve_table1_row(
+            2,
+            "code_length_scale",
+            "evolves up to 10-20 lines of code",
+            "evolves up to hundreds of lines of code",
+            "not_benchmark_backed",
+            [
+                "runtime.history.initial_pool_divergence_report",
+                "runtime.history.sample_efficiency_report",
+                "docs/todo/papers.md#table-1-code-scale",
+            ],
+        ),
+        _alphaevolve_table1_row(
+            3,
+            "programming_language_scope",
+            "evolves code in Python",
+            "evolves any language",
+            "not_supported",
+            [
+                "policies.candidate_language",
+                "runtime.history.candidate_language_runner_contract_report",
+                "docs/todo/code.md#candidate-workspace-fidelity",
+            ],
+        ),
+        _alphaevolve_table1_row(
+            4,
+            "evaluator_workload_scope",
+            "needs fast evaluation (<= 20min on 1 CPU)",
+            "can evaluate for hours, in parallel, on accelerators",
+            "partial",
+            [
+                "runtime.history.evaluator_workload_report",
+                "runtime.history.parallel_evaluation_readiness_report",
+                "runtime.history.distributed_pipeline_topology_report",
+            ],
+        ),
+        _alphaevolve_table1_row(
+            5,
+            "llm_sample_efficiency",
+            "millions of LLM samples used",
+            "thousands of LLM samples suffice",
+            "not_benchmark_backed",
+            [
+                "runtime.history.sample_efficiency_report",
+                "runtime.history.repeated_sampling_baseline_report",
+                "docs/todo/papers.md#sample-efficiency",
+            ],
+        ),
+        _alphaevolve_table1_row(
+            6,
+            "model_scale_effect",
+            "small LLMs used; no benefit from larger",
+            "benefits from SOTA LLMs",
+            "not_benchmark_backed",
+            [
+                "runtime.history.gemini_provider_parity_report",
+                "runtime.history.repeated_sampling_baseline_report",
+                "policies.provider_capability_lookup",
+            ],
+        ),
+        _alphaevolve_table1_row(
+            7,
+            "prompt_context_feedback",
+            "minimal context (only previous solutions)",
+            "rich context and feedback in prompts",
+            "partial",
+            [
+                "prompt_history.jsonl",
+                "runtime.history.qualitative_feedback_policy_report",
+                "runtime.history.hypothesis_index",
+            ],
+        ),
+        _alphaevolve_table1_row(
+            8,
+            "metric_optimization_scope",
+            "optimizes single metric",
+            "can simultaneously optimize multiple metrics",
+            "partial",
+            [
+                "runtime.history.objective_history",
+                "runtime.history.metric_diverse_inspiration_report",
+                "docs/todo/roadmap.md#multi-objective",
+            ],
+        ),
+    ]
+
+
+def _alphaevolve_table1_row(
+    order: int,
+    row_id: str,
+    funsearch_cell: str,
+    alphaevolve_cell: str,
+    local_status: str,
+    evidence_refs: list[str],
+) -> dict:
+    return {
+        "row_id": f"table1.{row_id}",
+        "order": order,
+        "funsearch_cell": funsearch_cell,
+        "alphaevolve_cell": alphaevolve_cell,
+        "source_cell_text_scope": "source_table_cell_text_from_local_pdf_page_2",
+        "local_status": local_status,
+        "evidence_refs": evidence_refs,
+        "evidence_ref_count": len(evidence_refs),
+        "capability_claim_ready": False,
+        "remaining_gap": _alphaevolve_table1_row_gap(row_id),
+    }
+
+
+def _alphaevolve_table1_row_gap(row_id: str) -> list[str]:
+    gaps = {
+        "function_vs_file_scope": [
+            "benchmark_backed_entire_code_file_evolution",
+            "existing_codebase_multi_component_parity",
+        ],
+        "code_length_scale": [
+            "hundreds_line_candidate_benchmark",
+            "changed_line_and_component_scale_telemetry",
+        ],
+        "programming_language_scope": [
+            "arbitrary_language_runner_contracts",
+            "build_system_execution_contracts",
+        ],
+        "evaluator_workload_scope": [
+            "hours_scale_evaluator_budget_records",
+            "parallel_accelerator_evaluator_nodes",
+        ],
+        "llm_sample_efficiency": [
+            "equal_budget_target_success_curves",
+            "thousands_scale_llm_sample_benchmarks",
+        ],
+        "model_scale_effect": [
+            "sota_model_family_capability_evidence",
+            "model_scale_ablation_curves",
+        ],
+        "prompt_context_feedback": [
+            "full_context_source_role_replay",
+            "feedback_effectiveness_benchmarks",
+        ],
+        "metric_optimization_scope": [
+            "multi_metric_benchmark_outcomes",
+            "pareto_frontier_primary_archive_policy",
+        ],
+    }
+    return gaps[row_id]
+
+
+def _write_alphaevolve_table1_artifacts(
+    run_dir: Path,
+    rows: list[dict],
+) -> list[dict]:
+    markdown = [
+        "# AlphaEvolve Table 1 Capability Comparison",
+        "",
+        "| Row | FunSearch | AlphaEvolve | Local status |",
+        "| --- | --- | --- | --- |",
+    ]
+    for row in rows:
+        markdown.append(
+            "| {order} | {funsearch} | {alphaevolve} | {status} |".format(
+                order=row["order"],
+                funsearch=row["funsearch_cell"],
+                alphaevolve=row["alphaevolve_cell"],
+                status=row["local_status"],
+            )
+        )
+    markdown.append("")
+    markdown.append(
+        "This generated exhibit records the source table and local status; it is not "
+        "evidence that each Table 1 capability row is satisfied."
+    )
+    accessibility = [
+        "AlphaEvolve Table 1 capability comparison exhibit.",
+        "Source: papers/2506.13131__AlphaEvolve.pdf, local PDF page 2.",
+        "Rows:",
+    ]
+    for row in rows:
+        accessibility.append(
+            "{order}. FunSearch: {funsearch}; AlphaEvolve: {alphaevolve}; "
+            "local status: {status}; remaining gaps: {gaps}.".format(
+                order=row["order"],
+                funsearch=row["funsearch_cell"],
+                alphaevolve=row["alphaevolve_cell"],
+                status=row["local_status"],
+                gaps=", ".join(row["remaining_gap"]),
+            )
+        )
+    return [
+        _write_alphaevolve_table1_artifact(
+            run_dir,
+            "paper_artifacts/table1_capability_comparison/table_1.md",
+            "\n".join(markdown) + "\n",
+            artifact_kind="markdown_table",
+        ),
+        _write_alphaevolve_table1_artifact(
+            run_dir,
+            "paper_artifacts/table1_capability_comparison/table_1_accessibility.txt",
+            "\n".join(accessibility) + "\n",
+            artifact_kind="accessibility_text",
+        ),
+    ]
+
+
+def _write_alphaevolve_table1_artifact(
+    run_dir: Path,
+    relative_path: str,
+    content: str,
+    *,
+    artifact_kind: str,
+) -> dict:
+    path = run_dir / relative_path
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content, encoding="utf-8", newline="\n")
+    payload = content.encode("utf-8")
+    return {
+        "table_id": "alphaevolve_table_1_capability_comparison",
+        "status": "generated",
+        "artifact_kind": artifact_kind,
+        "path": relative_path,
+        "sha256": hashlib.sha256(payload).hexdigest(),
+        "bytes": len(payload),
+        "hash_scope": "generated_table1_capability_exhibit_text_artifact",
+        "source": "runtime_history_static_table1_mapping",
+    }
+
+
+def validate_alphaevolve_table1_capability_exhibit_report(report: object) -> dict:
+    issues: list[dict[str, str]] = []
+    schema = "libreevolve.alphaevolve_table1_capability_exhibit_report.v1"
+    if not isinstance(report, Mapping):
+        return {
+            "schema": schema,
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_report",
+                    "message": "Table 1 capability exhibit report must be a mapping",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "table_id",
+        "source_paper",
+        "local_pdf_page",
+        "source_table_label",
+        "caption",
+        "row_count",
+        "rows",
+        "rendered_artifacts",
+        "rendered_artifact_count",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"Table 1 report missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != schema:
+        issues.append({"code": "invalid_schema", "message": "unsupported schema"})
+    if report.get("source") != "runtime_history_static_table1_mapping":
+        issues.append({"code": "invalid_source", "message": "unsupported source"})
+    if report.get("table_id") != "alphaevolve_table_1_capability_comparison":
+        issues.append({"code": "invalid_table_id", "message": "unsupported table id"})
+    if report.get("source_paper") != "papers/2506.13131__AlphaEvolve.pdf":
+        issues.append({"code": "invalid_source_paper", "message": "unsupported source paper"})
+    if report.get("local_pdf_page") != 2:
+        issues.append({"code": "invalid_local_pdf_page", "message": "Table 1 local PDF page must be 2"})
+    rows = report.get("rows")
+    if not isinstance(rows, list):
+        issues.append({"code": "invalid_rows", "message": "rows must be a list"})
+        rows = []
+    _validate_report_count(report, "row_count", len(rows), issues)
+    expected_ids = [row["row_id"] for row in _alphaevolve_table1_rows()]
+    observed_ids: list[str] = []
+    for index, row in enumerate(rows):
+        if not isinstance(row, Mapping):
+            issues.append({"code": "invalid_row", "message": "row must be a mapping"})
+            continue
+        row_id = row.get("row_id")
+        if not isinstance(row_id, str):
+            issues.append({"code": "invalid_row_id", "message": f"row {index} missing row_id"})
+        else:
+            observed_ids.append(row_id)
+        if row.get("order") != index + 1:
+            issues.append({"code": "invalid_row_order", "message": f"row {index} order mismatch"})
+        for field in ("funsearch_cell", "alphaevolve_cell", "source_cell_text_scope", "local_status"):
+            value = row.get(field)
+            if not isinstance(value, str) or not value:
+                issues.append({"code": f"invalid_{field}", "message": f"row {index} {field} is invalid"})
+        evidence_refs = row.get("evidence_refs")
+        if not isinstance(evidence_refs, list) or not evidence_refs:
+            issues.append({"code": "invalid_evidence_refs", "message": f"row {index} evidence refs are invalid"})
+            evidence_refs = []
+        elif not all(isinstance(ref, str) and ref for ref in evidence_refs):
+            issues.append({"code": "invalid_evidence_ref", "message": f"row {index} evidence ref is invalid"})
+        _validate_report_count(row, "evidence_ref_count", len(evidence_refs), issues)
+        if row.get("capability_claim_ready") is not False:
+            issues.append({"code": "row_capability_overclaim", "message": f"row {index} must not claim capability readiness"})
+        remaining_gap = row.get("remaining_gap")
+        if not isinstance(remaining_gap, list) or not remaining_gap:
+            issues.append({"code": "invalid_row_remaining_gap", "message": f"row {index} remaining_gap is invalid"})
+    if observed_ids and observed_ids != expected_ids:
+        issues.append({"code": "row_id_order_mismatch", "message": "Table 1 row ids must match the source row order"})
+    artifacts = report.get("rendered_artifacts")
+    if not isinstance(artifacts, list):
+        issues.append({"code": "invalid_rendered_artifacts", "message": "rendered_artifacts must be a list"})
+        artifacts = []
+    _validate_report_count(report, "rendered_artifact_count", len(artifacts), issues)
+    for index, artifact in enumerate(artifacts):
+        if not isinstance(artifact, Mapping):
+            issues.append({"code": "invalid_artifact", "message": "rendered artifact must be a mapping"})
+            continue
+        path = artifact.get("path")
+        if (
+            not isinstance(path, str)
+            or not path.startswith("paper_artifacts/table1_capability_comparison/")
+            or ".." in Path(path).parts
+        ):
+            issues.append({"code": "invalid_artifact_path", "message": f"artifact {index} path is invalid"})
+        if not _is_sha256_hex(artifact.get("sha256")):
+            issues.append({"code": "invalid_artifact_hash", "message": f"artifact {index} hash is invalid"})
+        if artifact.get("hash_scope") != "generated_table1_capability_exhibit_text_artifact":
+            issues.append({"code": "invalid_artifact_hash_scope", "message": f"artifact {index} hash scope is invalid"})
+    if report.get("claim_ready") is not False:
+        issues.append({"code": "claim_ready_overclaim", "message": "Table 1 report must not claim full parity"})
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be a mapping"})
+    else:
+        for field in ("individual_capability_rows_satisfied", "full_table1_parity"):
+            if readiness.get(field) is not False:
+                issues.append({"code": f"{field}_overclaim", "message": f"{field} must remain false"})
+        if readiness.get("table_exhibit_record_ready") is not True:
+            issues.append({"code": "table_exhibit_record_not_ready", "message": "table exhibit record should be ready"})
+    return {"schema": schema, "ok": not issues, "issues": issues}
 
 
 def _process_exhibit_source_diagram_text_record(

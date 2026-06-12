@@ -1824,6 +1824,18 @@ AlphaEvolve-style async controller/sampler/evaluator implementation, and
 independent evaluator-pool implementation remain open.
 The committed `papers/process_exhibit_boundary.json` sidecar preserves that
 absence boundary for paper-manifest validation at the repo root.
+Completed manifests also include
+`runtime.history.alphaevolve_table1_capability_exhibit_report` with schema
+`libreevolve.alphaevolve_table1_capability_exhibit_report.v1`. This report
+records AlphaEvolve Table 1 as a source-table exhibit with a stable table id,
+local PDF page/caption location, eight ordered row ids, FunSearch and
+AlphaEvolve cell text, local implementation status, row-to-evidence references,
+and explicit false readiness for each behavioral capability row. It writes a
+deterministic Markdown table and plain-text accessibility export under
+`paper_artifacts/table1_capability_comparison/` and records their SHA-256
+hashes. This is exhibit provenance for the comparison table, not proof of
+code-scale, arbitrary-language, parallel-accelerator, sample-efficiency,
+model-scale, rich-context, or multi-metric Table 1 parity.
 Retained elite-only candidates can still resurface through best/exploit,
 metric, novelty, recency, selection, mixed inspiration, and migration paths.
 They remain excluded from occupied-cell explore and random inspiration pools

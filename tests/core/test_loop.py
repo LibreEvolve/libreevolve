@@ -50,6 +50,7 @@ from libreevolve.core.loop import (
     validate_parallel_evaluation_readiness_report,
     validate_distributed_pipeline_topology_report,
     validate_alphaevolve_process_exhibit_report,
+    validate_alphaevolve_table1_capability_exhibit_report,
     validate_candidate_abstraction_choice_report,
     validate_candidate_language_runner_contract_report,
     validate_collaborator_feedback_provenance_report,
@@ -6554,6 +6555,89 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     validation = validate_alphaevolve_process_exhibit_report(edited)
     assert validation["ok"] is False
     assert "step_stream_path_mismatch" in {
+        issue["code"] for issue in validation["issues"]
+    }
+
+
+def test_runtime_history_reports_alphaevolve_table1_capability_exhibit():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem("def evaluate(c): return {'score': 0.5, 'is_valid': True}")
+
+    evolve(problem, Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"][
+        "alphaevolve_table1_capability_exhibit_report"
+    ]
+
+    assert report["schema"] == (
+        "libreevolve.alphaevolve_table1_capability_exhibit_report.v1"
+    )
+    assert report["validation"]["ok"] is True
+    assert validate_alphaevolve_table1_capability_exhibit_report(report)["ok"] is True
+    assert report["table_id"] == "alphaevolve_table_1_capability_comparison"
+    assert report["source_paper"] == "papers/2506.13131__AlphaEvolve.pdf"
+    assert report["local_pdf_page"] == 2
+    assert report["row_count"] == 8
+    assert report["rendered_artifact_count"] == 2
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["stable_table_id"] is True
+    assert report["claim_readiness"]["stable_row_ids"] is True
+    assert report["claim_readiness"]["table_exhibit_record_ready"] is True
+    assert report["claim_readiness"]["individual_capability_rows_satisfied"] is False
+    assert report["claim_readiness"]["full_table1_parity"] is False
+
+    rows = report["rows"]
+    assert [row["row_id"] for row in rows] == [
+        "table1.function_vs_file_scope",
+        "table1.code_length_scale",
+        "table1.programming_language_scope",
+        "table1.evaluator_workload_scope",
+        "table1.llm_sample_efficiency",
+        "table1.model_scale_effect",
+        "table1.prompt_context_feedback",
+        "table1.metric_optimization_scope",
+    ]
+    assert rows[0]["funsearch_cell"] == "evolves single function"
+    assert rows[0]["alphaevolve_cell"] == "evolves entire code file"
+    assert all(row["capability_claim_ready"] is False for row in rows)
+    assert all(row["evidence_refs"] for row in rows)
+    assert all(row["remaining_gap"] for row in rows)
+
+    artifact_by_kind = {
+        artifact["artifact_kind"]: artifact for artifact in report["rendered_artifacts"]
+    }
+    markdown = artifact_by_kind["markdown_table"]
+    assert markdown["path"] == "paper_artifacts/table1_capability_comparison/table_1.md"
+    assert len(markdown["sha256"]) == 64
+    markdown_path = Path(tmpdir) / "t" / markdown["path"]
+    assert markdown_path.exists()
+    assert "AlphaEvolve Table 1 Capability Comparison" in markdown_path.read_text(
+        encoding="utf-8"
+    )
+    accessibility = artifact_by_kind["accessibility_text"]
+    assert accessibility["path"] == (
+        "paper_artifacts/table1_capability_comparison/table_1_accessibility.txt"
+    )
+    assert Path(tmpdir, "t", accessibility["path"]).exists()
+
+    overclaimed = copy.deepcopy(report)
+    overclaimed["claim_ready"] = True
+    overclaimed["claim_readiness"]["full_table1_parity"] = True
+    overclaimed["rows"][0]["capability_claim_ready"] = True
+    validation = validate_alphaevolve_table1_capability_exhibit_report(overclaimed)
+    assert validation["ok"] is False
+    assert {
+        "claim_ready_overclaim",
+        "full_table1_parity_overclaim",
+        "row_capability_overclaim",
+    }.issubset({issue["code"] for issue in validation["issues"]})
+
+    bad_artifact = copy.deepcopy(report)
+    bad_artifact["rendered_artifacts"][0]["sha256"] = "nothex"
+    validation = validate_alphaevolve_table1_capability_exhibit_report(bad_artifact)
+    assert validation["ok"] is False
+    assert "invalid_artifact_hash" in {
         issue["code"] for issue in validation["issues"]
     }
 

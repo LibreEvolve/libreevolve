@@ -418,24 +418,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     evaluator budget, quality-progress results, and language/build-runner
     scope that justify any AlphaEvolve Table 1 code-scale comparison.
 
-- [ ] Keep README Table 1 wording scoped until capability-table exhibit
-      provenance exists.
+- [ ] Keep README Table 1 wording scoped after capability-table exhibit
+      provenance.
   - Spec evidence: AlphaEvolve Table 1 is a row-by-row FunSearch versus
     AlphaEvolve comparison covering code scale, language scope, evaluator
     duration/parallelism/accelerators, sample counts, model scale, prompt
     context/feedback, and single versus multiple metrics. Local PDF page 2
     contains the eight comparison rows and caption.
   - Current evidence: README has a high-level gap table and detailed sections
-    for several Table 1-related capabilities, but it does not document a
-    Table 1 exhibit record with stable row ids, exact comparison text for both
-    FunSearch and AlphaEvolve cells, source PDF/caption location, row-to-gap
-    mappings, rendered artifact hashes, or row-level implementation status.
-    README's current comparison table should therefore remain an explanatory
-    status summary, not a validated reproduction of Table 1.
-  - Required result: when Table 1 exhibit provenance lands, update README,
-    ROADMAP, papers index, and code/paper TODOs together so README can
-    distinguish the reproduced capability-comparison table from the separate
-    work needed to satisfy each Table 1 capability row.
+    for several Table 1-related capabilities. It now documents
+    `runtime.history.alphaevolve_table1_capability_exhibit_report`, which
+    records stable row ids, FunSearch/AlphaEvolve cell text, source
+    PDF/caption location, row-to-gap mappings, rendered artifact hashes, and
+    row-level implementation status. README still presents the comparison as
+    exhibit provenance and status evidence, not validated Table 1 capability
+    parity.
+  - Required result: when individual Table 1 capability rows are satisfied,
+    update README, ROADMAP, papers index, and code/paper TODOs together so
+    README distinguishes the reproduced capability-comparison table from the
+    separate work needed to prove each Table 1 behavior.
 
 - [ ] Extend README Figure 1 and Figure 2 process-diagram wording beyond the
       current process-overview exhibit map.

@@ -70,6 +70,12 @@ LibreEvolve has:
   `papers/process_exhibit_boundary.json` now carrying the manifest-validated
   boundary for exact source-diagram layout reproduction, AlphaEvolve async
   topology implementation, and independent evaluator-pool implementation
+- AlphaEvolve Table 1 capability-comparison exhibit reports under
+  `runtime.history.alphaevolve_table1_capability_exhibit_report`, preserving a
+  stable table id, eight ordered row ids, source page/caption location,
+  source-cell text, row-to-report/TODO evidence mappings, generated
+  Markdown/accessibility artifacts with hashes, and explicit false readiness
+  for individual Table 1 capability-row parity
 - distributed-pipeline topology boundary reports under
   `runtime.history.distributed_pipeline_topology_report`, naming the current
   single-process controller, in-process database, configured LLM sampler
@@ -343,10 +349,11 @@ is not yet an AlphaEvolve reproduction.
   candidates.
 - Add richer workspace fixtures beyond the current `workspace_math` nested
   package, JSON data, and binary static seed asset smoke case.
-- Add a codebase-scale benchmark/report before claiming AlphaEvolve Table 1
-  parity for entire-code-file, hundreds-of-lines, or multi-component algorithm
-  evolution; current multi-file workspace support is only a local mechanics
-  surface.
+- Add codebase-scale, arbitrary-language, evaluator-workload,
+  sample-efficiency, model-scale, prompt-context, and multi-metric benchmark
+  evidence before claiming AlphaEvolve Table 1 capability parity; the current
+  `runtime.history.alphaevolve_table1_capability_exhibit_report` preserves the
+  comparison table as provenance, not as proof that each row is satisfied.
 - Extend `runtime.history.mutation_operator_boundary_report` beyond the
   current fixed diff/full/file/block/topology parser-surface evidence into
   proposal-level operator-family provenance, task/failure-aware operator

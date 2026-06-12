@@ -733,28 +733,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     score progress before treating current workspace support as AlphaEvolve
     Table 1 code-scale parity.
 
-- [ ] Track Table 1 capability-comparison exhibit provenance as paper
-      evidence.
+- [ ] Keep Table 1 capability-comparison exhibit evidence scoped to table
+      provenance rather than row parity.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 1 compares FunSearch
     and AlphaEvolve across capability and behavior rows: function/file
     evolution, code length, programming language scope, evaluator duration and
     accelerator/parallelism support, LLM sample counts, model scale, prompt
     context and feedback, and single versus multiple metrics. Local PDF page 2
     contains the eight-row table and caption.
-  - Current gap: paper TODOs already split out several Table 1 row claims such
-    as code-scale behavior, sample efficiency, model mix, rich context,
-    evaluator workload, and multi-metric optimization. They do not preserve
-    Table 1 as a table exhibit with stable table/row ids, source page/caption
-    location, exact FunSearch and AlphaEvolve cell text, row ordering,
+  - Current evidence: paper TODOs already split out several Table 1 row claims
+    such as code-scale behavior, sample efficiency, model mix, rich context,
+    evaluator workload, and multi-metric optimization. Completed manifests now
+    include `runtime.history.alphaevolve_table1_capability_exhibit_report`,
+    preserving Table 1 as a table exhibit with stable table/row ids, source
+    page/caption location, FunSearch and AlphaEvolve cell text, row ordering,
     row-to-implementation status, row-to-TODO/report mappings, rendered table
-    artifact hashes, or validation that docs do not treat partial row coverage
-    as full Table 1 parity. README's high-level comparison table is a status
-    summary, not a paper-facing exhibit record.
-  - Required result: add paper-facing Table 1 exhibit records with row ids,
-    FunSearch/AlphaEvolve comparison text, source location, per-row status and
-    evidence links, rendered artifact paths/hashes, and README/ROADMAP wording
-    that separates reproducing the Table 1 comparison artifact from satisfying
-    the individual behavioral capability rows.
+    artifact hashes, and validation that full Table 1 parity remains false.
+  - Required result: satisfy the individual behavioral capability rows with
+    benchmark-backed evidence. The remaining gap is not reproducing the
+    comparison artifact; it is proving code scale, arbitrary-language,
+    evaluator-workload, sample-efficiency, model-scale, rich-context, and
+    multi-metric capabilities under paper-faithful conditions.
 
 - [ ] Extend Figure 1 and Figure 2 process-overview exhibit provenance as
       paper evidence.

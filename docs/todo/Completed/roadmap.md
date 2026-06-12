@@ -9127,3 +9127,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     replay, cross-run dedup indexes, and richer drill-downs open.
   - Verification: focused runtime whole-run source/workspace integrity test
     validates the implemented report.
+
+- [x] Preserve Table 1 capability-comparison exhibit boundary.
+  - Spec evidence: roadmap Table 1 claims need to separate source-table
+    provenance from proof of the individual AlphaEvolve capability rows.
+  - Status: ROADMAP and TODO wording now recognize
+    `runtime.history.alphaevolve_table1_capability_exhibit_report` as
+    source-table exhibit evidence with stable row ids, source page/caption
+    location, row-to-evidence mappings, generated artifact hashes, and false
+    readiness for Table 1 capability parity.
+  - Verification: focused runtime Table 1 capability-exhibit test validates
+    the implemented report.

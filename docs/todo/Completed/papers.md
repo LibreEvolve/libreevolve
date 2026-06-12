@@ -11927,3 +11927,20 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     index, or full selected/unselected source-diff inspection surface.
   - Verification: focused runtime whole-run source/workspace integrity test
     validates the implemented report.
+
+- [x] Record Table 1 capability-comparison exhibit boundary.
+  - Spec evidence: AlphaEvolve Table 1 compares FunSearch and AlphaEvolve as
+    a source-table artifact before any local system can claim the individual
+    capability rows.
+  - Status: paper-facing TODOs and runtime manifests now expose
+    `alphaevolve_table1_capability_exhibit_report`, which preserves stable
+    table/row ids, source page/caption location, FunSearch/AlphaEvolve cell
+    text, row ordering, per-row local status, row-to-report/TODO evidence
+    mappings, generated artifact hashes, and false readiness for full Table 1
+    parity.
+  - Remaining paper gap: this does not prove the individual Table 1
+    capabilities for code scale, arbitrary language, evaluator workload,
+    sample efficiency, model scale, prompt context/feedback, or multi-metric
+    optimization.
+  - Verification: focused runtime Table 1 capability-exhibit test validates
+    the implemented report.

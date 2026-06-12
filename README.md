@@ -76,6 +76,15 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 | Local models | Published experiments use hosted Gemini models; local model use is not discussed | **Yes (Ollama)** |
 | Research grounding | Published paper | **24-paper local cache and implementation-status docs** |
 
+Completed manifests also include
+`runtime.history.alphaevolve_table1_capability_exhibit_report`, which records
+AlphaEvolve Table 1 as a paper-facing capability-comparison exhibit with
+stable row ids, source page/caption location, per-row local status,
+row-to-evidence mappings, and generated Markdown/accessibility artifacts under
+`paper_artifacts/table1_capability_comparison/`. This preserves the source
+table as an auditable exhibit; it does not mean LibreEvolve satisfies the
+individual Table 1 capability rows.
+
 ## Getting Started
 
 ### Installation
@@ -1441,6 +1450,15 @@ exact source-diagram layout reproduction, AlphaEvolve async controller topology
 implementation, and independent evaluator-pool implementation.
 The committed `papers/process_exhibit_boundary.json` sidecar now records that
 paper-manifest-validated process-exhibit parity boundary.
+Completed manifests also include
+`runtime.history.alphaevolve_table1_capability_exhibit_report`, which records
+AlphaEvolve Table 1 as a stable eight-row capability comparison with source
+page/caption location, FunSearch/AlphaEvolve cell text, per-row local status,
+row-to-report/TODO evidence links, and generated Markdown/accessibility
+artifacts with SHA-256 hashes under
+`paper_artifacts/table1_capability_comparison/`. Its `claim_ready` and
+per-row capability readiness flags remain false so this exhibit provenance is
+not flattened into Table 1 capability parity.
 Accepted archive admissions prevalidate their strict history record before
 mutating the live MAP-Elites/island archive, and direct admission thresholds
 must be finite non-boolean numbers. Direct `ProgramDatabase.add()`/`admit()`

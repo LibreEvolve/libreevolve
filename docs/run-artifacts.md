@@ -75,7 +75,10 @@ valid/invalid counts, and whether strict AlphaEvolve-style complete initial
 program parity is claim-ready. The default `permissive_baseline` policy keeps
 invalid seeds as diagnostic baselines; `alphaevolve_strict` stops before
 mutation with `invalid_initial_programs` when any seed lacks evaluator validity
-or declared metrics.
+or declared metrics. The paper-facing sidecar
+`papers/initial_program_validity_boundary.json` records that strict runtime
+reports can be claim-ready only for configured strict runs, while default
+permissive runs do not claim AlphaEvolve complete initial-program parity.
 Problem fixtures can optionally include `formulation.yaml` or
 `formulation.yml`; direct callers can set `Problem.formulation_metadata`.
 Startup manifest validation normalizes this into

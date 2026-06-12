@@ -2983,7 +2983,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     provides `initial_program_validity_policy: alphaevolve_strict` and
     `runtime.history.initial_program_validity_report`, which distinguishes
     permissive baseline runs from strict runs where all selected seeds must be
-    evaluator-valid and metric-complete before mutation.
+    evaluator-valid and metric-complete before mutation. The paper-facing
+    sidecar `papers/initial_program_validity_boundary.json` now records this
+    strict-policy-available boundary and keeps default permissive runs outside
+    complete initial-program parity claims.
   - Required result: require strict-seed validity for AlphaEvolve-parity
     benchmark fixtures, add paper-facing fixture evidence for complete/runnable
     starts across matrix and constructive-math benchmarks, and keep seed

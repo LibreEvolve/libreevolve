@@ -476,6 +476,12 @@ from libreevolve.problems.benchmarks.initial_program_idea_provenance_boundary im
     render_initial_program_idea_provenance_boundary_summary,
     validate_initial_program_idea_provenance_boundary,
 )
+from libreevolve.problems.benchmarks.initial_program_validity_boundary import (
+    INITIAL_PROGRAM_VALIDITY_BOUNDARY_SCHEMA,
+    initial_program_validity_boundary_record,
+    render_initial_program_validity_boundary_summary,
+    validate_initial_program_validity_boundary,
+)
 from libreevolve.problems.benchmarks.repeated_sampling_baseline_boundary import (
     REPEATED_SAMPLING_BASELINE_BOUNDARY_SCHEMA,
     repeated_sampling_baseline_boundary_record,
@@ -617,6 +623,7 @@ __all__ = [
     "GIGAEVO_FRAMEWORK_BOUNDARY_SCHEMA",
     "INCORRECT_SUGGESTION_AUDIT_BOUNDARY_SCHEMA",
     "INITIAL_PROGRAM_IDEA_PROVENANCE_BOUNDARY_SCHEMA",
+    "INITIAL_PROGRAM_VALIDITY_BOUNDARY_SCHEMA",
     "IMPROVEVOLVE_BOUNDARY_SCHEMA",
     "MADEVOLVE_BOUNDARY_SCHEMA",
     "MAGELLAN_BOUNDARY_SCHEMA",
@@ -725,6 +732,7 @@ __all__ = [
     "gigaevo_framework_boundary_record",
     "incorrect_suggestion_audit_boundary_record",
     "initial_program_idea_provenance_boundary_record",
+    "initial_program_validity_boundary_record",
     "improvevolve_boundary_record",
     "madevolve_boundary_record",
     "magellan_boundary_record",
@@ -823,6 +831,7 @@ __all__ = [
     "render_gigaevo_framework_boundary_summary",
     "render_incorrect_suggestion_audit_boundary_summary",
     "render_initial_program_idea_provenance_boundary_summary",
+    "render_initial_program_validity_boundary_summary",
     "render_improvevolve_boundary_summary",
     "render_madevolve_boundary_summary",
     "render_magellan_boundary_summary",
@@ -926,6 +935,7 @@ __all__ = [
     "validate_gigaevo_framework_boundary",
     "validate_incorrect_suggestion_audit_boundary",
     "validate_initial_program_idea_provenance_boundary",
+    "validate_initial_program_validity_boundary",
     "validate_improvevolve_boundary",
     "validate_madevolve_boundary",
     "validate_magellan_boundary",

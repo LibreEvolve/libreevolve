@@ -215,6 +215,10 @@ from libreevolve.problems.benchmarks.initial_program_idea_provenance_boundary im
     initial_program_idea_provenance_boundary_record,
     validate_initial_program_idea_provenance_boundary,
 )
+from libreevolve.problems.benchmarks.initial_program_validity_boundary import (
+    initial_program_validity_boundary_record,
+    validate_initial_program_validity_boundary,
+)
 from libreevolve.problems.benchmarks.repeated_sampling_baseline_boundary import (
     repeated_sampling_baseline_boundary_record,
     validate_repeated_sampling_baseline_boundary,
@@ -362,6 +366,7 @@ PAPER_AUTHOR_METADATA_BOUNDARY_FILE = "papers/paper_author_metadata_boundary.jso
 TITLE_PAGE_AFFILIATION_BOUNDARY_FILE = "papers/title_page_affiliation_boundary.json"
 SYSTEM_CONTRIBUTION_PROVENANCE_BOUNDARY_FILE = "papers/system_contribution_provenance_boundary.json"
 INITIAL_PROGRAM_IDEA_PROVENANCE_BOUNDARY_FILE = "papers/initial_program_idea_provenance_boundary.json"
+INITIAL_PROGRAM_VALIDITY_BOUNDARY_FILE = "papers/initial_program_validity_boundary.json"
 COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_FILE = "papers/collaborator_feedback_provenance_boundary.json"
 PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_FILE = "papers/problem_formulation_provenance_boundary.json"
 EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integration_boundary.json"
@@ -836,6 +841,7 @@ def validate_paper_manifest(
     issues.extend(_validate_title_page_affiliation_boundary(root_path))
     issues.extend(_validate_system_contribution_provenance_boundary(root_path))
     issues.extend(_validate_initial_program_idea_provenance_boundary(root_path))
+    issues.extend(_validate_initial_program_validity_boundary(root_path))
     issues.extend(_validate_collaborator_feedback_provenance_boundary(root_path))
     issues.extend(_validate_problem_formulation_provenance_boundary(root_path))
     issues.extend(_validate_existing_codebase_integration_boundary(root_path))
@@ -1748,6 +1754,38 @@ def _validate_initial_program_idea_provenance_boundary(root_path: Path) -> list[
             f"initial_program_idea_provenance_boundary_{issue.code}",
             issue.message,
             "initial_program_idea_provenance",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_initial_program_validity_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / INITIAL_PROGRAM_VALIDITY_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = initial_program_validity_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "initial_program_validity_boundary_manifest_missing",
+                    (
+                        f"{INITIAL_PROGRAM_VALIDITY_BOUNDARY_FILE} must emit "
+                        "initial-program validity availability"
+                    ),
+                    "initial_program_validity",
+                )
+            ]
+    report = validate_initial_program_validity_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"initial_program_validity_boundary_{issue.code}",
+            issue.message,
+            "initial_program_validity",
         )
         for issue in report.issues
     ]

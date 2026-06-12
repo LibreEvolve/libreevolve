@@ -80,6 +80,11 @@ Important limits:
   equal-budget seed-variant result tables, prompt-context linkage, and
   human contribution review exist; the boundary is tracked by
   `papers/initial_program_idea_provenance_boundary.json`.
+- Initial-program validity is policy-gated: default permissive runs may keep
+  invalid seeds as diagnostics, while AlphaEvolve complete-initial-program
+  parity is only claimable for `alphaevolve_strict` runs with valid
+  metric-bearing seeds; the boundary is tracked by
+  `papers/initial_program_validity_boundary.json`.
 - The included examples are smoke fixtures and small demos unless explicitly
   documented otherwise.
 - Paper and blog claims are tracked as source boundaries unless local benchmark

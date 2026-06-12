@@ -550,7 +550,10 @@ skeleton/evaluator. LibreEvolve now has
 selected seed to be evaluator-valid and to return declared metrics before
 mutation. Benchmark fixtures still need to opt into strict mode and carry
 problem-specific validity evidence before every initial seed baseline can be
-treated as paper-faithful AlphaEvolve initial-solution evidence.
+treated as paper-faithful AlphaEvolve initial-solution evidence. The sidecar
+`papers/initial_program_validity_boundary.json` preserves that
+strict-policy-available boundary and keeps default permissive runs outside
+complete initial-program parity claims.
 
 AlphaEvolve expert-formulation note: local context-source and problem/source
 provenance records identify artifacts and rendered prompt context, and

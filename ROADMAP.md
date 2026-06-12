@@ -269,7 +269,9 @@ LibreEvolve has:
   `runtime.history.initial_program_validity_report`, preserving permissive
   invalid generation-0 baselines by default while `alphaevolve_strict` stops
   before mutation with `invalid_initial_programs` when any selected seed is not
-  evaluator-valid or lacks declared metrics
+  evaluator-valid or lacks declared metrics, with
+  `papers/initial_program_validity_boundary.json` preserving the paper-facing
+  strict-policy-available boundary
 - optional problem-formulation metadata under `formulation.yaml` or direct
   `Problem.formulation_metadata`, normalized into
   `problem.formulation_metadata` and summarized by

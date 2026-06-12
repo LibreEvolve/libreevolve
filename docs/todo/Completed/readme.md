@@ -12562,3 +12562,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused initial-program idea tests reject premature human-seeded benchmark
     parity claims.
+
+- [x] Keep README initial-program validity boundary tied to paper-index sidecar.
+  - Status: README now states that initial-program validity is policy-gated:
+    default permissive runs may keep invalid seeds as diagnostics, while
+    AlphaEvolve complete-initial-program parity requires strict runs with valid
+    metric-bearing seeds and is tracked by
+    `papers/initial_program_validity_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused initial-program validity tests reject default complete-initial-
+    program parity overclaims.

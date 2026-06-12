@@ -10306,3 +10306,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     outputs explicitly open.
   - Verification: paper-manifest validation checks the 53-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.
+
+- [x] Keep roadmap initial-program validity boundary tied to sidecar.
+  - Status: ROADMAP now links `runtime.history.initial_program_validity_report`
+    and `initial_program_validity_policy: alphaevolve_strict` to
+    `papers/initial_program_validity_boundary.json`, preserving the
+    strict-policy-available boundary while keeping permissive invalid
+    generation-0 baselines outside complete-initial-program parity claims.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused initial-program validity tests reject premature default-run
+    parity claims.

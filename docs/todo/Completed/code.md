@@ -18330,3 +18330,13 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     claim-ready overclaims, invalid boundary status, missing evidence fields,
     and premature AlphaEvolve human-seeded benchmark parity.
+
+- [x] Add initial-program validity sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/initial_program_validity_boundary.py`
+    now emits and validates the strict-policy-available boundary for
+    `runtime.history.initial_program_validity_report`, and
+    `libreevolve/tools/paper_manifest.py` requires the committed paper sidecar
+    at the repo root.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    default complete-initial-program overclaims, invalid boundary status,
+    missing evidence fields, and invalid strict/default policy drift.

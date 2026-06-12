@@ -334,7 +334,10 @@ Primary evidence:
     `runtime.history.initial_program_validity_report`, validates seed
     evaluator-validity and declared-metric presence, and stops strict runs
     before mutation with `runtime.stop_reason=invalid_initial_programs` when
-    any selected seed violates that contract.
+    any selected seed violates that contract. The paper-facing sidecar
+    `papers/initial_program_validity_boundary.json` now records this as a
+    strict-policy-available boundary rather than default complete
+    initial-program parity.
   - Required result: apply strict mode to benchmark fixtures that make
     AlphaEvolve-parity claims, add fixture/report evidence for complete
     runnable starts across matrix and constructive-math benchmarks, verify

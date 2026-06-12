@@ -369,7 +369,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     AlphaEvolve-strict complete initial-program precondition. ROADMAP and
     README now also document `initial_program_validity_policy:
     alphaevolve_strict`, strict stop reason `invalid_initial_programs`, and
-    `runtime.history.initial_program_validity_report`.
+    `runtime.history.initial_program_validity_report`, with
+    `papers/initial_program_validity_boundary.json` preserving the
+    strict-policy-available paper-facing boundary.
   - Required result: when strict mode is applied to benchmark fixtures and
     complete-start evidence is published for matrix/constructive-math
     benchmarks, update roadmap text so it neither rejects the current

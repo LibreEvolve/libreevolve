@@ -13411,3 +13411,13 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Record initial-program validity paper-facing sidecar.
+  - Status: `papers/initial_program_validity_boundary.json` now records the
+    AlphaEvolve initial-program validity boundary as strict-policy-available:
+    `alphaevolve_strict` runs can become claim-ready only when every selected
+    seed is evaluator-valid and metric-complete, while default permissive runs
+    remain diagnostic.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused initial-program validity tests reject default
+    complete-initial-program parity overclaims.

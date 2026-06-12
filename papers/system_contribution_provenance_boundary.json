@@ -1,0 +1,48 @@
+{
+  "schema": "libreevolve.alphaevolve_system_contribution_provenance_boundary.v1",
+  "runtime_report_schema": "libreevolve.system_contribution_provenance_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve Contributions pages 22-23 record system-development roles for initial design, project vision and scoping, first benchmark iteration, final system, infrastructure, code review, team coordination, and supervision",
+  "boundary_status": "system_contribution_claim_ready",
+  "runtime_report_status": "system_contribution_provenance_report_available",
+  "claim_ready": true,
+  "claim_ready_fixture": "libreevolve/problems/examples/matrix_multiplication/system_contributions.yaml",
+  "source_pages": [
+    22,
+    23
+  ],
+  "required_phases": [
+    "initial_design",
+    "project_vision_scoping",
+    "first_benchmark_iteration",
+    "final_system",
+    "infrastructure",
+    "code_review",
+    "team_coordination",
+    "supervision"
+  ],
+  "required_evidence_fields": [
+    "metadata_present",
+    "all_required_phases_recorded",
+    "artifact_or_module_links_recorded",
+    "source_pages_recorded",
+    "review_scopes_recorded",
+    "privacy_policy_recorded",
+    "contribution_roles_review_or_owner_signoff",
+    "git_history_boundary_separated",
+    "package_metadata_boundary_separated",
+    "publication_author_boundary_separated",
+    "alphaevolve_system_contribution_parity",
+    "reviewed_matrix_fixture_system_contribution_records",
+    "source_pages_22_23_recorded"
+  ],
+  "excluded_claims": {
+    "generic_git_history_or_commit_authorship": "out_of_scope",
+    "package_metadata_or_distribution_authorship": "out_of_scope",
+    "publication_author_metadata": "separate_runtime_report",
+    "acknowledgement_role_provenance": "separate_runtime_report",
+    "local_validation_or_benchmark_success": "not_claimed",
+    "deployment_or_production_operation_evidence": "not_claimed"
+  },
+  "claim_boundary": "This boundary records that the matrix_multiplication fixture has reviewed paper-attributed system-development contribution metadata covering required phases, artifact/module labels, source pages, review scopes, privacy policy, and review status. It does not claim generic git history or commit authorship, package metadata or distribution authorship, publication-author metadata, acknowledgement-role provenance, local validation or benchmark success, or deployment or production operation evidence."
+}

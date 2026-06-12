@@ -10078,6 +10078,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     root and focused title-page tests reject local-affiliation, rights, or
     technical-capability scope drift.
 
+- [x] Keep roadmap system-contribution boundary tied to sidecar.
+  - Status: ROADMAP now links optional system-contribution metadata and
+    `runtime.history.system_contribution_provenance_report` to
+    `papers/system_contribution_provenance_boundary.json`, preserving the
+    claim-ready contribution-role scope for the reviewed
+    `matrix_multiplication` fixture.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused system-contribution tests reject git-history,
+    package-authorship, validation, or deployment scope drift.
+
 - [x] Preserve `2603.28052` Meta-Harness paper-cache scope in roadmap.
   - Status: ROADMAP now identifies arXiv `2603.28052`, `Meta-Harness:
     End-to-End Optimization of Model Harnesses`, as background outer-loop

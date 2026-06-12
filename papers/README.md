@@ -639,7 +639,12 @@ publication-author metadata, acknowledgement roles, or local validation
 evidence; the `matrix_multiplication` example now provides a reviewed
 `system_contributions.yaml` fixture for AlphaEvolve pages 22-23, and its
 zero-generation manifest report is claim-ready for system-development
-contribution parity.
+contribution parity. The committed
+`papers/system_contribution_provenance_boundary.json` sidecar preserves that
+scope while excluding generic git history or commit authorship, package
+metadata or distribution authorship, publication-author metadata,
+acknowledgement-role provenance, local validation or benchmark success, and
+deployment or production operation evidence.
 
 AlphaEvolve process-exhibit note: completed manifests now include
 `runtime.history.alphaevolve_process_exhibit_report` with schema

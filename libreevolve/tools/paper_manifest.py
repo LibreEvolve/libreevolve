@@ -235,6 +235,10 @@ from libreevolve.problems.benchmarks.sums_differences_sequence_boundary import (
     sums_differences_sequence_boundary_record,
     validate_sums_differences_sequence_boundary,
 )
+from libreevolve.problems.benchmarks.system_contribution_provenance_boundary import (
+    system_contribution_provenance_boundary_record,
+    validate_system_contribution_provenance_boundary,
+)
 from libreevolve.problems.benchmarks.ucb1_boundary import (
     ucb1_boundary_record,
     validate_ucb1_boundary,
@@ -352,6 +356,7 @@ BENCHMARK_FIXTURE_READINESS_BOUNDARY_FILE = "papers/benchmark_fixture_readiness_
 ACKNOWLEDGEMENT_ROLE_PROVENANCE_BOUNDARY_FILE = "papers/acknowledgement_role_provenance_boundary.json"
 PAPER_AUTHOR_METADATA_BOUNDARY_FILE = "papers/paper_author_metadata_boundary.json"
 TITLE_PAGE_AFFILIATION_BOUNDARY_FILE = "papers/title_page_affiliation_boundary.json"
+SYSTEM_CONTRIBUTION_PROVENANCE_BOUNDARY_FILE = "papers/system_contribution_provenance_boundary.json"
 COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_FILE = "papers/collaborator_feedback_provenance_boundary.json"
 PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_FILE = "papers/problem_formulation_provenance_boundary.json"
 EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integration_boundary.json"
@@ -824,6 +829,7 @@ def validate_paper_manifest(
     issues.extend(_validate_acknowledgement_role_provenance_boundary(root_path))
     issues.extend(_validate_paper_author_metadata_boundary(root_path))
     issues.extend(_validate_title_page_affiliation_boundary(root_path))
+    issues.extend(_validate_system_contribution_provenance_boundary(root_path))
     issues.extend(_validate_collaborator_feedback_provenance_boundary(root_path))
     issues.extend(_validate_problem_formulation_provenance_boundary(root_path))
     issues.extend(_validate_existing_codebase_integration_boundary(root_path))
@@ -1672,6 +1678,38 @@ def _validate_title_page_affiliation_boundary(root_path: Path) -> list[PaperMani
             f"title_page_affiliation_boundary_{issue.code}",
             issue.message,
             "title_page_affiliation",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_system_contribution_provenance_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / SYSTEM_CONTRIBUTION_PROVENANCE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = system_contribution_provenance_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "system_contribution_provenance_boundary_manifest_missing",
+                    (
+                        f"{SYSTEM_CONTRIBUTION_PROVENANCE_BOUNDARY_FILE} must emit "
+                        "system-contribution provenance availability"
+                    ),
+                    "system_contribution_provenance",
+                )
+            ]
+    report = validate_system_contribution_provenance_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"system_contribution_provenance_boundary_{issue.code}",
+            issue.message,
+            "system_contribution_provenance",
         )
         for issue in report.issues
     ]

@@ -71,6 +71,11 @@ Important limits:
   facts; the boundary is tracked by
   `papers/title_page_affiliation_boundary.json` and does not claim local
   affiliation, endorsement, rights regrant, or technical capability evidence.
+- System-contribution provenance is claim-ready only for the reviewed
+  `matrix_multiplication` fixture's AlphaEvolve pages 22-23 contribution-role
+  records; the boundary is tracked by
+  `papers/system_contribution_provenance_boundary.json` and does not claim git
+  history, package authorship, local validation, or deployment evidence.
 - The included examples are smoke fixtures and small demos unless explicitly
   documented otherwise.
 - Paper and blog claims are tracked as source boundaries unless local benchmark

@@ -195,7 +195,10 @@ page/section locators, and review scope text. Completed manifests include
 paper-attributed system-development roles separate from generic git/source
 history, package metadata, publication-author metadata, acknowledgement roles,
 and local validation evidence; populated reviewed fixture records are still
-required for AlphaEvolve system-contribution parity claims.
+required for AlphaEvolve system-contribution parity claims. The paper-facing
+sidecar `papers/system_contribution_provenance_boundary.json` records that the
+reviewed `matrix_multiplication` fixture is claim-ready only for
+paper-attributed system-development contribution parity.
 Completed manifests also include
 `runtime.history.candidate_abstraction_choice_report` with schema
 `libreevolve.candidate_abstraction_choice_report.v1`. This report derives the

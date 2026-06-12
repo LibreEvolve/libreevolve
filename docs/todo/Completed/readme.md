@@ -12543,3 +12543,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused title-page tests reject local-affiliation, endorsement, rights, or
     technical-capability scope drift.
+
+- [x] Keep README system-contribution boundary tied to paper-index sidecar.
+  - Status: README now scopes system-contribution provenance to the reviewed
+    `matrix_multiplication` fixture's AlphaEvolve pages 22-23 contribution
+    role records and points to
+    `papers/system_contribution_provenance_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused system-contribution tests reject git-history, package-authorship,
+    validation, or deployment scope drift.

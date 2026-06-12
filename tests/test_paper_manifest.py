@@ -1112,6 +1112,60 @@ def test_validate_paper_manifest_requires_title_page_affiliation_boundary_at_rep
     assert "title_page_affiliation_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_system_contribution_provenance_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.SYSTEM_CONTRIBUTION_PROVENANCE_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.system_contribution_provenance_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_system_contribution_provenance_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.system_contribution_provenance_boundary_record()
+    record["claim_ready"] = False
+    record["boundary_status"] = "git_history_ready"
+    record["excluded_claims"]["generic_git_history_or_commit_authorship"] = "claimed"
+    sidecar = tmp_path / paper_manifest.SYSTEM_CONTRIBUTION_PROVENANCE_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "system_contribution_provenance_boundary_claim_ready_underclaim" in codes
+    assert "system_contribution_provenance_boundary_invalid_boundary_status" in codes
+    assert (
+        "system_contribution_provenance_boundary_invalid_excluded_claim_generic_git_history_or_commit_authorship"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_system_contribution_provenance_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "system_contribution_provenance_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_existing_codebase_integration_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

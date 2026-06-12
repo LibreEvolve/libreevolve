@@ -12877,6 +12877,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     publication-author, technical-capability, rights, and contact-detail scope
     drift.
 
+- [x] Record system-contribution provenance paper-facing sidecar.
+  - Status: `libreevolve/problems/benchmarks/system_contribution_provenance_boundary.py`
+    and `papers/system_contribution_provenance_boundary.json` now preserve the
+    reviewed `matrix_multiplication` system-contribution fixture as
+    claim-ready for AlphaEvolve pages 22-23 paper-attributed
+    system-development contribution parity.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused system-contribution boundary tests reject git-history,
+    package-authorship, publication-author, acknowledgement, validation, and
+    deployment scope drift.
+
 - [x] Add `2603.28052` Meta-Harness paper-cache coverage.
   - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
     `papers/row_identity.json`, and `papers/README.md` now include

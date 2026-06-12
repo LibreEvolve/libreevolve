@@ -516,6 +516,12 @@ from libreevolve.problems.benchmarks.systems_results import (
     validate_systems_evidence_bundle,
     validate_systems_result_report,
 )
+from libreevolve.problems.benchmarks.system_contribution_provenance_boundary import (
+    SYSTEM_CONTRIBUTION_PROVENANCE_BOUNDARY_SCHEMA,
+    render_system_contribution_provenance_boundary_summary,
+    system_contribution_provenance_boundary_record,
+    validate_system_contribution_provenance_boundary,
+)
 from libreevolve.problems.benchmarks.thetaevolve_boundary import (
     THETAEVOLVE_BOUNDARY_SCHEMA,
     render_thetaevolve_boundary_summary,
@@ -646,6 +652,7 @@ __all__ = [
     "SAMPLE_EFFICIENCY_BOUNDARY_SCHEMA",
     "SUMS_DIFFERENCES_BOUNDARY_SCHEMA",
     "SUMS_DIFFERENCES_SEQUENCE_BOUNDARY_SCHEMA",
+    "SYSTEM_CONTRIBUTION_PROVENANCE_BOUNDARY_SCHEMA",
     "SYSTEMS_ARTIFACT_INVENTORY_SCHEMA",
     "SYSTEMS_RESULT_SCHEMA",
     "THETAEVOLVE_BOUNDARY_SCHEMA",
@@ -840,6 +847,7 @@ __all__ = [
     "render_sample_efficiency_boundary_summary",
     "render_sums_differences_boundary_summary",
     "render_sums_differences_sequence_boundary_summary",
+    "render_system_contribution_provenance_boundary_summary",
     "render_systems_result_summary",
     "render_thetaevolve_boundary_summary",
     "render_title_page_affiliation_boundary_summary",
@@ -847,6 +855,7 @@ __all__ = [
     "render_alphaevolve_2026_impact_boundary_summary",
     "render_ucb1_boundary_summary",
     "render_whole_run_source_workspace_integrity_boundary_summary",
+    "system_contribution_provenance_boundary_record",
     "systems_result_artifact_inventory",
     "strassen_2x2_publication_bundle_record",
     "thetaevolve_boundary_record",
@@ -946,6 +955,7 @@ __all__ = [
     "validate_sample_efficiency_boundary",
     "validate_sums_differences_boundary",
     "validate_sums_differences_sequence_boundary",
+    "validate_system_contribution_provenance_boundary",
     "validate_systems_evidence_bundle",
     "validate_systems_result_report",
     "validate_thetaevolve_boundary",

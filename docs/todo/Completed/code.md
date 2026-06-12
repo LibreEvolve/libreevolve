@@ -4,6 +4,15 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add Multiagent Learning `2602.16928` CFR/PSRO source-boundary gate.
+  - Evidence: `libreevolve/problems/benchmarks/multiagent_learning_boundary.py`
+    records the MARL algorithm-discovery source boundary, validates the
+    background-only state, rejects premature CFR/PSRO runtime claims, and is
+    required by `libreevolve/tools/paper_manifest.py`.
+    `tests/test_multiagent_learning_boundary.py` and `tests/test_paper_manifest.py`
+    cover the absence record, overclaim rejection, and root-manifest sidecar
+    requirement.
+
 - [x] Add ArchAgent `2602.22425` computer-architecture source-boundary gate.
   - Evidence: `libreevolve/problems/benchmarks/archagent_boundary.py` records
     the ArchAgent computer-architecture source boundary, validates the

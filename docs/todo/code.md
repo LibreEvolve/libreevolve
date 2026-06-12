@@ -5805,7 +5805,7 @@ Primary evidence:
     end-to-end harness-code optimization as missing evidence until local
     implementation and reports exist.
 
-- [ ] Add AlphaEvolve MARL algorithm-discovery boundary for CFR and PSRO.
+- [ ] Implement AlphaEvolve MARL algorithm-discovery parity beyond source boundary.
   - Spec evidence: arXiv `2602.16928`, `Discovering Multiagent Learning
     Algorithms with Large Language Models`, was submitted February 18, 2026
     and last revised May 7, 2026. Its abstract says the authors deploy
@@ -5821,35 +5821,25 @@ Primary evidence:
     `EvalMetaStrategySolver`) as Python search spaces, uses OpenSpiel, exact
     game-tree exploitability, four training games plus fourteen test games,
     and deterministic metrics.
-  - Current evidence: `papers/README.md` has a background-only row for
-    `2602.16928`, but LibreEvolve has no implemented source-boundary gate for
-    this source, no CFR or PSRO candidate interface, no imperfect-information game
-    evaluator, no OpenSpiel-style game-suite fixture, no train/generalization
-    split metadata for game-theoretic algorithms, no mechanism-coupling or
-    structural-complexity report, no ablation/distillation workflow that
-    reduces discovered solvers to a minimal algorithmic core, no exact
-    exploitability traversal boundary, no IQM log-improvement audit, no
-    constant-sum normal-form random-game validation, and no VAD-CFR,
-    SHOR-PSRO, WOP-CFR, or PM-PSRO benchmark records.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2602.16928`: arXiv id/version/date/PDF hash, authors, source
-    license, code/artifact availability, relation to AlphaEvolve and
-    LibreEvolve evaluator APIs, CFR and PSRO candidate schemas, game-suite
-    metadata for the 18 OpenSpiel instances including information-state counts
-    and action ranges, train/evaluation game split hashes, baseline solver
-    identities for CFR/CFR+/LCFR/DCFR/PCFR+/DPCFR+/HS-PCFR+, Uniform/Nash/
-    AlphaRank/PRD/RM, exact-oracle PSRO records, regret/exploitability and
-    IQM log-improvement metric definitions, evaluator budget and random-seed
-    records, evolved-mechanism provenance for VAD-CFR and SHOR-PSRO,
-    mechanism-coupling ablation records, WOP-CFR warm-start/asymmetric-
-    discount/optimistic-prediction records, PM-PSRO tangent-projection and
-    dynamic-budget records, structural-complexity metrics, distilled-solver
-    handoff records, random constant-sum normal-form validation, exact-
-    exploitability scale limits, single-trajectory/LLM-backbone/baseline-scope
-    caveats, generalization reports for VAD-CFR, SHOR-PSRO, WOP-CFR, and
-    PM-PSRO, and README/ROADMAP wording that keeps MARL/game-theoretic
-    algorithm discovery as missing evidence until local implementation and
-    reports exist.
+  - Current evidence: `papers/multiagent_learning_boundary.json` now
+    preserves the source-specific boundary for `2602.16928`, including
+    title/authors/arXiv version/revision date, cached PDF digest/license,
+    source-link status, absence of a dedicated runtime repository in
+    extracted links, component rows, current no-MARL-runner/local generic
+    Python-workspace scope, required evidence fields, and missing-evidence
+    keys. `papers/README.md`, `README.md`, and `ROADMAP.md` keep CFR/PSRO
+    MARL algorithm discovery source-scoped rather than implemented.
+  - Required result: implement the missing runtime evidence for `2602.16928`:
+    CFR and PSRO candidate schemas, OpenSpiel imperfect-information game
+    fixtures, CFR/PSRO runtime harnesses, exact exploitability metrics,
+    exact-best-response PSRO records, train/test split records, baseline
+    ledgers for CFR/CFR+/LCFR/DCFR/PCFR+/DPCFR+/HS-PCFR+ and Uniform/Nash/
+    AlphaRank/PRD/RM, VAD-CFR and SHOR-PSRO result rows, WOP-CFR and PM-PSRO
+    distillation rows, IQM ablation records, mechanism-coupling records,
+    random normal-form validation rows, generated solver artifact hashes,
+    OpenSpiel version records, seed/budget records, independent checker
+    outputs, and benchmark reports before claiming AlphaEvolve-style MARL
+    algorithm discovery.
 
 - [ ] Add AlphaEvolve Ramsey-number combinatorial-structure boundary.
   - Spec evidence: arXiv `2603.09172`, `Reinforced Generation of

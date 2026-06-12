@@ -4,6 +4,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Multiagent Learning `2602.16928` source boundary in README.
+  - Evidence: `README.md` lists Multiagent Learning as AlphaEvolve MARL
+    algorithm-discovery context only and points to
+    `papers/multiagent_learning_boundary.json` for the missing CFR/PSRO,
+    OpenSpiel, exploitability, exact-oracle, evolved-solver,
+    distillation/ablation, random normal-form, and artifact-provenance
+    evidence.
+
 - [x] Document ArchAgent `2602.22425` source boundary in README.
   - Evidence: `README.md` lists ArchAgent as AlphaEvolve computer-architecture
     application context only and points to `papers/archagent_boundary.json` for

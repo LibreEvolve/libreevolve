@@ -3644,17 +3644,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     structural complexity. The method uses OpenSpiel, exact exploitability,
     deterministic metrics, and train-test ablation to separate overfit
     mechanisms from minimal algorithmic cores.
-  - Current evidence: README documents LibreEvolve's Python problem format,
-    local subprocess validators, staged evaluator cascades, examples,
-    benchmark boundaries, and paper cache. It does not mention `2602.16928`,
-    provide CFR or PSRO candidate interfaces, include an imperfect-information
-    game evaluator, define game-suite train/generalization splits, compare
-    against human-designed MARL baselines, report evolved mechanism coupling,
-    or show ablation/distillation evidence for minimal generalizing solvers.
-    It also lacks README boundaries for exact exploitability scale limits,
-    exact best-response PSRO, IQM log-improvement audits, random normal-form
-    validation, single-trajectory caveats, and tabular-baseline-only
-    comparison scope.
+  - Current evidence: README now lists Multiagent Learning only as
+    AlphaEvolve MARL algorithm-discovery context and points to
+    `papers/multiagent_learning_boundary.json` for the missing CFR/PSRO
+    candidate schemas, OpenSpiel game fixtures, exploitability metrics,
+    exact-oracle PSRO records, VAD-CFR/SHOR-PSRO rows, WOP-CFR/PM-PSRO
+    distillation rows, IQM ablations, random normal-form validation, and
+    generated solver artifact provenance. It still does not provide CFR or
+    PSRO candidate interfaces, include an imperfect-information game
+    evaluator, define game-suite train/generalization splits, compare against
+    human-designed MARL baselines, report evolved mechanism coupling, or show
+    ablation/distillation evidence for minimal generalizing solvers.
   - Required result: if README mentions AlphaEvolve MARL discovery,
     game-theoretic learning, CFR, PSRO, VAD-CFR, SHOR-PSRO, WOP-CFR,
     PM-PSRO, Poker/Goofspiel/Liar's Dice/Blotto/Battleship benchmarks,

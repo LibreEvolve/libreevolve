@@ -623,7 +623,8 @@ is not yet an AlphaEvolve reproduction.
   This remains audit consistency for the declared local-subprocess boundary,
   not OS/container sandbox or quota enforcement.
 - Continue labeling CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve,
-  GigaEvo, CodeEvolve, MadEvolve, Magellan, and ArchAgent features as inspired or
+  GigaEvo, CodeEvolve, MadEvolve, Magellan, ArchAgent, and Multiagent
+  Learning features as inspired or
   application context unless paper behavior is actually implemented. The committed
   `papers/gigaevo_framework_boundary.json`
   sidecar records the GigaEvo source-specific boundary for Redis lifecycle
@@ -679,6 +680,13 @@ is not yet an AlphaEvolve reproduction.
   Policy62 artifacts, hardware-realizability and state-budget checks,
   post-silicon specialization, simulator-escape controls, distributed
   simulation reliability, and dedicated ArchAgent runtime-repository status.
+  The committed `papers/multiagent_learning_boundary.json` sidecar records
+  the Multiagent Learning source-specific boundary for CFR/PSRO candidate
+  schemas, OpenSpiel imperfect-information game fixtures, exploitability
+  metrics, exact-oracle PSRO records, VAD-CFR/SHOR-PSRO rows, WOP-CFR/
+  PM-PSRO distillation rows, IQM ablation audits, random normal-form
+  validation, generated solver artifacts, and dedicated runtime-repository
+  status.
 
 ## Mid Term
 

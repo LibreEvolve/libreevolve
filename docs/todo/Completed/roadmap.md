@@ -2,6 +2,13 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Preserve Multiagent Learning `2602.16928` boundary scope in roadmap.
+  - Evidence: `ROADMAP.md` adds `papers/multiagent_learning_boundary.json` to
+    the inspired/application-context source-boundary list and keeps MARL
+    algorithm-discovery support unpromoted until CFR/PSRO candidate schemas,
+    game fixtures, exploitability/oracle records, result rows, ablations,
+    distillation, and reproducibility evidence exist.
+
 - [x] Preserve ArchAgent `2602.22425` boundary scope in roadmap.
   - Evidence: `ROADMAP.md` adds `papers/archagent_boundary.json` to the
     inspired/application-context source-boundary list and keeps ArchAgent

@@ -5356,7 +5356,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     Meta-Harness as missing paper evidence rather than implemented LibreEvolve
     support.
 
-- [ ] Track AlphaEvolve MARL algorithm-discovery paper evidence.
+- [ ] Implement AlphaEvolve MARL algorithm-discovery paper evidence beyond source boundary.
   - Paper/source evidence: arXiv `2602.16928`, submitted February 18, 2026
     and last revised May 7, 2026, is titled `Discovering Multiagent Learning
     Algorithms with Large Language Models`. Its abstract says AlphaEvolve is
@@ -5368,33 +5368,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     and PM-PSRO that generalize with reduced structural complexity. It uses
     OpenSpiel, exact game-tree exploitability, deterministic algorithms, and a
     four-game training split plus fourteen-game test split.
-  - Current gap: `papers/README.md` lists `2602.16928` only as
-    `Background only; no CFR/PSRO benchmark or game-theoretic evaluator`.
-    The current implementation and paper index do not yet provide a
-    first-class paper/source boundary for CFR/PSRO candidate schemas,
-    imperfect-information game
-    evaluator protocols, train/generalization game splits, baseline solver
-    identities, mechanism-coupling ablations, structural complexity, or
-    distilled-solver handoff evidence. It also does not preserve paper-facing
-    rows for the CFR/PSRO skeleton class names, exact-oracle PSRO, IQM
-    log-improvement scores, 1000 random constant-sum normal-form games per
-    `(N, A)` configuration, exact-exploitability scale limits below `350K`
-    information states, or the single-AlphaEvolve-trajectory and tabular-
-    baseline caveats.
-  - Required result: add paper-manifest and paper-index coverage updates for
-    `2602.16928`: title/authors/arXiv version/date/PDF digest, source
-    license, code/artifact URL/status, relation to AlphaEvolve and
-    LibreEvolve problem/evaluator assumptions, CFR/PSRO candidate schemas,
-    game-suite taxonomy with information-state/action metadata, train/
-    evaluation split metadata, game-specific metric definitions, exact
-    exploitability traversal records, random-seed and budget records, VAD-CFR
-    and SHOR-PSRO result tables, human-designed baseline identities, IQM
-    ablation and distillation records, WOP-CFR and PM-PSRO generalization
-    reports, structural-complexity measures, exact-oracle and exact-payoff
-    PSRO records, random normal-form validation rows, limitation/caveat
-    records, reproducibility status, and README/ROADMAP wording that treats
-    MARL algorithm discovery as missing paper evidence rather than implemented
-    LibreEvolve support.
+  - Current gap: `papers/multiagent_learning_boundary.json` now records
+    title/authors, arXiv version/revision date, cached PDF digest/license,
+    source-link status, absence of a dedicated runtime repository in
+    extracted links, background-only local status, component rows, local
+    no-MARL-runner evidence, required evidence fields, and missing evidence
+    keys. The paper-facing runtime evidence remains absent.
+  - Required result: add executable paper/report evidence for `2602.16928`:
+    CFR/PSRO candidate schemas, OpenSpiel imperfect-information game
+    evaluator protocols, train/generalization game splits, exact
+    exploitability traversal records, exact-oracle PSRO records, baseline
+    solver identities, VAD-CFR and SHOR-PSRO result tables, IQM ablation and
+    distillation records, WOP-CFR and PM-PSRO generalization reports,
+    structural-complexity measures, random normal-form validation rows,
+    limitation/caveat records, seed/budget records, generated solver artifact
+    hashes, independent checker outputs, and reproducibility status.
 
 - [ ] Track AlphaEvolve Ramsey-number paper evidence.
   - Paper/source evidence: arXiv `2603.09172`, submitted March 10, 2026 and

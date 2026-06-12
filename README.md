@@ -41,6 +41,9 @@ Important limits:
   candidates, not AI-Co-Scientist-style hypothesis representation or
   hallucination-resistance evidence; that boundary is tracked by
   `papers/programmatic_representation_boundary.json`.
+- Natural-language preambles are bounded leading metadata before structured
+  mutation markers, not complete freeform rationale handling; that boundary is
+  tracked by `papers/natural_language_preamble_boundary.json`.
 - Related Work positioning is not inferred from the bundled paper list; the
   missing taxonomy and claim gates are tracked by
   `papers/related_work_taxonomy_boundary.json`.

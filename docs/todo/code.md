@@ -2188,7 +2188,9 @@ Primary evidence:
     `metadata.explanatory_preamble`, completed manifests include
     `runtime.history.natural_language_preamble_report`, and prompt wording
     allows optional brief leading explanations while preserving strict
-    rejection for prose between or after mutation sections.
+    rejection for prose between or after mutation sections. The committed
+    `papers/natural_language_preamble_boundary.json` sidecar preserves this
+    bounded-leading-capture-only boundary.
   - Remaining gap: explanatory-preamble support is bounded leading capture
     only. It does not accept arbitrary interleaved/trailing rationale, does
     not disambiguate raw full replacements without a structured marker, does

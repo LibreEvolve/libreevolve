@@ -18426,3 +18426,15 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     Related Work positioning overclaims, invalid boundary status, missing
     evidence drift, and incomplete required evidence fields.
+
+- [x] Add natural-language preamble sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/natural_language_preamble_boundary.py`
+    now emits and validates the bounded-leading-preamble-only boundary for
+    `runtime.history.natural_language_preamble_report`, separating redacted
+    leading explanatory text, proposal-metadata interop, marker-boundary
+    enforcement, status/mode counts, and interleaved/trailing prose rejection
+    from configurable preamble policy, full-replacement disambiguation,
+    rationale-quality scoring, cross-run tables, and proposal-memory joins.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    complete rationale-handling overclaims, invalid boundary status, missing
+    evidence drift, and incomplete required evidence fields.

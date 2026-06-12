@@ -323,6 +323,12 @@ from libreevolve.problems.benchmarks.multiagent_learning_boundary import (
     render_multiagent_learning_boundary_summary,
     validate_multiagent_learning_boundary,
 )
+from libreevolve.problems.benchmarks.natural_language_preamble_boundary import (
+    NATURAL_LANGUAGE_PREAMBLE_BOUNDARY_SCHEMA,
+    natural_language_preamble_boundary_record,
+    render_natural_language_preamble_boundary_summary,
+    validate_natural_language_preamble_boundary,
+)
 from libreevolve.problems.benchmarks.map_elites_illumination_boundary import (
     MAP_ELITES_ILLUMINATION_BOUNDARY_SCHEMA,
     map_elites_illumination_boundary_record,
@@ -678,6 +684,7 @@ __all__ = [
     "MADEVOLVE_BOUNDARY_SCHEMA",
     "MAGELLAN_BOUNDARY_SCHEMA",
     "MULTIAGENT_LEARNING_BOUNDARY_SCHEMA",
+    "NATURAL_LANGUAGE_PREAMBLE_BOUNDARY_SCHEMA",
     "MATRIX_RANK_TABLE_ARTIFACT_BOUNDARY_SCHEMA",
     "MATRIX_RANK_TABLE_EXHIBIT_SCHEMA",
     "MATRIX_ARTIFACT_INVENTORY_SCHEMA",
@@ -794,6 +801,7 @@ __all__ = [
     "madevolve_boundary_record",
     "magellan_boundary_record",
     "multiagent_learning_boundary_record",
+    "natural_language_preamble_boundary_record",
     "parallel_evaluation_readiness_boundary_record",
     "paper_author_metadata_boundary_record",
     "process_exhibit_boundary_record",
@@ -900,6 +908,7 @@ __all__ = [
     "render_madevolve_boundary_summary",
     "render_magellan_boundary_summary",
     "render_multiagent_learning_boundary_summary",
+    "render_natural_language_preamble_boundary_summary",
     "render_matrix_baseline_component_runtime_boundary_summary",
     "render_matrix_cascade_run_runtime_boundary_summary",
     "render_matrix_rank_table_artifact_boundary_summary",
@@ -1011,6 +1020,7 @@ __all__ = [
     "validate_madevolve_boundary",
     "validate_magellan_boundary",
     "validate_multiagent_learning_boundary",
+    "validate_natural_language_preamble_boundary",
     "validate_matrix_baseline_component_runtime_boundary",
     "validate_matrix_cascade_run_runtime_boundary",
     "validate_matrix_rank_table_artifact_boundary",

@@ -1205,9 +1205,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     payload through structured diff blocks.
   - Current evidence: ROADMAP now distinguishes bounded leading
     explanatory-preamble capture and `runtime.history.natural_language_preamble_report`
-    from broader semantic proposal memory. Current code accepts leading
-    preambles before structured mutation markers and rejects prose between or
-    after mutation sections.
+    plus `papers/natural_language_preamble_boundary.json` from broader
+    semantic proposal memory. Current code accepts leading preambles before
+    structured mutation markers and rejects prose between or after mutation
+    sections.
   - Remaining gap: roadmap wording must stay scoped as future work adds
     configurable preamble policies, raw full-replacement disambiguation,
     rationale-quality scoring, or cross-run proposal-memory tables.

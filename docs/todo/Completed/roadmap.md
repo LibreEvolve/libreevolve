@@ -10392,3 +10392,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation requires the committed sidecar and
     focused Related Work taxonomy tests reject positioning-readiness
     overclaims.
+
+- [x] Keep roadmap natural-language preamble boundary tied to sidecar.
+  - Status: ROADMAP now links
+    `runtime.history.natural_language_preamble_report` to
+    `papers/natural_language_preamble_boundary.json`, preserving bounded
+    leading-preamble capture while keeping configurable preamble policy,
+    full-replacement disambiguation, rationale-quality scoring, and cross-run
+    proposal-memory tables open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused natural-language preamble tests reject complete rationale-handling
+    overclaims.

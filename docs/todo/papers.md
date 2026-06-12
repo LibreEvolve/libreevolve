@@ -1843,6 +1843,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     and now also captures bounded/redacted leading explanatory text before the
     first structured diff/file/block mutation marker. The paper index lists
     this as partial AlphaEvolve support, not complete proposal-memory parity.
+    The committed `papers/natural_language_preamble_boundary.json` sidecar
+    preserves this bounded-leading-capture-only boundary.
   - Current gap: the preamble contract remains narrower than arbitrary
     AlphaEvolve-style rationale handling. Prose between or after mutation
     sections is still rejected, raw full replacements without structured

@@ -623,7 +623,9 @@ is not yet an AlphaEvolve reproduction.
   `runtime.history.controller_backtracking_report` observed branch-state
   transition/redirect evidence, and
   `runtime.history.natural_language_preamble_report` bounded leading
-  explanatory-preamble capture,
+  explanatory-preamble capture, with
+  `papers/natural_language_preamble_boundary.json` preserving the
+  bounded-leading-capture-only scope,
   into semantically searchable proposal memory only if needed; remaining work
   is semantic proposal-index retrieval, calibrated proposal-quality models,
   near-duplicate/idea-family novelty, model-quality attribution,

@@ -263,6 +263,10 @@ from libreevolve.problems.benchmarks.parallel_evaluation_readiness_boundary impo
     parallel_evaluation_readiness_boundary_record,
     validate_parallel_evaluation_readiness_boundary,
 )
+from libreevolve.problems.benchmarks.natural_language_preamble_boundary import (
+    natural_language_preamble_boundary_record,
+    validate_natural_language_preamble_boundary,
+)
 from libreevolve.problems.benchmarks.ramsey_numbers_boundary import (
     ramsey_numbers_boundary_record,
     validate_ramsey_numbers_boundary,
@@ -405,6 +409,7 @@ PROGRAMMATIC_REPRESENTATION_BOUNDARY_FILE = "papers/programmatic_representation_
 RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_FILE = "papers/release_artifact_reproducibility_boundary.json"
 RELATED_WORK_TAXONOMY_BOUNDARY_FILE = "papers/related_work_taxonomy_boundary.json"
 TASK_SPECIFICATION_BOUNDARY_FILE = "papers/task_specification_boundary.json"
+NATURAL_LANGUAGE_PREAMBLE_BOUNDARY_FILE = "papers/natural_language_preamble_boundary.json"
 EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integration_boundary.json"
 CANDIDATE_ABSTRACTION_BOUNDARY_FILE = "papers/candidate_abstraction_boundary.json"
 CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_FILE = "papers/candidate_language_runner_boundary.json"
@@ -888,6 +893,7 @@ def validate_paper_manifest(
     issues.extend(_validate_release_artifact_reproducibility_boundary(root_path))
     issues.extend(_validate_related_work_taxonomy_boundary(root_path))
     issues.extend(_validate_task_specification_boundary(root_path))
+    issues.extend(_validate_natural_language_preamble_boundary(root_path))
     issues.extend(_validate_existing_codebase_integration_boundary(root_path))
     issues.extend(_validate_candidate_language_runner_boundary(root_path))
     issues.extend(_validate_candidate_abstraction_boundary(root_path))
@@ -1674,6 +1680,38 @@ def _validate_task_specification_boundary(root_path: Path) -> list[PaperManifest
             f"task_specification_boundary_{issue.code}",
             issue.message,
             "task_specification",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_natural_language_preamble_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / NATURAL_LANGUAGE_PREAMBLE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = natural_language_preamble_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "natural_language_preamble_boundary_manifest_missing",
+                    (
+                        f"{NATURAL_LANGUAGE_PREAMBLE_BOUNDARY_FILE} must emit "
+                        "bounded leading preamble versus complete rationale-handling scope"
+                    ),
+                    "natural_language_preamble",
+                )
+            ]
+    report = validate_natural_language_preamble_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"natural_language_preamble_boundary_{issue.code}",
+            issue.message,
+            "natural_language_preamble",
         )
         for issue in report.issues
     ]

@@ -1374,9 +1374,10 @@ than silently becoming candidate code. LibreEvolve also captures bounded,
 redacted natural-language explanation before the first structured mutation
 marker as separate explanatory-preamble metadata; when it follows structured
 proposal metadata, a blank line separates the two surfaces. Prose between or
-after mutation sections remains rejected, so raw full-replacement
-disambiguation and broader rationale-quality/proposal-memory handling remain
-open.
+after mutation sections remains rejected. The committed
+`papers/natural_language_preamble_boundary.json` sidecar preserves the
+bounded-leading-capture-only scope, so raw full-replacement disambiguation and
+broader rationale-quality/proposal-memory handling remain open.
 
 AlphaEvolve mutation-mode note: LibreEvolve implements canonical diff parsing
 and configured `full` replacement mode, but `Config.mutation_mode` is currently

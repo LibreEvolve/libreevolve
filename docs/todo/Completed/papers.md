@@ -13519,3 +13519,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused Related Work taxonomy tests reject positioning-readiness
     overclaims.
+
+- [x] Record natural-language preamble paper-facing sidecar.
+  - Status: `papers/natural_language_preamble_boundary.json` now records the
+    bounded-leading-capture-only boundary for AlphaEvolve-style proposal
+    preambles: runtime manifests can show bounded redacted leading explanatory
+    preamble capture, structured proposal metadata interop, mutation-marker
+    boundaries, diff/file/block leading-preamble support, status/mode counts,
+    and rejection of interleaved/trailing prose, while configurable preamble
+    policy, raw full-replacement disambiguation, semantic rationale-quality
+    scoring, cross-run preamble tables, proposal-memory joins, and arbitrary
+    unparsed rationale acceptance remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused natural-language preamble tests reject complete
+    rationale-handling overclaims.

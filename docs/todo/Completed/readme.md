@@ -12642,3 +12642,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused Related Work taxonomy tests reject positioning-readiness
     overclaims.
+
+- [x] Keep README natural-language preamble boundary tied to sidecar.
+  - Status: README now states that natural-language preambles are bounded
+    leading metadata before structured mutation markers, not complete freeform
+    rationale handling, with the boundary tracked by
+    `papers/natural_language_preamble_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused natural-language preamble tests reject complete rationale-handling
+    overclaims.

@@ -2324,8 +2324,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     text before a SEARCH/REPLACE diff example.
   - Current evidence: README documents that leading explanatory preambles are
     accepted before structured mutation markers and captured in bounded,
-    redacted metadata through `runtime.history.natural_language_preamble_report`.
-    It also says prose between or after mutation sections remains rejected.
+    redacted metadata through `runtime.history.natural_language_preamble_report`
+    and `papers/natural_language_preamble_boundary.json`. It also says prose
+    between or after mutation sections remains rejected.
   - Remaining gap: README still needs to stay scoped as future work adds
     configurable preamble policies, raw full-replacement disambiguation,
     rationale-quality scoring, or cross-run proposal-memory joins.

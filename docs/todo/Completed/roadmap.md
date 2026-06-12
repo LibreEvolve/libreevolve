@@ -9303,6 +9303,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: focused benchmark-fixture readiness report test validates
     the implemented report.
 
+- [x] Preserve benchmark-fixture readiness paper-facing sidecar.
+  - Status: ROADMAP and TODO wording now link smoke/example-scope
+    benchmark-fixture readiness telemetry to
+    `papers/benchmark_fixture_readiness_boundary.json`, while preserving
+    non-smoke AlphaEvolve-comparable scope, repeated-seed, baseline,
+    emitted-artifact, anti-gaming, and paper-claim-ready fixture gaps.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused manifest tests reject drifted benchmark-fixture readiness
+    claims.
+
 - [x] Preserve qualitative-feedback prompt-history audit boundary.
   - Spec evidence: roadmap qualitative-feedback claims need to separate
     configured criterion metadata and prompt-history row joins from calibrated

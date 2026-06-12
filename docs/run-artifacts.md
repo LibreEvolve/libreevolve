@@ -97,6 +97,10 @@ AlphaEvolve-comparable flag, formulation/review status, task-spec identity,
 benchmark-hardening references, and explicit false readiness for repeated-seed
 protocols, SOTA/target baseline values, fixture-emitted result artifacts, and
 anti-gaming negative-fixture evidence.
+The paper-facing counterpart is
+`papers/benchmark_fixture_readiness_boundary.json`, which manifest validation
+requires at the repository root so smoke/example-scope readiness telemetry
+cannot drift into an AlphaEvolve-comparable benchmark-fixture claim.
 Problem fixtures can also optionally include `codebase_integration.yaml` or
 `codebase_integration.yml`; direct callers can set
 `Problem.codebase_integration_metadata`. Startup manifest validation

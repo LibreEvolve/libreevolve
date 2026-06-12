@@ -11736,6 +11736,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: focused benchmark-fixture readiness report test validates
     the documented report contract.
 
+- [x] Document benchmark-fixture readiness paper-facing sidecar.
+  - Status: README, papers index, run-artifact docs, and TODO ledgers now point
+    to `papers/benchmark_fixture_readiness_boundary.json` as the committed
+    sidecar that preserves the smoke-fixture readiness-only boundary.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused manifest tests reject premature benchmark-fixture
+    readiness claims.
+
 - [x] Document qualitative-feedback prompt-history audit report.
   - Spec evidence: README qualitative-feedback wording needed to distinguish
     declared hard-to-code criteria from audited feedback records and from

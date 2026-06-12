@@ -560,6 +560,10 @@ parameter-scope decisions, background refs, and review/signoff state. Section
 3.2 reports external mathematicians suggesting problems and advising
 formulation, so mathematical benchmark fixtures still need populated,
 expert-reviewed formulation metadata before making that class of paper claim.
+The committed `papers/benchmark_fixture_readiness_boundary.json` sidecar
+preserves the related smoke-fixture readiness boundary for repeated-seed
+protocols, SOTA/target baselines, emitted result artifacts, anti-gaming
+negative fixtures, and paper-claim-ready benchmark scope.
 
 AlphaEvolve collaborator-feedback note: LibreEvolve now has optional
 `collaborator_feedback.yaml` / `Problem.collaborator_feedback_metadata` records

@@ -366,7 +366,9 @@ Primary evidence:
     benchmark/paper-claim fixture scope, hardening references, and explicit
     false readiness for missing repeated-seed protocols, SOTA/target baselines,
     fixture-emitted result artifacts, and anti-gaming negative-fixture
-    evidence. Existing benchmark fixtures have not yet been populated with
+    evidence. The committed
+    `papers/benchmark_fixture_readiness_boundary.json` sidecar now preserves
+    this smoke-fixture readiness boundary. Existing benchmark fixtures have not yet been populated with
     real expert-formulation records or paper-claim-ready benchmark evidence.
   - Required result: populate matrix and constructive-math benchmark fixtures
     with expert-reviewed formulation metadata, link those records to evaluator

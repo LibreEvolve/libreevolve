@@ -280,7 +280,9 @@ LibreEvolve has:
   problem metadata to the example-scope registry and preserving explicit false
   readiness for smoke fixtures, missing repeated-seed protocols, missing
   SOTA/target baselines, missing fixture-emitted result artifacts, and missing
-  anti-gaming negative-fixture evidence
+  anti-gaming negative-fixture evidence, with
+  `papers/benchmark_fixture_readiness_boundary.json` preserving the
+  paper-facing smoke-fixture readiness boundary
 - optional external feedback metadata under `collaborator_feedback.yaml` or
   direct `Problem.collaborator_feedback_metadata`, normalized into
   `problem.collaborator_feedback_metadata` and summarized by

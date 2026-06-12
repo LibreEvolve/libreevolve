@@ -17522,6 +17522,16 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused benchmark-fixture readiness report test validates
     the smoke-scope boundary and overclaim checks.
 
+- [x] Add benchmark-fixture readiness paper-facing sidecar.
+  - Status: `libreevolve/problems/benchmarks/benchmark_fixture_readiness_boundary.py`
+    and `papers/benchmark_fixture_readiness_boundary.json` now preserve
+    smoke/example-scope readiness telemetry while keeping non-smoke
+    AlphaEvolve-comparable scope, repeated-seed protocols, SOTA/target
+    baselines, fixture-emitted result artifacts, anti-gaming negative-fixture
+    checks, and paper-claim-ready fixtures absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and rejects drifted records that claim benchmark-fixture readiness.
+
 - [x] Add qualitative-feedback prompt-history audit report.
   - Spec evidence: AlphaEvolve uses LLM feedback for hard-to-code criteria,
     so local qualitative-feedback records need auditable linkage to the

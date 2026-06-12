@@ -89,6 +89,12 @@ from libreevolve.problems.benchmarks.benchmark_hardening import (
     validate_benchmark_evidence_scope,
     validate_benchmark_hardening_report,
 )
+from libreevolve.problems.benchmarks.benchmark_fixture_readiness_boundary import (
+    BENCHMARK_FIXTURE_READINESS_BOUNDARY_SCHEMA,
+    benchmark_fixture_readiness_boundary_record,
+    render_benchmark_fixture_readiness_boundary_summary,
+    validate_benchmark_fixture_readiness_boundary,
+)
 from libreevolve.problems.benchmarks.bilateral_trade_boundary import (
     BILATERAL_TRADE_BOUNDARY_SCHEMA,
     bilateral_trade_boundary_record,
@@ -535,6 +541,7 @@ __all__ = [
     "AUTOCONVOLUTION_BOUNDARY_SCHEMA",
     "BENCHMARK_HARDENING_ARTIFACT_INVENTORY_SCHEMA",
     "BENCHMARK_EVIDENCE_SCOPE_SCHEMA",
+    "BENCHMARK_FIXTURE_READINESS_BOUNDARY_SCHEMA",
     "BENCHMARK_HARDENING_SCHEMA",
     "BILATERAL_TRADE_BOUNDARY_SCHEMA",
     "BRUHAT_INTERVALS_BOUNDARY_SCHEMA",
@@ -642,6 +649,7 @@ __all__ = [
     "alphaevolve_references_section_record",
     "alphaevolve_source_pdf_rights_record",
     "alphaevolve_source_pdf_version_record",
+    "benchmark_fixture_readiness_boundary_record",
     "benchmark_hardening_artifact_inventory",
     "bilateral_trade_boundary_record",
     "bruhat_intervals_boundary_record",
@@ -728,6 +736,7 @@ __all__ = [
     "render_alphaevolve_source_pdf_version_summary",
     "render_archagent_boundary_summary",
     "render_autoconvolution_boundary_summary",
+    "render_benchmark_fixture_readiness_boundary_summary",
     "render_benchmark_hardening_summary",
     "render_bilateral_trade_boundary_summary",
     "render_bruhat_intervals_boundary_summary",
@@ -821,6 +830,7 @@ __all__ = [
     "validate_archagent_boundary",
     "validate_autoconvolution_boundary",
     "validate_benchmark_evidence_scope",
+    "validate_benchmark_fixture_readiness_boundary",
     "validate_benchmark_hardening_report",
     "validate_bilateral_trade_boundary",
     "validate_bruhat_intervals_boundary",

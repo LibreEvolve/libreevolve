@@ -352,7 +352,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     smoke-only fixture scope, missing AlphaEvolve-comparable benchmark scope,
     missing repeated-seed protocols, missing SOTA/target baselines, missing
     fixture-emitted result artifacts, and missing anti-gaming negative-fixture
-    evidence. Existing benchmark fixtures do not yet carry real
+    evidence. README now also names
+    `papers/benchmark_fixture_readiness_boundary.json` as the committed
+    smoke-fixture readiness absence boundary. Existing benchmark fixtures do not yet carry real
     expert-reviewed formulation records or paper-claim-ready benchmark
     evidence.
   - Required result: when matrix and constructive-math benchmark fixtures are

@@ -394,8 +394,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     problem metadata to the example-scope registry and records when a problem
     remains smoke-only, lacks AlphaEvolve-comparable scope, repeated-seed
     protocol, SOTA/target baselines, fixture-emitted result artifacts, or
-    anti-gaming negative-fixture evidence. Existing benchmark fixtures have
-    not yet been populated with real expert-reviewed formulation records or
+    anti-gaming negative-fixture evidence. ROADMAP now also names
+    `papers/benchmark_fixture_readiness_boundary.json` as the committed
+    smoke-fixture readiness absence boundary. Existing benchmark fixtures have not yet been populated with real expert-reviewed formulation records or
     paper-claim-ready benchmark evidence.
   - Required result: when matrix and constructive-math benchmark fixtures carry
     reviewed formulation metadata and paper-facing evidence, update roadmap,

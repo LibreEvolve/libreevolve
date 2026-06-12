@@ -1,0 +1,35 @@
+{
+  "schema": "libreevolve.alphaevolve_benchmark_fixture_readiness_boundary.v1",
+  "runtime_report_schema": "libreevolve.benchmark_fixture_readiness_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve paper-facing benchmark claims require scoped fixtures, expert formulation, task targets, repeated-seed evidence, baseline values, emitted result artifacts, and anti-gaming checks",
+  "boundary_status": "smoke_fixture_readiness_only",
+  "runtime_report_status": "benchmark_fixture_readiness_report_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "example_scope_record_present",
+    "scope_registry_valid",
+    "not_smoke_only_claim",
+    "alphaevolve_comparable_scope",
+    "reviewed_formulation_metadata",
+    "background_knowledge_refs",
+    "task_spec_target_identity",
+    "benchmark_hardening_refs",
+    "repeated_seed_protocol",
+    "sota_or_target_baseline_values",
+    "fixture_emitted_result_artifacts",
+    "anti_gaming_negative_fixtures_passed",
+    "benchmark_fixture_readiness",
+    "alphaevolve_paper_claim_fixture"
+  ],
+  "missing_evidence": {
+    "non_smoke_benchmark_scope_record": "not_recorded_locally",
+    "alphaevolve_comparable_scope_record": "not_recorded_locally",
+    "repeated_seed_protocol": "not_recorded_locally",
+    "sota_or_target_baseline_values": "not_recorded_locally",
+    "fixture_emitted_result_artifacts": "not_recorded_locally",
+    "anti_gaming_negative_fixtures_passed": "not_recorded_locally",
+    "paper_claim_ready_benchmark_fixture": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has runtime readiness telemetry for example-scope registry linkage, smoke fixture scope, formulation/review metadata, task-spec identity, and benchmark hardening references when present, but does not claim non-smoke AlphaEvolve-comparable fixture scope, repeated-seed protocols, SOTA or target baseline values, fixture-emitted result artifacts, anti-gaming negative-fixture checks, or paper-claim-ready benchmark fixtures."
+}

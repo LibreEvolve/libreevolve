@@ -1330,6 +1330,60 @@ def test_validate_paper_manifest_requires_map_elites_descriptor_boundary_at_repo
     assert "map_elites_descriptor_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_objective_archive_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.OBJECTIVE_ARCHIVE_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.objective_archive_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_objective_archive_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.objective_archive_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "primary_pareto_archive_replacement_ready"
+    record["missing_evidence"]["primary_pareto_archive_replacement"] = "recorded"
+    sidecar = tmp_path / paper_manifest.OBJECTIVE_ARCHIVE_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "objective_archive_boundary_claim_ready_overclaim" in codes
+    assert "objective_archive_boundary_invalid_boundary_status" in codes
+    assert (
+        "objective_archive_boundary_invalid_missing_evidence_primary_pareto_archive_replacement"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_objective_archive_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "objective_archive_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_release_artifact_reproducibility_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

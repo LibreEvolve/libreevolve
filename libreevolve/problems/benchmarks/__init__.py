@@ -365,6 +365,12 @@ from libreevolve.problems.benchmarks.map_elites_descriptor_boundary import (
     render_map_elites_descriptor_boundary_summary,
     validate_map_elites_descriptor_boundary,
 )
+from libreevolve.problems.benchmarks.objective_archive_boundary import (
+    OBJECTIVE_ARCHIVE_BOUNDARY_SCHEMA,
+    objective_archive_boundary_record,
+    render_objective_archive_boundary_summary,
+    validate_objective_archive_boundary,
+)
 from libreevolve.problems.benchmarks.matrix_exhibits import (
     FIGURE4_MATRIX_DISCOVERY_ARTIFACT_BOUNDARY_SCHEMA,
     FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA,
@@ -718,6 +724,7 @@ __all__ = [
     "MULTIAGENT_LEARNING_BOUNDARY_SCHEMA",
     "MUTATION_CONSISTENCY_BOUNDARY_SCHEMA",
     "NATURAL_LANGUAGE_PREAMBLE_BOUNDARY_SCHEMA",
+    "OBJECTIVE_ARCHIVE_BOUNDARY_SCHEMA",
     "PROMPT_EXAMPLE_COPY_BOUNDARY_SCHEMA",
     "MATRIX_RANK_TABLE_ARTIFACT_BOUNDARY_SCHEMA",
     "MATRIX_RANK_TABLE_EXHIBIT_SCHEMA",
@@ -842,6 +849,7 @@ __all__ = [
     "multiagent_learning_boundary_record",
     "mutation_consistency_boundary_record",
     "natural_language_preamble_boundary_record",
+    "objective_archive_boundary_record",
     "prompt_example_copy_boundary_record",
     "parallel_evaluation_readiness_boundary_record",
     "paper_author_metadata_boundary_record",
@@ -952,6 +960,7 @@ __all__ = [
     "render_multiagent_learning_boundary_summary",
     "render_mutation_consistency_boundary_summary",
     "render_natural_language_preamble_boundary_summary",
+    "render_objective_archive_boundary_summary",
     "render_prompt_example_copy_boundary_summary",
     "render_matrix_baseline_component_runtime_boundary_summary",
     "render_matrix_cascade_run_runtime_boundary_summary",
@@ -1069,6 +1078,7 @@ __all__ = [
     "validate_multiagent_learning_boundary",
     "validate_mutation_consistency_boundary",
     "validate_natural_language_preamble_boundary",
+    "validate_objective_archive_boundary",
     "validate_prompt_example_copy_boundary",
     "validate_matrix_baseline_component_runtime_boundary",
     "validate_matrix_cascade_run_runtime_boundary",

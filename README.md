@@ -71,6 +71,10 @@ Important limits:
 - Database sampling reports are local strategy/count telemetry, not calibrated
   AlphaEvolve-style exploration/exploitation evidence; that boundary is tracked
   by `papers/sampling_balance_boundary.json`.
+- Multi-objective archive data is retained overlay and diagnostic frontier
+  evidence, not primary Pareto/frontier archive replacement or durable
+  cross-run metric optimization; that boundary is tracked by
+  `papers/objective_archive_boundary.json`.
 - MAP-Elites descriptor snapshots are insertion-time local descriptor metadata,
   not stable learned/evaluator-provided behavior descriptors or archive rebin
   semantics; that boundary is tracked by

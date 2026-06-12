@@ -12693,3 +12693,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused MAP-Elites descriptor tests reject stable descriptor/rebin
     overclaims.
+
+- [x] Keep README objective archive boundary tied to sidecar.
+  - Status: README now states that multi-objective archive data is retained
+    overlay and diagnostic-frontier evidence, not primary Pareto/frontier
+    archive replacement or durable cross-run metric optimization, with the
+    boundary tracked by `papers/objective_archive_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused objective archive tests reject primary-archive overclaims.

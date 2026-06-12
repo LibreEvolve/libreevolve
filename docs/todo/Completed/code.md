@@ -18510,3 +18510,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     stable-descriptor/rebin overclaims, invalid boundary status, missing
     evidence drift, and incomplete required evidence fields.
+
+- [x] Add objective archive sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/objective_archive_boundary.py`
+    now emits and validates the retained-overlay boundary for
+    `runtime.history.objective_frontier` and MAP-Elites
+    `objective_archive_policy` records, separating diagnostic frontiers,
+    normalized vectors, bounded Pareto retention, metric-cell overlays,
+    metric/frontier sampling pools, policy snapshots, and readiness-overclaim
+    rejection from primary Pareto archive replacement, frontier-dominance cell
+    replacement, durable cross-run metric databases, metric-target persistence
+    tables, feedback-calibration runners, cross-run metric optimization, and
+    frontier primary-archive replay.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    primary archive overclaims, invalid boundary status, missing evidence
+    drift, and incomplete required evidence fields.

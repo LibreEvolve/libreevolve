@@ -1,0 +1,37 @@
+{
+  "schema": "libreevolve.objective_archive_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve can optimize multiple user-provided scores, so multi-objective tradeoffs should be part of the durable archive policy rather than only diagnostic views",
+  "boundary_status": "bounded_retained_overlays_not_primary_pareto_archive",
+  "runtime_frontier_schema": "libreevolve.objective_frontier.v1",
+  "objective_archive_policy_schema": "libreevolve.map_elites_objective_archive_policy.v1",
+  "objective_archive_readiness_schema": "libreevolve.map_elites_objective_archive_readiness.v1",
+  "runtime_report_status": "objective_frontier_and_map_elites_policy_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "diagnostic_objective_frontier",
+    "declared_normalized_metric_vectors",
+    "bounded_pareto_frontier_retention",
+    "metric_cell_archive_overlays",
+    "metric_and_frontier_sampling_pools",
+    "objective_archive_policy_snapshot",
+    "readiness_overclaim_rejection",
+    "primary_pareto_archive_replacement",
+    "frontier_dominance_cell_replacement",
+    "durable_cross_run_metric_database",
+    "metric_target_persistence_tables",
+    "llm_feedback_calibration_runner",
+    "cross_run_metric_specific_optimization",
+    "frontier_primary_archive_replay"
+  ],
+  "missing_evidence": {
+    "primary_pareto_archive_replacement": "not_recorded_locally",
+    "frontier_dominance_cell_replacement": "not_recorded_locally",
+    "durable_cross_run_metric_database": "not_recorded_locally",
+    "metric_target_persistence_tables": "not_recorded_locally",
+    "llm_feedback_calibration_runner": "not_recorded_locally",
+    "cross_run_metric_specific_optimization": "not_recorded_locally",
+    "frontier_primary_archive_replay": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve manifests and archive snapshots include diagnostic objective frontiers, declared normalized metric vectors, bounded Pareto frontier retention, metric-cell archive overlays, metric/frontier sampling pools, objective archive policy snapshots, and readiness overclaim rejection. It does not claim primary Pareto archive replacement, frontier-dominance cell replacement, durable cross-run metric databases, metric-target persistence tables, LLM feedback calibration runners, cross-run metric-specific optimization, or frontier primary archive replay."
+}

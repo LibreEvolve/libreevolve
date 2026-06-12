@@ -1108,7 +1108,9 @@ MAP-Elites `objective_archive_policy` snapshots now also carry
 `libreevolve.map_elites_objective_archive_readiness.v1`, which keeps primary
 Pareto/frontier archive replacement, durable cross-run metric databases,
 metric-target persistence tables, and runtime feedback-calibration runners
-false with validation that rejects overclaims.
+false with validation that rejects overclaims. The committed
+`papers/objective_archive_boundary.json` sidecar keeps this retained-overlay
+and diagnostic-frontier scope machine-validated.
 
 AlphaEvolve database-resurfacing note: bounded current-run resurfacing now exists
 through `runtime.history.resurfacing_index`,

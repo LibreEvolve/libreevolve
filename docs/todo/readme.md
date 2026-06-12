@@ -2494,6 +2494,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     primary Pareto/frontier replacement and durable metric-target databases
     false, and `runtime.history.sampling_balance_report` with aggregate
     parent/inspiration decision counts, with
+    README now tying that retained-overlay boundary to
+    `papers/objective_archive_boundary.json` and
     `papers/sampling_balance_boundary.json` preserving the local-counts-only
     claim boundary. It should not imply that these knobs have been calibrated
     or measured as an AlphaEvolve-style

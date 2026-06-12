@@ -366,6 +366,10 @@ from libreevolve.problems.benchmarks.map_elites_descriptor_boundary import (
     map_elites_descriptor_boundary_record,
     validate_map_elites_descriptor_boundary,
 )
+from libreevolve.problems.benchmarks.objective_archive_boundary import (
+    objective_archive_boundary_record,
+    validate_objective_archive_boundary,
+)
 from libreevolve.problems.benchmarks.gigaevo_boundary import (
     gigaevo_framework_boundary_record,
     validate_gigaevo_framework_boundary,
@@ -464,6 +468,7 @@ MATRIX_SWEEP_SPACE_RUNTIME_FILE = "papers/matrix_sweep_space_runtime_boundary.js
 MATRIX_TENSOR_RANK_RUNTIME_FILE = "papers/matrix_tensor_rank_runtime_boundary.json"
 MAP_ELITES_ILLUMINATION_BOUNDARY_FILE = "papers/map_elites_illumination_boundary.json"
 MAP_ELITES_DESCRIPTOR_BOUNDARY_FILE = "papers/map_elites_descriptor_boundary.json"
+OBJECTIVE_ARCHIVE_BOUNDARY_FILE = "papers/objective_archive_boundary.json"
 GEMINI_PROVIDER_PARITY_BOUNDARY_FILE = "papers/gemini_provider_parity_boundary.json"
 GIGAEVO_FRAMEWORK_BOUNDARY_FILE = "papers/gigaevo_framework_boundary.json"
 CODEEVOLVE_BOUNDARY_FILE = "papers/codeevolve_boundary.json"
@@ -947,6 +952,7 @@ def validate_paper_manifest(
     issues.extend(_validate_math_outcome_boundaries(root_path))
     issues.extend(_validate_map_elites_illumination_boundary(root_path))
     issues.extend(_validate_map_elites_descriptor_boundary(root_path))
+    issues.extend(_validate_objective_archive_boundary(root_path))
     issues.extend(_validate_gemini_provider_parity_boundary(root_path))
     issues.extend(_validate_gigaevo_framework_boundary(root_path))
     issues.extend(_validate_codeevolve_boundary(root_path))
@@ -2894,6 +2900,38 @@ def _validate_map_elites_descriptor_boundary(root_path: Path) -> list[PaperManif
             f"map_elites_descriptor_boundary_{issue.code}",
             issue.message,
             "map_elites_descriptor",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_objective_archive_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / OBJECTIVE_ARCHIVE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = objective_archive_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "objective_archive_boundary_manifest_missing",
+                    (
+                        f"{OBJECTIVE_ARCHIVE_BOUNDARY_FILE} must emit "
+                        "retained multi-objective overlays versus primary archive scope"
+                    ),
+                    "objective_archive",
+                )
+            ]
+    report = validate_objective_archive_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"objective_archive_boundary_{issue.code}",
+            issue.message,
+            "objective_archive",
         )
         for issue in report.issues
     ]

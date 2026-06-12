@@ -504,6 +504,11 @@ is not yet an AlphaEvolve reproduction.
 - Extend the current selected-row `show` archive objective-vector summaries
   and manifest-level metric archive summaries into CLI/report drill-downs for
   metric-specific archives.
+- Keep multi-objective archive policy scoped to retained overlays until
+  Pareto/frontier replacement becomes the primary archive policy or durable
+  cross-run metric-specific optimization lands. The committed
+  `papers/objective_archive_boundary.json` sidecar keeps the current
+  bounded-overlay and diagnostic-frontier scope machine-validated.
 
 ### 3. Expand evaluation cascades
 

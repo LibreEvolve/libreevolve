@@ -1544,7 +1544,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     readiness for primary Pareto/frontier replacement, durable cross-run
     metric databases, metric-target persistence tables, and runtime
     feedback-calibration runners; validation rejects forged readiness
-    overclaims.
+    overclaims. `papers/objective_archive_boundary.json` now validates this
+    retained-overlay and diagnostic-frontier boundary.
     `runtime.history.failure_index` now groups failure records by fingerprint
     with bounded repetition/latest-record evidence. `runtime.history.hypothesis_index`
     now exposes bounded redacted proposal idea/rationale/hypothesis evidence

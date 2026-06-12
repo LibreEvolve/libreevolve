@@ -10457,3 +10457,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation requires the committed sidecar and
     focused MAP-Elites descriptor tests reject stable descriptor/rebin
     overclaims.
+
+- [x] Keep roadmap objective archive boundary tied to sidecar.
+  - Status: ROADMAP now links the current retained-overlay and diagnostic-
+    frontier multi-objective scope to
+    `papers/objective_archive_boundary.json` while keeping primary
+    Pareto/frontier replacement and durable cross-run metric-specific
+    optimization open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused objective archive tests reject primary-archive overclaims.

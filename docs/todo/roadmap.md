@@ -722,7 +722,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `libreevolve.map_elites_objective_archive_readiness.v1` with false
     readiness for primary Pareto/frontier replacement, durable cross-run
     metric databases, metric-target persistence tables, and runtime
-    feedback-calibration runners.
+    feedback-calibration runners. ROADMAP now ties that scope to
+    `papers/objective_archive_boundary.json`.
   - Required result: when Pareto/frontier replacement becomes the primary
     archive policy, or durable cross-run metric-specific optimization lands,
     update the roadmap, README, papers index, and code/paper TODO entries

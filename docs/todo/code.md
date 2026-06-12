@@ -1814,7 +1814,10 @@ Primary evidence:
     for primary Pareto/frontier replacement, durable cross-run metric
     databases, metric-target persistence tables, and runtime
     feedback-calibration runners. Validation rejects primary Pareto/frontier
-    cell-replacement and readiness overclaims. Backend reward, admission
+    cell-replacement and readiness overclaims.
+    `papers/objective_archive_boundary.json` now validates these retained
+    Pareto/frontier and metric-cell overlays as diagnostic/retained evidence,
+    not primary Pareto archive replacement. Backend reward, admission
     thresholds, and some parent/inspiration paths still use
     scalar final fitness, and the primary MAP-Elites cell grid still uses
     scalar selection score rather than Pareto/frontier dominance.

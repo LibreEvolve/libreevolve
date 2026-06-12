@@ -13607,3 +13607,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused MAP-Elites descriptor tests reject stable descriptor/rebin
     overclaims.
+
+- [x] Record objective archive paper-facing sidecar.
+  - Status: `papers/objective_archive_boundary.json` now records the retained
+    overlay and diagnostic-frontier boundary for AlphaEvolve-style
+    multi-objective archive claims: runtime evidence can show diagnostic
+    objective frontiers, normalized metric vectors, bounded Pareto retention,
+    metric-cell overlays, metric/frontier sampling pools, objective archive
+    policy snapshots, and readiness-overclaim rejection, while primary Pareto
+    archive replacement, frontier-dominance cell replacement, durable
+    cross-run metric databases, metric-target persistence tables,
+    feedback-calibration runners, cross-run metric-specific optimization, and
+    frontier primary-archive replay remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused objective archive tests reject primary-archive
+    overclaims.

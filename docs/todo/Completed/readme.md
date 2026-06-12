@@ -11615,3 +11615,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     and Table 1 parity claims.
   - Verification: focused runtime codebase-scale benchmark boundary test
     validates the implemented report.
+
+- [x] Document incorrect-suggestion audit boundary report.
+  - Spec evidence: README execution-grounding wording needed to distinguish
+    local evaluator filtering from independent false-acceptance/
+    false-rejection audit evidence.
+  - Status: README and run-artifact docs now describe
+    `runtime.history.incorrect_suggestion_audit_report`, including generated,
+    accepted, rejected, execution-filtered, invalid-evaluation,
+    archive-rejected, accepted-invalid, local filter-rate, and bounded audit
+    row evidence, while excluding independent rejudge, cross-run proposal
+    tables, semantic failed-proposal retrieval, and audited error-rate claims.
+  - Verification: focused runtime execution-filtered proposal lifecycle test
+    validates the implemented report.

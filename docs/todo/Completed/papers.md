@@ -11960,3 +11960,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     quality-progress results.
   - Verification: focused runtime codebase-scale benchmark boundary test
     validates the implemented report.
+
+- [x] Record incorrect-suggestion audit boundary.
+  - Spec evidence: AlphaEvolve frames automatic evaluation as the grounding
+    mechanism that filters incorrect base-LLM suggestions.
+  - Status: paper-facing TODOs and runtime manifests now expose
+    `incorrect_suggestion_audit_report`, which records local generated,
+    accepted, rejected, execution-filtered, invalid-evaluation,
+    archive-rejected, and accepted-invalid counts plus local filter rates and
+    bounded audit rows while keeping independent rejudge and audited error
+    rates false.
+  - Remaining paper gap: this does not independently rejudge accepted or
+    rejected proposals, prove benchmark-specific evaluator-oracle sufficiency,
+    aggregate cross-run proposal tables, or report audited false-acceptance/
+    false-rejection rates.
+  - Verification: focused runtime execution-filtered proposal lifecycle test
+    validates the implemented report.

@@ -43,10 +43,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     backend/call summaries, mutation hashes, evaluator validity, archive
     admission or rejection, rejection reasons, execution-filtered counts,
     failure-memory linkage, and explicit false-acceptance/false-rejection
-    review fields. It also keeps the claim scoped to local execution-
-    grounding evidence rather than an independent benchmark rejudge. README
-    now also names `papers/proposal_lifecycle_audit_boundary.json` as the
-    committed paper-manifest-validated independent-audit absence boundary.
+    review fields. README also describes
+    `runtime.history.incorrect_suggestion_audit_report`, a validated
+    `libreevolve.incorrect_suggestion_audit_report.v1` summary with local
+    accepted/rejected/execution-filtered counts, invalid-evaluation and
+    archive-rejection counts, local filter rates, bounded audit rows, and false
+    readiness for independent rejudge and audited error rates. It keeps the
+    claim scoped to local execution-grounding evidence rather than an
+    independent benchmark rejudge. README names
+    `papers/proposal_lifecycle_audit_boundary.json` as the committed
+    paper-manifest-validated independent-audit absence boundary.
   - Required result: when independent rejudge/reference-checker or statistical
     oracle evidence lands, update README, ROADMAP, papers index, and code/paper
     TODOs together with benchmark-specific evaluator-oracle sufficiency,

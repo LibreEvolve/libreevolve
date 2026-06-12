@@ -17336,3 +17336,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     remain open.
   - Verification: focused runtime codebase-scale benchmark boundary test
     passes.
+
+- [x] Add incorrect-suggestion audit boundary report.
+  - Spec evidence: AlphaEvolve says code execution and automatic evaluation
+    ground LLM-directed evolution and avoid incorrect base-LLM suggestions.
+  - Status: runtime histories now include
+    `libreevolve.incorrect_suggestion_audit_report.v1`, derived from proposal
+    lifecycle records. It records generated, accepted, rejected,
+    execution-filtered, invalid-evaluation, diff/parse-error, archive-rejected,
+    and accepted-invalid counts, local filter rates, bounded proposal audit
+    rows, and explicit false readiness for independent rejudge,
+    reference/statistical oracles, cross-run proposal tables, semantic
+    failed-proposal retrieval, and audited false-acceptance/false-rejection
+    rates.
+  - Remaining gap: independent rejudge/reference-checker or statistical-oracle
+    evidence, benchmark-specific oracle sufficiency labels, cross-run proposal
+    tables, semantic failed-proposal retrieval, and audited error rates remain
+    open.
+  - Verification: focused runtime execution-filtered proposal lifecycle test
+    validates the implemented report.

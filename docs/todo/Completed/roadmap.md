@@ -9152,3 +9152,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     code-scale parity open.
   - Verification: focused runtime codebase-scale benchmark boundary test
     validates the implemented report.
+
+- [x] Preserve incorrect-suggestion audit boundary.
+  - Spec evidence: roadmap execution-grounding claims need to separate local
+    evaluator filtering evidence from independent audit evidence.
+  - Status: ROADMAP and TODO wording now recognize
+    `runtime.history.incorrect_suggestion_audit_report` as local
+    execution-grounding evidence with accepted/rejected/execution-filtered
+    counts, invalid-evaluation and archive-rejection counts, local filter
+    rates, and false readiness for independent rejudge, reference/statistical
+    oracles, cross-run proposal tables, semantic failed-proposal retrieval, and
+    audited false-acceptance/false-rejection rates.
+  - Verification: focused runtime execution-filtered proposal lifecycle test
+    validates the implemented report.

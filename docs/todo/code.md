@@ -1320,19 +1320,22 @@ Primary evidence:
   - Current evidence: completed manifests now include
     `runtime.history.proposal_lifecycle_report` with schema
     `libreevolve.proposal_lifecycle_report.v1`, plus
-    `validate_proposal_lifecycle_report()`. The report merges generated
-    candidate history with generated failure rows by candidate id and records
-    proposal id, parent id, generation, proposal-batch metadata, backend/call
-    summaries when available, mutation payload hashes, evaluator validity,
-    archive admission or rejection, rejection reasons, execution-filtered
-    counts, bounded failure-memory linkage, and explicit false-acceptance/
-    false-rejection review status. Focused tests cover a cleanly parsed LLM
-    mutation that execution/evaluation marks invalid, rejects from archive
-    admission, persists to `failure_history.jsonl`, and exposes through the
-    lifecycle report without accepting an invalid generated proposal. The
-    committed `papers/proposal_lifecycle_audit_boundary.json` sidecar now
-    records the paper-manifest-validated `not_independently_audited` boundary
-    for independent rejudge/oracle and audited error-rate evidence.
+    `validate_proposal_lifecycle_report()`. Completed manifests also include
+    `runtime.history.incorrect_suggestion_audit_report` with schema
+    `libreevolve.incorrect_suggestion_audit_report.v1`, plus
+    `validate_incorrect_suggestion_audit_report()`. The reports merge
+    generated candidate history with generated failure rows by candidate id and
+    record proposal id, parent id, generation, backend/call summaries, mutation
+    payload hashes, evaluator validity, archive admission or rejection,
+    rejection reasons, execution-filtered/invalid/archive-rejected/
+    accepted-invalid counts, local filter rates, bounded failure-memory
+    linkage, and explicit false-acceptance/false-rejection audit absence.
+    Focused tests cover a cleanly parsed LLM mutation that
+    execution/evaluation marks invalid, rejects from archive admission,
+    persists to `failure_history.jsonl`, and exposes through both reports
+    without accepting an invalid generated proposal. The committed
+    `papers/proposal_lifecycle_audit_boundary.json` sidecar records the
+    paper-manifest-validated `not_independently_audited` boundary.
   - Remaining gap: this is local run-level evidence, not an independent
     adjudication of whether every rejected proposal was truly incorrect or
     every accepted proposal was truly correct. It does not yet provide

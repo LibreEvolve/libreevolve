@@ -90,6 +90,7 @@ from libreevolve.core.loop import (
     validate_proposal_diversity_report,
     validate_proposal_score_report,
     validate_proposal_lifecycle_report,
+    validate_incorrect_suggestion_audit_report,
     validate_sample_efficiency_report,
     validate_repeated_sampling_baseline_report,
     validate_gemini_provider_parity_report,
@@ -7653,6 +7654,50 @@ def test_runtime_history_reports_execution_filtered_proposal_lifecycle():
     assert lifecycle["admission"]["reason"] == "invalid_evaluation"
     assert lifecycle["llm"]["calls"][0]["backend_name"] == "fake/model"
     assert lifecycle["mutation"]["sha256"] == failures[0]["mutation_sha256"]
+
+    audit = manifest["runtime"]["history"]["incorrect_suggestion_audit_report"]
+    assert audit["schema"] == "libreevolve.incorrect_suggestion_audit_report.v1"
+    assert audit["validation"]["ok"] is True
+    assert validate_incorrect_suggestion_audit_report(audit)["ok"] is True
+    assert audit["generated_candidate_count"] == 1
+    assert audit["accepted_generated_count"] == 0
+    assert audit["rejected_generated_count"] == 1
+    assert audit["execution_filtered_count"] == 1
+    assert audit["invalid_evaluation_count"] == 1
+    assert audit["accepted_invalid_count"] == 0
+    assert audit["local_filter_rate"] == 1.0
+    assert audit["accepted_invalid_rate"] is None
+    assert audit["audit_scope"]["local_execution_grounding"] is True
+    assert audit["audit_scope"]["independent_rejudge"] is False
+    assert audit["audit_scope"]["reference_or_statistical_oracle"] is False
+    assert audit["claim_ready"] is False
+    assert audit["claim_readiness"]["local_execution_grounding_counts"] is True
+    assert audit["claim_readiness"]["independent_rejudge_of_rejected_candidates"] is False
+    assert audit["claim_readiness"]["audited_false_acceptance_rate"] is False
+    assert audit["claim_readiness"]["audited_false_rejection_rate"] is False
+    assert audit["claim_readiness"][
+        "publication_strength_incorrect_suggestion_filtering"
+    ] is False
+    audit_record = audit["audit_records"][0]
+    assert audit_record["proposal_id"] == lifecycle["proposal_id"]
+    assert audit_record["execution_filtered"] is True
+    assert audit_record["independent_rejudge_status"] == "not_run"
+    assert audit_record["false_acceptance_audited"] is False
+    assert audit_record["false_rejection_audited"] is False
+
+    overclaimed = copy.deepcopy(audit)
+    overclaimed["claim_ready"] = True
+    overclaimed["audit_scope"]["independent_rejudge"] = True
+    overclaimed["claim_readiness"]["audited_false_rejection_rate"] = True
+    overclaimed["audit_records"][0]["independent_rejudge_status"] = "passed"
+    validation = validate_incorrect_suggestion_audit_report(overclaimed)
+    assert validation["ok"] is False
+    assert {
+        "claim_ready_overclaim",
+        "independent_rejudge_overclaim",
+        "audited_false_rejection_rate_overclaim",
+        "independent_rejudge_status_overclaim",
+    }.issubset({issue["code"] for issue in validation["issues"]})
 
     sample_efficiency = manifest["runtime"]["history"]["sample_efficiency_report"]
     assert sample_efficiency["schema"] == "libreevolve.sample_efficiency_report.v1"

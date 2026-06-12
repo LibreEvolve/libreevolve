@@ -1268,6 +1268,16 @@ audited error-rate claim. The committed
 `papers/proposal_lifecycle_audit_boundary.json` sidecar now records that
 paper-manifest-validated independent-audit absence boundary.
 Completed manifests also include
+`runtime.history.incorrect_suggestion_audit_report`, a bounded
+`libreevolve.incorrect_suggestion_audit_report.v1` summary derived from the
+proposal lifecycle report. It records generated, accepted, rejected,
+execution-filtered, invalid-evaluation, diff/parse-error, archive-rejected,
+and accepted-invalid counts, local filter and accepted-invalid rates when a
+denominator exists, sampled proposal audit rows, and explicit false readiness
+for independent rejudge, reference/statistical oracle sufficiency, cross-run
+proposal tables, semantic failed-proposal retrieval, and audited
+false-acceptance/false-rejection rates.
+Completed manifests also include
 `runtime.history.sample_efficiency_report`, a single-run
 `libreevolve.sample_efficiency_report.v1` summary derived from the lifecycle
 report. It counts generated proposals, evaluated candidates, valid candidates,

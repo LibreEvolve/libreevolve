@@ -5442,6 +5442,9 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
             programs,
         ),
         "proposal_lifecycle_report": proposal_lifecycle_report,
+        "incorrect_suggestion_audit_report": _incorrect_suggestion_audit_report(
+            proposal_lifecycle_report
+        ),
         "sample_efficiency_report": _sample_efficiency_report(
             proposal_lifecycle_report
         ),
@@ -29162,6 +29165,336 @@ def _proposal_lifecycle_report(
     }
     report["validation"] = validate_proposal_lifecycle_report(report)
     return report
+
+
+def _incorrect_suggestion_audit_report(
+    proposal_lifecycle_report: Mapping[str, object],
+) -> dict:
+    records = [
+        record
+        for record in proposal_lifecycle_report.get("records", [])
+        if isinstance(record, Mapping)
+    ]
+    generated_count = _sample_efficiency_non_negative_int(
+        proposal_lifecycle_report.get("generated_candidate_count")
+    )
+    if generated_count is None:
+        generated_count = len(records)
+    accepted_count = _sample_efficiency_non_negative_int(
+        proposal_lifecycle_report.get("accepted_generated_count")
+    )
+    if accepted_count is None:
+        accepted_count = sum(
+            1 for record in records if record.get("lifecycle_status") == "accepted_history"
+        )
+    rejected_count = _sample_efficiency_non_negative_int(
+        proposal_lifecycle_report.get("rejected_generated_count")
+    )
+    if rejected_count is None:
+        rejected_count = sum(
+            1
+            for record in records
+            if str(record.get("lifecycle_status", "")).startswith("rejected_")
+        )
+    execution_filtered_count = _sample_efficiency_non_negative_int(
+        proposal_lifecycle_report.get("execution_filtered_count")
+    )
+    if execution_filtered_count is None:
+        execution_filtered_count = sum(
+            1 for record in records if record.get("execution_filtered") is True
+        )
+    invalid_evaluation_count = _sample_efficiency_non_negative_int(
+        proposal_lifecycle_report.get("invalid_evaluation_count")
+    )
+    if invalid_evaluation_count is None:
+        invalid_evaluation_count = sum(
+            1 for record in records if record.get("evaluator_is_valid") is False
+        )
+    accepted_invalid_count = _sample_efficiency_non_negative_int(
+        proposal_lifecycle_report.get("accepted_invalid_count")
+    )
+    if accepted_invalid_count is None:
+        accepted_invalid_count = sum(
+            1
+            for record in records
+            if record.get("lifecycle_status") == "accepted_history"
+            and record.get("evaluator_is_valid") is not True
+        )
+    audited_records = [
+        _incorrect_suggestion_audit_record(record)
+        for record in records[:50]
+    ]
+    report = {
+        "schema": "libreevolve.incorrect_suggestion_audit_report.v1",
+        "source": "runtime.history.proposal_lifecycle_report",
+        "generated_candidate_count": generated_count,
+        "accepted_generated_count": accepted_count,
+        "rejected_generated_count": rejected_count,
+        "execution_filtered_count": execution_filtered_count,
+        "invalid_evaluation_count": invalid_evaluation_count,
+        "diff_or_parse_error_count": _sample_efficiency_non_negative_int(
+            proposal_lifecycle_report.get("diff_or_parse_error_count")
+        )
+        or 0,
+        "archive_rejected_count": _sample_efficiency_non_negative_int(
+            proposal_lifecycle_report.get("archive_rejected_count")
+        )
+        or 0,
+        "accepted_invalid_count": accepted_invalid_count,
+        "local_filter_rate": _incorrect_suggestion_rate(
+            execution_filtered_count,
+            generated_count,
+        ),
+        "accepted_invalid_rate": _incorrect_suggestion_rate(
+            accepted_invalid_count,
+            accepted_count,
+        ),
+        "rejection_reasons": proposal_lifecycle_report.get("rejection_reasons")
+        if isinstance(proposal_lifecycle_report.get("rejection_reasons"), Mapping)
+        else {},
+        "audit_records": audited_records,
+        "audit_records_truncated": len(records) > len(audited_records),
+        "audit_scope": {
+            "local_execution_grounding": True,
+            "local_evaluator_validity_gate": True,
+            "archive_admission_gate": True,
+            "failure_history_diagnostics": True,
+            "independent_rejudge": False,
+            "reference_or_statistical_oracle": False,
+            "cross_run_proposal_table": False,
+            "semantic_failed_proposal_retrieval": False,
+        },
+        "false_acceptance_review": {
+            "status": "not_independently_reviewed",
+            "accepted_invalid_count": accepted_invalid_count,
+            "audited_false_acceptance_rate": None,
+        },
+        "false_rejection_review": {
+            "status": "not_independently_reviewed",
+            "audited_false_rejection_rate": None,
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "local_execution_grounding_counts": True,
+            "local_rejection_reason_counts": bool(
+                proposal_lifecycle_report.get("rejection_reasons")
+            ),
+            "independent_rejudge_of_accepted_candidates": False,
+            "independent_rejudge_of_rejected_candidates": False,
+            "reference_or_statistical_oracle_sufficiency": False,
+            "cross_run_proposal_lifecycle_table": False,
+            "audited_false_acceptance_rate": False,
+            "audited_false_rejection_rate": False,
+            "semantic_failed_proposal_retrieval": False,
+            "publication_strength_incorrect_suggestion_filtering": False,
+            "remaining_gap": [
+                "independent_rejudge_of_accepted_candidates",
+                "independent_rejudge_of_rejected_candidates",
+                "reference_or_statistical_oracle_sufficiency",
+                "cross_run_proposal_lifecycle_table",
+                "audited_false_acceptance_and_false_rejection_rates",
+                "semantic_failed_proposal_retrieval",
+            ],
+        },
+    }
+    report["validation"] = validate_incorrect_suggestion_audit_report(report)
+    return report
+
+
+def _incorrect_suggestion_audit_record(record: Mapping[str, object]) -> dict:
+    return {
+        "proposal_id": record.get("proposal_id"),
+        "lifecycle_status": record.get("lifecycle_status"),
+        "evaluator_is_valid": record.get("evaluator_is_valid")
+        if isinstance(record.get("evaluator_is_valid"), bool)
+        else None,
+        "execution_filtered": record.get("execution_filtered") is True,
+        "rejection_reason": record.get("rejection_reason")
+        if isinstance(record.get("rejection_reason"), str)
+        else None,
+        "admitted": (
+            record.get("admission", {}).get("admitted")
+            if isinstance(record.get("admission"), Mapping)
+            and isinstance(record.get("admission", {}).get("admitted"), bool)
+            else None
+        ),
+        "independent_rejudge_status": "not_run",
+        "false_acceptance_audited": False,
+        "false_rejection_audited": False,
+    }
+
+
+def _incorrect_suggestion_rate(count: int, denominator: int) -> float | None:
+    if denominator <= 0:
+        return None
+    return round(count / denominator, 6)
+
+
+def validate_incorrect_suggestion_audit_report(report: object) -> dict:
+    issues: list[dict[str, str]] = []
+    schema = "libreevolve.incorrect_suggestion_audit_report.v1"
+    if not isinstance(report, Mapping):
+        return {
+            "schema": schema,
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_report",
+                    "message": "incorrect-suggestion audit report must be a mapping",
+                }
+            ],
+        }
+    if report.get("schema") != schema:
+        issues.append({"code": "invalid_schema", "message": "unsupported schema"})
+    if report.get("source") != "runtime.history.proposal_lifecycle_report":
+        issues.append({"code": "invalid_source", "message": "unsupported source"})
+    for field in (
+        "generated_candidate_count",
+        "accepted_generated_count",
+        "rejected_generated_count",
+        "execution_filtered_count",
+        "invalid_evaluation_count",
+        "diff_or_parse_error_count",
+        "archive_rejected_count",
+        "accepted_invalid_count",
+    ):
+        if _sample_efficiency_non_negative_int(report.get(field)) is None:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    generated = _sample_efficiency_non_negative_int(
+        report.get("generated_candidate_count")
+    ) or 0
+    accepted = _sample_efficiency_non_negative_int(
+        report.get("accepted_generated_count")
+    ) or 0
+    rejected = _sample_efficiency_non_negative_int(
+        report.get("rejected_generated_count")
+    ) or 0
+    execution_filtered = _sample_efficiency_non_negative_int(
+        report.get("execution_filtered_count")
+    ) or 0
+    accepted_invalid = _sample_efficiency_non_negative_int(
+        report.get("accepted_invalid_count")
+    ) or 0
+    if accepted + rejected > generated:
+        issues.append(
+            {
+                "code": "candidate_count_overflow",
+                "message": "accepted plus rejected candidates cannot exceed generated count",
+            }
+        )
+    if execution_filtered > rejected:
+        issues.append(
+            {
+                "code": "execution_filtered_overflow",
+                "message": "execution-filtered count cannot exceed rejected count",
+            }
+        )
+    if accepted_invalid > accepted:
+        issues.append(
+            {
+                "code": "accepted_invalid_overflow",
+                "message": "accepted-invalid count cannot exceed accepted count",
+            }
+        )
+    _validate_optional_rate(report.get("local_filter_rate"), "local_filter_rate", issues)
+    _validate_optional_rate(
+        report.get("accepted_invalid_rate"),
+        "accepted_invalid_rate",
+        issues,
+    )
+    audit_scope = report.get("audit_scope")
+    if not isinstance(audit_scope, Mapping):
+        issues.append({"code": "invalid_audit_scope", "message": "audit_scope must be a mapping"})
+        audit_scope = {}
+    for field in (
+        "independent_rejudge",
+        "reference_or_statistical_oracle",
+        "cross_run_proposal_table",
+        "semantic_failed_proposal_retrieval",
+    ):
+        if audit_scope.get(field) is not False:
+            issues.append(
+                {
+                    "code": f"{field}_overclaim",
+                    "message": f"audit_scope.{field} must remain false",
+                }
+            )
+    records = report.get("audit_records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_audit_records", "message": "audit_records must be a list"})
+        records = []
+    for index, record in enumerate(records):
+        if not isinstance(record, Mapping):
+            issues.append({"code": "invalid_audit_record", "message": "audit record must be a mapping"})
+            continue
+        if not isinstance(record.get("proposal_id"), str) or not record.get("proposal_id"):
+            issues.append({"code": "invalid_audit_record_proposal_id", "message": f"audit record {index} needs a proposal id"})
+        if record.get("independent_rejudge_status") != "not_run":
+            issues.append({"code": "independent_rejudge_status_overclaim", "message": "independent rejudge status must remain not_run"})
+        for field in ("false_acceptance_audited", "false_rejection_audited"):
+            if record.get(field) is not False:
+                issues.append({"code": f"{field}_overclaim", "message": f"{field} must remain false"})
+    for field in ("false_acceptance_review", "false_rejection_review"):
+        review = report.get(field)
+        if not isinstance(review, Mapping):
+            issues.append({"code": f"invalid_{field}", "message": f"{field} must be a mapping"})
+            continue
+        if review.get("status") != "not_independently_reviewed":
+            issues.append({"code": f"{field}_overclaim", "message": f"{field}.status must remain not_independently_reviewed"})
+        for rate_field in ("audited_false_acceptance_rate", "audited_false_rejection_rate"):
+            if rate_field in review and review.get(rate_field) is not None:
+                issues.append({"code": f"{rate_field}_overclaim", "message": f"{rate_field} must remain null"})
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be a mapping"})
+        readiness = {}
+    for field in (
+        "independent_rejudge_of_accepted_candidates",
+        "independent_rejudge_of_rejected_candidates",
+        "reference_or_statistical_oracle_sufficiency",
+        "cross_run_proposal_lifecycle_table",
+        "audited_false_acceptance_rate",
+        "audited_false_rejection_rate",
+        "semantic_failed_proposal_retrieval",
+        "publication_strength_incorrect_suggestion_filtering",
+    ):
+        if readiness.get(field) is not False:
+            issues.append(
+                {
+                    "code": f"{field}_overclaim",
+                    "message": f"claim_readiness.{field} must remain false",
+                }
+            )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "claim_ready_overclaim",
+                "message": "incorrect-suggestion audit report must not claim readiness",
+            }
+        )
+    return {"schema": schema, "ok": not issues, "issues": issues}
+
+
+def _validate_optional_rate(value: object, field: str, issues: list[dict[str, str]]) -> None:
+    if value is None:
+        return
+    if (
+        isinstance(value, bool)
+        or not isinstance(value, (int, float))
+        or not math.isfinite(float(value))
+        or not 0.0 <= float(value) <= 1.0
+    ):
+        issues.append(
+            {
+                "code": f"invalid_{field}",
+                "message": f"{field} must be null or a finite rate in [0, 1]",
+            }
+        )
 
 
 def _sample_efficiency_report(proposal_lifecycle_report: Mapping[str, object]) -> dict:

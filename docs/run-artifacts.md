@@ -3323,6 +3323,23 @@ retrieval, or audited false-positive/false-negative rates. The committed
 `papers/proposal_lifecycle_audit_boundary.json` sidecar preserves the same
 independent-audit absence boundary for paper-manifest validation.
 
+## `runtime.history.incorrect_suggestion_audit_report`
+
+Completed manifests include a bounded incorrect-suggestion audit report with
+schema `libreevolve.incorrect_suggestion_audit_report.v1`. It is derived from
+`runtime.history.proposal_lifecycle_report` and records generated, accepted,
+rejected, execution-filtered, invalid-evaluation, diff/parse-error,
+archive-rejected, and accepted-invalid counts, plus local filter and
+accepted-invalid rates when denominators are present. Bounded audit records
+link proposal ids to lifecycle status, evaluator validity, rejection reason,
+archive admission, and the fact that no independent rejudge was run.
+
+This is local execution-grounding evidence. Its `claim_ready: false` boundary
+is intentional: independent rejudge of accepted or rejected candidates,
+reference/statistical-oracle sufficiency, cross-run proposal lifecycle tables,
+semantic failed-proposal retrieval, and audited false-acceptance/
+false-rejection rates remain unsupported.
+
 ## `runtime.history.sample_efficiency_report`
 
 Completed manifests include a single-run sample-efficiency report with schema

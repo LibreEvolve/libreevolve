@@ -92,8 +92,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     id, backend/call summaries, mutation payload hash, evaluator validity,
     archive admission/rejection, rejection reason, execution-filtered counts,
     failure-memory linkage, and false-acceptance/false-rejection review
-    status. The wording explicitly keeps this as local execution-grounding
-    evidence rather than an independent audit. ROADMAP now also names
+    status. They also cite
+    `runtime.history.incorrect_suggestion_audit_report`, a validated
+    `libreevolve.incorrect_suggestion_audit_report.v1` runtime summary with
+    local accepted/rejected/execution-filtered counts, invalid-evaluation and
+    archive-rejection counts, local filter rates, bounded audit rows, and
+    false readiness for independent rejudge and audited error rates. The
+    wording explicitly keeps this as local execution-grounding evidence rather
+    than an independent audit. ROADMAP names
     `papers/proposal_lifecycle_audit_boundary.json` as the committed
     paper-manifest-validated independent-audit absence boundary.
   - Required result: when independent rejudge/reference-checker or statistical

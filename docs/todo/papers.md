@@ -45,17 +45,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     the initial candidate pool.
   - Partial status: completed manifests now include
     `runtime.history.proposal_lifecycle_report` with schema
-    `libreevolve.proposal_lifecycle_report.v1`. The report connects generated
-    proposals through backend/call summaries, mutation hashes, execution/
-    evaluator validity, archive admission or rejection, rejection reasons,
-    execution-filtered counts, failure-memory linkage, aggregate false-
-    acceptance/false-rejection review status, and claim-readiness checks. The
-    committed `papers/proposal_lifecycle_audit_boundary.json` sidecar now
-    preserves the paper-manifest-validated independent-audit absence boundary.
-  - Current gap: the report is local run evidence. It does not independently
-    rejudge accepted or rejected proposals, prove benchmark-specific evaluator-
-    oracle sufficiency, aggregate cross-run proposal tables, or report audited
-    false-acceptance/false-rejection rates.
+    `libreevolve.proposal_lifecycle_report.v1`. Completed manifests also
+    include `runtime.history.incorrect_suggestion_audit_report` with schema
+    `libreevolve.incorrect_suggestion_audit_report.v1`. The reports connect
+    generated proposals through backend/call summaries, mutation hashes,
+    execution/evaluator validity, archive admission or rejection, rejection
+    reasons, execution-filtered counts, invalid-evaluation and
+    archive-rejected counts, local filter rates, failure-memory linkage,
+    aggregate false-acceptance/false-rejection audit absence, and
+    claim-readiness checks. The committed
+    `papers/proposal_lifecycle_audit_boundary.json` sidecar preserves the
+    paper-manifest-validated independent-audit absence boundary.
+  - Current gap: these reports are local run evidence. They do not
+    independently rejudge accepted or rejected proposals, prove
+    benchmark-specific evaluator-oracle sufficiency, aggregate cross-run
+    proposal tables, or report audited false-acceptance/false-rejection rates.
   - Required result: add independent rejudge/reference-checker or statistical
     oracle evidence for accepted and rejected proposals, cross-run proposal
     lifecycle tables, semantic failed-proposal retrieval, benchmark-specific

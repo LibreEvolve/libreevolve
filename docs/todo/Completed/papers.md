@@ -11857,3 +11857,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     outcomes.
   - Verification: focused ensemble scheduler tests validate the implemented
     fields.
+
+- [x] Record single-run sample-efficiency evidence.
+  - Spec evidence: AlphaEvolve Table 1 and Section 4 make LLM sample budgets
+    part of the paper-facing efficiency claim.
+  - Status: paper-facing TODOs and runtime manifests now expose
+    `sample_efficiency_report` with single-run generated proposal,
+    evaluated/valid/admitted candidate, retained-elite, sampling-eligible,
+    logical LLM sample, and bounded best-score curve evidence.
+  - Remaining paper gap: this does not prove target hits, thousands-scale
+    sample sufficiency, repeated-sampling uplift, or model-size/equal-budget
+    comparisons.
+  - Verification: focused runtime sample-efficiency test validates the
+    implemented report.

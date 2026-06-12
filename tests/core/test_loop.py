@@ -86,6 +86,7 @@ from libreevolve.core.loop import (
     validate_proposal_diversity_report,
     validate_proposal_score_report,
     validate_proposal_lifecycle_report,
+    validate_sample_efficiency_report,
     validate_hypothesis_branch_report,
     validate_controller_backtracking_report,
     VALID_THRESHOLD,
@@ -7304,6 +7305,37 @@ def test_runtime_history_reports_execution_filtered_proposal_lifecycle():
     assert lifecycle["admission"]["reason"] == "invalid_evaluation"
     assert lifecycle["llm"]["calls"][0]["backend_name"] == "fake/model"
     assert lifecycle["mutation"]["sha256"] == failures[0]["mutation_sha256"]
+
+    sample_efficiency = manifest["runtime"]["history"]["sample_efficiency_report"]
+    assert sample_efficiency["schema"] == "libreevolve.sample_efficiency_report.v1"
+    assert sample_efficiency["validation"]["ok"] is True
+    assert validate_sample_efficiency_report(sample_efficiency)["ok"] is True
+    assert sample_efficiency["generated_proposal_count"] == 1
+    assert sample_efficiency["evaluated_candidate_count"] == 1
+    assert sample_efficiency["valid_candidate_count"] == 0
+    assert sample_efficiency["archive_admitted_candidate_count"] == 0
+    assert sample_efficiency["retained_elite_count"] == 0
+    assert sample_efficiency["logical_llm_sample_count"] == 1
+    assert sample_efficiency["target_policy"]["status"] == "not_configured"
+    assert sample_efficiency["claim_ready"] is False
+    assert "cross_run_sample_budget_curves" in (
+        sample_efficiency["claim_readiness"]["remaining_gap"]
+    )
+    assert sample_efficiency["cumulative_curve"] == [
+        {
+            "sample_index": 1,
+            "proposal_id": lifecycle["proposal_id"],
+            "logical_llm_sample_count": 1,
+            "evaluated_candidate_count": 1,
+            "valid_candidate_count": 0,
+            "archive_admitted_candidate_count": 0,
+            "retained_elite_count": 0,
+            "search_state_changed_count": 0,
+            "sampling_eligible_count": 0,
+            "best_score_so_far": -0.1,
+            "target_hit_count": 0,
+        }
+    ]
 
 
 def test_runtime_history_reports_duplicate_work_policy_with_run_local_cache():

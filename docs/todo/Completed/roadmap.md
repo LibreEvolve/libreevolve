@@ -9069,3 +9069,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     labels, and `claim_ready: false` limitations.
   - Verification: focused ensemble scheduler tests validate the implemented
     fields.
+
+- [x] Preserve single-run sample-efficiency evidence.
+  - Spec evidence: roadmap sample-efficiency claims need to distinguish local
+    runtime sample counts from future AlphaEvolve Table 1 benchmark evidence.
+  - Status: ROADMAP and TODO wording now recognize
+    `runtime.history.sample_efficiency_report` as single-run evidence for
+    proposal/candidate/sample counts and a bounded best-score curve, while
+    keeping target-hit, thousands-scale, repeated-sampling, and model-size
+    comparison evidence open.
+  - Verification: focused runtime sample-efficiency test validates the
+    implemented report.

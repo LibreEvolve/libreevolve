@@ -3277,6 +3277,22 @@ retrieval, or audited false-positive/false-negative rates. The committed
 `papers/proposal_lifecycle_audit_boundary.json` sidecar preserves the same
 independent-audit absence boundary for paper-manifest validation.
 
+## `runtime.history.sample_efficiency_report`
+
+Completed manifests include a single-run sample-efficiency report with schema
+`libreevolve.sample_efficiency_report.v1`. It is derived from
+`runtime.history.proposal_lifecycle_report` and records generated proposal
+count, evaluated candidate count, valid candidate count, archive-admitted
+candidate count, retained elite count, search-state-changed count,
+sampling-eligible count, logical LLM sample count, and a bounded cumulative
+curve over proposal sample index with best score so far.
+
+The report currently records `target_policy.status: "not_configured"` and
+`claim_ready: false`. It is local sample-count/runtime evidence, not proof of
+AlphaEvolve Table 1 sample efficiency, target-hit-per-sample behavior,
+thousands-scale benchmark success, equal-budget model-size comparison, or a
+repeated-sampling baseline.
+
 Prompt feedback for the selected parent also renders bounded, redacted
 summaries from the candidate's persisted evaluation record: recent stage
 status, stdout/stderr, retry/sample attempts, and LLM grader feedback. It also

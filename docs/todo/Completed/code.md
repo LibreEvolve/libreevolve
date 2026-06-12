@@ -17227,3 +17227,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Remaining gap: this is a metadata trace, not experiment-level
     selection/outcome evidence or equal-budget Flash/Pro-style validation.
   - Verification: focused ensemble scheduler tests pass.
+
+- [x] Add single-run sample-efficiency report.
+  - Spec evidence: AlphaEvolve Table 1 compares useful results under LLM sample
+    budgets, so local runtime artifacts need proposal/candidate/sample counts
+    before broader sample-efficiency claims.
+  - Status: runtime histories now include
+    `libreevolve.sample_efficiency_report.v1`, derived from proposal lifecycle
+    evidence, with generated proposal, evaluated/valid/admitted candidate,
+    retained-elite, search-state, sampling-eligible, logical LLM sample, and
+    bounded cumulative best-score counts.
+  - Remaining gap: target-hit curves, thousands-scale benchmark evidence,
+    repeated-sampling baselines, and equal-budget model-size comparisons remain
+    open.
+  - Verification: focused runtime sample-efficiency test passes.

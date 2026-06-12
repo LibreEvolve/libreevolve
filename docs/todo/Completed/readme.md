@@ -11536,3 +11536,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     `claim_ready: false`.
   - Verification: focused ensemble scheduler tests validate the implemented
     fields.
+
+- [x] Document single-run sample-efficiency report.
+  - Spec evidence: README sample-efficiency wording needed to distinguish
+    local proposal/candidate/sample-count artifacts from AlphaEvolve Table 1
+    sample-efficiency claims.
+  - Status: README and run-artifact docs now describe
+    `runtime.history.sample_efficiency_report`, including generated proposal,
+    evaluated/valid/admitted candidate, retained-elite, logical LLM sample, and
+    bounded best-score curve counts with `claim_ready: false`.
+  - Verification: focused runtime sample-efficiency test validates the
+    implemented report.

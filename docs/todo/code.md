@@ -4192,15 +4192,18 @@ Primary evidence:
     provider-attempts, provider-reported tokens, configured estimated cost,
     latency, evaluator counts, evaluator seconds, and wall-clock runtime.
     Generated candidates have deterministic ids, proposal-batch metadata, and
-    history rows. The ablation-result contract validates equal-budget curves
-    and includes the `Small base LLM only` variant, but it does not require
-    candidate/sample-count efficiency curves.
+    history rows. Runtime histories now include
+    `libreevolve.sample_efficiency_report.v1`, derived from proposal lifecycle
+    evidence, with generated proposal, evaluated/valid/admitted candidate,
+    retained-elite, sampling-eligible, logical LLM sample, and bounded
+    cumulative best-score counts. The ablation-result contract validates
+    equal-budget curves and includes the `Small base LLM only` variant, but it
+    does not require target-hit or model-size sample-count efficiency curves.
   - Required result: add benchmark/report schemas and runtime summaries that
-    count generated LLM proposals, evaluated candidates, valid candidates,
-    archive-admitted candidates, retained elites, and target hits by sample
-    budget; validate score/target progress versus thousands-scale proposal
-    counts; and compare SOTA/strong-model runs with small-base or generic
-    routing runs before claiming AlphaEvolve-style sample efficiency.
+    extend the single-run counts into target hits by sample budget, validate
+    score/target progress versus thousands-scale proposal counts, and compare
+    SOTA/strong-model runs with small-base or generic routing runs before
+    claiming AlphaEvolve-style sample efficiency.
 
 - [ ] Add repeated-sampling baseline reports for test-time-compute uplift
       claims.

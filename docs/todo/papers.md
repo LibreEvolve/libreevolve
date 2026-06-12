@@ -400,16 +400,19 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Partial status: LibreEvolve records logical LLM calls, provider attempts,
     provider-reported token totals, configured estimated cost, latency,
     generated candidate ids, sequential sibling proposal batches, and
-    equal-budget ablation report shapes.
-  - Current gap: no benchmark report ties final score or target attainment to
-    the number of generated/evaluated LLM proposals, compares thousands-scale
-    runs against much larger or smaller sample budgets, or separates
-    sample-efficiency gains from generic budget stopping, fast/strong routing,
-    and the `Small base LLM only` ablation label.
+    equal-budget ablation report shapes. Runtime histories now include
+    `libreevolve.sample_efficiency_report.v1`, a single-run report that counts
+    generated proposals, evaluated/valid/admitted candidates, retained elites,
+    sampling-eligible candidates, logical LLM samples, and a bounded cumulative
+    best-score curve.
+  - Current gap: no benchmark report ties target attainment to the number of
+    generated/evaluated LLM proposals, compares thousands-scale runs against
+    much larger or smaller sample budgets, or separates sample-efficiency
+    gains from generic budget stopping, fast/strong routing, and the
+    `Small base LLM only` ablation label.
   - Required result: add sample-efficiency report fields and validation for
-    generated proposals, evaluated candidates, admitted candidates, retained
-    elites, LLM-call/sample budgets, target attainment versus sample count,
-    and equal-budget model-size comparisons before claiming AlphaEvolve-style
+    target attainment versus sample count, thousands-scale budget curves, and
+    equal-budget model-size comparisons before claiming AlphaEvolve-style
     "thousands of samples suffice" behavior.
 
 - [ ] Track repeated-sampling baselines for test-time-compute uplift claims.

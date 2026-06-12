@@ -1523,22 +1523,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     underclaims current focused `throughput_depth` coverage nor overclaims
     AlphaEvolve-grade model-scheduling validation.
 
-- [ ] Keep sample-efficiency roadmap wording scoped to budget accounting
-      until proposal-count reports exist.
+- [ ] Keep sample-efficiency roadmap wording scoped to single-run counts
+      until benchmark-level curves exist.
   - Spec evidence: AlphaEvolve Table 1 says AlphaEvolve can get useful results
     with thousands of LLM samples, unlike FunSearch's millions, and Section 4
     evaluates the impact of powerful models under fixed compute budgets.
-  - Current evidence: `ROADMAP.md` discusses local LLM call/provider/token/
-    configured-cost/latency budget accounting, equal-budget ablation report
-    contracts, fast/deep scheduler validation, and small-base-model ablation
-    labels. It does not require reports that plot target progress against
-    generated/evaluated proposal counts or validate thousands-scale sample
-    efficiency.
-  - Required result: when proposal-count efficiency reports, sample-budget
-    curves, model-size comparisons, or target-hit-per-sample summaries land,
-    update ROADMAP, README, papers index, and code/paper TODOs together so
-    roadmap language distinguishes budget stopping from AlphaEvolve-style
-    "thousands of samples suffice" evidence.
+  - Current evidence: `ROADMAP.md` now mentions
+    `runtime.history.sample_efficiency_report`, which records single-run
+    generated/evaluated/valid/admitted/retained counts, logical LLM sample
+    counts, and a bounded cumulative best-score curve. It still keeps
+    target-hit evidence, thousands-scale benchmark curves, equal-budget
+    model-size comparisons, repeated-sampling baselines, and fast/deep
+    scheduler validation as open work.
+  - Required result: when benchmark-level sample-budget curves, model-size
+    comparisons, repeated-sampling baselines, or target-hit-per-sample
+    summaries land, update ROADMAP, README, papers index, and code/paper TODOs
+    together so roadmap language distinguishes single-run local counts from
+    AlphaEvolve-style "thousands of samples suffice" evidence.
 
 - [ ] Keep test-time-compute roadmap wording scoped until repeated-sampling
       baselines exist.

@@ -1242,6 +1242,16 @@ is local execution-grounding evidence, not an independent benchmark rejudge or
 audited error-rate claim. The committed
 `papers/proposal_lifecycle_audit_boundary.json` sidecar now records that
 paper-manifest-validated independent-audit absence boundary.
+Completed manifests also include
+`runtime.history.sample_efficiency_report`, a single-run
+`libreevolve.sample_efficiency_report.v1` summary derived from the lifecycle
+report. It counts generated proposals, evaluated candidates, valid candidates,
+archive-admitted candidates, retained elites, sampling-eligible candidates,
+logical LLM samples, and a bounded cumulative curve with best score so far.
+The report deliberately marks target thresholds as `not_configured` and
+`claim_ready: false`; it is local sample-count evidence, not thousands-scale
+Table 1 validation, target-hit proof, repeated-sampling comparison, or
+cross-run model-size analysis.
 Rejected workspace seed rows render all seed files into bounded `mutation_text`
 and include `seed_workspace` per-file path, role, byte count, SHA-256, snippet,
 and truncation metadata.

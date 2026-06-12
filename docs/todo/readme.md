@@ -2649,14 +2649,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: README documents logical LLM call caps, provider-attempt,
     token, configured-cost, and latency stops, sequential
     `proposals_per_generation` batches, equal-budget ablation report schemas,
-    and the `Small base LLM only` registry variant. It does not document
-    benchmark evidence that useful target progress is achieved in
-    thousands-scale generated/evaluated proposal counts.
-  - Required result: once benchmark reports track generated proposals,
-    evaluated candidates, admitted/retained candidates, target hits, and
-    score/target progress versus LLM sample budgets, update README, ROADMAP,
-    papers index, and code/paper TODOs so README does not imply that budget
-    caps or small-base labels prove AlphaEvolve-style sample efficiency.
+    and the `Small base LLM only` registry variant. README now documents the
+    single-run `sample_efficiency_report` with generated/evaluated/valid/
+    admitted/retained counts, logical LLM samples, and a bounded best-score
+    curve. It still does not document benchmark evidence that useful target
+    progress is achieved in thousands-scale proposal counts.
+  - Required result: once benchmark reports track target hits and score/target
+    progress versus LLM sample budgets across thousands-scale and equal-budget
+    model-size comparisons, update README, ROADMAP, papers index, and
+    code/paper TODOs so README does not imply that local sample counts, budget
+    caps, or small-base labels prove AlphaEvolve-style sample efficiency.
 
 - [ ] Keep README test-time-compute wording scoped until repeated-sampling
       baselines exist.

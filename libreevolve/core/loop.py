@@ -5235,6 +5235,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         programs,
     )
     hypothesis_branch_report = _hypothesis_branch_report(db, programs)
+    proposal_lifecycle_report = _proposal_lifecycle_report(db, programs)
     distributed_pipeline_topology = _distributed_pipeline_topology_report(
         startup_manifest,
         budget,
@@ -5420,7 +5421,10 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
             db.startup_manifest_snapshot(),
             programs,
         ),
-        "proposal_lifecycle_report": _proposal_lifecycle_report(db, programs),
+        "proposal_lifecycle_report": proposal_lifecycle_report,
+        "sample_efficiency_report": _sample_efficiency_report(
+            proposal_lifecycle_report
+        ),
         "hypothesis_branch_report": hypothesis_branch_report,
         "controller_backtracking_report": _controller_backtracking_report(
             programs,
@@ -27653,6 +27657,320 @@ def _proposal_lifecycle_report(
     }
     report["validation"] = validate_proposal_lifecycle_report(report)
     return report
+
+
+def _sample_efficiency_report(proposal_lifecycle_report: Mapping[str, object]) -> dict:
+    records = [
+        record
+        for record in proposal_lifecycle_report.get("records", [])
+        if isinstance(record, Mapping)
+    ]
+    generated_count = _sample_efficiency_non_negative_int(
+        proposal_lifecycle_report.get("generated_candidate_count")
+    )
+    if generated_count is None:
+        generated_count = len(records)
+    evaluated_count = sum(
+        1 for record in records if isinstance(record.get("evaluator_is_valid"), bool)
+    )
+    valid_count = sum(1 for record in records if record.get("evaluator_is_valid") is True)
+    admitted_count = sum(
+        1 for record in records if record.get("admission", {}).get("admitted") is True
+    )
+    retained_elite_count = sum(
+        1
+        for record in records
+        if record.get("admission", {}).get("elite_retained") is True
+    )
+    search_state_changed_count = sum(
+        1
+        for record in records
+        if record.get("admission", {}).get("search_state_changed") is True
+    )
+    sampling_eligible_count = sum(
+        1
+        for record in records
+        if record.get("admission", {}).get("sampling_eligible") is True
+    )
+    llm_sample_count = sum(_sample_efficiency_llm_call_count(record) for record in records)
+    curve = _sample_efficiency_curve(records)
+    report = {
+        "schema": "libreevolve.sample_efficiency_report.v1",
+        "source": "runtime.history.proposal_lifecycle_report",
+        "generated_proposal_count": generated_count,
+        "evaluated_candidate_count": evaluated_count,
+        "valid_candidate_count": valid_count,
+        "archive_admitted_candidate_count": admitted_count,
+        "retained_elite_count": retained_elite_count,
+        "search_state_changed_count": search_state_changed_count,
+        "sampling_eligible_count": sampling_eligible_count,
+        "logical_llm_sample_count": llm_sample_count,
+        "target_hit_count": 0,
+        "target_policy": {
+            "status": "not_configured",
+            "target_thresholds": [],
+            "target_attainment_by_sample": False,
+        },
+        "cumulative_curve": curve,
+        "curve_truncated": generated_count > len(curve),
+        "claim_ready": False,
+        "claim_readiness": {
+            "single_run_sample_counts": True,
+            "target_attainment_curve": False,
+            "thousands_scale_budget_validation": False,
+            "equal_budget_model_size_comparison": False,
+            "separates_evolution_from_repeated_sampling": False,
+            "remaining_gap": [
+                "target_threshold_configuration",
+                "cross_run_sample_budget_curves",
+                "equal_budget_small_base_model_comparison",
+                "repeated_sampling_baseline_linkage",
+                "thousands_scale_benchmark_runs",
+            ],
+        },
+    }
+    report["validation"] = validate_sample_efficiency_report(report)
+    return report
+
+
+def _sample_efficiency_curve(records: list[Mapping[str, object]]) -> list[dict]:
+    curve: list[dict] = []
+    evaluated_count = 0
+    valid_count = 0
+    admitted_count = 0
+    retained_elite_count = 0
+    search_state_changed_count = 0
+    sampling_eligible_count = 0
+    llm_sample_count = 0
+    best_score: float | None = None
+    for index, record in enumerate(records[:50], start=1):
+        evaluated = isinstance(record.get("evaluator_is_valid"), bool)
+        valid = record.get("evaluator_is_valid") is True
+        admission = record.get("admission") if isinstance(record.get("admission"), Mapping) else {}
+        admitted = admission.get("admitted") is True
+        retained = admission.get("elite_retained") is True
+        search_changed = admission.get("search_state_changed") is True
+        sampling_eligible = admission.get("sampling_eligible") is True
+        score = _proposal_lifecycle_number(record.get("score"))
+        if evaluated:
+            evaluated_count += 1
+        if valid:
+            valid_count += 1
+        if admitted:
+            admitted_count += 1
+        if retained:
+            retained_elite_count += 1
+        if search_changed:
+            search_state_changed_count += 1
+        if sampling_eligible:
+            sampling_eligible_count += 1
+        if score is not None:
+            best_score = score if best_score is None else max(best_score, score)
+        llm_sample_count += _sample_efficiency_llm_call_count(record)
+        curve.append(
+            {
+                "sample_index": index,
+                "proposal_id": record.get("proposal_id"),
+                "logical_llm_sample_count": llm_sample_count,
+                "evaluated_candidate_count": evaluated_count,
+                "valid_candidate_count": valid_count,
+                "archive_admitted_candidate_count": admitted_count,
+                "retained_elite_count": retained_elite_count,
+                "search_state_changed_count": search_state_changed_count,
+                "sampling_eligible_count": sampling_eligible_count,
+                "best_score_so_far": best_score,
+                "target_hit_count": 0,
+            }
+        )
+    return curve
+
+
+def _sample_efficiency_llm_call_count(record: Mapping[str, object]) -> int:
+    llm = record.get("llm") if isinstance(record.get("llm"), Mapping) else {}
+    value = llm.get("call_count")
+    if isinstance(value, int) and not isinstance(value, bool) and value >= 0:
+        return value
+    calls = llm.get("calls")
+    if isinstance(calls, list):
+        return len(calls)
+    return 0
+
+
+def _sample_efficiency_non_negative_int(value: object) -> int | None:
+    if isinstance(value, int) and not isinstance(value, bool) and value >= 0:
+        return value
+    return None
+
+
+def validate_sample_efficiency_report(report: object) -> dict:
+    issues: list[dict[str, str]] = []
+    if not isinstance(report, Mapping):
+        return {
+            "schema": "libreevolve.sample_efficiency_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_report",
+                    "message": "sample efficiency report must be a mapping",
+                }
+            ],
+        }
+    if report.get("schema") != "libreevolve.sample_efficiency_report.v1":
+        issues.append({"code": "invalid_schema", "message": "unsupported schema"})
+    required_counts = (
+        "generated_proposal_count",
+        "evaluated_candidate_count",
+        "valid_candidate_count",
+        "archive_admitted_candidate_count",
+        "retained_elite_count",
+        "search_state_changed_count",
+        "sampling_eligible_count",
+        "logical_llm_sample_count",
+        "target_hit_count",
+    )
+    for field in required_counts:
+        if _sample_efficiency_non_negative_int(report.get(field)) is None:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    generated_count = _sample_efficiency_non_negative_int(
+        report.get("generated_proposal_count")
+    )
+    for field in (
+        "evaluated_candidate_count",
+        "valid_candidate_count",
+        "archive_admitted_candidate_count",
+        "retained_elite_count",
+        "search_state_changed_count",
+        "sampling_eligible_count",
+        "target_hit_count",
+    ):
+        count = _sample_efficiency_non_negative_int(report.get(field))
+        if generated_count is not None and count is not None and count > generated_count:
+            issues.append(
+                {
+                    "code": f"{field}_exceeds_generated",
+                    "message": f"{field} cannot exceed generated_proposal_count",
+                }
+            )
+    curve = report.get("cumulative_curve")
+    if not isinstance(curve, list):
+        issues.append(
+            {
+                "code": "invalid_cumulative_curve",
+                "message": "cumulative_curve must be a list",
+            }
+        )
+        curve = []
+    if generated_count is not None and len(curve) > generated_count:
+        issues.append(
+            {
+                "code": "curve_exceeds_generated",
+                "message": "cumulative_curve cannot exceed generated_proposal_count",
+            }
+        )
+    previous_sample_index = 0
+    previous_counts = {
+        "logical_llm_sample_count": 0,
+        "evaluated_candidate_count": 0,
+        "valid_candidate_count": 0,
+        "archive_admitted_candidate_count": 0,
+        "retained_elite_count": 0,
+        "search_state_changed_count": 0,
+        "sampling_eligible_count": 0,
+        "target_hit_count": 0,
+    }
+    for index, row in enumerate(curve):
+        if not isinstance(row, Mapping):
+            issues.append(
+                {"code": "invalid_curve_row", "message": "curve rows must be mappings"}
+            )
+            continue
+        sample_index = _sample_efficiency_non_negative_int(row.get("sample_index"))
+        if sample_index != previous_sample_index + 1:
+            issues.append(
+                {
+                    "code": "invalid_curve_sample_index",
+                    "message": "curve sample_index values must be contiguous from 1",
+                }
+            )
+        previous_sample_index = sample_index or previous_sample_index
+        for field, previous in previous_counts.items():
+            value = _sample_efficiency_non_negative_int(row.get(field))
+            if value is None:
+                issues.append(
+                    {
+                        "code": f"invalid_curve_{field}",
+                        "message": f"curve {field} must be a non-negative integer",
+                    }
+                )
+                continue
+            if value < previous:
+                issues.append(
+                    {
+                        "code": f"non_monotonic_curve_{field}",
+                        "message": f"curve {field} must be monotonic",
+                    }
+                )
+            previous_counts[field] = value
+        score = row.get("best_score_so_far")
+        if score is not None and (
+            isinstance(score, bool)
+            or not isinstance(score, (int, float))
+            or not math.isfinite(float(score))
+        ):
+            issues.append(
+                {
+                    "code": "invalid_curve_best_score",
+                    "message": "best_score_so_far must be finite or null",
+                }
+            )
+        if index == len(curve) - 1:
+            for field, value in previous_counts.items():
+                expected = report.get(field)
+                if field == "logical_llm_sample_count":
+                    expected = report.get("logical_llm_sample_count")
+                if (
+                    _sample_efficiency_non_negative_int(expected) is not None
+                    and value > expected
+                ):
+                    issues.append(
+                        {
+                            "code": f"curve_{field}_exceeds_report",
+                            "message": f"curve {field} cannot exceed report count",
+                        }
+                    )
+    target_policy = report.get("target_policy")
+    if not isinstance(target_policy, Mapping) or target_policy.get("status") != "not_configured":
+        issues.append(
+            {
+                "code": "invalid_target_policy",
+                "message": "target_policy must record not_configured status",
+            }
+        )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "invalid_claim_ready",
+                "message": "sample efficiency report must not claim full readiness",
+            }
+        )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping) or readiness.get("single_run_sample_counts") is not True:
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must preserve single-run sample-count status",
+            }
+        )
+    return {
+        "schema": "libreevolve.sample_efficiency_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
 
 
 def _proposal_diversity_report(programs: list[Program]) -> dict:

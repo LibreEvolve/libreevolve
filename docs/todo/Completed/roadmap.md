@@ -9226,6 +9226,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: focused runtime whole-run source/workspace integrity test
     validates the implemented report.
 
+- [x] Preserve whole-run source/workspace integrity paper-facing sidecar.
+  - Status: ROADMAP and TODO wording now point to
+    `papers/whole_run_source_workspace_integrity_boundary.json` as the
+    paper-facing sidecar for the runtime whole-run integrity absence report,
+    while durable query/replay/index work remains open.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused whole-run integrity boundary tests validate the absence
+    record.
+
 - [x] Preserve Table 1 capability-comparison exhibit boundary.
   - Spec evidence: roadmap Table 1 claims need to separate source-table
     provenance from proof of the individual AlphaEvolve capability rows.

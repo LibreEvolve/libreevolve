@@ -2057,6 +2057,9 @@ Primary evidence:
     records retained-program canonical workspace hashes and selected runtime
     artifact hashes as inspection evidence without creating a durable
     source/workspace dedup index.
+    `papers/whole_run_source_workspace_integrity_boundary.json` now preserves
+    the same bounded retained-program integrity absence boundary for
+    paper-manifest validation.
   - Required result: add durable cross-run cache storage, resume-spanning cache
     replay, cache invalidation/migration policy, stochastic re-evaluation
     policy, semantic near-duplicate detection, and source/output-aware cache

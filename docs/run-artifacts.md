@@ -1615,7 +1615,9 @@ Important behavior:
   coherence, static-file reference counts, startup provenance presence, and
   selected runtime artifact file/tree hashes. This is run-inspection evidence,
   not a durable query UI, full raw source replay store, cross-run workspace
-  dedup index, or static-file content replay surface.
+  dedup index, or static-file content replay surface. The committed
+  `papers/whole_run_source_workspace_integrity_boundary.json` sidecar
+  preserves this absence boundary for paper-manifest validation.
 - `runtime.history.hypothesis_index` stores bounded proposal
   idea/rationale/hypothesis summaries for valid programs with captured
   proposal metadata. Text fields are redacted, hashed, and capped before

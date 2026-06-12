@@ -17415,6 +17415,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused runtime whole-run source/workspace integrity test
     passes.
 
+- [x] Emit whole-run source/workspace integrity paper-facing absence boundary sidecar.
+  - Status: `libreevolve/problems/benchmarks/whole_run_source_workspace_integrity_boundary.py`
+    and `papers/whole_run_source_workspace_integrity_boundary.json` now
+    preserve that LibreEvolve has a runtime report for retained-program
+    workspace hashes, primary-file coherence, source-payload shape,
+    static-file reference counts, startup provenance presence, and selected
+    runtime artifact hashes, but no durable whole-run query surface, full raw
+    source-payload replay artifacts, cross-run workspace dedup index,
+    static-file content replay, or selected/unselected source-diff views.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused whole-run integrity boundary tests validate the absence
+    record.
+
 - [x] Add Table 1 capability-comparison exhibit provenance.
   - Spec evidence: AlphaEvolve Table 1 is a row-level comparison between
     FunSearch and AlphaEvolve capabilities, and source-table provenance should

@@ -2037,6 +2037,8 @@ resumed-trace proof are still open.
 - Improve run inspection beyond the current validity/archive-aware selected-row
   `show` view, streamed history source/workspace validation, bounded runtime
   summaries, and manifest-level whole-run source/workspace integrity report
+  with `papers/whole_run_source_workspace_integrity_boundary.json`
+  preserving the paper-facing absence boundary
   toward richer archive/prompt/failure drill-downs, durable query views over run
   artifacts, full source-payload replay, and cross-run source/workspace
   indexes.

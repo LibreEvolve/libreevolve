@@ -215,6 +215,10 @@ from libreevolve.problems.benchmarks.ucb1_boundary import (
     ucb1_boundary_record,
     validate_ucb1_boundary,
 )
+from libreevolve.problems.benchmarks.whole_run_source_workspace_integrity_boundary import (
+    validate_whole_run_source_workspace_integrity_boundary,
+    whole_run_source_workspace_integrity_boundary_record,
+)
 from libreevolve.problems.benchmarks.paper_bibliography import (
     EXPECTED_REFERENCES_BIBLIOGRAPHY_FILE,
     alphaevolve_references_section_record,
@@ -323,6 +327,7 @@ REPEATED_SAMPLING_BASELINE_BOUNDARY_FILE = "papers/repeated_sampling_baseline_bo
 SAMPLE_EFFICIENCY_BOUNDARY_FILE = "papers/sample_efficiency_boundary.json"
 PARALLEL_EVALUATION_READINESS_BOUNDARY_FILE = "papers/parallel_evaluation_readiness_boundary.json"
 DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_FILE = "papers/distributed_pipeline_topology_boundary.json"
+WHOLE_RUN_SOURCE_WORKSPACE_INTEGRITY_BOUNDARY_FILE = "papers/whole_run_source_workspace_integrity_boundary.json"
 EVALUATION_CASCADE_BOUNDARY_FILE = "papers/evaluation_cascade_boundary.json"
 CONTROLLER_BACKTRACKING_BOUNDARY_FILE = "papers/controller_backtracking_boundary.json"
 MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE = "papers/matrix_headline_historicity_artifacts.json"
@@ -786,6 +791,7 @@ def validate_paper_manifest(
     issues.extend(_validate_sample_efficiency_boundary(root_path))
     issues.extend(_validate_parallel_evaluation_readiness_boundary(root_path))
     issues.extend(_validate_distributed_pipeline_topology_boundary(root_path))
+    issues.extend(_validate_whole_run_source_workspace_integrity_boundary(root_path))
     issues.extend(_validate_evaluation_cascade_boundary(root_path))
     issues.extend(_validate_controller_backtracking_boundary(root_path))
     issues.extend(_validate_example_benchmark_scope_records(root_path))
@@ -1714,6 +1720,38 @@ def _validate_distributed_pipeline_topology_boundary(root_path: Path) -> list[Pa
             f"distributed_pipeline_topology_boundary_{issue.code}",
             issue.message,
             "distributed_pipeline_topology",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_whole_run_source_workspace_integrity_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / WHOLE_RUN_SOURCE_WORKSPACE_INTEGRITY_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = whole_run_source_workspace_integrity_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "whole_run_source_workspace_integrity_boundary_manifest_missing",
+                    (
+                        f"{WHOLE_RUN_SOURCE_WORKSPACE_INTEGRITY_BOUNDARY_FILE} must emit "
+                        "whole-run source/workspace integrity availability"
+                    ),
+                    "whole_run_source_workspace_integrity",
+                )
+            ]
+    report = validate_whole_run_source_workspace_integrity_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"whole_run_source_workspace_integrity_boundary_{issue.code}",
+            issue.message,
+            "whole_run_source_workspace_integrity",
         )
         for issue in report.issues
     ]

@@ -563,7 +563,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     manifest evidence for retained-program workspace hashes, primary-file
     coherence, source-payload shape, static-file references, and selected
     runtime artifact hashes, while excluding durable query, full replay, and
-    cross-run dedup claims.
+    cross-run dedup claims. The paper-facing
+    `papers/whole_run_source_workspace_integrity_boundary.json` sidecar
+    preserves the same bounded retained-program integrity absence boundary for
+    manifest validation.
   - Required result: when durable run-artifact query views, richer
     archive/prompt/failure drill-downs, full source-payload replay, or
     cross-run source/workspace indexes land, update README, ROADMAP, papers

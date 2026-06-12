@@ -11663,6 +11663,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: focused runtime whole-run source/workspace integrity test
     validates the implemented report.
 
+- [x] Document whole-run source/workspace integrity sidecar boundary.
+  - Status: README and run-artifact docs now point to
+    `papers/whole_run_source_workspace_integrity_boundary.json` as the
+    paper-facing sidecar for the bounded retained-program integrity absence
+    boundary.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused whole-run integrity boundary tests validate the absence
+    record.
+
 - [x] Document Table 1 capability-comparison exhibit report.
   - Spec evidence: README Table 1 wording needed to distinguish a reproduced
     source-table exhibit from satisfying each AlphaEvolve capability row.

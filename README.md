@@ -109,7 +109,9 @@ folders, and the current JSONL streams:
 - `prompt_prior_score_table.jsonl`
 
 See [docs/run-artifacts.md](docs/run-artifacts.md) for schemas, invalid-record
-quarantine streams, restore behavior, and inspection details.
+quarantine streams, restore behavior, and inspection details. Whole-run
+source/workspace integrity is bounded by
+`papers/whole_run_source_workspace_integrity_boundary.json`.
 
 ## How It Works
 

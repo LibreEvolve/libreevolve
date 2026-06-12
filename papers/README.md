@@ -1373,7 +1373,9 @@ source/workspace display path remains selected-row scope, but streamed
 current and legacy history rows now validate `code`, `files`, and
 `primary_file` payload shape before any best-looking row is printed. It still
 does not summarize every unselected row's source/workspace payloads as
-whole-run source integrity evidence.
+whole-run source integrity evidence. The committed
+`papers/whole_run_source_workspace_integrity_boundary.json` sidecar preserves
+the bounded retained-program integrity boundary for paper-manifest validation.
 
 MAP-Elites cell-inspection note: `libreevolve show` rejects malformed current
 history cells by arity/type/non-negativity and, when

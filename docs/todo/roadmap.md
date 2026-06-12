@@ -761,6 +761,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     retained-program workspace hashes, primary-file coherence, source-payload
     shape, static-file reference counts, startup provenance presence, and
     selected runtime artifact hashes.
+    `papers/whole_run_source_workspace_integrity_boundary.json` now preserves
+    the same bounded retained-program integrity absence boundary for manifest
+    validation.
   - Required result: when durable query/report views, richer
     archive/prompt/failure drill-downs, full source-payload replay, or
     cross-run source/workspace indexes land, update the roadmap, README,

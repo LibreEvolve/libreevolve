@@ -492,6 +492,12 @@ from libreevolve.problems.benchmarks.ucb1_boundary import (
     ucb1_boundary_record,
     validate_ucb1_boundary,
 )
+from libreevolve.problems.benchmarks.whole_run_source_workspace_integrity_boundary import (
+    WHOLE_RUN_SOURCE_WORKSPACE_INTEGRITY_BOUNDARY_SCHEMA,
+    render_whole_run_source_workspace_integrity_boundary_summary,
+    validate_whole_run_source_workspace_integrity_boundary,
+    whole_run_source_workspace_integrity_boundary_record,
+)
 
 __all__ = [
     "ABLATION_ARTIFACT_INVENTORY_SCHEMA",
@@ -590,6 +596,7 @@ __all__ = [
     "THETAEVOLVE_BOUNDARY_SCHEMA",
     "TTT_DISCOVER_BOUNDARY_SCHEMA",
     "UCB1_BOUNDARY_SCHEMA",
+    "WHOLE_RUN_SOURCE_WORKSPACE_INTEGRITY_BOUNDARY_SCHEMA",
     "ablation_result_artifact_inventory",
     "alphaevolve_2026_impact_boundary_record",
     "appendix_a_matrix_baseline_citation_boundary_from_citations",
@@ -768,11 +775,13 @@ __all__ = [
     "render_ttt_discover_boundary_summary",
     "render_alphaevolve_2026_impact_boundary_summary",
     "render_ucb1_boundary_summary",
+    "render_whole_run_source_workspace_integrity_boundary_summary",
     "systems_result_artifact_inventory",
     "strassen_2x2_publication_bundle_record",
     "thetaevolve_boundary_record",
     "ttt_discover_boundary_record",
     "ucb1_boundary_record",
+    "whole_run_source_workspace_integrity_boundary_record",
     "validate_ablation_result_report",
     "validate_appendix_a_matrix_curation",
     "validate_appendix_a_matrix_excluded_target_curation_boundary",
@@ -863,5 +872,6 @@ __all__ = [
     "validate_thetaevolve_boundary",
     "validate_ttt_discover_boundary",
     "validate_ucb1_boundary",
+    "validate_whole_run_source_workspace_integrity_boundary",
     "write_strassen_2x2_publication_bundle",
 ]

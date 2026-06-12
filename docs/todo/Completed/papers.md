@@ -12033,6 +12033,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: focused runtime whole-run source/workspace integrity test
     validates the implemented report.
 
+- [x] Record whole-run source/workspace integrity paper-facing sidecar.
+  - Status: `libreevolve/problems/benchmarks/whole_run_source_workspace_integrity_boundary.py`
+    and `papers/whole_run_source_workspace_integrity_boundary.json` now
+    preserve the paper-facing boundary that retained-program workspace hashes
+    and selected runtime artifact hashes exist, while durable query views,
+    full source-payload replay, cross-run workspace indexes, static content
+    replay, and selected/unselected source-diff inspection remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused whole-run integrity boundary tests reject premature
+    generated-program database claims.
+
 - [x] Record Table 1 capability-comparison exhibit boundary.
   - Spec evidence: AlphaEvolve Table 1 compares FunSearch and AlphaEvolve as
     a source-table artifact before any local system can claim the individual

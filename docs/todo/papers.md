@@ -4362,6 +4362,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     summarizes retained-program workspace hashes, source-payload shape,
     primary-file coherence, static-file references, startup provenance
     presence, and selected runtime artifact hashes.
+    `papers/whole_run_source_workspace_integrity_boundary.json` now preserves
+    the same bounded retained-program integrity absence boundary for
+    paper-manifest validation.
   - Required result: add durable query/report surfaces over every candidate's
     source payloads, workspace paths, source hashes, primary-file coherence,
     and display/truncation policy. The remaining gap is not malformed

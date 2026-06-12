@@ -1492,6 +1492,60 @@ def test_validate_paper_manifest_requires_proposal_score_boundary_at_repo_root(
     assert "proposal_score_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_failure_memory_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.FAILURE_MEMORY_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.failure_memory_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_failure_memory_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.failure_memory_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "semantic_failed_proposal_memory_ready"
+    record["missing_evidence"]["semantic_failed_proposal_retrieval"] = "recorded"
+    sidecar = tmp_path / paper_manifest.FAILURE_MEMORY_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "failure_memory_boundary_claim_ready_overclaim" in codes
+    assert "failure_memory_boundary_invalid_boundary_status" in codes
+    assert (
+        "failure_memory_boundary_invalid_missing_evidence_semantic_failed_proposal_retrieval"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_failure_memory_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "failure_memory_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_release_artifact_reproducibility_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

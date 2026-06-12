@@ -2542,7 +2542,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     a bounded failure index grouped by fingerprint/repetition/recency.
     `AGENTS.md` now scopes this as persisted run-local failure diagnostics and
     bounded prompt-visible failure memory, not durable cross-run semantic
-    failed-proposal memory.
+    failed-proposal memory. README and AGENTS now tie that boundary to
+    `papers/failure_memory_boundary.json`.
   - Required result: when cross-run failure tables, semantic failed-proposal
     retrieval, learned repetition avoidance, replayable failed-mutation
     payloads, or durable failure-aware sampling policies land, update README,

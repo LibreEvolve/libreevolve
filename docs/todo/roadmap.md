@@ -94,7 +94,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `papers/proposal_lifecycle_audit_boundary.json` as the committed
     paper-manifest-validated independent-audit absence boundary and
     `papers/incorrect_suggestion_audit_boundary.json` as the committed
-    incorrect-suggestion filtering absence boundary.
+    incorrect-suggestion filtering absence boundary. ROADMAP now also ties
+    run-local failure diagnostics versus semantic failed-proposal memory to
+    `papers/failure_memory_boundary.json`.
   - Required result: when independent rejudge/reference-checker or statistical
     oracle reports land, update ROADMAP, README, papers index, and code/paper
     TODOs with benchmark-specific evaluator-oracle sufficiency, cross-run

@@ -383,6 +383,12 @@ from libreevolve.problems.benchmarks.proposal_score_boundary import (
     render_proposal_score_boundary_summary,
     validate_proposal_score_boundary,
 )
+from libreevolve.problems.benchmarks.failure_memory_boundary import (
+    FAILURE_MEMORY_BOUNDARY_SCHEMA,
+    failure_memory_boundary_record,
+    render_failure_memory_boundary_summary,
+    validate_failure_memory_boundary,
+)
 from libreevolve.problems.benchmarks.matrix_exhibits import (
     FIGURE4_MATRIX_DISCOVERY_ARTIFACT_BOUNDARY_SCHEMA,
     FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA,
@@ -724,6 +730,7 @@ __all__ = [
     "FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA",
     "FIGURE9_MATRIX_DIFF_ARTIFACT_BOUNDARY_SCHEMA",
     "FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA",
+    "FAILURE_MEMORY_BOUNDARY_SCHEMA",
     "GEMINI_PROVIDER_PARITY_BOUNDARY_SCHEMA",
     "GIGAEVO_FRAMEWORK_BOUNDARY_SCHEMA",
     "INCORRECT_SUGGESTION_AUDIT_BOUNDARY_SCHEMA",
@@ -850,6 +857,7 @@ __all__ = [
     "evaluator_oracle_boundary_record",
     "example_benchmark_scope_records",
     "existing_codebase_integration_boundary_record",
+    "failure_memory_boundary_record",
     "gigaevo_framework_boundary_record",
     "incorrect_suggestion_audit_boundary_record",
     "initial_pool_divergence_boundary_record",
@@ -958,6 +966,7 @@ __all__ = [
     "render_evaluator_oracle_boundary_summary",
     "render_example_benchmark_scope_summary",
     "render_existing_codebase_integration_boundary_summary",
+    "render_failure_memory_boundary_summary",
     "render_figure8_exhibit_summary",
     "render_figure8_artifact_boundary_summary",
     "render_figure4_matrix_discovery_artifact_boundary_summary",
@@ -1078,6 +1087,7 @@ __all__ = [
     "validate_evaluator_oracle_boundary",
     "validate_example_benchmark_scope",
     "validate_existing_codebase_integration_boundary",
+    "validate_failure_memory_boundary",
     "validate_figure8_exhibit",
     "validate_figure8_artifact_boundary",
     "validate_figure4_matrix_discovery_artifact_boundary",

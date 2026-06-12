@@ -1,0 +1,39 @@
+{
+  "schema": "libreevolve.failure_memory_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve-style evolutionary memory should reuse failed proposal evidence through durable, searchable, and semantically meaningful memory rather than only bounded run-local diagnostics",
+  "boundary_status": "run_local_failure_diagnostics_not_semantic_memory",
+  "failure_index_schema": "libreevolve.failure_index.v1",
+  "failure_history_schema": "libreevolve.failure_history.v1",
+  "runtime_report_status": "run_local_failure_index_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "failure_history_jsonl_rows",
+    "strict_failure_history_loader",
+    "persisted_failure_fingerprints",
+    "repetition_counts",
+    "changed_file_summaries",
+    "file_delta_summaries",
+    "evaluation_error_summaries",
+    "stage_error_summaries",
+    "bounded_prompt_visible_failure_memory",
+    "configurable_recent_failure_filters",
+    "runtime_failure_index",
+    "proposal_lifecycle_failure_reuse_summary",
+    "durable_cross_run_failure_table",
+    "semantic_failed_proposal_retrieval",
+    "learned_repetition_avoidance_policy",
+    "replayable_failed_mutation_payloads",
+    "failure_aware_sampling_policy",
+    "cross_run_failure_index_migrations"
+  ],
+  "missing_evidence": {
+    "durable_cross_run_failure_table": "not_recorded_locally",
+    "semantic_failed_proposal_retrieval": "not_recorded_locally",
+    "learned_repetition_avoidance_policy": "not_recorded_locally",
+    "replayable_failed_mutation_payloads": "not_recorded_locally",
+    "failure_aware_sampling_policy": "not_recorded_locally",
+    "cross_run_failure_index_migrations": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve persists run-local failure_history.jsonl rows, validates them with a strict loader, stores failure fingerprints and repetition counts, summarizes changed files, file deltas, evaluation and stage errors, renders bounded prompt-visible failure memory with configurable filters, emits runtime.history.failure_index, and summarizes failure reuse in proposal lifecycle reports. It does not claim durable cross-run failure tables, semantic failed-proposal retrieval, learned repetition avoidance, replayable failed-mutation payloads, failure-aware sampling policy, or cross-run failure-index migrations."
+}

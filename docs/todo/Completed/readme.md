@@ -12718,3 +12718,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     `papers/proposal_score_boundary.json`.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused proposal score tests reject semantic idea-memory overclaims.
+
+- [x] Keep README/AGENTS failure memory boundary tied to sidecar.
+  - Status: README and AGENTS now state that failure memory is run-local
+    diagnostic evidence, not durable cross-run semantic failed-proposal
+    memory, learned repetition avoidance, or failure-aware sampling policy,
+    with the boundary tracked by `papers/failure_memory_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused failure memory tests reject semantic memory overclaims.

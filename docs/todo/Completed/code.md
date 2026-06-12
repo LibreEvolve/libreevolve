@@ -18556,3 +18556,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     semantic idea-memory overclaims, invalid boundary status, missing evidence
     drift, and incomplete required evidence fields.
+
+- [x] Add failure memory sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/failure_memory_boundary.py` now
+    emits and validates the run-local-failure-diagnostics-only boundary for
+    `failure_history.jsonl` and `runtime.history.failure_index`, separating
+    strict failure-history loading, persisted failure fingerprints, repetition
+    counts, changed-file and file-delta summaries, evaluation/stage error
+    summaries, bounded prompt-visible failure memory, configurable recent
+    failure filters, runtime failure-index records, and proposal-lifecycle
+    failure-reuse summaries from durable cross-run failure tables, semantic
+    failed-proposal retrieval, learned repetition avoidance, replayable
+    failed-mutation payloads, failure-aware sampling policy, and cross-run
+    failure-index migrations.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    semantic failure-memory overclaims, invalid boundary status, missing
+    evidence drift, and incomplete required evidence fields.

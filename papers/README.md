@@ -1148,13 +1148,16 @@ metric-vector and feedback/artifact-content/program-output ranking,
 semantic output-similarity or schema-aware output retrieval, calibrated proposal
 quality models, near-duplicate or semantic/cross-run novelty or hypothesis
 retrieval, model-quality attribution, explicit controller-owned backtracking
-policy, and prompt/archive score-influence policy. The committed
-`papers/proposal_score_boundary.json` sidecar keeps this bounded current-run
-proposal-score scope machine-validated.
-and suppression/retry policies,
+policy, prompt/archive score-influence policy, suppression/retry policies,
 schema migrations, and replayable sampling policies, not the absence of any
 resurfacing API, proposal metadata capture, exact duplicate counts, or
-branch-level abandonment, observed redirect, or proposal-score evidence.
+branch-level abandonment, observed redirect, or proposal-score evidence. The
+committed `papers/proposal_score_boundary.json` sidecar keeps this bounded
+current-run proposal-score scope machine-validated.
+`runtime.history.failure_index` groups failure records by exact fingerprint,
+repetition, and recency with bounded records; the committed
+`papers/failure_memory_boundary.json` sidecar keeps this run-local failure
+diagnostics scope machine-validated.
 
 AlphaEvolve duplicate-work note: generated candidate ids include workspace-hash
 identity provenance, and completed manifests now include

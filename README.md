@@ -60,6 +60,10 @@ Important limits:
   durable cross-run memory, semantic duplicate detection, or resume-spanning
   cache replay; that boundary is tracked by
   `papers/duplicate_work_policy_boundary.json`.
+- Failure memory is run-local diagnostic evidence, not durable cross-run
+  semantic failed-proposal memory, learned repetition avoidance, or
+  failure-aware sampling policy; that boundary is tracked by
+  `papers/failure_memory_boundary.json`.
 - Related Work positioning is not inferred from the bundled paper list; the
   missing taxonomy and claim gates are tracked by
   `papers/related_work_taxonomy_boundary.json`.

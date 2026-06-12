@@ -48,6 +48,7 @@ libreevolve/
 - Failed/rejected candidates are persisted to `failure_history.jsonl`, and
   prompts render bounded recent failure memory with configurable filters and
   limits; durable cross-run/semantic failed-proposal memory remains open work
+  and is tracked by `papers/failure_memory_boundary.json`
 
 ## Running Tests
 

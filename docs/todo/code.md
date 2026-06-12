@@ -1891,7 +1891,10 @@ Primary evidence:
     `resurface_by_feedback()` for bounded run-local metric, lineage,
     descriptor/novelty, and feedback query results, persists
     `runtime.history.failure_index` grouped by failure
-    fingerprint/repetition evidence, persists `runtime.history.hypothesis_index`
+    fingerprint/repetition evidence, with
+    `papers/failure_memory_boundary.json` validating that this remains
+    run-local diagnostic evidence rather than semantic failed-proposal memory.
+    It persists `runtime.history.hypothesis_index`
     for bounded redacted proposal idea/rationale/hypothesis summaries, includes
     hypothesis evidence in `resurfacing_index`, persists
     `runtime.history.artifact_index` for bounded evaluator-artifact path/hash,

@@ -167,7 +167,9 @@ LibreEvolve has:
   semantic failed-proposal retrieval, and audited false-acceptance/
   false-rejection rates, with
   `papers/incorrect_suggestion_audit_boundary.json` preserving the
-  paper-facing independent-audit absence boundary
+  paper-facing independent-audit absence boundary and
+  `papers/failure_memory_boundary.json` preserving the run-local failure
+  diagnostics versus semantic failed-proposal memory boundary
 - single-run sample-efficiency reports under
   `runtime.history.sample_efficiency_report`, derived from proposal lifecycle
   evidence and counting generated proposals, evaluated/valid/admitted

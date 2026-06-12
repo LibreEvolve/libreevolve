@@ -13653,3 +13653,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused proposal score tests reject semantic idea-memory
     overclaims.
+
+- [x] Record failure memory paper-facing sidecar.
+  - Status: `papers/failure_memory_boundary.json` now records the run-local
+    failure-diagnostics boundary for AlphaEvolve-style failed-proposal memory:
+    runtime evidence can show failure-history rows, strict loader validation,
+    failure fingerprints, repetition counts, changed-file and file-delta
+    summaries, evaluation/stage errors, bounded prompt-visible failure memory,
+    configurable recent-failure filters, runtime failure-index records, and
+    proposal-lifecycle failure-reuse summaries, while durable cross-run
+    failure tables, semantic failed-proposal retrieval, learned repetition
+    avoidance, replayable failed-mutation payloads, failure-aware sampling,
+    and cross-run failure-index migrations remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused failure memory tests reject semantic memory overclaims.

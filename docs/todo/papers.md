@@ -1547,7 +1547,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     overclaims. `papers/objective_archive_boundary.json` now validates this
     retained-overlay and diagnostic-frontier boundary.
     `runtime.history.failure_index` now groups failure records by fingerprint
-    with bounded repetition/latest-record evidence. `runtime.history.hypothesis_index`
+    with bounded repetition/latest-record evidence, and
+    `papers/failure_memory_boundary.json` validates this run-local diagnostic
+    boundary. `runtime.history.hypothesis_index`
     now exposes bounded redacted proposal idea/rationale/hypothesis evidence
     and feeds hypothesis records into `resurfacing_index`. This remains a
     heuristic rather than a paper-faithful multi-score database policy:

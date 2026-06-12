@@ -10485,3 +10485,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     refinement, and score/field influence policy open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused proposal score tests reject semantic idea-memory overclaims.
+
+- [x] Keep roadmap failure memory boundary tied to sidecar.
+  - Status: ROADMAP now links current run-local failure diagnostics and
+    prompt-visible failure memory to `papers/failure_memory_boundary.json`
+    while keeping durable cross-run failure tables, semantic failed-proposal
+    retrieval, learned repetition avoidance, replayable failed-mutation
+    payloads, failure-aware sampling, and cross-run failure-index migrations
+    open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused failure memory tests reject semantic memory overclaims.

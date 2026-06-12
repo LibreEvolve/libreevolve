@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 36 cache rows and links the AlphaEvolve row to
+  identities for all 37 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1380,6 +1380,19 @@ resumed-trace proof are still open.
   comparison ledgers, per-parameter cost accounting, and independent
   reproduction outputs remain open before roadmap wording can promote
   Zarankiewicz discovery support.
+- Keep CORAL autonomous multi-agent evolution claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2604.01658`, `CORAL: Towards Autonomous Multi-Agent Evolution for
+  Open-Ended Discovery`, cached locally as `papers/2604.01658__CORAL.pdf`.
+  This is background autonomous multi-agent evolution context only;
+  long-running autonomous agent sessions, shared persistent memory
+  repositories, asynchronous multi-agent execution runtimes, heartbeat-based
+  intervention controllers, isolated per-agent workspaces, evaluator
+  separation layers, resource/session/health managers, knowledge-reuse
+  analyses, 10-task SOTA reports, 3-10x improvement-rate reproductions,
+  Anthropic kernel-engineering 1363-to-1103 cycle reproductions, linked-code
+  audits, and independent reproduction outputs remain open before roadmap
+  wording can promote CORAL-style autonomous multi-agent support.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

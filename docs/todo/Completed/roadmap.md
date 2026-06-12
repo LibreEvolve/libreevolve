@@ -764,7 +764,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     URL, and local PDF label describing the same source before version or
     rights evidence attaches.
   - Status: ROADMAP now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 36 cache
+    companion manifest that emits derived source identities for all 37 cache
     rows and links the AlphaEvolve row to `papers/source_versions.json`.
   - Remaining gap: none for this bounded roadmap wording slice.
 
@@ -9893,5 +9893,20 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     algorithm artifact hashes, OpenEvolve setup provenance, reward-function
     specifications, upper-bound comparison ledgers, per-parameter cost
     accounting, and independent reproduction outputs explicitly open.
-  - Verification: paper-manifest validation checks the 36-row manifest,
+  - Verification: paper-manifest validation checks the current manifest,
+    paper-index row, TODO coverage row, and source-identity sidecar.
+
+- [x] Preserve `2604.01658` CORAL paper-cache scope in roadmap.
+  - Status: ROADMAP now identifies arXiv `2604.01658`, `CORAL: Towards
+    Autonomous Multi-Agent Evolution for Open-Ended Discovery`, as background
+    autonomous multi-agent evolution context only, with the cached
+    `papers/2604.01658__CORAL.pdf` row and missing long-running autonomous
+    agent sessions, shared persistent memory repositories, asynchronous
+    multi-agent execution runtimes, heartbeat-based intervention controllers,
+    isolated per-agent workspaces, evaluator separation layers,
+    resource/session/health managers, knowledge-reuse analyses, 10-task SOTA
+    reports, 3-10x improvement-rate reproductions, Anthropic kernel-
+    engineering cycle reproductions, linked-code audits, and independent
+    reproduction outputs explicitly open.
+  - Verification: paper-manifest validation checks the 37-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.

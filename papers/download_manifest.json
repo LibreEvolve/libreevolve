@@ -340,6 +340,16 @@
     "sha256": "bebb4ec9e8a114800515c1018b76d9a19c4467edcc1f168bc10be68b0d0ad4f0"
   },
   {
+    "id": "2604.01658",
+    "title": "CORAL",
+    "url": "https://arxiv.org/pdf/2604.01658.pdf",
+    "file": "papers/2604.01658__CORAL.pdf",
+    "ok": true,
+    "bytes": 3096184,
+    "message": "downloaded",
+    "sha256": "6baf82f122d884380dea1ce2a20a92fd4e75216f430f652819d56bb2b893085c"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.paper_source_identity_manifest.v1",
-  "source_identity_count": 36,
+  "source_identity_count": 37,
   "source_identity_policy": "manifest_id_url_source_id_and_file_source_prefix_must_match_before_source_version_or_rights_claims",
   "sources": [
     {
@@ -611,6 +611,24 @@
       "url_source_id": "2605.01120",
       "url_versioned_id": "2605.01120",
       "file_source_id": "2605.01120",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2604.01658",
+      "title": "CORAL",
+      "url": "https://arxiv.org/pdf/2604.01658.pdf",
+      "file": "papers/2604.01658__CORAL.pdf",
+      "sha256": "6baf82f122d884380dea1ce2a20a92fd4e75216f430f652819d56bb2b893085c",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2604.01658",
+      "url_versioned_id": "2604.01658",
+      "file_source_id": "2604.01658",
       "identity_checks": {
         "manifest_id_matches_url_source_id": true,
         "manifest_id_matches_file_source_id": true,

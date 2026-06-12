@@ -12896,3 +12896,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2604.01658` CORAL paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2604.01658`, `CORAL: Towards Autonomous Multi-Agent Evolution for
+    Open-Ended Discovery`, cached locally as `papers/2604.01658__CORAL.pdf`
+    with byte count `3096184` and SHA-256
+    `6baf82f122d884380dea1ce2a20a92fd4e75216f430f652819d56bb2b893085c`.
+  - Remaining paper gap: source-license details, linked-code audit for
+    `https://github.com/Human-Agent-Society/CORAL`, agent-session schemas,
+    shared-memory/index metadata, asynchronous execution and communication
+    traces, heartbeat intervention records, workspace-isolation and
+    evaluator-separation policies, resource and health telemetry,
+    knowledge-reuse/mechanistic analysis artifacts, mathematical/algorithmic/
+    systems benchmark taxonomy, kernel-engineering metric records, baseline
+    identities, code/artifact reproducibility status, and independent
+    reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

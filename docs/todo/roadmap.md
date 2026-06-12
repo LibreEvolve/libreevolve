@@ -3626,8 +3626,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     background-only or benchmark-fixture status rule so roadmap claims do not
     outpace local Zarankiewicz benchmark support.
 
-- [ ] Add CORAL autonomous multi-agent evolution gates before roadmap
-      promotion.
+- [ ] Implement CORAL autonomous multi-agent evolution gates beyond paper
+      cache coverage.
   - Spec evidence: arXiv `2604.01658`, submitted April 2, 2026 and last
     revised May 17, 2026, introduces CORAL for autonomous multi-agent
     evolution on open-ended discovery tasks. The abstract says fixed
@@ -3638,17 +3638,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     session/health management. It reports state-of-the-art results on 10
     tasks, 3-10x higher improvement rates with fewer evaluations, and an
     Anthropic kernel-engineering improvement from 1363 to 1103 cycles.
-  - Current evidence: ROADMAP tracks MAP-Elites islands, ring migration,
-    async reviewer gaps, archive restore, benchmark/report contracts, and
-    many search-source gates. It does not mention `2604.01658`, define CORAL
-    gates, or require evidence before promoting autonomous multi-agent
-    collaboration beyond the current island/migration abstraction.
-  - Required result: add roadmap gates for `2604.01658`: paper/source
-    manifest entry, PDF/cache hash, source-license and linked-code status,
-    agent-session and shared-memory schemas, async execution and communication
-    traces, heartbeat intervention logs, isolated-workspace policy,
-    evaluator-separation contract, resource-management telemetry, session
-    health events, knowledge-reuse/mechanistic analyses, benchmark taxonomy,
+  - Current evidence: ROADMAP, `papers/download_manifest.*`, and
+    `papers/README.md` now include `2604.01658`, cached locally as
+    `papers/2604.01658__CORAL.pdf` with byte count `3096184` and SHA-256
+    `6baf82f122d884380dea1ce2a20a92fd4e75216f430f652819d56bb2b893085c`.
+    ROADMAP tracks MAP-Elites islands, ring migration, async reviewer gaps,
+    archive restore, benchmark/report contracts, and many search-source gates,
+    but still has no local CORAL-style autonomous multi-agent evidence.
+  - Required result: add roadmap gates beyond paper-cache coverage for
+    `2604.01658`: source-license and linked-code status, agent-session and
+    shared-memory schemas, async execution and communication traces, heartbeat
+    intervention logs, isolated-workspace policy, evaluator-separation
+    contract, resource-management telemetry, session health events,
+    knowledge-reuse/mechanistic analyses, benchmark taxonomy,
     kernel-engineering metric records, baseline identities, and a
     background-only or benchmark-fixture status rule so roadmap claims do not
     outpace local CORAL-style autonomous multi-agent support.

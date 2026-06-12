@@ -165,7 +165,7 @@ Common run options:
 
 ## Research Sources
 
-LibreEvolve is informed by a local cache of 36 papers on LLM-guided evolution,
+LibreEvolve is informed by a local cache of 37 papers on LLM-guided evolution,
 program synthesis, quality-diversity optimization, and related benchmarks. The
 PDF cache lives locally under `papers/`, but the PDFs themselves are gitignored.
 The committed repository tracks `papers/README.md`, download manifests, and
@@ -176,7 +176,7 @@ not authoritative bibliographic titles. Use `papers/README.md` for paper-facing
 titles, implementation status, and benchmark coverage decisions.
 
 The table below is a curated subset for README context. `papers/README.md` is
-the complete implementation-status index for all 36 manifest rows.
+the complete implementation-status index for all 37 manifest rows.
 
 | Source | Role in LibreEvolve |
 | --- | --- |
@@ -197,6 +197,7 @@ the complete implementation-status index for all 36 manifest rows.
 | [FlashEvolve](https://arxiv.org/abs/2605.08520) | Asynchronous-stage orchestration context only; no local async worker queue, artifact-version DAG, staleness repair, or throughput benchmark exists. |
 | [What Do Evolutionary Coding Agents Evolve?](https://arxiv.org/abs/2605.20086) | Trace-diagnostic evaluation context only; no local EvoTrace edit taxonomy, EvoReplay intervention harness, or cycling/overfitting report exists. |
 | [Zarankiewicz reinforced search](https://arxiv.org/abs/2605.01120) | Extremal-graph benchmark candidate only; no local Zarankiewicz fixture, `K_{s,t}` verifier, construction table, or sub-$30 cost report exists. |
+| [CORAL](https://arxiv.org/abs/2604.01658) | Autonomous multi-agent evolution context only; no local long-running agent sessions, shared persistent memory, heartbeat interventions, or isolated multi-agent workspace runtime exists. |
 
 Rehydrate the ignored local PDF cache on a fresh checkout:
 

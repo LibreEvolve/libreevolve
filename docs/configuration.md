@@ -864,7 +864,8 @@ Completed manifests aggregate that boundary under
 configured sample-worker fan-out, observed sample-execution compression, and
 `claim_ready: false` fields for missing per-candidate compute-hour budgets,
 candidate-level async queues, distributed evaluator nodes, mutation-depth
-impact, and pending-work resume.
+impact, and pending-work resume. The matching paper-facing absence boundary is
+preserved in `papers/parallel_evaluation_readiness_boundary.json`.
 `eval_stages[].retries` is capped at `10`; configured stages therefore have an
 explicit retry ceiling. When `min_score` or `metric_thresholds` is configured,
 retries are threshold-aware: a locally valid attempt below a minimum threshold

@@ -11636,6 +11636,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: focused runtime parallel-evaluation readiness test validates
     the implemented report.
 
+- [x] Document parallel-evaluation readiness sidecar boundary.
+  - Status: README, configuration docs, and run-artifact docs now point to
+    `papers/parallel_evaluation_readiness_boundary.json` as the paper-facing
+    sidecar for the same local-sample-worker-only readiness boundary.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused parallel-evaluation boundary tests validate the absence
+    record.
+
 - [x] Document whole-run source/workspace integrity report.
   - Spec evidence: README run-inspection wording needed to distinguish bounded
     manifest integrity evidence from AlphaEvolve-grade generated-program

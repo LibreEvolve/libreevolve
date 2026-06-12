@@ -1,0 +1,31 @@
+{
+  "schema": "libreevolve.alphaevolve_parallel_evaluation_readiness_boundary.v1",
+  "runtime_report_schema": "libreevolve.parallel_evaluation_readiness_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve parallelizes expensive candidate evaluation and runs an asynchronous controller, LLM sampler, and evaluator-node pipeline optimized for throughput",
+  "boundary_status": "local_sample_worker_fanout_only",
+  "runtime_report_status": "parallel_evaluation_readiness_report_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "local_stage_sample_worker_fanout",
+    "observed_wall_clock_compression",
+    "distributed_pipeline_topology_ref",
+    "per_candidate_compute_hour_budget",
+    "candidate_level_async_evaluation_queue",
+    "distributed_evaluator_worker_nodes",
+    "randomized_initialization_shard_identity",
+    "mutation_chain_depth_impact_under_slow_feedback",
+    "pending_evaluation_resume_state",
+    "equal_budget_parallelism_report_ref"
+  ],
+  "missing_evidence": {
+    "per_candidate_compute_hour_budget_records": "not_recorded_locally",
+    "candidate_level_async_evaluation_queue": "not_recorded_locally",
+    "distributed_evaluator_worker_nodes": "not_recorded_locally",
+    "randomized_initialization_shard_identity": "not_recorded_locally",
+    "mutation_chain_depth_impact_under_slow_feedback": "not_recorded_locally",
+    "pending_evaluation_resume_state": "not_recorded_locally",
+    "equal_budget_parallelism_report_links": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has runtime reporting for configured local stage sample-worker fan-out, observed wall-clock compression, and distributed-pipeline topology linkage, but does not claim AlphaEvolve-style per-candidate compute-hour budgets, candidate-level async evaluator queues, distributed evaluator nodes, randomized initialization shards, mutation-chain depth impact under slow feedback, pending-work resume, or equal-budget parallelism reports."
+}

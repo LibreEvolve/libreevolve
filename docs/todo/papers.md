@@ -196,6 +196,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     compression, topology linkage, and explicit false readiness for
     compute-hour budgets, async evaluator queues, distributed evaluator nodes,
     mutation-chain-depth impact, and pending-work resume.
+    `papers/parallel_evaluation_readiness_boundary.json` now preserves the
+    same paper-facing absence boundary for manifest validation.
     Completed manifests also embed
     `libreevolve.controller_state_validation.v1` to verify the current
     controller boundary is terminal, synchronous, and drained rather than an

@@ -11993,6 +11993,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: focused runtime parallel-evaluation readiness test validates
     the implemented report.
 
+- [x] Record parallel-evaluation readiness paper-facing sidecar.
+  - Status: `libreevolve/problems/benchmarks/parallel_evaluation_readiness_boundary.py`
+    and `papers/parallel_evaluation_readiness_boundary.json` now preserve the
+    paper-facing boundary that local sample-worker fan-out and wall-clock
+    compression reports exist, while compute-hour budgets, async evaluator
+    queues, distributed worker nodes, randomized shard identity, mutation-depth
+    impact, pending-work resume, and equal-budget parallelism evidence remain
+    absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused parallel-evaluation boundary tests reject premature
+    readiness claims.
+
 - [x] Record whole-run source/workspace integrity boundary.
   - Spec evidence: AlphaEvolve-scale runs require auditable generated-program
     databases, not only compact selected-best source display.

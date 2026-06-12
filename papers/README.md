@@ -658,7 +658,9 @@ is `claim_ready: false` because it records a single-process synchronous
 topology; async controller queues, distributed sampler/evaluator worker
 fan-out, queue capacities, nonblocking dependency tracking, throughput
 dispatch telemetry, and pending-work checkpoints remain open before Section
-2.6 topology parity.
+2.6 topology parity. The committed
+`papers/parallel_evaluation_readiness_boundary.json` sidecar preserves the
+parallel-evaluation readiness absence boundary for paper-manifest validation.
 
 AlphaEvolve evaluator-metric note: LibreEvolve now reserves boolean `is_valid`
 as a local admission gate outside declared `metrics.yaml` objectives and stores

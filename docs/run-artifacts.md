@@ -1163,7 +1163,9 @@ wall-clock compression, but `claim_ready` remains false until the runtime
 records per-candidate compute-hour budgets, candidate-level async evaluation
 queues, distributed evaluator worker nodes, randomized-initialization shard
 identity, mutation-chain-depth impact under slow feedback, pending-work resume
-state, and equal-budget parallelism reports.
+state, and equal-budget parallelism reports. The committed
+`papers/parallel_evaluation_readiness_boundary.json` sidecar preserves the
+same absence boundary for paper-manifest validation.
 Malformed evaluator accounting passed directly to `RunBudget.record_evaluation()`
 is rejected before local evaluation counters mutate. The current
 `max_evaluations` limit is still a seed/candidate evaluation cap rather than a

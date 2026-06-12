@@ -9196,6 +9196,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: focused runtime parallel-evaluation readiness test validates
     the implemented report.
 
+- [x] Preserve parallel-evaluation readiness paper-facing sidecar.
+  - Status: ROADMAP and TODO wording now point to
+    `papers/parallel_evaluation_readiness_boundary.json` as the paper-facing
+    sidecar for the runtime parallel-evaluation readiness absence report,
+    while async controller/evaluator-node work remains open.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused parallel-evaluation boundary tests validate the absence
+    record.
+
 - [x] Preserve whole-run source/workspace integrity boundary.
   - Spec evidence: roadmap run-inspection claims need to separate bounded
     manifest integrity summaries from durable AlphaEvolve-grade generated

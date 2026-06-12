@@ -191,6 +191,10 @@ from libreevolve.problems.benchmarks.sample_efficiency_boundary import (
     sample_efficiency_boundary_record,
     validate_sample_efficiency_boundary,
 )
+from libreevolve.problems.benchmarks.parallel_evaluation_readiness_boundary import (
+    parallel_evaluation_readiness_boundary_record,
+    validate_parallel_evaluation_readiness_boundary,
+)
 from libreevolve.problems.benchmarks.ramsey_numbers_boundary import (
     ramsey_numbers_boundary_record,
     validate_ramsey_numbers_boundary,
@@ -313,6 +317,7 @@ PROCESS_EXHIBIT_BOUNDARY_FILE = "papers/process_exhibit_boundary.json"
 PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_FILE = "papers/proposal_lifecycle_audit_boundary.json"
 REPEATED_SAMPLING_BASELINE_BOUNDARY_FILE = "papers/repeated_sampling_baseline_boundary.json"
 SAMPLE_EFFICIENCY_BOUNDARY_FILE = "papers/sample_efficiency_boundary.json"
+PARALLEL_EVALUATION_READINESS_BOUNDARY_FILE = "papers/parallel_evaluation_readiness_boundary.json"
 EVALUATION_CASCADE_BOUNDARY_FILE = "papers/evaluation_cascade_boundary.json"
 CONTROLLER_BACKTRACKING_BOUNDARY_FILE = "papers/controller_backtracking_boundary.json"
 MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE = "papers/matrix_headline_historicity_artifacts.json"
@@ -774,6 +779,7 @@ def validate_paper_manifest(
     issues.extend(_validate_proposal_lifecycle_audit_boundary(root_path))
     issues.extend(_validate_repeated_sampling_baseline_boundary(root_path))
     issues.extend(_validate_sample_efficiency_boundary(root_path))
+    issues.extend(_validate_parallel_evaluation_readiness_boundary(root_path))
     issues.extend(_validate_evaluation_cascade_boundary(root_path))
     issues.extend(_validate_controller_backtracking_boundary(root_path))
     issues.extend(_validate_example_benchmark_scope_records(root_path))
@@ -1638,6 +1644,38 @@ def _validate_sample_efficiency_boundary(root_path: Path) -> list[PaperManifestI
             f"sample_efficiency_boundary_{issue.code}",
             issue.message,
             "sample_efficiency",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_parallel_evaluation_readiness_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / PARALLEL_EVALUATION_READINESS_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = parallel_evaluation_readiness_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "parallel_evaluation_readiness_boundary_manifest_missing",
+                    (
+                        f"{PARALLEL_EVALUATION_READINESS_BOUNDARY_FILE} must emit "
+                        "parallel-evaluation readiness availability"
+                    ),
+                    "parallel_evaluation_readiness",
+                )
+            ]
+    report = validate_parallel_evaluation_readiness_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"parallel_evaluation_readiness_boundary_{issue.code}",
+            issue.message,
+            "parallel_evaluation_readiness",
         )
         for issue in report.issues
     ]

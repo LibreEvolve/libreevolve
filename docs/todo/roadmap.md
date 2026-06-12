@@ -496,6 +496,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     local sample-worker fan-out and compression while keeping compute-hour,
     async queue, distributed worker, mutation-depth, pending-work resume, and
     equal-budget parallelism readiness false.
+    `papers/parallel_evaluation_readiness_boundary.json` now preserves the
+    same paper-facing absence boundary for manifest validation.
   - Required result: when parallel evaluator execution or reports land, update
     ROADMAP, README, papers index, and code/paper TODOs with per-candidate
     compute-hour budgets, evaluator-worker fan-out, randomized-initialization

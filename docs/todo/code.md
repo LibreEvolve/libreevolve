@@ -1463,6 +1463,8 @@ Primary evidence:
     and topology linkage while preserving `claim_ready: false` for missing
     compute-hour budgets, candidate-level async queues, distributed evaluator
     nodes, mutation-depth impact, and pending-work resume.
+    `papers/parallel_evaluation_readiness_boundary.json` now preserves the
+    same absence boundary for paper-manifest validation.
     This still does not provide async candidate queues, distributed evaluator
     nodes, or mutation-depth throughput under slow evaluator feedback.
     `RunBudget` explicitly tracks synchronous local consumption; controller

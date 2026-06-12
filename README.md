@@ -35,7 +35,9 @@ Important limits:
   `papers/gemini_provider_parity_boundary.json`.
 - Evaluators run in local subprocesses, not hardened security sandboxes.
 - The archive and controller are local and synchronous, not a distributed
-  asynchronous AlphaEvolve-style service.
+  asynchronous AlphaEvolve-style service; parallel-evaluation readiness is
+  tracked by `runtime.history.parallel_evaluation_readiness_report` and
+  `papers/parallel_evaluation_readiness_boundary.json`.
 - The included examples are smoke fixtures and small demos unless explicitly
   documented otherwise.
 - Paper and blog claims are tracked as source boundaries unless local benchmark

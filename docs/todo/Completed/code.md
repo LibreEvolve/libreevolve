@@ -17373,6 +17373,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     reports remain open.
   - Verification: focused runtime parallel-evaluation readiness test passes.
 
+- [x] Emit parallel-evaluation readiness paper-facing absence boundary sidecar.
+  - Status: `libreevolve/problems/benchmarks/parallel_evaluation_readiness_boundary.py`
+    and `papers/parallel_evaluation_readiness_boundary.json` now preserve that
+    LibreEvolve has a runtime parallel-evaluation readiness report, but no
+    per-candidate compute-hour budgets, candidate-level async evaluator queues,
+    distributed evaluator nodes, randomized shard identity, mutation-depth
+    impact under slow feedback, pending-work resume, or equal-budget
+    parallelism report links.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused parallel-evaluation boundary tests validate the absence
+    record.
+
 - [x] Add whole-run source/workspace integrity report.
   - Spec evidence: AlphaEvolve-scale generated-program databases need
     auditable whole-run source/workspace evidence, not only selected-row source

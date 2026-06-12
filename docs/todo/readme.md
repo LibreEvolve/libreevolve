@@ -2682,7 +2682,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     which records local sample-worker fan-out and wall-clock compression while
     preserving false readiness for compute-hour budgets, async evaluator
     queues, distributed worker nodes, mutation-depth impact, and pending-work
-    resume.
+    resume. The paper-facing
+    `papers/parallel_evaluation_readiness_boundary.json` sidecar preserves the
+    same absence boundary for manifest validation.
   - Required result: when parallelized-evaluation reports land, update README,
     ROADMAP, papers index, and code/paper TODOs with per-candidate compute-hour
     budget, wall-clock duration, evaluator-worker fan-out, randomized

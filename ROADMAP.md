@@ -794,9 +794,11 @@ is not yet an AlphaEvolve reproduction.
   `eval_stages[].sample_workers` fan-out for configured-stage samples, but not
   concurrent proposal/evaluation queues. Completed manifests also expose
   `runtime.history.parallel_evaluation_readiness_report`, which records local
-  sample-worker fan-out and wall-clock compression while keeping compute-hour
-  budgets, distributed evaluator nodes, mutation-depth impact, pending-work
-  resume, and equal-budget parallelism evidence open.
+  sample-worker fan-out and wall-clock compression, and
+  `papers/parallel_evaluation_readiness_boundary.json` preserves the
+  paper-facing absence boundary while keeping compute-hour budgets,
+  distributed evaluator nodes, mutation-depth impact, pending-work resume, and
+  equal-budget parallelism evidence open.
 - Compose the current restored LLM scheduler, prompt-history, RNG, archive, and
   budget snapshots with controller and pending-evaluation checkpoint state so
   long runs can resume from more than a terminal drained boundary.

@@ -48,6 +48,10 @@ Important limits:
   diagnostics, not hard rejection, semantic-copy detection, or custom-template
   inventory evidence; that boundary is tracked by
   `papers/prompt_example_copy_boundary.json`.
+- Multi-edit consistency reports are current-run diagnostics, not proof that
+  accepted edits are semantically coherent or that required companion edits are
+  inferred; that boundary is tracked by
+  `papers/mutation_consistency_boundary.json`.
 - Related Work positioning is not inferred from the bundled paper list; the
   missing taxonomy and claim gates are tracked by
   `papers/related_work_taxonomy_boundary.json`.

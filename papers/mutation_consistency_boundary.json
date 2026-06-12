@@ -1,0 +1,36 @@
+{
+  "schema": "libreevolve.mutation_consistency_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve prompts require proposed SEARCH/REPLACE edits to be consistent with each other, including companion edits such as adding a config variable when another replacement uses it",
+  "boundary_status": "diagnostic_multi_edit_consistency_scan_only",
+  "runtime_report_schema": "libreevolve.mutation_consistency_report.v1",
+  "runtime_report_status": "mutation_consistency_report_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "multi_edit_candidate_inventory",
+    "changed_structured_edit_units",
+    "changed_file_or_block_ids",
+    "diagnostic_cochange_links",
+    "best_effort_python_symbol_scan",
+    "unresolved_reference_diagnostics",
+    "evaluator_failure_taxonomy_linkage",
+    "candidate_status_and_admission_records",
+    "language_aware_scope_resolution",
+    "config_resource_dependency_models",
+    "required_companion_edit_inference",
+    "cross_file_dataflow_or_import_resolution",
+    "benchmark_calibrated_consistency_failures",
+    "hard_or_configurable_acceptance_gate",
+    "semantic_consistency_proof"
+  ],
+  "missing_evidence": {
+    "language_aware_scope_resolution": "not_recorded_locally",
+    "config_resource_dependency_models": "not_recorded_locally",
+    "required_companion_edit_inference": "not_recorded_locally",
+    "cross_file_dataflow_or_import_resolution": "not_recorded_locally",
+    "benchmark_calibrated_consistency_failures": "not_recorded_locally",
+    "hard_or_configurable_acceptance_gate": "not_recorded_locally",
+    "semantic_consistency_proof": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve manifests include runtime.history.mutation_consistency_report for generated multi-edit candidate inventories, changed structured edit units, changed file or block ids, diagnostic cochange links, best-effort Python symbol scans, unresolved-reference diagnostics, evaluator failure-taxonomy linkage, and candidate status/admission records. It does not claim language-aware scope resolution, config or resource dependency models, required companion-edit inference, cross-file dataflow or import resolution, benchmark-calibrated consistency failures, hard or configurable acceptance gates, or semantic consistency proof."
+}

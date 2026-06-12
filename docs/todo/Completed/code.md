@@ -18451,3 +18451,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject full
     guard-readiness overclaims, invalid boundary status, missing evidence
     drift, and incomplete required evidence fields.
+
+- [x] Add mutation-consistency sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/mutation_consistency_boundary.py`
+    now emits and validates the diagnostic-multi-edit-consistency-scan-only
+    boundary for `runtime.history.mutation_consistency_report`, separating
+    generated multi-edit inventories, structured edit units, changed file or
+    block ids, diagnostic cochange links, best-effort Python symbol scans,
+    unresolved-reference diagnostics, evaluator taxonomy linkage, and
+    admission/status records from language-aware scope resolution,
+    config/resource dependency models, required companion-edit inference,
+    cross-file dataflow/import resolution, benchmark-calibrated consistency
+    failures, acceptance gates, and semantic proof.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    semantic-consistency overclaims, invalid boundary status, missing evidence
+    drift, and incomplete required evidence fields.

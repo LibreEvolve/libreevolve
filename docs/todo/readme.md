@@ -2365,7 +2365,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     for multi-edit payloads, changed edit units, co-change links, best-effort
     Python symbol/reference scans, unresolved references, evaluator status,
     and archive admission. It also says the report is not a semantic proof or
-    archive gate.
+    archive gate. README now also ties that scope to
+    `papers/mutation_consistency_boundary.json`.
   - Remaining gap: README must stay scoped until language-aware scope/import
     resolution, config/resource companion-edit models, required-link
     inference, benchmark-calibrated consistency taxonomy, and optional gating

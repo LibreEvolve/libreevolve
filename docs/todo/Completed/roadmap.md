@@ -10413,3 +10413,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     renamed copy detection, and custom prompt-template inventories open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused prompt example-copy tests reject full guard-readiness overclaims.
+
+- [x] Keep roadmap mutation-consistency boundary tied to sidecar.
+  - Status: ROADMAP now links `runtime.history.mutation_consistency_report` to
+    `papers/mutation_consistency_boundary.json`, preserving the current
+    diagnostic scan scope while keeping language-aware scope resolution,
+    config/resource dependency models, required companion-edit inference,
+    cross-file dataflow/import resolution, benchmark-calibrated consistency
+    gates, and semantic proof open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused mutation-consistency tests reject semantic-proof overclaims.

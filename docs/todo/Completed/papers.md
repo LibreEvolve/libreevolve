@@ -13547,3 +13547,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused prompt example-copy boundary tests reject full
     guard-readiness overclaims.
+
+- [x] Record mutation-consistency paper-facing sidecar.
+  - Status: `papers/mutation_consistency_boundary.json` now records the
+    diagnostic-scan-only boundary for AlphaEvolve-style multi-edit consistency:
+    runtime manifests can show generated multi-edit inventories, changed
+    structured edit units, file/block ids, diagnostic cochange links,
+    best-effort Python symbol scans, unresolved-reference diagnostics,
+    evaluator taxonomy linkage, and admission/status records, while
+    language-aware scope resolution, config/resource dependency models,
+    required companion-edit inference, cross-file dataflow/import resolution,
+    benchmark-calibrated consistency failures, acceptance gates, and semantic
+    consistency proof remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused mutation-consistency boundary tests reject semantic-proof
+    overclaims.

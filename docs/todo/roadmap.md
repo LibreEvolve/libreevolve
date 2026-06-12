@@ -1248,7 +1248,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `runtime.history.mutation_consistency_report` as current diagnostic
     evidence for multi-edit payload inventories, changed edit units,
     best-effort Python symbol/reference scans, unresolved references,
-    evaluator taxonomy, and admission links.
+    evaluator taxonomy, and admission links. ROADMAP now also ties that
+    diagnostic-only scope to `papers/mutation_consistency_boundary.json`.
   - Remaining gap: roadmap wording must stay scoped until language-aware
     scope/import resolution, config/resource dependency models,
     required-companion-edit inference, cross-file dataflow, and benchmark-

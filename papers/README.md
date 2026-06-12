@@ -1400,7 +1400,9 @@ AST symbol/reference summaries, unresolved-reference diagnostics, evaluator
 status, and archive admission. This is current-run diagnostic evidence, not a
 complete semantic verifier: language-aware scope resolution, config/resource
 dependency models, required-companion-edit inference, cross-file dataflow, and
-benchmark-calibrated consistency gates remain open.
+benchmark-calibrated consistency gates remain open. The committed
+`papers/mutation_consistency_boundary.json` sidecar keeps this diagnostic-only
+scope machine-validated.
 
 AlphaEvolve scope-boundary note: the paper explicitly treats automated
 evaluation as both a core advantage and a limitation, keeping tasks that require

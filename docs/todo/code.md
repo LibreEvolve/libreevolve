@@ -2243,6 +2243,8 @@ Primary evidence:
     diagnostic co-change links, best-effort Python AST introduced/reference
     symbols, unresolved-reference diagnostics, evaluator-failure taxonomy,
     prompt/candidate ids, archive admission, and `claim_ready: false`.
+    `papers/mutation_consistency_boundary.json` now validates this as a
+    diagnostic-scan-only boundary, not semantic consistency proof.
   - Remaining gap: the report is diagnostic-only. It does not perform
     language-aware scope resolution, config/resource dependency modeling,
     required-companion-edit inference, cross-file dataflow/import resolution,

@@ -1892,7 +1892,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     changed file/block/search edit units, diagnostic co-change links,
     best-effort Python introduced/reference symbol labels,
     unresolved-reference diagnostics, evaluator-failure taxonomy linkage, and
-    accepted/rejected status.
+    accepted/rejected status. `papers/mutation_consistency_boundary.json` now
+    validates this as current-run diagnostic evidence only.
   - Current gap: this is current-run diagnostic evidence, not complete
     semantic proof. It does not infer required companion edits, model config or
     resource dependencies, resolve Python scopes/imports across files, classify

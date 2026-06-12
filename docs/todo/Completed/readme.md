@@ -12659,3 +12659,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     by `papers/prompt_example_copy_boundary.json`.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused prompt example-copy tests reject full guard-readiness overclaims.
+
+- [x] Keep README mutation-consistency boundary tied to sidecar.
+  - Status: README now states that multi-edit consistency reports are
+    current-run diagnostics, not proof that accepted edits are semantically
+    coherent or that required companion edits are inferred, with the boundary
+    tracked by `papers/mutation_consistency_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused mutation-consistency tests reject semantic-proof overclaims.

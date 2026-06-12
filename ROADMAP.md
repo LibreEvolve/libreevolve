@@ -428,7 +428,9 @@ is not yet an AlphaEvolve reproduction.
   diagnostics, evaluator taxonomy, and admission links into language-aware
   scope resolution, config/resource dependency models, required-companion-edit
   inference, cross-file dataflow/import resolution, and benchmark-calibrated
-  consistency gating.
+  consistency gating. The committed
+  `papers/mutation_consistency_boundary.json` sidecar keeps the current
+  diagnostic-scan-only scope machine-validated.
 - Extend `runtime.history.initial_pool_divergence_report` beyond current
   seed-vs-generated workspace hash, bounded primary-file text distance,
   changed-file summary, and numeric metric L1 evidence into task-specific

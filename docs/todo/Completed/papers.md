@@ -12005,3 +12005,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     simplicity improves search or filtering quality.
   - Verification: focused LLM-feedback runtime test validates the report and
     overclaim boundaries.
+
+- [x] Record domain-specific systems ready-gate policy.
+  - Spec evidence: AlphaEvolve Section 3.3 systems-result claims depend on
+    domain-specific evidence types, so paper-facing systems reports should not
+    accept generic `not_applicable` gates for ready claims.
+  - Status: paper-facing TODOs and validators now record that ready
+    scheduling/kernel reports require passed held-out gates, ready
+    compiler/hardware reports require passed reference-correctness gates, and
+    generic ready systems reports require both held-out and
+    reference-correctness gates.
+  - Remaining paper gap: the policy does not create real held-out workloads,
+    randomized/reference checks, deployment measurements, or expert
+    certification artifacts.
+  - Verification: systems-result regression tests validate the rejection of
+    domain-required `not_applicable` gates.

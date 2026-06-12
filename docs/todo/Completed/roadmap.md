@@ -9189,3 +9189,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     linkage and criterion-quality ablations remain open.
   - Verification: focused LLM-feedback runtime test validates the implemented
     report.
+
+- [x] Preserve domain-specific systems ready-gate boundary.
+  - Spec evidence: roadmap systems-result claims need to distinguish
+    report-contract validation from real AlphaEvolve-style systems evidence,
+    while still preventing ready reports from bypassing domain-required gates
+    with generic `not_applicable` rationales.
+  - Status: ROADMAP and TODO wording now recognize the stricter systems
+    validator policy for scheduling/kernel held-out gates,
+    compiler/hardware reference-correctness gates, and generic systems reports
+    requiring both.
+  - Verification: systems-result regression tests validate the policy.

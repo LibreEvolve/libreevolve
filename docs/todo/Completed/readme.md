@@ -11654,3 +11654,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     claims.
   - Verification: focused LLM-feedback runtime test validates the documented
     report contract.
+
+- [x] Document domain-specific systems ready-gate policy.
+  - Spec evidence: README systems-result wording needed to avoid implying that
+    a generic `not_applicable` rationale is enough for AlphaEvolve-style
+    systems readiness in domains that required held-out or reference evidence.
+  - Status: README and run-artifact docs now state that ready
+    scheduling/kernel reports require passed held-out gates, ready
+    compiler/hardware reports require passed reference-correctness gates, and
+    generic ready systems reports require both.
+  - Verification: systems-result regression tests validate the documented
+    ready-gate policy.

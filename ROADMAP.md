@@ -1260,6 +1260,10 @@ is not yet an AlphaEvolve reproduction.
   application owners/advisors, domain reviewers, validation or data owners,
   production approvers, approval state, artifact references, and
   local-benchmark-versus-production boundary text. Ready scheduling reports
+  and kernel reports must pass held-out gates, ready compiler and hardware
+  reports must pass reference-correctness gates, and generic ready systems
+  reports must pass both held-out and reference-correctness gates rather than
+  using generic `not_applicable` rationales. Ready scheduling reports
   also require `scheduling_formulation` records for vector-bin-packing setup,
   CPU/memory dimensions, workload/capacity snapshots, stranded-resource
   objective, feature mapping, simulator hashes, and artifact refs, plus

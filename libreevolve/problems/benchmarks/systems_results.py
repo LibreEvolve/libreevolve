@@ -21,6 +21,13 @@ GATE_ARTIFACT_KINDS = {
     "heldout": "heldout_report",
     "reference_correctness": "reference_report",
 }
+DOMAIN_READY_GATE_REQUIREMENTS = {
+    "scheduling": {"heldout": "passed"},
+    "kernel": {"heldout": "passed"},
+    "compiler": {"reference_correctness": "passed"},
+    "hardware": {"reference_correctness": "passed"},
+    "systems": {"heldout": "passed", "reference_correctness": "passed"},
+}
 APPLICATION_PROVENANCE_ROLES = frozenset(
     {
         "application_colead",
@@ -135,6 +142,7 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
             )
         )
     if data.get("alphaevolve_ready") is True:
+        _validate_domain_ready_gate_requirements(domain, gate_statuses, issues)
         _validate_ready_gate_artifacts(gate_statuses, artifact_kinds, issues)
         if not claim_calibration_ready:
             issues.append(
@@ -780,6 +788,28 @@ def _gates_are_alphaevolve_ready(statuses: dict[str, str]) -> bool:
         and statuses.get("heldout") in {"passed", "not_applicable"}
         and statuses.get("reference_correctness") in {"passed", "not_applicable"}
     )
+
+
+def _validate_domain_ready_gate_requirements(
+    domain: str | None,
+    gate_statuses: dict[str, str],
+    issues: list[SystemsResultIssue],
+) -> None:
+    if domain is None:
+        return
+    for gate_name, required_status in DOMAIN_READY_GATE_REQUIREMENTS.get(
+        domain, {}
+    ).items():
+        if gate_statuses.get(gate_name) != required_status:
+            issues.append(
+                SystemsResultIssue(
+                    f"invalid_ready_domain_{gate_name}_gate",
+                    (
+                        f"alphaevolve_ready {domain} reports require "
+                        f"{gate_name} gate status {required_status}"
+                    ),
+                )
+            )
 
 
 def _validate_ready_gate_artifacts(

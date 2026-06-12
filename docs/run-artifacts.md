@@ -2294,6 +2294,12 @@ or independent certification.
 with its artifact inventory, including matching benchmark, candidate, domain,
 report schema, record hash, and zero missing/mismatch/invalid records before
 treating the bundle as AlphaEvolve-ready.
+Systems report validation also applies domain-specific ready-gate policy:
+scheduling and kernel reports must pass held-out gates, compiler and hardware
+reports must pass reference-correctness gates, and generic systems reports
+must pass both held-out and reference-correctness gates before
+`alphaevolve_ready` can be accepted. `not_applicable` remains a documented
+draft boundary, not a generic bypass for ready domain claims.
 `libreevolve.systems_evidence_bundle.v1` is the portable wrapper for those
 records: it embeds the systems report and artifact inventory, records stable
 SHA-256 hashes for each embedded object plus the inventory records hash, checks

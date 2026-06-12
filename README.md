@@ -4429,6 +4429,12 @@ separate optimization, held-out, and reference-correctness gates with case-set
 hashes, sample counts/seeds, finite metrics, artifacts matching passed gate
 kinds, explicit rationale when a gate is not applicable, and optional
 certification links that cannot contradict `alphaevolve_ready` claims.
+Ready systems reports now enforce domain-specific gate policy: scheduling and
+kernel reports require a passed held-out gate, compiler and hardware reports
+require a passed reference-correctness gate, and generic systems reports
+require both held-out and reference-correctness gates to pass. Documented
+`not_applicable` gates remain allowed for non-ready drafts and for
+domain-appropriate ready scheduling reference-correctness boundaries.
 `alphaevolve_ready` systems reports also require `claim_calibration` records
 that map finite gate metrics to published-style claim ids with metric names,
 units, baselines, denominators, comparison windows, aggregation methods,

@@ -3799,11 +3799,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     passed-gate artifact-kind requirements, and optional certification linkage
     that cannot contradict readiness claims. It rejects `alphaevolve_ready`
     claims unless held-out and reference gates passed or are explicitly
-    documented as not applicable. That not-applicable policy is still
-    domain-agnostic: the validator does not yet require randomized
-    reference-code checks for kernel/compiler-style reports, unseen workload
-    gates for scheduling reports, or deployment/hardware/expert confirmation
-    gates for domains where Section 3.3 used those evidence types.
+    documented as not applicable. Ready-report validation now also rejects
+    generic `not_applicable` bypasses for domain-required gates:
+    scheduling/kernel held-out, compiler/hardware reference-correctness, and
+    generic systems held-out plus reference-correctness. This enforces the
+    report contract; it does not create the real held-out or reference-check
+    artifacts.
     `libreevolve.systems_result_artifact_inventory.v1` now verifies declared
     systems report artifacts against concrete files under an explicit artifact
     root, checking safe relative paths, existence, SHA-256 hashes, and byte
@@ -3818,13 +3819,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     checks, and readiness consistency validation.
   - Required result: connect compiler, hardware, kernel, scheduling, or systems
     fixtures to this report format, implement real unseen evaluation cases and
-    randomized/reference-correctness checks, add domain-specific rules for when
-    `not_applicable` gates are allowed, and emit report artifacts that
+    randomized/reference-correctness checks, and emit report artifacts that
     distinguish loop feedback from held-out, deployment, and certification
     evidence. The remaining paper gap is producing those evidence files from
-    real fixture runs and enforcing domain-specific readiness gates, not
-    verifying the declared files, report/inventory consistency, or
-    evidence-bundle consistency once a report names them.
+    real fixture runs, not verifying the declared files, report/inventory
+    consistency, or evidence-bundle consistency once a report names them.
 
 - [ ] Record Section 3.3 result-claim metric calibration for systems reports.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3 reports specific

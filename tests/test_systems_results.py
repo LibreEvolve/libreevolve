@@ -531,6 +531,52 @@ def test_not_applicable_gate_requires_rationale_but_can_be_ready():
     assert "missing_reference_correctness_rationale" in codes
 
 
+def test_ready_systems_report_rejects_domain_required_not_applicable_gates():
+    cases = [
+        ("kernel", "heldout", "invalid_ready_domain_heldout_gate"),
+        (
+            "compiler",
+            "reference_correctness",
+            "invalid_ready_domain_reference_correctness_gate",
+        ),
+        (
+            "hardware",
+            "reference_correctness",
+            "invalid_ready_domain_reference_correctness_gate",
+        ),
+        ("systems", "heldout", "invalid_ready_domain_heldout_gate"),
+        (
+            "systems",
+            "reference_correctness",
+            "invalid_ready_domain_reference_correctness_gate",
+        ),
+    ]
+    for domain, gate_name, issue_code in cases:
+        report = _valid_report()
+        report["domain"] = domain
+        for record in report["application_provenance"]["records"]:
+            record["domain"] = domain
+        for record in report["claim_calibration"]["records"]:
+            record["domain"] = domain
+        gate = next(item for item in report["gates"] if item["name"] == gate_name)
+        gate.clear()
+        gate.update(
+            {
+                "name": gate_name,
+                "status": "not_applicable",
+                "case_set_id": f"not_applicable_{gate_name}",
+                "rationale": "generic rationale is not enough for this domain",
+            }
+        )
+
+        validation = validate_systems_result_report(report)
+        codes = {issue.code for issue in validation.issues}
+
+        assert validation.ok is False
+        assert validation.alphaevolve_ready is False
+        assert issue_code in codes
+
+
 def test_ready_scheduling_report_requires_ranking_only_safety():
     report = _valid_scheduling_report()
     report.pop("scheduling_safety")

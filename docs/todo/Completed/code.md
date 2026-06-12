@@ -17392,3 +17392,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     qualitative-feedback quality claims are ready.
   - Verification: focused LLM-feedback runtime test validates the policy
     report, prompt-history audit report, and overclaim checks.
+
+- [x] Enforce domain-specific systems ready-gate requirements.
+  - Spec evidence: AlphaEvolve Section 3.3 systems results used
+    domain-specific evidence: unseen workload or held-out shape evaluation for
+    scheduling and kernels, randomized/reference checks for compiler and
+    hardware-style changes, and stronger practical confirmation before ready
+    claims.
+  - Status: `validate_systems_result_report()` now rejects
+    `alphaevolve_ready` reports that use generic `not_applicable` rationales
+    for domain-required gates. Scheduling and kernel domains require passed
+    held-out gates, compiler and hardware domains require passed
+    reference-correctness gates, and generic systems reports require both
+    held-out and reference-correctness gates to pass.
+  - Remaining gap: real compiler, hardware, kernel, scheduling, and systems
+    fixtures still need to emit the held-out, reference-check, deployment, and
+    certification artifacts themselves.
+  - Verification: systems-result regression tests cover domain-required
+    `not_applicable` rejection and existing scheduling exceptions.

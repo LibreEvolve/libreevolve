@@ -1009,15 +1009,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     availability, not unseen workloads, reference-code checks, deployment
     evidence, or independent certification. Matching paper/code TODOs still
     require real verifier scripts, reviewer/deployment provenance, systems
-    fixtures, held-out case sets, randomized/reference-correctness checks, and
-    domain-specific rules for when a held-out or reference-correctness gate may
-    be marked `not_applicable`.
+    fixtures, held-out case sets, and randomized/reference-correctness checks.
+    README now also documents that ready scheduling/kernel reports require
+    passed held-out gates, ready compiler/hardware reports require passed
+    reference-correctness gates, and generic ready systems reports require
+    both rather than accepting generic `not_applicable` rationales.
   - Required result: when benchmark runs emit real certification reports,
     deployment/reviewer evidence, held-out systems reports, or reference-code
-    checks, and when systems reports enforce domain-specific readiness gates,
-    update README, ROADMAP, papers index, and code/paper TODO entries together
-    so README neither underclaims the current report and inventory contracts
-    nor overclaims AlphaEvolve-style confirmed result evidence.
+    checks, update README, ROADMAP, papers index, and code/paper TODO entries
+    together so README neither underclaims the current report and inventory
+    contracts nor overclaims AlphaEvolve-style confirmed result evidence.
 
 - [ ] Keep README systems-metric wording scoped until calibrated Section 3.3
       result claims are populated.

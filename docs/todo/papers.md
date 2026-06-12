@@ -5994,7 +5994,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     LibreEvolve's backend scheduler as heuristic unless those assumptions and
     regret reports are explicitly validated.
 
-- [ ] Track GigaEvo framework paper evidence as a source-specific boundary.
+- [ ] Implement GigaEvo framework paper evidence beyond the source-specific
+      boundary.
   - Paper/source evidence: local arXiv `2511.17592`, `GigaEvo: An Open Source
     Optimization Framework Powered by LLMs and Evolution Algorithms`, by
     Valentin Khrulkov, Andrey V. Galichin, Denis Bashkirov, Dmitry Vinichenko,
@@ -6036,7 +6037,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     GigaEvo framework behavior marked missing unless local implementation
     artifacts and reports prove it.
 
-- [ ] Track CodeEvolve paper evidence as a source-specific boundary.
+- [ ] Implement CodeEvolve paper evidence beyond the source-specific boundary.
   - Paper/source evidence: local arXiv `2510.14150`, `CODE EVOLVE: an
     open-source evolutionary framework for algorithmic discovery and
     optimization`, by Henrique Assumpcao, Diego Ferreira, Leandro Campos, and
@@ -6082,8 +6083,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     wording that keeps CodeEvolve-specific behavior marked missing unless
     implementation artifacts and reports prove it.
 
-- [ ] Track ThetaEvolve test-time learning paper evidence as a source-specific
-      boundary.
+- [ ] Implement ThetaEvolve test-time learning paper evidence beyond the
+      source-specific boundary.
   - Paper/source evidence: local arXiv `2511.23473`, `ThetaEvolve:
     Test-time Learning on Open Problems`, by Yiping Wang, Shao-Rong Su,
     Zhiyuan Zeng, Eva Xu, Liliang Ren, Xinyu Yang, Zeyi Huang, Xuehai He,
@@ -6126,8 +6127,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     ThetaEvolve-style test-time learning marked missing until implementation
     artifacts and reports prove it.
 
-- [ ] Track ImprovEvolve modular-operator paper evidence as a source-specific
-      boundary.
+- [ ] Implement ImprovEvolve modular-operator paper evidence beyond the
+      source-specific boundary.
   - Paper/source evidence: local arXiv `2602.10233`, `ImprovEvolve: Ask
     AlphaEvolve to Improve the Input Solution and Then Improvise`, by Alexey
     Kravatskiy, Valentin Khrulkov, and Ivan Oseledets was submitted as arXiv
@@ -6168,8 +6169,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     that keeps ImprovEvolve-style execution marked missing unless
     implementation artifacts and reports prove it.
 
-- [ ] Track MadEvolve parameter-optimization paper evidence as a source-
-      specific boundary.
+- [ ] Implement MadEvolve parameter-optimization paper evidence beyond the
+      source-specific boundary.
   - Paper/source evidence: local arXiv `2602.15951`, `MadEvolve:
     Evolutionary Optimization of Cosmological Algorithms with Large Language
     Models`, by Tianyi Li, Shihui Zang, and Moritz Munchmeyer was submitted as
@@ -6211,8 +6212,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     madevolve.org report-link checks, and README/ROADMAP/code wording that
     keeps MadEvolve behavior marked missing unless local artifacts prove it.
 
-- [ ] Track CausalEvolve causal-scratchpad paper evidence as a source-specific
-      boundary.
+- [ ] Implement CausalEvolve causal-scratchpad paper evidence beyond the
+      source-specific boundary.
   - Paper/source evidence: local arXiv `2603.14575v2`, `CausalEvolve: Towards
     Open-Ended Discovery with Causal Scratchpad`, by Yongqiang Chen, Chenxi
     Liu, Zhenhao Chen, Tongliang Liu, Bo Han, and Kun Zhang was submitted as
@@ -6296,8 +6297,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     that keeps current DeepResearch retrieval context marked missing for
     DeepEvolve execution claims.
 
-- [ ] Track MAP-Elites illumination-algorithm paper evidence as a source-
-      specific boundary.
+- [ ] Implement MAP-Elites illumination-algorithm paper evidence beyond the
+      source-specific boundary.
   - Paper/source evidence: local arXiv `1504.04909`, `Illuminating search
     spaces by mapping elites`, by Jean-Baptiste Mouret and Jeff Clune is a
     preliminary draft dated April 21, 2015; the local cache row points to
@@ -6336,8 +6337,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     search, and README/ROADMAP/code wording that keeps current local archive
     support distinct from full illumination-algorithm reproduction.
 
-- [ ] Track hardness-of-approximation proof-element paper evidence as a
-      source-specific boundary.
+- [ ] Implement hardness-of-approximation proof-element paper evidence beyond
+      the source-specific boundary.
   - Paper/source evidence: local arXiv `2509.18057v7`, `Reinforced Generation
     of Combinatorial Structures: Hardness of Approximation`, by Ansh Nagda,
     Prabhakar Raghavan, and Abhradeep Thakurta was submitted as v7 on March 9,

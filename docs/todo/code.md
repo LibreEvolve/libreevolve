@@ -6517,8 +6517,7 @@ Primary evidence:
     heuristic UCB-style backend routing from canonical UCB1 finite-time regret
     guarantees.
 
-- [ ] Add GigaEvo framework source boundary before inspiration claims become
-      reproduction claims.
+- [ ] Implement GigaEvo framework parity beyond the source boundary.
   - Spec evidence: local arXiv `2511.17592`, `GigaEvo: An Open Source
     Optimization Framework Powered by LLMs and Evolution Algorithms`, by
     Valentin Khrulkov, Andrey V. Galichin, Denis Bashkirov, Dmitry Vinichenko,
@@ -6570,7 +6569,8 @@ Primary evidence:
     Rules (`0.803` test AUC for the evolved agent). Keep docs wording labeled
     as inspiration-only until those artifacts exist.
 
-- [ ] Add CodeEvolve source boundary before crossover/refinement claims.
+- [ ] Implement CodeEvolve crossover/refinement parity beyond the source
+      boundary.
   - Spec evidence: local arXiv `2510.14150`, `CODE EVOLVE: an open-source
     evolutionary framework for algorithmic discovery and optimization`, by
     Henrique Assumpcao, Diego Ferreira, Leandro Campos, and Fabricio Murai was
@@ -6626,7 +6626,7 @@ Primary evidence:
     that keeps CodeEvolve behavior inspiration-only until local artifacts prove
     otherwise.
 
-- [ ] Add ThetaEvolve test-time RL source boundary before training claims.
+- [ ] Implement ThetaEvolve test-time RL parity beyond the source boundary.
   - Spec evidence: local arXiv `2511.23473`, `ThetaEvolve: Test-time Learning
     on Open Problems`, by Yiping Wang et al. was submitted as arXiv v1 on
     November 28, 2025; the cached PDF hash is
@@ -6674,8 +6674,8 @@ Primary evidence:
     README/ROADMAP wording that keeps LibreEvolve's current clipped-reward
     export separate from ThetaEvolve-style test-time learning.
 
-- [ ] Add ImprovEvolve modular-operator source boundary before interface
-      claims.
+- [ ] Implement ImprovEvolve modular-operator parity beyond the source
+      boundary.
   - Spec evidence: local arXiv `2602.10233`, `ImprovEvolve: Ask AlphaEvolve
     to Improve the Input Solution and Then Improvise`, by Alexey Kravatskiy,
     Valentin Khrulkov, and Ivan Oseledets was submitted as arXiv v1 on
@@ -6724,8 +6724,8 @@ Primary evidence:
     README/ROADMAP wording that keeps current static modular prompting
     separate from ImprovEvolve execution semantics.
 
-- [ ] Add MadEvolve parameter-optimization source boundary before domain-
-      evolution claims.
+- [ ] Implement MadEvolve parameter-optimization parity beyond the source
+      boundary.
   - Spec evidence: local arXiv `2602.15951`, `MadEvolve: Evolutionary
     Optimization of Cosmological Algorithms with Large Language Models`, by
     Tianyi Li, Shihui Zang, and Moritz Munchmeyer was submitted as arXiv v1 on
@@ -6777,8 +6777,8 @@ Primary evidence:
     URL/artifact checks, and README/ROADMAP wording that keeps MadEvolve as
     background until those mechanisms are locally executed.
 
-- [ ] Add CausalEvolve causal-scratchpad source boundary before causal
-      discovery claims.
+- [ ] Implement CausalEvolve causal-scratchpad parity beyond the source
+      boundary.
   - Spec evidence: local arXiv `2603.14575v2`, `CausalEvolve: Towards
     Open-Ended Discovery with Causal Scratchpad`, by Yongqiang Chen, Chenxi
     Liu, Zhenhao Chen, Tongliang Liu, Bo Han, and Kun Zhang was submitted as
@@ -6888,8 +6888,8 @@ Primary evidence:
     hyperparameter records, and README/ROADMAP wording that keeps current
     retrieval context separate from DeepEvolve execution semantics.
 
-- [ ] Add MAP-Elites illumination-algorithm source boundary before archive
-      completeness claims.
+- [ ] Implement MAP-Elites illumination-algorithm parity beyond the source
+      boundary.
   - Spec evidence: local arXiv `1504.04909`, `Illuminating search spaces by
     mapping elites`, by Jean-Baptiste Mouret and Jeff Clune is a preliminary
     draft dated April 21, 2015; the cached PDF has 15 pages, byte count
@@ -6943,8 +6943,8 @@ Primary evidence:
     README/ROADMAP wording that keeps LibreEvolve's current 3D archive separate
     from full MAP-Elites illumination evidence.
 
-- [ ] Add hardness-of-approximation proof-element gates before theoretical-CS
-      application claims.
+- [ ] Implement hardness-of-approximation proof-element gates beyond the
+      source boundary.
   - Spec evidence: local arXiv `2509.18057v7`, `Reinforced Generation of
     Combinatorial Structures: Hardness of Approximation`, by Ansh Nagda,
     Prabhakar Raghavan, and Abhradeep Thakurta was submitted as v7 on March 9,

@@ -4656,7 +4656,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     current backend scheduling heuristic until canonical UCB1 assumptions and
     finite-time-regret evidence are validated.
 
-- [ ] Add GigaEvo framework gates before roadmap promotion.
+- [ ] Implement GigaEvo framework gates beyond source-boundary roadmap
+      promotion.
   - Spec evidence: local arXiv `2511.17592`, `GigaEvo: An Open Source
     Optimization Framework Powered by LLMs and Evolution Algorithms`, by
     Valentin Khrulkov et al. presents an AlphaEvolve-inspired framework with
@@ -4695,7 +4696,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     wording that keeps GigaEvo as framework inspiration until local evidence
     proves otherwise.
 
-- [ ] Add CodeEvolve operator and benchmark gates before roadmap promotion.
+- [ ] Implement CodeEvolve operator and benchmark gates beyond source-boundary
+      roadmap promotion.
   - Spec evidence: local arXiv `2510.14150`, `CODE EVOLVE: an open-source
     evolutionary framework for algorithmic discovery and optimization`, by
     Henrique Assumpcao et al. describes islands-based genetic search, weighted
@@ -4733,7 +4735,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     README/papers/code wording that keeps CodeEvolve as agentic code-evolution
     inspiration until local evidence proves operator and benchmark parity.
 
-- [ ] Add ThetaEvolve test-time learning gates before roadmap promotion.
+- [ ] Implement ThetaEvolve test-time learning gates beyond source-boundary
+      roadmap promotion.
   - Spec evidence: local arXiv `2511.23473`, `ThetaEvolve: Test-time Learning
     on Open Problems`, by Yiping Wang et al. was submitted as arXiv v1 on
     November 28, 2025 and describes a dynamic program-evolution environment
@@ -4768,7 +4771,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     README/papers/code wording that keeps ThetaEvolve as test-time-training
     inspiration until local evidence proves actual test-time learning support.
 
-- [ ] Add ImprovEvolve modular-operator gates before roadmap promotion.
+- [ ] Implement ImprovEvolve modular-operator gates beyond source-boundary
+      roadmap promotion.
   - Spec evidence: local arXiv `2602.10233`, `ImprovEvolve: Ask AlphaEvolve
     to Improve the Input Solution and Then Improvise`, by Kravatskiy,
     Khrulkov, and Oseledets was submitted as arXiv v1 on February 10, 2026 and
@@ -4803,7 +4807,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     modular-search inspiration until local execution semantics and benchmark
     evidence are validated.
 
-- [ ] Add MadEvolve parameter-optimization gates before roadmap promotion.
+- [ ] Implement MadEvolve parameter-optimization gates beyond source-boundary
+      roadmap promotion.
   - Spec evidence: local arXiv `2602.15951`, `MadEvolve: Evolutionary
     Optimization of Cosmological Algorithms with Large Language Models`, by
     Tianyi Li, Shihui Zang, and Moritz Munchmeyer was submitted as arXiv v1 on
@@ -4840,7 +4845,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     report-artifact checks, and README/papers/code wording that keeps
     MadEvolve as background until local evidence proves those semantics.
 
-- [ ] Add CausalEvolve causal-scratchpad gates before roadmap promotion.
+- [ ] Implement CausalEvolve causal-scratchpad gates beyond source-boundary
+      roadmap promotion.
   - Spec evidence: local arXiv `2603.14575v2`, `CausalEvolve: Towards
     Open-Ended Discovery with Causal Scratchpad`, by Yongqiang Chen et al. was
     submitted as arXiv v1 on March 15, 2026 and revised as v2 on March 29,
@@ -4917,7 +4923,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     wording that keeps DeepEvolve as retrieval/debug-loop inspiration until
     local execution evidence proves those semantics.
 
-- [ ] Add MAP-Elites illumination-algorithm gates before roadmap promotion.
+- [ ] Implement MAP-Elites illumination-algorithm gates beyond source-boundary
+      roadmap promotion.
   - Spec evidence: local arXiv `1504.04909`, `Illuminating search spaces by
     mapping elites`, by Jean-Baptiste Mouret and Jeff Clune is a preliminary
     draft dated April 21, 2015 with cached SHA-256
@@ -4957,8 +4964,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     wording that keeps current 3D archive support separate from full
     MAP-Elites illumination evidence.
 
-- [ ] Add hardness-of-approximation proof-element gates before roadmap
-      promotion.
+- [ ] Implement hardness-of-approximation proof-element gates beyond
+      source-boundary roadmap promotion.
   - Spec evidence: local arXiv `2509.18057v7`, `Reinforced Generation of
     Combinatorial Structures: Hardness of Approximation`, by Ansh Nagda,
     Prabhakar Raghavan, and Abhradeep Thakurta was submitted as v7 on March 9,

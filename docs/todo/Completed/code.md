@@ -17554,3 +17554,16 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     capture, and pricing discovery remain open.
   - Verification: diagnostics-policy tests cover remote-default overclaims and
     backend-default count inflation with valid backend hashes.
+
+- [x] Summarize provider-failure remaining gaps by role.
+  - Spec evidence: AlphaEvolve-style provider orchestration needs replayable
+    role/category failure-policy evidence without implying cross-run provider
+    isolation or provider-output replay.
+  - Status: `provider_failure_policy` rows now use the role-specific
+    quarantine/cross-run-resume remaining-gap marker when quarantine policy is
+    active, and `load_llm_call_ledger()` summarizes remaining-gap counts by
+    role.
+  - Remaining gap: durable cross-run provider-failure quarantine/resume proof,
+    provider-output replay, and hard SDK cancellation remain open.
+  - Verification: ensemble ledger tests cover generic and quarantine-specific
+    remaining-gap summaries.

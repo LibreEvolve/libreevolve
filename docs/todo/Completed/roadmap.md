@@ -9295,3 +9295,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     provider default capture open.
   - Verification: diagnostics-policy tests validate remote-default overclaim
     and backend-default count rejection.
+
+- [x] Preserve provider-failure replay-summary boundary.
+  - Spec evidence: roadmap provider-orchestration claims need to distinguish
+    in-run failure/quarantine evidence from cross-run provider isolation.
+  - Status: ROADMAP and TODO wording now recognize role-specific
+    provider-failure remaining-gap summaries while keeping cross-run
+    quarantine/resume, hard cancellation, and provider replay open.
+  - Verification: ensemble ledger tests validate generic and quarantine
+    remaining-gap summaries.

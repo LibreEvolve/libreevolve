@@ -4517,6 +4517,10 @@ Primary evidence:
     `llm_role_failure_quarantine_after` configures a matching exact role,
     reflecting the ensemble's role/backend failure-threshold quarantine state
     for exhausted timeout failures.
+    Failed-call `provider_failure_policy` rows now distinguish generic
+    provider-output/hard-cancel gaps from role-specific quarantine and
+    cross-run-resume policy gaps, and strict ledger replay summarizes those
+    remaining-gap counts by role.
     Runtime cancellation-policy records now also include
     `libreevolve.provider_cancellation_observations.v1`, derived from the
     validated LLM scheduler snapshot, with timeout-failure counts by role,

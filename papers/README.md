@@ -876,7 +876,9 @@ custom backend attempt and records timed-out calls as structured timeout
 failures with retry/fallback eligibility. Configurable role/backend
 consecutive-failure quarantine and zero-reward scheduler penalties now exist
 for exhausted reward-accounted failures, and scheduler failure-policy state can
-be restored. Cross-run provider-failure policy proof beyond restored scheduler
+be restored. Ledger replay summarizes remaining-gap categories by role,
+including the role-specific quarantine/cross-run-resume gap when that policy is
+active. Cross-run provider-failure policy proof beyond restored scheduler
 state, provider-output/raw-payload replay, hard provider cancellation,
 timeout-driven stop behavior, and richer runtime cancellation artifacts beyond
 configured in-run quarantine observations remain open.

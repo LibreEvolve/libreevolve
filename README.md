@@ -1871,6 +1871,9 @@ failures for that role/backend pair. Quarantined backends are excluded on later
 logical calls for that role, reward-accounted failed calls record an explicit
 zero-reward scheduler penalty, and `provider_failure_policy_state` persists the
 thresholds plus per-role/backend counters for scheduler restore.
+Failed-call `provider_failure_policy` rows and strict ledger replay now retain
+remaining-gap counters, distinguishing generic provider-output/hard-cancel
+replay gaps from role-specific quarantine and cross-run-resume policy gaps.
 Built-in adapters also expose LibreEvolve's effective local generation
 defaults in each call as `backend_defaults`: output-token cap, provider
 internal retry cap, configured request timeout or `null`, API mode, and OpenAI

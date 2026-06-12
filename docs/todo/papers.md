@@ -956,7 +956,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     failing role/backend pairs and apply zero-reward scheduler penalties to
     reward-accounted failures. Strict ledger replay now derives
     `provider_failure_policy_summary` for audit-only role/category/decision
-    evidence. Ensemble-deadline timeout rows now also include a
+    evidence, including role-specific remaining-gap counts for quarantine and
+    cross-run-resume policy gaps. Ensemble-deadline timeout rows now also
+    include a
     replay-validated `libreevolve.provider_cancellation_record.v1` with the
     role, backend, call id, timeout seconds, retry/fallback/telemetry budget
     action, and explicit `unsupported_daemon_worker_may_continue` hard-cancel

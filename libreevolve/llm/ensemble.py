@@ -2838,9 +2838,7 @@ def _provider_failure_policy_record(
         "fallback_decision": "fallback" if will_fallback else "no_fallback",
         "quarantine_decision": state["quarantine_decision"],
         "penalty_decision": state["penalty_decision"],
-        "remaining_gap": (
-            "provider_output_replay_and_hard_cancellation_not_implemented"
-        ),
+        "remaining_gap": "provider_output_replay_and_hard_cancellation_not_implemented",
     }
     if state["quarantine_policy"] != "disabled":
         record.update({
@@ -2849,6 +2847,9 @@ def _provider_failure_policy_record(
             "quarantine_threshold": state["quarantine_threshold"],
             "consecutive_failures": state["consecutive_failures"],
             "backend_quarantined": state["backend_quarantined"],
+            "remaining_gap": (
+                "role_specific_quarantine_penalty_and_cross_run_resume_policy_not_implemented"
+            ),
         })
     return record
 
@@ -3547,6 +3548,7 @@ def _add_provider_failure_policy_summary(
             "fallback_decisions": {},
             "quarantine_decisions": {},
             "penalty_decisions": {},
+            "remaining_gaps": {},
         },
     )
     role_summary["failed_policy_records"] += 1
@@ -3560,6 +3562,9 @@ def _add_provider_failure_policy_summary(
         value = policy.get(source)
         if isinstance(value, str):
             _increment_summary_counter(role_summary[target], value)
+    remaining_gap = policy.get("remaining_gap")
+    if isinstance(remaining_gap, str):
+        _increment_summary_counter(role_summary["remaining_gaps"], remaining_gap)
 
 
 def _provider_diagnostics_summary(
@@ -3845,9 +3850,17 @@ def _provider_failure_policy_summary_record(summary: dict[str, dict]) -> dict:
                 sorted(values["quarantine_decisions"].items())
             ),
             "penalty_decisions": dict(sorted(values["penalty_decisions"].items())),
+            "remaining_gaps": dict(sorted(values["remaining_gaps"].items())),
         }
         for role, values in sorted(summary.items())
     }
+    remaining_gaps = sorted(
+        {
+            gap
+            for values in roles.values()
+            for gap in values["remaining_gaps"]
+        }
+    )
     return {
         "schema": "libreevolve.provider_failure_policy_summary.v1",
         "scope": "llm_call_ledger_replay",
@@ -3855,6 +3868,7 @@ def _provider_failure_policy_summary_record(summary: dict[str, dict]) -> dict:
         "total_failed_policy_records": sum(
             values["failed_policy_records"] for values in roles.values()
         ),
+        "remaining_gaps": remaining_gaps,
         "remaining_gap": (
             "provider_output_replay_and_hard_cancellation_not_implemented"
         ),

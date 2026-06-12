@@ -12154,3 +12154,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     account/model default rates, or provider pricing.
   - Verification: diagnostics-policy tests validate remote-default overclaim
     and backend-default count rejection.
+
+- [x] Record provider-failure remaining-gap summaries.
+  - Spec evidence: AlphaEvolve-scale provider scheduling needs replayable
+    failure-policy audit evidence without implying cross-run provider
+    quarantine/resume proof.
+  - Status: paper-facing TODOs and ledger replay now distinguish generic
+    provider-output/hard-cancel gaps from role-specific quarantine/cross-run-
+    resume policy gaps.
+  - Remaining paper gap: this does not prove cross-run provider isolation,
+    provider-output replay, or hard provider cancellation.
+  - Verification: ensemble ledger tests validate generic and quarantine
+    remaining-gap summaries.

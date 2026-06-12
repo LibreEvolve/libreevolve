@@ -1169,6 +1169,9 @@ def test_role_failure_quarantine_excludes_backend_after_threshold():
     assert failed_call["provider_failure_policy"]["quarantine_threshold"] == 1
     assert failed_call["provider_failure_policy"]["consecutive_failures"] == 1
     assert failed_call["provider_failure_policy"]["backend_quarantined"] is True
+    assert failed_call["provider_failure_policy"]["remaining_gap"] == (
+        "role_specific_quarantine_penalty_and_cross_run_resume_policy_not_implemented"
+    )
     state = ens.scheduler_state["provider_failure_policy_state"]
     assert state["role_quarantine_after"] == {"mutation": 1}
     assert state["roles"]["mutation"]["backends"] == [
@@ -2249,6 +2252,7 @@ def test_load_llm_call_ledger_validates_call_and_reward_rows(tmp_path):
         "scope": "llm_call_ledger_replay",
         "roles": {},
         "total_failed_policy_records": 0,
+        "remaining_gaps": [],
         "remaining_gap": (
             "provider_output_replay_and_hard_cancellation_not_implemented"
         ),
@@ -2527,12 +2531,49 @@ def test_load_llm_call_ledger_validates_provider_failure_policy(tmp_path):
                 "penalty_decisions": {
                     "not_penalized_by_ensemble_policy": 1,
                 },
+                "remaining_gaps": {
+                    "provider_output_replay_and_hard_cancellation_not_implemented": 1,
+                },
             }
         },
         "total_failed_policy_records": 1,
+        "remaining_gaps": [
+            "provider_output_replay_and_hard_cancellation_not_implemented"
+        ],
         "remaining_gap": (
             "provider_output_replay_and_hard_cancellation_not_implemented"
         ),
+    }
+
+
+def test_load_llm_call_ledger_summarizes_quarantine_remaining_gap(tmp_path):
+    records = []
+    backend = _b("b1")
+    backend.generate.side_effect = TimeoutError("slow")
+    ens = LLMEnsemble(
+        [backend],
+        role_failure_quarantine_after={"mutation": 1},
+    )
+    ens.set_call_record_sink(records.append)
+
+    with pytest.raises(TimeoutError):
+        ens.generate("prompt text", role="mutation")
+
+    ledger = tmp_path / "llm_calls.jsonl"
+    _write_llm_call_ledger(ledger, records)
+
+    replay = load_llm_call_ledger(ledger, backend_count=1)
+
+    assert records[0]["provider_failure_policy"]["remaining_gap"] == (
+        "role_specific_quarantine_penalty_and_cross_run_resume_policy_not_implemented"
+    )
+    assert replay["provider_failure_policy_summary"]["remaining_gaps"] == [
+        "role_specific_quarantine_penalty_and_cross_run_resume_policy_not_implemented"
+    ]
+    assert replay["provider_failure_policy_summary"]["roles"]["mutation"][
+        "remaining_gaps"
+    ] == {
+        "role_specific_quarantine_penalty_and_cross_run_resume_policy_not_implemented": 1
     }
 
 

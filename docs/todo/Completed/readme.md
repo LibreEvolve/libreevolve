@@ -11764,3 +11764,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     backend-default counts while keeping live provider defaults absent.
   - Verification: diagnostics-policy tests validate remote-default overclaim
     and backend-default count rejection.
+
+- [x] Document provider-failure remaining-gap summaries.
+  - Spec evidence: README provider-failure wording needed to distinguish
+    in-run role/backend quarantine evidence from full cross-run provider
+    isolation and replay.
+  - Status: README and TODO wording now state that failed-call policy rows and
+    ledger replay distinguish generic provider-output/hard-cancel gaps from
+    role-specific quarantine/cross-run-resume gaps.
+  - Verification: ensemble ledger tests validate generic and quarantine
+    remaining-gap summaries.

@@ -9337,7 +9337,8 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     current-surface audit hashes from richer AlphaEvolve context-policy
     ownership.
   - Status: ROADMAP and TODO wording now recognize compact capability-summary
-    hashes for meta-prompt mutation context-policy surfaces while keeping
-    semantic context selection and retrieval/summarization control open.
+    hashes and embedded validation for meta-prompt mutation context-policy
+    surfaces while keeping semantic context selection and retrieval/
+    summarization control open.
   - Verification: meta-prompt evolution tests validate retained capability
-    summary schema, count, and hashes.
+    summary schema, count, hashes, and forged-summary rejection.

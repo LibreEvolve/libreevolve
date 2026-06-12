@@ -11809,6 +11809,6 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     per-mutation audit hash for the context-policy surface shown to the model.
   - Status: README and TODO wording now document
     `libreevolve.meta_prompt_context_policy_capability_summary.v1` in
-    meta-prompt mutation metadata.
+    meta-prompt mutation metadata with embedded validation.
   - Verification: meta-prompt evolution tests validate retained capability
-    summary schema, count, and hashes.
+    summary schema, count, hashes, and forged-summary rejection.

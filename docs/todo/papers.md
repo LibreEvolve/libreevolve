@@ -2344,7 +2344,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     the bounded redacted prompt-performance evidence. Meta-prompt mutation
     metadata also records a compact capability summary with schema, field
     count, field hash, and per-section hashes for the policy surface shown to
-    the model. Final manifests now
+    the model, with validation rejecting forged count/hash/section and
+    unsupported-field overclaims. Final manifests now
     include `runtime.prompt_context_policy_coverage` with schema
     `libreevolve.prompt_context_policy_coverage.v1` and embedded validation
     against the current policy schema/capability map, while keeping

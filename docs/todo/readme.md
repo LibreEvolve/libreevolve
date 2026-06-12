@@ -2493,7 +2493,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     fields, and per-mutation
     `libreevolve.meta_prompt_context_policy_capability_summary.v1` metadata
     with capability/prompt-policy schemas, field counts, field hash, and
-    per-section hashes.
+    per-section hashes, plus embedded validation for summary count, hash,
+    section, and unsupported-field overclaims.
   - Required result: when prompt-program policy can control retrieval or
     summarization behavior, learned/semantic context selection, arbitrary
     instruction channels, broader per-role retention, or other prompt surfaces

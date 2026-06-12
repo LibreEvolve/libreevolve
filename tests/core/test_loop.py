@@ -29,6 +29,7 @@ from libreevolve.core.loop import (
     FULL_RESUME_BUNDLE_VALIDATION_SCHEMA,
     PROMPT_CONTEXT_POLICY_COVERAGE_SCHEMA,
     PROMPT_CONTEXT_POLICY_COVERAGE_VALIDATION_SCHEMA,
+    META_PROMPT_CONTEXT_POLICY_CAPABILITY_SUMMARY_VALIDATION_SCHEMA,
     PROMPT_SECTION_PACKING_COVERAGE_SCHEMA,
     PROMPT_SECTION_PACKING_COVERAGE_VALIDATION_SCHEMA,
     RETRIEVAL_EVIDENCE_COVERAGE_SCHEMA,
@@ -121,6 +122,7 @@ from libreevolve.core.loop import (
     validate_runtime_lineage_replay_policy,
     validate_runtime_llm_scheduler_state_snapshot,
     validate_meta_prompt_context_policy_capabilities,
+    validate_meta_prompt_context_policy_capability_summary,
     _select_critique_mutation,
 )
 from libreevolve.core.meta_prompt import PromptDatabase, PromptProgram
@@ -16651,6 +16653,10 @@ def test_meta_prompt_evolution_conditions_mutation_on_performance_evidence():
     )
     assert len(capability_summary["fields_sha256"]) == 64
     assert len(capability_summary["sections"]) == 3
+    assert capability_summary["validation"]["schema"] == (
+        META_PROMPT_CONTEXT_POLICY_CAPABILITY_SUMMARY_VALIDATION_SCHEMA
+    )
+    assert capability_summary["validation"]["ok"] is True
 
 
 def test_meta_prompt_context_policy_capabilities_validate_current_policy_schema():
@@ -16669,6 +16675,36 @@ def test_meta_prompt_context_policy_capabilities_validate_current_policy_schema(
         assert fields == sorted(fields, key=fields.index)
         advertised.update(fields)
     assert advertised == set(validate_prompt_context_policy({})) - {"schema"}
+
+
+def test_meta_prompt_context_policy_capability_summary_rejects_overclaims():
+    _, context = _build_meta_prompt_mutation_request(
+        PromptProgram(template=DEFAULT_TEMPLATE),
+        PromptDatabase(tempfile.mkdtemp(), templates=[DEFAULT_TEMPLATE]),
+        Program(code="x=2", fitness=0.4),
+        Program(code="x=1", fitness=0.3),
+        0.1,
+        [],
+        Config(),
+    )
+    summary = copy.deepcopy(context["context_policy_capability_summary"])
+    summary["field_count"] += 1
+    summary["fields_sha256"] = "0" * 64
+    summary["sections"][0]["field_count"] += 1
+    summary["unsupported"] = True
+    summary.pop("validation")
+
+    validation = validate_meta_prompt_context_policy_capability_summary(summary)
+
+    assert validation["schema"] == (
+        META_PROMPT_CONTEXT_POLICY_CAPABILITY_SUMMARY_VALIDATION_SCHEMA
+    )
+    assert validation["ok"] is False
+    codes = {issue["code"] for issue in validation["issues"]}
+    assert "field_count_mismatch" in codes
+    assert "fields_sha256_mismatch" in codes
+    assert "sections_mismatch" in codes
+    assert "unsupported_field" in codes
 
 
 def test_runtime_prompt_context_policy_coverage_scopes_alphaevolve_completeness():

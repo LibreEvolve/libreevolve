@@ -1049,7 +1049,9 @@ Primary evidence:
     records `libreevolve.meta_prompt_context_policy_capability_summary.v1`
     with the capability schema, prompt-policy schema, tunable field count,
     field hash, and per-section hashes for the policy surface shown to the
-    model. Focused tests assert that meta-prompt evidence includes current
+    model, plus embedded validation that rejects summary count/hash/section
+    mismatches and unsupported summary fields. Focused tests assert that
+    meta-prompt evidence includes current
     context-policy values and the tunable policy surface under the redacted
     prompt-evidence cap. Final manifests now include
     `runtime.prompt_context_policy_coverage` with schema

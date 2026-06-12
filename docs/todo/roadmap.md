@@ -1370,8 +1370,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `libreevolve.prompt_context_policy.v1` state, meta-prompt evidence exposes
     a checked `libreevolve.meta_prompt_context_policy_capabilities.v1`
     capability map, meta-prompt mutation metadata records a compact capability
-    summary with tunable field and section hashes, and the current tunable
-    fields include optional channel controls, section priorities,
+    summary with tunable field and section hashes plus embedded validation,
+    and the current tunable fields include optional channel controls, section priorities,
     mutation-instruction variants, parent metric selection/caps, parent-code
     selection/filtering/order/limits/caps/truncation, proposal metadata
     enablement, feedback subsection controls, and inspiration sampling

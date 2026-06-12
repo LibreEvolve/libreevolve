@@ -144,6 +144,9 @@ PROMPT_CONTEXT_POLICY_COVERAGE_SCHEMA = (
 PROMPT_CONTEXT_POLICY_COVERAGE_VALIDATION_SCHEMA = (
     "libreevolve.prompt_context_policy_coverage_validation.v1"
 )
+META_PROMPT_CONTEXT_POLICY_CAPABILITY_SUMMARY_VALIDATION_SCHEMA = (
+    "libreevolve.meta_prompt_context_policy_capability_summary_validation.v1"
+)
 RETRIEVAL_EVIDENCE_COVERAGE_SCHEMA = (
     "libreevolve.retrieval_evidence_coverage.v1"
 )
@@ -37002,6 +37005,11 @@ def _build_meta_prompt_mutation_request(
     context_policy_capability_summary = _meta_prompt_context_policy_capability_summary(
         context_policy_capabilities
     )
+    context_policy_capability_summary["validation"] = (
+        validate_meta_prompt_context_policy_capability_summary(
+            context_policy_capability_summary
+        )
+    )
     evidence = {
         "reward_policy": {
             "mode": config.prompt_reward_mode,
@@ -37309,6 +37317,70 @@ def _meta_prompt_context_policy_capability_summary(capabilities: dict) -> dict:
         ).hexdigest(),
         "sections": sections,
         "policy": "hashes_current_meta_prompt_visible_context_policy_fields",
+    }
+
+
+def validate_meta_prompt_context_policy_capability_summary(summary: object) -> dict:
+    """Validate retained meta-prompt context-policy capability summary hashes."""
+    issues: list[dict[str, str]] = []
+    if not isinstance(summary, dict):
+        return {
+            "schema": META_PROMPT_CONTEXT_POLICY_CAPABILITY_SUMMARY_VALIDATION_SCHEMA,
+            "ok": False,
+            "summary_schema": None,
+            "field_count": 0,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "meta-prompt context-policy capability summary must be an object",
+                }
+            ],
+        }
+    expected = _meta_prompt_context_policy_capability_summary(
+        validate_meta_prompt_context_policy_capabilities(
+            _META_PROMPT_CONTEXT_POLICY_CAPABILITIES
+        )
+    )
+    comparable = {
+        key: value
+        for key, value in summary.items()
+        if key != "validation"
+    }
+    for field in (
+        "schema",
+        "capabilities_schema",
+        "context_policy_schema",
+        "field_count",
+        "fields_sha256",
+        "sections",
+        "policy",
+    ):
+        if comparable.get(field) != expected[field]:
+            issues.append(
+                {
+                    "code": f"{field}_mismatch",
+                    "message": f"{field} must match the current validated capability summary",
+                }
+            )
+    unsupported = set(comparable) - set(expected)
+    for field in sorted(unsupported):
+        issues.append(
+            {
+                "code": "unsupported_field",
+                "message": f"unsupported capability summary field: {field}",
+            }
+        )
+    return {
+        "schema": META_PROMPT_CONTEXT_POLICY_CAPABILITY_SUMMARY_VALIDATION_SCHEMA,
+        "ok": not issues,
+        "summary_schema": summary.get("schema")
+        if isinstance(summary.get("schema"), str)
+        else None,
+        "field_count": summary.get("field_count")
+        if isinstance(summary.get("field_count"), int)
+        and not isinstance(summary.get("field_count"), bool)
+        else 0,
+        "issues": issues,
     }
 
 

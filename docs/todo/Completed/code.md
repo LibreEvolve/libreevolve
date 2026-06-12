@@ -17612,10 +17612,11 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Status: meta-prompt mutation metadata now records
     `libreevolve.meta_prompt_context_policy_capability_summary.v1` with
     capability/prompt-policy schemas, tunable field count, field hash, and
-    per-section hashes for the validated policy surface.
+    per-section hashes for the validated policy surface, plus embedded
+    validation for forged count/hash/section and unsupported-field overclaims.
   - Remaining gap: this is current-surface audit metadata, not semantic context
     selection, retrieval/summarization policy control, or full AlphaEvolve-grade
     prompt-context evolution.
   - Verification: meta-prompt evolution tests validate retained capability
-    summary schema, count, and hashes without expanding prompt evidence past
-    its bounded section set.
+    summary schema, count, hashes, embedded validation, and forged-summary
+    rejection without expanding prompt evidence past its bounded section set.

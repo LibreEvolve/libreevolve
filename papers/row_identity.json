@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.paper_source_identity_manifest.v1",
-  "source_identity_count": 47,
+  "source_identity_count": 48,
   "source_identity_policy": "manifest_id_url_source_id_and_file_source_prefix_must_match_before_source_version_or_rights_claims",
   "sources": [
     {
@@ -809,6 +809,24 @@
       "url_source_id": "2606.05922",
       "url_versioned_id": "2606.05922",
       "file_source_id": "2606.05922",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2605.30621",
+      "title": "Harness_Updating_Is_Not_Harness_Benefit",
+      "url": "https://arxiv.org/pdf/2605.30621.pdf",
+      "file": "papers/2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf",
+      "sha256": "a3a09f90dc278f1c6ceee5a3f7bf807b5a92b642cbcb0123d20b824a0e880d6b",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2605.30621",
+      "url_versioned_id": "2605.30621",
+      "file_source_id": "2605.30621",
       "identity_checks": {
         "manifest_id_matches_url_source_id": true,
         "manifest_id_matches_file_source_id": true,

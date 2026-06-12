@@ -13106,3 +13106,24 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2605.30621` harness-updating versus harness-benefit paper-cache
+      coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2605.30621`, `Harness Updating Is Not Harness Benefit: Disentangling
+    Evolution Capabilities in Self-Evolving LLM Agents`, cached locally as
+    `papers/2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf` with
+    byte count `2463998` and SHA-256
+    `a3a09f90dc278f1c6ceee5a3f7bf807b5a92b642cbcb0123d20b824a0e880d6b`.
+  - Remaining paper gap: source-license details, linked-code URL/status,
+    harness-updating and harness-benefit metric definitions, evolver/task-
+    agent pairing records, persistent harness update artifacts, activation
+    telemetry, adherence and instruction-following traces, model-tier
+    taxonomy, weak/mid/strong baseline identities, capability-budget analysis,
+    post-evolution performance deltas, SWE-Bench Verified/MCP-Atlas/
+    SkillsBench metadata if used, code/artifact reproducibility status, and
+    independent reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

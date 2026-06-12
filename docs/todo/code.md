@@ -5705,7 +5705,8 @@ Primary evidence:
     retrospective self-preference harness optimization as missing evidence
     until local implementation and reports exist.
 
-- [ ] Add harness-updating versus harness-benefit capability boundary.
+- [ ] Implement harness-updating versus harness-benefit capability evidence
+      beyond paper cache coverage.
   - Spec evidence: arXiv `2605.30621`, `Harness Updating Is Not Harness
     Benefit: Disentangling Evolution Capabilities in Self-Evolving LLM
     Agents`, was submitted May 28, 2026. Its abstract distinguishes
@@ -5717,24 +5718,29 @@ Primary evidence:
     models benefit little, mid-tier models benefit most, and strong-tier
     models benefit less than mid-tier. It traces weak-tier failure to missing
     harness artifact activation or poor faithful following after activation.
-  - Current evidence: LibreEvolve records candidate mutations, prompt
-    context, backend selection, run artifacts, and failure histories, but it
-    has no source row for `2605.30621`, no harness self-evolution benchmark,
-    no metric separating update-generation quality from downstream
-    task-agent benefit, no harness artifact activation telemetry, no
-    long-horizon instruction-following/adherence metric, no model-tier
-    comparison matrix, and no budget rule distinguishing capability spent on
-    the evolver from capability spent on the task-solving agent.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2605.30621`: arXiv id/version/date/PDF hash, authors, source
-    license, linked-code URL/status, relation to AlphaEvolve and LibreEvolve
-    harness assumptions, harness-updating metric definitions, harness-benefit
-    metric definitions, evolver/task-agent pairing matrix, persistent harness
-    update artifacts, activation/load-rate telemetry, adherence/following
-    traces across long trajectories, model-tier taxonomy, weak/mid/strong
-    baseline identities, capability-budget accounting, post-evolution
-    performance deltas, SWE-Bench Verified/MCP-Atlas/SkillsBench benchmark
-    metadata if reproduced, and README/ROADMAP wording that keeps harness
+  - Current evidence: `papers/download_manifest.*`, `papers/row_identity.json`,
+    `papers/README.md`, README, ROADMAP, and TODO coverage now include
+    `2605.30621`, cached locally as
+    `papers/2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf` with
+    byte count `2463998` and SHA-256
+    `a3a09f90dc278f1c6ceee5a3f7bf807b5a92b642cbcb0123d20b824a0e880d6b`.
+    LibreEvolve records candidate mutations, prompt context, backend
+    selection, run artifacts, and failure histories, but it has no harness
+    self-evolution benchmark, no metric separating update-generation quality
+    from downstream task-agent benefit, no harness artifact activation
+    telemetry, no long-horizon instruction-following/adherence metric, no
+    model-tier comparison matrix, and no budget rule distinguishing capability
+    spent on the evolver from capability spent on the task-solving agent.
+  - Required result: add implementation-boundary metadata beyond the paper
+    cache: source license, linked-code URL/status, relation to AlphaEvolve and
+    LibreEvolve harness assumptions, harness-updating metric definitions,
+    harness-benefit metric definitions, evolver/task-agent pairing matrix,
+    persistent harness update artifacts, activation/load-rate telemetry,
+    adherence/following traces across long trajectories, model-tier taxonomy,
+    weak/mid/strong baseline identities, capability-budget accounting, post-
+    evolution performance deltas, SWE-Bench Verified/MCP-Atlas/SkillsBench
+    benchmark metadata if reproduced, and README/ROADMAP wording that keeps
+    harness
     self-evolution benefit claims separate from harness-update generation
     until local evidence proves both.
 

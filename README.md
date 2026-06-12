@@ -165,7 +165,7 @@ Common run options:
 
 ## Research Sources
 
-LibreEvolve is informed by a local cache of 47 papers on LLM-guided evolution,
+LibreEvolve is informed by a local cache of 48 papers on LLM-guided evolution,
 program synthesis, quality-diversity optimization, and related benchmarks. The
 PDF cache lives locally under `papers/`, but the PDFs themselves are gitignored.
 The committed repository tracks `papers/README.md`, download manifests, and
@@ -176,7 +176,7 @@ not authoritative bibliographic titles. Use `papers/README.md` for paper-facing
 titles, implementation status, and benchmark coverage decisions.
 
 The table below is a curated subset for README context. `papers/README.md` is
-the complete implementation-status index for all 47 manifest rows.
+the complete implementation-status index for all 48 manifest rows.
 
 | Source | Role in LibreEvolve |
 | --- | --- |
@@ -208,6 +208,7 @@ the complete implementation-status index for all 47 manifest rows.
 | [SIA](https://arxiv.org/abs/2605.27276) | Harness-plus-weight self-improvement context only; no local Feedback-Agent, editable task-agent harness inventory, online weight-update loop, adapter/checkpoint lifecycle, or harness-versus-weight ablation report exists. |
 | [HarnessFix](https://arxiv.org/abs/2606.06324) | Trace-grounded harness repair context only; no local HTIR trace normalization, harness-layer failure attribution, recurring flaw record consolidation, scoped repair operator schema, or regression-bounded patch validation exists. |
 | [RHO](https://arxiv.org/abs/2606.05922) | Retrospective harness optimization context only; no local hard/diverse trajectory coreset selector, parallel re-rollout workflow, self-validation/self-consistency analysis, pairwise self-preference harness ranking, or SWE-Bench Pro reproduction exists. |
+| [Harness Updating Is Not Harness Benefit](https://arxiv.org/abs/2605.30621) | Harness-capability disentanglement context only; no local harness-updating versus harness-benefit metric schema, cross-model capability-tier experiment, activation/adherence failure audit, or benchmark reproduction exists. |
 
 Rehydrate the ignored local PDF cache on a fresh checkout:
 

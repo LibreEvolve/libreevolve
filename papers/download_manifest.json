@@ -450,6 +450,16 @@
     "sha256": "75b126a2a6350e8ff58c0e6c7f3366894e23f0610f533ac533fc3e3214aa7cd4"
   },
   {
+    "id": "2605.30621",
+    "title": "Harness_Updating_Is_Not_Harness_Benefit",
+    "url": "https://arxiv.org/pdf/2605.30621.pdf",
+    "file": "papers/2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf",
+    "ok": true,
+    "bytes": 2463998,
+    "message": "downloaded",
+    "sha256": "a3a09f90dc278f1c6ceee5a3f7bf807b5a92b642cbcb0123d20b824a0e880d6b"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

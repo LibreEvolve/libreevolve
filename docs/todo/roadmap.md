@@ -620,7 +620,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `docs/examples/task_specification.embedded_evaluate_math.json` example. It
     is still a partial artifact, not full AlphaEvolve task-spec parity for
     external validators, arbitrary language/build runner specs, or full
-    user-authored task-spec evidence.
+    user-authored task-spec evidence. ROADMAP now also names
+    `papers/task_specification_boundary.json` as the
+    runtime-artifact-resolution-only paper-facing boundary.
   - Required result: when those non-embedded task-spec parity gaps land, update
     ROADMAP, README, papers index, and code/paper TODOs together.
 

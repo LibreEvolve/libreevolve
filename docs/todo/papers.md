@@ -322,7 +322,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `task_specification.json` run artifact. It also includes bounded candidate
     prompt, and evaluator JSONL row joins, plus the checked
     `docs/examples/task_specification.embedded_evaluate_math.json` standalone
-    example.
+    example. The paper-facing sidecar
+    `papers/task_specification_boundary.json` now preserves this
+    runtime-artifact-resolution-only boundary.
   - Current gap: paper-facing evidence still lacks full task-spec parity for
     external validators, arbitrary language/build runners, and user-authored
     standalone task specs beyond the checked example.

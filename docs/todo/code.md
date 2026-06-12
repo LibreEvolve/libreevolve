@@ -229,7 +229,10 @@ Primary evidence:
     checked paper-facing standalone example validated by
     `tests/test_task_spec_examples.py`. Runtime also emits
     `evaluator_results.jsonl` rows and task-spec deep-id records join
-    candidate ids to those row ids.
+    candidate ids to those row ids. The paper-facing sidecar
+    `papers/task_specification_boundary.json` now records this as a
+    runtime-artifact-resolution-only boundary rather than full AlphaEvolve
+    task-spec parity.
   - Required result: extend artifact-level parity beyond the current embedded
     static score-field attribution path: external validators, arbitrary
     language/build runner task specs, and full user-authored task-spec parity

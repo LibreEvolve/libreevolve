@@ -530,6 +530,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     standalone `task_specification.json` run artifact. It also documents
     bounded candidate, prompt, and evaluator JSONL row joins plus the checked
     `docs/examples/task_specification.embedded_evaluate_math.json` example.
+    README now also names `papers/task_specification_boundary.json` as the
+    runtime-artifact-resolution-only paper-facing boundary.
     README should still not imply full AlphaEvolve task-spec parity because
     external validators, arbitrary language/build runner specs, and full
     user-authored task-spec evidence remain incomplete.

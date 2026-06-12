@@ -59,6 +59,10 @@ from libreevolve.problems.benchmarks.problem_formulation_provenance_boundary imp
     problem_formulation_provenance_boundary_record,
     validate_problem_formulation_provenance_boundary,
 )
+from libreevolve.problems.benchmarks.task_specification_boundary import (
+    task_specification_boundary_record,
+    validate_task_specification_boundary,
+)
 from libreevolve.problems.benchmarks.fault2flow_boundary import (
     fault2flow_boundary_record,
     validate_fault2flow_boundary,
@@ -369,6 +373,7 @@ INITIAL_PROGRAM_IDEA_PROVENANCE_BOUNDARY_FILE = "papers/initial_program_idea_pro
 INITIAL_PROGRAM_VALIDITY_BOUNDARY_FILE = "papers/initial_program_validity_boundary.json"
 COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_FILE = "papers/collaborator_feedback_provenance_boundary.json"
 PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_FILE = "papers/problem_formulation_provenance_boundary.json"
+TASK_SPECIFICATION_BOUNDARY_FILE = "papers/task_specification_boundary.json"
 EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integration_boundary.json"
 CANDIDATE_ABSTRACTION_BOUNDARY_FILE = "papers/candidate_abstraction_boundary.json"
 CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_FILE = "papers/candidate_language_runner_boundary.json"
@@ -844,6 +849,7 @@ def validate_paper_manifest(
     issues.extend(_validate_initial_program_validity_boundary(root_path))
     issues.extend(_validate_collaborator_feedback_provenance_boundary(root_path))
     issues.extend(_validate_problem_formulation_provenance_boundary(root_path))
+    issues.extend(_validate_task_specification_boundary(root_path))
     issues.extend(_validate_existing_codebase_integration_boundary(root_path))
     issues.extend(_validate_candidate_language_runner_boundary(root_path))
     issues.extend(_validate_candidate_abstraction_boundary(root_path))
@@ -1594,6 +1600,38 @@ def _validate_problem_formulation_provenance_boundary(root_path: Path) -> list[P
             f"problem_formulation_provenance_boundary_{issue.code}",
             issue.message,
             "problem_formulation_provenance",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_task_specification_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / TASK_SPECIFICATION_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = task_specification_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "task_specification_boundary_manifest_missing",
+                    (
+                        f"{TASK_SPECIFICATION_BOUNDARY_FILE} must emit "
+                        "task-specification artifact-resolution availability"
+                    ),
+                    "task_specification",
+                )
+            ]
+    report = validate_task_specification_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"task_specification_boundary_{issue.code}",
+            issue.message,
+            "task_specification",
         )
         for issue in report.issues
     ]

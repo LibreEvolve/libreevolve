@@ -18340,3 +18340,13 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     default complete-initial-program overclaims, invalid boundary status,
     missing evidence fields, and invalid strict/default policy drift.
+
+- [x] Add task-specification sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/task_specification_boundary.py`
+    now emits and validates the runtime-artifact-resolution-only boundary for
+    startup task-spec bundles, `task_specification.json`, and
+    `runtime.history.task_spec_artifact_resolution_report`; paper-manifest
+    validation requires the committed sidecar at the repo root.
+  - Verification: focused boundary tests and paper-manifest tests reject full
+    AlphaEvolve task-spec parity overclaims, invalid boundary status, missing
+    evidence fields, and task-spec schema drift.

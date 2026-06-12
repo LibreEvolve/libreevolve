@@ -53,6 +53,10 @@ Important limits:
 - Expert-guided problem formulation is a metadata/report contract until real
   benchmark fixtures carry populated review/signoff evidence; the boundary is
   tracked by `papers/problem_formulation_provenance_boundary.json`.
+- Task-specification evidence is a runtime artifact-resolution contract, not
+  full AlphaEvolve task-spec parity for external validators, arbitrary
+  language/build runners, or user-authored standalone specs; the boundary is
+  tracked by `papers/task_specification_boundary.json`.
 - Collaborator-feedback provenance is a metadata/report contract until
   representative fixtures carry reviewed multi-cohort feedback evidence; the
   boundary is tracked by `papers/collaborator_feedback_provenance_boundary.json`.

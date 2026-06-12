@@ -13421,3 +13421,14 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused initial-program validity tests reject default
     complete-initial-program parity overclaims.
+
+- [x] Record task-specification paper-facing sidecar.
+  - Status: `papers/task_specification_boundary.json` now records the
+    task-specification evidence boundary as runtime-artifact-resolution-only:
+    startup bundles, standalone `task_specification.json`, runtime artifact
+    links, and supported embedded score-field causality exist, while external
+    validator score causality, arbitrary language/build-runner specs, and full
+    user-authored task-spec parity remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused task-specification tests reject full task-spec parity
+    overclaims.

@@ -55,7 +55,9 @@ add/score rows, plus evaluator row ids in `evaluator_results.jsonl`.
 standalone documentation example. The runtime report can record static AST
 score-field causal attribution for supported candidate-owned embedded
 `evaluate` paths, but `claim_ready: false` still covers external validators,
-arbitrary languages/build systems, and full task-spec parity.
+arbitrary languages/build systems, and full task-spec parity. The paper-facing
+sidecar `papers/task_specification_boundary.json` preserves this
+runtime-artifact-resolution-only boundary.
 Completed manifests also include
 `runtime.history.initial_program_idea_provenance_report` with schema
 `libreevolve.initial_program_idea_provenance_report.v1`. This report reads

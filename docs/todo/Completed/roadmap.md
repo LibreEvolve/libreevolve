@@ -10316,3 +10316,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation requires the committed sidecar and
     focused initial-program validity tests reject premature default-run
     parity claims.
+
+- [x] Keep roadmap task-specification boundary tied to sidecar.
+  - Status: ROADMAP now links `runtime.history.task_spec_artifact_resolution_report`
+    and the standalone task-spec example to
+    `papers/task_specification_boundary.json`, preserving the
+    runtime-artifact-resolution-only boundary while keeping external
+    validators, arbitrary language/build runners, and user-authored standalone
+    task-spec parity open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused task-specification tests reject full task-spec parity overclaims.

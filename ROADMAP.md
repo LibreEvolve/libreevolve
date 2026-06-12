@@ -232,7 +232,9 @@ LibreEvolve has:
   candidate-owned `evaluate` metric returns depend on EVOLVE blocks, plus
   bounded candidate and prompt/evaluator JSONL row joins, plus a validated
   standalone task-spec example under `docs/examples/`, while leaving
-  arbitrary-validator/build-system task-spec parity open
+  arbitrary-validator/build-system task-spec parity open, with
+  `papers/task_specification_boundary.json` preserving the paper-facing
+  runtime-artifact-resolution-only boundary
 - runtime prompt prior-score provenance under
   `runtime.history.prompt_prior_score_provenance_report`, linking generated
   mutation prompts to target-parent and selected-inspiration score records,

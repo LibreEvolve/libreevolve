@@ -113,6 +113,12 @@ from libreevolve.problems.benchmarks.problem_formulation_provenance_boundary imp
     render_problem_formulation_provenance_boundary_summary,
     validate_problem_formulation_provenance_boundary,
 )
+from libreevolve.problems.benchmarks.task_specification_boundary import (
+    TASK_SPECIFICATION_BOUNDARY_SCHEMA,
+    render_task_specification_boundary_summary,
+    task_specification_boundary_record,
+    validate_task_specification_boundary,
+)
 from libreevolve.problems.benchmarks.bilateral_trade_boundary import (
     BILATERAL_TRADE_BOUNDARY_SCHEMA,
     bilateral_trade_boundary_record,
@@ -660,6 +666,7 @@ __all__ = [
     "PROCESS_EXHIBIT_BOUNDARY_SCHEMA",
     "COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_SCHEMA",
     "PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_SCHEMA",
+    "TASK_SPECIFICATION_BOUNDARY_SCHEMA",
     "PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_SCHEMA",
     "RAMSEY_NUMBERS_BOUNDARY_SCHEMA",
     "REPEATED_SAMPLING_BASELINE_BOUNDARY_SCHEMA",
@@ -741,6 +748,7 @@ __all__ = [
     "paper_author_metadata_boundary_record",
     "process_exhibit_boundary_record",
     "problem_formulation_provenance_boundary_record",
+    "task_specification_boundary_record",
     "proposal_lifecycle_audit_boundary_record",
     "ramsey_numbers_boundary_record",
     "repeated_sampling_baseline_boundary_record",
@@ -859,6 +867,7 @@ __all__ = [
     "render_parallel_evaluation_readiness_boundary_summary",
     "render_process_exhibit_boundary_summary",
     "render_problem_formulation_provenance_boundary_summary",
+    "render_task_specification_boundary_summary",
     "render_proposal_lifecycle_audit_boundary_summary",
     "render_ramsey_numbers_boundary_summary",
     "render_repeated_sampling_baseline_boundary_summary",
@@ -969,6 +978,7 @@ __all__ = [
     "validate_parallel_evaluation_readiness_boundary",
     "validate_process_exhibit_boundary",
     "validate_problem_formulation_provenance_boundary",
+    "validate_task_specification_boundary",
     "validate_proposal_lifecycle_audit_boundary",
     "validate_ramsey_numbers_boundary",
     "validate_repeated_sampling_baseline_boundary",

@@ -12572,3 +12572,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused initial-program validity tests reject default complete-initial-
     program parity overclaims.
+
+- [x] Keep README task-specification boundary tied to paper-index sidecar.
+  - Status: README now states that task-specification evidence is a runtime
+    artifact-resolution contract, not full AlphaEvolve task-spec parity for
+    external validators, arbitrary language/build runners, or user-authored
+    standalone specs, with the boundary tracked by
+    `papers/task_specification_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused task-specification tests reject full task-spec parity overclaims.

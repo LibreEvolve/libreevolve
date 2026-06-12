@@ -5355,6 +5355,9 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "alphaevolve_table1_capability_exhibit_report": (
             _alphaevolve_table1_capability_exhibit_report(run_dir)
         ),
+        "codebase_scale_benchmark_report": (
+            _codebase_scale_benchmark_report(programs)
+        ),
         "evaluator_oracle_registry": _evaluator_oracle_registry_report(
             db,
             programs,
@@ -13858,6 +13861,340 @@ def validate_alphaevolve_table1_capability_exhibit_report(report: object) -> dic
                 issues.append({"code": f"{field}_overclaim", "message": f"{field} must remain false"})
         if readiness.get("table_exhibit_record_ready") is not True:
             issues.append({"code": "table_exhibit_record_not_ready", "message": "table exhibit record should be ready"})
+    return {"schema": schema, "ok": not issues, "issues": issues}
+
+
+def _codebase_scale_benchmark_report(programs: list[Program]) -> dict:
+    parent_by_id = {program.id: program for program in programs}
+    program_records = [
+        _codebase_scale_program_record(program, parent_by_id.get(program.parent_id))
+        for program in sorted(programs, key=lambda item: (item.generation, item.id))
+    ]
+    generated_records = [
+        record for record in program_records if record.get("candidate_type") == "generated"
+    ]
+    multi_file_records = [
+        record for record in program_records if int(record.get("file_count", 0)) > 1
+    ]
+    hundreds_line_records = [
+        record
+        for record in program_records
+        if int(record.get("total_text_lines", 0)) >= 100
+    ]
+    max_record = max(
+        program_records,
+        key=lambda record: (
+            int(record.get("total_text_lines", 0)),
+            int(record.get("file_count", 0)),
+            str(record.get("program_id", "")),
+        ),
+        default=None,
+    )
+    report = {
+        "schema": "libreevolve.codebase_scale_benchmark_report.v1",
+        "source": "runtime_history_candidate_workspaces",
+        "program_count": len(program_records),
+        "generated_program_count": len(generated_records),
+        "multi_file_program_count": len(multi_file_records),
+        "hundreds_line_program_count": len(hundreds_line_records),
+        "max_file_count": max(
+            (int(record.get("file_count", 0)) for record in program_records),
+            default=0,
+        ),
+        "max_total_text_lines": max(
+            (int(record.get("total_text_lines", 0)) for record in program_records),
+            default=0,
+        ),
+        "max_primary_file_lines": max(
+            (int(record.get("primary_file_lines", 0)) for record in program_records),
+            default=0,
+        ),
+        "max_changed_file_count_vs_parent": max(
+            (
+                int(record.get("changed_file_count_vs_parent", 0))
+                for record in program_records
+            ),
+            default=0,
+        ),
+        "max_changed_line_count_vs_parent": max(
+            (
+                int(record.get("changed_line_count_vs_parent", 0))
+                for record in program_records
+            ),
+            default=0,
+        ),
+        "non_python_file_program_count": sum(
+            1 for record in program_records if int(record.get("non_python_file_count", 0)) > 0
+        ),
+        "static_file_reference_count": sum(
+            int(record.get("static_file_count", 0)) for record in program_records
+        ),
+        "largest_program": max_record,
+        "program_records": program_records[:100],
+        "program_records_truncated": len(program_records) > 100,
+        "scale_thresholds": {
+            "hundreds_line_threshold": 100,
+            "multi_component_file_threshold": 3,
+            "codebase_scale_fixture_required": True,
+            "arbitrary_language_runner_required_for_any_language_claim": True,
+            "build_runner_required_for_existing_codebase_claim": True,
+        },
+        "threshold_evidence": {
+            "any_hundreds_line_program": bool(hundreds_line_records),
+            "any_hundreds_line_generated_program": any(
+                int(record.get("total_text_lines", 0)) >= 100
+                for record in generated_records
+            ),
+            "any_three_file_program": any(
+                int(record.get("file_count", 0)) >= 3 for record in program_records
+            ),
+            "any_multi_file_generated_program": any(
+                int(record.get("file_count", 0)) > 1 for record in generated_records
+            ),
+            "any_cross_file_generated_change": any(
+                int(record.get("changed_file_count_vs_parent", 0)) > 1
+                for record in generated_records
+            ),
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "workspace_file_line_scale_measured": bool(program_records),
+            "generated_change_scale_measured": bool(generated_records),
+            "multi_component_workspace_observed": bool(multi_file_records),
+            "hundreds_line_generated_program_observed": any(
+                int(record.get("total_text_lines", 0)) >= 100
+                for record in generated_records
+            ),
+            "cross_file_dependency_edit_evidence": False,
+            "realistic_codebase_benchmark_fixture": False,
+            "arbitrary_language_runner_scope": False,
+            "build_runner_scope": False,
+            "long_horizon_quality_progress_evidence": False,
+            "table1_code_scale_parity": False,
+            "remaining_gap": [
+                "large_multi_component_benchmark_fixture",
+                "hundreds_line_generated_program_success_curve",
+                "cross_file_dependency_edit_evidence",
+                "arbitrary_language_runner_execution",
+                "build_runner_execution_contract",
+                "long_horizon_quality_progress_on_codebase_task",
+                "benchmark_valid_admitted_retained_rate_summary",
+            ],
+        },
+    }
+    report["validation"] = validate_codebase_scale_benchmark_report(report)
+    return report
+
+
+def _codebase_scale_program_record(
+    program: Program,
+    parent: Program | None,
+) -> dict:
+    workspace = program.workspace()
+    files = workspace.files
+    parent_workspace = parent.workspace() if parent is not None else None
+    change = _codebase_scale_workspace_change(workspace, parent_workspace)
+    metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
+    return {
+        "program_id": program.id,
+        "generation": program.generation,
+        "candidate_type": metadata.get("candidate_type"),
+        "parent_id": program.parent_id,
+        "parent_present": parent is not None,
+        "workspace_sha256": _workspace_sha256(workspace),
+        "file_count": len(files),
+        "python_file_count": sum(1 for path in files if path.endswith(".py")),
+        "non_python_file_count": sum(1 for path in files if not path.endswith(".py")),
+        "static_file_count": len(workspace.static_files),
+        "primary_file": workspace.primary_file,
+        "primary_file_lines": _codebase_scale_line_count(
+            files.get(workspace.primary_file, "")
+        ),
+        "total_text_lines": sum(_codebase_scale_line_count(text) for text in files.values()),
+        "total_text_chars": sum(len(text) for text in files.values()),
+        "changed_file_count_vs_parent": change["changed_file_count"],
+        "changed_line_count_vs_parent": change["changed_line_count"],
+        "added_file_count_vs_parent": len(change["added_files"]),
+        "removed_file_count_vs_parent": len(change["removed_files"]),
+        "modified_file_count_vs_parent": len(change["modified_files"]),
+        "changed_files_vs_parent": change["changed_files"][:25],
+        "cross_file_change_vs_parent": change["changed_file_count"] > 1,
+        "evaluation_valid": program.metrics.get("is_valid")
+        if isinstance(program.metrics.get("is_valid"), bool)
+        else None,
+        "score": program.fitness if math.isfinite(program.fitness) else None,
+    }
+
+
+def _codebase_scale_line_count(text: str) -> int:
+    if text == "":
+        return 0
+    return len(text.splitlines())
+
+
+def _codebase_scale_workspace_change(
+    workspace: CandidateWorkspace,
+    parent_workspace: CandidateWorkspace | None,
+) -> dict:
+    if parent_workspace is None:
+        return {
+            "added_files": [],
+            "removed_files": [],
+            "modified_files": [],
+            "changed_files": [],
+            "changed_file_count": 0,
+            "changed_line_count": 0,
+        }
+    files = workspace.files
+    parent_files = parent_workspace.files
+    added = sorted(set(files) - set(parent_files))
+    removed = sorted(set(parent_files) - set(files))
+    shared = sorted(set(files) & set(parent_files))
+    modified = [path for path in shared if files[path] != parent_files[path]]
+    changed_files = sorted(set(added) | set(removed) | set(modified))
+    changed_lines = 0
+    for path in added:
+        changed_lines += _codebase_scale_line_count(files[path])
+    for path in removed:
+        changed_lines += _codebase_scale_line_count(parent_files[path])
+    for path in modified:
+        changed_lines += _codebase_scale_changed_line_count(parent_files[path], files[path])
+    return {
+        "added_files": added,
+        "removed_files": removed,
+        "modified_files": modified,
+        "changed_files": changed_files,
+        "changed_file_count": len(changed_files),
+        "changed_line_count": changed_lines,
+    }
+
+
+def _codebase_scale_changed_line_count(before: str, after: str) -> int:
+    matcher = difflib.SequenceMatcher(
+        None,
+        before.splitlines(),
+        after.splitlines(),
+        autojunk=False,
+    )
+    changed = 0
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag != "equal":
+            changed += max(i2 - i1, j2 - j1)
+    return changed
+
+
+def validate_codebase_scale_benchmark_report(report: object) -> dict:
+    issues: list[dict[str, str]] = []
+    schema = "libreevolve.codebase_scale_benchmark_report.v1"
+    if not isinstance(report, Mapping):
+        return {
+            "schema": schema,
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_report",
+                    "message": "codebase-scale benchmark report must be a mapping",
+                }
+            ],
+        }
+    if report.get("schema") != schema:
+        issues.append({"code": "invalid_schema", "message": "unsupported schema"})
+    if report.get("source") != "runtime_history_candidate_workspaces":
+        issues.append({"code": "invalid_source", "message": "unsupported source"})
+    program_records = report.get("program_records")
+    if not isinstance(program_records, list):
+        issues.append({"code": "invalid_program_records", "message": "program_records must be a list"})
+        program_records = []
+    if report.get("program_records_truncated") is True:
+        program_count = _sample_efficiency_non_negative_int(report.get("program_count"))
+        if program_count is None or program_count < len(program_records):
+            issues.append({"code": "invalid_program_count", "message": "program_count must cover retained records"})
+    else:
+        _validate_report_count(report, "program_count", len(program_records), issues)
+    generated_count = 0
+    multi_file_count = 0
+    hundreds_line_count = 0
+    max_file_count = 0
+    max_total_lines = 0
+    max_primary_lines = 0
+    max_changed_files = 0
+    max_changed_lines = 0
+    non_python_program_count = 0
+    static_file_reference_count = 0
+    for index, record in enumerate(program_records):
+        if not isinstance(record, Mapping):
+            issues.append({"code": "invalid_program_record", "message": "program record must be a mapping"})
+            continue
+        if not isinstance(record.get("program_id"), str) or not record.get("program_id"):
+            issues.append({"code": "invalid_program_id", "message": f"program record {index} needs an id"})
+        if not _is_sha256_hex(record.get("workspace_sha256")):
+            issues.append({"code": "invalid_workspace_sha256", "message": f"program record {index} hash is invalid"})
+        for field in (
+            "generation",
+            "file_count",
+            "python_file_count",
+            "non_python_file_count",
+            "static_file_count",
+            "primary_file_lines",
+            "total_text_lines",
+            "total_text_chars",
+            "changed_file_count_vs_parent",
+            "changed_line_count_vs_parent",
+            "added_file_count_vs_parent",
+            "removed_file_count_vs_parent",
+            "modified_file_count_vs_parent",
+        ):
+            if _sample_efficiency_non_negative_int(record.get(field)) is None:
+                issues.append({"code": f"invalid_{field}", "message": f"{field} must be a non-negative integer"})
+        file_count = int(record.get("file_count", 0))
+        total_lines = int(record.get("total_text_lines", 0))
+        primary_lines = int(record.get("primary_file_lines", 0))
+        changed_files = int(record.get("changed_file_count_vs_parent", 0))
+        changed_lines = int(record.get("changed_line_count_vs_parent", 0))
+        max_file_count = max(max_file_count, file_count)
+        max_total_lines = max(max_total_lines, total_lines)
+        max_primary_lines = max(max_primary_lines, primary_lines)
+        max_changed_files = max(max_changed_files, changed_files)
+        max_changed_lines = max(max_changed_lines, changed_lines)
+        if record.get("candidate_type") == "generated":
+            generated_count += 1
+        if file_count > 1:
+            multi_file_count += 1
+        if total_lines >= 100:
+            hundreds_line_count += 1
+        if int(record.get("non_python_file_count", 0)) > 0:
+            non_python_program_count += 1
+        static_file_reference_count += int(record.get("static_file_count", 0))
+    if report.get("program_records_truncated") is not True:
+        for field, expected in (
+            ("generated_program_count", generated_count),
+            ("multi_file_program_count", multi_file_count),
+            ("hundreds_line_program_count", hundreds_line_count),
+            ("max_file_count", max_file_count),
+            ("max_total_text_lines", max_total_lines),
+            ("max_primary_file_lines", max_primary_lines),
+            ("max_changed_file_count_vs_parent", max_changed_files),
+            ("max_changed_line_count_vs_parent", max_changed_lines),
+            ("non_python_file_program_count", non_python_program_count),
+            ("static_file_reference_count", static_file_reference_count),
+        ):
+            _validate_report_count(report, field, expected, issues)
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be a mapping"})
+    else:
+        for field in (
+            "cross_file_dependency_edit_evidence",
+            "realistic_codebase_benchmark_fixture",
+            "arbitrary_language_runner_scope",
+            "build_runner_scope",
+            "long_horizon_quality_progress_evidence",
+            "table1_code_scale_parity",
+        ):
+            if readiness.get(field) is not False:
+                issues.append({"code": f"{field}_overclaim", "message": f"{field} must remain false"})
+    if report.get("claim_ready") is not False:
+        issues.append({"code": "claim_ready_overclaim", "message": "codebase-scale report must not claim Table 1 parity"})
     return {"schema": schema, "ok": not issues, "issues": issues}
 
 

@@ -718,20 +718,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     functions and components. Local PDF page 2 contains the Table 1 code-scale
     rows; pages 18-19 discuss entire-codebase evolution.
   - Partial status: LibreEvolve has Python-primary workspaces, multi-file seed
-    loading, file-topology mutations, materialization diagnostics, full-workspace
-    prompt/export paths, and a small multi-file smoke fixture. The example
-    scope registry marks `workspace_math` as `alphaevolve_comparable: False`
-    with current role `workspace_packaging_fixture`, so it is evidence for
-    mechanics rather than Table 1-scale performance.
-  - Current gap: there is no paper-facing benchmark or report that demonstrates
-    hundreds-line generated programs, coupled multi-component edits, non-Python
-    or build-runner execution, realistic codebase dependency edits, evaluator
-    throughput, or quality progress on a large codebase-scale task.
-  - Required result: add codebase-scale benchmark fixtures and reports with
-    generated/changed line counts, component/file counts, dependency-edit
+    loading, file-topology mutations, materialization diagnostics,
+    full-workspace prompt/export paths, and a small multi-file smoke fixture.
+    Completed manifests now include
+    `runtime.history.codebase_scale_benchmark_report`, which records
+    generated/changed line counts, component/file counts, static-file
+    references, and multi-file/hundreds-line threshold evidence for retained
+    programs. The example scope registry still marks `workspace_math` as
+    `alphaevolve_comparable: False` with current role
+    `workspace_packaging_fixture`, so it is evidence for mechanics rather than
+    Table 1-scale performance.
+  - Current gap: there is no realistic benchmark fixture that demonstrates
+    hundreds-line generated programs, coupled multi-component edits,
+    non-Python or build-runner execution, realistic codebase dependency edits,
+    evaluator throughput, or quality progress on a large codebase-scale task.
+  - Required result: add codebase-scale benchmark fixtures with dependency-edit
     evidence, evaluator/runtime budgets, valid/admitted/retained rates, and
     score progress before treating current workspace support as AlphaEvolve
-    Table 1 code-scale parity.
+    Table 1 code-scale parity. The remaining gap is benchmark-backed evidence,
+    not manifest telemetry for current run scale.
 
 - [ ] Keep Table 1 capability-comparison exhibit evidence scoped to table
       provenance rather than row parity.

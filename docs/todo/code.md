@@ -442,21 +442,23 @@ Primary evidence:
   - Current evidence: LibreEvolve supports Python-primary text workspaces,
     multi-file seed loading, topology mutations, full-workspace prompt
     rendering/materialization, complete `best_workspace/` export, and a small
-    `workspace_math` smoke fixture. The current examples and tests do not
-    constitute a codebase-scale benchmark: they do not exercise hundreds of
-    generated lines, multiple coupled components, language/build runners, or
-    long-horizon automated evaluation over a realistic multi-component
-    codebase. Code evidence: `example_scope.py` explicitly marks
-    `workspace_math` as `level: "smoke"`, `alphaevolve_comparable: False`, and
-    `current_role: "workspace_packaging_fixture"`; its baseline seed is a
-    small Python package plus tiny data/static files, not a Table 1-scale
-    generated codebase.
-  - Required result: add a benchmark/report contract and fixtures that track
-    generated line counts, changed component counts, cross-file dependency
-    edits, evaluator runtime, validity/admission rates, and quality progress
-    for a large multi-function or multi-file codebase, with explicit
-    non-Python/build-runner scope if claimed, before README, ROADMAP, or
-    paper-index wording claims AlphaEvolve Table 1 code-scale parity.
+    `workspace_math` smoke fixture. Completed manifests now include
+    `runtime.history.codebase_scale_benchmark_report`, which measures retained
+    program file/line scale, generated-program counts, parent-relative changed
+    files/lines, multi-file and hundreds-line threshold evidence, static-file
+    references, and false readiness for realistic codebase fixtures,
+    arbitrary-language/build runners, cross-file dependency-edit evidence,
+    long-horizon quality progress, and Table 1 code-scale parity. Code
+    evidence still marks `workspace_math` as `level: "smoke"`,
+    `alphaevolve_comparable: False`, and
+    `current_role: "workspace_packaging_fixture"`.
+  - Required result: add realistic benchmark fixtures that exercise hundreds
+    of generated lines, multiple coupled components, language/build runners if
+    claimed, cross-file dependency edits, evaluator runtime, validity/admission
+    rates, and quality progress for a large multi-function or multi-file
+    codebase before README, ROADMAP, or paper-index wording claims
+    AlphaEvolve Table 1 code-scale parity. The remaining gap is benchmark
+    evidence, not run-local workspace scale telemetry.
 
 - [ ] Keep Table 1 capability-comparison exhibit provenance scoped to row
       evidence instead of capability parity.

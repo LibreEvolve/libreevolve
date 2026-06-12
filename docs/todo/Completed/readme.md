@@ -11603,3 +11603,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     status, and false capability-parity readiness.
   - Verification: focused runtime Table 1 capability-exhibit test validates
     the implemented report.
+
+- [x] Document codebase-scale benchmark boundary report.
+  - Spec evidence: README code-scale wording needed to distinguish run-local
+    workspace scale telemetry from AlphaEvolve Table 1 code-scale parity.
+  - Status: README and run-artifact docs now describe
+    `runtime.history.codebase_scale_benchmark_report`, including retained
+    program file/line scale, generated-program counts, parent-relative changed
+    files/lines, multi-file/hundreds-line threshold evidence, and excluded
+    realistic-codebase, language/build-runner, dependency-edit, quality-curve,
+    and Table 1 parity claims.
+  - Verification: focused runtime codebase-scale benchmark boundary test
+    validates the implemented report.

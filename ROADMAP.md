@@ -76,6 +76,13 @@ LibreEvolve has:
   source-cell text, row-to-report/TODO evidence mappings, generated
   Markdown/accessibility artifacts with hashes, and explicit false readiness
   for individual Table 1 capability-row parity
+- codebase-scale benchmark boundary reports under
+  `runtime.history.codebase_scale_benchmark_report`, measuring retained
+  program file/line scale, generated-candidate counts, parent-relative changed
+  files/lines, multi-file and hundreds-line threshold evidence, and explicit
+  false readiness for realistic codebase fixtures, arbitrary-language/build
+  runners, cross-file dependency-edit evidence, long-horizon quality progress,
+  and Table 1 code-scale parity
 - distributed-pipeline topology boundary reports under
   `runtime.history.distributed_pipeline_topology_report`, naming the current
   single-process controller, in-process database, configured LLM sampler
@@ -349,11 +356,14 @@ is not yet an AlphaEvolve reproduction.
   candidates.
 - Add richer workspace fixtures beyond the current `workspace_math` nested
   package, JSON data, and binary static seed asset smoke case.
-- Add codebase-scale, arbitrary-language, evaluator-workload,
-  sample-efficiency, model-scale, prompt-context, and multi-metric benchmark
-  evidence before claiming AlphaEvolve Table 1 capability parity; the current
+- Add realistic codebase-scale fixtures, arbitrary-language/build runners,
+  evaluator-workload, sample-efficiency, model-scale, prompt-context, and
+  multi-metric benchmark evidence before claiming AlphaEvolve Table 1
+  capability parity; the current
   `runtime.history.alphaevolve_table1_capability_exhibit_report` preserves the
-  comparison table as provenance, not as proof that each row is satisfied.
+  comparison table as provenance, and
+  `runtime.history.codebase_scale_benchmark_report` measures current run scale
+  without proving each row is satisfied.
 - Extend `runtime.history.mutation_operator_boundary_report` beyond the
   current fixed diff/full/file/block/topology parser-surface evidence into
   proposal-level operator-family provenance, task/failure-aware operator

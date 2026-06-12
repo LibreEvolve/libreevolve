@@ -1836,6 +1836,18 @@ deterministic Markdown table and plain-text accessibility export under
 hashes. This is exhibit provenance for the comparison table, not proof of
 code-scale, arbitrary-language, parallel-accelerator, sample-efficiency,
 model-scale, rich-context, or multi-metric Table 1 parity.
+Completed manifests also include
+`runtime.history.codebase_scale_benchmark_report` with schema
+`libreevolve.codebase_scale_benchmark_report.v1`. This report measures retained
+program workspace scale for the current run: generated-program counts,
+multi-file and hundreds-line program counts, max file/line/character counts,
+parent-relative changed file and line counts, static-file references, largest
+program summary, bounded per-program records, and threshold evidence for
+multi-component/hundreds-line observations. It is scale telemetry for the
+current run, not a codebase-scale benchmark result: cross-file dependency-edit
+evidence, realistic codebase fixtures, arbitrary-language/build-runner
+execution, long-horizon quality progress, and Table 1 code-scale parity remain
+explicitly false.
 Retained elite-only candidates can still resurface through best/exploit,
 metric, novelty, recency, selection, mixed inspiration, and migration paths.
 They remain excluded from occupied-cell explore and random inspiration pools

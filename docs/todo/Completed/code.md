@@ -17318,3 +17318,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     curves, model-scale ablations, rich-context/feedback effectiveness, and
     multi-metric benchmark outcomes.
   - Verification: focused runtime Table 1 capability-exhibit test passes.
+
+- [x] Add codebase-scale benchmark boundary report.
+  - Spec evidence: AlphaEvolve Table 1 reports entire-code-file and
+    hundreds-line evolution, while current workspace mechanics alone do not
+    prove that scale.
+  - Status: runtime histories now include
+    `libreevolve.codebase_scale_benchmark_report.v1`, measuring retained
+    program file/line scale, generated-program counts, parent-relative changed
+    files/lines, static-file references, multi-file and hundreds-line
+    threshold evidence, and explicit false readiness for realistic codebase
+    fixtures, arbitrary-language/build runners, cross-file dependency edits,
+    long-horizon quality progress, and Table 1 code-scale parity.
+  - Remaining gap: realistic benchmark fixtures with coupled multi-component
+    edits, hundreds-line generated success curves, evaluator budget/rate
+    summaries, language/build-runner scope, and quality-progress outcomes
+    remain open.
+  - Verification: focused runtime codebase-scale benchmark boundary test
+    passes.

@@ -463,19 +463,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     18-19 discuss entire-codebase evolution.
   - Current evidence: ROADMAP correctly lists current workspace mechanics:
     Python seed workspaces, file topology mutations, materialization
-    diagnostics, and the small `workspace_math` fixture. Scope records mark
-    shipped examples, including `workspace_math`, as smoke fixtures with
-    `alphaevolve_comparable: False`. Those features do not yet prove large
-    multi-component generated-code performance, arbitrary-language execution,
-    or build-runner parity. ROADMAP now also names
-    `papers/candidate_language_runner_boundary.json` as the committed
-    paper-manifest-validated arbitrary-language/build-runner absence boundary,
-    and documents metadata-only `candidate_language_runners` /
-    `candidate_build_systems` declarations as non-executed manifest evidence.
-  - Required result: when large-codebase benchmarks or reports land, update
-    roadmap, README, papers index, and code/paper TODO entries together so the
-    roadmap separates current workspace mechanics from AlphaEvolve Table 1
-    code-scale parity.
+    diagnostics, and the small `workspace_math` fixture. Completed manifests
+    now include `runtime.history.codebase_scale_benchmark_report`, which
+    measures retained program file/line scale, generated-candidate counts,
+    parent-relative changed files/lines, and multi-file/hundreds-line
+    threshold evidence while keeping Table 1 code-scale parity false. Scope
+    records still mark shipped examples, including `workspace_math`, as smoke
+    fixtures with `alphaevolve_comparable: False`, and ROADMAP still names the
+    arbitrary-language/build-runner absence boundary.
+  - Required result: when realistic large-codebase benchmark fixtures land,
+    update roadmap, README, papers index, and code/paper TODO entries together
+    so the roadmap separates current workspace mechanics and run-local scale
+    telemetry from AlphaEvolve Table 1 code-scale parity.
 
 - [ ] Keep parallel-evaluation roadmap wording scoped until compute-hour
       throughput evidence exists.

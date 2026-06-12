@@ -11944,3 +11944,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     optimization.
   - Verification: focused runtime Table 1 capability-exhibit test validates
     the implemented report.
+
+- [x] Record codebase-scale benchmark boundary.
+  - Spec evidence: AlphaEvolve Table 1 and Section 2.1 describe entire-code
+    files, hundreds of lines, arbitrary languages, and complex algorithms with
+    multiple functions/components.
+  - Status: paper-facing TODOs and runtime manifests now expose
+    `codebase_scale_benchmark_report`, which records retained-program
+    file/line/component scale, generated-program counts, parent-relative
+    changed files/lines, static-file references, threshold evidence, and false
+    readiness for Table 1 code-scale parity.
+  - Remaining paper gap: this does not provide a realistic large-codebase
+    benchmark fixture, coupled dependency-edit evidence, arbitrary-language or
+    build-runner execution, evaluator budget/rate evidence, or long-horizon
+    quality-progress results.
+  - Verification: focused runtime codebase-scale benchmark boundary test
+    validates the implemented report.

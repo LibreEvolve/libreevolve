@@ -51,6 +51,7 @@ from libreevolve.core.loop import (
     validate_distributed_pipeline_topology_report,
     validate_alphaevolve_process_exhibit_report,
     validate_alphaevolve_table1_capability_exhibit_report,
+    validate_codebase_scale_benchmark_report,
     validate_candidate_abstraction_choice_report,
     validate_candidate_language_runner_contract_report,
     validate_collaborator_feedback_provenance_report,
@@ -6640,6 +6641,85 @@ def test_runtime_history_reports_alphaevolve_table1_capability_exhibit():
     assert "invalid_artifact_hash" in {
         issue["code"] for issue in validation["issues"]
     }
+
+
+def test_runtime_history_reports_codebase_scale_benchmark_boundary():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(code, workspace):\n"
+        "    score = 2.0 if 'VALUE = 2' in code else 1.0\n"
+        "    return {'score': score, 'is_valid': True}\n"
+    )
+    long_helper = "\n".join(f"def helper_{index}(): return {index}" for index in range(60))
+    problem.initial_programs = []
+    problem.initial_workspaces = [
+        {
+            "primary_file": "main.py",
+            "files": {
+                "main.py": "from pkg.helpers import helper_1\nVALUE = 1\n",
+                "pkg/helpers.py": long_helper + "\n",
+                "pkg/config.py": "SETTING = 'seed'\n",
+            },
+        }
+    ]
+
+    class CodebaseScaleBackend:
+        name = "codebase-scale/model"
+
+        def generate(self, prompt, **kwargs):
+            return "<<<<<<< SEARCH\nVALUE = 1\n=======\nVALUE = 2\n>>>>>>> REPLACE"
+
+    with patch(
+        "libreevolve.core.loop.build_llm",
+        return_value=LLMEnsemble([CodebaseScaleBackend()]),
+    ):
+        evolve(problem, Config(max_generations=1, log_dir=tmpdir, problem_name="t"))
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["codebase_scale_benchmark_report"]
+
+    assert report["schema"] == "libreevolve.codebase_scale_benchmark_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_codebase_scale_benchmark_report(report)["ok"] is True
+    assert report["program_count"] == 2
+    assert report["generated_program_count"] == 1
+    assert report["multi_file_program_count"] == 2
+    assert report["max_file_count"] == 3
+    assert report["max_total_text_lines"] >= 62
+    assert report["max_changed_file_count_vs_parent"] == 1
+    assert report["max_changed_line_count_vs_parent"] == 1
+    assert report["threshold_evidence"]["any_three_file_program"] is True
+    assert report["threshold_evidence"]["any_multi_file_generated_program"] is True
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["workspace_file_line_scale_measured"] is True
+    assert report["claim_readiness"]["generated_change_scale_measured"] is True
+    assert report["claim_readiness"]["multi_component_workspace_observed"] is True
+    assert report["claim_readiness"]["realistic_codebase_benchmark_fixture"] is False
+    assert report["claim_readiness"]["arbitrary_language_runner_scope"] is False
+    assert report["claim_readiness"]["build_runner_scope"] is False
+    assert report["claim_readiness"]["table1_code_scale_parity"] is False
+
+    generated = [
+        record
+        for record in report["program_records"]
+        if record["candidate_type"] == "generated"
+    ][0]
+    assert generated["parent_present"] is True
+    assert generated["file_count"] == 3
+    assert generated["changed_files_vs_parent"] == ["main.py"]
+    assert generated["cross_file_change_vs_parent"] is False
+
+    overclaimed = copy.deepcopy(report)
+    overclaimed["claim_ready"] = True
+    overclaimed["claim_readiness"]["table1_code_scale_parity"] = True
+    overclaimed["claim_readiness"]["arbitrary_language_runner_scope"] = True
+    validation = validate_codebase_scale_benchmark_report(overclaimed)
+    assert validation["ok"] is False
+    assert {
+        "claim_ready_overclaim",
+        "table1_code_scale_parity_overclaim",
+        "arbitrary_language_runner_scope_overclaim",
+    }.issubset({issue["code"] for issue in validation["issues"]})
 
 
 def test_runtime_history_reports_existing_codebase_marker_inventory():

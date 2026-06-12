@@ -9138,3 +9138,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     readiness for Table 1 capability parity.
   - Verification: focused runtime Table 1 capability-exhibit test validates
     the implemented report.
+
+- [x] Preserve codebase-scale benchmark boundary.
+  - Spec evidence: roadmap code-scale claims need to separate workspace
+    mechanics and current-run scale telemetry from AlphaEvolve Table 1
+    codebase-scale parity.
+  - Status: ROADMAP and TODO wording now recognize
+    `runtime.history.codebase_scale_benchmark_report` as run-local scale
+    evidence for retained program file/line counts, generated-candidate counts,
+    parent-relative changed files/lines, and multi-file/hundreds-line
+    thresholds, while keeping realistic codebase fixtures, language/build
+    runners, dependency edits, long-horizon quality progress, and Table 1
+    code-scale parity open.
+  - Verification: focused runtime codebase-scale benchmark boundary test
+    validates the implemented report.

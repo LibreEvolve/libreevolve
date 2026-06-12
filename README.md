@@ -84,6 +84,15 @@ row-to-evidence mappings, and generated Markdown/accessibility artifacts under
 `paper_artifacts/table1_capability_comparison/`. This preserves the source
 table as an auditable exhibit; it does not mean LibreEvolve satisfies the
 individual Table 1 capability rows.
+Completed manifests also include
+`runtime.history.codebase_scale_benchmark_report`, which measures the actual
+run-local workspace scale for retained programs: file counts, text-line counts,
+primary-file line counts, generated-program counts, parent-relative changed
+files/lines, static-file references, and multi-file/non-Python workspace
+presence. The report is evidence about current run scale and keeps Table 1
+code-scale parity false until realistic codebase benchmarks, arbitrary-language
+or build runners, cross-file dependency edits, and long-horizon quality
+progress are demonstrated.
 
 ## Getting Started
 
@@ -1459,6 +1468,13 @@ artifacts with SHA-256 hashes under
 `paper_artifacts/table1_capability_comparison/`. Its `claim_ready` and
 per-row capability readiness flags remain false so this exhibit provenance is
 not flattened into Table 1 capability parity.
+Completed manifests also include
+`runtime.history.codebase_scale_benchmark_report`, which records retained
+program workspace scale, generated-candidate counts, multi-file and
+hundreds-line threshold evidence, parent-relative changed files/lines, and
+explicit false readiness for cross-file dependency-edit evidence, realistic
+codebase benchmark fixtures, arbitrary-language/build-runner scope, and
+Table 1 code-scale parity.
 Accepted archive admissions prevalidate their strict history record before
 mutating the live MAP-Elites/island archive, and direct admission thresholds
 must be finite non-boolean numbers. Direct `ProgramDatabase.add()`/`admit()`

@@ -4459,13 +4459,18 @@ code only ranks machines already deemed feasible. They also require
 interpretable heuristic structure, debuggability/operator review,
 predictability checks, rollout-risk controls, deployment ergonomics, and
 comparison against less interpretable learned-policy baselines.
+Ready compiler reports also require `compiler_ir_provenance` records for
+XLA/compiler-generated IR: IR origin, debugging-only/editability boundary,
+already-optimized baseline provenance, reference implementation hash,
+randomized input-generator identity/hash, numerical tolerance policy, final
+expert-confirmation scope, and per-edit randomized reference-check records
+with kernel/pre/postprocessing attribution and artifact refs.
 The claim-calibration schema still does not create real scheduling, kernel,
 hardware, or compiler fixtures, nor does it populate calibrated evidence for
 AlphaEvolve Section 3.3 magnitudes such as resource recovery percentages,
 kernel speedups, training-time reductions, RTL PPA deltas, or compiler
-pre/postprocessing speedups. Compiler-IR reports also do
-not yet identify XLA-IR origin, debugging-only versus direct-editing
-boundaries, or compiler-generated/already-optimized baseline provenance.
+pre/postprocessing speedups. Compiler-IR provenance still does not generate
+real XLA/FlashAttention edit artifacts or run randomized reference checks.
 Hardware reports also do not yet identify RTL-stage workflow placement,
 standard-Verilog trust/adoption evidence, upcoming-chip integration, or
 time-to-market impact.

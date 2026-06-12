@@ -9200,3 +9200,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     compiler/hardware reference-correctness gates, and generic systems reports
     requiring both.
   - Verification: systems-result regression tests validate the policy.
+
+- [x] Preserve compiler-IR provenance boundary.
+  - Spec evidence: roadmap compiler-IR claims need to distinguish generic final
+    reference-correctness gates from AlphaEvolve-style per-edit randomized
+    reference-check traces on compiler-generated XLA IR.
+  - Status: ROADMAP and TODO wording now recognize that ready compiler systems
+    reports require `compiler_ir_provenance`, while real XLA/FlashAttention
+    edit artifacts, randomized input coverage, and final expert/all-input
+    signoff remain open.
+  - Verification: systems-result regression tests validate the implemented
+    provenance requirement.

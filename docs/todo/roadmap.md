@@ -2111,19 +2111,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     direct developer editing and was compiler-generated/already highly
     optimized.
   - Current evidence: roadmap systems-result wording covers generic
-    reference-correctness and expert-confirmation gaps, but current report
-    validation does not require per-edit randomized reference-check traces,
-    input-generator provenance, IR-origin/editability constraints,
-    compiler-generated baseline provenance, numerical tolerance policy, or
-    attribution of improvements to the kernel versus pre/postprocessing IR
-    levels.
-  - Required result: when compiler/kernel fixtures or report validators add
-    edit-sequence reference-check artifacts, reference-code hashes,
-    randomized-input coverage, IR provenance/editability metadata,
-    tolerance/failure policy, abstraction-level attribution, and expert
-    signoff scope, update ROADMAP, README, papers index, and code/paper TODOs
-    so roadmap text distinguishes final correctness gates from
-    AlphaEvolve-style compiler-IR optimization traces.
+    reference-correctness and expert-confirmation gates. Ready compiler
+    reports now also require `compiler_ir_provenance` for per-edit randomized
+    reference-check records, input-generator provenance, IR-origin/editability
+    constraints, compiler-generated baseline provenance, numerical tolerance
+    policy, and kernel/pre/postprocessing attribution. Real compiler fixtures
+    still do not emit those edit-sequence artifacts or expert/all-input
+    signoff evidence.
+  - Required result: when compiler/kernel fixtures emit edit-sequence
+    reference-check artifacts, reference-code hashes, randomized-input
+    coverage, tolerance/failure-policy outputs, and expert signoff scope,
+    update ROADMAP, README, papers index, and code/paper TODOs so roadmap text
+    distinguishes report-contract metadata from AlphaEvolve-style
+    compiler-IR optimization traces.
 
 - [ ] Keep compiler-stack roadmap wording scoped until FlashAttention context
       provenance exists.

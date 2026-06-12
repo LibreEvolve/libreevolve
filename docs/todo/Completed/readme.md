@@ -11665,3 +11665,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     generic ready systems reports require both.
   - Verification: systems-result regression tests validate the documented
     ready-gate policy.
+
+- [x] Document compiler-IR provenance for ready compiler reports.
+  - Spec evidence: README compiler systems wording needed to separate final
+    reference-correctness gates from AlphaEvolve-style per-edit randomized
+    reference checks on compiler-generated IR.
+  - Status: README and run-artifact docs now describe
+    `compiler_ir_provenance` for ready compiler reports, including IR
+    origin/editability boundary, compiler-generated baseline provenance,
+    reference and randomized-input-generator hashes, numerical tolerance
+    policy, expert-confirmation scope, edit attribution, and artifact refs.
+  - Verification: systems-result regression tests validate the documented
+    report contract.

@@ -1273,8 +1273,13 @@ is not yet an AlphaEvolve reproduction.
   `scheduling_deployment_readiness` records for interpretable heuristic
   structure, operator/debug review, predictability checks, deployment
   ergonomics, rollout-risk controls, and less-interpretable learned-policy
-  comparison. Real scheduling resource recovery, kernel/training-time speedup,
-  RTL PPA, and compiler speedup fixtures still need to populate those records.
+  comparison. Ready compiler reports also require `compiler_ir_provenance`
+  with IR origin/editability boundaries, compiler-generated baseline
+  provenance, reference implementation and randomized input-generator hashes,
+  numerical tolerance policy, final expert-confirmation scope, and per-edit
+  randomized reference-check records. Real scheduling resource recovery,
+  kernel/training-time speedup, RTL PPA, and compiler speedup fixtures still
+  need to populate those records.
 - Add hardware-adoption evidence for TPU RTL-style reports before claiming
   Section 3.3.3 parity: RTL-stage workflow placement, standard-Verilog
   trust/adoption rationale, upcoming-chip integration, and time-to-market

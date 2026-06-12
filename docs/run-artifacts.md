@@ -2300,6 +2300,11 @@ reports must pass reference-correctness gates, and generic systems reports
 must pass both held-out and reference-correctness gates before
 `alphaevolve_ready` can be accepted. `not_applicable` remains a documented
 draft boundary, not a generic bypass for ready domain claims.
+Ready compiler reports additionally require `compiler_ir_provenance`, covering
+IR origin, debug-only/editability boundary, compiler-generated baseline
+provenance, reference implementation and randomized input-generator hashes,
+numerical tolerance policy, final expert-confirmation scope, and per-edit
+randomized reference-check records with artifact refs.
 `libreevolve.systems_evidence_bundle.v1` is the portable wrapper for those
 records: it embeds the systems report and artifact inventory, records stable
 SHA-256 hashes for each embedded object plus the inventory records hash, checks

@@ -4167,20 +4167,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     optimized, every modification was checked against the reference unmodified
     code on randomized inputs, and the final code was confirmed by human
     experts for all possible inputs.
-  - Current gap: current systems result contracts can name a final
-    `reference_correctness` gate, but they do not require paper-facing
-    per-edit reference-check traces, randomized input generator provenance,
-    reference implementation identity, IR-origin/debug-only versus direct-edit
-    boundary metadata, compiler-generated/already-optimized baseline
-    provenance, numerical tolerance policy, attribution to kernel versus
-    pre/postprocessing abstraction levels, or separate final expert signoff
-    scope.
-  - Required result: add compiler/kernel report fields and validation for
-    edit-by-edit randomized reference checks, reference-code hashes,
-    input-generator seeds and coverage, IR provenance and editability
-    constraints, numerical tolerance/failure policy, abstraction-level
-    attribution, and final expert/all-input confirmation before claiming
-    AlphaEvolve-comparable compiler-generated IR evidence.
+  - Current gap: systems result contracts now require ready compiler reports to
+    include `compiler_ir_provenance` with per-edit randomized reference-check
+    records, randomized input generator provenance, reference implementation
+    identity, IR-origin/debug-only versus direct-edit boundary metadata,
+    compiler-generated/already-optimized baseline provenance, numerical
+    tolerance policy, kernel/pre/postprocessing attribution, and final expert
+    confirmation scope. They still do not emit real compiler edit artifacts,
+    randomized input coverage records, reference-check outputs, or expert
+    all-input confirmation files.
+  - Required result: connect compiler/kernel fixtures to real edit-by-edit
+    randomized reference checks, reference-code hashes, input-generator seeds
+    and coverage, tolerance/failure-policy outputs, abstraction-level
+    attribution artifacts, and final expert/all-input confirmation before
+    claiming AlphaEvolve-comparable compiler-generated IR evidence.
 
 - [ ] Record FlashAttention compiler-stack context evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.4 explains that

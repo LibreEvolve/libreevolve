@@ -17410,3 +17410,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     certification artifacts themselves.
   - Verification: systems-result regression tests cover domain-required
     `not_applicable` rejection and existing scheduling exceptions.
+
+- [x] Require compiler-IR provenance for ready compiler systems reports.
+  - Spec evidence: AlphaEvolve Section 3.3.4 optimized compiler-generated XLA
+    IR for FlashAttention, checked each modification against reference code on
+    randomized inputs, and separately relied on final expert confirmation.
+  - Status: `validate_systems_result_report()` now requires
+    `compiler_ir_provenance` before accepting `alphaevolve_ready` compiler
+    reports. The record validates IR origin, debug/editability boundary,
+    compiler-generated baseline provenance, reference implementation hash,
+    randomized input-generator identity/hash, numerical tolerance policy,
+    final expert-confirmation scope, and per-edit randomized reference-check
+    records with kernel/pre/postprocessing attribution and artifact refs.
+  - Remaining gap: real compiler fixtures still need to emit the edit
+    artifacts, randomized input coverage, reference-check outputs, and final
+    expert/all-input confirmation files.
+  - Verification: systems-result regression tests cover valid compiler IR
+    provenance, missing ready provenance, and bad edit-reference metadata.

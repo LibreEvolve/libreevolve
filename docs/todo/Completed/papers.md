@@ -12020,3 +12020,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     certification artifacts.
   - Verification: systems-result regression tests validate the rejection of
     domain-required `not_applicable` gates.
+
+- [x] Record compiler-IR provenance boundary.
+  - Spec evidence: AlphaEvolve Section 3.3.4 says every compiler-IR
+    modification was checked against reference code on randomized inputs and
+    the final code was separately confirmed by experts.
+  - Status: paper-facing TODOs and validators now require
+    `compiler_ir_provenance` for ready compiler reports, including IR
+    origin/editability boundaries, compiler-generated baseline provenance,
+    reference and input-generator hashes, numerical tolerance policy,
+    final-expert scope, and per-edit reference-check records.
+  - Remaining paper gap: this does not generate real XLA/FlashAttention edit
+    artifacts, randomized input coverage records, reference-check outputs, or
+    all-input expert confirmation files.
+  - Verification: systems-result regression tests validate valid, missing, and
+    malformed compiler-IR provenance cases.

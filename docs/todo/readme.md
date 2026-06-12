@@ -1276,17 +1276,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     for debugging rather than direct developer editing and was
     compiler-generated/already highly optimized.
   - Current evidence: README documents generic systems result reports and
-    reference-correctness gates, but it does not yet describe per-edit
-    randomized reference-check traces, reference implementation hashes,
-    randomized input generator provenance, IR-origin/editability boundaries,
-    compiler-generated baseline provenance, numerical tolerance policy, or
-    kernel-versus-pre/postprocessing attribution.
-  - Required result: once compiler/kernel report metadata captures per-edit
-    reference checks, randomized input coverage, tolerance/failure policy,
-    IR provenance/editability constraints, abstraction-level attribution, and
-    final expert signoff scope, update README, ROADMAP, papers index, and
-    matching TODOs so README does not imply final reference-gate artifacts
-    prove AlphaEvolve-style compiler-IR traces.
+    reference-correctness gates. README now describes ready compiler-report
+    `compiler_ir_provenance`: per-edit randomized reference-check records,
+    reference implementation and input-generator hashes, IR-origin/editability
+    boundaries, compiler-generated baseline provenance, numerical tolerance
+    policy, final expert-confirmation scope, and
+    kernel/pre/postprocessing attribution. Real compiler fixtures still do not
+    emit those edit-sequence artifacts.
+  - Required result: once compiler/kernel fixtures emit real per-edit
+    reference checks, randomized input coverage, tolerance/failure-policy
+    outputs, and final expert signoff artifacts, update README, ROADMAP,
+    papers index, and matching TODOs so README does not imply metadata alone
+    proves AlphaEvolve-style compiler-IR traces.
 
 - [ ] Keep README compiler-stack wording scoped until FlashAttention context
       provenance exists.

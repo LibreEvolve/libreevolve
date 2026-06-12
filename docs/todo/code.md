@@ -4012,19 +4012,18 @@ Primary evidence:
     on randomized inputs during optimization, and the final version was
     rigorously confirmed by human experts for all possible inputs.
   - Current evidence: `libreevolve.systems_result_report.v1` can require a
-    final `reference_correctness` gate and artifact, but it has no
-    compiler-IR-specific schema for per-edit randomized reference checks,
-    IR-origin/debug-only versus direct-editing boundary metadata,
-    compiler-generated/already-optimized baseline provenance,
-    abstraction-level labels for kernel versus pre/postprocessing IR edits,
-    reference implementation identity, randomized input generators, numerical
-    tolerance policy, or final expert-confirmation scope.
-  - Required result: add compiler/kernel report metadata and validators for
-    candidate-edit sequences, per-edit randomized reference-check artifacts,
-    IR provenance and editability constraints, reference implementation hashes,
-    input-generator seeds/coverage, numerical tolerance and failure policies,
-    abstraction-level attribution, and final expert/all-input signoff before
-    treating compiler-generated IR results as AlphaEvolve-ready.
+    final `reference_correctness` gate and artifact. Ready compiler reports
+    now also require `compiler_ir_provenance` with IR-origin/debug-only versus
+    direct-editing boundary metadata, compiler-generated/already-optimized
+    baseline provenance, reference implementation hash, randomized input
+    generator identity/hash, numerical tolerance policy, final expert
+    confirmation scope, and per-edit randomized reference-check records with
+    kernel/pre/postprocessing attribution and artifact refs.
+  - Required result: connect compiler/kernel fixtures to real candidate-edit
+    sequences, emitted per-edit randomized reference-check artifacts,
+    input-generator seed/coverage records, tolerance/failure-policy outputs,
+    and final expert/all-input signoff evidence before treating
+    compiler-generated IR results as AlphaEvolve-ready.
 
 - [ ] Add FlashAttention compiler-stack context provenance.
   - Spec evidence: AlphaEvolve Section 3.3.4 places the optimized

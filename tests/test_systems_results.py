@@ -234,6 +234,42 @@ def _valid_scheduling_report() -> dict:
     return report
 
 
+def _valid_compiler_report() -> dict:
+    report = _valid_report()
+    report["domain"] = "compiler"
+    for record in report["application_provenance"]["records"]:
+        record["domain"] = "compiler"
+    for record in report["claim_calibration"]["records"]:
+        record["domain"] = "compiler"
+        record["claim_kind"] = "compiler_kernel_speedup"
+        record["claim_scope"] = "local compiler IR speedup smoke claim"
+    report["compiler_ir_provenance"] = {
+        "boundary_statement": (
+            "Compiler IR provenance is separate from final speedup evidence."
+        ),
+        "ir_origin": "XLA-generated FlashAttention IR",
+        "editability_boundary": (
+            "IR is generated for debugging and not a stable developer API."
+        ),
+        "baseline_provenance": "compiler-generated already-optimized baseline",
+        "reference_implementation_sha256": "1" * 64,
+        "randomized_input_generator_id": "flashattention_random_inputs",
+        "randomized_input_generator_sha256": "2" * 64,
+        "numerical_tolerance_policy": "float32 atol=1e-5 rtol=1e-5",
+        "final_expert_confirmation_scope": "expert reviewed all-input claim scope",
+        "edit_records": [
+            {
+                "edit_id": "edit_001",
+                "abstraction_level": "kernel_ir",
+                "randomized_seed_count": 128,
+                "reference_check_passed": True,
+                "artifact_refs": ["systems/flashattention/reference.json"],
+            }
+        ],
+    }
+    return report
+
+
 def _write_systems_files(report: dict, root) -> None:
     for artifact in report["artifacts"]:
         path = root / artifact["path"]
@@ -575,6 +611,52 @@ def test_ready_systems_report_rejects_domain_required_not_applicable_gates():
         assert validation.ok is False
         assert validation.alphaevolve_ready is False
         assert issue_code in codes
+
+
+def test_ready_compiler_report_requires_ir_provenance():
+    report = _valid_compiler_report()
+
+    validation = validate_systems_result_report(report)
+
+    assert validation.ok is True
+    assert validation.alphaevolve_ready is True
+
+    report.pop("compiler_ir_provenance")
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "missing_compiler_ir_provenance" in codes
+    assert "invalid_ready_compiler_ir_provenance" in codes
+
+
+def test_compiler_ir_provenance_rejects_bad_edit_reference_checks():
+    report = _valid_compiler_report()
+    report["compiler_ir_provenance"]["reference_implementation_sha256"] = "bad"
+    report["compiler_ir_provenance"]["edit_records"][0]["abstraction_level"] = (
+        "source_python"
+    )
+    report["compiler_ir_provenance"]["edit_records"][0][
+        "randomized_seed_count"
+    ] = 0
+    report["compiler_ir_provenance"]["edit_records"][0][
+        "reference_check_passed"
+    ] = False
+    report["compiler_ir_provenance"]["edit_records"][0]["artifact_refs"] = [
+        "systems/flashattention/missing.json"
+    ]
+
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "invalid_compiler_ir_reference_hash" in codes
+    assert "invalid_compiler_ir_abstraction_level" in codes
+    assert "invalid_compiler_ir_randomized_seed_count" in codes
+    assert "invalid_compiler_ir_reference_check" in codes
+    assert "invalid_compiler_ir_artifact_ref" in codes
 
 
 def test_ready_scheduling_report_requires_ranking_only_safety():

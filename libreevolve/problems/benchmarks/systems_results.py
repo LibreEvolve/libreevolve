@@ -41,6 +41,9 @@ APPLICATION_PROVENANCE_ROLES = frozenset(
 APPLICATION_APPROVAL_STATES = frozenset(
     {"pending", "reviewed", "approved", "deployed", "not_applicable"}
 )
+COMPILER_IR_ABSTRACTION_LEVELS = frozenset(
+    {"kernel_ir", "preprocessing_ir", "postprocessing_ir"}
+)
 CLAIM_CALIBRATION_KINDS = frozenset(
     {
         "scheduling_resource_recovery",
@@ -133,6 +136,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
         data.get("alphaevolve_ready") is True,
         issues,
     )
+    compiler_ir_ready = _validate_compiler_ir_provenance(
+        data.get("compiler_ir_provenance"),
+        data,
+        domain,
+        data.get("alphaevolve_ready") is True,
+        issues,
+    )
     certification_ready = _validate_certification_reference(data.get("certification"), issues)
     if data.get("alphaevolve_ready") is True and not _gates_are_alphaevolve_ready(gate_statuses):
         issues.append(
@@ -177,6 +187,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
                 SystemsResultIssue(
                     "invalid_ready_application_provenance",
                     "alphaevolve_ready systems reports require application owner/reviewer provenance",
+                )
+            )
+        if domain == "compiler" and not compiler_ir_ready:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_ready_compiler_ir_provenance",
+                    "alphaevolve_ready compiler reports require compiler-IR provenance",
                 )
             )
         if certification_ready is False:
@@ -1379,6 +1396,160 @@ def _validate_claim_calibration(
             artifact_paths,
             "artifact_refs",
             "invalid_claim_artifact_ref",
+            prefix,
+            issues,
+        )
+        if len(issues) == before_issues:
+            valid_records += 1
+    return valid_records == len(records)
+
+
+def _validate_compiler_ir_provenance(
+    value: object,
+    report: dict[str, Any],
+    domain: str | None,
+    require_ready: bool,
+    issues: list[SystemsResultIssue],
+) -> bool:
+    if value is None:
+        if require_ready and domain == "compiler":
+            issues.append(
+                SystemsResultIssue(
+                    "missing_compiler_ir_provenance",
+                    "alphaevolve_ready compiler reports require compiler_ir_provenance",
+                )
+            )
+        return False
+    if domain not in {"compiler", "kernel"}:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_compiler_ir_domain",
+                "compiler_ir_provenance is only valid for compiler or kernel domains",
+            )
+        )
+        return False
+    if not isinstance(value, dict):
+        issues.append(
+            SystemsResultIssue(
+                "invalid_compiler_ir_provenance",
+                "compiler_ir_provenance must be an object",
+            )
+        )
+        return False
+    artifact_paths = {
+        artifact.get("path")
+        for artifact in report.get("artifacts", [])
+        if isinstance(artifact, dict) and isinstance(artifact.get("path"), str)
+    }
+    for field in (
+        "boundary_statement",
+        "ir_origin",
+        "editability_boundary",
+        "baseline_provenance",
+        "numerical_tolerance_policy",
+        "final_expert_confirmation_scope",
+    ):
+        text = value.get(field)
+        if not isinstance(text, str) or not text.strip():
+            issues.append(
+                SystemsResultIssue(
+                    f"invalid_compiler_ir_{field}",
+                    f"compiler_ir_provenance.{field} must be non-empty text",
+                )
+            )
+    _validate_sha(
+        value.get("reference_implementation_sha256"),
+        "invalid_compiler_ir_reference_hash",
+        "compiler_ir_provenance.reference_implementation_sha256",
+        issues,
+    )
+    input_generator_id = value.get("randomized_input_generator_id")
+    if (
+        not isinstance(input_generator_id, str)
+        or _ID_RE.fullmatch(input_generator_id) is None
+    ):
+        issues.append(
+            SystemsResultIssue(
+                "invalid_compiler_ir_input_generator_id",
+                "compiler_ir_provenance.randomized_input_generator_id must be stable",
+            )
+        )
+    _validate_sha(
+        value.get("randomized_input_generator_sha256"),
+        "invalid_compiler_ir_input_generator_hash",
+        "compiler_ir_provenance.randomized_input_generator_sha256",
+        issues,
+    )
+    records = value.get("edit_records")
+    if not isinstance(records, list) or not records:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_compiler_ir_edit_records",
+                "compiler_ir_provenance.edit_records must be a non-empty list",
+            )
+        )
+        return False
+    record_ids: set[str] = set()
+    valid_records = 0
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_compiler_ir_edit_record",
+                    "compiler IR edit records must be objects",
+                )
+            )
+            continue
+        prefix = f"compiler_ir_provenance.edit_records[{index}]"
+        before_issues = len(issues)
+        edit_id = record.get("edit_id")
+        if not isinstance(edit_id, str) or _ID_RE.fullmatch(edit_id) is None:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_compiler_ir_edit_id",
+                    f"{prefix}.edit_id must be stable",
+                )
+            )
+        elif edit_id in record_ids:
+            issues.append(
+                SystemsResultIssue(
+                    "duplicate_compiler_ir_edit_id",
+                    "compiler IR edit_id values must be unique",
+                )
+            )
+        else:
+            record_ids.add(edit_id)
+        if record.get("abstraction_level") not in COMPILER_IR_ABSTRACTION_LEVELS:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_compiler_ir_abstraction_level",
+                    f"{prefix}.abstraction_level is unsupported",
+                )
+            )
+        seed_count = record.get("randomized_seed_count")
+        if (
+            isinstance(seed_count, bool)
+            or not isinstance(seed_count, int)
+            or seed_count <= 0
+        ):
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_compiler_ir_randomized_seed_count",
+                    f"{prefix}.randomized_seed_count must be positive",
+                )
+            )
+        if record.get("reference_check_passed") is not True:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_compiler_ir_reference_check",
+                    f"{prefix}.reference_check_passed must be true",
+                )
+            )
+        _validate_application_reference_list(
+            record.get("artifact_refs"),
+            artifact_paths,
+            "artifact_refs",
+            "invalid_compiler_ir_artifact_ref",
             prefix,
             issues,
         )

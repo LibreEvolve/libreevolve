@@ -89,6 +89,14 @@ whether expert contributor roles, objective/evaluator rationale,
 parameter-scope decisions, background-knowledge linkage, and expert review or
 domain-owner signoff are present before marking expert-guided formulation
 parity claim-ready.
+Completed manifests also include
+`runtime.history.benchmark_fixture_readiness_report` with schema
+`libreevolve.benchmark_fixture_readiness_report.v1`. It joins startup problem
+metadata with the example-scope registry, records the matching fixture level,
+AlphaEvolve-comparable flag, formulation/review status, task-spec identity,
+benchmark-hardening references, and explicit false readiness for repeated-seed
+protocols, SOTA/target baseline values, fixture-emitted result artifacts, and
+anti-gaming negative-fixture evidence.
 Problem fixtures can also optionally include `codebase_integration.yaml` or
 `codebase_integration.yml`; direct callers can set
 `Problem.codebase_integration_metadata`. Startup manifest validation

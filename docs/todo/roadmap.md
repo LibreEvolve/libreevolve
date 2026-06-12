@@ -398,9 +398,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     field, and
     `runtime.history.problem_formulation_provenance_report` for roles,
     rationale, parameter-scope, background refs, and review/signoff readiness.
-    Runtime evidence can now identify the declared formulation metadata, but
-    existing benchmark fixtures have not yet been populated with real
-    expert-reviewed formulation records.
+    Runtime evidence can now identify the declared formulation metadata.
+    `runtime.history.benchmark_fixture_readiness_report` also joins startup
+    problem metadata to the example-scope registry and records when a problem
+    remains smoke-only, lacks AlphaEvolve-comparable scope, repeated-seed
+    protocol, SOTA/target baselines, fixture-emitted result artifacts, or
+    anti-gaming negative-fixture evidence. Existing benchmark fixtures have
+    not yet been populated with real expert-reviewed formulation records or
+    paper-claim-ready benchmark evidence.
   - Required result: when matrix and constructive-math benchmark fixtures carry
     reviewed formulation metadata and paper-facing evidence, update roadmap,
     README, papers index, and code/paper TODO entries together so roadmap text

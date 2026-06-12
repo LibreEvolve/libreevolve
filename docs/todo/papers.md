@@ -2926,8 +2926,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     contributor roles, problem-origin and formulation notes,
     objective/evaluator rationale, parameter-scope decisions,
     background-knowledge refs, and review/signoff readiness. Current
-    mathematical benchmark fixtures still lack real populated expert-reviewed
-    records and paper-facing certification examples.
+    paper-facing status also includes
+    `runtime.history.benchmark_fixture_readiness_report` for run-level
+    smoke-only scope, missing AlphaEvolve-comparable benchmark scope,
+    hardening references, and explicit false readiness for repeated-seed
+    protocols, SOTA/target baselines, fixture-emitted result artifacts, and
+    anti-gaming negative-fixture evidence. Current mathematical benchmark
+    fixtures still lack real populated expert-reviewed records,
+    paper-facing certification examples, and paper-claim-ready benchmark
+    evidence.
   - Required result: populate matrix and constructive-math benchmark fixtures
     with reviewed formulation records, link them to evaluator/report artifacts,
     add paper-facing examples or certification rows, and require review/signoff

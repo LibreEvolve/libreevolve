@@ -5295,6 +5295,11 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 db.startup_manifest_snapshot()
             )
         ),
+        "benchmark_fixture_readiness_report": (
+            _benchmark_fixture_readiness_report(
+                db.startup_manifest_snapshot()
+            )
+        ),
         "collaborator_feedback_provenance_report": (
             _collaborator_feedback_provenance_report(
                 db.startup_manifest_snapshot()
@@ -7403,6 +7408,302 @@ def validate_problem_formulation_provenance_report(report: object) -> dict:
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _benchmark_fixture_readiness_report(
+    startup_manifest: Mapping[str, object],
+) -> dict:
+    config = (
+        startup_manifest.get("config")
+        if isinstance(startup_manifest.get("config"), Mapping)
+        else {}
+    )
+    problem = (
+        startup_manifest.get("problem")
+        if isinstance(startup_manifest.get("problem"), Mapping)
+        else {}
+    )
+    formulation = (
+        problem.get("formulation_metadata")
+        if isinstance(problem.get("formulation_metadata"), Mapping)
+        else {}
+    )
+    task_spec = (
+        startup_manifest.get("task_specification")
+        if isinstance(startup_manifest.get("task_specification"), Mapping)
+        else {}
+    )
+    problem_name = (
+        config.get("problem_name")
+        if isinstance(config.get("problem_name"), str)
+        else None
+    )
+    scope_records, scope_validation = _benchmark_fixture_scope_records()
+    matching_scope = next(
+        (
+            record
+            for record in scope_records
+            if isinstance(record, Mapping)
+            and record.get("problem_id") == problem_name
+        ),
+        None,
+    )
+    hardening_refs = _benchmark_fixture_hardening_refs(problem_name)
+    has_reviewed_formulation = (
+        formulation.get("status") == "provided"
+        and isinstance(formulation.get("review"), Mapping)
+        and formulation["review"].get("status")
+        in {"expert_reviewed", "domain_owner_signed_off"}
+    )
+    has_background_refs = (
+        isinstance(formulation.get("background_knowledge_refs"), list)
+        and bool(formulation.get("background_knowledge_refs"))
+    )
+    has_target_identity = _benchmark_fixture_task_spec_has_target(task_spec)
+    report = {
+        "schema": "libreevolve.benchmark_fixture_readiness_report.v1",
+        "source": "startup_manifest_problem_metadata_and_example_scope",
+        "problem_name": problem_name,
+        "example_scope_registry": {
+            "schema": "libreevolve.example_benchmark_scope.v1",
+            "record_count": len(scope_records),
+            "validation_ok": scope_validation.get("ok") is True,
+            "smoke_only": scope_validation.get("smoke_only") is True,
+            "comparable_problem_ids": scope_validation.get(
+                "comparable_problem_ids", []
+            ),
+        },
+        "matching_example_scope": matching_scope,
+        "scope_level": (
+            matching_scope.get("level")
+            if isinstance(matching_scope, Mapping)
+            and isinstance(matching_scope.get("level"), str)
+            else "unregistered_problem"
+        ),
+        "alphaevolve_comparable": (
+            matching_scope.get("alphaevolve_comparable") is True
+            if isinstance(matching_scope, Mapping)
+            else False
+        ),
+        "formulation_metadata_status": formulation.get("status"),
+        "formulation_problem_origin": formulation.get("problem_origin"),
+        "review_status": (
+            formulation.get("review", {}).get("status")
+            if isinstance(formulation.get("review"), Mapping)
+            else None
+        ),
+        "task_specification_status": task_spec.get("status"),
+        "task_spec_id": task_spec.get("task_spec_id"),
+        "hardening_refs": hardening_refs,
+        "hardening_ref_count": len(hardening_refs),
+        "readiness_evidence": {
+            "example_scope_record_present": isinstance(matching_scope, Mapping),
+            "scope_registry_valid": scope_validation.get("ok") is True,
+            "not_smoke_only_claim": (
+                isinstance(matching_scope, Mapping)
+                and matching_scope.get("level") in {"benchmark", "paper_claim"}
+            ),
+            "alphaevolve_comparable_scope": (
+                isinstance(matching_scope, Mapping)
+                and matching_scope.get("alphaevolve_comparable") is True
+            ),
+            "reviewed_formulation_metadata": has_reviewed_formulation,
+            "background_knowledge_refs": has_background_refs,
+            "task_spec_target_identity": has_target_identity,
+            "benchmark_hardening_refs": bool(hardening_refs),
+            "repeated_seed_protocol": False,
+            "sota_or_target_baseline_values": False,
+            "fixture_emitted_result_artifacts": False,
+            "anti_gaming_negative_fixtures_passed": False,
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "benchmark_fixture_readiness": False,
+            "alphaevolve_paper_claim_fixture": False,
+            "remaining_gap": [
+                gap
+                for gap, ready in (
+                    (
+                        "non_smoke_benchmark_scope_record",
+                        isinstance(matching_scope, Mapping)
+                        and matching_scope.get("level")
+                        in {"benchmark", "paper_claim"},
+                    ),
+                    (
+                        "alphaevolve_comparable_scope_record",
+                        isinstance(matching_scope, Mapping)
+                        and matching_scope.get("alphaevolve_comparable") is True,
+                    ),
+                    ("reviewed_formulation_metadata", has_reviewed_formulation),
+                    ("task_spec_target_identity", has_target_identity),
+                    ("benchmark_hardening_refs", bool(hardening_refs)),
+                    ("repeated_seed_protocol", False),
+                    ("sota_or_target_baseline_values", False),
+                    ("fixture_emitted_result_artifacts", False),
+                    ("anti_gaming_negative_fixtures_passed", False),
+                )
+                if not ready
+            ],
+        },
+    }
+    report["validation"] = validate_benchmark_fixture_readiness_report(report)
+    return report
+
+
+def _benchmark_fixture_scope_records() -> tuple[list[dict], dict]:
+    try:
+        from libreevolve.problems.benchmarks.example_scope import (
+            example_benchmark_scope_records,
+            validate_example_benchmark_scope,
+        )
+
+        records = example_benchmark_scope_records()
+        validation = validate_example_benchmark_scope(records)
+        return records, {
+            "ok": validation.ok,
+            "smoke_only": validation.smoke_only,
+            "comparable_problem_ids": validation.comparable_problem_ids,
+            "issues": [
+                {"code": issue.code, "message": issue.message}
+                for issue in validation.issues
+            ],
+        }
+    except Exception as exc:  # pragma: no cover - defensive manifest path
+        return [], {
+            "ok": False,
+            "smoke_only": False,
+            "comparable_problem_ids": [],
+            "issues": [
+                {
+                    "code": "example_scope_registry_unavailable",
+                    "message": str(exc),
+                }
+            ],
+        }
+
+
+def _benchmark_fixture_hardening_refs(problem_name: str | None) -> list[str]:
+    if problem_name == "matrix_multiplication":
+        return ["libreevolve.problems.benchmarks.benchmark_hardening"]
+    return []
+
+
+def _benchmark_fixture_task_spec_has_target(task_spec: Mapping[str, object]) -> bool:
+    if not task_spec:
+        return False
+    for field in ("task_spec_id", "score_fields", "evaluator_fields"):
+        value = task_spec.get(field)
+        if isinstance(value, str) and value:
+            return True
+        if isinstance(value, list) and value:
+            return True
+    return False
+
+
+def validate_benchmark_fixture_readiness_report(report: object) -> dict:
+    issues: list[dict[str, str]] = []
+    schema = "libreevolve.benchmark_fixture_readiness_report.v1"
+    if not isinstance(report, Mapping):
+        return {
+            "schema": schema,
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_report",
+                    "message": "benchmark fixture readiness report must be a mapping",
+                }
+            ],
+        }
+    if report.get("schema") != schema:
+        issues.append({"code": "invalid_schema", "message": "unsupported schema"})
+    if report.get("source") != "startup_manifest_problem_metadata_and_example_scope":
+        issues.append({"code": "invalid_source", "message": "unsupported source"})
+    registry = report.get("example_scope_registry")
+    if not isinstance(registry, Mapping):
+        issues.append(
+            {
+                "code": "invalid_example_scope_registry",
+                "message": "registry must be a mapping",
+            }
+        )
+        registry = {}
+    else:
+        if registry.get("validation_ok") is not True:
+            issues.append(
+                {
+                    "code": "example_scope_registry_invalid",
+                    "message": "example scope registry must validate",
+                }
+            )
+        comparable = registry.get("comparable_problem_ids")
+        if not isinstance(comparable, list):
+            issues.append(
+                {
+                    "code": "invalid_comparable_problem_ids",
+                    "message": "comparable problem ids must be a list",
+                }
+            )
+    scope_level = report.get("scope_level")
+    if scope_level not in {"smoke", "benchmark", "paper_claim", "unregistered_problem"}:
+        issues.append(
+            {"code": "invalid_scope_level", "message": "unsupported scope level"}
+        )
+    if report.get("alphaevolve_comparable") is True and scope_level == "smoke":
+        issues.append(
+            {
+                "code": "smoke_scope_comparable_overclaim",
+                "message": "smoke fixtures cannot be AlphaEvolve-comparable",
+            }
+        )
+    evidence = report.get("readiness_evidence")
+    if not isinstance(evidence, Mapping):
+        issues.append(
+            {
+                "code": "invalid_readiness_evidence",
+                "message": "readiness_evidence must be a mapping",
+            }
+        )
+        evidence = {}
+    for field in (
+        "repeated_seed_protocol",
+        "sota_or_target_baseline_values",
+        "fixture_emitted_result_artifacts",
+        "anti_gaming_negative_fixtures_passed",
+    ):
+        if evidence.get(field) is not False:
+            issues.append(
+                {
+                    "code": f"{field}_overclaim",
+                    "message": (
+                        f"{field} must remain false until benchmark evidence exists"
+                    ),
+                }
+            )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be a mapping",
+            }
+        )
+        readiness = {}
+    for field in ("benchmark_fixture_readiness", "alphaevolve_paper_claim_fixture"):
+        if readiness.get(field) is not False:
+            issues.append(
+                {
+                    "code": f"{field}_overclaim",
+                    "message": f"{field} must remain false",
+                }
+            )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "claim_ready_overclaim",
+                "message": "benchmark fixture readiness must remain false",
+            }
+        )
+    return {"schema": schema, "ok": not issues, "issues": issues}
 
 
 def _collaborator_feedback_provenance_report(

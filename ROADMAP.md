@@ -265,6 +265,12 @@ LibreEvolve has:
   contributor roles, problem origin, formulation notes, objective/evaluator
   rationale, parameter-scope decisions, background refs, and review/signoff
   readiness
+- benchmark-fixture readiness reports under
+  `runtime.history.benchmark_fixture_readiness_report`, joining startup
+  problem metadata to the example-scope registry and preserving explicit false
+  readiness for smoke fixtures, missing repeated-seed protocols, missing
+  SOTA/target baselines, missing fixture-emitted result artifacts, and missing
+  anti-gaming negative-fixture evidence
 - optional external feedback metadata under `collaborator_feedback.yaml` or
   direct `Problem.collaborator_feedback_metadata`, normalized into
   `problem.collaborator_feedback_metadata` and summarized by
@@ -722,7 +728,10 @@ is not yet an AlphaEvolve reproduction.
   validation evidence while preserving `alphaevolve_comparable: false`. The
   standard paper-manifest gate now validates the shipped example-scope records
   from `papers/example_benchmark_scope.json` so smoke fixtures cannot drift
-  into paper-comparable claims.
+  into paper-comparable claims. Runtime manifests now also emit
+  `runtime.history.benchmark_fixture_readiness_report`, which makes the same
+  smoke-versus-benchmark boundary visible for each run while keeping real
+  benchmark and paper-claim readiness false.
 - Connect real benchmark fixtures to `libreevolve.benchmark_hardening.v1`
   reports emitted by actual randomized/exhaustive validators and anti-gaming
   fixtures, including protected score/correctness/artifact signals,

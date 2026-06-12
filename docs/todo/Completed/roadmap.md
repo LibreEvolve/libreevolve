@@ -9165,3 +9165,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     audited false-acceptance/false-rejection rates.
   - Verification: focused runtime execution-filtered proposal lifecycle test
     validates the implemented report.
+
+- [x] Preserve benchmark-fixture readiness boundary.
+  - Spec evidence: roadmap benchmark claims need to separate smoke examples
+    and registry evidence from real AlphaEvolve-comparable benchmark fixtures.
+  - Status: ROADMAP and TODO wording now recognize
+    `runtime.history.benchmark_fixture_readiness_report` as run-level evidence
+    for smoke/benchmark/paper-claim scope, AlphaEvolve-comparable flags,
+    formulation/review state, task-spec identity, hardening references, and
+    explicit false readiness for missing repeated-seed, baseline,
+    emitted-artifact, and anti-gaming evidence.
+  - Verification: focused benchmark-fixture readiness report test validates
+    the implemented report.

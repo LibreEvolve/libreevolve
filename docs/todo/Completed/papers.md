@@ -11976,3 +11976,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     false-rejection rates.
   - Verification: focused runtime execution-filtered proposal lifecycle test
     validates the implemented report.
+
+- [x] Record benchmark-fixture readiness boundary.
+  - Spec evidence: AlphaEvolve paper-facing benchmark claims require scoped
+    fixtures and result evidence, not only example validators or registry
+    sidecars.
+  - Status: paper-facing TODOs and runtime manifests now expose
+    `benchmark_fixture_readiness_report`, which records example-scope registry
+    linkage, smoke-only fixture status, hardening references, formulation and
+    review status, and false readiness for repeated-seed protocols,
+    SOTA/target baselines, fixture-emitted result artifacts, and anti-gaming
+    negative-fixture evidence.
+  - Remaining paper gap: this does not create real matrix or constructive-math
+    benchmark runs, paper-claim-ready result artifacts, repeated-seed tables,
+    or certified anti-gaming negative-fixture outcomes.
+  - Verification: focused benchmark-fixture readiness report test validates
+    the smoke-scope and overclaim boundaries.

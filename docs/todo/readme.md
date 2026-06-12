@@ -339,8 +339,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `runtime.history.problem_formulation_provenance_report`. It distinguishes
     context-source artifact tracking from expert formulation evidence and says
     claim readiness requires expert roles, rationale, parameter-scope,
-    background refs, and review/signoff. Existing benchmark fixtures do not yet
-    carry real expert-reviewed formulation records.
+    background refs, and review/signoff. README now also documents
+    `runtime.history.benchmark_fixture_readiness_report`, which records
+    smoke-only fixture scope, missing AlphaEvolve-comparable benchmark scope,
+    missing repeated-seed protocols, missing SOTA/target baselines, missing
+    fixture-emitted result artifacts, and missing anti-gaming negative-fixture
+    evidence. Existing benchmark fixtures do not yet carry real
+    expert-reviewed formulation records or paper-claim-ready benchmark
+    evidence.
   - Required result: when matrix and constructive-math benchmark fixtures are
     populated with reviewed formulation metadata and paper-facing evidence,
     update README, ROADMAP, papers index, and code/paper TODO entries together

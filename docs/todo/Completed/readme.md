@@ -11628,3 +11628,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     tables, semantic failed-proposal retrieval, and audited error-rate claims.
   - Verification: focused runtime execution-filtered proposal lifecycle test
     validates the implemented report.
+
+- [x] Document benchmark-fixture readiness boundary report.
+  - Spec evidence: README benchmark wording needed to distinguish smoke
+    fixtures from AlphaEvolve-comparable benchmark and paper-claim fixtures.
+  - Status: README and run-artifact docs now describe
+    `runtime.history.benchmark_fixture_readiness_report`, including
+    example-scope registry linkage, smoke-only fixture scope,
+    formulation/review status, task-spec identity, hardening references, and
+    false readiness for repeated-seed protocols, SOTA/target baselines,
+    fixture-emitted result artifacts, and anti-gaming negative-fixture
+    evidence.
+  - Verification: focused benchmark-fixture readiness report test validates
+    the documented report contract.

@@ -58,6 +58,7 @@ from libreevolve.core.loop import (
     validate_initial_program_idea_provenance_report,
     validate_initial_program_validity_report,
     validate_initial_pool_divergence_report,
+    validate_benchmark_fixture_readiness_report,
     validate_problem_formulation_provenance_report,
     validate_existing_codebase_integration_report,
     validate_explicit_context_source_role_report,
@@ -9642,6 +9643,109 @@ def test_loaded_problem_formulation_metadata_reaches_manifest_and_report():
         "alphaevolve_expert_guided_formulation_parity"
     ] is True
     assert report["review_status"] == "expert_reviewed"
+
+
+def test_benchmark_fixture_readiness_report_keeps_smoke_scope_unready():
+    problem_dir = Path(tempfile.mkdtemp())
+    (problem_dir / "task_description.txt").write_text(
+        "matrix smoke fixture", encoding="utf-8"
+    )
+    (problem_dir / "metrics.yaml").write_text(
+        "metrics:\n"
+        "  - name: score\n"
+        "    primary: true\n"
+        "    bounds: [0.0, 1.0]\n",
+        encoding="utf-8",
+    )
+    (problem_dir / "validate.py").write_text(
+        "def evaluate(c): return {'score': 1.0, 'is_valid': True}\n",
+        encoding="utf-8",
+    )
+    seed_dir = problem_dir / "initial_programs"
+    seed_dir.mkdir()
+    (seed_dir / "seed.py").write_text("x = 1\n", encoding="utf-8")
+    (problem_dir / "formulation.yaml").write_text(
+        "problem_origin: benchmark_fixture\n"
+        "contributors:\n"
+        "  - role: formulation_advisor\n"
+        "    label: matrix advisor\n"
+        "formulation_notes: Reviewed as a bounded matrix smoke fixture.\n"
+        "objective_rationale: Maximize score for the declared smoke metric.\n"
+        "evaluator_rationale: The validator returns the declared primary score.\n"
+        "parameter_scope:\n"
+        "  - name: matrix_size\n"
+        "    value: 2x2 smoke case\n"
+        "    rationale: Keeps regression runs bounded.\n"
+        "background_knowledge_refs:\n"
+        "  - papers/2506.13131__AlphaEvolve.pdf pages 21-22\n"
+        "review:\n"
+        "  status: domain_owner_signed_off\n"
+        "  reviewer_labels:\n"
+        "    - matrix advisor\n",
+        encoding="utf-8",
+    )
+    problem = load_problem(problem_dir)
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(
+        problem,
+        Config(
+            max_generations=0,
+            log_dir=tmpdir,
+            problem_name="matrix_multiplication",
+        ),
+    )
+
+    manifest = json.loads(
+        (Path(tmpdir) / "matrix_multiplication" / "manifest.json").read_text()
+    )
+    report = manifest["runtime"]["history"]["benchmark_fixture_readiness_report"]
+    assert report["schema"] == "libreevolve.benchmark_fixture_readiness_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_benchmark_fixture_readiness_report(report)["ok"] is True
+    assert report["problem_name"] == "matrix_multiplication"
+    assert report["example_scope_registry"]["validation_ok"] is True
+    assert report["example_scope_registry"]["smoke_only"] is True
+    assert report["scope_level"] == "smoke"
+    assert report["alphaevolve_comparable"] is False
+    assert report["matching_example_scope"]["problem_id"] == "matrix_multiplication"
+    evidence = report["readiness_evidence"]
+    assert evidence["example_scope_record_present"] is True
+    assert evidence["scope_registry_valid"] is True
+    assert evidence["not_smoke_only_claim"] is False
+    assert evidence["alphaevolve_comparable_scope"] is False
+    assert evidence["reviewed_formulation_metadata"] is True
+    assert evidence["background_knowledge_refs"] is True
+    assert evidence["task_spec_target_identity"] is True
+    assert evidence["benchmark_hardening_refs"] is True
+    assert evidence["repeated_seed_protocol"] is False
+    assert evidence["sota_or_target_baseline_values"] is False
+    assert evidence["fixture_emitted_result_artifacts"] is False
+    assert evidence["anti_gaming_negative_fixtures_passed"] is False
+    assert report["hardening_ref_count"] == 1
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["benchmark_fixture_readiness"] is False
+    assert report["claim_readiness"]["alphaevolve_paper_claim_fixture"] is False
+    assert "non_smoke_benchmark_scope_record" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    assert "alphaevolve_comparable_scope_record" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+
+    edited = copy.deepcopy(report)
+    edited["claim_ready"] = True
+    edited["alphaevolve_comparable"] = True
+    edited["readiness_evidence"]["repeated_seed_protocol"] = True
+    edited["claim_readiness"]["benchmark_fixture_readiness"] = True
+    validation = validate_benchmark_fixture_readiness_report(edited)
+    assert validation["ok"] is False
+    assert {issue["code"] for issue in validation["issues"]} >= {
+        "claim_ready_overclaim",
+        "benchmark_fixture_readiness_overclaim",
+        "repeated_seed_protocol_overclaim",
+        "smoke_scope_comparable_overclaim",
+    }
 
 
 def test_problem_formulation_report_marks_missing_metadata_boundary():

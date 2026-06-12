@@ -2410,6 +2410,14 @@ decisions, background-knowledge linkage, and expert review or domain-owner
 signoff are present before marking AlphaEvolve-style expert-guided formulation
 parity claim-ready. Context-source provenance alone is still not treated as
 expert formulation evidence.
+Completed manifests also include
+`runtime.history.benchmark_fixture_readiness_report`, which joins startup
+problem metadata with the shipped example-scope registry. It records whether
+the current problem is only a smoke/example fixture or a benchmark/paper-claim
+fixture, whether any benchmark-hardening references exist, and which readiness
+evidence is still absent. Repeated-seed protocols, SOTA/target baselines,
+fixture-emitted result artifacts, and anti-gaming negative-fixture evidence
+remain false until real benchmark fixtures produce them.
 Problem fixtures can also optionally add `codebase_integration.yaml` or
 `codebase_integration.yml`; direct callers can set
 `Problem.codebase_integration_metadata`. The manifest normalizes this to

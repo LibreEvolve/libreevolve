@@ -17355,3 +17355,23 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     open.
   - Verification: focused runtime execution-filtered proposal lifecycle test
     validates the implemented report.
+
+- [x] Add benchmark-fixture readiness boundary report.
+  - Spec evidence: AlphaEvolve benchmark claims require more than smoke
+    examples; they need scoped benchmark fixtures, repeated-seed protocols,
+    target or SOTA baselines, emitted result artifacts, and anti-gaming
+    evidence.
+  - Status: runtime histories now include
+    `libreevolve.benchmark_fixture_readiness_report.v1`, joining startup
+    problem metadata with the example-scope registry. It records the current
+    problem's smoke/benchmark/paper-claim level, AlphaEvolve-comparable flag,
+    formulation/review status, task-spec identity, hardening references, and
+    explicit false readiness for repeated-seed protocols, SOTA/target
+    baselines, fixture-emitted result artifacts, and anti-gaming
+    negative-fixture evidence.
+  - Remaining gap: real benchmark fixtures still need populated reviewed
+    formulation metadata, non-smoke scope records, repeated-seed execution,
+    target/SOTA values, emitted artifacts, and negative-fixture results before
+    benchmark or paper-claim readiness can become true.
+  - Verification: focused benchmark-fixture readiness report test validates
+    the smoke-scope boundary and overclaim checks.

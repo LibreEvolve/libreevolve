@@ -1238,8 +1238,11 @@ server selection remain outside self-describing artifacts. There is also no
 first-class Google/Gemini backend yet, so AlphaEvolve's published Gemini 2.0
 Flash/Gemini 2.0 Pro model mix currently requires either a custom backend with
 separate evidence or a future provider/plugin contract before it can be treated
-as provider-parity reproduction evidence. AlphaEvolve's Table 1 sample-count
-claim is also not yet reproduced: current budgets and ablation schemas can
+as provider-parity reproduction evidence. The committed
+`papers/gemini_provider_parity_boundary.json` sidecar preserves that
+first-class-provider absence boundary for paper-manifest validation.
+AlphaEvolve's Table 1 sample-count claim is also not yet reproduced: current
+budgets and ablation schemas can
 account for LLM calls and provider usage, but no report yet proves useful
 target progress in thousands-scale generated/evaluated proposal counts versus
 FunSearch-style much larger sample budgets or small-base-model alternatives.

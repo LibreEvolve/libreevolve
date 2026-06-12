@@ -4258,6 +4258,8 @@ Primary evidence:
     which records the built-in provider list, detects Gemini-like custom model
     ids and Flash/Pro-shaped lanes, and preserves `claim_ready: false` while no
     first-class Google/Gemini backend exists.
+    `papers/gemini_provider_parity_boundary.json` now preserves the same
+    first-class-provider absence boundary for paper-manifest validation.
   - Required result: add a built-in Google/Gemini backend or an explicitly
     equivalent provider plugin contract with model-family capability metadata,
     credential/client preflight, safe request/usage/default telemetry,

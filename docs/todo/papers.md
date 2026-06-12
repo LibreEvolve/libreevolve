@@ -393,7 +393,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     include `libreevolve.gemini_provider_parity_report.v1`, which records the
     built-in provider list, configured Gemini-like custom backends,
     Flash/Pro-shaped lane counts, and a `claim_ready: false` first-class-provider
-    absence boundary.
+    absence boundary. `papers/gemini_provider_parity_boundary.json` now
+    preserves the same first-class-provider absence boundary for
+    paper-manifest validation.
   - Current gap: a custom backend can wrap Gemini externally, but the paper
     ledger has no first-class evidence for Gemini credential preflight,
     provider-native usage/default/capability telemetry, safe provider
@@ -473,6 +475,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     histories now include `libreevolve.gemini_provider_parity_report.v1`, which
     detects Gemini-like custom model ids and Flash/Pro-shaped lanes while
     preserving the missing first-class provider boundary.
+    `papers/gemini_provider_parity_boundary.json` now records that paper-facing
+    absence boundary for manifest validation.
   - Current gap: no built-in Google/Gemini backend exists, and `custom`
     backends do not by themselves supply provider-native usage/default
     telemetry, account/model capability evidence, credential preflight, or

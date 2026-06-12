@@ -30,7 +30,9 @@ Implemented today:
 
 Important limits:
 
-- There is no first-class Gemini provider yet.
+- There is no first-class Gemini provider yet; the absence boundary is tracked
+  by `runtime.history.gemini_provider_parity_report` and
+  `papers/gemini_provider_parity_boundary.json`.
 - Evaluators run in local subprocesses, not hardened security sandboxes.
 - The archive and controller are local and synchronous, not a distributed
   asynchronous AlphaEvolve-style service.

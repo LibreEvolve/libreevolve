@@ -11617,6 +11617,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: focused runtime Gemini provider-parity boundary test
     validates the implemented report.
 
+- [x] Document Gemini provider-parity sidecar boundary.
+  - Status: README and supporting backend/runtime docs now point to
+    `papers/gemini_provider_parity_boundary.json` as the paper-facing sidecar
+    for the same first-class Google/Gemini provider absence boundary.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused Gemini provider boundary tests validate the absence
+    record.
+
 - [x] Document parallel-evaluation readiness boundary.
   - Spec evidence: README parallel-evaluation wording needed to distinguish
     local configured-stage sample workers from AlphaEvolve-style async

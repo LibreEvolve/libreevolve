@@ -215,6 +215,12 @@ from libreevolve.problems.benchmarks.gigaevo_boundary import (
     render_gigaevo_framework_boundary_summary,
     validate_gigaevo_framework_boundary,
 )
+from libreevolve.problems.benchmarks.gemini_provider_parity_boundary import (
+    GEMINI_PROVIDER_PARITY_BOUNDARY_SCHEMA,
+    gemini_provider_parity_boundary_record,
+    render_gemini_provider_parity_boundary_summary,
+    validate_gemini_provider_parity_boundary,
+)
 from libreevolve.problems.benchmarks.improvevolve_boundary import (
     IMPROVEVOLVE_BOUNDARY_SCHEMA,
     improvevolve_boundary_record,
@@ -525,6 +531,7 @@ __all__ = [
     "FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA",
     "FIGURE9_MATRIX_DIFF_ARTIFACT_BOUNDARY_SCHEMA",
     "FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA",
+    "GEMINI_PROVIDER_PARITY_BOUNDARY_SCHEMA",
     "GIGAEVO_FRAMEWORK_BOUNDARY_SCHEMA",
     "IMPROVEVOLVE_BOUNDARY_SCHEMA",
     "MADEVOLVE_BOUNDARY_SCHEMA",
@@ -604,6 +611,7 @@ __all__ = [
     "bilateral_trade_boundary_record",
     "bruhat_intervals_boundary_record",
     "fault2flow_boundary_record",
+    "gemini_provider_parity_boundary_record",
     "global_nlp_optimization_boundary_record",
     "candidate_abstraction_boundary_record",
     "candidate_language_runner_boundary_record",
@@ -705,6 +713,7 @@ __all__ = [
     "render_figure4_matrix_discovery_exhibit_summary",
     "render_figure9_matrix_diff_artifact_boundary_summary",
     "render_figure9_matrix_diff_exhibit_summary",
+    "render_gemini_provider_parity_boundary_summary",
     "render_gigaevo_framework_boundary_summary",
     "render_improvevolve_boundary_summary",
     "render_madevolve_boundary_summary",
@@ -791,6 +800,7 @@ __all__ = [
     "validate_figure4_matrix_discovery_exhibit",
     "validate_figure9_matrix_diff_artifact_boundary",
     "validate_figure9_matrix_diff_exhibit",
+    "validate_gemini_provider_parity_boundary",
     "validate_gigaevo_framework_boundary",
     "validate_improvevolve_boundary",
     "validate_madevolve_boundary",

@@ -1613,6 +1613,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     now tracks `runtime.history.gemini_provider_parity_report` as an explicit
     absence boundary: it records built-in provider types, Gemini-like custom
     backend specs, Flash/Pro-shaped lanes, and `claim_ready: false`.
+    `papers/gemini_provider_parity_boundary.json` now preserves the same
+    first-class-provider absence boundary for manifest validation.
   - Required result: when a Gemini backend, provider-plugin contract, or
     explicit paper-level substitute lands, update ROADMAP, README, papers
     index, and code/paper TODOs so roadmap language separates generic backend

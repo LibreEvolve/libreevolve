@@ -262,6 +262,10 @@ from libreevolve.problems.benchmarks.gigaevo_boundary import (
     gigaevo_framework_boundary_record,
     validate_gigaevo_framework_boundary,
 )
+from libreevolve.problems.benchmarks.gemini_provider_parity_boundary import (
+    gemini_provider_parity_boundary_record,
+    validate_gemini_provider_parity_boundary,
+)
 from libreevolve.problems.benchmarks.improvevolve_boundary import (
     improvevolve_boundary_record,
     validate_improvevolve_boundary,
@@ -320,6 +324,7 @@ MATRIX_SCALAR_FIELD_RUNTIME_FILE = "papers/matrix_scalar_field_runtime_boundary.
 MATRIX_SWEEP_SPACE_RUNTIME_FILE = "papers/matrix_sweep_space_runtime_boundary.json"
 MATRIX_TENSOR_RANK_RUNTIME_FILE = "papers/matrix_tensor_rank_runtime_boundary.json"
 MAP_ELITES_ILLUMINATION_BOUNDARY_FILE = "papers/map_elites_illumination_boundary.json"
+GEMINI_PROVIDER_PARITY_BOUNDARY_FILE = "papers/gemini_provider_parity_boundary.json"
 GIGAEVO_FRAMEWORK_BOUNDARY_FILE = "papers/gigaevo_framework_boundary.json"
 CODEEVOLVE_BOUNDARY_FILE = "papers/codeevolve_boundary.json"
 THETAEVOLVE_BOUNDARY_FILE = "papers/thetaevolve_boundary.json"
@@ -774,6 +779,7 @@ def validate_paper_manifest(
     issues.extend(_validate_example_benchmark_scope_records(root_path))
     issues.extend(_validate_math_outcome_boundaries(root_path))
     issues.extend(_validate_map_elites_illumination_boundary(root_path))
+    issues.extend(_validate_gemini_provider_parity_boundary(root_path))
     issues.extend(_validate_gigaevo_framework_boundary(root_path))
     issues.extend(_validate_codeevolve_boundary(root_path))
     issues.extend(_validate_thetaevolve_boundary(root_path))
@@ -1824,6 +1830,38 @@ def _validate_map_elites_illumination_boundary(root_path: Path) -> list[PaperMan
             f"map_elites_illumination_boundary_{issue.code}",
             issue.message,
             "map_elites_illumination",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_gemini_provider_parity_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / GEMINI_PROVIDER_PARITY_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = gemini_provider_parity_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "gemini_provider_parity_boundary_manifest_missing",
+                    (
+                        f"{GEMINI_PROVIDER_PARITY_BOUNDARY_FILE} must emit "
+                        "Google/Gemini provider-parity availability"
+                    ),
+                    "gemini_provider_parity",
+                )
+            ]
+    report = validate_gemini_provider_parity_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"gemini_provider_parity_boundary_{issue.code}",
+            issue.message,
+            "gemini_provider_parity",
         )
         for issue in report.issues
     ]

@@ -17346,6 +17346,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     remains open.
   - Verification: focused runtime Gemini provider-parity boundary test passes.
 
+- [x] Emit Gemini provider-parity paper-facing absence boundary sidecar.
+  - Status: `libreevolve/problems/benchmarks/gemini_provider_parity_boundary.py`
+    and `papers/gemini_provider_parity_boundary.json` now preserve that
+    LibreEvolve has a runtime Gemini provider-parity absence report, but no
+    first-class Google/Gemini adapter, Gemini credential preflight,
+    provider-native usage/default telemetry, capability lookup, Flash/Pro
+    lane contract, or paper-level substitution contract.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused Gemini provider boundary tests validate the absence
+    record.
+
 - [x] Add parallel-evaluation readiness absence report.
   - Spec evidence: AlphaEvolve Section 2.4 ties expensive candidate
     evaluation to parallelized work and throughput under slow evaluator

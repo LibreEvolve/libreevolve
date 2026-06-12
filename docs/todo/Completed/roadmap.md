@@ -9175,6 +9175,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: focused runtime Gemini provider-parity boundary test
     validates the implemented report.
 
+- [x] Preserve Gemini provider-parity paper-facing sidecar.
+  - Status: ROADMAP and TODO wording now point to
+    `papers/gemini_provider_parity_boundary.json` as the paper-facing sidecar
+    for the runtime Gemini provider-parity absence report, while first-class
+    Google/Gemini provider work remains open.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused Gemini provider boundary tests validate the absence
+    record.
+
 - [x] Preserve parallel-evaluation readiness boundary.
   - Spec evidence: roadmap async/evaluator-worker claims need to separate
     local sample-worker compression from AlphaEvolve-style evaluator-node

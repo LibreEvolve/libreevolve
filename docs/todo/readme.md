@@ -2656,7 +2656,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     or Flash/Pro lane labeling. README now points to
     `runtime.history.gemini_provider_parity_report`, which records the missing
     first-class Gemini provider boundary and detects Gemini-like custom model
-    ids without claiming AlphaEvolve Flash/Pro parity.
+    ids without claiming AlphaEvolve Flash/Pro parity. The paper-facing
+    `papers/gemini_provider_parity_boundary.json` sidecar preserves the same
+    first-class-provider absence boundary for manifest validation.
   - Required result: if Gemini support or an equivalent provider-plugin
     contract lands, update README, ROADMAP, papers index, and code/paper TODOs
     so provider claims distinguish generic extensibility from reproducing or

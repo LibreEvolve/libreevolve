@@ -1,0 +1,30 @@
+{
+  "schema": "libreevolve.alphaevolve_gemini_provider_parity_boundary.v1",
+  "runtime_report_schema": "libreevolve.gemini_provider_parity_report.v1",
+  "source_paper_id": "2506.13131",
+  "alphaevolve_provider_requirement": "gemini_flash_and_gemini_pro",
+  "source_claim": "AlphaEvolve's published model mix used Gemini 2.0 Flash and Gemini 2.0 Pro, so provider parity needs a first-class Google/Gemini surface or explicit paper-level substitution",
+  "boundary_status": "missing_first_class_gemini_provider",
+  "runtime_report_status": "gemini_provider_parity_absence_report_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "built_in_google_gemini_adapter",
+    "gemini_credential_preflight",
+    "provider_native_usage_telemetry",
+    "provider_native_default_telemetry",
+    "provider_capability_lookup",
+    "gemini_flash_lane_identity",
+    "gemini_pro_lane_identity",
+    "paper_level_substitution_contract"
+  ],
+  "missing_evidence": {
+    "built_in_google_gemini_adapter": "not_recorded_locally",
+    "gemini_credential_preflight": "not_recorded_locally",
+    "provider_native_usage_telemetry": "not_recorded_locally",
+    "provider_native_default_telemetry": "not_recorded_locally",
+    "provider_capability_lookup": "not_recorded_locally",
+    "gemini_flash_pro_lane_contract": "not_recorded_locally",
+    "paper_level_substitution_contract": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has a runtime Gemini provider-parity absence report that lists built-in provider types, detects Gemini-like custom model ids, and counts Flash/Pro-shaped lanes, but does not claim a first-class Google/Gemini adapter, Gemini credential preflight, provider-native usage/default telemetry, capability lookup, Flash/Pro lane contract, or paper-level substitution contract."
+}

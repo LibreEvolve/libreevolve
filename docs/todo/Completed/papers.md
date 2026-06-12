@@ -11967,6 +11967,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: focused runtime Gemini provider-parity boundary test
     validates the implemented report.
 
+- [x] Record Gemini provider-parity paper-facing sidecar.
+  - Status: `libreevolve/problems/benchmarks/gemini_provider_parity_boundary.py`
+    and `papers/gemini_provider_parity_boundary.json` now preserve the
+    paper-facing boundary that the runtime report exists, while first-class
+    Google/Gemini adapter, credential preflight, provider-native telemetry,
+    capability lookup, Flash/Pro lane contract, and paper-level substitution
+    evidence remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused Gemini provider boundary tests reject premature provider
+    parity claims.
+
 - [x] Record parallel-evaluation readiness absence boundary.
   - Spec evidence: AlphaEvolve Sections 2.4 and 2.6 describe expensive
     evaluations, parallelized work, and async controller/evaluator throughput.

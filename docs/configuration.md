@@ -604,7 +604,8 @@ remain `anthropic`, `openai`, `ollama`, and `custom`; custom backend model
 names containing `gemini` can be reported as Gemini-like substitutions, but
 they do not provide first-class Google/Gemini credential preflight,
 provider-native telemetry, capability lookup, or validated AlphaEvolve
-Flash/Pro lane parity.
+Flash/Pro lane parity. The matching paper-facing absence boundary is preserved
+in `papers/gemini_provider_parity_boundary.json`.
 Restored/replay prompt payloads can be preflighted with
 `validate_restored_llm_prompt()`, which delegates to the same non-empty text
 boundary used by live ensemble and bundled direct-adapter calls. Oversized and

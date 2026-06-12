@@ -3453,6 +3453,8 @@ parity. In the current codebase `gemini_builtin_available` is false,
 reported as an opaque Gemini-like substitution, not as first-class Google/
 Gemini credential preflight, provider-native usage/default telemetry,
 capability lookup, safe diagnostics, or validated Flash/Pro lane parity.
+The committed `papers/gemini_provider_parity_boundary.json` sidecar preserves
+the same absence boundary for paper-manifest validation.
 
 Prompt feedback for the selected parent also renders bounded, redacted
 summaries from the candidate's persisted evaluation record: recent stage

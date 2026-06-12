@@ -282,6 +282,8 @@ with schema `libreevolve.gemini_provider_parity_report.v1`: the report lists
 the built-in backend types, configured backend specs, Gemini-like custom
 models, Flash/Pro-shaped lanes, and `claim_ready: false` until a first-class
 Gemini adapter or equivalent provider-plugin/substitution contract exists.
+The paper-facing absence boundary is also preserved in
+`papers/gemini_provider_parity_boundary.json` for manifest validation.
 
 Built-in backend specs expose a small validated request-parameter surface:
 `temperature` and `top_p` for OpenAI, Anthropic, and Ollama; `stop` for

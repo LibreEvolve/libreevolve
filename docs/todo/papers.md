@@ -1572,6 +1572,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     now exposes bounded evaluator-artifact path/hash, redaction, skipped-file,
     stage, and content-excerpt evidence, and valid artifact-bearing candidates
     feed into `resurfacing_index`.
+    `papers/artifact_index_boundary.json` now validates that this remains
+    bounded current-run artifact metadata/content-excerpt evidence, not durable
+    full-content or semantic artifact search.
   - Required result: add Pareto/frontier archive replacement and durable
     persisted lineage-aware resurfacing for programs that excel under different
     metrics, including durable output-aware indexes and similarity/schema

@@ -18587,3 +18587,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     semantic output-retrieval overclaims, invalid boundary status, missing
     evidence drift, and incomplete required evidence fields.
+
+- [x] Add artifact-index sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/artifact_index_boundary.py` now
+    emits and validates the bounded-artifact-metadata-only boundary for
+    `runtime.history.artifact_index`, separating evaluator artifact metadata,
+    path/hash records, redaction status, skipped-artifact diagnostics,
+    stage/sample/attempt metadata, bounded content excerpts, current-run
+    artifact-bearing resurfacing sources, and artifact count/byte summaries
+    from durable artifact query tables, full artifact-content search, semantic
+    artifact similarity search, cross-run artifact indexes, content-ranking
+    policy, and replayable artifact-driven sampling.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    full-content artifact-search overclaims, invalid boundary status, missing
+    evidence drift, and incomplete required evidence fields.

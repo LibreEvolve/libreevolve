@@ -2460,7 +2460,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     current-run querying, and states that these indexes are not persisted
     database tables, semantic output-similarity indexes, schema-aware output
     retrieval, or replayable sampling engines. README now ties that boundary
-    to `papers/program_output_boundary.json`.
+    to `papers/program_output_boundary.json`. README also ties bounded
+    current-run artifact path/hash/redaction/skipped/stage/content-excerpt
+    indexing to `papers/artifact_index_boundary.json`, while keeping durable
+    full-content and semantic artifact search out of scope.
   - Required result: continue keeping README wording scoped when durable output
     query tables, schema-aware output retrieval, or semantic output search
     land.

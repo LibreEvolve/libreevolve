@@ -1354,7 +1354,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     evaluator program-output index and exact source/hash query API as
     current-run evidence, not durable output retrieval or semantic similarity
     search. ROADMAP now ties that boundary to
-    `papers/program_output_boundary.json`.
+    `papers/program_output_boundary.json`. It also ties bounded evaluator
+    artifact metadata/content-excerpt resurfacing to
+    `papers/artifact_index_boundary.json`, keeping durable full-content or
+    semantic artifact search open.
 
 - [ ] Keep database-sampling roadmap wording scoped until calibrated
       exploration / exploitation balance evidence exists.

@@ -1899,8 +1899,10 @@ Primary evidence:
     hypothesis evidence in `resurfacing_index`, persists
     `runtime.history.artifact_index` for bounded evaluator-artifact path/hash,
     redaction, skipped-file, stage, and content-excerpt evidence, includes valid
-    artifact-bearing candidates in `resurfacing_index`, and can restore
-    cells/elites from a manifest plus accepted history bundle.
+    artifact-bearing candidates in `resurfacing_index`, and now ties that
+    bounded artifact metadata/content-excerpt scope to
+    `papers/artifact_index_boundary.json`. It can restore cells/elites from a
+    manifest plus accepted history bundle.
     `runtime.history.program_output_index` now persists bounded evaluator
     `outputs` / `program_output` source/hash/preview summaries from
     `evaluation.metadata.program_outputs`, and valid output-bearing candidates

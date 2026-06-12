@@ -10504,3 +10504,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     replayable output-driven sampling open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused program-output tests reject semantic output-retrieval overclaims.
+
+- [x] Keep roadmap artifact-index boundary tied to sidecar.
+  - Status: ROADMAP now links current bounded artifact metadata/excerpt
+    resurfacing to `papers/artifact_index_boundary.json` while keeping durable
+    artifact query tables, full-content artifact search, semantic artifact
+    similarity search, cross-run artifact indexes, content-ranking policy, and
+    replayable artifact-driven sampling open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused artifact-index tests reject full-content search overclaims.

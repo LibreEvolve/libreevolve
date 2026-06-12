@@ -386,6 +386,10 @@ from libreevolve.problems.benchmarks.program_output_boundary import (
     program_output_boundary_record,
     validate_program_output_boundary,
 )
+from libreevolve.problems.benchmarks.artifact_index_boundary import (
+    artifact_index_boundary_record,
+    validate_artifact_index_boundary,
+)
 from libreevolve.problems.benchmarks.gigaevo_boundary import (
     gigaevo_framework_boundary_record,
     validate_gigaevo_framework_boundary,
@@ -489,6 +493,7 @@ METRIC_DIVERSE_PROMPT_BOUNDARY_FILE = "papers/metric_diverse_prompt_boundary.jso
 PROPOSAL_SCORE_BOUNDARY_FILE = "papers/proposal_score_boundary.json"
 FAILURE_MEMORY_BOUNDARY_FILE = "papers/failure_memory_boundary.json"
 PROGRAM_OUTPUT_BOUNDARY_FILE = "papers/program_output_boundary.json"
+ARTIFACT_INDEX_BOUNDARY_FILE = "papers/artifact_index_boundary.json"
 GEMINI_PROVIDER_PARITY_BOUNDARY_FILE = "papers/gemini_provider_parity_boundary.json"
 GIGAEVO_FRAMEWORK_BOUNDARY_FILE = "papers/gigaevo_framework_boundary.json"
 CODEEVOLVE_BOUNDARY_FILE = "papers/codeevolve_boundary.json"
@@ -977,6 +982,7 @@ def validate_paper_manifest(
     issues.extend(_validate_proposal_score_boundary(root_path))
     issues.extend(_validate_failure_memory_boundary(root_path))
     issues.extend(_validate_program_output_boundary(root_path))
+    issues.extend(_validate_artifact_index_boundary(root_path))
     issues.extend(_validate_gemini_provider_parity_boundary(root_path))
     issues.extend(_validate_gigaevo_framework_boundary(root_path))
     issues.extend(_validate_codeevolve_boundary(root_path))
@@ -3084,6 +3090,38 @@ def _validate_program_output_boundary(root_path: Path) -> list[PaperManifestIssu
             f"program_output_boundary_{issue.code}",
             issue.message,
             "program_output",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_artifact_index_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ARTIFACT_INDEX_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = artifact_index_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "artifact_index_boundary_manifest_missing",
+                    (
+                        f"{ARTIFACT_INDEX_BOUNDARY_FILE} must emit "
+                        "bounded artifact metadata versus full-content search scope"
+                    ),
+                    "artifact_index",
+                )
+            ]
+    report = validate_artifact_index_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"artifact_index_boundary_{issue.code}",
+            issue.message,
+            "artifact_index",
         )
         for issue in report.issues
     ]

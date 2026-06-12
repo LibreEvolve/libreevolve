@@ -12735,3 +12735,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     `papers/program_output_boundary.json`.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused program-output tests reject semantic output-retrieval overclaims.
+
+- [x] Keep README artifact-index boundary tied to sidecar.
+  - Status: README now states that artifact indexes are bounded current-run
+    path/hash/redaction/skipped/stage metadata and content excerpts, not
+    durable artifact query tables, full-content artifact search, semantic
+    artifact similarity search, cross-run artifact indexes, content-ranking
+    policy, or replayable artifact-driven sampling, with the boundary tracked
+    by `papers/artifact_index_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused artifact-index tests reject full-content search overclaims.

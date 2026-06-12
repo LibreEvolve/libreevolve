@@ -13682,3 +13682,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused program-output tests reject semantic output-retrieval
     overclaims.
+
+- [x] Record artifact-index paper-facing sidecar.
+  - Status: `papers/artifact_index_boundary.json` now records the bounded
+    artifact metadata/content-excerpt boundary for AlphaEvolve-style attached
+    evaluation artifacts: runtime evidence can show evaluator artifact
+    metadata, path/hash records, redaction status, skipped-artifact
+    diagnostics, stage/sample/attempt metadata, bounded content excerpts,
+    runtime artifact indexes, valid artifact-bearing resurfacing sources, and
+    artifact count/byte summaries, while durable artifact query tables, full
+    artifact-content search, semantic artifact similarity search, cross-run
+    artifact indexes, content-ranking policy, and replayable artifact-driven
+    sampling remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused artifact-index tests reject full-content search
+    overclaims.

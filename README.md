@@ -91,6 +91,11 @@ Important limits:
   bounded output summaries, not durable output tables, schema-aware retrieval,
   semantic output similarity search, or replayable output-driven sampling;
   that boundary is tracked by `papers/program_output_boundary.json`.
+- Artifact indexes are bounded current-run path/hash/redaction/skipped/stage
+  metadata and content excerpts, not durable artifact query tables,
+  full-content artifact search, semantic artifact similarity search, cross-run
+  artifact indexes, content-ranking policy, or replayable artifact-driven
+  sampling; that boundary is tracked by `papers/artifact_index_boundary.json`.
 - MAP-Elites descriptor snapshots are insertion-time local descriptor metadata,
   not stable learned/evaluator-provided behavior descriptors or archive rebin
   semantics; that boundary is tracked by

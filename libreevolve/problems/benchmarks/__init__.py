@@ -395,6 +395,12 @@ from libreevolve.problems.benchmarks.program_output_boundary import (
     render_program_output_boundary_summary,
     validate_program_output_boundary,
 )
+from libreevolve.problems.benchmarks.artifact_index_boundary import (
+    ARTIFACT_INDEX_BOUNDARY_SCHEMA,
+    artifact_index_boundary_record,
+    render_artifact_index_boundary_summary,
+    validate_artifact_index_boundary,
+)
 from libreevolve.problems.benchmarks.matrix_exhibits import (
     FIGURE4_MATRIX_DISCOVERY_ARTIFACT_BOUNDARY_SCHEMA,
     FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA,
@@ -711,6 +717,7 @@ __all__ = [
     "FAULT2FLOW_BOUNDARY_SCHEMA",
     "GLOBAL_NLP_OPTIMIZATION_BOUNDARY_SCHEMA",
     "ARCHAGENT_BOUNDARY_SCHEMA",
+    "ARTIFACT_INDEX_BOUNDARY_SCHEMA",
     "AUTOMATED_EVALUATOR_SCOPE_BOUNDARY_SCHEMA",
     "CANDIDATE_ABSTRACTION_BOUNDARY_SCHEMA",
     "CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_SCHEMA",
@@ -839,6 +846,7 @@ __all__ = [
     "alphaevolve_references_section_record",
     "alphaevolve_source_pdf_rights_record",
     "alphaevolve_source_pdf_version_record",
+    "artifact_index_boundary_record",
     "benchmark_fixture_readiness_boundary_record",
     "benchmark_hardening_artifact_inventory",
     "bilateral_trade_boundary_record",
@@ -948,6 +956,7 @@ __all__ = [
     "render_alphaevolve_source_pdf_rights_summary",
     "render_alphaevolve_source_pdf_version_summary",
     "render_archagent_boundary_summary",
+    "render_artifact_index_boundary_summary",
     "render_automated_evaluator_scope_boundary_summary",
     "render_autoconvolution_boundary_summary",
     "render_benchmark_fixture_readiness_boundary_summary",
@@ -1069,6 +1078,7 @@ __all__ = [
     "validate_alphaevolve_source_pdf_rights",
     "validate_alphaevolve_source_pdf_version",
     "validate_archagent_boundary",
+    "validate_artifact_index_boundary",
     "validate_automated_evaluator_scope_boundary",
     "validate_autoconvolution_boundary",
     "validate_benchmark_evidence_scope",

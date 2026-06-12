@@ -12722,6 +12722,26 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
 
+- [x] Add `2603.28052` Meta-Harness paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2603.28052`, `Meta-Harness: End-to-End Optimization of Model
+    Harnesses`, cached locally as `papers/2603.28052__Meta_Harness.pdf`
+    with byte count `1078140` and SHA-256
+    `7d9b90f53a9f4801a090f1a4acb843340cde81e4f865f97d53fff2a6a570eb73`.
+  - Remaining paper gap: source-license details, linked-code URL/status,
+    harness-code candidate schema, filesystem-visible harness workspace
+    layout, agentic proposer trace records, candidate harness edit
+    provenance, execution-trace feedback bundles, score/provenance replay
+    packages, multi-objective harness search records, cross-task task-
+    distribution splits, generalization/overfit reports, GSM8K/GPQA/
+    InteractiveQA/ToolQA/TruthfulQA/LLF-Bench benchmark metadata, baseline
+    identities, code/artifact reproducibility status, and independent
+    reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.
+
 - [x] Add `2605.05921` intentmaking/sensemaking HCI paper-cache coverage.
   - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
     `papers/row_identity.json`, and `papers/README.md` now include

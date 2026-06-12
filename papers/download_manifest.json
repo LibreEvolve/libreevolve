@@ -500,6 +500,16 @@
     "sha256": "50454c1eec069b668b515c6d322e4c5ac55f24655298b3381f91f461a9c39b3e"
   },
   {
+    "id": "2603.28052",
+    "title": "Meta_Harness",
+    "url": "https://arxiv.org/pdf/2603.28052.pdf",
+    "file": "papers/2603.28052__Meta_Harness.pdf",
+    "ok": true,
+    "bytes": 1078140,
+    "message": "downloaded",
+    "sha256": "7d9b90f53a9f4801a090f1a4acb843340cde81e4f865f97d53fff2a6a570eb73"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

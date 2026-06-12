@@ -764,7 +764,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     URL, and local PDF label describing the same source before version or
     rights evidence attaches.
   - Status: ROADMAP now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 52 cache
+    companion manifest that emits derived source identities for all 53 cache
     rows and links the AlphaEvolve row to `papers/source_versions.json`.
   - Remaining gap: none for this bounded roadmap wording slice.
 
@@ -9938,7 +9938,22 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     unverifiable-domain benchmarks, external-judge reward-hacking
     comparisons, linked-code audits, and independent reproduction outputs
     explicitly open.
-  - Verification: paper-manifest validation checks the 52-row manifest,
+  - Verification: paper-manifest validation checks the 53-row manifest,
+    paper-index row, TODO coverage row, and source-identity sidecar.
+
+- [x] Preserve `2603.28052` Meta-Harness paper-cache scope in roadmap.
+  - Status: ROADMAP now identifies arXiv `2603.28052`, `Meta-Harness:
+    End-to-End Optimization of Model Harnesses`, as background outer-loop
+    harness-code optimization context only, with the cached
+    `papers/2603.28052__Meta_Harness.pdf` row and missing harness-code
+    candidate schemas, filesystem-visible harness workspaces, agentic
+    proposer traces, execution-trace feedback bundles, score/provenance
+    replay packages, multi-objective harness search controllers, cross-task
+    harness benchmarks, task-distribution splits, generalization/overfit
+    reports, GSM8K/GPQA/InteractiveQA/ToolQA/TruthfulQA/LLF-Bench
+    reproductions, linked-code audits, and independent reproduction outputs
+    explicitly open.
+  - Verification: paper-manifest validation checks the 53-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.
 
 - [x] Preserve `2605.21605` GenEvolve paper-cache scope in roadmap.
@@ -9953,7 +9968,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     supervision records, multimodal policy-update loops, GenEvolve-Data
     metadata, GenEvolve-Bench reports, baseline comparisons, linked-code
     audits, and independent reproduction outputs explicitly open.
-  - Verification: paper-manifest validation checks the 52-row manifest,
+  - Verification: paper-manifest validation checks the 53-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.
 
 - [x] Preserve `2605.29847` EvoRubric paper-cache scope in roadmap.
@@ -9968,7 +9983,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     expansion, medical/writing/science benchmark reports, reward-hacking
     audits, linked-code audits, and independent reproduction outputs
     explicitly open.
-  - Verification: paper-manifest validation checks the 52-row manifest,
+  - Verification: paper-manifest validation checks the 53-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.
 
 - [x] Preserve `2605.29293` LLM-ALSO paper-cache scope in roadmap.
@@ -9983,7 +9998,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     promotion gates, main-training trajectory provenance, learning-efficiency
     reports, linked-code audits, and independent reproduction outputs
     explicitly open.
-  - Verification: paper-manifest validation checks the 52-row manifest,
+  - Verification: paper-manifest validation checks the 53-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.
 
 - [x] Preserve `2512.18746` MemEvolve paper-cache scope in roadmap.
@@ -9996,7 +10011,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     EvolveLab benchmark mappings, static-memory baseline comparisons,
     cross-task or cross-LLM transfer reports, performance-delta records,
     linked-code audits, and independent reproduction outputs explicitly open.
-  - Verification: paper-manifest validation checks the 52-row manifest,
+  - Verification: paper-manifest validation checks the 53-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.
 
 - [x] Preserve `2606.06114` ANCHOR paper-cache scope in roadmap.
@@ -10010,7 +10025,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     streams, supervision-frequency/cadence traces, preservation-of-objective-
     performance reports, coding/math/safety benchmark reports, linked-code
     audits, and independent reproduction outputs explicitly open.
-  - Verification: paper-manifest validation checks the 52-row manifest,
+  - Verification: paper-manifest validation checks the 53-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.
 
 - [x] Preserve `2605.27276` SIA paper-cache scope in roadmap.
@@ -10023,7 +10038,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     policies, harness-only versus weight-only versus combined ablation
     reports, LawBench/kernel/scRNA benchmark records, compute/cost telemetry,
     linked-code audits, and independent reproduction outputs explicitly open.
-  - Verification: paper-manifest validation checks the 52-row manifest,
+  - Verification: paper-manifest validation checks the 53-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.
 
 - [x] Preserve `2606.06324` HarnessFix paper-cache scope in roadmap.
@@ -10039,7 +10054,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     unacceptable-regression threshold records, held-out SWE-Bench Verified/
     Terminal-Bench 2.0 Verified/GAIA/AppWorld benchmark reports, linked-code
     audits, and independent reproduction outputs explicitly open.
-  - Verification: paper-manifest validation checks the 52-row manifest,
+  - Verification: paper-manifest validation checks the 53-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.
 
 - [x] Preserve `2606.05922` RHO paper-cache scope in roadmap.
@@ -10054,7 +10069,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     policies, deployment/rollback metadata, behavior-pattern shift reports,
     long-horizon accuracy records, SWE-Bench Pro benchmark records, linked-
     code audits, and independent reproduction outputs explicitly open.
-  - Verification: paper-manifest validation checks the 52-row manifest,
+  - Verification: paper-manifest validation checks the 53-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.
 
 - [x] Preserve `2605.30621` harness-updating versus harness-benefit paper-
@@ -10070,7 +10085,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     failure audits, adherence-failure audits, capability-budget recommendation
     reports, public-code snapshot audits, and independent reproduction outputs
     explicitly open.
-  - Verification: paper-manifest validation checks the 52-row manifest,
+  - Verification: paper-manifest validation checks the 53-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.
 
 - [x] Preserve `2604.25850` AHE paper-cache scope in roadmap.
@@ -10085,7 +10100,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     Terminal-Bench 2 reports, SWE-bench-verified transfer reports, cross-
     family transfer reports, tools/middleware/memory ablations, public-code
     snapshot audits, and independent reproduction outputs explicitly open.
-  - Verification: paper-manifest validation checks the 52-row manifest,
+  - Verification: paper-manifest validation checks the 53-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.
 
 - [x] Preserve `2605.13357` AI Harness Engineering paper-cache scope in
@@ -10100,7 +10115,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     failure-attribution taxonomy reports, deterministic requirement-check
     packages, structured verification reports, public-code snapshot audits,
     and independent reproduction outputs explicitly open.
-  - Verification: paper-manifest validation checks the 52-row manifest,
+  - Verification: paper-manifest validation checks the 53-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.
 
 - [x] Preserve `2605.21516` inference-time trajectory-alignment paper-cache
@@ -10116,7 +10131,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     stopping rules, controlled synthetic experiments, terminal-agent benchmark
     reproductions, linked-code audits, and independent reproduction outputs
     explicitly open.
-  - Verification: paper-manifest validation checks the 52-row manifest,
+  - Verification: paper-manifest validation checks the 53-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.
 
 - [x] Preserve `2606.01770` Adaptive Auto-Harness paper-cache scope in
@@ -10133,5 +10148,5 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     security-competition/event-forecasting benchmark reproductions, five-
     baseline comparisons, linked-code audits, and independent reproduction
     outputs explicitly open.
-  - Verification: paper-manifest validation checks the 52-row manifest,
+  - Verification: paper-manifest validation checks the 53-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.

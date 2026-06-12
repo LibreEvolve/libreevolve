@@ -5908,7 +5908,7 @@ Primary evidence:
     ended harness deployment claims as missing evidence until local
     implementation and reports exist.
 
-- [ ] Add Meta-Harness outer-loop harness-code search boundary.
+- [ ] Implement Meta-Harness outer-loop harness-code search evidence beyond paper cache coverage.
   - Spec evidence: arXiv `2603.28052`, `Meta-Harness: End-to-End
     Optimization of Model Harnesses`, was submitted March 30, 2026. Its
     abstract says LLM-system performance depends not only on model weights but
@@ -5919,26 +5919,30 @@ Primary evidence:
     traces of prior candidates. It reports gains on online text
     classification, retrieval-augmented IMO-level math reasoning across held-
     out models, and agentic coding on TerminalBench-2.
-  - Current evidence: LibreEvolve searches over candidate program workspaces
-    and records prompt/evaluator/history artifacts, but it has no
-    `2603.28052` source row, no first-class harness-code search target, no
-    agentic proposer role with filesystem access to prior harness candidates,
-    no source/score/trace corpus for harness variants, no harness-level
-    mutation and evaluation loop distinct from candidate-program evolution,
-    no context-token efficiency report, no held-out model transfer evaluation,
-    and no TerminalBench-2 agentic-coding harness benchmark.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2603.28052`: arXiv id/version/date/PDF hash, authors, source
-    license, linked-code URL/status, relation to AlphaEvolve and LibreEvolve
-    candidate search, harness-code candidate schema, agentic proposer role
-    schema, filesystem-visible source/score/trace corpus records, prior-
-    candidate retrieval policy, harness mutation and evaluation records,
-    context storage/retrieval/presentation artifacts, context-token budget and
-    efficiency metrics, held-out model transfer reports, online text-
-    classification/RAG-math/TerminalBench-2 benchmark metadata, hand-
-    engineered baseline identities, and README/ROADMAP wording that keeps
-    end-to-end harness-code optimization as missing evidence until local
-    implementation and reports exist.
+  - Current evidence: `papers/download_manifest.*`, `papers/row_identity.json`,
+    `papers/README.md`, README, ROADMAP, and TODO coverage now include
+    `2603.28052`, cached locally as `papers/2603.28052__Meta_Harness.pdf`
+    with byte count `1078140` and SHA-256
+    `7d9b90f53a9f4801a090f1a4acb843340cde81e4f865f97d53fff2a6a570eb73`.
+    LibreEvolve mutates candidate programs and prompts, keeps run-local
+    artifacts, and can inspect best workspaces, but it has no first-class
+    harness-code search target, no filesystem-visible harness workspace for
+    a proposer agent, no harness-code genotype, no execution-trace feedback
+    bundle for prior harness candidates, no multi-objective harness search
+    controller, no cross-task harness benchmark, and no generalization/
+    overfit report for harness-code changes.
+  - Required result: add implementation-boundary metadata beyond the paper
+    cache: source license, linked-code URL/status, relation to AlphaEvolve
+    and LibreEvolve prompt/plugin/runtime assumptions, harness-code candidate
+    schema, filesystem-visible harness workspace layout, agentic proposer
+    trace records, candidate harness edit provenance, execution-trace
+    feedback bundles, score/provenance replay packages, multi-objective
+    harness search controller, cross-task task-distribution splits,
+    generalization/overfit reports, GSM8K/GPQA/InteractiveQA/ToolQA/
+    TruthfulQA/LLF-Bench benchmark metadata, baseline identities, and
+    README/ROADMAP wording that keeps Meta-Harness-style end-to-end harness
+    optimization as missing evidence until local runtime artifacts and
+    reports exist.
 
 - [ ] Implement AlphaEvolve MARL algorithm-discovery parity beyond source boundary.
   - Spec evidence: arXiv `2602.16928`, `Discovering Multiagent Learning

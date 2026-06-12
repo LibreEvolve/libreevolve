@@ -5434,7 +5434,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     and README/ROADMAP wording that treats Adaptive Auto-Harness as background
     context until those artifacts exist.
 
-- [ ] Track Meta-Harness outer-loop harness-code search paper evidence.
+- [ ] Reproduce Meta-Harness outer-loop harness-code search evidence beyond paper coverage.
   - Paper/source evidence: arXiv `2603.28052`, submitted March 30, 2026, is
     titled `Meta-Harness: End-to-End Optimization of Model Harnesses`. Its
     abstract says LLM systems depend on harness code that decides what
@@ -5447,27 +5447,33 @@ directory and using the AlphaEvolve paper as the primary specification.
     tokens, a 4.7 point average gain on 200 IMO-level retrieval-augmented math
     problems across five held-out models, and harnesses that surpass hand-
     engineered baselines on TerminalBench-2.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2603.28052` as its own source. Existing rows mention
-    Meta-Harness only as a related baseline or applicability boundary while
-    covering AHE, AI Harness Engineering, Adaptive Auto-Harness, RHO,
-    HarnessFix, and SIA. They do not track Meta-Harness-specific harness-code
-    search, agentic proposer filesystem access, prior source/score/trace
-    corpora, context-token efficiency, held-out model transfer, or
-    TerminalBench-2 harness benchmark evidence.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2603.28052`: title/authors/arXiv version/date/PDF digest, source
-    license, linked-code URL/status, relation to AlphaEvolve and LibreEvolve
-    harness assumptions, harness-code candidate schema, agentic proposer
-    records, filesystem corpus layout, prior source/score/trace metadata,
-    candidate retrieval policy, harness mutation/evaluation records,
-    information storage/retrieval/presentation artifacts, context-token
-    efficiency reports, online text-classification metadata, RAG math and
-    held-out model transfer records, TerminalBench-2 benchmark metadata, hand-
-    engineered baseline identities, code/artifact availability if any,
-    reproducibility status, and README/ROADMAP wording that treats
-    Meta-Harness as missing paper evidence rather than implemented LibreEvolve
-    support.
+  - Current gap: the paper cache, paper index, row identity, README, ROADMAP,
+    and TODO coverage now include `2603.28052`, cached locally as
+    `papers/2603.28052__Meta_Harness.pdf` with byte count `1078140` and
+    SHA-256
+    `7d9b90f53a9f4801a090f1a4acb843340cde81e4f865f97d53fff2a6a570eb73`.
+    Reproduction evidence remains absent: no source-license details,
+    linked-code URL/status, relation to AlphaEvolve and LibreEvolve
+    harness assumptions, harness-code candidate schema, filesystem-visible
+    harness workspace layout, agentic proposer trace records, candidate
+    harness edit provenance, execution-trace feedback bundles,
+    score/provenance replay packages, multi-objective harness search
+    records, cross-task task-distribution splits, generalization/overfit
+    reports, GSM8K/GPQA/InteractiveQA/ToolQA/TruthfulQA/LLF-Bench benchmark
+    metadata, baseline identities, code/artifact reproducibility status, or
+    independent reproduction output exists.
+  - Required result: add reproduction-grade Meta-Harness evidence: source
+    license, project URL status, linked-code status, relation to AlphaEvolve
+    and LibreEvolve harness assumptions, harness-code candidate schema,
+    filesystem-visible harness workspace layout, agentic proposer trace
+    records, candidate harness edit provenance, execution-trace feedback
+    bundles, score/provenance replay packages, multi-objective harness
+    search records, cross-task task-distribution splits, generalization/
+    overfit reports, GSM8K/GPQA/InteractiveQA/ToolQA/TruthfulQA/LLF-Bench
+    benchmark metadata, baseline identities, code/artifact reproducibility
+    status, independent reproduction outputs, and README/ROADMAP wording
+    that treats Meta-Harness as background context until those artifacts
+    exist.
 
 - [ ] Implement AlphaEvolve MARL algorithm-discovery paper evidence beyond source boundary.
   - Paper/source evidence: arXiv `2602.16928`, submitted February 18, 2026

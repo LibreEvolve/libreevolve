@@ -4140,32 +4140,36 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     fixture status rule so roadmap claims do not outpace local Adaptive Auto-
     Harness-style sustained deployment support.
 
-- [ ] Add Meta-Harness outer-loop harness-code search gates before roadmap
-      promotion.
+- [ ] Implement Meta-Harness outer-loop harness-code search gates beyond paper
+      cache coverage.
   - Spec evidence: arXiv `2603.28052`, submitted March 30, 2026, introduces
     `Meta-Harness: End-to-End Optimization of Model Harnesses`. The abstract
     frames harness code as the mechanism controlling what information an LLM
     system stores, retrieves, and presents, then searches over that harness
     code with an agentic proposer that inspects prior source code, scores, and
     execution traces through a filesystem.
-  - Current evidence: ROADMAP tracks candidate program evolution, prompt
-    context, run artifacts, AHE, AI Harness Engineering, Adaptive
-    Auto-Harness, RHO, HarnessFix, and SIA gates. It does not mention
-    `2603.28052` as a first-class roadmap gate, define harness-code candidate
-    schemas, expose prior harness candidates through a filesystem corpus,
-    record agentic proposer decisions, measure context-token efficiency,
-    evaluate held-out model transfer, or compare discovered harnesses against
-    hand-engineered TerminalBench-2 baselines.
-  - Required result: add roadmap gates for `2603.28052`: paper/source
-    manifest entry, PDF/cache hash, source-license and linked-code status,
-    harness-code candidate schema, agentic proposer role records, filesystem
-    source/score/trace corpus layout, prior-candidate retrieval policy,
-    harness mutation/evaluation records, information storage/retrieval/
-    presentation artifacts, context-token budget and efficiency telemetry,
-    held-out model transfer reports, online text-classification/RAG-math/
-    TerminalBench-2 benchmark records, hand-engineered baseline identities,
-    and a background-only or benchmark-fixture status rule so roadmap claims
-    do not outpace local Meta-Harness-style end-to-end harness optimization.
+  - Current evidence: ROADMAP, `papers/download_manifest.*`,
+    `papers/row_identity.json`, `papers/README.md`, README, and TODO
+    coverage now include `2603.28052`, cached locally as
+    `papers/2603.28052__Meta_Harness.pdf` with byte count `1078140` and
+    SHA-256
+    `7d9b90f53a9f4801a090f1a4acb843340cde81e4f865f97d53fff2a6a570eb73`.
+    ROADMAP tracks the paper as background outer-loop harness-code
+    optimization context only. It still has no harness-code candidate
+    schema, filesystem-visible harness workspace, agentic proposer trace,
+    execution-trace feedback bundle, multi-objective harness search
+    controller, cross-task benchmark, or generalization/overfit gate before
+    promoting end-to-end harness optimization claims.
+  - Required result: implement roadmap gates beyond paper-cache evidence:
+    source-license and linked-code status, harness-code candidate schema,
+    filesystem-visible harness workspace layout, agentic proposer trace
+    records, candidate harness edit provenance, execution-trace feedback
+    bundles, score/provenance replay packages, multi-objective harness
+    search controller, cross-task task-distribution splits, generalization/
+    overfit reports, GSM8K/GPQA/InteractiveQA/ToolQA/TruthfulQA/LLF-Bench
+    benchmark records, baseline identities, and a background-only or
+    benchmark-fixture status rule so roadmap claims do not outpace local
+    Meta-Harness-style end-to-end harness optimization support.
 
 - [ ] Add AlphaEvolve MARL algorithm-discovery gates before roadmap
       promotion.

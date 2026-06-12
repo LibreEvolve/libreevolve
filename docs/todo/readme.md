@@ -3660,19 +3660,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     reports gains in online text classification with fewer context tokens,
     retrieval-augmented IMO-level math reasoning across held-out models, and
     TerminalBench-2 agentic coding.
-  - Current evidence: README documents LibreEvolve's current candidate
-    workspace mutation, prompt construction, evaluator artifacts, run
-    histories, and benchmark boundaries. It does not list `2603.28052`, treat
-    harness code as the evolved artifact, expose a source/score/trace corpus
-    of prior harness candidates, provide an agentic harness proposer, report
-    context-token efficiency, evaluate held-out model transfer, or benchmark
-    discovered harnesses against hand-engineered baselines.
+  - Current evidence: README now lists `2603.28052`, Meta-Harness, as
+    outer-loop harness-code optimization context only and says no local
+    harness-code candidate schema, agentic proposer workspace, execution-
+    trace feedback bundle, cross-task harness benchmark, or end-to-end
+    harness optimization reproduction exists. README also documents
+    LibreEvolve's current prompt/plugin/runtime boundaries, run artifacts,
+    candidate mutations, evaluator streams, failure histories, and benchmark
+    boundaries; it does not claim harness-code candidate schemas, proposer
+    workspaces, harness edit provenance, execution-trace feedback bundles,
+    cross-task generalization tests, or Meta-Harness benchmark reproduction.
   - Required result: if README mentions Meta-Harness, end-to-end harness
     optimization, harness-code search, agentic proposer, filesystem-visible
     prior candidates, source/score/trace search history, context-token
     efficiency, held-out model transfer, online text classification, RAG math,
     or TerminalBench-2 discovered harnesses, keep the wording source-scoped
-    until the paper is in the manifest and local artifacts can show harness
+    until local artifacts can show harness
     candidate schemas, proposer records, corpus layout, mutation/evaluation
     traces, transfer reports, benchmark baselines, and report outcomes. Avoid
     implying LibreEvolve supports Meta-Harness-style harness-code optimization

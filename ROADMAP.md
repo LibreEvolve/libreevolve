@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 52 cache rows and links the AlphaEvolve row to
+  identities for all 53 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1586,6 +1586,19 @@ resumed-trace proof are still open.
   reproductions, five-baseline comparisons, linked-code audits, and
   independent reproduction outputs remain open before roadmap wording can
   promote sustained Adaptive Auto-Harness deployment support.
+- Keep Meta-Harness outer-loop harness-code optimization claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2603.28052`, `Meta-Harness: End-to-End Optimization of Model
+  Harnesses`, cached locally as `papers/2603.28052__Meta_Harness.pdf`.
+  This is background outer-loop harness-code optimization context only;
+  harness-code candidate schemas, filesystem-visible harness workspaces,
+  agentic proposer traces, execution-trace feedback bundles,
+  score/provenance replay packages, multi-objective harness search
+  controllers, cross-task harness benchmarks, task-distribution splits,
+  generalization/overfit reports, GSM8K/GPQA/InteractiveQA/ToolQA/
+  TruthfulQA/LLF-Bench reproductions, linked-code audits, and independent
+  reproduction outputs remain open before roadmap wording can promote
+  Meta-Harness-style end-to-end harness optimization.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

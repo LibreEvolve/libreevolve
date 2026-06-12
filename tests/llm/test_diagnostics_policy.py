@@ -93,6 +93,21 @@ def test_llm_provider_diagnostics_summary_rejects_live_pricing_overclaim():
     assert "live_pricing_not_supported" in codes
 
 
+def test_llm_provider_diagnostics_summary_rejects_nested_raw_payload_claims():
+    summary = _summary()
+    summary["totals"]["raw_provider_payloads"] = [{"opaque": True}]
+    summary["backends"][0]["raw_payload_replay"] = "available"
+    summary["records_sha256"] = _hash_backends(summary)
+
+    validation = validate_llm_provider_diagnostics_summary(summary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.raw_payload_replay_ready is False
+    assert "invalid_totals_raw_provider_payloads" in codes
+    assert "invalid_backend_raw_payload_replay" in codes
+
+
 def test_llm_provider_diagnostics_summary_rejects_configured_pricing_drift():
     summary = _summary()
     summary["totals"]["configured_pricing_estimate_count"] = 1

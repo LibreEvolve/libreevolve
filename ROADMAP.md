@@ -654,7 +654,8 @@ is not yet an AlphaEvolve reproduction.
   critique, feedback grading, and meta-prompt mutation calls.
 - Extend current run-scoped call telemetry beyond provider usage, configured
   cost estimates, request ids, finish reasons, adapter-internal retry
-  summaries, configured-pricing aggregate consistency checks, and
+  summaries, configured-pricing aggregate consistency checks, raw-payload
+  replay overclaim checks, and
   token/cost/latency budget stops to include raw provider diagnostics, live
   provider pricing/default-rate capture beyond configured token-cost estimates,
   and richer budget-event evidence.

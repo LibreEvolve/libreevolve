@@ -17531,3 +17531,14 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     replay remain open.
   - Verification: diagnostics-policy tests cover configured-pricing count
     drift and cost-status reason drift.
+
+- [x] Validate raw provider replay absence across diagnostics scopes.
+  - Spec evidence: AlphaEvolve-scale provider replay needs raw provider-call
+    provenance that is distinct from bounded scalar retained diagnostics.
+  - Status: `validate_llm_provider_diagnostics_summary()` now rejects raw
+    provider-payload replay claims at the summary, totals, and backend-record
+    scopes.
+  - Remaining gap: real raw provider payload sidecars, provider-output replay,
+    and account/model-default provenance remain open.
+  - Verification: diagnostics-policy tests cover nested raw provider replay
+    overclaims with valid backend hashes.

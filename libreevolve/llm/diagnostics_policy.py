@@ -438,12 +438,30 @@ def _validate_no_raw_payload_claims(
     data: dict[str, Any],
     issues: list[LLMProviderDiagnosticsIssue],
 ) -> None:
+    _validate_no_raw_payload_claims_in_scope(data, "", issues)
+    totals = data.get("totals")
+    if isinstance(totals, dict):
+        _validate_no_raw_payload_claims_in_scope(totals, "totals", issues)
+    backends = data.get("backends")
+    if isinstance(backends, list):
+        for item in backends:
+            if isinstance(item, dict):
+                _validate_no_raw_payload_claims_in_scope(item, "backend", issues)
+
+
+def _validate_no_raw_payload_claims_in_scope(
+    data: dict[str, Any],
+    scope: str,
+    issues: list[LLMProviderDiagnosticsIssue],
+) -> None:
     for field in _RAW_PAYLOAD_FIELDS:
         if field in data and data[field] not in (False, None, "unsupported"):
+            field_path = f"{scope}.{field}" if scope else field
+            code = f"invalid_{scope}_{field}" if scope else f"invalid_{field}"
             issues.append(
                 LLMProviderDiagnosticsIssue(
-                    f"invalid_{field}",
-                    f"{field} must not claim raw provider payload replay",
+                    code,
+                    f"{field_path} must not claim raw provider payload replay",
                 )
             )
 

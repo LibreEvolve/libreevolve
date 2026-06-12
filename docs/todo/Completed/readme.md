@@ -11746,3 +11746,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     configured-pricing aggregate drift and cost-status reason drift while still
     marking live/default provider pricing as absent.
   - Verification: diagnostics-policy tests validate the documented boundary.
+
+- [x] Document raw provider replay absence boundary.
+  - Spec evidence: README provider diagnostics wording needed to distinguish
+    bounded retained hashes/text/scalar telemetry from full raw provider replay.
+  - Status: README and TODO wording now state that provider diagnostics reject
+    raw provider-payload replay claims at summary, totals, and backend-record
+    scopes while keeping true raw replay absent.
+  - Verification: diagnostics-policy tests validate nested raw provider replay
+    overclaim rejection.

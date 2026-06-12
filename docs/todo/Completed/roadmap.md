@@ -9277,3 +9277,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     diagnostics consistency checks while keeping live/default pricing open.
   - Verification: diagnostics-policy tests validate configured-pricing count
     and reason-count boundaries.
+
+- [x] Preserve raw provider replay boundary.
+  - Spec evidence: roadmap provider-diagnostics claims need to distinguish
+    retained scalar diagnostics from replayable raw provider-call artifacts.
+  - Status: ROADMAP and TODO wording now recognize raw provider-payload replay
+    overclaim checks at summary, totals, and backend-record scopes while
+    keeping full raw provider replay open.
+  - Verification: diagnostics-policy tests validate nested raw provider replay
+    overclaim rejection.

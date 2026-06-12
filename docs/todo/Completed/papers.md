@@ -12131,3 +12131,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     provider payloads.
   - Verification: diagnostics-policy tests validate configured-pricing count
     and reason-count boundaries.
+
+- [x] Record raw provider replay boundary.
+  - Spec evidence: AlphaEvolve-scale model-call replay needs provider-output
+    and raw provider-call provenance beyond bounded retained diagnostics.
+  - Status: paper-facing TODOs and diagnostics validators now reject raw
+    provider-payload replay claims at summary, totals, and backend-record
+    scopes.
+  - Remaining paper gap: this does not emit raw provider payload sidecars,
+    replay provider outputs, capture account/model defaults, or fetch live
+    provider pricing.
+  - Verification: diagnostics-policy tests validate nested raw provider replay
+    overclaim rejection.

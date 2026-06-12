@@ -2750,7 +2750,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     budget snapshots, `controller_budget_events.jsonl` replay, and
     full-runtime restore validation. It also documents strict call-ledger
     provider-failure summaries, configured-pricing aggregate/reason
-    consistency checks in provider diagnostics, and restorable scheduler
+    consistency checks in provider diagnostics, raw provider-payload replay
+    overclaim checks at summary/totals/backend scopes, and restorable scheduler
     failure-policy state. It correctly states that `proposals_per_generation`
     is sequential batch sampling/accounting rather than parallel LLM/evaluator
     execution. It still marks live provider pricing/default-rate capture beyond

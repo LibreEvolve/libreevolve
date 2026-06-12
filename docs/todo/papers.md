@@ -5260,7 +5260,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     and README/ROADMAP wording that treats harness-update benefit as
     background context until those artifacts exist.
 
-- [ ] Track AHE observability-driven harness evolution paper evidence.
+- [ ] Reproduce AHE observability-driven harness evolution evidence beyond
+      paper coverage.
   - Paper/source evidence: arXiv `2604.25850`, submitted April 28, 2026, is
     titled `Agentic Harness Engineering: Observability-Driven Automatic
     Evolution of Coding-Agent Harnesses`. Its abstract says harnesses mediate
@@ -5275,26 +5276,31 @@ directory and using the AlphaEvolve paper as the primary specification.
     pass@1 from 69.7% to 77.0%, surpassing Codex-CLI and self-evolving
     baselines, plus frozen-harness transfer to SWE-bench Verified and cross-
     family Terminal-Bench gains.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2604.25850`. Existing rows cover AlphaEvolve search, SIA,
-    HarnessFix, RHO, harness-benefit disentanglement, and AEvo meta-editing,
-    but not component/experience/decision observability as a harness evolution
-    contract, file-level harness component action spaces, layered trajectory
-    evidence corpora, edit-prediction verification, frozen-harness transfer,
-    or attribution of gains to tools, middleware, and long-term memory rather
-    than system prompts.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2604.25850`: title/authors/arXiv version/date/PDF digest, source
-    license, linked-code URL/status, relation to AlphaEvolve and LibreEvolve
-    harness assumptions, editable component taxonomy, file-level component
-    manifests, component edit/revert records, trajectory-evidence corpus
-    schema, drill-down evidence links, edit-prediction records, task-outcome
-    verification records, falsifiable edit-contract status, iteration traces,
-    component-attribution reports, frozen-harness transfer results,
+  - Current gap: the paper cache, paper index, row identity, README, ROADMAP,
+    and TODO coverage now include `2604.25850`, cached locally as
+    `papers/2604.25850__AHE.pdf` with byte count `1432986` and SHA-256
+    `299f2633b4c13db7bed52434b4db7c48ea621993581014d30e7bcd036d3464df`.
+    Reproduction evidence remains absent: no source-license details,
+    linked-code URL/status, relation to AlphaEvolve and LibreEvolve harness
+    assumptions, editable component taxonomy, file-level component manifests,
+    component edit/revert records, trajectory-evidence corpus schema, drill-
+    down evidence links, edit-prediction records, task-outcome verification
+    records, falsifiable edit-contract status, iteration traces, component-
+    attribution reports, frozen-harness transfer results, Terminal-Bench 2 and
+    SWE-bench Verified metadata, baseline identities, token/cost accounting,
+    code/artifact reproducibility status, or independent reproduction output
+    exists.
+  - Required result: add reproduction-grade AHE evidence: source license,
+    project URL status, linked-code status, relation to AlphaEvolve and
+    LibreEvolve harness assumptions, editable component taxonomy, file-level
+    component manifests, component edit/revert records, trajectory-evidence
+    corpus schema, drill-down evidence links, edit-prediction records, task-
+    outcome verification records, falsifiable edit-contract status, iteration
+    traces, component-attribution reports, frozen-harness transfer results,
     Terminal-Bench 2 and SWE-bench Verified metadata, baseline identities,
-    token/cost accounting, code/artifact availability if any, reproducibility
-    status, and README/ROADMAP wording that treats AHE as missing paper
-    evidence rather than implemented LibreEvolve support.
+    token/cost accounting, code/artifact reproducibility status, independent
+    reproduction outputs, and README/ROADMAP wording that treats AHE as
+    background context until those artifacts exist.
 
 - [ ] Track AI Harness Engineering runtime-substrate paper evidence.
   - Paper/source evidence: arXiv `2605.13357`, submitted May 13, 2026, is

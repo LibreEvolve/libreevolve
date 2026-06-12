@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.paper_source_identity_manifest.v1",
-  "source_identity_count": 48,
+  "source_identity_count": 49,
   "source_identity_policy": "manifest_id_url_source_id_and_file_source_prefix_must_match_before_source_version_or_rights_claims",
   "sources": [
     {
@@ -827,6 +827,24 @@
       "url_source_id": "2605.30621",
       "url_versioned_id": "2605.30621",
       "file_source_id": "2605.30621",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2604.25850",
+      "title": "AHE",
+      "url": "https://arxiv.org/pdf/2604.25850.pdf",
+      "file": "papers/2604.25850__AHE.pdf",
+      "sha256": "299f2633b4c13db7bed52434b4db7c48ea621993581014d30e7bcd036d3464df",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2604.25850",
+      "url_versioned_id": "2604.25850",
+      "file_source_id": "2604.25850",
       "identity_checks": {
         "manifest_id_matches_url_source_id": true,
         "manifest_id_matches_file_source_id": true,

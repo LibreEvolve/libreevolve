@@ -460,6 +460,16 @@
     "sha256": "a3a09f90dc278f1c6ceee5a3f7bf807b5a92b642cbcb0123d20b824a0e880d6b"
   },
   {
+    "id": "2604.25850",
+    "title": "AHE",
+    "url": "https://arxiv.org/pdf/2604.25850.pdf",
+    "file": "papers/2604.25850__AHE.pdf",
+    "ok": true,
+    "bytes": 1432986,
+    "message": "downloaded",
+    "sha256": "299f2633b4c13db7bed52434b4db7c48ea621993581014d30e7bcd036d3464df"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 48 cache rows and links the AlphaEvolve row to
+  identities for all 49 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1532,6 +1532,20 @@ resumed-trace proof are still open.
   audits, capability-budget recommendation reports, public-code snapshot
   audits, and independent reproduction outputs remain open before roadmap
   wording can promote separate harness-updating or harness-benefit support.
+- Keep AHE observability-driven harness-evolution claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2604.25850`, `Agentic Harness Engineering: Observability-Driven Automatic
+  Evolution of Coding-Agent Harnesses`, cached locally as
+  `papers/2604.25850__AHE.pdf`. This is background agentic harness
+  observability context only; file-level editable harness component graphs,
+  component-observability schemas, layered drill-down trajectory evidence
+  corpora, raw-trace-to-digest provenance, decision-observability prediction
+  contracts, next-round falsification records, per-edit rollback manifests,
+  ten-iteration Terminal-Bench 2 reports, SWE-bench-verified transfer reports,
+  cross-family transfer reports, tools/middleware/memory ablations,
+  public-code snapshot audits, and independent reproduction outputs remain
+  open before roadmap wording can promote AHE-style observability-driven
+  harness evolution support.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

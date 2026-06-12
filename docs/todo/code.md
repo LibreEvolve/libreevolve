@@ -5744,7 +5744,8 @@ Primary evidence:
     self-evolution benefit claims separate from harness-update generation
     until local evidence proves both.
 
-- [ ] Add AHE observability-driven harness evolution source boundary.
+- [ ] Implement AHE observability-driven harness evolution evidence beyond
+      paper cache coverage.
   - Spec evidence: arXiv `2604.25850`, `Agentic Harness Engineering:
     Observability-Driven Automatic Evolution of Coding-Agent Harnesses`, was
     submitted April 28, 2026. Its abstract says harness engineering remains
@@ -5759,25 +5760,30 @@ Primary evidence:
     against task-level outcomes. It reports ten AHE iterations improving
     Terminal-Bench 2 pass@1 from 69.7% to 77.0%, plus frozen-harness transfer
     to SWE-bench Verified and other model families.
-  - Current evidence: LibreEvolve records prompts, candidate diffs, evaluator
-    outputs, failures, archives, and manifests, but it has no AHE source row,
-    no file-level editable harness component inventory for prompts/tools/
-    middleware/skills/sub-agents/memory, no revertible harness edit action
-    space, no layered trajectory-evidence corpus distilled from long runs, no
-    decision-observability record that pairs each edit with an expected
-    outcome, no falsifiable edit contract, no cross-iteration harness
-    evolution report, and no frozen-harness transfer benchmark.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2604.25850`: arXiv id/version/date/PDF hash, authors, source
-    license, linked-code URL/status, relation to AlphaEvolve and LibreEvolve
-    harness artifacts, editable component taxonomy, file-level component
-    manifests, revertible patch records, trajectory-evidence distillation
-    schema, drill-down evidence corpus links, edit-prediction records,
-    outcome verification records, falsifiable contract status, iteration
-    traces, tool/middleware/memory attribution, frozen-harness transfer
-    reports, Terminal-Bench 2 and SWE-bench Verified benchmark metadata,
-    baseline identities, token/cost accounting, and README/ROADMAP wording
-    that keeps observability-driven harness evolution as missing evidence
+  - Current evidence: `papers/download_manifest.*`, `papers/row_identity.json`,
+    `papers/README.md`, README, ROADMAP, and TODO coverage now include
+    `2604.25850`, cached locally as `papers/2604.25850__AHE.pdf` with byte
+    count `1432986` and SHA-256
+    `299f2633b4c13db7bed52434b4db7c48ea621993581014d30e7bcd036d3464df`.
+    LibreEvolve records prompts, candidate diffs, evaluator outputs,
+    failures, archives, and manifests, but it has no file-level editable
+    harness component inventory for prompts/tools/middleware/skills/sub-
+    agents/memory, no revertible harness edit action space, no layered
+    trajectory-evidence corpus distilled from long runs, no decision-
+    observability record that pairs each edit with an expected outcome, no
+    falsifiable edit contract, no cross-iteration harness evolution report,
+    and no frozen-harness transfer benchmark.
+  - Required result: add implementation-boundary metadata beyond the paper
+    cache: source license, linked-code URL/status, relation to AlphaEvolve and
+    LibreEvolve harness artifacts, editable component taxonomy, file-level
+    component manifests, revertible patch records, trajectory-evidence
+    distillation schema, drill-down evidence corpus links, edit-prediction
+    records, outcome verification records, falsifiable contract status,
+    iteration traces, tool/middleware/memory attribution, frozen-harness
+    transfer reports, Terminal-Bench 2 and SWE-bench Verified benchmark
+    metadata, baseline identities, token/cost accounting, and README/ROADMAP
+    wording that keeps observability-driven harness evolution as missing
+    evidence
     until local implementation and reports exist.
 
 - [ ] Add AI Harness Engineering runtime-substrate source boundary.

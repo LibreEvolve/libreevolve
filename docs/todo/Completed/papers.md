@@ -13127,3 +13127,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2604.25850` AHE paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2604.25850`, `Agentic Harness Engineering: Observability-Driven
+    Automatic Evolution of Coding-Agent Harnesses`, cached locally as
+    `papers/2604.25850__AHE.pdf` with byte count `1432986` and SHA-256
+    `299f2633b4c13db7bed52434b4db7c48ea621993581014d30e7bcd036d3464df`.
+  - Remaining paper gap: source-license details, linked-code URL/status,
+    editable component taxonomy, file-level component manifests, component
+    edit/revert records, trajectory-evidence corpus schema, drill-down
+    evidence links, edit-prediction records, task-outcome verification
+    records, falsifiable edit-contract status, iteration traces, component-
+    attribution reports, frozen-harness transfer results, Terminal-Bench 2 and
+    SWE-bench Verified metadata, baseline identities, token/cost accounting,
+    code/artifact reproducibility status, and independent reproduction outputs
+    remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

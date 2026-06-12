@@ -112,6 +112,10 @@ Important limits:
   counters, registry/custom role section packing, retrieval/context/plugin/
   failure-memory packing, or full validator-metadata prompt policy; that
   boundary is tracked by `papers/prompt_section_packing_boundary.json`.
+- Documentation alignment checks are path, manifest, TODO-coverage, and
+  sidecar-registry guards, not semantic proof that every README, ROADMAP,
+  papers-index, and TODO statement is current; that boundary is tracked by
+  `papers/documentation_truthfulness_boundary.json`.
 - Database sampling reports are local strategy/count telemetry, not calibrated
   AlphaEvolve-style exploration/exploitation evidence; that boundary is tracked
   by `papers/sampling_balance_boundary.json`.

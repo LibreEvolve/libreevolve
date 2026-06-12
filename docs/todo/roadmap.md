@@ -25,7 +25,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     guards do not prove every README, ROADMAP, paper-index, and TODO statement
     has matching code evidence, nor do they detect all stale completed TODO
     references, all missing active TODO links, or all semantic mismatches
-    between implemented behavior and prose.
+    between implemented behavior and prose. The committed
+    `papers/documentation_truthfulness_boundary.json` sidecar now preserves
+    this cross-document-guard boundary for paper-manifest validation.
   - Required result: when stronger cross-document claim verification,
     implementation-evidence mapping, stale completed-entry detection,
     README/ROADMAP/paper/TODO semantic diffing, or generated alignment reports

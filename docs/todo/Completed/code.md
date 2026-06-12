@@ -18725,3 +18725,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     all-role provider-token prompt-packing overclaims, invalid boundary status,
     missing evidence drift, and incomplete required evidence fields.
+
+- [x] Add documentation-truthfulness sidecar validation.
+  - Status:
+    `libreevolve/problems/benchmarks/documentation_truthfulness_boundary.py`
+    now emits and validates the cross-document guard boundary, separating
+    README status scope, ROADMAP status scope, papers-index status scope,
+    active and completed TODO ledgers, docs/README routing, GitHub Actions
+    docs path filters, paper-manifest README and papers-index consistency,
+    paper-manifest TODO coverage rows, stale source-specific absence wording
+    checks, boundary sidecar registry, and focused boundary tests from
+    semantic documentation-claim verification, implementation-evidence
+    mapping, stale completed-entry detection, generated alignment reports, and
+    full proof that every AlphaEvolve-facing claim is current.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    semantic documentation-proof overclaims, invalid boundary status, missing
+    evidence drift, and incomplete required evidence fields.

@@ -1258,6 +1258,14 @@ push/pull_request path filters, secret scan, Python 3.11/3.12 Ubuntu unit jobs,
 and optional integration tests exist, while CI paper-manifest jobs, semantic
 docs-claim verification, wheel/sdist smoke tests, cross-platform matrices,
 branch policy, and notification policy remain absent.
+The committed `papers/documentation_truthfulness_boundary.json` sidecar
+preserves the current cross-document documentation guard boundary: README,
+ROADMAP, papers-index, TODO-ledger, path-filter, paper-manifest consistency,
+TODO-coverage, stale source-specific wording, sidecar-registry, and focused
+boundary-test evidence exist, while semantic documentation-claim verification,
+implementation-evidence mapping, stale completed-entry detection, generated
+alignment reports, and full proof that every AlphaEvolve-facing claim is
+current remain absent.
 Environment provenance is useful
 package name/version, selected and extra `[project]` metadata, known-lockfile
 hash, pip-freeze and pip-config hash/preview, installed-distribution `WHEEL`
@@ -2263,6 +2271,15 @@ Implemented:
   all-role provider-token section packing, exact non-OpenAI provider counters,
   registry/custom role section packing, retrieval/context/plugin/failure-
   memory section packing, or full validator-metadata prompt policy.
+- `papers/documentation_truthfulness_boundary.json`: documentation
+  truthfulness sidecar for the AlphaEvolve-alignment docs process. It records
+  README, ROADMAP, papers-index, active/completed TODO-ledger, docs/README
+  routing, GitHub Actions docs path-filter, paper-manifest consistency,
+  TODO-coverage, stale source-specific wording, sidecar-registry, and focused
+  boundary-test evidence. It is not evidence of semantic documentation-claim
+  verification, implementation-evidence mapping, stale completed-entry
+  detection, generated alignment reports, or full proof that every
+  AlphaEvolve-facing claim is current.
 - `libreevolve/problems/examples/sorting`: neutral plateau/diversity smoke
   fixture. The bubble-sort seed already reaches `accuracy == 1.0`, so this
   example can demonstrate mutation handling and same-score implementation

@@ -87,6 +87,10 @@ from libreevolve.problems.benchmarks.prompt_section_packing_boundary import (
     prompt_section_packing_boundary_record,
     validate_prompt_section_packing_boundary,
 )
+from libreevolve.problems.benchmarks.documentation_truthfulness_boundary import (
+    documentation_truthfulness_boundary_record,
+    validate_documentation_truthfulness_boundary,
+)
 from libreevolve.problems.benchmarks.release_artifact_reproducibility_boundary import (
     release_artifact_reproducibility_boundary_record,
     validate_release_artifact_reproducibility_boundary,
@@ -488,6 +492,7 @@ FAST_STRONG_MODEL_MIX_BOUNDARY_FILE = "papers/fast_strong_model_mix_boundary.jso
 PROVIDER_CANCELLATION_BOUNDARY_FILE = "papers/provider_cancellation_boundary.json"
 CRITIQUE_REVIEWER_POOL_BOUNDARY_FILE = "papers/critique_reviewer_pool_boundary.json"
 PROMPT_SECTION_PACKING_BOUNDARY_FILE = "papers/prompt_section_packing_boundary.json"
+DOCUMENTATION_TRUTHFULNESS_BOUNDARY_FILE = "papers/documentation_truthfulness_boundary.json"
 RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_FILE = "papers/release_artifact_reproducibility_boundary.json"
 RELATED_WORK_TAXONOMY_BOUNDARY_FILE = "papers/related_work_taxonomy_boundary.json"
 TASK_SPECIFICATION_BOUNDARY_FILE = "papers/task_specification_boundary.json"
@@ -991,6 +996,7 @@ def validate_paper_manifest(
     issues.extend(_validate_provider_cancellation_boundary(root_path))
     issues.extend(_validate_critique_reviewer_pool_boundary(root_path))
     issues.extend(_validate_prompt_section_packing_boundary(root_path))
+    issues.extend(_validate_documentation_truthfulness_boundary(root_path))
     issues.extend(_validate_release_artifact_reproducibility_boundary(root_path))
     issues.extend(_validate_related_work_taxonomy_boundary(root_path))
     issues.extend(_validate_task_specification_boundary(root_path))
@@ -2178,6 +2184,38 @@ def _validate_prompt_section_packing_boundary(root_path: Path) -> list[PaperMani
             f"prompt_section_packing_boundary_{issue.code}",
             issue.message,
             "prompt_section_packing",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_documentation_truthfulness_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / DOCUMENTATION_TRUTHFULNESS_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = documentation_truthfulness_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "documentation_truthfulness_boundary_manifest_missing",
+                    (
+                        f"{DOCUMENTATION_TRUTHFULNESS_BOUNDARY_FILE} must emit "
+                        "cross-document guards versus semantic claim-proof scope"
+                    ),
+                    "documentation_truthfulness",
+                )
+            ]
+    report = validate_documentation_truthfulness_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"documentation_truthfulness_boundary_{issue.code}",
+            issue.message,
+            "documentation_truthfulness",
         )
         for issue in report.issues
     ]

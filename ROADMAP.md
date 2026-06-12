@@ -674,7 +674,11 @@ is not yet an AlphaEvolve reproduction.
 ### 5. Documentation truthfulness
 
 - Keep README, docs, paper index, and `docs/todo/*` aligned with implemented
-  behavior.
+  behavior. The committed
+  `papers/documentation_truthfulness_boundary.json` sidecar preserves the
+  current cross-document guard boundary while keeping semantic
+  documentation-claim verification and full AlphaEvolve-facing claim proof
+  open.
 - Keep paper-manifest validation diagnostics shareable by using
   repository-relative labels and secret-redacted exception text in text and JSON
   output.

@@ -1,0 +1,35 @@
+{
+  "schema": "libreevolve.documentation_truthfulness_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve-alignment documentation should keep project claims synchronized with implemented behavior and cited evidence",
+  "boundary_status": "cross_document_guards_without_semantic_claim_proof",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "readme_status_scope",
+    "roadmap_status_scope",
+    "papers_index_status_scope",
+    "active_todo_ledgers",
+    "completed_todo_ledgers",
+    "docs_readme_routing",
+    "github_actions_docs_path_filters",
+    "paper_manifest_readme_consistency",
+    "paper_manifest_papers_index_consistency",
+    "paper_manifest_todo_coverage_rows",
+    "paper_manifest_stale_absence_wording_checks",
+    "boundary_sidecar_registry",
+    "focused_boundary_tests",
+    "semantic_claim_verifier",
+    "implementation_evidence_mapping",
+    "stale_completed_entry_detection",
+    "generated_alignment_report",
+    "full_alphaevolve_claim_truth_proof"
+  ],
+  "missing_evidence": {
+    "semantic_claim_verifier": "not_recorded_locally",
+    "implementation_evidence_mapping": "not_recorded_locally",
+    "stale_completed_entry_detection": "not_recorded_locally",
+    "generated_alignment_report": "not_recorded_locally",
+    "full_alphaevolve_claim_truth_proof": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has README status scoping, ROADMAP status scoping, papers-index status scoping, active and completed TODO ledgers, docs/README routing, GitHub Actions docs path filters, paper-manifest README and papers-index consistency checks, paper-manifest TODO coverage rows, stale source-specific absence wording checks, a boundary sidecar registry, and focused boundary tests. It does not claim semantic documentation-claim verification, implementation-evidence mapping, stale completed entry detection, generated alignment reports, or full proof that every AlphaEvolve-facing claim is current."
+}

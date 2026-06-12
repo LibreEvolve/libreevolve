@@ -13824,3 +13824,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused prompt section-packing tests reject all-role provider-token
     prompt-packing overclaims.
+
+- [x] Record documentation-truthfulness paper-facing sidecar.
+  - Status: `papers/documentation_truthfulness_boundary.json` now records the
+    cross-document guard boundary for AlphaEvolve-alignment documentation:
+    README, ROADMAP, papers-index, active/completed TODO-ledger,
+    docs/README-routing, GitHub Actions docs path-filter, paper-manifest
+    consistency, TODO-coverage, stale source-specific wording,
+    sidecar-registry, and focused boundary-test evidence exist, while semantic
+    documentation-claim verification, implementation-evidence mapping, stale
+    completed-entry detection, generated alignment reports, and full proof
+    that every AlphaEvolve-facing claim is current remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused documentation-truthfulness tests reject semantic proof
+    overclaims.

@@ -155,6 +155,12 @@ from libreevolve.problems.benchmarks.prompt_section_packing_boundary import (
     render_prompt_section_packing_boundary_summary,
     validate_prompt_section_packing_boundary,
 )
+from libreevolve.problems.benchmarks.documentation_truthfulness_boundary import (
+    DOCUMENTATION_TRUTHFULNESS_BOUNDARY_SCHEMA,
+    documentation_truthfulness_boundary_record,
+    render_documentation_truthfulness_boundary_summary,
+    validate_documentation_truthfulness_boundary,
+)
 from libreevolve.problems.benchmarks.release_artifact_reproducibility_boundary import (
     RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_SCHEMA,
     release_artifact_reproducibility_boundary_record,
@@ -918,6 +924,7 @@ __all__ = [
     "controller_backtracking_boundary_record",
     "critique_reviewer_pool_boundary_record",
     "deepevolve_boundary_record",
+    "documentation_truthfulness_boundary_record",
     "distributed_pipeline_topology_boundary_record",
     "duplicate_work_policy_boundary_record",
     "embedded_evaluator_boundary_record",
@@ -1037,6 +1044,7 @@ __all__ = [
     "render_controller_backtracking_boundary_summary",
     "render_critique_reviewer_pool_boundary_summary",
     "render_deepevolve_boundary_summary",
+    "render_documentation_truthfulness_boundary_summary",
     "render_distributed_pipeline_topology_boundary_summary",
     "render_duplicate_work_policy_boundary_summary",
     "render_embedded_evaluator_boundary_summary",
@@ -1168,6 +1176,7 @@ __all__ = [
     "validate_controller_backtracking_boundary",
     "validate_critique_reviewer_pool_boundary",
     "validate_deepevolve_boundary",
+    "validate_documentation_truthfulness_boundary",
     "validate_distributed_pipeline_topology_boundary",
     "validate_duplicate_work_policy_boundary",
     "validate_embedded_evaluator_boundary",

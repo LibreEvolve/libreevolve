@@ -10595,3 +10595,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation requires the committed sidecar and
     focused prompt section-packing tests reject all-role provider-token
     prompt-packing overclaims.
+
+- [x] Keep roadmap documentation-truthfulness boundary tied to sidecar.
+  - Status: ROADMAP now links current README/docs/paper-index/TODO alignment
+    wording to `papers/documentation_truthfulness_boundary.json` while keeping
+    semantic documentation-claim verification, implementation-evidence
+    mapping, stale completed-entry detection, generated alignment reports, and
+    full AlphaEvolve-facing claim proof open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused documentation-truthfulness tests reject semantic proof overclaims.

@@ -12828,3 +12828,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused prompt section-packing tests reject all-role provider-token
     prompt-packing overclaims.
+
+- [x] Keep README documentation-truthfulness boundary tied to sidecar.
+  - Status: README now states that documentation alignment checks are path,
+    manifest, TODO-coverage, and sidecar-registry guards, not semantic proof
+    that every README, ROADMAP, papers-index, and TODO statement is current,
+    with the boundary tracked by
+    `papers/documentation_truthfulness_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused documentation-truthfulness tests reject semantic proof overclaims.

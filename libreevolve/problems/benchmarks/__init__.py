@@ -522,6 +522,12 @@ from libreevolve.problems.benchmarks.thetaevolve_boundary import (
     thetaevolve_boundary_record,
     validate_thetaevolve_boundary,
 )
+from libreevolve.problems.benchmarks.title_page_affiliation_boundary import (
+    TITLE_PAGE_AFFILIATION_BOUNDARY_SCHEMA,
+    render_title_page_affiliation_boundary_summary,
+    title_page_affiliation_boundary_record,
+    validate_title_page_affiliation_boundary,
+)
 from libreevolve.problems.benchmarks.ttt_discover_boundary import (
     TTT_DISCOVER_BOUNDARY_SCHEMA,
     render_ttt_discover_boundary_summary,
@@ -643,6 +649,7 @@ __all__ = [
     "SYSTEMS_ARTIFACT_INVENTORY_SCHEMA",
     "SYSTEMS_RESULT_SCHEMA",
     "THETAEVOLVE_BOUNDARY_SCHEMA",
+    "TITLE_PAGE_AFFILIATION_BOUNDARY_SCHEMA",
     "TTT_DISCOVER_BOUNDARY_SCHEMA",
     "UCB1_BOUNDARY_SCHEMA",
     "WHOLE_RUN_SOURCE_WORKSPACE_INTEGRITY_BOUNDARY_SCHEMA",
@@ -835,6 +842,7 @@ __all__ = [
     "render_sums_differences_sequence_boundary_summary",
     "render_systems_result_summary",
     "render_thetaevolve_boundary_summary",
+    "render_title_page_affiliation_boundary_summary",
     "render_ttt_discover_boundary_summary",
     "render_alphaevolve_2026_impact_boundary_summary",
     "render_ucb1_boundary_summary",
@@ -842,6 +850,7 @@ __all__ = [
     "systems_result_artifact_inventory",
     "strassen_2x2_publication_bundle_record",
     "thetaevolve_boundary_record",
+    "title_page_affiliation_boundary_record",
     "ttt_discover_boundary_record",
     "ucb1_boundary_record",
     "whole_run_source_workspace_integrity_boundary_record",
@@ -940,6 +949,7 @@ __all__ = [
     "validate_systems_evidence_bundle",
     "validate_systems_result_report",
     "validate_thetaevolve_boundary",
+    "validate_title_page_affiliation_boundary",
     "validate_ttt_discover_boundary",
     "validate_ucb1_boundary",
     "validate_whole_run_source_workspace_integrity_boundary",

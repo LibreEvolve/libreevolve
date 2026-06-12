@@ -326,6 +326,10 @@ from libreevolve.problems.benchmarks.thetaevolve_boundary import (
     thetaevolve_boundary_record,
     validate_thetaevolve_boundary,
 )
+from libreevolve.problems.benchmarks.title_page_affiliation_boundary import (
+    title_page_affiliation_boundary_record,
+    validate_title_page_affiliation_boundary,
+)
 from libreevolve.problems.benchmarks.ttt_discover_boundary import (
     ttt_discover_boundary_record,
     validate_ttt_discover_boundary,
@@ -347,6 +351,7 @@ FIGURE8_ABLATION_ARTIFACTS_FILE = "papers/figure8_ablation_artifacts.json"
 BENCHMARK_FIXTURE_READINESS_BOUNDARY_FILE = "papers/benchmark_fixture_readiness_boundary.json"
 ACKNOWLEDGEMENT_ROLE_PROVENANCE_BOUNDARY_FILE = "papers/acknowledgement_role_provenance_boundary.json"
 PAPER_AUTHOR_METADATA_BOUNDARY_FILE = "papers/paper_author_metadata_boundary.json"
+TITLE_PAGE_AFFILIATION_BOUNDARY_FILE = "papers/title_page_affiliation_boundary.json"
 COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_FILE = "papers/collaborator_feedback_provenance_boundary.json"
 PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_FILE = "papers/problem_formulation_provenance_boundary.json"
 EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integration_boundary.json"
@@ -818,6 +823,7 @@ def validate_paper_manifest(
     issues.extend(_validate_benchmark_fixture_readiness_boundary(root_path))
     issues.extend(_validate_acknowledgement_role_provenance_boundary(root_path))
     issues.extend(_validate_paper_author_metadata_boundary(root_path))
+    issues.extend(_validate_title_page_affiliation_boundary(root_path))
     issues.extend(_validate_collaborator_feedback_provenance_boundary(root_path))
     issues.extend(_validate_problem_formulation_provenance_boundary(root_path))
     issues.extend(_validate_existing_codebase_integration_boundary(root_path))
@@ -1634,6 +1640,38 @@ def _validate_paper_author_metadata_boundary(root_path: Path) -> list[PaperManif
             f"paper_author_metadata_boundary_{issue.code}",
             issue.message,
             "paper_author_metadata",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_title_page_affiliation_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / TITLE_PAGE_AFFILIATION_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = title_page_affiliation_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "title_page_affiliation_boundary_manifest_missing",
+                    (
+                        f"{TITLE_PAGE_AFFILIATION_BOUNDARY_FILE} must emit "
+                        "title-page affiliation metadata availability"
+                    ),
+                    "title_page_affiliation",
+                )
+            ]
+    report = validate_title_page_affiliation_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"title_page_affiliation_boundary_{issue.code}",
+            issue.message,
+            "title_page_affiliation",
         )
         for issue in report.issues
     ]

@@ -10069,6 +10069,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     root and focused paper-author tests reject adjacent metadata or local-
     authorship scope drift.
 
+- [x] Keep roadmap title-page affiliation boundary tied to sidecar.
+  - Status: ROADMAP now links optional title-page metadata and
+    `runtime.history.title_page_affiliation_report` to
+    `papers/title_page_affiliation_boundary.json`, preserving the claim-ready
+    source-publication scope for the reviewed `matrix_multiplication` fixture.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused title-page tests reject local-affiliation, rights, or
+    technical-capability scope drift.
+
 - [x] Preserve `2603.28052` Meta-Harness paper-cache scope in roadmap.
   - Status: ROADMAP now identifies arXiv `2603.28052`, `Meta-Harness:
     End-to-End Optimization of Model Harnesses`, as background outer-loop

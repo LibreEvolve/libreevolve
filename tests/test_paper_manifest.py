@@ -1058,6 +1058,60 @@ def test_validate_paper_manifest_requires_paper_author_metadata_boundary_at_repo
     assert "paper_author_metadata_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_title_page_affiliation_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.TITLE_PAGE_AFFILIATION_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.title_page_affiliation_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_title_page_affiliation_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.title_page_affiliation_boundary_record()
+    record["claim_ready"] = False
+    record["boundary_status"] = "local_affiliation_ready"
+    record["excluded_claims"]["local_libreevolve_affiliation_or_endorsement"] = "claimed"
+    sidecar = tmp_path / paper_manifest.TITLE_PAGE_AFFILIATION_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "title_page_affiliation_boundary_claim_ready_underclaim" in codes
+    assert "title_page_affiliation_boundary_invalid_boundary_status" in codes
+    assert (
+        "title_page_affiliation_boundary_invalid_excluded_claim_local_libreevolve_affiliation_or_endorsement"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_title_page_affiliation_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "title_page_affiliation_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_existing_codebase_integration_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

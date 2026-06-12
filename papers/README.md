@@ -622,7 +622,12 @@ endorsement, licensing, publication-author, or technical capability evidence;
 the `matrix_multiplication` example now provides a reviewed `title_page.yaml`
 fixture for AlphaEvolve page 1, links it to `papers/source_rights.json`, and
 its zero-generation manifest report is claim-ready for title-page affiliation
-and footnote parity.
+and footnote parity. The committed
+`papers/title_page_affiliation_boundary.json` sidecar preserves that
+source-publication scope while excluding local LibreEvolve affiliation or
+endorsement, publication-author metadata, technical capability, benchmark
+success, system-contribution provenance, rights regrant, and copied contact
+details.
 
 AlphaEvolve system-contribution note: LibreEvolve now has optional
 `system_contributions.yaml` / `Problem.system_contribution_metadata` records

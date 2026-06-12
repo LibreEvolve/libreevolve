@@ -12535,3 +12535,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused paper-author tests reject local-authorship, affiliation,
     implementation, or contact-detail scope drift.
+
+- [x] Keep README title-page affiliation boundary tied to paper-index sidecar.
+  - Status: README now scopes title-page affiliation metadata to the reviewed
+    `matrix_multiplication` fixture's AlphaEvolve page 1 source-publication
+    facts and points to `papers/title_page_affiliation_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused title-page tests reject local-affiliation, endorsement, rights, or
+    technical-capability scope drift.

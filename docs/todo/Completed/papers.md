@@ -12867,6 +12867,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     acknowledgement, implementation, local-authorship, and contact-disclosure
     scope drift.
 
+- [x] Record title-page affiliation paper-facing sidecar.
+  - Status: `libreevolve/problems/benchmarks/title_page_affiliation_boundary.py`
+    and `papers/title_page_affiliation_boundary.json` now preserve the
+    reviewed `matrix_multiplication` title-page fixture as claim-ready for
+    AlphaEvolve page 1 source-publication affiliation and footnote parity.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused title-page boundary tests reject local-affiliation,
+    publication-author, technical-capability, rights, and contact-detail scope
+    drift.
+
 - [x] Add `2603.28052` Meta-Harness paper-cache coverage.
   - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
     `papers/row_identity.json`, and `papers/README.md` now include

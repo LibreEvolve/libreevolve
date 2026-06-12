@@ -1,0 +1,43 @@
+{
+  "schema": "libreevolve.alphaevolve_title_page_affiliation_boundary.v1",
+  "runtime_report_schema": "libreevolve.title_page_affiliation_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve title page page 1 records the Google DeepMind affiliation footnote, equal-contribution footnote, and source rights linkage used as publication metadata",
+  "boundary_status": "title_page_affiliation_claim_ready",
+  "runtime_report_status": "title_page_affiliation_report_available",
+  "claim_ready": true,
+  "claim_ready_fixture": "libreevolve/problems/examples/matrix_multiplication/title_page.yaml",
+  "source_pages": [
+    1
+  ],
+  "affiliation_organization": "Google DeepMind",
+  "required_marker_kinds": [
+    "affiliation",
+    "equal_contribution"
+  ],
+  "required_evidence_fields": [
+    "metadata_present",
+    "affiliation_organization_recorded",
+    "affiliation_footnote_recorded",
+    "equal_contribution_footnote_recorded",
+    "author_to_marker_mapping_recorded",
+    "source_rights_linked",
+    "privacy_redaction_policy_recorded",
+    "title_page_metadata_review_or_owner_signoff",
+    "local_affiliation_boundary_separated",
+    "publication_author_boundary_separated",
+    "technical_system_boundary_separated",
+    "alphaevolve_title_page_affiliation_parity",
+    "reviewed_matrix_fixture_title_page_records",
+    "source_page_1_recorded"
+  ],
+  "excluded_claims": {
+    "local_libreevolve_affiliation_or_endorsement": "not_claimed",
+    "publication_author_metadata": "separate_runtime_report",
+    "technical_capability_or_benchmark_success": "out_of_scope",
+    "system_contribution_provenance": "separate_runtime_report",
+    "license_or_rights_regrant": "not_claimed",
+    "copied_contact_details": "not_recorded"
+  },
+  "claim_boundary": "This boundary records that the matrix_multiplication fixture has reviewed title-page metadata for source-paper affiliation, affiliation and equal-contribution footnotes, author-marker mapping, source-rights linkage, privacy/redaction policy, and review status. It does not claim local LibreEvolve affiliation or endorsement, publication-author metadata, technical capability, benchmark success, system-contribution provenance, license or rights regrant, or copied contact details."
+}

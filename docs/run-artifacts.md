@@ -179,6 +179,9 @@ affiliation and title-page footnote evidence separate from LibreEvolve's local
 project affiliation, endorsement, MIT license, publication-author metadata,
 source-rights metadata, and technical capability evidence; populated reviewed
 fixture records are still required for AlphaEvolve title-page parity claims.
+The paper-facing sidecar `papers/title_page_affiliation_boundary.json` records
+that the reviewed `matrix_multiplication` fixture is claim-ready only for
+source-publication title-page affiliation and footnote parity.
 Problem fixtures can also optionally include `system_contributions.yaml` or
 `system_contributions.yml`; direct callers can set
 `Problem.system_contribution_metadata`. Startup manifest validation normalizes

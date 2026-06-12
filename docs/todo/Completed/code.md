@@ -18301,3 +18301,13 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     claim-ready underclaiming, invalid boundary status, missing role/evidence
     fields, and title-page affiliation scope drift.
+
+- [x] Add title-page affiliation sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/title_page_affiliation_boundary.py`
+    now emits and validates the claim-ready title-page affiliation boundary
+    for the reviewed `matrix_multiplication` fixture, and
+    `libreevolve/tools/paper_manifest.py` requires the committed paper sidecar
+    at the repo root.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    claim-ready underclaiming, invalid boundary status, missing evidence
+    fields, and local-affiliation scope drift.

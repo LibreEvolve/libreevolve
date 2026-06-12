@@ -66,6 +66,11 @@ Important limits:
   roles plus title-page marker linkage; the boundary is tracked by
   `papers/paper_author_metadata_boundary.json` and does not claim local
   authorship, affiliation, technical validation, or copied contact details.
+- Title-page affiliation metadata is claim-ready only for the reviewed
+  `matrix_multiplication` fixture's AlphaEvolve page 1 source-publication
+  facts; the boundary is tracked by
+  `papers/title_page_affiliation_boundary.json` and does not claim local
+  affiliation, endorsement, rights regrant, or technical capability evidence.
 - The included examples are smoke fixtures and small demos unless explicitly
   documented otherwise.
 - Paper and blog claims are tracked as source boundaries unless local benchmark

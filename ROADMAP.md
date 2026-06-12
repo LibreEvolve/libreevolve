@@ -322,7 +322,9 @@ LibreEvolve has:
   mappings, source-rights linkage, privacy/redaction policy, and
   review/signoff readiness; the `matrix_multiplication` example carries a
   reviewed AlphaEvolve page 1 fixture linked to `papers/source_rights.json`
-  and a manifest regression for the claim-ready title-page boundary
+  and a manifest regression for the claim-ready title-page boundary, with
+  `papers/title_page_affiliation_boundary.json` preserving that paper-facing
+  source-publication scope
 - optional system-contribution metadata under `system_contributions.yaml` or
   direct `Problem.system_contribution_metadata`, normalized into
   `problem.system_contribution_metadata` and summarized by

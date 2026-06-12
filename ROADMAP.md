@@ -624,7 +624,7 @@ is not yet an AlphaEvolve reproduction.
   not OS/container sandbox or quota enforcement.
 - Continue labeling CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve,
   TTT Discover, Bruhat Intervals, GigaEvo, CodeEvolve, MadEvolve, Magellan,
-  ArchAgent, Multiagent Learning, Bilateral Trade, Ramsey Numbers, and Berczy
+  ArchAgent, Multiagent Learning, Bilateral Trade, Fault2Flow, Ramsey Numbers, and Berczy
   local-correction combinatorics
   features as inspired, candidate benchmark, or
   application context unless paper behavior is actually implemented. The committed
@@ -725,7 +725,15 @@ is not yet an AlphaEvolve reproduction.
   evaluators, integer-rounding precision policy, witness artifacts, code
   hashes, prior-baseline rows, alternate-search attempts, BIC/BB/IR
   assumptions, unrounded-mixture caveat handling, and independent checker
-  outputs.
+  outputs. The committed `papers/fault2flow_boundary.json` sidecar records the
+  Fault2Flow source-specific boundary for regulatory PDF ingestion,
+  MinerU-to-Markdown extraction, PlantUML mind-map generation, PASTA
+  fault-tree schemas, human-in-the-loop expert review states, AlphaEvolve
+  reasoning optimization, multi-island archive provenance, n8n workflow
+  synthesis and activation, workflow verification/refinement loops, DL/T
+  722-2014 transformer fault-diagnosis dataset rows, GPT-5 judge outputs,
+  Table 1 reproduction rows, token ledgers, human-annotation ethics records,
+  placeholder publication-metadata caveats, and local workflow snapshots.
 
 ## Mid Term
 

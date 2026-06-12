@@ -12119,3 +12119,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     outputs explicit as missing.
   - Verification: Bruhat Intervals boundary and paper-manifest tests validate
     the sidecar that README now references.
+
+- [x] Document Fault2Flow `2511.12916` source boundary in README.
+  - Status: README now names `papers/fault2flow_boundary.json` in the source
+    reference table while keeping Fault2Flow as AlphaEvolve-optimized workflow
+    application context only, with regulatory/PDF ingestion, PASTA fault-tree
+    schemas, human-in-loop review states, AlphaEvolve optimizer evidence, n8n
+    workflow synthesis/verification, dataset/result rows, GPT-5 judge outputs,
+    and local workflow artifacts explicit as missing.
+  - Verification: Fault2Flow boundary and paper-manifest tests validate the
+    sidecar that README now references.

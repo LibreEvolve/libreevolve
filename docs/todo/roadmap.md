@@ -4326,8 +4326,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     seed/budget records, independent checker outputs, and benchmark-fixture
     status rules before roadmap claims promote ArchAgent support.
 
-- [ ] Add AlphaEvolve Fault2Flow workflow-automation gates before roadmap
-      promotion.
+- [ ] Implement AlphaEvolve Fault2Flow workflow-automation gates beyond
+      source-boundary roadmap promotion.
   - Spec evidence: arXiv `2511.12916`, submitted November 17, 2025,
     introduces `Fault2Flow: An AlphaEvolve-Optimized Human-in-the-Loop
     Multi-Agent System for Fault-to-Workflow Automation`. The abstract says
@@ -4342,10 +4342,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     n8n workflow construction/activation, synthesized workflow verification
     tests, and a `DL/T 722-2014` transformer DGA case study over 16
     expert-designed cases.
-  - Current evidence: ROADMAP tracks general plugins, systems benchmarks, and
-    background paper-index rows, but it does not promote `2511.12916` beyond
-    background-only status. It does not define a regulatory-text ingestion
-    gate, PASTA fault-tree schema, expert-verification workflow, reasoning-
+  - Current evidence: ROADMAP and `papers/fault2flow_boundary.json` now keep
+    `2511.12916` source-scoped and background-only until local artifacts exist.
+    ROADMAP still does not define a regulatory-text ingestion gate, PASTA
+    fault-tree schema, expert-verification workflow, reasoning-
     logic optimization record, n8n workflow emitter, transformer fault-
     diagnosis dataset contract, topological-consistency metric, semantic-
     fidelity metric, or operational workflow artifact policy. It also lacks

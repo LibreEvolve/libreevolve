@@ -12604,3 +12604,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     independent reproduction outputs remain open.
   - Verification: Bruhat Intervals boundary tests and paper-manifest tests
     validate the sidecar and reject verifier-readiness overclaims.
+
+- [x] Record Fault2Flow `2511.12916` source boundary.
+  - Status: `papers/fault2flow_boundary.json` now carries the source-specific
+    Fault2Flow boundary with cached PDF digest, arXiv v1 identity, CC
+    BY-NC-ND license metadata, OpenEvolve reference-only status, no dedicated
+    Fault2Flow repository link in extracted PDF links, ACM placeholder DOI
+    caveat, framework components, required evidence fields, missing-evidence
+    keys, and source-reported Table 1 values.
+  - Remaining paper gap: executable regulatory ingestion, MinerU/PlantUML/PASTA
+    artifacts, expert-review records, AlphaEvolve/OpenEvolve optimizer traces,
+    n8n workflow artifacts, verification/refinement traces, dataset snapshots,
+    GPT-5 judge outputs, token records, ethics records, and independent
+    reproduction outputs remain open.
+  - Verification: Fault2Flow boundary tests and paper-manifest tests validate
+    the sidecar and reject workflow-readiness overclaims.

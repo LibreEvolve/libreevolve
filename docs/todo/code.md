@@ -6083,7 +6083,7 @@ Primary evidence:
     simulator environment hashes, independent checker outputs, and benchmark
     reports before claiming ArchAgent-style computer-architecture discovery.
 
-- [ ] Add AlphaEvolve Fault2Flow workflow-automation boundary.
+- [ ] Implement AlphaEvolve Fault2Flow workflow automation beyond the source boundary.
   - Spec evidence: arXiv `2511.12916`, `Fault2Flow: An AlphaEvolve-Optimized
     Human-in-the-Loop Multi-Agent System for Fault-to-Workflow Automation`,
     was submitted November 17, 2025. Its abstract frames power-grid fault
@@ -6105,10 +6105,10 @@ Primary evidence:
     Table 1 reports Fault2Flow variants with TC `1.0`, E2ERC `1.0`, success
     `16/0`, and roughly `1800-1900` average tokens, while end-to-end baselines
     have TC below `0.94`, E2ERC below `0.72`, and higher token usage.
-  - Current evidence: `papers/README.md` lists `2511.12916` only as
-    background AlphaEvolve-optimized workflow application context with no
-    fault-to-workflow or human-in-the-loop multi-agent benchmark. LibreEvolve
-    has no implemented source-boundary gate for this source, no regulatory-text
+  - Current evidence: `papers/fault2flow_boundary.json` now records the
+    source-specific absence boundary for `2511.12916`, and `papers/README.md`
+    lists it as background AlphaEvolve-optimized workflow application context.
+    LibreEvolve still has no regulatory-text
     to PASTA fault-tree candidate schema, no expert-verification workflow, no n8n
     workflow emitter, no transformer fault-diagnosis dataset fixture, no
     topological-consistency or semantic-fidelity metric contract, no

@@ -9667,3 +9667,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     independent checker outputs.
   - Verification: Bruhat Intervals boundary tests and paper-manifest tests
     validate the sidecar and repo-root requirement.
+
+- [x] Preserve Fault2Flow `2511.12916` boundary scope in roadmap.
+  - Status: ROADMAP and roadmap TODO wording now identify
+    `papers/fault2flow_boundary.json` as the source-specific boundary for
+    regulatory PDF ingestion, MinerU-to-Markdown extraction, PlantUML mind-map
+    generation, PASTA fault-tree schemas, human-in-the-loop expert review
+    states, AlphaEvolve reasoning optimization, multi-island archive
+    provenance, n8n workflow synthesis and activation, workflow
+    verification/refinement loops, DL/T 722-2014 dataset rows, GPT-5 judge
+    outputs, Table 1 reproduction rows, token ledgers, human-annotation ethics
+    records, placeholder publication-metadata caveats, and local workflow
+    snapshots.
+  - Verification: Fault2Flow boundary tests and paper-manifest tests validate
+    the sidecar and repo-root requirement.

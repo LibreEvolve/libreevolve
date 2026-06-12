@@ -3866,8 +3866,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     supports AlphaEvolve-style ArchAgent computer-architecture discovery
     without those artifacts.
 
-- [ ] Keep README AlphaEvolve Fault2Flow workflow-automation claims absent or
-      source-scoped until fault-to-workflow benchmark evidence exists.
+- [ ] Implement README AlphaEvolve Fault2Flow workflow-automation claims beyond
+      source-scoped absence.
   - Spec evidence: arXiv `2511.12916`, `Fault2Flow: An AlphaEvolve-Optimized
     Human-in-the-Loop Multi-Agent System for Fault-to-Workflow Automation`,
     uses an AlphaEvolve module to optimize reasoning logic in a workflow that
@@ -3880,9 +3880,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     an OpenEvolve-linked AlphaEvolve optimizer, emits n8n IF/ELSE workflows,
     and evaluates 16 transformer DGA cases with LRM, SF, TC, E2ERC,
     success/fail, and token metrics.
-  - Current evidence: README documents general plugins, paper-cache status,
-    benchmark-report contracts, and smoke fixtures. It does not mention
-    `2511.12916`, parse regulatory fault-diagnosis text into PASTA fault
+  - Current evidence: README now lists `2511.12916` as source-scoped
+    Fault2Flow application context and points to `papers/fault2flow_boundary.json`.
+    It still does not parse regulatory fault-diagnosis text into PASTA fault
     trees, model expert verification states, optimize reasoning logic for
     fault workflows, emit n8n workflows, preserve transformer fault-diagnosis
     dataset provenance, or report topological-consistency and semantic-

@@ -1,0 +1,199 @@
+{
+  "schema": "libreevolve.fault2flow_boundary.v1",
+  "source_paper_id": "2511.12916",
+  "source_title": "Fault2Flow: An AlphaEvolve-Optimized Human-in-the-Loop Multi-Agent System for Fault-to-Workflow Automation",
+  "source_authors": [
+    "Yafang Wang",
+    "Yangjie Tian",
+    "Xiaoyu Shen",
+    "Gaoyang Zhang",
+    "Jiaze Sun",
+    "He Zhang",
+    "Ruohua Xu",
+    "Feng Zhao"
+  ],
+  "source_version": "v1",
+  "source_submitted_date": "2025-11-17",
+  "source_pdf_date": "2025-11-18",
+  "source_url": "https://arxiv.org/pdf/2511.12916.pdf",
+  "source_file": "papers/2511.12916__Fault2Flow.pdf",
+  "source_sha256": "7319d8cc2bba103c7e508a1017b79e59a9446cab21e229760ba6b0f83945b477",
+  "source_bytes": 6489403,
+  "source_license": "http://creativecommons.org/licenses/by-nc-nd/4.0/",
+  "boundary_status": "workflow_automation_context_without_local_fault2flow_benchmark",
+  "claim_ready": false,
+  "source_links": [
+    {
+      "url": "https://arxiv.org/abs/2511.12916v1",
+      "status": "source_version_reference_only"
+    },
+    {
+      "url": "https://github.com/algorithmicsuperintelligence/openevolve",
+      "status": "related_alphaevolve_implementation_reference_only"
+    },
+    {
+      "url": "<no_dedicated_fault2flow_code_repository_extracted>",
+      "status": "not_found_in_extracted_links"
+    },
+    {
+      "url": "https://doi.org/XXXXXXX.XXXXXXX",
+      "status": "placeholder_publication_metadata"
+    }
+  ],
+  "framework_components": [
+    {
+      "component_id": "regulatory_pdf_ingestion",
+      "paper_role": "ingest regulatory PDFs for power-grid fault diagnosis",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "mineru_markdown_extraction",
+      "paper_role": "extract structured Markdown from regulatory documents",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "pasta_fault_tree_schema",
+      "paper_role": "represent expert-reviewed fault trees in PASTA DSL",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "human_in_loop_expert_review",
+      "paper_role": "record expert review of mind maps, trees, and workflows",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "mind_map_generation_agent",
+      "paper_role": "generate PlantUML mind maps from extracted rules",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "fault_tree_translation_agent",
+      "paper_role": "translate reviewed mind maps into PASTA fault trees",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "alphaevolve_reasoning_optimizer",
+      "paper_role": "optimize reasoning logic with a multi-island LLM search",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "multi_island_elite_archive",
+      "paper_role": "exchange elite reasoning candidates across islands",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "n8n_workflow_synthesis",
+      "paper_role": "emit executable n8n workflows from PASTA trees",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "workflow_verification_agent",
+      "paper_role": "synthesize tests and refine failed workflows",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "transformer_fault_dataset_rows",
+      "paper_role": "evaluate sixteen transformer fault-diagnosis cases",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "gpt5_judge_metric_records",
+      "paper_role": "score readability and semantic fidelity using GPT-5",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "table1_baseline_comparison_rows",
+      "paper_role": "compare end-to-end baselines with Fault2Flow variants",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "data_ethics_and_placeholder_metadata_records",
+      "paper_role": "preserve annotation ethics and ACM placeholder caveats",
+      "local_status": "not_recorded"
+    }
+  ],
+  "local_evidence": {
+    "current_fault2flow_runner": "<none>",
+    "current_workflow_scope": "python_primary_generic_search_not_fault_to_workflow_automation",
+    "regulatory_ingestion_ready": false,
+    "mineru_extraction_ready": false,
+    "pasta_schema_ready": false,
+    "expert_review_ready": false,
+    "alphaevolve_optimizer_ready": false,
+    "multi_island_archive_ready": false,
+    "n8n_workflow_builder_ready": false,
+    "workflow_activation_ready": false,
+    "verification_agent_ready": false,
+    "dataset_rows_ready": false,
+    "gpt5_judge_ready": false,
+    "table1_reproduction_ready": false,
+    "repository_runtime_verified": false
+  },
+  "reported_result": {
+    "dataset_cases": 16,
+    "three_ratio_cases": 9,
+    "characteristic_gas_cases": 7,
+    "topological_consistency_fault2flow": 1.0,
+    "e2erc_fault2flow": 1.0,
+    "success_fault2flow": "16/0",
+    "qwen3_80b_end2end_success": "14/2",
+    "gpt_4_1_end2end_success": "12/4",
+    "qwen3_80b_end2end_avg_tokens": 21334.21,
+    "qwen3_80b_fault2flow_avg_tokens": 1799.83,
+    "gpt_4_1_fault2flow_avg_tokens": 1887.62,
+    "source_standard": "DL/T 722-2014",
+    "judge_model": "GPT-5",
+    "demo_model": "Qwen3-Next-80B-A3B-Instruct",
+    "demo_temperature": 0.0,
+    "publication_metadata_status": "contains_acm_placeholder_conference_and_doi"
+  },
+  "required_evidence_fields": [
+    "source_license_and_repository_status",
+    "alphaevolve_relation",
+    "workflow_fixture_policy",
+    "regulatory_source_provenance",
+    "document_understanding_records",
+    "mineru_extraction_records",
+    "mysql_storage_records",
+    "milvus_vector_search_records",
+    "plantuml_mind_map_records",
+    "pasta_fault_tree_records",
+    "expert_review_state_records",
+    "alphaevolve_optimizer_records",
+    "multi_island_archive_records",
+    "n8n_workflow_schema_records",
+    "workflow_activation_records",
+    "verification_test_case_records",
+    "failure_refinement_loop_records",
+    "transformer_dataset_rows",
+    "evaluation_metric_definitions",
+    "gpt5_judge_records",
+    "table1_result_rows",
+    "token_usage_records",
+    "human_annotation_ethics_records",
+    "independent_checker_outputs"
+  ],
+  "missing_evidence": {
+    "regulatory_pdf_ingestion_runtime": "not_implemented_locally",
+    "mineru_markdown_extraction": "not_implemented_locally",
+    "plantuml_mind_map_schema": "not_implemented_locally",
+    "pasta_fault_tree_schema": "not_implemented_locally",
+    "expert_review_interface_records": "not_recorded_locally",
+    "alphaevolve_reasoning_optimizer": "not_implemented_locally",
+    "multi_island_archive_records": "not_recorded_locally",
+    "readability_logical_validity_scores": "not_recorded_locally",
+    "n8n_workflow_builder": "not_implemented_locally",
+    "n8n_api_activation_records": "not_recorded_locally",
+    "workflow_verification_agent": "not_implemented_locally",
+    "synthesized_test_case_records": "not_recorded_locally",
+    "failure_refinement_loop_records": "not_recorded_locally",
+    "dl_t_722_2014_dataset_snapshot": "not_recorded_locally",
+    "transformer_fault_case_rows": "not_recorded_locally",
+    "gpt5_judge_outputs": "not_recorded_locally",
+    "table1_result_reproduction": "not_recorded_locally",
+    "token_usage_records": "not_recorded_locally",
+    "human_annotation_ethics_records": "not_recorded_locally",
+    "local_repository_or_workflow_snapshot": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records Fault2Flow as AlphaEvolve-optimized workflow application context only. LibreEvolve currently does not claim regulatory PDF ingestion, MinerU extraction, PlantUML mind-map generation, PASTA fault-tree translation, human-in-the-loop expert review, AlphaEvolve reasoning optimization, multi-island archive provenance, n8n workflow synthesis or activation, workflow verification/refinement, transformer fault-diagnosis dataset rows, GPT-5 judge outputs, Table 1 reproduction, token ledgers, human-annotation ethics records, or local Fault2Flow repository/runtime snapshots."
+}

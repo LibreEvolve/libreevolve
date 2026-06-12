@@ -18052,3 +18052,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     open.
   - Verification: Bruhat Intervals boundary tests and paper-manifest tests cover
     the sidecar, drift rejection, and repo-root sidecar requirement.
+
+- [x] Add Fault2Flow `2511.12916` source-boundary gate.
+  - Status: `libreevolve.problems.benchmarks.fault2flow_boundary` now emits
+    and validates `papers/fault2flow_boundary.json` with cached PDF digest,
+    arXiv v1 identity, CC BY-NC-ND license metadata, OpenEvolve reference-only
+    link status, ACM placeholder metadata caveat, framework components,
+    required future evidence fields, missing-evidence keys, and overclaim
+    rejection.
+  - Remaining gap: regulatory PDF ingestion, MinerU extraction, PlantUML mind
+    maps, PASTA fault trees, human review states, AlphaEvolve optimizer traces,
+    n8n workflow synthesis/activation, workflow verification loops, dataset
+    rows, GPT-5 judge outputs, Table 1 reproduction, token ledgers, ethics
+    records, and local workflow snapshots remain open.
+  - Verification: Fault2Flow boundary tests and paper-manifest tests cover the
+    sidecar, drift rejection, and repo-root sidecar requirement.

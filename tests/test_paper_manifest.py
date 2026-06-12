@@ -1665,6 +1665,58 @@ def test_validate_paper_manifest_requires_bruhat_intervals_boundary_at_repo_root
     assert "bruhat_intervals_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_fault2flow_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.FAULT2FLOW_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.fault2flow_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_fault2flow_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.fault2flow_boundary_record()
+    record["claim_ready"] = True
+    record["local_evidence"]["n8n_workflow_builder_ready"] = True
+    sidecar = tmp_path / paper_manifest.FAULT2FLOW_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "fault2flow_boundary_claim_ready_overclaim" in codes
+    assert (
+        "fault2flow_boundary_local_evidence_n8n_workflow_builder_ready_overclaim"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_fault2flow_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "fault2flow_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_bilateral_trade_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

@@ -5597,7 +5597,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     seed/budget records, independent checker outputs, and reproducibility
     status.
 
-- [ ] Track AlphaEvolve Fault2Flow workflow-automation paper evidence.
+- [ ] Implement AlphaEvolve Fault2Flow workflow-automation paper evidence beyond the source boundary.
   - Paper/source evidence: arXiv `2511.12916`, submitted November 17, 2025, is
     titled `Fault2Flow: An AlphaEvolve-Optimized Human-in-the-Loop Multi-Agent
     System for Fault-to-Workflow Automation`. Its abstract says Fault2Flow
@@ -5618,11 +5618,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     LRM, SF, TC, E2ERC, success/failure, and average-token rows for Qwen3-80B
     and GPT-4.1 end-to-end baselines plus Qwen3-14B/32B/80B and GPT-4.1
     Fault2Flow variants.
-  - Current gap: `papers/README.md` lists `2511.12916` as background-only
-    AlphaEvolve-optimized workflow application context with no fault-to-
-    workflow or human-in-the-loop multi-agent benchmark, but the current
-    implementation and paper index do not yet provide local source-boundary
-    artifacts or implementation evidence for this paper. Broad
+  - Current gap: `papers/fault2flow_boundary.json` now records the
+    source-specific absence boundary for `2511.12916`, and `papers/README.md`
+    lists the row as background-only AlphaEvolve-optimized workflow application
+    context. The current implementation still does not provide executable
+    workflow artifacts or implementation evidence for this paper. Broad
     framework/plugin gaps do not capture regulatory-source provenance, PASTA
     fault-tree schemas, expert verification states, reasoning-logic
     optimization records, n8n workflow artifacts, transformer fault-diagnosis

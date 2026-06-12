@@ -45,6 +45,10 @@ Important limits:
   provenance and prompt-history audit evidence, not executed calibration,
   task-suite, ablation, or independent feedback-quality validation; that
   boundary is tracked by `papers/qualitative_feedback_boundary.json`.
+- Feedback calibration artifacts are schema/report contracts, not runtime
+  calibration runners, executed task-suite results, grader ablations, or
+  independent feedback-quality validation; that boundary is tracked by
+  `papers/feedback_calibration_boundary.json`.
 - Role-scoped LLM scheduling is opt-in local UCB/runtime evidence with
   reward-accounted roles, role budget maps, scheduler-state snapshots, and
   per-call policy telemetry, not calibrated AlphaEvolve role reward policy,

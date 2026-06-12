@@ -125,6 +125,12 @@ from libreevolve.problems.benchmarks.qualitative_feedback_boundary import (
     render_qualitative_feedback_boundary_summary,
     validate_qualitative_feedback_boundary,
 )
+from libreevolve.problems.benchmarks.feedback_calibration_boundary import (
+    FEEDBACK_CALIBRATION_BOUNDARY_SCHEMA,
+    feedback_calibration_boundary_record,
+    render_feedback_calibration_boundary_summary,
+    validate_feedback_calibration_boundary,
+)
 from libreevolve.problems.benchmarks.llm_role_scheduler_boundary import (
     LLM_ROLE_SCHEDULER_BOUNDARY_SCHEMA,
     llm_role_scheduler_boundary_record,
@@ -945,6 +951,7 @@ __all__ = [
     "evaluator_oracle_boundary_record",
     "example_benchmark_scope_records",
     "fast_strong_model_mix_boundary_record",
+    "feedback_calibration_boundary_record",
     "existing_codebase_integration_boundary_record",
     "failure_memory_boundary_record",
     "gigaevo_framework_boundary_record",
@@ -1067,6 +1074,7 @@ __all__ = [
     "render_evaluator_oracle_boundary_summary",
     "render_example_benchmark_scope_summary",
     "render_fast_strong_model_mix_boundary_summary",
+    "render_feedback_calibration_boundary_summary",
     "render_existing_codebase_integration_boundary_summary",
     "render_failure_memory_boundary_summary",
     "render_figure8_exhibit_summary",
@@ -1201,6 +1209,7 @@ __all__ = [
     "validate_evaluator_oracle_boundary",
     "validate_example_benchmark_scope",
     "validate_fast_strong_model_mix_boundary",
+    "validate_feedback_calibration_boundary",
     "validate_existing_codebase_integration_boundary",
     "validate_failure_memory_boundary",
     "validate_figure8_exhibit",

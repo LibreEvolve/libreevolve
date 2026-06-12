@@ -18772,3 +18772,15 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject raw
     provider-replay overclaims, invalid boundary status, missing evidence
     drift, and incomplete required evidence fields.
+
+- [x] Add feedback-calibration sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/feedback_calibration_boundary.py`
+    now emits and validates the report-contract boundary, separating the LLM
+    feedback calibration report schema, artifact-inventory schema, grader
+    declarations, task-suite declarations, criterion-quality fields, safe
+    artifact-reference validation, summary renderer, and schema validation
+    tests from runtime calibration runners, executed task-suite results,
+    grader ablation results, and independent feedback-quality validation.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    executed-calibration overclaims, invalid boundary status, missing evidence
+    drift, and incomplete required evidence fields.

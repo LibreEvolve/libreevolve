@@ -1006,6 +1006,60 @@ def test_validate_paper_manifest_requires_qualitative_feedback_boundary_at_repo_
     assert "qualitative_feedback_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_feedback_calibration_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.FEEDBACK_CALIBRATION_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.feedback_calibration_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_feedback_calibration_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.feedback_calibration_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "executed_feedback_calibration_ready"
+    record["missing_evidence"]["runtime_calibration_runner"] = "recorded"
+    sidecar = tmp_path / paper_manifest.FEEDBACK_CALIBRATION_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "feedback_calibration_boundary_claim_ready_overclaim" in codes
+    assert "feedback_calibration_boundary_invalid_boundary_status" in codes
+    assert (
+        "feedback_calibration_boundary_invalid_missing_evidence_runtime_calibration_runner"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_feedback_calibration_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "feedback_calibration_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_llm_role_scheduler_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

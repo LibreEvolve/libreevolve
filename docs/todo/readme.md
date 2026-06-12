@@ -2039,7 +2039,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     grader-config, and plot artifacts under a safe root, and that the current
     code does not run feedback-grader calibration experiments. Matching
     roadmap/paper/code TODOs still require real feedback-calibration fixtures
-    and grader ablation reports.
+    and grader ablation reports. README now points to
+    `papers/feedback_calibration_boundary.json` for the report-contract versus
+    executed-calibration boundary.
   - Required result: when runtime fixtures or benchmark scripts emit real
     feedback-calibration reports, reviewer/task suites, or grader ablation
     evidence, update README, ROADMAP, papers index, and code/paper TODO entries

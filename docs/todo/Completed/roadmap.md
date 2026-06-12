@@ -10625,3 +10625,11 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation requires the committed sidecar and
     focused provider-diagnostics replay tests reject raw provider-replay
     overclaims.
+
+- [x] Keep roadmap feedback-calibration boundary tied to sidecar.
+  - Status: ROADMAP now links the LLM feedback calibration report contract and
+    artifact-inventory contract to `papers/feedback_calibration_boundary.json`
+    while keeping runtime calibration runners, executed task-suite results,
+    grader ablations, and independent feedback-quality validation open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused feedback-calibration tests reject executed-calibration overclaims.

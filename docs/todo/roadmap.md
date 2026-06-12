@@ -1898,7 +1898,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     artifact-inventory contract validate declared multi-task calibration
     evidence and safe artifact references once a report exists. The roadmap
     now scopes the follow-up to emitting real reports and grader ablation
-    fixtures.
+    fixtures. The committed `papers/feedback_calibration_boundary.json`
+    sidecar now preserves this report-contract boundary for paper-manifest
+    validation.
   - Required result: when a runtime fixture or benchmark script emits real
     feedback-calibration reports, update the roadmap, README, papers index, and
     code/paper TODO entries together so they neither underclaim the report

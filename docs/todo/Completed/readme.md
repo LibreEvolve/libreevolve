@@ -12856,3 +12856,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused provider-diagnostics replay tests reject raw provider-replay
     overclaims.
+
+- [x] Keep README feedback-calibration boundary tied to sidecar.
+  - Status: README now states that feedback calibration artifacts are
+    schema/report contracts, not runtime calibration runners, executed
+    task-suite results, grader ablations, or independent feedback-quality
+    validation, with the boundary tracked by
+    `papers/feedback_calibration_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused feedback-calibration tests reject executed-calibration overclaims.

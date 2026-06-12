@@ -362,6 +362,13 @@ prompt-history row joins. The committed
 `papers/qualitative_feedback_boundary.json` sidecar keeps this declared-policy
 and audit scope machine-validated apart from executed calibration/task-suite
 evidence and independent feedback-quality validation.
+The committed `papers/feedback_calibration_boundary.json` sidecar separately
+preserves the feedback-calibration report-contract boundary: calibration report
+and artifact-inventory schemas, grader declarations, task-suite declarations,
+criterion-quality fields, safe artifact-reference validation, summary
+rendering, and schema tests exist, while runtime calibration runners, executed
+task-suite results, grader ablations, and independent feedback-quality
+validation remain absent.
 Proposal metadata prompt context can now be narrowed with `proposal_fields`, a
 safe allowlist over idea, rationale, and hypothesis fields.
 Stage-summary prompt context can now be narrowed with `stage_summary_fields`,
@@ -2277,6 +2284,13 @@ Implemented:
   backend-default count checks. It is not evidence of raw provider-payload
   sidecars, provider-output replay, complete provider-call replay, or
   account/model default capture.
+- `papers/feedback_calibration_boundary.json`: feedback-calibration sidecar
+  for AlphaEvolve Section 2.4. It records the feedback calibration report
+  schema, artifact-inventory schema, grader declarations, task-suite
+  declarations, criterion-quality fields, safe artifact-reference validation,
+  summary renderer, and schema validation tests. It is not evidence of runtime
+  calibration runners, executed task-suite results, grader ablation results,
+  or independent feedback-quality validation.
 - `papers/critique_reviewer_pool_boundary.json`: critique reviewer-pool
   sidecar for AlphaEvolve Sections 2.4 and 2.6. It records configured reviewer
   specs, manifest-safe reviewer names, optional reviewer prompts, reviewer role

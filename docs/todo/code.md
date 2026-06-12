@@ -1785,7 +1785,9 @@ Primary evidence:
     `libreevolve.llm_feedback_calibration_artifact_inventory.v1` verifies
     calibration report, raw-record, grader-config, and plot files under a safe
     artifact root. No runtime feedback-calibration runner emits these reports
-    yet.
+    yet. The committed `papers/feedback_calibration_boundary.json` sidecar now
+    validates this report-contract versus executed-fixture boundary at the
+    paper-manifest layer.
     Plugin score composition is logged separately and can change final fitness.
     Declared non-primary `source: plugin` metrics can be filled by plugin hooks
     through validated metric side effects and then enter

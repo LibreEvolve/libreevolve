@@ -1004,7 +1004,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve.llm_feedback_calibration_artifact_inventory.v1` verifies those
     calibration report, raw-record, grader-config, and plot artifacts against a
     safe artifact root. No runtime feedback-calibration fixture emits those
-    reports yet.
+    reports yet. The committed `papers/feedback_calibration_boundary.json`
+    sidecar now preserves this report-contract boundary for paper-manifest
+    validation.
 
     Evaluator subprocess-attempt, configured-stage sample, retry, timeout, and
     sample/stage budget-exhaustion counters now persist in evaluation

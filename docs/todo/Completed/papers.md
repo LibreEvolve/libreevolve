@@ -13868,3 +13868,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused provider-diagnostics replay tests reject raw provider-
     replay overclaims.
+
+- [x] Record feedback-calibration paper-facing sidecar.
+  - Status: `papers/feedback_calibration_boundary.json` now records the
+    feedback-calibration report-contract boundary for AlphaEvolve Section 2.4:
+    report schema, artifact-inventory schema, grader declarations, task-suite
+    declarations, criterion-quality fields, safe artifact-reference validation,
+    summary renderer, and schema validation tests exist, while runtime
+    calibration runners, executed task-suite results, grader ablation results,
+    and independent feedback-quality validation remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused feedback-calibration tests reject executed-calibration
+    overclaims.

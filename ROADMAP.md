@@ -537,7 +537,11 @@ is not yet an AlphaEvolve reproduction.
 - Emit calibration/ablation runs for LLM feedback graders; the
   `libreevolve.llm_feedback_calibration.v1` report and artifact-inventory
   contracts now validate declared multi-task calibration evidence, but no
-  runtime fixture generates those reports yet.
+  runtime fixture generates those reports yet. The current
+  `papers/feedback_calibration_boundary.json` sidecar preserves the
+  report-contract boundary while keeping runtime calibration runners, executed
+  task-suite results, grader ablations, and independent feedback-quality
+  validation open.
 - Extend `runtime.history.qualitative_feedback_policy_report` and
   `runtime.history.qualitative_feedback_prompt_history_audit_report` beyond
   criterion/rubric/intent metadata and prompt-history row joins into executed

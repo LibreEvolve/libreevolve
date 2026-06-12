@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 29 cache rows and links the AlphaEvolve row to
+  identities for all 30 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1298,6 +1298,18 @@ resumed-trace proof are still open.
   rows against AlphaEvolve/OpenEvolve/GEPA/ShinkaEvolve, token-efficiency
   reports, strategy ablation records, and independent reproduction outputs
   remain open before roadmap wording can promote EvoX-style adaptive search
+  support.
+- Keep DeltaEvolve semantic-delta context claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2602.02919`, `DeltaEvolve: Accelerating Scientific Discovery through
+  Momentum-Driven Evolution`, cached locally as
+  `papers/2602.02919__DeltaEvolve.pdf`. This is background context-memory
+  framework evidence only; first-class semantic-delta schemas,
+  node-transition effect attribution, semantic-delta memory banks,
+  multi-level database/index metadata, progressive disclosure traces,
+  token-savings reports, full-code-history baseline comparisons,
+  scientific-task benchmark taxonomies, and independent reproduction outputs
+  remain open before roadmap wording can promote DeltaEvolve-style context
   support.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest

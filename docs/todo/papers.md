@@ -4594,7 +4594,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     ablation evidence, code/artifact availability if any, and independent
     verification outputs.
 
-- [ ] Track DeltaEvolve semantic-delta context paper evidence.
+- [ ] Reproduce DeltaEvolve semantic-delta context evidence beyond paper
+      coverage.
   - Paper/source evidence: arXiv `2602.02919`, submitted February 2, 2026, is
     titled `DeltaEvolve: Accelerating Scientific Discovery through
     Momentum-Driven Evolution`. Its abstract says AlphaEvolve and similar
@@ -4603,21 +4604,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     replaces that context with structured semantic deltas explaining how and
     why modifications between successive nodes affect performance, organized
     through a multi-level database and progressive disclosure mechanism.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2602.02919`. Existing source rows cover AlphaEvolve,
-    prompt/history artifacts, failed-proposal snippets, EvoX adaptive strategy
-    gates, and selected application papers, but not semantic-delta memory,
+  - Current gap: the paper manifest, paper index, row-identity manifest, and
+    TODO coverage now include `2602.02919`, cached locally as
+    `papers/2602.02919__DeltaEvolve.pdf` with byte count `3764777` and
+    SHA-256
+    `d4726d81fe96ddb4b370c4a37c06510394597f640187d6ba8e615b5952c3a4d8`.
+    Existing source rows still do not capture semantic-delta memory,
     node-transition effect attribution, progressive context disclosure, or
     token-efficiency comparisons against full-code histories.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2602.02919`: title/authors/arXiv version/date/PDF digest, source license,
-    relation to AlphaEvolve and LibreEvolve prompt/context policy,
-    semantic-delta schema, node-transition provenance, performance-effect
-    attribution, multi-level database/index metadata, progressive-disclosure
-    policy, token-accounting metrics, scientific-task benchmark taxonomy,
-    baseline method identities, code/artifact availability if any, and
-    README/ROADMAP wording that treats DeltaEvolve as missing paper evidence
-    rather than implemented LibreEvolve support.
+  - Required result: add reproduction-grade evidence for `2602.02919`:
+    source-license metadata, relation to AlphaEvolve and LibreEvolve
+    prompt/context policy, semantic-delta schema, node-transition provenance,
+    performance-effect attribution, multi-level database/index metadata,
+    progressive-disclosure policy, token-accounting metrics,
+    scientific-task benchmark taxonomy, baseline method identities,
+    code/artifact availability if any, and independent verification outputs.
 
 - [ ] Track MLEvolve long-horizon ML-engineering paper evidence.
   - Paper/source evidence: arXiv `2606.06473`, submitted June 4, 2026, is

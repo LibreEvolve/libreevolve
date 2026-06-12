@@ -5050,7 +5050,8 @@ Primary evidence:
     EvoX-style adaptive meta-evolution only after local strategy evolution and
     benchmark reports exist.
 
-- [ ] Add DeltaEvolve semantic-delta context source boundary.
+- [ ] Implement DeltaEvolve semantic-delta context evidence beyond paper cache
+      coverage.
   - Spec evidence: arXiv `2602.02919`, `DeltaEvolve: Accelerating Scientific
     Discovery through Momentum-Driven Evolution`, was submitted February 2,
     2026. Its abstract says AlphaEvolve-style LLM-driven evolutionary systems
@@ -5061,23 +5062,27 @@ Primary evidence:
     successive nodes affect performance, and uses a multi-level database plus
     progressive disclosure to reduce input tokens while improving results
     across diverse scientific tasks.
-  - Current evidence: LibreEvolve records prompts, parent programs, SEARCH/
-    REPLACE diffs, run history, and a small in-memory failed-proposal snippet
-    list, but it does not preserve semantic deltas as first-class records or
-    use them as prompt-control context. There is no delta-effect schema,
+  - Current evidence: `papers/download_manifest.*`, `papers/row_identity.json`,
+    `papers/README.md`, README, ROADMAP, and TODO coverage now include
+    `2602.02919`, cached locally as `papers/2602.02919__DeltaEvolve.pdf`
+    with byte count `3764777` and SHA-256
+    `d4726d81fe96ddb4b370c4a37c06510394597f640187d6ba8e615b5952c3a4d8`.
+    LibreEvolve records prompts, parent programs, SEARCH/REPLACE diffs, run
+    history, and a small in-memory failed-proposal snippet list, but it does
+    not preserve semantic deltas as first-class records or use them as
+    prompt-control context. There is no delta-effect schema,
     causal/performance attribution for successive program nodes, multi-level
     semantic-delta memory, progressive-disclosure policy, token-savings report,
     or benchmark comparing full-code parent context against DeltaEvolve-style
     momentum guidance.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2602.02919`: arXiv id/version/date/PDF hash, authors, source license,
-    relation to AlphaEvolve and LibreEvolve prompt construction,
-    semantic-delta schema, node-to-node effect attribution, performance-change
-    records, multi-level database/indexing metadata, progressive-disclosure
-    traces, token-accounting metrics, scientific-task benchmark taxonomy,
-    baseline identities, and README/ROADMAP wording that treats semantic-delta
-    momentum guidance as missing evidence until local storage, prompt assembly,
-    and benchmark artifacts exist.
+  - Required result: add implementation-boundary metadata and runnable
+    evidence beyond the paper cache: relation to AlphaEvolve and LibreEvolve
+    prompt construction, semantic-delta schema, node-to-node effect
+    attribution, performance-change records, multi-level database/indexing
+    metadata, progressive-disclosure traces, token-accounting metrics,
+    scientific-task benchmark taxonomy, baseline identities, and
+    README/ROADMAP wording that promotes semantic-delta momentum guidance only
+    after local storage, prompt assembly, and benchmark artifacts exist.
 
 - [ ] Add MLEvolve long-horizon ML-engineering source boundary.
   - Spec evidence: arXiv `2606.06473`, `MLEvolve: A Self-Evolving Framework

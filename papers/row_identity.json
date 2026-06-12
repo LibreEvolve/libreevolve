@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.paper_source_identity_manifest.v1",
-  "source_identity_count": 29,
+  "source_identity_count": 30,
   "source_identity_policy": "manifest_id_url_source_id_and_file_source_prefix_must_match_before_source_version_or_rights_claims",
   "sources": [
     {
@@ -485,6 +485,24 @@
       "url_source_id": "2602.23413",
       "url_versioned_id": "2602.23413",
       "file_source_id": "2602.23413",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2602.02919",
+      "title": "DeltaEvolve",
+      "url": "https://arxiv.org/pdf/2602.02919.pdf",
+      "file": "papers/2602.02919__DeltaEvolve.pdf",
+      "sha256": "d4726d81fe96ddb4b370c4a37c06510394597f640187d6ba8e615b5952c3a4d8",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2602.02919",
+      "url_versioned_id": "2602.02919",
+      "file_source_id": "2602.02919",
       "identity_checks": {
         "manifest_id_matches_url_source_id": true,
         "manifest_id_matches_file_source_id": true,

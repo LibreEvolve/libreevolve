@@ -270,6 +270,16 @@
     "sha256": "df9c3c8149c650112c1b034f874a458c6ae65bcac05421d1790c3cac7e9d2622"
   },
   {
+    "id": "2602.02919",
+    "title": "DeltaEvolve",
+    "url": "https://arxiv.org/pdf/2602.02919.pdf",
+    "file": "papers/2602.02919__DeltaEvolve.pdf",
+    "ok": true,
+    "bytes": 3764777,
+    "message": "downloaded",
+    "sha256": "d4726d81fe96ddb4b370c4a37c06510394597f640187d6ba8e615b5952c3a4d8"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

@@ -764,7 +764,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     URL, and local PDF label describing the same source before version or
     rights evidence attaches.
   - Status: ROADMAP now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 29 cache
+    companion manifest that emits derived source identities for all 30 cache
     rows and links the AlphaEvolve row to `papers/source_versions.json`.
   - Remaining gap: none for this bounded roadmap wording slice.
 
@@ -9799,5 +9799,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     state, strategy-credit assignment, dynamic policy-update artifacts,
     task-suite taxonomy, baseline comparison rows, token-efficiency reports,
     ablation records, and independent reproduction outputs explicitly open.
-  - Verification: paper-manifest validation checks the 29-row manifest,
+  - Verification: paper-manifest validation checks the current manifest,
+    paper-index row, TODO coverage row, and source-identity sidecar.
+
+- [x] Preserve `2602.02919` DeltaEvolve paper-cache scope in roadmap.
+  - Status: ROADMAP now identifies arXiv `2602.02919`, `DeltaEvolve:
+    Accelerating Scientific Discovery through Momentum-Driven Evolution`, as
+    background context-memory framework evidence only, with the cached
+    `papers/2602.02919__DeltaEvolve.pdf` row and missing semantic-delta
+    schemas, node-transition effect attribution, semantic-delta memory banks,
+    multi-level database/index metadata, progressive disclosure traces,
+    token-savings reports, full-code-history baseline comparisons,
+    scientific-task benchmark taxonomies, and independent reproduction outputs
+    explicitly open.
+  - Verification: paper-manifest validation checks the 30-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.

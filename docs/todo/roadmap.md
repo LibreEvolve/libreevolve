@@ -3448,7 +3448,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     benchmark-fixture status rule so roadmap claims do not outpace local
     EvoX-style strategy evolution support.
 
-- [ ] Add DeltaEvolve semantic-delta context gates before roadmap promotion.
+- [ ] Implement DeltaEvolve semantic-delta context gates beyond paper cache
+      coverage.
   - Spec evidence: arXiv `2602.02919`, submitted February 2, 2026, introduces
     DeltaEvolve as a momentum-driven evolutionary framework. The abstract says
     AlphaEvolve relies on full-code histories that are context-inefficient and
@@ -3456,19 +3457,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     semantic deltas describing how and why successive modifications affect
     performance, then organizes those deltas through a multi-level database
     and progressive disclosure to reduce input tokens.
-  - Current evidence: ROADMAP tracks prompt/context construction, prompt
-    history artifacts, failure memory, benchmark/report contracts, and several
-    AlphaEvolve-adjacent paper gates. It does not mention `2602.02919`, define
-    a semantic-delta source gate, or require evidence before promoting
-    momentum-guided delta memory beyond current parent-program and SEARCH/
-    REPLACE diff handling.
-  - Required result: add roadmap gates for `2602.02919`: paper/source
-    manifest entry, PDF/cache hash, source-license metadata, semantic-delta
-    record schema, node-transition and performance-effect provenance,
-    multi-level memory/index artifacts, progressive-disclosure policy traces,
-    token-accounting metrics, scientific-task benchmark taxonomy, baseline
-    method identities, and a background-only or benchmark-fixture status rule
-    so roadmap claims do not outpace local DeltaEvolve-style context support.
+  - Current evidence: ROADMAP, `papers/download_manifest.*`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2602.02919` with local cache hash and background-only status. They still
+    do not require evidence before promoting momentum-guided delta memory
+    beyond current parent-program and SEARCH/REPLACE diff handling.
+  - Required result: add roadmap gates beyond the paper cache:
+    source-license metadata, semantic-delta record schema, node-transition and
+    performance-effect provenance, multi-level memory/index artifacts,
+    progressive-disclosure policy traces, token-accounting metrics,
+    scientific-task benchmark taxonomy, baseline method identities,
+    independent reproduction outputs, and a benchmark-fixture status rule so
+    roadmap claims do not outpace local DeltaEvolve-style context support.
 
 - [ ] Add MLEvolve long-horizon ML-engineering gates before roadmap promotion.
   - Spec evidence: arXiv `2606.06473`, submitted June 4, 2026, introduces

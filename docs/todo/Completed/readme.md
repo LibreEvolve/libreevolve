@@ -643,7 +643,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Spec evidence: README points readers to the local paper cache as the source
     ledger for paper-facing implementation status and benchmark decisions.
   - Status: README now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 29 cache
+    companion manifest that emits derived source identities for all 30 cache
     rows, including URL source id, filename source prefix, validation booleans,
     and the AlphaEvolve row's source-version link.
   - Remaining gap: none for this bounded README wording slice.
@@ -1079,7 +1079,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     algorithm subset.
   - Status: corrected and guarded. README now states the visible paper tables
     are a curated subset and that `papers/README.md` is the complete
-    implementation-status index for all 29 manifest rows. The paper-manifest
+    implementation-status index for all 30 manifest rows. The paper-manifest
     validator now flags root README paper summaries that list only a subset of
     manifest ids without this curated-summary disclosure.
   - Verification: `tests/test_paper_manifest.py` covers accepted curated
@@ -12216,4 +12216,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     meta-evolution context only and states that no local strategy-genome,
     strategy-credit, or dynamic search-policy benchmark exists.
   - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 29-row manifest.
+    count and curated-subset wording against the current manifest.
+
+- [x] Document `2602.02919` DeltaEvolve paper coverage in README.
+  - Status: README now includes `2602.02919`, `DeltaEvolve`, as semantic-delta
+    context-memory inspiration only and states that no local semantic-delta
+    store, progressive disclosure sampler, or token-efficiency benchmark
+    exists.
+  - Verification: paper-manifest validation checks README's local paper-cache
+    count and curated-subset wording against the 30-row manifest.

@@ -12770,3 +12770,21 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2602.02919` DeltaEvolve paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2602.02919`, `DeltaEvolve: Accelerating Scientific Discovery through
+    Momentum-Driven Evolution`, cached locally as
+    `papers/2602.02919__DeltaEvolve.pdf` with byte count `3764777` and
+    SHA-256
+    `d4726d81fe96ddb4b370c4a37c06510394597f640187d6ba8e615b5952c3a4d8`.
+  - Remaining paper gap: source-license details, semantic-delta schema,
+    node-transition provenance, performance-effect attribution, multi-level
+    database/index metadata, progressive-disclosure policy, token-accounting
+    metrics, scientific-task benchmark taxonomy, baseline method identities,
+    code/artifact availability, and independent reproduction outputs remain
+    open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

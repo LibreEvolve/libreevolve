@@ -17241,3 +17241,15 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     repeated-sampling baselines, and equal-budget model-size comparisons remain
     open.
   - Verification: focused runtime sample-efficiency test passes.
+
+- [x] Add repeated-sampling baseline absence report.
+  - Spec evidence: AlphaEvolve's test-time-compute framing compares
+    evolutionary search against repeated sampling from the base model.
+  - Status: runtime histories now include
+    `libreevolve.repeated_sampling_baseline_report.v1`, linking observed
+    generated/accepted/rejected/execution-filtered sample counts to an explicit
+    `No evolution` comparator absence boundary and required future controls.
+  - Remaining gap: executable repeated-sampling runner, fixed
+    prompt/model/seed/evaluator contracts, budget parity, target curves, and
+    linked evolutionary comparator runs remain open.
+  - Verification: focused runtime repeated-sampling boundary test passes.

@@ -87,6 +87,7 @@ from libreevolve.core.loop import (
     validate_proposal_score_report,
     validate_proposal_lifecycle_report,
     validate_sample_efficiency_report,
+    validate_repeated_sampling_baseline_report,
     validate_hypothesis_branch_report,
     validate_controller_backtracking_report,
     VALID_THRESHOLD,
@@ -7336,6 +7337,31 @@ def test_runtime_history_reports_execution_filtered_proposal_lifecycle():
             "target_hit_count": 0,
         }
     ]
+
+    repeated_sampling = manifest["runtime"]["history"][
+        "repeated_sampling_baseline_report"
+    ]
+    assert repeated_sampling["schema"] == (
+        "libreevolve.repeated_sampling_baseline_report.v1"
+    )
+    assert repeated_sampling["validation"]["ok"] is True
+    assert validate_repeated_sampling_baseline_report(repeated_sampling)["ok"] is True
+    assert repeated_sampling["status"] == "not_configured"
+    assert repeated_sampling["paper_variant"] == "No evolution"
+    assert repeated_sampling["observed_sample_counts"] == {
+        "generated_proposal_count": 1,
+        "accepted_generated_count": 0,
+        "rejected_generated_count": 1,
+        "execution_filtered_count": 1,
+    }
+    assert repeated_sampling["budget_parity"]["status"] == "not_checked"
+    assert repeated_sampling["claim_ready"] is False
+    assert repeated_sampling["claim_readiness"][
+        "controlled_repeated_sampling_run"
+    ] is False
+    assert "disabled_parent_selection" in (
+        repeated_sampling["required_comparator_controls"]
+    )
 
 
 def test_runtime_history_reports_duplicate_work_policy_with_run_local_cache():

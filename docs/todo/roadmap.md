@@ -1548,16 +1548,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     feedback to sustain useful test-time compute.
   - Current evidence: roadmap/README/paper-index status can point to LLM
     budget telemetry, generated candidate ids, archive admission records,
-    sample-efficiency gaps, and an equal-budget ablation report contract with a
-    `No evolution` variant. Those are not yet a controlled repeated-sampling
-    comparator with matched prompt/model/seed/evaluator settings and disabled
-    evolutionary feedback, parent/inspiration resurfacing, archive-driven
-    selection, and meta-prompt updates.
-  - Required result: when repeated-sampling baseline reports land, update
-    ROADMAP, README, papers index, and code/paper TODOs together so roadmap
-    language distinguishes ordinary budgeted LLM sampling and `No evolution`
-    labels from AlphaEvolve-style test-time-compute uplift over repeated
-    base-model sampling.
+    sample-efficiency reports, an equal-budget ablation report contract with a
+    `No evolution` variant, and a runtime
+    `repeated_sampling_baseline_report` absence boundary. Those are not yet a
+    controlled repeated-sampling comparator with matched prompt/model/seed/
+    evaluator settings and disabled evolutionary feedback,
+    parent/inspiration resurfacing, archive-driven selection, and meta-prompt
+    updates.
+  - Required result: when executable repeated-sampling comparator reports land,
+    update ROADMAP, README, papers index, and code/paper TODOs together so
+    roadmap language distinguishes ordinary budgeted LLM sampling, local
+    absence boundaries, and `No evolution` labels from AlphaEvolve-style
+    test-time-compute uplift over repeated base-model sampling.
 
 - [ ] Keep provider-roadmap wording explicit about missing Google/Gemini
       first-class support.

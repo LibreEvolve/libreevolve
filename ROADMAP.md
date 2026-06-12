@@ -147,6 +147,11 @@ LibreEvolve has:
   candidates, retained elites, sampling-eligible candidates, logical LLM
   samples, and a bounded best-score cumulative curve while keeping target-hit,
   thousands-scale, repeated-sampling, and model-size comparison evidence open
+- repeated-sampling baseline boundary reports under
+  `runtime.history.repeated_sampling_baseline_report`, linking observed sample
+  counts to an explicit `No evolution` comparator absence boundary while
+  keeping fixed prompt/model/seed/evaluator controls, budget parity,
+  target-progress curves, and linked evolutionary comparator runs open
 - opt-in evaluator artifact copy-out from temporary candidate workspaces with
   hashes, limits, and text redaction metadata
 - validator subprocess environment allowlisting, persisted stdout/stderr
@@ -635,6 +640,10 @@ is not yet an AlphaEvolve reproduction.
   and model-size/equal-budget analyses before treating it as AlphaEvolve
   Table 1 evidence that useful results can be reached with thousands rather
   than millions of LLM-generated samples.
+- Turn the current repeated-sampling boundary report into an executable
+  equal-budget comparator runner with fixed prompt/model/seed/evaluator
+  controls and linked evolutionary runs before making test-time-compute uplift
+  claims over repeated base-model sampling.
 - Extend current synchronous configurable critique reviewer pools, role routing,
   and first/last-valid aggregation toward async reviewer overlap, calibrated
   reviewer scoring, stronger provider isolation, and runtime artifacts for

@@ -1252,6 +1252,15 @@ The report deliberately marks target thresholds as `not_configured` and
 `claim_ready: false`; it is local sample-count evidence, not thousands-scale
 Table 1 validation, target-hit proof, repeated-sampling comparison, or
 cross-run model-size analysis.
+Completed manifests also include
+`runtime.history.repeated_sampling_baseline_report`, a
+`libreevolve.repeated_sampling_baseline_report.v1` boundary record for the
+AlphaEvolve "No evolution" comparison. It links observed generated/accepted/
+rejected/execution-filtered sample counts to the run and lists the controls
+still required for a real repeated-sampling comparator: fixed prompt/model/
+seed/evaluator settings, disabled archive feedback, parent/inspiration
+resurfacing, failure feedback, meta-prompt updates, budget parity, target
+curves, and a linked evolutionary comparator run.
 Rejected workspace seed rows render all seed files into bounded `mutation_text`
 and include `seed_workspace` per-file path, role, byte count, SHA-256, snippet,
 and truncation metadata.

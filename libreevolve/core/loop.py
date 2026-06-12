@@ -5425,6 +5425,10 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "sample_efficiency_report": _sample_efficiency_report(
             proposal_lifecycle_report
         ),
+        "repeated_sampling_baseline_report": _repeated_sampling_baseline_report(
+            startup_manifest,
+            proposal_lifecycle_report,
+        ),
         "hypothesis_branch_report": hypothesis_branch_report,
         "controller_backtracking_report": _controller_backtracking_report(
             programs,
@@ -27968,6 +27972,243 @@ def validate_sample_efficiency_report(report: object) -> dict:
         )
     return {
         "schema": "libreevolve.sample_efficiency_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _repeated_sampling_baseline_report(
+    startup_manifest: Mapping[str, object],
+    proposal_lifecycle_report: Mapping[str, object],
+) -> dict:
+    config = (
+        startup_manifest.get("config")
+        if isinstance(startup_manifest.get("config"), Mapping)
+        else {}
+    )
+    sample_counts = {
+        "generated_proposal_count": _sample_efficiency_non_negative_int(
+            proposal_lifecycle_report.get("generated_candidate_count")
+        )
+        or 0,
+        "accepted_generated_count": _sample_efficiency_non_negative_int(
+            proposal_lifecycle_report.get("accepted_generated_count")
+        )
+        or 0,
+        "rejected_generated_count": _sample_efficiency_non_negative_int(
+            proposal_lifecycle_report.get("rejected_generated_count")
+        )
+        or 0,
+        "execution_filtered_count": _sample_efficiency_non_negative_int(
+            proposal_lifecycle_report.get("execution_filtered_count")
+        )
+        or 0,
+    }
+    max_generations = config.get("max_generations")
+    proposals_per_generation = config.get("proposals_per_generation")
+    report = {
+        "schema": "libreevolve.repeated_sampling_baseline_report.v1",
+        "source": "startup_config_and_runtime_proposal_lifecycle",
+        "status": "not_configured",
+        "paper_variant": "No evolution",
+        "alphaevolve_setup": (
+            "same_initial_program_repeated_sampling_no_evolutionary_feedback"
+        ),
+        "current_runtime_policy": {
+            "max_generations": max_generations
+            if isinstance(max_generations, int) and not isinstance(max_generations, bool)
+            else None,
+            "proposals_per_generation": proposals_per_generation
+            if isinstance(proposals_per_generation, int)
+            and not isinstance(proposals_per_generation, bool)
+            else None,
+            "archive_admission_enabled": True,
+            "parent_selection_enabled": True,
+            "inspiration_resurfacing_enabled": True,
+            "failure_feedback_enabled": True,
+            "meta_prompt_updates_configurable": True,
+        },
+        "required_comparator_controls": [
+            "same_initial_program_prompt_history",
+            "fixed_model_and_backend",
+            "fixed_prompt_template",
+            "fixed_seed_and_candidate_count",
+            "same_evaluator_configuration",
+            "disabled_archive_admission_feedback",
+            "disabled_parent_selection",
+            "disabled_inspiration_resurfacing",
+            "disabled_failure_feedback",
+            "disabled_meta_prompt_updates",
+            "linked_evolutionary_comparator_run",
+        ],
+        "observed_sample_counts": sample_counts,
+        "budget_parity": {
+            "status": "not_checked",
+            "matching_evolutionary_run_id": None,
+            "matching_repeated_sampling_run_id": None,
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "runtime_absence_boundary": True,
+            "controlled_repeated_sampling_run": False,
+            "budget_parity_checked": False,
+            "target_progress_curve": False,
+            "linked_evolutionary_comparator": False,
+            "remaining_gap": [
+                "controlled_repeated_sampling_runner",
+                "fixed_prompt_model_seed_evaluator_contract",
+                "budget_parity_validation",
+                "target_progress_curve_linkage",
+                "evolutionary_comparator_run_linkage",
+            ],
+        },
+    }
+    report["validation"] = validate_repeated_sampling_baseline_report(report)
+    return report
+
+
+def validate_repeated_sampling_baseline_report(report: object) -> dict:
+    issues: list[dict[str, str]] = []
+    if not isinstance(report, Mapping):
+        return {
+            "schema": "libreevolve.repeated_sampling_baseline_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_report",
+                    "message": "repeated sampling baseline report must be a mapping",
+                }
+            ],
+        }
+    if report.get("schema") != "libreevolve.repeated_sampling_baseline_report.v1":
+        issues.append({"code": "invalid_schema", "message": "unsupported schema"})
+    if report.get("status") != "not_configured":
+        issues.append(
+            {
+                "code": "invalid_status",
+                "message": "runtime repeated-sampling comparator status must be not_configured",
+            }
+        )
+    if report.get("alphaevolve_setup") != (
+        "same_initial_program_repeated_sampling_no_evolutionary_feedback"
+    ):
+        issues.append(
+            {
+                "code": "invalid_alphaevolve_setup",
+                "message": "alphaevolve_setup must match the No evolution boundary",
+            }
+        )
+    controls = report.get("required_comparator_controls")
+    required_controls = {
+        "same_initial_program_prompt_history",
+        "fixed_model_and_backend",
+        "fixed_prompt_template",
+        "fixed_seed_and_candidate_count",
+        "same_evaluator_configuration",
+        "disabled_archive_admission_feedback",
+        "disabled_parent_selection",
+        "disabled_inspiration_resurfacing",
+        "disabled_failure_feedback",
+        "disabled_meta_prompt_updates",
+        "linked_evolutionary_comparator_run",
+    }
+    if not isinstance(controls, list) or set(controls) != required_controls:
+        issues.append(
+            {
+                "code": "invalid_required_comparator_controls",
+                "message": "required_comparator_controls must list the repeated-sampling controls",
+            }
+        )
+    sample_counts = report.get("observed_sample_counts")
+    if not isinstance(sample_counts, Mapping):
+        issues.append(
+            {
+                "code": "invalid_observed_sample_counts",
+                "message": "observed_sample_counts must be a mapping",
+            }
+        )
+    else:
+        for field in (
+            "generated_proposal_count",
+            "accepted_generated_count",
+            "rejected_generated_count",
+            "execution_filtered_count",
+        ):
+            if _sample_efficiency_non_negative_int(sample_counts.get(field)) is None:
+                issues.append(
+                    {
+                        "code": f"invalid_{field}",
+                        "message": f"{field} must be a non-negative integer",
+                    }
+                )
+        generated = _sample_efficiency_non_negative_int(
+            sample_counts.get("generated_proposal_count")
+        )
+        accepted = _sample_efficiency_non_negative_int(
+            sample_counts.get("accepted_generated_count")
+        )
+        rejected = _sample_efficiency_non_negative_int(
+            sample_counts.get("rejected_generated_count")
+        )
+        if (
+            generated is not None
+            and accepted is not None
+            and rejected is not None
+            and accepted + rejected > generated
+        ):
+            issues.append(
+                {
+                    "code": "sample_counts_exceed_generated",
+                    "message": "accepted plus rejected counts cannot exceed generated",
+                }
+            )
+    budget_parity = report.get("budget_parity")
+    if not isinstance(budget_parity, Mapping) or budget_parity.get("status") != "not_checked":
+        issues.append(
+            {
+                "code": "invalid_budget_parity",
+                "message": "budget_parity must record not_checked status",
+            }
+        )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "invalid_claim_ready",
+                "message": "repeated sampling report must not claim readiness",
+            }
+        )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be a mapping",
+            }
+        )
+    else:
+        expected_false = (
+            "controlled_repeated_sampling_run",
+            "budget_parity_checked",
+            "target_progress_curve",
+            "linked_evolutionary_comparator",
+        )
+        if readiness.get("runtime_absence_boundary") is not True:
+            issues.append(
+                {
+                    "code": "missing_runtime_absence_boundary",
+                    "message": "runtime absence boundary must be explicit",
+                }
+            )
+        for field in expected_false:
+            if readiness.get(field) is not False:
+                issues.append(
+                    {
+                        "code": f"invalid_{field}",
+                        "message": f"{field} must remain false",
+                    }
+                )
+    return {
+        "schema": "libreevolve.repeated_sampling_baseline_report.v1",
         "ok": not issues,
         "issues": issues,
     }

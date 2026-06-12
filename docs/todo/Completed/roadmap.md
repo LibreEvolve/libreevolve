@@ -9080,3 +9080,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     comparison evidence open.
   - Verification: focused runtime sample-efficiency test validates the
     implemented report.
+
+- [x] Preserve repeated-sampling comparator absence boundary.
+  - Spec evidence: roadmap test-time-compute claims need to separate local
+    budget/sample telemetry from executed repeated-sampling comparator evidence.
+  - Status: ROADMAP and TODO wording now recognize
+    `runtime.history.repeated_sampling_baseline_report` as an absence boundary
+    with observed sample counts and required comparator controls, while keeping
+    executable repeated-sampling runs and linked evolutionary comparisons open.
+  - Verification: focused runtime repeated-sampling boundary test validates
+    the implemented report.

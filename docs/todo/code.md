@@ -4213,12 +4213,15 @@ Primary evidence:
     search.
   - Current evidence: LibreEvolve records LLM call/provider/token/cost/latency
     budgets, generated candidate ids, archive admission, and an equal-budget
-    ablation report contract with a `No evolution` variant. It does not yet
-    define a repeated-sampling baseline runner or report that fixes model,
+    ablation report contract with a `No evolution` variant. Runtime histories
+    now include `libreevolve.repeated_sampling_baseline_report.v1`, an absence
+    boundary that links observed generated/accepted/rejected/execution-filtered
+    sample counts to the missing repeated-sampling comparator controls. It does
+    not yet define a repeated-sampling baseline runner that fixes model,
     prompt, seed, budget, candidate count, and evaluator settings while
     disabling evolutionary feedback, parent/inspiration resurfacing,
-    archive-driven selection, and meta-prompt updates. The current
-    `No evolution` registry label is not enough to prove a base-LLM
+    archive-driven selection, and meta-prompt updates. The current report and
+    `No evolution` registry label are not enough to prove a base-LLM
     repeated-sample comparator.
   - Required result: add benchmark/report support for equal-budget repeated
     base-model sampling baselines with controlled prompts/models/seeds,

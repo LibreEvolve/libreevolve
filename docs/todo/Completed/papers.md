@@ -11870,3 +11870,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     comparisons.
   - Verification: focused runtime sample-efficiency test validates the
     implemented report.
+
+- [x] Record repeated-sampling comparator absence boundary.
+  - Spec evidence: AlphaEvolve's Discussion contrasts evolutionary
+    test-time-compute search with repeated base-model sampling.
+  - Status: paper-facing TODOs and runtime manifests now expose
+    `repeated_sampling_baseline_report`, which records current
+    repeated-sampling comparator absence, observed sample counts, required
+    comparator controls, and `claim_ready: false`.
+  - Remaining paper gap: this does not execute a controlled repeated-sampling
+    baseline, prove budget parity, link target-progress curves, or compare
+    against a matching evolutionary run.
+  - Verification: focused runtime repeated-sampling boundary test validates
+    the implemented report.

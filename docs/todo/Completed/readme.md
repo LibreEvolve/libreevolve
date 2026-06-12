@@ -11547,3 +11547,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     bounded best-score curve counts with `claim_ready: false`.
   - Verification: focused runtime sample-efficiency test validates the
     implemented report.
+
+- [x] Document repeated-sampling comparator absence boundary.
+  - Spec evidence: README test-time-compute wording needed to distinguish a
+    local absence boundary from evidence of uplift over repeated base-model
+    sampling.
+  - Status: README and run-artifact docs now describe
+    `runtime.history.repeated_sampling_baseline_report` with observed sample
+    counts, required comparator controls, budget-parity absence, and
+    `claim_ready: false`.
+  - Verification: focused runtime repeated-sampling boundary test validates
+    the implemented report.

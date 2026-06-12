@@ -3293,6 +3293,24 @@ AlphaEvolve Table 1 sample efficiency, target-hit-per-sample behavior,
 thousands-scale benchmark success, equal-budget model-size comparison, or a
 repeated-sampling baseline.
 
+## `runtime.history.repeated_sampling_baseline_report`
+
+Completed manifests include a repeated-sampling baseline boundary report with
+schema `libreevolve.repeated_sampling_baseline_report.v1`. It records that the
+current runtime has no controlled repeated-sampling comparator configured,
+links the observed generated/accepted/rejected/execution-filtered sample
+counts from the proposal lifecycle report, and lists the controls required for
+AlphaEvolve's "No evolution" comparison: same initial program prompt history,
+fixed model/prompt/seed/evaluator settings, disabled archive feedback, disabled
+parent/inspiration resurfacing, disabled failure feedback, disabled meta-prompt
+updates, budget parity, target-progress curves, and a linked evolutionary
+comparator run.
+
+The report is an explicit absence boundary. Its `claim_ready: false` status
+means ordinary LLM-call budget caps, sample-efficiency counts, or the ablation
+registry's `No evolution` label must not be read as evidence that LibreEvolve
+improves over equal-budget repeated base-model sampling.
+
 Prompt feedback for the selected parent also renders bounded, redacted
 summaries from the candidate's persisted evaluation record: recent stage
 status, stdout/stderr, retry/sample attempts, and LLM grader feedback. It also

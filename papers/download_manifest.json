@@ -400,6 +400,16 @@
     "sha256": "06b9bcb459f40437119f2c95153985a0e8682e0509ca12be9bd5f32147c888f5"
   },
   {
+    "id": "2512.18746",
+    "title": "MemEvolve",
+    "url": "https://arxiv.org/pdf/2512.18746.pdf",
+    "file": "papers/2512.18746__MemEvolve.pdf",
+    "ok": true,
+    "bytes": 10951239,
+    "message": "downloaded",
+    "sha256": "51ca8a0ca349b7ad111b5380148c6dd34fa4d16f933ac58677fc2246b1566dd5"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

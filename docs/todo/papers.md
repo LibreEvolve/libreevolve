@@ -5021,7 +5021,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     ROADMAP wording that treats LLM-ALSO as background context until those
     artifacts exist.
 
-- [ ] Track MemEvolve meta-evolving memory-architecture paper evidence.
+- [ ] Reproduce MemEvolve meta-evolving memory-architecture evidence beyond
+      paper coverage.
   - Paper/source evidence: arXiv `2512.18746`, submitted December 21, 2025, is
     titled `MemEvolve: Meta-Evolution of Agent Memory Systems`. Its abstract
     says self-evolving memory systems are reshaping LLM-agent evolution, but
@@ -5033,24 +5034,29 @@ directory and using the AlphaEvolve paper as the primary specification.
     systems into a modular encode/store/retrieve/manage design space, and
     reports up to 17.06% improvements for frameworks such as SmolAgent and
     Flash-Searcher plus cross-task and cross-LLM generalization.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2512.18746`. Existing rows cover AlphaEvolve run artifacts,
-    prompt history, failed-proposal snippets, DeltaEvolve semantic context,
-    CORAL shared memory, and several open-ended source gates, but not
-    meta-evolution of the memory architecture itself, EvolveLab's modular
-    memory substrate, encode/store/retrieve/manage component mutations, or
-    transfer evidence across tasks and backbone models.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2512.18746`: title/authors/arXiv version/date/PDF digest, source license,
-    linked-code URL/status, relation to AlphaEvolve and LibreEvolve run
-    memory, memory-component taxonomy, encode/store/retrieve/manage schema,
-    memory-architecture mutation records, experiential-knowledge artifacts,
-    joint content/architecture evolution traces, static-memory baseline
-    identities, EvolveLab benchmark metadata, cross-task and cross-LLM
-    transfer metrics, performance-delta records, code/artifact availability
-    if any, reproducibility status, and README/ROADMAP wording that treats
-    MemEvolve as missing paper evidence rather than implemented LibreEvolve
-    support.
+  - Current gap: the paper cache, paper index, row identity, README, ROADMAP,
+    and TODO coverage now include `2512.18746`, cached locally as
+    `papers/2512.18746__MemEvolve.pdf` with byte count `10951239` and
+    SHA-256
+    `51ca8a0ca349b7ad111b5380148c6dd34fa4d16f933ac58677fc2246b1566dd5`.
+    Reproduction evidence remains absent: no source-license details,
+    linked-code or project/demo URL status, memory-component taxonomy,
+    encode/store/retrieve/manage schema, memory-architecture mutation records,
+    experiential-knowledge artifacts, joint content/architecture evolution
+    traces, static-memory baseline identities, EvolveLab benchmark metadata,
+    cross-task and cross-LLM transfer metrics, performance-delta records,
+    code/artifact availability status, reproducibility status, or independent
+    reproduction output exists.
+  - Required result: add reproduction-grade MemEvolve evidence: source
+    license, project/demo URL status, linked-code status, relation to
+    AlphaEvolve and LibreEvolve run memory, memory-component taxonomy,
+    encode/store/retrieve/manage schema, memory-architecture mutation records,
+    experiential-knowledge artifacts, joint content/architecture evolution
+    traces, static-memory baseline identities, EvolveLab benchmark metadata,
+    cross-task and cross-LLM transfer metrics, performance-delta records,
+    code/artifact reproducibility status, independent reproduction outputs,
+    and README/ROADMAP wording that treats MemEvolve as background context
+    until those artifacts exist.
 
 - [ ] Track ANCHOR healthy-evolution oversight paper evidence.
   - Paper/source evidence: arXiv `2606.06114`, submitted June 4, 2026, is

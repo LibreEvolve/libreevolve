@@ -764,7 +764,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     URL, and local PDF label describing the same source before version or
     rights evidence attaches.
   - Status: ROADMAP now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 42 cache
+    companion manifest that emits derived source identities for all 43 cache
     rows and links the AlphaEvolve row to `papers/source_versions.json`.
   - Remaining gap: none for this bounded roadmap wording slice.
 
@@ -9938,7 +9938,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     unverifiable-domain benchmarks, external-judge reward-hacking
     comparisons, linked-code audits, and independent reproduction outputs
     explicitly open.
-  - Verification: paper-manifest validation checks the 42-row manifest,
+  - Verification: paper-manifest validation checks the 43-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.
 
 - [x] Preserve `2605.21605` GenEvolve paper-cache scope in roadmap.
@@ -9953,7 +9953,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     supervision records, multimodal policy-update loops, GenEvolve-Data
     metadata, GenEvolve-Bench reports, baseline comparisons, linked-code
     audits, and independent reproduction outputs explicitly open.
-  - Verification: paper-manifest validation checks the 42-row manifest,
+  - Verification: paper-manifest validation checks the 43-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.
 
 - [x] Preserve `2605.29847` EvoRubric paper-cache scope in roadmap.
@@ -9968,7 +9968,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     expansion, medical/writing/science benchmark reports, reward-hacking
     audits, linked-code audits, and independent reproduction outputs
     explicitly open.
-  - Verification: paper-manifest validation checks the 42-row manifest,
+  - Verification: paper-manifest validation checks the 43-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.
 
 - [x] Preserve `2605.29293` LLM-ALSO paper-cache scope in roadmap.
@@ -9983,5 +9983,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     promotion gates, main-training trajectory provenance, learning-efficiency
     reports, linked-code audits, and independent reproduction outputs
     explicitly open.
-  - Verification: paper-manifest validation checks the 42-row manifest,
+  - Verification: paper-manifest validation checks the 43-row manifest,
+    paper-index row, TODO coverage row, and source-identity sidecar.
+
+- [x] Preserve `2512.18746` MemEvolve paper-cache scope in roadmap.
+  - Status: ROADMAP now identifies arXiv `2512.18746`, `MemEvolve:
+    Meta-Evolution of Agent Memory Systems`, as background memory-architecture
+    evolution context only, with the cached `papers/2512.18746__MemEvolve.pdf`
+    row and missing explicit encode/store/retrieve/manage memory-component
+    design spaces, memory-architecture genotypes, memory-system
+    mutation/evaluation loops, experiential-knowledge co-evolution traces,
+    EvolveLab benchmark mappings, static-memory baseline comparisons,
+    cross-task or cross-LLM transfer reports, performance-delta records,
+    linked-code audits, and independent reproduction outputs explicitly open.
+  - Verification: paper-manifest validation checks the 43-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.

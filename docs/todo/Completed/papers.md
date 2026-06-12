@@ -13010,3 +13010,21 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2512.18746` MemEvolve paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2512.18746`, `MemEvolve: Meta-Evolution of Agent Memory Systems`, cached
+    locally as `papers/2512.18746__MemEvolve.pdf` with byte count `10951239`
+    and SHA-256
+    `51ca8a0ca349b7ad111b5380148c6dd34fa4d16f933ac58677fc2246b1566dd5`.
+  - Remaining paper gap: source-license details, linked-code or project/demo
+    URL status, memory-component taxonomy, encode/store/retrieve/manage
+    schema, memory-architecture mutation records, experiential-knowledge
+    artifacts, joint content/architecture evolution traces, static-memory
+    baseline identities, EvolveLab benchmark metadata, cross-task and
+    cross-LLM transfer metrics, performance-delta records, code/artifact
+    reproducibility status, and independent reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

@@ -3333,26 +3333,30 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     implying LibreEvolve supports
     LLM-ALSO-style adaptive reward shaping without those artifacts.
 
-- [ ] Keep README MemEvolve memory-architecture claims absent or source-scoped
-      until paper and runtime evidence exists.
+- [ ] Keep README MemEvolve memory-architecture claims source-scoped until
+      runtime evidence exists.
   - Spec evidence: arXiv `2512.18746`, `MemEvolve: Meta-Evolution of Agent
     Memory Systems`, says agent memory systems usually store trajectories,
     distill experience, and synthesize reusable tools through manually
     engineered static architectures. MemEvolve jointly evolves experiential
     knowledge and the memory architecture itself, using an EvolveLab modular
     design space over encode, store, retrieve, and manage.
-  - Current evidence: README documents LibreEvolve's current run artifacts,
-    prompt history, failure streams, archive events, and implementation
-    boundaries. It does not list `2512.18746`, expose evolvable memory
-    architecture components, mutate encode/store/retrieve/manage policies,
-    compare static memory baselines, or report cross-task/cross-LLM transfer.
+  - Current evidence: README now lists `2512.18746`, MemEvolve, as memory-
+    architecture evolution context only and says no local encode/store/
+    retrieve/manage design space, memory-architecture mutation loop, EvolveLab
+    benchmark mapping, or transfer report exists. README also documents
+    LibreEvolve's current run artifacts, prompt history, failure streams,
+    archive events, and implementation boundaries; it does not claim
+    evolvable memory architecture components, encode/store/retrieve/manage
+    policy mutation, static memory baseline comparison, or cross-task/
+    cross-LLM transfer.
   - Required result: if README mentions MemEvolve, self-evolving memory,
     meta-evolving memory architecture, EvolveLab, encode/store/retrieve/manage
     memory design, trajectory distillation, reusable-tool memory, or adaptive
-    memory transfer, keep the wording source-scoped until the paper is in the
-    manifest and local artifacts can show memory component schemas, mutation
-    records, content/architecture co-evolution traces, benchmark baselines,
-    transfer metrics, and report outcomes. Avoid implying LibreEvolve supports
+    memory transfer, keep the wording source-scoped until local artifacts can
+    show memory component schemas, mutation records, content/architecture
+    co-evolution traces, benchmark baselines, transfer metrics, and report
+    outcomes. Avoid implying LibreEvolve supports
     MemEvolve-style memory architecture evolution without those artifacts.
 
 - [ ] Keep README ANCHOR healthy-evolution oversight claims absent or

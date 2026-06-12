@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 42 cache rows and links the AlphaEvolve row to
+  identities for all 43 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1456,6 +1456,17 @@ resumed-trace proof are still open.
   learning-efficiency reports, linked-code audits, and independent
   reproduction outputs remain open before roadmap wording can promote
   LLM-ALSO-style adaptive learning-signal support.
+- Keep MemEvolve memory-architecture evolution claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2512.18746`, `MemEvolve: Meta-Evolution of Agent Memory Systems`, cached
+  locally as `papers/2512.18746__MemEvolve.pdf`. This is background memory-
+  architecture evolution context only; explicit encode/store/retrieve/manage
+  memory-component design spaces, memory-architecture genotypes,
+  memory-system mutation/evaluation loops, experiential-knowledge co-evolution
+  traces, EvolveLab benchmark mappings, static-memory baseline comparisons,
+  cross-task or cross-LLM transfer reports, performance-delta records,
+  linked-code audits, and independent reproduction outputs remain open before
+  roadmap wording can promote MemEvolve-style memory support.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

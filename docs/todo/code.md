@@ -5516,7 +5516,8 @@ Primary evidence:
     wording that keeps adaptive learning-signal optimization as missing
     implementation evidence until local runtime artifacts and reports exist.
 
-- [ ] Add MemEvolve meta-evolving memory-architecture source boundary.
+- [ ] Implement MemEvolve meta-evolving memory-architecture evidence beyond
+      paper cache coverage.
   - Spec evidence: arXiv `2512.18746`, `MemEvolve: Meta-Evolution of Agent
     Memory Systems`, was submitted December 21, 2025. Its abstract says
     self-evolving LLM agents typically rely on manually engineered memory
@@ -5528,23 +5529,28 @@ Primary evidence:
     encode, store, retrieve, and manage. It reports up to 17.06% improvements
     for frameworks such as SmolAgent and Flash-Searcher plus cross-task and
     cross-LLM generalization.
-  - Current evidence: LibreEvolve stores run artifacts, prompt history,
-    failure snippets, archive events, and best programs, but these are fixed
-    artifact schemas rather than evolvable memory architecture components.
-    There is no MemEvolve source row, no explicit encode/store/retrieve/manage
-    memory design space, no memory-architecture genotype, no memory-system
-    mutation/evaluation loop, no architecture-transfer report, no EvolveLab
-    benchmark mapping, and no comparison against static memory baselines.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2512.18746`: arXiv id/version/date/PDF hash, authors, source license,
-    linked code URL/status, relation to AlphaEvolve and LibreEvolve run memory,
-    memory component taxonomy, encode/store/retrieve/manage schema,
-    memory-architecture mutation records, experiential-knowledge artifacts,
-    joint content/architecture evolution traces, memory baseline identities,
-    EvolveLab benchmark taxonomy, cross-task and cross-LLM transfer metrics,
-    performance-delta records, reproducibility status, and README/ROADMAP
-    wording that keeps meta-evolving memory systems as missing evidence until
-    local implementation and reports exist.
+  - Current evidence: `papers/download_manifest.*`, `papers/row_identity.json`,
+    `papers/README.md`, README, ROADMAP, and TODO coverage now include
+    `2512.18746`, cached locally as `papers/2512.18746__MemEvolve.pdf` with
+    byte count `10951239` and SHA-256
+    `51ca8a0ca349b7ad111b5380148c6dd34fa4d16f933ac58677fc2246b1566dd5`.
+    LibreEvolve still stores run artifacts, prompt history, failure snippets,
+    archive events, and best programs as fixed artifact schemas rather than
+    evolvable memory architecture components. It has no explicit
+    encode/store/retrieve/manage memory design space, no memory-architecture
+    genotype, no memory-system mutation/evaluation loop, no architecture-
+    transfer report, no EvolveLab benchmark mapping, and no comparison against
+    static memory baselines.
+  - Required result: add implementation-boundary metadata beyond the paper
+    cache: source license, linked-code or project/demo URL status, relation to
+    AlphaEvolve and LibreEvolve run memory, memory component taxonomy,
+    encode/store/retrieve/manage schema, memory-architecture mutation records,
+    experiential-knowledge artifacts, joint content/architecture evolution
+    traces, memory baseline identities, EvolveLab benchmark taxonomy,
+    cross-task and cross-LLM transfer metrics, performance-delta records,
+    reproducibility status, and README/ROADMAP wording that keeps
+    meta-evolving memory systems as missing implementation evidence until
+    local runtime artifacts and reports exist.
 
 - [ ] Add ANCHOR human-like oversight and norm-correction source boundary.
   - Spec evidence: arXiv `2606.06114`, `Towards Healthy Evolution: Exploring

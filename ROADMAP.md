@@ -624,8 +624,8 @@ is not yet an AlphaEvolve reproduction.
   not OS/container sandbox or quota enforcement.
 - Continue labeling CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve,
   GigaEvo, CodeEvolve, MadEvolve, Magellan, ArchAgent, Multiagent Learning,
-  Ramsey Numbers, and Berczy local-correction combinatorics features as
-  inspired, candidate benchmark, or
+  Bilateral Trade, Ramsey Numbers, and Berczy local-correction combinatorics
+  features as inspired, candidate benchmark, or
   application context unless paper behavior is actually implemented. The committed
   `papers/gigaevo_framework_boundary.json`
   sidecar records the GigaEvo source-specific boundary for Redis lifecycle
@@ -700,6 +700,14 @@ is not yet an AlphaEvolve reproduction.
   harnesses, certificate schemas, symmetry-scramble and hard-negative replay
   records, evolved-code and Gemini-summary artifacts, reported metric and
   conjecture rows, repository snapshots, and independent verifier outputs.
+  The committed `papers/bilateral_trade_boundary.json` sidecar records the
+  Bilateral Trade source-specific boundary for value-distribution candidate
+  schemas, fixed Discrete Equal Revenue buyer fixtures, evolved seller CDF
+  runtime, PMF/CDF/survival validation, first-best and Random-Offerer GFT
+  evaluators, integer-rounding precision policy, witness artifacts, code
+  hashes, prior-baseline rows, alternate-search attempts, BIC/BB/IR
+  assumptions, unrounded-mixture caveat handling, and independent checker
+  outputs.
 
 ## Mid Term
 

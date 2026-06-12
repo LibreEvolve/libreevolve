@@ -26,6 +26,10 @@ from libreevolve.problems.benchmarks.ablation_registry import (
     REGISTRY_PATH as ABLATION_REGISTRY_PATH,
     validate_ablation_registry,
 )
+from libreevolve.problems.benchmarks.bilateral_trade_boundary import (
+    bilateral_trade_boundary_record,
+    validate_bilateral_trade_boundary,
+)
 from libreevolve.problems.benchmarks.ablation_exhibits import (
     figure8_artifact_boundary_record,
     validate_figure8_artifact_boundary,
@@ -281,6 +285,7 @@ ARCHAGENT_BOUNDARY_FILE = "papers/archagent_boundary.json"
 MULTIAGENT_LEARNING_BOUNDARY_FILE = "papers/multiagent_learning_boundary.json"
 RAMSEY_NUMBERS_BOUNDARY_FILE = "papers/ramsey_numbers_boundary.json"
 COMBINATORICS_BERCZY_BOUNDARY_FILE = "papers/combinatorics_berczy_boundary.json"
+BILATERAL_TRADE_BOUNDARY_FILE = "papers/bilateral_trade_boundary.json"
 EXAMPLE_BENCHMARK_SCOPE_FILE = "papers/example_benchmark_scope.json"
 MATH_OUTCOME_BOUNDARY_FILE = "papers/math_outcome_boundary.json"
 MATH_STARTING_CONSTRUCTION_BOUNDARY_FILE = "papers/math_starting_construction_boundary.json"
@@ -671,6 +676,7 @@ def validate_paper_manifest(
     issues.extend(_validate_multiagent_learning_boundary(root_path))
     issues.extend(_validate_ramsey_numbers_boundary(root_path))
     issues.extend(_validate_combinatorics_berczy_boundary(root_path))
+    issues.extend(_validate_bilateral_trade_boundary(root_path))
 
     if set(csv_by_id) - seen_ids:
         for row_id in sorted(set(csv_by_id) - seen_ids):
@@ -2019,6 +2025,38 @@ def _validate_combinatorics_berczy_boundary(root_path: Path) -> list[PaperManife
             f"combinatorics_berczy_boundary_{issue.code}",
             issue.message,
             "combinatorics_berczy",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_bilateral_trade_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / BILATERAL_TRADE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = bilateral_trade_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "bilateral_trade_boundary_manifest_missing",
+                    (
+                        f"{BILATERAL_TRADE_BOUNDARY_FILE} must emit "
+                        "Bilateral Trade mechanism-design evidence availability"
+                    ),
+                    "bilateral_trade",
+                )
+            ]
+    report = validate_bilateral_trade_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"bilateral_trade_boundary_{issue.code}",
+            issue.message,
+            "bilateral_trade",
         )
         for issue in report.issues
     ]

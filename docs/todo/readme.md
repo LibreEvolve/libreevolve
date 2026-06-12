@@ -3763,10 +3763,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     computation after `1e-15` rounding, and a rounded
     mixture-of-modulated-power-laws seller witness with component values
     `1.2322`, `0.3312`, `0.8565`, `0.5939`, and ratio `2.0749`.
-  - Current evidence: README documents benchmark-report contracts, paper-cache
-    status, constructive-math and systems gaps, and example fixtures. It does
-    not mention `2603.08679`, define bilateral-trade value distributions,
-    compute first-best or Random-Offerer GFT, preserve BIC/BB assumptions,
+  - Current evidence: README now lists `2603.08679` as Bilateral Trade
+    mechanism-design context and points to `papers/bilateral_trade_boundary.json`.
+    README documents benchmark-report contracts, paper-cache status,
+    constructive-math and systems gaps, and example fixtures, but it still
+    does not define bilateral-trade value distributions, compute first-best
+    or Random-Offerer GFT, preserve BIC/BB assumptions,
     compare the prior `2` conjecture or `~2.02` counterexample, or provide
     witness distribution artifacts and checker outputs. It also lacks
     source-scoped wording for the fixed-buyer/evolved-seller search setup,

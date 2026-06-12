@@ -5480,7 +5480,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     declaration provenance, and caveats that these are experimental
     conjecture-generating results rather than proof certificates.
 
-- [ ] Track AlphaEvolve bilateral-trade lower-bound paper evidence.
+- [ ] Implement AlphaEvolve bilateral-trade lower-bound paper evidence beyond
+      source boundary.
   - Paper/source evidence: arXiv `2603.08679`, submitted March 9, 2026, is
     titled `A New Lower Bound for the Random Offerer Mechanism in Bilateral
     Trade using AI-Guided Evolutionary Search`. Its abstract invokes the
@@ -5500,11 +5501,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     `GFT_BO ~= 0.8565`, `GFT_RO ~= 0.5939`, and ratio `2.0749`. Section 4.3
     and Appendix A describe rounding probabilities to `1e-15` multiples and
     exact integer GFT computation.
-  - Current gap: `papers/README.md` lists `2603.08679` as background-only
-    mechanism-design context with no bilateral-trade distribution benchmark,
-    but the current implementation and paper index do not yet provide local
-    source-boundary artifacts or implementation evidence for this paper.
-    Broad benchmark gaps do not capture value-distribution witness
+  - Current gap: `papers/bilateral_trade_boundary.json` now records the
+    source-specific boundary for this paper: title/authors, arXiv
+    version/date, cached-PDF digest, license, reference-only source link,
+    reported result fields, component ids, required evidence fields, and
+    missing local benchmark/artifact evidence. Broad benchmark gaps still do
+    not capture value-distribution witness
     schemas, FB/RO GFT calculations, economic mechanism assumptions, ratio
     tolerance, or lower-bound baseline attribution. They also omit the fixed
     Discrete Equal Revenue buyer fixture, evolved seller-generator code
@@ -5513,11 +5515,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     appendix evaluator code, and the paper's undocumented alternate searches
     that reportedly reached `2.08` when evolving the buyer after fixing the
     seller and below `2.07` when co-evolving both sides.
-  - Required result: add paper-manifest and paper-index coverage updates for
-    `2603.08679`: title/authors/arXiv version/date/PDF digest, source
-    license, code/artifact URL/status, relation to AlphaEvolve and
-    LibreEvolve economic-mechanism assumptions, value-distribution candidate
-    schemas, buyer/seller support and probability constraints, FB and RO GFT
+  - Required result: add executable paper/report evidence for `2603.08679`:
+    value-distribution candidate schemas, buyer/seller support and probability
+    constraints, FB and RO GFT
     calculation metadata, BIC/BB assumption records, ratio objective and
     tolerance policy, witness distribution artifacts, prior `2` conjecture
     and `~2.02` counterexample baselines, seed/budget records, independent

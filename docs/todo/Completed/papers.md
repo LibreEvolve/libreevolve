@@ -4,6 +4,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## Papers Todo: Reference and Specification Gaps
 
+- [x] Record Bilateral Trade `2603.08679` source boundary.
+  - Evidence: `papers/bilateral_trade_boundary.json` preserves the source
+    identity, cached PDF digest/license, source-link status, component rows,
+    current no-mechanism-design-runner evidence, required evidence fields, and
+    missing distribution-schema, GFT-evaluator, precision-policy,
+    witness-artifact, baseline-row, caveat, and independent-verifier evidence.
+    `papers/README.md` marks the paper as mechanism-design context and links
+    completed code/paper/README/roadmap evidence for this boundary.
+
 - [x] Record Berczy local-correction combinatorics `2603.06692` source
       boundary.
   - Evidence: `papers/combinatorics_berczy_boundary.json` preserves the source

@@ -4,6 +4,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Bilateral Trade `2603.08679` source boundary in README.
+  - Evidence: `README.md` lists Bilateral Trade as AlphaEvolve
+    mechanism-design result context only and points to
+    `papers/bilateral_trade_boundary.json` for the missing
+    value-distribution schema, buyer/seller witness artifact,
+    first-best/Random-Offerer GFT evaluator, precision-policy, baseline-row,
+    and independent-checker evidence.
+
 - [x] Document Berczy local-correction combinatorics `2603.06692` source
       boundary in README.
   - Evidence: `README.md` lists Local Corrections in Combinatorics as a

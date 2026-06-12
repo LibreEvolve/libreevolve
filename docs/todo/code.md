@@ -5950,7 +5950,8 @@ Primary evidence:
     artifact hashes, and explicit proof-boundary fields marking these as
     experimental algorithms and conjectures rather than verified theorems.
 
-- [ ] Add AlphaEvolve bilateral-trade mechanism-design boundary.
+- [ ] Implement AlphaEvolve bilateral-trade mechanism-design parity beyond
+      source boundary.
   - Spec evidence: arXiv `2603.08679`, `A New Lower Bound for the Random
     Offerer Mechanism in Bilateral Trade using AI-Guided Evolutionary Search`,
     was submitted March 9, 2026. Its abstract frames bilateral trade under
@@ -5974,10 +5975,12 @@ Primary evidence:
     `z=(m+1)/(H+1)`, yielding `GFT_FB ~= 1.2322`,
     `GFT_SO ~= 0.3312`, `GFT_BO ~= 0.8565`, `GFT_RO ~= 0.5939`, and
     ratio `2.0749`; the appendix includes evaluator code.
-  - Current evidence: `papers/README.md` lists `2603.08679` only as
-    background AlphaEvolve mechanism-design context with no bilateral-trade
-    distribution benchmark. LibreEvolve has no implemented source-boundary gate
-    for this source, no buyer/seller value-distribution candidate schema, no
+  - Current evidence: `papers/bilateral_trade_boundary.json` now records the
+    source-specific absence boundary for `2603.08679`, including source
+    identity, cached-PDF digest, source version, license, source link status,
+    reported `2.0749` result fields, required evidence fields, and missing
+    local evaluator/artifact evidence. LibreEvolve still has no buyer/seller
+    value-distribution candidate schema, no
     Random-Offerer evaluator, no first-best GFT computation, no BIC/BB
     assumption record, no ratio-verification report, no prior-counterexample
     baseline comparison, and no economic-mechanism artifact policy for
@@ -5989,11 +5992,9 @@ Primary evidence:
     the paper's other attempts (fixing the seller and evolving the buyer
     reportedly reached `2.08` but was not detailed; co-evolving both sides
     found a lower bound below `2.07`).
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2603.08679`: arXiv id/version/date/PDF hash, authors, source
-    license, code/artifact availability, relation to AlphaEvolve and
-    LibreEvolve mechanism-design fixtures, value-distribution candidate
-    schema, buyer/seller support and probability constraints, FB and RO GFT
+  - Required result: implement the missing runtime evidence for
+    `2603.08679`: value-distribution candidate schema, buyer/seller support
+    and probability constraints, FB and RO GFT
     calculation records, BIC/BB assumption metadata, ratio objective
     definition, numerical precision/tolerance policy, witness distribution
     artifacts, prior lower-bound/counterexample baselines, seed/budget

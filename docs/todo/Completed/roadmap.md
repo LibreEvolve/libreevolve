@@ -2,6 +2,13 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Preserve Bilateral Trade `2603.08679` boundary scope in roadmap.
+  - Evidence: `ROADMAP.md` adds `papers/bilateral_trade_boundary.json` to the
+    inspired/application-context source-boundary list and keeps
+    bilateral-trade lower-bound support unpromoted until distribution schemas,
+    GFT evaluators, precision records, witness artifacts, baseline rows,
+    caveat handling, and independent verifier evidence exist.
+
 - [x] Preserve Berczy local-correction combinatorics `2603.06692` boundary
       scope in roadmap.
   - Evidence: `ROADMAP.md` adds `papers/combinatorics_berczy_boundary.json`

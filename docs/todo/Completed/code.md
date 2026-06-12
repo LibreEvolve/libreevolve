@@ -4,6 +4,16 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add Bilateral Trade `2603.08679` mechanism-design source-boundary gate.
+  - Evidence: `libreevolve/problems/benchmarks/bilateral_trade_boundary.py`
+    records the source identity, cached-PDF digest, reported `2.0749`
+    Random-Offerer result fields, required local evidence fields, and false
+    local evaluator/checker readiness flags. It rejects premature
+    distribution-benchmark claims and is required by
+    `libreevolve/tools/paper_manifest.py`. `tests/test_bilateral_trade_boundary.py`
+    and `tests/test_paper_manifest.py` cover the absence record, overclaim
+    rejection, and root-manifest sidecar requirement.
+
 - [x] Add Berczy local-correction combinatorics source-boundary gate.
   - Evidence: `libreevolve/problems/benchmarks/combinatorics_berczy_boundary.py`
     records the `2603.06692` source identity, cached-PDF digest, reported

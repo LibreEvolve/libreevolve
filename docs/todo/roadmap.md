@@ -4223,9 +4223,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `H=20000`, `1e-15` rounded integer arithmetic, exact GFT computation, and
     a modulated-power-law seller distribution yielding the reported component
     values and ratio.
-  - Current evidence: ROADMAP tracks broad benchmark gaps, constructive-math
-    result gaps, systems fixtures, and background paper-index rows. It does
-    not promote `2603.08679` beyond background-only status, define a
+  - Current evidence: ROADMAP now names `papers/bilateral_trade_boundary.json`
+    as the source-specific absence boundary for Bilateral Trade
+    mechanism-design evidence. It still does not promote `2603.08679` beyond
+    background-only status, define a
     bilateral-trade distribution benchmark, compute first-best versus
     Random-Offerer GFT, preserve BIC/BB assumptions, compare prior
     counterexample baselines, or verify lower-bound witness distributions. It
@@ -4233,8 +4234,7 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     survival-function fixtures, CDF/SF/PMF rounding validation, SO/BO
     optimal-price records, appendix evaluator traceability, and the
     rounded-versus-unrounded result caveat.
-  - Required result: add roadmap gates for `2603.08679`: paper/source
-    manifest entry, PDF/cache hash, source-license and code-artifact status,
+  - Required result: implement roadmap promotion gates for `2603.08679`:
     value-distribution candidate schema, buyer/seller support and probability
     constraints, FB and RO GFT evaluator records, BIC/BB assumption metadata,
     ratio objective and tolerance policy, witness distribution artifacts,

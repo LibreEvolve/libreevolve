@@ -645,7 +645,13 @@ is not yet an AlphaEvolve reproduction.
   split, free-parameter tracking, nested parameter optimization, JAX/vmad
   compatibility, optimized-value source injection, BAO/21cm/tSZ task adapters,
   generated innovation reports, run/model-contribution statistics,
-  reward-hacking controls, and hosted report artifacts.
+  reward-hacking controls, and hosted report artifacts. The committed
+  `papers/causalevolve_boundary.json` sidecar records the CausalEvolve
+  source-specific boundary for POMDP/SCM task-world records, causal scratchpad
+  memory, LLM outcome-factor generation, executable factor code,
+  CausalPlanner factor-direction interventions, procedure-factor extraction,
+  treatment-effect tables, surprise-pattern detection, abductive hypotheses,
+  scratchpad replay, and benchmark/ablation rows.
 
 ## Mid Term
 

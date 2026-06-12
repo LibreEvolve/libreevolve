@@ -9566,3 +9566,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     report artifacts.
   - Verification: MadEvolve boundary tests and paper-manifest tests validate
     the sidecar and repo-root requirement.
+
+- [x] Preserve CausalEvolve boundary scope in roadmap.
+  - Spec evidence: roadmap CausalEvolve claims should not promote fixed
+    token-pattern factor guidance into CausalEvolve's causal scratchpad,
+    intervention policy, treatment-effect, abduction, or benchmark parity.
+  - Status: ROADMAP and roadmap TODO wording now identify
+    `papers/causalevolve_boundary.json` as the source-specific boundary for
+    POMDP/SCM task-world records, causal scratchpad memory, LLM outcome-factor
+    generation, executable factor code, CausalPlanner factor-direction
+    interventions, procedure-factor extraction, treatment-effect tables,
+    surprise-pattern detection, abductive hypotheses, scratchpad replay, and
+    benchmark/ablation rows.
+  - Verification: CausalEvolve boundary tests and paper-manifest tests
+    validate the sidecar and repo-root requirement.

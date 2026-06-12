@@ -12491,3 +12491,21 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     generalization claims, and hosted report artifacts remain open.
   - Verification: MadEvolve boundary tests and paper-manifest tests validate
     the sidecar and reject domain-optimization readiness overclaims.
+
+- [x] Record CausalEvolve source boundary.
+  - Spec evidence: paper-facing CausalEvolve claims need to distinguish fixed
+    token-pattern factor guidance from POMDP/SCM framing, causal scratchpad
+    memory, LLM factor generation, intervention policies, treatment-effect
+    estimates, surprise/abduction artifacts, and benchmark comparisons.
+  - Status: `papers/causalevolve_boundary.json` now carries the
+    source-specific `2603.14575` boundary with cached PDF digest, arXiv
+    version/revision metadata, CC BY-NC-SA license metadata, no-code-link
+    status, framework components, local token-pattern status, required
+    evidence fields, and missing-evidence keys.
+  - Remaining paper gap: theoretical claims, factor-generation prompts,
+    executable outcome metrics, CausalPlanner policy, procedure-factor
+    extraction, treatment effects, surprise/abduction artifacts, benchmark
+    tasks, seeds, step schedules, baseline/ablation rows, and result tables
+    remain open.
+  - Verification: CausalEvolve boundary tests and paper-manifest tests
+    validate the sidecar and reject causal-scratchpad readiness overclaims.

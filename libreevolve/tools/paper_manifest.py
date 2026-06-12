@@ -60,6 +60,10 @@ from libreevolve.problems.benchmarks.candidate_language_runner_boundary import (
     candidate_language_runner_boundary_record,
     validate_candidate_language_runner_boundary,
 )
+from libreevolve.problems.benchmarks.causalevolve_boundary import (
+    causalevolve_boundary_record,
+    validate_causalevolve_boundary,
+)
 from libreevolve.problems.benchmarks.codeevolve_boundary import (
     codeevolve_boundary_record,
     validate_codeevolve_boundary,
@@ -246,6 +250,7 @@ CODEEVOLVE_BOUNDARY_FILE = "papers/codeevolve_boundary.json"
 THETAEVOLVE_BOUNDARY_FILE = "papers/thetaevolve_boundary.json"
 IMPROVEVOLVE_BOUNDARY_FILE = "papers/improvevolve_boundary.json"
 MADEVOLVE_BOUNDARY_FILE = "papers/madevolve_boundary.json"
+CAUSALEVOLVE_BOUNDARY_FILE = "papers/causalevolve_boundary.json"
 EXAMPLE_BENCHMARK_SCOPE_FILE = "papers/example_benchmark_scope.json"
 MATH_OUTCOME_BOUNDARY_FILE = "papers/math_outcome_boundary.json"
 MATH_STARTING_CONSTRUCTION_BOUNDARY_FILE = "papers/math_starting_construction_boundary.json"
@@ -629,6 +634,7 @@ def validate_paper_manifest(
     issues.extend(_validate_thetaevolve_boundary(root_path))
     issues.extend(_validate_improvevolve_boundary(root_path))
     issues.extend(_validate_madevolve_boundary(root_path))
+    issues.extend(_validate_causalevolve_boundary(root_path))
 
     if set(csv_by_id) - seen_ids:
         for row_id in sorted(set(csv_by_id) - seen_ids):
@@ -1753,6 +1759,38 @@ def _validate_madevolve_boundary(root_path: Path) -> list[PaperManifestIssue]:
             f"madevolve_boundary_{issue.code}",
             issue.message,
             "madevolve",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_causalevolve_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / CAUSALEVOLVE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = causalevolve_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "causalevolve_boundary_manifest_missing",
+                    (
+                        f"{CAUSALEVOLVE_BOUNDARY_FILE} must emit "
+                        "CausalEvolve causal-scratchpad evidence availability"
+                    ),
+                    "causalevolve",
+                )
+            ]
+    report = validate_causalevolve_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"causalevolve_boundary_{issue.code}",
+            issue.message,
+            "causalevolve",
         )
         for issue in report.issues
     ]

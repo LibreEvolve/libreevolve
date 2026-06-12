@@ -4833,7 +4833,7 @@ the complete implementation-status index for all 25 manifest rows.
 | [**ThetaEvolve**](https://arxiv.org/abs/2511.23473) | Wang et al. | 2025 | Test-time training inspiration only; `papers/thetaevolve_boundary.json` records missing dynamic-environment, batch-sampling, lazy-penalty, reward-shaping, online GRPO/RL, checkpoint, throughput, and benchmark-comparison evidence |
 | [**ImprovEvolve**](https://arxiv.org/abs/2602.10233) | Kravatskiy et al. | 2026 | Modular-search inspiration only; `papers/improvevolve_boundary.json` records missing interface enforcement, Stage A/B execution, basin hopping, GigaEvo backbone, human-edit, benchmark, ablation, and budget evidence |
 | [**MadEvolve**](https://arxiv.org/abs/2602.15951) | Li, Zang & Münchmeyer | 2026 | Domain-evolution inspiration only; `papers/madevolve_boundary.json` records missing free-parameter tracking, nested optimization, JAX/vmad compatibility, cosmology adapters, innovation reports, run/model statistics, and reward-hacking controls |
-| [**CausalEvolve**](https://arxiv.org/abs/2603.14575) | Chen et al. | 2026 | Inspiration for causal guidance; not scratchpad-complete |
+| [**CausalEvolve**](https://arxiv.org/abs/2603.14575) | Chen et al. | 2026 | Causal-guidance inspiration only; `papers/causalevolve_boundary.json` records missing POMDP/SCM framing, causal scratchpad, LLM factor generation, executable factor code, interventions, treatment effects, surprise/abduction artifacts, and benchmark rows |
 | [**DeepEvolve**](https://arxiv.org/abs/2510.06056) | Liu et al. | 2025 | Inspiration for retrieval context; not cross-file-debug-loop complete |
 
 **Foundational algorithms:**

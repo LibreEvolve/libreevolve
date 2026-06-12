@@ -12027,3 +12027,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     missing.
   - Verification: MadEvolve boundary and paper-manifest tests validate the
     sidecar that README now references.
+
+- [x] Document CausalEvolve source boundary.
+  - Spec evidence: README CausalEvolve wording needed to keep token-pattern
+    factor guidance separate from causal scratchpad, intervention, treatment
+    effect, abduction, and benchmark-comparison evidence.
+  - Status: README now names `papers/causalevolve_boundary.json` in the
+    CausalEvolve reference row and keeps POMDP/SCM framing, causal scratchpad,
+    LLM factor generation, executable factor code, interventions, treatment
+    effects, surprise/abduction artifacts, and benchmark rows explicit as
+    missing.
+  - Verification: CausalEvolve boundary and paper-manifest tests validate the
+    sidecar that README now references.

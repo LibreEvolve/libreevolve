@@ -1,0 +1,149 @@
+{
+  "schema": "libreevolve.causalevolve_boundary.v1",
+  "source_paper_id": "2603.14575",
+  "source_title": "CausalEvolve: Towards Open-Ended Discovery with Causal Scratchpad",
+  "source_version": "v2",
+  "source_submitted_date": "2026-03-15",
+  "source_revised_date": "2026-03-29",
+  "source_url": "https://arxiv.org/pdf/2603.14575.pdf",
+  "source_file": "papers/2603.14575__CausalEvolve.pdf",
+  "source_sha256": "b3190d25d802f5b9913e4e266b7dda1b76d2211d2d4cad68e1a5d0a3d03fc4d2",
+  "source_bytes": 538166,
+  "source_license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+  "boundary_status": "causal_guidance_inspiration_without_causalevolve_scratchpad_parity",
+  "claim_ready": false,
+  "source_links": [
+    {
+      "url": "https://arxiv.org/abs/2603.14575v2",
+      "status": "source_version_reference_only"
+    },
+    {
+      "url": "<no_dedicated_causalevolve_code_repository_extracted>",
+      "status": "not_found_in_extracted_links"
+    }
+  ],
+  "framework_components": [
+    {
+      "component_id": "pomdp_scm_framing",
+      "paper_role": "POMDP and SCM-scoped scientific discovery framing",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "causal_scratchpad_schema",
+      "paper_role": "persistent causal scratchpad memory over factors and hypotheses",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "llm_outcome_factor_generation",
+      "paper_role": "LLM-generated outcome-level causal factors before evolution",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "executable_factor_code",
+      "paper_role": "executable factor-code metrics over task outputs",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "causalplanner_interventions",
+      "paper_role": "CausalPlanner MAB over factor-direction interventions",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "inspiration_sorting",
+      "paper_role": "top-factor direction sorts inspiration programs",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "procedure_factor_extraction",
+      "paper_role": "procedure-level factors extracted from accumulated trials",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "treatment_effect_estimation",
+      "paper_role": "approximate treatment-effect tables over factors",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "surprise_pattern_detection",
+      "paper_role": "sign-inversion and quantity-shift surprise pattern detection",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "abductive_hypothesis_generation",
+      "paper_role": "abductive reasoning that proposes new factors and hypotheses",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "scratchpad_memory_replay",
+      "paper_role": "scratchpad memory update and replay artifacts",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "benchmark_and_ablation_rows",
+      "paper_role": "Hadamard, autocorrelation, circle-packing, and AIME rows",
+      "local_status": "not_recorded"
+    }
+  ],
+  "local_evidence": {
+    "current_plugin": "libreevolve/plugins/causal.py",
+    "current_scope": "fixed_token_pattern_guidance_not_causal_scratchpad",
+    "fixed_factor_categories": [
+      "loop_structure",
+      "data_types",
+      "algorithm_choice",
+      "constants",
+      "helper_functions"
+    ],
+    "causal_scratchpad_ready": false,
+    "llm_factor_generation_ready": false,
+    "executable_factor_code_ready": false,
+    "intervention_policy_ready": false,
+    "procedure_factor_ready": false,
+    "treatment_effect_ready": false,
+    "surprise_abduction_ready": false,
+    "benchmark_rows_ready": false
+  },
+  "required_evidence_fields": [
+    "source_license_and_code_status",
+    "pomdp_scm_task_world_metadata",
+    "causal_scratchpad_schema",
+    "outcome_factor_prompt_records",
+    "executable_factor_code_contracts",
+    "deterministic_factor_metric_artifacts",
+    "causalplanner_action_space",
+    "causalplanner_reward_policy_tau_k",
+    "inspiration_selection_records",
+    "procedure_factor_extraction_artifacts",
+    "approximate_treatment_effect_tables",
+    "surprise_pattern_detector_outputs",
+    "abductive_hypothesis_lifecycle",
+    "scratchpad_memory_update_replay",
+    "environment_shift_generalization_checks",
+    "hadamard_autocorr_circle_aime_benchmark_rows",
+    "baseline_ablation_method_rows",
+    "seed_step_schedule_records",
+    "grok_4_1_fast_reasoning_model_provenance",
+    "appendix_d_metric_library",
+    "theory_nonidentifiability_boundary",
+    "local_token_pattern_plugin_separation_evidence"
+  ],
+  "missing_evidence": {
+    "pomdp_scm_belief_records": "not_recorded_locally",
+    "causal_scratchpad_schema": "not_implemented_locally",
+    "llm_outcome_factor_generation": "not_implemented_locally",
+    "executable_factor_code": "not_implemented_locally",
+    "causalplanner_intervention_actions": "not_implemented_locally",
+    "top_factor_inspiration_sorting": "not_implemented_locally",
+    "procedure_factor_extraction": "not_implemented_locally",
+    "treatment_effect_estimates": "not_recorded_locally",
+    "surprise_pattern_detection": "not_implemented_locally",
+    "abductive_hypothesis_generation": "not_implemented_locally",
+    "scratchpad_memory_replay": "not_recorded_locally",
+    "environment_shift_model": "not_recorded_locally",
+    "benchmark_comparison_rows": "not_recorded_locally",
+    "appendix_d_metric_library": "not_implemented_locally",
+    "dedicated_code_repository": "not_found_in_extracted_links",
+    "theory_sample_efficiency_boundary": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records CausalEvolve as causal-guidance inspiration only. It does not claim POMDP/SCM task-world records, a causal scratchpad, LLM-generated outcome factors, executable factor code, CausalPlanner factor-direction interventions, procedure factor extraction, treatment-effect tables, surprise-pattern detection, abductive hypotheses, scratchpad replay, or benchmark comparison parity. LibreEvolve's current causal plugin is fixed token-pattern guidance, not CausalEvolve causal-scratchpad execution."
+}

@@ -6836,14 +6836,16 @@ Primary evidence:
     Grok-4.1-fast-reasoning for fair comparisons and evaluates 3 seeds over
     task-specific step schedules.
   - Current evidence: `libreevolve/plugins/causal.py` explicitly says the local
-    plugin is not the CausalEvolve causal scratchpad. It uses a fixed regex
-    factor list over diff/full mutation text, parent-aware score deltas,
-    pull-once-then-UCB-like factor selection, bounded recent history, malformed
-    evidence counters, and prompt-visible recent outcome summaries. There is
-    no implemented source-specific `2603.14575` code gate, no POMDP/SCM belief record, no
-    LLM-defined outcome-factor schema or executable factor-code validation, no
-    `(factor, direction)` intervention action records, no top-factor inspiration
-    sorting, no procedure-factor extractor, no treatment-effect estimates, no
+    plugin is not the CausalEvolve causal scratchpad, and the committed
+    `papers/causalevolve_boundary.json` sidecar now records the
+    source-specific `2603.14575` boundary with cached PDF digest, CC BY-NC-SA
+    license metadata, no-dedicated-code-link status, component rows, local
+    token-pattern guidance scope, required future evidence fields, and
+    missing-evidence keys. The remaining code gap is the actual causal
+    behavior: no POMDP/SCM belief record, no LLM-defined outcome-factor schema
+    or executable factor-code validation, no `(factor, direction)`
+    intervention action records, no top-factor inspiration sorting, no
+    procedure-factor extractor, no treatment-effect estimates, no
     surprise-pattern detector, no abductive-reasoning scratchpad, no causal
     hypothesis lifecycle, and no Hadamard/autocorrelation/circle-packing/AIME
     comparison report tied to this source. The local heuristic also has no

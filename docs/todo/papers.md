@@ -6280,13 +6280,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     v2 URL, OpenEvolve, Grok-4.1-fast, and causality/COAT references, but no
     dedicated CausalEvolve code repository URL.
   - Current gap: `papers/README.md` says LibreEvolve only has token-pattern
-    outcome-factor guidance and no LLM causal scratchpad. Existing paper TODOs
-    and completed entries preserve that broad scoping, but there is no active
-    `2603.14575` source-specific evidence boundary for the paper version,
-    theoretical claims, factor-generation prompts, executable outcome metrics,
-    CausalPlanner intervention policy, procedure-factor extraction, treatment
-    effects, surprise-pattern/abduction artifacts, benchmark tasks, seeds,
-    step schedules, baseline/ablation rows, or result tables.
+    outcome-factor guidance, and `papers/causalevolve_boundary.json` now
+    preserves the CausalEvolve PDF as a source-specific evidence boundary with
+    cached source metadata, CC BY-NC-SA license metadata, no-dedicated-code
+    status, component rows, local token-pattern guidance scope, required
+    future evidence fields, and missing-evidence keys. The remaining paper gap
+    is executable/reportable evidence for theoretical claims,
+    factor-generation prompts, executable outcome metrics, CausalPlanner
+    intervention policy, procedure-factor extraction, treatment effects,
+    surprise-pattern/abduction artifacts, benchmark tasks, seeds, step
+    schedules, baseline/ablation rows, and result tables.
   - Required result: add paper-manifest and paper-index coverage for
     `2603.14575`: title/authors/arXiv version/date/PDF digest, code/source
     status, POMDP/SCM notation and theorem boundary, outcome-level factor

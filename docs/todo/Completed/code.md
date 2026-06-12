@@ -17930,3 +17930,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     reward-hacking controls, and hosted report checks remain open.
   - Verification: MadEvolve boundary tests and paper-manifest tests cover the
     sidecar, drift rejection, and repo-root sidecar requirement.
+
+- [x] Add CausalEvolve causal-scratchpad source-boundary gate.
+  - Spec evidence: `2603.14575v2` describes CausalEvolve as an
+    AlphaEvolve-like causal-discovery framework with POMDP/SCM framing,
+    LLM-generated outcome factors, executable factor code, CausalPlanner
+    factor-direction interventions, procedure factors, treatment effects,
+    surprise-pattern detection, abductive hypotheses, and benchmark rows.
+  - Status: `libreevolve.problems.benchmarks.causalevolve_boundary` now emits
+    and validates `papers/causalevolve_boundary.json` with cached PDF digest,
+    CC BY-NC-SA license metadata, no-dedicated-code status, component rows,
+    local `CausalPlugin` token-pattern scope, required future evidence fields,
+    missing-evidence keys, and overclaim rejection.
+  - Remaining gap: POMDP/SCM task-world records, causal scratchpad memory,
+    LLM factor generation, executable factor metrics, intervention actions,
+    procedure-factor extraction, treatment-effect tables, surprise/abduction
+    artifacts, Appendix D metrics, and benchmark rows remain open.
+  - Verification: CausalEvolve boundary tests and paper-manifest tests cover
+    the sidecar, drift rejection, and repo-root sidecar requirement.

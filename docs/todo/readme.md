@@ -4345,14 +4345,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `0.793`/`0.809` on second autocorrelation, `2.476`/`2.564` on circle
     packing, and `38.89`/`40.00` on AIME with Grok-4.1-fast-reasoning.
   - Current evidence: README says the causal plugin is a lightweight
-    token-pattern heuristic, not CausalEvolve's causal scratchpad, and
-    `papers/README.md` says detected factors are fixed local token-pattern
-    categories rather than LLM-discovered causal variables. Existing README
-    TODOs keep paper-inspired plugin rows scoped generally, but README does not
-    require a `2603.14575` source-specific boundary for POMDP/SCM framing,
+    token-pattern heuristic, not CausalEvolve's causal scratchpad, and now
+    points at `papers/causalevolve_boundary.json` for the `2603.14575`
+    source-specific boundary. That sidecar keeps POMDP/SCM framing,
     executable outcome factors, directional interventions, procedure factors,
-    treatment effects, surprise patterns, abductive hypotheses, benchmark rows,
-    ablations, seed/step schedules, or model provenance.
+    treatment effects, surprise patterns, abductive hypotheses, benchmark
+    rows, ablations, seed/step schedules, and model provenance unavailable
+    until local artifacts prove them.
   - Required result: if README mentions CausalEvolve, causal scratchpads,
     outcome-level factors, procedure-level factors, causal planning,
     treatment-effect guidance, surprise-pattern reasoning, abductive causal

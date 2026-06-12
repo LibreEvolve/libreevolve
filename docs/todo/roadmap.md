@@ -4862,15 +4862,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     actions are alternated for `K` iterations with currently best actions for
     the next `K` iterations.
   - Current evidence: ROADMAP says CausalEvolve features remain inspired unless
-    paper behavior is implemented, README describes the causal plugin as fixed
-    token-pattern guidance rather than a causal scratchpad, and
-    `papers/README.md` says there are no LLM-discovered causal variables.
-    Roadmap lacks `2603.14575`-specific gates for source metadata,
-    POMDP/SCM-scoped task records, LLM factor-generation prompts, executable
-    outcome-factor code, intervention actions, inspiration-sorting traces,
-    procedure-factor extraction, treatment-effect estimates, surprise-pattern
-    and abductive-reasoning artifacts, benchmark rows, ablations, seed/step
-    schedules, model provenance, and environment-shift/generalization caveats.
+    paper behavior is implemented, and now names
+    `papers/causalevolve_boundary.json` as the source-specific gate for
+    `2603.14575`. The sidecar records source metadata, CC BY-NC-SA license,
+    no-dedicated-code status, component rows, required future evidence fields,
+    and missing-evidence keys while keeping POMDP/SCM-scoped task records, LLM
+    factor-generation prompts, executable outcome-factor code, intervention
+    actions, inspiration-sorting traces, procedure-factor extraction,
+    treatment-effect estimates, surprise-pattern and abductive-reasoning
+    artifacts, benchmark rows, ablations, seed/step schedules, model
+    provenance, and environment-shift/generalization caveats as future gates.
   - Required result: add roadmap gates for `2603.14575`: paper/source manifest
     entry, PDF/cache hash, code/source status, causal scratchpad schema,
     POMDP/SCM and environment metadata, outcome-factor and executable

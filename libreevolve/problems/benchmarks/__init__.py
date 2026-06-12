@@ -89,6 +89,12 @@ from libreevolve.problems.benchmarks.candidate_language_runner_boundary import (
     render_candidate_language_runner_boundary_summary,
     validate_candidate_language_runner_boundary,
 )
+from libreevolve.problems.benchmarks.causalevolve_boundary import (
+    CAUSALEVOLVE_BOUNDARY_SCHEMA,
+    causalevolve_boundary_record,
+    render_causalevolve_boundary_summary,
+    validate_causalevolve_boundary,
+)
 from libreevolve.problems.benchmarks.codeevolve_boundary import (
     CODEEVOLVE_BOUNDARY_SCHEMA,
     codeevolve_boundary_record,
@@ -386,6 +392,7 @@ __all__ = [
     "BENCHMARK_HARDENING_SCHEMA",
     "CANDIDATE_ABSTRACTION_BOUNDARY_SCHEMA",
     "CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_SCHEMA",
+    "CAUSALEVOLVE_BOUNDARY_SCHEMA",
     "CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA",
     "CODEEVOLVE_BOUNDARY_SCHEMA",
     "CONTROLLER_BACKTRACKING_BOUNDARY_SCHEMA",
@@ -467,6 +474,7 @@ __all__ = [
     "benchmark_hardening_artifact_inventory",
     "candidate_abstraction_boundary_record",
     "candidate_language_runner_boundary_record",
+    "causalevolve_boundary_record",
     "certification_artifact_inventory",
     "codeevolve_boundary_record",
     "controller_backtracking_boundary_record",
@@ -532,6 +540,7 @@ __all__ = [
     "render_benchmark_hardening_summary",
     "render_candidate_abstraction_boundary_summary",
     "render_candidate_language_runner_boundary_summary",
+    "render_causalevolve_boundary_summary",
     "render_certification_summary",
     "render_codeevolve_boundary_summary",
     "render_controller_backtracking_boundary_summary",
@@ -596,6 +605,7 @@ __all__ = [
     "validate_benchmark_hardening_report",
     "validate_candidate_abstraction_boundary",
     "validate_candidate_language_runner_boundary",
+    "validate_causalevolve_boundary",
     "validate_certification_evidence_bundle",
     "validate_codeevolve_boundary",
     "validate_controller_backtracking_boundary",

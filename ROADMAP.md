@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 45 cache rows and links the AlphaEvolve row to
+  identities for all 46 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1491,6 +1491,21 @@ resumed-trace proof are still open.
   compute/cost telemetry, linked-code audits, and independent reproduction
   outputs remain open before roadmap wording can promote SIA-style harness-
   plus-weight self-improvement support.
+- Keep HarnessFix trace-grounded harness repair claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2606.06324`, `From Failed Trajectories to Reliable LLM Agents:
+  Diagnosing and Repairing Harness Flaws`, cached locally as
+  `papers/2606.06324__HarnessFix.pdf`. This is background trace-grounded
+  harness repair context only; HTIR trace-normalization schemas, raw-trace
+  normalization records, harness-code linkage, step-level provenance,
+  execution/tool/context/lifecycle/observability/verification/governance
+  harness-layer attribution taxonomies, recurring flaw records, scoped
+  repair-operator definitions, generated harness patch artifacts, flaw-
+  specific validation specs, unacceptable-regression threshold records,
+  held-out SWE-Bench Verified/Terminal-Bench 2.0 Verified/GAIA/AppWorld
+  benchmark reports, linked-code audits, and independent reproduction
+  outputs remain open before roadmap wording can promote HarnessFix-style
+  trace-grounded harness repair support.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

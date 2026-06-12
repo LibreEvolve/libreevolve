@@ -3908,8 +3908,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     benchmark-fixture status rule so roadmap claims do not outpace local
     SIA-style harness-plus-weight self-improvement support.
 
-- [ ] Add HarnessFix trace-grounded harness repair gates before roadmap
-      promotion.
+- [ ] Implement HarnessFix trace-grounded harness repair gates beyond paper
+      cache coverage.
   - Spec evidence: arXiv `2606.06324`, submitted June 4, 2026, introduces
     HarnessFix in `From Failed Trajectories to Reliable LLM Agents:
     Diagnosing and Repairing Harness Flaws`. The abstract frames harnesses as
@@ -3920,16 +3920,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     harness code into HTIR, attributes failures to responsible steps and
     harness layers, consolidates flaw records, maps them to scoped repair
     operators, and validates patches with regression constraints.
-  - Current evidence: ROADMAP tracks failure/quarantine streams, prompt
-    history, evaluator contracts, benchmark reports, AEvo meta-editing gates,
-    and SIA harness-plus-weight gates. It does not mention `2606.06324`,
-    define a trace-grounded harness repair gate, require HTIR-like trace
-    normalization, attribute failures to harness layers, consolidate recurring
-    flaw records, generate scoped harness repairs, or validate harness patches
-    against target-flaw reduction and unacceptable-regression bounds before
-    promoting agent reliability or harness self-repair claims.
-  - Required result: add roadmap gates for `2606.06324`: paper/source
-    manifest entry, PDF/cache hash, source-license metadata, HTIR schema,
+  - Current evidence: ROADMAP, `papers/download_manifest.*`,
+    `papers/row_identity.json`, `papers/README.md`, README, and TODO
+    coverage now include `2606.06324`, cached locally as
+    `papers/2606.06324__HarnessFix.pdf` with byte count `2363715` and
+    SHA-256
+    `00a4236ba8ab24925e3b0409b4c003bd22c57d76faabc888f20734fba5e4cafd`.
+    ROADMAP tracks the paper as background trace-grounded harness repair
+    context only. It still has no trace-grounded harness repair gate, HTIR-
+    like trace normalization, failure-to-harness-layer attribution, recurring
+    flaw records, scoped harness repairs, or validation of harness patches
+    against target-flaw reduction and unacceptable-regression bounds.
+  - Required result: implement roadmap gates beyond paper-cache evidence:
+    source-license metadata, linked-code or project URL status, HTIR schema,
     raw-trace normalization, harness-code linkage, step-level provenance,
     harness-layer attribution taxonomy, recurring flaw records, repair
     operator definitions, harness patch/version artifacts, flaw-specific

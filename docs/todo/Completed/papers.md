@@ -13066,3 +13066,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2606.06324` HarnessFix paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2606.06324`, `From Failed Trajectories to Reliable LLM Agents:
+    Diagnosing and Repairing Harness Flaws`, cached locally as
+    `papers/2606.06324__HarnessFix.pdf` with byte count `2363715` and
+    SHA-256
+    `00a4236ba8ab24925e3b0409b4c003bd22c57d76faabc888f20734fba5e4cafd`.
+  - Remaining paper gap: source-license details, linked-code or project/demo
+    URL status, HTIR schema, trace-to-harness-code linkage, step-level
+    provenance, harness-layer taxonomy, failure-attribution records,
+    recurring flaw consolidation, repair-operator definitions, harness patch
+    artifacts, flaw-specific validation specifications, unacceptable-
+    regression thresholds, held-out benchmark results, SWE-Bench/Terminal-
+    Bench/GAIA/AppWorld metadata, baseline identities, code/artifact
+    reproducibility status, and independent reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

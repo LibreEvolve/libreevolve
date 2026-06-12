@@ -165,7 +165,7 @@ Common run options:
 
 ## Research Sources
 
-LibreEvolve is informed by a local cache of 45 papers on LLM-guided evolution,
+LibreEvolve is informed by a local cache of 46 papers on LLM-guided evolution,
 program synthesis, quality-diversity optimization, and related benchmarks. The
 PDF cache lives locally under `papers/`, but the PDFs themselves are gitignored.
 The committed repository tracks `papers/README.md`, download manifests, and
@@ -176,7 +176,7 @@ not authoritative bibliographic titles. Use `papers/README.md` for paper-facing
 titles, implementation status, and benchmark coverage decisions.
 
 The table below is a curated subset for README context. `papers/README.md` is
-the complete implementation-status index for all 45 manifest rows.
+the complete implementation-status index for all 46 manifest rows.
 
 | Source | Role in LibreEvolve |
 | --- | --- |
@@ -206,6 +206,7 @@ the complete implementation-status index for all 45 manifest rows.
 | [MemEvolve](https://arxiv.org/abs/2512.18746) | Memory-architecture evolution context only; no local encode/store/retrieve/manage design space, memory-architecture mutation loop, EvolveLab benchmark mapping, or transfer report exists. |
 | [ANCHOR healthy evolution](https://arxiv.org/abs/2606.06114) | Healthy-evolution oversight context only; no local human-like oversight agent, phase-specific norm-correction interface, safety-drift metric lineage, or supervision-cadence report exists. |
 | [SIA](https://arxiv.org/abs/2605.27276) | Harness-plus-weight self-improvement context only; no local Feedback-Agent, editable task-agent harness inventory, online weight-update loop, adapter/checkpoint lifecycle, or harness-versus-weight ablation report exists. |
+| [HarnessFix](https://arxiv.org/abs/2606.06324) | Trace-grounded harness repair context only; no local HTIR trace normalization, harness-layer failure attribution, recurring flaw record consolidation, scoped repair operator schema, or regression-bounded patch validation exists. |
 
 Rehydrate the ignored local PDF cache on a fresh checkout:
 

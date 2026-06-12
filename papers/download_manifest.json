@@ -430,6 +430,16 @@
     "sha256": "3f75a62487a5fb3fc2db8d06b78e6f6d598fc46b446cdfa9e205c33fb41de265"
   },
   {
+    "id": "2606.06324",
+    "title": "HarnessFix",
+    "url": "https://arxiv.org/pdf/2606.06324.pdf",
+    "file": "papers/2606.06324__HarnessFix.pdf",
+    "ok": true,
+    "bytes": 2363715,
+    "message": "downloaded",
+    "sha256": "00a4236ba8ab24925e3b0409b4c003bd22c57d76faabc888f20734fba5e4cafd"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

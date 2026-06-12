@@ -5136,7 +5136,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     independent reproduction outputs, and README/ROADMAP wording that treats
     SIA as background context until those artifacts exist.
 
-- [ ] Track HarnessFix trace-grounded harness repair paper evidence.
+- [ ] Reproduce HarnessFix trace-grounded harness repair evidence beyond paper
+      coverage.
   - Paper/source evidence: arXiv `2606.06324`, submitted June 4, 2026, is
     titled `From Failed Trajectories to Reliable LLM Agents: Diagnosing and
     Repairing Harness Flaws`. Its abstract says agent harnesses provide
@@ -5151,25 +5152,31 @@ directory and using the AlphaEvolve paper as the primary specification.
     operators, and validates harness patches under flaw-specific repair specs.
     It reports 15.2% to 50.0% held-out improvements on SWE-Bench Verified,
     Terminal-Bench 2.0 Verified, GAIA, and AppWorld.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2606.06324`. Existing rows cover AlphaEvolve evaluator-backed
-    program search, failed-proposal snippets, trace diagnostics, SIA harness
-    and weight updates, and AEvo process meta-editing, but not
-    trace-normalized harness diagnosis, HTIR, harness-layer attribution,
-    recurring flaw records, scoped repair operators, regression-bounded patch
-    validation, or held-out harness reliability reports.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2606.06324`: title/authors/arXiv version/date/PDF digest, source
-    license, relation to AlphaEvolve and LibreEvolve harness/failure
-    assumptions, HTIR schema, trace-to-harness-code linkage, step-level
-    provenance, harness-layer taxonomy, failure-attribution records,
-    recurring flaw consolidation, repair-operator definitions, harness patch
-    artifacts, flaw-specific validation specifications, unacceptable-
-    regression thresholds, held-out benchmark results, SWE-Bench/Terminal-
-    Bench/GAIA/AppWorld metadata, baseline identities, code/artifact
-    availability if any, reproducibility status, and README/ROADMAP wording
-    that treats HarnessFix as missing paper evidence rather than implemented
-    LibreEvolve support.
+  - Current gap: the paper cache, paper index, row identity, README, ROADMAP,
+    and TODO coverage now include `2606.06324`, cached locally as
+    `papers/2606.06324__HarnessFix.pdf` with byte count `2363715` and
+    SHA-256
+    `00a4236ba8ab24925e3b0409b4c003bd22c57d76faabc888f20734fba5e4cafd`.
+    Reproduction evidence remains absent: no source-license details, linked-
+    code or project/demo URL status, HTIR schema, trace-to-harness-code
+    linkage, step-level provenance, harness-layer taxonomy, failure-
+    attribution records, recurring flaw consolidation, repair-operator
+    definitions, harness patch artifacts, flaw-specific validation
+    specifications, unacceptable-regression thresholds, held-out benchmark
+    results, SWE-Bench/Terminal-Bench/GAIA/AppWorld metadata, baseline
+    identities, code/artifact availability status, reproducibility status, or
+    independent reproduction output exists.
+  - Required result: add reproduction-grade HarnessFix evidence: source
+    license, project/demo URL status, linked-code status, relation to
+    AlphaEvolve and LibreEvolve harness/failure assumptions, HTIR schema,
+    trace-to-harness-code linkage, step-level provenance, harness-layer
+    taxonomy, failure-attribution records, recurring flaw consolidation,
+    repair-operator definitions, harness patch artifacts, flaw-specific
+    validation specifications, unacceptable-regression thresholds, held-out
+    benchmark results, SWE-Bench/Terminal-Bench/GAIA/AppWorld metadata,
+    baseline identities, code/artifact reproducibility status, independent
+    reproduction outputs, and README/ROADMAP wording that treats HarnessFix as
+    background context until those artifacts exist.
 
 - [ ] Track RHO retrospective self-preference harness optimization evidence.
   - Paper/source evidence: arXiv `2606.05922`, submitted June 4, 2026, is

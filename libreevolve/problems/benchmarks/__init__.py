@@ -143,6 +143,12 @@ from libreevolve.problems.benchmarks.follow_on_coverage import (
     render_alphaevolve_follow_on_problem_coverage_summary,
     validate_alphaevolve_follow_on_problem_coverage,
 )
+from libreevolve.problems.benchmarks.gigaevo_boundary import (
+    GIGAEVO_FRAMEWORK_BOUNDARY_SCHEMA,
+    gigaevo_framework_boundary_record,
+    render_gigaevo_framework_boundary_summary,
+    validate_gigaevo_framework_boundary,
+)
 from libreevolve.problems.benchmarks.map_elites_illumination_boundary import (
     MAP_ELITES_ILLUMINATION_BOUNDARY_SCHEMA,
     map_elites_illumination_boundary_record,
@@ -370,6 +376,7 @@ __all__ = [
     "FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA",
     "FIGURE9_MATRIX_DIFF_ARTIFACT_BOUNDARY_SCHEMA",
     "FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA",
+    "GIGAEVO_FRAMEWORK_BOUNDARY_SCHEMA",
     "MATRIX_RANK_TABLE_ARTIFACT_BOUNDARY_SCHEMA",
     "MATRIX_RANK_TABLE_EXHIBIT_SCHEMA",
     "MATRIX_ARTIFACT_INVENTORY_SCHEMA",
@@ -439,6 +446,7 @@ __all__ = [
     "evaluator_oracle_boundary_record",
     "example_benchmark_scope_records",
     "existing_codebase_integration_boundary_record",
+    "gigaevo_framework_boundary_record",
     "process_exhibit_boundary_record",
     "proposal_lifecycle_audit_boundary_record",
     "figure4_matrix_discovery_artifact_boundary_from_exhibit",
@@ -506,6 +514,7 @@ __all__ = [
     "render_figure4_matrix_discovery_exhibit_summary",
     "render_figure9_matrix_diff_artifact_boundary_summary",
     "render_figure9_matrix_diff_exhibit_summary",
+    "render_gigaevo_framework_boundary_summary",
     "render_matrix_baseline_component_runtime_boundary_summary",
     "render_matrix_cascade_run_runtime_boundary_summary",
     "render_matrix_rank_table_artifact_boundary_summary",
@@ -564,6 +573,7 @@ __all__ = [
     "validate_figure4_matrix_discovery_exhibit",
     "validate_figure9_matrix_diff_artifact_boundary",
     "validate_figure9_matrix_diff_exhibit",
+    "validate_gigaevo_framework_boundary",
     "validate_matrix_baseline_component_runtime_boundary",
     "validate_matrix_cascade_run_runtime_boundary",
     "validate_matrix_rank_table_artifact_boundary",

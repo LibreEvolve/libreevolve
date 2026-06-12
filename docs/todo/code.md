@@ -6581,20 +6581,20 @@ Primary evidence:
     needs explicit disambiguation.
   - Current evidence: `papers/README.md` marks GigaEvo as framework
     inspiration and explicitly says LibreEvolve has no Redis lifecycle
-    database, `asyncio` DAG engine, insight stage, or concurrent units. A broad
-    built-in-plugin/inspiration TODO keeps GigaEvo grouped with CodeEvolve,
-    ThetaEvolve, ImprovEvolve, MadEvolve, CausalEvolve, and DeepEvolve, but
-    there is no implemented source-specific code gate for `2511.17592`, no
-    local equivalent of Redis program lifecycle states, no DAG stage graph/caching
+    database, `asyncio` DAG engine, insight stage, or concurrent units. The
+    committed `papers/gigaevo_framework_boundary.json` sidecar now records
+    source metadata, dual GitHub source-link ambiguity, framework component
+    rows, local evidence scope, required future evidence fields, and
+    missing-evidence keys. The remaining implementation gap is no local
+    equivalent of Redis program lifecycle states, no DAG stage graph/caching
     schema, no optimistic-concurrency program archive, no Hydra-equivalent
     component composition, no GigaEvo problem-layout adapter, no LangGraph-
-    style mutation operator, no bidirectional lineage analysis records, no
-    GigaEvo benchmark reproduction report, and no validation that
-    README/ROADMAP wording distinguishes framework inspiration from GigaEvo
-    reproduction. Current `ProgramDatabase` explicitly says it is a small
-    local log/archive facade, not a GigaEvo-style lifecycle database.
-  - Required result: add source-boundary metadata and implementation gates for
-    `2511.17592`: arXiv version/date/PDF hash, source/license and code-URL
+    style mutation operator, no bidirectional lineage analysis records, and no
+    GigaEvo benchmark reproduction report. Current `ProgramDatabase`
+    explicitly says it is a small local log/archive facade, not a
+    GigaEvo-style lifecycle database.
+  - Required result: implement the gates named by
+    `papers/gigaevo_framework_boundary.json`: source/license and code-URL
     status, Redis-vs-local-storage applicability, program lifecycle state
     schema, DAG node/edge/stage-output records, concurrency/caching telemetry,
     optimistic-concurrency semantics, Hydra/component-composition mapping,

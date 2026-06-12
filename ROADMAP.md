@@ -620,7 +620,11 @@ is not yet an AlphaEvolve reproduction.
   not OS/container sandbox or quota enforcement.
 - Continue labeling CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve,
   GigaEvo, CodeEvolve, and MadEvolve features as inspired unless paper behavior
-  is actually implemented.
+  is actually implemented. The committed `papers/gigaevo_framework_boundary.json`
+  sidecar records the GigaEvo source-specific boundary for Redis lifecycle
+  storage, asyncio DAG execution, concurrent units, insight/lineage stages,
+  LangGraph mutation, Hydra mapping, dual GitHub source disambiguation, and
+  benchmark reproduction.
 
 ## Mid Term
 

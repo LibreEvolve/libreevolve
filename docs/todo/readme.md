@@ -4181,17 +4181,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     prompt/agent evolution with `0.803` test AUC for the evolved agent.
   - Current evidence: README and `papers/README.md` mark GigaEvo as framework
     inspiration only and say Redis lifecycle database, `asyncio` DAG engine,
-    insight stage, and concurrent units are not implemented. Existing README
-    TODOs group GigaEvo with other paper-inspired approximations, but README
-    does not require a source-specific boundary for `2511.17592`, code
-    repository status, architecture-component mapping, lifecycle/DAG/lineage
-    semantics, Hydra problem-layout mapping, or benchmark-reproduction claim
-    handling.
+    insight stage, and concurrent units are not implemented. README now points
+    at `papers/gigaevo_framework_boundary.json`, which records source
+    metadata, dual GitHub source-link ambiguity, architecture-component rows,
+    lifecycle/DAG/lineage missing-evidence keys, Hydra mapping gaps, and
+    benchmark-reproduction absence. README still must not imply those artifacts
+    exist locally.
   - Required result: if README mentions GigaEvo, Redis lifecycle storage,
     DAG-based evaluation, concurrent units, insight stages, bidirectional
     lineage tracking, LangGraph mutation, or GigaEvo benchmark reproduction,
     keep the wording source-scoped until local manifests and reports include
-    the `2511.17592` source row, PDF/code hashes, lifecycle-state schema,
+    executable evidence beyond the `2511.17592` source row and sidecar:
+    PDF/code hashes, lifecycle-state schema,
     DAG-stage/dependency records, concurrency/caching telemetry, insight and
     lineage artifacts, Hydra/component-layout mapping, benchmark reproduction
     rows for the named paper tasks, and a clear distinction between

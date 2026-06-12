@@ -11972,3 +11972,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     theorem-lifting metadata, baseline/SOTA rows, and source-repository status.
   - Verification: theoretical-CS source and paper-manifest tests validate the
     sidecar that README now references.
+
+- [x] Document GigaEvo framework boundary.
+  - Spec evidence: README GigaEvo wording needed to keep framework inspiration
+    separate from Redis/DAG/concurrency/LangGraph/runtime parity.
+  - Status: README now names `papers/gigaevo_framework_boundary.json` in the
+    GigaEvo reference row and keeps missing Redis lifecycle database,
+    `asyncio` DAG engine, insight stage, concurrent units, LangGraph mutation,
+    and benchmark reproduction evidence explicit.
+  - Verification: GigaEvo boundary and paper-manifest tests validate the
+    sidecar that README now references.

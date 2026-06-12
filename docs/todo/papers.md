@@ -6064,18 +6064,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     `https://github.com/FusionBrainLab/gigaevo-core`.
   - Current gap: `papers/README.md` lists `2511.17592` as framework
     inspiration and says Redis lifecycle database, `asyncio` DAG engine,
-    insight stage, and concurrent units are not implemented. Existing paper
-    TODOs group GigaEvo with other inspiration rows, but do not preserve the
-    GigaEvo PDF itself as a source-specific evidence boundary with
-    architecture-component rows, lifecycle-state semantics, DAG-stage
-    topology, insight/lineage artifacts, benchmark-reproduction claims, code
-    repository status, Hydra problem-layout requirements, or validation that
-    docs do not conflate grouped inspiration status with GigaEvo framework
-    parity.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2511.17592`: title/authors/arXiv version/date/PDF digest, source license,
-    linked code URL/status, architecture-component inventory, Redis program
-    lifecycle schema, DAG stage/dependency/caching metadata, insight and
+    insight stage, and concurrent units are not implemented. The committed
+    `papers/gigaevo_framework_boundary.json` sidecar now preserves the GigaEvo
+    PDF as a source-specific evidence boundary with source digest, dual GitHub
+    source-link ambiguity, architecture-component rows, local evidence scope,
+    required future evidence fields, and missing-evidence keys. It still does
+    not provide executable lifecycle-state semantics, DAG-stage topology,
+    insight/lineage artifacts, benchmark-reproduction claims, source-code
+    status resolution, or Hydra problem-layout implementation artifacts.
+  - Required result: implement paper-manifest and paper-index evidence beyond
+    the sidecar: source license, linked code URL/status,
+    architecture-component inventory, Redis program lifecycle schema, DAG
+    stage/dependency/caching metadata, insight and
     lineage-analysis records, mutation-operator mode/source details,
     Hydra/problem-layout metadata, benchmark-problem and reproduction-result
     rows for Heilbronn `n = 11`, circle packing `n = 26`/`n = 32`, kissing

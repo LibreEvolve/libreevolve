@@ -4681,15 +4681,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current evidence: ROADMAP tells readers to keep GigaEvo features labeled
     as inspired unless the paper behavior is actually implemented, and
     `papers/README.md` marks Redis lifecycle database, `asyncio` DAG engine,
-    insight stage, and concurrent units as absent. The roadmap does not yet
-    define `2511.17592`-specific gates for source metadata, code repository
-    status, architecture-component parity, lifecycle-state persistence,
-    DAG-stage dependency/caching evidence, Hydra/problem-layout parity,
-    lineage/insight artifacts, or benchmark-reproduction reports.
-  - Required result: add roadmap gates for `2511.17592`: paper/source manifest
-    entry, PDF/cache hash, source-license and code-artifact status,
-    Redis-vs-local-storage boundary, program lifecycle state model, DAG
-    topology/stage-output/caching records, concurrency telemetry, insight and
+    insight stage, and concurrent units as absent. The committed
+    `papers/gigaevo_framework_boundary.json` sidecar now defines
+    `2511.17592`-specific gates for source metadata, dual GitHub source-link
+    status, architecture components, lifecycle/DAG/lineage gaps,
+    Hydra/problem-layout parity, and benchmark reproduction. Roadmap still
+    lacks executable code repository status, architecture-component parity,
+    lifecycle-state persistence, DAG-stage dependency/caching evidence,
+    lineage/insight artifacts, and benchmark-reproduction reports.
+  - Required result: implement roadmap gates beyond the sidecar:
+    source-license and code-artifact status, Redis-vs-local-storage boundary,
+    program lifecycle state model, DAG topology/stage-output/caching records,
+    concurrency telemetry, insight and
     ancestor/descendant lineage-analysis artifacts, mutation-operator
     provenance, Hydra/component-configuration mapping, MAP-Elites/island
     compatibility reports, AlphaEvolve benchmark reproduction rows plus

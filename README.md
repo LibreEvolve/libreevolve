@@ -4828,7 +4828,7 @@ the complete implementation-status index for all 25 manifest rows.
 | Paper | Authors | Year | Role in LibreEvolve |
 |-------|---------|:----:|---------------------|
 | [**AlphaEvolve**](https://arxiv.org/abs/2506.13131) | Novikov et al. (Google DeepMind) | 2025 | Core architecture inspiration |
-| [**GigaEvo**](https://arxiv.org/abs/2511.17592) | Khrulkov et al. | 2025 | Framework inspiration only; Redis lifecycle database, asyncio DAG engine, insight stage, and concurrent units are not implemented |
+| [**GigaEvo**](https://arxiv.org/abs/2511.17592) | Khrulkov et al. | 2025 | Framework inspiration only; `papers/gigaevo_framework_boundary.json` records missing Redis lifecycle database, asyncio DAG engine, insight stage, concurrent units, LangGraph mutation, and benchmark reproduction evidence |
 | [**CodeEvolve**](https://arxiv.org/abs/2510.14150) | Assumpção et al. | 2025 | Agentic code-evolution inspiration only; crossover, targeted refinement, modular orchestration, and context-aware recombination are not implemented |
 | [**ThetaEvolve**](https://arxiv.org/abs/2511.23473) | Wang et al. | 2025 | Inspiration for export/training boundary |
 | [**ImprovEvolve**](https://arxiv.org/abs/2602.10233) | Kravatskiy et al. | 2026 | Inspiration for modular prompting |

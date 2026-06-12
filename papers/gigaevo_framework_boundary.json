@@ -1,0 +1,111 @@
+{
+  "schema": "libreevolve.gigaevo_framework_boundary.v1",
+  "source_paper_id": "2511.17592",
+  "source_title": "GigaEvo: An Open Source Optimization Framework Powered by LLMs and Evolution Algorithms",
+  "source_version": "v1",
+  "source_submitted_date": "2025-11-17",
+  "source_url": "https://arxiv.org/pdf/2511.17592.pdf",
+  "source_file": "papers/2511.17592__GigaEvo.pdf",
+  "source_sha256": "9a14bf06a1323e63bf53234e79e44c41e1e78e0dc2f90578d74b928efd067113",
+  "source_bytes": 1393166,
+  "boundary_status": "framework_inspiration_without_gigaevo_runtime_parity",
+  "claim_ready": false,
+  "source_links": [
+    {
+      "url": "https://github.com/AIRI-Institute/gigaevo-core",
+      "status": "linked_in_paper_source_status_not_disambiguated"
+    },
+    {
+      "url": "https://github.com/FusionBrainLab/gigaevo-core",
+      "status": "linked_in_paper_source_status_not_disambiguated"
+    }
+  ],
+  "framework_components": [
+    {
+      "component_id": "redis_program_storage",
+      "paper_role": "Redis-backed Program records with lifecycle state and optimistic counters",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "asyncio_dag_engine",
+      "paper_role": "async DAG execution with dependencies, caching, and skip behavior",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "map_elites_evolution",
+      "paper_role": "quality-diversity evolution backbone",
+      "local_status": "partial_local_map_elites_not_gigaevo_runtime"
+    },
+    {
+      "component_id": "langgraph_mutation_operator",
+      "paper_role": "LangGraph mutation and agentic pipeline operator",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "insight_generation",
+      "paper_role": "generated insights used by later stages",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "bidirectional_lineage",
+      "paper_role": "ancestor and descendant lineage analysis",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "hydra_configuration",
+      "paper_role": "componentized Hydra configuration and problem layout",
+      "local_status": "not_mapped"
+    },
+    {
+      "component_id": "benchmark_reproduction",
+      "paper_role": "Heilbronn, circle packing, kissing, bin packing, and Jigsaw rows",
+      "local_status": "not_recorded"
+    }
+  ],
+  "local_evidence": {
+    "program_database_scope": "small_local_log_archive_not_lifecycle_database",
+    "current_mutation_modes": [
+      "diff",
+      "full_rewrite"
+    ],
+    "current_map_elites_scope": "local_archive_without_gigaevo_runtime_parity",
+    "redis_required": false,
+    "asyncio_dag_ready": false,
+    "concurrent_units_ready": false,
+    "insight_stage_ready": false,
+    "benchmark_reproduction_ready": false
+  },
+  "required_evidence_fields": [
+    "source_license_and_repository_status",
+    "redis_program_lifecycle_schema",
+    "optimistic_concurrency_records",
+    "asyncio_dag_node_edge_schema",
+    "dag_stage_output_records",
+    "stage_caching_and_skip_telemetry",
+    "concurrent_unit_runtime_telemetry",
+    "hydra_component_configuration_mapping",
+    "gigaevo_problem_layout_adapter",
+    "insight_generation_artifacts",
+    "ancestor_descendant_lineage_artifacts",
+    "langgraph_mutation_operator_provenance",
+    "diff_rewrite_mutation_mode_evidence",
+    "map_elites_island_compatibility_report",
+    "benchmark_reproduction_rows",
+    "dual_github_source_disambiguation"
+  ],
+  "missing_evidence": {
+    "redis_program_lifecycle_database": "not_implemented_locally",
+    "asyncio_dag_execution_engine": "not_implemented_locally",
+    "optimistic_concurrency_control": "not_implemented_locally",
+    "dag_stage_caching_and_skipping": "not_recorded_locally",
+    "concurrent_units": "not_implemented_locally",
+    "hydra_component_mapping": "not_recorded_locally",
+    "gigaevo_problem_layout_adapter": "not_implemented_locally",
+    "insight_stage_artifacts": "not_recorded_locally",
+    "bidirectional_lineage_analysis": "not_recorded_locally",
+    "langgraph_mutation_operator": "not_implemented_locally",
+    "benchmark_reproduction_rows": "not_recorded_locally",
+    "dual_github_source_status": "not_disambiguated"
+  },
+  "claim_boundary": "This boundary records GigaEvo as framework inspiration only. It does not claim Redis lifecycle storage, asyncio DAG execution, concurrent units, Hydra component parity, LangGraph mutation, insight or bidirectional-lineage stages, source-repository disambiguation, or GigaEvo benchmark reproduction."
+}

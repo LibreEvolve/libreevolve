@@ -17839,3 +17839,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     remain open.
   - Verification: theoretical-CS source tests and paper-manifest tests cover
     the nested boundary and reject premature readiness claims.
+
+- [x] Add GigaEvo framework source-boundary gate.
+  - Spec evidence: `2511.17592` describes GigaEvo as a framework with Redis
+    program lifecycle storage, an `asyncio` DAG engine, concurrent units,
+    LangGraph mutation, insight/lineage stages, Hydra configuration, and
+    benchmark reproduction rows.
+  - Status: `libreevolve.problems.benchmarks.gigaevo_boundary` now emits and
+    validates `papers/gigaevo_framework_boundary.json` with source digest,
+    component rows, dual GitHub source-link ambiguity, local evidence scope,
+    required future evidence fields, missing-evidence keys, and overclaim
+    rejection.
+  - Remaining gap: Redis lifecycle database, async DAG execution,
+    concurrency/caching telemetry, Hydra/problem-layout mapping, LangGraph
+    mutation, insight/lineage artifacts, source disambiguation, and benchmark
+    reproduction remain open.
+  - Verification: GigaEvo boundary tests and paper-manifest tests cover the
+    sidecar, drift rejection, and repo-root sidecar requirement.

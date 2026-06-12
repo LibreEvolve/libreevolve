@@ -9501,3 +9501,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     gates.
   - Verification: theoretical-CS and paper-manifest tests validate the
     sidecar boundary.
+
+- [x] Preserve GigaEvo framework-boundary scope in roadmap.
+  - Spec evidence: roadmap GigaEvo claims should not promote local diff/full
+    mutation or MAP-Elites support into GigaEvo framework parity.
+  - Status: ROADMAP and roadmap TODO wording now identify
+    `papers/gigaevo_framework_boundary.json` as the source-specific boundary
+    for Redis lifecycle storage, asyncio DAG execution, concurrent units,
+    insight/lineage stages, LangGraph mutation, Hydra mapping, source-link
+    disambiguation, and benchmark reproduction.
+  - Verification: GigaEvo boundary tests and paper-manifest tests validate the
+    sidecar and repo-root requirement.

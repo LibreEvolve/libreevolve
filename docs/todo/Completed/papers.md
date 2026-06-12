@@ -12413,3 +12413,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     local executable/reproducible evidence.
   - Verification: theoretical-CS tests and paper-manifest tests validate the
     sidecar and reject artifact-readiness overclaims.
+
+- [x] Record GigaEvo framework source boundary.
+  - Spec evidence: paper-facing GigaEvo claims need to distinguish framework
+    inspiration from local Redis/DAG/concurrency/runtime parity.
+  - Status: `papers/gigaevo_framework_boundary.json` now carries the
+    source-specific `2511.17592` boundary with cached PDF digest, framework
+    components, local status, dual GitHub source ambiguity, required evidence
+    fields, and missing-evidence keys.
+  - Remaining paper gap: source repository disambiguation, Redis lifecycle
+    artifacts, DAG/caching/concurrency telemetry, Hydra/problem-layout records,
+    insight/lineage artifacts, and benchmark reproduction rows remain open.
+  - Verification: GigaEvo boundary tests and paper-manifest tests validate the
+    sidecar and reject framework-readiness overclaims.

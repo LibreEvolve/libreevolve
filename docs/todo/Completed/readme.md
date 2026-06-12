@@ -643,7 +643,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Spec evidence: README points readers to the local paper cache as the source
     ledger for paper-facing implementation status and benchmark decisions.
   - Status: README now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 41 cache
+    companion manifest that emits derived source identities for all 42 cache
     rows, including URL source id, filename source prefix, validation booleans,
     and the AlphaEvolve row's source-version link.
   - Remaining gap: none for this bounded README wording slice.
@@ -1079,7 +1079,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     algorithm subset.
   - Status: corrected and guarded. README now states the visible paper tables
     are a curated subset and that `papers/README.md` is the complete
-    implementation-status index for all 41 manifest rows. The paper-manifest
+    implementation-status index for all 42 manifest rows. The paper-manifest
     validator now flags root README paper summaries that list only a subset of
     manifest ids without this curated-summary disclosure.
   - Verification: `tests/test_paper_manifest.py` covers accepted curated
@@ -12296,7 +12296,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     reward, Proposer/Generator co-training loop, GRPO/DPO trainer, or
     verifier-free self-evolution report exists.
   - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 41-row manifest.
+    count and curated-subset wording against the 42-row manifest.
 
 - [x] Document `2605.21605` GenEvolve paper coverage in README.
   - Status: README now includes `2605.21605`, GenEvolve, as multimodal
@@ -12304,7 +12304,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     generation tool pipeline, visual-reference trajectory store, Agentic Visual
     Experience Distillation, or GenEvolve-Bench report exists.
   - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 41-row manifest.
+    count and curated-subset wording against the 42-row manifest.
 
 - [x] Document `2605.29847` EvoRubric paper coverage in README.
   - Status: README now includes `2605.29847`, EvoRubric, as self-evolving
@@ -12312,4 +12312,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     Generator co-evolution, criteria verification, rubric memory pool, or
     reward-hacking report exists.
   - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 41-row manifest.
+    count and curated-subset wording against the 42-row manifest.
+
+- [x] Document `2605.29293` LLM-ALSO paper coverage in README.
+  - Status: README now includes `2605.29293`, LLM-ALSO, as learning-signal
+    optimization context only and states that no local sparse-reward MARL
+    harness, Critic/Generator reward-shaping loop, branch-validation trace, or
+    learning-efficiency report exists.
+  - Verification: paper-manifest validation checks README's local paper-cache
+    count and curated-subset wording against the 42-row manifest.

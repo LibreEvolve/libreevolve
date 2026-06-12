@@ -165,7 +165,7 @@ Common run options:
 
 ## Research Sources
 
-LibreEvolve is informed by a local cache of 41 papers on LLM-guided evolution,
+LibreEvolve is informed by a local cache of 42 papers on LLM-guided evolution,
 program synthesis, quality-diversity optimization, and related benchmarks. The
 PDF cache lives locally under `papers/`, but the PDFs themselves are gitignored.
 The committed repository tracks `papers/README.md`, download manifests, and
@@ -176,7 +176,7 @@ not authoritative bibliographic titles. Use `papers/README.md` for paper-facing
 titles, implementation status, and benchmark coverage decisions.
 
 The table below is a curated subset for README context. `papers/README.md` is
-the complete implementation-status index for all 41 manifest rows.
+the complete implementation-status index for all 42 manifest rows.
 
 | Source | Role in LibreEvolve |
 | --- | --- |
@@ -202,6 +202,7 @@ the complete implementation-status index for all 41 manifest rows.
 | [G-Zero](https://arxiv.org/abs/2605.09959) | Verifier-free co-evolution context only; no local Hint-delta intrinsic reward, Proposer/Generator co-training loop, GRPO/DPO trainer, or verifier-free self-evolution report exists. |
 | [GenEvolve](https://arxiv.org/abs/2605.21605) | Multimodal trajectory-distillation context only; no local image-generation tool pipeline, visual-reference trajectory store, Agentic Visual Experience Distillation, or GenEvolve-Bench report exists. |
 | [EvoRubric](https://arxiv.org/abs/2605.29847) | Self-evolving reward-rubric context only; no local Reasoner/Rubric-Generator co-evolution, criteria verification, rubric memory pool, or reward-hacking report exists. |
+| [LLM-ALSO](https://arxiv.org/abs/2605.29293) | Learning-signal optimization context only; no local sparse-reward MARL harness, Critic/Generator reward-shaping loop, branch-validation trace, or learning-efficiency report exists. |
 
 Rehydrate the ignored local PDF cache on a fresh checkout:
 

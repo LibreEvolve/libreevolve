@@ -12991,3 +12991,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2605.29293` LLM-ALSO paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2605.29293`, `LLM-ALSO: LLM-Driven Adaptive Learning-Signal
+    Optimization for Multi-Agent Reinforcement Learning`, cached locally as
+    `papers/2605.29293__LLM_ALSO.pdf` with byte count `712323` and SHA-256
+    `06b9bcb459f40437119f2c95153985a0e8682e0509ca12be9bd5f32147c888f5`.
+  - Remaining paper gap: source-license details, linked-code or project/demo
+    URL status, Critic/Generator role schema, sparse-return and compact-
+    behavior evidence metadata, stage-specific diagnosis artifacts,
+    reward-shaping configuration schema, branch-validation records, promotion
+    criteria, main-training trajectory provenance, sparse-reward cooperative
+    MARL task taxonomy, learning-efficiency metrics, baseline identities,
+    code/artifact reproducibility status, and independent reproduction outputs
+    remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 41 cache rows and links the AlphaEvolve row to
+  identities for all 42 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1443,6 +1443,19 @@ resumed-trace proof are still open.
   science benchmark reports, reward-hacking audits, linked-code audits, and
   independent reproduction outputs remain open before roadmap wording can
   promote EvoRubric-style reward-rubric support.
+- Keep LLM-ALSO adaptive learning-signal claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2605.29293`, `LLM-ALSO: LLM-Driven Adaptive Learning-Signal Optimization
+  for Multi-Agent Reinforcement Learning`, cached locally as
+  `papers/2605.29293__LLM_ALSO.pdf`. This is background learning-signal
+  optimization context only; sparse-reward cooperative MARL harnesses, Critic
+  LLM diagnosis roles, Generator LLM reward-shaping roles, compact behavior
+  evidence records, stage-specific coordination-failure diagnoses,
+  reward-shaping configuration artifacts, branch-validation trajectories,
+  validated-update promotion gates, main-training trajectory provenance,
+  learning-efficiency reports, linked-code audits, and independent
+  reproduction outputs remain open before roadmap wording can promote
+  LLM-ALSO-style adaptive learning-signal support.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

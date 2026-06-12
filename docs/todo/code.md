@@ -5480,7 +5480,8 @@ Primary evidence:
     README/ROADMAP wording that keeps self-evolving rubric rewards as missing
     implementation evidence until local runtime artifacts and reports exist.
 
-- [ ] Add LLM-ALSO adaptive learning-signal source boundary.
+- [ ] Implement LLM-ALSO adaptive learning-signal evidence beyond paper cache
+      coverage.
   - Spec evidence: arXiv `2605.29293`, `LLM-ALSO: LLM-Driven Adaptive
     Learning-Signal Optimization for Multi-Agent Reinforcement Learning`, was
     submitted May 28, 2026. Its abstract says effective training-time
@@ -5493,23 +5494,27 @@ Primary evidence:
     proposes reward-shaping configurations conditioned on the diagnosis; and
     branch-validation feedback refines candidates before updates affect the
     main training trajectory.
-  - Current evidence: LibreEvolve supports scalar/structured evaluator scores,
-    plugins, and run artifacts, but it has no LLM-ALSO source row, no
-    sparse-reward MARL training harness, no Critic/Generator learning-signal
-    roles, no stage-specific coordination-failure diagnosis, no
-    reward-shaping configuration artifact, no branch-validation trajectory,
-    no promotion gate for validated reward updates, and no learning-efficiency
-    report for cooperative MARL tasks.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2605.29293`: arXiv id/version/date/PDF hash, authors, source license,
-    relation to AlphaEvolve and LibreEvolve evaluator/reward contracts,
-    Critic/Generator role schemas, sparse-return and compact-behavior evidence
-    records, stage-specific diagnosis artifacts, reward-shaping configuration
-    schema, branch-validation traces, update-promotion criteria, main-training
+  - Current evidence: `papers/download_manifest.*`, `papers/row_identity.json`,
+    `papers/README.md`, README, ROADMAP, and TODO coverage now include
+    `2605.29293`, cached locally as `papers/2605.29293__LLM_ALSO.pdf` with
+    byte count `712323` and SHA-256
+    `06b9bcb459f40437119f2c95153985a0e8682e0509ca12be9bd5f32147c888f5`.
+    LibreEvolve still supports scalar/structured evaluator scores, plugins,
+    and run artifacts, but it has no sparse-reward MARL training harness, no
+    Critic/Generator learning-signal roles, no stage-specific coordination-
+    failure diagnosis, no reward-shaping configuration artifact, no
+    branch-validation trajectory, no promotion gate for validated reward
+    updates, and no learning-efficiency report for cooperative MARL tasks.
+  - Required result: add implementation-boundary metadata beyond the paper
+    cache: source license, linked-code or project/demo URL status, relation to
+    AlphaEvolve and LibreEvolve evaluator/reward contracts, Critic/Generator
+    role schemas, sparse-return and compact-behavior evidence records,
+    stage-specific diagnosis artifacts, reward-shaping configuration schema,
+    branch-validation traces, update-promotion criteria, main-training
     trajectory provenance, sparse-reward cooperative MARL task taxonomy,
     learning-efficiency metrics, baseline identities, and README/ROADMAP
     wording that keeps adaptive learning-signal optimization as missing
-    evidence until local implementation and reports exist.
+    implementation evidence until local runtime artifacts and reports exist.
 
 - [ ] Add MemEvolve meta-evolving memory-architecture source boundary.
   - Spec evidence: arXiv `2512.18746`, `MemEvolve: Meta-Evolution of Agent

@@ -408,6 +408,12 @@ from libreevolve.problems.benchmarks.paper_artifact_roles import (
     validate_paper_artifact_linkage,
     validate_paper_artifact_roles,
 )
+from libreevolve.problems.benchmarks.paper_author_metadata_boundary import (
+    PAPER_AUTHOR_METADATA_BOUNDARY_SCHEMA,
+    paper_author_metadata_boundary_record,
+    render_paper_author_metadata_boundary_summary,
+    validate_paper_author_metadata_boundary,
+)
 from libreevolve.problems.benchmarks.paper_bibliography import (
     ALPHAEVOLVE_REFERENCES_BIBLIOGRAPHY_SCHEMA,
     ALPHAEVOLVE_REFERENCES_SECTION_SCHEMA,
@@ -622,6 +628,7 @@ __all__ = [
     "STRASSEN_2X2_PUBLICATION_BUNDLE_SEEDS",
     "PAPER_ARTIFACT_ROLE_SCHEMA",
     "PAPER_ARTIFACT_LINKAGE_SCHEMA",
+    "PAPER_AUTHOR_METADATA_BOUNDARY_SCHEMA",
     "PAPER_CERTIFICATION_SCHEMA",
     "PARALLEL_EVALUATION_READINESS_BOUNDARY_SCHEMA",
     "PROCESS_EXHIBIT_BOUNDARY_SCHEMA",
@@ -701,6 +708,7 @@ __all__ = [
     "magellan_boundary_record",
     "multiagent_learning_boundary_record",
     "parallel_evaluation_readiness_boundary_record",
+    "paper_author_metadata_boundary_record",
     "process_exhibit_boundary_record",
     "problem_formulation_provenance_boundary_record",
     "proposal_lifecycle_audit_boundary_record",
@@ -815,6 +823,7 @@ __all__ = [
     "render_matrix_tensor_rank_runtime_boundary_summary",
     "render_paper_artifact_role_summary",
     "render_paper_artifact_linkage_summary",
+    "render_paper_author_metadata_boundary_summary",
     "render_parallel_evaluation_readiness_boundary_summary",
     "render_process_exhibit_boundary_summary",
     "render_problem_formulation_provenance_boundary_summary",
@@ -917,6 +926,7 @@ __all__ = [
     "validate_math_starting_construction_boundary",
     "validate_paper_artifact_roles",
     "validate_paper_artifact_linkage",
+    "validate_paper_author_metadata_boundary",
     "validate_paper_result_certification",
     "validate_parallel_evaluation_readiness_boundary",
     "validate_process_exhibit_boundary",

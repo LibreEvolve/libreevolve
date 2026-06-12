@@ -162,7 +162,10 @@ manifests include `runtime.history.paper_author_metadata_report` with schema
 contributors, manuscript writers, paper-input contributors, and corresponding
 authors separate from technical implementation provenance, acknowledgement
 roles, title-page affiliation metadata, package/project metadata, and local
-validation evidence.
+validation evidence. The paper-facing sidecar
+`papers/paper_author_metadata_boundary.json` records that the reviewed
+`matrix_multiplication` fixture is claim-ready only for publication-author
+metadata parity.
 Problem fixtures can also optionally include `title_page.yaml` or
 `title_page.yml`; direct callers can set `Problem.title_page_metadata`.
 Startup manifest validation normalizes this into `problem.title_page_metadata`

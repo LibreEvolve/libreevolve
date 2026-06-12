@@ -12856,6 +12856,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused acknowledgement-role boundary tests reject scope drift.
 
+- [x] Record publication-author metadata paper-facing sidecar.
+  - Status: `libreevolve/problems/benchmarks/paper_author_metadata_boundary.py`
+    and `papers/paper_author_metadata_boundary.json` now preserve the reviewed
+    `matrix_multiplication` paper-author fixture as claim-ready for
+    AlphaEvolve pages 22-23 publication-author metadata plus title-page marker
+    linkage.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused paper-author boundary tests reject title-page,
+    acknowledgement, implementation, local-authorship, and contact-disclosure
+    scope drift.
+
 - [x] Add `2603.28052` Meta-Harness paper-cache coverage.
   - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
     `papers/row_identity.json`, and `papers/README.md` now include

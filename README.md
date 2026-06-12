@@ -61,6 +61,11 @@ Important limits:
   roles; the boundary is tracked by
   `papers/acknowledgement_role_provenance_boundary.json` and does not claim
   technical validation, authorship, affiliation, or deployment evidence.
+- Publication-author metadata is claim-ready only for the reviewed
+  `matrix_multiplication` fixture's AlphaEvolve pages 22-23 author/contribution
+  roles plus title-page marker linkage; the boundary is tracked by
+  `papers/paper_author_metadata_boundary.json` and does not claim local
+  authorship, affiliation, technical validation, or copied contact details.
 - The included examples are smoke fixtures and small demos unless explicitly
   documented otherwise.
 - Paper and blog claims are tracked as source boundaries unless local benchmark

@@ -1004,6 +1004,60 @@ def test_validate_paper_manifest_requires_acknowledgement_role_provenance_bounda
     assert "acknowledgement_role_provenance_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_paper_author_metadata_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.PAPER_AUTHOR_METADATA_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.paper_author_metadata_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_paper_author_metadata_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.paper_author_metadata_boundary_record()
+    record["claim_ready"] = False
+    record["boundary_status"] = "title_page_affiliation_ready"
+    record["excluded_claims"]["title_page_affiliation_metadata"] = "claimed"
+    sidecar = tmp_path / paper_manifest.PAPER_AUTHOR_METADATA_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "paper_author_metadata_boundary_claim_ready_underclaim" in codes
+    assert "paper_author_metadata_boundary_invalid_boundary_status" in codes
+    assert (
+        "paper_author_metadata_boundary_invalid_excluded_claim_title_page_affiliation_metadata"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_paper_author_metadata_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "paper_author_metadata_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_existing_codebase_integration_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

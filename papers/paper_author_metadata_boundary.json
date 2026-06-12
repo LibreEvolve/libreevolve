@@ -1,0 +1,44 @@
+{
+  "schema": "libreevolve.alphaevolve_paper_author_metadata_boundary.v1",
+  "runtime_report_schema": "libreevolve.paper_author_metadata_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve author information and Contributions pages 22-23 record equal contributors, manuscript writers, paper-input contributors, and corresponding authors, with the equal-contribution title-page marker linked separately",
+  "boundary_status": "paper_author_metadata_claim_ready",
+  "runtime_report_status": "paper_author_metadata_report_available",
+  "claim_ready": true,
+  "claim_ready_fixture": "libreevolve/problems/examples/matrix_multiplication/paper_authors.yaml",
+  "source_pages": [
+    22,
+    23
+  ],
+  "title_page_marker_linkage": "star",
+  "required_role_categories": [
+    "equal_contributor",
+    "manuscript_writer",
+    "paper_input",
+    "corresponding_author"
+  ],
+  "required_evidence_fields": [
+    "metadata_present",
+    "all_publication_author_roles_recorded",
+    "source_page_and_section_recorded",
+    "title_page_equal_contribution_marker_linked",
+    "contact_privacy_policy_recorded",
+    "publication_metadata_review_or_owner_signoff",
+    "technical_implementation_boundary_separated",
+    "acknowledgement_boundary_separated",
+    "title_page_affiliation_boundary_separated",
+    "alphaevolve_publication_author_metadata_parity",
+    "reviewed_matrix_fixture_paper_author_records",
+    "source_pages_22_23_recorded"
+  ],
+  "excluded_claims": {
+    "technical_implementation_or_benchmark_success": "out_of_scope",
+    "acknowledgement_role_provenance": "separate_runtime_report",
+    "title_page_affiliation_metadata": "separate_runtime_report",
+    "system_contribution_provenance": "separate_runtime_report",
+    "local_libreevolve_authorship_or_affiliation": "not_claimed",
+    "copied_public_contact_details": "not_recorded"
+  },
+  "claim_boundary": "This boundary records that the matrix_multiplication fixture has reviewed publication-author metadata covering AlphaEvolve equal contributors, manuscript writers, paper-input contributors, corresponding authors, source locators, title-page marker linkage, and contact/privacy policy. It does not claim technical implementation evidence, benchmark success, acknowledgement-role provenance, title-page affiliation metadata, system-contribution provenance, local LibreEvolve authorship or affiliation, or copied public contact details."
+}

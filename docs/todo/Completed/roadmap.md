@@ -10060,6 +10060,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     root and focused acknowledgement-role tests reject publication-author or
     technical-validation scope drift.
 
+- [x] Keep roadmap publication-author boundary tied to sidecar.
+  - Status: ROADMAP now links optional paper-author metadata and
+    `runtime.history.paper_author_metadata_report` to
+    `papers/paper_author_metadata_boundary.json`, preserving the claim-ready
+    scope for the reviewed `matrix_multiplication` fixture only.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused paper-author tests reject adjacent metadata or local-
+    authorship scope drift.
+
 - [x] Preserve `2603.28052` Meta-Harness paper-cache scope in roadmap.
   - Status: ROADMAP now identifies arXiv `2603.28052`, `Meta-Harness:
     End-to-End Optimization of Model Harnesses`, as background outer-loop

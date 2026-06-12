@@ -263,6 +263,10 @@ from libreevolve.problems.benchmarks.paper_artifact_roles import (
     validate_paper_artifact_linkage,
     validate_paper_artifact_roles,
 )
+from libreevolve.problems.benchmarks.paper_author_metadata_boundary import (
+    paper_author_metadata_boundary_record,
+    validate_paper_author_metadata_boundary,
+)
 from libreevolve.problems.benchmarks.matrix_exhibits import (
     figure4_matrix_discovery_artifact_boundary_record,
     figure9_matrix_diff_artifact_boundary_record,
@@ -342,6 +346,7 @@ FIGURE4_MATRIX_DISCOVERY_ARTIFACTS_FILE = "papers/figure4_matrix_discovery_artif
 FIGURE8_ABLATION_ARTIFACTS_FILE = "papers/figure8_ablation_artifacts.json"
 BENCHMARK_FIXTURE_READINESS_BOUNDARY_FILE = "papers/benchmark_fixture_readiness_boundary.json"
 ACKNOWLEDGEMENT_ROLE_PROVENANCE_BOUNDARY_FILE = "papers/acknowledgement_role_provenance_boundary.json"
+PAPER_AUTHOR_METADATA_BOUNDARY_FILE = "papers/paper_author_metadata_boundary.json"
 COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_FILE = "papers/collaborator_feedback_provenance_boundary.json"
 PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_FILE = "papers/problem_formulation_provenance_boundary.json"
 EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integration_boundary.json"
@@ -812,6 +817,7 @@ def validate_paper_manifest(
     issues.extend(_validate_figure8_ablation_artifacts(root_path))
     issues.extend(_validate_benchmark_fixture_readiness_boundary(root_path))
     issues.extend(_validate_acknowledgement_role_provenance_boundary(root_path))
+    issues.extend(_validate_paper_author_metadata_boundary(root_path))
     issues.extend(_validate_collaborator_feedback_provenance_boundary(root_path))
     issues.extend(_validate_problem_formulation_provenance_boundary(root_path))
     issues.extend(_validate_existing_codebase_integration_boundary(root_path))
@@ -1596,6 +1602,38 @@ def _validate_acknowledgement_role_provenance_boundary(root_path: Path) -> list[
             f"acknowledgement_role_provenance_boundary_{issue.code}",
             issue.message,
             "acknowledgement_role_provenance",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_paper_author_metadata_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / PAPER_AUTHOR_METADATA_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = paper_author_metadata_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "paper_author_metadata_boundary_manifest_missing",
+                    (
+                        f"{PAPER_AUTHOR_METADATA_BOUNDARY_FILE} must emit "
+                        "publication-author metadata availability"
+                    ),
+                    "paper_author_metadata",
+                )
+            ]
+    report = validate_paper_author_metadata_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"paper_author_metadata_boundary_{issue.code}",
+            issue.message,
+            "paper_author_metadata",
         )
         for issue in report.issues
     ]

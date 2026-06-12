@@ -311,8 +311,10 @@ LibreEvolve has:
   manuscript writers, paper-input contributors, corresponding authors,
   title-page marker linkage, contact/privacy policy, and review/signoff
   readiness; the `matrix_multiplication` example carries a reviewed
-  AlphaEvolve pages 1/22/23 fixture and a manifest regression for the
-  claim-ready publication-author metadata boundary
+  AlphaEvolve pages 22-23 fixture plus title-page marker linkage and a
+  manifest regression for the claim-ready publication-author metadata
+  boundary, with `papers/paper_author_metadata_boundary.json` preserving that
+  paper-facing scope
 - optional title-page affiliation metadata under `title_page.yaml` or direct
   `Problem.title_page_metadata`, normalized into `problem.title_page_metadata`
   and summarized by `runtime.history.title_page_affiliation_report` for

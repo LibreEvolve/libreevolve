@@ -18291,3 +18291,13 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     claim-ready underclaiming, invalid boundary status, missing role/evidence
     fields, and publication-author scope drift.
+
+- [x] Add publication-author metadata sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/paper_author_metadata_boundary.py`
+    now emits and validates the claim-ready publication-author metadata
+    boundary for the reviewed `matrix_multiplication` fixture, and
+    `libreevolve/tools/paper_manifest.py` requires the committed paper sidecar
+    at the repo root.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    claim-ready underclaiming, invalid boundary status, missing role/evidence
+    fields, and title-page affiliation scope drift.

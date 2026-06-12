@@ -604,9 +604,13 @@ review/signoff state. These publication metadata records are separate from
 technical implementation provenance, acknowledgement roles, title-page
 affiliation metadata, package/project metadata, and local validation evidence;
 the `matrix_multiplication` example now provides a reviewed
-`paper_authors.yaml` fixture for AlphaEvolve pages 1, 22, and 23, and its
-zero-generation manifest report is claim-ready for paper-author metadata
-parity.
+`paper_authors.yaml` fixture for AlphaEvolve pages 22-23 plus title-page
+marker linkage, and its zero-generation manifest report is claim-ready for
+paper-author metadata parity. The committed
+`papers/paper_author_metadata_boundary.json` sidecar preserves that scope
+while excluding technical implementation evidence, acknowledgement-role
+provenance, title-page affiliation metadata, system-contribution provenance,
+local LibreEvolve authorship or affiliation, and copied public contact details.
 
 AlphaEvolve title-page affiliation note: LibreEvolve now has optional
 `title_page.yaml` / `Problem.title_page_metadata` records plus

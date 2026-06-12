@@ -1902,6 +1902,9 @@ Provider diagnostics also reject raw provider-payload replay claims at the
 summary, totals, and backend-record scopes; retained hashes, redacted text
 snippets, and bounded scalar diagnostics still do not provide full raw payload
 replay.
+They also reject remote provider-default/default-rate capture claims and
+backend-default counts that exceed retained call records; `backend_defaults`
+remain LibreEvolve's local effective settings, not provider-side defaults.
 Built-in OpenAI, Anthropic, and Ollama backend specs also accept positive
 `timeout_sec`, which is forwarded to provider client construction as a request
 timeout. Run-level `llm_call_timeout_sec` adds an ensemble deadline around

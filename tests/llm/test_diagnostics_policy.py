@@ -108,6 +108,25 @@ def test_llm_provider_diagnostics_summary_rejects_nested_raw_payload_claims():
     assert "invalid_backend_raw_payload_replay" in codes
 
 
+def test_llm_provider_diagnostics_summary_rejects_remote_default_overclaims():
+    summary = _summary()
+    summary["provider_default_rate_capture"] = "available"
+    summary["totals"]["remote_provider_defaults"] = {"temperature": 1}
+    summary["totals"]["backend_defaults_record_count"] = 2
+    summary["backends"][0]["provider_side_defaults"] = {"max_tokens": 8192}
+    summary["backends"][0]["backend_defaults_record_count"] = 2
+    summary["records_sha256"] = _hash_backends(summary)
+
+    validation = validate_llm_provider_diagnostics_summary(summary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_provider_default_rate_capture" in codes
+    assert "invalid_totals_remote_provider_defaults" in codes
+    assert "invalid_backend_provider_side_defaults" in codes
+    assert "backend_defaults_count_exceeds_calls" in codes
+
+
 def test_llm_provider_diagnostics_summary_rejects_configured_pricing_drift():
     summary = _summary()
     summary["totals"]["configured_pricing_estimate_count"] = 1

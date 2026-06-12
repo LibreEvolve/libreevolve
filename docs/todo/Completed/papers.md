@@ -12143,3 +12143,14 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     provider pricing.
   - Verification: diagnostics-policy tests validate nested raw provider replay
     overclaim rejection.
+
+- [x] Record local backend-default boundary.
+  - Spec evidence: AlphaEvolve-scale provider-call accounting needs live
+    provider/account/model default evidence distinct from local SDK settings.
+  - Status: paper-facing TODOs and diagnostics validators now reject remote
+    provider-default/default-rate capture claims and backend-default count
+    inflation.
+  - Remaining paper gap: this does not capture live provider-side defaults,
+    account/model default rates, or provider pricing.
+  - Verification: diagnostics-policy tests validate remote-default overclaim
+    and backend-default count rejection.

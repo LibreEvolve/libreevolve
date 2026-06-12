@@ -1729,9 +1729,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     aggregate retained call-history windows and explicitly limit themselves to
     bounded scalar diagnostics and configured pricing estimates. The validator
     now rejects raw provider-payload replay claims at the summary, totals, and
-    backend-record scopes; this is still not full raw provider-native payload
-    replay, live provider pricing/default-rate discovery, account/model default
-    capture, or complete replay evidence for provider outputs.
+    backend-record scopes, remote provider-default/default-rate capture claims,
+    and backend-default record counts that exceed retained call records; this
+    is still not full raw provider-native payload replay, live provider
+    pricing/default-rate discovery, account/model default capture, or complete
+    replay evidence for provider outputs.
   - Required result: when raw provider-payload replay, live pricing/default
     capture, provider account/model default evidence, or richer budget-event
     artifacts land, update the roadmap, README, papers index, and code/paper
@@ -1771,9 +1773,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     drift and cost-status reason drift so aggregate summaries cannot imply
     more configured pricing evidence than retained call rows support. They also
     reject raw provider-payload replay overclaims at the summary, totals, and
-    backend-record scopes. The roadmap now names live provider pricing/default-
-    rate capture beyond configured token-cost estimates and raw provider replay
-    as remaining gaps.
+    backend-record scopes, remote provider-default/default-rate capture claims,
+    and backend-default counts that exceed retained calls. The roadmap now
+    names live provider pricing/default-rate capture beyond configured token-
+    cost estimates and raw provider replay as remaining gaps.
   - Required result: when live provider pricing discovery, provider default
     rate capture, or account/model-specific pricing evidence lands, update the
     roadmap, README, papers index, and code/paper TODO entries together so they

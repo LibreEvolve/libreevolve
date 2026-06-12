@@ -11755,3 +11755,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     scopes while keeping true raw replay absent.
   - Verification: diagnostics-policy tests validate nested raw provider replay
     overclaim rejection.
+
+- [x] Document local backend-default diagnostics boundary.
+  - Spec evidence: README provider-default wording needed to distinguish local
+    effective generation settings from remote provider-side defaults.
+  - Status: README and TODO wording now state that provider diagnostics reject
+    remote provider-default/default-rate capture overclaims and impossible
+    backend-default counts while keeping live provider defaults absent.
+  - Verification: diagnostics-policy tests validate remote-default overclaim
+    and backend-default count rejection.

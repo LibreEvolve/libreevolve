@@ -3289,6 +3289,7 @@ def test_provider_diagnostics_summary_aggregates_retained_call_history():
         "provider_response_error_text_retention_follows_configured_modes",
         "bounded_scalar_provider_diagnostics_not_full_raw_provider_payloads",
         "configured_cost_estimates_not_live_provider_pricing",
+        "local_backend_defaults_not_remote_provider_defaults",
     ]
 
 

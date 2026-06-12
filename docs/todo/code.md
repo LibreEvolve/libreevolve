@@ -4139,11 +4139,12 @@ Primary evidence:
     backend-default API-mode counts, call history retention, a records hash,
     configured-pricing aggregate consistency checks, cost-status reason
     consistency checks, raw-payload replay overclaim checks at the summary,
-    totals, and backend-record scopes, and explicit limitations that this is
-    retained-history-
-    only, configured response/error text retention, bounded scalar diagnostics
-    rather than full provider-native payloads, and configured estimates rather
-    than live pricing.
+    totals, and backend-record scopes, backend-default count consistency
+    checks, remote-default/default-rate overclaim checks, and explicit
+    limitations that this is retained-history only, configured response/error
+    text retention, bounded scalar diagnostics rather than full provider-native
+    payloads, configured estimates rather than live pricing, and local backend
+    defaults rather than remote provider defaults.
     `validate_provider_capability_lookup_policy()` now validates
     `libreevolve.provider_capability_lookup_policy.v1` records for static-only
     provider lookup boundaries, required local validation checks, OpenAI
@@ -4156,7 +4157,9 @@ Primary evidence:
     integrity, non-negative counters, backend-count, total/backend aggregate
     count and retention-counter consistency, required limitation statements,
     and the current no-live-pricing/no-raw-payload replay boundary, including
-    nested raw-payload replay claims under totals or backend records.
+    nested raw-payload replay claims under totals or backend records. It also
+    rejects remote provider-default/default-rate overclaims and
+    backend-default record counts that exceed retained call counts.
     Focused ensemble tests now cover `throughput_depth` metadata selection,
     normalized depth/cost/latency contribution against the reward scale,
     descriptive breadth/depth role metadata, live role metadata routing,

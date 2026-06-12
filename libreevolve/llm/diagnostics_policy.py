@@ -20,6 +20,7 @@ _REQUIRED_LIMITATIONS = {
     "provider_response_error_text_retention_follows_configured_modes",
     "bounded_scalar_provider_diagnostics_not_full_raw_provider_payloads",
     "configured_cost_estimates_not_live_provider_pricing",
+    "local_backend_defaults_not_remote_provider_defaults",
 }
 _TOTAL_COUNT_FIELDS = (
     "call_count",
@@ -86,6 +87,14 @@ _RAW_PAYLOAD_FIELDS = (
     "provider_native_payloads",
     "raw_payload_replay",
 )
+_REMOTE_DEFAULT_FIELDS = (
+    "remote_provider_defaults",
+    "provider_side_defaults",
+    "provider_default_rates",
+    "live_provider_default_rates",
+    "account_model_defaults",
+    "provider_default_rate_capture",
+)
 
 
 @dataclass(frozen=True)
@@ -149,6 +158,7 @@ def validate_llm_provider_diagnostics_summary(
     _validate_limitations(data.get("limitations"), issues)
     _validate_no_raw_payload_claims(data, issues)
     _validate_live_pricing_boundary(totals, backends, issues)
+    _validate_provider_defaults_boundary(data, totals, backends, issues)
     _validate_configured_pricing_boundary(totals, backends, issues)
     if totals is not None:
         _validate_totals_match_backends(totals, backends, issues)
@@ -483,6 +493,72 @@ def _validate_live_pricing_boundary(
             LLMProviderDiagnosticsIssue(
                 "live_pricing_not_supported",
                 "current diagnostics policy must not claim live pricing records",
+            )
+        )
+
+
+def _validate_provider_defaults_boundary(
+    data: dict[str, Any],
+    totals: dict[str, Any] | None,
+    backends: list[dict[str, Any]],
+    issues: list[LLMProviderDiagnosticsIssue],
+) -> None:
+    _validate_no_remote_default_claims_in_scope(data, "", issues)
+    if totals is not None:
+        _validate_no_remote_default_claims_in_scope(totals, "totals", issues)
+        _validate_backend_defaults_count(
+            totals,
+            "call_count",
+            "totals",
+            issues,
+        )
+    for item in backends:
+        _validate_no_remote_default_claims_in_scope(item, "backend", issues)
+        _validate_backend_defaults_count(item, "calls", "backend", issues)
+
+
+def _validate_no_remote_default_claims_in_scope(
+    data: dict[str, Any],
+    scope: str,
+    issues: list[LLMProviderDiagnosticsIssue],
+) -> None:
+    for field in _REMOTE_DEFAULT_FIELDS:
+        if field in data and data[field] not in (
+            False,
+            None,
+            "unsupported",
+            "not_fetched",
+            "not_captured",
+        ):
+            field_path = f"{scope}.{field}" if scope else field
+            code = f"invalid_{scope}_{field}" if scope else f"invalid_{field}"
+            issues.append(
+                LLMProviderDiagnosticsIssue(
+                    code,
+                    f"{field_path} must not claim remote provider defaults or default-rate capture",
+                )
+            )
+
+
+def _validate_backend_defaults_count(
+    record: dict[str, Any],
+    call_field: str,
+    scope: str,
+    issues: list[LLMProviderDiagnosticsIssue],
+) -> None:
+    defaults_count = record.get("backend_defaults_record_count")
+    call_count = record.get(call_field)
+    if (
+        isinstance(defaults_count, int)
+        and not isinstance(defaults_count, bool)
+        and isinstance(call_count, int)
+        and not isinstance(call_count, bool)
+        and defaults_count > call_count
+    ):
+        issues.append(
+            LLMProviderDiagnosticsIssue(
+                "backend_defaults_count_exceeds_calls",
+                f"{scope}.backend_defaults_record_count cannot exceed {scope}.{call_field}",
             )
         )
 

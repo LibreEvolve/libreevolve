@@ -9286,3 +9286,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     keeping full raw provider replay open.
   - Verification: diagnostics-policy tests validate nested raw provider replay
     overclaim rejection.
+
+- [x] Preserve local backend-default boundary.
+  - Spec evidence: roadmap provider-default claims need to distinguish local
+    backend defaults from live provider/account/model default capture.
+  - Status: ROADMAP and TODO wording now recognize remote-default/default-rate
+    overclaim checks and backend-default count consistency while keeping live
+    provider default capture open.
+  - Verification: diagnostics-policy tests validate remote-default overclaim
+    and backend-default count rejection.

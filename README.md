@@ -4489,6 +4489,13 @@ the concrete TPU arithmetic-circuit rewrite: source/modified Verilog hashes,
 rewrite diff hash, component and matrix-unit context, semantic rewrite
 category, changed spans, removed-bit inventory, rewrite rationale, PPA linkage,
 verification linkage, and artifact refs.
+Ready hardware reports also require `hardware_contribution_provenance` records
+for the broader Gemini-to-TPU claim: Gemini/AlphaEvolve model-family
+relationship, AlphaEvolve run identity, producing backend, TPU generation,
+arithmetic-circuit identity, contribution novelty basis, first-direct-
+contribution scope, integration milestone, hardware review signoff scope,
+downstream synthesis rediscovery distinction, confirmation flags, and artifact
+refs.
 The claim-calibration schema still does not create real scheduling, kernel,
 hardware, or compiler fixtures, nor does it populate calibrated evidence for
 AlphaEvolve Section 3.3 magnitudes such as resource recovery percentages,
@@ -4506,7 +4513,10 @@ synthesis reports, upcoming-chip integration records, or time-to-market
 evidence. Hardware rewrite provenance records the concrete bit-removal
 metadata, but it does not generate real before/after Verilog files, diff/AST
 artifacts, removed-signal inventories, or proof that eliminated bits caused the
-reported PPA deltas.
+reported PPA deltas. Hardware contribution provenance records the attribution
+boundary, but it does not prove a real Gemini-produced TPU integration,
+firstness/novelty review, hardware signoff package, or downstream synthesis
+rediscovery audit.
 `libreevolve.systems_result_artifact_inventory.v1` verifies the declared
 systems report artifacts against concrete files under an explicit artifact
 root, including safe relative paths, existence, SHA-256 hashes, and byte

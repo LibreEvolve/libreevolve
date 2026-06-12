@@ -378,6 +378,31 @@ def _valid_hardware_report() -> dict:
         ],
         "artifact_refs": ["systems/flashattention/reference.json"],
     }
+    report["hardware_contribution_provenance"] = {
+        "model_family_relationship": "Gemini-family model used through AlphaEvolve",
+        "alphaevolve_run_identity": "alphaevolve_hardware_rtl_run_001",
+        "producing_backend_identity": "gemini_candidate_backend",
+        "tpu_generation_identity": "upcoming TPU generation target",
+        "arithmetic_circuit_identity": "matrix multiplication unit arithmetic circuit",
+        "contribution_novelty_basis": (
+            "first direct Gemini contribution to TPU arithmetic circuits"
+        ),
+        "first_direct_contribution_scope": (
+            "bounded to reviewed TPU arithmetic-circuit RTL contribution"
+        ),
+        "integration_milestone": "accepted for upcoming TPU integration review",
+        "hardware_review_signoff_scope": (
+            "hardware reviewer confirmed model-produced RTL contribution scope"
+        ),
+        "synthesis_rediscovery_distinction": (
+            "downstream synthesis rediscovery is recorded separately from model attribution"
+        ),
+        "gemini_family_confirmed": True,
+        "alphaevolve_mediated": True,
+        "integration_milestone_confirmed": True,
+        "rediscovery_caveat_recorded": True,
+        "artifact_refs": ["systems/flashattention/reference.json"],
+    }
     return report
 
 
@@ -915,6 +940,40 @@ def test_hardware_rewrite_provenance_rejects_bad_bit_removal_context():
     assert "invalid_hardware_rewrite_removed_bit_ppa_ref" in codes
 
 
+def test_ready_hardware_report_requires_contribution_provenance():
+    report = _valid_hardware_report()
+
+    report.pop("hardware_contribution_provenance")
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "missing_hardware_contribution_provenance" in codes
+    assert "invalid_ready_hardware_contribution_provenance" in codes
+
+
+def test_hardware_contribution_provenance_rejects_bad_attribution_context():
+    report = _valid_hardware_report()
+    contribution = report["hardware_contribution_provenance"]
+    contribution["model_family_relationship"] = ""
+    contribution["gemini_family_confirmed"] = False
+    contribution["alphaevolve_mediated"] = False
+    contribution["rediscovery_caveat_recorded"] = False
+    contribution["artifact_refs"] = ["systems/flashattention/missing.json"]
+
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "invalid_hardware_contribution_model_family_relationship" in codes
+    assert "invalid_hardware_contribution_gemini_family_confirmed" in codes
+    assert "invalid_hardware_contribution_alphaevolve_mediated" in codes
+    assert "invalid_hardware_contribution_rediscovery_caveat_recorded" in codes
+    assert "invalid_hardware_contribution_artifact_ref" in codes
+
+
 def test_ready_scheduling_report_requires_ranking_only_safety():
     report = _valid_scheduling_report()
     report.pop("scheduling_safety")
@@ -1099,6 +1158,7 @@ def test_systems_result_summary_renders_gates_and_readiness():
     assert "| compiler_adoption_provenance | absent |" in summary
     assert "| hardware_rtl_eda_provenance | absent |" in summary
     assert "| hardware_rewrite_provenance | absent |" in summary
+    assert "| hardware_contribution_provenance | absent |" in summary
     assert "optimization=passed" in summary
     assert "heldout=passed" in summary
     assert "reference_correctness=passed" in summary

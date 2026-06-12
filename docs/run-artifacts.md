@@ -2335,6 +2335,14 @@ rewrite diff hash, component and matrix-unit context, semantic rewrite
 category, changed spans, removed-bit inventory, rewrite rationale, PPA linkage,
 verification linkage, and artifact refs. This records the bit-removal rewrite
 boundary; it does not create the real Verilog or diff artifacts.
+Ready hardware reports also require `hardware_contribution_provenance`,
+covering the broader Gemini-to-TPU attribution claim: Gemini/AlphaEvolve model
+family relationship, run identity, producing backend, TPU generation,
+arithmetic-circuit identity, novelty basis, first-direct-contribution scope,
+integration milestone, hardware review signoff scope, downstream synthesis
+rediscovery distinction, confirmation flags, and artifact refs. This records
+the attribution boundary; it does not prove firstness, deployment, or real TPU
+integration.
 `libreevolve.systems_evidence_bundle.v1` is the portable wrapper for those
 records: it embeds the systems report and artifact inventory, records stable
 SHA-256 hashes for each embedded object plus the inventory records hash, checks

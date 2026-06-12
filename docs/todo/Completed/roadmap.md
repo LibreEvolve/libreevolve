@@ -9256,3 +9256,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     artifacts remain open.
   - Verification: systems-result regression tests validate the implemented
     provenance requirement.
+
+- [x] Preserve Gemini-to-TPU contribution provenance boundary.
+  - Spec evidence: roadmap hardware-contribution claims need to distinguish
+    concrete RTL optimization evidence from the broader claim that Gemini
+    directly contributed to TPU arithmetic circuits through AlphaEvolve.
+  - Status: ROADMAP and TODO wording now recognize that ready hardware systems
+    reports require `hardware_contribution_provenance`, while real
+    model/backend records, TPU/circuit review, firstness/novelty review,
+    integration milestone, hardware signoff, and rediscovery-audit artifacts
+    remain open.
+  - Verification: systems-result regression tests validate the implemented
+    provenance requirement.

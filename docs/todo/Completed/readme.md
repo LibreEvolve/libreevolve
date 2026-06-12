@@ -11725,3 +11725,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     artifact refs.
   - Verification: systems-result regression tests validate the documented
     report contract.
+
+- [x] Document Gemini-to-TPU contribution provenance.
+  - Spec evidence: README hardware systems wording needed to distinguish a
+    reviewed Gemini/AlphaEvolve contribution claim from a concrete RTL rewrite
+    and from downstream synthesis rediscovery.
+  - Status: README and run-artifact docs now describe
+    `hardware_contribution_provenance` for ready hardware reports, including
+    model-family relationship, AlphaEvolve run identity, producing backend, TPU
+    generation, circuit identity, novelty basis, first-direct-contribution
+    scope, integration milestone, hardware review scope, synthesis rediscovery
+    distinction, confirmation flags, and artifact refs.
+  - Verification: systems-result regression tests validate the documented
+    report contract.

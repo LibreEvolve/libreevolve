@@ -4147,19 +4147,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     via AlphaEvolve.
   - Current gap: paper-facing hardware TODOs track RTL/EDA verification,
     designer and synthesis-tool signoff, upcoming-TPU integration, Verilog
-    adoption, and concrete bit-removal artifacts. They do not separately
-    preserve the attribution evidence for the Gemini-to-TPU contribution
-    claim: which Gemini/AlphaEvolve model-family produced the edit, which TPU
+    adoption, concrete bit-removal artifacts, and now
+    `hardware_contribution_provenance`. Ready hardware reports separately
+    preserve attribution evidence for the Gemini-to-TPU contribution claim:
+    which Gemini/AlphaEvolve model-family produced the edit, which TPU
     arithmetic circuit and TPU generation received it, why it qualifies as a
-    first direct contribution, and how that differs from the downstream
-    synthesis-tool rediscovery note.
-  - Required result: add paper/report evidence for Gemini hardware
-    self-contribution claims with model-family/backend identity, TPU and
-    arithmetic-circuit identifiers, integration milestone, novelty/firstness
-    basis, hardware review/signoff roles, synthesis-tool rediscovery caveat,
-    and README/ROADMAP wording that separates RTL optimization evidence from
-    the broader claim that Gemini directly contributed to TPU arithmetic
-    circuits through AlphaEvolve.
+    first direct contribution, integration milestone, review scope, and how it
+    differs from the downstream synthesis-tool rediscovery note.
+  - Required result: add real paper/report artifacts for Gemini hardware
+    self-contribution claims: model-family/backend records, TPU and
+    arithmetic-circuit identifiers, integration milestone records,
+    novelty/firstness review evidence, hardware review/signoff files,
+    synthesis-tool rediscovery audit artifacts, and README/ROADMAP wording that
+    separates RTL optimization evidence from the broader claim that Gemini
+    directly contributed to TPU arithmetic circuits through AlphaEvolve.
 
 - [ ] Record per-edit reference checks for compiler-generated IR results.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.4 says

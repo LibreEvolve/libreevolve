@@ -12103,3 +12103,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     unit records, or per-bit verification/PPA output links.
   - Verification: systems-result regression tests validate missing and
     malformed TPU rewrite provenance cases.
+
+- [x] Record Gemini-to-TPU contribution provenance boundary.
+  - Spec evidence: AlphaEvolve Section 3.3.3 says the hardware improvement was
+    integrated into an upcoming TPU and represented Gemini's first direct
+    contribution to TPU arithmetic circuits through AlphaEvolve.
+  - Status: paper-facing TODOs and validators now require
+    `hardware_contribution_provenance` for ready hardware reports, including
+    model-family/backend identity, AlphaEvolve run identity, TPU generation,
+    circuit identity, novelty basis, first-direct-contribution scope,
+    integration milestone, hardware review scope, synthesis rediscovery caveat,
+    confirmation flags, and artifact refs.
+  - Remaining paper gap: this does not generate real model/backend records,
+    TPU/circuit review files, novelty/firstness review evidence, integration
+    milestone records, hardware signoff files, or rediscovery-audit artifacts.
+  - Verification: systems-result regression tests validate missing and
+    malformed contribution-attribution provenance cases.

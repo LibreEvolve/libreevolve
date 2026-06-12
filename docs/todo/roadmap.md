@@ -2091,16 +2091,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     contribution to TPU arithmetic circuits", achieved through AlphaEvolve.
   - Current evidence: roadmap systems-result wording covers hardware
     verification, synthesis/PPA, designer signoff, upcoming-chip integration,
-    standard-Verilog trust, and bit-removal rewrite provenance. It does not
-    require hardware fixtures or reports to preserve the attribution evidence
-    that links a Gemini/AlphaEvolve-produced RTL edit to a specific TPU
-    arithmetic circuit and qualifies the "first direct contribution" claim.
-  - Required result: when Gemini-to-TPU contribution metadata and validators
-    land, update ROADMAP, README, papers index, and code/paper TODOs together
-    so roadmap text distinguishes concrete RTL optimization evidence from the
-    broader Gemini hardware-contribution claim, including model-family
-    relation, TPU/circuit identity, integration milestone, hardware review,
-    and downstream synthesis-tool rediscovery caveats.
+    standard-Verilog trust, bit-removal rewrite provenance, and now
+    `hardware_contribution_provenance`. Ready hardware reports preserve the
+    attribution evidence that links a Gemini/AlphaEvolve-produced RTL edit to a
+    specific TPU arithmetic circuit and qualifies the "first direct
+    contribution" claim: model-family relation, AlphaEvolve run/backend
+    identity, TPU/circuit identity, novelty basis, integration milestone,
+    hardware review, and downstream synthesis-tool rediscovery caveats.
+  - Required result: when hardware fixtures emit real Gemini-to-TPU
+    contribution artifacts, update ROADMAP, README, papers index, and
+    code/paper TODOs together so roadmap text distinguishes concrete RTL
+    optimization evidence from the broader Gemini hardware-contribution claim.
 
 - [ ] Keep compiler-IR roadmap wording scoped to final reference gates until
       per-edit randomized checks exist.

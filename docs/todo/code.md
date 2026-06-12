@@ -3991,16 +3991,21 @@ Primary evidence:
     AlphaEvolve.
   - Current evidence: hardware TODOs require RTL/EDA verification,
     designer/synthesis signoff, upcoming-TPU integration, Verilog trust and
-    adoption evidence, and concrete bit-removal rewrite artifacts. They do
-    not require a report to preserve the attribution chain behind the
-    Gemini-to-TPU self-contribution claim.
-  - Required result: add hardware-domain report metadata for Gemini
-    contribution claims: Gemini/AlphaEvolve model-family relationship,
-    arithmetic-circuit and TPU generation identity, contribution novelty
-    basis, integration milestone, responsible hardware review/signoff roles,
-    distinction from downstream synthesis-tool rediscovery, and docs checks
-    that separate a concrete RTL optimization from the broader claim that
-    Gemini directly contributed to TPU arithmetic circuits through
+    adoption evidence, concrete bit-removal rewrite artifacts, and now
+    `hardware_contribution_provenance`. Ready hardware reports preserve the
+    attribution chain behind the Gemini-to-TPU self-contribution claim:
+    Gemini/AlphaEvolve model-family relationship, AlphaEvolve run identity,
+    producing backend identity, arithmetic-circuit and TPU generation identity,
+    contribution novelty basis, first-direct-contribution scope, integration
+    milestone, responsible hardware review/signoff scope, distinction from
+    downstream synthesis-tool rediscovery, confirmation flags, and artifact
+    refs.
+  - Required result: connect hardware fixtures to real attribution artifacts:
+    model/run/backend records, reviewed TPU-generation and circuit identifiers,
+    firstness/novelty review evidence, integration milestone records,
+    responsible hardware signoff files, and downstream synthesis rediscovery
+    audit artifacts that separate a concrete RTL optimization from the broader
+    claim that Gemini directly contributed to TPU arithmetic circuits through
     AlphaEvolve.
 
 - [ ] Add per-edit reference-check provenance for compiler-generated IR tasks.

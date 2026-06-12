@@ -184,6 +184,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
         data.get("alphaevolve_ready") is True,
         issues,
     )
+    hardware_contribution_ready = _validate_hardware_contribution_provenance(
+        data.get("hardware_contribution_provenance"),
+        data,
+        domain,
+        data.get("alphaevolve_ready") is True,
+        issues,
+    )
     certification_ready = _validate_certification_reference(data.get("certification"), issues)
     if data.get("alphaevolve_ready") is True and not _gates_are_alphaevolve_ready(gate_statuses):
         issues.append(
@@ -263,6 +270,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
                 SystemsResultIssue(
                     "invalid_ready_hardware_rewrite_provenance",
                     "alphaevolve_ready hardware reports require TPU rewrite provenance",
+                )
+            )
+        if domain == "hardware" and not hardware_contribution_ready:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_ready_hardware_contribution_provenance",
+                    "alphaevolve_ready hardware reports require Gemini-to-TPU contribution provenance",
                 )
             )
         if certification_ready is False:
@@ -403,6 +417,7 @@ def render_systems_result_summary(report: dict[str, Any]) -> str:
     compiler_adoption = report.get("compiler_adoption_provenance")
     hardware_rtl = report.get("hardware_rtl_eda_provenance")
     hardware_rewrite = report.get("hardware_rewrite_provenance")
+    hardware_contribution = report.get("hardware_contribution_provenance")
     lines = [
         f"Systems result report: {report.get('benchmark_id', '<unknown>')}",
         "",
@@ -424,6 +439,7 @@ def render_systems_result_summary(report: dict[str, Any]) -> str:
         f"| compiler_adoption_provenance | {'present' if isinstance(compiler_adoption, dict) else 'absent'} |",
         f"| hardware_rtl_eda_provenance | {'present' if isinstance(hardware_rtl, dict) else 'absent'} |",
         f"| hardware_rewrite_provenance | {'present' if isinstance(hardware_rewrite, dict) else 'absent'} |",
+        f"| hardware_contribution_provenance | {'present' if isinstance(hardware_contribution, dict) else 'absent'} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -2106,6 +2122,89 @@ def _validate_hardware_removed_bits(
             prefix,
             issues,
         )
+
+
+def _validate_hardware_contribution_provenance(
+    value: object,
+    report: dict[str, Any],
+    domain: str | None,
+    require_ready: bool,
+    issues: list[SystemsResultIssue],
+) -> bool:
+    if domain != "hardware":
+        if value is not None:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_hardware_contribution_domain",
+                    "hardware_contribution_provenance is only valid for hardware reports",
+                )
+            )
+        return domain != "hardware"
+    if value is None:
+        if require_ready:
+            issues.append(
+                SystemsResultIssue(
+                    "missing_hardware_contribution_provenance",
+                    "alphaevolve_ready hardware reports require hardware_contribution_provenance",
+                )
+            )
+        return False
+    if not isinstance(value, dict):
+        issues.append(
+            SystemsResultIssue(
+                "invalid_hardware_contribution_provenance",
+                "hardware_contribution_provenance must be an object",
+            )
+        )
+        return False
+    before_issues = len(issues)
+    artifact_paths = {
+        artifact.get("path")
+        for artifact in report.get("artifacts", [])
+        if isinstance(artifact, dict) and isinstance(artifact.get("path"), str)
+    }
+    for field in (
+        "model_family_relationship",
+        "alphaevolve_run_identity",
+        "producing_backend_identity",
+        "tpu_generation_identity",
+        "arithmetic_circuit_identity",
+        "contribution_novelty_basis",
+        "first_direct_contribution_scope",
+        "integration_milestone",
+        "hardware_review_signoff_scope",
+        "synthesis_rediscovery_distinction",
+    ):
+        text = value.get(field)
+        if not isinstance(text, str) or not text.strip():
+            issues.append(
+                SystemsResultIssue(
+                    f"invalid_hardware_contribution_{field}",
+                    f"hardware_contribution_provenance.{field} must be non-empty text",
+                )
+            )
+    for flag in (
+        "gemini_family_confirmed",
+        "alphaevolve_mediated",
+        "integration_milestone_confirmed",
+        "rediscovery_caveat_recorded",
+    ):
+        if value.get(flag) is not True:
+            issues.append(
+                SystemsResultIssue(
+                    f"invalid_hardware_contribution_{flag}",
+                    f"hardware_contribution_provenance.{flag} must be true",
+                )
+            )
+    _validate_application_reference_list(
+        value.get("artifact_refs"),
+        artifact_paths,
+        "artifact_refs",
+        "invalid_hardware_contribution_artifact_ref",
+        "hardware_contribution_provenance",
+        issues,
+    )
+    return len(issues) == before_issues
 
 
 def _validate_application_provenance(

@@ -1259,16 +1259,19 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     contribution to TPU arithmetic circuits", achieved via AlphaEvolve.
   - Current evidence: README can point to hardware verification gaps,
     upcoming-TPU integration gaps, downstream synthesis-tool confirmation
-    gaps, and concrete bit-removal artifact gaps. It does not require evidence
-    for the attribution chain that makes the claim about Gemini directly
-    contributing to TPU arithmetic circuits rather than merely reporting a
-    Verilog optimization.
-  - Required result: when Gemini-to-TPU contribution metadata lands, update
-    README, ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes RTL optimization, integration, and synthesis rediscovery
-    evidence from the broader self-contribution claim involving Gemini,
-    AlphaEvolve, a specific TPU generation, and reviewed arithmetic-circuit
-    integration.
+    gaps, concrete bit-removal artifact gaps, and now
+    `hardware_contribution_provenance`. It documents the attribution chain that
+    makes the claim about Gemini directly contributing to TPU arithmetic
+    circuits rather than merely reporting a Verilog optimization: model-family
+    relationship, AlphaEvolve run/backend identity, TPU generation, circuit
+    identity, novelty basis, integration milestone, hardware review, and
+    downstream synthesis rediscovery caveat.
+  - Required result: when hardware fixtures emit real Gemini-to-TPU
+    attribution artifacts, update README, ROADMAP, papers index, and
+    code/paper TODOs together so README distinguishes RTL optimization,
+    integration, and synthesis rediscovery evidence from the broader
+    self-contribution claim involving Gemini, AlphaEvolve, a specific TPU
+    generation, and reviewed arithmetic-circuit integration.
 
 - [ ] Keep README compiler-IR wording scoped to final reference gates until
       per-edit randomized checks exist.

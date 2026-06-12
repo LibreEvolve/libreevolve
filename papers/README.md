@@ -1641,10 +1641,16 @@ Implemented:
   circuit rewrite: source/modified Verilog hashes, rewrite diff hash,
   component and matrix-unit context, semantic rewrite category, changed spans,
   removed-bit inventory, rewrite rationale, PPA linkage, verification linkage,
-  and artifact refs. The contract still does not emit real RTL source,
-  before/after Verilog files, diff/AST artifacts, removed-signal inventories,
-  synthesis/PPA, verification, designer-signoff, downstream-synthesis,
-  upcoming-chip integration, or deployment-impact artifacts. For compiler-generated
+  and artifact refs. They also require `hardware_contribution_provenance`
+  metadata for the broader Gemini-to-TPU claim: model-family relationship,
+  AlphaEvolve run/backend identity, TPU generation, arithmetic-circuit
+  identity, novelty basis, first-direct-contribution scope, integration
+  milestone, hardware review signoff scope, synthesis-tool rediscovery caveat,
+  confirmation flags, and artifact refs. The contract still does not emit real
+  RTL source, before/after Verilog files, diff/AST artifacts, removed-signal
+  inventories, synthesis/PPA, verification, designer-signoff,
+  downstream-synthesis, upcoming-chip integration, Gemini attribution review,
+  firstness/novelty evidence, or deployment-impact artifacts. For compiler-generated
   IR tasks, ready compiler reports now require `compiler_ir_provenance` and
   `compiler_stack_provenance` metadata for IR origin/editability constraints,
   compiler-generated/already-optimized baseline provenance, reference and

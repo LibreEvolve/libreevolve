@@ -1295,15 +1295,22 @@ is not yet an AlphaEvolve reproduction.
   `hardware_rewrite_provenance` for the concrete TPU arithmetic-circuit
   rewrite: before/after Verilog hashes, diff hash, component and matrix-unit
   context, semantic rewrite category, changed spans, removed-bit inventory,
-  PPA linkage, verification linkage, and artifact refs. Real scheduling
-  resource recovery, kernel/training-time speedup, RTL PPA, compiler speedup
-  fixtures, emitted compiler-stack artifacts, real compiler adoption/
-  integration artifacts, real hardware RTL/EDA artifacts, and real hardware
-  rewrite artifacts still need to populate those records.
+  PPA linkage, verification linkage, and artifact refs. They also require
+  `hardware_contribution_provenance` for the broader Gemini-to-TPU attribution
+  claim: model-family relationship, AlphaEvolve run/backend identity, TPU
+  generation, circuit identity, novelty basis, first-direct-contribution
+  scope, integration milestone, hardware review scope, synthesis rediscovery
+  distinction, confirmation flags, and artifact refs. Real scheduling resource
+  recovery, kernel/training-time speedup, RTL PPA, compiler speedup fixtures,
+  emitted compiler-stack artifacts, real compiler adoption/integration
+  artifacts, real hardware RTL/EDA artifacts, real hardware rewrite artifacts,
+  and real Gemini-to-TPU attribution artifacts still need to populate those
+  records.
 - Populate real hardware-adoption and rewrite evidence for TPU RTL-style
   reports before claiming Section 3.3.3 parity: emitted RTL, before/after
   Verilog diffs, removed-bit inventories, synthesis/PPA, verification,
-  designer-signoff, downstream-synthesis, upcoming-chip integration, and
+  designer-signoff, downstream-synthesis, upcoming-chip integration, Gemini/
+  AlphaEvolve attribution review, firstness/novelty evidence, and
   time-to-market artifacts in addition to report metadata.
 - Add self-improvement evidence boundaries before claiming AlphaEvolve-style
   infrastructure or base-model uplift: component identity, before/after

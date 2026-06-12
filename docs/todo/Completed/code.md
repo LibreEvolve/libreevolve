@@ -17498,3 +17498,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     outputs.
   - Verification: systems-result regression tests cover missing ready
     provenance and malformed TPU rewrite metadata.
+
+- [x] Require Gemini-to-TPU contribution provenance for ready hardware reports.
+  - Spec evidence: AlphaEvolve Section 3.3.3 says the hardware improvement was
+    integrated into an upcoming TPU and represented Gemini's first direct
+    contribution to TPU arithmetic circuits, achieved through AlphaEvolve.
+  - Status: `validate_systems_result_report()` now requires
+    `hardware_contribution_provenance` before accepting `alphaevolve_ready`
+    hardware reports. The record validates Gemini/AlphaEvolve model-family
+    relationship, run identity, producing backend, TPU generation, arithmetic
+    circuit identity, contribution novelty basis, first-direct-contribution
+    scope, integration milestone, hardware review scope, synthesis rediscovery
+    distinction, confirmation flags, and artifact refs.
+  - Remaining gap: real hardware fixtures still need to emit model/run/backend
+    records, reviewed TPU/circuit identifiers, novelty/firstness review
+    evidence, integration milestone records, hardware signoff files, and
+    downstream synthesis rediscovery audit artifacts.
+  - Verification: systems-result regression tests cover missing ready
+    provenance and malformed contribution-attribution metadata.

@@ -623,8 +623,9 @@ is not yet an AlphaEvolve reproduction.
   This remains audit consistency for the declared local-subprocess boundary,
   not OS/container sandbox or quota enforcement.
 - Continue labeling CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve,
-  GigaEvo, CodeEvolve, MadEvolve, Magellan, ArchAgent, Multiagent Learning,
-  Bilateral Trade, Ramsey Numbers, and Berczy local-correction combinatorics
+  TTT Discover, GigaEvo, CodeEvolve, MadEvolve, Magellan, ArchAgent,
+  Multiagent Learning, Bilateral Trade, Ramsey Numbers, and Berczy
+  local-correction combinatorics
   features as inspired, candidate benchmark, or
   application context unless paper behavior is actually implemented. The committed
   `papers/gigaevo_framework_boundary.json`
@@ -642,6 +643,14 @@ is not yet an AlphaEvolve reproduction.
   runtime, large-database scaling, batch sampling, early checks, lazy
   penalties, reward shaping, online GRPO/RL training, checkpoint lifecycle,
   throughput reports, and benchmark comparisons. The committed
+  `papers/ttt_discover_boundary.json` sidecar records the TTT Discover
+  source-specific boundary for test-time policy weight updates,
+  single-problem RL environments, continuous-reward problem contracts, PUCT
+  state reuse, adaptive entropic training objectives, Tinker training-run
+  evidence, gpt-oss-120b LoRA backend records, matched Best-of-N/OpenEvolve
+  comparator rows, math/kernel/AtCoder/biology result rows, expert or
+  organizer reviews, public-code artifact hashes, cost records, and
+  independent reproduction outputs. The committed
   `papers/improvevolve_boundary.json` sidecar records the ImprovEvolve
   source-specific boundary for `generate_config`/`improve`/`perturb`
   interface enforcement, Stage A/B execution, basin hopping, perturbation

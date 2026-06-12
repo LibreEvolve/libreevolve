@@ -4372,7 +4372,7 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     records, and explicit documentation that Fault2Flow is not a supported
     LibreEvolve workflow until those local artifacts exist.
 
-- [ ] Add TTT-Discover test-time-training gates before roadmap promotion.
+- [ ] Implement TTT-Discover gates beyond source-boundary roadmap promotion.
   - Spec evidence: arXiv `2601.16175`, submitted January 22, 2026 and last
     revised February 5, 2026, introduces `Learning to Discover at Test Time`.
     The abstract contrasts AlphaEvolve's frozen-LLM prompting search with
@@ -4387,10 +4387,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     rollouts per step, LoRA rank `32`, Tinker `32768`-token context window,
     fixed Table 9 hyperparameters, and result tables for math, GPUMode
     kernels, AtCoder, denoising, ablations, and MLA Triton-filtered variants.
-  - Current evidence: ROADMAP tracks AlphaEvolve frozen-search gaps, provider
-    routing, feedback graders, budget accounting, and broad background paper
-    rows, but it does not promote `2601.16175` beyond background-only status.
-    It does not define a mutable model-policy state gate, test-time RL loop,
+  - Current evidence: ROADMAP now keeps `2601.16175` behind the committed
+    `papers/ttt_discover_boundary.json` source-specific absence boundary. It
+    tracks AlphaEvolve frozen-search gaps, provider routing, feedback graders,
+    budget accounting, and broad background paper rows, but it still does not
+    define a mutable model-policy state gate, test-time RL loop,
     Tinker/API training-run provenance, open-model checkpoint record,
     continuous-reward cross-domain benchmark suite, expert/organizer review
     artifact rule, or cost-per-problem accounting boundary. It also lacks
@@ -4399,10 +4400,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     caveats, Modal/GPUMode/AtCoder/OpenProblems harness provenance, official
     submission IDs, Table 2-10 result rows, and the paper's sampling-budget
     inconsistency.
-  - Required result: add roadmap gates for `2601.16175`: paper/source
-    manifest entry, PDF/cache hash, source-license and public-code status,
-    mutable policy/training-state schema, RL objective and rollout-selection
-    metadata, training API and checkpoint provenance, open-model identity,
+  - Required result: implement roadmap promotion gates beyond the source-boundary
+    sidecar for `2601.16175`: mutable policy/training-state schema, RL objective
+    and rollout-selection metadata, training API and checkpoint provenance, open-model identity,
     continuous-reward task definitions, Erdos/autocorrelation/GPUMode/AtCoder/
     single-cell benchmark records, prior-art and AlphaEvolve/OpenEvolve
     baseline identities, expert/organizer review artifacts, seed/run records,

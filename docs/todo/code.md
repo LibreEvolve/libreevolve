@@ -6145,8 +6145,7 @@ Primary evidence:
     validated workflow artifacts from LLM-judged readability and
     semantic-fidelity scores.
 
-- [ ] Add TTT-Discover test-time-training boundary against AlphaEvolve frozen
-      search.
+- [ ] Implement TTT-Discover test-time-training beyond the source boundary.
   - Spec evidence: arXiv `2601.16175`, `Learning to Discover at Test Time`,
     was submitted January 22, 2026 and last revised February 5, 2026. Its
     abstract contrasts prior test-time scaling such as AlphaEvolve, which
@@ -6168,10 +6167,11 @@ Primary evidence:
     size `512` as `8` groups of `64`, Adam learning rate `4e-5`, LoRA rank
     `32`, KL coefficient `{0.01, 0.1}`, adaptive-beta KL constraint
     `gamma = ln(2)`, and PUCT exploration coefficient `1.0`.
-  - Current evidence: `papers/README.md` lists `2601.16175` only as
-    background test-time discovery context. LibreEvolve has no implemented
-    source-boundary gate for this source, no test-time RL training loop, no mutable model
-    policy state, no Tinker/API training-run metadata, no open-model
+  - Current evidence: `papers/ttt_discover_boundary.json` now records the
+    source-specific absence boundary for `2601.16175`, including the PDF hash,
+    public code/result URLs, and the missing local runtime evidence. LibreEvolve
+    still has no test-time RL training loop, no mutable model policy state, no
+    Tinker/API training-run metadata, no open-model
     reproduction protocol for `gpt-oss-120b`, no continuous-reward
     cross-domain benchmark suite covering the cited math/kernel/algorithm/
     biology tasks, no expert/organizer review artifact policy, and no
@@ -6184,13 +6184,11 @@ Primary evidence:
     Modal/GPUMode/AtCoder/OpenProblems harness provenance, and a checker for
     the paper's `Best-of-25600` versus Figure 4 `50 * 512 = 256000` sampling
     inconsistency.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2601.16175`: arXiv id/version/date/PDF hash, authors, source
-    license, public code URL/status, relation to AlphaEvolve frozen-search
-    assumptions and LibreEvolve's provider adapters, mutable policy/training
-    state schema, RL objective and rollout-selection records, Tinker or
-    equivalent training API metadata, open-model identity and checkpoint
-    provenance, continuous-reward task definitions, Erdos/autocorrelation/
+  - Required result: implement runtime evidence beyond the source-boundary
+    record for `2601.16175`: mutable policy/training state schema, RL objective
+    and rollout-selection records, Tinker or equivalent training API metadata,
+    open-model identity and checkpoint provenance, continuous-reward task
+    definitions, Erdos/autocorrelation/
     GPUMode/AtCoder/single-cell benchmark records, prior-art and
     AlphaEvolve/OpenEvolve baseline identities, expert/organizer review
     artifacts, cost and budget accounting, seed/run records, independent

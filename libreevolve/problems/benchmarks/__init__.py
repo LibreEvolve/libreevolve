@@ -408,6 +408,12 @@ from libreevolve.problems.benchmarks.thetaevolve_boundary import (
     thetaevolve_boundary_record,
     validate_thetaevolve_boundary,
 )
+from libreevolve.problems.benchmarks.ttt_discover_boundary import (
+    TTT_DISCOVER_BOUNDARY_SCHEMA,
+    render_ttt_discover_boundary_summary,
+    ttt_discover_boundary_record,
+    validate_ttt_discover_boundary,
+)
 
 __all__ = [
     "ABLATION_ARTIFACT_INVENTORY_SCHEMA",
@@ -492,6 +498,7 @@ __all__ = [
     "SYSTEMS_ARTIFACT_INVENTORY_SCHEMA",
     "SYSTEMS_RESULT_SCHEMA",
     "THETAEVOLVE_BOUNDARY_SCHEMA",
+    "TTT_DISCOVER_BOUNDARY_SCHEMA",
     "ablation_result_artifact_inventory",
     "appendix_a_matrix_baseline_citation_boundary_from_citations",
     "appendix_a_matrix_baseline_citation_boundary_from_builtin_citations",
@@ -644,9 +651,11 @@ __all__ = [
     "render_ramsey_numbers_boundary_summary",
     "render_systems_result_summary",
     "render_thetaevolve_boundary_summary",
+    "render_ttt_discover_boundary_summary",
     "systems_result_artifact_inventory",
     "strassen_2x2_publication_bundle_record",
     "thetaevolve_boundary_record",
+    "ttt_discover_boundary_record",
     "validate_ablation_result_report",
     "validate_appendix_a_matrix_curation",
     "validate_appendix_a_matrix_excluded_target_curation_boundary",
@@ -723,5 +732,6 @@ __all__ = [
     "validate_systems_evidence_bundle",
     "validate_systems_result_report",
     "validate_thetaevolve_boundary",
+    "validate_ttt_discover_boundary",
     "write_strassen_2x2_publication_bundle",
 ]

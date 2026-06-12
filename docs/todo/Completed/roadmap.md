@@ -9640,3 +9640,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     rows, Appendix C query rows, and 30-minute/single-GPU budget evidence.
   - Verification: DeepEvolve boundary tests and paper-manifest tests validate
     the sidecar and repo-root requirement.
+
+- [x] Preserve TTT Discover `2601.16175` boundary scope in roadmap.
+  - Status: ROADMAP and roadmap TODO wording now identify
+    `papers/ttt_discover_boundary.json` as the source-specific boundary for
+    test-time policy weight updates, single-problem RL environments,
+    continuous-reward problem contracts, PUCT state reuse, adaptive entropic
+    training objectives, Tinker training-run evidence, gpt-oss-120b LoRA
+    backend records, matched Best-of-N/OpenEvolve comparator rows,
+    math/kernel/AtCoder/biology result rows, expert or organizer reviews,
+    public-code artifact hashes, cost records, and independent reproduction
+    outputs.
+  - Verification: TTT Discover boundary tests and paper-manifest tests validate
+    the sidecar and repo-root requirement.

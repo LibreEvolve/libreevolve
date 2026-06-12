@@ -12577,3 +12577,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     open.
   - Verification: DeepEvolve boundary tests and paper-manifest tests validate
     the sidecar and reject loop-parity readiness overclaims.
+
+- [x] Record TTT Discover `2601.16175` source boundary.
+  - Status: `papers/ttt_discover_boundary.json` now carries the
+    source-specific TTT Discover boundary with cached PDF digest, arXiv v2
+    identity, CC BY 4.0 license metadata, public GitHub/project/result links,
+    Algorithm 1 method settings, source-reported result labels, required
+    evidence fields, and missing-evidence keys.
+  - Remaining paper gap: executable policy-update traces, problem/reward
+    schemas, Tinker training-run provenance, checkpoint/LoRA artifacts,
+    table-level benchmark rows, official submission evidence, expert-review
+    records, public artifact hashes, cost records, and independent
+    reproduction outputs remain open.
+  - Verification: TTT Discover boundary tests and paper-manifest tests validate
+    the sidecar and reject policy-update readiness overclaims.

@@ -12099,3 +12099,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     qualitative judge rows, and ablation evidence explicit as missing.
   - Verification: DeepEvolve boundary and paper-manifest tests validate the
     sidecar that README now references.
+
+- [x] Document TTT Discover `2601.16175` source boundary in README.
+  - Status: README now names `papers/ttt_discover_boundary.json` in the source
+    reference table while keeping TTT Discover as test-time discovery context
+    only, with test-time-training RL loop, single-problem environments,
+    continuous reward contracts, Tinker/gpt-oss-120b runtime evidence,
+    benchmark result rows, public-code artifacts, and independent
+    reproduction outputs explicit as missing.
+  - Verification: TTT Discover boundary and paper-manifest tests validate the
+    sidecar that README now references.

@@ -241,6 +241,10 @@ from libreevolve.problems.benchmarks.thetaevolve_boundary import (
     thetaevolve_boundary_record,
     validate_thetaevolve_boundary,
 )
+from libreevolve.problems.benchmarks.ttt_discover_boundary import (
+    ttt_discover_boundary_record,
+    validate_ttt_discover_boundary,
+)
 
 
 REQUIRED_FIELDS = ("id", "title", "url", "file", "ok", "bytes", "sha256", "message")
@@ -276,6 +280,7 @@ MAP_ELITES_ILLUMINATION_BOUNDARY_FILE = "papers/map_elites_illumination_boundary
 GIGAEVO_FRAMEWORK_BOUNDARY_FILE = "papers/gigaevo_framework_boundary.json"
 CODEEVOLVE_BOUNDARY_FILE = "papers/codeevolve_boundary.json"
 THETAEVOLVE_BOUNDARY_FILE = "papers/thetaevolve_boundary.json"
+TTT_DISCOVER_BOUNDARY_FILE = "papers/ttt_discover_boundary.json"
 IMPROVEVOLVE_BOUNDARY_FILE = "papers/improvevolve_boundary.json"
 MADEVOLVE_BOUNDARY_FILE = "papers/madevolve_boundary.json"
 CAUSALEVOLVE_BOUNDARY_FILE = "papers/causalevolve_boundary.json"
@@ -676,6 +681,7 @@ def validate_paper_manifest(
     issues.extend(_validate_multiagent_learning_boundary(root_path))
     issues.extend(_validate_ramsey_numbers_boundary(root_path))
     issues.extend(_validate_combinatorics_berczy_boundary(root_path))
+    issues.extend(_validate_ttt_discover_boundary(root_path))
     issues.extend(_validate_bilateral_trade_boundary(root_path))
 
     if set(csv_by_id) - seen_ids:
@@ -2025,6 +2031,38 @@ def _validate_combinatorics_berczy_boundary(root_path: Path) -> list[PaperManife
             f"combinatorics_berczy_boundary_{issue.code}",
             issue.message,
             "combinatorics_berczy",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_ttt_discover_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / TTT_DISCOVER_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = ttt_discover_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "ttt_discover_boundary_manifest_missing",
+                    (
+                        f"{TTT_DISCOVER_BOUNDARY_FILE} must emit "
+                        "TTT-Discover test-time-training evidence availability"
+                    ),
+                    "ttt_discover",
+                )
+            ]
+    report = validate_ttt_discover_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"ttt_discover_boundary_{issue.code}",
+            issue.message,
+            "ttt_discover",
         )
         for issue in report.issues
     ]

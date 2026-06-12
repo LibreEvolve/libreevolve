@@ -5654,7 +5654,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     and source-scoped status until executable workflow artifacts are locally
     reproduced.
 
-- [ ] Track TTT-Discover test-time-training paper evidence.
+- [ ] Implement TTT-Discover paper evidence beyond the source boundary.
   - Paper/source evidence: arXiv `2601.16175`, submitted January 22, 2026 and
     last revised February 5, 2026, is titled `Learning to Discover at Test
     Time`. Its abstract contrasts AlphaEvolve-style frozen-LLM prompting with
@@ -5674,10 +5674,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     PUCT reuse, and reports fixed hyperparameters in Table 9: `50` steps,
     `512` rollouts per step, LoRA rank `32`, Tinker context window `32768`,
     prompt-plus-thinking limit `26000`, Adam `4e-5`, and `gamma = ln(2)`.
-  - Current gap: `papers/README.md` lists `2601.16175` as background-only
-    test-time discovery context, but the current implementation and paper
-    index do not yet provide local source-boundary artifacts or implementation
-    evidence for this paper. Existing AlphaEvolve and framework
+  - Current gap: `papers/ttt_discover_boundary.json` now records the
+    source-specific absence boundary for `2601.16175`, including source identity,
+    public code/result links, and the current missing-evidence contract. The
+    current implementation and paper index still do not provide executable
+    implementation evidence for this paper. Existing AlphaEvolve and framework
     gaps do not capture mutable model-policy state, RL-at-test-time training
     records, Tinker run provenance, open-model checkpoint identity, continuous-
     reward task definitions, cross-domain benchmark rows, expert/organizer
@@ -5689,11 +5690,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     hyperparameters, Table 10 Triton-filtered MLA results, OpenEvolve
     context-window truncation caveats, and the `Best-of-25600` versus Figure 4
     `50 * 512 = 256000` inconsistency.
-  - Required result: add paper-manifest and paper-index coverage updates for
-    `2601.16175`: title/authors/arXiv version/date/PDF digest, source
-    license, public code URL/status, relation to AlphaEvolve frozen-search and
-    LibreEvolve provider assumptions, mutable policy/training-state schema,
-    RL objective and rollout-selection metadata, Tinker/API training-run
+  - Required result: implement paper-evidence records beyond the source-boundary
+    sidecar for `2601.16175`: mutable policy/training-state schema, RL objective
+    and rollout-selection metadata, Tinker/API training-run
     records, open-model/checkpoint provenance, continuous-reward task
     definitions, Erdos/autocorrelation/GPUMode/AtCoder/single-cell benchmark
     records, prior-art and AlphaEvolve/OpenEvolve baseline identities, expert

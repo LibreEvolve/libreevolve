@@ -18024,3 +18024,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     rows, Appendix C query rows, and runtime/GPU budget evidence remain open.
   - Verification: DeepEvolve boundary tests and paper-manifest tests cover the
     sidecar, drift rejection, and repo-root sidecar requirement.
+
+- [x] Add TTT Discover `2601.16175` source-boundary gate.
+  - Status: `libreevolve.problems.benchmarks.ttt_discover_boundary` now emits
+    and validates `papers/ttt_discover_boundary.json` with cached PDF digest,
+    CC BY 4.0 license metadata, public code/result links, method settings,
+    source-reported result labels, required future evidence fields, missing
+    evidence keys, and overclaim rejection.
+  - Remaining gap: test-time policy weight updates, single-problem RL
+    environment execution, continuous-reward contracts, PUCT state reuse,
+    Tinker/gpt-oss-120b runtime records, benchmark rows, expert-review
+    artifacts, public-code snapshots, cost records, and independent
+    reproduction outputs remain open.
+  - Verification: TTT Discover boundary tests and paper-manifest tests cover
+    the sidecar, drift rejection, and repo-root sidecar requirement.

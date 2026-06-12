@@ -4310,16 +4310,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `0.743` to `0.971` for 21cm tidal reconstruction, and tSZ loss reduction
     from `0.613` to `0.230`, plus Table 2/3 run and model-contribution
     statistics across `2,126` generated programs.
-  - Current evidence: README labels MadEvolve as background context with no
-    MadEvolve implementation; `papers/README.md` says there is no
-    free-parameter optimization or innovation report. Existing README TODOs
-    keep paper-inspired framework rows scoped generally, but README does not
-    require a `2602.15951` source-specific boundary for parameter schemas,
-    inner optimizer records, optimized-value source injection,
+  - Current evidence: README labels MadEvolve as domain-evolution inspiration
+    and now points at `papers/madevolve_boundary.json` for the `2602.15951`
+    source-specific boundary. That sidecar keeps parameter schemas, inner
+    optimizer records, optimized-value source injection,
     differentiability/operator validation, generated report sections, per-task
     benchmark rows, run statistics, model-contribution statistics, compute
-    budgets, overfitting/reward-hacking caveats, hosted report artifacts, or
-    public code/source status.
+    budgets, overfitting/reward-hacking caveats, hosted report artifacts, and
+    public code/source status unavailable until local artifacts prove them.
   - Required result: if README mentions MadEvolve, domain evolution,
     free-parameter optimization, nested optimization, autodiff/JAX/vmad
     support, generated innovation reports, BAO/21cm/tSZ MadEvolve results,

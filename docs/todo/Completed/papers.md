@@ -12474,3 +12474,20 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     result-comparison claims remain open.
   - Verification: ImprovEvolve boundary tests and paper-manifest tests
     validate the sidecar and reject execution-readiness overclaims.
+
+- [x] Record MadEvolve source boundary.
+  - Spec evidence: paper-facing MadEvolve claims need to distinguish generic
+    LibreEvolve evolution surfaces from MadEvolve's free-parameter tracking,
+    nested optimization, cosmology fixtures, generated reports, and
+    run-statistics claims.
+  - Status: `papers/madevolve_boundary.json` now carries the source-specific
+    `2602.15951` boundary with cached PDF digest, arXiv version, license
+    metadata, madevolve.org/GitHub link status, framework components, local
+    generic-evolution status, required evidence fields, and missing-evidence
+    keys.
+  - Remaining paper gap: parameter schemas, optimizer budgets,
+    differentiability requirements, task prompts/evaluators, report sections,
+    run/model statistics, compute environment, reward-hacking caveats,
+    generalization claims, and hosted report artifacts remain open.
+  - Verification: MadEvolve boundary tests and paper-manifest tests validate
+    the sidecar and reject domain-optimization readiness overclaims.

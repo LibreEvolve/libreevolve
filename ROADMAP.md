@@ -640,7 +640,12 @@ is not yet an AlphaEvolve reproduction.
   interface enforcement, Stage A/B execution, basin hopping, perturbation
   schedules, monotonic acceptance, GigaEvo outer-loop parity, model/provider
   provenance, human-edited variants, HEX/ACI2 benchmark rows, ablations, and
-  compute budgets.
+  compute budgets. The committed `papers/madevolve_boundary.json` sidecar
+  records the MadEvolve source-specific boundary for framework/application
+  split, free-parameter tracking, nested parameter optimization, JAX/vmad
+  compatibility, optimized-value source injection, BAO/21cm/tSZ task adapters,
+  generated innovation reports, run/model-contribution statistics,
+  reward-hacking controls, and hosted report artifacts.
 
 ## Mid Term
 

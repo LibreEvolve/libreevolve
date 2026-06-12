@@ -17911,3 +17911,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     benchmark rows, ablations, and budget rows remain open.
   - Verification: ImprovEvolve boundary tests and paper-manifest tests cover
     the sidecar, drift rejection, and repo-root sidecar requirement.
+
+- [x] Add MadEvolve domain-optimization source-boundary gate.
+  - Spec evidence: `2602.15951v1` describes MadEvolve as an
+    AlphaEvolve-like scientific algorithm evolution framework with explicit
+    free-parameter tracking, nested parameter optimization, JAX/vmad
+    autodiff/Adam support, optimized-value source injection, cosmology
+    adapters, generated innovation reports, run/model statistics, and
+    reward-hacking controls.
+  - Status: `libreevolve.problems.benchmarks.madevolve_boundary` now emits and
+    validates `papers/madevolve_boundary.json` with cached PDF digest,
+    arXiv-license metadata, madevolve.org/GitHub source links, component rows,
+    local generic-evolution scope, required future evidence fields,
+    missing-evidence keys, and overclaim rejection.
+  - Remaining gap: free-parameter tracking, budgeted inner optimization,
+    JAX/vmad compatibility, optimized source injection, BAO/21cm/tSZ adapters,
+    generated reports, benchmark statistics, model-contribution tables,
+    reward-hacking controls, and hosted report checks remain open.
+  - Verification: MadEvolve boundary tests and paper-manifest tests cover the
+    sidecar, drift rejection, and repo-root sidecar requirement.

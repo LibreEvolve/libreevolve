@@ -9552,3 +9552,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     variants, HEX/ACI2 benchmark rows, ablations, and compute budgets.
   - Verification: ImprovEvolve boundary tests and paper-manifest tests
     validate the sidecar and repo-root requirement.
+
+- [x] Preserve MadEvolve boundary scope in roadmap.
+  - Spec evidence: roadmap MadEvolve claims should not promote generic
+    evolutionary search, MAP-Elites, or heuristic model routing into
+    MadEvolve's parameter-optimization and cosmology-application parity.
+  - Status: ROADMAP and roadmap TODO wording now identify
+    `papers/madevolve_boundary.json` as the source-specific boundary for
+    framework/application split, free-parameter tracking, nested parameter
+    optimization, JAX/vmad compatibility, optimized-value source injection,
+    BAO/21cm/tSZ task adapters, generated innovation reports,
+    run/model-contribution statistics, reward-hacking controls, and hosted
+    report artifacts.
+  - Verification: MadEvolve boundary tests and paper-manifest tests validate
+    the sidecar and repo-root requirement.

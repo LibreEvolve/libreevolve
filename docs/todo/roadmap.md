@@ -4823,15 +4823,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and `synthesis`) and a five-island heterogeneous LLM ensemble with UCB
     model selection.
   - Current evidence: ROADMAP says MadEvolve features remain inspired unless
-    paper behavior is implemented, README labels MadEvolve as background
-    context, and `papers/README.md` states that no free-parameter optimization
-    or innovation report exists. Roadmap lacks `2602.15951`-specific gates for
-    source metadata, linked code status, parameter schemas, inner optimizer
-    execution, differentiability/operator constraints, optimized-value source
-    injection, per-task cosmology fixtures, generated reports, run statistics,
-    model-contribution statistics, compute environment, reward-hacking
-    diagnostics, hosted report-link validation, and
-    over-parameterization/generalization evidence.
+    paper behavior is implemented, and now names `papers/madevolve_boundary.json`
+    as the source-specific gate for `2602.15951`. The sidecar records source
+    metadata, madevolve.org/GitHub link status, component rows, required future
+    evidence fields, and missing-evidence keys while keeping parameter schemas,
+    inner optimizer execution, differentiability/operator constraints,
+    optimized-value source injection, per-task cosmology fixtures, generated
+    reports, run statistics, model-contribution statistics, compute
+    environment, reward-hacking diagnostics, hosted report-link validation,
+    and over-parameterization/generalization evidence as future gates.
   - Required result: add roadmap gates for `2602.15951`: paper/source manifest
     entry, PDF/cache hash, madevolve.org and GitHub source status,
     framework-vs-application split, parameter-declaration and parameter-meaning

@@ -6781,18 +6781,20 @@ Primary evidence:
     `https://github.com/tianyi-stack/MadEvolve-Cosmo`, and report PDFs for
     BAO, iterative BAO, 21cm, and LDL/tSZ runs.
   - Current evidence: README and `papers/README.md` label MadEvolve as
-    background/domain-evolution inspiration only, and code search shows no
-    MadEvolve implementation. LibreEvolve has evaluator execution,
-    metric/result reports, MAP-Elites/islands, and prompt-context tunable-field
-    policy metadata, but no implemented source-specific `2602.15951` code gate, no
-    parameter declaration schema, no child-vs-parent new-parameter detector, no
-    budgeted inner optimizer, no JAX/vmad differentiability contract, no
-    optimized-parameter source injection, no domain-task adapters for BAO,
-    21cm, or tSZ, no generated innovation-report pipeline, and no MadEvolve run
-    statistics or model-contribution artifacts. It also has no MadEvolve
-    reward-hacking guardrails such as large-scale BAO penalties, no
-    over-parameterization controls such as the paper's `<10` tunable-parameter
-    prompt constraint, and no mode-collapse diagnostics for island populations.
+    background/domain-evolution inspiration only, and the committed
+    `papers/madevolve_boundary.json` sidecar now records the source-specific
+    `2602.15951` boundary with cached PDF digest, madevolve.org/GitHub link
+    status, component rows, local generic-evolution scope, required future
+    evidence fields, and missing-evidence keys. The remaining code gap is the
+    actual domain behavior: no parameter declaration schema, no
+    child-vs-parent new-parameter detector, no budgeted inner optimizer, no
+    JAX/vmad differentiability contract, no optimized-parameter source
+    injection, no domain-task adapters for BAO, 21cm, or tSZ, no generated
+    innovation-report pipeline, and no MadEvolve run statistics or
+    model-contribution artifacts. It also has no MadEvolve reward-hacking
+    guardrails such as large-scale BAO penalties, no over-parameterization
+    controls such as the paper's `<10` tunable-parameter prompt constraint,
+    and no mode-collapse diagnostics for island populations.
   - Required result: add source-boundary metadata and implementation gates for
     `2602.15951`: arXiv version/date/PDF hash, madevolve.org and GitHub source
     status, framework/application split, parameter config schema, parameter

@@ -4832,7 +4832,7 @@ the complete implementation-status index for all 25 manifest rows.
 | [**CodeEvolve**](https://arxiv.org/abs/2510.14150) | Assumpção et al. | 2025 | Agentic code-evolution inspiration only; `papers/codeevolve_boundary.json` records missing prompt/solution dual fitness, semantic crossover, meta-prompting, targeted refinement, scheduler, sandbox, benchmark, ablation, and cost evidence |
 | [**ThetaEvolve**](https://arxiv.org/abs/2511.23473) | Wang et al. | 2025 | Test-time training inspiration only; `papers/thetaevolve_boundary.json` records missing dynamic-environment, batch-sampling, lazy-penalty, reward-shaping, online GRPO/RL, checkpoint, throughput, and benchmark-comparison evidence |
 | [**ImprovEvolve**](https://arxiv.org/abs/2602.10233) | Kravatskiy et al. | 2026 | Modular-search inspiration only; `papers/improvevolve_boundary.json` records missing interface enforcement, Stage A/B execution, basin hopping, GigaEvo backbone, human-edit, benchmark, ablation, and budget evidence |
-| [**MadEvolve**](https://arxiv.org/abs/2602.15951) | Li, Zang & Münchmeyer | 2026 | Background context; no MadEvolve implementation |
+| [**MadEvolve**](https://arxiv.org/abs/2602.15951) | Li, Zang & Münchmeyer | 2026 | Domain-evolution inspiration only; `papers/madevolve_boundary.json` records missing free-parameter tracking, nested optimization, JAX/vmad compatibility, cosmology adapters, innovation reports, run/model statistics, and reward-hacking controls |
 | [**CausalEvolve**](https://arxiv.org/abs/2603.14575) | Chen et al. | 2026 | Inspiration for causal guidance; not scratchpad-complete |
 | [**DeepEvolve**](https://arxiv.org/abs/2510.06056) | Liu et al. | 2025 | Inspiration for retrieval context; not cross-file-debug-loop complete |
 

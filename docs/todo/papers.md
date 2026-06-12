@@ -6235,16 +6235,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     reconstruction, and tSZ prediction. The PDF links `madevolve.org`,
     `tianyi-stack/MadEvolve`, `tianyi-stack/MadEvolve-Cosmo`, `biweidai/LDL`,
     `rainwoodman/vmad`, and four generated report PDFs.
-  - Current gap: `papers/README.md` lists `2602.15951` as background only with
-    no free-parameter optimization or innovation report, and completed TODOs
-    only preserve that scoping. There is no implemented source-specific paper
-    evidence gate for MadEvolve's PDF evidence, public framework/application
-    repositories, parameter schemas, optimization budgets, differentiability requirements,
-    per-task prompts/evaluators, report sections, run statistics, model
-    contribution table, compute environment, reward-hacking caveats, or
-    generalization claims. Existing docs also do not distinguish the framework
-    repository from the cosmology application repository or the hosted report
-    artifacts.
+  - Current gap: `papers/README.md` lists `2602.15951` as background only, and
+    `papers/madevolve_boundary.json` now preserves the MadEvolve PDF evidence
+    as a source-specific boundary with cached source metadata, public
+    framework/application links, component rows, local generic-evolution
+    scope, required future evidence fields, and missing-evidence keys. The
+    remaining paper gap is executable/reportable evidence for parameter
+    schemas, optimization budgets, differentiability requirements, per-task
+    prompts/evaluators, report sections, run statistics, model contribution
+    table, compute environment, reward-hacking caveats, generalization claims,
+    framework-vs-application repository status, and hosted report artifacts.
   - Required result: add paper-manifest and paper-index coverage for
     `2602.15951`: title/authors/arXiv version/date/PDF digest, source/license
     and public code status for madevolve.org, `tianyi-stack/MadEvolve`, and

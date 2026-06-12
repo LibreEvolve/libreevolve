@@ -12015,3 +12015,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     ablation, and budget evidence explicit as missing.
   - Verification: ImprovEvolve boundary and paper-manifest tests validate the
     sidecar that README now references.
+
+- [x] Document MadEvolve source boundary.
+  - Spec evidence: README MadEvolve wording needed to keep domain-evolution
+    inspiration separate from free-parameter tracking, nested optimization,
+    cosmology adapters, generated reports, and benchmark-statistics evidence.
+  - Status: README now names `papers/madevolve_boundary.json` in the
+    MadEvolve reference row and keeps free-parameter tracking, nested
+    optimization, JAX/vmad compatibility, cosmology adapters, innovation
+    reports, run/model statistics, and reward-hacking controls explicit as
+    missing.
+  - Verification: MadEvolve boundary and paper-manifest tests validate the
+    sidecar that README now references.

@@ -376,7 +376,11 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Partial status: LibreEvolve has built-in OpenAI, Anthropic, and Ollama
     adapters, configured custom import-path backends, role-backend eligibility,
     provider usage/default telemetry for supported adapters, and backend
-    metadata that can label breadth/depth behavior.
+    metadata that can label breadth/depth behavior. Runtime histories now
+    include `libreevolve.gemini_provider_parity_report.v1`, which records the
+    built-in provider list, configured Gemini-like custom backends,
+    Flash/Pro-shaped lane counts, and a `claim_ready: false` first-class-provider
+    absence boundary.
   - Current gap: a custom backend can wrap Gemini externally, but the paper
     ledger has no first-class evidence for Gemini credential preflight,
     provider-native usage/default/capability telemetry, safe provider
@@ -446,7 +450,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     provide a first-class Google/Gemini backend surface or explicitly document
     an equivalent substitute with comparable capability and telemetry evidence.
   - Partial status: LibreEvolve supports multiple built-in providers through
-    OpenAI, Anthropic, and Ollama, plus custom backend class paths.
+    OpenAI, Anthropic, and Ollama, plus custom backend class paths. Runtime
+    histories now include `libreevolve.gemini_provider_parity_report.v1`, which
+    detects Gemini-like custom model ids and Flash/Pro-shaped lanes while
+    preserving the missing first-class provider boundary.
   - Current gap: no built-in Google/Gemini backend exists, and `custom`
     backends do not by themselves supply provider-native usage/default
     telemetry, account/model capability evidence, credential preflight, or

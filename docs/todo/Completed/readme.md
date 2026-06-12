@@ -11558,3 +11558,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     `claim_ready: false`.
   - Verification: focused runtime repeated-sampling boundary test validates
     the implemented report.
+
+- [x] Document Gemini provider-parity absence boundary.
+  - Spec evidence: README provider wording needed to distinguish current
+    OpenAI/Anthropic/Ollama/custom support from AlphaEvolve's published
+    Gemini Flash/Pro provider surface.
+  - Status: README, backend docs, configuration docs, and run-artifact docs now
+    describe `runtime.history.gemini_provider_parity_report`, including
+    built-in provider types, Gemini-like custom backend detection, Flash/Pro-shaped
+    lanes, and `claim_ready: false`.
+  - Verification: focused runtime Gemini provider-parity boundary test
+    validates the implemented report.

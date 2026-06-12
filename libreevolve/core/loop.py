@@ -5429,6 +5429,9 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
             startup_manifest,
             proposal_lifecycle_report,
         ),
+        "gemini_provider_parity_report": _gemini_provider_parity_report(
+            startup_manifest
+        ),
         "hypothesis_branch_report": hypothesis_branch_report,
         "controller_backtracking_report": _controller_backtracking_report(
             programs,
@@ -27972,6 +27975,331 @@ def validate_sample_efficiency_report(report: object) -> dict:
         )
     return {
         "schema": "libreevolve.sample_efficiency_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _gemini_provider_parity_report(startup_manifest: Mapping[str, object]) -> dict:
+    from libreevolve.llm.backend_registry import builtin_backend_registry
+
+    config = (
+        startup_manifest.get("config")
+        if isinstance(startup_manifest.get("config"), Mapping)
+        else {}
+    )
+    raw_backends = config.get("backends")
+    backend_specs = raw_backends if isinstance(raw_backends, list) else []
+    builtin_types = sorted(builtin_backend_registry())
+    records = [
+        _gemini_provider_backend_record(index, spec, builtin_types)
+        for index, spec in enumerate(backend_specs)
+        if isinstance(spec, Mapping)
+    ]
+    gemini_records = [
+        record for record in records if record.get("provider_family") == "gemini"
+    ]
+    flash_count = sum(1 for record in gemini_records if record.get("lane") == "flash")
+    pro_count = sum(1 for record in gemini_records if record.get("lane") == "pro")
+    has_first_class_gemini = any(
+        provider in builtin_types for provider in ("gemini", "google")
+    )
+    report = {
+        "schema": "libreevolve.gemini_provider_parity_report.v1",
+        "source": "startup_config_and_builtin_backend_registry",
+        "alphaevolve_provider_requirement": "gemini_flash_and_gemini_pro",
+        "built_in_backend_types": builtin_types,
+        "gemini_builtin_available": has_first_class_gemini,
+        "configured_backend_count": len(records),
+        "configured_custom_backend_count": sum(
+            1 for record in records if record.get("type") == "custom"
+        ),
+        "configured_gemini_like_backend_count": len(gemini_records),
+        "configured_flash_lane_count": flash_count,
+        "configured_pro_lane_count": pro_count,
+        "configured_backends": records,
+        "custom_backend_substitution_policy": (
+            "opaque_custom_backend_not_provider_parity"
+        ),
+        "provider_parity_status": (
+            "first_class_gemini_backend_available"
+            if has_first_class_gemini
+            else "missing_first_class_gemini_backend"
+        ),
+        "substitution_status": (
+            "custom_gemini_like_backend_configured_without_first_class_parity"
+            if gemini_records and not has_first_class_gemini
+            else "not_declared"
+        ),
+        "claim_ready": False,
+        "claim_readiness": {
+            "first_class_gemini_backend": has_first_class_gemini,
+            "credential_preflight": False,
+            "provider_native_usage_telemetry": False,
+            "provider_native_default_telemetry": False,
+            "provider_capability_lookup": False,
+            "flash_pro_lane_contract": has_first_class_gemini
+            and flash_count > 0
+            and pro_count > 0,
+            "substitution_contract": False,
+            "remaining_gap": [
+                "built_in_google_gemini_adapter",
+                "gemini_credential_preflight",
+                "provider_native_gemini_usage_and_default_telemetry",
+                "gemini_flash_pro_lane_labels",
+                "paper_level_substitution_contract",
+            ],
+        },
+    }
+    report["validation"] = validate_gemini_provider_parity_report(report)
+    return report
+
+
+def _gemini_provider_backend_record(
+    index: int,
+    spec: Mapping[str, object],
+    builtin_types: list[str],
+) -> dict:
+    backend_type = spec.get("type")
+    model = spec.get("model")
+    role = spec.get("role")
+    lane = _gemini_provider_lane_label(model, role)
+    provider_family = _gemini_provider_family(backend_type, model)
+    first_class_provider = isinstance(backend_type, str) and backend_type in builtin_types
+    record = {
+        "index": index,
+        "type": backend_type if isinstance(backend_type, str) else None,
+        "model": model if isinstance(model, str) else None,
+        "role": role if isinstance(role, str) else None,
+        "provider_family": provider_family,
+        "lane": lane,
+        "first_class_provider": first_class_provider,
+        "parity_status": (
+            "first_class_gemini_provider"
+            if provider_family == "gemini" and first_class_provider
+            else "gemini_like_custom_or_unsupported_backend"
+            if provider_family == "gemini"
+            else "non_gemini_backend"
+        ),
+    }
+    return record
+
+
+def _gemini_provider_family(backend_type: object, model: object) -> str:
+    backend_text = backend_type.lower() if isinstance(backend_type, str) else ""
+    model_text = model.lower() if isinstance(model, str) else ""
+    if backend_text in {"gemini", "google"} or "gemini" in model_text:
+        return "gemini"
+    if backend_text in {"anthropic", "custom", "ollama", "openai"}:
+        return backend_text
+    return "unknown"
+
+
+def _gemini_provider_lane_label(model: object, role: object) -> str | None:
+    values = [
+        value.lower()
+        for value in (model, role)
+        if isinstance(value, str)
+    ]
+    if any("flash" in value for value in values):
+        return "flash"
+    if any("pro" in value for value in values):
+        return "pro"
+    return None
+
+
+def validate_gemini_provider_parity_report(report: object) -> dict:
+    issues: list[dict[str, str]] = []
+    if not isinstance(report, Mapping):
+        return {
+            "schema": "libreevolve.gemini_provider_parity_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_report",
+                    "message": "Gemini provider parity report must be a mapping",
+                }
+            ],
+        }
+    if report.get("schema") != "libreevolve.gemini_provider_parity_report.v1":
+        issues.append({"code": "invalid_schema", "message": "unsupported schema"})
+    if report.get("source") != "startup_config_and_builtin_backend_registry":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "source must identify startup config and backend registry",
+            }
+        )
+    builtins = report.get("built_in_backend_types")
+    if not isinstance(builtins, list) or not all(
+        isinstance(item, str) for item in builtins
+    ):
+        issues.append(
+            {
+                "code": "invalid_builtin_backend_types",
+                "message": "built_in_backend_types must be a list of strings",
+            }
+        )
+        builtins = []
+    has_gemini_builtin = any(item in {"gemini", "google"} for item in builtins)
+    if report.get("gemini_builtin_available") is not has_gemini_builtin:
+        issues.append(
+            {
+                "code": "gemini_builtin_availability_mismatch",
+                "message": "gemini_builtin_available must match built_in_backend_types",
+            }
+        )
+    if has_gemini_builtin and report.get("provider_parity_status") != (
+        "first_class_gemini_backend_available"
+    ):
+        issues.append(
+            {
+                "code": "invalid_provider_parity_status",
+                "message": "status must reflect first-class Gemini availability",
+            }
+        )
+    if not has_gemini_builtin and report.get("provider_parity_status") != (
+        "missing_first_class_gemini_backend"
+    ):
+        issues.append(
+            {
+                "code": "invalid_provider_parity_status",
+                "message": "status must reflect the missing first-class Gemini backend",
+            }
+        )
+    records = report.get("configured_backends")
+    if not isinstance(records, list):
+        issues.append(
+            {
+                "code": "invalid_configured_backends",
+                "message": "configured_backends must be a list",
+            }
+        )
+        records = []
+    else:
+        for index, record in enumerate(records):
+            if not isinstance(record, Mapping):
+                issues.append(
+                    {
+                        "code": "invalid_backend_record",
+                        "message": "configured backend records must be mappings",
+                    }
+                )
+                continue
+            if record.get("index") != index:
+                issues.append(
+                    {
+                        "code": "invalid_backend_index",
+                        "message": "configured backend indexes must be contiguous",
+                    }
+                )
+            if record.get("provider_family") not in {
+                "anthropic",
+                "custom",
+                "gemini",
+                "ollama",
+                "openai",
+                "unknown",
+            }:
+                issues.append(
+                    {
+                        "code": "invalid_provider_family",
+                        "message": "provider_family has an unsupported value",
+                    }
+                )
+            if record.get("lane") not in {None, "flash", "pro"}:
+                issues.append(
+                    {
+                        "code": "invalid_lane",
+                        "message": "lane must be flash, pro, or null",
+                    }
+                )
+    _validate_report_count(
+        report,
+        "configured_backend_count",
+        len(records),
+        issues,
+    )
+    _validate_report_count(
+        report,
+        "configured_custom_backend_count",
+        sum(
+            1
+            for record in records
+            if isinstance(record, Mapping) and record.get("type") == "custom"
+        ),
+        issues,
+    )
+    gemini_count = sum(
+        1
+        for record in records
+        if isinstance(record, Mapping) and record.get("provider_family") == "gemini"
+    )
+    _validate_report_count(
+        report,
+        "configured_gemini_like_backend_count",
+        gemini_count,
+        issues,
+    )
+    _validate_report_count(
+        report,
+        "configured_flash_lane_count",
+        sum(
+            1
+            for record in records
+            if isinstance(record, Mapping) and record.get("lane") == "flash"
+        ),
+        issues,
+    )
+    _validate_report_count(
+        report,
+        "configured_pro_lane_count",
+        sum(
+            1
+            for record in records
+            if isinstance(record, Mapping) and record.get("lane") == "pro"
+        ),
+        issues,
+    )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "invalid_claim_ready",
+                "message": "Gemini parity report must not claim readiness",
+            }
+        )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be a mapping",
+            }
+        )
+    else:
+        for field in (
+            "credential_preflight",
+            "provider_native_usage_telemetry",
+            "provider_native_default_telemetry",
+            "provider_capability_lookup",
+            "substitution_contract",
+        ):
+            if readiness.get(field) is not False:
+                issues.append(
+                    {
+                        "code": f"invalid_{field}",
+                        "message": f"{field} must remain false until implemented",
+                    }
+                )
+        if readiness.get("first_class_gemini_backend") is not has_gemini_builtin:
+            issues.append(
+                {
+                    "code": "first_class_gemini_backend_mismatch",
+                    "message": "first_class_gemini_backend must match registry state",
+                }
+            )
+    return {
+        "schema": "libreevolve.gemini_provider_parity_report.v1",
         "ok": not issues,
         "issues": issues,
     }

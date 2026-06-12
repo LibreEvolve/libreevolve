@@ -88,6 +88,7 @@ from libreevolve.core.loop import (
     validate_proposal_lifecycle_report,
     validate_sample_efficiency_report,
     validate_repeated_sampling_baseline_report,
+    validate_gemini_provider_parity_report,
     validate_hypothesis_branch_report,
     validate_controller_backtracking_report,
     VALID_THRESHOLD,
@@ -1227,6 +1228,60 @@ def test_completed_runtime_records_no_llm_scheduler_for_zero_generation_run():
         "status": "not_initialized",
         "reason": "no_mutation_llm_was_constructed",
     }
+
+
+def test_runtime_history_records_gemini_provider_parity_boundary():
+    tmpdir = tempfile.mkdtemp()
+    backends = [
+        {"type": "openai", "model": "gpt-5", "role": "general"},
+        {
+            "type": "custom",
+            "model": "gemini-2.0-flash",
+            "class_path": "example.backends:GeminiFlashBackend",
+            "role": "breadth",
+        },
+        {
+            "type": "custom",
+            "model": "gemini-2.0-pro",
+            "class_path": "example.backends:GeminiProBackend",
+            "role": "depth",
+        },
+    ]
+
+    evolve(
+        _problem(),
+        Config(
+            max_generations=0,
+            log_dir=tmpdir,
+            problem_name="t",
+            backends=backends,
+        ),
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["gemini_provider_parity_report"]
+
+    assert report["schema"] == "libreevolve.gemini_provider_parity_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_gemini_provider_parity_report(report)["ok"] is True
+    assert report["built_in_backend_types"] == ["anthropic", "ollama", "openai"]
+    assert report["gemini_builtin_available"] is False
+    assert report["configured_backend_count"] == 3
+    assert report["configured_custom_backend_count"] == 2
+    assert report["configured_gemini_like_backend_count"] == 2
+    assert report["configured_flash_lane_count"] == 1
+    assert report["configured_pro_lane_count"] == 1
+    assert report["provider_parity_status"] == "missing_first_class_gemini_backend"
+    assert report["substitution_status"] == (
+        "custom_gemini_like_backend_configured_without_first_class_parity"
+    )
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["credential_preflight"] is False
+    assert report["claim_readiness"]["provider_native_usage_telemetry"] is False
+    assert report["claim_readiness"]["substitution_contract"] is False
+    assert report["configured_backends"][1]["provider_family"] == "gemini"
+    assert report["configured_backends"][1]["lane"] == "flash"
+    assert report["configured_backends"][1]["first_class_provider"] is False
 
 
 def test_completed_runtime_records_valid_provider_cancellation_policy():

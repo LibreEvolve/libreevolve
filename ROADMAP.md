@@ -644,6 +644,12 @@ is not yet an AlphaEvolve reproduction.
   equal-budget comparator runner with fixed prompt/model/seed/evaluator
   controls and linked evolutionary runs before making test-time-compute uplift
   claims over repeated base-model sampling.
+- Turn the current Gemini provider-parity boundary report into a first-class
+  Google/Gemini adapter or equivalent provider-plugin/substitution contract.
+  Completed manifests now record built-in provider types, configured
+  Gemini-like custom backends, Flash/Pro-shaped model names, and
+  `claim_ready: false`; this is evidence for the missing AlphaEvolve
+  Flash/Pro provider surface, not provider parity.
 - Extend current synchronous configurable critique reviewer pools, role routing,
   and first/last-valid aggregation toward async reviewer overlap, calibrated
   reviewer scoring, stronger provider isolation, and runtime artifacts for

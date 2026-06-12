@@ -9090,3 +9090,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     executable repeated-sampling runs and linked evolutionary comparisons open.
   - Verification: focused runtime repeated-sampling boundary test validates
     the implemented report.
+
+- [x] Preserve Gemini provider-parity absence boundary.
+  - Spec evidence: roadmap provider claims need to separate generic backend
+    extensibility from AlphaEvolve's published Gemini Flash/Pro provider
+    surface.
+  - Status: ROADMAP and TODO wording now recognize
+    `runtime.history.gemini_provider_parity_report` as an absence boundary
+    with built-in provider types, configured Gemini-like custom backend specs,
+    Flash/Pro-shaped lanes, and `claim_ready: false`, while keeping first-class
+    Gemini support open.
+  - Verification: focused runtime Gemini provider-parity boundary test
+    validates the implemented report.

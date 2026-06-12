@@ -597,6 +597,14 @@ normalization boundary as `build_llm()`, including model-id, token-limit,
 request-parameter, client-context, custom-backend, and unsupported-field
 checks, and returns a defensive normalized copy. Full run resume does not yet
 consume restored backend specs.
+Completed manifests also include
+`runtime.history.gemini_provider_parity_report`, which compares the configured
+backend specs with the built-in registry. The current supported backend types
+remain `anthropic`, `openai`, `ollama`, and `custom`; custom backend model
+names containing `gemini` can be reported as Gemini-like substitutions, but
+they do not provide first-class Google/Gemini credential preflight,
+provider-native telemetry, capability lookup, or validated AlphaEvolve
+Flash/Pro lane parity.
 Restored/replay prompt payloads can be preflighted with
 `validate_restored_llm_prompt()`, which delegates to the same non-empty text
 boundary used by live ensemble and bundled direct-adapter calls. Oversized and

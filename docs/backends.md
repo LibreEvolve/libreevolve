@@ -276,6 +276,13 @@ objects plus scheduler metadata. Registry-created objects are ordinary backend
 objects; when used through `LLMEnsemble`, they inherit the same prompt type,
 size, role, timeout, retry/fallback, and response-size boundaries.
 
+Google/Gemini is not a built-in registry provider yet. Completed manifests
+record that boundary under `runtime.history.gemini_provider_parity_report`
+with schema `libreevolve.gemini_provider_parity_report.v1`: the report lists
+the built-in backend types, configured backend specs, Gemini-like custom
+models, Flash/Pro-shaped lanes, and `claim_ready: false` until a first-class
+Gemini adapter or equivalent provider-plugin/substitution contract exists.
+
 Built-in backend specs expose a small validated request-parameter surface:
 `temperature` and `top_p` for OpenAI, Anthropic, and Ollama; `stop` for
 Anthropic, Ollama, and OpenAI Chat Completions mode; and `seed` for Ollama and

@@ -11883,3 +11883,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     against a matching evolutionary run.
   - Verification: focused runtime repeated-sampling boundary test validates
     the implemented report.
+
+- [x] Record Gemini provider-parity absence boundary.
+  - Spec evidence: AlphaEvolve Section 2.4 names Gemini Flash/Pro model use,
+    so paper-facing provider evidence must not treat an opaque custom backend
+    slot as reproduction of that provider surface.
+  - Status: paper-facing TODOs and runtime manifests now expose
+    `gemini_provider_parity_report`, which records built-in provider types,
+    configured Gemini-like custom backends, Flash/Pro-shaped lane counts,
+    substitution status, and `claim_ready: false`.
+  - Remaining paper gap: this does not implement Google/Gemini credentials,
+    provider-native telemetry, capability lookup, safe diagnostics, or a
+    provider-plugin/substitution contract proving Flash/Pro provider parity.
+  - Verification: focused runtime Gemini provider-parity boundary test
+    validates the implemented report.

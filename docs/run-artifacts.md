@@ -3311,6 +3311,23 @@ means ordinary LLM-call budget caps, sample-efficiency counts, or the ablation
 registry's `No evolution` label must not be read as evidence that LibreEvolve
 improves over equal-budget repeated base-model sampling.
 
+## `runtime.history.gemini_provider_parity_report`
+
+Completed manifests include a Gemini provider-parity boundary report with
+schema `libreevolve.gemini_provider_parity_report.v1`. It is derived from the
+startup config and built-in backend registry, then records built-in backend
+types, configured backend count, configured custom backend count,
+Gemini-like backend count, Flash/Pro-shaped lane counts, and a bounded
+configured-backend summary.
+
+The report is intentionally an absence boundary for AlphaEvolve provider
+parity. In the current codebase `gemini_builtin_available` is false,
+`provider_parity_status` is `missing_first_class_gemini_backend`, and
+`claim_ready` is false. A custom backend whose model id contains `gemini` is
+reported as an opaque Gemini-like substitution, not as first-class Google/
+Gemini credential preflight, provider-native usage/default telemetry,
+capability lookup, safe diagnostics, or validated Flash/Pro lane parity.
+
 Prompt feedback for the selected parent also renders bounded, redacted
 summaries from the candidate's persisted evaluation record: recent stage
 status, stdout/stderr, retry/sample attempts, and LLM grader feedback. It also

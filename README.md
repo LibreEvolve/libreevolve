@@ -28,7 +28,7 @@ LibreEvolve is an open-source Python framework for **automated algorithm discove
 
 This repository is an independent implementation and is not affiliated with or endorsed by Google DeepMind, Andrej Karpathy, or the authors of the cited papers.
 
-Works with **OpenAI** (Chat Completions by default; Responses API when `api_mode: responses` or `reasoning_effort` is configured), **Anthropic Claude**, and **local models via Ollama**. Model names in examples are provider-specific examples; LibreEvolve forwards them to the relevant SDK and does not validate current availability. Configured model identifiers must still be manifest-safe strings matching `[A-Za-z0-9][A-Za-z0-9_.:/+-]{0,191}` and must not look like credentials. Run manifests record this boundary under `policies.provider_capability_lookup`: local static validation only, no live provider model-registry, service/API-version, or account-availability lookup before the run. `validate_provider_capability_lookup_policy()` validates that static lookup boundary and rejects records that claim live model-registry, service/API-version, or account-availability discovery without evidence.
+Works with **OpenAI** (Chat Completions by default; Responses API when `api_mode: responses` or `reasoning_effort` is configured), **Anthropic Claude**, and **local models via Ollama**. Model names in examples are provider-specific examples; LibreEvolve forwards them to the relevant SDK and does not validate current availability. Configured model identifiers must still be manifest-safe strings matching `[A-Za-z0-9][A-Za-z0-9_.:/+-]{0,191}` and must not look like credentials. Run manifests record this boundary under `policies.provider_capability_lookup`: local static validation only, no live provider model-registry, service/API-version, or account-availability lookup before the run. `validate_provider_capability_lookup_policy()` validates that static lookup boundary and rejects records that claim live model-registry, service/API-version, or account-availability discovery without evidence. Google/Gemini is not a built-in provider yet; completed manifests record that AlphaEvolve Flash/Pro parity boundary under `runtime.history.gemini_provider_parity_report`.
 
 Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://complete.tech) | [libreevolve.com](https://libreevolve.com)
 
@@ -66,7 +66,7 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 | Feature | AlphaEvolve (Google DeepMind) | LibreEvolve |
 |---------|-------------------------------|-------------|
 | Source | Closed-source | **Open-source (MIT)** |
-| LLM backends | Published experiments use Gemini Flash/Pro; paper describes existing/custom LLM choices | **OpenAI, Anthropic, Ollama, and configured custom import-path backends** |
+| LLM backends | Published experiments use Gemini Flash/Pro; paper describes existing/custom LLM choices | **OpenAI, Anthropic, Ollama, and configured custom import-path backends; no first-class Gemini adapter yet, with manifest evidence under `runtime.history.gemini_provider_parity_report`** |
 | Population model | Closed evolutionary database inspired by MAP-Elites/island models | **Small local MAP-Elites with configurable island migration, defaulting to five islands** |
 | LLM selection | Fast/deep model scheduling described | **UCB-style heuristic plus bounded normalized throughput/depth metadata after pull-once initialization** |
 | Evaluation | User-defined evaluators returning scalar metrics, optional cascades, feedback, and parallel execution | **Local subprocess evaluator with structured results, staged validator cascades, optional synchronous LLM feedback, and a reserved `is_valid` admission gate outside scored metrics** |
@@ -1856,6 +1856,15 @@ registry, provider service/API-version, or account-availability lookup for
 capability discovery before a run. The OpenAI static compatibility check is
 linked to `policies.openai_api_mode`; provider-side capability failures can
 still occur at call time.
+Completed manifests also include
+`runtime.history.gemini_provider_parity_report`, which compares the configured
+backend specs with the built-in backend registry and records whether
+AlphaEvolve's Gemini Flash/Pro provider surface is first-class in the run. In
+the current codebase this report remains `claim_ready: false`: custom
+Gemini-like backend model names can be detected as opaque substitutions, but
+there is no built-in Google/Gemini adapter, credential preflight,
+provider-native usage/default telemetry, capability lookup, or validated
+Flash/Pro lane contract.
 Empty or non-text backend responses are
 recorded as failed ensemble calls with
 retry/fallback eligibility rather than successful pulls. Responses longer than

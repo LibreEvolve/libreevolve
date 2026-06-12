@@ -17253,3 +17253,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     prompt/model/seed/evaluator contracts, budget parity, target curves, and
     linked evolutionary comparator runs remain open.
   - Verification: focused runtime repeated-sampling boundary test passes.
+
+- [x] Add Gemini provider-parity absence report.
+  - Spec evidence: AlphaEvolve's published model mix used Gemini Flash/Pro,
+    so local provider evidence must distinguish generic custom backend
+    extensibility from first-class Google/Gemini provider parity.
+  - Status: runtime histories now include
+    `libreevolve.gemini_provider_parity_report.v1`, derived from startup
+    backend specs and the built-in backend registry, with built-in provider
+    types, configured custom backend counts, Gemini-like model detection,
+    Flash/Pro-shaped lane counts, and `claim_ready: false`.
+  - Remaining gap: a built-in Google/Gemini adapter or equivalent provider
+    plugin/substitution contract with credential preflight, provider-native
+    telemetry, capability lookup, diagnostics, and validated Flash/Pro lanes
+    remains open.
+  - Verification: focused runtime Gemini provider-parity boundary test passes.

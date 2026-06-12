@@ -2590,7 +2590,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     Ollama, and custom backend support, but the built-in registry does not
     include a Google/Gemini backend. A custom backend is not the same as
     first-class provider telemetry, credential preflight, capability evidence,
-    or Flash/Pro lane labeling.
+    or Flash/Pro lane labeling. README now points to
+    `runtime.history.gemini_provider_parity_report`, which records the missing
+    first-class Gemini provider boundary and detects Gemini-like custom model
+    ids without claiming AlphaEvolve Flash/Pro parity.
   - Required result: if Gemini support or an equivalent provider-plugin
     contract lands, update README, ROADMAP, papers index, and code/paper TODOs
     so provider claims distinguish generic extensibility from reproducing or

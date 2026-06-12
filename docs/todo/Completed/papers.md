@@ -12933,3 +12933,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2605.09959` G-Zero paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2605.09959`, `G-Zero: Self-Play for Open-Ended Generation from Zero
+    Data`, cached locally as `papers/2605.09959__G_Zero.pdf` with byte count
+    `1980993` and SHA-256
+    `97ba152b7208e1d8d2f0f1bcf4fe293419e485a568217a6ed8ea50214f5357c9`.
+  - Remaining paper gap: source-license details, Generator/Proposer role
+    schema, Hint-delta reward definition, unassisted versus hint-conditioned
+    response artifacts, self-generated query/hint records, GRPO/DPO training
+    metadata, intrinsic-reward calibration, exploration coverage evidence,
+    pseudo-label score-noise filters, reward-hacking diagnostics, open-ended
+    task taxonomy, theoretical guarantee assumptions, baseline identities,
+    code/artifact availability, reproducibility status, and independent
+    reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

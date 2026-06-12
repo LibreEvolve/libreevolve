@@ -360,6 +360,16 @@
     "sha256": "40b5c2cde5b1886488a67b511d7dd780756304a5714d8b3261b8fe35e47beba0"
   },
   {
+    "id": "2605.09959",
+    "title": "G_Zero",
+    "url": "https://arxiv.org/pdf/2605.09959.pdf",
+    "file": "papers/2605.09959__G_Zero.pdf",
+    "ok": true,
+    "bytes": 1980993,
+    "message": "downloaded",
+    "sha256": "97ba152b7208e1d8d2f0f1bcf4fe293419e485a568217a6ed8ea50214f5357c9"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

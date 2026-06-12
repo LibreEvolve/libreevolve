@@ -764,7 +764,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     URL, and local PDF label describing the same source before version or
     rights evidence attaches.
   - Status: ROADMAP now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 38 cache
+    companion manifest that emits derived source identities for all 39 cache
     rows and links the AlphaEvolve row to `papers/source_versions.json`.
   - Remaining gap: none for this bounded roadmap wording slice.
 
@@ -9923,5 +9923,20 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     reasoning benchmark reports, 26% relative-improvement reproductions,
     three-task open-ended optimization reports, linked-code audits, and
     independent reproduction outputs explicitly open.
-  - Verification: paper-manifest validation checks the 38-row manifest,
+  - Verification: paper-manifest validation checks the current manifest,
+    paper-index row, TODO coverage row, and source-identity sidecar.
+
+- [x] Preserve `2605.09959` G-Zero paper-cache scope in roadmap.
+  - Status: ROADMAP now identifies arXiv `2605.09959`, `G-Zero: Self-Play for
+    Open-Ended Generation from Zero Data`, as background verifier-free
+    co-evolution context only, with the cached
+    `papers/2605.09959__G_Zero.pdf` row and missing Hint-delta intrinsic-
+    reward computation, Proposer/Generator model roles, self-generated
+    query/hint datasets, GRPO proposer training, DPO generator training,
+    co-evolution training loops, pseudo-label noise filters,
+    exploration-coverage reports, best-iterate suboptimality fixtures,
+    unverifiable-domain benchmarks, external-judge reward-hacking
+    comparisons, linked-code audits, and independent reproduction outputs
+    explicitly open.
+  - Verification: paper-manifest validation checks the 39-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.

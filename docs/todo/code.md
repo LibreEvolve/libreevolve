@@ -5369,7 +5369,8 @@ Primary evidence:
     README/ROADMAP wording that keeps AEvo-style harnessed meta-editing as
     missing evidence until local implementation and reports exist.
 
-- [ ] Add G-Zero verifier-free co-evolution source boundary.
+- [ ] Implement G-Zero verifier-free co-evolution evidence beyond paper cache
+      coverage.
   - Spec evidence: arXiv `2605.09959`, `G-Zero: Self-Play for Open-Ended
     Generation from Zero Data`, was submitted May 11, 2026. Its abstract says
     self-evolving LLMs perform well in verifiable domains but struggle on
@@ -5382,24 +5383,26 @@ Primary evidence:
     is trained with DPO to internalize the hint-guided improvements. The
     abstract also states a best-iterate suboptimality guarantee under
     sufficient exploration coverage and low pseudo-label score noise.
-  - Current evidence: LibreEvolve depends on explicit user validators and
-    evaluator scores for program admission, MAP-Elites retention, and
-    benchmark reporting. It has no G-Zero source row, no verifier-free
-    open-ended task mode, no Generator/Proposer co-evolution loop, no
-    Hint-delta intrinsic reward, no self-generated hint artifacts, no GRPO/DPO
-    training interface, no exploration-coverage diagnostic, and no
+  - Current evidence: `papers/download_manifest.*`, `papers/README.md`, and
+    TODO coverage now include `2605.09959`, cached locally as
+    `papers/2605.09959__G_Zero.pdf` with byte count `1980993` and SHA-256
+    `97ba152b7208e1d8d2f0f1bcf4fe293419e485a568217a6ed8ea50214f5357c9`.
+    LibreEvolve depends on explicit user validators and evaluator scores for
+    program admission, MAP-Elites retention, and benchmark reporting. It has
+    no verifier-free open-ended task mode, no Generator/Proposer co-evolution
+    loop, no Hint-delta intrinsic reward, no self-generated hint artifacts, no
+    GRPO/DPO training interface, no exploration-coverage diagnostic, and no
     pseudo-label noise filter or reward-hacking audit for unverifiable tasks.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2605.09959`: arXiv id/version/date/PDF hash, authors, source license,
-    relation to AlphaEvolve and LibreEvolve's evaluator contract, Generator
-    and Proposer role schemas, Hint-delta computation records, unassisted vs
-    hint-conditioned response pairs, self-generated query/hint artifacts,
-    GRPO/DPO training traces, intrinsic-reward calibration, exploration
-    coverage metrics, pseudo-label noise filters, reward-hacking diagnostics,
-    open-ended task taxonomy, theoretical guarantee assumptions, baseline
-    identities, and README/ROADMAP wording that keeps verifier-free
-    co-evolution as missing evidence until local implementation and reports
-    exist.
+  - Required result: add evidence beyond paper-cache coverage for
+    `2605.09959`: authors/source-license details, relation to AlphaEvolve and
+    LibreEvolve's evaluator contract, Generator and Proposer role schemas,
+    Hint-delta computation records, unassisted vs hint-conditioned response
+    pairs, self-generated query/hint artifacts, GRPO/DPO training traces,
+    intrinsic-reward calibration, exploration coverage metrics, pseudo-label
+    noise filters, reward-hacking diagnostics, open-ended task taxonomy,
+    theoretical guarantee assumptions, baseline identities, and
+    README/ROADMAP wording that keeps verifier-free co-evolution as missing
+    evidence until local implementation and reports exist.
 
 - [ ] Add GenEvolve multimodal trajectory-distillation source boundary.
   - Spec evidence: arXiv `2605.21605`, `GenEvolve: Self-Evolving Image

@@ -3682,7 +3682,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     or benchmark-fixture status rule so roadmap claims do not outpace local
     AEvo-style harnessed meta-editing support.
 
-- [ ] Add G-Zero verifier-free co-evolution gates before roadmap promotion.
+- [ ] Implement G-Zero verifier-free co-evolution gates beyond paper cache
+      coverage.
   - Spec evidence: arXiv `2605.09959`, submitted May 11, 2026, introduces
     G-Zero for open-ended generation from zero data. The abstract says
     self-evolving LLMs struggle outside verifiable domains because proxy LLM
@@ -3691,20 +3692,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     predictive shift from self-generated hints, a Proposer uses GRPO to target
     Generator blind spots with queries and hints, and the Generator uses DPO
     to internalize improvements.
-  - Current evidence: ROADMAP tracks evaluator contracts, validator
-    subprocesses, benchmark-report artifacts, reward/scoring gaps, and many
-    self-evolution source gates. It does not mention `2605.09959`, define a
-    verifier-free source gate, or require local evidence before promoting
-    open-ended self-evolution without explicit validators.
-  - Required result: add roadmap gates for `2605.09959`: paper/source
-    manifest entry, PDF/cache hash, source-license metadata, Generator/
-    Proposer role schema, Hint-delta reward records, unassisted and
-    hint-conditioned response pairs, query/hint artifact storage, GRPO/DPO
-    training traces, intrinsic-reward calibration, exploration coverage
-    reports, pseudo-label noise filtering, reward-hacking diagnostics,
-    open-ended task taxonomy, theoretical-assumption records, baseline
-    identities, and a background-only or benchmark-fixture status rule so
-    roadmap claims do not outpace local G-Zero-style verifier-free support.
+  - Current evidence: ROADMAP, `papers/download_manifest.*`, and
+    `papers/README.md` now include `2605.09959`, cached locally as
+    `papers/2605.09959__G_Zero.pdf` with byte count `1980993` and SHA-256
+    `97ba152b7208e1d8d2f0f1bcf4fe293419e485a568217a6ed8ea50214f5357c9`.
+    ROADMAP tracks evaluator contracts, validator subprocesses,
+    benchmark-report artifacts, reward/scoring gaps, and many self-evolution
+    source gates, but still has no local verifier-free co-evolution evidence.
+  - Required result: add roadmap gates beyond paper-cache coverage for
+    `2605.09959`: source-license metadata, Generator/Proposer role schema,
+    Hint-delta reward records, unassisted and hint-conditioned response pairs,
+    query/hint artifact storage, GRPO/DPO training traces, intrinsic-reward
+    calibration, exploration coverage reports, pseudo-label noise filtering,
+    reward-hacking diagnostics, open-ended task taxonomy,
+    theoretical-assumption records, baseline identities, and a background-only
+    or benchmark-fixture status rule so roadmap claims do not outpace local
+    G-Zero-style verifier-free support.
 
 - [ ] Add GenEvolve multimodal trajectory-distillation gates before roadmap
       promotion.

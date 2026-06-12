@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.paper_source_identity_manifest.v1",
-  "source_identity_count": 38,
+  "source_identity_count": 39,
   "source_identity_policy": "manifest_id_url_source_id_and_file_source_prefix_must_match_before_source_version_or_rights_claims",
   "sources": [
     {
@@ -647,6 +647,24 @@
       "url_source_id": "2605.13821",
       "url_versioned_id": "2605.13821",
       "file_source_id": "2605.13821",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2605.09959",
+      "title": "G_Zero",
+      "url": "https://arxiv.org/pdf/2605.09959.pdf",
+      "file": "papers/2605.09959__G_Zero.pdf",
+      "sha256": "97ba152b7208e1d8d2f0f1bcf4fe293419e485a568217a6ed8ea50214f5357c9",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2605.09959",
+      "url_versioned_id": "2605.09959",
+      "file_source_id": "2605.09959",
       "identity_checks": {
         "manifest_id_matches_url_source_id": true,
         "manifest_id_matches_file_source_id": true,

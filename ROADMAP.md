@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 38 cache rows and links the AlphaEvolve row to
+  identities for all 39 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1406,6 +1406,18 @@ resumed-trace proof are still open.
   reproductions, three-task open-ended optimization reports, linked-code
   audits, and independent reproduction outputs remain open before roadmap
   wording can promote AEvo-style harnessed meta-editing support.
+- Keep G-Zero verifier-free co-evolution claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2605.09959`, `G-Zero: Self-Play for Open-Ended Generation from Zero Data`,
+  cached locally as `papers/2605.09959__G_Zero.pdf`. This is background
+  verifier-free co-evolution context only; Hint-delta intrinsic-reward
+  computation, Proposer/Generator model roles, self-generated query/hint
+  datasets, GRPO proposer training, DPO generator training, co-evolution
+  training loops, pseudo-label noise filters, exploration-coverage reports,
+  best-iterate suboptimality fixtures, unverifiable-domain benchmarks,
+  external-judge reward-hacking comparisons, linked-code audits, and
+  independent reproduction outputs remain open before roadmap wording can
+  promote G-Zero-style verifier-free self-evolution support.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

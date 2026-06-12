@@ -1594,7 +1594,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     controlled repeated-sampling comparator with matched prompt/model/seed/
     evaluator settings and disabled evolutionary feedback,
     parent/inspiration resurfacing, archive-driven selection, and meta-prompt
-    updates.
+    updates. `papers/repeated_sampling_baseline_boundary.json` now preserves
+    that controlled-comparator absence boundary for paper-manifest validation.
   - Required result: when executable repeated-sampling comparator reports land,
     update ROADMAP, README, papers index, and code/paper TODOs together so
     roadmap language distinguishes ordinary budgeted LLM sampling, local

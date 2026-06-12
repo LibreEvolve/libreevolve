@@ -2741,11 +2741,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: README now documents
     `runtime.history.repeated_sampling_baseline_report` as an explicit
     not-configured boundary linked to observed sample counts and required
-    comparator controls. It still does not document controlled repeated
-    base-model sampling baselines with matched prompt/model/seed/evaluator
-    settings, disabled evolutionary feedback, disabled parent/inspiration
-    resurfacing, disabled meta-prompt updates, and target-progress comparisons
-    against matching evolutionary runs.
+    comparator controls. The paper index now also names
+    `papers/repeated_sampling_baseline_boundary.json` as the paper-facing
+    controlled-comparator absence boundary. README still does not document
+    controlled repeated base-model sampling baselines with matched
+    prompt/model/seed/evaluator settings, disabled evolutionary feedback,
+    disabled parent/inspiration resurfacing, disabled meta-prompt updates, and
+    target-progress comparisons against matching evolutionary runs.
   - Required result: when executable repeated-sampling comparator reports land,
     update README, ROADMAP, papers index, and code/paper TODOs so README
     separates generic LLM-call budget caps, local absence boundaries, and

@@ -4302,7 +4302,10 @@ Primary evidence:
     now include `libreevolve.repeated_sampling_baseline_report.v1`, an absence
     boundary that links observed generated/accepted/rejected/execution-filtered
     sample counts to the missing repeated-sampling comparator controls. It does
-    not yet define a repeated-sampling baseline runner that fixes model,
+    not claim comparator readiness, and
+    `papers/repeated_sampling_baseline_boundary.json` now preserves the same
+    controlled-comparator absence boundary for paper-manifest validation. It
+    still does not define a repeated-sampling baseline runner that fixes model,
     prompt, seed, budget, candidate count, and evaluator settings while
     disabling evolutionary feedback, parent/inspiration resurfacing,
     archive-driven selection, and meta-prompt updates. The current report and

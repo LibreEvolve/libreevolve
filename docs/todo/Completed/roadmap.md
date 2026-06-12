@@ -20,6 +20,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation requires the sidecar and focused
     sample-efficiency boundary tests validate the absence record.
 
+- [x] Add repeated-sampling boundary sidecar to roadmap evidence.
+  - Status: roadmap/TODO wording now ties the runtime `No evolution`
+    comparator absence report to
+    `papers/repeated_sampling_baseline_boundary.json`, preserving missing
+    controlled comparator, fixed prompt/model/seed/evaluator, budget-parity,
+    target-progress, disabled evolutionary-feedback, and linked evolutionary-
+    run evidence.
+  - Verification: paper-manifest validation requires the sidecar and focused
+    repeated-sampling boundary tests validate the absence record.
+
 - [x] Preserve Bilateral Trade `2603.08679` boundary scope in roadmap.
   - Evidence: `ROADMAP.md` adds `papers/bilateral_trade_boundary.json` to the
     inspired/application-context source-boundary list and keeps

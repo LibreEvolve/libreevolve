@@ -171,9 +171,10 @@ LibreEvolve has:
   repeated-sampling, and model-size comparison evidence open
 - repeated-sampling baseline boundary reports under
   `runtime.history.repeated_sampling_baseline_report`, linking observed sample
-  counts to an explicit `No evolution` comparator absence boundary while
-  keeping fixed prompt/model/seed/evaluator controls, budget parity,
-  target-progress curves, and linked evolutionary comparator runs open
+  counts to an explicit `No evolution` comparator absence boundary, with
+  `papers/repeated_sampling_baseline_boundary.json` preserving the missing
+  fixed prompt/model/seed/evaluator controls, budget parity,
+  target-progress curves, and linked evolutionary comparator runs
 - opt-in evaluator artifact copy-out from temporary candidate workspaces with
   hashes, limits, and text redaction metadata
 - validator subprocess environment allowlisting, persisted stdout/stderr

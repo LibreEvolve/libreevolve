@@ -447,7 +447,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve.repeated_sampling_baseline_report.v1`, which records the
     current absence of a controlled comparator, links observed generated/
     accepted/rejected/execution-filtered sample counts, and lists the missing
-    comparator controls.
+    comparator controls. `papers/repeated_sampling_baseline_boundary.json` now
+    preserves that controlled-comparator absence boundary for paper-manifest
+    validation.
   - Current gap: paper-facing reports do not define an equal-budget repeated
     base-model sampling comparator with fixed prompt/model/seed/evaluator
     conditions, generated/evaluated sample counts, disabled archive feedback,

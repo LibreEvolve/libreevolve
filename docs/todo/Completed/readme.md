@@ -12436,3 +12436,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     FunSearch-versus-AlphaEvolve evidence.
   - Verification: paper-manifest validation checks the sample-efficiency
     sidecar and README/paper-index count consistency.
+
+- [x] Keep README repeated-sampling boundary tied to paper-index sidecar.
+  - Status: README remains scoped to local budget/report surfaces, while
+    `papers/README.md` now points repeated-sampling uplift claims to
+    `papers/repeated_sampling_baseline_boundary.json` for missing controlled
+    comparator, fixed prompt/model/seed/evaluator, budget-parity, target-
+    progress, and linked evolutionary-run evidence.
+  - Verification: paper-manifest validation checks the repeated-sampling
+    sidecar and README/paper-index count consistency.

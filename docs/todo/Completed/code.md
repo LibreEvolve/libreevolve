@@ -17319,6 +17319,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     linked evolutionary comparator runs remain open.
   - Verification: focused runtime repeated-sampling boundary test passes.
 
+- [x] Emit repeated-sampling baseline paper-facing absence boundary sidecar.
+  - Status: `libreevolve/problems/benchmarks/repeated_sampling_baseline_boundary.py`
+    and `papers/repeated_sampling_baseline_boundary.json` now preserve that
+    LibreEvolve has a runtime absence report for the `No evolution`
+    repeated-sampling comparator, but no executable controlled repeated-
+    sampling runner, fixed prompt/model/seed/evaluator parity, budget parity,
+    target-progress curves, disabled evolutionary-feedback proof, or linked
+    evolutionary comparator runs.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused repeated-sampling boundary tests validate the absence
+    record.
+
 - [x] Add Gemini provider-parity absence report.
   - Spec evidence: AlphaEvolve's published model mix used Gemini Flash/Pro,
     so local provider evidence must distinguish generic custom backend

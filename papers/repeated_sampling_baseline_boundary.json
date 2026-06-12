@@ -1,0 +1,33 @@
+{
+  "schema": "libreevolve.alphaevolve_repeated_sampling_baseline_boundary.v1",
+  "runtime_report_schema": "libreevolve.repeated_sampling_baseline_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve is framed as test-time compute that improves over repeated base-model sampling through machine feedback and evolutionary search",
+  "paper_variant": "No evolution",
+  "boundary_status": "runtime_absence_boundary_only",
+  "runtime_report_status": "repeated_sampling_baseline_absence_report_available",
+  "claim_ready": false,
+  "required_comparator_controls": [
+    "same_initial_program_prompt_history",
+    "fixed_model_and_backend",
+    "fixed_prompt_template",
+    "fixed_seed_and_candidate_count",
+    "same_evaluator_configuration",
+    "disabled_archive_admission_feedback",
+    "disabled_parent_selection",
+    "disabled_inspiration_resurfacing",
+    "disabled_failure_feedback",
+    "disabled_meta_prompt_updates",
+    "linked_evolutionary_comparator_run"
+  ],
+  "missing_evidence": {
+    "controlled_repeated_sampling_runner": "not_recorded_locally",
+    "fixed_prompt_model_seed_evaluator_contract": "not_recorded_locally",
+    "budget_parity_validation": "not_recorded_locally",
+    "target_progress_curve_linkage": "not_recorded_locally",
+    "evolutionary_comparator_run_linkage": "not_recorded_locally",
+    "same_initial_program_prompt_history_proof": "not_recorded_locally",
+    "archive_feedback_disabled_proof": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has a runtime absence report for the No evolution repeated-sampling comparator, but does not claim an executable controlled repeated-sampling runner, fixed prompt/model/seed/evaluator parity, budget parity, target progress curves, disabled evolutionary-feedback proof, or linked evolutionary comparator runs."
+}

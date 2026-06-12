@@ -244,7 +244,10 @@ feedback setup and marks current zero-generation/seed-only labels as
 `prompt_history_unproven`; it still has no executed prompt/history proof that
 each proposal repeatedly starts from the same initial program without
 evolutionary-database parent, inspiration, previous-candidate, or
-archive-feedback context. The `No context in the prompt` row is currently too
+archive-feedback context. The committed
+`papers/repeated_sampling_baseline_boundary.json` sidecar preserves the same
+controlled-comparator absence boundary for paper-manifest validation. The `No
+context in the prompt` row is currently too
 broad for the paper definition: AlphaEvolve describes removing explicit
 problem-specific context, not removing the current program or evolutionary
 prior-program context. The row now carries a validated

@@ -11943,6 +11943,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: focused runtime repeated-sampling boundary test validates
     the implemented report.
 
+- [x] Add repeated-sampling baseline paper-facing absence sidecar.
+  - Status: `papers/repeated_sampling_baseline_boundary.json` now records the
+    missing paper evidence for controlled repeated-sampling runner support,
+    fixed prompt/model/seed/evaluator contracts, budget parity validation,
+    target-progress curve linkage, evolutionary comparator linkage, same-
+    initial-program prompt-history proof, and disabled archive-feedback proof.
+  - Verification: paper-manifest validation checks the committed sidecar, and
+    focused boundary tests reject premature repeated-sampling comparator
+    readiness claims.
+
 - [x] Record Gemini provider-parity absence boundary.
   - Spec evidence: AlphaEvolve Section 2.4 names Gemini Flash/Pro model use,
     so paper-facing provider evidence must not treat an opaque custom backend

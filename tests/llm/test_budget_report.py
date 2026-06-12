@@ -51,6 +51,7 @@ def _valid_report() -> dict:
         "policy": LLM_BUDGET_REPORT_POLICY,
         "run_id": "run_2026_06_04",
         "paper_budget_ready": True,
+        "role_scheduler_scope": "shared",
         "role_budgets": [_role_budget("mutation"), _role_budget("critique"), _role_budget("feedback")],
         "role_usage": [_role_usage("mutation"), _role_usage("critique"), _role_usage("feedback")],
         "resume_state": {
@@ -103,6 +104,17 @@ def test_llm_budget_report_rejects_invalid_status_and_policy():
     assert validation.ok is False
     assert "invalid_status" in codes
     assert "invalid_policy" in codes
+
+
+def test_llm_budget_report_rejects_invalid_role_scheduler_scope():
+    report = _valid_report()
+    report["role_scheduler_scope"] = "global"
+
+    validation = validate_llm_budget_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_role_scheduler_scope" in codes
 
 
 def test_llm_budget_report_loads_json_file(tmp_path):

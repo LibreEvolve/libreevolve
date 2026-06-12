@@ -9037,3 +9037,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     budget policy, and experiment reports.
   - Verification: focused runtime manifest/accounting tests validate the
     implemented fields.
+
+- [x] Preserve role scheduler scope in paper-facing budget-report evidence.
+  - Spec evidence: Roadmap-facing scheduler/budget claims need the report
+    contract to carry the effective scheduler selection scope.
+  - Status: `runtime.llm_budget_report` now carries and validates
+    `role_scheduler_scope`, keeping future roadmap work scoped to calibrated
+    reward signals, quota ownership, budget policy, and experiment reports.
+  - Verification: focused budget-report and runtime manifest tests validate the
+    implemented field.

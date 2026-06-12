@@ -4492,10 +4492,11 @@ Paper-facing LLM budget reports use `libreevolve.llm_budget_report.v1` in
 `cooperative_enforcement_snapshot` under policy
 `runtime_cooperative_budget_enforcement_v1`. The contract validates per-role
 logical call, retry-attempt, adapter-attempt, token, cost, and wall-clock limits
-and usage, provider-internal retry-attempt caps, persisted resume-state hashes,
-and paper-ready coverage for mutation, critique, and feedback roles. A report
-cannot claim restored retry-budget state unless it also carries persisted
-resume-state evidence. `llm_budget_resume_artifact_inventory()` emits
+and usage, provider-internal retry-attempt caps, the effective
+`role_scheduler_scope`, persisted resume-state hashes, and paper-ready coverage
+for mutation, critique, and feedback roles. A report cannot claim restored
+retry-budget state unless it also carries persisted resume-state evidence.
+`llm_budget_resume_artifact_inventory()` emits
 `libreevolve.llm_budget_resume_artifact_inventory.v1` to verify optional
 `resume_state.artifacts[]` records against an artifact root, including safe
 relative paths, file existence, SHA-256 hashes, byte counts, per-record

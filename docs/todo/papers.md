@@ -1041,7 +1041,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     persisted resume-state hashes. Current reports use status
     `cooperative_enforcement_snapshot` and policy
     `runtime_cooperative_budget_enforcement_v1`, and the validator rejects
-    stale audit-only policy labels.
+    stale audit-only policy labels plus invalid `role_scheduler_scope` values.
     `libreevolve.llm_budget_resume_artifact_inventory.v1` now verifies
     optional LLM budget `resume_state.artifacts[]` records against an artifact
     root, including safe relative paths, file existence, SHA-256 hashes, byte
@@ -1054,9 +1054,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     Final manifests now emit `runtime.llm_budget_report`
     instances with observed per-role logical-call, retry, provider-attempt,
     usage counters, configured estimated cost, retained LLM latency, and
-    scheduler-resume-hash evidence plus self-validation, and retained LLM
-    call-history rows now provide per-call provider-internal retry records
-    grouped by role plus configured-cost source metadata. Final
+    scheduler-resume-hash evidence, role scheduler scope, and self-validation,
+    and retained LLM call-history rows now provide per-call provider-internal
+    retry records grouped by role plus configured-cost source metadata. Final
     manifests also emit `runtime.llm_provider_diagnostics` using
     `libreevolve.llm_provider_diagnostics.v1`, a retained-call-history
     aggregate that groups backend/API-mode usage, bounded provider diagnostic

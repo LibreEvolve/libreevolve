@@ -1867,6 +1867,7 @@ def test_completed_runtime_persists_llm_scheduler_state_snapshot():
     assert budget_report["status"] == LLM_BUDGET_REPORT_STATUS
     assert budget_report["policy"] == LLM_BUDGET_REPORT_POLICY
     assert budget_report["paper_budget_ready"] is False
+    assert budget_report["role_scheduler_scope"] == "shared"
     assert budget_report["validation"]["ok"] is True
     assert budget_report["validation"]["paper_budget_ready"] is False
     assert budget_validation.ok is True
@@ -1943,6 +1944,9 @@ def test_runtime_persists_role_scoped_llm_scheduler_scope():
     accounting = manifest["runtime"]["llm_accounting"]
     assert accounting["limits"]["llm_role_scheduler_scope"] == "role_scoped"
     assert accounting["role_scheduler_scope"] == "role_scoped"
+    budget_report = manifest["runtime"]["llm_budget_report"]
+    assert budget_report["role_scheduler_scope"] == "role_scoped"
+    assert budget_report["validation"]["ok"] is True
 
 
 def test_runtime_llm_budget_report_retains_provider_retry_attempts_by_role():

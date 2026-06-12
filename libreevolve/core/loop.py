@@ -2889,6 +2889,7 @@ def _runtime_llm_budget_report(
         "policy": LLM_BUDGET_REPORT_POLICY,
         "run_id": config.run_id,
         "paper_budget_ready": False,
+        "role_scheduler_scope": state.get("role_scheduler_scope", "shared"),
         "role_budgets": [
             _runtime_llm_budget_role_budget(config, role, summary)
             for role, summary in sorted(role_accounting.items())

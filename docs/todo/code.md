@@ -4088,9 +4088,10 @@ Primary evidence:
     `runtime.llm_accounting` totals and self-validated
     `runtime.llm_budget_report` instances now use status
     `cooperative_enforcement_snapshot` and policy
-    `runtime_cooperative_budget_enforcement_v1`, validate that report metadata,
-    and retain per-call provider-internal retry details from bounded LLM call
-    history when available. Focused ensemble tests now cover fake provider
+    `runtime_cooperative_budget_enforcement_v1`, validate that report metadata
+    including top-level `role_scheduler_scope`, and retain per-call
+    provider-internal retry details from bounded LLM call history when
+    available. Focused ensemble tests now cover fake provider
     usage counts and
     adapter retry diagnostics for `mutation`, `critique`, `feedback:<name>`,
     and `meta_prompt` roles. Backend specs and direct backend metadata now

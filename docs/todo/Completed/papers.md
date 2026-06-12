@@ -11821,3 +11821,12 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     effective `llm_role_scheduler_scope`.
   - Verification: focused runtime manifest/accounting tests validate the
     implemented fields.
+
+- [x] Record role scheduler scope in paper-facing LLM budget reports.
+  - Spec evidence: AlphaEvolve paper-facing budget artifacts should carry the
+    scheduler-selection scope used for role-level model-call evidence.
+  - Status: `libreevolve.llm_budget_report.v1` now includes and validates
+    top-level `role_scheduler_scope`, and runtime manifests self-validate that
+    field.
+  - Verification: focused budget-report and runtime manifest tests validate the
+    implemented field.

@@ -62,6 +62,7 @@ def validate_llm_budget_report(report: object | str | Path) -> LLMBudgetValidati
     if data.get("policy") != LLM_BUDGET_REPORT_POLICY:
         issues.append(LLMBudgetIssue("invalid_policy", "unsupported LLM budget report policy"))
     run_id = _id_field(data, "run_id", issues)
+    _validate_role_scheduler_scope(data.get("role_scheduler_scope"), issues)
     budgets = _validate_role_budgets(data.get("role_budgets"), issues)
     usage = _validate_role_usage(data.get("role_usage"), budgets, issues)
     _validate_resume_state(data.get("resume_state"), issues)
@@ -121,6 +122,7 @@ def render_llm_budget_summary(report: dict[str, Any]) -> str:
         "|---|---|",
         f"| schema_status | {status} |",
         f"| paper_budget_ready | {ready} |",
+        f"| role_scheduler_scope | {report.get('role_scheduler_scope', '<missing>')} |",
         f"| role_count | {validation.role_count} |",
         f"| usage_count | {len(report.get('role_usage', [])) if isinstance(report.get('role_usage'), list) else 0} |",
     ]
@@ -453,6 +455,16 @@ def _validate_role_budgets(value: object, issues: list[LLMBudgetIssue]) -> dict[
             if field in item and item[field] is not None:
                 _positive_number(item[field], f"invalid_{field}", field, issues)
     return budgets
+
+
+def _validate_role_scheduler_scope(value: object, issues: list[LLMBudgetIssue]) -> None:
+    if value not in {"shared", "role_scoped"}:
+        issues.append(
+            LLMBudgetIssue(
+                "invalid_role_scheduler_scope",
+                "role_scheduler_scope must be 'shared' or 'role_scoped'",
+            )
+        )
 
 
 def _validate_role_usage(

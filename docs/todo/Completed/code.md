@@ -17192,3 +17192,13 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     reward contracts, quota/budget ownership, and experiment reports remain
     open.
   - Verification: focused runtime manifest/accounting tests pass.
+
+- [x] Add role scheduler scope to paper-facing LLM budget reports.
+  - Spec evidence: AlphaEvolve-style budget evidence should identify whether
+    role usage was collected under shared or role-owned scheduler selection.
+  - Status: `runtime.llm_budget_report` now emits top-level
+    `role_scheduler_scope`, validates it as `shared` or `role_scoped`, and
+    renders it in budget summaries.
+  - Remaining gap: this is budget-report audit metadata, not calibrated
+    reward contracts, quota ownership, or experiment-backed model-mix proof.
+  - Verification: focused budget-report and runtime manifest tests pass.

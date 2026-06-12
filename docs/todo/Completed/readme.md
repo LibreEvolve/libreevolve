@@ -11506,3 +11506,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     `reward_accounting_policy`.
   - Verification: focused runtime manifest/accounting tests validate the
     implemented fields.
+
+- [x] Document role scheduler scope in LLM budget reports.
+  - Spec evidence: README budget-report wording needed to expose whether
+    shared or role-owned scheduler selection applies to observed role budgets.
+  - Status: README now lists `role_scheduler_scope` among
+    `libreevolve.llm_budget_report.v1` validated fields.
+  - Verification: focused budget-report and runtime manifest tests validate the
+    implemented field.

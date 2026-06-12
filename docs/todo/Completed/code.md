@@ -18631,3 +18631,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     executed-calibration overclaims, invalid boundary status, missing evidence
     drift, and incomplete required evidence fields.
+
+- [x] Add expensive-evaluation budget sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/expensive_evaluation_budget_boundary.py`
+    now emits and validates the local-cooperative-budget-only boundary,
+    separating generation/evaluation/evaluator-second/wall-clock limits,
+    logical LLM calls, provider attempts, provider tokens, configured provider
+    cost, retained LLM latency, stage sample/retry/timeout counters, runtime
+    budget snapshots, controller budget-event replay, LLM budget reports, and
+    full-runtime restore budget pre-application from per-candidate compute-hour
+    accounting, worker/accelerator lease accounting, async queue budget
+    accounting, queued/running/completed long-evaluation state, partial
+    expensive-evaluation checkpoint/resume, wall-clock versus compute-hour
+    compression, and equal-budget benchmark execution reports.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    compute-hour budget overclaims, invalid boundary status, missing evidence
+    drift, and incomplete required evidence fields.

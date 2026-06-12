@@ -1035,7 +1035,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     quarantine observations, accelerator/worker budget enforcement, live
     provider pricing/default-rate capture beyond configured token-cost
     estimates, provider-output/raw-payload replay beyond bounded retained
-    diagnostics, and async/pending-work controller restore. The remaining gap
+    diagnostics, and async/pending-work controller restore.
+    `papers/expensive_evaluation_budget_boundary.json` now validates that the
+    current compute-budget scope is local cooperative counters, not
+    per-candidate compute-hour accounting, accelerator/worker lease
+    accounting, async queue budgets, partial long-evaluation resume, or
+    equal-budget benchmark execution reports. The remaining gap
     is not in-run role/backend failure quarantine state, strict
     provider-failure ledger summaries, restorable scheduler failure-policy
     state, remaining-runtime wait-deadline propagation, timeout call telemetry,

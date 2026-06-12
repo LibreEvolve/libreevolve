@@ -13725,3 +13725,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused qualitative-feedback tests reject executed-calibration
     overclaims.
+
+- [x] Record expensive-evaluation budget paper-facing sidecar.
+  - Status: `papers/expensive_evaluation_budget_boundary.json` now records the
+    local cooperative budget boundary for AlphaEvolve expensive-evaluation and
+    fixed-compute-budget language: runtime evidence can show local generation,
+    evaluation, evaluator-second, wall-clock, LLM logical-call, provider
+    attempt, token, configured-cost, retained-latency, stage sample/retry/
+    timeout, budget snapshot, controller-event replay, LLM budget report, and
+    full-runtime restore budget pre-apply surfaces, while per-candidate
+    compute-hour accounting, worker/accelerator lease accounting, async queue
+    budgets, queued/running/completed long-evaluation state, partial expensive-
+    evaluation resume, wall-clock versus compute-hour compression, and
+    equal-budget benchmark execution reports remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused expensive-evaluation budget tests reject compute-hour
+    overclaims.

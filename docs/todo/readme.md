@@ -2751,7 +2751,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     queues, distributed worker nodes, mutation-depth impact, and pending-work
     resume. The paper-facing
     `papers/parallel_evaluation_readiness_boundary.json` sidecar preserves the
-    same absence boundary for manifest validation.
+    same absence boundary for manifest validation. README now also points to
+    `papers/expensive_evaluation_budget_boundary.json` for the local
+    cooperative-budget versus compute-hour runtime boundary.
   - Required result: when parallelized-evaluation reports land, update README,
     ROADMAP, papers index, and code/paper TODOs with per-candidate compute-hour
     budget, wall-clock duration, evaluator-worker fan-out, randomized

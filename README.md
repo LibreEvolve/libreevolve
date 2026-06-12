@@ -80,6 +80,11 @@ Important limits:
 - Configuration validation is local effective-config validation; live
   provider/model API compatibility is tracked by
   `papers/config_validation_boundary.json`.
+- Runtime budgets are local cooperative generation/evaluation/evaluator-second/
+  wall-clock/LLM/provider counters, not per-candidate compute-hour accounting,
+  accelerator/worker leases, async queue budgets, or equal-budget execution
+  reports; that boundary is tracked by
+  `papers/expensive_evaluation_budget_boundary.json`.
 - Database sampling reports are local strategy/count telemetry, not calibrated
   AlphaEvolve-style exploration/exploitation evidence; that boundary is tracked
   by `papers/sampling_balance_boundary.json`.

@@ -1629,7 +1629,9 @@ Primary evidence:
     replayable `llm_call` controller events can now restore provider-attempt,
     token, configured-cost, LLM-latency, and role-scoped LLM usage counters.
     These remain cooperative local counters and preflight validators, not a
-    unified compute-hour/resource budget for long-running worker or accelerator jobs.
+    unified compute-hour/resource budget for long-running worker or accelerator
+    jobs. `papers/expensive_evaluation_budget_boundary.json` now validates this
+    local-budget-only scope.
   - Required result: add a unified expensive-evaluation budget model that can
     account for per-candidate compute-hours, worker/accelerator leases,
     CPU/memory/GPU quotas, token/cost/provider-attempt spend where evaluator

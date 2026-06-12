@@ -1209,7 +1209,12 @@ the restored `evolve()` budget snapshot. Provider-output replay, pending
 controller work, direct event-stream consumption inside `evolve()`, ordered
 migration-event replay, and end-to-end resumed-trace evidence remain open
 before budget manifests can be treated as robust cross-process experiment
-accounting.
+accounting. The committed
+`papers/expensive_evaluation_budget_boundary.json` sidecar keeps the current
+local cooperative budget scope machine-validated apart from per-candidate
+compute-hour accounting, worker/accelerator lease accounting, async queue
+budget accounting, partial long-evaluation resume, wall-clock versus
+compute-hour compression, and equal-budget benchmark execution reports.
 
 AlphaEvolve environment-provenance note: manifests record Python/platform
 metadata, `pyproject.toml` status/hash, the selected execution-identity PEP 621

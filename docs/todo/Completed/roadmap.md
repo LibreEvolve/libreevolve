@@ -10532,3 +10532,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     property fixtures, and independent feedback-quality validation open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused qualitative-feedback tests reject executed-calibration overclaims.
+
+- [x] Keep roadmap expensive-evaluation budget boundary tied to sidecar.
+  - Status: ROADMAP now links current local cooperative budget controls to
+    `papers/expensive_evaluation_budget_boundary.json` while keeping
+    accelerator budgets, async queue budgets, compute-hour accounting,
+    pending-work/provider-output restore composition, and equal-budget
+    benchmark execution reports open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused expensive-evaluation budget tests reject compute-hour overclaims.

@@ -517,7 +517,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     async queue, distributed worker, mutation-depth, pending-work resume, and
     equal-budget parallelism readiness false.
     `papers/parallel_evaluation_readiness_boundary.json` now preserves the
-    same paper-facing absence boundary for manifest validation.
+    same paper-facing absence boundary for manifest validation. ROADMAP now
+    also points to `papers/expensive_evaluation_budget_boundary.json` for the
+    local cooperative-budget versus compute-hour runtime boundary.
   - Required result: when parallel evaluator execution or reports land, update
     ROADMAP, README, papers index, and code/paper TODOs with per-candidate
     compute-hour budgets, evaluator-worker fan-out, randomized-initialization

@@ -12764,3 +12764,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     `papers/qualitative_feedback_boundary.json`.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused qualitative-feedback tests reject executed-calibration overclaims.
+
+- [x] Keep README expensive-evaluation budget boundary tied to sidecar.
+  - Status: README now states that runtime budgets are local cooperative
+    generation/evaluation/evaluator-second/wall-clock/LLM/provider counters,
+    not per-candidate compute-hour accounting, accelerator/worker leases,
+    async queue budgets, or equal-budget execution reports, with the boundary
+    tracked by `papers/expensive_evaluation_budget_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused expensive-evaluation budget tests reject compute-hour overclaims.

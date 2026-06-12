@@ -578,6 +578,12 @@ from libreevolve.problems.benchmarks.parallel_evaluation_readiness_boundary impo
     render_parallel_evaluation_readiness_boundary_summary,
     validate_parallel_evaluation_readiness_boundary,
 )
+from libreevolve.problems.benchmarks.expensive_evaluation_budget_boundary import (
+    EXPENSIVE_EVALUATION_BUDGET_BOUNDARY_SCHEMA,
+    expensive_evaluation_budget_boundary_record,
+    render_expensive_evaluation_budget_boundary_summary,
+    validate_expensive_evaluation_budget_boundary,
+)
 from libreevolve.problems.benchmarks.process_exhibit_boundary import (
     PROCESS_EXHIBIT_BOUNDARY_SCHEMA,
     process_exhibit_boundary_record,
@@ -748,6 +754,7 @@ __all__ = [
     "EVALUATOR_ORACLE_BOUNDARY_SCHEMA",
     "EXPECTED_TARGET_COUNT",
     "EVALUATION_CASCADE_BOUNDARY_SCHEMA",
+    "EXPENSIVE_EVALUATION_BUDGET_BOUNDARY_SCHEMA",
     "EXAMPLE_BENCHMARK_SCOPE_SCHEMA",
     "EXISTING_CODEBASE_INTEGRATION_BOUNDARY_SCHEMA",
     "FIGURE8_ARTIFACT_BOUNDARY_SCHEMA",
@@ -884,6 +891,7 @@ __all__ = [
     "duplicate_work_policy_boundary_record",
     "embedded_evaluator_boundary_record",
     "evaluation_cascade_boundary_record",
+    "expensive_evaluation_budget_boundary_record",
     "evaluator_oracle_boundary_record",
     "example_benchmark_scope_records",
     "existing_codebase_integration_boundary_record",
@@ -997,6 +1005,7 @@ __all__ = [
     "render_duplicate_work_policy_boundary_summary",
     "render_embedded_evaluator_boundary_summary",
     "render_evaluation_cascade_boundary_summary",
+    "render_expensive_evaluation_budget_boundary_summary",
     "render_evaluator_oracle_boundary_summary",
     "render_example_benchmark_scope_summary",
     "render_existing_codebase_integration_boundary_summary",
@@ -1122,6 +1131,7 @@ __all__ = [
     "validate_duplicate_work_policy_boundary",
     "validate_embedded_evaluator_boundary",
     "validate_evaluation_cascade_boundary",
+    "validate_expensive_evaluation_budget_boundary",
     "validate_evaluator_oracle_boundary",
     "validate_example_benchmark_scope",
     "validate_existing_codebase_integration_boundary",

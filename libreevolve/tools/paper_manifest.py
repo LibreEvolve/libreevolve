@@ -271,6 +271,10 @@ from libreevolve.problems.benchmarks.parallel_evaluation_readiness_boundary impo
     parallel_evaluation_readiness_boundary_record,
     validate_parallel_evaluation_readiness_boundary,
 )
+from libreevolve.problems.benchmarks.expensive_evaluation_budget_boundary import (
+    expensive_evaluation_budget_boundary_record,
+    validate_expensive_evaluation_budget_boundary,
+)
 from libreevolve.problems.benchmarks.natural_language_preamble_boundary import (
     natural_language_preamble_boundary_record,
     validate_natural_language_preamble_boundary,
@@ -482,6 +486,7 @@ REPEATED_SAMPLING_BASELINE_BOUNDARY_FILE = "papers/repeated_sampling_baseline_bo
 SAMPLING_BALANCE_BOUNDARY_FILE = "papers/sampling_balance_boundary.json"
 SAMPLE_EFFICIENCY_BOUNDARY_FILE = "papers/sample_efficiency_boundary.json"
 PARALLEL_EVALUATION_READINESS_BOUNDARY_FILE = "papers/parallel_evaluation_readiness_boundary.json"
+EXPENSIVE_EVALUATION_BUDGET_BOUNDARY_FILE = "papers/expensive_evaluation_budget_boundary.json"
 DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_FILE = "papers/distributed_pipeline_topology_boundary.json"
 WHOLE_RUN_SOURCE_WORKSPACE_INTEGRITY_BOUNDARY_FILE = "papers/whole_run_source_workspace_integrity_boundary.json"
 CODEBASE_SCALE_BENCHMARK_BOUNDARY_FILE = "papers/codebase_scale_benchmark_boundary.json"
@@ -979,6 +984,7 @@ def validate_paper_manifest(
     issues.extend(_validate_sampling_balance_boundary(root_path))
     issues.extend(_validate_sample_efficiency_boundary(root_path))
     issues.extend(_validate_parallel_evaluation_readiness_boundary(root_path))
+    issues.extend(_validate_expensive_evaluation_budget_boundary(root_path))
     issues.extend(_validate_distributed_pipeline_topology_boundary(root_path))
     issues.extend(_validate_whole_run_source_workspace_integrity_boundary(root_path))
     issues.extend(_validate_codebase_scale_benchmark_boundary(root_path))
@@ -2558,6 +2564,38 @@ def _validate_parallel_evaluation_readiness_boundary(root_path: Path) -> list[Pa
             f"parallel_evaluation_readiness_boundary_{issue.code}",
             issue.message,
             "parallel_evaluation_readiness",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_expensive_evaluation_budget_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / EXPENSIVE_EVALUATION_BUDGET_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = expensive_evaluation_budget_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "expensive_evaluation_budget_boundary_manifest_missing",
+                    (
+                        f"{EXPENSIVE_EVALUATION_BUDGET_BOUNDARY_FILE} must emit "
+                        "local cooperative budget versus compute-hour runtime scope"
+                    ),
+                    "expensive_evaluation_budget",
+                )
+            ]
+    report = validate_expensive_evaluation_budget_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"expensive_evaluation_budget_boundary_{issue.code}",
+            issue.message,
+            "expensive_evaluation_budget",
         )
         for issue in report.issues
     ]

@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 34 cache rows and links the AlphaEvolve row to
+  identities for all 35 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1357,6 +1357,17 @@ resumed-trace proof are still open.
   throughput reproductions, linked-code audits, and independent reproduction
   outputs remain open before roadmap wording can promote FlashEvolve-style
   async orchestration support.
+- Keep evolutionary-agent trace-diagnostic claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2605.20086`, `What Do Evolutionary Coding Agents Evolve?`, cached locally
+  as `papers/2605.20086__Evolutionary_Coding_Agents.pdf`. This is background
+  trace-diagnostic evaluation context only; EvoTrace-compatible trace schemas,
+  nine-class edit-taxonomy annotation, LLM-as-judge/human reannotation
+  validation, parent-child search graph exports, prompt/context substitution
+  replay, model substitution replay, component-removal intervention harnesses,
+  constant-retuning baselines, deleted-line reintroduction/cycling detectors,
+  held-out generalization reports, and independent reproduction outputs remain
+  open before roadmap wording can promote EvoTrace/EvoReplay-style evidence.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

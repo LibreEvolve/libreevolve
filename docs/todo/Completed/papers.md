@@ -12857,3 +12857,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2605.20086` evolutionary-agent trace-diagnostics paper-cache
+      coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2605.20086`, `What Do Evolutionary Coding Agents Evolve?`, cached
+    locally as `papers/2605.20086__Evolutionary_Coding_Agents.pdf` with byte
+    count `2273394` and SHA-256
+    `b8f592bd68429b4c5f7cee2878a316941acf3cdf80215a0d78c08c25a73722f3`.
+  - Remaining paper gap: source-license details, linked dataset/code status,
+    EvoTrace schema details, nine-class edit-taxonomy annotation pipeline,
+    LLM-as-judge and human reannotation validation, parent-child search graph
+    exports, prompt/context/model substitution replay evidence,
+    component-removal interventions, constant-retuning baseline,
+    deterministic cycling detector, held-out generalization protocol,
+    baseline-agent identities, code/artifact reproducibility status, and
+    independent reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

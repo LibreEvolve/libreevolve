@@ -3131,26 +3131,26 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and report outcomes. Avoid implying LibreEvolve supports FlashEvolve-style
     async orchestration without those implementation and benchmark artifacts.
 
-- [ ] Keep README mechanistic evolutionary-agent claims absent or source-scoped
-      until trace-diagnostic evidence exists.
+- [ ] Keep README mechanistic evolutionary-agent claims source-scoped until
+      trace-diagnostic evidence exists.
   - Spec evidence: arXiv `2605.20086`, `What Do Evolutionary Coding Agents
     Evolve?`, argues that final benchmark scores hide how evolutionary coding
     agents improve programs and whether improvements are structural
     innovations, constant tuning, overfitting, or cycling artifacts. It
     introduces EvoTrace annotations and EvoReplay interventions for
     AlphaEvolve-style agents including AlphaEvolve, OpenEvolve, and FunSearch.
-  - Current evidence: README documents run artifacts, history streams, prompt
-    history, archives, evaluator reports, and current implementation
-    boundaries. It does not list `2605.20086`, annotate edit mechanisms,
-    extract dependency structures, classify fitness trajectories, detect
-    cycling or overfitting, separate constant tuning from new logic, or expose
-    replay interventions over historical search traces.
+  - Current evidence: README now lists `2605.20086`, `What Do Evolutionary
+    Coding Agents Evolve?`, as trace-diagnostic evaluation context only and
+    states that no local EvoTrace edit taxonomy, EvoReplay intervention
+    harness, or cycling/overfitting report exists. README also documents run
+    artifacts, history streams, prompt history, archives, evaluator reports,
+    and current implementation boundaries.
   - Required result: if README mentions mechanistic discovery, structural
     innovation, interpretable evolutionary progress, overfitting resistance,
     prompt/population sensitivity, EvoTrace, EvoReplay, or claims that
     LibreEvolve's best programs represent genuine algorithmic discovery, keep
-    the wording source-scoped until the paper is in the manifest and local
-    artifacts can show edit annotations, dependency graphs, fitness-trajectory
+    the wording source-scoped until local artifacts can show edit annotations,
+    dependency graphs, fitness-trajectory
     classes, cycling/overfitting labels, replay interventions, counterfactual
     outcomes, baseline-agent identities, and task reports. Avoid implying
     LibreEvolve has trace-level mechanistic evidence without those artifacts.

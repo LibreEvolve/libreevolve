@@ -4737,7 +4737,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     and README/ROADMAP wording that treats FlashEvolve as missing
     implementation evidence rather than implemented LibreEvolve support.
 
-- [ ] Track evolutionary-agent trace-diagnostics paper evidence.
+- [ ] Reproduce evolutionary-agent trace-diagnostics evidence beyond paper
+      coverage.
   - Paper/source evidence: arXiv `2605.20086`, submitted May 25, 2026, is
     titled `What Do Evolutionary Coding Agents Evolve?`. Its abstract says
     aggregate benchmark scores hide how evolutionary coding agents improve
@@ -4749,22 +4750,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     new logic, and sensitivity to population structure and prompt content
     across AlphaEvolve-style agents such as AlphaEvolve, OpenEvolve, and
     FunSearch.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2605.20086`. Existing rows cover AlphaEvolve, benchmark/report
-    contracts, prompt/history artifacts, archive events, async orchestration,
-    context memory, adaptive search, and cost-aware routing, but not
-    mechanistic trace annotation, replay interventions, cycling/overfitting
-    diagnostics, structural-innovation labels, or prompt/population
-    sensitivity evidence.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2605.20086`: title/authors/arXiv version/date/PDF digest, source license,
-    relation to AlphaEvolve and LibreEvolve run artifacts, EvoTrace edit-type
-    taxonomy, dependency extraction, fitness-trajectory labels,
-    EvoReplay-intervention schema, cycling and overfitting diagnostics,
-    constant-tuning versus new-logic classification, prompt/population
-    sensitivity metadata, benchmark/task taxonomy, baseline-agent identities,
-    code/artifact availability if any, and README/ROADMAP wording that treats
-    mechanistic trace diagnostics as missing paper evidence rather than
+  - Current gap: the paper cache, paper index, row identity, and TODO coverage
+    now include `2605.20086`, cached locally as
+    `papers/2605.20086__Evolutionary_Coding_Agents.pdf` with byte count
+    `2273394` and SHA-256
+    `b8f592bd68429b4c5f7cee2878a316941acf3cdf80215a0d78c08c25a73722f3`.
+    Existing evidence still does not reproduce mechanistic trace annotation,
+    replay interventions, cycling/overfitting diagnostics, structural-
+    innovation labels, or prompt/population sensitivity evidence.
+  - Required result: add reproduction-grade evidence beyond paper coverage for
+    `2605.20086`: title/authors/arXiv version/date, source license, relation
+    to AlphaEvolve and LibreEvolve run artifacts, EvoTrace edit-type taxonomy,
+    dependency extraction, fitness-trajectory labels, EvoReplay-intervention
+    schema, cycling and overfitting diagnostics, constant-tuning versus
+    new-logic classification, prompt/population sensitivity metadata,
+    benchmark/task taxonomy, baseline-agent identities, code/artifact
+    availability if any, and README/ROADMAP wording that treats mechanistic
+    trace diagnostics as missing implementation evidence rather than
     implemented LibreEvolve support.
 
 - [ ] Track Zarankiewicz reinforced-search paper evidence.

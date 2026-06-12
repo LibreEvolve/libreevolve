@@ -165,7 +165,7 @@ Common run options:
 
 ## Research Sources
 
-LibreEvolve is informed by a local cache of 34 papers on LLM-guided evolution,
+LibreEvolve is informed by a local cache of 35 papers on LLM-guided evolution,
 program synthesis, quality-diversity optimization, and related benchmarks. The
 PDF cache lives locally under `papers/`, but the PDFs themselves are gitignored.
 The committed repository tracks `papers/README.md`, download manifests, and
@@ -176,7 +176,7 @@ not authoritative bibliographic titles. Use `papers/README.md` for paper-facing
 titles, implementation status, and benchmark coverage decisions.
 
 The table below is a curated subset for README context. `papers/README.md` is
-the complete implementation-status index for all 34 manifest rows.
+the complete implementation-status index for all 35 manifest rows.
 
 | Source | Role in LibreEvolve |
 | --- | --- |
@@ -195,6 +195,7 @@ the complete implementation-status index for all 34 manifest rows.
 | [LEVI](https://arxiv.org/abs/2605.09764) | Cost-aware search-architecture context only; no local large/small model mutation router, proxy benchmark, or cost-comparison report exists. |
 | [PACEvolve](https://arxiv.org/abs/2601.10657) | Long-horizon consistency context only; no local hierarchical context-management, momentum-backtracking, or LLM-SR/KernelBench report exists. |
 | [FlashEvolve](https://arxiv.org/abs/2605.08520) | Asynchronous-stage orchestration context only; no local async worker queue, artifact-version DAG, staleness repair, or throughput benchmark exists. |
+| [What Do Evolutionary Coding Agents Evolve?](https://arxiv.org/abs/2605.20086) | Trace-diagnostic evaluation context only; no local EvoTrace edit taxonomy, EvoReplay intervention harness, or cycling/overfitting report exists. |
 
 Rehydrate the ignored local PDF cache on a fresh checkout:
 

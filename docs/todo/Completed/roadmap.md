@@ -764,7 +764,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     URL, and local PDF label describing the same source before version or
     rights evidence attaches.
   - Status: ROADMAP now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 34 cache
+    companion manifest that emits derived source identities for all 35 cache
     rows and links the AlphaEvolve row to `papers/source_versions.json`.
   - Remaining gap: none for this bounded roadmap wording slice.
 
@@ -9864,5 +9864,20 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     records, adaptive workflow controllers, EvolBench/ChatDev/MetaGPT
     benchmark reports, throughput reproductions, linked-code audits, and
     independent reproduction outputs explicitly open.
-  - Verification: paper-manifest validation checks the 34-row manifest,
+  - Verification: paper-manifest validation checks the current manifest,
+    paper-index row, TODO coverage row, and source-identity sidecar.
+
+- [x] Preserve `2605.20086` evolutionary-agent trace-diagnostics paper-cache
+      scope in roadmap.
+  - Status: ROADMAP now identifies arXiv `2605.20086`, `What Do Evolutionary
+    Coding Agents Evolve?`, as background trace-diagnostic evaluation context
+    only, with the cached
+    `papers/2605.20086__Evolutionary_Coding_Agents.pdf` row and missing
+    EvoTrace-compatible trace schemas, nine-class edit-taxonomy annotation,
+    LLM-as-judge/human reannotation validation, parent-child search graph
+    exports, prompt/context substitution replay, model substitution replay,
+    component-removal intervention harnesses, constant-retuning baselines,
+    deleted-line reintroduction/cycling detectors, held-out generalization
+    reports, and independent reproduction outputs explicitly open.
+  - Verification: paper-manifest validation checks the 35-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.

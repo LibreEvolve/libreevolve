@@ -437,6 +437,7 @@ ALLOWED_STATUS_TABLE_ROLES = frozenset(
         "Retrieval/debug loop inspiration",
         "Test-time discovery context",
         "Test-time training inspiration",
+        "Trace-diagnostic evaluation context",
     }
 )
 ALLOWED_STATUS_TABLE_STATUS_PREFIXES = (
@@ -476,6 +477,7 @@ STATUS_TABLE_ROLE_STATUS_PREFIXES = {
     "Retrieval/debug loop inspiration": ("Only ",),
     "Test-time discovery context": ("Background only",),
     "Test-time training inspiration": ("Only ",),
+    "Trace-diagnostic evaluation context": ("Background only",),
 }
 STATUS_TABLE_STATUSES_REQUIRING_COMPLETED_EVIDENCE = (
     "Implemented as ",

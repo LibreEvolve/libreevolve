@@ -5225,7 +5225,8 @@ Primary evidence:
     wording that keeps FlashEvolve-style async orchestration as missing
     evidence until local implementation and reports exist.
 
-- [ ] Add evolutionary-agent trace-diagnostics source boundary.
+- [ ] Implement evolutionary-agent trace diagnostics beyond paper cache
+      coverage.
   - Spec evidence: arXiv `2605.20086`, `What Do Evolutionary Coding Agents
     Evolve?`, was submitted May 25, 2026. Its abstract argues that aggregate
     benchmark scores hide how evolutionary coding agents improve programs,
@@ -5237,16 +5238,21 @@ Primary evidence:
     and genuinely new logic, and sensitivity to population structure and
     prompt content across AlphaEvolve-style agents such as AlphaEvolve,
     OpenEvolve, and FunSearch.
-  - Current evidence: LibreEvolve records history JSONL, archive events,
-    prompt history, evaluator artifacts, accepted/rejected programs, and best
-    programs, but it does not annotate edit mechanisms or provide replayable
-    intervention traces. There is no edit-type taxonomy, dependency graph,
+  - Current evidence: `papers/download_manifest.*`, `papers/README.md`, and
+    TODO coverage now include `2605.20086`, cached locally as
+    `papers/2605.20086__Evolutionary_Coding_Agents.pdf` with byte count
+    `2273394` and SHA-256
+    `b8f592bd68429b4c5f7cee2878a316941acf3cdf80215a0d78c08c25a73722f3`.
+    LibreEvolve records history JSONL, archive events, prompt history,
+    evaluator artifacts, accepted/rejected programs, and best programs, but it
+    does not annotate edit mechanisms or provide replayable intervention
+    traces. There is no edit-type taxonomy, dependency graph,
     fitness-trajectory classifier, cycling detector, overfitting-vs-innovation
     label, constant-tuning/new-logic split, prompt-content sensitivity report,
     population-structure ablation, or EvoReplay-style counterfactual
     intervention tool.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2605.20086`: arXiv id/version/date/PDF hash, authors, source license,
+  - Required result: add evidence beyond paper-cache coverage for
+    `2605.20086`: authors/source-license details, linked dataset/code status,
     relation to AlphaEvolve and LibreEvolve run-history artifacts, edit-type
     annotation schema, dependency-structure extraction, fitness-trajectory
     records, cycling and overfitting diagnostics, structural-innovation

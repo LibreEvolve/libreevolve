@@ -12426,3 +12426,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     insight/lineage artifacts, and benchmark reproduction rows remain open.
   - Verification: GigaEvo boundary tests and paper-manifest tests validate the
     sidecar and reject framework-readiness overclaims.
+
+- [x] Record CodeEvolve source boundary.
+  - Spec evidence: paper-facing CodeEvolve claims need to distinguish agentic
+    code-evolution inspiration from local crossover/refinement/operator,
+    benchmark, ablation, and cost-comparison parity.
+  - Status: `papers/codeevolve_boundary.json` now carries the source-specific
+    `2510.14150` boundary with cached PDF digest, arXiv version, license
+    metadata, framework components, linked code/experiment URLs, local status,
+    required evidence fields, and missing-evidence keys.
+  - Remaining paper gap: prompt/solution fitness artifacts, semantic
+    crossover, meta-prompting, targeted-refinement context, scheduler traces,
+    sandbox limit evidence, CVT archive metadata, benchmark rows, ablations,
+    hyperparameter rows, and quality-cost comparison rows remain open.
+  - Verification: CodeEvolve boundary tests and paper-manifest tests validate
+    the sidecar and reject CodeEvolve readiness overclaims.

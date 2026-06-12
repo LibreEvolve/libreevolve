@@ -6631,18 +6631,19 @@ Primary evidence:
     `https://github.com/inter-co/science-codeevolve` and
     `https://github.com/inter-co/science-codeevolve-experiments`.
   - Current evidence: `papers/README.md` marks CodeEvolve as agentic
-    code-evolution inspiration and says LibreEvolve lacks CodeEvolve-style
-    crossover, targeted refinement, modular orchestration, and context-aware
-    recombination. Broad inspiration TODOs and AlphaEvolve mutation-operator
-    TODOs mention CodeEvolve or crossover generally, but there is no
-    implemented source-specific code gate for `2510.14150`, no prompt/solution dual fitness
-    implementation boundary, no semantic inspiration-crossover operator, no
-    meta-prompting exploration operator, no depth-refinement ancestor context
-    records, no Plateau Scheduler/evolution-rate trace, no sandbox/runtime-
-    memory parity report, no CVT-MAP-Elites parity evidence, and no benchmark/
-    cost comparison artifact tied to the local CodeEvolve PDF. LibreEvolve has
-    configurable inspiration sampling and optional prompt-program mutation, but
-    those are not CodeEvolve's prompt-fitness population, semantic crossover,
+    code-evolution inspiration, and the committed
+    `papers/codeevolve_boundary.json` sidecar now records the source-specific
+    `2510.14150` boundary with cached PDF digest, license metadata, linked
+    code/experiment URLs, component rows, local evidence scope, required
+    future evidence fields, and missing-evidence keys. The remaining code gap
+    is the actual behavior: no prompt/solution dual fitness implementation, no
+    semantic inspiration-crossover operator, no meta-prompting exploration
+    operator, no depth-refinement ancestor context records, no Plateau
+    Scheduler/evolution-rate trace, no sandbox/runtime-memory parity report,
+    no CVT-MAP-Elites parity evidence, and no benchmark/cost comparison
+    artifact tied to the local CodeEvolve PDF. LibreEvolve has configurable
+    inspiration sampling and optional prompt-program mutation, but those are
+    not CodeEvolve's prompt-fitness population, semantic crossover,
     targeted-refinement, or component-ablation artifacts.
   - Required result: add source-boundary metadata and implementation gates for
     `2510.14150`: arXiv version/date/PDF hash, linked code/release status,

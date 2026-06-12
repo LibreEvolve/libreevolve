@@ -17856,3 +17856,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     reproduction remain open.
   - Verification: GigaEvo boundary tests and paper-manifest tests cover the
     sidecar, drift rejection, and repo-root sidecar requirement.
+
+- [x] Add CodeEvolve source-boundary gate.
+  - Spec evidence: `2510.14150v4` describes CodeEvolve as an islands-based
+    agentic code-evolution framework with prompt/solution dual fitness,
+    weighted LLM ensembles, semantic inspiration crossover, meta-prompting,
+    depth-targeted refinement, exploration scheduling, sandboxed evaluation,
+    MAP-Elites/CVT archives, benchmark rows, ablations, and cost comparisons.
+  - Status: `libreevolve.problems.benchmarks.codeevolve_boundary` now emits and
+    validates `papers/codeevolve_boundary.json` with cached PDF digest, arXiv
+    license metadata, linked code/experiment URLs, component rows, local
+    evidence scope, required future evidence fields, missing-evidence keys,
+    and overclaim rejection.
+  - Remaining gap: CodeEvolve prompt/solution dual fitness, semantic
+    crossover, meta-prompting, targeted refinement, scheduler traces,
+    sandbox/runtime-memory enforcement, CVT-MAP-Elites parity, benchmark rows,
+    ablations, and quality-cost comparisons remain open.
+  - Verification: CodeEvolve boundary tests and paper-manifest tests cover the
+    sidecar, drift rejection, and repo-root sidecar requirement.

@@ -9512,3 +9512,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     disambiguation, and benchmark reproduction.
   - Verification: GigaEvo boundary tests and paper-manifest tests validate the
     sidecar and repo-root requirement.
+
+- [x] Preserve CodeEvolve boundary scope in roadmap.
+  - Spec evidence: roadmap CodeEvolve claims should not promote local
+    prompt-program mutation or inspiration sampling into CodeEvolve operator,
+    benchmark, ablation, or quality-cost parity.
+  - Status: ROADMAP and roadmap TODO wording now identify
+    `papers/codeevolve_boundary.json` as the source-specific boundary for
+    prompt/solution dual fitness, semantic inspiration crossover,
+    meta-prompting, depth-targeted refinement, exploration scheduling,
+    sandbox runtime/memory limits, MAP-Elites/CVT parity, benchmark rows,
+    ablations, quality-cost comparisons, and linked experiment-artifact status.
+  - Verification: CodeEvolve boundary tests and paper-manifest tests validate
+    the sidecar and repo-root requirement.

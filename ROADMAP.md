@@ -624,7 +624,12 @@ is not yet an AlphaEvolve reproduction.
   sidecar records the GigaEvo source-specific boundary for Redis lifecycle
   storage, asyncio DAG execution, concurrent units, insight/lineage stages,
   LangGraph mutation, Hydra mapping, dual GitHub source disambiguation, and
-  benchmark reproduction.
+  benchmark reproduction. The committed `papers/codeevolve_boundary.json`
+  sidecar records the CodeEvolve source-specific boundary for prompt/solution
+  dual fitness, semantic inspiration crossover, meta-prompting exploration,
+  depth-targeted refinement, exploration scheduling, sandbox runtime/memory
+  limits, MAP-Elites/CVT parity, benchmark rows, ablations, quality-cost
+  comparisons, and linked experiment-artifact status.
 
 ## Mid Term
 

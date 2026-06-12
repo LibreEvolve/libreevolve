@@ -60,6 +60,10 @@ from libreevolve.problems.benchmarks.candidate_language_runner_boundary import (
     candidate_language_runner_boundary_record,
     validate_candidate_language_runner_boundary,
 )
+from libreevolve.problems.benchmarks.codeevolve_boundary import (
+    codeevolve_boundary_record,
+    validate_codeevolve_boundary,
+)
 from libreevolve.problems.benchmarks.evaluation_cascade_boundary import (
     evaluation_cascade_boundary_record,
     validate_evaluation_cascade_boundary,
@@ -226,6 +230,7 @@ MATRIX_SWEEP_SPACE_RUNTIME_FILE = "papers/matrix_sweep_space_runtime_boundary.js
 MATRIX_TENSOR_RANK_RUNTIME_FILE = "papers/matrix_tensor_rank_runtime_boundary.json"
 MAP_ELITES_ILLUMINATION_BOUNDARY_FILE = "papers/map_elites_illumination_boundary.json"
 GIGAEVO_FRAMEWORK_BOUNDARY_FILE = "papers/gigaevo_framework_boundary.json"
+CODEEVOLVE_BOUNDARY_FILE = "papers/codeevolve_boundary.json"
 EXAMPLE_BENCHMARK_SCOPE_FILE = "papers/example_benchmark_scope.json"
 MATH_OUTCOME_BOUNDARY_FILE = "papers/math_outcome_boundary.json"
 MATH_STARTING_CONSTRUCTION_BOUNDARY_FILE = "papers/math_starting_construction_boundary.json"
@@ -605,6 +610,7 @@ def validate_paper_manifest(
     issues.extend(_validate_math_outcome_boundaries(root_path))
     issues.extend(_validate_map_elites_illumination_boundary(root_path))
     issues.extend(_validate_gigaevo_framework_boundary(root_path))
+    issues.extend(_validate_codeevolve_boundary(root_path))
 
     if set(csv_by_id) - seen_ids:
         for row_id in sorted(set(csv_by_id) - seen_ids):
@@ -1601,6 +1607,38 @@ def _validate_gigaevo_framework_boundary(root_path: Path) -> list[PaperManifestI
             f"gigaevo_framework_boundary_{issue.code}",
             issue.message,
             "gigaevo_framework",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_codeevolve_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / CODEEVOLVE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = codeevolve_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "codeevolve_boundary_manifest_missing",
+                    (
+                        f"{CODEEVOLVE_BOUNDARY_FILE} must emit "
+                        "CodeEvolve operator and benchmark evidence availability"
+                    ),
+                    "codeevolve",
+                )
+            ]
+    report = validate_codeevolve_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"codeevolve_boundary_{issue.code}",
+            issue.message,
+            "codeevolve",
         )
         for issue in report.issues
     ]

@@ -6105,16 +6105,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     `https://github.com/inter-co/science-codeevolve` and
     `https://github.com/inter-co/science-codeevolve-experiments`.
   - Current gap: `papers/README.md` lists `2510.14150` as agentic
-    code-evolution inspiration and says CodeEvolve-style crossover, targeted
-    refinement, modular orchestration, and context-aware recombination are not
-    implemented. Existing paper TODOs group CodeEvolve with other inspiration
-    rows and mention mutation/crossover operator gaps generally, but do not
-    preserve the CodeEvolve PDF itself as a source-specific evidence boundary
-    with architecture rows, prompt/solution fitness definitions,
-    operator-level claims, scheduler semantics, sandbox requirements,
-    benchmark-result rows, ablation/cost claims, linked-code status,
-    hyperparameter recommendations, or validation that docs avoid conflating
-    LibreEvolve's prompt-program support with CodeEvolve framework parity.
+    code-evolution inspiration, and `papers/codeevolve_boundary.json` now
+    preserves the CodeEvolve PDF as a source-specific evidence boundary with
+    cached source metadata, license metadata, linked-code/experiment URLs,
+    component rows, local evidence scope, required future evidence fields, and
+    missing-evidence keys. The remaining paper gap is executable/reportable
+    evidence for the paper behavior: prompt/solution fitness definitions as
+    local runtime artifacts, operator-level claims, scheduler semantics,
+    sandbox requirements, benchmark-result rows, ablation/cost claims,
+    verified linked-code status, hyperparameter recommendations, and validation
+    that docs avoid conflating LibreEvolve's prompt-program support with
+    CodeEvolve framework parity.
   - Required result: add paper-manifest and paper-index coverage for
     `2510.14150`: title/authors/arXiv version/date/PDF digest, source license,
     linked code URL/status, island/population and prompt/solution fitness

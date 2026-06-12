@@ -4717,15 +4717,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `5` of `9` instances, and Table 2 records Qwen3-Coder-30B vs GEMINI-2.5
     cost/time comparisons.
   - Current evidence: ROADMAP says CodeEvolve features should remain labeled
-    as inspired unless the paper behavior is actually implemented, and
-    `papers/README.md` marks crossover, targeted refinement, modular
-    orchestration, and context-aware recombination as absent. The roadmap does
-    not yet define `2510.14150`-specific gates for source metadata, linked code
-    status, prompt/solution dual fitness, semantic crossover, meta-prompting,
-    depth-refinement context, exploration-scheduler traces, sandbox parity,
-    MAP-Elites/CVT archive behavior, benchmark rows, ablations,
-    hyperparameter defaults, open-framework comparisons, or quality-cost
-    comparison evidence.
+    as inspired unless the paper behavior is actually implemented, and now
+    names `papers/codeevolve_boundary.json` as the source-specific gate for
+    `2510.14150`. The sidecar records source metadata, license metadata,
+    linked code/experiment URLs, component rows, required future evidence
+    fields, and missing-evidence keys while keeping prompt/solution dual
+    fitness, semantic crossover, meta-prompting, depth-refinement context,
+    exploration-scheduler traces, sandbox parity, MAP-Elites/CVT archive
+    behavior, benchmark rows, ablations, hyperparameter defaults,
+    open-framework comparisons, and quality-cost comparison evidence as future
+    gates.
   - Required result: add roadmap gates for `2510.14150`: paper/source manifest
     entry, PDF/cache hash, source-license and code-artifact status,
     islands/population metadata, prompt/solution fitness records, weighted

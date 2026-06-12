@@ -11982,3 +11982,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     and benchmark reproduction evidence explicit.
   - Verification: GigaEvo boundary and paper-manifest tests validate the
     sidecar that README now references.
+
+- [x] Document CodeEvolve source boundary.
+  - Spec evidence: README CodeEvolve wording needed to keep agentic
+    code-evolution inspiration separate from semantic crossover, targeted
+    refinement, scheduler, sandbox, benchmark, ablation, and cost parity.
+  - Status: README now names `papers/codeevolve_boundary.json` in the
+    CodeEvolve reference row and keeps prompt/solution dual fitness, semantic
+    crossover, meta-prompting, targeted refinement, scheduler, sandbox,
+    benchmark, ablation, and cost evidence explicit as missing.
+  - Verification: CodeEvolve boundary and paper-manifest tests validate the
+    sidecar that README now references.

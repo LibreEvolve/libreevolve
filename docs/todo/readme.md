@@ -4215,15 +4215,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     GEMINI-2.5 such as roughly `$6` vs just under `$35` for the `n = 26`
     circle-packing run.
   - Current evidence: README and `papers/README.md` mark CodeEvolve as
-    agentic code-evolution inspiration only and say crossover, targeted
-    refinement, modular orchestration, and context-aware recombination are not
-    implemented. Existing README TODOs group CodeEvolve with other
-    paper-inspired approximations, but README does not require a
-    source-specific boundary for `2510.14150`, prompt/solution fitness,
-    semantic crossover, meta-prompting exploration, depth-refinement ancestor
-    context, Plateau Scheduler behavior, sandbox parity, MAP-Elites/CVT
-    archive parity, benchmark rows, ablations, hyperparameter guidance, or
-    cost-comparison claims.
+    agentic code-evolution inspiration only, and README now points at
+    `papers/codeevolve_boundary.json` for the `2510.14150` source-specific
+    boundary. That sidecar keeps prompt/solution fitness, semantic crossover,
+    meta-prompting exploration, depth-refinement ancestor context, Plateau
+    Scheduler behavior, sandbox parity, MAP-Elites/CVT archive parity,
+    benchmark rows, ablations, hyperparameter guidance, and cost-comparison
+    claims unavailable until local artifacts prove them.
   - Required result: if README mentions CodeEvolve, inspiration crossover,
     meta-prompting, targeted refinement, modular orchestration,
     context-aware recombination, open-weight cost comparisons, or CodeEvolve

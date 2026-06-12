@@ -18415,3 +18415,14 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     hallucination/bridge overclaims, invalid boundary status, missing evidence
     drift, and incomplete required evidence fields.
+
+- [x] Add Related Work taxonomy sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/related_work_taxonomy_boundary.py`
+    now emits and validates the flat-paper-index-only boundary for
+    AlphaEvolve Related Work positioning, separating source inventory, status
+    rows, and individual TODOs from method-family, representation, feedback/
+    evidence, task-stage, proof/witness, comparison-axis, and positioning-claim
+    taxonomy evidence.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    Related Work positioning overclaims, invalid boundary status, missing
+    evidence drift, and incomplete required evidence fields.

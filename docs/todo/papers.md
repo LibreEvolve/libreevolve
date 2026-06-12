@@ -1765,11 +1765,13 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current gap: the local paper index lists PDFs and selected inspiration
     relationships, while TODOs cover individual gaps such as FunSearch,
     AI-Co-Scientist, CodeEvolve, DeepEvolve, and domain benchmarks. It does
-    not preserve the paper's Related Work taxonomy as evidence: source
-    reference ids, method family, task stage, candidate representation,
-    evaluator/evidence mode, proof-versus-witness status, comparison claim,
-    complementary-mechanism status, and whether LibreEvolve implements,
-    partially implements, or only cites the related approach as background.
+    not preserve the paper's Related Work taxonomy as evidence. The committed
+    `papers/related_work_taxonomy_boundary.json` sidecar records this absence
+    for source reference ids, method family, task stage, candidate
+    representation, evaluator/evidence mode, proof-versus-witness status,
+    comparison claim, complementary-mechanism status, and whether LibreEvolve
+    implements, partially implements, or only cites the related approach as
+    background.
   - Required result: add paper-facing related-work taxonomy records and
     validation for each relevant source/category, including method family,
     representation mode, evaluation/evidence mode, discovery stage, comparison

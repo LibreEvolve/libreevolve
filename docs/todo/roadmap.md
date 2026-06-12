@@ -1120,10 +1120,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     AlphaEvolve scale.
   - Current evidence: roadmap/README/paper-index status can cite bundled
     papers and specific feature gaps, but it does not require a related-work
-    taxonomy that records source ids, method family, task stage, candidate
+    taxonomy. The committed `papers/related_work_taxonomy_boundary.json`
+    sidecar records that source ids, method family, task stage, candidate
     representation, evaluator/evidence mode, proof-versus-witness status,
-    comparison claim, complementary-mechanism status, or local status for each
-    AlphaEvolve Related Work category.
+    comparison claim, complementary-mechanism status, and local status are
+    still missing for each AlphaEvolve Related Work category.
   - Required result: when related-work taxonomy metadata lands, update
     ROADMAP, README, papers index, and code/paper TODOs so roadmap claims
     distinguish broad inspiration and paper availability from AlphaEvolve's

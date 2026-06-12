@@ -654,6 +654,11 @@ is not yet an AlphaEvolve reproduction.
   coverage row coverage, active ledger links, and completed-ledger checklist
   evidence. It does not yet prove arbitrary natural-language semantics for
   every long status phrase, benchmark qualifier, or paper claim.
+- Keep Related Work positioning scoped to flat source inventory until a
+  validated taxonomy lands. The committed
+  `papers/related_work_taxonomy_boundary.json` sidecar records that source
+  rows and individual TODOs do not yet prove source-category mapping,
+  method-family labels, comparison axes, or AlphaEvolve positioning claims.
 - Persisted validator-boundary consistency now has a CLI artifact gate:
   `validate_run_artifact_validator_boundary_consistency()` loads manifest-backed
   run directories, validates `policies.validator_execution`, scans

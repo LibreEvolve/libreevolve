@@ -125,6 +125,12 @@ from libreevolve.problems.benchmarks.release_artifact_reproducibility_boundary i
     render_release_artifact_reproducibility_boundary_summary,
     validate_release_artifact_reproducibility_boundary,
 )
+from libreevolve.problems.benchmarks.related_work_taxonomy_boundary import (
+    RELATED_WORK_TAXONOMY_BOUNDARY_SCHEMA,
+    related_work_taxonomy_boundary_record,
+    render_related_work_taxonomy_boundary_summary,
+    validate_related_work_taxonomy_boundary,
+)
 from libreevolve.problems.benchmarks.task_specification_boundary import (
     TASK_SPECIFICATION_BOUNDARY_SCHEMA,
     render_task_specification_boundary_summary,
@@ -705,6 +711,7 @@ __all__ = [
     "COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_SCHEMA",
     "PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_SCHEMA",
     "PROGRAMMATIC_REPRESENTATION_BOUNDARY_SCHEMA",
+    "RELATED_WORK_TAXONOMY_BOUNDARY_SCHEMA",
     "RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_SCHEMA",
     "TASK_SPECIFICATION_BOUNDARY_SCHEMA",
     "PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_SCHEMA",
@@ -792,6 +799,7 @@ __all__ = [
     "process_exhibit_boundary_record",
     "problem_formulation_provenance_boundary_record",
     "programmatic_representation_boundary_record",
+    "related_work_taxonomy_boundary_record",
     "release_artifact_reproducibility_boundary_record",
     "task_specification_boundary_record",
     "proposal_lifecycle_audit_boundary_record",
@@ -916,6 +924,7 @@ __all__ = [
     "render_process_exhibit_boundary_summary",
     "render_problem_formulation_provenance_boundary_summary",
     "render_programmatic_representation_boundary_summary",
+    "render_related_work_taxonomy_boundary_summary",
     "render_release_artifact_reproducibility_boundary_summary",
     "render_task_specification_boundary_summary",
     "render_proposal_lifecycle_audit_boundary_summary",
@@ -1032,6 +1041,7 @@ __all__ = [
     "validate_process_exhibit_boundary",
     "validate_problem_formulation_provenance_boundary",
     "validate_programmatic_representation_boundary",
+    "validate_related_work_taxonomy_boundary",
     "validate_release_artifact_reproducibility_boundary",
     "validate_task_specification_boundary",
     "validate_proposal_lifecycle_audit_boundary",

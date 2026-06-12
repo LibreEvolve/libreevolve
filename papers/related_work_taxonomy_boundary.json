@@ -1,0 +1,38 @@
+{
+  "schema": "libreevolve.related_work_taxonomy_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve's Related Work positions the system as execution-feedback code superoptimization and algorithm discovery against pre-LLM search, AlphaTensor, GPU-kernel and LLM-agent optimizers, AI-for-science systems, and proof discovery",
+  "boundary_status": "paper_index_rows_without_related_work_taxonomy",
+  "paper_index_status": "flat_source_inventory_and_individual_gap_rows",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "source_paper_inventory",
+    "paper_index_status_rows",
+    "individual_source_gap_todos",
+    "related_work_source_id_map",
+    "method_family_taxonomy",
+    "candidate_representation_taxonomy",
+    "feedback_signal_taxonomy",
+    "task_stage_taxonomy",
+    "comparison_axis_taxonomy",
+    "source_category_citations",
+    "alphaevolve_positioning_claim_table",
+    "readme_related_work_summary_gate",
+    "roadmap_related_work_summary_gate",
+    "paper_index_related_work_summary_gate"
+  ],
+  "missing_evidence": {
+    "related_work_source_id_map": "not_recorded_locally",
+    "method_family_taxonomy": "not_recorded_locally",
+    "candidate_representation_taxonomy": "not_recorded_locally",
+    "feedback_signal_taxonomy": "not_recorded_locally",
+    "task_stage_taxonomy": "not_recorded_locally",
+    "comparison_axis_taxonomy": "not_recorded_locally",
+    "source_category_citations": "not_recorded_locally",
+    "alphaevolve_positioning_claim_table": "not_recorded_locally",
+    "readme_related_work_summary_gate": "not_recorded_locally",
+    "roadmap_related_work_summary_gate": "not_recorded_locally",
+    "paper_index_related_work_summary_gate": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has a source-paper inventory, paper-index status rows, and individual source-gap TODOs. It does not claim a Related Work taxonomy with source-id category mapping, method-family labels, candidate-representation labels, feedback-signal labels, task-stage labels, comparison axes, category citations, an AlphaEvolve positioning-claim table, or README/ROADMAP/paper-index gates for Related Work summary claims."
+}

@@ -41,6 +41,9 @@ Important limits:
   candidates, not AI-Co-Scientist-style hypothesis representation or
   hallucination-resistance evidence; that boundary is tracked by
   `papers/programmatic_representation_boundary.json`.
+- Related Work positioning is not inferred from the bundled paper list; the
+  missing taxonomy and claim gates are tracked by
+  `papers/related_work_taxonomy_boundary.json`.
 - Candidate execution is Python-primary. Arbitrary language/build runners and
   problem-defined candidate abstractions remain open work.
 - Configuration validation is local effective-config validation; live

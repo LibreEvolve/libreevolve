@@ -952,6 +952,60 @@ def test_validate_paper_manifest_requires_programmatic_representation_boundary_a
     assert "programmatic_representation_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_related_work_taxonomy_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.RELATED_WORK_TAXONOMY_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.related_work_taxonomy_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_related_work_taxonomy_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.related_work_taxonomy_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "related_work_taxonomy_ready"
+    record["missing_evidence"]["method_family_taxonomy"] = "recorded"
+    sidecar = tmp_path / paper_manifest.RELATED_WORK_TAXONOMY_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "related_work_taxonomy_boundary_claim_ready_overclaim" in codes
+    assert "related_work_taxonomy_boundary_invalid_boundary_status" in codes
+    assert (
+        "related_work_taxonomy_boundary_invalid_missing_evidence_method_family_taxonomy"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_related_work_taxonomy_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "related_work_taxonomy_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_release_artifact_reproducibility_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

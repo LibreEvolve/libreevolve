@@ -1453,6 +1453,10 @@ The active column points only at currently open backlog files; grouped labels
 are intentionally not accepted until a grouped-label taxonomy exists. Completed
 files preserve implemented decisions and prior paper-index cleanups, and each
 completed path is checked for source-specific completed checklist evidence.
+The committed `papers/related_work_taxonomy_boundary.json` sidecar records the
+separate Related Work boundary: flat source rows and individual TODOs are not
+yet a method-family, representation, feedback/evidence, task-stage,
+proof/witness, or AlphaEvolve positioning taxonomy.
 Source-specific active gaps now appear across
 `docs/todo/code.md`, `docs/todo/papers.md`, `docs/todo/roadmap.md`, and
 `docs/todo/readme.md`; completed evidence remains split by the completed-ledger

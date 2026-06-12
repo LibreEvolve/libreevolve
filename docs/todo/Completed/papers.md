@@ -13507,3 +13507,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused programmatic-representation tests reject hallucination/
     bridge overclaims.
+
+- [x] Record Related Work taxonomy paper-facing sidecar.
+  - Status: `papers/related_work_taxonomy_boundary.json` now records the
+    flat-inventory-only boundary for AlphaEvolve Related Work positioning:
+    source-paper inventory, paper-index status rows, and individual source-gap
+    TODOs exist, while source-category mapping, method-family labels,
+    candidate-representation labels, feedback/evidence labels, task-stage
+    labels, comparison axes, category citations, an AlphaEvolve positioning
+    claim table, and README/ROADMAP/paper-index summary gates remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused Related Work taxonomy tests reject positioning-readiness
+    overclaims.

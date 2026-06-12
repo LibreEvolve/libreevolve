@@ -10383,3 +10383,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation requires the committed sidecar and
     focused programmatic-representation tests reject hallucination/bridge
     overclaims.
+
+- [x] Keep roadmap Related Work positioning boundary tied to sidecar.
+  - Status: ROADMAP now links flat source-inventory positioning limits to
+    `papers/related_work_taxonomy_boundary.json`, preserving the absence
+    boundary for source-category mapping, method-family labels, comparison
+    axes, and AlphaEvolve positioning claims.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused Related Work taxonomy tests reject positioning-readiness
+    overclaims.

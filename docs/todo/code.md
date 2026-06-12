@@ -2161,11 +2161,12 @@ Primary evidence:
   - Current evidence: LibreEvolve has a PDF manifest and paper index with
     selected local inspiration papers plus feature-specific TODOs for
     FunSearch, AI-Co-Scientist, CodeEvolve, DeepEvolve, and benchmark domains.
-    There is no schema or report that preserves AlphaEvolve's broader Related
-    Work taxonomy, method-family comparisons, candidate-representation modes,
-    evidence/evaluator modes, proof-versus-witness distinctions, or which
-    related-work claims are local capability, background context, or explicitly
-    unsupported.
+    The committed `papers/related_work_taxonomy_boundary.json` sidecar records
+    that this is still flat source inventory plus individual gap rows, not
+    AlphaEvolve's broader Related Work taxonomy, method-family comparisons,
+    candidate-representation modes, evidence/evaluator modes, proof-versus-
+    witness distinctions, or which related-work claims are local capability,
+    background context, or explicitly unsupported.
   - Required result: add paper/reference taxonomy metadata and validators for
     related-work source ids, method families (`superoptimization`,
     `llm_algorithm_discovery`, `ai_for_science`, `proof_search`,

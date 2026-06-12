@@ -2281,10 +2281,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     components.
   - Current evidence: README can list bundled papers, mention inspirations,
     and document specific implemented or missing features. It does not yet
-    expose a related-work taxonomy that maps sources to method families,
-    candidate representation, evaluator/evidence mode, discovery stage,
-    proof-versus-witness status, comparison claim, complementary-mechanism
-    status, and local implementation status.
+    expose a related-work taxonomy. The committed
+    `papers/related_work_taxonomy_boundary.json` sidecar records that flat
+    source inventory and individual gap rows do not map sources to method
+    families, candidate representation, evaluator/evidence mode, discovery
+    stage, proof-versus-witness status, comparison claim, complementary-
+    mechanism status, and local implementation status.
   - Required result: when Related Work taxonomy records land, update README,
     ROADMAP, papers index, and code/paper TODOs together so README
     distinguishes source availability and broad inspiration from

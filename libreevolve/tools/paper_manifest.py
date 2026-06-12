@@ -67,6 +67,10 @@ from libreevolve.problems.benchmarks.release_artifact_reproducibility_boundary i
     release_artifact_reproducibility_boundary_record,
     validate_release_artifact_reproducibility_boundary,
 )
+from libreevolve.problems.benchmarks.related_work_taxonomy_boundary import (
+    related_work_taxonomy_boundary_record,
+    validate_related_work_taxonomy_boundary,
+)
 from libreevolve.problems.benchmarks.task_specification_boundary import (
     task_specification_boundary_record,
     validate_task_specification_boundary,
@@ -399,6 +403,7 @@ COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_FILE = "papers/collaborator_feedback_p
 PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_FILE = "papers/problem_formulation_provenance_boundary.json"
 PROGRAMMATIC_REPRESENTATION_BOUNDARY_FILE = "papers/programmatic_representation_boundary.json"
 RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_FILE = "papers/release_artifact_reproducibility_boundary.json"
+RELATED_WORK_TAXONOMY_BOUNDARY_FILE = "papers/related_work_taxonomy_boundary.json"
 TASK_SPECIFICATION_BOUNDARY_FILE = "papers/task_specification_boundary.json"
 EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integration_boundary.json"
 CANDIDATE_ABSTRACTION_BOUNDARY_FILE = "papers/candidate_abstraction_boundary.json"
@@ -881,6 +886,7 @@ def validate_paper_manifest(
     issues.extend(_validate_problem_formulation_provenance_boundary(root_path))
     issues.extend(_validate_programmatic_representation_boundary(root_path))
     issues.extend(_validate_release_artifact_reproducibility_boundary(root_path))
+    issues.extend(_validate_related_work_taxonomy_boundary(root_path))
     issues.extend(_validate_task_specification_boundary(root_path))
     issues.extend(_validate_existing_codebase_integration_boundary(root_path))
     issues.extend(_validate_candidate_language_runner_boundary(root_path))
@@ -1732,6 +1738,38 @@ def _validate_release_artifact_reproducibility_boundary(root_path: Path) -> list
             f"release_artifact_reproducibility_boundary_{issue.code}",
             issue.message,
             "release_artifact_reproducibility",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_related_work_taxonomy_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / RELATED_WORK_TAXONOMY_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = related_work_taxonomy_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "related_work_taxonomy_boundary_manifest_missing",
+                    (
+                        f"{RELATED_WORK_TAXONOMY_BOUNDARY_FILE} must emit "
+                        "flat paper-index versus Related Work taxonomy scope"
+                    ),
+                    "related_work_taxonomy",
+                )
+            ]
+    report = validate_related_work_taxonomy_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"related_work_taxonomy_boundary_{issue.code}",
+            issue.message,
+            "related_work_taxonomy",
         )
         for issue in report.issues
     ]

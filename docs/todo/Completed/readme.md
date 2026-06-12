@@ -12634,3 +12634,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused programmatic-representation tests reject hallucination/bridge
     overclaims.
+
+- [x] Keep README Related Work positioning boundary tied to sidecar.
+  - Status: README now states that Related Work positioning is not inferred
+    from the bundled paper list and that the missing taxonomy and claim gates
+    are tracked by `papers/related_work_taxonomy_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused Related Work taxonomy tests reject positioning-readiness
+    overclaims.

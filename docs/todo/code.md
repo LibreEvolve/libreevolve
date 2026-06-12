@@ -4164,7 +4164,8 @@ Primary evidence:
     provider lookup boundaries, required local validation checks, OpenAI
     API-mode policy linkage, offline compatibility, record count/hash
     integrity, and explicit non-use of live model-registry, service/API-version,
-    or account-availability discovery.
+    or account-availability discovery, including
+    `libreevolve.provider_capability_lookup_readiness.v1` false readiness.
     `validate_llm_provider_diagnostics_summary()` now validates
     `libreevolve.llm_provider_diagnostics.v1` runtime summaries for
     schema/policy/status/source, retained-history scope, backend-record hash

@@ -11857,3 +11857,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     account/model-specific pricing.
   - Verification: provider diagnostics tests validate forged pricing-readiness
     overclaim rejection.
+
+- [x] Document provider capability lookup readiness guards.
+  - Spec evidence: README provider model wording needed to distinguish static
+    local validation from live registry/API/account discovery.
+  - Status: README and TODO wording now state that `capability_readiness` keeps
+    live model-registry, service/API-version, and account-availability surfaces
+    false.
+  - Verification: capability policy tests validate forged readiness overclaim
+    rejection.

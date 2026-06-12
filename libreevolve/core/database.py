@@ -9617,6 +9617,17 @@ def _provider_capability_lookup_policy(backends: list[dict]) -> dict:
         "provider_model_registry": "not_queried",
         "provider_service_api_version": "not_queried",
         "provider_account_availability": "not_checked",
+        "capability_readiness": {
+            "schema": "libreevolve.provider_capability_lookup_readiness.v1",
+            "live_model_registry_lookup": False,
+            "provider_service_api_version_lookup": False,
+            "provider_account_availability_validation": False,
+            "remaining_gap": [
+                "live_model_registry_lookup",
+                "provider_service_api_version_lookup",
+                "provider_account_availability_validation",
+            ],
+        },
         "record_count": len(records),
         "records_sha256": hashlib.sha256(records_payload.encode("utf-8")).hexdigest(),
         "records": records,

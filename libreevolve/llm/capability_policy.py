@@ -10,6 +10,9 @@ from typing import Any
 PROVIDER_CAPABILITY_LOOKUP_POLICY_SCHEMA = (
     "libreevolve.provider_capability_lookup_policy.v1"
 )
+PROVIDER_CAPABILITY_LOOKUP_READINESS_SCHEMA = (
+    "libreevolve.provider_capability_lookup_readiness.v1"
+)
 PROVIDER_CAPABILITY_LOOKUP_POLICY = "local_static_validation_no_live_provider_lookup"
 _REQUIRED_LOCAL_VALIDATION = {
     "backend_type_and_supported_key_schema",
@@ -20,6 +23,11 @@ _OPENAI_LOCAL_VALIDATION = {
     "openai_api_mode_enum_and_reasoning_effort_route",
     "openai_model_family_reasoning_effort_static_compatibility",
 }
+_CAPABILITY_READINESS_FALSE_FIELDS = (
+    "live_model_registry_lookup",
+    "provider_service_api_version_lookup",
+    "provider_account_availability_validation",
+)
 _HEX_64 = re.compile(r"^[0-9a-f]{64}$")
 
 
@@ -55,6 +63,7 @@ def validate_provider_capability_lookup_policy(
     _expect(data, "provider_model_registry", "not_queried", issues)
     _expect(data, "provider_service_api_version", "not_queried", issues)
     _expect(data, "provider_account_availability", "not_checked", issues)
+    _validate_capability_readiness(data.get("capability_readiness"), issues)
     records = _validate_records(data.get("records"), issues)
     record_count = data.get("record_count")
     if (
@@ -267,6 +276,46 @@ def _validate_record(
                     "OpenAI records must reference policies.openai_api_mode",
                 )
             )
+
+
+def _validate_capability_readiness(
+    value: object,
+    issues: list[ProviderCapabilityIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(
+            ProviderCapabilityIssue(
+                "invalid_capability_readiness",
+                "capability_readiness must be an object",
+            )
+        )
+        return
+    if value.get("schema") != PROVIDER_CAPABILITY_LOOKUP_READINESS_SCHEMA:
+        issues.append(
+            ProviderCapabilityIssue(
+                "invalid_capability_readiness_schema",
+                "capability_readiness schema is unsupported",
+            )
+        )
+    for field in _CAPABILITY_READINESS_FALSE_FIELDS:
+        if value.get(field) is not False:
+            issues.append(
+                ProviderCapabilityIssue(
+                    f"{field}_overclaim",
+                    f"capability_readiness.{field} must remain false until implemented",
+                )
+            )
+    remaining_gap = value.get("remaining_gap")
+    if (
+        not isinstance(remaining_gap, list)
+        or not all(isinstance(item, str) and item for item in remaining_gap)
+    ):
+        issues.append(
+            ProviderCapabilityIssue(
+                "invalid_capability_readiness_remaining_gap",
+                "capability_readiness.remaining_gap must list incomplete provider capability surfaces",
+            )
+        )
 
 
 def _expect(

@@ -4037,6 +4037,17 @@ def test_manifest_written():
         "provider_model_registry": "not_queried",
         "provider_service_api_version": "not_queried",
         "provider_account_availability": "not_checked",
+        "capability_readiness": {
+            "schema": "libreevolve.provider_capability_lookup_readiness.v1",
+            "live_model_registry_lookup": False,
+            "provider_service_api_version_lookup": False,
+            "provider_account_availability_validation": False,
+            "remaining_gap": [
+                "live_model_registry_lookup",
+                "provider_service_api_version_lookup",
+                "provider_account_availability_validation",
+            ],
+        },
         "record_count": 1,
         "records_sha256": (
             "b1dc311e056f6adcc09881ea7250451266eff4962210b6eb04f3f1511f17e5f9"
@@ -4290,6 +4301,17 @@ def test_manifest_records_effective_openai_api_mode_policy():
     assert provider_policy["provider_service_api_version"] == "not_queried"
     assert provider_policy["provider_account_availability"] == "not_checked"
     assert provider_policy["network_calls_before_run"] == "none_for_capability_discovery"
+    assert provider_policy["capability_readiness"] == {
+        "schema": "libreevolve.provider_capability_lookup_readiness.v1",
+        "live_model_registry_lookup": False,
+        "provider_service_api_version_lookup": False,
+        "provider_account_availability_validation": False,
+        "remaining_gap": [
+            "live_model_registry_lookup",
+            "provider_service_api_version_lookup",
+            "provider_account_availability_validation",
+        ],
+    }
     assert provider_policy["records"] == [
         {
             "backend_index": 0,

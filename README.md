@@ -28,7 +28,7 @@ LibreEvolve is an open-source Python framework for **automated algorithm discove
 
 This repository is an independent implementation and is not affiliated with or endorsed by Google DeepMind, Andrej Karpathy, or the authors of the cited papers.
 
-Works with **OpenAI** (Chat Completions by default; Responses API when `api_mode: responses` or `reasoning_effort` is configured), **Anthropic Claude**, and **local models via Ollama**. Model names in examples are provider-specific examples; LibreEvolve forwards them to the relevant SDK and does not validate current availability. Configured model identifiers must still be manifest-safe strings matching `[A-Za-z0-9][A-Za-z0-9_.:/+-]{0,191}` and must not look like credentials. Run manifests record this boundary under `policies.provider_capability_lookup`: local static validation only, no live provider model-registry, service/API-version, or account-availability lookup before the run. `validate_provider_capability_lookup_policy()` validates that static lookup boundary and rejects records that claim live model-registry, service/API-version, or account-availability discovery without evidence. Google/Gemini is not a built-in provider yet; completed manifests record that AlphaEvolve Flash/Pro parity boundary under `runtime.history.gemini_provider_parity_report`.
+Works with **OpenAI** (Chat Completions by default; Responses API when `api_mode: responses` or `reasoning_effort` is configured), **Anthropic Claude**, and **local models via Ollama**. Model names in examples are provider-specific examples; LibreEvolve forwards them to the relevant SDK and does not validate current availability. Configured model identifiers must still be manifest-safe strings matching `[A-Za-z0-9][A-Za-z0-9_.:/+-]{0,191}` and must not look like credentials. Run manifests record this boundary under `policies.provider_capability_lookup`: local static validation only, no live provider model-registry, service/API-version, or account-availability lookup before the run. `validate_provider_capability_lookup_policy()` validates that static lookup boundary and rejects records that claim live model-registry, service/API-version, or account-availability discovery without evidence; `capability_readiness` keeps those live surfaces false. Google/Gemini is not a built-in provider yet; completed manifests record that AlphaEvolve Flash/Pro parity boundary under `runtime.history.gemini_provider_parity_report`.
 
 Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://complete.tech) | [libreevolve.com](https://libreevolve.com)
 
@@ -1946,8 +1946,11 @@ Startup manifests make that boundary explicit under
 `policies.provider_capability_lookup`: LibreEvolve performs no live model
 registry, provider service/API-version, or account-availability lookup for
 capability discovery before a run. The OpenAI static compatibility check is
-linked to `policies.openai_api_mode`; provider-side capability failures can
-still occur at call time.
+linked to `policies.openai_api_mode`, and
+`libreevolve.provider_capability_lookup_readiness.v1` keeps live
+model-registry lookup, service/API-version lookup, and account-availability
+validation false. Provider-side capability failures can still occur at call
+time.
 Completed manifests also include
 `runtime.history.gemini_provider_parity_report`, which compares the configured
 backend specs with the built-in backend registry and records whether

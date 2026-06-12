@@ -3,6 +3,7 @@ import json
 
 from libreevolve.core.database import _provider_capability_lookup_policy
 from libreevolve.llm.capability_policy import (
+    PROVIDER_CAPABILITY_LOOKUP_READINESS_SCHEMA,
     PROVIDER_CAPABILITY_LOOKUP_POLICY_SCHEMA,
     validate_provider_capability_lookup_policy,
 )
@@ -33,6 +34,17 @@ def test_provider_capability_lookup_policy_validates_static_boundary():
     assert validation.record_count == 2
     assert validation.issues == []
     assert policy["schema"] == PROVIDER_CAPABILITY_LOOKUP_POLICY_SCHEMA
+    assert policy["capability_readiness"] == {
+        "schema": PROVIDER_CAPABILITY_LOOKUP_READINESS_SCHEMA,
+        "live_model_registry_lookup": False,
+        "provider_service_api_version_lookup": False,
+        "provider_account_availability_validation": False,
+        "remaining_gap": [
+            "live_model_registry_lookup",
+            "provider_service_api_version_lookup",
+            "provider_account_availability_validation",
+        ],
+    }
     assert policy["record_count"] == 2
     assert policy["records_sha256"] == _hash_records(policy)
 
@@ -54,6 +66,9 @@ def test_provider_capability_lookup_policy_rejects_live_lookup_overclaims():
     policy["provider_model_registry"] = "queried"
     policy["provider_service_api_version"] = "queried"
     policy["provider_account_availability"] = "checked"
+    policy["capability_readiness"]["live_model_registry_lookup"] = True
+    policy["capability_readiness"]["provider_service_api_version_lookup"] = True
+    policy["capability_readiness"]["provider_account_availability_validation"] = True
     policy["records"][0]["live_model_registry_lookup"] = True
     policy["records"][0]["provider_service_api_version_lookup"] = True
     policy["records"][0]["provider_account_availability_check"] = True
@@ -68,6 +83,9 @@ def test_provider_capability_lookup_policy_rejects_live_lookup_overclaims():
     assert "invalid_provider_model_registry" in codes
     assert "invalid_provider_service_api_version" in codes
     assert "invalid_provider_account_availability" in codes
+    assert "live_model_registry_lookup_overclaim" in codes
+    assert "provider_service_api_version_lookup_overclaim" in codes
+    assert "provider_account_availability_validation_overclaim" in codes
     assert "invalid_live_model_registry_lookup" in codes
     assert "invalid_provider_service_api_version_lookup" in codes
     assert "invalid_provider_account_availability_check" in codes

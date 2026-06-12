@@ -511,11 +511,11 @@ is not yet an AlphaEvolve reproduction.
   evidence: complete install-source interpretation semantics, external build
   execution/options/environment records beyond `pyproject.toml`
   `[build-system]` and installed `WHEEL` metadata, non-project build metadata
-  policy, live provider service/API-version capture, provider cost and
-  remote-default capture, accelerator budget/accounting semantics, and
-  remaining private package-source resolution policy, plus restore/check
-  validation that separates bounded audit hints from replayable evaluator
-  environment proof.
+  policy, live provider service/API-version capture beyond explicit false
+  capability-readiness fields, provider cost and remote-default capture,
+  accelerator budget/accounting semantics, and remaining private package-source
+  resolution policy, plus restore/check validation that separates bounded audit
+  hints from replayable evaluator environment proof.
 
 ### 4. Prompt and context work
 

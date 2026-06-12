@@ -1092,8 +1092,9 @@ accelerator runtime hints/probes. The manifest-visible
 `environment_reproducibility_policy` hashes those bounded evidence surfaces and
 explicitly scopes unsupported surfaces, including broader non-project build
 provenance, complete private package-source interpretation, live provider
-service/API versions, live provider pricing/default-rate capture beyond configured estimates,
-and accelerator budget/accounting evidence. Environment provenance is useful
+service/API versions beyond false capability-readiness fields, live provider
+pricing/default-rate capture beyond configured estimates, and accelerator
+budget/accounting evidence. Environment provenance is useful
 package name/version, selected and extra `[project]` metadata, known-lockfile
 hash, pip-freeze and pip-config hash/preview, installed-distribution `WHEEL`
 tag and source/install metadata, NumPy config summary, provider SDK-version

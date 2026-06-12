@@ -1712,8 +1712,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and manifest policies make the narrower capability boundary explicit:
     LibreEvolve performs manifest-safe model-id validation and local OpenAI
     compatibility checks only, with no live model-registry,
-    service/API-version, or account-availability lookup before a run. Code and
-    paper TODO entries already track live authenticated provider
+    service/API-version, or account-availability lookup before a run.
+    `capability_readiness` keeps those live surfaces false with validation.
+    Code and paper TODO entries already track live authenticated provider
     request/model-registry evidence beyond credential-presence and local client
     construction.
   - Required result: when live provider model-registry discovery,

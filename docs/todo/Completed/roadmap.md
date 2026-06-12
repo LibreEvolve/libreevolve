@@ -9388,3 +9388,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     account/model-specific pricing.
   - Verification: provider diagnostics tests validate forged pricing-readiness
     overclaim rejection.
+
+- [x] Preserve provider capability lookup readiness boundaries.
+  - Spec evidence: roadmap provider-environment wording should not imply live
+    model registry, service/API-version, or account entitlement validation from
+    static backend checks.
+  - Status: ROADMAP and TODO wording now recognize explicit false
+    capability-readiness fields for those provider discovery surfaces.
+  - Verification: capability policy tests validate forged readiness overclaim
+    rejection.

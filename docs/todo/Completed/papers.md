@@ -12271,3 +12271,13 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     implemented.
   - Verification: provider diagnostics tests validate forged pricing-readiness
     overclaim rejection.
+
+- [x] Record provider capability lookup readiness guards.
+  - Spec evidence: paper-facing provider claims need evidence that static local
+    backend validation is not live model-registry, service/API-version, or
+    account-availability proof.
+  - Status: paper-facing TODOs and the papers overview now record false
+    capability-readiness fields for those live provider discovery surfaces.
+  - Remaining paper gap: live provider/account discovery is not implemented.
+  - Verification: capability policy tests validate forged readiness overclaim
+    rejection.

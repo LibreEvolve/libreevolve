@@ -2109,9 +2109,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     to provider SDKs, validates only manifest-safe identifier syntax/secret
     shape, records `policies.provider_capability_lookup`, and performs no live
     model-registry, service/API-version, or account-availability lookup before
-    the run. Code and paper TODO entries already scope the remaining provider
-    auth gap to live authenticated request/model-registry validation rather
-    than credential-presence and local client-construction preflight.
+    the run. `capability_readiness` now keeps those live surfaces false with
+    validation. Code and paper TODO entries already scope the remaining
+    provider auth gap to live authenticated request/model-registry validation
+    rather than credential-presence and local client-construction preflight.
   - Required result: when live provider model-registry discovery,
     service/API-version capture, account-availability validation, or provider
     capability evidence lands, update README, ROADMAP, papers index, and

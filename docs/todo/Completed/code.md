@@ -17678,3 +17678,15 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Remaining gap: live pricing/default-rate discovery is not implemented.
   - Verification: provider diagnostics policy, ensemble summary, and runtime
     manifest tests cover pricing-readiness false flags and overclaim rejection.
+
+- [x] Guard provider capability lookup readiness overclaims.
+  - Spec evidence: AlphaEvolve-scale backend comparisons need live model
+    registry, service/API-version, and account-availability evidence before
+    claiming provider capability reproducibility.
+  - Status: provider capability policies now carry
+    `libreevolve.provider_capability_lookup_readiness.v1` with false flags for
+    live model-registry lookup, provider service/API-version lookup, and
+    account-availability validation; validation rejects forged true values.
+  - Remaining gap: live provider/account discovery is not implemented.
+  - Verification: capability policy and manifest tests cover readiness false
+    flags and overclaim rejection.

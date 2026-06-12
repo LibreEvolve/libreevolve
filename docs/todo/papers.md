@@ -4647,7 +4647,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     and metric definitions, mathematical-algorithm baseline identities,
     code/artifact reproducibility status, and independent verification outputs.
 
-- [ ] Track LEVI cost-aware search-architecture paper evidence.
+- [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
+      coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is
     titled `LEVI: Stronger Search Architectures Can Substitute for Larger LLMs
     in Evolutionary Search`. Its abstract says AlphaEvolve-style LLM-guided
@@ -4660,23 +4661,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     reports systems-research wins at 3.3x-6.7x lower budget, one 35x
     lower-cost match, and prompt-optimization results at less than half GEPA's
     rollout budget. The arXiv page links code at `https://github.com/ttanv/levi`.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2605.09764`. Existing rows cover AlphaEvolve, MAP-Elites,
-    UCB-style ensemble selection, evaluator artifacts, EvoX adaptive search,
-    DeltaEvolve context memory, and MLEvolve long-horizon MLE, but not
-    LEVI-style diversity preservation, cost-aware mutation routing,
-    proxy-benchmark rank preservation, provider-budget accounting, or
-    systems/prompt optimization cost comparisons.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2605.09764`: title/authors/arXiv version/date/PDF digest, source license,
-    linked-code URL/status, relation to AlphaEvolve and LibreEvolve archive/
-    ensemble behavior, diversity metrics, solution-database invariants,
-    mutation-router policy, large/small model assignment traces,
-    proxy-benchmark construction and rank-correlation evidence, rollout and
-    provider-cost accounting, systems/prompt benchmark taxonomy, baseline
-    method identities, code/artifact reproducibility status, and README/
-    ROADMAP wording that treats LEVI as missing paper evidence rather than
-    implemented LibreEvolve support.
+  - Current gap: the paper manifest, paper index, row-identity manifest, and
+    TODO coverage now include `2605.09764`, cached locally as
+    `papers/2605.09764__LEVI.pdf` with byte count `1568204` and SHA-256
+    `66cb851e38702e08213cc455f3c457289b2297be9b413be6372d21da5f0cfc58`.
+    Existing rows still do not capture LEVI-style diversity preservation,
+    cost-aware mutation routing, proxy-benchmark rank preservation,
+    provider-budget accounting, or systems/prompt optimization cost
+    comparisons.
+  - Required result: add reproduction-grade evidence for `2605.09764`:
+    source-license metadata, linked-code URL/status, relation to AlphaEvolve
+    and LibreEvolve archive/ensemble behavior, diversity metrics,
+    solution-database invariants, mutation-router policy, large/small model
+    assignment traces, proxy-benchmark construction and rank-correlation
+    evidence, rollout and provider-cost accounting, systems/prompt benchmark
+    taxonomy, baseline method identities, code/artifact reproducibility status,
+    and independent verification outputs.
 
 - [ ] Track PACEvolve long-horizon consistency paper evidence.
   - Paper/source evidence: arXiv `2601.10657`, submitted January 15, 2026 and

@@ -12805,3 +12805,20 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2605.09764` LEVI paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2605.09764`, `LEVI: Stronger Search Architectures Can Substitute for
+    Larger LLMs in Evolutionary Search`, cached locally as
+    `papers/2605.09764__LEVI.pdf` with byte count `1568204` and SHA-256
+    `66cb851e38702e08213cc455f3c457289b2297be9b413be6372d21da5f0cfc58`.
+  - Remaining paper gap: source-license details, linked-code URL/status,
+    diversity metrics, solution-database invariants, mutation-router policy,
+    large/small model assignment traces, proxy-benchmark construction and
+    rank-correlation evidence, rollout/provider-cost accounting,
+    systems/prompt benchmark taxonomy, baseline identities, code/artifact
+    reproducibility status, and independent reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

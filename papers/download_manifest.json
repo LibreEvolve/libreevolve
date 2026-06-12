@@ -290,6 +290,16 @@
     "sha256": "db5a1709ee78cd3d979c47b8734d8449427b6f69787fdb0d5e6f8e43951e9bde"
   },
   {
+    "id": "2605.09764",
+    "title": "LEVI",
+    "url": "https://arxiv.org/pdf/2605.09764.pdf",
+    "file": "papers/2605.09764__LEVI.pdf",
+    "ok": true,
+    "bytes": 1568204,
+    "message": "downloaded",
+    "sha256": "66cb851e38702e08213cc455f3c457289b2297be9b413be6372d21da5f0cfc58"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

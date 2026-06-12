@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 31 cache rows and links the AlphaEvolve row to
+  identities for all 32 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1323,6 +1323,17 @@ resumed-trace proof are still open.
   mathematical-algorithm baseline comparisons, linked-code audits, and
   independent reproduction outputs remain open before roadmap wording can
   promote MLEvolve-style ML-engineering support.
+- Keep LEVI cost-aware search-architecture claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2605.09764`, `LEVI: Stronger Search Architectures Can Substitute for
+  Larger LLMs in Evolutionary Search`, cached locally as
+  `papers/2605.09764__LEVI.pdf`. This is background cost-aware
+  search-architecture context only; diversity-preserving solution-database
+  reports, large/small model mutation-router policy, role-assignment traces,
+  rank-preserving proxy benchmark construction, rollout/provider-cost
+  accounting, systems-research benchmark fixtures, prompt-optimization budget
+  comparisons, linked-code audits, and independent reproduction outputs remain
+  open before roadmap wording can promote LEVI-style cost-aware search support.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

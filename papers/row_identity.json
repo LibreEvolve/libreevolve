@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.paper_source_identity_manifest.v1",
-  "source_identity_count": 31,
+  "source_identity_count": 32,
   "source_identity_policy": "manifest_id_url_source_id_and_file_source_prefix_must_match_before_source_version_or_rights_claims",
   "sources": [
     {
@@ -521,6 +521,24 @@
       "url_source_id": "2606.06473",
       "url_versioned_id": "2606.06473",
       "file_source_id": "2606.06473",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2605.09764",
+      "title": "LEVI",
+      "url": "https://arxiv.org/pdf/2605.09764.pdf",
+      "file": "papers/2605.09764__LEVI.pdf",
+      "sha256": "66cb851e38702e08213cc455f3c457289b2297be9b413be6372d21da5f0cfc58",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2605.09764",
+      "url_versioned_id": "2605.09764",
+      "file_source_id": "2605.09764",
       "identity_checks": {
         "manifest_id_matches_url_source_id": true,
         "manifest_id_matches_file_source_id": true,

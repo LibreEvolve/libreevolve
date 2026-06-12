@@ -5120,7 +5120,8 @@ Primary evidence:
     that promotes MLEvolve-style long-horizon MLE only after local harnesses
     and reports exist.
 
-- [ ] Add LEVI cost-aware search-architecture source boundary.
+- [ ] Implement LEVI cost-aware search-architecture evidence beyond paper
+      cache coverage.
   - Spec evidence: arXiv `2605.09764`, `LEVI: Stronger Search Architectures
     Can Substitute for Larger LLMs in Evolutionary Search`, was submitted May
     10, 2026. Its abstract says AlphaEvolve-style LLM-guided evolutionary
@@ -5133,22 +5134,26 @@ Primary evidence:
     systems-research benchmark scores at 3.3x-6.7x lower budget than
     frontier-model runs and one 35x lower-cost match, plus prompt-optimization
     results at less than half GEPA's rollout budget.
-  - Current evidence: LibreEvolve has MAP-Elites cells, island migration, a
-    heuristic LLM ensemble, run manifests, and evaluator artifacts, but no
-    LEVI source row, cost-aware mutation router, explicit large/small model
-    role split, diversity-preservation report for the solution database,
-    proxy-benchmark calibration, rank-preservation test, rollout-budget
-    accounting, or systems/prompt optimization cost-comparison fixture.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2605.09764`: arXiv id/version/date/PDF hash, authors, source license,
-    linked code URL/status, relation to AlphaEvolve and LibreEvolve's archive
-    and ensemble behavior, diversity metrics and database invariants,
-    mutation-router policy schema, large/small model assignment traces,
-    proxy-benchmark construction and rank-correlation evidence,
-    rollout-budget/cost accounting, systems and prompt-optimization benchmark
-    taxonomy, baseline identities, and README/ROADMAP wording that keeps
-    LEVI-style cost-aware search architecture as missing evidence until local
-    implementation and reports exist.
+  - Current evidence: `papers/download_manifest.*`, `papers/row_identity.json`,
+    `papers/README.md`, README, ROADMAP, and TODO coverage now include
+    `2605.09764`, cached locally as `papers/2605.09764__LEVI.pdf` with byte
+    count `1568204` and SHA-256
+    `66cb851e38702e08213cc455f3c457289b2297be9b413be6372d21da5f0cfc58`.
+    LibreEvolve has MAP-Elites cells, island migration, a heuristic LLM
+    ensemble, run manifests, and evaluator artifacts, but no cost-aware
+    mutation router, explicit large/small model role split,
+    diversity-preservation report for the solution database, proxy-benchmark
+    calibration, rank-preservation test, rollout-budget accounting, or
+    systems/prompt optimization cost-comparison fixture.
+  - Required result: add implementation-boundary metadata and runnable
+    evidence beyond the paper cache: linked code URL/status, relation to
+    AlphaEvolve and LibreEvolve's archive and ensemble behavior, diversity
+    metrics and database invariants, mutation-router policy schema,
+    large/small model assignment traces, proxy-benchmark construction and
+    rank-correlation evidence, rollout-budget/cost accounting, systems and
+    prompt-optimization benchmark taxonomy, baseline identities, and
+    README/ROADMAP wording that promotes LEVI-style cost-aware search only
+    after local implementation and reports exist.
 
 - [ ] Add PACEvolve long-horizon consistency source boundary.
   - Spec evidence: arXiv `2601.10657`, `PACEvolve: Enabling Long-Horizon

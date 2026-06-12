@@ -12916,3 +12916,20 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2605.13821` AEvo paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2605.13821`, `Harnessing Agentic Evolution`, cached locally as
+    `papers/2605.13821__AEvo.pdf` with byte count `1450611` and SHA-256
+    `40b5c2cde5b1886488a67b511d7dd780756304a5714d8b3261b8fe35e47beba0`.
+  - Remaining paper gap: source-license details, process-state schema,
+    accumulated-evidence inventory, meta-agent observation/action schema,
+    procedure/context patch artifacts, control-edit provenance,
+    rollback/versioning metadata, drift/stability diagnostics,
+    iteration-budget accounting, agentic/reasoning/open-ended benchmark
+    taxonomy, baseline identities, code/artifact availability,
+    reproducibility status, and independent reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

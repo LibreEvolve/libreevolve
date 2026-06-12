@@ -5333,7 +5333,8 @@ Primary evidence:
     multi-agent evolution as missing evidence until local implementation and
     reports exist.
 
-- [ ] Add AEvo harnessed meta-editing source boundary.
+- [ ] Implement AEvo harnessed meta-editing evidence beyond paper cache
+      coverage.
   - Spec evidence: arXiv `2605.13821`, `Harnessing Agentic Evolution`, was
     submitted May 13, 2026. Its abstract frames agentic evolution as iterative
     generation, evaluation, and feedback-guided search, but says existing
@@ -5346,24 +5347,27 @@ Primary evidence:
     candidate. It reports a 26 relative improvement over the strongest of
     five evolution baselines and state-of-the-art results on three
     open-ended optimization tasks under the same iteration budget.
-  - Current evidence: LibreEvolve records prompts, failures, history streams,
-    archives, run manifests, and static configuration, but it has no AEvo
-    source row or process-level environment state for meta-editing the
-    evolutionary controller. There is no meta-agent role, no procedure/context
-    patch schema, no state observation contract over accumulated evidence, no
-    policy for safely editing prompts/config/search mechanisms mid-run, no
-    rollback/versioning for control edits, and no benchmark separating
-    candidate-generation improvements from evolution-procedure improvements.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2605.13821`: arXiv id/version/date/PDF hash, authors, source license,
-    relation to AlphaEvolve and LibreEvolve's fixed controller/config,
-    process-state schema, accumulated evidence inventory, meta-agent action
-    schema, procedure/context patch artifacts, control-edit provenance,
-    rollback/versioning policy, drift/stability diagnostics, iteration-budget
-    accounting, agentic/reasoning/open-ended benchmark taxonomy, baseline
-    identities, and README/ROADMAP wording that keeps AEvo-style harnessed
-    meta-editing as missing evidence until local implementation and reports
-    exist.
+  - Current evidence: `papers/download_manifest.*`, `papers/README.md`, and
+    TODO coverage now include `2605.13821`, cached locally as
+    `papers/2605.13821__AEvo.pdf` with byte count `1450611` and SHA-256
+    `40b5c2cde5b1886488a67b511d7dd780756304a5714d8b3261b8fe35e47beba0`.
+    LibreEvolve records prompts, failures, history streams, archives, run
+    manifests, and static configuration, but it has no process-level
+    environment state for meta-editing the evolutionary controller. There is
+    no meta-agent role, no procedure/context patch schema, no state
+    observation contract over accumulated evidence, no policy for safely
+    editing prompts/config/search mechanisms mid-run, no rollback/versioning
+    for control edits, and no benchmark separating candidate-generation
+    improvements from evolution-procedure improvements.
+  - Required result: add evidence beyond paper-cache coverage for
+    `2605.13821`: authors/source-license details, relation to AlphaEvolve and
+    LibreEvolve's fixed controller/config, process-state schema, accumulated
+    evidence inventory, meta-agent action schema, procedure/context patch
+    artifacts, control-edit provenance, rollback/versioning policy,
+    drift/stability diagnostics, iteration-budget accounting,
+    agentic/reasoning/open-ended benchmark taxonomy, baseline identities, and
+    README/ROADMAP wording that keeps AEvo-style harnessed meta-editing as
+    missing evidence until local implementation and reports exist.
 
 - [ ] Add G-Zero verifier-free co-evolution source boundary.
   - Spec evidence: arXiv `2605.09959`, `G-Zero: Self-Play for Open-Ended

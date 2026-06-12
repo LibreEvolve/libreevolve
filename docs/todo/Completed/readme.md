@@ -643,7 +643,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Spec evidence: README points readers to the local paper cache as the source
     ledger for paper-facing implementation status and benchmark decisions.
   - Status: README now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 37 cache
+    companion manifest that emits derived source identities for all 38 cache
     rows, including URL source id, filename source prefix, validation booleans,
     and the AlphaEvolve row's source-version link.
   - Remaining gap: none for this bounded README wording slice.
@@ -1079,7 +1079,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     algorithm subset.
   - Status: corrected and guarded. README now states the visible paper tables
     are a curated subset and that `papers/README.md` is the complete
-    implementation-status index for all 37 manifest rows. The paper-manifest
+    implementation-status index for all 38 manifest rows. The paper-manifest
     validator now flags root README paper summaries that list only a subset of
     manifest ids without this curated-summary disclosure.
   - Verification: `tests/test_paper_manifest.py` covers accepted curated
@@ -12280,4 +12280,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     sessions, shared persistent memory, heartbeat interventions, or isolated
     multi-agent workspace runtime exists.
   - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 37-row manifest.
+    count and curated-subset wording against the current manifest.
+
+- [x] Document `2605.13821` AEvo paper coverage in README.
+  - Status: README now includes `2605.13821`, AEvo, as harnessed meta-editing
+    context only and states that no local process-level state, meta-agent
+    procedure editor, protected evaluator harness, or meta-edit benchmark
+    report exists.
+  - Verification: paper-manifest validation checks README's local paper-cache
+    count and curated-subset wording against the 38-row manifest.

@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 37 cache rows and links the AlphaEvolve row to
+  identities for all 38 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1393,6 +1393,19 @@ resumed-trace proof are still open.
   Anthropic kernel-engineering 1363-to-1103 cycle reproductions, linked-code
   audits, and independent reproduction outputs remain open before roadmap
   wording can promote CORAL-style autonomous multi-agent support.
+- Keep AEvo harnessed meta-editing claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2605.13821`, `Harnessing Agentic Evolution`, cached locally as
+  `papers/2605.13821__AEvo.pdf`. This is background harnessed meta-editing
+  context only; process-level evolution state, meta-agent procedure or
+  agent-context editors, standardized editable evolution workspaces,
+  protected evaluator boundaries, searchable candidate histories for
+  meta-editing, meta-editing phase/evolution-segment runners, run-plan
+  contracts, procedure-versus-agent evolution instantiations, five-baseline
+  agentic/reasoning benchmark reports, 26% relative-improvement
+  reproductions, three-task open-ended optimization reports, linked-code
+  audits, and independent reproduction outputs remain open before roadmap
+  wording can promote AEvo-style harnessed meta-editing support.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

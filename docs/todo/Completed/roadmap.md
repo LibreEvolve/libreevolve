@@ -764,7 +764,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     URL, and local PDF label describing the same source before version or
     rights evidence attaches.
   - Status: ROADMAP now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 37 cache
+    companion manifest that emits derived source identities for all 38 cache
     rows and links the AlphaEvolve row to `papers/source_versions.json`.
   - Remaining gap: none for this bounded roadmap wording slice.
 
@@ -9908,5 +9908,20 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     reports, 3-10x improvement-rate reproductions, Anthropic kernel-
     engineering cycle reproductions, linked-code audits, and independent
     reproduction outputs explicitly open.
-  - Verification: paper-manifest validation checks the 37-row manifest,
+  - Verification: paper-manifest validation checks the current manifest,
+    paper-index row, TODO coverage row, and source-identity sidecar.
+
+- [x] Preserve `2605.13821` AEvo paper-cache scope in roadmap.
+  - Status: ROADMAP now identifies arXiv `2605.13821`, `Harnessing Agentic
+    Evolution`, as background harnessed meta-editing context only, with the
+    cached `papers/2605.13821__AEvo.pdf` row and missing process-level
+    evolution state, meta-agent procedure or agent-context editors,
+    standardized editable evolution workspaces, protected evaluator
+    boundaries, searchable candidate histories for meta-editing,
+    meta-editing phase/evolution-segment runners, run-plan contracts,
+    procedure-versus-agent evolution instantiations, five-baseline agentic/
+    reasoning benchmark reports, 26% relative-improvement reproductions,
+    three-task open-ended optimization reports, linked-code audits, and
+    independent reproduction outputs explicitly open.
+  - Verification: paper-manifest validation checks the 38-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.

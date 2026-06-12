@@ -350,6 +350,16 @@
     "sha256": "6baf82f122d884380dea1ce2a20a92fd4e75216f430f652819d56bb2b893085c"
   },
   {
+    "id": "2605.13821",
+    "title": "AEvo",
+    "url": "https://arxiv.org/pdf/2605.13821.pdf",
+    "file": "papers/2605.13821__AEvo.pdf",
+    "ok": true,
+    "bytes": 1450611,
+    "message": "downloaded",
+    "sha256": "40b5c2cde5b1886488a67b511d7dd780756304a5714d8b3261b8fe35e47beba0"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

@@ -4836,7 +4836,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     README/ROADMAP wording that treats CORAL as missing implementation
     evidence rather than implemented LibreEvolve support.
 
-- [ ] Track AEvo harnessed meta-editing paper evidence.
+- [ ] Reproduce AEvo harnessed meta-editing evidence beyond paper coverage.
   - Paper/source evidence: arXiv `2605.13821`, submitted May 13, 2026, is
     titled `Harnessing Agentic Evolution`. Its abstract says agentic evolution
     improves programs, workflows, and scientific solutions by iteratively
@@ -4848,23 +4848,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     context controlling future evolution, reporting a 26 relative improvement
     over the strongest of five baselines and state-of-the-art results on three
     open-ended optimization tasks under the same iteration budget.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2605.13821`. Existing rows cover AlphaEvolve, static prompt/run
-    artifacts, failures, trace diagnostics, adaptive search, async
-    orchestration, and CORAL multi-agent autonomy, but not AEvo-style
-    process-level state, meta-agent procedure/context edits, controller
-    self-modification, control-edit rollback/versioning, drift diagnostics, or
-    benchmark boundaries separating candidate generation from mechanism edits.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2605.13821`: title/authors/arXiv version/date/PDF digest, source license,
-    relation to AlphaEvolve and LibreEvolve, process-state schema,
-    accumulated-evidence inventory, meta-agent observation/action schema,
-    procedure/context patch artifacts, control-edit provenance,
-    rollback/versioning metadata, drift/stability diagnostics,
-    iteration-budget accounting, agentic/reasoning/open-ended benchmark
-    taxonomy, baseline identities, code/artifact availability if any,
-    reproducibility status, and README/ROADMAP wording that treats AEvo as
-    missing paper evidence rather than implemented LibreEvolve support.
+  - Current gap: the paper cache, paper index, row identity, and TODO coverage
+    now include `2605.13821`, cached locally as
+    `papers/2605.13821__AEvo.pdf` with byte count `1450611` and SHA-256
+    `40b5c2cde5b1886488a67b511d7dd780756304a5714d8b3261b8fe35e47beba0`.
+    Existing evidence still does not reproduce AEvo-style process-level state,
+    meta-agent procedure/context edits, controller self-modification,
+    control-edit rollback/versioning, drift diagnostics, or benchmark
+    boundaries separating candidate generation from mechanism edits.
+  - Required result: add reproduction-grade evidence beyond paper coverage for
+    `2605.13821`: title/authors/arXiv version/date, source license, relation
+    to AlphaEvolve and LibreEvolve, process-state schema, accumulated-evidence
+    inventory, meta-agent observation/action schema, procedure/context patch
+    artifacts, control-edit provenance, rollback/versioning metadata,
+    drift/stability diagnostics, iteration-budget accounting,
+    agentic/reasoning/open-ended benchmark taxonomy, baseline identities,
+    code/artifact availability if any, reproducibility status, and
+    README/ROADMAP wording that treats AEvo as missing implementation evidence
+    rather than implemented LibreEvolve support.
 
 - [ ] Track G-Zero verifier-free co-evolution paper evidence.
   - Paper/source evidence: arXiv `2605.09959`, submitted May 11, 2026, is

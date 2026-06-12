@@ -1041,7 +1041,9 @@ programs and can feed current-run resurfacing evidence.
 `runtime.history.program_output_index` exposes bounded source/hash/preview
 summaries for evaluator `outputs` / `program_output` payloads retained under
 `evaluation.metadata.program_outputs`, and valid output-bearing candidates can
-feed current-run resurfacing evidence.
+feed current-run resurfacing evidence. `resurface_by_program_output()` can
+return defensive current-run candidates by exact output source key and/or
+output hash.
 `runtime.history.hypothesis_branch_report` now groups generated candidates by
 captured proposal text hashes and marks rejected/no-accepted branches as
 `abandoned_evidence` with fallback-parent inference and failure-memory linkage.
@@ -1059,7 +1061,7 @@ bounded sample records and an exact-text-only analysis policy.
 proposal quality plus exact proposal-signature novelty scores. This narrows the
 remaining database gap to durable cross-run query/index tables, full
 metric-vector and feedback/artifact-content/program-output ranking,
-output-similarity query APIs, calibrated proposal
+semantic output-similarity or schema-aware output retrieval, calibrated proposal
 quality models, near-duplicate or semantic/cross-run novelty or hypothesis
 retrieval, model-quality attribution, explicit controller-owned backtracking
 and suppression/retry policies,

@@ -1530,7 +1530,7 @@ resumed-trace proof are still open.
 ## Good First Follow-Ups
 
 1. Persist database query indexes beyond run-local metric/novelty/lineage/
-   feedback/artifact/program-output resurfacing.
+   feedback/artifact/exact program-output resurfacing.
 2. Add one non-toy benchmark run fixture with expected artifacts.
 3. Add workspace resume coverage beyond current `best_workspace/` export.
 4. Emit real LLM feedback calibration reports and grader ablation fixtures.

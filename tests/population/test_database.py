@@ -1191,6 +1191,40 @@ def test_program_output_index_snapshot_reports_evaluator_output_evidence(tmp_pat
     } >= {"score", "program_output"}
     assert invalid.id not in surfaced
 
+    assert [program.id for program in db.resurface_by_program_output(k=3)] == [
+        strong.id,
+        omitted.id,
+    ]
+    assert [
+        program.id
+        for program in db.resurface_by_program_output(
+            k=3,
+            source_key="program_output",
+        )
+    ] == [strong.id]
+    assert [
+        program.id
+        for program in db.resurface_by_program_output(
+            k=3,
+            source_key="outputs",
+            include_omitted=False,
+        )
+    ] == []
+    assert [
+        program.id
+        for program in db.resurface_by_program_output(
+            k=3,
+            output_sha256=hashlib.sha256(payload_text.encode("utf-8")).hexdigest(),
+        )
+    ] == [strong.id]
+    assert [
+        program.id
+        for program in db.resurface_by_program_output(k=3, exclude_ids={strong.id})
+    ] == [omitted.id]
+    output_program = db.resurface_by_program_output(k=1)[0]
+    output_program.code = "mutated"
+    assert db.all_programs()[3].code == "x = 1\n"
+
 
 def test_resurface_candidates_returns_defensive_ranked_programs(tmp_path):
     db = ProgramDatabase(Config(log_dir=str(tmp_path), problem_name="t"))
@@ -1450,6 +1484,12 @@ def test_resurface_query_methods_validate_keys(tmp_path):
         db.resurface_by_descriptor("", k=1)
     with pytest.raises(ValueError, match="feedback_name"):
         db.resurface_by_feedback("sk-" + "proj_sensitive_1234567890abcdef", k=1)
+    with pytest.raises(ValueError, match="source_key"):
+        db.resurface_by_program_output(k=1, source_key="unsafe")
+    with pytest.raises(ValueError, match="output_sha256"):
+        db.resurface_by_program_output(k=1, output_sha256="not-a-sha")
+    with pytest.raises(ValueError, match="include_omitted"):
+        db.resurface_by_program_output(k=1, include_omitted="yes")
 
 
 def test_resurface_candidates_rejects_unknown_target_metric(tmp_path):

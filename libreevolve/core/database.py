@@ -1249,6 +1249,62 @@ class ProgramDatabase:
             )
         return []
 
+    def resurface_by_program_output(
+        self,
+        k: int,
+        exclude_ids: set[str] | None = None,
+        *,
+        source_key: str | None = None,
+        output_sha256: str | None = None,
+        include_omitted: bool = True,
+    ) -> list[Program]:
+        """Return valid candidates with retained evaluator program-output evidence.
+
+        This is an exact metadata query over the bounded current-run
+        program-output index, not semantic output similarity search.
+        """
+        k = validate_sample_count(k, "database program-output resurfacing count")
+        exclude_ids = validate_exclude_ids(
+            exclude_ids,
+            "database program-output resurfacing exclude_ids",
+        )
+        source_key = _validate_program_output_source_key(
+            source_key,
+            "database program-output resurfacing source_key",
+        )
+        output_sha256 = _validate_optional_sha256(
+            output_sha256,
+            "database program-output resurfacing output_sha256",
+        )
+        if not isinstance(include_omitted, bool):
+            raise ValueError(
+                "database program-output resurfacing include_omitted must be a boolean"
+            )
+        if k <= 0:
+            return []
+        snapshot = _program_output_index_snapshot(
+            self._all,
+            program_limit=max(len(self._all), k + len(exclude_ids), 1),
+        )
+        programs_by_id = {program.id: program for program in self._all}
+        records = []
+        for record in snapshot["programs"]:
+            if record.get("evaluation_is_valid") is not True:
+                continue
+            if source_key is not None and record.get("source_key") != source_key:
+                continue
+            if output_sha256 is not None and record.get("sha256") != output_sha256:
+                continue
+            if include_omitted is False and record.get("omitted") is True:
+                continue
+            records.append(record)
+        return _ranked_program_snapshots_from_index_records(
+            programs_by_id,
+            records,
+            k=k,
+            exclude_ids=exclude_ids,
+        )
+
     def _log_archive_event(self, event: dict) -> None:
         append_strict_jsonl(
             self._archive_events,
@@ -4065,6 +4121,24 @@ def _validate_database_query_key(value: object, label: str) -> str:
         raise ValueError(f"{label} must be display-safe text")
     if redact_sensitive_text(value) != value:
         raise ValueError(f"{label} must not contain sensitive-looking text")
+    return value
+
+
+def _validate_program_output_source_key(value: object, label: str) -> str | None:
+    if value is None:
+        return None
+    if value not in {"outputs", "program_output"}:
+        raise ValueError(f"{label} must be 'outputs' or 'program_output'")
+    assert isinstance(value, str)
+    return value
+
+
+def _validate_optional_sha256(value: object, label: str) -> str | None:
+    if value is None:
+        return None
+    if not _is_sha256_hex(value):
+        raise ValueError(f"{label} must be a sha256 hex digest")
+    assert isinstance(value, str)
     return value
 
 

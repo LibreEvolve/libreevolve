@@ -1864,12 +1864,14 @@ Primary evidence:
     `runtime.history.program_output_index` now persists bounded evaluator
     `outputs` / `program_output` source/hash/preview summaries from
     `evaluation.metadata.program_outputs`, and valid output-bearing candidates
-    now feed `resurfacing_index` through a `program_output` source. Current
-    evaluator output payloads are validated, redacted, truncated, can be
-    required or checked by stage policies, and can be rendered as bounded
+    now feed `resurfacing_index` through a `program_output` source.
+    `ProgramDatabase.resurface_by_program_output()` can return defensive
+    current-run snapshots filtered by exact source key and/or output hash.
+    Current evaluator output payloads are validated, redacted, truncated, can
+    be required or checked by stage policies, and can be rendered as bounded
     prompt feedback, but there is still no output-similarity query API,
-    output-specific resurface method, durable output table, or semantic
-    cross-run retrieval.
+    schema-aware retrieval, durable output table, or semantic cross-run
+    retrieval.
     Current
     `manifest.json` files carry top-level `schema_version` and
     `artifact_schema` metadata, and current `history.jsonl`,
@@ -1908,10 +1910,10 @@ Primary evidence:
     run records,
     and tests proving resurfacing decisions can be rebuilt from persisted run
     artifacts rather than only from the live in-memory history/archive facade.
-    Extend the new first-class program-output index into output-specific
-    query/resurfacing APIs, durable output tables, schema-aware retrieval, and
+    Extend the new first-class program-output index and exact source/hash
+    query API into durable output tables, schema-aware retrieval, and
     similarity search so AlphaEvolve-style program outputs attached to
-    solutions are queryable beyond bounded current-run rank-fusion evidence.
+    solutions are queryable beyond bounded current-run evidence.
 
 - [ ] Extend exploration/exploitation sampling-balance reports into calibrated
   database-resurfacing analysis.

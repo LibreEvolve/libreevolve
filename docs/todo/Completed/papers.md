@@ -12358,8 +12358,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     source/hash/preview evidence for evaluator `outputs` / `program_output`
     payloads, with valid output-bearing candidates feeding
     `resurfacing_index`.
-  - Remaining paper gap: durable output tables, output-specific resurface APIs,
-    schema-aware output retrieval, semantic output similarity, and cross-run
-    output memory remain open.
+  - Remaining paper gap: durable output tables, schema-aware output retrieval,
+    semantic output similarity, and cross-run output memory remain open.
   - Verification: database and loop tests validate emitted program-output
     index records and manifest exposure.
+
+- [x] Record exact program-output resurfacing queries.
+  - Spec evidence: paper-facing database claims need to distinguish bounded
+    exact output queries from durable AlphaEvolve-style output retrieval.
+  - Status: paper-facing TODOs and the papers overview now record
+    `resurface_by_program_output()` as exact current-run source-key/hash
+    querying over bounded program-output records.
+  - Remaining paper gap: durable output tables, schema-aware output retrieval,
+    semantic output similarity, and cross-run output memory remain open.
+  - Verification: database tests validate exact output query behavior and
+    input validation.

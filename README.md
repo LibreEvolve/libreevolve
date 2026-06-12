@@ -1649,9 +1649,11 @@ payloads retained under `evaluation.metadata.program_outputs`, and valid
 output-bearing candidates can contribute to current-run
 `runtime.history.resurfacing_index`. `ProgramDatabase.resurface_by_metric()`,
 `resurface_by_lineage()`, `resurface_by_descriptor()`,
-`resurface_by_novelty()`, and `resurface_by_feedback()` can return defensive
-run-local snapshots from those current-history views, but those indexes are
-not persisted database tables, semantic output-similarity indexes, or
+`resurface_by_novelty()`, `resurface_by_feedback()`, and
+`resurface_by_program_output()` can return defensive run-local snapshots from
+those current-history views, with program-output queries limited to exact
+source-key and output-hash filters. Those indexes are not persisted database
+tables, semantic output-similarity indexes, schema-aware output retrieval, or
 replayable sampling engines.
 Generated candidate ids include a workspace hash for identity provenance, and
 history/database paths reject duplicate program ids. Completed manifests also

@@ -1298,8 +1298,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `resurface_by_metric()`, `resurface_by_lineage()`,
     `resurface_by_descriptor()`, `resurface_by_novelty()`, and
     `resurface_by_feedback()` APIs over score, metric, frontier, lineage,
-    descriptor/novelty, hypothesis, artifact, program-output, and feedback
-    views. These
+    descriptor/novelty, hypothesis, artifact, and feedback views.
+    `ProgramDatabase.resurface_by_program_output()` adds exact source-key/hash
+    queries over bounded program-output records. These
     records preserve `durable_database_ready: false` and remain append-only
     logs, an in-memory archive, and manifest-visible bounded summaries rather
     than persisted cross-run query/index tables, full metric-vector and
@@ -1312,8 +1313,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     README, papers index, and code/paper TODO entries together so roadmap
     wording neither underclaims current run-local resurfacing nor overclaims
     AlphaEvolve-grade queryable database support. Treat the new bounded
-    evaluator program-output index as current-run evidence, not durable output
-    retrieval or semantic similarity search.
+    evaluator program-output index and exact source/hash query API as
+    current-run evidence, not durable output retrieval or semantic similarity
+    search.
 
 - [ ] Keep database-sampling roadmap wording scoped until calibrated
       exploration / exploitation balance evidence exists.

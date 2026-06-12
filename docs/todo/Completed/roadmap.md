@@ -9459,3 +9459,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     preserving durable query indexes as follow-up work.
   - Verification: database and loop tests validate emitted program-output
     index records and manifest exposure.
+
+- [x] Preserve exact program-output query scope in database roadmap.
+  - Spec evidence: roadmap database wording should separate exact current-run
+    output queries from durable semantic output retrieval.
+  - Status: ROADMAP and TODO wording now identify exact program-output
+    resurfacing as current-run evidence while preserving persisted query
+    indexes as follow-up work.
+  - Verification: database tests validate source-key/hash output queries and
+    input validation.

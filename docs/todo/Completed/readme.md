@@ -11930,3 +11930,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     engines.
   - Verification: database and loop tests validate emitted program-output
     index records and manifest exposure.
+
+- [x] Document exact program-output resurfacing queries.
+  - Spec evidence: README database-output wording needed to distinguish exact
+    current-run output queries from durable/semantic output retrieval.
+  - Status: README now documents `resurface_by_program_output()` with exact
+    source-key and output-hash filters, and keeps semantic output similarity,
+    schema-aware output retrieval, persisted database tables, and replayable
+    sampling engines out of scope.
+  - Verification: database tests validate exact output query behavior and
+    input validation.

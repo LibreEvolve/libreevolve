@@ -17771,9 +17771,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     output-bearing candidates now feed `runtime.history.resurfacing_index`
     through a `program_output` source, and completed manifests expose
     `runtime.history.program_output_index`.
-  - Remaining gap: durable output tables, output-specific resurface APIs,
-    schema-aware output retrieval, semantic output similarity, and cross-run
-    output memory remain open.
+  - Remaining gap: durable output tables, schema-aware output retrieval,
+    semantic output similarity, and cross-run output memory remain open.
   - Verification: database and loop tests cover emitted output-index records,
     bounded previews, omitted-output summaries, manifest exposure, and
     current-run resurfacing source integration.
+
+- [x] Add exact program-output resurfacing queries.
+  - Spec evidence: AlphaEvolve's database can resurface solutions with attached
+    evaluation outputs, so output-bearing candidates need a query surface
+    beyond generic rank fusion.
+  - Status: `ProgramDatabase.resurface_by_program_output()` now returns
+    defensive current-run candidate snapshots from the bounded
+    `program_output_index`, with filters for exact source key, exact output
+    hash, omitted-output inclusion, and exclude ids.
+  - Remaining gap: durable output tables, schema-aware retrieval, semantic
+    output similarity, and cross-run output memory remain open.
+  - Verification: database tests cover source-key, output-hash,
+    omitted-output, exclude-id, invalid-record exclusion, defensive-copy, and
+    validation-error behavior.

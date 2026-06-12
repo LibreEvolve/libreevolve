@@ -2400,12 +2400,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `program_output` capture, redaction, truncation, stage output checks,
     bounded prompt-visible program-output summaries,
     `runtime.history.program_output_index`, and valid output-bearing
-    candidates contributing to current-run `resurfacing_index`. It also states
-    that these indexes are not persisted database tables, semantic
-    output-similarity indexes, or replayable sampling engines.
+    candidates contributing to current-run `resurfacing_index`. It also
+    documents `resurface_by_program_output()` as exact source-key/hash
+    current-run querying, and states that these indexes are not persisted
+    database tables, semantic output-similarity indexes, schema-aware output
+    retrieval, or replayable sampling engines.
   - Required result: continue keeping README wording scoped when durable output
-    query tables, output-specific resurface APIs, schema-aware output
-    retrieval, or semantic output search land.
+    query tables, schema-aware output retrieval, or semantic output search
+    land.
 
 - [ ] Keep README database-memory wording scoped until duplicate-work cache is
       durable and cross-run.

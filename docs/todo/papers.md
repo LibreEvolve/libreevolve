@@ -1502,16 +1502,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     Current evaluator outputs/program outputs can be captured, redacted,
     checked, rendered to prompts, indexed under
     `runtime.history.program_output_index`, and fed into current-run
-    `resurfacing_index`, but they are not a durable or semantic resurfacing
-    dimension despite AlphaEvolve's database storing solutions with attached
-    evaluation results and program outputs. `runtime.history.artifact_index`
+    `resurfacing_index`; `resurface_by_program_output()` can query them by
+    exact source key and/or output hash. They are still not a durable or
+    semantic resurfacing dimension despite AlphaEvolve's database storing
+    solutions with attached evaluation results and program outputs.
+    `runtime.history.artifact_index`
     now exposes bounded evaluator-artifact path/hash, redaction, skipped-file,
     stage, and content-excerpt evidence, and valid artifact-bearing candidates
     feed into `resurfacing_index`.
   - Required result: add Pareto/frontier archive replacement and durable
     persisted lineage-aware resurfacing for programs that excel under different
     metrics, including durable output-aware indexes and similarity/schema
-    retrieval for attached program outputs.
+    retrieval for attached program outputs beyond exact current-run source/hash
+    filtering.
 
 - [ ] Extend multiple-score prompt-diversity evidence into benchmark policy.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.

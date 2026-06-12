@@ -2851,7 +2851,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     status, outcome/timing telemetry, and selected-reviewer provenance. Matching
     code/roadmap TODOs still say reviewer calls are sequential,
     replacement-only, and selected by first/last valid mutation rather than
-    calibrated reviewer score or benchmarked reviewer reliability.
+    calibrated reviewer score or benchmarked reviewer reliability. README now
+    points to `papers/critique_reviewer_pool_boundary.json`, which preserves
+    this synchronous reviewer boundary for manifest validation.
   - Required result: when async reviewer overlap, calibrated reviewer scoring,
     reviewer-pool ablations, stronger per-reviewer provider isolation, or
     external reviewer-specific timeout/failure artifacts land, update README,

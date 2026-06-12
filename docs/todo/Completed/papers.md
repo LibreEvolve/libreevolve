@@ -13790,3 +13790,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused provider-cancellation tests reject live hard-cancellation
     overclaims.
+
+- [x] Record critique reviewer-pool paper-facing sidecar.
+  - Status: `papers/critique_reviewer_pool_boundary.json` now records the
+    synchronous first/last-valid reviewer-pool boundary for AlphaEvolve
+    Sections 2.4 and 2.6: runtime evidence can show configured reviewer specs,
+    manifest-safe reviewer names, optional reviewer prompts, reviewer role
+    labels, role backend routing and budget accounting compatibility, bounded
+    synchronous pool execution, first/last-valid aggregation, reviewer parser
+    status, valid revision counts, selected reviewer provenance, reviewer
+    elapsed seconds, reviewer outcome status, and inline runtime artifact
+    policy, while async reviewer overlap, calibrated reviewer-score reports,
+    reviewer reliability ablations, per-reviewer provider isolation, and
+    external reviewer timeout artifacts remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused critique reviewer-pool tests reject calibrated reviewer
+    orchestration overclaims.

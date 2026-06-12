@@ -18693,3 +18693,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject live
     hard-cancellation overclaims, invalid boundary status, missing evidence
     drift, and incomplete required evidence fields.
+
+- [x] Add critique reviewer-pool sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/critique_reviewer_pool_boundary.py`
+    now emits and validates the synchronous reviewer-pool boundary, separating
+    configured reviewer specs, manifest-safe names, optional prompts, reviewer
+    role labels, role backend-routing and budget-accounting compatibility,
+    bounded synchronous pool execution, first/last-valid aggregation, parser
+    status, valid revision counts, selected reviewer provenance, elapsed
+    seconds, outcome status, and inline runtime artifact policy from async
+    reviewer overlap, calibrated reviewer-score reports, reviewer reliability
+    ablations, per-reviewer provider isolation, and external reviewer timeout
+    artifacts.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    calibrated async reviewer-pool overclaims, invalid boundary status, missing
+    evidence drift, and incomplete required evidence fields.

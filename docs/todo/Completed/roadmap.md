@@ -10572,3 +10572,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation requires the committed sidecar and
     focused provider-cancellation tests reject live hard-cancellation
     overclaims.
+
+- [x] Keep roadmap critique reviewer-pool boundary tied to sidecar.
+  - Status: ROADMAP now links current synchronous configurable critique
+    reviewer pools, role routing, first/last-valid aggregation, and retained
+    reviewer telemetry to `papers/critique_reviewer_pool_boundary.json` while
+    keeping async reviewer overlap, calibrated reviewer scoring, reviewer
+    reliability ablations, per-reviewer provider isolation, and external
+    reviewer timeout artifacts open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused critique reviewer-pool tests reject calibrated reviewer
+    orchestration overclaims.

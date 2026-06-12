@@ -4691,7 +4691,9 @@ Primary evidence:
     reviewer records outcome, elapsed seconds, and the inline runtime-artifact
     policy. Existing `llm_role_backend_indices`, role accounting, and
     timeout/cancellation policy records can route and account for exact reviewer
-    roles such as `critique:correctness`.
+    roles such as `critique:correctness`. The committed
+    `papers/critique_reviewer_pool_boundary.json` sidecar now validates this
+    synchronous first/last-valid reviewer boundary at the paper-manifest layer.
   - Remaining gap: reviewer calls are still sequential, replacement-only, and
     selected by first/last valid mutation rather than calibrated reviewer score
     or benchmarked reviewer reliability. Reviewer pools do not yet overlap

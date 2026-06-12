@@ -102,6 +102,11 @@ Important limits:
   enforcement, cross-run provider quarantine resume, richer role-specific
   timeout artifacts, or provider-output raw-payload replay; that boundary is
   tracked by `papers/provider_cancellation_boundary.json`.
+- Critique reviewer pools are bounded synchronous first/last-valid mutation
+  filters with reviewer telemetry, not async reviewer overlap, calibrated
+  reviewer scoring, reviewer reliability ablations, per-reviewer provider
+  isolation, or external reviewer timeout artifacts; that boundary is tracked
+  by `papers/critique_reviewer_pool_boundary.json`.
 - Database sampling reports are local strategy/count telemetry, not calibrated
   AlphaEvolve-style exploration/exploitation evidence; that boundary is tracked
   by `papers/sampling_balance_boundary.json`.

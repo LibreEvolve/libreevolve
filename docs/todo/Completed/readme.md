@@ -12806,3 +12806,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused provider-cancellation tests reject live hard-cancellation
     overclaims.
+
+- [x] Keep README critique reviewer-pool boundary tied to sidecar.
+  - Status: README now states that critique reviewer pools are bounded
+    synchronous first/last-valid mutation filters with reviewer telemetry, not
+    async reviewer overlap, calibrated reviewer scoring, reviewer reliability
+    ablations, per-reviewer provider isolation, or external reviewer timeout
+    artifacts, with the boundary tracked by
+    `papers/critique_reviewer_pool_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused critique reviewer-pool tests reject calibrated reviewer
+    orchestration overclaims.

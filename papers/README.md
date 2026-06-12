@@ -2238,6 +2238,16 @@ Implemented:
   handles, timeout-driven stop enforcement, cross-run provider quarantine
   resume, richer role-specific timeout artifacts, or provider-output
   raw-payload replay.
+- `papers/critique_reviewer_pool_boundary.json`: critique reviewer-pool
+  sidecar for AlphaEvolve Sections 2.4 and 2.6. It records configured reviewer
+  specs, manifest-safe reviewer names, optional reviewer prompts, reviewer role
+  labels, role backend-routing and budget-accounting compatibility, bounded
+  synchronous pool execution, first/last-valid aggregation, reviewer parser
+  status, valid revision counts, selected reviewer provenance, reviewer
+  elapsed seconds, reviewer outcome status, and inline runtime artifact policy.
+  It is not evidence of async reviewer overlap, calibrated reviewer-score
+  reports, reviewer reliability ablations, per-reviewer provider isolation, or
+  external reviewer timeout artifacts.
 - `libreevolve/problems/examples/sorting`: neutral plateau/diversity smoke
   fixture. The bubble-sort seed already reaches `accuracy == 1.0`, so this
   example can demonstrate mutation handling and same-score implementation

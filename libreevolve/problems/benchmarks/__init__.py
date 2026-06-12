@@ -143,6 +143,12 @@ from libreevolve.problems.benchmarks.provider_cancellation_boundary import (
     render_provider_cancellation_boundary_summary,
     validate_provider_cancellation_boundary,
 )
+from libreevolve.problems.benchmarks.critique_reviewer_pool_boundary import (
+    CRITIQUE_REVIEWER_POOL_BOUNDARY_SCHEMA,
+    critique_reviewer_pool_boundary_record,
+    render_critique_reviewer_pool_boundary_summary,
+    validate_critique_reviewer_pool_boundary,
+)
 from libreevolve.problems.benchmarks.release_artifact_reproducibility_boundary import (
     RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_SCHEMA,
     release_artifact_reproducibility_boundary_record,
@@ -904,6 +910,7 @@ __all__ = [
     "collaborator_feedback_provenance_boundary_record",
     "combinatorics_berczy_boundary_record",
     "controller_backtracking_boundary_record",
+    "critique_reviewer_pool_boundary_record",
     "deepevolve_boundary_record",
     "distributed_pipeline_topology_boundary_record",
     "duplicate_work_policy_boundary_record",
@@ -1021,6 +1028,7 @@ __all__ = [
     "render_collaborator_feedback_provenance_boundary_summary",
     "render_combinatorics_berczy_boundary_summary",
     "render_controller_backtracking_boundary_summary",
+    "render_critique_reviewer_pool_boundary_summary",
     "render_deepevolve_boundary_summary",
     "render_distributed_pipeline_topology_boundary_summary",
     "render_duplicate_work_policy_boundary_summary",
@@ -1150,6 +1158,7 @@ __all__ = [
     "validate_collaborator_feedback_provenance_boundary",
     "validate_combinatorics_berczy_boundary",
     "validate_controller_backtracking_boundary",
+    "validate_critique_reviewer_pool_boundary",
     "validate_deepevolve_boundary",
     "validate_distributed_pipeline_topology_boundary",
     "validate_duplicate_work_policy_boundary",

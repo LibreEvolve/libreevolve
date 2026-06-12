@@ -392,6 +392,35 @@ directory and using the AlphaEvolve paper as the primary specification.
     model mixes before treating LibreEvolve's ensemble as AlphaEvolve-style
     Flash/Pro scheduling evidence.
 
+- [ ] Validate critique reviewer pools beyond synchronous replacement filters.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 2.6.
+  - Requirement: AlphaEvolve-style critique and feedback channels should
+    provide attributable, budgeted model-review signal rather than only a
+    sequential mutation-replacement filter.
+  - Partial status: `critique_reviewers` accepts manifest-safe reviewer specs
+    with optional prompts and role labels, `critique_aggregation_policy`
+    selects `first_valid` or `last_valid`, and retained
+    `metadata.critique.reviewer_pool` records the
+    `libreevolve.critique_reviewer_pool.v1` schema, reviewer parser status,
+    valid revision counts, selected-reviewer provenance, reviewer elapsed
+    seconds, outcome status, and inline runtime-artifact policy. Existing role
+    backend routing, role budgets, and timeout/cancellation policy records can
+    route/account for reviewer roles such as `critique:correctness`. The
+    committed `papers/critique_reviewer_pool_boundary.json` sidecar preserves
+    this synchronous first/last-valid reviewer boundary for paper-manifest
+    validation.
+  - Current gap: reviewer calls are sequential, replacement-only, and selected
+    by first/last valid mutation rather than calibrated reviewer score or
+    benchmarked reviewer reliability. There is no async reviewer overlap,
+    calibrated reviewer-score report, reviewer-pool reliability ablation,
+    stronger per-reviewer provider isolation, or external reviewer timeout
+    artifact bundle.
+  - Required result: add async/parallel reviewer execution where useful,
+    calibrated reviewer scoring, reviewer reliability reports, per-reviewer
+    provider isolation/budget policy, and external reviewer timeout/failure
+    artifacts before treating reviewer pools as AlphaEvolve-grade critique
+    orchestration.
+
 - [ ] Track Google/Gemini provider-parity evidence separately from generic
       custom-backend extensibility.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4, "Models used".

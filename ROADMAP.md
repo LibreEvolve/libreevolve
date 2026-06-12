@@ -970,7 +970,12 @@ resumed-trace proof are still open.
 - Extend current synchronous configurable critique reviewer pools, role routing,
   and first/last-valid aggregation toward async reviewer overlap, calibrated
   reviewer scoring, stronger provider isolation, and runtime artifacts for
-  reviewer-specific timeout/failure behavior.
+  reviewer-specific timeout/failure behavior. The current
+  `papers/critique_reviewer_pool_boundary.json` sidecar preserves the
+  synchronous first/last-valid telemetry boundary while keeping async reviewer
+  overlap, calibrated reviewer scoring, reviewer reliability ablations,
+  per-reviewer provider isolation, and external reviewer timeout artifacts
+  open.
 
 ### 8. Plugin extensibility
 

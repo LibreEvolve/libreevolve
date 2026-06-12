@@ -3403,6 +3403,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     telemetry, selected reviewer, and selection provenance. Reviewer calls are
     still sequential, replacement-only, and chosen by first/last valid mutation
     rather than calibrated reviewer score or benchmarked reviewer reliability.
+    The roadmap now points to `papers/critique_reviewer_pool_boundary.json`,
+    which preserves this synchronous reviewer boundary for manifest validation.
   - Required result: when async reviewer overlap, calibrated reviewer scoring,
     reviewer-pool ablation reports, stronger per-reviewer provider isolation,
     or external reviewer-specific timeout/failure artifacts land, update the

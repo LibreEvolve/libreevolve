@@ -2326,6 +2326,18 @@ def test_runtime_llm_budget_report_uses_configured_provider_cost_rate():
         == "estimated_from_configured_rate_and_provider_total_tokens"
     )
     assert cost_estimate_status["live_pricing_status"] == "not_fetched"
+    diagnostics = manifest["runtime"]["llm_provider_diagnostics"]
+    assert diagnostics["pricing_readiness"] == {
+        "schema": "libreevolve.llm_provider_pricing_readiness.v1",
+        "live_provider_pricing": False,
+        "provider_default_rate_capture": False,
+        "account_model_specific_pricing": False,
+        "remaining_gap": [
+            "live_provider_pricing",
+            "provider_default_rate_capture",
+            "account_model_specific_pricing",
+        ],
+    }
 
 
 def test_loop_persists_replayable_controller_llm_budget_events():

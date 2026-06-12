@@ -9379,3 +9379,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     runtime-readiness fields for those provider-cancellation surfaces.
   - Verification: cancellation policy tests validate forged readiness
     overclaim rejection.
+
+- [x] Preserve provider-pricing readiness boundaries.
+  - Spec evidence: roadmap provider-accounting wording should not imply live
+    pricing/default-rate capture from configured local cost metadata.
+  - Status: ROADMAP and TODO wording now recognize explicit false
+    pricing-readiness fields for live pricing, default-rate capture, and
+    account/model-specific pricing.
+  - Verification: provider diagnostics tests validate forged pricing-readiness
+    overclaim rejection.

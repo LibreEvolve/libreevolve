@@ -54,6 +54,9 @@ DEFAULT_MAX_CALL_HISTORY = 500
 DEFAULT_MAX_PROMPT_CHARS: int | None = None
 DEFAULT_REWARD_ACCOUNTED_ROLES = ("mutation",)
 LLM_PROVIDER_DIAGNOSTICS_SCHEMA = "libreevolve.llm_provider_diagnostics.v1"
+LLM_PROVIDER_PRICING_READINESS_SCHEMA = (
+    "libreevolve.llm_provider_pricing_readiness.v1"
+)
 PROVIDER_RESPONSE_ERROR_CATEGORIES = {
     "non_text",
     "empty_text",
@@ -3732,6 +3735,17 @@ def _provider_diagnostics_summary(
         "backend_count": len(group_records),
         "backends": group_records,
         "records_sha256": hashlib.sha256(payload.encode("utf-8")).hexdigest(),
+        "pricing_readiness": {
+            "schema": LLM_PROVIDER_PRICING_READINESS_SCHEMA,
+            "live_provider_pricing": False,
+            "provider_default_rate_capture": False,
+            "account_model_specific_pricing": False,
+            "remaining_gap": [
+                "live_provider_pricing",
+                "provider_default_rate_capture",
+                "account_model_specific_pricing",
+            ],
+        },
         "limitations": [
             "retained_call_history_window_only",
             "provider_response_error_text_retention_follows_configured_modes",

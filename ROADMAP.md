@@ -667,10 +667,10 @@ resumed-trace proof are still open.
 - Extend current run-scoped call telemetry beyond provider usage, configured
   cost estimates, request ids, finish reasons, adapter-internal retry
   summaries, configured-pricing aggregate consistency checks, raw-payload
-  replay overclaim checks, remote-default overclaim checks, and
-  token/cost/latency budget stops to include raw provider diagnostics, live
-  provider pricing/default-rate capture beyond configured token-cost estimates,
-  and richer budget-event evidence.
+  replay overclaim checks, remote-default overclaim checks, explicit false
+  pricing-readiness fields, and token/cost/latency budget stops to include raw
+  provider diagnostics, live provider pricing/default-rate capture beyond
+  configured token-cost estimates, and richer budget-event evidence.
 - Extend the current configurable role/backend consecutive-failure quarantine
   and zero-reward scheduler penalty beyond ensemble-local retry/fallback
   handling, restorable scheduler failure-policy state, and strict ledger

@@ -855,7 +855,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     evidence unsupported by retained call rows. They also reject raw provider-
     payload replay overclaims at the summary, totals, and backend-record
     scopes, remote provider-default/default-rate capture claims, and backend-
-    default record counts that exceed retained calls.
+    default record counts that exceed retained calls. Diagnostics now also
+    expose false pricing-readiness flags for live provider pricing, provider
+    default-rate capture, and account/model-specific pricing.
     Live global token and configured-cost stop
     criteria now exist, and full-runtime restore now pre-applies replayed
     provider-attempt/token/configured-cost/latency controller events to the

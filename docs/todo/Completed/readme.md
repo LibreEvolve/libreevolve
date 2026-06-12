@@ -11848,3 +11848,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     quarantine resume false.
   - Verification: cancellation policy tests validate forged readiness
     overclaim rejection.
+
+- [x] Document provider-pricing readiness guards.
+  - Spec evidence: README provider-cost wording needed to distinguish
+    configured backend pricing estimates from live provider pricing/defaults.
+  - Status: README and TODO wording now state that provider diagnostics carry
+    false pricing-readiness flags for live pricing, default-rate capture, and
+    account/model-specific pricing.
+  - Verification: provider diagnostics tests validate forged pricing-readiness
+    overclaim rejection.

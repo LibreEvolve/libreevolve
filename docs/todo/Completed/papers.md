@@ -12259,3 +12259,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Remaining paper gap: this does not implement those runtime surfaces.
   - Verification: cancellation policy tests validate forged readiness
     overclaim rejection.
+
+- [x] Record provider-pricing readiness guards.
+  - Spec evidence: paper-facing provider-budget claims need evidence that
+    configured token-cost estimates are not live provider pricing/default-rate
+    capture.
+  - Status: paper-facing TODOs and the papers overview now record false
+    pricing-readiness fields for live pricing, provider default-rate capture,
+    and account/model-specific pricing.
+  - Remaining paper gap: live pricing/default-rate discovery is not
+    implemented.
+  - Verification: provider diagnostics tests validate forged pricing-readiness
+    overclaim rejection.

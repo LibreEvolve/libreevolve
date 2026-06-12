@@ -1159,7 +1159,9 @@ normalized values. Call telemetry also persists `backend_defaults` for
 LibreEvolve's effective local output-token caps, provider internal retry caps,
 configured request timeouts, API modes, and OpenAI reasoning/API-mode policy;
 provider diagnostics reject remote default/default-rate capture overclaims, but
-remote provider-side defaults and pricing are not inferred. Structured
+remote provider-side defaults and pricing are not inferred. Diagnostics also
+keep live provider pricing, provider default-rate capture, and account/model-
+specific pricing readiness false. Structured
 system/developer/user prompt roles are serialized as hash-only
 `prompt_role_policy` metadata, not raw instruction text. Endpoint/client context now has an
 explicit validated built-in backend surface for OpenAI `base_url`,

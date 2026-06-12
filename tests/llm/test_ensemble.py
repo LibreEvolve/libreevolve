@@ -3325,6 +3325,17 @@ def test_provider_diagnostics_summary_aggregates_retained_call_history():
         "backend_default_api_modes": {"chat": 1},
     }
     assert len(summary["records_sha256"]) == 64
+    assert summary["pricing_readiness"] == {
+        "schema": "libreevolve.llm_provider_pricing_readiness.v1",
+        "live_provider_pricing": False,
+        "provider_default_rate_capture": False,
+        "account_model_specific_pricing": False,
+        "remaining_gap": [
+            "live_provider_pricing",
+            "provider_default_rate_capture",
+            "account_model_specific_pricing",
+        ],
+    }
     assert summary["limitations"] == [
         "retained_call_history_window_only",
         "provider_response_error_text_retention_follows_configured_modes",

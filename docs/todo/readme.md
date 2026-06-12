@@ -2764,8 +2764,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     provider-failure summaries, configured-pricing aggregate/reason
     consistency checks in provider diagnostics, raw provider-payload replay
     overclaim checks at summary/totals/backend scopes, remote provider-default
-    overclaim checks, backend-default count consistency, and restorable
-    scheduler failure-policy state with role-specific remaining-gap summaries.
+    overclaim checks, explicit pricing-readiness false flags, backend-default
+    count consistency, and restorable scheduler failure-policy state with
+    role-specific remaining-gap summaries.
     It correctly states that
     `proposals_per_generation`
     is sequential batch sampling/accounting rather than parallel LLM/evaluator

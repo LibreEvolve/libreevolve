@@ -1913,7 +1913,10 @@ estimated reason counts must match configured estimates, and not-estimated
 reason counts must match not-estimated cost rows. Omitted rates keep cost usage
 at zero and do not imply free provider calls. `max_llm_cost_microusd` can stop
 runs from that configured estimate, but LibreEvolve still does not fetch live
-provider pricing or provider default rates.
+provider pricing or provider default rates. Diagnostics also carry
+`libreevolve.llm_provider_pricing_readiness.v1`, keeping live provider pricing,
+provider default-rate capture, and account/model-specific pricing false with
+overclaim validation.
 Provider diagnostics also reject raw provider-payload replay claims at the
 summary, totals, and backend-record scopes; retained hashes, redacted text
 snippets, and bounded scalar diagnostics still do not provide full raw payload

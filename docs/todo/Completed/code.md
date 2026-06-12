@@ -17667,3 +17667,14 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Remaining gap: this does not implement those runtime cancellation surfaces.
   - Verification: cancellation policy and runtime manifest tests cover forged
     runtime-readiness overclaims.
+
+- [x] Guard provider-pricing readiness overclaims.
+  - Spec evidence: AlphaEvolve-scale provider accounting should distinguish
+    configured cost estimates from live provider pricing/default-rate capture.
+  - Status: provider diagnostics summaries now carry
+    `libreevolve.llm_provider_pricing_readiness.v1` with false flags for live
+    provider pricing, provider default-rate capture, and account/model-specific
+    pricing; validation rejects forged true values.
+  - Remaining gap: live pricing/default-rate discovery is not implemented.
+  - Verification: provider diagnostics policy, ensemble summary, and runtime
+    manifest tests cover pricing-readiness false flags and overclaim rejection.

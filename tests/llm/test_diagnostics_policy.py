@@ -4,6 +4,7 @@ import json
 
 from libreevolve.llm.diagnostics_policy import (
     LLM_PROVIDER_DIAGNOSTICS_POLICY,
+    LLM_PROVIDER_PRICING_READINESS_SCHEMA,
     validate_llm_provider_diagnostics_summary,
 )
 from libreevolve.llm.ensemble import (
@@ -44,6 +45,17 @@ def test_llm_provider_diagnostics_summary_validates_ensemble_snapshot():
     assert validation.issues == []
     assert summary["schema"] == LLM_PROVIDER_DIAGNOSTICS_SCHEMA
     assert summary["policy"] == LLM_PROVIDER_DIAGNOSTICS_POLICY
+    assert summary["pricing_readiness"] == {
+        "schema": LLM_PROVIDER_PRICING_READINESS_SCHEMA,
+        "live_provider_pricing": False,
+        "provider_default_rate_capture": False,
+        "account_model_specific_pricing": False,
+        "remaining_gap": [
+            "live_provider_pricing",
+            "provider_default_rate_capture",
+            "account_model_specific_pricing",
+        ],
+    }
 
 
 def test_llm_provider_diagnostics_summary_loads_json_file(tmp_path):
@@ -91,6 +103,22 @@ def test_llm_provider_diagnostics_summary_rejects_live_pricing_overclaim():
     assert validation.ok is False
     assert validation.live_pricing_ready is False
     assert "live_pricing_not_supported" in codes
+
+
+def test_llm_provider_diagnostics_summary_rejects_pricing_readiness_overclaim():
+    summary = _summary()
+    summary["pricing_readiness"]["live_provider_pricing"] = True
+    summary["pricing_readiness"]["provider_default_rate_capture"] = True
+    summary["pricing_readiness"]["account_model_specific_pricing"] = True
+
+    validation = validate_llm_provider_diagnostics_summary(summary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.live_pricing_ready is False
+    assert "live_provider_pricing_overclaim" in codes
+    assert "provider_default_rate_capture_overclaim" in codes
+    assert "account_model_specific_pricing_overclaim" in codes
 
 
 def test_llm_provider_diagnostics_summary_rejects_nested_raw_payload_claims():

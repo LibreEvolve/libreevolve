@@ -1789,9 +1789,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     more configured pricing evidence than retained call rows support. They also
     reject raw provider-payload replay overclaims at the summary, totals, and
     backend-record scopes, remote provider-default/default-rate capture claims,
-    and backend-default counts that exceed retained calls. The roadmap now
-    names live provider pricing/default-rate capture beyond configured token-
-    cost estimates and raw provider replay as remaining gaps.
+    explicit pricing-readiness overclaims, and backend-default counts that
+    exceed retained calls. The roadmap now names live provider pricing/default-
+    rate capture beyond configured token-cost estimates and raw provider replay
+    as remaining gaps.
   - Required result: when live provider pricing discovery, provider default
     rate capture, or account/model-specific pricing evidence lands, update the
     roadmap, README, papers index, and code/paper TODO entries together so they

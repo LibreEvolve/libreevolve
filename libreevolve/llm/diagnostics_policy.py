@@ -12,6 +12,9 @@ from libreevolve.llm.ensemble import LLM_PROVIDER_DIAGNOSTICS_SCHEMA
 LLM_PROVIDER_DIAGNOSTICS_POLICY = (
     "bounded_retained_call_history_provider_diagnostics"
 )
+LLM_PROVIDER_PRICING_READINESS_SCHEMA = (
+    "libreevolve.llm_provider_pricing_readiness.v1"
+)
 _EXPECTED_STATUS = "snapshot"
 _EXPECTED_SOURCE = "LLMEnsemble.call_history"
 _HEX_64 = re.compile(r"^[0-9a-f]{64}$")
@@ -95,6 +98,11 @@ _REMOTE_DEFAULT_FIELDS = (
     "account_model_defaults",
     "provider_default_rate_capture",
 )
+_PRICING_READINESS_FALSE_FIELDS = (
+    "live_provider_pricing",
+    "provider_default_rate_capture",
+    "account_model_specific_pricing",
+)
 
 
 @dataclass(frozen=True)
@@ -156,6 +164,7 @@ def validate_llm_provider_diagnostics_summary(
         )
     _validate_records_hash(data.get("records_sha256"), backends, issues)
     _validate_limitations(data.get("limitations"), issues)
+    _validate_pricing_readiness(data.get("pricing_readiness"), issues)
     _validate_no_raw_payload_claims(data, issues)
     _validate_live_pricing_boundary(totals, backends, issues)
     _validate_provider_defaults_boundary(data, totals, backends, issues)
@@ -493,6 +502,46 @@ def _validate_live_pricing_boundary(
             LLMProviderDiagnosticsIssue(
                 "live_pricing_not_supported",
                 "current diagnostics policy must not claim live pricing records",
+            )
+        )
+
+
+def _validate_pricing_readiness(
+    value: object,
+    issues: list[LLMProviderDiagnosticsIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(
+            LLMProviderDiagnosticsIssue(
+                "invalid_pricing_readiness",
+                "pricing_readiness must be an object",
+            )
+        )
+        return
+    if value.get("schema") != LLM_PROVIDER_PRICING_READINESS_SCHEMA:
+        issues.append(
+            LLMProviderDiagnosticsIssue(
+                "invalid_pricing_readiness_schema",
+                "pricing_readiness schema is unsupported",
+            )
+        )
+    for field in _PRICING_READINESS_FALSE_FIELDS:
+        if value.get(field) is not False:
+            issues.append(
+                LLMProviderDiagnosticsIssue(
+                    f"{field}_overclaim",
+                    f"pricing_readiness.{field} must remain false until implemented",
+                )
+            )
+    remaining_gap = value.get("remaining_gap")
+    if (
+        not isinstance(remaining_gap, list)
+        or not all(isinstance(item, str) and item for item in remaining_gap)
+    ):
+        issues.append(
+            LLMProviderDiagnosticsIssue(
+                "invalid_pricing_readiness_remaining_gap",
+                "pricing_readiness.remaining_gap must list incomplete pricing surfaces",
             )
         )
 

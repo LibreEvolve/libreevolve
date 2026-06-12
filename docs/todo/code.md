@@ -4171,9 +4171,11 @@ Primary evidence:
     integrity, non-negative counters, backend-count, total/backend aggregate
     count and retention-counter consistency, required limitation statements,
     and the current no-live-pricing/no-raw-payload replay boundary, including
-    nested raw-payload replay claims under totals or backend records. It also
-    rejects remote provider-default/default-rate overclaims and
-    backend-default record counts that exceed retained call counts.
+    explicit `libreevolve.llm_provider_pricing_readiness.v1` false readiness
+    for live provider pricing, provider default-rate capture, and account/model
+    specific pricing. It also rejects nested raw-payload replay claims under
+    totals or backend records, remote provider-default/default-rate overclaims,
+    and backend-default record counts that exceed retained call counts.
     Focused ensemble tests now cover `throughput_depth` metadata selection,
     normalized depth/cost/latency contribution against the reward scale,
     descriptive breadth/depth role metadata, live role metadata routing,

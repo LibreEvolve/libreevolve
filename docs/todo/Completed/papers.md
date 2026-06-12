@@ -13190,3 +13190,25 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2606.01770` Adaptive Auto-Harness paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2606.01770`, `Adaptive Auto-Harness: Sustained Self-Improvement for
+    Agentic System Deployment on Open-Ended Task Streams`, cached locally as
+    `papers/2606.01770__Adaptive_Auto_Harness.pdf` with byte count `1895729`
+    and SHA-256
+    `50454c1eec069b668b515c6d322e4c5ac55f24655298b3381f91f461a9c39b3e`.
+  - Remaining paper gap: source-license details, linked-code URL/status,
+    open-ended task-stream schema, history-growth records, task-heterogeneity
+    metadata, distribution-shift metrics, oracle-harness definition,
+    evolution-loss and adaptation-loss records, stateful multi-agent evolver
+    roles, cross-cycle memory, harness tree artifacts, solve-time routing
+    records, human-steering hook provenance, targeted steering outcomes,
+    sustained-performance/degradation curves, prediction-market/security-
+    competition/event-forecasting benchmark metadata, baseline identities,
+    ablation records, code/artifact reproducibility status, and independent
+    reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

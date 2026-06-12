@@ -165,7 +165,7 @@ Common run options:
 
 ## Research Sources
 
-LibreEvolve is informed by a local cache of 51 papers on LLM-guided evolution,
+LibreEvolve is informed by a local cache of 52 papers on LLM-guided evolution,
 program synthesis, quality-diversity optimization, and related benchmarks. The
 PDF cache lives locally under `papers/`, but the PDFs themselves are gitignored.
 The committed repository tracks `papers/README.md`, download manifests, and
@@ -176,7 +176,7 @@ not authoritative bibliographic titles. Use `papers/README.md` for paper-facing
 titles, implementation status, and benchmark coverage decisions.
 
 The table below is a curated subset for README context. `papers/README.md` is
-the complete implementation-status index for all 51 manifest rows.
+the complete implementation-status index for all 52 manifest rows.
 
 | Source | Role in LibreEvolve |
 | --- | --- |
@@ -212,6 +212,7 @@ the complete implementation-status index for all 51 manifest rows.
 | [AHE](https://arxiv.org/abs/2604.25850) | Observability-driven harness-evolution context only; no local file-level harness component graph, layered trajectory evidence corpus, edit-prediction contract, falsification loop, or Terminal-Bench 2 reproduction exists. |
 | [AI Harness Engineering](https://arxiv.org/abs/2605.13357) | Runtime-substrate context only; no complete eleven-responsibility harness contract, H0-H3 ladder, trace-based episode package, controlled validation task, or structured verification report exists. |
 | [Inference-time trajectory alignment](https://arxiv.org/abs/2605.21516) | Harness design context only; no local decomposition/guidance parameter sweep, retry-budget study, over-decomposition/over-pruning/hallucinated-execution report, partial-harnessing benchmark, or terminal-agent reproduction exists. |
+| [Adaptive Auto-Harness](https://arxiv.org/abs/2606.01770) | Open-ended task-stream deployment context only; no local chronological task stream, evolution/adaptation-loss decomposition, harness tree routing, human-steering hook, or prediction-market/security/event benchmark reproduction exists. |
 
 Rehydrate the ignored local PDF cache on a fresh checkout:
 

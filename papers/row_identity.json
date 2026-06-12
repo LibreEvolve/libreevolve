@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.paper_source_identity_manifest.v1",
-  "source_identity_count": 51,
+  "source_identity_count": 52,
   "source_identity_policy": "manifest_id_url_source_id_and_file_source_prefix_must_match_before_source_version_or_rights_claims",
   "sources": [
     {
@@ -881,6 +881,24 @@
       "url_source_id": "2605.21516",
       "url_versioned_id": "2605.21516",
       "file_source_id": "2605.21516",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2606.01770",
+      "title": "Adaptive_Auto_Harness",
+      "url": "https://arxiv.org/pdf/2606.01770.pdf",
+      "file": "papers/2606.01770__Adaptive_Auto_Harness.pdf",
+      "sha256": "50454c1eec069b668b515c6d322e4c5ac55f24655298b3381f91f461a9c39b3e",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2606.01770",
+      "url_versioned_id": "2606.01770",
+      "file_source_id": "2606.01770",
       "identity_checks": {
         "manifest_id_matches_url_source_id": true,
         "manifest_id_matches_file_source_id": true,

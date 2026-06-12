@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 51 cache rows and links the AlphaEvolve row to
+  identities for all 52 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1572,6 +1572,20 @@ resumed-trace proof are still open.
   synthetic experiments, terminal-agent benchmark reproductions, linked-code
   audits, and independent reproduction outputs remain open before roadmap
   wording can promote inference-time trajectory-alignment harness support.
+- Keep Adaptive Auto-Harness open-ended task-stream claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2606.01770`, `Adaptive Auto-Harness: Sustained Self-Improvement for
+  Agentic System Deployment on Open-Ended Task Streams`, cached locally as
+  `papers/2606.01770__Adaptive_Auto_Harness.pdf`. This is background
+  adaptive auto-harness deployment context only; chronological open-ended
+  task-stream schemas, history-growth records, task-heterogeneity reports,
+  distribution-shift detectors, evolution-loss/adaptation-loss decompositions,
+  stateful multi-agent evolvers, harness trees, solve-time routing policies,
+  human-steering hooks, overfitting/accuracy-peak-decline reports,
+  prediction-market/security-competition/event-forecasting benchmark
+  reproductions, five-baseline comparisons, linked-code audits, and
+  independent reproduction outputs remain open before roadmap wording can
+  promote sustained Adaptive Auto-Harness deployment support.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

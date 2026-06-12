@@ -5865,7 +5865,8 @@ Primary evidence:
     harness alignment claims as missing evidence until local implementation
     and reports exist.
 
-- [ ] Add Adaptive Auto-Harness open-ended task-stream boundary.
+- [ ] Implement Adaptive Auto-Harness open-ended task-stream evidence beyond
+      paper cache coverage.
   - Spec evidence: arXiv `2606.01770`, `Adaptive Auto-Harness: Sustained
     Self-Improvement for Agentic System Deployment on Open-Ended Task
     Streams`, was submitted June 1, 2026. Its abstract says existing
@@ -5879,27 +5880,33 @@ Primary evidence:
     adaptation loss, then addresses them with a stateful multi-agent evolver,
     a harness tree with solve-time routing, and human-steering hooks when
     history lacks the needed signal.
-  - Current evidence: LibreEvolve supports per-run artifacts, fixed problem
-    directories, MAP-Elites archives, islands, prompt history, and evaluator
-    feedback, but it has no `2606.01770` source row, no open-ended task-stream
-    abstraction, no unbounded history management across heterogeneous task
-    distributions, no evolution-loss/adaptation-loss accounting, no stateful
-    multi-agent evolver roles, no harness tree, no solve-time routing policy,
-    no human-steering hook record, and no sustained-performance report that
-    detects early peak followed by degradation.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2606.01770`: arXiv id/version/date/PDF hash, authors, source
-    license, linked-code URL/status, relation to AlphaEvolve and LibreEvolve
-    run/problem boundaries, open-ended task-stream schema, history-growth
-    records, task heterogeneity and distribution-shift metrics, oracle-harness
-    definition, evolution-loss and adaptation-loss records, stateful multi-
-    agent evolver role schemas, cross-cycle memory records, harness tree
-    artifacts, solve-time routing traces, human-steering hook provenance,
-    targeted-steering outcomes, sustained-performance curves, degradation/
-    brittleness diagnostics, prediction-market/security-competition/event-
-    forecasting benchmark metadata, baseline identities, ablation records, and
-    README/ROADMAP wording that keeps adaptive open-ended harness deployment
-    claims as missing evidence until local implementation and reports exist.
+  - Current evidence: `papers/download_manifest.*`, `papers/row_identity.json`,
+    `papers/README.md`, README, ROADMAP, and TODO coverage now include
+    `2606.01770`, cached locally as
+    `papers/2606.01770__Adaptive_Auto_Harness.pdf` with byte count `1895729`
+    and SHA-256
+    `50454c1eec069b668b515c6d322e4c5ac55f24655298b3381f91f461a9c39b3e`.
+    LibreEvolve supports per-run artifacts, fixed problem directories,
+    MAP-Elites archives, islands, prompt history, and evaluator feedback, but
+    it has no open-ended task-stream abstraction, no unbounded history
+    management across heterogeneous task distributions, no evolution-loss/
+    adaptation-loss accounting, no stateful multi-agent evolver roles, no
+    harness tree, no solve-time routing policy, no human-steering hook record,
+    and no sustained-performance report that detects early peak followed by
+    degradation.
+  - Required result: add implementation-boundary metadata beyond the paper
+    cache: source license, linked-code URL/status, relation to AlphaEvolve and
+    LibreEvolve run/problem boundaries, open-ended task-stream schema,
+    history-growth records, task heterogeneity and distribution-shift metrics,
+    oracle-harness definition, evolution-loss and adaptation-loss records,
+    stateful multi-agent evolver role schemas, cross-cycle memory records,
+    harness tree artifacts, solve-time routing traces, human-steering hook
+    provenance, targeted-steering outcomes, sustained-performance curves,
+    degradation/brittleness diagnostics, prediction-market/security-
+    competition/event-forecasting benchmark metadata, baseline identities,
+    ablation records, and README/ROADMAP wording that keeps adaptive open-
+    ended harness deployment claims as missing evidence until local
+    implementation and reports exist.
 
 - [ ] Add Meta-Harness outer-loop harness-code search boundary.
   - Spec evidence: arXiv `2603.28052`, `Meta-Harness: End-to-End

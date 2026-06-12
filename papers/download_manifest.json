@@ -490,6 +490,16 @@
     "sha256": "5458d316fd5edbfda5cf7355592d41e0c5f3f889e31c92855728c47452f6ca32"
   },
   {
+    "id": "2606.01770",
+    "title": "Adaptive_Auto_Harness",
+    "url": "https://arxiv.org/pdf/2606.01770.pdf",
+    "file": "papers/2606.01770__Adaptive_Auto_Harness.pdf",
+    "ok": true,
+    "bytes": 1895729,
+    "message": "downloaded",
+    "sha256": "50454c1eec069b668b515c6d322e4c5ac55f24655298b3381f91f461a9c39b3e"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

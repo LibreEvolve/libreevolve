@@ -3619,8 +3619,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     Avoid implying LibreEvolve has proven that increased harness structure is
     beneficial without those artifacts.
 
-- [ ] Keep README Adaptive Auto-Harness deployment claims absent or
-      source-scoped until open-ended task-stream evidence exists.
+- [ ] Keep README Adaptive Auto-Harness deployment claims source-scoped until
+      open-ended task-stream runtime evidence exists.
   - Spec evidence: arXiv `2606.01770`, `Adaptive Auto-Harness: Sustained
     Self-Improvement for Agentic System Deployment on Open-Ended Task
     Streams`, says fixed offline harness benchmarks do not capture open-ended
@@ -3629,21 +3629,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     brittle, then proposes evolution-loss/adaptation-loss accounting, a
     stateful multi-agent evolver, a harness tree with solve-time routing, and
     human-steering hooks.
-  - Current evidence: README documents LibreEvolve's current problem-centric
-    CLI, run artifacts, prompt history, MAP-Elites archive, islands, examples,
-    and benchmark boundaries. It does not list `2606.01770`, support
-    open-ended task streams, manage growing cross-run histories for
-    deployment, maintain a harness tree, route tasks to harness variants,
-    distinguish evolution loss from adaptation loss, record human steering, or
-    report sustained performance under distribution shift.
+  - Current evidence: README now lists `2606.01770`, Adaptive Auto-Harness, as
+    open-ended task-stream deployment context only and says no local
+    chronological task stream, evolution/adaptation-loss decomposition,
+    harness tree routing, human-steering hook, or prediction-market/security/
+    event benchmark reproduction exists. README also documents LibreEvolve's
+    current problem-centric CLI, run artifacts, prompt history, MAP-Elites
+    archive, islands, examples, and benchmark boundaries; it does not claim
+    open-ended task streams, growing cross-run deployment histories, harness
+    trees, solve-time routing, evolution/adaptation loss accounting, human
+    steering, or sustained performance under distribution shift.
   - Required result: if README mentions Adaptive Auto-Harness, sustained self-
     improvement, open-ended task streams, deployment adaptation, history-
     growth management, task-wise harness routing, harness trees, solve-time
     routing, human steering, evolution loss, adaptation loss, prediction-
     market/security/event-forecasting streams, or degradation from dense
-    repeated harness updates, keep the wording source-scoped until the paper
-    is in the manifest and local artifacts can show stream schemas,
-    distribution-shift records, harness-tree artifacts, routing traces,
+    repeated harness updates, keep the wording source-scoped until local
+    artifacts can show stream schemas, distribution-shift records,
+    harness-tree artifacts, routing traces,
     steering logs, sustained-performance curves, benchmark baselines, and
     report outcomes. Avoid implying LibreEvolve supports Adaptive
     Auto-Harness-style deployment without those artifacts.

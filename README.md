@@ -38,6 +38,9 @@ Important limits:
 - Configuration validation is local effective-config validation; live
   provider/model API compatibility is tracked by
   `papers/config_validation_boundary.json`.
+- Database sampling reports are local strategy/count telemetry, not calibrated
+  AlphaEvolve-style exploration/exploitation evidence; that boundary is tracked
+  by `papers/sampling_balance_boundary.json`.
 - The included examples are smoke fixtures and small demos unless a fixture
   explicitly documents stronger benchmark evidence.
 - Gemini/provider parity, benchmark-scale claims, paper-result reproduction,

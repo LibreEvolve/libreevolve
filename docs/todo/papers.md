@@ -1681,7 +1681,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     manifests now include `runtime.history.sampling_balance_report`, with
     per-run and per-generation parent/inspiration decision counts, mixed
     explore/exploit counts, inspiration strategy source counts, metric target
-    counts, frontier/lineage indicators, and validators.
+    counts, frontier/lineage indicators, validators, and the committed
+    `papers/sampling_balance_boundary.json` local-counts-only sidecar.
   - Current gap: paper-facing reports still do not connect sampling decisions
     to selected-program repetition, island/cell/descriptor contribution, score
     improvement, diversity coverage, budget impact, or equal-budget strategy

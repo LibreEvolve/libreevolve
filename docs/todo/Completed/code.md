@@ -18381,3 +18381,14 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject live
     provider/API compatibility overclaims, invalid boundary status, missing
     evidence drift, and incomplete required evidence fields.
+
+- [x] Add sampling-balance sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/sampling_balance_boundary.py`
+    now emits and validates the local-sampling-counts-only boundary for
+    `runtime.history.sampling_balance_report`, separating configured ratio,
+    parent/inspiration strategy counts, generation records, sample records,
+    and strategy-source telemetry from calibrated database-balance evidence;
+    paper-manifest validation requires the committed sidecar at the repo root.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    calibrated exploration/exploitation overclaims, invalid boundary status,
+    missing evidence drift, and incomplete required evidence fields.

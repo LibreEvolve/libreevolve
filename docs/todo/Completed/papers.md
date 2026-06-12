@@ -13465,3 +13465,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused config-validation boundary tests reject live provider/API
     compatibility overclaims.
+
+- [x] Record sampling-balance paper-facing sidecar.
+  - Status: `papers/sampling_balance_boundary.json` now records the
+    local-counts-only boundary for sampling-balance evidence: current
+    manifests expose configured explore ratio, parent/inspiration strategy
+    counts, per-generation decisions, sample records, strategy-source counts,
+    and metric/frontier/lineage indicators, while fallback source-pool
+    provenance, selected-program repetition tables, island/cell/metric/
+    lineage/descriptor coverage, score-improvement versus diversity effects,
+    equal-budget strategy comparisons, and calibrated balance policy remain
+    absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused sampling-balance boundary tests reject calibrated
+    AlphaEvolve database-balance overclaims.

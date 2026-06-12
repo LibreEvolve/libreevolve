@@ -1958,7 +1958,9 @@ Primary evidence:
     manifests now include `runtime.history.sampling_balance_report`, which
     aggregates actual parent and inspiration decisions by strategy, mixed
     explore/exploit branch, inspiration source, generation, selected-count
-    totals, metric target, frontier, and lineage indicators.
+    totals, metric target, frontier, and lineage indicators. The committed
+    `papers/sampling_balance_boundary.json` sidecar keeps this scoped to local
+    sampling-count telemetry.
   - Required result: extend sampling-balance reports with selected-program
     repetition, island/cell/descriptor contribution, score improvement,
     diversity coverage, budget impact, validation hooks, and equal-budget

@@ -2484,8 +2484,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     current-run resurfacing, objective archive readiness fields that keep
     primary Pareto/frontier replacement and durable metric-target databases
     false, and `runtime.history.sampling_balance_report` with aggregate
-    parent/inspiration decision counts. It should not imply that these knobs
-    have been calibrated or measured as an AlphaEvolve-style
+    parent/inspiration decision counts, with
+    `papers/sampling_balance_boundary.json` preserving the local-counts-only
+    claim boundary. It should not imply that these knobs have been calibrated
+    or measured as an AlphaEvolve-style
     exploration/exploitation balance.
   - Required result: when calibrated sampling-balance comparisons land, update
     README, ROADMAP, papers index, and code/paper TODO entries with fallback

@@ -12606,3 +12606,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused config-validation tests reject live provider/API compatibility
     overclaims.
+
+- [x] Keep README sampling-balance boundary tied to paper-index sidecar.
+  - Status: README now states that database sampling reports are local
+    strategy/count telemetry, not calibrated AlphaEvolve-style exploration/
+    exploitation evidence, with the boundary tracked by
+    `papers/sampling_balance_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused sampling-balance tests reject calibrated database-balance
+    overclaims.

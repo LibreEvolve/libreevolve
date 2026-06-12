@@ -10350,3 +10350,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation requires the committed sidecar and
     focused config-validation tests reject live provider/API compatibility
     overclaims.
+
+- [x] Keep roadmap sampling-balance boundary tied to sidecar.
+  - Status: ROADMAP now links
+    `runtime.history.sampling_balance_report` to
+    `papers/sampling_balance_boundary.json`, preserving the local-counts-only
+    boundary while keeping benchmark-required policies, cross-run fixtures,
+    scalar/single-metric comparators, and equal-budget strategy-effect
+    analysis open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused sampling-balance tests reject calibrated AlphaEvolve database-
+    balance overclaims.

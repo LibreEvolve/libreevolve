@@ -1159,9 +1159,11 @@ AlphaEvolve sampling-balance note: completed manifests now include
 `runtime.history.sampling_balance_report`, which aggregates generated-candidate
 parent/inspiration selection metadata into current-run explore/exploit,
 strategy, metric-target, frontier, lineage, and per-generation decision counts.
-This narrows the remaining Section 2.5 database-balance gap to equal-budget
-strategy comparisons, score-improvement attribution, diversity-effect analysis,
-and cross-run calibration rather than absence of run-local sampling telemetry.
+The committed `papers/sampling_balance_boundary.json` sidecar preserves that
+local-counts-only boundary. This narrows the remaining Section 2.5
+database-balance gap to equal-budget strategy comparisons, score-improvement
+attribution, diversity-effect analysis, and cross-run calibration rather than
+absence of run-local sampling telemetry.
 
 AlphaEvolve budget-accounting note: runtime manifests validate current-process
 `RunBudget` counters, elapsed evaluator seconds, seed/candidate totals,

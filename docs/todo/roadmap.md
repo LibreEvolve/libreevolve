@@ -1349,9 +1349,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     cells, islands, metric/frontier sampling, lineage sampling, novelty
     sampling, recency sampling, bounded current-run resurfacing, and
     `runtime.history.sampling_balance_report` with per-run and per-generation
-    parent/inspiration decision counts. It should not imply that the current
-    knobs are calibrated database-balance evidence or that a run report can
-    explain the improvement/diversity tradeoff.
+    parent/inspiration decision counts, plus
+    `papers/sampling_balance_boundary.json` as the local-counts-only evidence
+    boundary. It should not imply that the current knobs are calibrated
+    database-balance evidence or that a run report can explain the
+    improvement/diversity tradeoff.
   - Required result: when calibrated sampling-balance comparisons land, update
     ROADMAP, README, papers index, and code/paper TODO entries with fallback
     and source-pool provenance, selected-program repetition, island/cell/

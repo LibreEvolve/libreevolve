@@ -239,6 +239,10 @@ from libreevolve.problems.benchmarks.repeated_sampling_baseline_boundary import 
     repeated_sampling_baseline_boundary_record,
     validate_repeated_sampling_baseline_boundary,
 )
+from libreevolve.problems.benchmarks.sampling_balance_boundary import (
+    sampling_balance_boundary_record,
+    validate_sampling_balance_boundary,
+)
 from libreevolve.problems.benchmarks.sample_efficiency_boundary import (
     sample_efficiency_boundary_record,
     validate_sample_efficiency_boundary,
@@ -398,6 +402,7 @@ PROCESS_EXHIBIT_BOUNDARY_FILE = "papers/process_exhibit_boundary.json"
 PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_FILE = "papers/proposal_lifecycle_audit_boundary.json"
 INCORRECT_SUGGESTION_AUDIT_BOUNDARY_FILE = "papers/incorrect_suggestion_audit_boundary.json"
 REPEATED_SAMPLING_BASELINE_BOUNDARY_FILE = "papers/repeated_sampling_baseline_boundary.json"
+SAMPLING_BALANCE_BOUNDARY_FILE = "papers/sampling_balance_boundary.json"
 SAMPLE_EFFICIENCY_BOUNDARY_FILE = "papers/sample_efficiency_boundary.json"
 PARALLEL_EVALUATION_READINESS_BOUNDARY_FILE = "papers/parallel_evaluation_readiness_boundary.json"
 DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_FILE = "papers/distributed_pipeline_topology_boundary.json"
@@ -877,6 +882,7 @@ def validate_paper_manifest(
     issues.extend(_validate_proposal_lifecycle_audit_boundary(root_path))
     issues.extend(_validate_incorrect_suggestion_audit_boundary(root_path))
     issues.extend(_validate_repeated_sampling_baseline_boundary(root_path))
+    issues.extend(_validate_sampling_balance_boundary(root_path))
     issues.extend(_validate_sample_efficiency_boundary(root_path))
     issues.extend(_validate_parallel_evaluation_readiness_boundary(root_path))
     issues.extend(_validate_distributed_pipeline_topology_boundary(root_path))
@@ -2098,6 +2104,38 @@ def _validate_repeated_sampling_baseline_boundary(root_path: Path) -> list[Paper
             f"repeated_sampling_baseline_boundary_{issue.code}",
             issue.message,
             "repeated_sampling_baseline",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_sampling_balance_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / SAMPLING_BALANCE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = sampling_balance_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "sampling_balance_boundary_manifest_missing",
+                    (
+                        f"{SAMPLING_BALANCE_BOUNDARY_FILE} must emit "
+                        "local sampling-counts versus calibrated balance"
+                    ),
+                    "sampling_balance",
+                )
+            ]
+    report = validate_sampling_balance_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"sampling_balance_boundary_{issue.code}",
+            issue.message,
+            "sampling_balance",
         )
         for issue in report.issues
     ]

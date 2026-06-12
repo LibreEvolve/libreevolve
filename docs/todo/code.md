@@ -402,7 +402,8 @@ Primary evidence:
     `evaluation.metadata.llm_feedback`, `llm_feedback:<name>` stages, feedback
     indexes, retention modes, and scheduler reward telemetry. Existing
     fixtures have not yet been populated with real broad collaborator-feedback
-    records.
+    records. `papers/collaborator_feedback_provenance_boundary.json` preserves
+    the paper-facing metadata-contract-only boundary for this runtime surface.
   - Required result: populate representative fixtures with reviewed
     collaborator-feedback metadata, link feedback events to actual code/docs/
     report changes and validation outcomes, add paper-facing examples or

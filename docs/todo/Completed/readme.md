@@ -12508,3 +12508,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     progress, and linked evolutionary-run evidence.
   - Verification: paper-manifest validation checks the repeated-sampling
     sidecar and README/paper-index count consistency.
+
+- [x] Keep README collaborator-feedback boundary tied to paper-index sidecar.
+  - Status: README now states that collaborator-feedback provenance remains a
+    metadata/report contract until representative fixtures carry reviewed
+    multi-cohort feedback evidence, with the boundary tracked by
+    `papers/collaborator_feedback_provenance_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused collaborator-feedback boundary tests reject premature robustness or
+    versatility parity claims.

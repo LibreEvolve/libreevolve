@@ -12833,6 +12833,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
 
+- [x] Record collaborator-feedback provenance paper-facing sidecar.
+  - Status: `libreevolve/problems/benchmarks/collaborator_feedback_provenance_boundary.py`
+    and `papers/collaborator_feedback_provenance_boundary.json` now preserve
+    that optional collaborator-feedback metadata and runtime provenance reports
+    exist, while populated representative-fixture feedback records,
+    multi-cohort reviewed feedback evidence, paper-facing certification rows,
+    workflow change artifact links, reviewed validation outcomes, and
+    AlphaEvolve collaborator-feedback parity remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused collaborator-feedback boundary tests reject premature
+    parity claims.
+
 - [x] Add `2603.28052` Meta-Harness paper-cache coverage.
   - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
     `papers/row_identity.json`, and `papers/README.md` now include

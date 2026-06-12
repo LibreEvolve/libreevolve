@@ -1,0 +1,34 @@
+{
+  "schema": "libreevolve.alphaevolve_collaborator_feedback_provenance_boundary.v1",
+  "runtime_report_schema": "libreevolve.collaborator_feedback_provenance_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve Acknowledgements say early users and collaborators contributed diverse use cases and insightful feedback that shaped the system into a more robust and versatile tool",
+  "boundary_status": "metadata_contract_only",
+  "runtime_report_status": "collaborator_feedback_provenance_report_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "metadata_present",
+    "diverse_use_case_cohorts",
+    "feedback_event_ids_recorded",
+    "affected_workflow_areas_recorded",
+    "change_artifact_links_recorded",
+    "validation_outcomes_recorded",
+    "privacy_redaction_policy_recorded",
+    "collaborator_review_or_owner_signoff",
+    "robustness_or_versatility_claim_linked",
+    "alphaevolve_collaborator_feedback_parity",
+    "representative_fixture_feedback_records",
+    "paper_facing_certification_rows",
+    "workflow_change_artifact_links",
+    "reviewed_validation_outcomes"
+  ],
+  "missing_evidence": {
+    "representative_fixture_feedback_records": "not_recorded_locally",
+    "multi_cohort_reviewed_feedback_records": "not_recorded_locally",
+    "paper_facing_certification_rows": "not_recorded_locally",
+    "workflow_change_artifact_links": "not_recorded_locally",
+    "reviewed_validation_outcomes": "not_recorded_locally",
+    "alphaevolve_collaborator_feedback_parity": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has an optional collaborator feedback metadata contract and runtime provenance report for cohorts, feedback events, affected workflow areas, change-artifact links, validation outcomes, privacy/redaction policy, review/signoff state, and robustness/versatility claim links, but does not claim populated representative-fixture feedback records, multi-cohort reviewed feedback evidence, paper-facing certification rows, workflow change artifact links, reviewed validation outcomes, or AlphaEvolve collaborator-feedback parity."
+}

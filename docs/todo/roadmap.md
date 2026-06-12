@@ -425,6 +425,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     objective metrics, and LLM feedback calibration artifacts as separate
     in-run mechanisms. Existing fixtures do not yet carry real broad
     collaborator-feedback evidence.
+    `papers/collaborator_feedback_provenance_boundary.json` preserves the
+    roadmap-visible metadata-contract-only boundary for this runtime surface.
   - Required result: when representative fixtures carry reviewed
     collaborator-feedback metadata and paper-facing evidence, update roadmap,
     README, papers index, and code/paper TODO entries together so roadmap

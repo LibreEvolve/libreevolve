@@ -53,6 +53,9 @@ Important limits:
 - Expert-guided problem formulation is a metadata/report contract until real
   benchmark fixtures carry populated review/signoff evidence; the boundary is
   tracked by `papers/problem_formulation_provenance_boundary.json`.
+- Collaborator-feedback provenance is a metadata/report contract until
+  representative fixtures carry reviewed multi-cohort feedback evidence; the
+  boundary is tracked by `papers/collaborator_feedback_provenance_boundary.json`.
 - The included examples are smoke fixtures and small demos unless explicitly
   documented otherwise.
 - Paper and blog claims are tracked as source boundaries unless local benchmark

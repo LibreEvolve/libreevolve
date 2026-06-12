@@ -10041,6 +10041,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation checks the 53-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.
 
+- [x] Keep roadmap collaborator-feedback boundary tied to sidecar.
+  - Status: ROADMAP now links optional collaborator-feedback metadata and
+    `runtime.history.collaborator_feedback_provenance_report` to
+    `papers/collaborator_feedback_provenance_boundary.json`, preserving the
+    paper-facing metadata-contract-only boundary until reviewed multi-cohort
+    feedback evidence exists.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused collaborator-feedback tests reject premature parity
+    claims.
+
 - [x] Preserve `2603.28052` Meta-Harness paper-cache scope in roadmap.
   - Status: ROADMAP now identifies arXiv `2603.28052`, `Meta-Harness:
     End-to-End Optimization of Model Harnesses`, as background outer-loop

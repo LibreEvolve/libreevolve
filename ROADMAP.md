@@ -290,7 +290,9 @@ LibreEvolve has:
   `runtime.history.collaborator_feedback_provenance_report` for early-user or
   collaborator cohorts, feedback event ids, affected workflow areas,
   change-artifact links, validation outcomes, privacy/redaction policy, and
-  robustness/versatility claim readiness
+  robustness/versatility claim readiness, with
+  `papers/collaborator_feedback_provenance_boundary.json` preserving the
+  paper-facing metadata-contract-only boundary
 - optional acknowledgement metadata under `acknowledgements.yaml` or direct
   `Problem.acknowledgement_metadata`, normalized into
   `problem.acknowledgement_metadata` and summarized by

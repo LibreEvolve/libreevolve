@@ -47,6 +47,10 @@ from libreevolve.problems.benchmarks.benchmark_fixture_readiness_boundary import
     benchmark_fixture_readiness_boundary_record,
     validate_benchmark_fixture_readiness_boundary,
 )
+from libreevolve.problems.benchmarks.collaborator_feedback_provenance_boundary import (
+    collaborator_feedback_provenance_boundary_record,
+    validate_collaborator_feedback_provenance_boundary,
+)
 from libreevolve.problems.benchmarks.problem_formulation_provenance_boundary import (
     problem_formulation_provenance_boundary_record,
     validate_problem_formulation_provenance_boundary,
@@ -333,6 +337,7 @@ FIGURE9_MATRIX_DIFF_ARTIFACTS_FILE = "papers/figure9_matrix_diff_artifacts.json"
 FIGURE4_MATRIX_DISCOVERY_ARTIFACTS_FILE = "papers/figure4_matrix_discovery_artifacts.json"
 FIGURE8_ABLATION_ARTIFACTS_FILE = "papers/figure8_ablation_artifacts.json"
 BENCHMARK_FIXTURE_READINESS_BOUNDARY_FILE = "papers/benchmark_fixture_readiness_boundary.json"
+COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_FILE = "papers/collaborator_feedback_provenance_boundary.json"
 PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_FILE = "papers/problem_formulation_provenance_boundary.json"
 EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integration_boundary.json"
 CANDIDATE_ABSTRACTION_BOUNDARY_FILE = "papers/candidate_abstraction_boundary.json"
@@ -801,6 +806,7 @@ def validate_paper_manifest(
     issues.extend(_validate_ablation_registry_if_present(root_path))
     issues.extend(_validate_figure8_ablation_artifacts(root_path))
     issues.extend(_validate_benchmark_fixture_readiness_boundary(root_path))
+    issues.extend(_validate_collaborator_feedback_provenance_boundary(root_path))
     issues.extend(_validate_problem_formulation_provenance_boundary(root_path))
     issues.extend(_validate_existing_codebase_integration_boundary(root_path))
     issues.extend(_validate_candidate_language_runner_boundary(root_path))
@@ -1552,6 +1558,38 @@ def _validate_problem_formulation_provenance_boundary(root_path: Path) -> list[P
             f"problem_formulation_provenance_boundary_{issue.code}",
             issue.message,
             "problem_formulation_provenance",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_collaborator_feedback_provenance_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = collaborator_feedback_provenance_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "collaborator_feedback_provenance_boundary_manifest_missing",
+                    (
+                        f"{COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_FILE} must emit "
+                        "collaborator-feedback provenance availability"
+                    ),
+                    "collaborator_feedback_provenance",
+                )
+            ]
+    report = validate_collaborator_feedback_provenance_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"collaborator_feedback_provenance_boundary_{issue.code}",
+            issue.message,
+            "collaborator_feedback_provenance",
         )
         for issue in report.issues
     ]

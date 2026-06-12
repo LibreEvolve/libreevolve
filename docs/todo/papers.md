@@ -621,9 +621,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     claim readiness. Current paper-facing implementation notes can also
     describe LLM-grader feedback retention, feedback indexes,
     feedback-sourced metrics, and calibration-report contracts as separate
-    search/evaluation telemetry. Existing fixtures still lack real populated
-    broad collaborator-feedback records and paper-facing certification
-    examples.
+    search/evaluation telemetry.
+    `papers/collaborator_feedback_provenance_boundary.json` preserves this
+    metadata-contract-only boundary as manifest-validated paper evidence.
+    Existing fixtures still lack real populated broad collaborator-feedback
+    records and paper-facing certification examples.
   - Required result: populate representative fixtures with reviewed use-case
     feedback records, link events to actual workflow/artifact changes and
     validation outcomes, add paper-facing examples or certification rows, and

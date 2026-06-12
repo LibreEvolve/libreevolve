@@ -382,7 +382,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `evaluation.metadata.llm_feedback`, `llm_feedback:<name>` stages, feedback
     retention, feedback indexes, and feedback-sourced metrics. Existing
     fixtures do not yet carry real multi-cohort feedback records with
-    change-link and validation evidence.
+    change-link and validation evidence. README now points to
+    `papers/collaborator_feedback_provenance_boundary.json` as the committed
+    metadata-contract-only sidecar for this boundary.
   - Required result: when representative fixtures are populated with reviewed
     collaborator-feedback metadata and paper-facing evidence, update README,
     ROADMAP, papers index, and code/paper TODOs together so README

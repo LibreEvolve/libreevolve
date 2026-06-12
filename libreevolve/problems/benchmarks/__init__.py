@@ -95,6 +95,12 @@ from libreevolve.problems.benchmarks.benchmark_fixture_readiness_boundary import
     render_benchmark_fixture_readiness_boundary_summary,
     validate_benchmark_fixture_readiness_boundary,
 )
+from libreevolve.problems.benchmarks.collaborator_feedback_provenance_boundary import (
+    COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_SCHEMA,
+    collaborator_feedback_provenance_boundary_record,
+    render_collaborator_feedback_provenance_boundary_summary,
+    validate_collaborator_feedback_provenance_boundary,
+)
 from libreevolve.problems.benchmarks.problem_formulation_provenance_boundary import (
     PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_SCHEMA,
     problem_formulation_provenance_boundary_record,
@@ -612,6 +618,7 @@ __all__ = [
     "PAPER_CERTIFICATION_SCHEMA",
     "PARALLEL_EVALUATION_READINESS_BOUNDARY_SCHEMA",
     "PROCESS_EXHIBIT_BOUNDARY_SCHEMA",
+    "COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_SCHEMA",
     "PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_SCHEMA",
     "PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_SCHEMA",
     "RAMSEY_NUMBERS_BOUNDARY_SCHEMA",
@@ -669,6 +676,7 @@ __all__ = [
     "certification_artifact_inventory",
     "codebase_scale_benchmark_boundary_record",
     "codeevolve_boundary_record",
+    "collaborator_feedback_provenance_boundary_record",
     "combinatorics_berczy_boundary_record",
     "controller_backtracking_boundary_record",
     "deepevolve_boundary_record",
@@ -756,6 +764,7 @@ __all__ = [
     "render_certification_summary",
     "render_codebase_scale_benchmark_boundary_summary",
     "render_codeevolve_boundary_summary",
+    "render_collaborator_feedback_provenance_boundary_summary",
     "render_combinatorics_berczy_boundary_summary",
     "render_controller_backtracking_boundary_summary",
     "render_deepevolve_boundary_summary",
@@ -851,6 +860,7 @@ __all__ = [
     "validate_certification_evidence_bundle",
     "validate_codebase_scale_benchmark_boundary",
     "validate_codeevolve_boundary",
+    "validate_collaborator_feedback_provenance_boundary",
     "validate_combinatorics_berczy_boundary",
     "validate_controller_backtracking_boundary",
     "validate_deepevolve_boundary",

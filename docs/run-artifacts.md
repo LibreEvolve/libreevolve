@@ -129,7 +129,10 @@ external early-user/collaborator feedback separate from in-run `llm_feedback`
 graders and records whether diverse use-case cohorts, feedback event IDs,
 workflow areas, change links, validation outcomes, privacy/redaction policy,
 and collaborator review or owner signoff are present before robustness or
-versatility claims are marked claim-ready.
+versatility claims are marked claim-ready. The paper-facing sidecar
+`papers/collaborator_feedback_provenance_boundary.json` preserves that this is
+a metadata/report contract until representative fixtures carry reviewed
+multi-cohort feedback evidence.
 Problem fixtures can also optionally include `acknowledgements.yaml` or
 `acknowledgements.yml`; direct callers can set
 `Problem.acknowledgement_metadata`. Startup manifest validation normalizes this

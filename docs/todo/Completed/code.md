@@ -18272,3 +18272,12 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: AlphaEvolve 2026 impact boundary tests and paper-manifest
     tests cover the sidecar, drift rejection, and repo-root sidecar
     requirement.
+
+- [x] Add collaborator-feedback provenance sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/collaborator_feedback_provenance_boundary.py`
+    now emits and validates the collaborator-feedback metadata-contract-only
+    record, and `libreevolve/tools/paper_manifest.py` requires
+    `papers/collaborator_feedback_provenance_boundary.json` at the repo root.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    claim-ready drift, invalid boundary status, missing required evidence
+    fields, and premature AlphaEvolve collaborator-feedback parity.

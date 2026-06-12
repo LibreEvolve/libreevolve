@@ -13622,3 +13622,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused objective archive tests reject primary-archive
     overclaims.
+
+- [x] Record metric-diverse prompt paper-facing sidecar.
+  - Status: `papers/metric_diverse_prompt_boundary.json` now records the
+    prompt-visible-evidence-only boundary for AlphaEvolve Section 2.4
+    multi-score prompt claims: runtime evidence can show declared metric
+    vectors, metric-targeted parent/inspiration metadata, prompt-context
+    metric filtering, visible inspiration ids, metric-niche labels, raw and
+    normalized metric values, prompt hash linkage, metric-diverse inspiration
+    reports, and false readiness fields, while benchmark-required prompt
+    policies, cross-run fixtures, scalar-only baselines, single-metric target
+    baselines, equal-budget comparison reports, and AlphaEvolve Section 2.4
+    benchmark readiness remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused metric-diverse prompt tests reject benchmark-policy
+    overclaims.

@@ -18525,3 +18525,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     primary archive overclaims, invalid boundary status, missing evidence
     drift, and incomplete required evidence fields.
+
+- [x] Add metric-diverse prompt sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/metric_diverse_prompt_boundary.py`
+    now emits and validates the prompt-visible-evidence-only boundary for
+    `runtime.history.metric_diverse_inspiration_report`, separating declared
+    metric vectors, metric-targeted selection metadata, prompt-context metric
+    filtering, visible inspiration ids, metric-niche labels, raw/normalized
+    metric values, prompt hash linkage, runtime report evidence, and false
+    readiness fields from benchmark-required metric-diverse prompt policy,
+    cross-run metric-diverse fixtures, scalar-only baselines, single-metric
+    target baselines, equal-budget comparison reports, and AlphaEvolve Section
+    2.4 benchmark readiness.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    benchmark-policy overclaims, invalid boundary status, missing evidence
+    drift, and incomplete required evidence fields.

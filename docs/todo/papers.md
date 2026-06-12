@@ -1597,6 +1597,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     benchmark prompt-policy enforcement, cross-run fixtures, scalar-only
     baselines, single-metric baselines, and equal-budget comparison reports
     false with overclaim validation.
+    `papers/metric_diverse_prompt_boundary.json` now validates this
+    prompt-visible-evidence-only boundary.
   - Current gap: the paper/status surfaces still do not require benchmark runs
     to use metric-diverse prompt slates, compare those runs with scalar archive
     sampling, or provide cross-run fixtures for different definitions of

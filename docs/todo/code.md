@@ -1862,6 +1862,9 @@ Primary evidence:
     keeping benchmark prompt-policy enforcement, cross-run fixtures,
     scalar-only baselines, single-metric baselines, and equal-budget comparison
     reports false with overclaim validation.
+    `papers/metric_diverse_prompt_boundary.json` now validates that this is
+    prompt-visible evidence, not benchmark-required prompt policy or
+    scalar/single-metric equal-budget comparison evidence.
   - Required result: add benchmark-required policies/fixtures and comparison
     reports showing multi-score runs can deliberately condition the model on
     programs excelling under different metrics in the same prompt.

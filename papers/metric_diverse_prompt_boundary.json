@@ -1,0 +1,39 @@
+{
+  "schema": "libreevolve.metric_diverse_prompt_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve Section 2.4 says multiple scores can improve a primary target because prompts include programs that excel under different criteria, each representing a different definition of good",
+  "boundary_status": "prompt_visible_evidence_not_benchmark_policy",
+  "runtime_report_schema": "libreevolve.metric_diverse_inspiration_report.v1",
+  "runtime_record_schema": "libreevolve.metric_diverse_inspiration.v1",
+  "benchmark_policy_schema": "libreevolve.metric_diverse_prompt_benchmark_boundary.v1",
+  "benchmark_comparison_readiness_schema": "libreevolve.metric_diverse_benchmark_comparison_readiness.v1",
+  "runtime_report_status": "metric_diverse_prompt_visible_evidence_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "declared_metric_vectors",
+    "metric_targeted_parent_inspiration_metadata",
+    "prompt_context_metric_filtering",
+    "prompt_visible_inspiration_ids",
+    "metric_niche_labels",
+    "raw_and_normalized_metric_values",
+    "prompt_hash_linkage",
+    "metric_diverse_inspiration_report",
+    "benchmark_policy_false_readiness",
+    "benchmark_comparison_false_readiness",
+    "benchmark_required_metric_diverse_prompt_policy",
+    "cross_run_metric_diverse_prompt_fixture",
+    "scalar_only_baseline_comparison",
+    "single_metric_target_baseline_comparison",
+    "equal_budget_comparison_report",
+    "alphaevolve_section_2_4_benchmark_readiness"
+  ],
+  "missing_evidence": {
+    "benchmark_required_metric_diverse_prompt_policy": "not_recorded_locally",
+    "cross_run_metric_diverse_prompt_fixture": "not_recorded_locally",
+    "scalar_only_baseline_comparison": "not_recorded_locally",
+    "single_metric_target_baseline_comparison": "not_recorded_locally",
+    "equal_budget_comparison_report": "not_recorded_locally",
+    "alphaevolve_section_2_4_benchmark_readiness": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve manifests can show prompt-visible metric-diverse inspiration evidence: declared metric vectors, metric-targeted selection metadata, prompt-context metric filtering, prompt-visible inspiration ids, metric-niche labels, raw and normalized metric values, prompt hash linkage, and metric-diverse inspiration reports with false readiness fields. It does not claim benchmark-required metric-diverse prompt policy, cross-run metric-diverse prompt fixtures, scalar only baseline comparison, single-metric target baseline comparison, equal-budget comparison reports, or AlphaEvolve Section 2.4 benchmark readiness."
+}

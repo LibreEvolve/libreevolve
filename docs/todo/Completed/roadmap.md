@@ -10466,3 +10466,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     optimization open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused objective archive tests reject primary-archive overclaims.
+
+- [x] Keep roadmap metric-diverse prompt boundary tied to sidecar.
+  - Status: ROADMAP now links current prompt-visible metric-diverse
+    inspiration evidence to `papers/metric_diverse_prompt_boundary.json` while
+    keeping benchmark-required prompt policies, cross-run fixtures,
+    scalar/single-metric baselines, equal-budget comparison reports, and
+    AlphaEvolve Section 2.4 benchmark readiness open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused metric-diverse prompt tests reject benchmark-policy overclaims.

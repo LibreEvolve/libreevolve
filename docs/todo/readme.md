@@ -124,7 +124,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `libreevolve.metric_diverse_benchmark_comparison_readiness.v1`, which
     keeps benchmark prompt-policy enforcement, cross-run fixtures, scalar-only
     baselines, single-metric baselines, and equal-budget comparison reports
-    false. It should still not imply those current-run evidence surfaces
+    false. README now ties that boundary to
+    `papers/metric_diverse_prompt_boundary.json`. It should still not imply
+    those current-run evidence surfaces
     enforce benchmark-wide metric-diverse prompt conditioning or compare
     against scalar and one-at-a-time metric-targeted sampling.
   - Required result: when benchmark-required metric-diverse prompt policies and

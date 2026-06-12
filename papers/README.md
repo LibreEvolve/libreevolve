@@ -342,6 +342,8 @@ scalar/single-metric comparison reports exist. The same report now carries
 `libreevolve.metric_diverse_benchmark_comparison_readiness.v1`, keeping
 benchmark prompt-policy enforcement, cross-run fixtures, scalar-only
 baselines, single-metric baselines, and equal-budget comparison reports false.
+The committed `papers/metric_diverse_prompt_boundary.json` sidecar keeps this
+prompt-visible-evidence-only scope machine-validated.
 It can also cap already validated/redacted plugin `extra_context` with
 `extra_context_max_chars`, recording input/rendered/omitted character counts.
 LLM-grader prompt context can now be narrowed with `llm_feedback_fields`, a

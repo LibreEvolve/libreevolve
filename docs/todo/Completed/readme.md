@@ -12701,3 +12701,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     boundary tracked by `papers/objective_archive_boundary.json`.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused objective archive tests reject primary-archive overclaims.
+
+- [x] Keep README metric-diverse prompt boundary tied to sidecar.
+  - Status: README now states that metric-diverse prompt evidence is
+    current-run prompt-visible telemetry, not benchmark-required prompt policy,
+    cross-run fixtures, or scalar/single-metric equal-budget comparisons, with
+    the boundary tracked by `papers/metric_diverse_prompt_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused metric-diverse prompt tests reject benchmark-policy overclaims.

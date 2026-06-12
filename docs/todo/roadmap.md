@@ -747,7 +747,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `libreevolve.metric_diverse_benchmark_comparison_readiness.v1`, keeping
     benchmark prompt-policy enforcement, cross-run fixtures, scalar-only
     baselines, single-metric baselines, and equal-budget comparison reports
-    false. These current surfaces still do not require benchmark policies or
+    false. ROADMAP now ties that boundary to
+    `papers/metric_diverse_prompt_boundary.json`. These current surfaces still
+    do not require benchmark policies or
     fixtures proving multi-score runs consistently use and compare prompt
     slates with different metric niches.
   - Required result: when benchmark-required metric-diverse prompt policies and

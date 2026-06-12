@@ -472,7 +472,9 @@ is not yet an AlphaEvolve reproduction.
   `libreevolve.metric_diverse_benchmark_comparison_readiness.v1` false
   readiness for benchmark prompt-policy enforcement, cross-run fixtures,
   scalar-only baselines, single-metric baselines, and equal-budget comparison
-  reports. `runtime.history.sampling_balance_report` now aggregates
+  reports. `papers/metric_diverse_prompt_boundary.json` preserves this
+  prompt-visible-evidence-only boundary for paper-manifest validation.
+  `runtime.history.sampling_balance_report` now aggregates
   current-run parent/inspiration strategy decisions, with
   `papers/sampling_balance_boundary.json` preserving the local-counts-only
   boundary. Benchmark-required policies, cross-run fixtures,

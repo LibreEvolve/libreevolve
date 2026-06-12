@@ -75,6 +75,10 @@ Important limits:
   evidence, not primary Pareto/frontier archive replacement or durable
   cross-run metric optimization; that boundary is tracked by
   `papers/objective_archive_boundary.json`.
+- Metric-diverse prompt evidence is current-run prompt-visible telemetry, not
+  benchmark-required metric-diverse prompt policy, cross-run fixtures, or
+  scalar/single-metric equal-budget comparisons; that boundary is tracked by
+  `papers/metric_diverse_prompt_boundary.json`.
 - MAP-Elites descriptor snapshots are insertion-time local descriptor metadata,
   not stable learned/evaluator-provided behavior descriptors or archive rebin
   semantics; that boundary is tracked by

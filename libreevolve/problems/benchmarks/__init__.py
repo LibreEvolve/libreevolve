@@ -371,6 +371,12 @@ from libreevolve.problems.benchmarks.objective_archive_boundary import (
     render_objective_archive_boundary_summary,
     validate_objective_archive_boundary,
 )
+from libreevolve.problems.benchmarks.metric_diverse_prompt_boundary import (
+    METRIC_DIVERSE_PROMPT_BOUNDARY_SCHEMA,
+    metric_diverse_prompt_boundary_record,
+    render_metric_diverse_prompt_boundary_summary,
+    validate_metric_diverse_prompt_boundary,
+)
 from libreevolve.problems.benchmarks.matrix_exhibits import (
     FIGURE4_MATRIX_DISCOVERY_ARTIFACT_BOUNDARY_SCHEMA,
     FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA,
@@ -721,6 +727,7 @@ __all__ = [
     "IMPROVEVOLVE_BOUNDARY_SCHEMA",
     "MADEVOLVE_BOUNDARY_SCHEMA",
     "MAGELLAN_BOUNDARY_SCHEMA",
+    "METRIC_DIVERSE_PROMPT_BOUNDARY_SCHEMA",
     "MULTIAGENT_LEARNING_BOUNDARY_SCHEMA",
     "MUTATION_CONSISTENCY_BOUNDARY_SCHEMA",
     "NATURAL_LANGUAGE_PREAMBLE_BOUNDARY_SCHEMA",
@@ -846,6 +853,7 @@ __all__ = [
     "magellan_boundary_record",
     "map_elites_descriptor_boundary_record",
     "map_elites_illumination_boundary_record",
+    "metric_diverse_prompt_boundary_record",
     "multiagent_learning_boundary_record",
     "mutation_consistency_boundary_record",
     "natural_language_preamble_boundary_record",
@@ -957,6 +965,7 @@ __all__ = [
     "render_improvevolve_boundary_summary",
     "render_madevolve_boundary_summary",
     "render_magellan_boundary_summary",
+    "render_metric_diverse_prompt_boundary_summary",
     "render_multiagent_learning_boundary_summary",
     "render_mutation_consistency_boundary_summary",
     "render_natural_language_preamble_boundary_summary",
@@ -1075,6 +1084,7 @@ __all__ = [
     "validate_improvevolve_boundary",
     "validate_madevolve_boundary",
     "validate_magellan_boundary",
+    "validate_metric_diverse_prompt_boundary",
     "validate_multiagent_learning_boundary",
     "validate_mutation_consistency_boundary",
     "validate_natural_language_preamble_boundary",

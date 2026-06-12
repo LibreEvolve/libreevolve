@@ -2512,8 +2512,14 @@ hashes, score-versus-discard intent, metric linkage, optional calibration
 report id, and prompt-feedback linkage. Completed manifests summarize these
 configured and observed policies under
 `runtime.history.qualitative_feedback_policy_report`; it remains
-`claim_ready: false` until calibration/task-suite linkage and prompt-history
-row audits exist. Runtime
+`claim_ready: false` until calibration/task-suite linkage exists. Completed
+manifests also include
+`runtime.history.qualitative_feedback_prompt_history_audit_report`, which
+audits candidates with `evaluation.metadata.llm_feedback` records against
+`prompt_history.jsonl` add/score rows by candidate id and prompt-program id.
+The audit stores candidate ids, feedback names, line numbers, and join status,
+not prompt text, and keeps calibration/task-suite and criterion-quality
+ablation readiness false. Runtime
 `Program.metrics` keys must match the same manifest-safe
 metric-name grammar as declared `metrics.yaml` names, including optional dotted
 namespaces. Unsafe plugin-added metric side effects are reverted and recorded

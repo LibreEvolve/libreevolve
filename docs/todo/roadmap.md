@@ -1796,12 +1796,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current evidence: ROADMAP and README can cite configured LLM feedback
     graders, qualitative criterion declarations, evaluator-gap rationales,
     rubric/prompt hashes, score-versus-discard intent, feedback records, and
-    `runtime.history.qualitative_feedback_policy_report`. They still do not
-    prove calibration/task-suite linkage or prompt-history row audits.
-  - Required result: when calibration/task-suite and prompt-history audit
-    evidence lands, update ROADMAP, README, papers index, and code/paper TODOs
-    together so roadmap wording distinguishes declared qualitative criteria
-    from validated AlphaEvolve-style qualitative feedback.
+    `runtime.history.qualitative_feedback_policy_report`. Runtime manifests
+    now also emit
+    `runtime.history.qualitative_feedback_prompt_history_audit_report`, which
+    joins candidates with LLM-feedback records to prompt-history add/score row
+    line numbers when prompt-program history exists. They still do not prove
+    calibration/task-suite linkage or criterion-quality ablations.
+  - Required result: when calibration/task-suite and ablation evidence lands,
+    update ROADMAP, README, papers index, and code/paper TODOs together so
+    roadmap wording distinguishes audited declared qualitative criteria from
+    validated AlphaEvolve-style qualitative feedback.
 
 - [ ] Keep benchmark-hardening roadmap wording scoped to smoke evidence versus
   benchmark-grade fixtures.

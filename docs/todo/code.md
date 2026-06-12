@@ -1556,14 +1556,17 @@ Primary evidence:
     `qualitative_policy`, and completed manifests emit
     `runtime.history.qualitative_feedback_policy_report` with configured and
     observed criterion counts, rubric/prompt hashes, metric linkage,
-    score-versus-discard intent, and overclaim validation.
-  - Remaining gap: calibration/task-suite linkage and prompt-history row
-    audits are still not executed, so criterion policy metadata does not yet
-    prove AlphaEvolve-style qualitative feedback quality.
-  - Required result: add executed calibration/task-suite linkage,
-    prompt-history row audits, and ablation examples proving hard-to-code
-    criteria such as simplicity are governed and useful rather than merely
-    declared.
+    score-versus-discard intent, and overclaim validation. Runtime histories
+    now also emit
+    `runtime.history.qualitative_feedback_prompt_history_audit_report`, joining
+    candidates with feedback records to `prompt_history.jsonl` add/score line
+    numbers when prompt-program history exists.
+  - Remaining gap: executed calibration/task-suite linkage and ablation
+    examples are still missing, so criterion policy metadata plus prompt-row
+    joins do not yet prove AlphaEvolve-style qualitative feedback quality.
+  - Required result: add executed calibration/task-suite linkage and ablation
+    examples proving hard-to-code criteria such as simplicity are governed and
+    useful rather than merely declared.
 
 - [ ] Add unified expensive-evaluation compute budgets and resumable state.
   - Spec evidence: AlphaEvolve can spend hours or roughly 100 compute-hours on

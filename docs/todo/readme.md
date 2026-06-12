@@ -1990,13 +1990,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     scores or discard candidates when a criterion is not fulfilled.
   - Current evidence: README documents optional LLM feedback graders plus
     qualitative policy fields, retained `qualitative_policy` records, and
-    `runtime.history.qualitative_feedback_policy_report`. It should not imply
-    AlphaEvolve-style qualitative feedback quality until calibration/task-suite
-    linkage and prompt-history audits exist.
-  - Required result: when calibration/task-suite and prompt-history audit
-    evidence lands, update README, ROADMAP, papers index, and code/paper TODOs
-    together so README distinguishes declared hard-to-code criteria from
-    validated qualitative feedback such as simplicity.
+    `runtime.history.qualitative_feedback_policy_report`. README now also
+    documents
+    `runtime.history.qualitative_feedback_prompt_history_audit_report`, which
+    joins feedback-bearing candidates to prompt-history add/score rows without
+    retaining prompt text. It should not imply AlphaEvolve-style qualitative
+    feedback quality until calibration/task-suite linkage and
+    criterion-quality ablations exist.
+  - Required result: when calibration/task-suite and ablation evidence lands,
+    update README, ROADMAP, papers index, and code/paper TODOs together so
+    README distinguishes audited declared hard-to-code criteria from validated
+    qualitative feedback such as simplicity.
 
 - [ ] Keep README provider-cancellation wording scoped to timeout policy and
   observation evidence versus live hard cancellation.

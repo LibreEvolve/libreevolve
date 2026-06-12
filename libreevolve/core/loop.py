@@ -5394,6 +5394,13 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 programs,
             )
         ),
+        "qualitative_feedback_prompt_history_audit_report": (
+            _qualitative_feedback_prompt_history_audit_report(
+                db.startup_manifest_snapshot(),
+                programs,
+                run_dir,
+            )
+        ),
         "automated_evaluator_scope_report": (
             _automated_evaluator_scope_report(
                 db.startup_manifest_snapshot(),
@@ -19621,6 +19628,142 @@ def _qualitative_feedback_policy_report(
     return report
 
 
+def _qualitative_feedback_prompt_history_audit_report(
+    startup_manifest: Mapping[str, object],
+    programs: list[Program],
+    run_dir: Path,
+) -> dict:
+    config = (
+        startup_manifest.get("config")
+        if isinstance(startup_manifest.get("config"), Mapping)
+        else {}
+    )
+    llm_feedback = (
+        config.get("llm_feedback")
+        if isinstance(config.get("llm_feedback"), list)
+        else []
+    )
+    history_indexes = _prompt_current_history_join_indexes(run_dir)
+    records: list[dict] = []
+    for program in programs:
+        record = _qualitative_feedback_prompt_history_record(
+            program,
+            history_indexes,
+        )
+        if record is not None:
+            records.append(record)
+    records.sort(key=lambda item: (item["generation"], item["candidate_id"]))
+    observed_feedback_count = sum(record["feedback_record_count"] for record in records)
+    score_join_count = sum(
+        1 for record in records if record["prompt_history_score_joined"] is True
+    )
+    add_join_count = sum(
+        1 for record in records if record["prompt_history_add_joined"] is True
+    )
+    all_feedback_candidates_joined = bool(records) and score_join_count == len(records)
+    report = {
+        "schema": "libreevolve.qualitative_feedback_prompt_history_audit_report.v1",
+        "source": "history_jsonl_prompt_history_jsonl_feedback_records",
+        "configured_llm_feedback_count": len(llm_feedback),
+        "candidate_with_feedback_count": len(records),
+        "observed_feedback_record_count": observed_feedback_count,
+        "prompt_history_add_join_count": add_join_count,
+        "prompt_history_score_join_count": score_join_count,
+        "records": records[:25],
+        "records_truncated": len(records) > 25,
+        "audit_policy": {
+            "schema": "libreevolve.qualitative_feedback_prompt_history_audit.v1",
+            "feedback_record_source": "evaluation.metadata.llm_feedback",
+            "prompt_history_join_policy": (
+                "candidate_id_to_prompt_history_score_metadata_last_program_id"
+            ),
+            "prompt_text_retained_in_report": False,
+            "calibration_or_task_suite_required_for_claim": True,
+            "criterion_quality_ablation_required_for_claim": True,
+            "paper_claim_ready": False,
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "feedback_records_observed": observed_feedback_count > 0,
+            "prompt_history_score_rows_joined": all_feedback_candidates_joined,
+            "calibration_or_task_suite_linkage": False,
+            "criterion_quality_ablation": False,
+            "alphaevolve_qualitative_feedback_audit": False,
+            "remaining_gap": [
+                gap
+                for gap, ready in (
+                    ("feedback_records_observed", observed_feedback_count > 0),
+                    ("prompt_history_score_rows_joined", all_feedback_candidates_joined),
+                    ("calibration_or_task_suite_linkage", False),
+                    ("criterion_quality_ablation", False),
+                )
+                if not ready
+            ],
+        },
+    }
+    report["validation"] = (
+        validate_qualitative_feedback_prompt_history_audit_report(report)
+    )
+    return report
+
+
+def _qualitative_feedback_prompt_history_record(
+    program: Program,
+    history_indexes: Mapping[str, object],
+) -> dict | None:
+    evaluation = program.evaluation if isinstance(program.evaluation, Mapping) else {}
+    metadata = (
+        evaluation.get("metadata")
+        if isinstance(evaluation.get("metadata"), Mapping)
+        else {}
+    )
+    feedback_records = metadata.get("llm_feedback")
+    if not isinstance(feedback_records, list):
+        return None
+    feedback_names = [
+        record.get("name")
+        for record in feedback_records
+        if isinstance(record, Mapping) and isinstance(record.get("name"), str)
+    ]
+    if not feedback_names:
+        return None
+    program_metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
+    prompt_join = _prompt_current_history_join_record(
+        program.id,
+        program_metadata.get("prompt_program_id"),
+        history_indexes,
+    )
+    prompt_history = (
+        prompt_join.get("prompt_history")
+        if isinstance(prompt_join.get("prompt_history"), Mapping)
+        else {}
+    )
+    return {
+        "candidate_id": program.id,
+        "candidate_type": _program_candidate_type(program),
+        "generation": program.generation,
+        "prompt_program_id": (
+            program_metadata.get("prompt_program_id")
+            if isinstance(program_metadata.get("prompt_program_id"), str)
+            else None
+        ),
+        "feedback_record_count": len(feedback_names),
+        "feedback_names": feedback_names[:25],
+        "feedback_names_truncated": len(feedback_names) > 25,
+        "candidate_history_joined": prompt_join.get("candidate_history_joined") is True,
+        "prompt_history_add_joined": prompt_join.get("prompt_history_add_joined") is True,
+        "prompt_history_score_joined": (
+            prompt_join.get("prompt_history_score_joined") is True
+        ),
+        "prompt_history": {
+            "stream": "prompt_history.jsonl",
+            "add_line_number": prompt_history.get("add_line_number"),
+            "score_line_number": prompt_history.get("score_line_number"),
+            "score_line_numbers": prompt_history.get("score_line_numbers", []),
+        },
+    }
+
+
 def _qualitative_feedback_runtime_counts(programs: list[Program]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for program in programs:
@@ -19956,6 +20099,210 @@ def validate_qualitative_feedback_policy_report(report: object) -> dict:
         "ok": not issues,
         "issues": issues,
     }
+
+
+def validate_qualitative_feedback_prompt_history_audit_report(
+    report: object,
+) -> dict:
+    schema = "libreevolve.qualitative_feedback_prompt_history_audit_report.v1"
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": schema,
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "qualitative feedback prompt-history audit must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "configured_llm_feedback_count",
+        "candidate_with_feedback_count",
+        "observed_feedback_record_count",
+        "prompt_history_add_join_count",
+        "prompt_history_score_join_count",
+        "records",
+        "records_truncated",
+        "audit_policy",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": (
+                    "qualitative feedback prompt-history audit missing fields: "
+                    f"{sorted(missing)}"
+                ),
+            }
+        )
+    if report.get("schema") != schema:
+        issues.append({"code": "invalid_schema", "message": "unsupported schema"})
+    if report.get("source") != "history_jsonl_prompt_history_jsonl_feedback_records":
+        issues.append({"code": "invalid_source", "message": "unsupported source"})
+    records = report.get("records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_records", "message": "records must be a list"})
+        records = []
+    feedback_total = 0
+    score_join_count = 0
+    add_join_count = 0
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append(
+                {
+                    "code": "invalid_record",
+                    "message": f"audit record {index} must be an object",
+                }
+            )
+            continue
+        if not isinstance(record.get("candidate_id"), str) or not record.get("candidate_id"):
+            issues.append(
+                {
+                    "code": "invalid_candidate_id",
+                    "message": f"audit record {index} candidate_id must be text",
+                }
+            )
+        feedback_count = record.get("feedback_record_count")
+        if (
+            isinstance(feedback_count, int)
+            and not isinstance(feedback_count, bool)
+            and feedback_count > 0
+        ):
+            feedback_total += feedback_count
+        else:
+            issues.append(
+                {
+                    "code": "invalid_feedback_record_count",
+                    "message": f"audit record {index} feedback count must be positive",
+                }
+            )
+        if record.get("prompt_history_score_joined") is True:
+            score_join_count += 1
+        if record.get("prompt_history_add_joined") is True:
+            add_join_count += 1
+        prompt_history = record.get("prompt_history")
+        if not isinstance(prompt_history, dict):
+            issues.append(
+                {
+                    "code": "invalid_prompt_history",
+                    "message": f"audit record {index} prompt_history must be an object",
+                }
+            )
+    records_truncated = report.get("records_truncated") is True
+    candidate_count = report.get("candidate_with_feedback_count")
+    if (
+        not isinstance(candidate_count, int)
+        or isinstance(candidate_count, bool)
+        or candidate_count < 0
+    ):
+        issues.append(
+            {
+                "code": "invalid_candidate_with_feedback_count",
+                "message": "candidate_with_feedback_count must be non-negative",
+            }
+        )
+    elif not records_truncated and candidate_count != len(records):
+        issues.append(
+            {
+                "code": "candidate_count_mismatch",
+                "message": "candidate_with_feedback_count must match records",
+            }
+        )
+    observed_count = report.get("observed_feedback_record_count")
+    if (
+        not isinstance(observed_count, int)
+        or isinstance(observed_count, bool)
+        or observed_count < 0
+    ):
+        issues.append(
+            {
+                "code": "invalid_observed_feedback_record_count",
+                "message": "observed feedback count must be non-negative",
+            }
+        )
+    elif not records_truncated and observed_count != feedback_total:
+        issues.append(
+            {
+                "code": "observed_feedback_count_mismatch",
+                "message": "observed feedback count must match record sum",
+            }
+        )
+    if not records_truncated:
+        _validate_report_count(
+            report,
+            "prompt_history_add_join_count",
+            add_join_count,
+            issues,
+        )
+        _validate_report_count(
+            report,
+            "prompt_history_score_join_count",
+            score_join_count,
+            issues,
+        )
+    policy = report.get("audit_policy")
+    if not isinstance(policy, dict):
+        issues.append(
+            {"code": "invalid_audit_policy", "message": "audit_policy must be an object"}
+        )
+    else:
+        if policy.get("schema") != "libreevolve.qualitative_feedback_prompt_history_audit.v1":
+            issues.append(
+                {
+                    "code": "invalid_audit_policy_schema",
+                    "message": "audit policy schema is unsupported",
+                }
+            )
+        if policy.get("paper_claim_ready") is not False:
+            issues.append(
+                {
+                    "code": "qualitative_feedback_audit_overclaim",
+                    "message": "audit policy must not claim paper readiness",
+                }
+            )
+        if policy.get("prompt_text_retained_in_report") is not False:
+            issues.append(
+                {
+                    "code": "prompt_text_retention_overclaim",
+                    "message": "audit report must not claim prompt text retention",
+                }
+            )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, dict):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+    else:
+        for field in (
+            "calibration_or_task_suite_linkage",
+            "criterion_quality_ablation",
+            "alphaevolve_qualitative_feedback_audit",
+        ):
+            if readiness.get(field) is not False:
+                issues.append(
+                    {
+                        "code": f"{field}_overclaim",
+                        "message": f"{field} must remain false",
+                    }
+                )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "claim_ready_overclaim",
+                "message": "qualitative feedback audit must not claim readiness",
+            }
+        )
+    return {"schema": schema, "ok": not issues, "issues": issues}
 
 
 def validate_automated_evaluator_scope_report(report: object) -> dict:

@@ -11641,3 +11641,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     evidence.
   - Verification: focused benchmark-fixture readiness report test validates
     the documented report contract.
+
+- [x] Document qualitative-feedback prompt-history audit report.
+  - Spec evidence: README qualitative-feedback wording needed to distinguish
+    declared hard-to-code criteria from audited feedback records and from
+    calibrated AlphaEvolve-style qualitative scoring.
+  - Status: README and run-artifact docs now describe
+    `runtime.history.qualitative_feedback_prompt_history_audit_report`,
+    including feedback-bearing candidate joins to `prompt_history.jsonl`
+    add/score rows, stored line numbers, no prompt-text retention, and false
+    readiness for calibration/task-suite and criterion-quality ablation
+    claims.
+  - Verification: focused LLM-feedback runtime test validates the documented
+    report contract.

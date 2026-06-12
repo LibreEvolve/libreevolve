@@ -470,9 +470,11 @@ is not yet an AlphaEvolve reproduction.
   `libreevolve.llm_feedback_calibration.v1` report and artifact-inventory
   contracts now validate declared multi-task calibration evidence, but no
   runtime fixture generates those reports yet.
-- Extend `runtime.history.qualitative_feedback_policy_report` beyond
-  criterion/rubric/intent metadata into calibration/task-suite evidence and
-  prompt-history row audits for hard-to-code properties such as simplicity.
+- Extend `runtime.history.qualitative_feedback_policy_report` and
+  `runtime.history.qualitative_feedback_prompt_history_audit_report` beyond
+  criterion/rubric/intent metadata and prompt-history row joins into executed
+  calibration/task-suite evidence for hard-to-code properties such as
+  simplicity.
 - Add broader statistical hypothesis-test promotion policies for cascades,
   extending the current `one_sided_lower_confidence_bound` plus
   normal-approximation error-budget support and `binomial_success_rate`

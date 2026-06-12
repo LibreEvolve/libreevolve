@@ -1717,13 +1717,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     evaluator-gap rationale, rubric/prompt hashes, score-or-discard intent,
     metric linkage, optional calibration report id, and prompt-feedback
     linkage. Completed manifests summarize configured and observed criteria in
-    `runtime.history.qualitative_feedback_policy_report`.
+    `runtime.history.qualitative_feedback_policy_report`. Runtime manifests
+    now also include
+    `runtime.history.qualitative_feedback_prompt_history_audit_report`, which
+    joins feedback-bearing candidates to prompt-history add/score rows when
+    prompt-program history exists.
   - Current gap: paper-facing status still lacks executed calibration/task-suite
-    linkage, prompt-history row audits, and ablation evidence that the declared
-    criterion improves search or filtering quality.
-  - Required result: add calibration/task-suite linkage, prompt-history row
-    audits, and validation examples for hard-to-code properties such as
-    simplicity.
+    linkage and ablation evidence that the declared criterion improves search
+    or filtering quality.
+  - Required result: add calibration/task-suite linkage and validation
+    examples for hard-to-code properties such as simplicity.
 
 - [ ] Track natural-language proposal preambles beyond bounded leading capture.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3(c) and Section 2.3.

@@ -859,9 +859,13 @@ feedback records retain a bounded `qualitative_policy` object with criterion
 metadata, rubric/prompt hashes, metric linkage, score-versus-discard intent,
 and prompt-feedback linkage. Completed manifests summarize this boundary under
 `runtime.history.qualitative_feedback_policy_report`; the report remains
-`claim_ready: false` until calibration/task-suite evidence and prompt-history
-row audits prove the grader is a governed hard-to-code criterion rather than
-generic post-evaluation LLM scoring.
+`claim_ready: false` until calibration/task-suite evidence proves the grader
+is a governed hard-to-code criterion rather than generic post-evaluation LLM
+scoring. Completed manifests also include
+`runtime.history.qualitative_feedback_prompt_history_audit_report`, which
+joins candidates with `evaluation.metadata.llm_feedback` records to
+`prompt_history.jsonl` add/score rows when prompt-program history exists while
+retaining no prompt text and keeping paper-claim readiness false.
 Prompt-program archives validate direct reward policy and prompt-state inputs:
 reward bounds must be strictly increasing, prompt reward mode is limited to the
 documented modes, exploration coefficients must be finite and non-negative, and

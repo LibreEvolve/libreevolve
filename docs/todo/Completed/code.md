@@ -17375,3 +17375,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     benchmark or paper-claim readiness can become true.
   - Verification: focused benchmark-fixture readiness report test validates
     the smoke-scope boundary and overclaim checks.
+
+- [x] Add qualitative-feedback prompt-history audit report.
+  - Spec evidence: AlphaEvolve uses LLM feedback for hard-to-code criteria,
+    so local qualitative-feedback records need auditable linkage to the
+    generated prompt/candidate history before they can support paper-facing
+    claims.
+  - Status: runtime histories now include
+    `libreevolve.qualitative_feedback_prompt_history_audit_report.v1`, joining
+    candidates with `evaluation.metadata.llm_feedback` records to
+    `prompt_history.jsonl` add/score line numbers when prompt-program history
+    exists. The report stores candidate ids, feedback names, prompt-history
+    line numbers, and join status while retaining no prompt text.
+  - Remaining gap: executed calibration/task-suite linkage and
+    criterion-quality ablations remain open before AlphaEvolve-style
+    qualitative-feedback quality claims are ready.
+  - Verification: focused LLM-feedback runtime test validates the policy
+    report, prompt-history audit report, and overclaim checks.

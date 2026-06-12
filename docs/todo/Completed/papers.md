@@ -11992,3 +11992,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     or certified anti-gaming negative-fixture outcomes.
   - Verification: focused benchmark-fixture readiness report test validates
     the smoke-scope and overclaim boundaries.
+
+- [x] Record qualitative-feedback prompt-history audit boundary.
+  - Spec evidence: AlphaEvolve paper-facing qualitative-feedback claims depend
+    on traceable LLM-feedback evidence, not only declared grader metadata.
+  - Status: paper-facing TODOs and runtime manifests now expose
+    `qualitative_feedback_prompt_history_audit_report`, which joins
+    feedback-bearing candidates to `prompt_history.jsonl` add/score rows and
+    preserves bounded line-number evidence without retaining prompt text.
+  - Remaining paper gap: this does not provide executed calibration/task-suite
+    evidence or ablations proving that a hard-to-code criterion such as
+    simplicity improves search or filtering quality.
+  - Verification: focused LLM-feedback runtime test validates the report and
+    overclaim boundaries.

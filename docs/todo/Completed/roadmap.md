@@ -9177,3 +9177,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     emitted-artifact, and anti-gaming evidence.
   - Verification: focused benchmark-fixture readiness report test validates
     the implemented report.
+
+- [x] Preserve qualitative-feedback prompt-history audit boundary.
+  - Spec evidence: roadmap qualitative-feedback claims need to separate
+    configured criterion metadata and prompt-history row joins from calibrated
+    evidence that hard-to-code criteria improve search or filtering quality.
+  - Status: ROADMAP and TODO wording now recognize
+    `runtime.history.qualitative_feedback_prompt_history_audit_report` as
+    current run-level evidence for feedback records joined to
+    `prompt_history.jsonl` add/score rows, while calibration/task-suite
+    linkage and criterion-quality ablations remain open.
+  - Verification: focused LLM-feedback runtime test validates the implemented
+    report.

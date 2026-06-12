@@ -69,6 +69,7 @@ from libreevolve.core.loop import (
     validate_automated_evaluator_scope_report,
     validate_whole_run_source_workspace_integrity_report,
     validate_qualitative_feedback_policy_report,
+    validate_qualitative_feedback_prompt_history_audit_report,
     validate_paper_evaluator_metric_contract,
     validate_paper_author_metadata_report,
     validate_paper_metric_table_export,
@@ -18098,6 +18099,9 @@ def test_loop_applies_llm_feedback_to_candidate_score():
     child = records[-1]
     manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
     report = manifest["runtime"]["history"]["qualitative_feedback_policy_report"]
+    audit = manifest["runtime"]["history"][
+        "qualitative_feedback_prompt_history_audit_report"
+    ]
     assert best.fitness == 1.1
     assert child["metrics"]["simplicity"] == 0.5
     feedback = child["evaluation"]["metadata"]["llm_feedback"][0]
@@ -18122,6 +18126,31 @@ def test_loop_applies_llm_feedback_to_candidate_score():
     assert policy_record["calibration_report_id"] == "simplicity_calibration_v1"
     assert policy_record["runtime_record_count"] == 1
 
+    assert audit["schema"] == (
+        "libreevolve.qualitative_feedback_prompt_history_audit_report.v1"
+    )
+    assert audit["validation"]["ok"] is True
+    assert (
+        validate_qualitative_feedback_prompt_history_audit_report(audit)["ok"]
+        is True
+    )
+    assert audit["configured_llm_feedback_count"] == 1
+    assert audit["candidate_with_feedback_count"] == 1
+    assert audit["observed_feedback_record_count"] == 1
+    assert audit["prompt_history_add_join_count"] == 1
+    assert audit["prompt_history_score_join_count"] == 1
+    assert audit["claim_ready"] is False
+    assert audit["claim_readiness"]["feedback_records_observed"] is True
+    assert audit["claim_readiness"]["prompt_history_score_rows_joined"] is True
+    assert audit["claim_readiness"]["calibration_or_task_suite_linkage"] is False
+    assert audit["claim_readiness"]["criterion_quality_ablation"] is False
+    audit_record = audit["records"][0]
+    assert audit_record["candidate_id"] == child["id"]
+    assert audit_record["feedback_names"] == ["simplicity"]
+    assert audit_record["prompt_history_add_joined"] is True
+    assert audit_record["prompt_history_score_joined"] is True
+    assert audit_record["prompt_history"]["score_line_number"] == 2
+
     overclaimed = copy.deepcopy(report)
     overclaimed["policy"]["paper_claim_ready"] = True
     overclaimed["claim_ready"] = True
@@ -18130,6 +18159,20 @@ def test_loop_applies_llm_feedback_to_candidate_score():
     assert {
         issue["code"] for issue in validation["issues"]
     } >= {"qualitative_feedback_overclaim", "claim_ready_overclaim"}
+
+    overclaimed_audit = copy.deepcopy(audit)
+    overclaimed_audit["audit_policy"]["paper_claim_ready"] = True
+    overclaimed_audit["claim_ready"] = True
+    overclaimed_audit["claim_readiness"]["alphaevolve_qualitative_feedback_audit"] = True
+    validation = validate_qualitative_feedback_prompt_history_audit_report(
+        overclaimed_audit
+    )
+    assert validation["ok"] is False
+    assert {issue["code"] for issue in validation["issues"]} >= {
+        "qualitative_feedback_audit_overclaim",
+        "claim_ready_overclaim",
+        "alphaevolve_qualitative_feedback_audit_overclaim",
+    }
 
 
 def test_loop_honors_feedback_retention_mode_in_history_and_manifest():

@@ -16636,6 +16636,21 @@ def test_meta_prompt_evolution_conditions_mutation_on_performance_evidence():
         "prompt_program_summaries",
         "recent_failures",
     ]
+    capability_summary = context["context_policy_capability_summary"]
+    assert capability_summary["schema"] == (
+        "libreevolve.meta_prompt_context_policy_capability_summary.v1"
+    )
+    assert capability_summary["capabilities_schema"] == (
+        META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA
+    )
+    assert capability_summary["context_policy_schema"] == (
+        "libreevolve.prompt_context_policy.v1"
+    )
+    assert capability_summary["field_count"] == (
+        len(validate_prompt_context_policy({})) - 1
+    )
+    assert len(capability_summary["fields_sha256"]) == 64
+    assert len(capability_summary["sections"]) == 3
 
 
 def test_meta_prompt_context_policy_capabilities_validate_current_policy_schema():

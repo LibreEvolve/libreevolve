@@ -2341,7 +2341,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     JSON object with a revised `template` plus optional `context_policy`; and
     meta-prompt mutation requests now include a compact context-policy
     capability manifest plus per-prompt non-default context-policy previews in
-    the bounded redacted prompt-performance evidence. Final manifests now
+    the bounded redacted prompt-performance evidence. Meta-prompt mutation
+    metadata also records a compact capability summary with schema, field
+    count, field hash, and per-section hashes for the policy surface shown to
+    the model. Final manifests now
     include `runtime.prompt_context_policy_coverage` with schema
     `libreevolve.prompt_context_policy_coverage.v1` and embedded validation
     against the current policy schema/capability map, while keeping

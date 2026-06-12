@@ -905,7 +905,11 @@ text. `mutation_instruction_include_example` can keep or remove the built-in
 mutation-format example block while preserving the core format rules, and a
 `validate_meta_prompt_context_policy_capabilities()` check verifies that the
 meta-prompt-visible `libreevolve.meta_prompt_context_policy_capabilities.v1`
-map exactly covers the current structured prompt-context policy fields. A
+map exactly covers the current structured prompt-context policy fields.
+Meta-prompt mutation history also stores a compact
+`libreevolve.meta_prompt_context_policy_capability_summary.v1` with the
+capability schema, prompt-policy schema, tunable field count, field hash, and
+per-section hashes for the surface shown to the model. A
 nullable `parent_code_max_chars` cap can bound or suppress the required
 parent-code channel while `parent_code_paths` selects and orders safe mutable
 parent-workspace files before rendering. `parent_code_required_terms` and
@@ -1141,9 +1145,9 @@ suffixes so labels remain comparable without exposing the raw key. The current
 template sent to the meta-prompt call is separately secret-redacted and capped,
 and the prompt also includes the current placeholder list so required context
 channels stay visible after truncation. Prompt-history metadata stores the
-evidence hash, section list, selected prompt ids, and current-template
-SHA-256/length/redaction/truncation provenance without storing the raw template
-there.
+evidence hash, section list, selected prompt ids, context-policy capability
+summary, and current-template SHA-256/length/redaction/truncation provenance
+without storing the raw template there.
 Meta-prompt responses remain backward compatible with plain template text, but
 may now return a strict JSON object with a revised `template` and optional
 `context_policy`; accepted prompt-history rows persist both policy content and

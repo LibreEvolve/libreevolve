@@ -9331,3 +9331,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     scoring.
   - Verification: loop retrieval-manifest tests validate forged ranking/scoring
     readiness overclaims.
+
+- [x] Preserve meta-prompt capability-summary boundary.
+  - Spec evidence: roadmap prompt-evolution wording should distinguish
+    current-surface audit hashes from richer AlphaEvolve context-policy
+    ownership.
+  - Status: ROADMAP and TODO wording now recognize compact capability-summary
+    hashes for meta-prompt mutation context-policy surfaces while keeping
+    semantic context selection and retrieval/summarization control open.
+  - Verification: meta-prompt evolution tests validate retained capability
+    summary schema, count, and hashes.

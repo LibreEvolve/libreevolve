@@ -2490,7 +2490,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     inspiration sampling controls, and related diagnostics. It also documents
     `validate_meta_prompt_context_policy_capabilities()` checking the
     meta-prompt-visible capability map against the current structured policy
-    fields.
+    fields, and per-mutation
+    `libreevolve.meta_prompt_context_policy_capability_summary.v1` metadata
+    with capability/prompt-policy schemas, field counts, field hash, and
+    per-section hashes.
   - Required result: when prompt-program policy can control retrieval or
     summarization behavior, learned/semantic context selection, arbitrary
     instruction channels, broader per-role retention, or other prompt surfaces

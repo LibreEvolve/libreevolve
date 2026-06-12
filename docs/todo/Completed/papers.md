@@ -12205,3 +12205,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     payload replay, or replayable transport/TLS decisions.
   - Verification: loop retrieval-manifest tests validate forged ranking/scoring
     readiness overclaims.
+
+- [x] Record meta-prompt capability-summary metadata.
+  - Spec evidence: paper-facing prompt-evolution claims need per-mutation
+    evidence for which structured context-policy surface the meta-prompt saw.
+  - Status: paper-facing TODOs and the papers overview now record compact
+    capability-summary metadata with schema, field count, field hash, and
+    per-section hashes for meta-prompt mutations.
+  - Remaining paper gap: this does not implement semantic context selection,
+    retrieval/summarization policy control, or full AlphaEvolve-grade prompt
+    context ownership.
+  - Verification: meta-prompt evolution tests validate retained capability
+    summary schema, count, and hashes.

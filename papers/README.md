@@ -931,6 +931,13 @@ critique, feedback, and meta-prompt. The remaining gap is automatic selected-
 backend provider-token section packing across all prompt roles/provider
 families and context surfaces, plus context-policy evolution.
 
+Meta-prompt mutation history stores a compact
+`libreevolve.meta_prompt_context_policy_capability_summary.v1` with capability
+and prompt-policy schemas, tunable field counts, field hashes, and per-section
+hashes for the structured context-policy surface shown to the meta-prompt
+model. This is audit metadata for the current validated surface, not learned
+semantic context selection or retrieval/summarization policy control.
+
 AlphaEvolve island-state note: retained archive-state changes advance the
 island round-robin assignment cursor. Non-admitted MAP-Elites attempts, such as
 `not_improving_cell`, record their attempted island but do not consume the next

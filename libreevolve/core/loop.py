@@ -36999,6 +36999,9 @@ def _build_meta_prompt_mutation_request(
     context_policy_capabilities = validate_meta_prompt_context_policy_capabilities(
         _META_PROMPT_CONTEXT_POLICY_CAPABILITIES
     )
+    context_policy_capability_summary = _meta_prompt_context_policy_capability_summary(
+        context_policy_capabilities
+    )
     evidence = {
         "reward_policy": {
             "mode": config.prompt_reward_mode,
@@ -37056,6 +37059,7 @@ def _build_meta_prompt_mutation_request(
             "prompt_program_summaries",
             "recent_failures",
         ],
+        "context_policy_capability_summary": context_policy_capability_summary,
         "selected_prompt_id": prompt_program.id,
         "latest_program_id": program.id,
         "latest_parent_id": parent.id,
@@ -37278,6 +37282,34 @@ def _build_meta_prompt_mutation_request(
         f"{safe_template}"
     )
     return mutation_prompt, context_metadata
+
+
+def _meta_prompt_context_policy_capability_summary(capabilities: dict) -> dict:
+    sections = []
+    fields: list[str] = []
+    for section in _META_PROMPT_CONTEXT_POLICY_CAPABILITY_SECTIONS:
+        section_fields = _context_policy_capability_fields(capabilities[section])
+        fields.extend(section_fields)
+        sections.append(
+            {
+                "name": section,
+                "field_count": len(section_fields),
+                "fields_sha256": hashlib.sha256(
+                    ",".join(section_fields).encode("utf-8")
+                ).hexdigest(),
+            }
+        )
+    return {
+        "schema": "libreevolve.meta_prompt_context_policy_capability_summary.v1",
+        "capabilities_schema": capabilities["schema"],
+        "context_policy_schema": validate_prompt_context_policy({})["schema"],
+        "field_count": len(fields),
+        "fields_sha256": hashlib.sha256(
+            ",".join(sorted(fields)).encode("utf-8")
+        ).hexdigest(),
+        "sections": sections,
+        "policy": "hashes_current_meta_prompt_visible_context_policy_fields",
+    }
 
 
 def validate_meta_prompt_context_policy_capabilities(capabilities: object) -> dict:

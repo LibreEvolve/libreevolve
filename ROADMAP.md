@@ -533,7 +533,9 @@ is not yet an AlphaEvolve reproduction.
   context spans, critique prompts/mutations, feedback raw/parsed fields,
   provider output/error text, plugin context, meta-prompt evidence, framework
   quarantine snapshots, and DeepResearch retrieval bodies already have
-  bounded configurable retention surfaces.
+  bounded configurable retention surfaces, and meta-prompt mutation metadata
+  records compact capability-summary hashes for the prompt-context policy
+  surface shown to the model.
 - Integrate current evaluator-output prompt summaries, aggregate syntax
   diagnostics, and bounded run-local artifact content retrieval with
   selected-backend provider-token section packing. Artifact content can already

@@ -17605,3 +17605,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     evidence remain open.
   - Verification: loop retrieval-manifest tests cover forged ranking/scoring
     readiness overclaims and missing external-scoring limitations.
+
+- [x] Retain meta-prompt context-policy capability summary hashes.
+  - Spec evidence: AlphaEvolve-style prompt evolution should make the prompt
+    context-control surface shown to the meta-prompt auditable per mutation.
+  - Status: meta-prompt mutation metadata now records
+    `libreevolve.meta_prompt_context_policy_capability_summary.v1` with
+    capability/prompt-policy schemas, tunable field count, field hash, and
+    per-section hashes for the validated policy surface.
+  - Remaining gap: this is current-surface audit metadata, not semantic context
+    selection, retrieval/summarization policy control, or full AlphaEvolve-grade
+    prompt-context evolution.
+  - Verification: meta-prompt evolution tests validate retained capability
+    summary schema, count, and hashes without expanding prompt evidence past
+    its bounded section set.

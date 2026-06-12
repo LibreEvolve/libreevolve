@@ -1369,11 +1369,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     evidence now also show that prompt programs persist validated
     `libreevolve.prompt_context_policy.v1` state, meta-prompt evidence exposes
     a checked `libreevolve.meta_prompt_context_policy_capabilities.v1`
-    capability map, and the current tunable fields include optional channel
-    controls, section priorities, mutation-instruction variants, parent metric
-    selection/caps, parent-code selection/filtering/order/limits/caps/
-    truncation, proposal metadata enablement, feedback subsection controls, and
-    inspiration sampling controls.
+    capability map, meta-prompt mutation metadata records a compact capability
+    summary with tunable field and section hashes, and the current tunable
+    fields include optional channel controls, section priorities,
+    mutation-instruction variants, parent metric selection/caps, parent-code
+    selection/filtering/order/limits/caps/truncation, proposal metadata
+    enablement, feedback subsection controls, and inspiration sampling
+    controls.
   - Required result: when prompt-program policy can control retrieval or
     summarization behavior, learned/semantic context selection, arbitrary
     instruction channels, broader per-role retention, or other prompt surfaces

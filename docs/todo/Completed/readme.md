@@ -11803,3 +11803,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     source-scoring readiness flags false.
   - Verification: loop retrieval-manifest tests validate forged ranking/scoring
     readiness overclaims.
+
+- [x] Document meta-prompt capability summary metadata.
+  - Spec evidence: README prompt-evolution wording needed to identify the
+    per-mutation audit hash for the context-policy surface shown to the model.
+  - Status: README and TODO wording now document
+    `libreevolve.meta_prompt_context_policy_capability_summary.v1` in
+    meta-prompt mutation metadata.
+  - Verification: meta-prompt evolution tests validate retained capability
+    summary schema, count, and hashes.

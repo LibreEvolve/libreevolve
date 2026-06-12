@@ -37,6 +37,10 @@ Important limits:
   scope; robust evaluator-environment fixtures, manual-to-code transition
   policies, and LLM-only idea-stage contracts are tracked by
   `papers/automated_evaluator_scope_boundary.json`.
+- Natural-language proposal metadata is context around executable code
+  candidates, not AI-Co-Scientist-style hypothesis representation or
+  hallucination-resistance evidence; that boundary is tracked by
+  `papers/programmatic_representation_boundary.json`.
 - Candidate execution is Python-primary. Arbitrary language/build runners and
   problem-defined candidate abstractions remain open work.
 - Configuration validation is local effective-config validation; live

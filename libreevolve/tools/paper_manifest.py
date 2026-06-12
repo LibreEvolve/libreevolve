@@ -59,6 +59,10 @@ from libreevolve.problems.benchmarks.problem_formulation_provenance_boundary imp
     problem_formulation_provenance_boundary_record,
     validate_problem_formulation_provenance_boundary,
 )
+from libreevolve.problems.benchmarks.programmatic_representation_boundary import (
+    programmatic_representation_boundary_record,
+    validate_programmatic_representation_boundary,
+)
 from libreevolve.problems.benchmarks.release_artifact_reproducibility_boundary import (
     release_artifact_reproducibility_boundary_record,
     validate_release_artifact_reproducibility_boundary,
@@ -393,6 +397,7 @@ INITIAL_PROGRAM_IDEA_PROVENANCE_BOUNDARY_FILE = "papers/initial_program_idea_pro
 INITIAL_PROGRAM_VALIDITY_BOUNDARY_FILE = "papers/initial_program_validity_boundary.json"
 COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_FILE = "papers/collaborator_feedback_provenance_boundary.json"
 PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_FILE = "papers/problem_formulation_provenance_boundary.json"
+PROGRAMMATIC_REPRESENTATION_BOUNDARY_FILE = "papers/programmatic_representation_boundary.json"
 RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_FILE = "papers/release_artifact_reproducibility_boundary.json"
 TASK_SPECIFICATION_BOUNDARY_FILE = "papers/task_specification_boundary.json"
 EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integration_boundary.json"
@@ -874,6 +879,7 @@ def validate_paper_manifest(
     issues.extend(_validate_initial_program_validity_boundary(root_path))
     issues.extend(_validate_collaborator_feedback_provenance_boundary(root_path))
     issues.extend(_validate_problem_formulation_provenance_boundary(root_path))
+    issues.extend(_validate_programmatic_representation_boundary(root_path))
     issues.extend(_validate_release_artifact_reproducibility_boundary(root_path))
     issues.extend(_validate_task_specification_boundary(root_path))
     issues.extend(_validate_existing_codebase_integration_boundary(root_path))
@@ -1662,6 +1668,38 @@ def _validate_task_specification_boundary(root_path: Path) -> list[PaperManifest
             f"task_specification_boundary_{issue.code}",
             issue.message,
             "task_specification",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_programmatic_representation_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / PROGRAMMATIC_REPRESENTATION_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = programmatic_representation_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "programmatic_representation_boundary_manifest_missing",
+                    (
+                        f"{PROGRAMMATIC_REPRESENTATION_BOUNDARY_FILE} must emit "
+                        "code/programmatic-evaluation versus natural-language boundary"
+                    ),
+                    "programmatic_representation",
+                )
+            ]
+    report = validate_programmatic_representation_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"programmatic_representation_boundary_{issue.code}",
+            issue.message,
+            "programmatic_representation",
         )
         for issue in report.issues
     ]

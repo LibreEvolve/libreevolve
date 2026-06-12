@@ -10372,3 +10372,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation requires the committed sidecar and
     focused automated-evaluator scope tests reject robust environment-readiness
     overclaims.
+
+- [x] Keep roadmap programmatic-representation boundary tied to sidecar.
+  - Status: ROADMAP now links
+    `runtime.history.programmatic_representation_boundary_report` to
+    `papers/programmatic_representation_boundary.json`, preserving the
+    executable-code versus natural-language-proposal structural boundary while
+    keeping hallucination-risk controls, long-horizon step-count evidence, and
+    natural-language hypothesis bridge status open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused programmatic-representation tests reject hallucination/bridge
+    overclaims.

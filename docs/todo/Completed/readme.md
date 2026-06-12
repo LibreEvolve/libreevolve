@@ -12625,3 +12625,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused automated-evaluator scope tests reject robust environment-readiness
     overclaims.
+
+- [x] Keep README programmatic-representation boundary tied to sidecar.
+  - Status: README now states that natural-language proposal metadata is
+    context around executable code candidates, not AI-Co-Scientist-style
+    hypothesis representation or hallucination-resistance evidence, with the
+    boundary tracked by `papers/programmatic_representation_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused programmatic-representation tests reject hallucination/bridge
+    overclaims.

@@ -1098,8 +1098,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     classifies generated candidates as executable code workspaces, proposal
     metadata as natural-language context rather than candidate representation,
     declared evaluator metrics as programmatic criteria, and optional LLM
-    feedback as post-evaluator. The report keeps hallucination-resistance,
-    long-horizon evolution, and natural-language bridge claims unready.
+    feedback as post-evaluator. The committed
+    `papers/programmatic_representation_boundary.json` sidecar preserves this
+    structural boundary while hallucination-resistance, long-horizon evolution,
+    and natural-language bridge claims remain unready.
   - Required result: when hallucination-risk controls, long-horizon step-count
     evidence, and bridge status for any natural-language hypothesis stage land,
     update ROADMAP, README, papers index, and code/paper TODOs before claiming

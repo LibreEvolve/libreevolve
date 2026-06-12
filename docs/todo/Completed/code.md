@@ -18403,3 +18403,15 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     robust-environment overclaims, invalid boundary status, missing evidence
     drift, and incomplete required evidence fields.
+
+- [x] Add programmatic-representation sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/programmatic_representation_boundary.py`
+    now emits and validates the executable-code/programmatic-evaluation
+    boundary for `runtime.history.programmatic_representation_boundary_report`,
+    separating code-workspace candidates, natural-language proposal metadata,
+    evaluator metrics, deterministic validity, and post-evaluator LLM feedback
+    from hallucination measurement, long-horizon evidence, and
+    AI-Co-Scientist-style bridge claims.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    hallucination/bridge overclaims, invalid boundary status, missing evidence
+    drift, and incomplete required evidence fields.

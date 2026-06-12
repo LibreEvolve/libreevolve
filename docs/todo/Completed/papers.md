@@ -13493,3 +13493,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused automated-evaluator scope tests reject robust
     environment-readiness overclaims.
+
+- [x] Record programmatic-representation paper-facing sidecar.
+  - Status: `papers/programmatic_representation_boundary.json` now records the
+    structural AlphaEvolve versus AI-Co-Scientist boundary: runtime manifests
+    can show executable code-workspace candidates, proposal text as context
+    metadata, declared evaluator metrics and deterministic evaluator validity
+    as programmatic criteria, post-evaluator LLM feedback, and required
+    hypothesis-to-code transition, while hallucination-risk measurement,
+    long-horizon step-count evidence, natural-language hypothesis-stage
+    contracts, natural-language-to-programmatic bridge status, proposal-truth
+    models, and combined AI-Co-Scientist workflow evidence remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused programmatic-representation tests reject hallucination/
+    bridge overclaims.

@@ -2257,10 +2257,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `runtime.history.programmatic_representation_boundary_report`, which
     separates executable generated candidates from natural-language proposal
     metadata and records declared evaluator metrics plus deterministic
-    evaluator validity as programmatic criteria. README also states that the
-    report does not measure hallucination resistance, prove long-horizon
-    evolution, or implement a bridge from language-only idea stages into
-    executable candidate evaluation.
+    evaluator validity as programmatic criteria. README also links the
+    structural boundary to `papers/programmatic_representation_boundary.json`
+    and states that the report does not measure hallucination resistance, prove
+    long-horizon evolution, or implement a bridge from language-only idea
+    stages into executable candidate evaluation.
   - Required result: when hallucination-risk measurements, long-horizon
     evidence, or natural-language-to-programmatic bridge contracts land, update
     README, ROADMAP, papers index, and code/paper TODOs together so README does

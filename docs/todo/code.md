@@ -2137,7 +2137,9 @@ Primary evidence:
     `idea`/`rationale`/`hypothesis` fields as natural-language context
     metadata rather than candidate representations, declared evaluator metrics
     as programmatic criteria, optional LLM feedback as post-evaluator, and
-    `claim_ready: false` for hallucination and long-horizon claims.
+    `claim_ready: false` for hallucination and long-horizon claims. The
+    committed `papers/programmatic_representation_boundary.json` sidecar
+    preserves this structural code/programmatic-evaluation boundary.
   - Required result: add measured hallucination-risk controls, long-horizon
     step-count evidence, and any future bridge between natural-language
     hypothesis stages and programmatic candidate evaluation before claiming

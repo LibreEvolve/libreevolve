@@ -1422,7 +1422,9 @@ LibreEvolve's completed manifests now include
 generated candidates as executable code workspaces, labels captured proposal
 `idea`/`rationale`/`hypothesis` fields as natural-language context metadata,
 and keeps declared evaluator metrics plus deterministic evaluator validity as
-the programmatic criteria owner. The report remains `claim_ready: false` for
+the programmatic criteria owner. The committed
+`papers/programmatic_representation_boundary.json` sidecar preserves this
+structural boundary. The report remains `claim_ready: false` for
 hallucination-resistance claims, long-horizon evolution claims, and any full
 natural-language hypothesis stage bridged into programmatic candidate
 evaluation.

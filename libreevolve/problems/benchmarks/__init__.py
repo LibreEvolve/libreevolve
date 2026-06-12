@@ -113,6 +113,12 @@ from libreevolve.problems.benchmarks.problem_formulation_provenance_boundary imp
     render_problem_formulation_provenance_boundary_summary,
     validate_problem_formulation_provenance_boundary,
 )
+from libreevolve.problems.benchmarks.programmatic_representation_boundary import (
+    PROGRAMMATIC_REPRESENTATION_BOUNDARY_SCHEMA,
+    programmatic_representation_boundary_record,
+    render_programmatic_representation_boundary_summary,
+    validate_programmatic_representation_boundary,
+)
 from libreevolve.problems.benchmarks.release_artifact_reproducibility_boundary import (
     RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_SCHEMA,
     release_artifact_reproducibility_boundary_record,
@@ -698,6 +704,7 @@ __all__ = [
     "PROCESS_EXHIBIT_BOUNDARY_SCHEMA",
     "COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_SCHEMA",
     "PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_SCHEMA",
+    "PROGRAMMATIC_REPRESENTATION_BOUNDARY_SCHEMA",
     "RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_SCHEMA",
     "TASK_SPECIFICATION_BOUNDARY_SCHEMA",
     "PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_SCHEMA",
@@ -784,6 +791,7 @@ __all__ = [
     "paper_author_metadata_boundary_record",
     "process_exhibit_boundary_record",
     "problem_formulation_provenance_boundary_record",
+    "programmatic_representation_boundary_record",
     "release_artifact_reproducibility_boundary_record",
     "task_specification_boundary_record",
     "proposal_lifecycle_audit_boundary_record",
@@ -907,6 +915,7 @@ __all__ = [
     "render_parallel_evaluation_readiness_boundary_summary",
     "render_process_exhibit_boundary_summary",
     "render_problem_formulation_provenance_boundary_summary",
+    "render_programmatic_representation_boundary_summary",
     "render_release_artifact_reproducibility_boundary_summary",
     "render_task_specification_boundary_summary",
     "render_proposal_lifecycle_audit_boundary_summary",
@@ -1022,6 +1031,7 @@ __all__ = [
     "validate_parallel_evaluation_readiness_boundary",
     "validate_process_exhibit_boundary",
     "validate_problem_formulation_provenance_boundary",
+    "validate_programmatic_representation_boundary",
     "validate_release_artifact_reproducibility_boundary",
     "validate_task_specification_boundary",
     "validate_proposal_lifecycle_audit_boundary",

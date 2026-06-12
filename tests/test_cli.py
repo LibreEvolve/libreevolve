@@ -641,6 +641,27 @@ def test_run_can_restore_archive_cursor_snapshot_from_manifest(tmp_path):
                 "controller_pending_work_not_restored",
             ],
         },
+        "topology_policy": {
+            "schema": "libreevolve.island_topology_policy.v1",
+            "status": "configured_synchronous_ring_topology",
+            "policy": (
+                "config_n_islands_controls_local_synchronous_ring_migration_default_five"
+            ),
+            "configured_n_islands": 2,
+            "default_n_islands": 5,
+            "island_count_configurable": True,
+            "migration_topology": "ring",
+            "migration_execution": "synchronous_local_generation_boundary",
+            "adaptive_island_count_supported": False,
+            "non_ring_topologies_supported": False,
+            "alphaevolve_policy_ready": False,
+            "limitations": [
+                "no_adaptive_island_count_policy",
+                "no_non_ring_migration_topology",
+                "no_topology_specific_ablation_evidence",
+                "not_claimed_as_alphaevolve_identical_policy",
+            ],
+        },
     }
     assert mock.call_args.kwargs["runtime_archive_state_snapshot"] == expected_snapshot
     assert mock.call_args.kwargs["runtime_archive_programs_by_id"] is None

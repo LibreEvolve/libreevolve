@@ -671,11 +671,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     island count in a synchronous ring topology. README, ROADMAP, AGENTS, and
     the `IslandModel` docstring now describe configurable island migration
     with a five-island default instead of hardcoding all claims to five
-    islands.
-  - Current gap: this is a truthful local topology boundary, not proof of a
+    islands. Runtime archive-state snapshots now include `topology_policy`
+    schema `libreevolve.island_topology_policy.v1`, recording configured
+    synchronous ring migration, configurable island count, the five-island
+    default, and explicit false readiness for adaptive island counts, non-ring
+    topologies, and AlphaEvolve-identical island policy; validators reject
+    forged topology overclaims.
+  - Current gap: this is a validated local topology boundary, not proof of a
     paper-identical AlphaEvolve evolutionary database. Adaptive island counts,
-    non-ring topologies, topology-specific ablations, and paper-facing
-    migration-policy reports remain absent.
+    non-ring topologies, topology-specific ablations, and a richer
+    paper-facing migration-policy report remain absent.
   - Required result: if future work adds adaptive island topology or
     AlphaEvolve-specific migration policy fidelity, update the papers index,
     README, ROADMAP, and code TODO entries together so they neither underclaim

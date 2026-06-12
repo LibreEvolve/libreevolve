@@ -11875,3 +11875,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     and arbitrary instance-state capture false.
   - Verification: runtime plugin-state tests validate forged readiness
     overclaim rejection.
+
+- [x] Document island-topology policy guards.
+  - Spec evidence: README island wording needed to distinguish configurable
+    local ring migration from a fixed or paper-identical AlphaEvolve island
+    policy.
+  - Status: README and TODO wording now state that archive-state snapshots
+    carry `libreevolve.island_topology_policy.v1` with adaptive island counts,
+    non-ring topologies, and AlphaEvolve-identical policy readiness false.
+  - Verification: island/archive-state tests validate forged topology-policy
+    overclaim rejection.

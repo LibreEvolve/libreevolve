@@ -1408,8 +1408,12 @@ not retained, such as `reason: "not_improving_cell"`, does not consume the next
 island assignment. Final manifests persist this state under
 `runtime.history.archive_state`, including the next island id, archive sequence
 counters, migration sequence, metric-sampling cursor, archive sequence by
-program id, compact per-island occupancy/elite counts, and replayable
-per-island MAP-Elites cell/elite snapshots under `archive_contents`.
+program id, compact per-island occupancy/elite counts, `topology_policy`
+schema `libreevolve.island_topology_policy.v1`, and replayable per-island
+MAP-Elites cell/elite snapshots under `archive_contents`. The topology policy
+records configured synchronous ring migration with a five-island default,
+keeps island count configurable, and keeps adaptive island counts, non-ring
+topologies, and AlphaEvolve-identical policy readiness false.
 Archive-state snapshots also carry `migration_replay`, a validated policy that
 marks migration events as `not_applied_as_restore_engine` while confirming that
 `archive_contents` restores the current migrated placements.

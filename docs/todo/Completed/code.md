@@ -17704,3 +17704,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     constructor value/schema attribution remain open.
   - Verification: runtime plugin-state tests cover direct and entry-point
     policy readiness plus forged overclaim rejection.
+
+- [x] Guard island-topology policy overclaims.
+  - Spec evidence: AlphaEvolve describes island-inspired evolutionary
+    databases, but LibreEvolve must not treat its five-island default or local
+    ring migration as paper-identical topology.
+  - Status: archive-state snapshots now carry
+    `libreevolve.island_topology_policy.v1` with configured synchronous ring
+    migration, configurable island counts, the five-island default, and false
+    readiness for adaptive island counts, non-ring topologies, and
+    AlphaEvolve-identical policy.
+  - Remaining gap: adaptive island topologies, non-ring migration policies,
+    and topology-specific ablation evidence remain open.
+  - Verification: island, database, and runtime manifest tests validate the
+    topology-policy fields and forged overclaim rejection.

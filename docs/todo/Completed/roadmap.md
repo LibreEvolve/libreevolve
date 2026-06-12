@@ -9406,3 +9406,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     direct-instance readiness fields for those plugin provenance surfaces.
   - Verification: runtime plugin-state tests validate forged readiness
     overclaim rejection.
+
+- [x] Preserve island-topology readiness boundaries.
+  - Spec evidence: roadmap island wording should not imply a hardcoded
+    five-island runtime invariant or AlphaEvolve-identical topology policy.
+  - Status: ROADMAP and TODO wording now recognize validated
+    `runtime.history.archive_state.topology_policy` evidence with false
+    readiness for adaptive island counts, non-ring topologies, and
+    AlphaEvolve-identical policy.
+  - Verification: island/archive-state tests validate forged topology-policy
+    overclaim rejection.

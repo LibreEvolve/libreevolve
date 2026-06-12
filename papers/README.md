@@ -952,7 +952,11 @@ island slot. Final manifests now persist a compact
 sequence counters, and `archive_events.jsonl` persists versioned migration
 placement events. The same manifest snapshot now includes `archive_contents`
 with per-island MAP-Elites cells, elite-program ids, descriptor policy, and
-archive configuration. `load_archive_restore_bundle()` combines that manifest
+archive configuration, plus `topology_policy` schema
+`libreevolve.island_topology_policy.v1` for configured synchronous ring
+migration with a configurable island count and five-island default. That policy
+keeps adaptive island counts, non-ring topologies, and AlphaEvolve-identical
+policy readiness false. `load_archive_restore_bundle()` combines that manifest
 state with accepted `history.jsonl` records, and
 `ProgramDatabase(..., archive_state_snapshot=..., archive_programs_by_id=...)`
 can restore both the cursor/counter subset and the cell/elite contents. CLI

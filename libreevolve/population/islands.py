@@ -28,6 +28,11 @@ ISLAND_MIGRATION_REPLAY_STATUS = "not_applied_as_restore_engine"
 ISLAND_MIGRATION_REPLAY_POLICY = (
     "archive_contents_snapshot_restores_current_placements_without_replaying_migration_events"
 )
+ISLAND_TOPOLOGY_POLICY_SCHEMA = "libreevolve.island_topology_policy.v1"
+ISLAND_TOPOLOGY_STATUS = "configured_synchronous_ring_topology"
+ISLAND_TOPOLOGY_POLICY = (
+    "config_n_islands_controls_local_synchronous_ring_migration_default_five"
+)
 
 
 class IslandModel:
@@ -194,6 +199,7 @@ class IslandModel:
             "metric_sample_index": self._metric_sample_index,
             "frontier_sample_index": self._frontier_sample_index,
             "lineage_sample_index": self._lineage_sample_index,
+            "topology_policy": island_topology_policy(self.n_islands),
             "migration_replay": _migration_replay_policy(self._migration_sequence),
             "archive_sequence_by_program_id": dict(
                 sorted(self._archive_sequences.items())
@@ -235,6 +241,7 @@ class IslandModel:
         self._frontier_sample_index = restored["frontier_sample_index"]
         self._lineage_sample_index = restored["lineage_sample_index"]
         self._archive_sequences = dict(restored["archive_sequence_by_program_id"])
+        topology_policy = dict(restored["topology_policy"])
         migration_replay = dict(restored["migration_replay"])
         self._last_sample_metadata = {}
         return {
@@ -250,6 +257,7 @@ class IslandModel:
             "archive_sequence_by_program_id": dict(
                 sorted(self._archive_sequences.items())
             ),
+            "topology_policy": topology_policy,
             "migration_replay": migration_replay,
         }
 
@@ -783,6 +791,10 @@ def _validate_cursor_state_snapshot(snapshot: object, n_islands: int) -> dict:
         snapshot.get("archive_sequence_by_program_id"),
         archive_sequence,
     )
+    topology_policy = validate_island_topology_policy(
+        snapshot.get("topology_policy"),
+        n_islands,
+    )
     migration_replay = _validate_migration_replay_policy(
         snapshot.get("migration_replay"),
         migration_sequence,
@@ -796,6 +808,7 @@ def _validate_cursor_state_snapshot(snapshot: object, n_islands: int) -> dict:
         "frontier_sample_index": frontier_sample_index,
         "lineage_sample_index": lineage_sample_index,
         "archive_sequence_by_program_id": archive_sequences,
+        "topology_policy": topology_policy,
         "migration_replay": migration_replay,
     }
 
@@ -904,6 +917,101 @@ def _migration_replay_policy(migration_sequence: int) -> dict:
             "migration_skip_events_not_reconstructed",
             "controller_pending_work_not_restored",
         ],
+    }
+
+
+def island_topology_policy(n_islands: int) -> dict:
+    return {
+        "schema": ISLAND_TOPOLOGY_POLICY_SCHEMA,
+        "status": ISLAND_TOPOLOGY_STATUS,
+        "policy": ISLAND_TOPOLOGY_POLICY,
+        "configured_n_islands": n_islands,
+        "default_n_islands": 5,
+        "island_count_configurable": True,
+        "migration_topology": "ring",
+        "migration_execution": "synchronous_local_generation_boundary",
+        "adaptive_island_count_supported": False,
+        "non_ring_topologies_supported": False,
+        "alphaevolve_policy_ready": False,
+        "limitations": [
+            "no_adaptive_island_count_policy",
+            "no_non_ring_migration_topology",
+            "no_topology_specific_ablation_evidence",
+            "not_claimed_as_alphaevolve_identical_policy",
+        ],
+    }
+
+
+def validate_island_topology_policy(value: object, n_islands: int) -> dict:
+    if value is None:
+        return island_topology_policy(n_islands)
+    if not isinstance(value, dict):
+        raise ValueError("island topology policy must be an object")
+    required = {
+        "schema",
+        "status",
+        "policy",
+        "configured_n_islands",
+        "default_n_islands",
+        "island_count_configurable",
+        "migration_topology",
+        "migration_execution",
+        "adaptive_island_count_supported",
+        "non_ring_topologies_supported",
+        "alphaevolve_policy_ready",
+        "limitations",
+    }
+    missing = required - set(value)
+    if missing:
+        raise ValueError(f"island topology policy missing fields: {sorted(missing)}")
+    unsupported = set(value) - required
+    if unsupported:
+        raise ValueError(
+            f"island topology policy has unsupported fields: {sorted(unsupported)}"
+        )
+    if value["schema"] != ISLAND_TOPOLOGY_POLICY_SCHEMA:
+        raise ValueError("island topology policy schema is unsupported")
+    if value["status"] != ISLAND_TOPOLOGY_STATUS:
+        raise ValueError("island topology policy status is unsupported")
+    if value["policy"] != ISLAND_TOPOLOGY_POLICY:
+        raise ValueError("island topology policy is unsupported")
+    if value["configured_n_islands"] != n_islands:
+        raise ValueError("island topology policy configured_n_islands must match model")
+    if value["default_n_islands"] != 5:
+        raise ValueError("island topology policy default_n_islands must remain five")
+    if value["island_count_configurable"] is not True:
+        raise ValueError("island topology policy must preserve configurable island count")
+    if value["migration_topology"] != "ring":
+        raise ValueError("island topology policy migration_topology is unsupported")
+    if value["migration_execution"] != "synchronous_local_generation_boundary":
+        raise ValueError("island topology policy migration_execution is unsupported")
+    if value["adaptive_island_count_supported"] is not False:
+        raise ValueError("island topology policy must not claim adaptive island counts")
+    if value["non_ring_topologies_supported"] is not False:
+        raise ValueError("island topology policy must not claim non-ring topologies")
+    if value["alphaevolve_policy_ready"] is not False:
+        raise ValueError("island topology policy must not claim AlphaEvolve parity")
+    limitations = value["limitations"]
+    if not isinstance(limitations, list) or not limitations:
+        raise ValueError("island topology policy limitations must be a non-empty list")
+    for index, limitation in enumerate(limitations):
+        if not isinstance(limitation, str) or not limitation.strip():
+            raise ValueError(
+                f"island topology policy limitations[{index}] must be non-empty text"
+            )
+    return {
+        "schema": value["schema"],
+        "status": value["status"],
+        "policy": value["policy"],
+        "configured_n_islands": value["configured_n_islands"],
+        "default_n_islands": value["default_n_islands"],
+        "island_count_configurable": value["island_count_configurable"],
+        "migration_topology": value["migration_topology"],
+        "migration_execution": value["migration_execution"],
+        "adaptive_island_count_supported": value["adaptive_island_count_supported"],
+        "non_ring_topologies_supported": value["non_ring_topologies_supported"],
+        "alphaevolve_policy_ready": value["alphaevolve_policy_ready"],
+        "limitations": list(limitations),
     }
 
 

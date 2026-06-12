@@ -4,6 +4,7 @@ import pytest
 from libreevolve.core.config import Config
 from libreevolve.population.islands import (
     ISLAND_MIGRATION_REPLAY_SCHEMA,
+    ISLAND_TOPOLOGY_POLICY_SCHEMA,
     IslandModel,
 )
 from libreevolve.population.program import Program
@@ -165,6 +166,25 @@ def test_state_snapshot_persists_round_robin_cursor_after_non_admitted_attempt()
     assert snapshot["metric_sample_index"] == 0
     assert snapshot["frontier_sample_index"] == 0
     assert snapshot["lineage_sample_index"] == 0
+    assert snapshot["topology_policy"] == {
+        "schema": ISLAND_TOPOLOGY_POLICY_SCHEMA,
+        "status": "configured_synchronous_ring_topology",
+        "policy": "config_n_islands_controls_local_synchronous_ring_migration_default_five",
+        "configured_n_islands": 2,
+        "default_n_islands": 5,
+        "island_count_configurable": True,
+        "migration_topology": "ring",
+        "migration_execution": "synchronous_local_generation_boundary",
+        "adaptive_island_count_supported": False,
+        "non_ring_topologies_supported": False,
+        "alphaevolve_policy_ready": False,
+        "limitations": [
+            "no_adaptive_island_count_policy",
+            "no_non_ring_migration_topology",
+            "no_topology_specific_ablation_evidence",
+            "not_claimed_as_alphaevolve_identical_policy",
+        ],
+    }
     assert snapshot["migration_replay"] == {
         "schema": ISLAND_MIGRATION_REPLAY_SCHEMA,
         "status": "not_applied_as_restore_engine",
@@ -221,6 +241,7 @@ def test_restore_cursor_state_applies_next_island_and_sequences():
     assert result["status"] == "cursor_state_restored"
     assert result["archive_contents_restored"] is False
     assert result["full_archive_restore_required"] is True
+    assert result["topology_policy"] == snapshot["topology_policy"]
     assert result["migration_replay"] == snapshot["migration_replay"]
     assert event["island_id"] == snapshot["next_island_id"]
     assert event["archive_sequence"] == snapshot["archive_sequence"] + 1
@@ -294,6 +315,16 @@ def test_restore_cursor_state_rejects_migration_replay_overclaim():
     restored = IslandModel(Config(n_islands=2, migration_interval=5))
 
     with pytest.raises(ValueError, match="must not claim replay engine support"):
+        restored.restore_cursor_state(snapshot)
+
+
+def test_restore_cursor_state_rejects_topology_policy_overclaim():
+    source = IslandModel(Config(n_islands=2, migration_interval=5))
+    snapshot = source.state_snapshot()
+    snapshot["topology_policy"]["alphaevolve_policy_ready"] = True
+    restored = IslandModel(Config(n_islands=2, migration_interval=5))
+
+    with pytest.raises(ValueError, match="must not claim AlphaEvolve parity"):
         restored.restore_cursor_state(snapshot)
 
 

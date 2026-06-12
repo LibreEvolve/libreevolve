@@ -12293,3 +12293,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     constructor value/schema attribution remain open.
   - Verification: runtime plugin-state tests validate forged readiness
     overclaim rejection.
+
+- [x] Record island-topology policy guards.
+  - Spec evidence: paper-facing island claims need evidence that configurable
+    local ring migration is not a fixed or AlphaEvolve-identical island policy.
+  - Status: paper-facing TODOs and the papers overview now record
+    `libreevolve.island_topology_policy.v1` with configured synchronous ring
+    migration, configurable island count, the five-island default, and false
+    readiness for adaptive island counts, non-ring topologies, and
+    AlphaEvolve-identical policy.
+  - Remaining paper gap: adaptive island topologies, non-ring migration
+    policies, topology-specific ablations, and richer migration-policy reports
+    remain open.
+  - Verification: island/archive-state tests validate forged topology-policy
+    overclaim rejection.

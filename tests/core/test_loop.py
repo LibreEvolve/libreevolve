@@ -1618,6 +1618,25 @@ def test_completed_runtime_persists_archive_state_cursor_snapshot():
     assert archive_state["frontier_sample_index"] == 0
     assert archive_state["lineage_sample_index"] == 0
     assert len(archive_state["archive_sequence_by_program_id"]) == 1
+    assert archive_state["topology_policy"] == {
+        "schema": "libreevolve.island_topology_policy.v1",
+        "status": "configured_synchronous_ring_topology",
+        "policy": "config_n_islands_controls_local_synchronous_ring_migration_default_five",
+        "configured_n_islands": 3,
+        "default_n_islands": 5,
+        "island_count_configurable": True,
+        "migration_topology": "ring",
+        "migration_execution": "synchronous_local_generation_boundary",
+        "adaptive_island_count_supported": False,
+        "non_ring_topologies_supported": False,
+        "alphaevolve_policy_ready": False,
+        "limitations": [
+            "no_adaptive_island_count_policy",
+            "no_non_ring_migration_topology",
+            "no_topology_specific_ablation_evidence",
+            "not_claimed_as_alphaevolve_identical_policy",
+        ],
+    }
     assert archive_state["islands"][0]["occupied_cell_count"] == 1
     assert archive_state["islands"][1]["occupied_cell_count"] == 0
     assert archive_state["islands"][2]["occupied_cell_count"] == 0

@@ -50,6 +50,7 @@ from libreevolve.population.islands import (
     ISLAND_MIGRATION_REPLAY_STATUS,
     ISLAND_STATE_ACCEPTED_RESUME_STATUSES,
     IslandModel,
+    validate_island_topology_policy,
 )
 from libreevolve.population.program import (
     Program,
@@ -1806,6 +1807,7 @@ def validate_archive_state_snapshot(snapshot: object) -> dict:
     optional = {
         "archive_contents",
         "migration_replay",
+        "topology_policy",
         "frontier_sample_index",
         "lineage_sample_index",
     }
@@ -1837,6 +1839,10 @@ def validate_archive_state_snapshot(snapshot: object) -> dict:
     migration_sequence = _validate_snapshot_non_negative_int(
         snapshot["migration_sequence"],
         "migration_sequence",
+    )
+    topology_policy = _validate_archive_topology_policy(
+        snapshot.get("topology_policy"),
+        n_islands,
     )
     migration_replay = _validate_archive_migration_replay_policy(
         snapshot.get("migration_replay"),
@@ -1870,6 +1876,7 @@ def validate_archive_state_snapshot(snapshot: object) -> dict:
         "metric_sample_index": metric_sample_index,
         "frontier_sample_index": frontier_sample_index,
         "lineage_sample_index": lineage_sample_index,
+        "topology_policy": topology_policy,
         "migration_replay": migration_replay,
         "archive_sequence_by_program_id": sequence_by_program,
         "islands": islands,
@@ -1973,6 +1980,15 @@ def _validate_archive_sequence_by_program(
             )
         restored[program_id] = sequence
     return dict(sorted(restored.items()))
+
+
+def _validate_archive_topology_policy(value: object, n_islands: int) -> dict:
+    try:
+        return validate_island_topology_policy(value, n_islands)
+    except ValueError as exc:
+        raise ArchiveStateRestoreError(
+            f"archive state snapshot topology_policy {exc}"
+        ) from exc
 
 
 def _default_archive_migration_replay_policy(migration_sequence: int) -> dict:

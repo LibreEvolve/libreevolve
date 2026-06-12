@@ -178,7 +178,9 @@ LibreEvolve has:
 - validator subprocess environment allowlisting, persisted stdout/stderr
   redaction, and best-effort timeout process-tree cleanup
 - MAP-Elites plus configurable ring-topology island migration, defaulting to
-  five islands
+  five islands, with validated `runtime.history.archive_state.topology_policy`
+  evidence that keeps adaptive island counts, non-ring topologies, and
+  AlphaEvolve-identical policy readiness false
 - metric direction/bounds normalization for declared evaluator metrics and
   feedback-sourced objective metrics, averaged into archive selection score
 - a prompt sampler that renders context files, compact stage feedback,

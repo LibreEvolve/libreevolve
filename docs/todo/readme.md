@@ -2591,7 +2591,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     configuration rather than a fixed paper-derived constant.
   - Current evidence: README now describes configurable ring-topology island
     migration with a five-island default, matching `Config.n_islands` and the
-    tests that instantiate one-, two-, and three-island models.
+    tests that instantiate one-, two-, and three-island models. It also names
+    the manifest `topology_policy` schema
+    `libreevolve.island_topology_policy.v1`, which records configured
+    synchronous ring migration, keeps island count configurable, and keeps
+    adaptive island counts, non-ring topologies, and AlphaEvolve-identical
+    policy readiness false.
   - Required result: when future topology or migration-policy work lands,
     update README, ROADMAP, papers index, and code/paper TODO entries together
     so the README does not imply a hardcoded five-island runtime or overclaim

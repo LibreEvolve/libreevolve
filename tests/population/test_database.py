@@ -2126,6 +2126,14 @@ def test_archive_state_snapshot_exposes_island_cursor_for_runtime_manifest():
         first.id: 1,
         second.id: 2,
     }
+    assert snapshot["topology_policy"]["schema"] == "libreevolve.island_topology_policy.v1"
+    assert snapshot["topology_policy"]["configured_n_islands"] == 2
+    assert snapshot["topology_policy"]["default_n_islands"] == 5
+    assert snapshot["topology_policy"]["island_count_configurable"] is True
+    assert snapshot["topology_policy"]["migration_topology"] == "ring"
+    assert snapshot["topology_policy"]["adaptive_island_count_supported"] is False
+    assert snapshot["topology_policy"]["non_ring_topologies_supported"] is False
+    assert snapshot["topology_policy"]["alphaevolve_policy_ready"] is False
     assert snapshot["migration_replay"]["status"] == "not_applied_as_restore_engine"
     assert snapshot["migration_replay"]["replay_engine_supported"] is False
     assert snapshot["migration_replay"]["migration_sequence"] == 0
@@ -2162,6 +2170,27 @@ def test_archive_state_snapshot_rejects_migration_replay_overclaim():
     }
 
     with pytest.raises(ArchiveStateRestoreError, match="must not claim"):
+        validate_archive_state_snapshot(snapshot)
+
+
+def test_archive_state_snapshot_rejects_topology_policy_overclaim():
+    snapshot = _archive_state_snapshot()
+    snapshot["topology_policy"] = {
+        "schema": "libreevolve.island_topology_policy.v1",
+        "status": "configured_synchronous_ring_topology",
+        "policy": "config_n_islands_controls_local_synchronous_ring_migration_default_five",
+        "configured_n_islands": 2,
+        "default_n_islands": 5,
+        "island_count_configurable": True,
+        "migration_topology": "ring",
+        "migration_execution": "synchronous_local_generation_boundary",
+        "adaptive_island_count_supported": True,
+        "non_ring_topologies_supported": False,
+        "alphaevolve_policy_ready": False,
+        "limitations": ["no_adaptive_island_count_policy"],
+    }
+
+    with pytest.raises(ArchiveStateRestoreError, match="adaptive island"):
         validate_archive_state_snapshot(snapshot)
 
 

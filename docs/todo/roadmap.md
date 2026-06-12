@@ -1466,9 +1466,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     LibreEvolve's default island count into an unsupported fixed fidelity
     claim.
   - Current evidence: the roadmap now says MAP-Elites plus configurable
-    ring-topology island migration, defaulting to five islands. That matches
-    `Config.n_islands`, validation for positive configured island counts, and
-    tests with non-default island counts.
+    ring-topology island migration, defaulting to five islands, with validated
+    `runtime.history.archive_state.topology_policy` evidence. That matches
+    `Config.n_islands`, validation for positive configured island counts,
+    tests with non-default island counts, and explicit false readiness for
+    adaptive island counts, non-ring topologies, and AlphaEvolve-identical
+    island policy.
   - Required result: when adaptive island counts, non-ring topologies, or
     AlphaEvolve-specific migration policies land, update the roadmap, README,
     papers index, and code/paper TODO entries together so they do not

@@ -1655,7 +1655,13 @@ Primary evidence:
     configured island count in a ring topology. The `IslandModel` docstring,
     README feature/comparison text, ROADMAP feature list, and AGENTS overview
     now say configurable island migration with a five-island default instead
-    of implying a hardcoded five-island model.
+    of implying a hardcoded five-island model. Completed archive-state
+    snapshots now include `topology_policy` schema
+    `libreevolve.island_topology_policy.v1`, recording configured synchronous
+    ring migration, configurable island counts, the five-island default, and
+    explicit false readiness for adaptive island counts, non-ring topologies,
+    and AlphaEvolve-identical island policy. Restore and manifest validators
+    reject forged topology overclaims.
   - Required result: if future work adds paper-specific island counts,
     adaptive island topologies, or non-ring migration policies, update code
     comments, README, ROADMAP, papers index, and matching TODO entries

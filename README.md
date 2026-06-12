@@ -30,73 +30,16 @@ Implemented today:
 
 Important limits:
 
-- There is no first-class Gemini provider yet; the absence boundary is tracked
-  by `runtime.history.gemini_provider_parity_report` and
-  `papers/gemini_provider_parity_boundary.json`.
 - Evaluators run in local subprocesses, not hardened security sandboxes.
-- The archive and controller are local and synchronous, not a distributed
-  asynchronous AlphaEvolve-style service; parallel-evaluation readiness is
-  tracked by `runtime.history.parallel_evaluation_readiness_report` and
-  `papers/parallel_evaluation_readiness_boundary.json`, while topology parity
-  is bounded by `papers/distributed_pipeline_topology_boundary.json`.
-- Codebase-scale telemetry exists for current runs, but it is not
-  AlphaEvolve Table 1 code-scale parity; the boundary is tracked by
-  `runtime.history.codebase_scale_benchmark_report` and
-  `papers/codebase_scale_benchmark_boundary.json`.
-- Incorrect-suggestion filtering evidence is local execution/evaluator
-  telemetry, not an independent audit; the boundary is tracked by
-  `runtime.history.incorrect_suggestion_audit_report` and
-  `papers/incorrect_suggestion_audit_boundary.json`.
-- Benchmark-fixture readiness is smoke/example-scope telemetry until
-  repeated-seed, baseline, emitted-artifact, and anti-gaming evidence exists;
-  the boundary is tracked by `papers/benchmark_fixture_readiness_boundary.json`.
-- Expert-guided problem formulation is a metadata/report contract until real
-  benchmark fixtures carry populated review/signoff evidence; the boundary is
-  tracked by `papers/problem_formulation_provenance_boundary.json`.
-- Task-specification evidence is a runtime artifact-resolution contract, not
-  full AlphaEvolve task-spec parity for external validators, arbitrary
-  language/build runners, or user-authored standalone specs; the boundary is
-  tracked by `papers/task_specification_boundary.json`.
-- Collaborator-feedback provenance is a metadata/report contract until
-  representative fixtures carry reviewed multi-cohort feedback evidence; the
-  boundary is tracked by `papers/collaborator_feedback_provenance_boundary.json`.
-- Acknowledgement-role provenance is claim-ready only for the reviewed
-  `matrix_multiplication` fixture's AlphaEvolve pages 21-22 acknowledgement
-  roles; the boundary is tracked by
-  `papers/acknowledgement_role_provenance_boundary.json` and does not claim
-  technical validation, authorship, affiliation, or deployment evidence.
-- Publication-author metadata is claim-ready only for the reviewed
-  `matrix_multiplication` fixture's AlphaEvolve pages 22-23 author/contribution
-  roles plus title-page marker linkage; the boundary is tracked by
-  `papers/paper_author_metadata_boundary.json` and does not claim local
-  authorship, affiliation, technical validation, or copied contact details.
-- Title-page affiliation metadata is claim-ready only for the reviewed
-  `matrix_multiplication` fixture's AlphaEvolve page 1 source-publication
-  facts; the boundary is tracked by
-  `papers/title_page_affiliation_boundary.json` and does not claim local
-  affiliation, endorsement, rights regrant, or technical capability evidence.
-- System-contribution provenance is claim-ready only for the reviewed
-  `matrix_multiplication` fixture's AlphaEvolve pages 22-23 contribution-role
-  records; the boundary is tracked by
-  `papers/system_contribution_provenance_boundary.json` and does not claim git
-  history, package authorship, local validation, or deployment evidence.
-- Initial-program idea provenance is a metadata/report contract until
-  equal-budget seed-variant result tables, prompt-context linkage, and
-  human contribution review exist; the boundary is tracked by
-  `papers/initial_program_idea_provenance_boundary.json`.
-- Initial-program validity is policy-gated: default permissive runs may keep
-  invalid seeds as diagnostics, while AlphaEvolve complete-initial-program
-  parity is only claimable for `alphaevolve_strict` runs with valid
-  metric-bearing seeds; the boundary is tracked by
-  `papers/initial_program_validity_boundary.json`.
-- The included examples are smoke fixtures and small demos unless explicitly
-  documented otherwise.
-- Installation instructions cover editable/local use; verified wheel/sdist
-  builds, install-from-wheel smoke tests, and release-artifact provenance are
-  not claim-ready and are tracked by
-  `papers/release_artifact_reproducibility_boundary.json`.
-- Paper and blog claims are tracked as source boundaries unless local benchmark
-  evidence exists.
+- The controller, archive, migration, and evaluator flow are local and
+  synchronous, not a distributed asynchronous AlphaEvolve-style service.
+- Candidate execution is Python-primary. Arbitrary language/build runners and
+  problem-defined candidate abstractions remain open work.
+- The included examples are smoke fixtures and small demos unless a fixture
+  explicitly documents stronger benchmark evidence.
+- Gemini/provider parity, benchmark-scale claims, paper-result reproduction,
+  release packaging, and broader CI/platform guarantees are tracked as
+  boundaries in `papers/README.md` and `ROADMAP.md`, not promised here.
 
 ## Installation
 
@@ -236,50 +179,10 @@ Manifest `title` fields are inventory/display slugs derived from cache names,
 not authoritative bibliographic titles. Use `papers/README.md` for paper-facing
 titles, implementation status, and benchmark coverage decisions.
 
-The table below is a curated subset for README context. `papers/README.md` is
-the complete implementation-status index for all 53 manifest rows.
-
-<details>
-<summary>Curated source context</summary>
-
-| Source | Role in LibreEvolve |
-| --- | --- |
-| [AlphaEvolve](https://arxiv.org/abs/2506.13131) | Main architecture inspiration and comparison target. |
-| [AlphaEvolve 2026 impact update](https://deepmind.google/blog/alphaevolve-impact/) | Official DeepMind impact-claim context only; `papers/alphaevolve_2026_impact_boundary.json` records missing local benchmark evidence for the named DeepConsensus, AC OPF, Earth AI, Willow, TPU, cache-policy, Spanner, compiler-storage, public-gallery, customer, UI, and API workflows. |
-| [MAP-Elites](https://arxiv.org/abs/1504.04909) | Quality-diversity archive inspiration. |
-| [Finite-time Analysis of the Multiarmed Bandit Problem](https://homes.di.unimi.it/~cesabian/Pubblicazioni/ml-02.pdf) | UCB1 background for backend-selection boundaries. |
-| [CodeEvolve](https://arxiv.org/abs/2510.14150) | Related agentic code-evolution work. |
-| [DeepEvolve](https://arxiv.org/abs/2510.06056) | Related evolutionary coding-agent work. |
-| [FHE on TPU](https://arxiv.org/abs/2605.14718) | AlphaEvolve FHE/TPUv5e application context only; no local cryptographic-kernel or hardware-execution benchmark exists. |
-| [Intentmaking and Sensemaking](https://arxiv.org/abs/2605.05921) | AlphaEvolve HCI/user-study context only; no local intentmaking/sensemaking session-trace workflow exists. |
-| [Radar Power Allocation](https://arxiv.org/abs/2605.01794) | AlphaEvolve radar resource-allocation application context only; no local multi-target tracking or power-allocation benchmark exists. |
-| [EvoX](https://arxiv.org/abs/2602.23413) | Adaptive meta-evolution context only; no local strategy-genome, strategy-credit, or dynamic search-policy benchmark exists. |
-| [DeltaEvolve](https://arxiv.org/abs/2602.02919) | Semantic-delta context-memory inspiration only; no local semantic-delta store, progressive disclosure sampler, or token-efficiency benchmark exists. |
-| [MLEvolve](https://arxiv.org/abs/2606.06473) | Long-horizon ML-engineering context only; no local MLE-Bench harness, Progressive MCGS controller, or 12-hour medal-rate report exists. |
-| [LEVI](https://arxiv.org/abs/2605.09764) | Cost-aware search-architecture context only; no local large/small model mutation router, proxy benchmark, or cost-comparison report exists. |
-| [PACEvolve](https://arxiv.org/abs/2601.10657) | Long-horizon consistency context only; no local hierarchical context-management, momentum-backtracking, or LLM-SR/KernelBench report exists. |
-| [FlashEvolve](https://arxiv.org/abs/2605.08520) | Asynchronous-stage orchestration context only; no local async worker queue, artifact-version DAG, staleness repair, or throughput benchmark exists. |
-| [What Do Evolutionary Coding Agents Evolve?](https://arxiv.org/abs/2605.20086) | Trace-diagnostic evaluation context only; no local EvoTrace edit taxonomy, EvoReplay intervention harness, or cycling/overfitting report exists. |
-| [Zarankiewicz reinforced search](https://arxiv.org/abs/2605.01120) | Extremal-graph benchmark candidate only; no local Zarankiewicz fixture, `K_{s,t}` verifier, construction table, or sub-$30 cost report exists. |
-| [CORAL](https://arxiv.org/abs/2604.01658) | Autonomous multi-agent evolution context only; no local long-running agent sessions, shared persistent memory, heartbeat interventions, or isolated multi-agent workspace runtime exists. |
-| [AEvo](https://arxiv.org/abs/2605.13821) | Harnessed meta-editing context only; no local process-level state, meta-agent procedure editor, protected evaluator harness, or meta-edit benchmark report exists. |
-| [G-Zero](https://arxiv.org/abs/2605.09959) | Verifier-free co-evolution context only; no local Hint-delta intrinsic reward, Proposer/Generator co-training loop, GRPO/DPO trainer, or verifier-free self-evolution report exists. |
-| [GenEvolve](https://arxiv.org/abs/2605.21605) | Multimodal trajectory-distillation context only; no local image-generation tool pipeline, visual-reference trajectory store, Agentic Visual Experience Distillation, or GenEvolve-Bench report exists. |
-| [EvoRubric](https://arxiv.org/abs/2605.29847) | Self-evolving reward-rubric context only; no local Reasoner/Rubric-Generator co-evolution, criteria verification, rubric memory pool, or reward-hacking report exists. |
-| [LLM-ALSO](https://arxiv.org/abs/2605.29293) | Learning-signal optimization context only; no local sparse-reward MARL harness, Critic/Generator reward-shaping loop, branch-validation trace, or learning-efficiency report exists. |
-| [MemEvolve](https://arxiv.org/abs/2512.18746) | Memory-architecture evolution context only; no local encode/store/retrieve/manage design space, memory-architecture mutation loop, EvolveLab benchmark mapping, or transfer report exists. |
-| [ANCHOR healthy evolution](https://arxiv.org/abs/2606.06114) | Healthy-evolution oversight context only; no local human-like oversight agent, phase-specific norm-correction interface, safety-drift metric lineage, or supervision-cadence report exists. |
-| [SIA](https://arxiv.org/abs/2605.27276) | Harness-plus-weight self-improvement context only; no local Feedback-Agent, editable task-agent harness inventory, online weight-update loop, adapter/checkpoint lifecycle, or harness-versus-weight ablation report exists. |
-| [HarnessFix](https://arxiv.org/abs/2606.06324) | Trace-grounded harness repair context only; no local HTIR trace normalization, harness-layer failure attribution, recurring flaw record consolidation, scoped repair operator schema, or regression-bounded patch validation exists. |
-| [RHO](https://arxiv.org/abs/2606.05922) | Retrospective harness optimization context only; no local hard/diverse trajectory coreset selector, parallel re-rollout workflow, self-validation/self-consistency analysis, pairwise self-preference harness ranking, or SWE-Bench Pro reproduction exists. |
-| [Harness Updating Is Not Harness Benefit](https://arxiv.org/abs/2605.30621) | Harness-capability disentanglement context only; no local harness-updating versus harness-benefit metric schema, cross-model capability-tier experiment, activation/adherence failure audit, or benchmark reproduction exists. |
-| [AHE](https://arxiv.org/abs/2604.25850) | Observability-driven harness-evolution context only; no local file-level harness component graph, layered trajectory evidence corpus, edit-prediction contract, falsification loop, or Terminal-Bench 2 reproduction exists. |
-| [AI Harness Engineering](https://arxiv.org/abs/2605.13357) | Runtime-substrate context only; no complete eleven-responsibility harness contract, H0-H3 ladder, trace-based episode package, controlled validation task, or structured verification report exists. |
-| [Inference-time trajectory alignment](https://arxiv.org/abs/2605.21516) | Harness design context only; no local decomposition/guidance parameter sweep, retry-budget study, over-decomposition/over-pruning/hallucinated-execution report, partial-harnessing benchmark, or terminal-agent reproduction exists. |
-| [Adaptive Auto-Harness](https://arxiv.org/abs/2606.01770) | Open-ended task-stream deployment context only; no local chronological task stream, evolution/adaptation-loss decomposition, harness tree routing, human-steering hook, or prediction-market/security/event benchmark reproduction exists. |
-| [Meta-Harness](https://arxiv.org/abs/2603.28052) | Outer-loop harness-code optimization context only; no local harness-code candidate schema, agentic proposer workspace, execution-trace feedback bundle, cross-task harness benchmark, or end-to-end harness optimization reproduction exists. |
-
-</details>
+`papers/README.md` is the complete implementation-status index for all 53
+manifest rows. It separates implemented behavior, inspiration-only sources,
+candidate benchmark ideas, and source-boundary records so the root README does
+not have to carry the full research ledger.
 
 Rehydrate the ignored local PDF cache on a fresh checkout:
 

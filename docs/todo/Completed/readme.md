@@ -4,8 +4,8 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
-- [x] Document Bilateral Trade `2603.08679` source boundary in README.
-  - Evidence: `README.md` lists Bilateral Trade as AlphaEvolve
+- [x] Document Bilateral Trade `2603.08679` source boundary in paper index.
+  - Evidence: `papers/README.md` lists Bilateral Trade as AlphaEvolve
     mechanism-design result context only and points to
     `papers/bilateral_trade_boundary.json` for the missing
     value-distribution schema, buyer/seller witness artifact,
@@ -13,39 +13,39 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     and independent-checker evidence.
 
 - [x] Document Berczy local-correction combinatorics `2603.06692` source
-      boundary in README.
-  - Evidence: `README.md` lists Local Corrections in Combinatorics as a
+      boundary in paper index.
+  - Evidence: `papers/README.md` lists Local Corrections in Combinatorics as a
     constructive math benchmark candidate only and points to
     `papers/combinatorics_berczy_boundary.json` for the missing graph
     reconstruction, Alon-Tarsi Latin-square involution, Rota-basis
     local-exchange, certificate-schema, evolved-code, metric/conjecture-row,
     and independent-verifier evidence.
 
-- [x] Document Ramsey Numbers `2603.09172` source boundary in README.
-  - Evidence: `README.md` lists Ramsey Numbers as a constructive math
+- [x] Document Ramsey Numbers `2603.09172` source boundary in paper index.
+  - Evidence: `papers/README.md` lists Ramsey Numbers as a constructive math
     benchmark candidate only and points to `papers/ramsey_numbers_boundary.json`
     for the missing graph witness, verifier, lower-bound row,
     source-artifact snapshot, initialization-family, lower-bound semantics,
     and independent-checker evidence.
 
-- [x] Document Multiagent Learning `2602.16928` source boundary in README.
-  - Evidence: `README.md` lists Multiagent Learning as AlphaEvolve MARL
+- [x] Document Multiagent Learning `2602.16928` source boundary in paper index.
+  - Evidence: `papers/README.md` lists Multiagent Learning as AlphaEvolve MARL
     algorithm-discovery context only and points to
     `papers/multiagent_learning_boundary.json` for the missing CFR/PSRO,
     OpenSpiel, exploitability, exact-oracle, evolved-solver,
     distillation/ablation, random normal-form, and artifact-provenance
     evidence.
 
-- [x] Document ArchAgent `2602.22425` source boundary in README.
-  - Evidence: `README.md` lists ArchAgent as AlphaEvolve computer-architecture
+- [x] Document ArchAgent `2602.22425` source boundary in paper index.
+  - Evidence: `papers/README.md` lists ArchAgent as AlphaEvolve computer-architecture
     application context only and points to `papers/archagent_boundary.json` for
     the missing C++ cache-policy, ChampSim, CRC/SPEC06/Google Workload Trace,
     IPC, policy-artifact, hardware-realizability, state-budget,
     post-silicon-specialization, simulator-escape, and distributed-simulation
     evidence.
 
-- [x] Document Magellan `2601.21096` source boundary in README.
-  - Evidence: `README.md` lists Magellan as AlphaEvolve compiler-optimization
+- [x] Document Magellan `2601.21096` source boundary in paper index.
+  - Evidence: `papers/README.md` lists Magellan as AlphaEvolve compiler-optimization
     application context only and points to `papers/magellan_boundary.json` for
     the missing C++ decision-logic, compiler-pass integration,
     macro-benchmark, autotuning, LLVM/register-allocation/XLA, baseline,
@@ -174,7 +174,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     rendered artifacts, exact diagram text/accessibility export, topology
     evidence, evaluator-pool parallelism evidence, and per-step validation
     beyond the current runtime process map.
-  - Status: README now names `papers/process_exhibit_boundary.json` as the
+  - Status: papers/README.md now names `papers/process_exhibit_boundary.json` as the
     committed sidecar for the rendered process-diagram absence boundary, with
     paper-manifest validation.
   - Verification: `py -3.12 -m pytest
@@ -192,7 +192,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     candidate skeleton's `evaluate(eval_inputs)` entrypoint invokes evolved
     blocks and returns scores under stronger isolation/linkage evidence than
     the current opt-in path.
-  - Status: README now names `papers/embedded_evaluator_boundary.json` as the
+  - Status: papers/README.md now names `papers/embedded_evaluator_boundary.json` as the
     committed sidecar for the full-Figure-3 evaluator absence boundary, with
     paper-manifest validation.
   - Verification: `py -3.12 -m pytest
@@ -208,7 +208,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Spec evidence: AlphaEvolve Table 1 and Section 2.1 include arbitrary
     language/codebase scope that needs runner/build evidence beyond
     Python-primary workspace mechanics.
-  - Status: README now names `papers/candidate_language_runner_boundary.json`
+  - Status: papers/README.md now names `papers/candidate_language_runner_boundary.json`
     as the committed sidecar for the arbitrary-language/build-runner absence
     boundary, with paper-manifest validation.
   - Verification: `py -3.12 -m pytest
@@ -226,7 +226,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Spec evidence: AlphaEvolve multi-evaluator wording needs independent
     reference/statistical-oracle evidence beyond local cascade and feedback
     grader arbitration.
-  - Status: README now names `papers/evaluator_oracle_boundary.json` as the
+  - Status: papers/README.md now names `papers/evaluator_oracle_boundary.json` as the
     committed sidecar for the independent evaluator-oracle absence boundary,
     with paper-manifest validation.
   - Verification: `py -3.12 -m pytest
@@ -242,7 +242,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 - [x] Keep README controller-backtracking wording tied to committed sidecar.
   - Spec evidence: AlphaEvolve backtracking wording needs explicit controller-
     policy evidence beyond observed parent-selection redirects.
-  - Status: README now names `papers/controller_backtracking_boundary.json` as
+  - Status: papers/README.md now names `papers/controller_backtracking_boundary.json` as
     the committed sidecar for the controller-owned backtracking policy absence
     boundary, with paper-manifest validation.
   - Verification: `py -3.12 -m pytest
@@ -259,7 +259,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Spec evidence: AlphaEvolve cascade-efficiency claims need difficulty,
     test-set, seed/sample, and cost-saving evidence beyond runtime attrition
     counters.
-  - Status: README now names `papers/evaluation_cascade_boundary.json` as the
+  - Status: papers/README.md now names `papers/evaluation_cascade_boundary.json` as the
     committed sidecar for the cascade-efficiency absence boundary, with
     paper-manifest validation.
   - Verification: `py -3.12 -m pytest
@@ -275,7 +275,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Spec evidence: AlphaEvolve execution-grounding claims need independent
     audit evidence before README can imply audited false-acceptance or
     false-rejection rates.
-  - Status: README now names `papers/proposal_lifecycle_audit_boundary.json`
+  - Status: papers/README.md now names `papers/proposal_lifecycle_audit_boundary.json`
     as the committed sidecar for the independent proposal lifecycle audit
     absence boundary, with paper-manifest validation.
   - Verification: `py -3.12 -m pytest
@@ -291,7 +291,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Spec evidence: AlphaEvolve's flexible abstraction-selection claim needs
     rationale and bias evidence beyond the current code-file-set workspace
     representation.
-  - Status: README now names `papers/candidate_abstraction_boundary.json` as
+  - Status: papers/README.md now names `papers/candidate_abstraction_boundary.json` as
     the committed sidecar for the candidate-abstraction and bias-evidence
     absence boundary, with paper-manifest validation.
   - Verification: `py -3.12 -m pytest
@@ -306,7 +306,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 - [x] Keep README existing-codebase wording tied to committed sidecar.
   - Spec evidence: AlphaEvolve Section 2.1 minimal-marker integration claims
     require source-setup evidence beyond runtime workspace marker inventory.
-  - Status: README now names
+  - Status: papers/README.md now names
     `papers/existing_codebase_integration_boundary.json` as the committed
     sidecar for the source-setup-level existing-codebase integration absence
     boundary, with paper-manifest validation.
@@ -323,7 +323,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Spec evidence: AlphaEvolve Figure 8 is a visual ablation exhibit, so README
     wording must distinguish validated exhibit metadata from actual rendered
     curve artifacts.
-  - Status: README now names `papers/figure8_ablation_artifacts.json` as the
+  - Status: papers/README.md now names `papers/figure8_ablation_artifacts.json` as the
     committed sidecar for the Figure 8 rendered-artifact absence boundary, with
     paper-manifest validation.
   - Verification: `py -3.12 -m pytest tests\test_ablation_exhibits.py
@@ -339,7 +339,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Spec evidence: AlphaEvolve Section 3.2 constructive-math claims cover
     aggregate outcomes, simple/random starts, heuristic handoff, and staged
     heuristic sequences.
-  - Status: README now names `papers/math_outcome_boundary.json`,
+  - Status: papers/README.md now names `papers/math_outcome_boundary.json`,
     `papers/math_starting_construction_boundary.json`,
     `papers/math_heuristic_handoff_boundary.json`, and
     `papers/math_heuristic_stage_sequence_boundary.json` as the committed
@@ -640,7 +640,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Remaining gap: none for this bounded README wording slice.
 
 - [x] Document paper-cache row identity artifact evidence.
-  - Spec evidence: README points readers to the local paper cache as the source
+  - Spec evidence: papers/README.md points readers to the local paper cache as the source
     ledger for paper-facing implementation status and benchmark decisions.
   - Status: README now documents `papers/row_identity.json` as the committed
     companion manifest that emits derived source identities for all 53 cache
@@ -1842,7 +1842,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     repeated flushes, left both examples pending, and never exported the valid
     candidate code referenced matrix-rank work; the query did not include task,
   - README/backend-doc evidence: backend examples can include descriptive role
-  - README evidence: README points readers to `examples/runs/*` immediately
+  - README evidence: papers/README.md points readers to `examples/runs/*` immediately
   - README/docs evidence: examples and docs describe seed programs, run
 
 - [x] Clarify OpenAI Responses API routing.
@@ -2248,7 +2248,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - README evidence: README can now mention metric-aware parent/inspiration
   - README/config evidence: README says parent and inspiration sampling include
   - Required result: update README/configuration wording after the code policy
-  - README evidence: README points readers to `examples/runs/*` immediately
+  - README evidence: papers/README.md points readers to `examples/runs/*` immediately
   - README/run-artifact evidence: README describes `best.py` and
     files `Readme.md` and `README.md` raised during workspace materialization,
   - README/run-artifact evidence: run-artifact docs say program records in
@@ -10790,7 +10790,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
       validators.
   - Evidence: README did not describe any benchmark certification record that
     separates local evaluator acceptance from paper-level result confirmation.
-  - Status: README now names `libreevolve.paper_result_certification.v1`,
+  - Status: papers/README.md now names `libreevolve.paper_result_certification.v1`,
     describes its claim scope, verifier identity/independence, verdict, passed
     evidence, and hashed artifact requirements, and states that the contract
     does not run independent verifiers or create deployment/reviewer evidence.
@@ -10801,7 +10801,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Evidence: README did not document a systems-benchmark report contract for
     separating optimization feedback from held-out/generalization and
     reference-correctness evidence.
-  - Status: README now names `libreevolve.systems_result_report.v1`, describes
+  - Status: papers/README.md now names `libreevolve.systems_result_report.v1`, describes
     required optimization, held-out, and reference-correctness gates, case-set
     hashes, sample counts/seeds, finite metrics, artifacts, not-applicable
     rationale, and the boundary that this is not a real systems benchmark
@@ -10813,7 +10813,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Evidence: README described specific matrix smoke-validator shortcut
     rejections but not a reusable hardening contract for advertised benchmark
     readiness.
-  - Status: README now names `libreevolve.benchmark_hardening.v1`, describes
+  - Status: papers/README.md now names `libreevolve.benchmark_hardening.v1`, describes
     protected signals, shortcut categories, detector strategy, passed negative
     fixtures, hashed hardening artifacts, and the distinction between smoke
     records and benchmark/paper-claim records.
@@ -10823,7 +10823,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 - [x] Document executed equal-budget ablation result metadata.
   - Evidence: README documented the AlphaEvolve ablation registry definition
     but not the executed-result report shape for equal-budget curves.
-  - Status: README now names `libreevolve.alphaevolve_ablation_report.v1`,
+  - Status: papers/README.md now names `libreevolve.alphaevolve_ablation_report.v1`,
     describes all six Figure 8 variants, target/seed/fraction coverage,
     finite scores, consumed-budget consistency, passed component assertions,
     hashed curve artifacts, and the boundary that the contract does not run
@@ -10835,7 +10835,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Evidence: README documented runtime LLM accounting summaries but not a
     standalone report contract for paper-level role and provider-internal retry
     budget audits.
-  - Status: README now names `libreevolve.llm_budget_report.v1`, describes
+  - Status: papers/README.md now names `libreevolve.llm_budget_report.v1`, describes
     per-role logical-call, retry-attempt, adapter-attempt, token, cost, and
     wall-clock limits/usage, provider-internal retry caps, persisted
     resume-state hashes, and the boundary that the contract is not runtime
@@ -10847,7 +10847,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Evidence: README described request timeouts and ensemble wait deadlines but
     did not document a reusable policy contract for timeout/cancellation
     budget actions and evidence.
-  - Status: README now names `libreevolve.provider_cancellation_policy.v1`,
+  - Status: papers/README.md now names `libreevolve.provider_cancellation_policy.v1`,
     describes role-scoped timeout/cancellation rules, budget actions,
     hard-cancel readiness, artifact requirements, hashed cancellation
     artifacts, and the boundary that this is not live SDK cancellation
@@ -11212,7 +11212,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     for every long status phrase or benchmark qualifier.
   - Verification: `py -3.12 -m pytest tests/test_paper_manifest.py -q`
     reports 123 passed.
-- [x] Document the paper-artifact availability boundary in README.
+- [x] Document the paper-artifact availability boundary in paper index.
   - Spec evidence: README needs to distinguish paper-attributed figure/Colab
     contributor roles from concrete rendered or notebook artifact availability.
   - Status: README now describes
@@ -11224,17 +11224,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
       in README.
   - Spec evidence: README should separate paper-source OOM/resource-frontier
     evidence from local larger-target matrix scaling claims.
-  - Status: README now names
+  - Status: papers/README.md now names
     `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1` and
     states that no local larger-target attempts, measured GPU memory profiles,
     OOM diagnostics, reduced-seed tradeoffs, or attempted-versus-excluded
     target policies have been recorded yet.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
 
-- [x] Document the matrix near-integrality runtime boundary in README.
+- [x] Document the matrix near-integrality runtime boundary in paper index.
   - Spec evidence: README matrix wording needs to separate Section 3.1
     near-integral prompt/rounding evidence from actual local runner emission.
-  - Status: README now names
+  - Status: papers/README.md now names
     `libreevolve.matrix_near_integrality_runtime_boundary.v1`, scopes it to
     the current `not_emitted_by_local_runner` state, and lists the required
     future emitted-record fields for prompt hashes, coefficients,
@@ -11242,11 +11242,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     artifact hashes.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
 
-- [x] Document the matrix scalar-field runtime boundary in README.
+- [x] Document the matrix scalar-field runtime boundary in paper index.
   - Spec evidence: README matrix wording needs to separate declared
     scalar-field evidence validation from actual local runner emission for
     complex-valued and characteristic-specific claims.
-  - Status: README now names
+  - Status: papers/README.md now names
     `libreevolve.matrix_scalar_field_runtime_boundary.v1`, scopes it to the
     current `not_emitted_by_local_runner` state, and lists the required future
     emitted-record fields for scalar field, characteristic, applicability,
@@ -11254,11 +11254,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     matrix-result refs, artifact paths, and artifact hashes.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
 
-- [x] Document the matrix tensor-rank runtime boundary in README.
+- [x] Document the matrix tensor-rank runtime boundary in paper index.
   - Spec evidence: README matrix wording needs to separate declared
     tensor-rank evidence validation from actual local runner emission for
     recursive-applicability and non-tensor caveat claims.
-  - Status: README now names
+  - Status: papers/README.md now names
     `libreevolve.matrix_tensor_rank_runtime_boundary.v1`, scopes it to the
     current `not_emitted_by_local_runner` state, and lists required future
     emitted-record fields for algorithm kind, rank, recursive applicability,
@@ -11267,11 +11267,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     artifact hashes.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
 
-- [x] Document the matrix sweep-space runtime boundary in README.
+- [x] Document the matrix sweep-space runtime boundary in paper index.
   - Spec evidence: README matrix wording needs to separate declared
     sweep-space evidence validation from actual local runner emission for
     Figure 9-style `sweep()` program provenance.
-  - Status: README now names
+  - Status: papers/README.md now names
     `libreevolve.matrix_sweep_space_runtime_boundary.v1`, scopes it to the
     current `not_emitted_by_local_runner` state, and lists required future
     emitted-record fields for search-program refs, sweep function identity,
@@ -11280,11 +11280,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     artifact paths, and artifact hashes.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
 
-- [x] Document the matrix headline historicity runtime boundary in README.
+- [x] Document the matrix headline historicity runtime boundary in paper index.
   - Spec evidence: README matrix wording needs to separate declared headline
     historicity evidence validation from actual local runner emission for the
     4x4 complex rank-48 first-improvement claim.
-  - Status: README now names
+  - Status: papers/README.md now names
     `libreevolve.matrix_headline_historicity_runtime_boundary.v1`, scopes it
     to the current `not_emitted_by_local_runner` state, and lists required
     future emitted-record fields for headline target/rank/field values, source
@@ -11292,11 +11292,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     paths, and artifact hashes.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
 
-- [x] Document the matrix-rank table artifact boundary in README.
+- [x] Document the matrix-rank table artifact boundary in paper index.
   - Spec evidence: README matrix wording needs to separate declared Table 2/
     Appendix A Table 3 exhibit validation from actual local report/export
     emission of rendered table, OCR, and source-excerpt artifacts.
-  - Status: README now names
+  - Status: papers/README.md now names
     `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1`, scopes it
     to the current `not_emitted_by_local_report_export` state, and lists
     required future emitted-artifact fields for table ids, source page/caption
@@ -11304,12 +11304,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     paths/hashes, and nested matrix-rank table exhibit evidence.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
 
-- [x] Document the matrix subset-scope artifact boundary in README.
+- [x] Document the matrix subset-scope artifact boundary in paper index.
   - Spec evidence: README matrix wording needs to separate declared named
     subset validation from actual local report/export emission of
     subset-scope artifacts for `appendix_a_full`, `main_text_mnp_le_5`, and
     `table_2_selected`.
-  - Status: README now names
+  - Status: papers/README.md now names
     `libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1`, scopes
     it to the current `not_emitted_by_local_report_export` state, and lists
     required future emitted-artifact fields for subset ids, inclusion
@@ -11320,11 +11320,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     sidecar; automatic report/table exporter attachment remains open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
 
-- [x] Document the Appendix A matrix row-note artifact boundary in README.
+- [x] Document the Appendix A matrix row-note artifact boundary in paper index.
   - Spec evidence: README matrix wording needs to separate declared
     `mm_4x5x6` concurrent-work caveat validation from actual local
     report/export emission of row-note artifacts.
-  - Status: README now names
+  - Status: papers/README.md now names
     `libreevolve.alphaevolve_appendix_a_matrix_row_note_artifact_boundary.v1`,
     scopes it to the current `not_emitted_by_local_report_export` state, and
     lists required future emitted-artifact fields for note identity, target/
@@ -11335,10 +11335,10 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     automatic report/table exporter attachment remains open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
 
-- [x] Document the Appendix A matrix baseline-citation boundary in README.
+- [x] Document the Appendix A matrix baseline-citation boundary in paper index.
   - Spec evidence: README matrix wording needs to separate stored best-known
     rank values from traceable per-target prior-work citation evidence.
-  - Status: README now names
+  - Status: papers/README.md now names
     `libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1`,
     scopes it to the current `not_recorded_locally` state, and lists required
     future per-target citation fields for reference id, source table/page,
@@ -11346,11 +11346,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     scope, and report-visible baseline-source refs.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
 
-- [x] Document the matrix cascade-run runtime boundary in README.
+- [x] Document the matrix cascade-run runtime boundary in paper index.
   - Spec evidence: README matrix wording needs to distinguish declared
     per-seed result-report validation from executed AlphaEvolve Section
     3.1-style repeated-seed cascade traces.
-  - Status: README now names
+  - Status: papers/README.md now names
     `libreevolve.matrix_cascade_run_runtime_boundary.v1`, scopes it to the
     current `not_emitted_by_local_runner` state, and lists required future
     emitted-record fields for run/target/seed ids, cascade ids and versions,
@@ -11358,11 +11358,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     and hashes.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
 
-- [x] Document the matrix baseline-component runtime boundary in README.
+- [x] Document the matrix baseline-component runtime boundary in paper index.
   - Spec evidence: README matrix wording needs to distinguish final matrix
     result-report validation from AlphaEvolve Section 3.1 starting-algorithm
     provenance.
-  - Status: README now names
+  - Status: papers/README.md now names
     `libreevolve.matrix_baseline_component_runtime_boundary.v1`, scopes it to
     the current `not_emitted_by_local_runner` state, and lists required future
     emitted-record fields for baseline components, Adam optimizer metadata,
@@ -11381,10 +11381,10 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     while keeping the claim scoped to one baseline.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
 
-- [x] Document the Figure 9 matrix-diff artifact boundary in README.
+- [x] Document the Figure 9 matrix-diff artifact boundary in paper index.
   - Spec evidence: README Figure 9 wording needs to distinguish declared panel
     metadata from actual rendered/OCR/source-diff appendix panel artifacts.
-  - Status: README now names
+  - Status: papers/README.md now names
     `libreevolve.alphaevolve_figure9_matrix_diff_artifact_boundary.v1`, scopes
     it to the current `not_emitted_by_local_report_export` state, and lists
     required future artifact fields for Figure 9a-9c panel ids/order/pages,
@@ -11397,17 +11397,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Spec evidence: README Figure 4 wording needs to distinguish declared
     exhibit metadata from actual rendered/source artifacts and accepted
     mutation lineage.
-  - Status: README now names
+  - Status: papers/README.md now names
     `libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1`,
     scopes it to the current `not_emitted_by_local_report_export` state, and
     lists required future artifact/lineage fields for Figure 4 reproduction.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
 
-- [x] Document the Appendix A excluded-target curation boundary in README.
+- [x] Document the Appendix A excluded-target curation boundary in paper index.
   - Spec evidence: README target-suite curation wording needs to distinguish
     reported-suite curation and symmetry-equivalent omissions from exhaustive
     justification of excluded non-equivalent targets.
-  - Status: README now names
+  - Status: papers/README.md now names
     `libreevolve.alphaevolve_appendix_a_matrix_excluded_target_curation_boundary.v1`,
     scopes it to the current `not_recorded_locally` state, and lists required
     future excluded-target justification fields.
@@ -11418,7 +11418,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Spec evidence: README matrix-publication wording needs to distinguish one
     checked Strassen baseline bundle from generated artifacts across the full
     Appendix A target suite.
-  - Status: README now names
+  - Status: papers/README.md now names
     `libreevolve.matrix_suite_publication_artifact_boundary.v1`, scopes it to
     the current `not_generated_locally` state, and lists required future fields
     for one generated artifact record per registered Appendix A target.
@@ -12065,13 +12065,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 - [x] Document MAP-Elites `1504.04909` illumination boundary.
   - Spec evidence: README MAP-Elites wording needs to keep local archive
     support separate from Mouret-Clune illumination-algorithm reproduction.
-  - Status: README now names `papers/map_elites_illumination_boundary.json`
+  - Status: papers/README.md now names `papers/map_elites_illumination_boundary.json`
     in the MAP-Elites descriptor discussion and foundational references row,
     and keeps explicit `b(x)`/`f(x)` contracts, P/X map exports, illumination
     metric reports, visualization/lineage artifacts, and domain reproductions
     open.
   - Verification: MAP-Elites boundary and paper-manifest tests validate the
-    sidecar that README now references.
+    sidecar that papers/README.md now references.
 
 - [x] Document theoretical-CS proof-element artifact boundary.
   - Spec evidence: README hardness-of-approximation wording needed to separate
@@ -12081,140 +12081,140 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     inventories, verifier artifacts, independent brute-force outputs,
     theorem-lifting metadata, baseline/SOTA rows, and source-repository status.
   - Verification: theoretical-CS source and paper-manifest tests validate the
-    sidecar that README now references.
+    sidecar that papers/README.md now references.
 
 - [x] Document GigaEvo `2511.17592` framework boundary.
   - Spec evidence: README GigaEvo wording needed to keep framework inspiration
     separate from Redis/DAG/concurrency/LangGraph/runtime parity.
-  - Status: README now names `papers/gigaevo_framework_boundary.json` in the
+  - Status: papers/README.md now names `papers/gigaevo_framework_boundary.json` in the
     GigaEvo reference row and keeps missing Redis lifecycle database,
     `asyncio` DAG engine, insight stage, concurrent units, LangGraph mutation,
     and benchmark reproduction evidence explicit.
   - Verification: GigaEvo boundary and paper-manifest tests validate the
-    sidecar that README now references.
+    sidecar that papers/README.md now references.
 
 - [x] Document CodeEvolve `2510.14150` source boundary.
   - Spec evidence: README CodeEvolve wording needed to keep agentic
     code-evolution inspiration separate from semantic crossover, targeted
     refinement, scheduler, sandbox, benchmark, ablation, and cost parity.
-  - Status: README now names `papers/codeevolve_boundary.json` in the
+  - Status: papers/README.md now names `papers/codeevolve_boundary.json` in the
     CodeEvolve reference row and keeps prompt/solution dual fitness, semantic
     crossover, meta-prompting, targeted refinement, scheduler, sandbox,
     benchmark, ablation, and cost evidence explicit as missing.
   - Verification: CodeEvolve boundary and paper-manifest tests validate the
-    sidecar that README now references.
+    sidecar that papers/README.md now references.
 
 - [x] Document ThetaEvolve `2511.23473` source boundary.
   - Spec evidence: README ThetaEvolve wording needed to keep clipped-reward
     training-data export separate from actual test-time RL/GRPO training,
     checkpoint, throughput, and benchmark-comparison evidence.
-  - Status: README now names `papers/thetaevolve_boundary.json` in the
+  - Status: papers/README.md now names `papers/thetaevolve_boundary.json` in the
     ThetaEvolve reference row and keeps dynamic-environment, batch-sampling,
     lazy-penalty, reward-shaping, online GRPO/RL, checkpoint, throughput, and
     benchmark-comparison evidence explicit as missing.
   - Verification: ThetaEvolve boundary and paper-manifest tests validate the
-    sidecar that README now references.
+    sidecar that papers/README.md now references.
 
 - [x] Document ImprovEvolve `2602.10233` source boundary.
   - Spec evidence: README ImprovEvolve wording needed to keep static modular
     prompt guidance separate from actual `generate_config`/`improve`/`perturb`
     interface execution and benchmark evidence.
-  - Status: README now names `papers/improvevolve_boundary.json` in the
+  - Status: papers/README.md now names `papers/improvevolve_boundary.json` in the
     ImprovEvolve reference row and keeps interface enforcement, Stage A/B
     execution, basin hopping, GigaEvo backbone, human-edit, benchmark,
     ablation, and budget evidence explicit as missing.
   - Verification: ImprovEvolve boundary and paper-manifest tests validate the
-    sidecar that README now references.
+    sidecar that papers/README.md now references.
 
 - [x] Document MadEvolve `2602.15951` source boundary.
   - Spec evidence: README MadEvolve wording needed to keep domain-evolution
     inspiration separate from free-parameter tracking, nested optimization,
     cosmology adapters, generated reports, and benchmark-statistics evidence.
-  - Status: README now names `papers/madevolve_boundary.json` in the
+  - Status: papers/README.md now names `papers/madevolve_boundary.json` in the
     MadEvolve reference row and keeps free-parameter tracking, nested
     optimization, JAX/vmad compatibility, cosmology adapters, innovation
     reports, run/model statistics, and reward-hacking controls explicit as
     missing.
   - Verification: MadEvolve boundary and paper-manifest tests validate the
-    sidecar that README now references.
+    sidecar that papers/README.md now references.
 
 - [x] Document CausalEvolve `2603.14575` source boundary.
   - Spec evidence: README CausalEvolve wording needed to keep token-pattern
     factor guidance separate from causal scratchpad, intervention, treatment
     effect, abduction, and benchmark-comparison evidence.
-  - Status: README now names `papers/causalevolve_boundary.json` in the
+  - Status: papers/README.md now names `papers/causalevolve_boundary.json` in the
     CausalEvolve reference row and keeps POMDP/SCM framing, causal scratchpad,
     LLM factor generation, executable factor code, interventions, treatment
     effects, surprise/abduction artifacts, and benchmark rows explicit as
     missing.
   - Verification: CausalEvolve boundary and paper-manifest tests validate the
-    sidecar that README now references.
+    sidecar that papers/README.md now references.
 
 - [x] Document DeepEvolve `2510.06056` source boundary.
   - Spec evidence: README DeepEvolve wording needed to keep bounded retrieval
     context separate from DeepEvolve's plan/search/write proposal lifecycle,
     cross-file coding, reflection, debugging, benchmark rows, qualitative
     judge rows, and deep-research ablations.
-  - Status: README now names `papers/deepevolve_boundary.json` in the
+  - Status: papers/README.md now names `papers/deepevolve_boundary.json` in the
     DeepResearch plugin section and DeepEvolve reference row, while keeping the
     six-module loop, proposal pseudo-code, cross-file coding,
     reflection/debugging, score-zero fallback, nine-task benchmark rows,
     qualitative judge rows, and ablation evidence explicit as missing.
   - Verification: DeepEvolve boundary and paper-manifest tests validate the
-    sidecar that README now references.
+    sidecar that papers/README.md now references.
 
-- [x] Document TTT Discover `2601.16175` source boundary in README.
-  - Status: README now names `papers/ttt_discover_boundary.json` in the source
+- [x] Document TTT Discover `2601.16175` source boundary in paper index.
+  - Status: papers/README.md now names `papers/ttt_discover_boundary.json` in the source
     reference table while keeping TTT Discover as test-time discovery context
     only, with test-time-training RL loop, single-problem environments,
     continuous reward contracts, Tinker/gpt-oss-120b runtime evidence,
     benchmark result rows, public-code artifacts, and independent
     reproduction outputs explicit as missing.
   - Verification: TTT Discover boundary and paper-manifest tests validate the
-    sidecar that README now references.
+    sidecar that papers/README.md now references.
 
-- [x] Document Bruhat Intervals `2601.01235` source boundary in README.
-  - Status: README now names `papers/bruhat_intervals_boundary.json` in the
+- [x] Document Bruhat Intervals `2601.01235` source boundary in paper index.
+  - Status: papers/README.md now names `papers/bruhat_intervals_boundary.json` in the
     source reference table while keeping Bruhat Intervals as a constructive
     math benchmark candidate only, with permutation schemas, Bruhat/Ehresmann
     verifiers, dyadic witness checks, hypercube isomorphism evidence,
     AlphaEvolve provenance, public artifact hashes, and independent checker
     outputs explicit as missing.
   - Verification: Bruhat Intervals boundary and paper-manifest tests validate
-    the sidecar that README now references.
+    the sidecar that papers/README.md now references.
 
-- [x] Document Fault2Flow `2511.12916` source boundary in README.
-  - Status: README now names `papers/fault2flow_boundary.json` in the source
+- [x] Document Fault2Flow `2511.12916` source boundary in paper index.
+  - Status: papers/README.md now names `papers/fault2flow_boundary.json` in the source
     reference table while keeping Fault2Flow as AlphaEvolve-optimized workflow
     application context only, with regulatory/PDF ingestion, PASTA fault-tree
     schemas, human-in-loop review states, AlphaEvolve optimizer evidence, n8n
     workflow synthesis/verification, dataset/result rows, GPT-5 judge outputs,
     and local workflow artifacts explicit as missing.
   - Verification: Fault2Flow boundary and paper-manifest tests validate the
-    sidecar that README now references.
+    sidecar that papers/README.md now references.
 
-- [x] Document Global NLP Optimization `2601.05943` source boundary in README.
-  - Status: README now names `papers/global_nlp_optimization_boundary.json` in
+- [x] Document Global NLP Optimization `2601.05943` source boundary in paper index.
+  - Status: papers/README.md now names `papers/global_nlp_optimization_boundary.json` in
     the source reference table while keeping Global NLP Optimization as a
     direct global-NLP solver comparator only, with NLP formulation schemas,
     Mosel artifacts, Xpress/SCIP runners, solver license/version records,
     Table 1-3 reproduction, validation-code outputs, and independent checker
     evidence explicit as missing.
   - Verification: Global NLP Optimization boundary and paper-manifest tests
-    validate the sidecar that README now references.
+    validate the sidecar that papers/README.md now references.
 
-- [x] Document Autoconvolution `2506.16750` source boundary in README.
-  - Status: README now names `papers/autoconvolution_boundary.json` in the
+- [x] Document Autoconvolution `2506.16750` source boundary in paper index.
+  - Status: papers/README.md now names `papers/autoconvolution_boundary.json` in the
     source reference table while keeping Autoconvolution as post-AlphaEvolve
     constructive-math improvement context only, with 575-interval witness
     payloads, formula (3) checker, norm recomputation, exact fraction
     validation, AlphaEvolve/MV baselines, search provenance, public artifact
     snapshots, and independent checker evidence explicit as missing.
   - Verification: Autoconvolution boundary and paper-manifest tests validate
-    the sidecar that README now references.
+    the sidecar that papers/README.md now references.
 
-- [x] Document Sums and Differences `2505.16105` source boundary in README.
-  - Status: README now names `papers/sums_differences_boundary.json` in the
+- [x] Document Sums and Differences `2505.16105` source boundary in paper index.
+  - Status: papers/README.md now names `papers/sums_differences_boundary.json` in the
     source reference table while keeping Sums and Differences as
     post-AlphaEvolve constructive-math improvement context only, with U-set and
     `W(m,L,B)` schemas, base-(2B+1) encoding checks, sumset/difference-set
@@ -12222,10 +12222,10 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     snapshots, AlphaEvolve baseline rows, huge-set compression policy, and
     independent checker evidence explicit as missing.
   - Verification: Sums and Differences boundary and paper-manifest tests
-    validate the sidecar that README now references.
+    validate the sidecar that papers/README.md now references.
 
-- [x] Document Sums and Differences II `2506.01896` source boundary in README.
-  - Status: README now names `papers/sums_differences_sequence_boundary.json`
+- [x] Document Sums and Differences II `2506.01896` source boundary in paper index.
+  - Status: papers/README.md now names `papers/sums_differences_sequence_boundary.json`
     in the source reference table while keeping Sums and Differences II as
     post-AlphaEvolve asymptotic constructive-math improvement context only,
     with sequence-of-U schemas, large-deviation and asymptotic W checkers,
@@ -12233,263 +12233,264 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     tolerance-sweep provenance, finite-prefix artifact policy, baseline
     lineage rows, and independent checker evidence explicit as missing.
   - Verification: Sums and Differences II boundary and paper-manifest tests
-    validate the sidecar that README now references.
+    validate the sidecar that papers/README.md now references.
 
-- [x] Document UCB1 `auer-cesa-bianchi-fischer-2002` source boundary in README.
-  - Status: README now names `papers/ucb1_boundary.json` in the foundational
+- [x] Document UCB1 `auer-cesa-bianchi-fischer-2002` source boundary in paper index.
+  - Status: papers/README.md now names `papers/ucb1_boundary.json` in the foundational
     algorithms table while keeping UCB1 as inspiration for heuristic backend
-    routing only. The README points canonical finite-time regret claims to the
+    routing only. The papers/README.md points canonical finite-time regret claims to the
     missing assumptions and reports recorded in the sidecar.
   - Verification: UCB1 boundary and paper-manifest tests validate the sidecar
-    that README now references.
+    that papers/README.md now references.
 
-- [x] Document official 2026 AlphaEvolve impact source boundary in README.
-  - Status: README now includes the official 2026 AlphaEvolve impact article
+- [x] Document official 2026 AlphaEvolve impact source boundary in paper index.
+  - Status: papers/README.md now includes the official 2026 AlphaEvolve impact article
     as source-scoped context only and points to
     `papers/alphaevolve_2026_impact_boundary.json`, which records missing
     local benchmark evidence for the named DeepConsensus, AC OPF, Earth AI,
     Willow, TPU, cache-policy, Spanner, compiler-storage, public-gallery,
     customer, UI, and API workflows.
   - Verification: AlphaEvolve 2026 impact boundary tests and paper-manifest
-    tests validate the sidecar that README now references.
+    tests validate the sidecar that papers/README.md now references.
 
-- [x] Document `2605.14718` FHE-on-TPU paper coverage in README.
-  - Status: README now includes `2605.14718`, `FHE on TPU`, as
+- [x] Document `2605.14718` FHE-on-TPU paper coverage in paper index.
+  - Status: papers/README.md now includes `2605.14718`, `FHE on TPU`, as
     AlphaEvolve FHE/TPUv5e application context only and states that no local
     cryptographic-kernel or hardware-execution benchmark exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the current manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the current manifest.
 
-- [x] Document `2605.05921` intentmaking/sensemaking paper coverage in README.
-  - Status: README now includes `2605.05921`, `Intentmaking and Sensemaking`,
+- [x] Document `2605.05921` intentmaking/sensemaking paper coverage in paper index.
+  - Status: papers/README.md now includes `2605.05921`, `Intentmaking and Sensemaking`,
     as AlphaEvolve HCI/user-study context only and states that no local
     intentmaking/sensemaking session-trace workflow exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the current manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the current manifest.
 
-- [x] Document `2605.01794` radar power-allocation paper coverage in README.
-  - Status: README now includes `2605.01794`, `Radar Power Allocation`, as
+- [x] Document `2605.01794` radar power-allocation paper coverage in paper index.
+  - Status: papers/README.md now includes `2605.01794`, `Radar Power Allocation`, as
     AlphaEvolve radar resource-allocation application context only and states
     that no local multi-target tracking or power-allocation benchmark exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the current manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the current manifest.
 
-- [x] Document `2602.23413` EvoX paper coverage in README.
-  - Status: README now includes `2602.23413`, `EvoX`, as adaptive
+- [x] Document `2602.23413` EvoX paper coverage in paper index.
+  - Status: papers/README.md now includes `2602.23413`, `EvoX`, as adaptive
     meta-evolution context only and states that no local strategy-genome,
     strategy-credit, or dynamic search-policy benchmark exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the current manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the current manifest.
 
-- [x] Document `2602.02919` DeltaEvolve paper coverage in README.
-  - Status: README now includes `2602.02919`, `DeltaEvolve`, as semantic-delta
+- [x] Document `2602.02919` DeltaEvolve paper coverage in paper index.
+  - Status: papers/README.md now includes `2602.02919`, `DeltaEvolve`, as semantic-delta
     context-memory inspiration only and states that no local semantic-delta
     store, progressive disclosure sampler, or token-efficiency benchmark
     exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the current manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the current manifest.
 
-- [x] Document `2606.06473` MLEvolve paper coverage in README.
-  - Status: README now includes `2606.06473`, `MLEvolve`, as long-horizon
+- [x] Document `2606.06473` MLEvolve paper coverage in paper index.
+  - Status: papers/README.md now includes `2606.06473`, `MLEvolve`, as long-horizon
     ML-engineering context only and states that no local MLE-Bench harness,
     Progressive MCGS controller, or 12-hour medal-rate report exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the current manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the current manifest.
 
-- [x] Document `2605.09764` LEVI paper coverage in README.
-  - Status: README now includes `2605.09764`, `LEVI`, as cost-aware
+- [x] Document `2605.09764` LEVI paper coverage in paper index.
+  - Status: papers/README.md now includes `2605.09764`, `LEVI`, as cost-aware
     search-architecture context only and states that no local large/small
     model mutation router, proxy benchmark, or cost-comparison report exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the current manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the current manifest.
 
-- [x] Document `2601.10657` PACEvolve paper coverage in README.
-  - Status: README now includes `2601.10657`, `PACEvolve`, as long-horizon
+- [x] Document `2601.10657` PACEvolve paper coverage in paper index.
+  - Status: papers/README.md now includes `2601.10657`, `PACEvolve`, as long-horizon
     consistency context only and states that no local hierarchical
     context-management, momentum-backtracking, or LLM-SR/KernelBench report
     exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the current manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the current manifest.
 
-- [x] Document `2605.08520` FlashEvolve paper coverage in README.
-  - Status: README now includes `2605.08520`, `FlashEvolve`, as asynchronous-
+- [x] Document `2605.08520` FlashEvolve paper coverage in paper index.
+  - Status: papers/README.md now includes `2605.08520`, `FlashEvolve`, as asynchronous-
     stage orchestration context only and states that no local async worker
     queue, artifact-version DAG, staleness repair, or throughput benchmark
     exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the current manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the current manifest.
 
 - [x] Document `2605.20086` evolutionary-agent trace-diagnostics paper
-      coverage in README.
-  - Status: README now includes `2605.20086`, `What Do Evolutionary Coding
+      coverage in paper index.
+  - Status: papers/README.md now includes `2605.20086`, `What Do Evolutionary Coding
     Agents Evolve?`, as trace-diagnostic evaluation context only and states
     that no local EvoTrace edit taxonomy, EvoReplay intervention harness, or
     cycling/overfitting report exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the current manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the current manifest.
 
 - [x] Document `2605.01120` Zarankiewicz reinforced-search paper coverage in
       README.
-  - Status: README now includes `2605.01120`, Zarankiewicz reinforced search,
+  - Status: papers/README.md now includes `2605.01120`, Zarankiewicz reinforced search,
     as an extremal-graph benchmark candidate only and states that no local
     Zarankiewicz fixture, `K_{s,t}` verifier, construction table, or sub-$30
     cost report exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the current manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the current manifest.
 
-- [x] Document `2604.01658` CORAL paper coverage in README.
-  - Status: README now includes `2604.01658`, CORAL, as autonomous multi-agent
+- [x] Document `2604.01658` CORAL paper coverage in paper index.
+  - Status: papers/README.md now includes `2604.01658`, CORAL, as autonomous multi-agent
     evolution context only and states that no local long-running agent
     sessions, shared persistent memory, heartbeat interventions, or isolated
     multi-agent workspace runtime exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the current manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the current manifest.
 
-- [x] Document `2605.13821` AEvo paper coverage in README.
-  - Status: README now includes `2605.13821`, AEvo, as harnessed meta-editing
+- [x] Document `2605.13821` AEvo paper coverage in paper index.
+  - Status: papers/README.md now includes `2605.13821`, AEvo, as harnessed meta-editing
     context only and states that no local process-level state, meta-agent
     procedure editor, protected evaluator harness, or meta-edit benchmark
     report exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the current manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the current manifest.
 
-- [x] Document `2605.09959` G-Zero paper coverage in README.
-  - Status: README now includes `2605.09959`, G-Zero, as verifier-free
+- [x] Document `2605.09959` G-Zero paper coverage in paper index.
+  - Status: papers/README.md now includes `2605.09959`, G-Zero, as verifier-free
     co-evolution context only and states that no local Hint-delta intrinsic
     reward, Proposer/Generator co-training loop, GRPO/DPO trainer, or
     verifier-free self-evolution report exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 53-row manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the 53-row manifest.
 
-- [x] Document `2603.28052` Meta-Harness paper coverage in README.
-  - Status: README now includes `2603.28052`, Meta-Harness, as outer-loop
+- [x] Document `2603.28052` Meta-Harness paper coverage in paper index.
+  - Status: papers/README.md now includes `2603.28052`, Meta-Harness, as outer-loop
     harness-code optimization context only and states that no local harness-
     code candidate schema, agentic proposer workspace, execution-trace
     feedback bundle, cross-task harness benchmark, or end-to-end harness
     optimization reproduction exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 53-row manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the 53-row manifest.
 
-- [x] Document `2605.21605` GenEvolve paper coverage in README.
-  - Status: README now includes `2605.21605`, GenEvolve, as multimodal
+- [x] Document `2605.21605` GenEvolve paper coverage in paper index.
+  - Status: papers/README.md now includes `2605.21605`, GenEvolve, as multimodal
     trajectory-distillation context only and states that no local image-
     generation tool pipeline, visual-reference trajectory store, Agentic Visual
     Experience Distillation, or GenEvolve-Bench report exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 53-row manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the 53-row manifest.
 
-- [x] Document `2605.29847` EvoRubric paper coverage in README.
-  - Status: README now includes `2605.29847`, EvoRubric, as self-evolving
+- [x] Document `2605.29847` EvoRubric paper coverage in paper index.
+  - Status: papers/README.md now includes `2605.29847`, EvoRubric, as self-evolving
     reward-rubric context only and states that no local Reasoner/Rubric-
     Generator co-evolution, criteria verification, rubric memory pool, or
     reward-hacking report exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 53-row manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the 53-row manifest.
 
-- [x] Document `2605.29293` LLM-ALSO paper coverage in README.
-  - Status: README now includes `2605.29293`, LLM-ALSO, as learning-signal
+- [x] Document `2605.29293` LLM-ALSO paper coverage in paper index.
+  - Status: papers/README.md now includes `2605.29293`, LLM-ALSO, as learning-signal
     optimization context only and states that no local sparse-reward MARL
     harness, Critic/Generator reward-shaping loop, branch-validation trace, or
     learning-efficiency report exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 53-row manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the 53-row manifest.
 
-- [x] Document `2512.18746` MemEvolve paper coverage in README.
-  - Status: README now includes `2512.18746`, MemEvolve, as memory-
+- [x] Document `2512.18746` MemEvolve paper coverage in paper index.
+  - Status: papers/README.md now includes `2512.18746`, MemEvolve, as memory-
     architecture evolution context only and states that no local encode/store/
     retrieve/manage design space, memory-architecture mutation loop, EvolveLab
     benchmark mapping, or transfer report exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 53-row manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the 53-row manifest.
 
-- [x] Document `2606.06114` ANCHOR paper coverage in README.
-  - Status: README now includes `2606.06114`, ANCHOR healthy evolution, as
+- [x] Document `2606.06114` ANCHOR paper coverage in paper index.
+  - Status: papers/README.md now includes `2606.06114`, ANCHOR healthy evolution, as
     healthy-evolution oversight context only and states that no local human-
     like oversight agent, phase-specific norm-correction interface,
     safety-drift metric lineage, or supervision-cadence report exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 53-row manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the 53-row manifest.
 
-- [x] Document `2605.27276` SIA paper coverage in README.
-  - Status: README now includes `2605.27276`, SIA, as harness-plus-weight
+- [x] Document `2605.27276` SIA paper coverage in paper index.
+  - Status: papers/README.md now includes `2605.27276`, SIA, as harness-plus-weight
     self-improvement context only and states that no local Feedback-Agent,
     editable task-agent harness inventory, online weight-update loop,
     adapter/checkpoint lifecycle, or harness-versus-weight ablation report
     exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 53-row manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the 53-row manifest.
 
-- [x] Document `2606.06324` HarnessFix paper coverage in README.
-  - Status: README now includes `2606.06324`, HarnessFix, as trace-grounded
+- [x] Document `2606.06324` HarnessFix paper coverage in paper index.
+  - Status: papers/README.md now includes `2606.06324`, HarnessFix, as trace-grounded
     harness repair context only and states that no local HTIR trace
     normalization, harness-layer failure attribution, recurring flaw record
     consolidation, scoped repair operator schema, or regression-bounded patch
     validation exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 53-row manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the 53-row manifest.
 
-- [x] Document `2606.05922` RHO paper coverage in README.
-  - Status: README now includes `2606.05922`, RHO, as retrospective harness
+- [x] Document `2606.05922` RHO paper coverage in paper index.
+  - Status: papers/README.md now includes `2606.05922`, RHO, as retrospective harness
     optimization context only and states that no local hard/diverse
     trajectory coreset selector, parallel re-rollout workflow, self-
     validation/self-consistency analysis, pairwise self-preference harness
     ranking, or SWE-Bench Pro reproduction exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 53-row manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the 53-row manifest.
 
 - [x] Document `2605.30621` harness-updating versus harness-benefit paper
-      coverage in README.
-  - Status: README now includes `2605.30621`, Harness Updating Is Not Harness
+      coverage in paper index.
+  - Status: papers/README.md now includes `2605.30621`, Harness Updating Is Not Harness
     Benefit, as harness-capability disentanglement context only and states
     that no local harness-updating versus harness-benefit metric schema,
     cross-model capability-tier experiment, activation/adherence failure
     audit, or benchmark reproduction exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 53-row manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the 53-row manifest.
 
-- [x] Document `2604.25850` AHE paper coverage in README.
-  - Status: README now includes `2604.25850`, AHE, as observability-driven
+- [x] Document `2604.25850` AHE paper coverage in paper index.
+  - Status: papers/README.md now includes `2604.25850`, AHE, as observability-driven
     harness-evolution context only and states that no local file-level harness
     component graph, layered trajectory evidence corpus, edit-prediction
     contract, falsification loop, or Terminal-Bench 2 reproduction exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 53-row manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the 53-row manifest.
 
-- [x] Document `2605.13357` AI Harness Engineering paper coverage in README.
-  - Status: README now includes `2605.13357`, AI Harness Engineering, as
+- [x] Document `2605.13357` AI Harness Engineering paper coverage in paper index.
+  - Status: papers/README.md now includes `2605.13357`, AI Harness Engineering, as
     runtime-substrate context only and states that no complete eleven-
     responsibility harness contract, H0-H3 ladder, trace-based episode
     package, controlled validation task, or structured verification report
     exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 53-row manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the 53-row manifest.
 
 - [x] Document `2605.21516` inference-time trajectory-alignment paper coverage
       in README.
-  - Status: README now includes `2605.21516`, inference-time trajectory
+  - Status: papers/README.md now includes `2605.21516`, inference-time trajectory
     alignment, as harness design context only and states that no local
     decomposition/guidance parameter sweep, retry-budget study, over-
     decomposition/over-pruning/hallucinated-execution report, partial-
     harnessing benchmark, or terminal-agent reproduction exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 53-row manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the 53-row manifest.
 
-- [x] Document `2606.01770` Adaptive Auto-Harness paper coverage in README.
-  - Status: README now includes `2606.01770`, Adaptive Auto-Harness, as open-
+- [x] Document `2606.01770` Adaptive Auto-Harness paper coverage in paper index.
+  - Status: papers/README.md now includes `2606.01770`, Adaptive Auto-Harness, as open-
     ended task-stream deployment context only and states that no local
     chronological task stream, evolution/adaptation-loss decomposition,
     harness tree routing, human-steering hook, or prediction-market/security/
     event benchmark reproduction exists.
-  - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 53-row manifest.
+  - Verification: paper-manifest validation checks README's paper-cache
+    count and complete-index pointer against the 53-row manifest.
 
 - [x] Keep root README project-facing by collapsing the curated source table.
   - Status: README keeps install, quick-start, run-artifact, CLI, docs, and
-    testing sections visible while moving the long curated research-source
-    table into a collapsed details block. `papers/README.md` remains the
-    complete implementation-status index for all 53 manifest rows.
-  - Verification: paper-manifest validation still accepts README's curated-
-    subset wording and count against the 53-row manifest.
+    testing sections visible while removing the long curated research-source
+    table from the root page. `papers/README.md` remains the complete
+    implementation-status index for all 53 manifest rows and owns the detailed
+    paper/source ledger.
+  - Verification: paper-manifest validation still accepts README's paper-cache
+    count and complete-index pointer against the 53-row manifest.
 
 - [x] Keep README sample-efficiency boundary tied to paper-index sidecar.
   - Status: README remains scoped to local budget/report surfaces, while

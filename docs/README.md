@@ -4,6 +4,15 @@ These notes document the current implementation of LibreEvolve. They are intende
 to make the codebase easier to understand and extend without forcing readers to
 infer behavior from tests and source.
 
+Use the root [README](../README.md) as the practical entry point for setup,
+quick-start commands, current limits, and repository layout. Use this directory
+for operational details. Use [ROADMAP](../ROADMAP.md) and the
+[TODO ledgers](./todo/) for implementation gaps. Use
+[papers/README.md](../papers/README.md) for paper/source status and claim
+boundaries.
+
+## Operational Guides
+
 - [Architecture](./architecture.md): End-to-end runtime flow and component roles.
 - [Problem Format](./problem-format.md): Required files and the validator
   contract for custom problems.
@@ -15,6 +24,13 @@ infer behavior from tests and source.
 - [Development](./development.md): Local setup, tests, and contributor workflow.
 - [Paper Cache](../papers/README.md): Local paper roles, implementation status,
   and benchmark coverage decisions.
+
+## Documentation Boundaries
+
+- The root README should stay short enough to be useful on a first read.
+- Detailed runtime behavior belongs in the operational guides above.
+- Long-term status belongs in `ROADMAP.md` and `docs/todo/`.
+- Paper-derived claims belong in `papers/README.md` and validated JSON sidecars.
 
 When these documents disagree with an aspiration mentioned elsewhere in the
 repository, prefer the code and tests. The goal here is to describe how the

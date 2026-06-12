@@ -18,10 +18,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     source, and test path changes; paper-manifest validation checks README and
     `papers/README.md` paper-count/status-table consistency; and
     `tests/test_paper_manifest.py` verifies each manifest id has exactly one
-    TODO-coverage row. These guards do not prove every README, ROADMAP,
-    paper-index, and TODO statement has matching code evidence, nor do they
-    detect all stale completed TODO references, all missing active TODO links,
-    or all semantic mismatches between implemented behavior and prose.
+    TODO-coverage row. The root README has now been narrowed to a practical
+    setup/status entry point, `docs/README.md` routes operational docs versus
+    roadmap/TODO/paper-index ownership, and the long research-source ledger is
+    kept in `papers/README.md` instead of the project landing page. These
+    guards do not prove every README, ROADMAP, paper-index, and TODO statement
+    has matching code evidence, nor do they detect all stale completed TODO
+    references, all missing active TODO links, or all semantic mismatches
+    between implemented behavior and prose.
   - Required result: when stronger cross-document claim verification,
     implementation-evidence mapping, stale completed-entry detection,
     README/ROADMAP/paper/TODO semantic diffing, or generated alignment reports

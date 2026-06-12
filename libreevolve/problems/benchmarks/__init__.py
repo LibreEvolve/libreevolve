@@ -173,6 +173,12 @@ from libreevolve.problems.benchmarks.ci_workflow_coverage_boundary import (
     render_ci_workflow_coverage_boundary_summary,
     validate_ci_workflow_coverage_boundary,
 )
+from libreevolve.problems.benchmarks.config_validation_boundary import (
+    CONFIG_VALIDATION_BOUNDARY_SCHEMA,
+    config_validation_boundary_record,
+    render_config_validation_boundary_summary,
+    validate_config_validation_boundary,
+)
 from libreevolve.problems.benchmarks.causalevolve_boundary import (
     CAUSALEVOLVE_BOUNDARY_SCHEMA,
     causalevolve_boundary_record,

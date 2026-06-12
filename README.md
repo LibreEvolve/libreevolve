@@ -35,6 +35,9 @@ Important limits:
   synchronous, not a distributed asynchronous AlphaEvolve-style service.
 - Candidate execution is Python-primary. Arbitrary language/build runners and
   problem-defined candidate abstractions remain open work.
+- Configuration validation is local effective-config validation; live
+  provider/model API compatibility is tracked by
+  `papers/config_validation_boundary.json`.
 - The included examples are smoke fixtures and small demos unless a fixture
   explicitly documents stronger benchmark evidence.
 - Gemini/provider parity, benchmark-scale claims, paper-result reproduction,

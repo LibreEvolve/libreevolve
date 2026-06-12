@@ -2156,7 +2156,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     shape, records `policies.provider_capability_lookup`, and performs no live
     model-registry, service/API-version, or account-availability lookup before
     the run. `capability_readiness` now keeps those live surfaces false with
-    validation. Code and paper TODO entries already scope the remaining
+    validation. `papers/config_validation_boundary.json` now also scopes local
+    effective-config validation separately from live provider/model API
+    compatibility. Code and paper TODO entries already scope the remaining
     provider auth gap to live authenticated request/model-registry validation
     rather than credential-presence and local client-construction preflight.
   - Required result: when live provider model-registry discovery,

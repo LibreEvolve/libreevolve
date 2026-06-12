@@ -4223,6 +4223,11 @@ Primary evidence:
     integrity, and explicit non-use of live model-registry, service/API-version,
     or account-availability discovery, including
     `libreevolve.provider_capability_lookup_readiness.v1` false readiness.
+    `papers/config_validation_boundary.json` now records the wider
+    local-effective-config boundary and keeps live provider/model API
+    compatibility, provider service/API-version capture, account availability,
+    provider default discovery, and complete plugin-specific schemas out of
+    claim-ready status.
     `validate_llm_provider_diagnostics_summary()` now validates
     `libreevolve.llm_provider_diagnostics.v1` runtime summaries for
     schema/policy/status/source, retained-history scope, backend-record hash

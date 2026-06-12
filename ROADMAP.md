@@ -2057,8 +2057,9 @@ resumed-trace proof are still open.
 
 ### 10. Operational maturity
 
-- Extend current config validation to plugin-specific schemas and
-  provider/model API compatibility where feasible.
+- Extend current config validation beyond the
+  `papers/config_validation_boundary.json` local effective-config boundary to
+  plugin-specific schemas and provider/model API compatibility where feasible.
 - Extend strict finite JSONL coverage and diagnostics beyond current
   candidate, prompt, manifest, and GRPO-export writers as new run artifacts are
   added.

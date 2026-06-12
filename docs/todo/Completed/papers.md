@@ -13453,3 +13453,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     policy, and notification policy remain absent.
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused CI workflow tests reject full CI coverage overclaims.
+
+- [x] Record config-validation paper-facing sidecar.
+  - Status: `papers/config_validation_boundary.json` now records the local
+    effective-config validation boundary: CLI overrides, local Config/backend/
+    plugin validation, manifest config records, and credential/client-
+    construction preflight exist, while live provider model-registry
+    validation, service/API-version capture, account model availability,
+    provider default discovery, and complete plugin-specific schemas remain
+    absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused config-validation boundary tests reject live provider/API
+    compatibility overclaims.

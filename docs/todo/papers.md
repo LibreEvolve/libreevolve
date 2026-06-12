@@ -1182,6 +1182,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     compatibility, record count/hash integrity, and explicit non-use of live
     model-registry, service/API-version, or account-availability discovery,
     including false capability-readiness flags for those surfaces.
+    The committed `papers/config_validation_boundary.json` sidecar now records
+    the paper-facing local-effective-config-only boundary while keeping live
+    provider/model API compatibility, provider service/API-version capture,
+    account availability, provider default discovery, and complete plugin-
+    specific schemas as missing evidence.
     `validate_llm_provider_diagnostics_summary()` now validates the provider
     diagnostics summary contract, including record-hash integrity,
     non-negative counters, backend-count, total/backend aggregate count and

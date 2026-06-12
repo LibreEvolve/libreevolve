@@ -12598,3 +12598,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     tracked by `papers/ci_workflow_coverage_boundary.json`.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused CI workflow tests reject full CI coverage overclaims.
+
+- [x] Keep README config-validation boundary tied to paper-index sidecar.
+  - Status: README now states that configuration validation is local effective-
+    config validation and that live provider/model API compatibility is tracked
+    by `papers/config_validation_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused config-validation tests reject live provider/API compatibility
+    overclaims.

@@ -10342,3 +10342,11 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     branch policy, and notification-safe trigger policy open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused CI workflow tests reject full CI coverage overclaims.
+
+- [x] Keep roadmap config-validation boundary tied to sidecar.
+  - Status: ROADMAP now links current config validation to
+    `papers/config_validation_boundary.json`, while keeping plugin-specific
+    schema expansion and live provider/model API compatibility open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused config-validation tests reject live provider/API compatibility
+    overclaims.

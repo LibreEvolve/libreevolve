@@ -117,6 +117,10 @@ from libreevolve.problems.benchmarks.ci_workflow_coverage_boundary import (
     ci_workflow_coverage_boundary_record,
     validate_ci_workflow_coverage_boundary,
 )
+from libreevolve.problems.benchmarks.config_validation_boundary import (
+    config_validation_boundary_record,
+    validate_config_validation_boundary,
+)
 from libreevolve.problems.benchmarks.causalevolve_boundary import (
     causalevolve_boundary_record,
     validate_causalevolve_boundary,
@@ -387,6 +391,7 @@ EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integrat
 CANDIDATE_ABSTRACTION_BOUNDARY_FILE = "papers/candidate_abstraction_boundary.json"
 CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_FILE = "papers/candidate_language_runner_boundary.json"
 CI_WORKFLOW_COVERAGE_BOUNDARY_FILE = "papers/ci_workflow_coverage_boundary.json"
+CONFIG_VALIDATION_BOUNDARY_FILE = "papers/config_validation_boundary.json"
 EVALUATOR_ORACLE_BOUNDARY_FILE = "papers/evaluator_oracle_boundary.json"
 EMBEDDED_EVALUATOR_BOUNDARY_FILE = "papers/embedded_evaluator_boundary.json"
 PROCESS_EXHIBIT_BOUNDARY_FILE = "papers/process_exhibit_boundary.json"
@@ -865,6 +870,7 @@ def validate_paper_manifest(
     issues.extend(_validate_candidate_language_runner_boundary(root_path))
     issues.extend(_validate_candidate_abstraction_boundary(root_path))
     issues.extend(_validate_ci_workflow_coverage_boundary(root_path))
+    issues.extend(_validate_config_validation_boundary(root_path))
     issues.extend(_validate_evaluator_oracle_boundary(root_path))
     issues.extend(_validate_embedded_evaluator_boundary(root_path))
     issues.extend(_validate_process_exhibit_boundary(root_path))
@@ -2284,6 +2290,38 @@ def _validate_ci_workflow_coverage_boundary(root_path: Path) -> list[PaperManife
             f"ci_workflow_coverage_boundary_{issue.code}",
             issue.message,
             "ci_workflow_coverage",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_config_validation_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / CONFIG_VALIDATION_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = config_validation_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "config_validation_boundary_manifest_missing",
+                    (
+                        f"{CONFIG_VALIDATION_BOUNDARY_FILE} must emit "
+                        "local config-validation versus live provider compatibility"
+                    ),
+                    "config_validation",
+                )
+            ]
+    report = validate_config_validation_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"config_validation_boundary_{issue.code}",
+            issue.message,
+            "config_validation",
         )
         for issue in report.issues
     ]

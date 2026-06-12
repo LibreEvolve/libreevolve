@@ -18371,3 +18371,13 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject full
     CI coverage overclaims, invalid boundary status, missing evidence fields,
     and cross-platform readiness drift.
+
+- [x] Add config-validation sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/config_validation_boundary.py`
+    now emits and validates the local-effective-config-only boundary for CLI
+    override precedence, local Config/backend/plugin validation, manifest
+    config records, and credential/client-construction preflight; paper-
+    manifest validation requires the committed sidecar at the repo root.
+  - Verification: focused boundary tests and paper-manifest tests reject live
+    provider/API compatibility overclaims, invalid boundary status, missing
+    evidence drift, and incomplete required evidence fields.

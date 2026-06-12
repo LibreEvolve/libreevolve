@@ -694,7 +694,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     before config validation, plugin labels/options and backend specs are
     validated locally, and `ProgramDatabase` revalidates the full mutable
     `Config` before strict manifest serialization and run-directory
-    preparation. Existing roadmap TODOs already track plugin
+    preparation. `papers/config_validation_boundary.json` now preserves the
+    paper-manifest-validated local-effective-config-only boundary. Existing
+    roadmap TODOs already track plugin
     configuration-schema scope and static provider capability lookup, but live
     provider model-registry, service/API-version, account availability, and
     broader provider/model compatibility checks remain future work.

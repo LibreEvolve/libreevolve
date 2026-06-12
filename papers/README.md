@@ -1293,6 +1293,13 @@ separate evidence or a future provider/plugin contract before it can be treated
 as provider-parity reproduction evidence. The committed
 `papers/gemini_provider_parity_boundary.json` sidecar preserves that
 first-class-provider absence boundary for paper-manifest validation.
+The committed `papers/config_validation_boundary.json` sidecar separately
+preserves that current configuration validation is local effective-config
+validation only: it covers CLI override precedence, local backend/plugin spec
+checks, manifest config records, and credential/client-construction preflight,
+but not live provider model-registry validation, service/API-version capture,
+account model-availability proof, provider default discovery, or complete
+plugin-specific schemas.
 AlphaEvolve's Table 1 sample-count claim is also not yet reproduced: current
 budgets and ablation schemas can
 account for LLM calls and provider usage, but no report yet proves useful

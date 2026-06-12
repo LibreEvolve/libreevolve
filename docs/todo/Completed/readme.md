@@ -12581,3 +12581,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     `papers/task_specification_boundary.json`.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused task-specification tests reject full task-spec parity overclaims.
+
+- [x] Keep README release-artifact boundary tied to paper-index sidecar.
+  - Status: README now states that installation instructions cover
+    editable/local use and that verified wheel/sdist builds,
+    install-from-wheel smoke tests, and release-artifact provenance are tracked
+    by `papers/release_artifact_reproducibility_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused release-artifact tests reject verified-release overclaims.

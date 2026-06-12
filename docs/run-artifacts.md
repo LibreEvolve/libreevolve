@@ -752,6 +752,11 @@ accelerator runtime hint/probe summary, not a complete build-provenance record,
 full environment-variable snapshot, private package-index/source
 interpretation policy beyond redacted config evidence, live provider
 service/API-version capture, provider cost or remote provider-side default capture, or
+release-distribution verification. The paper-facing sidecar
+`papers/release_artifact_reproducibility_boundary.json` records that
+wheel/sdist build checks, install-from-wheel CLI smoke tests, package-data
+checks, release-artifact provenance, and release-checklist readiness remain
+outside current evidence.
 accelerator budget/accounting record.
 Package/build metadata fields include
 `name`, `version`, `requires-python`, license, authors/maintainers,

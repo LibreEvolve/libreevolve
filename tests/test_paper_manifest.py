@@ -896,6 +896,60 @@ def test_validate_paper_manifest_requires_problem_formulation_provenance_boundar
     assert "problem_formulation_provenance_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_release_artifact_reproducibility_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.release_artifact_reproducibility_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_release_artifact_reproducibility_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.release_artifact_reproducibility_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "verified_release_distribution"
+    record["missing_evidence"]["release_artifact_provenance"] = "recorded"
+    sidecar = tmp_path / paper_manifest.RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "release_artifact_reproducibility_boundary_claim_ready_overclaim" in codes
+    assert "release_artifact_reproducibility_boundary_invalid_boundary_status" in codes
+    assert (
+        "release_artifact_reproducibility_boundary_invalid_missing_evidence_release_artifact_provenance"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_release_artifact_reproducibility_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "release_artifact_reproducibility_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_task_specification_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

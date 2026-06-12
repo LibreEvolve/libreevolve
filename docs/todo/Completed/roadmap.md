@@ -10326,3 +10326,11 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     task-spec parity open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused task-specification tests reject full task-spec parity overclaims.
+
+- [x] Keep roadmap release-artifact boundary tied to sidecar.
+  - Status: ROADMAP now links editable/local install provenance to
+    `papers/release_artifact_reproducibility_boundary.json` while keeping
+    wheel/sdist build checks, package-data validation, install-from-wheel
+    smoke tests, release checklist, and release-artifact provenance open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused release-artifact tests reject verified-release overclaims.

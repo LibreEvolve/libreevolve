@@ -1,0 +1,32 @@
+{
+  "schema": "libreevolve.release_artifact_reproducibility_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve-style long-running experiments require reproducible code and dependency environments; local editable package metadata does not by itself prove a verified release distribution",
+  "boundary_status": "editable_local_install_only",
+  "runtime_report_status": "environment_and_package_provenance_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "pyproject_metadata_recorded",
+    "console_script_declared",
+    "runtime_environment_provenance_recorded",
+    "installed_distribution_metadata_recorded",
+    "wheel_metadata_snapshot_recorded",
+    "direct_url_installer_record_snapshot",
+    "pip_freeze_config_hashes",
+    "wheel_build_check",
+    "sdist_build_check",
+    "install_from_wheel_cli_smoke",
+    "package_data_inclusion_check",
+    "release_artifact_provenance",
+    "release_checklist"
+  ],
+  "missing_evidence": {
+    "wheel_build_check": "not_recorded_locally",
+    "sdist_build_check": "not_recorded_locally",
+    "install_from_wheel_cli_smoke": "not_recorded_locally",
+    "package_data_inclusion_check": "not_recorded_locally",
+    "release_artifact_provenance": "not_recorded_locally",
+    "release_checklist": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has pyproject metadata, a console-script declaration, and runtime environment/package provenance for editable or locally installed use, including bounded wheel metadata snapshots, direct_url/INSTALLER/RECORD evidence, and pip freeze/config hashes. It does not claim verified wheel or sdist builds, install-from-wheel CLI smoke tests, package-data inclusion checks, release-artifact provenance, or release-checklist readiness."
+}

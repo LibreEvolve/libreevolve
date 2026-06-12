@@ -555,7 +555,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     discovery, and a `libreevolve` console script, while the code TODO still
     notes there is no committed wheel/sdist build check, install-from-wheel CLI
     smoke test, package-data inclusion validation, release checklist, or
-    release-artifact provenance.
+    release-artifact provenance. README now also points to
+    `papers/release_artifact_reproducibility_boundary.json` for the
+    editable/local-install-only paper-facing boundary.
   - Required result: when wheel/sdist build validation, isolated
     install-from-wheel smoke tests, package-data checks, release checklists, or
     release-artifact provenance land, update README, ROADMAP, papers index, and

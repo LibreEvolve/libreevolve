@@ -651,7 +651,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     unsupported complete install-source interpretation, broader non-project
     build provenance, private package-source identity/authentication
     resolution, remote package artifact verification, live provider
-    service/default capture, and accelerator budget/accounting semantics.
+    service/default capture, and accelerator budget/accounting semantics. The
+    paper-facing sidecar
+    `papers/release_artifact_reproducibility_boundary.json` now records the
+    editable/local-install-only release-artifact boundary.
   - Current gap: these records do not form a replayable environment contract:
     external build commands/options/environment, non-project build metadata,
     transitive package-source resolution, private-index policy, remote package

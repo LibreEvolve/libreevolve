@@ -1198,6 +1198,11 @@ explicitly scopes unsupported surfaces, including broader non-project build
 provenance, complete private package-source interpretation, live provider
 service/API versions beyond false capability-readiness fields, live provider
 pricing/default-rate capture beyond configured estimates, and accelerator
+budget/accounting semantics. The committed
+`papers/release_artifact_reproducibility_boundary.json` sidecar preserves the
+editable/local-install boundary: wheel/sdist build checks, install-from-wheel
+CLI smoke tests, package-data inclusion checks, release-artifact provenance,
+and release-checklist readiness remain absent.
 budget/accounting evidence. Environment provenance is useful
 package name/version, selected and extra `[project]` metadata, known-lockfile
 hash, pip-freeze and pip-config hash/preview, installed-distribution `WHEEL`

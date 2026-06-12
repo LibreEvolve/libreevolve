@@ -551,6 +551,10 @@ is not yet an AlphaEvolve reproduction.
 - Preserve complete transitive environment/package provenance for evaluator
   runtime dependencies beyond the current bounded package/version and
   redacted/hash-backed `pip freeze` snapshots.
+- Preserve the editable/local install boundary for release packaging with
+  `papers/release_artifact_reproducibility_boundary.json`; wheel/sdist build
+  checks, package-data validation, install-from-wheel smoke tests, release
+  checklist, and release-artifact provenance remain open.
 - Extend current bounded environment provenance into stronger reproducibility
   evidence: complete install-source interpretation semantics, external build
   execution/options/environment records beyond `pyproject.toml`

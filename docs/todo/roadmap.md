@@ -646,6 +646,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     distribution provenance; the code TODO still records that wheel/sdist
     build checks, install-from-wheel CLI smoke tests, package-data inclusion
     validation, release checklist, and release-artifact provenance are missing.
+    ROADMAP now also points to
+    `papers/release_artifact_reproducibility_boundary.json` for the
+    editable/local-install-only paper-facing boundary.
   - Required result: when release-distribution checks land, update the roadmap,
     README, papers index, and code TODO entries together so roadmap wording
     neither underclaims current editable/local package metadata nor overclaims

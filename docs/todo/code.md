@@ -4720,7 +4720,10 @@ Primary evidence:
   - Remaining gap: there is no committed wheel/sdist build check,
     install-from-wheel CLI smoke test, package-data inclusion validation,
     release checklist, or release-artifact provenance tying a generated
-    distribution back to the source and manifest environment evidence.
+    distribution back to the source and manifest environment evidence. The
+    paper-facing sidecar
+    `papers/release_artifact_reproducibility_boundary.json` now preserves this
+    editable/local-install-only boundary.
   - Required result: add local/CI validation that builds the wheel and sdist,
     installs the wheel into an isolated environment, checks the console script
     and required package data, and records or documents release-artifact

@@ -13432,3 +13432,14 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused task-specification tests reject full task-spec parity
     overclaims.
+
+- [x] Record release-artifact reproducibility paper-facing sidecar.
+  - Status: `papers/release_artifact_reproducibility_boundary.json` now
+    records the editable/local-install-only boundary: pyproject metadata,
+    console-script declarations, and runtime package/environment provenance
+    exist, while wheel/sdist build checks, install-from-wheel smoke tests,
+    package-data checks, release-artifact provenance, and release-checklist
+    readiness remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused release-artifact tests reject verified-release
+    overclaims.

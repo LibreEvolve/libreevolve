@@ -91,6 +91,10 @@ Important limits:
   `papers/initial_program_validity_boundary.json`.
 - The included examples are smoke fixtures and small demos unless explicitly
   documented otherwise.
+- Installation instructions cover editable/local use; verified wheel/sdist
+  builds, install-from-wheel smoke tests, and release-artifact provenance are
+  not claim-ready and are tracked by
+  `papers/release_artifact_reproducibility_boundary.json`.
 - Paper and blog claims are tracked as source boundaries unless local benchmark
   evidence exists.
 

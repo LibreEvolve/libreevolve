@@ -18350,3 +18350,13 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject full
     AlphaEvolve task-spec parity overclaims, invalid boundary status, missing
     evidence fields, and task-spec schema drift.
+
+- [x] Add release-artifact reproducibility sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/release_artifact_reproducibility_boundary.py`
+    now emits and validates the editable/local-install-only boundary for
+    pyproject metadata, console-script declarations, and bounded runtime
+    environment/package provenance; paper-manifest validation requires the
+    committed sidecar at the repo root.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    verified-release overclaims, invalid boundary status, missing evidence
+    fields, and release-artifact provenance drift.

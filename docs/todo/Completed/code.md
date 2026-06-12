@@ -18392,3 +18392,14 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     calibrated exploration/exploitation overclaims, invalid boundary status,
     missing evidence drift, and incomplete required evidence fields.
+
+- [x] Add automated-evaluator scope sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/automated_evaluator_scope_boundary.py`
+    now emits and validates the machine-gradeable local-scope boundary for
+    `runtime.history.automated_evaluator_scope_report`, separating
+    deterministic evaluator validity/score ownership, post-evaluator LLM
+    feedback, manual-experiment exclusion, and executable-code transition from
+    robust evaluator-environment readiness.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    robust-environment overclaims, invalid boundary status, missing evidence
+    drift, and incomplete required evidence fields.

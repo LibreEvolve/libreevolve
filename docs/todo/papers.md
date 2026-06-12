@@ -1713,7 +1713,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     machine-gradeable executable evaluation from manual experimentation and
     pre-code natural-language idea review, labels optional LLM feedback as
     post-evaluator rather than a primary validity gate, and requires transition
-    into executable candidate evaluation. The paper-facing gap is now robust
+    into executable candidate evaluation. The committed
+    `papers/automated_evaluator_scope_boundary.json` sidecar preserves this
+    machine-gradeable local-scope boundary. The paper-facing gap is now robust
     environment-setup evidence for evaluator design, automatable-domain
     boundaries, setup effort, and expected discovery value.
   - Required result: add benchmark/report metadata and documentation checks for

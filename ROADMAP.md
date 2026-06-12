@@ -538,7 +538,10 @@ is not yet an AlphaEvolve reproduction.
 - Extend `runtime.history.automated_evaluator_scope_report` beyond the current
   machine-feedback/manual-experiment/LLM-feedback boundary into robust
   evaluator-environment fixtures, manual-to-code transition policy, and
-  environment-scaling evidence.
+  environment-scaling evidence. The committed
+  `papers/automated_evaluator_scope_boundary.json` sidecar preserves the
+  current machine-gradeable local evaluator scope while keeping robust
+  environment readiness open.
 - Extend `runtime.history.programmatic_representation_boundary_report` beyond
   the current executable-code versus natural-language-proposal separation into
   measured hallucination-risk controls, long-horizon step-count evidence, and

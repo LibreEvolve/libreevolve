@@ -10361,3 +10361,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation requires the committed sidecar and
     focused sampling-balance tests reject calibrated AlphaEvolve database-
     balance overclaims.
+
+- [x] Keep roadmap automated-evaluator scope boundary tied to sidecar.
+  - Status: ROADMAP now links
+    `runtime.history.automated_evaluator_scope_report` to
+    `papers/automated_evaluator_scope_boundary.json`, preserving the
+    machine-gradeable local evaluator scope while keeping robust evaluator-
+    environment fixtures, manual-to-code transition policy, LLM-only idea-stage
+    contracts, and environment-scaling evidence open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused automated-evaluator scope tests reject robust environment-readiness
+    overclaims.

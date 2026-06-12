@@ -83,6 +83,10 @@ from libreevolve.problems.benchmarks.archagent_boundary import (
     archagent_boundary_record,
     validate_archagent_boundary,
 )
+from libreevolve.problems.benchmarks.automated_evaluator_scope_boundary import (
+    automated_evaluator_scope_boundary_record,
+    validate_automated_evaluator_scope_boundary,
+)
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     REGISTRY_PATH as APPENDIX_A_MATRIX_REGISTRY_PATH,
     appendix_a_matrix_baseline_citation_boundary_record,
@@ -397,6 +401,7 @@ CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_FILE = "papers/candidate_language_runner_boun
 CI_WORKFLOW_COVERAGE_BOUNDARY_FILE = "papers/ci_workflow_coverage_boundary.json"
 CONFIG_VALIDATION_BOUNDARY_FILE = "papers/config_validation_boundary.json"
 EVALUATOR_ORACLE_BOUNDARY_FILE = "papers/evaluator_oracle_boundary.json"
+AUTOMATED_EVALUATOR_SCOPE_BOUNDARY_FILE = "papers/automated_evaluator_scope_boundary.json"
 EMBEDDED_EVALUATOR_BOUNDARY_FILE = "papers/embedded_evaluator_boundary.json"
 PROCESS_EXHIBIT_BOUNDARY_FILE = "papers/process_exhibit_boundary.json"
 PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_FILE = "papers/proposal_lifecycle_audit_boundary.json"
@@ -877,6 +882,7 @@ def validate_paper_manifest(
     issues.extend(_validate_ci_workflow_coverage_boundary(root_path))
     issues.extend(_validate_config_validation_boundary(root_path))
     issues.extend(_validate_evaluator_oracle_boundary(root_path))
+    issues.extend(_validate_automated_evaluator_scope_boundary(root_path))
     issues.extend(_validate_embedded_evaluator_boundary(root_path))
     issues.extend(_validate_process_exhibit_boundary(root_path))
     issues.extend(_validate_proposal_lifecycle_audit_boundary(root_path))
@@ -2392,6 +2398,38 @@ def _validate_evaluator_oracle_boundary(root_path: Path) -> list[PaperManifestIs
             f"evaluator_oracle_boundary_{issue.code}",
             issue.message,
             "evaluator_oracle",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_automated_evaluator_scope_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / AUTOMATED_EVALUATOR_SCOPE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = automated_evaluator_scope_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "automated_evaluator_scope_boundary_manifest_missing",
+                    (
+                        f"{AUTOMATED_EVALUATOR_SCOPE_BOUNDARY_FILE} must emit "
+                        "machine-gradeable evaluator scope versus robust environment readiness"
+                    ),
+                    "automated_evaluator_scope",
+                )
+            ]
+    report = validate_automated_evaluator_scope_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"automated_evaluator_scope_boundary_{issue.code}",
+            issue.message,
+            "automated_evaluator_scope",
         )
         for issue in report.issues
     ]

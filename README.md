@@ -33,6 +33,10 @@ Important limits:
 - Evaluators run in local subprocesses, not hardened security sandboxes.
 - The controller, archive, migration, and evaluator flow are local and
   synchronous, not a distributed asynchronous AlphaEvolve-style service.
+- Scientific-discovery scope is machine-gradeable local evaluator workflow
+  scope; robust evaluator-environment fixtures, manual-to-code transition
+  policies, and LLM-only idea-stage contracts are tracked by
+  `papers/automated_evaluator_scope_boundary.json`.
 - Candidate execution is Python-primary. Arbitrary language/build runners and
   problem-defined candidate abstractions remain open work.
 - Configuration validation is local effective-config validation; live

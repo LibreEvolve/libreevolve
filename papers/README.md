@@ -1407,7 +1407,9 @@ completed manifests now include
 machine evaluators as the candidate-validity owner, records optional LLM
 feedback as post-evaluator feedback rather than a primary gate, excludes manual
 experiment outcomes from candidate admission, and requires transition into
-executable code feedback before scoring. Paper-facing scientific-discovery
+executable code feedback before scoring. The committed
+`papers/automated_evaluator_scope_boundary.json` sidecar preserves that
+machine-gradeable local-scope boundary. Paper-facing scientific-discovery
 claims should remain scoped to machine-gradeable evaluator workflows until
 robust evaluator-environment fixtures, manual-to-code transition policies, and
 AI-Co-Scientist-style idea-stage contracts are implemented.

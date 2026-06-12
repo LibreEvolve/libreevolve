@@ -12615,3 +12615,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused sampling-balance tests reject calibrated database-balance
     overclaims.
+
+- [x] Keep README automated-evaluator scope boundary tied to sidecar.
+  - Status: README now states that scientific-discovery scope is
+    machine-gradeable local evaluator workflow scope and that robust evaluator-
+    environment fixtures, manual-to-code transition policies, and LLM-only
+    idea-stage contracts are tracked by
+    `papers/automated_evaluator_scope_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused automated-evaluator scope tests reject robust environment-readiness
+    overclaims.

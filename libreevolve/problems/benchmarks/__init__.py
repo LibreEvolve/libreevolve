@@ -155,6 +155,12 @@ from libreevolve.problems.benchmarks.archagent_boundary import (
     render_archagent_boundary_summary,
     validate_archagent_boundary,
 )
+from libreevolve.problems.benchmarks.automated_evaluator_scope_boundary import (
+    AUTOMATED_EVALUATOR_SCOPE_BOUNDARY_SCHEMA,
+    automated_evaluator_scope_boundary_record,
+    render_automated_evaluator_scope_boundary_summary,
+    validate_automated_evaluator_scope_boundary,
+)
 from libreevolve.problems.benchmarks.candidate_abstraction import (
     CANDIDATE_ABSTRACTION_BOUNDARY_SCHEMA,
     candidate_abstraction_boundary_record,
@@ -627,6 +633,7 @@ __all__ = [
     "FAULT2FLOW_BOUNDARY_SCHEMA",
     "GLOBAL_NLP_OPTIMIZATION_BOUNDARY_SCHEMA",
     "ARCHAGENT_BOUNDARY_SCHEMA",
+    "AUTOMATED_EVALUATOR_SCOPE_BOUNDARY_SCHEMA",
     "CANDIDATE_ABSTRACTION_BOUNDARY_SCHEMA",
     "CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_SCHEMA",
     "CI_WORKFLOW_COVERAGE_BOUNDARY_SCHEMA",
@@ -727,6 +734,7 @@ __all__ = [
     "appendix_a_matrix_subset_scope_artifact_boundary_record",
     "appendix_a_matrix_subset_scope_record",
     "archagent_boundary_record",
+    "automated_evaluator_scope_boundary_record",
     "autoconvolution_boundary_record",
     "alphaevolve_companion_colab_source_record",
     "alphaevolve_follow_on_math_source_record",
@@ -836,6 +844,7 @@ __all__ = [
     "render_alphaevolve_source_pdf_rights_summary",
     "render_alphaevolve_source_pdf_version_summary",
     "render_archagent_boundary_summary",
+    "render_automated_evaluator_scope_boundary_summary",
     "render_autoconvolution_boundary_summary",
     "render_benchmark_fixture_readiness_boundary_summary",
     "render_benchmark_hardening_summary",
@@ -943,6 +952,7 @@ __all__ = [
     "validate_alphaevolve_source_pdf_rights",
     "validate_alphaevolve_source_pdf_version",
     "validate_archagent_boundary",
+    "validate_automated_evaluator_scope_boundary",
     "validate_autoconvolution_boundary",
     "validate_benchmark_evidence_scope",
     "validate_benchmark_fixture_readiness_boundary",

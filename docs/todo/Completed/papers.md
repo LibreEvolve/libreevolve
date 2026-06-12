@@ -13479,3 +13479,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused sampling-balance boundary tests reject calibrated
     AlphaEvolve database-balance overclaims.
+
+- [x] Record automated-evaluator scope paper-facing sidecar.
+  - Status: `papers/automated_evaluator_scope_boundary.json` now records the
+    machine-gradeable local-scope boundary: runtime manifests can show
+    automated evaluator availability, deterministic candidate-validity
+    ownership, declared metric score ownership, post-evaluator LLM feedback,
+    manual-experiment exclusion, and executable-code transition, while robust
+    evaluator-environment fixtures, manual-to-code transition criteria,
+    LLM-only idea-feedback stage contracts, environment-scaling evidence,
+    automatable-domain boundaries, setup effort/cost models, and expected
+    high-value discovery scope remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused automated-evaluator scope tests reject robust
+    environment-readiness overclaims.

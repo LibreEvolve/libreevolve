@@ -2234,9 +2234,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     proposal metadata, and `runtime.history.automated_evaluator_scope_report`,
     which states the AlphaEvolve scope boundary for machine-gradeable tasks
     versus manual-experiment scientific workflows or pre-code LLM-only idea
-    review. It still does not describe evaluator-environment readiness evidence
-    such as robust evaluator design, automatable-domain boundaries, setup
-    effort, and expected discovery value.
+    review. The committed `papers/automated_evaluator_scope_boundary.json`
+    sidecar preserves this machine-gradeable local-scope boundary. It still
+    does not describe evaluator-environment readiness evidence such as robust
+    evaluator design, automatable-domain boundaries, setup effort, and
+    expected discovery value.
   - Required result: once robust environment fixtures and transition policies
     exist, update README, ROADMAP, papers index, and matching TODOs so public
     wording neither underclaims the current executable-evaluator workflow nor

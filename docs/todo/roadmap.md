@@ -1073,10 +1073,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     retrieval, hypothesis-memory follow-ups, and
     `runtime.history.automated_evaluator_scope_report`, which separates
     machine-gradeable evolution from manual-experiment scientific workflows or
-    AI-Co-Scientist-style pre-implementation idea review. It still does not
-    require roadmap evidence for evaluator-environment setup readiness:
-    robust-evaluator rationale, automatable-domain boundaries, setup effort,
-    and expected high-value discovery scope.
+    AI-Co-Scientist-style pre-implementation idea review. The committed
+    `papers/automated_evaluator_scope_boundary.json` sidecar preserves this
+    machine-gradeable local-scope boundary. It still does not require roadmap
+    evidence for evaluator-environment setup readiness: robust-evaluator
+    rationale, automatable-domain boundaries, setup effort, and expected
+    high-value discovery scope.
   - Required result: when robust evaluator-environment fixtures and transition
     policies land, update ROADMAP, README, papers index, and code/paper TODO
     entries together so the project neither underclaims executable evaluator

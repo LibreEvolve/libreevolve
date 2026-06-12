@@ -1229,7 +1229,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `runtime.history.prompt_example_copy_report`, which inventories built-in
     mutation-format example sentinels and records exact, normalized
     file-section-region, and example-format skeleton signals with candidate
-    status/admission metadata.
+    status/admission metadata. ROADMAP and
+    `papers/prompt_example_copy_boundary.json` now keep that evidence scoped
+    to built-in diagnostics, not full copy-detection policy.
   - Required result: when stronger example-copy diagnostics land, update
     ROADMAP, README, papers index, and code/paper TODOs together with
     configurable rejection, broader semantic/renamed copy detection, and custom

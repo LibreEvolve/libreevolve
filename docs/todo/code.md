@@ -2218,7 +2218,8 @@ Primary evidence:
     `def ... return 1` to `def ... return 2` example-format skeleton signal,
     records copied candidate status/admission metadata, and respects
     `mutation_instruction_include_example` when prompt context disables the
-    example.
+    example. `papers/prompt_example_copy_boundary.json` now validates this as
+    built-in-example diagnostics only, not a complete guard.
   - Remaining gap: this is diagnostic-only and still built-in-example scoped.
     It does not provide hard rejection, configurable acceptance policy,
     custom prompt-template example inventories, or broader semantic/renamed

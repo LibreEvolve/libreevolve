@@ -524,6 +524,8 @@ file-section-region, and simple example-format skeleton copy signals for
 example-only fragments. It is diagnostic-only: hard rejection, broader
 semantic/renamed copy detection, and custom prompt-template example
 inventories remain open.
+The committed `papers/prompt_example_copy_boundary.json` sidecar keeps this
+built-in-diagnostics-only scope machine-validated.
 Completed manifests now also include
 `runtime.history.prompt_current_binding_report`, which records current-run
 prompt/current-program binding evidence: generated candidate ids, prompt
@@ -1362,7 +1364,8 @@ example sentinels and records exact, normalized file-section-region, and simple
 example-format skeleton copy signals from generated payloads. This keeps
 concrete examples usable while exposing copied illustrative fragments as
 diagnostic evidence; custom-template inventories, broader semantic/renamed
-copy detection, and hard or configurable acceptance policy remain open.
+copy detection, and hard or configurable acceptance policy remain open. The
+paper-facing boundary is tracked by `papers/prompt_example_copy_boundary.json`.
 
 AlphaEvolve proposal-capture note: LibreEvolve treats leading proposal metadata
 as a structured mutation-response preamble. Short `IDEA:`, `RATIONALE:`, and

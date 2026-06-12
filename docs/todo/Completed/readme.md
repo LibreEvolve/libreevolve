@@ -12651,3 +12651,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused natural-language preamble tests reject complete rationale-handling
     overclaims.
+
+- [x] Keep README prompt example-copy boundary tied to sidecar.
+  - Status: README now states that prompt example-copy reports are built-in
+    exact/normalized/skeleton diagnostics, not hard rejection, semantic-copy
+    detection, or custom-template inventory evidence, with the boundary tracked
+    by `papers/prompt_example_copy_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused prompt example-copy tests reject full guard-readiness overclaims.

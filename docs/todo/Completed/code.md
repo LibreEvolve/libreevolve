@@ -18438,3 +18438,16 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     complete rationale-handling overclaims, invalid boundary status, missing
     evidence drift, and incomplete required evidence fields.
+
+- [x] Add prompt example-copy sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/prompt_example_copy_boundary.py`
+    now emits and validates the built-in-example-copy-diagnostics-only
+    boundary for `runtime.history.prompt_example_copy_report`, separating
+    exact, normalized-region, and example-format skeleton diagnostics with
+    candidate status, mutation mode, and sample records from hard rejection,
+    semantic or renamed copy detection, custom template inventories,
+    per-template source mapping, cross-run copy-rate tables, acceptance-outcome
+    policy, and prompt-example revision guidance.
+  - Verification: focused boundary tests and paper-manifest tests reject full
+    guard-readiness overclaims, invalid boundary status, missing evidence
+    drift, and incomplete required evidence fields.

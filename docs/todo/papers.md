@@ -1869,6 +1869,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     built-in mutation-format example sentinels and records exact,
     normalized file-section-region, and simple example-format skeleton copy
     signals with candidate status/admission metadata.
+    `papers/prompt_example_copy_boundary.json` now validates that this remains
+    a built-in-diagnostics-only evidence boundary.
   - Current gap: the report is diagnostic-only and remains scoped to built-in
     examples. It does not provide hard rejection, configurable acceptance
     policy, custom prompt-template example inventories, or broader

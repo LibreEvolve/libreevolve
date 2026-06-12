@@ -419,7 +419,9 @@ is not yet an AlphaEvolve reproduction.
   or configurable acceptance policy, broader semantic/renamed example-copy
   detection, and custom prompt-template example inventories before treating
   concrete prompt examples as fully guarded AlphaEvolve-style current-program
-  edit demonstrations.
+  edit demonstrations. The committed
+  `papers/prompt_example_copy_boundary.json` sidecar keeps the current
+  built-in-diagnostics-only scope machine-validated.
 - Extend `runtime.history.mutation_consistency_report` beyond current
   multi-edit payload inventories, changed file/block/search edit units,
   best-effort Python AST introduced/reference symbols, unresolved-reference

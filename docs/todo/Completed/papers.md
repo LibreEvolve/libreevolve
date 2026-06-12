@@ -13533,3 +13533,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused natural-language preamble tests reject complete
     rationale-handling overclaims.
+
+- [x] Record prompt example-copy paper-facing sidecar.
+  - Status: `papers/prompt_example_copy_boundary.json` now records the
+    built-in-diagnostics-only boundary for prompt example-copy evidence:
+    runtime manifests can show built-in mutation-example inventories, exact
+    copy signals, normalized region copy signals, example-format skeleton
+    signals, candidate status counts, mutation mode counts, and sample copy
+    records, while hard or configurable rejection policy, semantic or renamed
+    copy detection, custom template inventories, per-template source mapping,
+    cross-run copy-rate tables, acceptance-outcome policy, and prompt-example
+    revision guidance remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused prompt example-copy boundary tests reject full
+    guard-readiness overclaims.

@@ -2344,7 +2344,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `runtime.history.prompt_example_copy_report`, which inventories built-in
     mutation-format example sentinels and records exact, normalized
     file-section-region, and example-format skeleton signals with candidate
-    status/admission metadata.
+    status/admission metadata, with the built-in-diagnostics-only boundary
+    tracked by `papers/prompt_example_copy_boundary.json`.
   - Remaining gap: the report is diagnostic-only and still lacks configurable
     rejection, custom prompt-template example inventories, and broader
     semantic/renamed copy detection.

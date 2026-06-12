@@ -10403,3 +10403,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation requires the committed sidecar and
     focused natural-language preamble tests reject complete rationale-handling
     overclaims.
+
+- [x] Keep roadmap prompt example-copy boundary tied to sidecar.
+  - Status: ROADMAP now links
+    `runtime.history.prompt_example_copy_report` to
+    `papers/prompt_example_copy_boundary.json`, preserving the current
+    built-in exact, normalized-region, and example-format skeleton diagnostic
+    scope while keeping hard/configurable acceptance policy, semantic or
+    renamed copy detection, and custom prompt-template inventories open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused prompt example-copy tests reject full guard-readiness overclaims.

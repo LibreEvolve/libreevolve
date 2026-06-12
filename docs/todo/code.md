@@ -1180,7 +1180,9 @@ Primary evidence:
     metadata, or cache-snapshot retrieval evidence-boundary records and flags
     overclaims of semantic verification, full replay readiness, raw
     provider/source payload retention, TLS certificate-chain retention, or
-    authoritative prompt context. It still does not store unbounded raw
+    authoritative prompt context, plus semantic, learned, or external
+    source-ranking claims embedded in retrieval ranking metadata. It still does
+    not store unbounded raw
     provider payload artifacts, unbounded source-content artifacts,
     learned/external semantic ranking scores beyond deterministic query
     overlap and lexical grounding, or a
@@ -1207,7 +1209,7 @@ Primary evidence:
     hashes, query grounding, lexical grounding records, audit-only relevance
     scores, retained source order/hash metadata, sidecar inventory
     verification, deterministic ranking-provenance validation, bounded
-    semantic-boundary overclaim auditing, or run-level retrieval evidence
+    semantic-boundary and source-ranking overclaim auditing, or run-level retrieval evidence
     coverage validation.
 
 - [ ] Add semantic retrieval verification and replayable full-source evidence.

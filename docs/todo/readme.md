@@ -2817,9 +2817,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     artifacts and inventory hashes; active prompt context links to bounded
     transport, source-content, lexical-grounding, and evidence-boundary states;
     semantic-boundary audits and run-level coverage validation reject raw
-    payload, semantic-verification, learned-ranking, TLS-replay, full-replay,
-    and authoritative-context overclaims. Unbounded raw payload availability,
-    semantic source correctness, learned/external ranking, and replayable
+    payload, semantic-verification, source-ranking, learned-ranking, TLS-replay,
+    full-replay, and authoritative-context overclaims. Unbounded raw payload
+    availability, semantic source correctness, learned/external ranking, and replayable
     transport/TLS decision evidence remain open.
   - Required result: when retrieval payload retention, learned/external source
     ranking, semantic verification, or transport/TLS replay evidence changes,

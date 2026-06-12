@@ -1940,6 +1940,9 @@ def test_retrieval_semantic_boundary_audit_verifies_event_and_cache_snapshot(tmp
     assert record["raw_source_payload_retained"] is False
     assert record["tls_certificate_chain_retained"] is False
     assert record["semantic_verified"] is False
+    assert record["source_ranking_semantic_claimed"] is False
+    assert record["source_ranking_learned_claimed"] is False
+    assert record["source_ranking_external_claimed"] is False
     assert record["replayable_source_count"] == 1
     assert record["lexically_grounded_source_count"] == 1
     assert record["issues"] == []
@@ -2010,6 +2013,50 @@ def test_retrieval_semantic_boundary_audit_reports_overclaims():
     assert "missing_evidence_boundary_policy" in audit["events"][1]["issues"]
     assert audit["events"][2]["status"] == "invalid_record"
     assert "invalid_retrieval_event" in audit["events"][2]["issues"]
+
+
+def test_retrieval_semantic_boundary_audit_reports_source_ranking_overclaims():
+    plugin = DeepResearchPlugin(
+        search_fn=lambda q: {
+            "status": "ok",
+            "synthesis": "custom context",
+            "sources": [
+                {
+                    "id": "paper",
+                    "title": "Evolutionary optimization",
+                    "summary": "Evolutionary optimization context.",
+                }
+            ],
+        }
+    )
+    db = MagicMock()
+    db.best.return_value = _p()
+    plugin.on_generation_start(1, db)
+    event = plugin.prompt_context_metadata()["retrieval_events"][-1]
+
+    overclaimed = json.loads(json.dumps(event))
+    overclaimed["source_ranking"]["semantic_ranking_verified"] = True
+    overclaimed["source_ranking"]["learned_ranking_applied"] = True
+    overclaimed["source_ranking"]["external_score_applied"] = True
+    overclaimed["sources"][0]["query_relevance"]["semantic_verified"] = True
+    overclaimed["sources"][0]["query_relevance"]["learned_score"] = 0.75
+    overclaimed["sources"][0]["query_relevance"]["external_score"] = 0.95
+
+    audit = retrieval_semantic_boundary_audit(overclaimed)
+
+    assert audit["ok"] is False
+    assert audit["event_count"] == 1
+    assert audit["verified_count"] == 0
+    assert audit["overclaim_count"] == 1
+    [record] = audit["events"]
+    assert record["status"] == "overclaim"
+    assert record["semantic_verified"] is False
+    assert record["source_ranking_semantic_claimed"] is True
+    assert record["source_ranking_learned_claimed"] is True
+    assert record["source_ranking_external_claimed"] is True
+    assert "semantic_source_ranking_overclaimed" in record["issues"]
+    assert "learned_source_ranking_overclaimed" in record["issues"]
+    assert "external_source_ranking_overclaimed" in record["issues"]
 
 
 def test_source_ranking_policy_is_part_of_cache_key(tmp_path):

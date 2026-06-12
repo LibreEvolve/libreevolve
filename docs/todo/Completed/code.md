@@ -17580,3 +17580,16 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     and non-OpenAI/custom provider families remains open.
   - Verification: runtime prompt-section coverage tests cover forged
     non-mutation role overclaims.
+
+- [x] Reject retrieval source-ranking evidence overclaims.
+  - Spec evidence: DeepEvolve-style retrieval can influence candidate prompts,
+    so ranking metadata must not imply semantic, learned, or external scoring
+    evidence that LibreEvolve does not retain or compute.
+  - Status: `retrieval_semantic_boundary_audit()` now rejects source-ranking
+    metadata and per-source relevance records that overclaim semantic ranking,
+    learned ranking, or external score evidence.
+  - Remaining gap: real learned/external semantic ranking, semantic
+    source-content verification, unbounded provider/source payload replay, and
+    replayable transport/TLS evidence remain open.
+  - Verification: DeepResearch semantic-boundary tests cover forged
+    source-ranking overclaims.

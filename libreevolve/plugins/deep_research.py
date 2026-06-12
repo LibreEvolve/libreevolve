@@ -2664,6 +2664,7 @@ def _semantic_boundary_audit_record(event: object) -> dict:
     grounding = event.get("source_grounding_policy")
     source_trust = event.get("source_content_trust_policy")
     transport = event.get("transport_policy")
+    source_ranking = event.get("source_ranking")
     if not isinstance(boundary, dict):
         boundary = {}
     if not isinstance(context, dict):
@@ -2674,6 +2675,8 @@ def _semantic_boundary_audit_record(event: object) -> dict:
         source_trust = {}
     if not isinstance(transport, dict):
         transport = {}
+    if not isinstance(source_ranking, dict):
+        source_ranking = {}
 
     raw_retention = boundary.get("raw_payload_retention")
     if not isinstance(raw_retention, dict):
@@ -2705,6 +2708,7 @@ def _semantic_boundary_audit_record(event: object) -> dict:
         event.get("authoritative")
         or context.get("prompt_context_authoritative")
     )
+    ranking_claims = _source_ranking_boundary_claims(source_ranking, sources)
 
     issues: list[str] = []
     if "evidence_boundary_policy" not in event:
@@ -2727,6 +2731,12 @@ def _semantic_boundary_audit_record(event: object) -> dict:
         issues.append("tls_certificate_chain_retention_overclaimed")
     if authoritative:
         issues.append("prompt_context_authority_overclaimed")
+    if ranking_claims["semantic"]:
+        issues.append("semantic_source_ranking_overclaimed")
+    if ranking_claims["learned"]:
+        issues.append("learned_source_ranking_overclaimed")
+    if ranking_claims["external"]:
+        issues.append("external_source_ranking_overclaimed")
     if not _semantic_limitation_declared(boundary, context, grounding, source_trust):
         issues.append("missing_semantic_verification_limitation")
     if not _raw_payload_limitation_declared(boundary):
@@ -2741,6 +2751,9 @@ def _semantic_boundary_audit_record(event: object) -> dict:
         "raw_source_payload_retention_overclaimed",
         "tls_certificate_chain_retention_overclaimed",
         "prompt_context_authority_overclaimed",
+        "semantic_source_ranking_overclaimed",
+        "learned_source_ranking_overclaimed",
+        "external_source_ranking_overclaimed",
     }
     if any(issue in overclaim_codes for issue in issues):
         status = "overclaim"
@@ -2768,6 +2781,9 @@ def _semantic_boundary_audit_record(event: object) -> dict:
         "raw_source_payload_retained": raw_source_retained,
         "tls_certificate_chain_retained": tls_chain_retained,
         "semantic_verified": semantic_verified,
+        "source_ranking_semantic_claimed": ranking_claims["semantic"],
+        "source_ranking_learned_claimed": ranking_claims["learned"],
+        "source_ranking_external_claimed": ranking_claims["external"],
         "source_semantic_verified_count": len(source_semantic_flags),
         "content_evidence_count": _safe_non_negative_count(
             source_trust.get("content_evidence_count")
@@ -2792,6 +2808,54 @@ def _source_semantic_verification_flags(sources: list[object]) -> list[dict]:
             if isinstance(policy, dict) and bool(policy.get("semantic_verified")):
                 flags.append({"source_index": index, "field": field})
     return flags
+
+
+def _source_ranking_boundary_claims(
+    source_ranking: dict, sources: list[object]
+) -> dict[str, bool]:
+    semantic_keys = {
+        "semantic_verified",
+        "semantic_ranking",
+        "semantic_ranking_applied",
+        "semantic_ranking_ready",
+        "semantic_ranking_verified",
+    }
+    learned_keys = {
+        "learned_model",
+        "learned_ranker",
+        "learned_ranking",
+        "learned_ranking_applied",
+        "learned_ranking_ready",
+        "learned_score",
+    }
+    external_keys = {
+        "external_score",
+        "external_score_applied",
+        "external_score_provider",
+        "external_scoring",
+        "external_scoring_ready",
+    }
+    flags = {
+        "semantic": _truthy_any(source_ranking, semantic_keys),
+        "learned": _truthy_any(source_ranking, learned_keys),
+        "external": _truthy_any(source_ranking, external_keys),
+    }
+    for source in sources:
+        if not isinstance(source, dict):
+            continue
+        relevance = source.get("query_relevance")
+        if not isinstance(relevance, dict):
+            continue
+        flags["semantic"] = flags["semantic"] or _truthy_any(
+            relevance, semantic_keys
+        )
+        flags["learned"] = flags["learned"] or _truthy_any(relevance, learned_keys)
+        flags["external"] = flags["external"] or _truthy_any(relevance, external_keys)
+    return flags
+
+
+def _truthy_any(values: dict, keys: set[str]) -> bool:
+    return any(bool(values.get(key)) for key in keys)
 
 
 def _semantic_limitation_declared(*policies: dict) -> bool:

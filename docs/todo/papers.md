@@ -4389,7 +4389,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     plugin-metadata, or cache-snapshot records preserve the current bounded,
     non-semantic evidence boundary and reports overclaims of semantic
     verification, full replay readiness, raw provider/source payload retention,
-    TLS certificate-chain retention, or authoritative prompt context.
+    TLS certificate-chain retention, authoritative prompt context, and semantic,
+    learned, or external source-ranking evidence.
     `runtime.retrieval.evidence_coverage` now records
     `libreevolve.retrieval_evidence_coverage.v1` run-level coverage counts for
     retained retrieval evidence surfaces and
@@ -4412,9 +4413,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     claiming DeepEvolve-style retrieval is reproducible and audit-grade. The
     remaining paper gap is not retrieval payload sidecar inventory
     verification, deterministic retained-source ranking-provenance
-    validation, semantic-boundary overclaim auditing, run-level retrieval
-    evidence coverage validation, or the core full-runtime restore bundle that
-    deliberately excludes provider-output replay.
+    validation, semantic-boundary/source-ranking overclaim auditing, run-level
+    retrieval evidence coverage validation, or the core full-runtime restore
+    bundle that deliberately excludes provider-output replay.
 
 - [ ] Track official 2026 AlphaEvolve impact article as a separate source
       surface.

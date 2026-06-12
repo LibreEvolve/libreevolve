@@ -9313,3 +9313,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     section packing across all roles open.
   - Verification: runtime prompt-section coverage tests validate forged
     non-mutation role overclaims.
+
+- [x] Preserve retrieval ranking-evidence boundary.
+  - Spec evidence: roadmap DeepEvolve wording needs to distinguish bounded
+    retrieval provenance from audit-grade learned/external ranking evidence.
+  - Status: ROADMAP and TODO wording now recognize source-ranking overclaim
+    guards while keeping learned/external ranking, raw payload replay, and
+    replayable transport evidence open.
+  - Verification: DeepResearch semantic-boundary tests validate forged
+    source-ranking overclaims.

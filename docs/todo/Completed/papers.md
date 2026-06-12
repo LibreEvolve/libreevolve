@@ -12179,3 +12179,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     provider families.
   - Verification: runtime prompt-section coverage tests validate forged
     non-mutation role overclaims.
+
+- [x] Record retrieval source-ranking overclaim guards.
+  - Spec evidence: DeepEvolve-style retrieval/debug loops need source-ranking
+    evidence that cannot be mistaken for semantic verification or learned
+    scoring.
+  - Status: paper-facing TODOs and the papers index now record that
+    semantic-boundary audits reject source-ranking metadata that overclaims
+    semantic, learned, or external scoring evidence.
+  - Remaining paper gap: this does not implement learned/external semantic
+    ranking, semantic source-content verification, unbounded provider/source
+    payload replay, or replayable transport/TLS decisions.
+  - Verification: DeepResearch semantic-boundary tests validate forged
+    source-ranking overclaims.

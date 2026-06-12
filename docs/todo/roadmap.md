@@ -854,8 +854,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and paper TODOs already document bounded provider-result/source-content
     snapshots, retention-budgeted redacted sidecars, deterministic query-overlap
     ranking, transport-policy classification, and run-level coverage validation,
-    while preserving the open raw-payload, semantic-verification,
-    learned-ranking, TLS/transport-replay, and full-source replay gaps.
+    plus semantic-boundary rejection of ranking metadata that overclaims
+    semantic, learned, or external scoring evidence, while preserving the open
+    raw-payload, semantic-verification, learned-ranking, TLS/transport-replay,
+    and full-source replay gaps.
   - Required result: when unbounded retrieval payload/source artifacts,
     learned/external ranking provenance, replayable transport/failure decision
     trees, or default/custom provider provenance tests land, update the

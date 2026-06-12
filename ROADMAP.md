@@ -543,7 +543,9 @@ is not yet an AlphaEvolve reproduction.
   audit-grade source integrity: unbounded provider-payload/source-content
   artifacts, learned or externally scored ranking/selection evidence beyond
   provider order, a replayable transport/failure decision tree, and explicit
-  default-provider plus custom-provider provenance tests.
+  default-provider plus custom-provider provenance tests. Current bounded
+  audits reject source-ranking metadata that overclaims semantic, learned, or
+  external scoring evidence without implementing those rankers.
 - Extend the current optional `IDEA`/`RATIONALE`/`HYPOTHESIS` proposal metadata
   preamble, bounded `runtime.history.hypothesis_index` summaries, and
   `runtime.history.hypothesis_branch_report` abandonment evidence, plus

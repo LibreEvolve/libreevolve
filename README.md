@@ -3482,7 +3482,9 @@ rank retained sources by query-overlap score with provider rank as a
 tie-breaker; retrieval events, active prompt context, cache snapshots, and
 runtime plugin state record the policy and whether relevance affected order.
 The ranking-provenance validator can independently check those deterministic
-retained-source hashes for event records and cache snapshots.
+retained-source hashes for event records and cache snapshots. The semantic
+boundary audit also rejects retrieval metadata that tries to present source
+ranking as semantic verification, learned ranking, or external scoring evidence.
 Cache keys include the ranking policy so cached/offline replay cannot mix
 differently ordered source metadata for the same query. LibreEvolve does not yet persist unbounded raw provider/source
 payloads, unbounded source-content artifacts,

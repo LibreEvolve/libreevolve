@@ -11783,3 +11783,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     overclaims for critique, feedback, and meta-prompt.
   - Verification: runtime prompt-section coverage tests validate forged
     non-mutation role overclaims.
+
+- [x] Document retrieval source-ranking overclaim guards.
+  - Spec evidence: README DeepResearch wording needed to distinguish
+    deterministic query-overlap ranking evidence from semantic, learned, or
+    external scoring evidence.
+  - Status: README and TODO wording now state that semantic-boundary audits
+    reject source-ranking metadata that overclaims semantic, learned, or
+    external scoring evidence while keeping real learned/external ranking open.
+  - Verification: DeepResearch semantic-boundary tests validate forged
+    source-ranking overclaims.

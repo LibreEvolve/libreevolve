@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 49 cache rows and links the AlphaEvolve row to
+  identities for all 50 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1546,6 +1546,19 @@ resumed-trace proof are still open.
   public-code snapshot audits, and independent reproduction outputs remain
   open before roadmap wording can promote AHE-style observability-driven
   harness evolution support.
+- Keep AI Harness Engineering runtime-substrate claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2605.13357`, `AI Harness Engineering: A Runtime Substrate for
+  Foundation-Model Software Agents`, cached locally as
+  `papers/2605.13357__AI_Harness_Engineering.pdf`. This is background AI
+  harness runtime-substrate context only; complete eleven-responsibility
+  harness contracts, H0-H3 harness-ladder fixtures, trace-based episode-
+  package schemas, controlled validation-task reproductions,
+  model-harness-environment capability equation records, failure-attribution
+  taxonomy reports, deterministic requirement-check packages, structured
+  verification reports, public-code snapshot audits, and independent
+  reproduction outputs remain open before roadmap wording can promote AI
+  Harness Engineering runtime-substrate support.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

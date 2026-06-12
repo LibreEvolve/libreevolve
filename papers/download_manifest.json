@@ -470,6 +470,16 @@
     "sha256": "299f2633b4c13db7bed52434b4db7c48ea621993581014d30e7bcd036d3464df"
   },
   {
+    "id": "2605.13357",
+    "title": "AI_Harness_Engineering",
+    "url": "https://arxiv.org/pdf/2605.13357.pdf",
+    "file": "papers/2605.13357__AI_Harness_Engineering.pdf",
+    "ok": true,
+    "bytes": 263956,
+    "message": "downloaded",
+    "sha256": "a1e2d7ce307c662411ca6bd5f833d7dae7f122ce6ef1ddd6d2370e82575b2fb9"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

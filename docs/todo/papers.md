@@ -5302,7 +5302,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     reproduction outputs, and README/ROADMAP wording that treats AHE as
     background context until those artifacts exist.
 
-- [ ] Track AI Harness Engineering runtime-substrate paper evidence.
+- [ ] Reproduce AI Harness Engineering runtime-substrate evidence beyond paper
+      coverage.
   - Paper/source evidence: arXiv `2605.13357`, submitted May 13, 2026, is
     titled `AI Harness Engineering: A Runtime Substrate for Foundation-Model
     Software Agents`. Its abstract says autonomous software-engineering
@@ -5316,26 +5317,33 @@ directory and using the AlphaEvolve paper as the primary specification.
     through an H0-H3 ladder and converts each run into an auditable episode
     package; higher levels produce reproduction logs, failure attributions,
     deterministic requirement checks, and structured verification reports.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2605.13357`. Existing rows cover AlphaEvolve search, AHE
-    observability-driven evolution, HarnessFix, RHO, SIA, and AEvo, but not a
-    general AI-harness runtime-substrate contract, eleven responsibility
-    records, H0-H3 support-level comparisons, episode-package trace bundles,
-    entropy auditing, intervention logging, or requirement-level verification
-    as a harness maturity artifact.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2605.13357`: title/authors/arXiv version/date/PDF digest, source
-    license, relation to AlphaEvolve and LibreEvolve harness assumptions,
-    model-harness-environment schema, eleven responsibility taxonomy,
-    H0-H3 harness-level records, runtime-resource exposure matrix, task/
-    context/tool/memory/state artifact records, observability traces,
+  - Current gap: the paper cache, paper index, row identity, README, ROADMAP,
+    and TODO coverage now include `2605.13357`, cached locally as
+    `papers/2605.13357__AI_Harness_Engineering.pdf` with byte count `263956`
+    and SHA-256
+    `a1e2d7ce307c662411ca6bd5f833d7dae7f122ce6ef1ddd6d2370e82575b2fb9`.
+    Reproduction evidence remains absent: no source-license details,
+    relation to AlphaEvolve and LibreEvolve harness assumptions, model-
+    harness-environment schema, eleven responsibility taxonomy, H0-H3
+    harness-level records, runtime-resource exposure matrix, task/context/
+    tool/memory/state artifact records, observability traces, failure-
+    attribution logs, verification protocol and report records, permission
+    events, entropy audits, intervention logs, episode package schema,
+    deterministic requirement-check metadata, controlled validation task
+    evidence, maintenance-burden analysis, code/artifact reproducibility
+    status, or independent reproduction output exists.
+  - Required result: add reproduction-grade AI Harness Engineering evidence:
+    source license, relation to AlphaEvolve and LibreEvolve harness
+    assumptions, model-harness-environment schema, eleven responsibility
+    taxonomy, H0-H3 harness-level records, runtime-resource exposure matrix,
+    task/context/tool/memory/state artifact records, observability traces,
     failure-attribution logs, verification protocol and report records,
     permission events, entropy audits, intervention logs, episode package
     schema, deterministic requirement-check metadata, controlled validation
-    task evidence, maintenance-burden analysis, code/artifact availability if
-    any, reproducibility status, and README/ROADMAP wording that treats AI
-    Harness Engineering as missing paper evidence rather than implemented
-    LibreEvolve support.
+    task evidence, maintenance-burden analysis, code/artifact reproducibility
+    status, independent reproduction outputs, and README/ROADMAP wording that
+    treats AI Harness Engineering as background context until those artifacts
+    exist.
 
 - [ ] Track inference-time trajectory-alignment harness paper evidence.
   - Paper/source evidence: arXiv `2605.21516`, submitted May 15, 2026, is

@@ -5786,7 +5786,8 @@ Primary evidence:
     evidence
     until local implementation and reports exist.
 
-- [ ] Add AI Harness Engineering runtime-substrate source boundary.
+- [ ] Implement AI Harness Engineering runtime-substrate evidence beyond paper
+      cache coverage.
   - Spec evidence: arXiv `2605.13357`, `AI Harness Engineering: A Runtime
     Substrate for Foundation-Model Software Agents`, was submitted May 13,
     2026. Its abstract argues that autonomous software-engineering capability
@@ -5798,26 +5799,30 @@ Primary evidence:
     H0-H3 ladder that progressively exposes runtime support and a trace-based
     evaluation protocol that converts each run into an auditable episode
     package with richer evidence at higher harness levels.
-  - Current evidence: LibreEvolve records manifests, prompt history, LLM calls,
-    evaluator outputs, failure streams, and archive events, but it has no
-    `2605.13357` source row, no first-class model-harness-environment
-    capability contract, no complete eleven-responsibility harness inventory,
-    no H0-H3 runtime-support ladder, no episode package schema tying task,
-    repository, harness config, tools, verification rules, traces, and final
-    outcome together, no entropy audit, and no intervention log that records
-    human assistance and its avoidability.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2605.13357`: arXiv id/version/date/PDF hash, authors, source
-    license, relation to AlphaEvolve and LibreEvolve runtime artifacts,
-    model-harness-environment capability schema, eleven harness responsibility
-    records, H0-H3 harness-level taxonomy, exposed runtime-resource matrix,
-    task/spec/context/tool/memory/state records, observability and failure-
-    attribution traces, verification protocol records, permission-boundary
-    events, entropy-audit artifacts, intervention logs, episode package
-    schema, requirement-level evidence checks, controlled validation task
-    metadata, maintenance-burden reports, and README/ROADMAP wording that
-    keeps AI-harness runtime-substrate claims as missing evidence until local
-    implementation and reports exist.
+  - Current evidence: `papers/download_manifest.*`, `papers/row_identity.json`,
+    `papers/README.md`, README, ROADMAP, and TODO coverage now include
+    `2605.13357`, cached locally as
+    `papers/2605.13357__AI_Harness_Engineering.pdf` with byte count `263956`
+    and SHA-256
+    `a1e2d7ce307c662411ca6bd5f833d7dae7f122ce6ef1ddd6d2370e82575b2fb9`.
+    LibreEvolve records manifests, prompt history, LLM calls, evaluator
+    outputs, failure streams, and archive events, but it has no first-class
+    model-harness-environment capability contract, no complete eleven-
+    responsibility harness inventory, no H0-H3 runtime-support ladder, no
+    episode package schema tying task, repository, harness config, tools,
+    verification rules, traces, and final outcome together, no entropy audit,
+    and no intervention log that records human assistance and its avoidability.
+  - Required result: add implementation-boundary metadata beyond the paper
+    cache: source license, relation to AlphaEvolve and LibreEvolve runtime
+    artifacts, model-harness-environment capability schema, eleven harness
+    responsibility records, H0-H3 harness-level taxonomy, exposed runtime-
+    resource matrix, task/spec/context/tool/memory/state records,
+    observability and failure-attribution traces, verification protocol
+    records, permission-boundary events, entropy-audit artifacts,
+    intervention logs, episode package schema, requirement-level evidence
+    checks, controlled validation task metadata, maintenance-burden reports,
+    and README/ROADMAP wording that keeps AI-harness runtime-substrate claims
+    as missing evidence until local implementation and reports exist.
 
 - [ ] Add inference-time trajectory-alignment harness design boundary.
   - Spec evidence: arXiv `2605.21516`, `Harnesses for Inference-Time

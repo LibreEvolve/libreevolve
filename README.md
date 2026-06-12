@@ -165,7 +165,7 @@ Common run options:
 
 ## Research Sources
 
-LibreEvolve is informed by a local cache of 49 papers on LLM-guided evolution,
+LibreEvolve is informed by a local cache of 50 papers on LLM-guided evolution,
 program synthesis, quality-diversity optimization, and related benchmarks. The
 PDF cache lives locally under `papers/`, but the PDFs themselves are gitignored.
 The committed repository tracks `papers/README.md`, download manifests, and
@@ -176,7 +176,7 @@ not authoritative bibliographic titles. Use `papers/README.md` for paper-facing
 titles, implementation status, and benchmark coverage decisions.
 
 The table below is a curated subset for README context. `papers/README.md` is
-the complete implementation-status index for all 49 manifest rows.
+the complete implementation-status index for all 50 manifest rows.
 
 | Source | Role in LibreEvolve |
 | --- | --- |
@@ -210,6 +210,7 @@ the complete implementation-status index for all 49 manifest rows.
 | [RHO](https://arxiv.org/abs/2606.05922) | Retrospective harness optimization context only; no local hard/diverse trajectory coreset selector, parallel re-rollout workflow, self-validation/self-consistency analysis, pairwise self-preference harness ranking, or SWE-Bench Pro reproduction exists. |
 | [Harness Updating Is Not Harness Benefit](https://arxiv.org/abs/2605.30621) | Harness-capability disentanglement context only; no local harness-updating versus harness-benefit metric schema, cross-model capability-tier experiment, activation/adherence failure audit, or benchmark reproduction exists. |
 | [AHE](https://arxiv.org/abs/2604.25850) | Observability-driven harness-evolution context only; no local file-level harness component graph, layered trajectory evidence corpus, edit-prediction contract, falsification loop, or Terminal-Bench 2 reproduction exists. |
+| [AI Harness Engineering](https://arxiv.org/abs/2605.13357) | Runtime-substrate context only; no complete eleven-responsibility harness contract, H0-H3 ladder, trace-based episode package, controlled validation task, or structured verification report exists. |
 
 Rehydrate the ignored local PDF cache on a fresh checkout:
 

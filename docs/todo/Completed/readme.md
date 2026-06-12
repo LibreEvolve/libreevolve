@@ -643,7 +643,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Spec evidence: README points readers to the local paper cache as the source
     ledger for paper-facing implementation status and benchmark decisions.
   - Status: README now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 49 cache
+    companion manifest that emits derived source identities for all 50 cache
     rows, including URL source id, filename source prefix, validation booleans,
     and the AlphaEvolve row's source-version link.
   - Remaining gap: none for this bounded README wording slice.
@@ -1079,7 +1079,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     algorithm subset.
   - Status: corrected and guarded. README now states the visible paper tables
     are a curated subset and that `papers/README.md` is the complete
-    implementation-status index for all 49 manifest rows. The paper-manifest
+    implementation-status index for all 50 manifest rows. The paper-manifest
     validator now flags root README paper summaries that list only a subset of
     manifest ids without this curated-summary disclosure.
   - Verification: `tests/test_paper_manifest.py` covers accepted curated
@@ -12296,7 +12296,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     reward, Proposer/Generator co-training loop, GRPO/DPO trainer, or
     verifier-free self-evolution report exists.
   - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 49-row manifest.
+    count and curated-subset wording against the 50-row manifest.
 
 - [x] Document `2605.21605` GenEvolve paper coverage in README.
   - Status: README now includes `2605.21605`, GenEvolve, as multimodal
@@ -12304,7 +12304,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     generation tool pipeline, visual-reference trajectory store, Agentic Visual
     Experience Distillation, or GenEvolve-Bench report exists.
   - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 49-row manifest.
+    count and curated-subset wording against the 50-row manifest.
 
 - [x] Document `2605.29847` EvoRubric paper coverage in README.
   - Status: README now includes `2605.29847`, EvoRubric, as self-evolving
@@ -12312,7 +12312,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     Generator co-evolution, criteria verification, rubric memory pool, or
     reward-hacking report exists.
   - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 49-row manifest.
+    count and curated-subset wording against the 50-row manifest.
 
 - [x] Document `2605.29293` LLM-ALSO paper coverage in README.
   - Status: README now includes `2605.29293`, LLM-ALSO, as learning-signal
@@ -12320,7 +12320,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     harness, Critic/Generator reward-shaping loop, branch-validation trace, or
     learning-efficiency report exists.
   - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 49-row manifest.
+    count and curated-subset wording against the 50-row manifest.
 
 - [x] Document `2512.18746` MemEvolve paper coverage in README.
   - Status: README now includes `2512.18746`, MemEvolve, as memory-
@@ -12328,7 +12328,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     retrieve/manage design space, memory-architecture mutation loop, EvolveLab
     benchmark mapping, or transfer report exists.
   - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 49-row manifest.
+    count and curated-subset wording against the 50-row manifest.
 
 - [x] Document `2606.06114` ANCHOR paper coverage in README.
   - Status: README now includes `2606.06114`, ANCHOR healthy evolution, as
@@ -12336,7 +12336,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     like oversight agent, phase-specific norm-correction interface,
     safety-drift metric lineage, or supervision-cadence report exists.
   - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 49-row manifest.
+    count and curated-subset wording against the 50-row manifest.
 
 - [x] Document `2605.27276` SIA paper coverage in README.
   - Status: README now includes `2605.27276`, SIA, as harness-plus-weight
@@ -12345,7 +12345,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     adapter/checkpoint lifecycle, or harness-versus-weight ablation report
     exists.
   - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 49-row manifest.
+    count and curated-subset wording against the 50-row manifest.
 
 - [x] Document `2606.06324` HarnessFix paper coverage in README.
   - Status: README now includes `2606.06324`, HarnessFix, as trace-grounded
@@ -12354,7 +12354,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     consolidation, scoped repair operator schema, or regression-bounded patch
     validation exists.
   - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 49-row manifest.
+    count and curated-subset wording against the 50-row manifest.
 
 - [x] Document `2606.05922` RHO paper coverage in README.
   - Status: README now includes `2606.05922`, RHO, as retrospective harness
@@ -12363,7 +12363,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     validation/self-consistency analysis, pairwise self-preference harness
     ranking, or SWE-Bench Pro reproduction exists.
   - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 49-row manifest.
+    count and curated-subset wording against the 50-row manifest.
 
 - [x] Document `2605.30621` harness-updating versus harness-benefit paper
       coverage in README.
@@ -12373,7 +12373,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     cross-model capability-tier experiment, activation/adherence failure
     audit, or benchmark reproduction exists.
   - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 49-row manifest.
+    count and curated-subset wording against the 50-row manifest.
 
 - [x] Document `2604.25850` AHE paper coverage in README.
   - Status: README now includes `2604.25850`, AHE, as observability-driven
@@ -12381,4 +12381,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     component graph, layered trajectory evidence corpus, edit-prediction
     contract, falsification loop, or Terminal-Bench 2 reproduction exists.
   - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 49-row manifest.
+    count and curated-subset wording against the 50-row manifest.
+
+- [x] Document `2605.13357` AI Harness Engineering paper coverage in README.
+  - Status: README now includes `2605.13357`, AI Harness Engineering, as
+    runtime-substrate context only and states that no complete eleven-
+    responsibility harness contract, H0-H3 ladder, trace-based episode
+    package, controlled validation task, or structured verification report
+    exists.
+  - Verification: paper-manifest validation checks README's local paper-cache
+    count and curated-subset wording against the 50-row manifest.

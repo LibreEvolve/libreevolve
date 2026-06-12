@@ -13147,3 +13147,24 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2605.13357` AI Harness Engineering paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2605.13357`, `AI Harness Engineering: A Runtime Substrate for
+    Foundation-Model Software Agents`, cached locally as
+    `papers/2605.13357__AI_Harness_Engineering.pdf` with byte count `263956`
+    and SHA-256
+    `a1e2d7ce307c662411ca6bd5f833d7dae7f122ce6ef1ddd6d2370e82575b2fb9`.
+  - Remaining paper gap: source-license details, model-harness-environment
+    schema, eleven responsibility taxonomy, H0-H3 harness-level records,
+    runtime-resource exposure matrix, task/context/tool/memory/state artifact
+    records, observability traces, failure-attribution logs, verification
+    protocol and report records, permission events, entropy audits,
+    intervention logs, episode package schema, deterministic requirement-check
+    metadata, controlled validation task evidence, maintenance-burden
+    analysis, code/artifact reproducibility status, and independent
+    reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

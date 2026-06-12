@@ -11822,3 +11822,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     role policy, and DeepEvolve debug/refinement readiness flags false.
   - Verification: prompt-context policy coverage tests validate forged
     readiness overclaims.
+
+- [x] Document unresolved provider-token packing readiness guards.
+  - Spec evidence: README prompt-fitting wording needed to separate mutation
+    section packing from all-role/provider-family prompt fitting.
+  - Status: README and TODO wording now state that non-OpenAI/custom exact
+    counters, registry/custom role section packing, and retrieval/context/
+    plugin/failure-memory section packing readiness remain false.
+  - Verification: prompt-section coverage tests validate forged readiness
+    overclaims.

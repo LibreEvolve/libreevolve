@@ -2375,6 +2375,9 @@ def _runtime_prompt_section_packing_coverage(config: Config) -> dict:
         "provider_token_section_packing_ready_roles": ready_roles,
         "provider_token_section_packing_missing_roles": missing_roles,
         "automatic_provider_token_section_packing_complete": False,
+        "exact_non_openai_provider_counters_ready": False,
+        "registry_custom_role_section_packing_ready": False,
+        "retrieval_context_plugin_failure_memory_section_packing_ready": False,
         "final_prompt_token_counting_boundary": (
             "LLMEnsemble.generate performs role-scoped final-prompt counting "
             "when all eligible backends share a local counter"
@@ -2761,6 +2764,21 @@ def validate_prompt_section_packing_coverage(record: object) -> dict:
                 "message": "current coverage must not claim complete provider-token section packing",
             }
         )
+    false_only_fields = {
+        "exact_non_openai_provider_counters_ready": "exact_non_openai_provider_counters_overclaim",
+        "registry_custom_role_section_packing_ready": "registry_custom_role_section_packing_overclaim",
+        "retrieval_context_plugin_failure_memory_section_packing_ready": (
+            "retrieval_context_plugin_failure_memory_section_packing_overclaim"
+        ),
+    }
+    for field, code in false_only_fields.items():
+        if record.get(field) is not False:
+            issues.append(
+                {
+                    "code": code,
+                    "message": f"{field} must remain false until implemented",
+                }
+            )
     limitations = record.get("limitations")
     required_limitations = {
         "non_mutation_prompt_builders_do_not_use_promptsampler_section_packing",

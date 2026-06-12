@@ -9352,3 +9352,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     surfaces.
   - Verification: prompt-context policy coverage tests validate forged
     readiness overclaims.
+
+- [x] Preserve unresolved provider-token packing boundaries.
+  - Spec evidence: roadmap prompt-fitting wording should not imply
+    AlphaEvolve-grade provider-token packing across all roles or provider
+    families.
+  - Status: ROADMAP and TODO wording now recognize false readiness guards for
+    exact non-OpenAI/custom counters, registry/custom roles, and
+    retrieval/context/plugin/failure-memory section packing.
+  - Verification: prompt-section coverage tests validate forged readiness
+    overclaims.

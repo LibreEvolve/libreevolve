@@ -12228,3 +12228,14 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Remaining paper gap: this does not implement those controls.
   - Verification: prompt-context policy coverage tests validate forged
     readiness overclaims.
+
+- [x] Record unresolved provider-token packing guards.
+  - Spec evidence: paper-facing prompt-fitting claims need manifest evidence
+    that mutation-only section packing has not become all-role/provider-family
+    packing.
+  - Status: paper-facing TODOs and the papers overview now record false
+    readiness guards for exact non-OpenAI/custom counters, registry/custom
+    roles, and retrieval/context/plugin/failure-memory section packing.
+  - Remaining paper gap: this does not implement those packing surfaces.
+  - Verification: prompt-section coverage tests validate forged readiness
+    overclaims.

@@ -687,7 +687,9 @@ automatic at the ensemble boundary for roles whose eligible backends share that
 counter. Runtime prompt-section coverage rejects complete and role-level
 provider-token section-packing overclaims for critique, feedback, and
 meta-prompt; provider-token section-priority packing outside mutation prompts
-and non-OpenAI exact counters remain open.
+and non-OpenAI exact counters remain open. Coverage also keeps non-OpenAI/
+custom exact counters, registry/custom role packing, and retrieval/context/
+plugin/failure-memory packing readiness false.
 The current synchronous loop can generate and evaluate a sequential
 `proposals_per_generation` batch inside each generation, with sibling-candidate
 history accounting. Parallel LLM or evaluator workers remain future runtime

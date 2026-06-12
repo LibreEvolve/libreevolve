@@ -528,6 +528,9 @@ is not yet an AlphaEvolve reproduction.
   role-scoped final-prompt token counting, and backend context-window metadata
   plus role-level section-packing overclaim guards into selected-backend
   provider-token section packing across all prompt roles and context surfaces.
+  Runtime coverage keeps non-OpenAI/custom exact counters, registry/custom
+  role packing, and retrieval/context/plugin/failure-memory packing readiness
+  false until those surfaces exist.
 - Extend current prompt/history retention controls into replay-retention
   policy and richer context-policy ownership. Mutation prompts, explicit
   context spans, critique prompts/mutations, feedback raw/parsed fields,

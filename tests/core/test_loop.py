@@ -13035,6 +13035,12 @@ def test_runtime_prompt_section_packing_coverage_scopes_non_mutation_roles():
     assert validation["section_packing_role_count"] == 1
     assert validation["ready_role_count"] == 1
     assert validation["missing_role_count"] == 3
+    assert coverage["exact_non_openai_provider_counters_ready"] is False
+    assert coverage["registry_custom_role_section_packing_ready"] is False
+    assert (
+        coverage["retrieval_context_plugin_failure_memory_section_packing_ready"]
+        is False
+    )
 
     overclaim = copy.deepcopy(coverage)
     overclaim["automatic_provider_token_section_packing_complete"] = True
@@ -13046,6 +13052,24 @@ def test_runtime_prompt_section_packing_coverage_scopes_non_mutation_roles():
     assert any(
         issue["code"] == "section_packing_overclaim"
         for issue in invalid["issues"]
+    )
+    surface_overclaim = copy.deepcopy(coverage)
+    surface_overclaim["exact_non_openai_provider_counters_ready"] = True
+    surface_overclaim["registry_custom_role_section_packing_ready"] = True
+    surface_overclaim[
+        "retrieval_context_plugin_failure_memory_section_packing_ready"
+    ] = True
+    surface_overclaim.pop("validation")
+
+    invalid_surface = validate_prompt_section_packing_coverage(surface_overclaim)
+
+    assert invalid_surface["ok"] is False
+    surface_codes = {issue["code"] for issue in invalid_surface["issues"]}
+    assert "exact_non_openai_provider_counters_overclaim" in surface_codes
+    assert "registry_custom_role_section_packing_overclaim" in surface_codes
+    assert (
+        "retrieval_context_plugin_failure_memory_section_packing_overclaim"
+        in surface_codes
     )
 
     role_overclaim = copy.deepcopy(coverage)

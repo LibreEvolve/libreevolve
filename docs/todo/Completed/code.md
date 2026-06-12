@@ -17632,3 +17632,15 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Remaining gap: this does not implement those context-policy controls.
   - Verification: prompt-context policy coverage tests cover forged readiness
     overclaims for all four unsupported surfaces.
+
+- [x] Guard unresolved provider-token section-packing surfaces.
+  - Spec evidence: AlphaEvolve-scale prompt fitting should not infer exact
+    multi-provider or all-role section packing from mutation-only packing.
+  - Status: `runtime.prompt_section_packing` now records false readiness flags
+    for exact non-OpenAI/custom counters, registry/custom role section packing,
+    and retrieval/context/plugin/failure-memory section packing, and validation
+    rejects forged true values.
+  - Remaining gap: selected-backend provider-token section packing across all
+    roles and provider families remains open.
+  - Verification: prompt-section coverage tests cover forged readiness
+    overclaims for those surfaces.

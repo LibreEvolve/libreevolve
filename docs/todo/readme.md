@@ -581,7 +581,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     before final prompt validation, and tests covering mutation diagnostics and
     critique-role final-prompt counter telemetry. Runtime prompt-section
     coverage validation now also rejects complete and role-level overclaims
-    that mark critique, feedback, or meta-prompt as section-packed.
+    that mark critique, feedback, or meta-prompt as section-packed, and keeps
+    non-OpenAI/custom exact counters, registry/custom role section packing, and
+    retrieval/context/plugin/failure-memory section packing readiness false.
   - Required result: when selected-backend provider-token section packing
     covers critique, feedback, meta-prompt, registry-created, custom, and
     retrieval/context/plugin/failure-memory sections across provider families,

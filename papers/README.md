@@ -927,8 +927,10 @@ feedback, meta-prompt, registry-created, and custom roles, while backend
 metadata can derive heuristic prompt-token capacity from `context_window_tokens`
 minus `reserved_output_tokens`. Runtime prompt-section coverage rejects
 complete and role-level provider-token section-packing overclaims for
-critique, feedback, and meta-prompt. The remaining gap is automatic selected-
-backend provider-token section packing across all prompt roles/provider
+critique, feedback, and meta-prompt, while keeping exact non-OpenAI/custom
+counters, registry/custom role packing, and retrieval/context/plugin/failure-
+memory packing readiness false. The remaining gap is automatic selected-backend
+provider-token section packing across all prompt roles/provider
 families and context surfaces, plus context-policy evolution.
 
 Meta-prompt mutation history stores a compact

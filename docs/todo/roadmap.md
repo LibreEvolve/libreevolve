@@ -782,7 +782,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     have deterministic section budgets, and final prompts get role-scoped
     prompt-token cap checks. Runtime prompt-section coverage now rejects
     complete and role-level section-packing overclaims for critique, feedback,
-    and meta-prompt. The remaining gap is automatic provider-token section-
+    and meta-prompt, with explicit false readiness guards for non-OpenAI/custom
+    exact counters, registry/custom roles, and retrieval/context/plugin/
+    failure-memory packing. The remaining gap is automatic provider-token section-
     priority packing outside mutation prompts and exact counters across non-
     OpenAI/custom provider families, not bounded artifact-content rendering
     itself.

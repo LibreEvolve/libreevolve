@@ -2978,8 +2978,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     supports this application without runnable radar fixtures, constraint
     checks, baselines, and metric reports.
 
-- [ ] Keep README EvoX adaptive meta-evolution claims absent or source-scoped
-      until paper and benchmark evidence exists.
+- [ ] Keep README EvoX adaptive meta-evolution claims source-scoped until
+      benchmark evidence exists.
   - Spec evidence: arXiv `2602.23413`, `EvoX: Meta-Evolution for Automated
     Discovery`, says AlphaEvolve-style systems reuse evaluated solutions to
     guide new candidates, but fixed search strategies with predefined
@@ -2987,20 +2987,20 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     candidate solutions and search strategies, dynamically shifting strategy
     choices, and reports outperforming AlphaEvolve, OpenEvolve, GEPA, and
     ShinkaEvolve on the majority of nearly 200 real-world optimization tasks.
-  - Current evidence: README documents LibreEvolve's current implementation
-    boundaries, parent-selection behavior, islands/archive artifacts, and
-    benchmark-report contracts. It does not list `2602.23413`, preserve EvoX
-    paper evidence, expose adaptive strategy genomes, record strategy-credit
-    assignment, or provide benchmark reports comparing fixed mixed 30/70
-    parent selection against EvoX-style adaptive search.
+  - Current evidence: README now lists `2602.23413`, `EvoX`, as adaptive
+    meta-evolution context only and says no local strategy-genome,
+    strategy-credit, or dynamic search-policy benchmark exists. It still does
+    not expose adaptive strategy genomes, record strategy-credit assignment,
+    or provide benchmark reports comparing fixed mixed 30/70 parent selection
+    against EvoX-style adaptive search.
   - Required result: if README mentions EvoX, adaptive evolution, strategy
     self-optimization, dynamic explore/exploit shifting, or comparative wins
     over AlphaEvolve/OpenEvolve/GEPA/ShinkaEvolve, keep the wording
-    source-scoped until the paper is in the manifest and local artifacts can
-    show strategy-state traces, task-suite definitions, baseline identities,
-    ablation reports, token-efficiency data, and benchmark outcomes. Avoid
-    implying LibreEvolve supports EvoX-style meta-evolution without those
-    implementation and report artifacts.
+    source-scoped until local artifacts can show strategy-state traces,
+    task-suite definitions, baseline identities, ablation reports,
+    token-efficiency data, and benchmark outcomes. Avoid implying LibreEvolve
+    supports EvoX-style meta-evolution without those implementation and report
+    artifacts.
 
 - [ ] Keep README DeltaEvolve semantic-delta claims absent or source-scoped
       until paper and benchmark evidence exists.

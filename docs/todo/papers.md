@@ -4569,7 +4569,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     tracking-performance and speedup metrics, code/artifact availability if
     any, and independent verification outputs.
 
-- [ ] Track EvoX adaptive meta-evolution paper evidence.
+- [ ] Reproduce EvoX adaptive meta-evolution evidence beyond paper coverage.
   - Paper/source evidence: arXiv `2602.23413`, submitted February 26, 2026 and
     last revised March 16, 2026, is titled `EvoX: Meta-Evolution for
     Automated Discovery`. Its abstract says AlphaEvolve and related
@@ -4579,20 +4579,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     candidate solutions and the search strategies used to generate them,
     reporting majority-task wins over AlphaEvolve, OpenEvolve, GEPA, and
     ShinkaEvolve across nearly 200 real-world optimization tasks.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2602.23413`. Existing source rows cover AlphaEvolve, selected
-    application papers, follow-on math/problem repositories, and original
-    LibreEvolve fixed-strategy behavior, but not adaptive meta-evolution,
+  - Current gap: the paper manifest, paper index, row-identity manifest, and
+    TODO coverage now include `2602.23413`, cached locally as
+    `papers/2602.23413__EvoX.pdf` with byte count `4626948` and SHA-256
+    `df9c3c8149c650112c1b034f874a458c6ae65bcac05421d1790c3cac7e9d2622`.
+    Existing source rows still do not capture adaptive meta-evolution,
     strategy self-optimization, strategy-state traces, cross-task dynamic
     search-policy adaptation, or benchmark comparisons against EvoX.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2602.23413`: title/authors/arXiv version/date/PDF digest, source license,
-    relation to AlphaEvolve and LibreEvolve fixed mixed parent selection,
-    adaptive strategy representation, controller/provenance artifacts, task
-    taxonomy, baseline method identities, metric definitions, win-rate and
-    token-efficiency claims, ablation evidence, code/artifact availability if
-    any, and README/ROADMAP wording that treats EvoX as missing paper evidence
-    rather than implemented LibreEvolve support.
+  - Required result: add reproduction-grade evidence for `2602.23413`:
+    source-license metadata, relation to AlphaEvolve and LibreEvolve fixed
+    mixed parent selection, adaptive strategy representation,
+    controller/provenance artifacts, task taxonomy, baseline method
+    identities, metric definitions, win-rate and token-efficiency claims,
+    ablation evidence, code/artifact availability if any, and independent
+    verification outputs.
 
 - [ ] Track DeltaEvolve semantic-delta context paper evidence.
   - Paper/source evidence: arXiv `2602.02919`, submitted February 2, 2026, is

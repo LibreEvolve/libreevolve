@@ -12754,3 +12754,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2602.23413` EvoX paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2602.23413`, `EvoX: Meta-Evolution for Automated Discovery`, cached
+    locally as `papers/2602.23413__EvoX.pdf` with byte count `4626948` and
+    SHA-256
+    `df9c3c8149c650112c1b034f874a458c6ae65bcac05421d1790c3cac7e9d2622`.
+  - Remaining paper gap: source-license details, adaptive strategy
+    representation, controller/provenance artifacts, task-suite taxonomy,
+    baseline method identities, metric definitions, win-rate and
+    token-efficiency claims, ablation evidence, code/artifact availability,
+    and independent reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

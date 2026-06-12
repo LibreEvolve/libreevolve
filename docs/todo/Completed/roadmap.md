@@ -764,7 +764,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     URL, and local PDF label describing the same source before version or
     rights evidence attaches.
   - Status: ROADMAP now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 28 cache
+    companion manifest that emits derived source identities for all 29 cache
     rows and links the AlphaEvolve row to `papers/source_versions.json`.
   - Remaining gap: none for this bounded roadmap wording slice.
 
@@ -9788,5 +9788,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     taxonomy, feature schema, transform, simulator, baseline,
     performance-loss/speedup rows, generalization evidence, and independent
     reproduction outputs explicitly open.
-  - Verification: paper-manifest validation checks the 28-row manifest,
+  - Verification: paper-manifest validation checks the current manifest,
+    paper-index row, TODO coverage row, and source-identity sidecar.
+
+- [x] Preserve `2602.23413` EvoX paper-cache scope in roadmap.
+  - Status: ROADMAP now identifies arXiv `2602.23413`, `EvoX:
+    Meta-Evolution for Automated Discovery`, as background meta-evolution
+    context only, with the cached `papers/2602.23413__EvoX.pdf` row and
+    missing adaptive strategy-genome schemas, outer meta-evolution controller
+    state, strategy-credit assignment, dynamic policy-update artifacts,
+    task-suite taxonomy, baseline comparison rows, token-efficiency reports,
+    ablation records, and independent reproduction outputs explicitly open.
+  - Verification: paper-manifest validation checks the 29-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.

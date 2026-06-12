@@ -3424,7 +3424,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     benchmark-fixture status rule so roadmap claims do not outpace local radar
     benchmark support.
 
-- [ ] Add EvoX adaptive meta-evolution gates before roadmap promotion.
+- [ ] Implement EvoX adaptive meta-evolution gates beyond paper cache
+      coverage.
   - Spec evidence: arXiv `2602.23413`, submitted February 26, 2026 and last
     revised March 16, 2026, introduces EvoX as an adaptive evolution method
     that optimizes its own evolution process. The abstract positions
@@ -3433,17 +3434,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     explore/exploit knobs can fail to adapt, and reports EvoX outperforming
     AlphaEvolve, OpenEvolve, GEPA, and ShinkaEvolve on the majority of nearly
     200 real-world optimization tasks.
-  - Current evidence: ROADMAP tracks fixed parent-selection, run manifests,
-    migration/replay gaps, benchmark/report contracts, and later
-    AlphaEvolve-related source gates. It does not mention `2602.23413`, define
-    an adaptive-search source gate, or require local evidence before promoting
-    strategy self-optimization beyond the current fixed mixed 30/70
-    explore/exploit policy and explicit strategy switches.
-  - Required result: add roadmap gates for `2602.23413`: paper/source
-    manifest entry, PDF/cache hash, source-license metadata, adaptive
-    strategy representation, controller-state and strategy-provenance
-    artifacts, task-suite and baseline-method taxonomy, metric definitions,
-    ablation and token-efficiency reports, and a background-only or
+  - Current evidence: ROADMAP, `papers/download_manifest.*`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2602.23413` with local cache hash and background-only status. They still
+    do not require local evidence before promoting strategy self-optimization
+    beyond the current fixed mixed 30/70 explore/exploit policy and explicit
+    strategy switches.
+  - Required result: add roadmap gates beyond the paper cache:
+    source-license metadata, adaptive strategy representation,
+    controller-state and strategy-provenance artifacts, task-suite and
+    baseline-method taxonomy, metric definitions, ablation and
+    token-efficiency reports, independent reproduction outputs, and a
     benchmark-fixture status rule so roadmap claims do not outpace local
     EvoX-style strategy evolution support.
 

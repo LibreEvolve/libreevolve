@@ -1,0 +1,36 @@
+{
+  "schema": "libreevolve.provider_pricing_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_section_id": "2.4",
+  "source_claim": "AlphaEvolve-scale LLM scheduling and budget reports need reproducible cost evidence for the model calls that produced proposals and feedback",
+  "boundary_status": "configured_cost_estimates_without_live_provider_pricing",
+  "pricing_readiness_schema": "libreevolve.llm_provider_pricing_readiness.v1",
+  "diagnostics_schema": "libreevolve.llm_provider_diagnostics.v1",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "backend_cost_usd_per_million_tokens",
+    "provider_usage_total_tokens",
+    "per_call_cost_estimate",
+    "cost_estimate_status",
+    "runtime_configured_cost_accounting",
+    "llm_budget_report_configured_cost",
+    "provider_diagnostics_summary",
+    "pricing_readiness_schema",
+    "configured_pricing_aggregate_checks",
+    "cost_status_reason_checks",
+    "remote_default_rate_overclaim_checks",
+    "backend_default_count_checks",
+    "raw_payload_replay_overclaim_checks",
+    "live_provider_pricing",
+    "provider_default_rate_capture",
+    "account_model_specific_pricing",
+    "raw_provider_payload_replay"
+  ],
+  "missing_evidence": {
+    "live_provider_pricing": "not_recorded_locally",
+    "provider_default_rate_capture": "not_recorded_locally",
+    "account_model_specific_pricing": "not_recorded_locally",
+    "raw_provider_payload_replay": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has configured cost_usd_per_million_tokens backend metadata, provider usage total_tokens, per-call configured cost_estimate records, cost_estimate_status records, runtime configured-cost accounting, LLM budget report configured-cost totals, provider diagnostics summaries, pricing-readiness false fields, configured-pricing aggregate checks, cost-status reason checks, remote default-rate overclaim checks, backend-default count checks, and raw-payload replay overclaim checks. It does not claim live provider pricing, provider default-rate capture, account/model-specific pricing, or raw provider-payload replay."
+}

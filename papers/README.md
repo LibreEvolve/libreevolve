@@ -1335,7 +1335,11 @@ configured request timeouts, API modes, and OpenAI reasoning/API-mode policy;
 provider diagnostics reject remote default/default-rate capture overclaims, but
 remote provider-side defaults and pricing are not inferred. Diagnostics also
 keep live provider pricing, provider default-rate capture, and account/model-
-specific pricing readiness false. Structured
+specific pricing readiness false. The committed
+`papers/provider_pricing_boundary.json` sidecar preserves the configured-cost-
+estimate boundary while keeping live provider pricing, provider default-rate
+capture, account/model-specific pricing, and raw provider-payload replay
+absent. Structured
 system/developer/user prompt roles are serialized as hash-only
 `prompt_role_policy` metadata, not raw instruction text. Endpoint/client context now has an
 explicit validated built-in backend surface for OpenAI `base_url`,
@@ -2249,6 +2253,17 @@ Implemented:
   handles, timeout-driven stop enforcement, cross-run provider quarantine
   resume, richer role-specific timeout artifacts, or provider-output
   raw-payload replay.
+- `papers/provider_pricing_boundary.json`: provider pricing sidecar for
+  AlphaEvolve Section 2.4. It records configured
+  `cost_usd_per_million_tokens` backend metadata, provider usage
+  `total_tokens`, per-call configured `cost_estimate` records,
+  `cost_estimate_status` records, runtime configured-cost accounting, LLM
+  budget report configured-cost totals, provider diagnostics summaries,
+  pricing-readiness false fields, configured-pricing aggregate checks,
+  cost-status reason checks, remote default-rate overclaim checks,
+  backend-default count checks, and raw-payload replay overclaim checks. It is
+  not evidence of live provider pricing, provider default-rate capture,
+  account/model-specific pricing, or raw provider-payload replay.
 - `papers/critique_reviewer_pool_boundary.json`: critique reviewer-pool
   sidecar for AlphaEvolve Sections 2.4 and 2.6. It records configured reviewer
   specs, manifest-safe reviewer names, optional reviewer prompts, reviewer role

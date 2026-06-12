@@ -953,7 +953,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     scopes, remote provider-default/default-rate capture claims, and backend-
     default record counts that exceed retained calls. Diagnostics now also
     expose false pricing-readiness flags for live provider pricing, provider
-    default-rate capture, and account/model-specific pricing.
+    default-rate capture, and account/model-specific pricing. The committed
+    `papers/provider_pricing_boundary.json` sidecar now preserves this
+    configured-cost-estimate boundary for paper-manifest validation.
     Live global token and configured-cost stop
     criteria now exist, and full-runtime restore now pre-applies replayed
     provider-attempt/token/configured-cost/latency controller events to the

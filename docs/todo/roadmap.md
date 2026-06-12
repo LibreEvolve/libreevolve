@@ -1880,7 +1880,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     explicit pricing-readiness overclaims, and backend-default counts that
     exceed retained calls. The roadmap now names live provider pricing/default-
     rate capture beyond configured token-cost estimates and raw provider replay
-    as remaining gaps.
+    as remaining gaps. The committed `papers/provider_pricing_boundary.json`
+    sidecar now preserves this configured-cost-estimate boundary for paper-
+    manifest validation.
   - Required result: when live provider pricing discovery, provider default
     rate capture, or account/model-specific pricing evidence lands, update the
     roadmap, README, papers index, and code/paper TODO entries together so they

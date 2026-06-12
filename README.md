@@ -96,6 +96,10 @@ Important limits:
   accelerator/worker leases, async queue budgets, or equal-budget execution
   reports; that boundary is tracked by
   `papers/expensive_evaluation_budget_boundary.json`.
+- Provider cost evidence is configured token-cost estimates from retained
+  provider usage, not live provider pricing, provider default-rate capture,
+  account/model-specific pricing, or raw provider-payload replay; that boundary
+  is tracked by `papers/provider_pricing_boundary.json`.
 - Provider cancellation records are policy/audit evidence for request
   timeouts, ensemble wait deadlines, artifact gates, and quarantine
   observations, not live provider SDK hard cancellation, timeout-driven stop

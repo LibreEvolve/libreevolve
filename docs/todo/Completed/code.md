@@ -18741,3 +18741,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     semantic documentation-proof overclaims, invalid boundary status, missing
     evidence drift, and incomplete required evidence fields.
+
+- [x] Add provider-pricing sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/provider_pricing_boundary.py`
+    now emits and validates the configured-cost-estimate boundary, separating
+    backend `cost_usd_per_million_tokens` metadata, provider usage
+    `total_tokens`, per-call configured `cost_estimate` records,
+    `cost_estimate_status` records, runtime configured-cost accounting, LLM
+    budget report configured-cost totals, provider diagnostics summaries,
+    pricing-readiness false fields, configured-pricing aggregate checks,
+    cost-status reason checks, remote default-rate overclaim checks,
+    backend-default count checks, and raw-payload replay overclaim checks from
+    live provider pricing, provider default-rate capture, account/model-
+    specific pricing, and raw provider-payload replay.
+  - Verification: focused boundary tests and paper-manifest tests reject live
+    provider-pricing overclaims, invalid boundary status, missing evidence
+    drift, and incomplete required evidence fields.

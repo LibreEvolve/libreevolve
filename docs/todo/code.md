@@ -4276,7 +4276,9 @@ Primary evidence:
     for live provider pricing, provider default-rate capture, and account/model
     specific pricing. It also rejects nested raw-payload replay claims under
     totals or backend records, remote provider-default/default-rate overclaims,
-    and backend-default record counts that exceed retained call counts.
+    and backend-default record counts that exceed retained call counts. The
+    committed `papers/provider_pricing_boundary.json` sidecar now validates
+    this configured-cost-estimate boundary at the paper-manifest layer.
     Focused ensemble tests now cover `throughput_depth` metadata selection,
     normalized depth/cost/latency contribution against the reward scale,
     descriptive breadth/depth role metadata, live role metadata routing,

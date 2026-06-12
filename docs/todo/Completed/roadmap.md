@@ -10604,3 +10604,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     full AlphaEvolve-facing claim proof open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused documentation-truthfulness tests reject semantic proof overclaims.
+
+- [x] Keep roadmap provider-pricing boundary tied to sidecar.
+  - Status: ROADMAP now links current configured-pricing aggregate checks,
+    cost-status reason checks, pricing-readiness false fields, provider
+    usage/configured-cost/latency budget stops, and provider diagnostics to
+    `papers/provider_pricing_boundary.json` while keeping live provider
+    pricing, provider default-rate capture, account/model-specific pricing,
+    and raw provider-payload replay open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused provider-pricing tests reject live-pricing overclaims.

@@ -2879,7 +2879,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     consistency checks in provider diagnostics, raw provider-payload replay
     overclaim checks at summary/totals/backend scopes, remote provider-default
     overclaim checks, explicit pricing-readiness false flags, backend-default
-    count consistency, and restorable scheduler failure-policy state with
+    count consistency, `papers/provider_pricing_boundary.json` for the
+    configured-cost-estimate versus live-pricing boundary, and restorable
+    scheduler failure-policy state with
     role-specific remaining-gap summaries.
     It correctly states that
     `proposals_per_generation`

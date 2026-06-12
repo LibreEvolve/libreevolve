@@ -12837,3 +12837,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     `papers/documentation_truthfulness_boundary.json`.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused documentation-truthfulness tests reject semantic proof overclaims.
+
+- [x] Keep README provider-pricing boundary tied to sidecar.
+  - Status: README now states that provider cost evidence is configured
+    token-cost estimates from retained provider usage, not live provider
+    pricing, provider default-rate capture, account/model-specific pricing, or
+    raw provider-payload replay, with the boundary tracked by
+    `papers/provider_pricing_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused provider-pricing tests reject live-pricing overclaims.

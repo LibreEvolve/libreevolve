@@ -934,7 +934,11 @@ resumed-trace proof are still open.
   replay overclaim checks, remote-default overclaim checks, explicit false
   pricing-readiness fields, and token/cost/latency budget stops to include raw
   provider diagnostics, live provider pricing/default-rate capture beyond
-  configured token-cost estimates, and richer budget-event evidence.
+  configured token-cost estimates, and richer budget-event evidence. The
+  current `papers/provider_pricing_boundary.json` sidecar preserves the
+  configured-cost-estimate boundary while keeping live provider pricing,
+  default-rate capture, account/model-specific pricing, and raw provider
+  payload replay open.
 - Extend the current configurable role/backend consecutive-failure quarantine
   and zero-reward scheduler penalty beyond ensemble-local retry/fallback
   handling, restorable scheduler failure-policy state, and strict ledger

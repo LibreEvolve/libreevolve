@@ -13838,3 +13838,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused documentation-truthfulness tests reject semantic proof
     overclaims.
+
+- [x] Record provider-pricing paper-facing sidecar.
+  - Status: `papers/provider_pricing_boundary.json` now records the configured
+    cost-estimate boundary for AlphaEvolve Section 2.4: runtime evidence can
+    show backend configured token-cost metadata, provider usage token totals,
+    per-call configured cost estimates, cost-estimate status, runtime
+    configured-cost accounting, LLM budget report configured-cost totals,
+    provider diagnostics summaries, pricing-readiness false fields,
+    configured-pricing aggregate checks, cost-status reason checks, remote
+    default-rate overclaim checks, backend-default count checks, and raw-
+    payload replay overclaim checks, while live provider pricing, provider
+    default-rate capture, account/model-specific pricing, and raw provider-
+    payload replay remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused provider-pricing tests reject live-pricing overclaims.

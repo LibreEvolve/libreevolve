@@ -1,0 +1,33 @@
+{
+  "schema": "libreevolve.ci_workflow_coverage_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve-scale engineering evidence should be backed by repeatable validation over code, documentation, paper evidence, packaging, and supported runtime environments",
+  "boundary_status": "path_scoped_ubuntu_workflow_only",
+  "runtime_report_status": "github_actions_workflow_shape_tests_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "workflow_dispatch_trigger",
+    "push_pull_request_path_filters",
+    "secret_scan_job",
+    "python_311_unit_job",
+    "python_312_unit_job",
+    "optional_integration_job",
+    "docs_papers_todo_path_filters",
+    "workflow_shape_unit_tests",
+    "paper_manifest_ci_job",
+    "docs_semantic_claim_verifier",
+    "wheel_sdist_ci_smoke",
+    "cross_platform_ci_matrix",
+    "branch_policy",
+    "notification_policy"
+  ],
+  "missing_evidence": {
+    "paper_manifest_ci_job": "not_recorded_locally",
+    "docs_semantic_claim_verifier": "not_recorded_locally",
+    "wheel_sdist_ci_smoke": "not_recorded_locally",
+    "cross_platform_ci_matrix": "not_recorded_locally",
+    "branch_policy": "not_recorded_locally",
+    "notification_policy": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has a path-scoped GitHub Actions workflow with manual dispatch, push/pull_request path filters, a secret scan job, Python 3.11/3.12 Ubuntu unit jobs, an optional credential-gated integration job, and unit tests that check the workflow shape. It does not claim a CI paper-manifest job, semantic documentation-claim verification, wheel/sdist CI smoke tests, cross-platform CI coverage, branch policy, or notification policy."
+}

@@ -669,7 +669,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `tests/test_agents_docs.py` verifies the required path filters and job
     names, but it does not make CI run every docs/paper-specific verifier,
     wheel/sdist smoke, cross-platform jobs, or richer branch/notification
-    policy.
+    policy. ROADMAP now also points to
+    `papers/ci_workflow_coverage_boundary.json` for the paper-facing
+    path-scoped Ubuntu workflow boundary.
   - Required result: when broader docs/paper validation, release-artifact
     checks, interpreter/platform matrices, branch policy, or notification-safe
     trigger policy lands, update the roadmap, README, papers index, and

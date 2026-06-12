@@ -167,6 +167,12 @@ from libreevolve.problems.benchmarks.candidate_language_runner_boundary import (
     render_candidate_language_runner_boundary_summary,
     validate_candidate_language_runner_boundary,
 )
+from libreevolve.problems.benchmarks.ci_workflow_coverage_boundary import (
+    CI_WORKFLOW_COVERAGE_BOUNDARY_SCHEMA,
+    ci_workflow_coverage_boundary_record,
+    render_ci_workflow_coverage_boundary_summary,
+    validate_ci_workflow_coverage_boundary,
+)
 from libreevolve.problems.benchmarks.causalevolve_boundary import (
     CAUSALEVOLVE_BOUNDARY_SCHEMA,
     causalevolve_boundary_record,
@@ -611,6 +617,7 @@ __all__ = [
     "ARCHAGENT_BOUNDARY_SCHEMA",
     "CANDIDATE_ABSTRACTION_BOUNDARY_SCHEMA",
     "CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_SCHEMA",
+    "CI_WORKFLOW_COVERAGE_BOUNDARY_SCHEMA",
     "CAUSALEVOLVE_BOUNDARY_SCHEMA",
     "CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA",
     "CODEBASE_SCALE_BENCHMARK_BOUNDARY_SCHEMA",
@@ -729,6 +736,7 @@ __all__ = [
     "global_nlp_optimization_boundary_record",
     "candidate_abstraction_boundary_record",
     "candidate_language_runner_boundary_record",
+    "ci_workflow_coverage_boundary_record",
     "causalevolve_boundary_record",
     "certification_artifact_inventory",
     "codebase_scale_benchmark_boundary_record",
@@ -823,6 +831,7 @@ __all__ = [
     "render_global_nlp_optimization_boundary_summary",
     "render_candidate_abstraction_boundary_summary",
     "render_candidate_language_runner_boundary_summary",
+    "render_ci_workflow_coverage_boundary_summary",
     "render_causalevolve_boundary_summary",
     "render_certification_summary",
     "render_codebase_scale_benchmark_boundary_summary",
@@ -929,6 +938,7 @@ __all__ = [
     "validate_global_nlp_optimization_boundary",
     "validate_candidate_abstraction_boundary",
     "validate_candidate_language_runner_boundary",
+    "validate_ci_workflow_coverage_boundary",
     "validate_causalevolve_boundary",
     "validate_certification_evidence_bundle",
     "validate_codebase_scale_benchmark_boundary",

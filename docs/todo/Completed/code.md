@@ -18360,3 +18360,14 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     verified-release overclaims, invalid boundary status, missing evidence
     fields, and release-artifact provenance drift.
+
+- [x] Add CI workflow coverage sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/ci_workflow_coverage_boundary.py`
+    now emits and validates the path-scoped Ubuntu workflow boundary for
+    manual dispatch, push/pull_request path filters, secret scan,
+    Python 3.11/3.12 unit jobs, optional integration tests, and
+    workflow-shape tests; paper-manifest validation requires the committed
+    sidecar at the repo root.
+  - Verification: focused boundary tests and paper-manifest tests reject full
+    CI coverage overclaims, invalid boundary status, missing evidence fields,
+    and cross-platform readiness drift.

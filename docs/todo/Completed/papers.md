@@ -13443,3 +13443,13 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused release-artifact tests reject verified-release
     overclaims.
+
+- [x] Record CI workflow coverage paper-facing sidecar.
+  - Status: `papers/ci_workflow_coverage_boundary.json` now records the
+    path-scoped Ubuntu workflow boundary: manual dispatch, path filters, secret
+    scan, Python 3.11/3.12 unit jobs, optional integration tests, and
+    workflow-shape tests exist, while paper-manifest CI, semantic docs-claim
+    verification, wheel/sdist CI smoke, cross-platform matrices, branch
+    policy, and notification policy remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused CI workflow tests reject full CI coverage overclaims.

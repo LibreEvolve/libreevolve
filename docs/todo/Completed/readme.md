@@ -12589,3 +12589,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     by `papers/release_artifact_reproducibility_boundary.json`.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused release-artifact tests reject verified-release overclaims.
+
+- [x] Keep README CI workflow boundary tied to paper-index sidecar.
+  - Status: README now states that GitHub Actions provide path-scoped Ubuntu
+    validation for secret scanning, Python 3.11/3.12 non-integration tests,
+    and optional credential-gated integration tests, with broader CI coverage
+    tracked by `papers/ci_workflow_coverage_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused CI workflow tests reject full CI coverage overclaims.

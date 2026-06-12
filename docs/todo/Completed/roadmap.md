@@ -10334,3 +10334,11 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     smoke tests, release checklist, and release-artifact provenance open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused release-artifact tests reject verified-release overclaims.
+
+- [x] Keep roadmap CI workflow boundary tied to sidecar.
+  - Status: ROADMAP now links the current path-scoped GitHub Actions workflow
+    to `papers/ci_workflow_coverage_boundary.json`, while keeping broader
+    docs/paper-specific validation, platform coverage, release-artifact checks,
+    branch policy, and notification-safe trigger policy open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused CI workflow tests reject full CI coverage overclaims.

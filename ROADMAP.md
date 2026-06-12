@@ -2078,7 +2078,8 @@ resumed-trace proof are still open.
   Python 3.11/3.12 non-integration tests, optional integration tests, and
   documented paper-manifest commands with broader docs/paper-specific
   validation, more interpreter/platform coverage, and notification-safe trigger
-  and branch policy.
+  and branch policy. The current paper-facing CI boundary is tracked by
+  `papers/ci_workflow_coverage_boundary.json`.
 
 ## Non-Goals For Now
 

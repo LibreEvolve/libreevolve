@@ -1203,7 +1203,13 @@ budget/accounting semantics. The committed
 editable/local-install boundary: wheel/sdist build checks, install-from-wheel
 CLI smoke tests, package-data inclusion checks, release-artifact provenance,
 and release-checklist readiness remain absent.
-budget/accounting evidence. Environment provenance is useful
+The committed `papers/ci_workflow_coverage_boundary.json` sidecar preserves
+the current path-scoped GitHub Actions boundary: manual dispatch,
+push/pull_request path filters, secret scan, Python 3.11/3.12 Ubuntu unit jobs,
+and optional integration tests exist, while CI paper-manifest jobs, semantic
+docs-claim verification, wheel/sdist smoke tests, cross-platform matrices,
+branch policy, and notification policy remain absent.
+Environment provenance is useful
 package name/version, selected and extra `[project]` metadata, known-lockfile
 hash, pip-freeze and pip-config hash/preview, installed-distribution `WHEEL`
 tag and source/install metadata, NumPy config summary, provider SDK-version

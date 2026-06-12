@@ -334,6 +334,12 @@ sidecars, and long-term implementation status belongs in `ROADMAP.md` or
 Before opening a change, run focused tests for touched code and the paper
 manifest check when source-boundary files change.
 
+GitHub Actions currently provide path-scoped Ubuntu validation for secret
+scanning, Python 3.11/3.12 non-integration tests, and optional credential-gated
+integration tests. Broader paper/docs CI, wheel/sdist smoke checks,
+cross-platform matrices, and branch/notification policy are tracked by
+`papers/ci_workflow_coverage_boundary.json`.
+
 The secret scan uses `.secrets.baseline`. If you intentionally add synthetic
 provider-looking tokens in tests or TODO evidence, use a narrow fixture marker
 such as `# pragma: allowlist secret` where appropriate, or regenerate and stage

@@ -113,6 +113,10 @@ from libreevolve.problems.benchmarks.candidate_language_runner_boundary import (
     candidate_language_runner_boundary_record,
     validate_candidate_language_runner_boundary,
 )
+from libreevolve.problems.benchmarks.ci_workflow_coverage_boundary import (
+    ci_workflow_coverage_boundary_record,
+    validate_ci_workflow_coverage_boundary,
+)
 from libreevolve.problems.benchmarks.causalevolve_boundary import (
     causalevolve_boundary_record,
     validate_causalevolve_boundary,
@@ -382,6 +386,7 @@ TASK_SPECIFICATION_BOUNDARY_FILE = "papers/task_specification_boundary.json"
 EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integration_boundary.json"
 CANDIDATE_ABSTRACTION_BOUNDARY_FILE = "papers/candidate_abstraction_boundary.json"
 CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_FILE = "papers/candidate_language_runner_boundary.json"
+CI_WORKFLOW_COVERAGE_BOUNDARY_FILE = "papers/ci_workflow_coverage_boundary.json"
 EVALUATOR_ORACLE_BOUNDARY_FILE = "papers/evaluator_oracle_boundary.json"
 EMBEDDED_EVALUATOR_BOUNDARY_FILE = "papers/embedded_evaluator_boundary.json"
 PROCESS_EXHIBIT_BOUNDARY_FILE = "papers/process_exhibit_boundary.json"
@@ -859,6 +864,7 @@ def validate_paper_manifest(
     issues.extend(_validate_existing_codebase_integration_boundary(root_path))
     issues.extend(_validate_candidate_language_runner_boundary(root_path))
     issues.extend(_validate_candidate_abstraction_boundary(root_path))
+    issues.extend(_validate_ci_workflow_coverage_boundary(root_path))
     issues.extend(_validate_evaluator_oracle_boundary(root_path))
     issues.extend(_validate_embedded_evaluator_boundary(root_path))
     issues.extend(_validate_process_exhibit_boundary(root_path))
@@ -2246,6 +2252,38 @@ def _validate_codebase_scale_benchmark_boundary(root_path: Path) -> list[PaperMa
             f"codebase_scale_benchmark_boundary_{issue.code}",
             issue.message,
             "codebase_scale_benchmark",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_ci_workflow_coverage_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / CI_WORKFLOW_COVERAGE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = ci_workflow_coverage_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "ci_workflow_coverage_boundary_manifest_missing",
+                    (
+                        f"{CI_WORKFLOW_COVERAGE_BOUNDARY_FILE} must emit "
+                        "CI workflow coverage availability"
+                    ),
+                    "ci_workflow_coverage",
+                )
+            ]
+    report = validate_ci_workflow_coverage_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"ci_workflow_coverage_boundary_{issue.code}",
+            issue.message,
+            "ci_workflow_coverage",
         )
         for issue in report.issues
     ]

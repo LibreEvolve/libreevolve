@@ -4730,6 +4730,22 @@ Primary evidence:
     provenance without overclaiming full private-index or remote artifact
     verification.
 
+- [ ] Expand GitHub Actions workflow coverage beyond path-scoped Ubuntu jobs.
+  - Spec evidence: AlphaEvolve-scale engineering claims should be supported by
+    repeatable validation over source code, docs, paper evidence, packaging,
+    and supported runtime environments.
+  - Current evidence: `.github/workflows/tests.yml` has manual dispatch,
+    path-scoped `push` and `pull_request` triggers, a secret-scan job, Python
+    3.11/3.12 Ubuntu non-integration tests, and an optional
+    credential-gated integration job. `tests/test_agents_docs.py` verifies
+    required path filters and job names. The committed
+    `papers/ci_workflow_coverage_boundary.json` sidecar now preserves this
+    path-scoped Ubuntu workflow boundary.
+  - Required result: add broader docs/paper-specific CI validation,
+    paper-manifest CI commands, wheel/sdist smoke checks, interpreter/platform
+    matrices, branch policy, and notification-safe trigger policy before
+    treating CI as AlphaEvolve-grade validation coverage.
+
 - [ ] Add replayable external build, package-source, and accelerator environment evidence.
   - Spec evidence: AlphaEvolve-scale experiments should be reproducible across
     long-running evaluator environments, including external build steps,

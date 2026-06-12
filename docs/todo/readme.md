@@ -565,6 +565,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     editable/local CLI use nor overclaims verified release-distribution
     reproducibility.
 
+- [ ] Keep README CI wording scoped to path-scoped Ubuntu validation.
+  - Spec evidence: AlphaEvolve-scale engineering claims should be supported by
+    repeatable validation across code, docs, paper evidence, packaging, and
+    supported runtime environments.
+  - Current evidence: README now states that GitHub Actions provide
+    path-scoped Ubuntu validation for secret scanning, Python 3.11/3.12
+    non-integration tests, and optional credential-gated integration tests.
+    `.github/workflows/tests.yml` has manual dispatch plus path-scoped
+    `push`/`pull_request` triggers, and `tests/test_agents_docs.py` verifies
+    required path filters and job names. README now also points to
+    `papers/ci_workflow_coverage_boundary.json` for the paper-facing CI
+    coverage boundary.
+  - Required result: when paper/docs CI jobs, release-artifact checks,
+    interpreter/platform matrices, branch policy, or notification-safe trigger
+    policy land, update README, ROADMAP, papers index, and code/paper TODOs
+    together so README neither underclaims the current workflow nor overclaims
+    full AlphaEvolve-grade CI coverage.
+
 - [ ] Keep README `show` and run-inspection wording scoped to selected-row
   display plus streamed-row validation.
   - Spec evidence: AlphaEvolve-scale runs need auditable generated-program

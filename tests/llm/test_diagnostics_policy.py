@@ -93,6 +93,34 @@ def test_llm_provider_diagnostics_summary_rejects_live_pricing_overclaim():
     assert "live_pricing_not_supported" in codes
 
 
+def test_llm_provider_diagnostics_summary_rejects_configured_pricing_drift():
+    summary = _summary()
+    summary["totals"]["configured_pricing_estimate_count"] = 1
+    summary["backends"][0]["configured_pricing_estimate_count"] = 1
+    summary["records_sha256"] = _hash_backends(summary)
+
+    validation = validate_llm_provider_diagnostics_summary(summary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.live_pricing_ready is False
+    assert "configured_pricing_count_exceeds_cost_estimates" in codes
+
+
+def test_llm_provider_diagnostics_summary_rejects_cost_reason_drift():
+    summary = _summary()
+    summary["backends"][0]["cost_status_reasons"] = {
+        "missing_configured_backend_cost_rate": 0,
+    }
+    summary["records_sha256"] = _hash_backends(summary)
+
+    validation = validate_llm_provider_diagnostics_summary(summary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "not_estimated_reason_count_mismatch" in codes
+
+
 def test_llm_provider_diagnostics_summary_rejects_count_and_hash_mismatches():
     summary = copy.deepcopy(_summary())
     summary["backend_count"] = 2

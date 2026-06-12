@@ -1766,8 +1766,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `cost_usd_per_million_tokens`, provider usage `total_tokens` feeds
     configured `cost_estimate` records, runtime accounting accumulates
     configured cost, and diagnostics explicitly mark live pricing as
-    not fetched. The roadmap now names live provider pricing/default-rate
-    capture beyond configured token-cost estimates as the remaining gap.
+    not fetched. Provider diagnostics now also reject configured-pricing count
+    drift and cost-status reason drift so aggregate summaries cannot imply
+    more configured pricing evidence than retained call rows support. The
+    roadmap now names live provider pricing/default-rate capture beyond
+    configured token-cost estimates as the remaining gap.
   - Required result: when live provider pricing discovery, provider default
     rate capture, or account/model-specific pricing evidence lands, update the
     roadmap, README, papers index, and code/paper TODO entries together so they

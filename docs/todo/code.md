@@ -4137,10 +4137,11 @@ Primary evidence:
     redaction/truncation counts, provider-diagnostic item/key counts, omitted
     diagnostic counts, configured cost-estimate/not-estimated counts,
     backend-default API-mode counts, call history retention, a records hash,
-    and explicit limitations that this is retained-history-only, configured
-    response/error text retention, bounded scalar diagnostics rather than full
-    provider-native payloads, and configured estimates rather than live
-    pricing.
+    configured-pricing aggregate consistency checks, cost-status reason
+    consistency checks, and explicit limitations that this is retained-history-
+    only, configured response/error text retention, bounded scalar diagnostics
+    rather than full provider-native payloads, and configured estimates rather
+    than live pricing.
     `validate_provider_capability_lookup_policy()` now validates
     `libreevolve.provider_capability_lookup_policy.v1` records for static-only
     provider lookup boundaries, required local validation checks, OpenAI

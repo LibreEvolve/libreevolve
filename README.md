@@ -1890,10 +1890,14 @@ pricing estimate. When provider usage metadata includes `total_tokens`,
 backend metadata, that the token count came from provider usage metadata, and
 that the estimate is not live provider pricing. Each call also records
 `cost_estimate_status`, including bounded not-estimated reasons such as a
-missing configured rate or missing provider token total. Omitted rates keep cost
-usage at zero and do not imply free provider calls. `max_llm_cost_microusd` can
-stop runs from that configured estimate, but LibreEvolve still does not fetch
-live provider pricing or provider default rates.
+missing configured rate or missing provider token total.
+`runtime.llm_provider_diagnostics` validates configured-pricing aggregate
+consistency: configured-pricing counts cannot exceed cost-estimate counts,
+estimated reason counts must match configured estimates, and not-estimated
+reason counts must match not-estimated cost rows. Omitted rates keep cost usage
+at zero and do not imply free provider calls. `max_llm_cost_microusd` can stop
+runs from that configured estimate, but LibreEvolve still does not fetch live
+provider pricing or provider default rates.
 Built-in OpenAI, Anthropic, and Ollama backend specs also accept positive
 `timeout_sec`, which is forwarded to provider client construction as a request
 timeout. Run-level `llm_call_timeout_sec` adds an ensemble deadline around

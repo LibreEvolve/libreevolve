@@ -17516,3 +17516,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     downstream synthesis rediscovery audit artifacts.
   - Verification: systems-result regression tests cover missing ready
     provenance and malformed contribution-attribution metadata.
+
+- [x] Validate configured-pricing diagnostics boundaries.
+  - Spec evidence: AlphaEvolve-scale provider accounting needs auditable cost
+    evidence, while configured local rates are not live provider pricing.
+  - Status: `validate_llm_provider_diagnostics_summary()` now rejects
+    configured-pricing count drift and cost-status reason drift in retained
+    provider diagnostics summaries. Configured-pricing estimate counts cannot
+    exceed cost-estimate rows, estimated reason counts must match configured
+    estimates, and not-estimated reason counts must match not-estimated cost
+    rows.
+  - Remaining gap: live provider pricing discovery, provider default-rate
+    capture, account/model-specific pricing evidence, and raw provider payload
+    replay remain open.
+  - Verification: diagnostics-policy tests cover configured-pricing count
+    drift and cost-status reason drift.

@@ -850,6 +850,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     token-count source, and explicitly avoid claiming live provider pricing.
     Per-call `cost_estimate_status` records now preserve not-estimated reasons
     for missing configured rates or missing/invalid provider token totals.
+    Provider diagnostics now reject configured-pricing count drift and
+    cost-status reason drift so aggregate summaries cannot imply pricing
+    evidence unsupported by retained call rows.
     Live global token and configured-cost stop
     criteria now exist, and full-runtime restore now pre-applies replayed
     provider-attempt/token/configured-cost/latency controller events to the

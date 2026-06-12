@@ -9268,3 +9268,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     remain open.
   - Verification: systems-result regression tests validate the implemented
     provenance requirement.
+
+- [x] Preserve configured-pricing diagnostics boundary.
+  - Spec evidence: roadmap provider-pricing claims need to distinguish
+    configured local cost estimates from live provider pricing and provider
+    default-rate capture.
+  - Status: ROADMAP and TODO wording now recognize stricter configured-pricing
+    diagnostics consistency checks while keeping live/default pricing open.
+  - Verification: diagnostics-policy tests validate configured-pricing count
+    and reason-count boundaries.

@@ -11738,3 +11738,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     distinction, confirmation flags, and artifact refs.
   - Verification: systems-result regression tests validate the documented
     report contract.
+
+- [x] Document configured-pricing diagnostics boundaries.
+  - Spec evidence: README provider-cost wording needed to distinguish
+    configured backend cost estimates from live/default provider pricing.
+  - Status: README and TODO wording now state that provider diagnostics reject
+    configured-pricing aggregate drift and cost-status reason drift while still
+    marking live/default provider pricing as absent.
+  - Verification: diagnostics-policy tests validate the documented boundary.

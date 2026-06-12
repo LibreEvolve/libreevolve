@@ -149,6 +149,7 @@ def validate_llm_provider_diagnostics_summary(
     _validate_limitations(data.get("limitations"), issues)
     _validate_no_raw_payload_claims(data, issues)
     _validate_live_pricing_boundary(totals, backends, issues)
+    _validate_configured_pricing_boundary(totals, backends, issues)
     if totals is not None:
         _validate_totals_match_backends(totals, backends, issues)
     return LLMProviderDiagnosticsValidation(
@@ -466,6 +467,68 @@ def _validate_live_pricing_boundary(
                 "current diagnostics policy must not claim live pricing records",
             )
         )
+
+
+def _validate_configured_pricing_boundary(
+    totals: dict[str, Any] | None,
+    backends: list[dict[str, Any]],
+    issues: list[LLMProviderDiagnosticsIssue],
+) -> None:
+    records = [item for item in backends]
+    if totals is not None:
+        records.append(totals)
+    for index, record in enumerate(records):
+        scope = "totals" if record is totals else f"backend[{index}]"
+        cost_count = record.get("cost_estimate_count")
+        configured_count = record.get("configured_pricing_estimate_count")
+        not_estimated_count = record.get("cost_not_estimated_count")
+        reasons = record.get("cost_status_reasons")
+        if (
+            isinstance(cost_count, int)
+            and not isinstance(cost_count, bool)
+            and isinstance(configured_count, int)
+            and not isinstance(configured_count, bool)
+            and configured_count > cost_count
+        ):
+            issues.append(
+                LLMProviderDiagnosticsIssue(
+                    "configured_pricing_count_exceeds_cost_estimates",
+                    f"{scope}.configured_pricing_estimate_count cannot exceed cost_estimate_count",
+                )
+            )
+        if isinstance(reasons, dict):
+            estimated_reason_count = reasons.get(
+                "estimated_from_configured_rate_and_provider_total_tokens", 0
+            )
+            if (
+                isinstance(estimated_reason_count, int)
+                and not isinstance(estimated_reason_count, bool)
+                and isinstance(configured_count, int)
+                and not isinstance(configured_count, bool)
+                and estimated_reason_count != configured_count
+            ):
+                issues.append(
+                    LLMProviderDiagnosticsIssue(
+                        "configured_pricing_reason_count_mismatch",
+                        f"{scope}.cost_status_reasons estimated count must match configured pricing estimates",
+                    )
+                )
+            if isinstance(not_estimated_count, int) and not isinstance(
+                not_estimated_count, bool
+            ):
+                not_estimated_reasons = 0
+                for reason, count in reasons.items():
+                    if reason == "estimated_from_configured_rate_and_provider_total_tokens":
+                        continue
+                    if isinstance(count, int) and not isinstance(count, bool):
+                        not_estimated_reasons += count
+                if not_estimated_reasons != not_estimated_count:
+                    issues.append(
+                        LLMProviderDiagnosticsIssue(
+                            "not_estimated_reason_count_mismatch",
+                            f"{scope}.cost_status_reasons not-estimated counts must match cost_not_estimated_count",
+                        )
+                    )
 
 
 def _expect(

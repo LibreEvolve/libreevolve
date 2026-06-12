@@ -12119,3 +12119,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     milestone records, hardware signoff files, or rediscovery-audit artifacts.
   - Verification: systems-result regression tests validate missing and
     malformed contribution-attribution provenance cases.
+
+- [x] Record configured-pricing diagnostics boundary.
+  - Spec evidence: AlphaEvolve-scale cost and budget claims need provider-cost
+    evidence that remains distinct from configured local estimates.
+  - Status: paper-facing TODOs and diagnostics validators now reject
+    configured-pricing count drift and cost-status reason drift in provider
+    diagnostics summaries.
+  - Remaining paper gap: this does not fetch live provider pricing, capture
+    provider default rates, prove account/model-specific pricing, or replay raw
+    provider payloads.
+  - Verification: diagnostics-policy tests validate configured-pricing count
+    and reason-count boundaries.

@@ -2749,10 +2749,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     provider-attempt/token/configured-cost/latency stops, restorable runtime
     budget snapshots, `controller_budget_events.jsonl` replay, and
     full-runtime restore validation. It also documents strict call-ledger
-    provider-failure summaries and restorable scheduler failure-policy state,
-    and it correctly states that `proposals_per_generation` is sequential
-    batch sampling/accounting rather than parallel LLM/evaluator execution.
-    while still marking live provider pricing/default-rate capture beyond
+    provider-failure summaries, configured-pricing aggregate/reason
+    consistency checks in provider diagnostics, and restorable scheduler
+    failure-policy state. It correctly states that `proposals_per_generation`
+    is sequential batch sampling/accounting rather than parallel LLM/evaluator
+    execution. It still marks live provider pricing/default-rate capture beyond
     configured estimates, provider-output/raw-payload replay, cross-run
     provider-failure policy proof, async/pending-work budget composition, and
     mutation-chain-depth policy for slow evaluator feedback as open.

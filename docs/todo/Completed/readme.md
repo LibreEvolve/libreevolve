@@ -12773,3 +12773,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     tracked by `papers/expensive_evaluation_budget_boundary.json`.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused expensive-evaluation budget tests reject compute-hour overclaims.
+
+- [x] Keep README LLM role-scheduler boundary tied to sidecar.
+  - Status: README now states that role-scoped LLM scheduling is opt-in local
+    UCB/runtime evidence with reward-accounted roles, role budget maps,
+    scheduler-state snapshots, and per-call policy telemetry, not calibrated
+    AlphaEvolve role reward policy, experiment-owned quota policy,
+    fast/strong model-mix reports, or role-specific budget behavior reports,
+    with the boundary tracked by `papers/llm_role_scheduler_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused LLM role-scheduler tests reject calibrated scheduler overclaims.

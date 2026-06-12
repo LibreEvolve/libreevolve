@@ -915,7 +915,12 @@ resumed-trace proof are still open.
   selection state, configured reward-accounted role selection, role-scoped
   backend eligibility, logical call caps, and role budget maps into calibrated
   reward signals, quota ownership, and budget policy for mutation generation,
-  critique, feedback grading, and meta-prompt mutation calls.
+  critique, feedback grading, and meta-prompt mutation calls. The current
+  sidecar `papers/llm_role_scheduler_boundary.json` preserves the local
+  role-scoped UCB/runtime evidence boundary while keeping calibrated role
+  reward policy, experiment-owned quota policy, fast/strong model-mix reports,
+  resume replay experiment reports, and role-specific budget behavior reports
+  open.
 - Extend current run-scoped call telemetry beyond provider usage, configured
   cost estimates, request ids, finish reasons, adapter-internal retry
   summaries, configured-pricing aggregate consistency checks, raw-payload

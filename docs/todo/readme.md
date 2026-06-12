@@ -2704,7 +2704,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `throughput_depth_lane_evidence` as a metadata trace with fast-breadth/
     strong-depth labels and `claim_ready: false`. README should likewise avoid
     implying that backend metadata or `throughput_depth` unit coverage proves a
-    Flash/Pro-style fast-breadth plus strong-depth scheduling policy.
+    Flash/Pro-style fast-breadth plus strong-depth scheduling policy. README
+    now points to `papers/llm_role_scheduler_boundary.json`, which preserves
+    the local role-scoped scheduler boundary without claiming calibrated
+    AlphaEvolve role reward policy.
   - Required result: once calibrated reward semantics, quota/budget ownership,
     and experiment-backed fast/
     strong model-mix scheduling land, update the README and matching

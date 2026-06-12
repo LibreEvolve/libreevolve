@@ -18647,3 +18647,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     compute-hour budget overclaims, invalid boundary status, missing evidence
     drift, and incomplete required evidence fields.
+
+- [x] Add LLM role-scheduler sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/llm_role_scheduler_boundary.py`
+    now emits and validates the local role-scoped scheduler boundary,
+    separating configured role-backend routing, backend metadata matching,
+    reward-accounted roles, feedback reward wiring, per-role logical-call and
+    provider/token/configured-cost/latency budget maps, per-call scheduler
+    policy telemetry, opt-in role-scoped local UCB selection, scheduler-state
+    snapshots, restore validation, runtime LLM accounting summaries, and LLM
+    budget report role budgets from calibrated role reward policy,
+    experiment-owned quota policy, fast/strong model-mix reports, resume
+    replay experiment reports, and role-specific budget behavior reports.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    calibrated AlphaEvolve role-scheduler overclaims, invalid boundary status,
+    missing evidence drift, and incomplete required evidence fields.

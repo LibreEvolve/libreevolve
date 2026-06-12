@@ -350,7 +350,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     telemetry now also records reward-accounted versus telemetry-only role
     status, the bounded local reward contract, matching pre-selection logical
     call quota scopes, and whether selection reads global, role-owned, or no
-    reward state.
+    reward state. The committed `papers/llm_role_scheduler_boundary.json`
+    sidecar now preserves this local role-scoped UCB/runtime evidence boundary
+    for paper-manifest validation.
   - Current gap: role-scoped selection and per-call policy telemetry are local
     UCB/runtime contracts, not a calibrated AlphaEvolve scheduler:
     role-specific reward calibration, experiment-owned quota policy,

@@ -4408,7 +4408,9 @@ Primary evidence:
     `scheduler_policy` now records reward-accounted versus telemetry-only role
     status, the bounded local `LLMEnsemble.record_reward()` contract, matching
     pre-selection logical-call quota scopes, and whether selection reads global
-    scheduler state, role-owned scheduler state, or no reward state.
+    scheduler state, role-owned scheduler state, or no reward state. The
+    committed `papers/llm_role_scheduler_boundary.json` sidecar now validates
+    this local role-scoped scheduler boundary at the paper-manifest layer.
   - Remaining gap: role-scoped selection still shares the global exploration
     coefficient and backend set unless role routing narrows it, and the new
     policy fields are local runtime contracts rather than role-specific reward

@@ -10541,3 +10541,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     benchmark execution reports open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused expensive-evaluation budget tests reject compute-hour overclaims.
+
+- [x] Keep roadmap LLM role-scheduler boundary tied to sidecar.
+  - Status: ROADMAP now links opt-in role-scoped local UCB selection,
+    configured reward-accounted roles, role-scoped backend eligibility,
+    logical call caps, role budget maps, scheduler-state snapshots, and
+    per-call policy telemetry to `papers/llm_role_scheduler_boundary.json`
+    while keeping calibrated role reward policy, experiment-owned quota
+    policy, fast/strong model-mix reports, resume replay experiment reports,
+    and role-specific budget behavior reports open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused LLM role-scheduler tests reject calibrated scheduler overclaims.

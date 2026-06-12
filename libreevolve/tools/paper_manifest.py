@@ -67,6 +67,10 @@ from libreevolve.problems.benchmarks.qualitative_feedback_boundary import (
     qualitative_feedback_boundary_record,
     validate_qualitative_feedback_boundary,
 )
+from libreevolve.problems.benchmarks.llm_role_scheduler_boundary import (
+    llm_role_scheduler_boundary_record,
+    validate_llm_role_scheduler_boundary,
+)
 from libreevolve.problems.benchmarks.release_artifact_reproducibility_boundary import (
     release_artifact_reproducibility_boundary_record,
     validate_release_artifact_reproducibility_boundary,
@@ -463,6 +467,7 @@ COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_FILE = "papers/collaborator_feedback_p
 PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_FILE = "papers/problem_formulation_provenance_boundary.json"
 PROGRAMMATIC_REPRESENTATION_BOUNDARY_FILE = "papers/programmatic_representation_boundary.json"
 QUALITATIVE_FEEDBACK_BOUNDARY_FILE = "papers/qualitative_feedback_boundary.json"
+LLM_ROLE_SCHEDULER_BOUNDARY_FILE = "papers/llm_role_scheduler_boundary.json"
 RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_FILE = "papers/release_artifact_reproducibility_boundary.json"
 RELATED_WORK_TAXONOMY_BOUNDARY_FILE = "papers/related_work_taxonomy_boundary.json"
 TASK_SPECIFICATION_BOUNDARY_FILE = "papers/task_specification_boundary.json"
@@ -961,6 +966,7 @@ def validate_paper_manifest(
     issues.extend(_validate_problem_formulation_provenance_boundary(root_path))
     issues.extend(_validate_programmatic_representation_boundary(root_path))
     issues.extend(_validate_qualitative_feedback_boundary(root_path))
+    issues.extend(_validate_llm_role_scheduler_boundary(root_path))
     issues.extend(_validate_release_artifact_reproducibility_boundary(root_path))
     issues.extend(_validate_related_work_taxonomy_boundary(root_path))
     issues.extend(_validate_task_specification_boundary(root_path))
@@ -1988,6 +1994,38 @@ def _validate_qualitative_feedback_boundary(root_path: Path) -> list[PaperManife
             f"qualitative_feedback_boundary_{issue.code}",
             issue.message,
             "qualitative_feedback",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_llm_role_scheduler_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / LLM_ROLE_SCHEDULER_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = llm_role_scheduler_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "llm_role_scheduler_boundary_manifest_missing",
+                    (
+                        f"{LLM_ROLE_SCHEDULER_BOUNDARY_FILE} must emit "
+                        "role-scoped scheduler evidence versus calibrated policy scope"
+                    ),
+                    "llm_role_scheduler",
+                )
+            ]
+    report = validate_llm_role_scheduler_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"llm_role_scheduler_boundary_{issue.code}",
+            issue.message,
+            "llm_role_scheduler",
         )
         for issue in report.issues
     ]

@@ -13741,3 +13741,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused expensive-evaluation budget tests reject compute-hour
     overclaims.
+
+- [x] Record LLM role-scheduler paper-facing sidecar.
+  - Status: `papers/llm_role_scheduler_boundary.json` now records the local
+    role-scoped scheduler boundary for AlphaEvolve Sections 2.1 and 2.6:
+    runtime evidence can show configured role-backend routing, backend
+    metadata role matching, configured reward-accounted roles, feedback reward
+    wiring, per-role logical call and provider/token/configured-cost/latency
+    budgets, scheduler policy telemetry, opt-in role-scoped local UCB
+    selection, scheduler snapshots, restore validation, runtime LLM accounting
+    summaries, and LLM budget report role budgets, while calibrated role
+    reward policy, experiment-owned quota policy, fast/strong model-mix
+    reports, resume replay experiment reports, and role-specific budget
+    behavior reports remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused LLM role-scheduler tests reject calibrated scheduler
+    overclaims.

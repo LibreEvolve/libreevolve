@@ -946,9 +946,12 @@ reward-accounted role policy. Successful feedback grader records now include
 `scheduler_reward`, using normalized feedback score as scheduler reward when
 the exact feedback role is reward-accounted. These are audit summaries; live
 provider-attempt/token/configured-cost/latency stop checks now exist, but live
-provider pricing/default-rate capture beyond configured estimates, full async worker accounting, independent per-role
-live scheduler state, calibrated reward semantics, and quota/budget ownership
-beyond role-scoped backend eligibility and role budget maps remain open. Live
+provider pricing/default-rate capture beyond configured estimates, full async
+worker accounting, calibrated reward semantics, and experiment-owned
+quota/budget policy beyond opt-in role-scoped local UCB selection and role
+budget maps remain open. The static sidecar
+`papers/llm_role_scheduler_boundary.json` preserves that role-scheduler
+evidence boundary. Live
 synchronous budget deltas are now also persisted as contiguous
 `controller_budget_events.jsonl` rows for seed evaluations, generation
 lifecycle events, LLM calls, candidate evaluations, and terminal stop reasons.
@@ -2183,6 +2186,16 @@ Implemented:
   budget-event logs are wired, while queued/running async or pending-work
   budget consumption inside `evolve()`, provider-output replay composition, and
   hard provider cancellation remain open.
+- `papers/llm_role_scheduler_boundary.json`: LLM role-scheduler sidecar for
+  AlphaEvolve Sections 2.1 and 2.6. It records configured role-backend
+  routing, backend metadata role matching, reward-accounted roles, feedback
+  reward wiring, role logical-call/provider/token/configured-cost/latency
+  budget maps, per-call scheduler policy telemetry, opt-in role-scoped local
+  UCB selection, role scheduler snapshots, restore validation, runtime LLM
+  accounting summaries, and LLM budget report role budgets. It is not evidence
+  of calibrated role reward policy, experiment-owned quota policy,
+  fast/strong model-mix reports, resume replay experiment reports, or
+  role-specific budget behavior reports.
 - `libreevolve/llm/cancellation_policy.py`: provider timeout/cancellation
   policy contract. It validates timeout/cancellation rules, role-scoped budget
   actions, artifact requirements, hard-cancel readiness gated on

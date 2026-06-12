@@ -1557,7 +1557,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     reward-accounted versus telemetry-only roles, the bounded local reward
     contract, matching quota scopes, and scheduler-state ownership, while
     keeping calibrated reward signals, experiment-owned quotas, and
-    AlphaEvolve-style budget policy open.
+    AlphaEvolve-style budget policy open. The roadmap now also points to
+    `papers/llm_role_scheduler_boundary.json`, which preserves this local
+    role-scoped UCB/runtime boundary for manifest validation.
   - Required result: when calibrated per-role scheduler policy lands, update
     the roadmap, README, papers index, and code/paper TODO entries together so
     they neither underclaim current role-owned selection state nor overclaim

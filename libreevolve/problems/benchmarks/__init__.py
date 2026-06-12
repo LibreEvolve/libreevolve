@@ -125,6 +125,12 @@ from libreevolve.problems.benchmarks.qualitative_feedback_boundary import (
     render_qualitative_feedback_boundary_summary,
     validate_qualitative_feedback_boundary,
 )
+from libreevolve.problems.benchmarks.llm_role_scheduler_boundary import (
+    LLM_ROLE_SCHEDULER_BOUNDARY_SCHEMA,
+    llm_role_scheduler_boundary_record,
+    render_llm_role_scheduler_boundary_summary,
+    validate_llm_role_scheduler_boundary,
+)
 from libreevolve.problems.benchmarks.release_artifact_reproducibility_boundary import (
     RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_SCHEMA,
     release_artifact_reproducibility_boundary_record,
@@ -902,6 +908,7 @@ __all__ = [
     "initial_program_idea_provenance_boundary_record",
     "initial_program_validity_boundary_record",
     "improvevolve_boundary_record",
+    "llm_role_scheduler_boundary_record",
     "madevolve_boundary_record",
     "magellan_boundary_record",
     "map_elites_descriptor_boundary_record",
@@ -1023,6 +1030,7 @@ __all__ = [
     "render_initial_program_idea_provenance_boundary_summary",
     "render_initial_program_validity_boundary_summary",
     "render_improvevolve_boundary_summary",
+    "render_llm_role_scheduler_boundary_summary",
     "render_madevolve_boundary_summary",
     "render_magellan_boundary_summary",
     "render_metric_diverse_prompt_boundary_summary",
@@ -1149,6 +1157,7 @@ __all__ = [
     "validate_initial_program_idea_provenance_boundary",
     "validate_initial_program_validity_boundary",
     "validate_improvevolve_boundary",
+    "validate_llm_role_scheduler_boundary",
     "validate_madevolve_boundary",
     "validate_magellan_boundary",
     "validate_metric_diverse_prompt_boundary",

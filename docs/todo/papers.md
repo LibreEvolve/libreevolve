@@ -5426,7 +5426,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     2024, Exoo/Tatarevic 2015, Exoo 2006, Tatarevic 2020, Exoo 2012,
     Harborth/Krause 2003, and graph-only or personal-communication sources.
 
-- [ ] Track AlphaEvolve local-correction combinatorics paper evidence.
+- [ ] Implement AlphaEvolve local-correction combinatorics paper evidence
+      beyond source boundary.
   - Paper/source evidence: arXiv `2603.06692`, submitted March 4, 2026, is
     titled `Evolving Local Corrections for Global Constructions in
     Combinatorics`. Its abstract says AlphaEvolve is used as an experimental
@@ -5446,10 +5447,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     Alon-Tarsi section reports Tables 1-3 for orders `8,10,12,14,26`; and the
     Rota section reports Tables 4-6 for circuit-rich `F2` rank-5, rank-7, and
     variable-rank `5,7,9,11,13` benchmarks.
-  - Current gap: `papers/README.md` lists `2603.06692` as `Not implemented;
-    potential future benchmark`, but the current implementation and paper
-    index do not yet provide local source-boundary artifacts or implementation
-    evidence for this paper. Broad constructive-math TODOs do not
+  - Current gap: `papers/combinatorics_berczy_boundary.json` now records the
+    source-specific boundary for this paper: title/author, arXiv version/date,
+    cached-PDF digest, license, reference-only source link, reported result
+    surfaces, component ids, required evidence fields, and missing local
+    harness/artifact evidence. Broad constructive-math TODOs still do not
     capture local-correction certificate schemas, graph reconstruction from
     vertex-deleted subgraphs, Latin-square local trade/involution evidence,
     Rota basis-exchange policies, scoring protocols, explicit algorithm
@@ -5461,11 +5463,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     bias and isotopy anti-overfitting metrics, Rota insert/repair move
     formalism, circuit-oracle limitations, majority-rollout success, and
     appendix evolved-code/Gemini-summary provenance.
-  - Required result: add paper-manifest and paper-index coverage updates for
-    `2603.06692`: title/author/arXiv version/date/PDF digest, source license,
-    code/artifact URL/status, relation to AlphaEvolve and LibreEvolve
-    constructive-math assumptions, local-correction certificate schemas,
-    finite-step trace artifacts, graph/Latin-square/Rota case-study metadata,
+  - Required result: add executable paper/report evidence for `2603.06692`:
+    local-correction certificate schemas, finite-step trace artifacts,
+    graph/Latin-square/Rota case-study metadata,
     scoring protocol records, seed/budget records, explicit generated
     algorithms, structural-pattern summaries, conjecture statements,
     proof-status and traditional-analysis handoff fields, checker/verifier

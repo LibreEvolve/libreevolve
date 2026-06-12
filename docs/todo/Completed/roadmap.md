@@ -2,6 +2,15 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Preserve Berczy local-correction combinatorics `2603.06692` boundary
+      scope in roadmap.
+  - Evidence: `ROADMAP.md` adds `papers/combinatorics_berczy_boundary.json`
+    to the inspired/application-context source-boundary list and keeps
+    Berczy-style local-correction combinatorics unpromoted until graph
+    reconstruction, Latin-square involution, Rota-basis exchange, certificate
+    schemas, symmetry-scramble records, result rows, artifacts, and
+    independent-verifier evidence exist.
+
 - [x] Preserve Ramsey Numbers `2603.09172` boundary scope in roadmap.
   - Evidence: `ROADMAP.md` adds `papers/ramsey_numbers_boundary.json` to the
     inspired/application-context source-boundary list and keeps Ramsey-number

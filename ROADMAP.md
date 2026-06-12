@@ -624,7 +624,8 @@ is not yet an AlphaEvolve reproduction.
   not OS/container sandbox or quota enforcement.
 - Continue labeling CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve,
   GigaEvo, CodeEvolve, MadEvolve, Magellan, ArchAgent, Multiagent Learning,
-  and Ramsey Numbers features as inspired, candidate benchmark, or
+  Ramsey Numbers, and Berczy local-correction combinatorics features as
+  inspired, candidate benchmark, or
   application context unless paper behavior is actually implemented. The committed
   `papers/gigaevo_framework_boundary.json`
   sidecar records the GigaEvo source-specific boundary for Redis lifecycle
@@ -692,6 +693,13 @@ is not yet an AlphaEvolve reproduction.
   new/matched/exact lower-bound rows, Google Research construction/code links,
   graph and algorithm artifact hashes, initialization-family records,
   graph-size-to-lower-bound semantics, and independent checker outputs.
+  The committed `papers/combinatorics_berczy_boundary.json` sidecar records
+  the Berczy local-correction combinatorics source-specific boundary for
+  bipartite and planar graph-reconstruction harnesses, Alon-Tarsi
+  Latin-square trade/involution harnesses, Rota-basis local-exchange
+  harnesses, certificate schemas, symmetry-scramble and hard-negative replay
+  records, evolved-code and Gemini-summary artifacts, reported metric and
+  conjecture rows, repository snapshots, and independent verifier outputs.
 
 ## Mid Term
 

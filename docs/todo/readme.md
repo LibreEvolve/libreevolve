@@ -3720,10 +3720,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     robustness, and experimental run summaries; it reports concrete
     graph-reconstruction, Latin-square, and Rota benchmark tables rather than
     a general theorem.
-  - Current evidence: README documents constructive-math coverage gaps,
-    benchmark report contracts, paper-cache status, and smoke fixtures. It
-    does not mention `2603.06692`, define local-correction certificate
-    candidates, provide graph reconstruction from vertex-deleted subgraphs,
+  - Current evidence: README now lists `2603.06692` as Berczy local-correction
+    combinatorics context and points to `papers/combinatorics_berczy_boundary.json`.
+    README documents constructive-math coverage gaps, benchmark report
+    contracts, paper-cache status, and smoke fixtures, but it still does not
+    define local-correction certificate candidates, provide graph reconstruction from vertex-deleted subgraphs,
     Latin-square local trade/involution checks, Rota basis-exchange policy
     fixtures, scoring protocol records, conjecture/proof-status fields, or
     finite correcting-step trace artifacts. README also lacks the paper's

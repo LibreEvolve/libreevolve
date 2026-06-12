@@ -5889,7 +5889,8 @@ Primary evidence:
     work is only a graph or personal communication rather than a published
     search algorithm.
 
-- [ ] Add AlphaEvolve local-correction combinatorics boundary.
+- [ ] Implement AlphaEvolve local-correction combinatorics parity beyond source
+      boundary.
   - Spec evidence: arXiv `2603.06692`, `Evolving Local Corrections for Global
     Constructions in Combinatorics`, was submitted March 4, 2026. Its
     abstract says many combinatorics problems can be reformulated as global
@@ -5910,10 +5911,12 @@ Primary evidence:
     Alon-Tarsi Latin-square involution harnesses over orders
     `8,10,12,14,26`, and Rota local-exchange policy harnesses over `F2` ranks
     `5`, `7`, and `{5,7,9,11,13}`.
-  - Current evidence: `papers/README.md` lists `2603.06692` only as
-    `Not implemented; potential future benchmark`. LibreEvolve has no
-    implemented source-boundary gate for this source, no local-correction certificate
-    candidate schema, no graph-reconstruction evaluator, no Latin-square
+  - Current evidence: `papers/combinatorics_berczy_boundary.json` now records
+    the source-specific absence boundary for the Berczy local-correction
+    combinatorics paper, including source identity, PDF digest, source
+    version, license, reported result surfaces, required evidence fields, and
+    missing local harness/artifact evidence. LibreEvolve still has no
+    local-correction certificate candidate schema, no graph-reconstruction evaluator, no Latin-square
     trade/involution verifier, no matroid/basis-exchange evaluator for Rota's
     Basis Conjecture, no scoring-protocol metadata for these case studies, no
     outcome/conjecture ledger that separates explicit algorithms from proofs,
@@ -5926,11 +5929,9 @@ Primary evidence:
     assignment-matrix move traces, circuit-oracle metadata, majority-rollout
     robustness, and preservation of the paper's Gemini-generated summary and
     AI-use caveats.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2603.06692`: arXiv id/version/date/PDF hash, author, source license,
-    code/artifact availability, relation to AlphaEvolve and LibreEvolve
-    constructive-math fixtures, local-correction candidate schemas,
-    finite-step trace artifacts, graph reconstruction benchmark metadata,
+  - Required result: implement the missing runtime evidence for `2603.06692`:
+    local-correction candidate schemas, finite-step trace artifacts, graph
+    reconstruction benchmark metadata,
     vertex-deleted subgraph input/output schemas, Latin-square local-trade and
     sign-reversing-involution records, Rota basis-family and local-exchange
     policy records, scoring-protocol definitions, search budget and seed

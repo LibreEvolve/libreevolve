@@ -4,6 +4,16 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add Berczy local-correction combinatorics source-boundary gate.
+  - Evidence: `libreevolve/problems/benchmarks/combinatorics_berczy_boundary.py`
+    records the `2603.06692` source identity, cached-PDF digest, reported
+    graph/Alon-Tarsi/Rota result surfaces, required local evidence fields, and
+    false local harness/verifier readiness flags. It rejects premature
+    benchmark claims and is required by `libreevolve/tools/paper_manifest.py`.
+    `tests/test_combinatorics_berczy_boundary.py` and
+    `tests/test_paper_manifest.py` cover the absence record, overclaim
+    rejection, and root-manifest sidecar requirement.
+
 - [x] Add Ramsey Numbers `2603.09172` graph-witness source-boundary gate.
   - Evidence: `libreevolve/problems/benchmarks/ramsey_numbers_boundary.py`
     records the constructive Ramsey-number source boundary, validates the

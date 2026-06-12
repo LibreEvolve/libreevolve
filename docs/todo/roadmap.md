@@ -4176,9 +4176,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     blocks, random symmetry-scramble robust scoring, hard constraints plus soft
     progress, hard-negative replay, and appendix evolved-code/Gemini-summary
     artifacts across the three case studies.
-  - Current evidence: ROADMAP tracks broad constructive-math and benchmark
-    fixture gaps plus selected source-specific result papers. It does not
-    promote `2603.06692` beyond potential-future-benchmark status, define a
+  - Current evidence: ROADMAP now names
+    `papers/combinatorics_berczy_boundary.json` as the source-specific
+    absence boundary for Berczy local-correction combinatorics. It still does
+    not promote `2603.06692` beyond potential-future-benchmark status, define a
     local-correction certificate abstraction, require finite correcting-step
     traces, provide graph reconstruction, Latin-square trade, or Rota
     basis-exchange fixtures, preserve scoring protocols, or distinguish
@@ -4190,8 +4191,7 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     appendix evolved-code traceability, AI-summary provenance, and explicit
     evaluator-hardening records for WL-surrogate-to-exact-isomorphism
     transitions.
-  - Required result: add roadmap gates for `2603.06692`: paper/source
-    manifest entry, PDF/cache hash, source-license and code-artifact status,
+  - Required result: implement roadmap promotion gates for `2603.06692`:
     local-correction candidate schema, finite-step trace artifacts,
     graph-reconstruction benchmark records, vertex-deleted subgraph schemas,
     Latin-square local-trade and sign-reversing-involution records, Rota

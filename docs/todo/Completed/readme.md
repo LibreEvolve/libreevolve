@@ -4,6 +4,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Berczy local-correction combinatorics `2603.06692` source
+      boundary in README.
+  - Evidence: `README.md` lists Local Corrections in Combinatorics as a
+    constructive math benchmark candidate only and points to
+    `papers/combinatorics_berczy_boundary.json` for the missing graph
+    reconstruction, Alon-Tarsi Latin-square involution, Rota-basis
+    local-exchange, certificate-schema, evolved-code, metric/conjecture-row,
+    and independent-verifier evidence.
+
 - [x] Document Ramsey Numbers `2603.09172` source boundary in README.
   - Evidence: `README.md` lists Ramsey Numbers as a constructive math
     benchmark candidate only and points to `papers/ramsey_numbers_boundary.json`

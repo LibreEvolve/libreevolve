@@ -113,6 +113,12 @@ from libreevolve.problems.benchmarks.codeevolve_boundary import (
     render_codeevolve_boundary_summary,
     validate_codeevolve_boundary,
 )
+from libreevolve.problems.benchmarks.combinatorics_berczy_boundary import (
+    COMBINATORICS_BERCZY_BOUNDARY_SCHEMA,
+    combinatorics_berczy_boundary_record,
+    render_combinatorics_berczy_boundary_summary,
+    validate_combinatorics_berczy_boundary,
+)
 from libreevolve.problems.benchmarks.companion_sources import (
     ALPHAEVOLVE_COMPANION_COLAB_SCHEMA,
     alphaevolve_companion_colab_source_record,
@@ -426,6 +432,7 @@ __all__ = [
     "CAUSALEVOLVE_BOUNDARY_SCHEMA",
     "CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA",
     "CODEEVOLVE_BOUNDARY_SCHEMA",
+    "COMBINATORICS_BERCZY_BOUNDARY_SCHEMA",
     "CONTROLLER_BACKTRACKING_BOUNDARY_SCHEMA",
     "DEEPEVOLVE_BOUNDARY_SCHEMA",
     "EMBEDDED_EVALUATOR_BOUNDARY_SCHEMA",
@@ -513,6 +520,7 @@ __all__ = [
     "causalevolve_boundary_record",
     "certification_artifact_inventory",
     "codeevolve_boundary_record",
+    "combinatorics_berczy_boundary_record",
     "controller_backtracking_boundary_record",
     "deepevolve_boundary_record",
     "embedded_evaluator_boundary_record",
@@ -584,6 +592,7 @@ __all__ = [
     "render_causalevolve_boundary_summary",
     "render_certification_summary",
     "render_codeevolve_boundary_summary",
+    "render_combinatorics_berczy_boundary_summary",
     "render_controller_backtracking_boundary_summary",
     "render_deepevolve_boundary_summary",
     "render_embedded_evaluator_boundary_summary",
@@ -654,6 +663,7 @@ __all__ = [
     "validate_causalevolve_boundary",
     "validate_certification_evidence_bundle",
     "validate_codeevolve_boundary",
+    "validate_combinatorics_berczy_boundary",
     "validate_controller_backtracking_boundary",
     "validate_deepevolve_boundary",
     "validate_embedded_evaluator_boundary",

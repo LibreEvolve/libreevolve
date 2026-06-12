@@ -4,6 +4,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## Papers Todo: Reference and Specification Gaps
 
+- [x] Record Berczy local-correction combinatorics `2603.06692` source
+      boundary.
+  - Evidence: `papers/combinatorics_berczy_boundary.json` preserves the source
+    identity, cached PDF digest/license, source-link status, component rows,
+    current no-combinatorics-runner evidence, required evidence fields, and
+    missing graph/Latin-square/Rota harness, artifact, result-row, and
+    independent-verifier evidence. `papers/README.md` marks the paper as a
+    candidate benchmark and links completed code/paper/README/roadmap evidence
+    for this boundary.
+
 - [x] Record Ramsey Numbers `2603.09172` source boundary.
   - Evidence: `papers/ramsey_numbers_boundary.json` preserves the source
     identity, cached PDF digest/license, source-link status, component rows,

@@ -2311,6 +2311,14 @@ configuration, FlashAttention and Pallas kernel identity, JAX pre/postprocessing
 boundaries, XLA lowering stage, hardware target, lowered-IR hash, optimization
 decision category, and artifact refs. This records report metadata; it does
 not create the real lowered-IR artifacts or randomized reference checks.
+Ready compiler reports also require `compiler_adoption_provenance`, covering
+whether the discovered optimization is scoped as adoption into an existing
+compiler for a specific use case or as longer-term AlphaEvolve-in-the-compiler
+workflow integration. The record includes target compiler/version/pass,
+use-case scope, optimization artifact identity/hash, integration owner,
+reviewer signoff, adoption and rollout/revert state, workflow handoff boundary,
+and artifact refs. This records the integration-path boundary; it does not
+implement, deploy, or prove the compiler integration.
 `libreevolve.systems_evidence_bundle.v1` is the portable wrapper for those
 records: it embeds the systems report and artifact inventory, records stable
 SHA-256 hashes for each embedded object plus the inventory records hash, checks

@@ -1317,17 +1317,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     optimizations into existing compilers for specific use cases, or, longer
     term, incorporating AlphaEvolve into the compiler workflow itself.
   - Current evidence: README documents generic systems reports plus compiler-IR
-    reference-check, stack-context, and speedup gaps. It does not describe the
-    evidence needed before claiming a discovered optimization was incorporated
-    into an existing compiler, nor the stronger evidence needed before claiming
-    AlphaEvolve-style compiler-workflow integration: target compiler/pass,
-    bounded use case, optimization artifact, integration reviewer, rollout or
-    revert state, and workflow handoff.
-  - Required result: once compiler report metadata captures adoption path,
-    target compiler/pass identity, use-case constraints, integration and
-    rollout status, update README, ROADMAP, papers index, and matching TODOs so
-    README separates concrete compiler adoption from longer-term AlphaEvolve
-    workflow integration.
+    reference-check, stack-context, adoption-path metadata, and speedup gaps.
+    It now describes the evidence needed before claiming a discovered
+    optimization was incorporated into an existing compiler versus the stronger
+    future claim that AlphaEvolve is part of the compiler workflow: target
+    compiler/pass, bounded use case, optimization artifact, integration
+    reviewer, rollout or revert state, and workflow handoff.
+  - Required result: once compiler fixtures emit real compiler patch/pass
+    artifacts, use-case integration records, reviewer signoff files,
+    rollout/revert logs, and workflow handoff evidence, update README, ROADMAP,
+    papers index, and matching TODOs so README separates concrete compiler
+    adoption from longer-term AlphaEvolve workflow integration.
 
 - [ ] Keep README self-improvement wording scoped until infrastructure and
       distillation evidence exists.

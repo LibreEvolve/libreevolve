@@ -4470,13 +4470,23 @@ the surrounding FlashAttention/Pallas/JAX/XLA stack: workload/model
 configuration, FlashAttention and Pallas kernel identity, JAX pre/postprocessing
 boundaries, XLA lowering stage, hardware target, lowered-IR hash, optimization
 decision category, and artifact refs.
+Ready compiler reports also require `compiler_adoption_provenance` records to
+separate a discovered optimization adopted into an existing compiler for a
+bounded use case from the stronger future claim that AlphaEvolve is part of the
+compiler workflow itself. The record captures adoption path, target
+compiler/version/pass, use-case scope, optimization artifact identity/hash,
+integration owner, reviewer signoff scope, adoption state, rollout/revert
+state, workflow handoff boundary, and artifact refs.
 The claim-calibration schema still does not create real scheduling, kernel,
 hardware, or compiler fixtures, nor does it populate calibrated evidence for
 AlphaEvolve Section 3.3 magnitudes such as resource recovery percentages,
 kernel speedups, training-time reductions, RTL PPA deltas, or compiler
 pre/postprocessing speedups. Compiler-IR and compiler-stack provenance still
 do not generate real XLA/FlashAttention edit artifacts, lowered-IR artifacts,
-or randomized reference checks.
+or randomized reference checks. Compiler-adoption provenance records the
+integration-path boundary, but it does not implement or deploy a compiler
+patch, prove rollout/revert behavior, or make AlphaEvolve part of a compiler
+workflow.
 Hardware reports also do not yet identify RTL-stage workflow placement,
 standard-Verilog trust/adoption evidence, upcoming-chip integration, or
 time-to-market impact.

@@ -17444,3 +17444,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     evidence artifacts.
   - Verification: systems-result regression tests cover missing ready
     provenance and malformed compiler-stack context.
+
+- [x] Require compiler-adoption provenance for ready compiler systems reports.
+  - Spec evidence: AlphaEvolve Section 3.3.4 separates concrete discovered
+    optimizations incorporated into existing compilers for specific use cases
+    from the longer-term possibility of incorporating AlphaEvolve into the
+    compiler workflow itself.
+  - Status: `validate_systems_result_report()` now requires
+    `compiler_adoption_provenance` before accepting `alphaevolve_ready`
+    compiler reports. The record validates adoption path, adoption state,
+    target compiler/version/pass, use-case scope, optimization artifact
+    identity/hash, integration owner, reviewer signoff scope, rollout/revert
+    state, workflow handoff boundary, and artifact refs.
+  - Remaining gap: real compiler fixtures still need to emit compiler patch or
+    pass artifacts, use-case integration records, reviewer signoff files,
+    rollout/revert logs, and workflow handoff evidence.
+  - Verification: systems-result regression tests cover missing ready
+    provenance and malformed compiler-adoption metadata.

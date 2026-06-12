@@ -4211,19 +4211,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     existing compilers for specific use cases, or, longer term, incorporating
     AlphaEvolve into the compiler workflow itself.
   - Current gap: paper-facing compiler TODOs require per-edit reference checks,
-    IR provenance, expert signoff, FlashAttention stack context, and speedup
-    attribution. They do not require a report to distinguish the paper's two
-    adoption paths: a discovered optimization transferred into a conventional
-    compiler/pass for a bounded use case versus AlphaEvolve becoming part of
-    the compiler workflow. There is no field for target compiler/pass, use-case
-    boundary, integration owner, reviewer signoff, rollout/revert state, or
-    workflow-handoff semantics.
-  - Required result: add paper/report evidence for compiler adoption paths:
-    adoption-path enum, target compiler/pass and version, optimization artifact
-    hashes, workload/use-case constraints, integration-review records,
-    deployment or rollback status, and README/ROADMAP wording that separates
-    concrete compiler optimization adoption from longer-term AlphaEvolve
-    workflow integration.
+    IR provenance, expert signoff, FlashAttention stack context, adoption-path
+    metadata, and speedup attribution. Ready compiler reports now distinguish
+    the paper's two adoption paths: a discovered optimization transferred into
+    a conventional compiler/pass for a bounded use case versus AlphaEvolve
+    becoming part of the compiler workflow. The report records target
+    compiler/pass/version, use-case boundary, optimization artifact hash,
+    integration owner, reviewer signoff, rollout/revert state, workflow handoff,
+    and artifact refs.
+  - Required result: add real paper/report artifacts for compiler adoption
+    paths: compiler patch or pass artifacts, workload/use-case integration
+    records, integration-review files, deployment or rollback logs, and
+    workflow-handoff evidence that separates concrete compiler optimization
+    adoption from longer-term AlphaEvolve workflow integration.
 
 - [ ] Keep named AlphaEvolve application-context rows background-only until
   benchmark fixtures exist.

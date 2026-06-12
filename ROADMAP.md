@@ -1281,9 +1281,15 @@ is not yet an AlphaEvolve reproduction.
   `compiler_stack_provenance` for FlashAttention/Pallas/JAX/XLA context:
   workload/model configuration, kernel identity, JAX pre/postprocessing
   boundaries, XLA lowering stage, hardware target, lowered-IR hash,
-  optimization decision category, and artifact refs. Real scheduling resource
-  recovery, kernel/training-time speedup, RTL PPA, compiler speedup fixtures,
-  and emitted compiler-stack artifacts still need to populate those records.
+  optimization decision category, and artifact refs. Ready compiler reports
+  also require `compiler_adoption_provenance` to classify existing-compiler
+  bounded-use-case adoption versus AlphaEvolve-in-the-compiler-workflow
+  integration, with target compiler/pass, optimization artifact hash,
+  integration owner, reviewer scope, rollout/revert state, workflow handoff,
+  and artifact refs. Real scheduling resource recovery, kernel/training-time
+  speedup, RTL PPA, compiler speedup fixtures, emitted compiler-stack
+  artifacts, and real compiler adoption/integration artifacts still need to
+  populate those records.
 - Add hardware-adoption evidence for TPU RTL-style reports before claiming
   Section 3.3.3 parity: RTL-stage workflow placement, standard-Verilog
   trust/adoption rationale, upcoming-chip integration, and time-to-market

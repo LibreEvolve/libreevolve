@@ -9222,3 +9222,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     artifacts remain open.
   - Verification: systems-result regression tests validate the implemented
     provenance requirement.
+
+- [x] Preserve compiler-adoption provenance boundary.
+  - Spec evidence: roadmap compiler-adoption claims need to distinguish
+    bounded existing-compiler adoption from longer-term AlphaEvolve-in-the-
+    compiler-workflow integration.
+  - Status: ROADMAP and TODO wording now recognize that ready compiler systems
+    reports require `compiler_adoption_provenance`, while real compiler patch,
+    integration review, rollout/revert, and workflow handoff artifacts remain
+    open.
+  - Verification: systems-result regression tests validate the implemented
+    provenance requirement.

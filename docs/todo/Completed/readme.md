@@ -11689,3 +11689,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     lowered-IR hash, optimization decision category, and artifact refs.
   - Verification: systems-result regression tests validate the documented
     report contract.
+
+- [x] Document compiler-adoption provenance for ready compiler reports.
+  - Spec evidence: README compiler systems wording needed to distinguish
+    specific-use-case adoption into existing compilers from stronger future
+    AlphaEvolve compiler-workflow integration.
+  - Status: README and run-artifact docs now describe
+    `compiler_adoption_provenance` for ready compiler reports, including
+    adoption path, target compiler/version/pass, use-case scope, optimization
+    artifact identity/hash, integration owner, reviewer signoff, adoption
+    state, rollout/revert state, workflow handoff boundary, and artifact refs.
+  - Verification: systems-result regression tests validate the documented
+    report contract.

@@ -285,6 +285,23 @@ def _valid_compiler_report() -> dict:
         "optimization_decision_category": "memory_access_orchestration",
         "artifact_refs": ["systems/flashattention/reference.json"],
     }
+    report["compiler_adoption_provenance"] = {
+        "adoption_path": "existing_compiler_specific_use_case",
+        "target_compiler": "XLA",
+        "target_compiler_version": "debug-provenance-build",
+        "target_pass_or_component": "FlashAttention GPU lowering",
+        "use_case_scope": "bounded FlashAttention inference workload",
+        "optimization_artifact_identity": "flashattention_lowering_candidate",
+        "optimization_artifact_sha256": "7" * 64,
+        "integration_owner": "compiler integration reviewer",
+        "reviewer_signoff_scope": "reviewed use-case scoped integration path",
+        "adoption_state": "reviewed",
+        "rollout_or_revert_state": "not deployed; revert path documented",
+        "workflow_handoff_boundary": (
+            "records existing-compiler adoption separately from compiler-loop integration"
+        ),
+        "artifact_refs": ["systems/flashattention/reference.json"],
+    }
     return report
 
 
@@ -712,6 +729,40 @@ def test_compiler_stack_provenance_rejects_bad_stack_context():
     assert "invalid_compiler_stack_artifact_ref" in codes
 
 
+def test_ready_compiler_report_requires_adoption_provenance():
+    report = _valid_compiler_report()
+
+    report.pop("compiler_adoption_provenance")
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "missing_compiler_adoption_provenance" in codes
+    assert "invalid_ready_compiler_adoption_provenance" in codes
+
+
+def test_compiler_adoption_provenance_rejects_bad_integration_path():
+    report = _valid_compiler_report()
+    adoption = report["compiler_adoption_provenance"]
+    adoption["adoption_path"] = "direct_production_patch"
+    adoption["target_pass_or_component"] = ""
+    adoption["optimization_artifact_sha256"] = "bad"
+    adoption["adoption_state"] = "rolled_out"
+    adoption["artifact_refs"] = ["systems/flashattention/missing.json"]
+
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "invalid_compiler_adoption_path" in codes
+    assert "invalid_compiler_adoption_target_pass_or_component" in codes
+    assert "invalid_compiler_adoption_optimization_artifact_sha256" in codes
+    assert "invalid_compiler_adoption_state" in codes
+    assert "invalid_compiler_adoption_artifact_ref" in codes
+
+
 def test_ready_scheduling_report_requires_ranking_only_safety():
     report = _valid_scheduling_report()
     report.pop("scheduling_safety")
@@ -891,6 +942,9 @@ def test_systems_result_summary_renders_gates_and_readiness():
     assert "| scheduling_formulation | absent |" in summary
     assert "| scheduling_safety | absent |" in summary
     assert "| scheduling_deployment_readiness | absent |" in summary
+    assert "| compiler_ir_provenance | absent |" in summary
+    assert "| compiler_stack_provenance | absent |" in summary
+    assert "| compiler_adoption_provenance | absent |" in summary
     assert "optimization=passed" in summary
     assert "heldout=passed" in summary
     assert "reference_correctness=passed" in summary

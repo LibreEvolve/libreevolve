@@ -1644,10 +1644,15 @@ Implemented:
   records, final expert all-input signoff scope, workload/model configuration,
   FlashAttention/Pallas kernel identity, JAX pre/postprocessing boundaries,
   XLA lowering stage, hardware target, lowered-IR hash, optimization decision
-  category, and artifact refs. The contract still does not emit real
+  category, and artifact refs. They also require
+  `compiler_adoption_provenance` metadata for existing-compiler bounded-use
+  case adoption versus AlphaEvolve-in-the-compiler-workflow integration,
+  target compiler/pass identity, use-case scope, optimization artifact hash,
+  integration owner, reviewer scope, adoption state, rollout/revert state, and
+  workflow handoff boundary. The contract still does not emit real
   FlashAttention/Pallas/JAX/XLA artifacts, lowered-IR files, randomized
-  reference-check outputs, or calibrated result-claim records mapping finite
-  metrics to
+  reference-check outputs, compiler integration patches, rollout evidence, or
+  calibrated result-claim records mapping finite metrics to
   AlphaEvolve Section 3.3 magnitudes such as scheduling resource-recovery
   percentages, kernel speedups and training-time reductions, RTL PPA deltas,
   or compiler kernel/pre/postprocessing speedups with explicit units,

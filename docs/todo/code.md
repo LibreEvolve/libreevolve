@@ -4054,17 +4054,18 @@ Primary evidence:
     AlphaEvolve into the compiler workflow itself.
   - Current evidence: compiler TODOs require per-edit randomized reference
     checks, IR/debug provenance, FlashAttention stack context, speedup
-    attribution, and final expert confirmation. They do not require report or
-    artifact metadata that distinguishes a one-off discovered optimization
-    ported into an existing compiler from an AlphaEvolve-in-the-loop compiler
-    workflow, nor do they record the target compiler/pass, use-case scope,
-    integration owner, rollout/revert state, or workflow handoff boundary.
-  - Required result: add compiler-domain report metadata and validators for
-    adoption path (`existing_compiler_specific_use_case` versus
-    `alphaevolve_in_compiler_workflow`), target compiler/pass identity,
-    optimization artifact linkage, applicable workload/use-case constraints,
-    integration and reviewer signoff, rollout or revert state, and docs that
-    separate concrete compiler adoption from future workflow integration.
+    attribution, final expert confirmation, and now
+    `compiler_adoption_provenance`. Ready compiler reports classify adoption
+    path (`existing_compiler_specific_use_case` versus
+    `alphaevolve_in_compiler_workflow`), target compiler/version/pass, bounded
+    use-case scope, optimization artifact identity/hash, integration owner,
+    reviewer signoff scope, adoption state, rollout/revert state, workflow
+    handoff boundary, and artifact refs.
+  - Required result: connect compiler fixtures to real adoption/integration
+    evidence: compiler patch or pass artifacts, use-case-specific integration
+    records, reviewer signoff files, rollout/revert logs, and workflow handoff
+    artifacts that prove concrete existing-compiler adoption separately from
+    future AlphaEvolve-in-the-compiler-loop integration.
 
 ## LLM Ensemble
 

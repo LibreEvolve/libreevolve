@@ -12051,3 +12051,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     artifacts for FlashAttention.
   - Verification: systems-result regression tests validate missing and
     malformed compiler-stack provenance cases.
+
+- [x] Record compiler-adoption provenance boundary.
+  - Spec evidence: AlphaEvolve Section 3.3.4 says discovered compiler
+    optimizations may be incorporated into existing compilers for specific use
+    cases, while incorporating AlphaEvolve into the compiler workflow itself is
+    a separate longer-term possibility.
+  - Status: paper-facing TODOs and validators now require
+    `compiler_adoption_provenance` for ready compiler reports, including
+    adoption path, target compiler/version/pass, use-case scope, optimization
+    artifact hash, integration owner, reviewer scope, adoption state,
+    rollout/revert state, workflow handoff boundary, and artifact refs.
+  - Remaining paper gap: this does not generate real compiler patch/pass
+    artifacts, integration review files, deployment or rollback logs, or
+    workflow-handoff evidence.
+  - Verification: systems-result regression tests validate missing and
+    malformed compiler-adoption provenance cases.

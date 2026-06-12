@@ -41,6 +41,12 @@ APPLICATION_PROVENANCE_ROLES = frozenset(
 APPLICATION_APPROVAL_STATES = frozenset(
     {"pending", "reviewed", "approved", "deployed", "not_applicable"}
 )
+COMPILER_ADOPTION_PATHS = frozenset(
+    {"existing_compiler_specific_use_case", "alphaevolve_in_compiler_workflow"}
+)
+COMPILER_ADOPTION_STATES = frozenset(
+    {"proposed", "reviewed", "approved", "deployed", "reverted", "not_applicable"}
+)
 COMPILER_IR_ABSTRACTION_LEVELS = frozenset(
     {"kernel_ir", "preprocessing_ir", "postprocessing_ir"}
 )
@@ -153,6 +159,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
         data.get("alphaevolve_ready") is True,
         issues,
     )
+    compiler_adoption_ready = _validate_compiler_adoption_provenance(
+        data.get("compiler_adoption_provenance"),
+        data,
+        domain,
+        data.get("alphaevolve_ready") is True,
+        issues,
+    )
     certification_ready = _validate_certification_reference(data.get("certification"), issues)
     if data.get("alphaevolve_ready") is True and not _gates_are_alphaevolve_ready(gate_statuses):
         issues.append(
@@ -211,6 +224,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
                 SystemsResultIssue(
                     "invalid_ready_compiler_stack_provenance",
                     "alphaevolve_ready compiler reports require compiler-stack provenance",
+                )
+            )
+        if domain == "compiler" and not compiler_adoption_ready:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_ready_compiler_adoption_provenance",
+                    "alphaevolve_ready compiler reports require compiler adoption-path provenance",
                 )
             )
         if certification_ready is False:
@@ -346,6 +366,9 @@ def render_systems_result_summary(report: dict[str, Any]) -> str:
     scheduling_formulation = report.get("scheduling_formulation")
     scheduling_safety = report.get("scheduling_safety")
     scheduling_deployment = report.get("scheduling_deployment_readiness")
+    compiler_ir = report.get("compiler_ir_provenance")
+    compiler_stack = report.get("compiler_stack_provenance")
+    compiler_adoption = report.get("compiler_adoption_provenance")
     lines = [
         f"Systems result report: {report.get('benchmark_id', '<unknown>')}",
         "",
@@ -362,6 +385,9 @@ def render_systems_result_summary(report: dict[str, Any]) -> str:
         f"| scheduling_formulation | {'present' if isinstance(scheduling_formulation, dict) else 'absent'} |",
         f"| scheduling_safety | {'present' if isinstance(scheduling_safety, dict) else 'absent'} |",
         f"| scheduling_deployment_readiness | {'present' if isinstance(scheduling_deployment, dict) else 'absent'} |",
+        f"| compiler_ir_provenance | {'present' if isinstance(compiler_ir, dict) else 'absent'} |",
+        f"| compiler_stack_provenance | {'present' if isinstance(compiler_stack, dict) else 'absent'} |",
+        f"| compiler_adoption_provenance | {'present' if isinstance(compiler_adoption, dict) else 'absent'} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -1658,6 +1684,94 @@ def _validate_compiler_stack_provenance(
         "artifact_refs",
         "invalid_compiler_stack_artifact_ref",
         "compiler_stack_provenance",
+        issues,
+    )
+    return len(issues) == before_issues
+
+
+def _validate_compiler_adoption_provenance(
+    value: object,
+    report: dict[str, Any],
+    domain: str | None,
+    require_ready: bool,
+    issues: list[SystemsResultIssue],
+) -> bool:
+    if value is None:
+        if require_ready and domain == "compiler":
+            issues.append(
+                SystemsResultIssue(
+                    "missing_compiler_adoption_provenance",
+                    "alphaevolve_ready compiler reports require compiler_adoption_provenance",
+                )
+            )
+        return False
+    if domain != "compiler":
+        issues.append(
+            SystemsResultIssue(
+                "invalid_compiler_adoption_domain",
+                "compiler_adoption_provenance is only valid for compiler reports",
+            )
+        )
+        return False
+    if not isinstance(value, dict):
+        issues.append(
+            SystemsResultIssue(
+                "invalid_compiler_adoption_provenance",
+                "compiler_adoption_provenance must be an object",
+            )
+        )
+        return False
+    before_issues = len(issues)
+    artifact_paths = {
+        artifact.get("path")
+        for artifact in report.get("artifacts", [])
+        if isinstance(artifact, dict) and isinstance(artifact.get("path"), str)
+    }
+    if value.get("adoption_path") not in COMPILER_ADOPTION_PATHS:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_compiler_adoption_path",
+                "compiler_adoption_provenance.adoption_path is unsupported",
+            )
+        )
+    if value.get("adoption_state") not in COMPILER_ADOPTION_STATES:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_compiler_adoption_state",
+                "compiler_adoption_provenance.adoption_state is unsupported",
+            )
+        )
+    for field in (
+        "target_compiler",
+        "target_compiler_version",
+        "target_pass_or_component",
+        "use_case_scope",
+        "optimization_artifact_identity",
+        "integration_owner",
+        "reviewer_signoff_scope",
+        "rollout_or_revert_state",
+        "workflow_handoff_boundary",
+    ):
+        text = value.get(field)
+        if not isinstance(text, str) or not text.strip():
+            issues.append(
+                SystemsResultIssue(
+                    f"invalid_compiler_adoption_{field}",
+                    f"compiler_adoption_provenance.{field} must be non-empty text",
+                )
+            )
+    _validate_sha(
+        value.get("optimization_artifact_sha256"),
+        "invalid_compiler_adoption_optimization_artifact_sha256",
+        "compiler_adoption_provenance.optimization_artifact_sha256",
+        issues,
+    )
+    _validate_application_reference_list(
+        value.get("artifact_refs"),
+        artifact_paths,
+        "artifact_refs",
+        "invalid_compiler_adoption_artifact_ref",
+        "compiler_adoption_provenance",
         issues,
     )
     return len(issues) == before_issues

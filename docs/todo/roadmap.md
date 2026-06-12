@@ -2153,17 +2153,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     the compiler workflow itself.
   - Current evidence: roadmap systems-result wording covers generic compiler
     readiness, reference-correctness, expert signoff, runtime speedups, and
-    FlashAttention stack context. It does not require compiler fixtures or
-    report validators to classify whether an optimization was adopted as a
-    bounded existing-compiler change or as part of an AlphaEvolve-in-the-loop
-    compiler workflow, nor does it require target compiler/pass identity,
-    integration owner, use-case constraints, rollout/revert state, or workflow
-    handoff evidence.
-  - Required result: when compiler report metadata and validators add
-    integration-path evidence, update ROADMAP, README, papers index, and
-    code/paper TODOs so roadmap text distinguishes concrete optimization
-    adoption in existing compilers from future AlphaEvolve compiler-workflow
-    integration.
+    FlashAttention stack context. ROADMAP now records that ready compiler
+    reports require `compiler_adoption_provenance`, including adoption path,
+    target compiler/version/pass identity, integration owner, use-case
+    constraints, reviewer scope, rollout/revert state, workflow handoff, and
+    artifact refs.
+  - Required result: when compiler fixtures emit real integration-path
+    artifacts, update ROADMAP, README, papers index, and code/paper TODOs so
+    roadmap text distinguishes concrete optimization adoption in existing
+    compilers from future AlphaEvolve compiler-workflow integration.
 
 - [ ] Keep representative-fixture roadmap wording scoped to registries and
       smoke examples versus real target suites.

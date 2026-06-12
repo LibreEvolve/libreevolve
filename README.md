@@ -1737,6 +1737,11 @@ coordinates are documented insertion-time local heuristic coordinates rather
 than stable learned descriptors; evaluator-provided behavior descriptor
 contracts, learned descriptor models, and tested archive rebin semantics remain
 future work.
+`papers/map_elites_illumination_boundary.json` separately records that this is
+not full Mouret-Clune illumination evidence: explicit `b(x)`/`f(x)` contracts,
+`P`/`X` feature-performance map exports, coverage/reliability/precision/global
+performance reports, visualization/lineage artifacts, and retina/soft-robot/
+real-arm reproductions remain open.
 Rejected non-admitted candidates also leave the island assignment cursor on the
 same island for the next retained archive-state change.
 
@@ -4830,7 +4835,7 @@ the complete implementation-status index for all 25 manifest rows.
 
 | Paper | Authors | Year | Role |
 |-------|---------|:----:|------|
-| **MAP-Elites** | Mouret & Clune | 2015 | Quality-diversity archive |
+| **MAP-Elites** | Mouret & Clune | 2015 | Quality-diversity archive; local implementation remains scoped by `papers/map_elites_illumination_boundary.json` |
 | **UCB1** | Auer, Cesa-Bianchi & Fischer | 2002 | Inspiration for heuristic backend routing |
 
 The references above are summarized for context in this README. The codebase and

@@ -12386,3 +12386,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     linkage, and Figure 3 prompt/response exhibits remain open.
   - Verification: embedded evaluator and embedded-boundary tests validate the
     narrowed evidence boundary.
+
+- [x] Record MAP-Elites illumination source boundary.
+  - Spec evidence: paper-facing MAP-Elites claims need to distinguish the
+    local configurable 3D archive from Mouret-Clune illumination evidence.
+  - Status: `papers/map_elites_illumination_boundary.json` now carries the
+    source-specific `1504.04909` boundary with cached PDF digest, paper
+    algorithm variables, local archive/readiness schemas, missing evidence
+    keys, and a claim boundary that keeps full illumination parity false.
+  - Remaining paper gap: executable `b(x)`/`f(x)` contracts, P/X map exports,
+    illumination metric reports, visualization/lineage artifacts, and
+    benchmark-domain reproduction rows remain open.
+  - Verification: MAP-Elites boundary tests and paper-manifest tests validate
+    the sidecar and reject premature readiness claims.

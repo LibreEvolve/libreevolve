@@ -9478,3 +9478,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     isolation and non-static/external-validator score linkage open.
   - Verification: embedded evaluator and boundary tests validate the narrowed
     scope.
+
+- [x] Preserve MAP-Elites illumination-boundary scope in roadmap.
+  - Spec evidence: roadmap/archive claims should not treat LibreEvolve's local
+    3D MAP-Elites-style archive as full MAP-Elites illumination evidence.
+  - Status: roadmap TODO wording and the papers overview now identify
+    `papers/map_elites_illumination_boundary.json` as the source-specific
+    boundary for `1504.04909`, while preserving executable descriptor/map,
+    illumination-metric, visualization/lineage, and domain-reproduction gates
+    as future work.
+  - Verification: MAP-Elites boundary tests and paper-manifest tests cover the
+    sidecar and repo-root requirement.

@@ -11951,3 +11951,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     build isolation plus non-static/external-validator score linkage open.
   - Verification: embedded evaluator tests cover policy metadata, helper
     imports, and undeclared local module rejection.
+
+- [x] Document MAP-Elites illumination boundary.
+  - Spec evidence: README MAP-Elites wording needs to keep local archive
+    support separate from Mouret-Clune illumination-algorithm reproduction.
+  - Status: README now names `papers/map_elites_illumination_boundary.json`
+    in the MAP-Elites descriptor discussion and foundational references row,
+    and keeps explicit `b(x)`/`f(x)` contracts, P/X map exports, illumination
+    metric reports, visualization/lineage artifacts, and domain reproductions
+    open.
+  - Verification: MAP-Elites boundary and paper-manifest tests validate the
+    sidecar that README now references.

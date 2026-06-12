@@ -6357,17 +6357,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     and per-cell replacement by local performance.
   - Current gap: `papers/README.md` lists `1504.04909` as foundational and
     describes LibreEvolve's current configurable 3D archive plus open stable
-    descriptor/rebin/diagnostic gaps. Existing active paper TODOs discuss
-    descriptor modeling generally, but none preserve the MAP-Elites PDF itself
-    as a source-specific evidence boundary with the pseudocode variables,
-    algorithm assumptions, feature-space discretization policy, illumination
-    metrics, visualization outputs, lineage/stepping-stone analysis, benchmark
-    domains, paper-draft caveat, or experiment-parameter schedules.
-  - Required result: add paper-manifest and paper-index coverage for
-    `1504.04909`: title/authors/date/PDF digest, preliminary-draft status,
-    feature descriptor `b(x)`, performance function `f(x)`, map variables
-    `P`/`X`, initialization count `G`, iteration budget `I`, random selection
-    and variation policy, cell replacement condition, user-chosen dimension and
+    descriptor/rebin/diagnostic gaps. The committed
+    `papers/map_elites_illumination_boundary.json` sidecar now preserves the
+    MAP-Elites PDF as a source-specific evidence boundary with the local cache
+    digest, paper pseudocode variables, algorithm assumptions, current local
+    archive evidence, and false readiness for `P`/`X` map exports,
+    illumination metrics, visualization/lineage reports, and paper-domain
+    reproduction. It does not yet provide executable feature-space
+    discretization policy, illumination metrics, visualization outputs,
+    lineage/stepping-stone analysis, benchmark-domain rows, or
+    experiment-parameter schedules.
+  - Required result: implement the paper-manifest evidence named by
+    `papers/map_elites_illumination_boundary.json`: executable feature
+    descriptor `b(x)`, performance function `f(x)`, map variables `P`/`X`,
+    initialization count `G`, iteration budget `I`, random selection and
+    variation policy, cell replacement condition, user-chosen dimension and
     discretization records, empty/unfillable cell notes, global performance,
     global reliability, precision, and coverage metric definitions, feature-
     performance visualization requirements, parent/lineage stepping-stone

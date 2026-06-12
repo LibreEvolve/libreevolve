@@ -185,6 +185,10 @@ from libreevolve.problems.benchmarks.matrix_results import (
     validate_matrix_sweep_space_runtime_boundary,
     validate_matrix_tensor_rank_runtime_boundary,
 )
+from libreevolve.problems.benchmarks.map_elites_illumination_boundary import (
+    map_elites_illumination_boundary_record,
+    validate_map_elites_illumination_boundary,
+)
 
 
 REQUIRED_FIELDS = ("id", "title", "url", "file", "ok", "bytes", "sha256", "message")
@@ -216,6 +220,7 @@ MATRIX_NEAR_INTEGRALITY_RUNTIME_FILE = "papers/matrix_near_integrality_runtime_b
 MATRIX_SCALAR_FIELD_RUNTIME_FILE = "papers/matrix_scalar_field_runtime_boundary.json"
 MATRIX_SWEEP_SPACE_RUNTIME_FILE = "papers/matrix_sweep_space_runtime_boundary.json"
 MATRIX_TENSOR_RANK_RUNTIME_FILE = "papers/matrix_tensor_rank_runtime_boundary.json"
+MAP_ELITES_ILLUMINATION_BOUNDARY_FILE = "papers/map_elites_illumination_boundary.json"
 EXAMPLE_BENCHMARK_SCOPE_FILE = "papers/example_benchmark_scope.json"
 MATH_OUTCOME_BOUNDARY_FILE = "papers/math_outcome_boundary.json"
 MATH_STARTING_CONSTRUCTION_BOUNDARY_FILE = "papers/math_starting_construction_boundary.json"
@@ -593,6 +598,7 @@ def validate_paper_manifest(
     issues.extend(_validate_controller_backtracking_boundary(root_path))
     issues.extend(_validate_example_benchmark_scope_records(root_path))
     issues.extend(_validate_math_outcome_boundaries(root_path))
+    issues.extend(_validate_map_elites_illumination_boundary(root_path))
 
     if set(csv_by_id) - seen_ids:
         for row_id in sorted(set(csv_by_id) - seen_ids):
@@ -1525,6 +1531,38 @@ def _validate_controller_backtracking_boundary(root_path: Path) -> list[PaperMan
             f"controller_backtracking_boundary_{issue.code}",
             issue.message,
             "controller_backtracking",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_map_elites_illumination_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / MAP_ELITES_ILLUMINATION_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = map_elites_illumination_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "map_elites_illumination_boundary_manifest_missing",
+                    (
+                        f"{MAP_ELITES_ILLUMINATION_BOUNDARY_FILE} must emit "
+                        "MAP-Elites illumination-algorithm evidence availability"
+                    ),
+                    "map_elites_illumination",
+                )
+            ]
+    report = validate_map_elites_illumination_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"map_elites_illumination_boundary_{issue.code}",
+            issue.message,
+            "map_elites_illumination",
         )
         for issue in report.issues
     ]

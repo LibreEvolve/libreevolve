@@ -6936,21 +6936,26 @@ Primary evidence:
     use normalized metrics or numeric metadata, and archive snapshots persist
     descriptor policy/model metadata with insertion-time cell coordinates and a
     no-rebin policy. `IslandModel` adds synchronous ring migration, which is not
-    the paper's default pseudocode. Existing active TODOs mention MAP-Elites
-    descriptor and archive gaps, but there is no implemented source-specific
-    code gate for `1504.04909`, no explicit `b(x)` feature-descriptor contract separate from
-    current three-axis archive coordinates, no random-initialization/variation
-    policy evidence, no batched/hierarchical-resolution MAP-Elites mode, no
+    the paper's default pseudocode. The committed
+    `papers/map_elites_illumination_boundary.json` sidecar now records the
+    paper-facing `1504.04909` boundary with source digest, paper pseudocode
+    variables `b(x)`, `f(x)`, `P`, and `X`, local archive schemas, false
+    readiness for full map exports/illumination metrics/domain reproduction,
+    and required future evidence fields. The remaining implementation gap is no
+    explicit executable `b(x)` feature-descriptor contract separate from current
+    three-axis archive coordinates, no random-initialization/variation policy
+    evidence, no batched/hierarchical-resolution MAP-Elites mode, no
     illumination-map report, no coverage/reliability/precision metrics, no
     feature-space visualization artifacts, no parent-distance/lineage stepping-
     stone analysis, and no paper-domain reproduction rows for modular neural
     networks, simulated soft robots, or the real soft arm.
-  - Required result: add source-boundary metadata and implementation gates for
-    `1504.04909`: paper version/date/PDF hash, feature-descriptor schema,
-    user-chosen dimension declarations, discretization/binning resource policy,
-    performance function and cell replacement records, initialization and
-    variation policy records, feature-performance map export with both `P` and
-    `X` identities, empty/unfillable cell diagnostics, formal global
+  - Required result: implement the evidence named by
+    `papers/map_elites_illumination_boundary.json`: executable
+    feature-descriptor schema, user-chosen dimension declarations,
+    discretization/binning resource policy, performance function and cell
+    replacement records, initialization and variation policy records,
+    feature-performance map export with both `P` and `X` identities,
+    empty/unfillable cell diagnostics, formal global
     reliability `G(m)`, precision/opt-in reliability `P(m)`, coverage, and
     global-performance reports, normalized comparison records against
     traditional EA, novelty search with local competition, random sampling,

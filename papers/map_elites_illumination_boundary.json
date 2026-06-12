@@ -1,0 +1,93 @@
+{
+  "schema": "libreevolve.map_elites_illumination_boundary.v1",
+  "source_paper_id": "1504.04909",
+  "source_title": "Illuminating search spaces by mapping elites",
+  "source_file": "papers/1504.04909__MAP_Elites.pdf",
+  "source_url": "https://arxiv.org/pdf/1504.04909.pdf",
+  "source_sha256": "df7344343b14893a1d79a5459c1f56db50562e246d132cd0269f5201d1455872",
+  "source_bytes": 3221283,
+  "source_status": "local_preliminary_arxiv_pdf_cached",
+  "boundary_status": "local_3d_archive_without_full_illumination_evidence",
+  "claim_ready": false,
+  "paper_algorithm_contract": {
+    "feature_descriptor": "b(x)",
+    "performance_function": "f(x)",
+    "map_variables": [
+      "P",
+      "X"
+    ],
+    "initialization": "random_initialization_G_solutions",
+    "selection": "random_elite_selection_from_non_empty_cells",
+    "variation": "mutation_or_crossover_from_selected_elites",
+    "replacement": "replace_cell_only_when_candidate_improves_cell_performance",
+    "illumination_metrics": [
+      "global_performance",
+      "global_reliability",
+      "precision",
+      "coverage"
+    ]
+  },
+  "local_archive_evidence": {
+    "implementation_file": "libreevolve/population/map_elites.py",
+    "snapshot_schema": "libreevolve.map_elites_state.v1",
+    "descriptor_readiness_schema": "libreevolve.map_elites_descriptor_readiness.v1",
+    "objective_archive_readiness_schema": "libreevolve.map_elites_objective_archive_readiness.v1",
+    "default_descriptor_axes": [
+      "performance",
+      "complexity",
+      "diversity"
+    ],
+    "configurable_descriptor_axes": [
+      "metric:<name>",
+      "evaluation_metadata:<path>",
+      "candidate_metadata:<path>"
+    ],
+    "cell_replacement_policy": "scalar_selection_score_with_metric_overlays",
+    "diversity_policy": "current_elite_corpus_tfidf_char_ngram_distance",
+    "rebin_policy": "insertion_time_coordinates_no_rebin_engine",
+    "full_p_x_map_export_ready": false,
+    "illumination_metrics_ready": false,
+    "paper_domain_reproduction_ready": false
+  },
+  "required_evidence_fields": [
+    "source_digest",
+    "feature_descriptor_bx_contract",
+    "performance_function_fx_contract",
+    "dimension_declaration_policy",
+    "discretization_policy",
+    "initialization_policy_records",
+    "random_selection_variation_records",
+    "per_cell_replacement_records",
+    "p_map_export",
+    "x_map_export",
+    "empty_unfillable_cell_diagnostics",
+    "global_performance_report",
+    "global_reliability_report",
+    "precision_report",
+    "coverage_report",
+    "feature_performance_visualization_artifacts",
+    "parent_lineage_stepping_stone_report",
+    "descriptor_rebin_compatibility_tests",
+    "retina_experiment_schedule",
+    "simulated_soft_robot_schedule",
+    "real_soft_arm_schedule",
+    "comparison_baseline_rows"
+  ],
+  "missing_evidence": {
+    "explicit_bx_feature_descriptor_contract": "not_recorded_as_paper_contract",
+    "explicit_fx_performance_contract": "not_recorded_as_paper_contract",
+    "user_chosen_dimension_semantics": "not_recorded_locally",
+    "paper_p_and_x_map_exports": "not_recorded_locally",
+    "initialization_and_variation_records": "not_recorded_locally",
+    "illumination_metric_reports": "not_recorded_locally",
+    "feature_performance_visualizations": "not_recorded_locally",
+    "empty_unfillable_cell_diagnostics": "not_recorded_locally",
+    "lineage_stepping_stone_analysis": "not_recorded_locally",
+    "descriptor_rebin_tests": "not_recorded_locally",
+    "retina_domain_reproduction": "not_recorded_locally",
+    "simulated_soft_robot_reproduction": "not_recorded_locally",
+    "real_soft_arm_reproduction": "not_recorded_locally",
+    "comparison_baseline_rows": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has a configurable local 3D MAP-Elites-style archive, descriptor readiness metadata, and objective archive readiness metadata, but does not claim full Mouret-Clune illumination-algorithm parity with explicit b(x)/f(x) contracts, P/X feature-performance map exports, illumination metrics, visualization artifacts, lineage stepping-stone analysis, or retina/soft-robot/real-arm benchmark reproduction."
+}

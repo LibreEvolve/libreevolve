@@ -4422,17 +4422,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     local 3D quality-diversity grid plus retained elite list, with default
     axes based on archive selection score, complexity, and TF-IDF diversity,
     and configurable descriptor axes over metrics/metadata. Existing README
-    TODOs scope descriptor claims to insertion-time coordinates, but README
-    does not require a `1504.04909` source-specific boundary for paper
-    pseudocode, user-chosen feature descriptor contracts, illumination metrics,
-    feature-performance map exports, visualization artifacts, unfilled-cell
-    diagnostics, lineage/stepping-stone analysis, benchmark/domain
-    reproduction, or descriptor rebin compatibility evidence.
+    TODOs scope descriptor claims to insertion-time coordinates, and README now
+    points to `papers/map_elites_illumination_boundary.json` for the
+    `1504.04909` source-specific boundary. That sidecar records paper
+    pseudocode variables, local archive schemas, and false readiness for full
+    `P`/`X` map exports, illumination metrics, visualization/lineage artifacts,
+    and domain reproduction. It does not yet prove user-chosen feature
+    descriptor contracts, illumination metric reports, feature-performance map
+    exports, visualization artifacts, unfilled-cell diagnostics,
+    lineage/stepping-stone analysis, benchmark/domain reproduction, or
+    descriptor rebin compatibility evidence.
   - Required result: if README mentions MAP-Elites, illumination, behavior
     descriptors, feature-performance maps, archive coverage, reliability,
     precision, elite maps, or paper-faithful quality-diversity behavior, keep
-    wording source-scoped until manifests and reports include the `1504.04909`
-    source row, PDF hash, `b(x)`/`f(x)` schemas, dimension/discretization
+    wording source-scoped until manifests and reports include the executable
+    `1504.04909` evidence beyond the sidecar: `b(x)`/`f(x)` schemas,
+    dimension/discretization
     records, initialization/variation/replacement records, full map exports,
     coverage/reliability/precision/global-performance reports, visualization
     artifacts for Figures 3-7 style maps, lineage/parent-distance evidence,

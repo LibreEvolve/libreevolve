@@ -17807,3 +17807,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: embedded evaluator tests cover materialized helper imports,
     undeclared local module rejection, metadata policy fields, and existing
     callable/signature diagnostics.
+
+- [x] Add MAP-Elites illumination source-boundary gate.
+  - Spec evidence: Mouret and Clune's MAP-Elites paper defines an
+    illumination algorithm with explicit `b(x)`/`f(x)`, `P`/`X` maps,
+    per-cell replacement, illumination metrics, and paper-domain experiments.
+  - Status: `libreevolve.problems.benchmarks.map_elites_illumination_boundary`
+    now emits and validates `papers/map_elites_illumination_boundary.json`
+    with local PDF digest, paper pseudocode variables, local archive schemas,
+    false readiness for full map exports/metrics/domain reproduction, and
+    fail-closed overclaim checks.
+  - Remaining gap: executable paper-faithful feature descriptors, P/X map
+    exports, global performance/reliability/precision/coverage reports,
+    visualization/lineage artifacts, and retina/soft-robot/real-arm
+    reproduction remain open.
+  - Verification: `tests/test_map_elites_illumination_boundary.py` and
+    `tests/test_paper_manifest.py` cover the sidecar, drift rejection, and
+    repo-root sidecar requirement.

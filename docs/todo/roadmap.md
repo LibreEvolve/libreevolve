@@ -4936,16 +4936,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current evidence: ROADMAP describes a configurable local MAP-Elites archive
     and tracks stable descriptor/rebin gaps, while `papers/README.md` says the
     default local axes are selection score, serialized-workspace complexity,
-    and TF-IDF diversity. Roadmap lacks `1504.04909`-specific gates for paper
-    source metadata, explicit feature-descriptor schemas, user-chosen dimension
-    semantics, initialization/variation evidence, full feature-performance map
-    exports, unfilled-cell diagnostics, illumination metric reports,
-    visualization artifacts, parent-distance/lineage stepping-stone analysis,
+    and TF-IDF diversity. The committed
+    `papers/map_elites_illumination_boundary.json` sidecar now records the
+    `1504.04909` source metadata, local PDF hash, preliminary-draft/cache
+    status, paper pseudocode variables, local archive schemas, and false
+    readiness for full map exports, illumination metrics, and paper-domain
+    reproduction. Roadmap still lacks executable gates for explicit
+    feature-descriptor schemas, user-chosen dimension semantics,
+    initialization/variation evidence, full feature-performance map exports,
+    unfilled-cell diagnostics, illumination metric reports, visualization
+    artifacts, parent-distance/lineage stepping-stone analysis,
     benchmark/domain reproduction, and descriptor compatibility tests.
-  - Required result: add roadmap gates for `1504.04909`: paper/source manifest
-    entry, PDF/cache hash, preliminary-draft status, `b(x)`/`f(x)` contracts,
-    dimension declaration and discretization policy, random-initialization and
-    variation policy, per-cell replacement records, `P`/`X` feature-
+  - Required result: implement roadmap gates for `1504.04909` beyond the
+    sidecar: executable `b(x)`/`f(x)` contracts, dimension declaration and
+    discretization policy, random-initialization and variation policy,
+    per-cell replacement records, `P`/`X` feature-
     performance map exports, empty/unfillable cell diagnostics, coverage/global
     reliability/precision/global-performance reports, heatmap/visualization
     artifacts, lineage parent-cell distance reports, retina and robot

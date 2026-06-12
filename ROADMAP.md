@@ -455,7 +455,12 @@ is not yet an AlphaEvolve reproduction.
   model, or explicit tested rebin/snapshot semantics. Current
   `descriptor_model` snapshots carry
   `libreevolve.map_elites_descriptor_readiness.v1` with those readiness
-  surfaces false and overclaim validation.
+  surfaces false and overclaim validation. The committed
+  `papers/map_elites_illumination_boundary.json` sidecar now records the
+  source-specific MAP-Elites illumination boundary, keeping explicit
+  `b(x)`/`f(x)` contracts, `P`/`X` map exports, illumination metrics,
+  visualization/lineage artifacts, and paper-domain reproductions out of
+  current archive claims.
 - Extend the current selected-row `show` archive objective-vector summaries
   and manifest-level metric archive summaries into CLI/report drill-downs for
   metric-specific archives.

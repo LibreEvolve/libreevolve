@@ -4266,6 +4266,15 @@ def test_throughput_depth_strategy_treats_backend_role_as_descriptive_metadata()
     assert [first, second] == [0, 1]
     assert third == 0
     assert ens.call_history[-1]["backend_metadata"]["role"] == "breadth"
+    lane_evidence = ens.call_history[-1]["scheduler_policy"][
+        "throughput_depth_lane_evidence"
+    ]
+    assert lane_evidence["has_fast_breadth_lane"] is True
+    assert lane_evidence["has_strong_depth_lane"] is True
+    assert [lane["lane"] for lane in lane_evidence["lanes"]] == [
+        "fast_breadth",
+        "strong_depth",
+    ]
 
 
 def test_throughput_depth_metadata_is_normalized_against_reward_scale():
@@ -4337,6 +4346,48 @@ def test_throughput_depth_call_telemetry_records_effective_policy():
         "metadata_normalization": "per_selection_minmax",
         "metadata_weights": {"depth": 0.10, "cost": -0.05, "latency": -0.05},
         "neutral_normalized_metadata": 0.5,
+        "throughput_depth_lane_evidence": {
+            "policy": "throughput_depth_backend_metadata_lane_evidence_v1",
+            "status": "metadata_trace_not_experiment_report",
+            "eligible_backend_indices": [0, 1],
+            "lane_source": "backend_metadata.model_lane_or_role",
+            "lanes": [
+                {
+                    "backend_idx": 0,
+                    "metadata_role": None,
+                    "metadata_model_lane": None,
+                    "lane": "unclassified",
+                    "cost": 2.0,
+                    "latency": 1.0,
+                    "depth": 1.0,
+                    "normalized_cost": 1.0,
+                    "normalized_latency": 0.0,
+                    "normalized_depth": 0.0,
+                    "missing_metadata_defaults": [],
+                },
+                {
+                    "backend_idx": 1,
+                    "metadata_role": None,
+                    "metadata_model_lane": None,
+                    "lane": "unclassified",
+                    "cost": 1.0,
+                    "latency": 2.0,
+                    "depth": 4.0,
+                    "normalized_cost": 0.0,
+                    "normalized_latency": 1.0,
+                    "normalized_depth": 1.0,
+                    "missing_metadata_defaults": [],
+                },
+            ],
+            "has_fast_breadth_lane": False,
+            "has_strong_depth_lane": False,
+            "claim_ready": False,
+            "remaining_gaps": [
+                "experiment_level_selection_traces",
+                "equal_budget_scheduler_comparisons",
+                "candidate_throughput_and_quality_outcomes",
+            ],
+        },
     }
 
 

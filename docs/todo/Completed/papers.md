@@ -11844,3 +11844,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     proving role-specific selection and budget behavior remain open.
   - Verification: focused ensemble scheduler tests validate the implemented
     fields.
+
+- [x] Record per-call throughput-depth lane evidence.
+  - Spec evidence: AlphaEvolve Section 2.4's model mix separates low-latency
+    high-volume suggestions from stronger occasional suggestions.
+  - Status: per-call scheduler policy telemetry now records
+    `throughput_depth_lane_evidence` with eligible lanes, normalized
+    cost/latency/depth inputs, recognized fast-breadth/strong-depth labels, and
+    explicit `metadata_trace_not_experiment_report` status.
+  - Remaining paper gap: this does not prove reserved Flash/Pro-style lanes,
+    equal-budget scheduler comparisons, candidate throughput, or quality/depth
+    outcomes.
+  - Verification: focused ensemble scheduler tests validate the implemented
+    fields.

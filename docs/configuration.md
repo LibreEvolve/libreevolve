@@ -662,7 +662,11 @@ equal-valued fields use neutral `0.5`. Fixed weights are `depth: 0.10`,
 effective scheduler policy. The `role` field is descriptive metadata only; it
 is not yet used for quotas, escalation, or role-specific routing. Config
 validation makes role labels safe to persist, but accepted custom labels should
-not be treated as operational scheduler policy.
+not be treated as operational scheduler policy. The call policy also emits
+`throughput_depth_lane_evidence`: eligible backend indices, per-backend
+normalized cost/latency/depth values, missing-default markers, and recognized
+fast-breadth/strong-depth labels from `model_lane` or `role` metadata. That
+record is a metadata trace, not an experiment report.
 
 ### Plugins and logging
 

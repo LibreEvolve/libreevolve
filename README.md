@@ -2002,6 +2002,11 @@ scopes such as `feedback:*`. With
 selectable metadata is min/max normalized on each selection with fixed weights
 `depth: 0.10`, `cost: -0.05`, and `latency: -0.05`; equal-valued fields use
 neutral `0.5`, and the effective policy is persisted in call telemetry.
+That policy now includes `throughput_depth_lane_evidence`, a metadata trace of
+eligible backend lanes, normalized cost/latency/depth inputs, explicit
+fast-breadth or strong-depth labels when `model_lane` or `role` metadata
+declares them, and `claim_ready: false` until experiment-level selection traces
+and equal-budget comparisons exist.
 
 <details>
 <summary><h2>Architecture</h2></summary>

@@ -350,11 +350,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     metadata, role-backend eligibility, UCB-style selection, and a
     `throughput_depth` strategy with focused metadata/unit coverage for
     normalized depth/cost/latency contribution and breadth/depth role labels.
+    Per-call scheduler policy now emits
+    `throughput_depth_lane_evidence`, including eligible backend lanes,
+    normalized cost/latency/depth inputs, missing metadata defaults,
+    recognized fast-breadth/strong-depth labels from `model_lane` or `role`
+    metadata, and explicit `claim_ready: false` limitations.
   - Current gap: there is no runtime scheduler policy or experiment report
-    proving a reserved fast-breadth lane plus occasional strong-depth lane,
-    no equal-budget comparison against single-model or generic UCB routing,
-    and no paper-level evidence that the configured mix increases evaluated
-    idea volume while preserving breakthrough-quality proposals.
+    proving an experiment-owned fast-breadth lane plus occasional strong-depth
+    lane, no equal-budget comparison against single-model or generic UCB
+    routing, and no paper-level evidence that the configured mix increases
+    evaluated idea volume while preserving breakthrough-quality proposals.
   - Required result: add scheduler-validation fixtures and reports that record
     model lane roles, selection traces, consumed budget, candidate throughput,
     quality/depth outcomes, and equal-budget comparisons for fast/strong

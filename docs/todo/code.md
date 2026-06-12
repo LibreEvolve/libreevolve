@@ -4132,12 +4132,15 @@ Primary evidence:
     normalized depth/cost/latency contribution against the reward scale,
     descriptive breadth/depth role metadata, live role metadata routing,
     configured role-backend overrides, fallback to global selection without a
-    role match, and pull-once initialization before metadata priority.
+    role match, and pull-once initialization before metadata priority. Per-call
+    `scheduler_policy.throughput_depth_lane_evidence` now records eligible
+    backend lanes, normalized cost/latency/depth inputs, missing metadata
+    defaults, recognized fast-breadth/strong-depth labels from `model_lane` or
+    `role` metadata, and `claim_ready: false` limitations.
     This is not yet AlphaEvolve's Flash/Pro-style scheduler evidence: no
-    runtime policy reserves a low-latency breadth lane for high-volume
-    candidate generation while injecting a stronger depth lane for occasional
-    higher-quality proposals, and no report proves the mix improves search
-    under equal budgets.
+    runtime policy reserves a low-latency breadth lane or strong-depth lane
+    under an experiment-owned quota, and no report proves the mix improves
+    search under equal budgets.
     `max_llm_provider_attempts` now consumes retained adapter retry telemetry
     as a live after-call stop input; `max_llm_tokens`,
     `max_llm_cost_microusd`, and `max_llm_seconds` do the same for

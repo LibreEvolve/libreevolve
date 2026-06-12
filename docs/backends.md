@@ -244,7 +244,13 @@ overwhelm a full `1.0` empirical reward difference. Call telemetry records the
 effective scheduler policy. The optional `role` field is preserved as
 descriptive metadata but does not create breadth/depth quotas, escalation
 rules, or role-specific routing. Configured role labels must be manifest-safe,
-but custom labels are not interpreted by the scheduler.
+but custom labels are not interpreted by the scheduler. The persisted
+`scheduler_policy.throughput_depth_lane_evidence` record lists eligible
+backends, normalized cost/latency/depth values, missing metadata defaults, and
+explicit fast-breadth or strong-depth lane labels when `model_lane` or `role`
+metadata uses recognized values. It remains
+`metadata_trace_not_experiment_report`, not proof of AlphaEvolve Flash/Pro
+scheduling.
 
 Configured backend model identifiers are persisted in run manifests and call
 telemetry, so `Config` accepts only manifest-safe strings matching

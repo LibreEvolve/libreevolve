@@ -9058,3 +9058,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     AlphaEvolve-style budget policy open.
   - Verification: focused ensemble scheduler tests validate the implemented
     fields.
+
+- [x] Preserve per-call throughput-depth lane evidence.
+  - Spec evidence: roadmap scheduler claims need a visible boundary between
+    metadata-aware fast/strong lane traces and future experiment-grade
+    AlphaEvolve model-mix validation.
+  - Status: roadmap/TODO wording now recognizes
+    `throughput_depth_lane_evidence` as per-call metadata evidence with
+    normalized cost/latency/depth inputs, recognized fast-breadth/strong-depth
+    labels, and `claim_ready: false` limitations.
+  - Verification: focused ensemble scheduler tests validate the implemented
+    fields.

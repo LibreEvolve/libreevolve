@@ -830,11 +830,15 @@ cheap breadth models from deeper models. This is a scheduling concept, not a
 verified reproduction of AlphaEvolve's Gemini Flash/Pro policy.
 The current scoring formula uses only numeric `cost`, `latency`, and `depth`;
 it first selects each non-excluded backend once, then lets metadata influence
-selection. Backend metadata `role` is an optional live routing lane: if one or
-more backends declare a role matching the current LLM call role, selection is
-restricted to those backends; if no backend declares that role, the global
-backend bandit remains active. The ensemble constructor validates strategy
-names, exploration coefficients, retry/fallback controls, and one JSON-safe
+selection. Call telemetry also records a bounded
+`throughput_depth_lane_evidence` metadata trace with eligible lanes,
+normalized inputs, and recognized fast-breadth/strong-depth labels when
+`model_lane` or `role` metadata declares them. Backend metadata `role` is an
+optional live routing lane: if one or more backends declare a role matching the
+current LLM call role, selection is restricted to those backends; if no backend
+declares that role, the global backend bandit remains active. The ensemble
+constructor validates strategy names, exploration coefficients,
+retry/fallback controls, and one JSON-safe
 backend-metadata mapping per backend before calls can be generated.
 
 Mutation calls are the default reward-accounted ensemble pulls and receive

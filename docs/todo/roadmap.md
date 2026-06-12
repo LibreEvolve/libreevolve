@@ -1510,7 +1510,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     equal-budget scheduler variants, or prove that breadth/depth/cost/latency
     choices improve AlphaEvolve-style search outcomes. They also do not prove
     a dedicated fast-breadth plus strong-depth model-mix policy analogous to
-    AlphaEvolve's Flash/Pro scheduling.
+    AlphaEvolve's Flash/Pro scheduling. Per-call
+    `throughput_depth_lane_evidence` now records eligible lanes, normalized
+    metadata inputs, recognized fast-breadth/strong-depth labels, and
+    `claim_ready: false` limitations as a metadata trace rather than an
+    experiment report.
   - Required result: when executable scheduler-validation fixtures,
     experiment-level selection trace artifacts, equal-budget scheduler reports,
     dedicated fast/strong lane policies, or calibrated breadth/depth/cost/

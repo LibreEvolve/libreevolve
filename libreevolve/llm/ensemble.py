@@ -1108,6 +1108,9 @@ class LLMEnsemble:
             policy["metadata_normalization"] = _THROUGHPUT_DEPTH_NORMALIZATION
             policy["metadata_weights"] = dict(_THROUGHPUT_DEPTH_WEIGHTS)
             policy["neutral_normalized_metadata"] = _NEUTRAL_NORMALIZED_METADATA
+            policy["throughput_depth_lane_evidence"] = (
+                self._throughput_depth_lane_evidence(role_backend_indices)
+            )
         if (
             role is not None
             and role in self._reward_accounted_roles
@@ -1135,6 +1138,71 @@ class LLMEnsemble:
         if record["matching_scopes"]:
             record["unmatched_policy"] = "bounded_by_matching_role_call_limits"
         return record
+
+    def _throughput_depth_lane_evidence(
+        self,
+        role_backend_indices: set[int] | None,
+    ) -> dict:
+        eligible = (
+            list(range(len(self.backends)))
+            if role_backend_indices is None
+            else sorted(role_backend_indices)
+        )
+        normalized = {
+            field: self._normalized_scheduler_metadata(field, eligible)
+            for field in ("cost", "latency", "depth")
+        }
+        lanes = []
+        for index in eligible:
+            metadata = self._backend_metadata[index]
+            missing_defaults = [
+                field
+                for field in ("cost", "latency", "depth")
+                if field not in metadata
+            ]
+            lanes.append(
+                {
+                    "backend_idx": index,
+                    "metadata_role": metadata.get("role"),
+                    "metadata_model_lane": metadata.get("model_lane"),
+                    "lane": _classify_model_mix_lane(metadata),
+                    "cost": float(metadata.get("cost", 1.0)),
+                    "latency": float(metadata.get("latency", 1.0)),
+                    "depth": float(metadata.get("depth", 1.0)),
+                    "normalized_cost": normalized["cost"].get(
+                        index,
+                        _NEUTRAL_NORMALIZED_METADATA,
+                    ),
+                    "normalized_latency": normalized["latency"].get(
+                        index,
+                        _NEUTRAL_NORMALIZED_METADATA,
+                    ),
+                    "normalized_depth": normalized["depth"].get(
+                        index,
+                        _NEUTRAL_NORMALIZED_METADATA,
+                    ),
+                    "missing_metadata_defaults": missing_defaults,
+                }
+            )
+        return {
+            "policy": "throughput_depth_backend_metadata_lane_evidence_v1",
+            "status": "metadata_trace_not_experiment_report",
+            "eligible_backend_indices": eligible,
+            "lane_source": "backend_metadata.model_lane_or_role",
+            "lanes": lanes,
+            "has_fast_breadth_lane": any(
+                lane["lane"] == "fast_breadth" for lane in lanes
+            ),
+            "has_strong_depth_lane": any(
+                lane["lane"] == "strong_depth" for lane in lanes
+            ),
+            "claim_ready": False,
+            "remaining_gaps": [
+                "experiment_level_selection_traces",
+                "equal_budget_scheduler_comparisons",
+                "candidate_throughput_and_quality_outcomes",
+            ],
+        }
 
 
 class LLMCallLedgerError(ValueError):
@@ -3351,6 +3419,18 @@ def _role_selection_state_owner(
     if role_scheduler_scope == "role_scoped":
         return "role_scheduler_state"
     return "global_scheduler_state"
+
+
+def _classify_model_mix_lane(metadata: Mapping[str, object]) -> str:
+    raw = metadata.get("model_lane", metadata.get("role"))
+    if not isinstance(raw, str):
+        return "unclassified"
+    normalized = raw.lower().replace("-", "_").replace(" ", "_")
+    if normalized in {"fast", "breadth", "fast_breadth", "flash"}:
+        return "fast_breadth"
+    if normalized in {"strong", "depth", "strong_depth", "pro"}:
+        return "strong_depth"
+    return "unclassified"
 
 
 def _empty_role_accounting_record() -> dict[str, int | float]:

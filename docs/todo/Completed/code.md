@@ -17216,3 +17216,14 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     AlphaEvolve reward semantics, experiment-owned quota policy, or
     fast/strong model-mix proof.
   - Verification: focused ensemble scheduler tests pass.
+
+- [x] Add per-call throughput-depth lane evidence.
+  - Spec evidence: AlphaEvolve's model-mix discussion distinguishes fast
+    high-volume generation from occasional stronger depth suggestions.
+  - Status: `scheduler_policy.throughput_depth_lane_evidence` now records
+    eligible backend lanes, normalized cost/latency/depth inputs, missing
+    metadata defaults, recognized fast-breadth/strong-depth labels from
+    `model_lane` or `role` metadata, and `claim_ready: false` limitations.
+  - Remaining gap: this is a metadata trace, not experiment-level
+    selection/outcome evidence or equal-budget Flash/Pro-style validation.
+  - Verification: focused ensemble scheduler tests pass.

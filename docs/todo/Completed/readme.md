@@ -11525,3 +11525,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     scheduler-state ownership.
   - Verification: focused ensemble scheduler tests validate the implemented
     fields.
+
+- [x] Document per-call throughput-depth lane evidence.
+  - Spec evidence: README model-mix wording needed to expose current
+    fast-breadth/strong-depth metadata traces without implying AlphaEvolve
+    Flash/Pro scheduler validation.
+  - Status: README and backend docs now describe
+    `throughput_depth_lane_evidence` as a call-policy metadata trace with
+    eligible lanes, normalized inputs, recognized lane labels, and
+    `claim_ready: false`.
+  - Verification: focused ensemble scheduler tests validate the implemented
+    fields.

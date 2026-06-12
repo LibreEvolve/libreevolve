@@ -3351,7 +3351,12 @@ exception exposes a safe integer HTTP-style status code.
 Each call's `scheduler_policy` records the scheduler boundary: backend
 selection uses the shared `global_backend_bandit`, role selection is not
 independent per role, and sorted `reward_accounted_roles` state which roles can
-advance scheduler reward accounting.
+advance scheduler reward accounting. For `throughput_depth` calls it also
+includes `throughput_depth_lane_evidence`, a metadata trace of eligible backend
+indices, normalized cost/latency/depth values, missing-default markers, and
+recognized fast-breadth/strong-depth labels from backend `model_lane` or
+`role` metadata. That lane record is marked
+`metadata_trace_not_experiment_report` and `claim_ready: false`.
 Built-in provider adapters also add
 `adapter_retry` with their configured `provider_max_retries`, actual provider
 attempts, failed attempt count, and safe exception type labels for failed

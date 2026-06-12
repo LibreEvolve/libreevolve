@@ -17268,3 +17268,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     telemetry, capability lookup, diagnostics, and validated Flash/Pro lanes
     remains open.
   - Verification: focused runtime Gemini provider-parity boundary test passes.
+
+- [x] Add parallel-evaluation readiness absence report.
+  - Spec evidence: AlphaEvolve Section 2.4 ties expensive candidate
+    evaluation to parallelized work and throughput under slow evaluator
+    feedback.
+  - Status: runtime histories now include
+    `libreevolve.parallel_evaluation_readiness_report.v1`, derived from
+    startup evaluator-stage config, observed stage `sample_execution` metadata,
+    and distributed-topology evidence. It records configured local
+    sample-worker fan-out, observed wall-clock compression, local timeout
+    budget scope, topology linkage, and `claim_ready: false`.
+  - Remaining gap: per-candidate compute-hour budgets, candidate-level async
+    queues, distributed evaluator nodes, randomized shard identity,
+    mutation-depth impact, pending-work resume, and equal-budget parallelism
+    reports remain open.
+  - Verification: focused runtime parallel-evaluation readiness test passes.

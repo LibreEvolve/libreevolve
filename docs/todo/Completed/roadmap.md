@@ -9102,3 +9102,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     Gemini support open.
   - Verification: focused runtime Gemini provider-parity boundary test
     validates the implemented report.
+
+- [x] Preserve parallel-evaluation readiness boundary.
+  - Spec evidence: roadmap async/evaluator-worker claims need to separate
+    local sample-worker compression from AlphaEvolve-style evaluator-node
+    throughput and async controller work.
+  - Status: ROADMAP and TODO wording now recognize
+    `runtime.history.parallel_evaluation_readiness_report` as an absence
+    boundary with local sample-worker fan-out, observed wall-clock compression,
+    and false readiness for compute-hour, async queue, distributed worker,
+    mutation-depth, pending-work resume, and equal-budget evidence.
+  - Verification: focused runtime parallel-evaluation readiness test validates
+    the implemented report.

@@ -11897,3 +11897,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     provider-plugin/substitution contract proving Flash/Pro provider parity.
   - Verification: focused runtime Gemini provider-parity boundary test
     validates the implemented report.
+
+- [x] Record parallel-evaluation readiness absence boundary.
+  - Spec evidence: AlphaEvolve Sections 2.4 and 2.6 describe expensive
+    evaluations, parallelized work, and async controller/evaluator throughput.
+  - Status: paper-facing TODOs and runtime manifests now expose
+    `parallel_evaluation_readiness_report`, which records configured local
+    sample-worker fan-out, observed sample-execution compression, topology
+    linkage, and false readiness for compute-hour budgets, async queues,
+    distributed evaluator nodes, mutation-depth impact, and pending-work
+    resume.
+  - Remaining paper gap: this does not implement candidate-level async
+    evaluation, cluster worker identity, randomized shard accounting,
+    compute-hour budgets, or equal-budget parallelism evidence.
+  - Verification: focused runtime parallel-evaluation readiness test validates
+    the implemented report.

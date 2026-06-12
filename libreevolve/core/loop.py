@@ -5363,6 +5363,13 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
             )
         ),
         "evaluator_workload_report": _evaluator_workload_report(programs),
+        "parallel_evaluation_readiness_report": (
+            _parallel_evaluation_readiness_report(
+                startup_manifest,
+                programs,
+                distributed_pipeline_topology,
+            )
+        ),
         "qualitative_feedback_policy_report": (
             _qualitative_feedback_policy_report(
                 db.startup_manifest_snapshot(),
@@ -27548,6 +27555,311 @@ def _evaluator_workload_report(programs: list[Program]) -> dict:
     return report
 
 
+def _parallel_evaluation_readiness_report(
+    startup_manifest: Mapping[str, object],
+    programs: list[Program],
+    topology_report: Mapping[str, object],
+) -> dict:
+    config = (
+        startup_manifest.get("config")
+        if isinstance(startup_manifest.get("config"), Mapping)
+        else {}
+    )
+    eval_stages = (
+        config.get("eval_stages")
+        if isinstance(config.get("eval_stages"), list)
+        else []
+    )
+    stage_configs = _parallel_eval_stage_config_records(config, eval_stages)
+    candidate_records = _parallel_eval_candidate_records(programs)
+    sample_records = [
+        sample
+        for candidate in candidate_records
+        for sample in candidate.get("sample_execution_records", [])
+        if isinstance(sample, Mapping)
+    ]
+    parallel_sample_records = [
+        sample
+        for sample in sample_records
+        if _parallel_eval_positive_int(sample.get("effective_workers")) > 1
+    ]
+    compression_records = [
+        sample
+        for sample in sample_records
+        if sample.get("wall_clock_compression_observed") is True
+    ]
+    sample_elapsed_total = sum(
+        _parallel_eval_non_negative_number(sample.get("sample_elapsed_sec_sum")) or 0.0
+        for sample in sample_records
+    )
+    wall_clock_total = sum(
+        _parallel_eval_non_negative_number(sample.get("wall_clock_elapsed_sec")) or 0.0
+        for sample in sample_records
+    )
+    max_compression = max(
+        (
+            _parallel_eval_non_negative_number(
+                sample.get("wall_clock_compression_ratio")
+            )
+            or 0.0
+            for sample in sample_records
+        ),
+        default=0.0,
+    )
+    max_effective_workers = max(
+        [
+            record.get("effective_workers", 1)
+            for record in stage_configs
+            if isinstance(record.get("effective_workers"), int)
+        ]
+        + [
+            sample.get("effective_workers", 1)
+            for sample in sample_records
+            if isinstance(sample.get("effective_workers"), int)
+        ],
+        default=1,
+    )
+    report = {
+        "schema": "libreevolve.parallel_evaluation_readiness_report.v1",
+        "source": "startup_config_runtime_history_and_pipeline_topology",
+        "alphaevolve_requirement": (
+            "parallelized_expensive_evaluation_and_async_throughput"
+        ),
+        "configured_stage_count": len(stage_configs),
+        "configured_sample_worker_stage_count": sum(
+            1 for record in stage_configs if record.get("fanout_configured") is True
+        ),
+        "configured_stage_sample_count": sum(
+            int(record.get("samples", 0))
+            for record in stage_configs
+            if isinstance(record.get("samples"), int)
+        ),
+        "configured_max_effective_workers": max_effective_workers,
+        "stage_configurations": stage_configs,
+        "observed_evaluated_candidate_count": len(programs),
+        "observed_configured_stage_candidate_count": len(candidate_records),
+        "observed_sample_execution_record_count": len(sample_records),
+        "observed_parallel_sample_worker_record_count": len(parallel_sample_records),
+        "observed_wall_clock_compression_record_count": len(compression_records),
+        "observed_sample_elapsed_sec_sum": sample_elapsed_total,
+        "observed_wall_clock_elapsed_sec_sum": wall_clock_total,
+        "observed_max_wall_clock_compression_ratio": max_compression,
+        "candidate_records": candidate_records[:50],
+        "candidate_records_truncated": len(candidate_records) > 50,
+        "topology_linkage": {
+            "source_report_ref": "runtime.history.distributed_pipeline_topology_report",
+            "source_report_schema": topology_report.get("schema"),
+            "source_validation_ok": (
+                topology_report.get("validation", {}).get("ok")
+                if isinstance(topology_report.get("validation"), Mapping)
+                else None
+            ),
+            "controller_model": topology_report.get("controller_model"),
+            "evaluation_dispatch": (
+                topology_report.get("dispatch_policy", {}).get("evaluation_dispatch")
+                if isinstance(topology_report.get("dispatch_policy"), Mapping)
+                else None
+            ),
+            "worker_fanout_accounted": (
+                topology_report.get("throughput_budget_linkage", {}).get(
+                    "worker_fanout_accounted"
+                )
+                if isinstance(topology_report.get("throughput_budget_linkage"), Mapping)
+                else None
+            ),
+            "worker_fanout_accounting_scope": (
+                topology_report.get("throughput_budget_linkage", {}).get(
+                    "worker_fanout_accounting_scope"
+                )
+                if isinstance(topology_report.get("throughput_budget_linkage"), Mapping)
+                else None
+            ),
+        },
+        "compute_hour_budget": {
+            "per_candidate_compute_hour_budget_declared": False,
+            "local_timeout_budget_seconds_available": any(
+                record.get("local_timeout_budget_seconds_upper_bound") is not None
+                for record in stage_configs
+            ),
+            "local_timeout_budget_scope": "stage_sample_wall_clock_timeout_not_compute_hours",
+            "observed_sample_elapsed_sec_sum": sample_elapsed_total,
+            "observed_wall_clock_elapsed_sec_sum": wall_clock_total,
+        },
+        "async_pipeline_state": {
+            "candidate_level_evaluation_queue": False,
+            "distributed_evaluator_nodes": False,
+            "pending_work_resume": False,
+            "mutation_chain_depth_preserved_under_slow_feedback": False,
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "local_stage_sample_worker_fanout": len(parallel_sample_records) > 0
+            or any(record.get("fanout_configured") is True for record in stage_configs),
+            "wall_clock_compression_observed": len(compression_records) > 0,
+            "per_candidate_compute_hour_budget": False,
+            "candidate_level_async_evaluation": False,
+            "distributed_evaluator_worker_nodes": False,
+            "randomized_initialization_shards": False,
+            "mutation_chain_depth_impact": False,
+            "pending_work_resume": False,
+            "equal_budget_parallelism_report": False,
+            "remaining_gap": [
+                "per_candidate_compute_hour_budget_records",
+                "candidate_level_async_evaluation_queue",
+                "distributed_evaluator_worker_nodes",
+                "randomized_initialization_shard_identity",
+                "mutation_chain_depth_impact_under_slow_feedback",
+                "pending_evaluation_resume_state",
+                "equal_budget_parallelism_report_links",
+            ],
+        },
+    }
+    report["validation"] = validate_parallel_evaluation_readiness_report(report)
+    return report
+
+
+def _parallel_eval_stage_config_records(config: Mapping[str, object], eval_stages: list) -> list[dict]:
+    default_timeout = _parallel_eval_positive_number(config.get("eval_timeout_sec"))
+    records: list[dict] = []
+    for index, raw_stage in enumerate(eval_stages):
+        if not isinstance(raw_stage, Mapping):
+            continue
+        samples = _parallel_eval_positive_int(raw_stage.get("samples"))
+        if samples is None:
+            seeds = raw_stage.get("seeds")
+            samples = len(seeds) if isinstance(seeds, list) and seeds else 1
+        requested_workers = _parallel_eval_positive_int(raw_stage.get("sample_workers"))
+        if requested_workers is None:
+            requested_workers = 1
+        effective_workers = max(1, min(requested_workers, samples))
+        retries = _parallel_eval_non_negative_int(raw_stage.get("retries")) or 0
+        timeout = _parallel_eval_positive_number(
+            raw_stage.get("timeout_sec")
+        ) or default_timeout
+        timeout_budget = (
+            timeout * samples * (retries + 1)
+            if timeout is not None
+            else None
+        )
+        seeds = raw_stage.get("seeds")
+        records.append(
+            {
+                "stage_index": index,
+                "name": str(raw_stage.get("name", f"stage_{index}")),
+                "samples": samples,
+                "requested_workers": requested_workers,
+                "effective_workers": effective_workers,
+                "fanout_configured": effective_workers > 1,
+                "seed_count": len(seeds) if isinstance(seeds, list) else 0,
+                "retries": retries,
+                "timeout_sec": timeout,
+                "max_sample_seconds": _parallel_eval_positive_number(
+                    raw_stage.get("max_sample_seconds")
+                ),
+                "max_stage_seconds": _parallel_eval_positive_number(
+                    raw_stage.get("max_stage_seconds")
+                ),
+                "local_timeout_budget_seconds_upper_bound": timeout_budget,
+                "budget_scope": "local_wall_clock_timeout_not_compute_hour_budget",
+            }
+        )
+    return records
+
+
+def _parallel_eval_candidate_records(programs: list[Program]) -> list[dict]:
+    records: list[dict] = []
+    for program in programs:
+        evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+        metadata = evaluation.get("metadata") if isinstance(evaluation.get("metadata"), dict) else {}
+        configured = metadata.get("configured_stage_results")
+        if not isinstance(configured, list):
+            continue
+        sample_records: list[dict] = []
+        for stage_index, raw_stage in enumerate(configured):
+            if not isinstance(raw_stage, Mapping):
+                continue
+            stage_metadata = (
+                raw_stage.get("metadata")
+                if isinstance(raw_stage.get("metadata"), Mapping)
+                else {}
+            )
+            sample_execution = stage_metadata.get("sample_execution")
+            if not isinstance(sample_execution, Mapping):
+                continue
+            sample_records.append(
+                {
+                    "stage_index": raw_stage.get("stage_index", stage_index),
+                    "stage_name": raw_stage.get("name", f"stage_{stage_index}"),
+                    "mode": sample_execution.get("mode"),
+                    "requested_workers": sample_execution.get("requested_workers"),
+                    "effective_workers": sample_execution.get("effective_workers"),
+                    "planned_samples": sample_execution.get("planned_samples"),
+                    "completed_samples": sample_execution.get("completed_samples"),
+                    "sample_elapsed_sec_sum": sample_execution.get(
+                        "sample_elapsed_sec_sum"
+                    ),
+                    "wall_clock_elapsed_sec": sample_execution.get(
+                        "wall_clock_elapsed_sec"
+                    ),
+                    "wall_clock_compression_ratio": sample_execution.get(
+                        "wall_clock_compression_ratio"
+                    ),
+                    "wall_clock_compression_observed": (
+                        sample_execution.get("wall_clock_compression_observed") is True
+                    ),
+                }
+            )
+        if sample_records:
+            records.append(
+                {
+                    "program_id": program.id,
+                    "generation": program.generation,
+                    "candidate_type": (
+                        program.metadata.get("candidate_type")
+                        if isinstance(program.metadata, Mapping)
+                        else None
+                    ),
+                    "configured_stage_count": len(configured),
+                    "sample_execution_records": sample_records,
+                }
+            )
+    return records
+
+
+def _parallel_eval_positive_int(value: object) -> int | None:
+    if isinstance(value, int) and not isinstance(value, bool) and value > 0:
+        return value
+    return None
+
+
+def _parallel_eval_non_negative_int(value: object) -> int | None:
+    if isinstance(value, int) and not isinstance(value, bool) and value >= 0:
+        return value
+    return None
+
+
+def _parallel_eval_positive_number(value: object) -> float | None:
+    if (
+        isinstance(value, (int, float))
+        and not isinstance(value, bool)
+        and math.isfinite(float(value))
+        and float(value) > 0.0
+    ):
+        return float(value)
+    return None
+
+
+def _parallel_eval_non_negative_number(value: object) -> float | None:
+    if (
+        isinstance(value, (int, float))
+        and not isinstance(value, bool)
+        and math.isfinite(float(value))
+        and float(value) >= 0.0
+    ):
+        return float(value)
+    return None
+
+
 def _proposal_lifecycle_report(
     db: ProgramDatabase,
     programs: list[Program],
@@ -30685,6 +30997,322 @@ def validate_evaluator_workload_report(report: object) -> dict:
         issues.append({"code": "claim_ready_overclaim", "message": "workload report must not claim AlphaEvolve workload parity"})
     return {
         "schema": "libreevolve.evaluator_workload_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def validate_parallel_evaluation_readiness_report(report: object) -> dict:
+    issues: list[dict[str, str]] = []
+    if not isinstance(report, Mapping):
+        return {
+            "schema": "libreevolve.parallel_evaluation_readiness_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_report",
+                    "message": "parallel evaluation readiness report must be a mapping",
+                }
+            ],
+        }
+    if report.get("schema") != "libreevolve.parallel_evaluation_readiness_report.v1":
+        issues.append({"code": "invalid_schema", "message": "unsupported schema"})
+    if report.get("source") != "startup_config_runtime_history_and_pipeline_topology":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "source must identify startup config, runtime history, and topology",
+            }
+        )
+    stages = report.get("stage_configurations")
+    if not isinstance(stages, list):
+        issues.append(
+            {
+                "code": "invalid_stage_configurations",
+                "message": "stage_configurations must be a list",
+            }
+        )
+        stages = []
+    for index, stage in enumerate(stages):
+        if not isinstance(stage, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_stage_configuration",
+                    "message": "stage configuration records must be mappings",
+                }
+            )
+            continue
+        if stage.get("stage_index") != index:
+            issues.append(
+                {
+                    "code": "invalid_stage_index",
+                    "message": "stage indexes must be contiguous",
+                }
+            )
+        samples = _parallel_eval_positive_int(stage.get("samples"))
+        requested = _parallel_eval_positive_int(stage.get("requested_workers"))
+        effective = _parallel_eval_positive_int(stage.get("effective_workers"))
+        if samples is None or requested is None or effective is None:
+            issues.append(
+                {
+                    "code": "invalid_stage_worker_counts",
+                    "message": "stage samples and workers must be positive integers",
+                }
+            )
+        elif effective > min(requested, samples):
+            issues.append(
+                {
+                    "code": "effective_workers_exceed_bounds",
+                    "message": "effective workers cannot exceed requested workers or samples",
+                }
+            )
+        if stage.get("fanout_configured") is not (effective is not None and effective > 1):
+            issues.append(
+                {
+                    "code": "fanout_configured_mismatch",
+                    "message": "fanout_configured must match effective worker count",
+                }
+            )
+        if stage.get("budget_scope") != "local_wall_clock_timeout_not_compute_hour_budget":
+            issues.append(
+                {
+                    "code": "invalid_stage_budget_scope",
+                    "message": "stage budget scope must preserve compute-hour boundary",
+                }
+            )
+    _validate_report_count(report, "configured_stage_count", len(stages), issues)
+    _validate_report_count(
+        report,
+        "configured_sample_worker_stage_count",
+        sum(
+            1
+            for stage in stages
+            if isinstance(stage, Mapping) and stage.get("fanout_configured") is True
+        ),
+        issues,
+    )
+    _validate_report_count(
+        report,
+        "configured_stage_sample_count",
+        sum(
+            int(stage.get("samples", 0))
+            for stage in stages
+            if isinstance(stage, Mapping) and isinstance(stage.get("samples"), int)
+        ),
+        issues,
+    )
+    candidates = report.get("candidate_records")
+    if not isinstance(candidates, list):
+        issues.append(
+            {
+                "code": "invalid_candidate_records",
+                "message": "candidate_records must be a list",
+            }
+        )
+        candidates = []
+    sample_records: list[Mapping[str, object]] = []
+    for candidate in candidates:
+        if not isinstance(candidate, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_candidate_record",
+                    "message": "candidate records must be mappings",
+                }
+            )
+            continue
+        samples = candidate.get("sample_execution_records")
+        if not isinstance(samples, list):
+            issues.append(
+                {
+                    "code": "invalid_sample_execution_records",
+                    "message": "sample_execution_records must be a list",
+                }
+            )
+            continue
+        for sample in samples:
+            if not isinstance(sample, Mapping):
+                issues.append(
+                    {
+                        "code": "invalid_sample_execution_record",
+                        "message": "sample execution records must be mappings",
+                    }
+                )
+                continue
+            sample_records.append(sample)
+            for field in ("requested_workers", "effective_workers", "completed_samples"):
+                if _parallel_eval_positive_int(sample.get(field)) is None:
+                    issues.append(
+                        {
+                            "code": f"invalid_{field}",
+                            "message": f"{field} must be a positive integer",
+                        }
+                    )
+            for field in ("sample_elapsed_sec_sum", "wall_clock_elapsed_sec"):
+                if _parallel_eval_non_negative_number(sample.get(field)) is None:
+                    issues.append(
+                        {
+                            "code": f"invalid_{field}",
+                            "message": f"{field} must be a non-negative number",
+                        }
+                    )
+    retained_parallel_records = sum(
+        1
+        for sample in sample_records
+        if (_parallel_eval_positive_int(sample.get("effective_workers")) or 0) > 1
+    )
+    retained_compression_records = sum(
+        1
+        for sample in sample_records
+        if sample.get("wall_clock_compression_observed") is True
+    )
+    if report.get("candidate_records_truncated") is True:
+        for field, retained_count in (
+            ("observed_configured_stage_candidate_count", len(candidates)),
+            ("observed_sample_execution_record_count", len(sample_records)),
+            ("observed_parallel_sample_worker_record_count", retained_parallel_records),
+            ("observed_wall_clock_compression_record_count", retained_compression_records),
+        ):
+            value = _parallel_eval_non_negative_int(report.get(field))
+            if value is None or value < retained_count:
+                issues.append(
+                    {
+                        "code": f"invalid_{field}",
+                        "message": f"{field} must cover retained records when truncated",
+                    }
+                )
+    else:
+        _validate_report_count(
+            report,
+            "observed_configured_stage_candidate_count",
+            len(candidates),
+            issues,
+        )
+        _validate_report_count(
+            report,
+            "observed_sample_execution_record_count",
+            len(sample_records),
+            issues,
+        )
+        _validate_report_count(
+            report,
+            "observed_parallel_sample_worker_record_count",
+            retained_parallel_records,
+            issues,
+        )
+        _validate_report_count(
+            report,
+            "observed_wall_clock_compression_record_count",
+            retained_compression_records,
+            issues,
+        )
+    topology = report.get("topology_linkage")
+    if not isinstance(topology, Mapping):
+        issues.append(
+            {
+                "code": "invalid_topology_linkage",
+                "message": "topology_linkage must be a mapping",
+            }
+        )
+    else:
+        if topology.get("source_report_ref") != (
+            "runtime.history.distributed_pipeline_topology_report"
+        ):
+            issues.append(
+                {
+                    "code": "invalid_topology_ref",
+                    "message": "topology link must reference the runtime topology report",
+                }
+            )
+        if topology.get("source_report_schema") != (
+            "libreevolve.distributed_pipeline_topology_report.v1"
+        ):
+            issues.append(
+                {
+                    "code": "invalid_topology_schema",
+                    "message": "topology link schema is unsupported",
+                }
+            )
+    compute_budget = report.get("compute_hour_budget")
+    if not isinstance(compute_budget, Mapping):
+        issues.append(
+            {
+                "code": "invalid_compute_hour_budget",
+                "message": "compute_hour_budget must be a mapping",
+            }
+        )
+    else:
+        if compute_budget.get("per_candidate_compute_hour_budget_declared") is not False:
+            issues.append(
+                {
+                    "code": "compute_hour_budget_overclaim",
+                    "message": "per-candidate compute-hour budget must remain false",
+                }
+            )
+        if compute_budget.get("local_timeout_budget_scope") != (
+            "stage_sample_wall_clock_timeout_not_compute_hours"
+        ):
+            issues.append(
+                {
+                    "code": "invalid_timeout_budget_scope",
+                    "message": "timeout budget scope must preserve compute-hour boundary",
+                }
+            )
+    async_state = report.get("async_pipeline_state")
+    if not isinstance(async_state, Mapping):
+        issues.append(
+            {
+                "code": "invalid_async_pipeline_state",
+                "message": "async_pipeline_state must be a mapping",
+            }
+        )
+    else:
+        for field in (
+            "candidate_level_evaluation_queue",
+            "distributed_evaluator_nodes",
+            "pending_work_resume",
+            "mutation_chain_depth_preserved_under_slow_feedback",
+        ):
+            if async_state.get(field) is not False:
+                issues.append(
+                    {
+                        "code": f"{field}_overclaim",
+                        "message": f"{field} must remain false until implemented",
+                    }
+                )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "claim_ready_overclaim",
+                "message": "parallel evaluation report must not claim readiness",
+            }
+        )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be a mapping",
+            }
+        )
+    else:
+        for field in (
+            "per_candidate_compute_hour_budget",
+            "candidate_level_async_evaluation",
+            "distributed_evaluator_worker_nodes",
+            "randomized_initialization_shards",
+            "mutation_chain_depth_impact",
+            "pending_work_resume",
+            "equal_budget_parallelism_report",
+        ):
+            if readiness.get(field) is not False:
+                issues.append(
+                    {
+                        "code": f"{field}_overclaim",
+                        "message": f"{field} must remain false until implemented",
+                    }
+                )
+    return {
+        "schema": "libreevolve.parallel_evaluation_readiness_report.v1",
         "ok": not issues,
         "issues": issues,
     }

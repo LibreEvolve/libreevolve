@@ -492,7 +492,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     observed wall-clock seconds, and compression ratios, but the roadmap should
     not treat local sample-worker compression or generic async queues as
     sufficient without cluster-scale compute-hour accounting, distributed
-    evaluator-worker fan-out, and mutation-depth evidence.
+    evaluator-worker fan-out, and mutation-depth evidence. ROADMAP now points
+    to `runtime.history.parallel_evaluation_readiness_report`, which records
+    local sample-worker fan-out and compression while keeping compute-hour,
+    async queue, distributed worker, mutation-depth, pending-work resume, and
+    equal-budget parallelism readiness false.
   - Required result: when parallel evaluator execution or reports land, update
     ROADMAP, README, papers index, and code/paper TODOs with per-candidate
     compute-hour budgets, evaluator-worker fan-out, randomized-initialization

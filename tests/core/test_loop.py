@@ -47,6 +47,7 @@ from libreevolve.core.loop import (
     validate_evaluation_cascade_report,
     validate_cascade_hypothesis_test_policy_report,
     validate_evaluator_workload_report,
+    validate_parallel_evaluation_readiness_report,
     validate_distributed_pipeline_topology_report,
     validate_alphaevolve_process_exhibit_report,
     validate_candidate_abstraction_choice_report,
@@ -1687,6 +1688,84 @@ def test_pipeline_topology_records_configured_evaluator_sample_workers(tmp_path)
     assert compression["claim_scope"] == (
         "local_configured_stage_sample_worker_wall_clock_compression"
     )
+
+
+def test_runtime_history_records_parallel_evaluation_readiness_boundary(tmp_path):
+    problem = _problem(
+        "def evaluate(code, workspace, stage):\n"
+        "    import time\n"
+        "    time.sleep(0.05)\n"
+        "    return {'score': (stage['sample_index'] + 1) / 3, 'is_valid': True}\n",
+    )
+
+    evolve(
+        problem,
+        Config(
+            max_generations=0,
+            log_dir=str(tmp_path),
+            problem_name="parallel_readiness",
+            eval_stages=[
+                {
+                    "name": "sampled",
+                    "samples": 3,
+                    "sample_workers": 3,
+                    "timeout_sec": 1.0,
+                    "seeds": [101, 102, 103],
+                }
+            ],
+        ),
+    )
+
+    manifest = json.loads(
+        (tmp_path / "parallel_readiness" / "manifest.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    report = manifest["runtime"]["history"]["parallel_evaluation_readiness_report"]
+
+    assert report["schema"] == "libreevolve.parallel_evaluation_readiness_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_parallel_evaluation_readiness_report(report)["ok"] is True
+    assert report["configured_stage_count"] == 1
+    assert report["configured_sample_worker_stage_count"] == 1
+    assert report["configured_stage_sample_count"] == 3
+    assert report["configured_max_effective_workers"] == 3
+    assert report["observed_evaluated_candidate_count"] == 1
+    assert report["observed_configured_stage_candidate_count"] == 1
+    assert report["observed_sample_execution_record_count"] == 1
+    assert report["observed_parallel_sample_worker_record_count"] == 1
+    assert report["observed_wall_clock_compression_record_count"] == 1
+    assert report["observed_max_wall_clock_compression_ratio"] > 1.0
+    assert report["compute_hour_budget"] == {
+        "per_candidate_compute_hour_budget_declared": False,
+        "local_timeout_budget_seconds_available": True,
+        "local_timeout_budget_scope": "stage_sample_wall_clock_timeout_not_compute_hours",
+        "observed_sample_elapsed_sec_sum": report["observed_sample_elapsed_sec_sum"],
+        "observed_wall_clock_elapsed_sec_sum": report["observed_wall_clock_elapsed_sec_sum"],
+    }
+    assert report["async_pipeline_state"] == {
+        "candidate_level_evaluation_queue": False,
+        "distributed_evaluator_nodes": False,
+        "pending_work_resume": False,
+        "mutation_chain_depth_preserved_under_slow_feedback": False,
+    }
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["local_stage_sample_worker_fanout"] is True
+    assert report["claim_readiness"]["wall_clock_compression_observed"] is True
+    assert report["claim_readiness"]["candidate_level_async_evaluation"] is False
+    assert report["candidate_records"][0]["sample_execution_records"][0]["mode"] == (
+        "thread_pool"
+    )
+
+    overclaimed = copy.deepcopy(report)
+    overclaimed["compute_hour_budget"]["per_candidate_compute_hour_budget_declared"] = True
+    overclaimed["async_pipeline_state"]["distributed_evaluator_nodes"] = True
+    validation = validate_parallel_evaluation_readiness_report(overclaimed)
+    assert validation["ok"] is False
+    assert {
+        "compute_hour_budget_overclaim",
+        "distributed_evaluator_nodes_overclaim",
+    }.issubset({issue["code"] for issue in validation["issues"]})
 
 
 def test_validate_controller_state_snapshot_reports_overclaims_and_pending_work():

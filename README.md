@@ -1410,6 +1410,13 @@ checkpoint, or AlphaEvolve Section 2.6 topology overclaims. This report is
 negative boundary evidence for the current synchronous implementation, not a
 distributed async pipeline.
 Completed manifests also include
+`runtime.history.parallel_evaluation_readiness_report`, which aggregates
+configured stage sample-worker fan-out, observed sample-execution compression,
+and the topology link while keeping `claim_ready: false` for missing
+per-candidate compute-hour budgets, candidate-level async evaluator queues,
+distributed evaluator nodes, mutation-depth impact, pending-work resume, and
+equal-budget parallelism reports.
+Completed manifests also include
 `runtime.history.alphaevolve_process_exhibit_report`, which maps AlphaEvolve
 Figure 1/Figure 2 process nodes, edges, and Figure 2 displayed controller
 steps to LibreEvolve components and run-artifact paths. The report records
@@ -2583,6 +2590,11 @@ requires serial sample decisions. Multi-sample evaluations record
 `metadata.sample_execution` with requested/effective workers, summed sample
 elapsed seconds, observed stage wall-clock seconds, and a wall-clock
 compression ratio.
+The same facts are summarized in
+`runtime.history.parallel_evaluation_readiness_report`, which explicitly
+separates local stage-sample thread-pool compression from AlphaEvolve-style
+parallel evaluator-node throughput, compute-hour accounting, and async
+pending-work resume.
 Each structured evaluation also carries `accounting` counters for subprocess
 attempts, configured-stage samples, retry attempts, validator timeouts, and
 sample/stage budget exhaustions; these counters roll into candidate budget

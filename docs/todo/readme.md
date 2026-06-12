@@ -2613,6 +2613,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     workers. It should not imply that current sequential batches or local
     sample workers prove evaluation-cluster fan-out, cluster-scale compute-hour
     accounting, or preserved mutation-chain depth under expensive evaluation.
+    README now points to `runtime.history.parallel_evaluation_readiness_report`,
+    which records local sample-worker fan-out and wall-clock compression while
+    preserving false readiness for compute-hour budgets, async evaluator
+    queues, distributed worker nodes, mutation-depth impact, and pending-work
+    resume.
   - Required result: when parallelized-evaluation reports land, update README,
     ROADMAP, papers index, and code/paper TODOs with per-candidate compute-hour
     budget, wall-clock duration, evaluator-worker fan-out, randomized

@@ -1141,6 +1141,21 @@ workers keep `evaluation_dispatch: inline_blocking_local_subprocess` and
 `validate_distributed_pipeline_topology_report()` keeps `claim_ready: false`
 and fails async-pipeline, async-worker, pending-checkpoint, or AlphaEvolve
 async-topology overclaims.
+Completed runtime history also records
+`runtime.history.parallel_evaluation_readiness_report` with schema
+`libreevolve.parallel_evaluation_readiness_report.v1`. It aggregates the
+configured `eval_stages[].sample_workers` settings, observed
+`evaluation.metadata.sample_execution` records, summed sample elapsed seconds,
+observed wall-clock seconds, wall-clock compression records, and a link back to
+`runtime.history.distributed_pipeline_topology_report`.
+
+This report is a scoped readiness boundary for AlphaEvolve Section 2.4
+parallel evaluation. Local configured-stage sample workers can show fan-out and
+wall-clock compression, but `claim_ready` remains false until the runtime
+records per-candidate compute-hour budgets, candidate-level async evaluation
+queues, distributed evaluator worker nodes, randomized-initialization shard
+identity, mutation-chain-depth impact under slow feedback, pending-work resume
+state, and equal-budget parallelism reports.
 Malformed evaluator accounting passed directly to `RunBudget.record_evaluation()`
 is rejected before local evaluation counters mutate. The current
 `max_evaluations` limit is still a seed/candidate evaluation cap rather than a

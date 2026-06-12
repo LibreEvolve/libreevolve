@@ -1428,7 +1428,12 @@ Primary evidence:
     records `evaluation.metadata.sample_execution` with summed sample elapsed
     seconds, observed wall-clock seconds, and compression ratio, and the
     process-exhibit evaluator-pool record summarizes observed local
-    sample-worker wall-clock compression.
+    sample-worker wall-clock compression. Runtime histories now include
+    `libreevolve.parallel_evaluation_readiness_report.v1`, which aggregates
+    configured local sample-worker fan-out, observed wall-clock compression,
+    and topology linkage while preserving `claim_ready: false` for missing
+    compute-hour budgets, candidate-level async queues, distributed evaluator
+    nodes, mutation-depth impact, and pending-work resume.
     This still does not provide async candidate queues, distributed evaluator
     nodes, or mutation-depth throughput under slow evaluator feedback.
     `RunBudget` explicitly tracks synchronous local consumption; controller

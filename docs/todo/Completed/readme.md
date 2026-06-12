@@ -11569,3 +11569,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     lanes, and `claim_ready: false`.
   - Verification: focused runtime Gemini provider-parity boundary test
     validates the implemented report.
+
+- [x] Document parallel-evaluation readiness boundary.
+  - Spec evidence: README parallel-evaluation wording needed to distinguish
+    local configured-stage sample workers from AlphaEvolve-style async
+    evaluator-node throughput and compute-hour accounting.
+  - Status: README, configuration docs, and run-artifact docs now describe
+    `runtime.history.parallel_evaluation_readiness_report`, including local
+    sample-worker fan-out, observed wall-clock compression, topology linkage,
+    and `claim_ready: false`.
+  - Verification: focused runtime parallel-evaluation readiness test validates
+    the implemented report.

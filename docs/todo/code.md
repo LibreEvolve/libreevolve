@@ -6261,8 +6261,8 @@ Primary evidence:
     public repository hash/status, and a proof-status field distinguishing
     finite generated examples from theorem-backed constructions.
 
-- [ ] Add global NLP solver comparator boundary for AlphaEvolve geometry
-      benchmarks.
+- [ ] Implement global NLP solver comparator for AlphaEvolve geometry
+      benchmarks beyond the source boundary.
   - Spec evidence: arXiv `2601.05943`, `Global Optimization for
     Combinatorial Geometry Problems`, was submitted January 9, 2026. Its
     abstract says recent AlphaEvolve results raise the question of whether
@@ -6279,11 +6279,12 @@ Primary evidence:
     specifies Mosel NLP/QCP formulations, squared-distance variables, circle
     center/radius/rectangle-width variables, hexagon rotation variables,
     half-space parameters, and Farkas multipliers for non-overlap.
-  - Current evidence: `papers/README.md` lists `2601.05943` only as an
-    optimization benchmark comparator with no nonlinear-programming solver
-    comparison harness. LibreEvolve has no implemented source-boundary gate for
-    this source, no NLP formulation schema for AlphaEvolve geometry/combinatorial
-    benchmarks, no FICO Xpress or SCIP runner abstraction, no solver-version
+  - Current evidence: `papers/global_nlp_optimization_boundary.json` now
+    records the source-specific absence boundary for `2601.05943`, and
+    `papers/README.md` lists it as an optimization benchmark comparator with no
+    nonlinear-programming solver comparison harness. LibreEvolve still has no
+    NLP formulation schema for AlphaEvolve geometry/combinatorial benchmarks,
+    no FICO Xpress or SCIP runner abstraction, no solver-version
     or license/proprietary-availability records, no result comparison table
     against AlphaEvolve/literature values, no certificate/tolerance policy for
     solver outputs, and no report that distinguishes LLM-discovered algorithm

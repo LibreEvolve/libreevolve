@@ -12129,3 +12129,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     and local workflow artifacts explicit as missing.
   - Verification: Fault2Flow boundary and paper-manifest tests validate the
     sidecar that README now references.
+
+- [x] Document Global NLP Optimization `2601.05943` source boundary in README.
+  - Status: README now names `papers/global_nlp_optimization_boundary.json` in
+    the source reference table while keeping Global NLP Optimization as a
+    direct global-NLP solver comparator only, with NLP formulation schemas,
+    Mosel artifacts, Xpress/SCIP runners, solver license/version records,
+    Table 1-3 reproduction, validation-code outputs, and independent checker
+    evidence explicit as missing.
+  - Verification: Global NLP Optimization boundary and paper-manifest tests
+    validate the sidecar that README now references.

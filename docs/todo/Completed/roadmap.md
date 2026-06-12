@@ -9681,3 +9681,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     snapshots.
   - Verification: Fault2Flow boundary tests and paper-manifest tests validate
     the sidecar and repo-root requirement.
+
+- [x] Preserve Global NLP Optimization `2601.05943` boundary scope in roadmap.
+  - Status: ROADMAP and roadmap TODO wording now identify
+    `papers/global_nlp_optimization_boundary.json` as the source-specific
+    boundary for direct NLP formulation schemas, Mosel model artifacts,
+    min-max distance-ratio fixtures, square and perimeter-4 rectangle
+    circle-packing fixtures, rotated unit hexagon-packing fixtures, Farkas
+    non-overlap certificates, FICO Xpress and SCIP runner evidence, solver
+    identity/version/license records, incumbent/bound/certificate artifacts,
+    numerical tolerance and rounding policy, AlphaEvolve validation-code
+    outputs, Table 1-3 reproduction rows, solver-attribution caveats,
+    dual-bound-detail caveats, and independent checker outputs.
+  - Verification: Global NLP Optimization boundary tests and paper-manifest
+    tests validate the sidecar and repo-root requirement.

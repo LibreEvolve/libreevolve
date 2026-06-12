@@ -4463,7 +4463,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     finite AlphaEvolve-discovered examples from human-proved all-`m`
     constructions.
 
-- [ ] Add global NLP solver comparator gates before roadmap promotion.
+- [ ] Implement global NLP solver comparator gates beyond source-boundary
+      roadmap promotion.
   - Spec evidence: arXiv `2601.05943`, submitted January 9, 2026, introduces
     `Global Optimization for Combinatorial Geometry Problems`. The abstract
     frames AlphaEvolve's geometric/combinatorial discoveries as a benchmark
@@ -4475,9 +4476,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     packing, and regular-hexagon packing with explicit nonlinear
     formulations, Mosel implementations, squared-distance QCPs, and Farkas-
     multiplier separation for hexagon non-overlap.
-  - Current evidence: ROADMAP tracks AlphaEvolve constructive-math benchmark
-    gaps and broad comparator ideas, but it does not promote `2601.05943`
-    beyond potential-future-benchmark status. It does not define a direct NLP
+  - Current evidence: ROADMAP and `papers/global_nlp_optimization_boundary.json`
+    now keep `2601.05943` source-scoped as potential-future-benchmark status
+    until local solver artifacts exist. ROADMAP still does not define a direct NLP
     formulation gate, Xpress/SCIP runner abstraction, solver license/status
     handling, selected benchmark subset, solver parameter/time-limit policy,
     incumbent/bound/certificate artifact records, numerical tolerance policy,

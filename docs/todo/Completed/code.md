@@ -18067,3 +18067,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     records, and local workflow snapshots remain open.
   - Verification: Fault2Flow boundary tests and paper-manifest tests cover the
     sidecar, drift rejection, and repo-root sidecar requirement.
+
+- [x] Add Global NLP Optimization `2601.05943` source-boundary gate.
+  - Status:
+    `libreevolve.problems.benchmarks.global_nlp_optimization_boundary` now
+    emits and validates `papers/global_nlp_optimization_boundary.json` with
+    cached PDF digest, arXiv v2 identity, CC BY-NC-ND license metadata,
+    reference-only source links, selected benchmark families, Table 1-3 source
+    result rows, required future evidence fields, missing-evidence keys, and
+    overclaim rejection.
+  - Remaining gap: direct NLP schemas, Mosel artifacts, Xpress/SCIP runners,
+    solver license/version records, incumbent/bound/certificate artifacts,
+    tolerance policy, AlphaEvolve validation-code outputs, solver logs,
+    Table 1-3 reproduction, and independent checker outputs remain open.
+  - Verification: Global NLP Optimization boundary tests and paper-manifest
+    tests cover the sidecar, drift rejection, and repo-root sidecar
+    requirement.

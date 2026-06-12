@@ -1717,6 +1717,58 @@ def test_validate_paper_manifest_requires_fault2flow_boundary_at_repo_root(
     assert "fault2flow_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_global_nlp_optimization_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.GLOBAL_NLP_OPTIMIZATION_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.global_nlp_optimization_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_global_nlp_optimization_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.global_nlp_optimization_boundary_record()
+    record["claim_ready"] = True
+    record["local_evidence"]["xpress_runner_ready"] = True
+    sidecar = tmp_path / paper_manifest.GLOBAL_NLP_OPTIMIZATION_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "global_nlp_optimization_boundary_claim_ready_overclaim" in codes
+    assert (
+        "global_nlp_optimization_boundary_local_evidence_xpress_runner_ready_overclaim"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_global_nlp_optimization_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "global_nlp_optimization_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_bilateral_trade_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

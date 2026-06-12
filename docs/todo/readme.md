@@ -3994,8 +3994,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     process, bit-reversal theorem proof, public artifact verification, and
     theorem-backed consequences.
 
-- [ ] Keep README global-NLP solver comparison claims absent or source-scoped
-      until solver benchmark evidence exists.
+- [ ] Implement README global-NLP solver comparison claims beyond source-scoped
+      absence.
   - Spec evidence: arXiv `2601.05943`, `Global Optimization for
     Combinatorial Geometry Problems`, asks whether off-the-shelf global
     optimization solvers can match AlphaEvolve benchmark results when hard
@@ -4007,10 +4007,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     packing, and regular-hexagon packing, using Mosel formulations, QCP
     squared-distance constraints, circle center/radius variables, and Farkas-
     multiplier hexagon non-overlap constraints.
-  - Current evidence: README documents constructive-math gaps, benchmark-
-    report contracts, paper-cache status, and smoke fixtures. It does not
-    mention `2601.05943`, define direct NLP formulations for AlphaEvolve
-    benchmark problems, run Xpress or SCIP, record solver licenses/versions,
+  - Current evidence: README now lists `2601.05943` as source-scoped Global
+    NLP Optimization comparator context and points to
+    `papers/global_nlp_optimization_boundary.json`. It still does not define
+    direct NLP formulations for AlphaEvolve benchmark problems, run Xpress or
+    SCIP, record solver licenses/versions,
     preserve solver incumbents/bounds/certificates, compare solver outputs
     against AlphaEvolve and literature baselines, or document numerical
     tolerance and reproducibility for direct solver baselines. README also

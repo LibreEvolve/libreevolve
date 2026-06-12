@@ -38,6 +38,10 @@ from libreevolve.problems.benchmarks.fault2flow_boundary import (
     fault2flow_boundary_record,
     validate_fault2flow_boundary,
 )
+from libreevolve.problems.benchmarks.global_nlp_optimization_boundary import (
+    global_nlp_optimization_boundary_record,
+    validate_global_nlp_optimization_boundary,
+)
 from libreevolve.problems.benchmarks.ablation_exhibits import (
     figure8_artifact_boundary_record,
     validate_figure8_artifact_boundary,
@@ -300,6 +304,7 @@ RAMSEY_NUMBERS_BOUNDARY_FILE = "papers/ramsey_numbers_boundary.json"
 COMBINATORICS_BERCZY_BOUNDARY_FILE = "papers/combinatorics_berczy_boundary.json"
 BRUHAT_INTERVALS_BOUNDARY_FILE = "papers/bruhat_intervals_boundary.json"
 FAULT2FLOW_BOUNDARY_FILE = "papers/fault2flow_boundary.json"
+GLOBAL_NLP_OPTIMIZATION_BOUNDARY_FILE = "papers/global_nlp_optimization_boundary.json"
 BILATERAL_TRADE_BOUNDARY_FILE = "papers/bilateral_trade_boundary.json"
 EXAMPLE_BENCHMARK_SCOPE_FILE = "papers/example_benchmark_scope.json"
 MATH_OUTCOME_BOUNDARY_FILE = "papers/math_outcome_boundary.json"
@@ -694,6 +699,7 @@ def validate_paper_manifest(
     issues.extend(_validate_ttt_discover_boundary(root_path))
     issues.extend(_validate_bruhat_intervals_boundary(root_path))
     issues.extend(_validate_fault2flow_boundary(root_path))
+    issues.extend(_validate_global_nlp_optimization_boundary(root_path))
     issues.extend(_validate_bilateral_trade_boundary(root_path))
 
     if set(csv_by_id) - seen_ids:
@@ -2139,6 +2145,38 @@ def _validate_fault2flow_boundary(root_path: Path) -> list[PaperManifestIssue]:
             f"fault2flow_boundary_{issue.code}",
             issue.message,
             "fault2flow",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_global_nlp_optimization_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / GLOBAL_NLP_OPTIMIZATION_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = global_nlp_optimization_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "global_nlp_optimization_boundary_manifest_missing",
+                    (
+                        f"{GLOBAL_NLP_OPTIMIZATION_BOUNDARY_FILE} must emit "
+                        "global-NLP solver comparator evidence availability"
+                    ),
+                    "global_nlp_optimization",
+                )
+            ]
+    report = validate_global_nlp_optimization_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"global_nlp_optimization_boundary_{issue.code}",
+            issue.message,
+            "global_nlp_optimization",
         )
         for issue in report.issues
     ]

@@ -12619,3 +12619,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     reproduction outputs remain open.
   - Verification: Fault2Flow boundary tests and paper-manifest tests validate
     the sidecar and reject workflow-readiness overclaims.
+
+- [x] Record Global NLP Optimization `2601.05943` source boundary.
+  - Status: `papers/global_nlp_optimization_boundary.json` now carries the
+    source-specific Global NLP Optimization boundary with cached PDF digest,
+    arXiv v2 identity, CC BY-NC-ND license metadata, reference-only source
+    links, selected min-max distance-ratio, circle-packing, and hexagon-packing
+    families, Table 1-3 source result rows, rounding policies, solver
+    attribution caveat, dual-bound caveat, required evidence fields, and
+    missing-evidence keys.
+  - Remaining paper gap: executable NLP formulations, Mosel models, solver
+    logs, Xpress/SCIP version and license records, incumbent/bound artifacts,
+    AlphaEvolve validation-code outputs, result-table reproduction, and
+    independent checker outputs remain open.
+  - Verification: Global NLP Optimization boundary tests and paper-manifest
+    tests validate the sidecar and reject solver-readiness overclaims.

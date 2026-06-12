@@ -624,7 +624,8 @@ is not yet an AlphaEvolve reproduction.
   not OS/container sandbox or quota enforcement.
 - Continue labeling CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve,
   TTT Discover, Bruhat Intervals, GigaEvo, CodeEvolve, MadEvolve, Magellan,
-  ArchAgent, Multiagent Learning, Bilateral Trade, Fault2Flow, Ramsey Numbers, and Berczy
+  ArchAgent, Multiagent Learning, Bilateral Trade, Fault2Flow, Global NLP
+  Optimization, Ramsey Numbers, and Berczy
   local-correction combinatorics
   features as inspired, candidate benchmark, or
   application context unless paper behavior is actually implemented. The committed
@@ -734,6 +735,16 @@ is not yet an AlphaEvolve reproduction.
   722-2014 transformer fault-diagnosis dataset rows, GPT-5 judge outputs,
   Table 1 reproduction rows, token ledgers, human-annotation ethics records,
   placeholder publication-metadata caveats, and local workflow snapshots.
+  The committed `papers/global_nlp_optimization_boundary.json` sidecar records
+  the Global NLP Optimization source-specific boundary for direct NLP
+  formulation schemas, Mosel model artifacts, min-max distance-ratio fixtures,
+  square and perimeter-4 rectangle circle-packing fixtures, rotated unit
+  hexagon-packing fixtures, Farkas non-overlap certificates, FICO Xpress and
+  SCIP runner evidence, solver identity/version/license records,
+  incumbent/bound/certificate artifacts, numerical tolerance and rounding
+  policy, AlphaEvolve validation-code outputs, Table 1-3 reproduction rows,
+  solver-attribution caveats, dual-bound-detail caveats, and independent
+  checker outputs.
 
 ## Mid Term
 

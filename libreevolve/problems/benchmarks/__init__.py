@@ -95,6 +95,12 @@ from libreevolve.problems.benchmarks.fault2flow_boundary import (
     render_fault2flow_boundary_summary,
     validate_fault2flow_boundary,
 )
+from libreevolve.problems.benchmarks.global_nlp_optimization_boundary import (
+    GLOBAL_NLP_OPTIMIZATION_BOUNDARY_SCHEMA,
+    global_nlp_optimization_boundary_record,
+    render_global_nlp_optimization_boundary_summary,
+    validate_global_nlp_optimization_boundary,
+)
 from libreevolve.problems.benchmarks.archagent_boundary import (
     ARCHAGENT_BOUNDARY_SCHEMA,
     archagent_boundary_record,
@@ -453,6 +459,7 @@ __all__ = [
     "BILATERAL_TRADE_BOUNDARY_SCHEMA",
     "BRUHAT_INTERVALS_BOUNDARY_SCHEMA",
     "FAULT2FLOW_BOUNDARY_SCHEMA",
+    "GLOBAL_NLP_OPTIMIZATION_BOUNDARY_SCHEMA",
     "ARCHAGENT_BOUNDARY_SCHEMA",
     "CANDIDATE_ABSTRACTION_BOUNDARY_SCHEMA",
     "CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_SCHEMA",
@@ -546,6 +553,7 @@ __all__ = [
     "bilateral_trade_boundary_record",
     "bruhat_intervals_boundary_record",
     "fault2flow_boundary_record",
+    "global_nlp_optimization_boundary_record",
     "candidate_abstraction_boundary_record",
     "candidate_language_runner_boundary_record",
     "causalevolve_boundary_record",
@@ -621,6 +629,7 @@ __all__ = [
     "render_bilateral_trade_boundary_summary",
     "render_bruhat_intervals_boundary_summary",
     "render_fault2flow_boundary_summary",
+    "render_global_nlp_optimization_boundary_summary",
     "render_candidate_abstraction_boundary_summary",
     "render_candidate_language_runner_boundary_summary",
     "render_causalevolve_boundary_summary",
@@ -697,6 +706,7 @@ __all__ = [
     "validate_bilateral_trade_boundary",
     "validate_bruhat_intervals_boundary",
     "validate_fault2flow_boundary",
+    "validate_global_nlp_optimization_boundary",
     "validate_candidate_abstraction_boundary",
     "validate_candidate_language_runner_boundary",
     "validate_causalevolve_boundary",

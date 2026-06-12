@@ -5761,7 +5761,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     cluster-frozen-variable and good-embedding consequences, and source-scoped
     proof-status caveats before any benchmark claim is promoted.
 
-- [ ] Track global NLP solver comparator paper evidence.
+- [ ] Implement global NLP solver comparator paper evidence beyond the source boundary.
   - Paper/source evidence: arXiv `2601.05943`, submitted January 9, 2026, is
     titled `Global Optimization for Combinatorial Geometry Problems`. Its
     abstract says AlphaEvolve produced new best-known solutions for hard
@@ -5777,11 +5777,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     regular-hexagon packing. It defines the generic NLP form, Mosel
     implementations, QCP distance/circle formulations, and a hexagon model
     with rotation, half-space coefficients, and Farkas multipliers.
-  - Current gap: `papers/README.md` lists `2601.05943` as an optimization
-    benchmark comparator with no nonlinear-programming solver comparison
-    harness, but the current implementation and paper index do not yet
-    provide local source-boundary artifacts or implementation evidence for
-    this paper. Broad constructive-math and benchmark gaps do not
+  - Current gap: `papers/global_nlp_optimization_boundary.json` now records the
+    source-specific absence boundary for `2601.05943`, and `papers/README.md`
+    lists it as an optimization benchmark comparator with no
+    nonlinear-programming solver comparison harness. The current implementation
+    still does not provide local solver artifacts or implementation evidence
+    for this paper. Broad constructive-math and benchmark gaps do not
     capture direct NLP formulation artifacts, solver identity/license
     provenance, solver-run parameters, incumbent/bound/certificate records,
     numerical tolerances, or result tables comparing Xpress/SCIP outcomes

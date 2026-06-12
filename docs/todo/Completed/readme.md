@@ -11866,3 +11866,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     false.
   - Verification: capability policy tests validate forged readiness overclaim
     rejection.
+
+- [x] Document direct-plugin readiness guards.
+  - Spec evidence: README plugin provenance wording needed to distinguish
+    entry-point constructor options from direct-instance replayability.
+  - Status: README and TODO wording now state that direct-plugin policy
+    readiness keeps direct constructor values/schemas, direct custom registries,
+    and arbitrary instance-state capture false.
+  - Verification: runtime plugin-state tests validate forged readiness
+    overclaim rejection.

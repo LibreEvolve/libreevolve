@@ -1190,7 +1190,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     instantiation. Entry-point plugin specs also record configured paper-
     inspiration labels and distribution name/version plus hash-only RECORD/WHEEL
     metadata when available. Custom direct plugin specs record constructor
-    signature shape without parameter values. Captured direct-plugin
+    signature shape without parameter values, while direct-plugin policy
+    readiness keeps direct constructor values/schemas, direct custom registries,
+    and arbitrary instance-state capture false. Captured direct-plugin
     constructor values, arbitrary direct-plugin schemas, and richer custom
     package policy beyond entry-point distribution records remain part of the
     broader plugin registry gap. Problem-local evaluator

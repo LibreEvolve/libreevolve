@@ -4608,7 +4608,9 @@ Primary evidence:
     version metadata, constructor signature shape, and
     `libreevolve.direct_plugin_policy.v1`, which explicitly marks constructor
     values as excluded and package scope as module identity/file hash/version
-    only.
+    only. The policy now embeds `libreevolve.direct_plugin_policy_readiness.v1`
+    with false readiness for direct constructor values/schemas, direct custom
+    plugin registries, and arbitrary instance-state capture.
   - Required result: add a versioned direct custom plugin registry or
     declaration path that can safely attribute constructor values/schemas,
     package/distribution source, paper-inspiration scope, artifact ownership,

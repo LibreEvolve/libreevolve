@@ -12281,3 +12281,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Remaining paper gap: live provider/account discovery is not implemented.
   - Verification: capability policy tests validate forged readiness overclaim
     rejection.
+
+- [x] Record direct-plugin readiness guards.
+  - Spec evidence: paper-facing plugin claims need evidence that direct custom
+    plugin signatures are not constructor value/schema or package-registry
+    replay proof.
+  - Status: paper-facing TODOs and the papers overview now record false
+    direct-plugin readiness fields for direct constructor values/schemas,
+    direct custom registries, and arbitrary instance-state capture.
+  - Remaining paper gap: versioned direct custom plugin registries and safe
+    constructor value/schema attribution remain open.
+  - Verification: runtime plugin-state tests validate forged readiness
+    overclaim rejection.

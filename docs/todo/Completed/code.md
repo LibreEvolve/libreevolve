@@ -17690,3 +17690,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Remaining gap: live provider/account discovery is not implemented.
   - Verification: capability policy and manifest tests cover readiness false
     flags and overclaim rejection.
+
+- [x] Guard direct-plugin constructor readiness overclaims.
+  - Spec evidence: AlphaEvolve-style extension points need reproducible plugin
+    code/config boundaries, but direct live plugin instances cannot safely
+    expose arbitrary constructor values or instance state.
+  - Status: `libreevolve.direct_plugin_policy.v1` now embeds
+    `libreevolve.direct_plugin_policy_readiness.v1` with false flags for direct
+    constructor values, direct constructor schemas, direct custom plugin
+    registries, and arbitrary instance-state capture; validation rejects forged
+    true values.
+  - Remaining gap: versioned direct custom plugin registries and safe
+    constructor value/schema attribution remain open.
+  - Verification: runtime plugin-state tests cover direct and entry-point
+    policy readiness plus forged overclaim rejection.

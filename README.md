@@ -3279,9 +3279,12 @@ constructor values or instance attributes captured. Each non-built-in direct
 or entry-point spec also includes `libreevolve.direct_plugin_policy.v1`, which
 marks entry-point constructor options as manifest-safe/config-captured and
 marks direct-instance constructor values as explicitly excluded with
-module-identity/file-hash/version-only package scope. Versioned custom plugin
-registries, direct-instance constructor value/schema attribution, and richer
-custom package provenance remain future work.
+module-identity/file-hash/version-only package scope.
+`libreevolve.direct_plugin_policy_readiness.v1` keeps direct-instance
+constructor values, direct-instance constructor schemas, direct custom plugin
+registries, and arbitrary instance-state capture false with validation.
+Versioned custom plugin registries, direct-instance constructor value/schema
+attribution, and richer custom package provenance remain future work.
 
 `build_extra_context()` must return `str` or `None`. Returned text is treated
 as untrusted prompt evidence: LibreEvolve redacts common secret patterns,

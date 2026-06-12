@@ -907,7 +907,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current evidence: the roadmap now distinguishes entry-point distribution
     metadata and declared/manifest-safe constructor options from direct custom
     plugin instances, where current provenance records module/file/version and
-    constructor signature shape while explicitly excluding constructor values.
+    constructor signature shape while explicitly excluding constructor values
+    and keeping direct-instance readiness fields false.
   - Required result: when direct custom plugin constructor-value/schema
     attribution, versioned custom registries, or richer package policy lands,
     update the roadmap, README, papers index, and code/paper TODO entries
@@ -929,7 +930,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `RECORD`/`WHEEL` metadata when available, constructor-option policy, and
     loaded state. Direct custom plugins only record module/file/version
     identity plus constructor signature shape and explicitly exclude
-    constructor values, arbitrary instance state, and richer package policy.
+    constructor values, arbitrary instance state, and richer package policy
+    with false direct-instance readiness fields.
   - Required result: when direct custom plugin paper-scope declarations,
     versioned custom plugin registries, direct package/distribution source
     attribution, or richer paper-inspired plugin package policy lands, update

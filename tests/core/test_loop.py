@@ -40,6 +40,7 @@ from libreevolve.core.loop import (
     RuntimeRngStateError,
     controller_state_artifact_inventory,
     evolve,
+    validate_direct_plugin_policy,
     validate_prompt_context_policy_coverage,
     validate_prompt_section_packing_coverage,
     validate_retrieval_evidence_coverage,
@@ -11824,19 +11825,57 @@ def test_runtime_plugin_state_reports_direct_loaded_plugins_without_config_label
         state["loaded_specs"][0]["parameter_policy"]
         == "custom_constructor_signature_only_no_parameter_values"
     )
-    assert state["loaded_specs"][0]["direct_plugin_policy"] == {
-        "schema": "libreevolve.direct_plugin_policy.v1",
-        "source": "direct_instance",
-        "constructor_value_policy": "constructor_values_excluded_signature_shape_only",
-        "constructor_values_captured": False,
-        "constructor_schema_policy": "not_available_for_direct_instances",
-        "constructor_signature_policy": "names_kinds_required_flags_only",
-        "instance_attribute_policy": "not_captured",
-        "package_scope_policy": (
-            "direct_instance_module_identity_file_hash_and_version_only"
-        ),
-        "paper_scope_policy": "not_available_for_direct_instances",
+    direct_policy = state["loaded_specs"][0]["direct_plugin_policy"]
+    assert direct_policy["schema"] == "libreevolve.direct_plugin_policy.v1"
+    assert direct_policy["source"] == "direct_instance"
+    assert direct_policy["constructor_value_policy"] == (
+        "constructor_values_excluded_signature_shape_only"
+    )
+    assert direct_policy["constructor_values_captured"] is False
+    assert direct_policy["constructor_schema_policy"] == (
+        "not_available_for_direct_instances"
+    )
+    assert direct_policy["constructor_signature_policy"] == (
+        "names_kinds_required_flags_only"
+    )
+    assert direct_policy["instance_attribute_policy"] == "not_captured"
+    assert direct_policy["package_scope_policy"] == (
+        "direct_instance_module_identity_file_hash_and_version_only"
+    )
+    assert direct_policy["paper_scope_policy"] == "not_available_for_direct_instances"
+    assert direct_policy["direct_instance_readiness"] == {
+        "schema": "libreevolve.direct_plugin_policy_readiness.v1",
+        "direct_instance_constructor_values": False,
+        "direct_instance_constructor_schema": False,
+        "direct_custom_plugin_registry": False,
+        "arbitrary_instance_state_capture": False,
+        "remaining_gap": [
+            "direct_instance_constructor_values",
+            "direct_instance_constructor_schema",
+            "direct_custom_plugin_registry",
+            "arbitrary_instance_state_capture",
+        ],
     }
+    assert direct_policy["validation"] == {
+        "schema": "libreevolve.direct_plugin_policy_validation.v1",
+        "ok": True,
+        "issues": [],
+    }
+    forged_policy = copy.deepcopy(direct_policy)
+    forged_policy["direct_instance_readiness"][
+        "direct_instance_constructor_values"
+    ] = True
+    forged_policy["direct_instance_readiness"][
+        "direct_instance_constructor_schema"
+    ] = True
+    forged_policy["direct_instance_readiness"]["direct_custom_plugin_registry"] = True
+    forged_validation = validate_direct_plugin_policy(forged_policy)
+    forged_codes = {issue["code"] for issue in forged_validation["issues"]}
+
+    assert forged_validation["ok"] is False
+    assert "direct_instance_constructor_values_overclaim" in forged_codes
+    assert "direct_instance_constructor_schema_overclaim" in forged_codes
+    assert "direct_custom_plugin_registry_overclaim" in forged_codes
     signature = state["loaded_specs"][0]["constructor_signature"]
     assert signature == {
         "status": "available",
@@ -11886,6 +11925,16 @@ def test_runtime_plugin_state_records_custom_constructor_signature_without_value
         spec["direct_plugin_policy"]["package_scope_policy"]
         == "direct_instance_module_identity_file_hash_and_version_only"
     )
+    assert spec["direct_plugin_policy"]["direct_instance_readiness"][
+        "direct_instance_constructor_values"
+    ] is False
+    assert spec["direct_plugin_policy"]["direct_instance_readiness"][
+        "direct_instance_constructor_schema"
+    ] is False
+    assert spec["direct_plugin_policy"]["direct_instance_readiness"][
+        "direct_custom_plugin_registry"
+    ] is False
+    assert spec["direct_plugin_policy"]["validation"]["ok"] is True
     signature = spec["constructor_signature"]
     assert signature["parameter_values_captured"] is False
     assert signature["parameter_count"] == 3
@@ -11952,20 +12001,43 @@ def test_runtime_plugin_state_records_entry_point_plugin_provenance(monkeypatch,
     assert spec["parameter_policy"] == (
         "entry_point_constructor_options_from_manifest_safe_config"
     )
-    assert spec["direct_plugin_policy"] == {
-        "schema": "libreevolve.direct_plugin_policy.v1",
-        "source": "entry_point",
-        "constructor_value_policy": (
-            "manifest_safe_or_schema_validated_constructor_options_captured"
-        ),
-        "constructor_values_captured": True,
-        "constructor_schema_policy": "entry_point_declared_schema_or_manifest_safe_json",
-        "constructor_signature_policy": "names_kinds_required_flags_only",
-        "instance_attribute_policy": "not_captured",
-        "package_scope_policy": (
-            "entry_point_distribution_name_version_record_wheel_metadata"
-        ),
-        "paper_scope_policy": "configured_entry_point_paper_inspiration_labels",
+    entry_policy = spec["direct_plugin_policy"]
+    assert entry_policy["schema"] == "libreevolve.direct_plugin_policy.v1"
+    assert entry_policy["source"] == "entry_point"
+    assert entry_policy["constructor_value_policy"] == (
+        "manifest_safe_or_schema_validated_constructor_options_captured"
+    )
+    assert entry_policy["constructor_values_captured"] is True
+    assert entry_policy["constructor_schema_policy"] == (
+        "entry_point_declared_schema_or_manifest_safe_json"
+    )
+    assert entry_policy["constructor_signature_policy"] == (
+        "names_kinds_required_flags_only"
+    )
+    assert entry_policy["instance_attribute_policy"] == "not_captured"
+    assert entry_policy["package_scope_policy"] == (
+        "entry_point_distribution_name_version_record_wheel_metadata"
+    )
+    assert entry_policy["paper_scope_policy"] == (
+        "configured_entry_point_paper_inspiration_labels"
+    )
+    assert entry_policy["direct_instance_readiness"] == {
+        "schema": "libreevolve.direct_plugin_policy_readiness.v1",
+        "direct_instance_constructor_values": False,
+        "direct_instance_constructor_schema": False,
+        "direct_custom_plugin_registry": False,
+        "arbitrary_instance_state_capture": False,
+        "remaining_gap": [
+            "direct_instance_constructor_values",
+            "direct_instance_constructor_schema",
+            "direct_custom_plugin_registry",
+            "arbitrary_instance_state_capture",
+        ],
+    }
+    assert entry_policy["validation"] == {
+        "schema": "libreevolve.direct_plugin_policy_validation.v1",
+        "ok": True,
+        "issues": [],
     }
     assert spec["entry_point"] == {
         "schema": "libreevolve.plugin_entry_point.v1",

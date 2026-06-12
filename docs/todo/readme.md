@@ -2145,7 +2145,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     manifest-safe or declared-schema constructor options, paper-inspiration
     labels, distribution name/version and hash metadata, while direct custom
     plugin instances record constructor signature shape only and explicitly
-    exclude constructor values and instance attributes.
+    exclude constructor values and instance attributes. Direct-plugin policy
+    readiness now keeps direct constructor values/schemas, custom registries,
+    and arbitrary instance-state capture false.
   - Required result: once direct custom plugin registries, safe constructor
     value/schema attribution, or richer package provenance land, update README
     and matching code/paper TODO entries so the README neither underclaims

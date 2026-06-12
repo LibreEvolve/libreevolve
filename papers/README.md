@@ -1139,7 +1139,8 @@ shape, and distribution name/version plus hash-only RECORD/WHEEL metadata when
 available. Arbitrary direct-plugin constructor value capture, direct-plugin
 schema policy, versioned custom plugin registries, and richer custom package
 provenance remain open; direct custom plugin constructor signature shape is
-recorded without values.
+recorded without values, and direct-plugin policy readiness keeps those direct
+surfaces false.
 
 AlphaEvolve prompt-config provenance note: startup manifests retain
 prompt-bearing config through a redacted, bounded, hash-backed policy.

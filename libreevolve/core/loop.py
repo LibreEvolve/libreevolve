@@ -2082,7 +2082,7 @@ def _direct_plugin_constructor_policy(*, source: str) -> dict:
             "direct_instance_module_identity_file_hash_and_version_only"
         )
         paper_scope_policy = "not_available_for_direct_instances"
-    return {
+    policy = {
         "schema": "libreevolve.direct_plugin_policy.v1",
         "source": source,
         "constructor_value_policy": constructor_value_policy,
@@ -2096,6 +2096,95 @@ def _direct_plugin_constructor_policy(*, source: str) -> dict:
         "instance_attribute_policy": "not_captured",
         "package_scope_policy": package_scope_policy,
         "paper_scope_policy": paper_scope_policy,
+        "direct_instance_readiness": {
+            "schema": "libreevolve.direct_plugin_policy_readiness.v1",
+            "direct_instance_constructor_values": False,
+            "direct_instance_constructor_schema": False,
+            "direct_custom_plugin_registry": False,
+            "arbitrary_instance_state_capture": False,
+            "remaining_gap": [
+                "direct_instance_constructor_values",
+                "direct_instance_constructor_schema",
+                "direct_custom_plugin_registry",
+                "arbitrary_instance_state_capture",
+            ],
+        },
+    }
+    policy["validation"] = validate_direct_plugin_policy(policy)
+    return policy
+
+
+def validate_direct_plugin_policy(policy: object) -> dict:
+    issues: list[dict[str, str]] = []
+    if not isinstance(policy, Mapping):
+        return {
+            "schema": "libreevolve.direct_plugin_policy_validation.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "direct plugin policy must be an object",
+                }
+            ],
+        }
+    if policy.get("schema") != "libreevolve.direct_plugin_policy.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "direct plugin policy schema is unsupported",
+            }
+        )
+    if policy.get("source") not in {"direct_instance", "entry_point"}:
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "direct plugin policy source is unsupported",
+            }
+        )
+    readiness = policy.get("direct_instance_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_direct_instance_readiness",
+                "message": "direct_instance_readiness must be an object",
+            }
+        )
+    else:
+        if readiness.get("schema") != "libreevolve.direct_plugin_policy_readiness.v1":
+            issues.append(
+                {
+                    "code": "invalid_direct_instance_readiness_schema",
+                    "message": "direct_instance_readiness schema is unsupported",
+                }
+            )
+        for field in (
+            "direct_instance_constructor_values",
+            "direct_instance_constructor_schema",
+            "direct_custom_plugin_registry",
+            "arbitrary_instance_state_capture",
+        ):
+            if readiness.get(field) is not False:
+                issues.append(
+                    {
+                        "code": f"{field}_overclaim",
+                        "message": f"direct_instance_readiness.{field} must remain false until implemented",
+                    }
+                )
+        remaining_gap = readiness.get("remaining_gap")
+        if (
+            not isinstance(remaining_gap, list)
+            or not all(isinstance(item, str) and item for item in remaining_gap)
+        ):
+            issues.append(
+                {
+                    "code": "invalid_direct_instance_readiness_remaining_gap",
+                    "message": "direct_instance_readiness.remaining_gap must list incomplete direct-plugin surfaces",
+                }
+            )
+    return {
+        "schema": "libreevolve.direct_plugin_policy_validation.v1",
+        "ok": not issues,
+        "issues": issues,
     }
 
 

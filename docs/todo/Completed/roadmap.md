@@ -9397,3 +9397,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     capability-readiness fields for those provider discovery surfaces.
   - Verification: capability policy tests validate forged readiness overclaim
     rejection.
+
+- [x] Preserve direct-plugin readiness boundaries.
+  - Spec evidence: roadmap plugin extensibility wording should not imply direct
+    constructor value/schema capture or versioned custom registries from
+    signature-only direct instances.
+  - Status: ROADMAP and TODO wording now recognize explicit false
+    direct-instance readiness fields for those plugin provenance surfaces.
+  - Verification: runtime plugin-state tests validate forged readiness
+    overclaim rejection.

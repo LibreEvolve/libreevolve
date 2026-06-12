@@ -12307,3 +12307,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     remain open.
   - Verification: island/archive-state tests validate forged topology-policy
     overclaim rejection.
+
+- [x] Record MAP-Elites descriptor-readiness guards.
+  - Spec evidence: paper-facing descriptor claims need evidence that local
+    adaptive TF-IDF archive coordinates are not learned/evaluator-provided
+    behavior descriptors or tested rebin semantics.
+  - Status: paper-facing TODOs and the papers overview now record
+    `libreevolve.map_elites_descriptor_readiness.v1` with false readiness for
+    stable behavior-descriptor contracts, learned/evaluator descriptor models,
+    descriptor training inputs, restore-compatible descriptor revisioning, and
+    full/partial archive rebin engines.
+  - Remaining paper gap: actual stable/evaluator-provided descriptor models
+    and tested archive rebin semantics remain open.
+  - Verification: MAP-Elites tests validate emitted readiness and forged
+    readiness overclaim rejection.

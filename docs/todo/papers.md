@@ -649,11 +649,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     evaluator metrics, numeric evaluator metadata, or numeric candidate
     metadata as descriptor axes. Archive snapshots persist descriptor policy
     and descriptor-model records with axes, bounds, diversity reference ids,
-    revision, dynamic-reference status, and explicit no-rebin policy.
+    revision, dynamic-reference status, and explicit no-rebin policy. The
+    descriptor model now carries
+    `libreevolve.map_elites_descriptor_readiness.v1` with false readiness for
+    stable task behavior descriptor contracts, learned/evaluator-provided
+    descriptor models, descriptor training inputs, restore-compatible
+    descriptor revisioning, and full/partial archive rebin engines; restore
+    validation rejects forged readiness overclaims.
   - Current gap: existing cell coordinates are insertion-time snapshots under
-    a local adaptive TF-IDF novelty heuristic. There is no learned descriptor
-    model, evaluator-provided descriptor contract with compatibility rules, or
-    tested archive rebin engine.
+    a local adaptive TF-IDF novelty heuristic. The readiness guard is not a
+    learned descriptor model, evaluator-provided descriptor contract with
+    compatibility rules, or tested archive rebin engine.
   - Required result: add stable task behavior descriptor contracts or learned
     descriptor models, tested rebin/snapshot compatibility semantics, restore
     validation across descriptor revisions, and paper-facing reports that do

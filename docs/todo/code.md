@@ -1683,8 +1683,13 @@ Primary evidence:
     performance/complexity bounds, current diversity reference ids, a revision
     counter, `dynamic_diversity_reference: true`, and rebin policy
     `no_rebin_existing_cells_cell_coordinates_are_insertion_time_snapshots`.
-    Restore validation rejects descriptor axes/model mismatches and rejects
-    rebin overclaims such as `full_rebin`.
+    The descriptor model now carries
+    `libreevolve.map_elites_descriptor_readiness.v1` with false flags for
+    stable task behavior descriptor contracts, learned/evaluator-provided
+    descriptor models, descriptor training inputs, restore-compatible
+    descriptor revisioning, and full/partial rebin engines. Restore validation
+    rejects descriptor axes/model mismatches, rebin overclaims such as
+    `full_rebin`, and forged descriptor-readiness overclaims.
   - Required result: add evaluator-provided or learned descriptor models with
     stable versioning, explicit descriptor training inputs, tested full or
     partial archive rebin semantics, manifest-visible descriptor compatibility

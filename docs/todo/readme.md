@@ -2576,9 +2576,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     use stable text-workspace serialization, that `map_elites_descriptor_axes`
     can select configured metric/metadata axes, and that archive snapshots
     persist a `descriptor_model` with current diversity reference ids plus
-    no-rebin insertion-time coordinate policy. It also says existing cells are
-    not re-binned and diversity coordinates are local heuristic coordinates
-    rather than stable learned descriptors.
+    no-rebin insertion-time coordinate policy. It also says the descriptor
+    model carries `libreevolve.map_elites_descriptor_readiness.v1`, keeping
+    stable behavior-descriptor contracts, learned/evaluator descriptor models,
+    descriptor training inputs, restore-compatible descriptor revisioning, and
+    full/partial archive rebin engines false. Existing cells are not re-binned
+    and diversity coordinates are local heuristic coordinates rather than
+    stable learned descriptors.
   - Required result: once evaluator-provided behavior descriptors, learned
     descriptor models, or tested archive rebin semantics land, update the
     README and matching code/paper TODO entries together so the README neither

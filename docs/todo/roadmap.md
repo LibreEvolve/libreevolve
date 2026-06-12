@@ -1454,6 +1454,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     as the remaining work. Current archive snapshots already record descriptor
     axes, current diversity reference ids, descriptor-model revision, dynamic
     TF-IDF reference status, and the no-rebin insertion-time coordinate policy.
+    They also carry `libreevolve.map_elites_descriptor_readiness.v1` with
+    false readiness for stable behavior-descriptor contracts,
+    learned/evaluator descriptor models, descriptor training inputs,
+    restore-compatible descriptor revisioning, and full/partial rebin engines.
   - Required result: when learned/evaluator-provided descriptor models or
     archive rebin semantics land, update the roadmap, README, papers index,
     and code/paper TODO entries together so they neither underclaim current

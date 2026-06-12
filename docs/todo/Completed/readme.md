@@ -11885,3 +11885,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     non-ring topologies, and AlphaEvolve-identical policy readiness false.
   - Verification: island/archive-state tests validate forged topology-policy
     overclaim rejection.
+
+- [x] Document MAP-Elites descriptor-readiness guards.
+  - Spec evidence: README descriptor wording needed to distinguish local
+    insertion-time TF-IDF coordinates from stable behavior descriptors and
+    tested rebin semantics.
+  - Status: README and TODO wording now state that
+    `libreevolve.map_elites_descriptor_readiness.v1` keeps learned/evaluator
+    descriptor models, descriptor training inputs, restore-compatible
+    revisioning, and full/partial rebin engines false.
+  - Verification: MAP-Elites tests validate emitted readiness and forged
+    readiness overclaim rejection.

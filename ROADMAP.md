@@ -446,7 +446,10 @@ is not yet an AlphaEvolve reproduction.
   policy, and semantic near-duplicate detection remain open.
 - Replace the remaining insertion-time adaptive TF-IDF diversity coordinates
   with evaluator-provided behavior descriptors, a fixed/learned descriptor
-  model, or explicit tested rebin/snapshot semantics.
+  model, or explicit tested rebin/snapshot semantics. Current
+  `descriptor_model` snapshots carry
+  `libreevolve.map_elites_descriptor_readiness.v1` with those readiness
+  surfaces false and overclaim validation.
 - Extend the current selected-row `show` archive objective-vector summaries
   and manifest-level metric archive summaries into CLI/report drill-downs for
   metric-specific archives.

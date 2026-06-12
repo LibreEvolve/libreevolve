@@ -1712,6 +1712,11 @@ list.
 `descriptor_model` with a revision counter, current diversity reference ids,
 and a no-rebin policy:
 `no_rebin_existing_cells_cell_coordinates_are_insertion_time_snapshots`.
+The descriptor model also carries readiness schema
+`libreevolve.map_elites_descriptor_readiness.v1`, keeping stable task behavior
+descriptor contracts, learned/evaluator-provided descriptor models, descriptor
+training inputs, restore-compatible descriptor revisioning, and full/partial
+archive rebin engines false.
 Existing cells are not re-binned when the reference list changes, so diversity
 coordinates are documented insertion-time local heuristic coordinates rather
 than stable learned descriptors; evaluator-provided behavior descriptor

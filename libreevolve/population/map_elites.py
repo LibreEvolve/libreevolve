@@ -15,6 +15,9 @@ from libreevolve.population.sampling import validate_exclude_ids, validate_sampl
 MAP_ELITES_OBJECTIVE_ARCHIVE_POLICY_SCHEMA = (
     "libreevolve.map_elites_objective_archive_policy.v1"
 )
+MAP_ELITES_DESCRIPTOR_READINESS_SCHEMA = (
+    "libreevolve.map_elites_descriptor_readiness.v1"
+)
 _OBJECTIVE_ARCHIVE_POLICY_REQUIRED_FIELDS = {
     "schema",
     "status",
@@ -640,6 +643,7 @@ class MAPElites:
                 "rebin_policy": (
                     "no_rebin_existing_cells_cell_coordinates_are_insertion_time_snapshots"
                 ),
+                "readiness": map_elites_descriptor_readiness(),
             },
         }
 
@@ -990,6 +994,28 @@ def _char_ngram_size(corpus: list[str]) -> int | None:
     return max(1, min(4, longest))
 
 
+def map_elites_descriptor_readiness() -> dict:
+    return {
+        "schema": MAP_ELITES_DESCRIPTOR_READINESS_SCHEMA,
+        "stable_task_behavior_descriptor_contract": False,
+        "learned_descriptor_model": False,
+        "evaluator_provided_descriptor_model": False,
+        "full_archive_rebin_engine": False,
+        "partial_archive_rebin_engine": False,
+        "descriptor_training_inputs_recorded": False,
+        "restore_compatible_descriptor_revisioning": False,
+        "remaining_gap": [
+            "stable_task_behavior_descriptor_contract",
+            "learned_descriptor_model",
+            "evaluator_provided_descriptor_model",
+            "full_archive_rebin_engine",
+            "partial_archive_rebin_engine",
+            "descriptor_training_inputs_recorded",
+            "restore_compatible_descriptor_revisioning",
+        ],
+    }
+
+
 def _validate_map_elites_snapshot(snapshot: object, archive: MAPElites) -> dict:
     if not isinstance(snapshot, dict):
         raise ValueError("MAP-Elites snapshot must be an object")
@@ -1300,7 +1326,7 @@ def _validate_map_elites_descriptor_model(
         raise ValueError(
             f"MAP-Elites snapshot descriptor_model missing fields: {sorted(missing)}"
         )
-    unsupported = set(value) - required
+    unsupported = set(value) - required - {"readiness"}
     if unsupported:
         raise ValueError(
             "MAP-Elites snapshot descriptor_model has unsupported fields: "
@@ -1354,6 +1380,78 @@ def _validate_map_elites_descriptor_model(
     return {
         "revision": revision,
         "diversity_reference_program_ids": reference_ids,
+        "readiness": _validate_map_elites_descriptor_readiness(
+            value.get("readiness")
+        ),
+    }
+
+
+def _validate_map_elites_descriptor_readiness(value: object) -> dict:
+    if value is None:
+        return map_elites_descriptor_readiness()
+    if not isinstance(value, dict):
+        raise ValueError("MAP-Elites snapshot descriptor_model.readiness must be an object")
+    expected = map_elites_descriptor_readiness()
+    required = set(expected)
+    missing = required - set(value)
+    if missing:
+        raise ValueError(
+            "MAP-Elites snapshot descriptor_model.readiness missing fields: "
+            f"{sorted(missing)}"
+        )
+    unsupported = set(value) - required
+    if unsupported:
+        raise ValueError(
+            "MAP-Elites snapshot descriptor_model.readiness has unsupported fields: "
+            f"{sorted(unsupported)}"
+        )
+    if value["schema"] != MAP_ELITES_DESCRIPTOR_READINESS_SCHEMA:
+        raise ValueError(
+            "MAP-Elites snapshot descriptor_model.readiness schema is unsupported"
+        )
+    for field in (
+        "stable_task_behavior_descriptor_contract",
+        "learned_descriptor_model",
+        "evaluator_provided_descriptor_model",
+        "full_archive_rebin_engine",
+        "partial_archive_rebin_engine",
+        "descriptor_training_inputs_recorded",
+        "restore_compatible_descriptor_revisioning",
+    ):
+        if value[field] is not False:
+            raise ValueError(
+                "MAP-Elites snapshot descriptor_model.readiness "
+                f"must not claim {field}"
+            )
+    remaining_gap = value["remaining_gap"]
+    if not isinstance(remaining_gap, list) or not remaining_gap:
+        raise ValueError(
+            "MAP-Elites snapshot descriptor_model.readiness remaining_gap must be a non-empty list"
+        )
+    for index, gap in enumerate(remaining_gap):
+        if not isinstance(gap, str) or not gap.strip():
+            raise ValueError(
+                "MAP-Elites snapshot descriptor_model.readiness "
+                f"remaining_gap[{index}] must be non-empty text"
+            )
+    return {
+        "schema": value["schema"],
+        "stable_task_behavior_descriptor_contract": value[
+            "stable_task_behavior_descriptor_contract"
+        ],
+        "learned_descriptor_model": value["learned_descriptor_model"],
+        "evaluator_provided_descriptor_model": value[
+            "evaluator_provided_descriptor_model"
+        ],
+        "full_archive_rebin_engine": value["full_archive_rebin_engine"],
+        "partial_archive_rebin_engine": value["partial_archive_rebin_engine"],
+        "descriptor_training_inputs_recorded": value[
+            "descriptor_training_inputs_recorded"
+        ],
+        "restore_compatible_descriptor_revisioning": value[
+            "restore_compatible_descriptor_revisioning"
+        ],
+        "remaining_gap": list(remaining_gap),
     }
 
 

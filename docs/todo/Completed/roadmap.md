@@ -9416,3 +9416,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     AlphaEvolve-identical policy.
   - Verification: island/archive-state tests validate forged topology-policy
     overclaim rejection.
+
+- [x] Preserve MAP-Elites descriptor-readiness boundaries.
+  - Spec evidence: roadmap descriptor wording should not imply stable behavior
+    descriptors or rebin compatibility from insertion-time TF-IDF coordinates.
+  - Status: ROADMAP and TODO wording now recognize
+    `libreevolve.map_elites_descriptor_readiness.v1` with false readiness for
+    learned/evaluator descriptor models, descriptor training inputs,
+    restore-compatible descriptor revisioning, and full/partial rebin engines.
+  - Verification: MAP-Elites tests validate emitted readiness and forged
+    readiness overclaim rejection.

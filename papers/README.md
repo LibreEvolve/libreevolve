@@ -944,6 +944,17 @@ control. Runtime prompt-context policy coverage keeps those unsupported policy
 readiness surfaces false for retrieval/summarization, semantic source
 selection, non-`PromptSampler` roles, and DeepEvolve debug/refinement control.
 
+AlphaEvolve MAP-Elites descriptor note: archive snapshots persist descriptor
+policy and `descriptor_model` records with axes, bounds, current diversity
+reference ids, a revision counter, dynamic-reference status, and the no-rebin
+policy for insertion-time coordinates. The descriptor model now also carries
+`libreevolve.map_elites_descriptor_readiness.v1`, which keeps stable task
+behavior descriptor contracts, learned/evaluator-provided descriptor models,
+descriptor training inputs, restore-compatible descriptor revisioning, and
+full/partial archive rebin engines false with restore-time overclaim
+validation. This is evidence for the current local boundary, not proof of
+AlphaEvolve-grade behavior descriptors or archive rebin semantics.
+
 AlphaEvolve island-state note: retained archive-state changes advance the
 island round-robin assignment cursor. Non-admitted MAP-Elites attempts, such as
 `not_improving_cell`, record their attempted island but do not consume the next

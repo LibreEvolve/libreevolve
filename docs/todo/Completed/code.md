@@ -17718,3 +17718,16 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     and topology-specific ablation evidence remain open.
   - Verification: island, database, and runtime manifest tests validate the
     topology-policy fields and forged overclaim rejection.
+
+- [x] Guard MAP-Elites descriptor-readiness overclaims.
+  - Spec evidence: AlphaEvolve-style quality-diversity search needs stable
+    behavior descriptors or explicit descriptor/rebin compatibility evidence.
+  - Status: `descriptor_model` snapshots now carry
+    `libreevolve.map_elites_descriptor_readiness.v1` with false flags for
+    stable behavior-descriptor contracts, learned/evaluator descriptor models,
+    descriptor training inputs, restore-compatible descriptor revisioning, and
+    full/partial rebin engines; restore validation rejects forged true values.
+  - Remaining gap: actual learned/evaluator-provided descriptors and tested
+    archive rebin semantics remain open.
+  - Verification: MAP-Elites snapshot/restore tests cover emitted readiness,
+    legacy normalization, and forged overclaim rejection.

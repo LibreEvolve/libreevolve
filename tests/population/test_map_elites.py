@@ -3,6 +3,7 @@ from fractions import Fraction
 import pytest
 from libreevolve.population.map_elites import (
     MAPElites,
+    MAP_ELITES_DESCRIPTOR_READINESS_SCHEMA,
     MAP_ELITES_OBJECTIVE_ARCHIVE_POLICY_SCHEMA,
     _descriptor_text,
     validate_map_elites_objective_archive_policy,
@@ -385,6 +386,25 @@ def test_state_snapshot_restores_cells_and_elite_archive():
         "rebin_policy": (
             "no_rebin_existing_cells_cell_coordinates_are_insertion_time_snapshots"
         ),
+        "readiness": {
+            "schema": MAP_ELITES_DESCRIPTOR_READINESS_SCHEMA,
+            "stable_task_behavior_descriptor_contract": False,
+            "learned_descriptor_model": False,
+            "evaluator_provided_descriptor_model": False,
+            "full_archive_rebin_engine": False,
+            "partial_archive_rebin_engine": False,
+            "descriptor_training_inputs_recorded": False,
+            "restore_compatible_descriptor_revisioning": False,
+            "remaining_gap": [
+                "stable_task_behavior_descriptor_contract",
+                "learned_descriptor_model",
+                "evaluator_provided_descriptor_model",
+                "full_archive_rebin_engine",
+                "partial_archive_rebin_engine",
+                "descriptor_training_inputs_recorded",
+                "restore_compatible_descriptor_revisioning",
+            ],
+        },
     }
     assert result == {
         "status": "map_elites_state_restored",
@@ -510,6 +530,25 @@ def test_dynamic_diversity_policy_does_not_rebin_existing_cells():
     assert updated["descriptor_model"]["rebin_policy"] == (
         "no_rebin_existing_cells_cell_coordinates_are_insertion_time_snapshots"
     )
+    assert updated["descriptor_model"]["readiness"] == {
+        "schema": MAP_ELITES_DESCRIPTOR_READINESS_SCHEMA,
+        "stable_task_behavior_descriptor_contract": False,
+        "learned_descriptor_model": False,
+        "evaluator_provided_descriptor_model": False,
+        "full_archive_rebin_engine": False,
+        "partial_archive_rebin_engine": False,
+        "descriptor_training_inputs_recorded": False,
+        "restore_compatible_descriptor_revisioning": False,
+        "remaining_gap": [
+            "stable_task_behavior_descriptor_contract",
+            "learned_descriptor_model",
+            "evaluator_provided_descriptor_model",
+            "full_archive_rebin_engine",
+            "partial_archive_rebin_engine",
+            "descriptor_training_inputs_recorded",
+            "restore_compatible_descriptor_revisioning",
+        ],
+    }
 
 
 def test_restore_state_snapshot_rejects_descriptor_model_rebin_overclaim():
@@ -520,6 +559,29 @@ def test_restore_state_snapshot_rejects_descriptor_model_rebin_overclaim():
     snapshot["descriptor_model"]["rebin_policy"] = "full_rebin"
 
     with pytest.raises(ValueError, match="descriptor_model.rebin_policy"):
+        MAPElites().restore_state_snapshot(snapshot, {program.id: program})
+
+
+def test_restore_state_snapshot_accepts_legacy_descriptor_model_without_readiness():
+    source = MAPElites()
+    program = _pm(code="x=1", fitness=0.5, selection_score=0.5)
+    source.add(program)
+    snapshot = source.state_snapshot()
+    del snapshot["descriptor_model"]["readiness"]
+
+    result = MAPElites().restore_state_snapshot(snapshot, {program.id: program})
+
+    assert result["status"] == "map_elites_state_restored"
+
+
+def test_restore_state_snapshot_rejects_descriptor_readiness_overclaim():
+    source = MAPElites()
+    program = _pm(code="x=1", fitness=0.5, selection_score=0.5)
+    source.add(program)
+    snapshot = source.state_snapshot()
+    snapshot["descriptor_model"]["readiness"]["learned_descriptor_model"] = True
+
+    with pytest.raises(ValueError, match="must not claim learned_descriptor_model"):
         MAPElites().restore_state_snapshot(snapshot, {program.id: program})
 
 

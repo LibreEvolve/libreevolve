@@ -12427,3 +12427,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     complete implementation-status index for all 53 manifest rows.
   - Verification: paper-manifest validation still accepts README's curated-
     subset wording and count against the 53-row manifest.
+
+- [x] Keep README sample-efficiency boundary tied to paper-index sidecar.
+  - Status: README remains scoped to local budget/report surfaces, while
+    `papers/README.md` now points sample-efficiency claims to
+    `papers/sample_efficiency_boundary.json` for missing benchmark-level
+    target-hit, thousands-scale, repeated-sampling, model-size, and
+    FunSearch-versus-AlphaEvolve evidence.
+  - Verification: paper-manifest validation checks the sample-efficiency
+    sidecar and README/paper-index count consistency.

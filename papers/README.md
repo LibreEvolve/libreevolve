@@ -1240,6 +1240,9 @@ claim is also not yet reproduced: current budgets and ablation schemas can
 account for LLM calls and provider usage, but no report yet proves useful
 target progress in thousands-scale generated/evaluated proposal counts versus
 FunSearch-style much larger sample budgets or small-base-model alternatives.
+The committed `papers/sample_efficiency_boundary.json` sidecar preserves that
+benchmark-level absence boundary while recognizing the current single-run
+`runtime.history.sample_efficiency_report`.
 
 Candidate-abstraction evidence is also still missing: the primary row records
 LibreEvolve's code-file-set abstraction as a current divergence, but Section

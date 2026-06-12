@@ -183,6 +183,10 @@ from libreevolve.problems.benchmarks.proposal_lifecycle_audit import (
     proposal_lifecycle_audit_boundary_record,
     validate_proposal_lifecycle_audit_boundary,
 )
+from libreevolve.problems.benchmarks.sample_efficiency_boundary import (
+    sample_efficiency_boundary_record,
+    validate_sample_efficiency_boundary,
+)
 from libreevolve.problems.benchmarks.ramsey_numbers_boundary import (
     ramsey_numbers_boundary_record,
     validate_ramsey_numbers_boundary,
@@ -299,6 +303,7 @@ EVALUATOR_ORACLE_BOUNDARY_FILE = "papers/evaluator_oracle_boundary.json"
 EMBEDDED_EVALUATOR_BOUNDARY_FILE = "papers/embedded_evaluator_boundary.json"
 PROCESS_EXHIBIT_BOUNDARY_FILE = "papers/process_exhibit_boundary.json"
 PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_FILE = "papers/proposal_lifecycle_audit_boundary.json"
+SAMPLE_EFFICIENCY_BOUNDARY_FILE = "papers/sample_efficiency_boundary.json"
 EVALUATION_CASCADE_BOUNDARY_FILE = "papers/evaluation_cascade_boundary.json"
 CONTROLLER_BACKTRACKING_BOUNDARY_FILE = "papers/controller_backtracking_boundary.json"
 MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE = "papers/matrix_headline_historicity_artifacts.json"
@@ -757,6 +762,7 @@ def validate_paper_manifest(
     issues.extend(_validate_embedded_evaluator_boundary(root_path))
     issues.extend(_validate_process_exhibit_boundary(root_path))
     issues.extend(_validate_proposal_lifecycle_audit_boundary(root_path))
+    issues.extend(_validate_sample_efficiency_boundary(root_path))
     issues.extend(_validate_evaluation_cascade_boundary(root_path))
     issues.extend(_validate_controller_backtracking_boundary(root_path))
     issues.extend(_validate_example_benchmark_scope_records(root_path))
@@ -1556,6 +1562,38 @@ def _validate_proposal_lifecycle_audit_boundary(root_path: Path) -> list[PaperMa
             f"proposal_lifecycle_audit_boundary_{issue.code}",
             issue.message,
             "proposal_lifecycle_audit",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_sample_efficiency_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / SAMPLE_EFFICIENCY_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = sample_efficiency_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "sample_efficiency_boundary_manifest_missing",
+                    (
+                        f"{SAMPLE_EFFICIENCY_BOUNDARY_FILE} must emit "
+                        "benchmark-level sample-efficiency availability"
+                    ),
+                    "sample_efficiency",
+                )
+            ]
+    report = validate_sample_efficiency_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"sample_efficiency_boundary_{issue.code}",
+            issue.message,
+            "sample_efficiency",
         )
         for issue in report.issues
     ]

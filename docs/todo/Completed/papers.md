@@ -11921,6 +11921,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: focused runtime sample-efficiency test validates the
     implemented report.
 
+- [x] Add sample-efficiency benchmark-level absence boundary.
+  - Status: `papers/sample_efficiency_boundary.json` now records the missing
+    paper evidence for target thresholds, target-hit sample indices,
+    thousands-scale budget curves, repeated-sampling comparator runs,
+    small-versus-strong model sample curves, cross-run sample-efficiency
+    tables, and FunSearch-versus-AlphaEvolve budget reproduction.
+  - Verification: paper-manifest validation checks the committed sidecar, and
+    focused boundary tests reject premature sample-efficiency readiness claims.
+
 - [x] Record repeated-sampling comparator absence boundary.
   - Spec evidence: AlphaEvolve's Discussion contrasts evolutionary
     test-time-compute search with repeated base-model sampling.

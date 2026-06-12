@@ -421,7 +421,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve.sample_efficiency_report.v1`, a single-run report that counts
     generated proposals, evaluated/valid/admitted candidates, retained elites,
     sampling-eligible candidates, logical LLM samples, and a bounded cumulative
-    best-score curve.
+    best-score curve. `papers/sample_efficiency_boundary.json` now records the
+    benchmark-level absence boundary for target-hit sample indices,
+    thousands-scale curves, repeated-sampling comparators, model-size
+    comparisons, cross-run tables, and FunSearch-versus-AlphaEvolve budget
+    reproduction.
   - Current gap: no benchmark report ties target attainment to the number of
     generated/evaluated LLM proposals, compares thousands-scale runs against
     much larger or smaller sample budgets, or separates sample-efficiency

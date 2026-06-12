@@ -166,8 +166,9 @@ LibreEvolve has:
   `runtime.history.sample_efficiency_report`, derived from proposal lifecycle
   evidence and counting generated proposals, evaluated/valid/admitted
   candidates, retained elites, sampling-eligible candidates, logical LLM
-  samples, and a bounded best-score cumulative curve while keeping target-hit,
-  thousands-scale, repeated-sampling, and model-size comparison evidence open
+  samples, and a bounded best-score cumulative curve while
+  `papers/sample_efficiency_boundary.json` keeps target-hit, thousands-scale,
+  repeated-sampling, and model-size comparison evidence open
 - repeated-sampling baseline boundary reports under
   `runtime.history.repeated_sampling_baseline_report`, linking observed sample
   counts to an explicit `No evolution` comparator absence boundary while

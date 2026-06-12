@@ -410,6 +410,12 @@ from libreevolve.problems.benchmarks.proposal_lifecycle_audit import (
     render_proposal_lifecycle_audit_boundary_summary,
     validate_proposal_lifecycle_audit_boundary,
 )
+from libreevolve.problems.benchmarks.sample_efficiency_boundary import (
+    SAMPLE_EFFICIENCY_BOUNDARY_SCHEMA,
+    sample_efficiency_boundary_record,
+    render_sample_efficiency_boundary_summary,
+    validate_sample_efficiency_boundary,
+)
 from libreevolve.problems.benchmarks.ramsey_numbers_boundary import (
     RAMSEY_NUMBERS_BOUNDARY_SCHEMA,
     ramsey_numbers_boundary_record,
@@ -548,6 +554,7 @@ __all__ = [
     "PROCESS_EXHIBIT_BOUNDARY_SCHEMA",
     "PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_SCHEMA",
     "RAMSEY_NUMBERS_BOUNDARY_SCHEMA",
+    "SAMPLE_EFFICIENCY_BOUNDARY_SCHEMA",
     "SUMS_DIFFERENCES_BOUNDARY_SCHEMA",
     "SUMS_DIFFERENCES_SEQUENCE_BOUNDARY_SCHEMA",
     "SYSTEMS_ARTIFACT_INVENTORY_SCHEMA",
@@ -612,6 +619,7 @@ __all__ = [
     "process_exhibit_boundary_record",
     "proposal_lifecycle_audit_boundary_record",
     "ramsey_numbers_boundary_record",
+    "sample_efficiency_boundary_record",
     "sums_differences_boundary_record",
     "sums_differences_sequence_boundary_record",
     "figure4_matrix_discovery_artifact_boundary_from_exhibit",
@@ -716,6 +724,7 @@ __all__ = [
     "render_process_exhibit_boundary_summary",
     "render_proposal_lifecycle_audit_boundary_summary",
     "render_ramsey_numbers_boundary_summary",
+    "render_sample_efficiency_boundary_summary",
     "render_sums_differences_boundary_summary",
     "render_sums_differences_sequence_boundary_summary",
     "render_systems_result_summary",
@@ -806,6 +815,7 @@ __all__ = [
     "validate_process_exhibit_boundary",
     "validate_proposal_lifecycle_audit_boundary",
     "validate_ramsey_numbers_boundary",
+    "validate_sample_efficiency_boundary",
     "validate_sums_differences_boundary",
     "validate_sums_differences_sequence_boundary",
     "validate_systems_evidence_bundle",

@@ -2723,8 +2723,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and the `Small base LLM only` registry variant. README now documents the
     single-run `sample_efficiency_report` with generated/evaluated/valid/
     admitted/retained counts, logical LLM samples, and a bounded best-score
-    curve. It still does not document benchmark evidence that useful target
-    progress is achieved in thousands-scale proposal counts.
+    curve. The paper index now also names
+    `papers/sample_efficiency_boundary.json` as the benchmark-level absence
+    boundary. README still does not document benchmark evidence that useful
+    target progress is achieved in thousands-scale proposal counts.
   - Required result: once benchmark reports track target hits and score/target
     progress versus LLM sample budgets across thousands-scale and equal-budget
     model-size comparisons, update README, ROADMAP, papers index, and

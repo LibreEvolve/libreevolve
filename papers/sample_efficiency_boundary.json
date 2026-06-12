@@ -1,0 +1,37 @@
+{
+  "schema": "libreevolve.alphaevolve_sample_efficiency_boundary.v1",
+  "runtime_report_schema": "libreevolve.sample_efficiency_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve-style sample efficiency contrasts thousands-scale LLM samples against larger repeated-sampling or weaker-model budgets",
+  "boundary_status": "single_run_counts_only",
+  "runtime_report_status": "single_run_sample_efficiency_report_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "run_id",
+    "problem_id",
+    "target_metric",
+    "target_threshold",
+    "llm_sample_count",
+    "generated_candidate_count",
+    "evaluated_candidate_count",
+    "valid_candidate_count",
+    "admitted_candidate_count",
+    "retained_elite_count",
+    "best_score_by_sample",
+    "target_hit_sample_index",
+    "thousands_scale_budget_curve_ref",
+    "repeated_sampling_baseline_ref",
+    "model_size_comparison_ref",
+    "equal_budget_comparator_ref"
+  ],
+  "missing_evidence": {
+    "target_threshold_records": "not_recorded_locally",
+    "target_hit_sample_index": "not_recorded_locally",
+    "thousands_scale_budget_curves": "not_recorded_locally",
+    "repeated_sampling_comparator_runs": "not_recorded_locally",
+    "small_vs_strong_model_sample_curves": "not_recorded_locally",
+    "cross_run_sample_efficiency_table": "not_recorded_locally",
+    "funsearch_millions_vs_alphaevolve_thousands_reproduction": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has single-run generated, evaluated, valid, admitted, retained-elite, sampling-eligible, logical-sample, and bounded best-score counts, but does not claim AlphaEvolve-style target-hit sample-efficiency, thousands-scale proposal curves, repeated-sampling comparisons, model-size comparisons, or FunSearch-versus-AlphaEvolve budget reproduction."
+}

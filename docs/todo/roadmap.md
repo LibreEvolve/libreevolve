@@ -1572,7 +1572,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     counts, and a bounded cumulative best-score curve. It still keeps
     target-hit evidence, thousands-scale benchmark curves, equal-budget
     model-size comparisons, repeated-sampling baselines, and fast/deep
-    scheduler validation as open work.
+    scheduler validation as open work. The paper manifest now validates
+    `papers/sample_efficiency_boundary.json` as the benchmark-level absence
+    boundary for these missing sample-efficiency artifacts.
   - Required result: when benchmark-level sample-budget curves, model-size
     comparisons, repeated-sampling baselines, or target-hit-per-sample
     summaries land, update ROADMAP, README, papers index, and code/paper TODOs

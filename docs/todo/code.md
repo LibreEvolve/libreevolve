@@ -4282,6 +4282,8 @@ Primary evidence:
     cumulative best-score counts. The ablation-result contract validates
     equal-budget curves and includes the `Small base LLM only` variant, but it
     does not require target-hit or model-size sample-count efficiency curves.
+    `papers/sample_efficiency_boundary.json` now preserves this benchmark-level
+    absence boundary for paper-manifest validation.
   - Required result: add benchmark/report schemas and runtime summaries that
     extend the single-run counts into target hits by sample budget, validate
     score/target progress versus thousands-scale proposal counts, and compare

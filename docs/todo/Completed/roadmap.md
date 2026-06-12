@@ -11,6 +11,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Remaining guard: future roadmap passes still need to keep the intro and
     matching README/papers/TODO evidence aligned with the current worktree.
 
+- [x] Add sample-efficiency boundary sidecar to roadmap evidence.
+  - Status: roadmap/TODO wording now ties single-run sample-efficiency counts
+    to `runtime.history.sample_efficiency_report` and the missing benchmark-
+    level target-hit, thousands-scale, repeated-sampling, model-size, and
+    FunSearch-versus-AlphaEvolve evidence to
+    `papers/sample_efficiency_boundary.json`.
+  - Verification: paper-manifest validation requires the sidecar and focused
+    sample-efficiency boundary tests validate the absence record.
+
 - [x] Preserve Bilateral Trade `2603.08679` boundary scope in roadmap.
   - Evidence: `ROADMAP.md` adds `papers/bilateral_trade_boundary.json` to the
     inspired/application-context source-boundary list and keeps

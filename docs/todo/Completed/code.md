@@ -17296,6 +17296,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     open.
   - Verification: focused runtime sample-efficiency test passes.
 
+- [x] Emit sample-efficiency benchmark-level absence boundary sidecar.
+  - Status: `libreevolve/problems/benchmarks/sample_efficiency_boundary.py`
+    and `papers/sample_efficiency_boundary.json` now preserve that LibreEvolve
+    has single-run sample-efficiency counts but no target-hit sample index,
+    thousands-scale budget curves, repeated-sampling comparator runs,
+    small-versus-strong model sample curves, cross-run sample-efficiency
+    table, or FunSearch-versus-AlphaEvolve budget reproduction.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused sample-efficiency boundary tests validate the absence
+    record.
+
 - [x] Add repeated-sampling baseline absence report.
   - Spec evidence: AlphaEvolve's test-time-compute framing compares
     evolutionary search against repeated sampling from the base model.

@@ -13637,3 +13637,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused metric-diverse prompt tests reject benchmark-policy
     overclaims.
+
+- [x] Record proposal score paper-facing sidecar.
+  - Status: `papers/proposal_score_boundary.json` now records the bounded
+    current-run proposal-score boundary for AlphaEvolve-style idea memory:
+    runtime evidence can show versioned proposal score records,
+    idea/rationale/hypothesis metadata, bounded hypothesis-index summaries,
+    redacted text previews and hashes, outcome-linked quality, exact signature
+    novelty, duplicate counts, score ordering, current-run resurfacing
+    hypothesis sources, and recent DeepResearch query terms, while semantic
+    or embedding-backed retrieval, calibrated proposal-quality models,
+    cross-run persisted proposal tables, prompt/archive score policy,
+    benchmark-linked proposal-quality validation, and hypothesis refinement
+    loops remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused proposal score tests reject semantic idea-memory
+    overclaims.

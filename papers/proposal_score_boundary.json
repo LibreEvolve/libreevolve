@@ -1,0 +1,38 @@
+{
+  "schema": "libreevolve.proposal_score_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve-style evolutionary memory should make prior ideas, rationales, and hypotheses reusable through quality-aware and novelty-aware search, not only attach proposal text to candidates",
+  "boundary_status": "bounded_current_run_scores_not_semantic_idea_memory",
+  "proposal_score_report_schema": "libreevolve.proposal_score_report.v1",
+  "hypothesis_index_schema": "libreevolve.hypothesis_index.v1",
+  "scoring_policy_schema": "libreevolve.proposal_scoring_policy.v1",
+  "runtime_report_status": "bounded_current_run_proposal_scores_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "versioned_proposal_score_records",
+    "captured_idea_rationale_hypothesis_metadata",
+    "bounded_hypothesis_index",
+    "redacted_text_previews_and_hashes",
+    "outcome_linked_quality_signal",
+    "exact_signature_novelty_signal",
+    "duplicate_signature_counts",
+    "top_record_score_ordering",
+    "current_run_resurfacing_hypothesis_source",
+    "recent_deepresearch_query_terms",
+    "semantic_embedding_proposal_index",
+    "calibrated_proposal_quality_model",
+    "cross_run_persisted_proposal_table",
+    "prompt_archive_policy_using_proposal_scores",
+    "benchmark_linked_proposal_quality_validation",
+    "hypothesis_refinement_loop"
+  ],
+  "missing_evidence": {
+    "semantic_embedding_proposal_index": "not_recorded_locally",
+    "calibrated_proposal_quality_model": "not_recorded_locally",
+    "cross_run_persisted_proposal_table": "not_recorded_locally",
+    "prompt_archive_policy_using_proposal_scores": "not_recorded_locally",
+    "benchmark_linked_proposal_quality_validation": "not_recorded_locally",
+    "hypothesis_refinement_loop": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve manifests can show bounded current-run proposal scoring and hypothesis evidence: versioned proposal score records, captured idea/rationale/hypothesis metadata, bounded hypothesis-index summaries, redacted text previews and hashes, outcome-linked quality signals, exact signature novelty signals, duplicate signature counts, top-record score ordering, current-run resurfacing hypothesis sources, and recent DeepResearch query terms. It does not claim semantic or embedding-backed proposal retrieval, calibrated proposal-quality models, cross-run persisted proposal tables, prompt/archive selection policy using proposal scores, benchmark-linked proposal quality validation, or hypothesis refinement loops."
+}

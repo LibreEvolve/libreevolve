@@ -1148,6 +1148,9 @@ metric-vector and feedback/artifact-content/program-output ranking,
 semantic output-similarity or schema-aware output retrieval, calibrated proposal
 quality models, near-duplicate or semantic/cross-run novelty or hypothesis
 retrieval, model-quality attribution, explicit controller-owned backtracking
+policy, and prompt/archive score-influence policy. The committed
+`papers/proposal_score_boundary.json` sidecar keeps this bounded current-run
+proposal-score scope machine-validated.
 and suppression/retry policies,
 schema migrations, and replayable sampling policies, not the absence of any
 resurfacing API, proposal metadata capture, exact duplicate counts, or

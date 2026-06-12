@@ -18540,3 +18540,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     benchmark-policy overclaims, invalid boundary status, missing evidence
     drift, and incomplete required evidence fields.
+
+- [x] Add proposal score sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/proposal_score_boundary.py` now
+    emits and validates the bounded-current-run-scores-only boundary for
+    `runtime.history.proposal_score_report` and
+    `runtime.history.hypothesis_index`, separating versioned proposal score
+    records, captured idea/rationale/hypothesis metadata, bounded redacted
+    text previews/hashes, outcome-linked quality, exact signature novelty,
+    duplicate signature counts, score ordering, current-run hypothesis
+    resurfacing sources, and recent DeepResearch query terms from semantic or
+    embedding-backed proposal retrieval, calibrated proposal-quality models,
+    cross-run persisted proposal tables, prompt/archive score policy,
+    benchmark-linked proposal-quality validation, and hypothesis refinement.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    semantic idea-memory overclaims, invalid boundary status, missing evidence
+    drift, and incomplete required evidence fields.

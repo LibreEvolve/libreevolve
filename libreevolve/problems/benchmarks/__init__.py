@@ -377,6 +377,12 @@ from libreevolve.problems.benchmarks.metric_diverse_prompt_boundary import (
     render_metric_diverse_prompt_boundary_summary,
     validate_metric_diverse_prompt_boundary,
 )
+from libreevolve.problems.benchmarks.proposal_score_boundary import (
+    PROPOSAL_SCORE_BOUNDARY_SCHEMA,
+    proposal_score_boundary_record,
+    render_proposal_score_boundary_summary,
+    validate_proposal_score_boundary,
+)
 from libreevolve.problems.benchmarks.matrix_exhibits import (
     FIGURE4_MATRIX_DISCOVERY_ARTIFACT_BOUNDARY_SCHEMA,
     FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA,
@@ -764,6 +770,7 @@ __all__ = [
     "PAPER_CERTIFICATION_SCHEMA",
     "PARALLEL_EVALUATION_READINESS_BOUNDARY_SCHEMA",
     "PROCESS_EXHIBIT_BOUNDARY_SCHEMA",
+    "PROPOSAL_SCORE_BOUNDARY_SCHEMA",
     "COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_SCHEMA",
     "PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_SCHEMA",
     "PROGRAMMATIC_REPRESENTATION_BOUNDARY_SCHEMA",
@@ -862,6 +869,7 @@ __all__ = [
     "parallel_evaluation_readiness_boundary_record",
     "paper_author_metadata_boundary_record",
     "process_exhibit_boundary_record",
+    "proposal_score_boundary_record",
     "problem_formulation_provenance_boundary_record",
     "programmatic_representation_boundary_record",
     "related_work_taxonomy_boundary_record",
@@ -994,6 +1002,7 @@ __all__ = [
     "render_paper_author_metadata_boundary_summary",
     "render_parallel_evaluation_readiness_boundary_summary",
     "render_process_exhibit_boundary_summary",
+    "render_proposal_score_boundary_summary",
     "render_problem_formulation_provenance_boundary_summary",
     "render_programmatic_representation_boundary_summary",
     "render_related_work_taxonomy_boundary_summary",
@@ -1119,6 +1128,7 @@ __all__ = [
     "validate_paper_result_certification",
     "validate_parallel_evaluation_readiness_boundary",
     "validate_process_exhibit_boundary",
+    "validate_proposal_score_boundary",
     "validate_problem_formulation_provenance_boundary",
     "validate_programmatic_representation_boundary",
     "validate_related_work_taxonomy_boundary",

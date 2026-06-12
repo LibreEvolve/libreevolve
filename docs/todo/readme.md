@@ -2214,7 +2214,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `runtime.history.proposal_score_report` as bounded current-run outcome/
     exact-novelty score records. README should not imply semantic proposal
     retrieval, calibrated proposal-quality models, cross-run hypothesis tables,
-    or score-driven prompt/archive selection.
+    or score-driven prompt/archive selection. README now ties that boundary to
+    `papers/proposal_score_boundary.json`.
   - Required result: once semantic/cross-run proposal indexes, calibrated
     proposal-quality models, or stricter score/field influence policy lands,
     update the README and matching code/paper TODO entries together so the

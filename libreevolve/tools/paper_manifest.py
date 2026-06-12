@@ -374,6 +374,10 @@ from libreevolve.problems.benchmarks.metric_diverse_prompt_boundary import (
     metric_diverse_prompt_boundary_record,
     validate_metric_diverse_prompt_boundary,
 )
+from libreevolve.problems.benchmarks.proposal_score_boundary import (
+    proposal_score_boundary_record,
+    validate_proposal_score_boundary,
+)
 from libreevolve.problems.benchmarks.gigaevo_boundary import (
     gigaevo_framework_boundary_record,
     validate_gigaevo_framework_boundary,
@@ -474,6 +478,7 @@ MAP_ELITES_ILLUMINATION_BOUNDARY_FILE = "papers/map_elites_illumination_boundary
 MAP_ELITES_DESCRIPTOR_BOUNDARY_FILE = "papers/map_elites_descriptor_boundary.json"
 OBJECTIVE_ARCHIVE_BOUNDARY_FILE = "papers/objective_archive_boundary.json"
 METRIC_DIVERSE_PROMPT_BOUNDARY_FILE = "papers/metric_diverse_prompt_boundary.json"
+PROPOSAL_SCORE_BOUNDARY_FILE = "papers/proposal_score_boundary.json"
 GEMINI_PROVIDER_PARITY_BOUNDARY_FILE = "papers/gemini_provider_parity_boundary.json"
 GIGAEVO_FRAMEWORK_BOUNDARY_FILE = "papers/gigaevo_framework_boundary.json"
 CODEEVOLVE_BOUNDARY_FILE = "papers/codeevolve_boundary.json"
@@ -959,6 +964,7 @@ def validate_paper_manifest(
     issues.extend(_validate_map_elites_descriptor_boundary(root_path))
     issues.extend(_validate_objective_archive_boundary(root_path))
     issues.extend(_validate_metric_diverse_prompt_boundary(root_path))
+    issues.extend(_validate_proposal_score_boundary(root_path))
     issues.extend(_validate_gemini_provider_parity_boundary(root_path))
     issues.extend(_validate_gigaevo_framework_boundary(root_path))
     issues.extend(_validate_codeevolve_boundary(root_path))
@@ -2970,6 +2976,38 @@ def _validate_metric_diverse_prompt_boundary(root_path: Path) -> list[PaperManif
             f"metric_diverse_prompt_boundary_{issue.code}",
             issue.message,
             "metric_diverse_prompt",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_proposal_score_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / PROPOSAL_SCORE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = proposal_score_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "proposal_score_boundary_manifest_missing",
+                    (
+                        f"{PROPOSAL_SCORE_BOUNDARY_FILE} must emit "
+                        "bounded proposal scores versus semantic idea-memory scope"
+                    ),
+                    "proposal_score",
+                )
+            ]
+    report = validate_proposal_score_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"proposal_score_boundary_{issue.code}",
+            issue.message,
+            "proposal_score",
         )
         for issue in report.issues
     ]

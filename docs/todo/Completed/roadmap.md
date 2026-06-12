@@ -10475,3 +10475,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     AlphaEvolve Section 2.4 benchmark readiness open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused metric-diverse prompt tests reject benchmark-policy overclaims.
+
+- [x] Keep roadmap proposal score boundary tied to sidecar.
+  - Status: ROADMAP now links optional proposal metadata,
+    `runtime.history.hypothesis_index`, and
+    `runtime.history.proposal_score_report` to
+    `papers/proposal_score_boundary.json` while keeping semantic
+    proposal-index retrieval, calibrated proposal-quality models, hypothesis
+    refinement, and score/field influence policy open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused proposal score tests reject semantic idea-memory overclaims.

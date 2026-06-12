@@ -12709,3 +12709,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     the boundary tracked by `papers/metric_diverse_prompt_boundary.json`.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused metric-diverse prompt tests reject benchmark-policy overclaims.
+
+- [x] Keep README proposal score boundary tied to sidecar.
+  - Status: README now states that proposal scores and hypothesis indexes are
+    bounded current-run records, not semantic idea-memory retrieval, calibrated
+    proposal-quality models, cross-run proposal tables, or score-driven
+    prompt/archive policy, with the boundary tracked by
+    `papers/proposal_score_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused proposal score tests reject semantic idea-memory overclaims.

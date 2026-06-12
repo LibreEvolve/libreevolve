@@ -1625,6 +1625,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     hypothesis-quality models, embedding/semantic proposal indexes, cross-run
     persisted proposal tables, or a policy that lets proposal scores influence
     retrieval, prompting, and archive resurfacing.
+    `papers/proposal_score_boundary.json` now validates this bounded
+    current-run proposal-score boundary.
   - Required result: add semantic/cross-run proposal-hypothesis retrieval,
     calibrated proposal-quality and novelty models, persisted proposal-index
     tables, and prompt/retrieval/archive policy boundaries before treating

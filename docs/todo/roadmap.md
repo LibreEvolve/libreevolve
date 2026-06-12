@@ -1030,7 +1030,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `runtime.history.proposal_score_report` outcome/exact-novelty score
     records, from still-open semantic proposal-index retrieval, calibrated
     quality models, hypothesis-refinement loops, and field/score-influence
-    policy for retrieval, prompting, and archive resurfacing.
+    policy for retrieval, prompting, and archive resurfacing. ROADMAP now ties
+    that boundary to `papers/proposal_score_boundary.json`.
   - Required result: when semantic proposal-index retrieval, calibrated
     proposal-quality models, or score-driven prompt/archive policies land,
     update the roadmap, README, papers index, and code/paper TODO entries

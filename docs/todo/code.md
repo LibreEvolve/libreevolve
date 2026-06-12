@@ -1996,6 +1996,8 @@ Primary evidence:
     first-occurrence novelty, while explicitly leaving semantic similarity,
     embeddings, calibrated quality models, cross-run persistence, and
     prompt/archive selection integration false.
+    `papers/proposal_score_boundary.json` now validates this bounded
+    current-run proposal-score boundary.
   - Required result: add calibrated proposal-quality and novelty signals,
     semantic or embedding-backed proposal/hypothesis retrieval, cross-run
     persisted proposal indexes, and prompt/retrieval/archive policies that

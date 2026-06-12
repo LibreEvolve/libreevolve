@@ -4247,15 +4247,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     for FACI, plus a `3` second circle-packing program vs ShinkaEvolve's
     roughly `75` second program.
   - Current evidence: README says the ThetaEvolve-inspired `ttt_rl` plugin
-    writes clipped-reward training data and is not a real GRPO/RL trainer.
-    `papers/README.md` likewise says there is no online RL/GRPO training loop,
-    checkpoint management, resume semantics, or lazy-penalty dynamics.
-    Existing README TODOs group ThetaEvolve with paper-inspired approximations,
-    but README does not require a `2511.23473` source-specific boundary for
-    batch-sampled dynamic environments, large database scaling, lazy penalties,
-    reward-shaping parameters, GRPO telemetry, checkpoint provenance,
-    evaluator caveats, transfer reports, throughput reports, or benchmark
-    comparison claims.
+    writes clipped-reward training data and is not a real GRPO/RL trainer, and
+    now points at `papers/thetaevolve_boundary.json` for the `2511.23473`
+    source-specific boundary. That sidecar keeps batch-sampled dynamic
+    environments, large database scaling, lazy penalties, reward-shaping
+    parameters, GRPO telemetry, checkpoint provenance, evaluator caveats,
+    transfer reports, throughput reports, and benchmark comparison claims
+    unavailable until local artifacts prove them.
   - Required result: if README mentions ThetaEvolve, test-time learning,
     GRPO/RL training, lazy penalties, reward shaping, batch sampling, large
     program databases, trained checkpoints, or ThetaEvolve benchmark results,

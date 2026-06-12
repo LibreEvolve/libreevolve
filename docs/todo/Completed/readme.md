@@ -11993,3 +11993,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     benchmark, ablation, and cost evidence explicit as missing.
   - Verification: CodeEvolve boundary and paper-manifest tests validate the
     sidecar that README now references.
+
+- [x] Document ThetaEvolve source boundary.
+  - Spec evidence: README ThetaEvolve wording needed to keep clipped-reward
+    training-data export separate from actual test-time RL/GRPO training,
+    checkpoint, throughput, and benchmark-comparison evidence.
+  - Status: README now names `papers/thetaevolve_boundary.json` in the
+    ThetaEvolve reference row and keeps dynamic-environment, batch-sampling,
+    lazy-penalty, reward-shaping, online GRPO/RL, checkpoint, throughput, and
+    benchmark-comparison evidence explicit as missing.
+  - Verification: ThetaEvolve boundary and paper-manifest tests validate the
+    sidecar that README now references.

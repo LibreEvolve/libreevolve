@@ -17874,3 +17874,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     ablations, and quality-cost comparisons remain open.
   - Verification: CodeEvolve boundary tests and paper-manifest tests cover the
     sidecar, drift rejection, and repo-root sidecar requirement.
+
+- [x] Add ThetaEvolve test-time-learning source-boundary gate.
+  - Spec evidence: `2511.23473v1` describes ThetaEvolve as a test-time
+    learning framework with a dynamic environment, single LLM, large program
+    database, batch sampling, early checks, lazy penalties, reward shaping,
+    optional GRPO/RL training, RL-trained checkpoints, throughput reports, and
+    benchmark comparisons.
+  - Status: `libreevolve.problems.benchmarks.thetaevolve_boundary` now emits
+    and validates `papers/thetaevolve_boundary.json` with cached PDF digest,
+    CC-BY license metadata, linked code URL, component rows, local `ttt_rl`
+    export scope, required future evidence fields, missing-evidence keys, and
+    overclaim rejection.
+  - Remaining gap: ThetaEvolve dynamic-environment execution, batch sampling,
+    lazy penalties, reward shaping, online GRPO/RL, checkpoint lifecycle,
+    trained-checkpoint inference, throughput reports, and benchmark comparison
+    rows remain open.
+  - Verification: ThetaEvolve boundary tests and paper-manifest tests cover
+    the sidecar, drift rejection, and repo-root sidecar requirement.

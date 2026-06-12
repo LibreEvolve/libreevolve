@@ -12441,3 +12441,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     hyperparameter rows, and quality-cost comparison rows remain open.
   - Verification: CodeEvolve boundary tests and paper-manifest tests validate
     the sidecar and reject CodeEvolve readiness overclaims.
+
+- [x] Record ThetaEvolve source boundary.
+  - Spec evidence: paper-facing ThetaEvolve claims need to distinguish
+    clipped-reward JSONL export from dynamic-environment, GRPO/RL,
+    checkpointing, throughput, and benchmark-comparison parity.
+  - Status: `papers/thetaevolve_boundary.json` now carries the
+    source-specific `2511.23473` boundary with cached PDF digest, arXiv
+    version, CC-BY license metadata, linked code URL, framework components,
+    local `ttt_rl` status, required evidence fields, and missing-evidence
+    keys.
+  - Remaining paper gap: batch-sampling semantics, lazy-penalty/reward-shaping
+    formulas, GRPO configuration, checkpoint provenance, evaluator caveats,
+    database-size/throughput ablations, benchmark rows, and comparison claims
+    remain open.
+  - Verification: ThetaEvolve boundary tests and paper-manifest tests validate
+    the sidecar and reject test-time-learning readiness overclaims.

@@ -6150,15 +6150,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     `slime`, and records batch size `B = 32`, `n = 16`, response length
     `16384`, rollout temperature `1.0`, and `16` concurrent verifier programs.
   - Current gap: `papers/README.md` lists `2511.23473` as test-time training
-    inspiration and explicitly scopes LibreEvolve to clipped-reward JSONL
-    export without online RL/GRPO training, checkpointing, resume semantics, or
-    lazy-penalty dynamics. Existing paper TODOs group ThetaEvolve with other
-    inspiration rows and separately track broader TTT-Discover work, but they
-    do not preserve the ThetaEvolve PDF itself as a source-specific evidence
-    boundary with dynamic-environment components, batch-sampling semantics,
-    lazy-penalty/reward-shaping formulas, GRPO configuration, checkpoint
-    provenance, evaluator-compatibility caveats, database-size/throughput
-    ablations, benchmark rows, or comparison claims.
+    inspiration, and `papers/thetaevolve_boundary.json` now preserves the
+    ThetaEvolve PDF as a source-specific evidence boundary with cached source
+    metadata, CC-BY license metadata, linked code URL, dynamic-environment
+    component rows, local `ttt_rl` export scope, required future evidence
+    fields, and missing-evidence keys. The remaining paper gap is
+    executable/reportable evidence for the paper behavior: batch-sampling
+    semantics, lazy-penalty/reward-shaping formulas, GRPO configuration,
+    checkpoint provenance, evaluator-compatibility caveats,
+    database-size/throughput ablations, benchmark rows, and comparison claims.
   - Required result: add paper-manifest and paper-index coverage for
     `2511.23473`: title/authors/arXiv version/date/PDF digest, source license,
     linked code URL/status, dynamic-environment architecture rows,

@@ -9525,3 +9525,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     ablations, quality-cost comparisons, and linked experiment-artifact status.
   - Verification: CodeEvolve boundary tests and paper-manifest tests validate
     the sidecar and repo-root requirement.
+
+- [x] Preserve ThetaEvolve boundary scope in roadmap.
+  - Spec evidence: roadmap ThetaEvolve claims should not promote
+    clipped-reward JSONL export into dynamic-environment, GRPO/RL,
+    checkpointing, throughput, or benchmark-comparison parity.
+  - Status: ROADMAP and roadmap TODO wording now identify
+    `papers/thetaevolve_boundary.json` as the source-specific boundary for
+    dynamic-environment architecture, single-LLM runtime, large-database
+    scaling, batch sampling, early checks, lazy penalties, reward shaping,
+    online GRPO/RL training, checkpoint lifecycle, throughput reports, and
+    benchmark comparisons.
+  - Verification: ThetaEvolve boundary tests and paper-manifest tests validate
+    the sidecar and repo-root requirement.

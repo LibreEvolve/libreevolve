@@ -6681,15 +6681,16 @@ Primary evidence:
     length `16384`, rollout temperature `1.0`, and up to `16` concurrent
     verifier programs.
   - Current evidence: `papers/README.md` marks ThetaEvolve as test-time
-    training inspiration and says LibreEvolve only exports clipped-reward JSONL
-    through `libreevolve/plugins/ttt_rl.py`; there is no online RL/GRPO loop,
-    checkpoint management, resume semantics, or lazy-penalty dynamics. Existing grouped inspiration
-    TODOs and `TTTRLPlugin` docs keep the export boundary honest, but there is
-    no implemented source-specific code gate for `2511.23473`, no batch-sampled dynamic
-    environment, no `70`/`1000`/`10000` population/archive/island scaling
-    report, no lazy penalty against database-equivalent programs after comment
-    removal, no early-check penalty schema (`-0.4`, `-0.3`, `-0.2`, `-0.1`),
-    no reward-shaping records, no GRPO training run metadata, no asymmetric
+    training inspiration, and the committed `papers/thetaevolve_boundary.json`
+    sidecar now records the source-specific `2511.23473` boundary with cached
+    PDF digest, CC-BY license metadata, linked code URL, component rows, local
+    `ttt_rl` export scope, required future evidence fields, and
+    missing-evidence keys. The remaining code gap is the actual test-time
+    learning behavior: no batch-sampled dynamic environment, no
+    `70`/`1000`/`10000` population/archive/island scaling report, no lazy
+    penalty against database-equivalent programs after comment removal, no
+    early-check penalty schema (`-0.4`, `-0.3`, `-0.2`, `-0.1`), no
+    reward-shaping records, no GRPO training run metadata, no asymmetric
     clipping/truncated-importance-sampling configuration, no model checkpoint
     provenance, no transfer/generalization report, no SGLang/vLLM throughput
     report, and no AlphaEvolve-vs-ThetaEvolve benchmark comparison artifact.

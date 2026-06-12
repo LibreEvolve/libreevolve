@@ -4752,16 +4752,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     (`0.2`/`0.28`), learning rate `1e-6`, weight decay `0.1`, and no KL or
     entropy regularization.
   - Current evidence: ROADMAP says ThetaEvolve features should remain labeled
-    as inspired unless the paper behavior is actually implemented, and
-    `papers/README.md` states that LibreEvolve has clipped-reward JSONL export
-    but no online RL/GRPO training loop, checkpoint management, resume
-    semantics, or lazy-penalty dynamics. The roadmap does not yet define
-    `2511.23473`-specific gates for source metadata, linked code status,
-    dynamic-environment architecture, batch-sampling evidence,
-    database-scaling reports, lazy-penalty and reward-shaping semantics,
-    GRPO training telemetry, checkpoint lifecycle, transfer/generalization
-    reports, SGLang/vLLM-style throughput reports, evaluator caveats, or
-    benchmark comparisons.
+    as inspired unless the paper behavior is actually implemented, and now
+    names `papers/thetaevolve_boundary.json` as the source-specific gate for
+    `2511.23473`. The sidecar records source metadata, CC-BY license metadata,
+    linked code URL, dynamic-environment component rows, required future
+    evidence fields, and missing-evidence keys while keeping batch-sampling
+    evidence, database-scaling reports, lazy-penalty and reward-shaping
+    semantics, GRPO training telemetry, checkpoint lifecycle,
+    transfer/generalization reports, SGLang/vLLM-style throughput reports,
+    evaluator caveats, and benchmark comparisons as future gates.
   - Required result: add roadmap gates for `2511.23473`: paper/source manifest
     entry, PDF/cache hash, source-license and code-artifact status,
     single-LLM/database/batch-sampling metadata, early-check and lazy-penalty

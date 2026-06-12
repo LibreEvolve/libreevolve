@@ -4830,7 +4830,7 @@ the complete implementation-status index for all 25 manifest rows.
 | [**AlphaEvolve**](https://arxiv.org/abs/2506.13131) | Novikov et al. (Google DeepMind) | 2025 | Core architecture inspiration |
 | [**GigaEvo**](https://arxiv.org/abs/2511.17592) | Khrulkov et al. | 2025 | Framework inspiration only; `papers/gigaevo_framework_boundary.json` records missing Redis lifecycle database, asyncio DAG engine, insight stage, concurrent units, LangGraph mutation, and benchmark reproduction evidence |
 | [**CodeEvolve**](https://arxiv.org/abs/2510.14150) | Assumpção et al. | 2025 | Agentic code-evolution inspiration only; `papers/codeevolve_boundary.json` records missing prompt/solution dual fitness, semantic crossover, meta-prompting, targeted refinement, scheduler, sandbox, benchmark, ablation, and cost evidence |
-| [**ThetaEvolve**](https://arxiv.org/abs/2511.23473) | Wang et al. | 2025 | Inspiration for export/training boundary |
+| [**ThetaEvolve**](https://arxiv.org/abs/2511.23473) | Wang et al. | 2025 | Test-time training inspiration only; `papers/thetaevolve_boundary.json` records missing dynamic-environment, batch-sampling, lazy-penalty, reward-shaping, online GRPO/RL, checkpoint, throughput, and benchmark-comparison evidence |
 | [**ImprovEvolve**](https://arxiv.org/abs/2602.10233) | Kravatskiy et al. | 2026 | Inspiration for modular prompting |
 | [**MadEvolve**](https://arxiv.org/abs/2602.15951) | Li, Zang & Münchmeyer | 2026 | Background context; no MadEvolve implementation |
 | [**CausalEvolve**](https://arxiv.org/abs/2603.14575) | Chen et al. | 2026 | Inspiration for causal guidance; not scratchpad-complete |

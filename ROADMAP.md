@@ -629,7 +629,12 @@ is not yet an AlphaEvolve reproduction.
   dual fitness, semantic inspiration crossover, meta-prompting exploration,
   depth-targeted refinement, exploration scheduling, sandbox runtime/memory
   limits, MAP-Elites/CVT parity, benchmark rows, ablations, quality-cost
-  comparisons, and linked experiment-artifact status.
+  comparisons, and linked experiment-artifact status. The committed
+  `papers/thetaevolve_boundary.json` sidecar records the ThetaEvolve
+  source-specific boundary for dynamic-environment architecture, single-LLM
+  runtime, large-database scaling, batch sampling, early checks, lazy
+  penalties, reward shaping, online GRPO/RL training, checkpoint lifecycle,
+  throughput reports, and benchmark comparisons.
 
 ## Mid Term
 

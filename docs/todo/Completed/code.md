@@ -17593,3 +17593,15 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     replayable transport/TLS evidence remain open.
   - Verification: DeepResearch semantic-boundary tests cover forged
     source-ranking overclaims.
+
+- [x] Add manifest coverage flags for retrieval ranking/scoring boundaries.
+  - Spec evidence: run manifests should not summarize retrieval evidence in a
+    way that implies AlphaEvolve-grade semantic ranking or external scoring.
+  - Status: `runtime.retrieval.evidence_coverage` now records explicit false
+    readiness flags for semantic source ranking and external source scoring in
+    addition to learned ranking, and validation rejects forged true values.
+  - Remaining gap: learned/external semantic ranking, semantic source-content
+    verification, unbounded payload replay, and replayable transport/TLS
+    evidence remain open.
+  - Verification: loop retrieval-manifest tests cover forged ranking/scoring
+    readiness overclaims and missing external-scoring limitations.

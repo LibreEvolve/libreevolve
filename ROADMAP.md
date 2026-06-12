@@ -545,7 +545,8 @@ is not yet an AlphaEvolve reproduction.
   provider order, a replayable transport/failure decision tree, and explicit
   default-provider plus custom-provider provenance tests. Current bounded
   audits reject source-ranking metadata that overclaims semantic, learned, or
-  external scoring evidence without implementing those rankers.
+  external scoring evidence without implementing those rankers, and run-level
+  coverage keeps those ranking/scoring readiness flags false.
 - Extend the current optional `IDEA`/`RATIONALE`/`HYPOTHESIS` proposal metadata
   preamble, bounded `runtime.history.hypothesis_index` summaries, and
   `runtime.history.hypothesis_branch_report` abandonment evidence, plus

@@ -15753,7 +15753,9 @@ def test_manifest_summarizes_retrieval_events():
     assert coverage["raw_provider_payload_retained"] is False
     assert coverage["raw_source_payload_retained"] is False
     assert coverage["semantic_source_verification_ready"] is False
+    assert coverage["semantic_source_ranking_ready"] is False
     assert coverage["learned_ranking_ready"] is False
+    assert coverage["external_source_scoring_ready"] is False
     assert coverage["tls_decision_replay_ready"] is False
     assert coverage["full_retrieval_replay_ready"] is False
     assert coverage["validation"]["schema"] == (
@@ -15769,6 +15771,19 @@ def test_manifest_summarizes_retrieval_events():
         issue["code"] == "semantic_source_verification_overclaim"
         for issue in invalid["issues"]
     )
+    ranking_overclaim = copy.deepcopy(coverage)
+    ranking_overclaim["semantic_source_ranking_ready"] = True
+    ranking_overclaim["learned_ranking_ready"] = True
+    ranking_overclaim["external_source_scoring_ready"] = True
+    ranking_overclaim["limitations"].remove("query_overlap_not_external_source_scoring")
+    ranking_overclaim.pop("validation")
+    invalid_ranking = validate_retrieval_evidence_coverage(ranking_overclaim)
+    assert invalid_ranking["ok"] is False
+    ranking_issue_codes = {issue["code"] for issue in invalid_ranking["issues"]}
+    assert "semantic_source_ranking_overclaim" in ranking_issue_codes
+    assert "learned_ranking_overclaim" in ranking_issue_codes
+    assert "external_source_scoring_overclaim" in ranking_issue_codes
+    assert "missing_limitation" in ranking_issue_codes
     [artifact] = manifest["runtime"]["plugin_artifacts"]
     metadata = artifact["metadata"]
     assert artifact["plugin"] == "DeepResearchPlugin"

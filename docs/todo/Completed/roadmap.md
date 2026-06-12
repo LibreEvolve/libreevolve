@@ -9322,3 +9322,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     replayable transport evidence open.
   - Verification: DeepResearch semantic-boundary tests validate forged
     source-ranking overclaims.
+
+- [x] Preserve retrieval ranking/scoring manifest boundary.
+  - Spec evidence: roadmap DeepEvolve wording should not treat manifest
+    summaries as semantic ranking or external scoring evidence.
+  - Status: ROADMAP and TODO wording now recognize false manifest readiness
+    flags for semantic source ranking, learned ranking, and external source
+    scoring.
+  - Verification: loop retrieval-manifest tests validate forged ranking/scoring
+    readiness overclaims.

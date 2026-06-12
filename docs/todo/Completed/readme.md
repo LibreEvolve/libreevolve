@@ -11793,3 +11793,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     external scoring evidence while keeping real learned/external ranking open.
   - Verification: DeepResearch semantic-boundary tests validate forged
     source-ranking overclaims.
+
+- [x] Document retrieval ranking/scoring manifest flags.
+  - Spec evidence: README DeepResearch wording needed to identify run-level
+    retrieval evidence boundaries without implying semantic ranking or external
+    scoring support.
+  - Status: README and TODO wording now state that run-level retrieval evidence
+    coverage keeps semantic source-ranking, learned-ranking, and external
+    source-scoring readiness flags false.
+  - Verification: loop retrieval-manifest tests validate forged ranking/scoring
+    readiness overclaims.

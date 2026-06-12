@@ -1192,8 +1192,9 @@ Primary evidence:
     transport, payload-artifact, source-content, grounding, ranking,
     evidence-boundary, and context-audit policy coverage, with
     `libreevolve.retrieval_evidence_coverage_validation.v1` rejecting raw
-    provider/source payload, semantic-verification, learned-ranking, TLS-replay,
-    and full-replay overclaims.
+    provider/source payload, semantic-verification, semantic-source-ranking,
+    learned-ranking, external-source-scoring, TLS-replay, and full-replay
+    overclaims.
   - Required result: persist replayable source-content artifacts beyond bounded
     retained-source snapshots and retention-budgeted redacted sidecars; add
     learned or externally scored semantic ranking/selection provenance beyond

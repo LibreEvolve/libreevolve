@@ -3485,6 +3485,9 @@ The ranking-provenance validator can independently check those deterministic
 retained-source hashes for event records and cache snapshots. The semantic
 boundary audit also rejects retrieval metadata that tries to present source
 ranking as semantic verification, learned ranking, or external scoring evidence.
+Run-level retrieval evidence coverage records the same boundary with explicit
+false readiness flags for semantic source ranking, learned ranking, and external
+source scoring.
 Cache keys include the ranking policy so cached/offline replay cannot mix
 differently ordered source metadata for the same query. LibreEvolve does not yet persist unbounded raw provider/source
 payloads, unbounded source-content artifacts,

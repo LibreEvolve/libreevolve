@@ -4395,8 +4395,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve.retrieval_evidence_coverage.v1` run-level coverage counts for
     retained retrieval evidence surfaces and
     `libreevolve.retrieval_evidence_coverage_validation.v1` rejects raw
-    provider/source payload, semantic-verification, learned-ranking,
-    TLS-replay, and full-replay overclaims.
+    provider/source payload, semantic-verification, semantic-source-ranking,
+    learned-ranking, external-source-scoring, TLS-replay, and full-replay
+    overclaims.
     Retrieval query inputs now include bounded task-description,
     explicit-context, recent failure-history, local paper manifest title/id, and
     recent proposal-hypothesis terms as well as best-program fitness, metrics,

@@ -12192,3 +12192,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     payload replay, or replayable transport/TLS decisions.
   - Verification: DeepResearch semantic-boundary tests validate forged
     source-ranking overclaims.
+
+- [x] Record retrieval ranking/scoring manifest flags.
+  - Spec evidence: paper-facing DeepEvolve claims need run-level manifest
+    evidence that distinguishes deterministic query-overlap metadata from
+    absent semantic ranking and external scoring.
+  - Status: paper-facing TODOs and the papers index now record false readiness
+    flags for semantic source ranking, learned ranking, and external source
+    scoring in retrieval evidence coverage.
+  - Remaining paper gap: this does not implement learned/external semantic
+    ranking, semantic source-content verification, unbounded provider/source
+    payload replay, or replayable transport/TLS decisions.
+  - Verification: loop retrieval-manifest tests validate forged ranking/scoring
+    readiness overclaims.

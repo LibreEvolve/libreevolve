@@ -35864,6 +35864,7 @@ _RETRIEVAL_EVIDENCE_LIMITATIONS = (
     "bounded_redacted_payload_artifacts_not_unbounded_raw_payloads",
     "lexical_grounding_not_semantic_verification",
     "query_overlap_not_learned_semantic_ranking",
+    "query_overlap_not_external_source_scoring",
     "transport_status_without_tls_certificate_chain_replay",
     "retrieval_context_is_untrusted_non_authoritative_prompt_evidence",
 )
@@ -35871,7 +35872,9 @@ _RETRIEVAL_EVIDENCE_OVERCLAIM_FIELDS = {
     "raw_provider_payload_retained": "raw_provider_payload_overclaim",
     "raw_source_payload_retained": "raw_source_payload_overclaim",
     "semantic_source_verification_ready": "semantic_source_verification_overclaim",
+    "semantic_source_ranking_ready": "semantic_source_ranking_overclaim",
     "learned_ranking_ready": "learned_ranking_overclaim",
+    "external_source_scoring_ready": "external_source_scoring_overclaim",
     "tls_decision_replay_ready": "tls_decision_replay_overclaim",
     "full_retrieval_replay_ready": "full_retrieval_replay_overclaim",
 }
@@ -36022,7 +36025,9 @@ def _retrieval_evidence_coverage(events: list[dict]) -> dict:
         "raw_provider_payload_retained": False,
         "raw_source_payload_retained": False,
         "semantic_source_verification_ready": False,
+        "semantic_source_ranking_ready": False,
         "learned_ranking_ready": False,
+        "external_source_scoring_ready": False,
         "tls_decision_replay_ready": False,
         "full_retrieval_replay_ready": False,
         "limitations": list(_RETRIEVAL_EVIDENCE_LIMITATIONS),

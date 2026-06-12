@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 32 cache rows and links the AlphaEvolve row to
+  identities for all 33 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1334,6 +1334,17 @@ resumed-trace proof are still open.
   accounting, systems-research benchmark fixtures, prompt-optimization budget
   comparisons, linked-code audits, and independent reproduction outputs remain
   open before roadmap wording can promote LEVI-style cost-aware search support.
+- Keep PACEvolve long-horizon consistency claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2601.10657`, `PACEvolve: Enabling Long-Horizon Progress-Aware Consistent
+  Evolution`, cached locally as `papers/2601.10657__PACEvolve.pdf`. This is
+  background long-horizon consistency context only; context-pollution
+  detectors, hierarchical context-management/pruning artifacts, mode-collapse
+  diagnostics, momentum-based backtracking controllers, unified
+  crossover/backtracking samplers, trajectory-collaboration diagnostics,
+  LLM-SR/KernelBench/Modded NanoGPT benchmark reports, linked-code audits, and
+  independent reproduction outputs remain open before roadmap wording can
+  promote PACEvolve-style consistency support.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

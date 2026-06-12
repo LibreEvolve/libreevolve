@@ -3079,8 +3079,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     supports LEVI-style cost-aware search architecture without those
     implementation and benchmark artifacts.
 
-- [ ] Keep README PACEvolve long-horizon consistency claims absent or
-      source-scoped until paper and benchmark evidence exists.
+- [ ] Keep README PACEvolve long-horizon consistency claims source-scoped
+      until benchmark evidence exists.
   - Spec evidence: arXiv `2601.10657`, `PACEvolve: Enabling Long-Horizon
     Progress-Aware Consistent Evolution`, says LLM-in-the-loop evolutionary
     systems suffer from context pollution, mode collapse, and weak
@@ -3088,22 +3088,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     momentum-based backtracking, and self-adaptive sampling that unifies
     backtracking and crossover, with reported LLM-SR, KernelBench, and Modded
     NanoGPT results.
-  - Current evidence: README documents LibreEvolve's current prompt/context
-    history, failed-proposal limits, parent selection, MAP-Elites archive,
-    islands, and benchmark-report boundaries. It does not list `2601.10657`,
-    diagnose context pollution, prune hierarchical context, implement
-    momentum backtracking, coordinate crossover with backtracking, or report
-    LLM-SR/KernelBench/Modded-NanoGPT results.
+  - Current evidence: README now lists `2601.10657`, `PACEvolve`, as
+    long-horizon consistency context only and says no local hierarchical
+    context-management, momentum-backtracking, or LLM-SR/KernelBench report
+    exists. It still does not diagnose context pollution, prune hierarchical
+    context, implement momentum backtracking, coordinate crossover with
+    backtracking, or report LLM-SR/KernelBench/Modded-NanoGPT results.
   - Required result: if README mentions PACEvolve, progress-aware consistent
     evolution, context-pollution control, hierarchical context pruning,
     momentum-based backtracking, mode-collapse recovery, coordinated
     crossover/backtracking, weak-collaboration mitigation, LLM-SR,
     KernelBench, or Modded NanoGPT records, keep the wording source-scoped
-    until the paper is in the manifest and local artifacts can show context
-    metrics, pruning traces, backtracking state, sampling-policy records,
-    trajectory collaboration diagnostics, benchmark baselines, and report
-    outcomes. Avoid implying LibreEvolve supports PACEvolve-style consistency
-    controls without those implementation and benchmark artifacts.
+    until local artifacts can show context metrics, pruning traces,
+    backtracking state, sampling-policy records, trajectory collaboration
+    diagnostics, benchmark baselines, and report outcomes. Avoid implying
+    LibreEvolve supports PACEvolve-style consistency controls without those
+    implementation and benchmark artifacts.
 
 - [ ] Keep README FlashEvolve async-stage claims absent or source-scoped until
       paper and benchmark evidence exists.

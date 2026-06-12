@@ -4678,7 +4678,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     taxonomy, baseline method identities, code/artifact reproducibility status,
     and independent verification outputs.
 
-- [ ] Track PACEvolve long-horizon consistency paper evidence.
+- [ ] Reproduce PACEvolve long-horizon consistency evidence beyond paper
+      coverage.
   - Paper/source evidence: arXiv `2601.10657`, submitted January 15, 2026 and
     last revised January 16, 2026, is titled `PACEvolve: Enabling Long-Horizon
     Progress-Aware Consistent Evolution`. Its abstract says LLM-in-the-loop
@@ -4688,23 +4689,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     momentum-based backtracking, and a self-adaptive sampling policy that
     unifies backtracking and crossover, reporting state-of-the-art LLM-SR and
     KernelBench results plus record-surpassing Modded NanoGPT solutions.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2601.10657`. Existing rows cover AlphaEvolve, MAP-Elites,
-    prompt/history artifacts, DeltaEvolve semantic context, EvoX adaptive
-    search, MLEvolve long-horizon MLE, and LEVI cost-aware routing, but not
-    PACEvolve's context-pollution controls, hierarchical pruning,
-    momentum-backtracking state, crossover/backtracking coordination, or
-    LLM-SR/KernelBench/Modded-NanoGPT evidence.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2601.10657`: title/authors/arXiv version/date/PDF digest, source license,
-    relation to AlphaEvolve and LibreEvolve prompt/search policy,
-    context-pollution and mode-collapse metrics, hierarchical context schema,
-    pruning and momentum-backtracking artifacts, adaptive sampling and
-    crossover/backtracking coordination records, trajectory-collaboration
-    diagnostics, LLM-SR/KernelBench/Modded-NanoGPT benchmark metadata,
-    baseline method identities, code/artifact availability if any, and README/
-    ROADMAP wording that treats PACEvolve as missing paper evidence rather
-    than implemented LibreEvolve support.
+  - Current gap: the paper manifest, paper index, row-identity manifest, and
+    TODO coverage now include `2601.10657`, cached locally as
+    `papers/2601.10657__PACEvolve.pdf` with byte count `2691222` and
+    SHA-256
+    `fdf49e2e18905a5a836faabd43a57391faf30b4650ac6569c77f7a2469e92d61`.
+    Existing rows still do not capture PACEvolve's context-pollution controls,
+    hierarchical pruning, momentum-backtracking state, crossover/backtracking
+    coordination, or LLM-SR/KernelBench/Modded-NanoGPT evidence.
+  - Required result: add reproduction-grade evidence for `2601.10657`:
+    source-license metadata, relation to AlphaEvolve and LibreEvolve
+    prompt/search policy, context-pollution and mode-collapse metrics,
+    hierarchical context schema, pruning and momentum-backtracking artifacts,
+    adaptive sampling and crossover/backtracking coordination records,
+    trajectory-collaboration diagnostics, LLM-SR/KernelBench/Modded-NanoGPT
+    benchmark metadata, baseline method identities, code/artifact availability
+    if any, and independent verification outputs.
 
 - [ ] Track FlashEvolve asynchronous-stage paper evidence.
   - Paper/source evidence: arXiv `2605.08520`, submitted May 8, 2026, is

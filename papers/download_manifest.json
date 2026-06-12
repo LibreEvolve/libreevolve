@@ -300,6 +300,16 @@
     "sha256": "66cb851e38702e08213cc455f3c457289b2297be9b413be6372d21da5f0cfc58"
   },
   {
+    "id": "2601.10657",
+    "title": "PACEvolve",
+    "url": "https://arxiv.org/pdf/2601.10657.pdf",
+    "file": "papers/2601.10657__PACEvolve.pdf",
+    "ok": true,
+    "bytes": 2691222,
+    "message": "downloaded",
+    "sha256": "fdf49e2e18905a5a836faabd43a57391faf30b4650ac6569c77f7a2469e92d61"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

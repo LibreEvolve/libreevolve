@@ -5155,7 +5155,8 @@ Primary evidence:
     README/ROADMAP wording that promotes LEVI-style cost-aware search only
     after local implementation and reports exist.
 
-- [ ] Add PACEvolve long-horizon consistency source boundary.
+- [ ] Implement PACEvolve long-horizon consistency evidence beyond paper
+      cache coverage.
   - Spec evidence: arXiv `2601.10657`, `PACEvolve: Enabling Long-Horizon
     Progress-Aware Consistent Evolution`, was submitted January 15, 2026 and
     revised January 16, 2026. Its abstract says current LLM-in-the-loop
@@ -5166,23 +5167,28 @@ Primary evidence:
     that unifies backtracking and crossover for dynamic search coordination,
     reporting state-of-the-art results on LLM-SR and KernelBench plus
     record-surpassing solutions on Modded NanoGPT.
-  - Current evidence: LibreEvolve has prompt history, recent failed-child
-    snippets, fixed mixed parent sampling, island migration, MAP-Elites
-    retention, and archive/run manifests, but no PACEvolve source row, no
-    context-pollution detector, no hierarchical context pruning policy, no
-    momentum-based backtracking controller, no unified crossover/backtracking
-    sampler, no weak-collaboration diagnostics across parallel trajectories,
-    and no LLM-SR, KernelBench, or Modded NanoGPT benchmark reports.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2601.10657`: arXiv id/version/date/PDF hash, authors, source license,
-    relation to AlphaEvolve and LibreEvolve prompt/search dynamics,
-    context-pollution metrics, hierarchical context-management artifacts,
-    pruning policy traces, mode-collapse/stagnation diagnostics,
-    momentum-backtracking state, crossover/backtracking coordination schema,
-    adaptive sampling records, trajectory-collaboration evidence, LLM-SR/
-    KernelBench/Modded-NanoGPT benchmark taxonomy, baseline identities, and
-    README/ROADMAP wording that keeps PACEvolve-style consistency support as
-    missing evidence until local implementation and reports exist.
+  - Current evidence: `papers/download_manifest.*`, `papers/row_identity.json`,
+    `papers/README.md`, README, ROADMAP, and TODO coverage now include
+    `2601.10657`, cached locally as `papers/2601.10657__PACEvolve.pdf` with
+    byte count `2691222` and SHA-256
+    `fdf49e2e18905a5a836faabd43a57391faf30b4650ac6569c77f7a2469e92d61`.
+    LibreEvolve has prompt history, recent failed-child snippets, fixed mixed
+    parent sampling, island migration, MAP-Elites retention, and archive/run
+    manifests, but no context-pollution detector, no hierarchical context
+    pruning policy, no momentum-based backtracking controller, no unified
+    crossover/backtracking sampler, no weak-collaboration diagnostics across
+    parallel trajectories, and no LLM-SR, KernelBench, or Modded NanoGPT
+    benchmark reports.
+  - Required result: add implementation-boundary metadata and runnable
+    evidence beyond the paper cache: source-license metadata, relation to
+    AlphaEvolve and LibreEvolve prompt/search dynamics, context-pollution
+    metrics, hierarchical context-management artifacts, pruning policy traces,
+    mode-collapse/stagnation diagnostics, momentum-backtracking state,
+    crossover/backtracking coordination schema, adaptive sampling records,
+    trajectory-collaboration evidence, LLM-SR/KernelBench/Modded-NanoGPT
+    benchmark taxonomy, baseline identities, and README/ROADMAP wording that
+    promotes PACEvolve-style consistency only after local implementation and
+    reports exist.
 
 - [ ] Add FlashEvolve asynchronous-stage source boundary.
   - Spec evidence: arXiv `2605.08520`, `FlashEvolve: Accelerating Agent

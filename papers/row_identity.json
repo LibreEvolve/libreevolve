@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.paper_source_identity_manifest.v1",
-  "source_identity_count": 32,
+  "source_identity_count": 33,
   "source_identity_policy": "manifest_id_url_source_id_and_file_source_prefix_must_match_before_source_version_or_rights_claims",
   "sources": [
     {
@@ -539,6 +539,24 @@
       "url_source_id": "2605.09764",
       "url_versioned_id": "2605.09764",
       "file_source_id": "2605.09764",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2601.10657",
+      "title": "PACEvolve",
+      "url": "https://arxiv.org/pdf/2601.10657.pdf",
+      "file": "papers/2601.10657__PACEvolve.pdf",
+      "sha256": "fdf49e2e18905a5a836faabd43a57391faf30b4650ac6569c77f7a2469e92d61",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2601.10657",
+      "url_versioned_id": "2601.10657",
+      "file_source_id": "2601.10657",
       "identity_checks": {
         "manifest_id_matches_url_source_id": true,
         "manifest_id_matches_file_source_id": true,

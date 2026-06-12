@@ -18676,3 +18676,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     AlphaEvolve fast/strong scheduler overclaims, invalid boundary status,
     missing evidence drift, and incomplete required evidence fields.
+
+- [x] Add provider-cancellation sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/provider_cancellation_boundary.py`
+    now emits and validates the provider cancellation policy/audit boundary,
+    separating provider request timeout rules, ensemble wait deadline rules,
+    runtime deadline rules, declared hard-cancellation rules, role-scoped
+    budget actions, artifact-kind requirements, cancellation-record artifact
+    gates, hashed artifact inventory checks, runtime-readiness false fields,
+    provider-cancellation observations, timeout failure call records,
+    cancellation-record ledger replay, role/backend quarantine observations,
+    and provider failure-policy summaries from live provider SDK cancellation,
+    in-flight cancellation handles, timeout-driven stop enforcement, cross-run
+    provider quarantine resume, richer role-specific timeout artifacts, and
+    provider-output raw-payload replay.
+  - Verification: focused boundary tests and paper-manifest tests reject live
+    hard-cancellation overclaims, invalid boundary status, missing evidence
+    drift, and incomplete required evidence fields.

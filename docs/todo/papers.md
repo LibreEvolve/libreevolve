@@ -1040,6 +1040,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     provider pricing/default-rate capture beyond configured token-cost
     estimates, provider-output/raw-payload replay beyond bounded retained
     diagnostics, and async/pending-work controller restore.
+    `papers/provider_cancellation_boundary.json` now validates that this is
+    policy/audit evidence, not live provider SDK hard cancellation,
+    timeout-driven stop enforcement, cross-run provider quarantine resume,
+    richer role-specific timeout artifacts, or provider-output raw-payload
+    replay.
     `papers/expensive_evaluation_budget_boundary.json` now validates that the
     current compute-budget scope is local cooperative counters, not
     per-candidate compute-hour accounting, accelerator/worker lease

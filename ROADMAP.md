@@ -939,7 +939,12 @@ resumed-trace proof are still open.
   roles, cross-run quarantine/resume behavior, and persisted role-specific
   timeout artifacts beyond the currently covered timeout-policy,
   scheduler-observation, explicit false runtime-readiness fields, in-run
-  quarantine-evidence, and mutation timeout failure-history paths.
+  quarantine-evidence, and mutation timeout failure-history paths. The current
+  `papers/provider_cancellation_boundary.json` sidecar preserves the
+  policy/audit-only boundary while keeping live SDK cancellation,
+  timeout-driven stop enforcement, cross-run provider quarantine resume,
+  richer role-specific timeout artifacts, and provider-output raw-payload
+  replay open.
 - Extend current focused `throughput_depth` metadata tests into
   AlphaEvolve-style breadth/depth/cost/latency scheduler validation, including
   experiment-level selection traces and equal-budget report evidence. The

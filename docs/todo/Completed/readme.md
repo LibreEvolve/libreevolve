@@ -12794,3 +12794,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused fast/strong model-mix tests reject experiment-ready scheduler
     overclaims.
+
+- [x] Keep README provider-cancellation boundary tied to sidecar.
+  - Status: README now states that provider cancellation records are
+    policy/audit evidence for request timeouts, ensemble wait deadlines,
+    artifact gates, and quarantine observations, not live provider SDK hard
+    cancellation, timeout-driven stop enforcement, cross-run provider
+    quarantine resume, richer role-specific timeout artifacts, or
+    provider-output raw-payload replay, with the boundary tracked by
+    `papers/provider_cancellation_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused provider-cancellation tests reject live hard-cancellation
+    overclaims.

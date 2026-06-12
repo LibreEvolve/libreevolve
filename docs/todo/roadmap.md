@@ -1848,7 +1848,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     explicit false runtime-readiness fields, and mutation timeout
     failure-history rows before naming the open live SDK hard-cancellation,
     timeout-stop, raw provider output replay, and cross-run quarantine/resume
-    gaps.
+    gaps. The roadmap now points to
+    `papers/provider_cancellation_boundary.json`, which preserves the
+    policy/audit-only cancellation boundary for manifest validation.
   - Required result: when live provider SDK cancellation, runtime
     timeout-driven stop policy, cross-run provider-failure quarantine/resume
     behavior beyond restorable scheduler failure-policy state, raw provider

@@ -13772,3 +13772,21 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused fast/strong model-mix tests reject experiment-ready
     scheduler overclaims.
+
+- [x] Record provider-cancellation paper-facing sidecar.
+  - Status: `papers/provider_cancellation_boundary.json` now records the
+    policy/audit-only provider cancellation boundary for AlphaEvolve Sections
+    2.4 and 2.6: runtime evidence can show provider request timeout rules,
+    ensemble wait deadline rules, runtime deadline rules, declared hard-
+    cancellation rules, role-scoped budget actions, artifact-kind requirements,
+    cancellation-record artifact gates, hashed artifact inventory checks,
+    runtime-readiness false fields, provider-cancellation observations,
+    timeout failure call records, cancellation-record ledger replay,
+    role/backend quarantine observations, and provider failure-policy
+    summaries, while live provider SDK cancellation, in-flight cancellation
+    handles, timeout-driven stop enforcement, cross-run provider quarantine
+    resume, richer role-specific timeout artifacts, and provider-output
+    raw-payload replay remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused provider-cancellation tests reject live hard-cancellation
+    overclaims.

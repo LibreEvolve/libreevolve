@@ -10562,3 +10562,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation requires the committed sidecar and
     focused fast/strong model-mix tests reject experiment-ready scheduler
     overclaims.
+
+- [x] Keep roadmap provider-cancellation boundary tied to sidecar.
+  - Status: ROADMAP now links current provider cancellation policy/audit
+    evidence to `papers/provider_cancellation_boundary.json` while keeping
+    live SDK cancellation, timeout-driven stop enforcement, cross-run provider
+    quarantine resume, richer role-specific timeout artifacts, and
+    provider-output raw-payload replay open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused provider-cancellation tests reject live hard-cancellation
+    overclaims.

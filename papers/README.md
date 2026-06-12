@@ -976,7 +976,9 @@ including the role-specific quarantine/cross-run-resume gap when that policy is
 active. Cross-run provider-failure policy proof beyond restored scheduler
 state, provider-output/raw-payload replay, hard provider cancellation,
 timeout-driven stop behavior, and richer runtime cancellation artifacts beyond
-configured in-run quarantine observations remain open.
+configured in-run quarantine observations remain open. The committed
+`papers/provider_cancellation_boundary.json` sidecar preserves this
+policy/audit-only boundary for paper-manifest validation.
 
 AlphaEvolve prompt-archive note: `prompt_history.jsonl` records prompt-program
 selection, scoring, lineage, invalid-mutation penalties, and structured
@@ -2224,6 +2226,18 @@ Implemented:
   timeout-driven stop enforcement, and cross-run provider quarantine resume,
   but those runtime surfaces and richer cancellation artifacts beyond
   configured in-run quarantine observations remain open.
+- `papers/provider_cancellation_boundary.json`: provider cancellation sidecar
+  for AlphaEvolve Sections 2.4 and 2.6. It records validated provider request
+  timeout rules, ensemble wait deadline rules, runtime deadline rules, declared
+  hard-cancellation rules, role-scoped budget actions, artifact-kind
+  requirements, cancellation-record artifact gates, hashed artifact inventory
+  checks, runtime-readiness false fields, provider-cancellation observations,
+  timeout failure call records, cancellation-record ledger replay,
+  role/backend quarantine observations, and provider failure-policy summaries.
+  It is not evidence of live provider SDK cancellation, in-flight cancellation
+  handles, timeout-driven stop enforcement, cross-run provider quarantine
+  resume, richer role-specific timeout artifacts, or provider-output
+  raw-payload replay.
 - `libreevolve/problems/examples/sorting`: neutral plateau/diversity smoke
   fixture. The bubble-sort seed already reaches `accuracy == 1.0`, so this
   example can demonstrate mutation handling and same-score implementation

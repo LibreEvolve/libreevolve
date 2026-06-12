@@ -4659,6 +4659,9 @@ Primary evidence:
     against concrete files under an explicit artifact root, checking safe
     relative paths, existence, SHA-256 hashes, byte counts, per-artifact
     status, and aggregate missing/mismatch/invalid counts.
+    The committed `papers/provider_cancellation_boundary.json` sidecar now
+    validates this policy/audit-only cancellation boundary at the
+    paper-manifest layer.
   - Required result: connect the existing timeout/cancellation policy contract
     to live in-flight provider SDK cancellation, turn timeout categories into
     role-specific stop runtime policy, and add tests that runtime-budget

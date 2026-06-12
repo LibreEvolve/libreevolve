@@ -2081,7 +2081,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     false with overclaim validation. The README further says provider SDK hard
     cancellation and timeout-driven stop enforcement remain runtime work, and
     that artifact inventory proves named cancellation evidence files exist
-    rather than proving in-flight SDK calls can be hard-cancelled.
+    rather than proving in-flight SDK calls can be hard-cancelled. README now
+    points to `papers/provider_cancellation_boundary.json`, which preserves
+    that policy/audit-only boundary for manifest validation.
   - Required result: when live provider SDK cancellation, timeout-driven
     stop-run behavior, richer timeout/cancellation artifacts, or cross-run
     quarantine/resume proof lands, update README, ROADMAP, papers index, and

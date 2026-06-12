@@ -96,6 +96,12 @@ Important limits:
   accelerator/worker leases, async queue budgets, or equal-budget execution
   reports; that boundary is tracked by
   `papers/expensive_evaluation_budget_boundary.json`.
+- Provider cancellation records are policy/audit evidence for request
+  timeouts, ensemble wait deadlines, artifact gates, and quarantine
+  observations, not live provider SDK hard cancellation, timeout-driven stop
+  enforcement, cross-run provider quarantine resume, richer role-specific
+  timeout artifacts, or provider-output raw-payload replay; that boundary is
+  tracked by `papers/provider_cancellation_boundary.json`.
 - Database sampling reports are local strategy/count telemetry, not calibrated
   AlphaEvolve-style exploration/exploitation evidence; that boundary is tracked
   by `papers/sampling_balance_boundary.json`.

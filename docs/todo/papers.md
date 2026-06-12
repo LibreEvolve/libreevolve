@@ -5345,7 +5345,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     treats AI Harness Engineering as background context until those artifacts
     exist.
 
-- [ ] Track inference-time trajectory-alignment harness paper evidence.
+- [ ] Reproduce inference-time trajectory-alignment harness evidence beyond
+      paper coverage.
   - Paper/source evidence: arXiv `2605.21516`, submitted May 15, 2026, is
     titled `Harnesses for Inference-Time Alignment over Execution
     Trajectories`. Its abstract says harness engineering improves agent
@@ -5358,26 +5359,34 @@ directory and using the AlphaEvolve paper as the primary specification.
     predictions with controlled synthetic experiments and real terminal-agent
     benchmarks, and shows that partial harnesses can outperform fully
     structured workflows.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2605.21516`. Existing rows cover AlphaEvolve search, AHE, AI
-    Harness Engineering, HarnessFix, RHO, SIA, and harness-benefit
-    disentanglement, but not theoretical or empirical evidence for when
-    decomposition/guidance helps or harms, retry-budget sensitivity,
-    guidance-evidence alignment, partial harnessing, final-bias metrics, or
-    over-structured workflow failure modes.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2605.21516`: title/authors/arXiv version/date/PDF digest, source
-    license, relation to AlphaEvolve and LibreEvolve harness assumptions,
-    harness parameter schema, decomposition-granularity records, guidance-
-    strength and guidance-rule records, sub-goal and trajectory records,
-    retry-budget experiment metadata, pass-rate/final-bias metrics,
-    granularity-capability alignment evidence, guidance-evidence alignment
-    evidence, over-decomposition/over-pruning/hallucinated-execution
-    diagnostics, partial-harness prefix experiment records, Terminal-Bench-2
-    and controlled synthetic benchmark metadata, baseline identities,
-    code/artifact availability if any, reproducibility status, and README/
-    ROADMAP wording that treats inference-time trajectory alignment as
-    missing paper evidence rather than implemented LibreEvolve support.
+  - Current gap: the paper cache, paper index, row identity, README, ROADMAP,
+    and TODO coverage now include `2605.21516`, cached locally as
+    `papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf` with byte
+    count `2323632` and SHA-256
+    `5458d316fd5edbfda5cf7355592d41e0c5f3f889e31c92855728c47452f6ca32`.
+    Reproduction evidence remains absent: no source-license details, relation
+    to AlphaEvolve and LibreEvolve harness assumptions, harness parameter
+    schema, decomposition-granularity records, guidance-strength and guidance-
+    rule records, sub-goal and trajectory records, retry-budget experiment
+    metadata, pass-rate/final-bias metrics, granularity-capability alignment
+    evidence, guidance-evidence alignment evidence, over-decomposition/over-
+    pruning/hallucinated-execution diagnostics, partial-harness prefix
+    experiment records, Terminal-Bench-2 and controlled synthetic benchmark
+    metadata, baseline identities, code/artifact reproducibility status, or
+    independent reproduction output exists.
+  - Required result: add reproduction-grade inference-time trajectory-
+    alignment evidence: source license, relation to AlphaEvolve and
+    LibreEvolve harness assumptions, harness parameter schema,
+    decomposition-granularity records, guidance-strength and guidance-rule
+    records, sub-goal and trajectory records, retry-budget experiment
+    metadata, pass-rate/final-bias metrics, granularity-capability alignment
+    evidence, guidance-evidence alignment evidence, over-decomposition/over-
+    pruning/hallucinated-execution diagnostics, partial-harness prefix
+    experiment records, Terminal-Bench-2 and controlled synthetic benchmark
+    metadata, baseline identities, code/artifact reproducibility status,
+    independent reproduction outputs, and README/ROADMAP wording that treats
+    inference-time trajectory alignment as background context until those
+    artifacts exist.
 
 - [ ] Track Adaptive Auto-Harness open-ended task-stream paper evidence.
   - Paper/source evidence: arXiv `2606.01770`, submitted June 1, 2026, is

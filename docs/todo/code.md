@@ -5824,7 +5824,8 @@ Primary evidence:
     and README/ROADMAP wording that keeps AI-harness runtime-substrate claims
     as missing evidence until local implementation and reports exist.
 
-- [ ] Add inference-time trajectory-alignment harness design boundary.
+- [ ] Implement inference-time trajectory-alignment harness evidence beyond
+      paper cache coverage.
   - Spec evidence: arXiv `2605.21516`, `Harnesses for Inference-Time
     Alignment over Execution Trajectories`, was submitted May 15, 2026. Its
     abstract says harness engineering aims to improve long-term performance
@@ -5837,27 +5838,32 @@ Primary evidence:
     hallucinated execution. It also reports that partial harnesses, which
     specify only initial steps and leave the remainder to the agent, can
     outperform fully structured workflows.
-  - Current evidence: LibreEvolve records prompt variants, parent selection,
-    evaluator results, retry-like evaluator behavior, and run artifacts, but
-    it has no `2605.21516` source row, no harness parameterization for
-    decomposition granularity, guidance strength, or local guidance rules, no
-    pass-rate/final-bias tradeoff report, no retry-budget sensitivity study,
-    no over-decomposition or over-pruning diagnostics, no hallucinated
-    execution metric, no partial-harness benchmark, and no alignment evidence
-    separating helpful structure from over-constraining execution.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2605.21516`: arXiv id/version/date/PDF hash, authors, source
-    license, relation to AlphaEvolve and LibreEvolve prompt/evaluator
-    scaffolds, harness parameter schema for decomposition granularity,
-    guidance strength, and guidance rule, sub-goal sequence records,
-    trajectory/action-distribution records, retry-budget records, pass-rate
-    and final-bias metrics, granularity-capability alignment reports,
-    guidance-evidence alignment reports, over-decomposition/over-pruning/
-    hallucinated-execution diagnostics, partial-harness prefix experiments,
-    Terminal-Bench-2 and controlled synthetic benchmark metadata, baseline
-    identities, and README/ROADMAP wording that keeps inference-time harness
-    alignment claims as missing evidence until local implementation and
-    reports exist.
+  - Current evidence: `papers/download_manifest.*`, `papers/row_identity.json`,
+    `papers/README.md`, README, ROADMAP, and TODO coverage now include
+    `2605.21516`, cached locally as
+    `papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf` with byte
+    count `2323632` and SHA-256
+    `5458d316fd5edbfda5cf7355592d41e0c5f3f889e31c92855728c47452f6ca32`.
+    LibreEvolve records prompt variants, parent selection, evaluator results,
+    retry-like evaluator behavior, and run artifacts, but it has no harness
+    parameterization for decomposition granularity, guidance strength, or
+    local guidance rules, no pass-rate/final-bias tradeoff report, no retry-
+    budget sensitivity study, no over-decomposition or over-pruning
+    diagnostics, no hallucinated execution metric, no partial-harness
+    benchmark, and no alignment evidence separating helpful structure from
+    over-constraining execution.
+  - Required result: add implementation-boundary metadata beyond the paper
+    cache: source license, relation to AlphaEvolve and LibreEvolve prompt/
+    evaluator scaffolds, harness parameter schema for decomposition
+    granularity, guidance strength, and guidance rule, sub-goal sequence
+    records, trajectory/action-distribution records, retry-budget records,
+    pass-rate and final-bias metrics, granularity-capability alignment
+    reports, guidance-evidence alignment reports, over-decomposition/over-
+    pruning/hallucinated-execution diagnostics, partial-harness prefix
+    experiments, Terminal-Bench-2 and controlled synthetic benchmark metadata,
+    baseline identities, and README/ROADMAP wording that keeps inference-time
+    harness alignment claims as missing evidence until local implementation
+    and reports exist.
 
 - [ ] Add Adaptive Auto-Harness open-ended task-stream boundary.
   - Spec evidence: arXiv `2606.01770`, `Adaptive Auto-Harness: Sustained

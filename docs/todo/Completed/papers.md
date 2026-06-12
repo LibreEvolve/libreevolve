@@ -13168,3 +13168,25 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2605.21516` inference-time trajectory-alignment paper-cache
+      coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2605.21516`, `Harnesses for Inference-Time Alignment over Execution
+    Trajectories`, cached locally as
+    `papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf` with byte
+    count `2323632` and SHA-256
+    `5458d316fd5edbfda5cf7355592d41e0c5f3f889e31c92855728c47452f6ca32`.
+  - Remaining paper gap: source-license details, harness parameter schema,
+    decomposition-granularity records, guidance-strength and guidance-rule
+    records, sub-goal and trajectory records, retry-budget experiment
+    metadata, pass-rate/final-bias metrics, granularity-capability alignment
+    evidence, guidance-evidence alignment evidence, over-decomposition/over-
+    pruning/hallucinated-execution diagnostics, partial-harness prefix
+    experiment records, Terminal-Bench-2 and controlled synthetic benchmark
+    metadata, baseline identities, code/artifact reproducibility status, and
+    independent reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

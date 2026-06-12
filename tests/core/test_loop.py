@@ -1379,6 +1379,17 @@ def test_completed_runtime_records_valid_provider_cancellation_policy():
         "roles": ["mutation", "critique", "feedback:*", "meta_prompt"],
         "source": "loop_llm_generate_roles",
     }
+    assert policy["runtime_readiness"] == {
+        "schema": "libreevolve.provider_cancellation_runtime_readiness.v1",
+        "live_provider_sdk_cancellation": False,
+        "timeout_driven_stop_enforcement": False,
+        "cross_run_provider_quarantine_resume": False,
+        "remaining_gap": [
+            "live_provider_sdk_cancellation",
+            "timeout_driven_stop_enforcement",
+            "cross_run_provider_quarantine_resume",
+        ],
+    }
     timeout_rules = policy["rules"][:-1]
     runtime_rule = policy["rules"][-1]
     assert len(timeout_rules) == 8
@@ -1407,6 +1418,18 @@ def test_completed_runtime_records_valid_provider_cancellation_policy():
         "quarantine_record",
         "budget_stop_record",
     }
+
+    forged = copy.deepcopy(policy)
+    forged["runtime_readiness"]["live_provider_sdk_cancellation"] = True
+    forged["runtime_readiness"]["timeout_driven_stop_enforcement"] = True
+    forged["runtime_readiness"]["cross_run_provider_quarantine_resume"] = True
+    forged_validation = validate_provider_cancellation_policy(forged)
+    forged_codes = {issue.code for issue in forged_validation.issues}
+
+    assert forged_validation.ok is False
+    assert "live_provider_sdk_cancellation_overclaim" in forged_codes
+    assert "timeout_driven_stop_enforcement_overclaim" in forged_codes
+    assert "cross_run_provider_quarantine_resume_overclaim" in forged_codes
 
 
 def test_provider_cancellation_policy_records_configured_timeout_quarantine():

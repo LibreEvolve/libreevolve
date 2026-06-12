@@ -1763,9 +1763,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     runtime scheduler observations, configured in-run role/backend quarantine
     evidence, strict provider-failure ledger summaries, restorable scheduler
     failure-policy state, role-specific failure-policy remaining-gap summaries,
-    and mutation timeout failure-history rows before naming the open live SDK
-    hard-cancellation, timeout-stop, raw provider output replay, and cross-run
-    quarantine/resume gaps.
+    explicit false runtime-readiness fields, and mutation timeout
+    failure-history rows before naming the open live SDK hard-cancellation,
+    timeout-stop, raw provider output replay, and cross-run quarantine/resume
+    gaps.
   - Required result: when live provider SDK cancellation, runtime
     timeout-driven stop policy, cross-run provider-failure quarantine/resume
     behavior beyond restorable scheduler failure-policy state, raw provider

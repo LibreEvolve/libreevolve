@@ -1957,9 +1957,10 @@ Implemented:
   policy contract. It validates timeout/cancellation rules, role-scoped budget
   actions, artifact requirements, hard-cancel readiness gated on
   `cancellation_record` artifact evidence, and hashed cancellation artifacts,
-  but live provider SDK cancellation, timeout-driven stop enforcement, and
-  richer runtime cancellation artifacts beyond configured in-run quarantine
-  observations remain open.
+  plus false runtime-readiness fields for live provider SDK cancellation,
+  timeout-driven stop enforcement, and cross-run provider quarantine resume,
+  but those runtime surfaces and richer cancellation artifacts beyond
+  configured in-run quarantine observations remain open.
 - `libreevolve/problems/examples/sorting`: neutral plateau/diversity smoke
   fixture. The bubble-sort seed already reaches `accuracy == 1.0`, so this
   example can demonstrate mutation handling and same-score implementation

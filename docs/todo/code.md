@@ -4523,7 +4523,9 @@ Primary evidence:
     manifests now include a validated `runtime.provider_cancellation_policy`
     record declaring the current provider timeout, ensemble deadline, runtime
     deadline actions, and matching timeout/budget-stop artifact kinds with
-    `hard_cancel_ready: false`.
+    `hard_cancel_ready: false`. Policy `runtime_readiness` now keeps live
+    provider SDK cancellation, timeout-driven stop enforcement, and cross-run
+    provider quarantine resume false, and validation rejects forged true values.
     Provider-request-timeout and ensemble-deadline rules are now scoped to the
     loop's active LLM role surfaces: `mutation`, `critique`, `feedback:*`, and
     `meta_prompt`. Those rules now declare `quarantine` actions and

@@ -104,6 +104,7 @@ from libreevolve.llm.ensemble import (
 )
 from libreevolve.llm.cancellation_policy import (
     PROVIDER_CANCELLATION_POLICY_SCHEMA,
+    PROVIDER_CANCELLATION_RUNTIME_READINESS_SCHEMA,
     validate_provider_cancellation_policy,
 )
 from libreevolve.llm.budget_report import (
@@ -4296,6 +4297,17 @@ def _runtime_provider_cancellation_policy(
             "policy": "libreevolve.llm_timeout_role_scope.v1",
             "roles": ["mutation", "critique", "feedback:*", "meta_prompt"],
             "source": "loop_llm_generate_roles",
+        },
+        "runtime_readiness": {
+            "schema": PROVIDER_CANCELLATION_RUNTIME_READINESS_SCHEMA,
+            "live_provider_sdk_cancellation": False,
+            "timeout_driven_stop_enforcement": False,
+            "cross_run_provider_quarantine_resume": False,
+            "remaining_gap": [
+                "live_provider_sdk_cancellation",
+                "timeout_driven_stop_enforcement",
+                "cross_run_provider_quarantine_resume",
+            ],
         },
         "rules": [
             *provider_timeout_rules,

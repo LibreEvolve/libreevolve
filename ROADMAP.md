@@ -681,8 +681,8 @@ resumed-trace proof are still open.
   cancellation, budget-affecting timeout/cancellation stop behavior across LLM
   roles, cross-run quarantine/resume behavior, and persisted role-specific
   timeout artifacts beyond the currently covered timeout-policy,
-  scheduler-observation, in-run quarantine-evidence, and mutation timeout
-  failure-history paths.
+  scheduler-observation, explicit false runtime-readiness fields, in-run
+  quarantine-evidence, and mutation timeout failure-history paths.
 - Extend current focused `throughput_depth` metadata tests into
   AlphaEvolve-style breadth/depth/cost/latency scheduler validation, including
   experiment-level selection traces and equal-budget report evidence.

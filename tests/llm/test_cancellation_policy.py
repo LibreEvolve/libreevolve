@@ -4,6 +4,7 @@ import json
 from libreevolve.llm.cancellation_policy import (
     PROVIDER_CANCELLATION_ARTIFACT_INVENTORY_SCHEMA,
     PROVIDER_CANCELLATION_POLICY_SCHEMA,
+    PROVIDER_CANCELLATION_RUNTIME_READINESS_SCHEMA,
     provider_cancellation_artifact_inventory,
     render_provider_cancellation_summary,
     validate_provider_cancellation_policy,
@@ -15,6 +16,17 @@ def _valid_policy() -> dict:
         "schema": PROVIDER_CANCELLATION_POLICY_SCHEMA,
         "policy_id": "default_llm_timeout_policy",
         "hard_cancel_ready": True,
+        "runtime_readiness": {
+            "schema": PROVIDER_CANCELLATION_RUNTIME_READINESS_SCHEMA,
+            "live_provider_sdk_cancellation": False,
+            "timeout_driven_stop_enforcement": False,
+            "cross_run_provider_quarantine_resume": False,
+            "remaining_gap": [
+                "live_provider_sdk_cancellation",
+                "timeout_driven_stop_enforcement",
+                "cross_run_provider_quarantine_resume",
+            ],
+        },
         "rules": [
             {
                 "id": "provider_request_timeout_mutation",
@@ -209,6 +221,21 @@ def test_provider_cancellation_policy_accepts_safe_role_prefix_pattern():
     validation = validate_provider_cancellation_policy(policy)
 
     assert validation.ok is True
+
+
+def test_provider_cancellation_policy_rejects_runtime_readiness_overclaims():
+    policy = _valid_policy()
+    policy["runtime_readiness"]["live_provider_sdk_cancellation"] = True
+    policy["runtime_readiness"]["timeout_driven_stop_enforcement"] = True
+    policy["runtime_readiness"]["cross_run_provider_quarantine_resume"] = True
+
+    validation = validate_provider_cancellation_policy(policy)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "live_provider_sdk_cancellation_overclaim" in codes
+    assert "timeout_driven_stop_enforcement_overclaim" in codes
+    assert "cross_run_provider_quarantine_resume_overclaim" in codes
 
 
 def test_provider_cancellation_policy_rejects_unsafe_artifacts():

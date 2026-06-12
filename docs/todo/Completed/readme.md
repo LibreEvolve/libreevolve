@@ -11839,3 +11839,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     validation keeps `resumed_trace_proof_ready: false` and rejects overclaims.
   - Verification: full-resume bundle tests validate forged resumed-trace proof
     overclaim rejection.
+
+- [x] Document provider-cancellation runtime readiness guards.
+  - Spec evidence: README provider-timeout wording needed to distinguish
+    policy/observation evidence from live hard cancellation and stop behavior.
+  - Status: README and TODO wording now state that policy `runtime_readiness`
+    keeps live SDK cancellation, timeout-driven stop enforcement, and cross-run
+    quarantine resume false.
+  - Verification: cancellation policy tests validate forged readiness
+    overclaim rejection.

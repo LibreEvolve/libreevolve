@@ -934,7 +934,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     hard-cancel readiness gated on `cancellation_record` artifact evidence, and
     hashed cancellation artifacts. Runtime manifests now scope provider-timeout
     and ensemble-deadline rules to `mutation`, `critique`, `feedback:*`, and
-    `meta_prompt`. Rules for scopes with configured
+    `meta_prompt`, while policy `runtime_readiness` keeps live provider SDK
+    cancellation, timeout-driven stop enforcement, and cross-run provider
+    quarantine resume false with overclaim validation. Rules for scopes with configured
     `llm_role_failure_quarantine_after` now declare timeout-driven
     `quarantine` actions and `quarantine_record` evidence, matching the
     ensemble's role/backend failure-threshold quarantine state. Runtime

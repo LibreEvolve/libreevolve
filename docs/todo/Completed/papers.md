@@ -12249,3 +12249,13 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     ordered migration replay, and end-to-end resumed-trace proof remain open.
   - Verification: full-resume bundle tests validate forged resumed-trace proof
     overclaim rejection.
+
+- [x] Record provider-cancellation runtime readiness guards.
+  - Spec evidence: paper-facing provider-budget claims need evidence that
+    timeout policy contracts do not imply live SDK cancellation or stop policy.
+  - Status: paper-facing TODOs and the papers overview now record false
+    runtime-readiness fields for live SDK cancellation, timeout-driven stop
+    enforcement, and cross-run quarantine resume.
+  - Remaining paper gap: this does not implement those runtime surfaces.
+  - Verification: cancellation policy tests validate forged readiness
+    overclaim rejection.

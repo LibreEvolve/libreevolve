@@ -4717,9 +4717,11 @@ manifests scope provider request-timeout and ensemble-deadline rules to
 `mutation`, `critique`, `feedback:*`, and `meta_prompt` roles. They also attach
 `libreevolve.provider_cancellation_observations.v1` from the runtime LLM
 scheduler snapshot, including timeout-failure counts and role/backend
-quarantine observations when available. This defines policy and observation
-evidence only; provider SDK hard cancellation and timeout-driven stop
-enforcement remain runtime work.
+quarantine observations when available, and policy `runtime_readiness` keeps
+live provider SDK cancellation, timeout-driven stop enforcement, and cross-run
+provider quarantine resume false with overclaim validation. This defines
+policy and observation evidence only; provider SDK hard cancellation and
+timeout-driven stop enforcement remain runtime work.
 `libreevolve.provider_cancellation_artifact_inventory.v1` verifies declared
 timeout, cancellation, budget-stop, and quarantine artifacts against concrete
 files under an explicit artifact root, checking safe relative paths, existence,

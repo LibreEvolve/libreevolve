@@ -9370,3 +9370,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     validation keeps resumed-trace proof readiness false.
   - Verification: full-resume bundle tests validate forged resumed-trace proof
     overclaim rejection.
+
+- [x] Preserve provider-cancellation runtime boundaries.
+  - Spec evidence: roadmap cancellation wording should not imply live SDK
+    cancellation, timeout-stop enforcement, or cross-run quarantine resume from
+    timeout policy records.
+  - Status: ROADMAP and TODO wording now recognize explicit false
+    runtime-readiness fields for those provider-cancellation surfaces.
+  - Verification: cancellation policy tests validate forged readiness
+    overclaim rejection.

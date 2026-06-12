@@ -17656,3 +17656,14 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     restore, ordered migration replay, and resumed-trace proof remain open.
   - Verification: full-resume bundle tests validate the false readiness field
     and forged resumed-trace proof overclaim rejection.
+
+- [x] Guard provider-cancellation runtime readiness overclaims.
+  - Spec evidence: AlphaEvolve-scale provider orchestration needs actual live
+    cancellation and stop behavior, not only timeout policy records.
+  - Status: provider cancellation policies now carry
+    `libreevolve.provider_cancellation_runtime_readiness.v1` with false flags
+    for live provider SDK cancellation, timeout-driven stop enforcement, and
+    cross-run provider quarantine resume; validation rejects forged true values.
+  - Remaining gap: this does not implement those runtime cancellation surfaces.
+  - Verification: cancellation policy and runtime manifest tests cover forged
+    runtime-readiness overclaims.

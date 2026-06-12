@@ -12,9 +12,15 @@ from .prompt_roles import validate_prompt_role_label
 
 PROVIDER_CANCELLATION_POLICY_SCHEMA = "libreevolve.provider_cancellation_policy.v1"
 PROVIDER_CANCELLATION_ARTIFACT_INVENTORY_SCHEMA = "libreevolve.provider_cancellation_artifact_inventory.v1"
+PROVIDER_CANCELLATION_RUNTIME_READINESS_SCHEMA = "libreevolve.provider_cancellation_runtime_readiness.v1"
 CANCELLATION_KINDS = frozenset({"provider_request_timeout", "ensemble_wait_deadline", "runtime_deadline", "hard_cancel"})
 BUDGET_ACTIONS = frozenset({"retry", "fallback", "quarantine", "stop_run", "telemetry_only"})
 ARTIFACT_KINDS = frozenset({"timeout_log", "cancellation_record", "budget_stop_record", "quarantine_record"})
+RUNTIME_READINESS_FALSE_FIELDS = (
+    "live_provider_sdk_cancellation",
+    "timeout_driven_stop_enforcement",
+    "cross_run_provider_quarantine_resume",
+)
 _ID_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}")
 _ROLE_PATTERN_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,125}:\*")
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
@@ -47,6 +53,7 @@ def validate_provider_cancellation_policy(policy: object | str | Path) -> Cancel
     policy_id = _id_field(data, "policy_id", issues)
     rules = _validate_rules(data.get("rules"), issues)
     artifact_kinds = _validate_artifacts(data.get("artifacts"), issues)
+    _validate_runtime_readiness(data.get("runtime_readiness"), issues)
     _validate_rule_artifact_requirements(rules, artifact_kinds, issues)
     if data.get("hard_cancel_ready") is True and not _has_hard_cancel_stop_rule(rules):
         issues.append(CancellationPolicyIssue("missing_hard_cancel_stop_rule", "hard_cancel_ready requires a hard_cancel stop_run rule"))
@@ -367,6 +374,46 @@ def _validate_artifacts(value: object, issues: list[CancellationPolicyIssue]) ->
             kinds.add(artifact["kind"])
         _validate_file_record(artifact, "artifact", issues)
     return kinds
+
+
+def _validate_runtime_readiness(
+    value: object,
+    issues: list[CancellationPolicyIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(
+            CancellationPolicyIssue(
+                "invalid_runtime_readiness",
+                "runtime_readiness must be an object",
+            )
+        )
+        return
+    if value.get("schema") != PROVIDER_CANCELLATION_RUNTIME_READINESS_SCHEMA:
+        issues.append(
+            CancellationPolicyIssue(
+                "invalid_runtime_readiness_schema",
+                "runtime_readiness schema is unsupported",
+            )
+        )
+    for field in RUNTIME_READINESS_FALSE_FIELDS:
+        if value.get(field) is not False:
+            issues.append(
+                CancellationPolicyIssue(
+                    f"{field}_overclaim",
+                    f"runtime_readiness.{field} must remain false until implemented",
+                )
+            )
+    remaining_gap = value.get("remaining_gap")
+    if (
+        not isinstance(remaining_gap, list)
+        or not all(isinstance(item, str) and item for item in remaining_gap)
+    ):
+        issues.append(
+            CancellationPolicyIssue(
+                "invalid_runtime_readiness_remaining_gap",
+                "runtime_readiness.remaining_gap must list incomplete runtime surfaces",
+            )
+        )
 
 
 def _validate_file_record(record: dict[str, Any], prefix: str, issues: list[CancellationPolicyIssue]) -> None:

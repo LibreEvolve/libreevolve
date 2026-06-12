@@ -13896,3 +13896,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     confirmations; or domain-specific result artifacts.
   - Verification: focused systems-result readiness boundary and paper-manifest
     tests cover valid, overclaim, and missing-root-sidecar cases.
+- [x] Add paper-facing Figure 3 supervised-learning exhibit boundary.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 3 presents a
+    supervised-learning pipeline example with source-code/evaluate,
+    assembled-prompt, and LLM-output subfigures.
+  - Status: `papers/figure3_supervised_exhibit_boundary.json` now records the
+    boundary for stable Figure 3/3a/3b/3c identity, supporting local surfaces,
+    required future source/prompt/output excerpts, displayed score values,
+    omitted-line policy, rendered hashes, and concrete run-artifact links.
+  - Remaining paper gap: this is absence evidence only; local Figure 3 exhibit
+    artifacts and links still need to be generated.
+  - Verification: focused Figure 3 supervised-exhibit boundary and
+    paper-manifest tests cover valid, overclaim, and missing-root-sidecar
+    cases.

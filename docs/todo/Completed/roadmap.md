@@ -10651,3 +10651,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     Gemini-to-TPU attribution artifacts still need to populate those records.
   - Verification: focused boundary and paper-manifest tests cover overclaim
     rejection and repo-root sidecar presence.
+- [x] Scope ROADMAP Figure 3 supervised-learning exhibit claims with a sidecar.
+  - Spec evidence: AlphaEvolve Figure 3 links the source-code/evaluate,
+    assembled-prompt, and LLM-output subfigures into one supervised-learning
+    paper example.
+  - Status: ROADMAP now cites `papers/figure3_supervised_exhibit_boundary.json`
+    as the manifest-checked boundary between generic embedded-evaluator,
+    prompt-history, candidate-history, SEARCH/REPLACE, preamble,
+    prompt-packing, and prompt-example-copy support and unreproduced Figure 3
+    exhibit artifacts.
+  - Remaining roadmap gap: exact source/prompt/output excerpts, displayed
+    scores, rendered artifact hashes, and concrete run links still need to be
+    generated before claiming reproduced Figure 3 example evidence.
+  - Verification: focused boundary and paper-manifest tests cover overclaim
+    rejection and repo-root sidecar presence.

@@ -18799,3 +18799,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     domain-specific result artifacts.
   - Verification: focused boundary and paper-manifest tests cover the accepted
     sidecar, overclaim rejection, and repo-root sidecar requirement.
+- [x] Add Figure 3 supervised-learning exhibit absence boundary.
+  - Spec evidence: AlphaEvolve Figure 3 is a paper-facing supervised-learning
+    pipeline exhibit with linked source-code/evaluate, assembled-prompt, and
+    LLM-output subfigures.
+  - Status: `libreevolve.alphaevolve_figure3_supervised_exhibit_boundary.v1`
+    now records the gap between generic embedded-evaluator, prompt-history,
+    candidate-history, SEARCH/REPLACE, preamble, prompt-packing, and
+    prompt-example-copy surfaces versus reproduced Figure 3 exhibit evidence.
+    The paper manifest now requires
+    `papers/figure3_supervised_exhibit_boundary.json` at the repo root and
+    rejects premature reproduced-exhibit claims.
+  - Remaining gap: exact Figure 3 source, prompt, and LLM-output excerpt
+    artifacts, displayed scores, rendered hashes, and run-artifact links still
+    need to be produced.
+  - Verification: focused boundary and paper-manifest tests cover valid,
+    overclaim, and missing-root-sidecar cases.

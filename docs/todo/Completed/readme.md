@@ -12880,3 +12880,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     evidence before README can claim AlphaEvolve-style systems results.
   - Verification: focused boundary and paper-manifest tests cover the sidecar
     and its overclaim rejection.
+- [x] Add README boundary for Figure 3 supervised-learning example evidence.
+  - Spec evidence: AlphaEvolve Figure 3 presents source-code/evaluate,
+    assembled-prompt, and LLM-output subfigures with displayed program scores.
+  - Status: README now states that Figure 3 support is generic embedded
+    evaluator, prompt-history, candidate-history, SEARCH/REPLACE, and preamble
+    handling, not reproduced paper subfigure evidence with exact excerpts,
+    displayed score values, rendered hashes, or run-artifact links. It points
+    to `papers/figure3_supervised_exhibit_boundary.json`.
+  - Remaining README gap: the docs cannot claim reproduced Figure 3 example
+    evidence until those exhibit artifacts exist.
+  - Verification: focused boundary and paper-manifest tests cover the sidecar
+    and its overclaim rejection.

@@ -2292,11 +2292,14 @@ Primary evidence:
   - Current evidence: LibreEvolve tracks evolve-block parsing,
     SEARCH/REPLACE compatibility, prompt-context rendering, natural-language
     preamble divergence, and prompt-example copy diagnostics as separate
-    behavior gaps. No code/report schema records Figure 3 exhibit IDs,
-    subfigure labels, exact source/prompt/output excerpt artifacts and hashes,
-    score values shown in the prompt, ellipsis/skipped-line policy, source PDF
-    location, rendering/text artifact hashes, or links from the displayed
-    example to prompt-history, evaluator, candidate, and run artifacts.
+    behavior gaps.
+    `libreevolve.alphaevolve_figure3_supervised_exhibit_boundary.v1` now
+    records the paper-facing absence boundary for stable Figure 3/subfigure
+    IDs, exact source/prompt/output excerpt artifacts and hashes, displayed
+    score values, ellipsis/skipped-line policy, source PDF location,
+    rendering/text artifact hashes, and links from the displayed example to
+    prompt-history, evaluator, candidate, and run artifacts. It does not
+    produce those exhibit artifacts.
   - Required result: add Figure 3-style prompt/evaluation exhibit metadata with
     stable figure/subfigure IDs, source file/evaluate-function excerpt
     artifacts, rendered prompt excerpt artifacts, LLM-output excerpt artifacts,

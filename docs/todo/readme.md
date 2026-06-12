@@ -2398,11 +2398,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and an LLM output containing explanatory prose plus SEARCH/REPLACE edits.
   - Current evidence: README documents evolve-block parsing, prompt context,
     SEARCH/REPLACE mutation, strict prose handling, and prompt-example-copy
-    gaps. It does not document Figure 3 exhibit IDs, subfigure labels, exact
-    source/prompt/output excerpt artifact hashes, displayed score values,
-    omitted-line/ellipsis policy, source PDF/caption location, rendered
-    artifact paths/hashes, or links from the displayed example to prompt
-    history, evaluator, candidate, and run artifacts.
+    gaps. README now also points to
+    `papers/figure3_supervised_exhibit_boundary.json`, which preserves the
+    manifest-checked absence boundary for Figure 3 exhibit IDs, subfigure
+    labels, exact source/prompt/output excerpt artifact hashes, displayed
+    score values, omitted-line/ellipsis policy, source PDF/caption location,
+    rendered artifact paths/hashes, and links from the displayed example to
+    prompt history, evaluator, candidate, and run artifacts. It does not
+    produce those exhibit artifacts.
   - Required result: when Figure 3 exhibit provenance lands, update README,
     ROADMAP, papers index, and matching TODOs so README distinguishes
     reproduced supervised-learning paper-example evidence from generic

@@ -805,6 +805,13 @@ when a returned metric expression depends on an EVOLVE block.
 The committed `papers/embedded_evaluator_boundary.json` sidecar now emits the
 `embedded_entrypoint_without_full_figure3_parity` boundary, and
 `validate_paper_manifest()` requires and validates it at the real repo root.
+The committed `papers/figure3_supervised_exhibit_boundary.json` sidecar keeps
+the separate Figure 3 supervised-learning paper-example boundary explicit:
+generic embedded evaluation, prompt history, candidate history,
+SEARCH/REPLACE parsing, preamble handling, prompt packing, and
+prompt-example-copy diagnostics are not reproduced Figure 3 source,
+assembled-prompt, and LLM-output subfigure evidence with displayed scores,
+rendered hashes, and concrete run-artifact links.
 
 AlphaEvolve evaluator-workload note: configured stages can now declare
 `workload.type` as `simple_check`, `inner_search`, `ml_training`, or `custom`,

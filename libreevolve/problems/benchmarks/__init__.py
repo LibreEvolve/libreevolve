@@ -341,6 +341,12 @@ from libreevolve.problems.benchmarks.embedded_evaluator_boundary import (
     render_embedded_evaluator_boundary_summary,
     validate_embedded_evaluator_boundary,
 )
+from libreevolve.problems.benchmarks.figure3_supervised_exhibit_boundary import (
+    FIGURE3_SUPERVISED_EXHIBIT_BOUNDARY_SCHEMA,
+    figure3_supervised_exhibit_boundary_record,
+    render_figure3_supervised_exhibit_boundary_summary,
+    validate_figure3_supervised_exhibit_boundary,
+)
 from libreevolve.problems.benchmarks.existing_codebase_integration import (
     EXISTING_CODEBASE_INTEGRATION_BOUNDARY_SCHEMA,
     existing_codebase_integration_boundary_record,
@@ -821,6 +827,7 @@ __all__ = [
     "FIGURE8_EXHIBIT_SCHEMA",
     "FIGURE4_MATRIX_DISCOVERY_ARTIFACT_BOUNDARY_SCHEMA",
     "FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA",
+    "FIGURE3_SUPERVISED_EXHIBIT_BOUNDARY_SCHEMA",
     "FIGURE9_MATRIX_DIFF_ARTIFACT_BOUNDARY_SCHEMA",
     "FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA",
     "FAILURE_MEMORY_BOUNDARY_SCHEMA",
@@ -1001,6 +1008,7 @@ __all__ = [
     "sums_differences_boundary_record",
     "sums_differences_sequence_boundary_record",
     "figure4_matrix_discovery_artifact_boundary_from_exhibit",
+    "figure3_supervised_exhibit_boundary_record",
     "figure8_exhibit_from_ablation_report",
     "figure8_artifact_boundary_record",
     "figure4_matrix_discovery_artifact_boundary_record",
@@ -1086,6 +1094,7 @@ __all__ = [
     "render_failure_memory_boundary_summary",
     "render_figure8_exhibit_summary",
     "render_figure8_artifact_boundary_summary",
+    "render_figure3_supervised_exhibit_boundary_summary",
     "render_figure4_matrix_discovery_artifact_boundary_summary",
     "render_figure4_matrix_discovery_exhibit_summary",
     "render_figure9_matrix_diff_artifact_boundary_summary",
@@ -1223,6 +1232,7 @@ __all__ = [
     "validate_failure_memory_boundary",
     "validate_figure8_exhibit",
     "validate_figure8_artifact_boundary",
+    "validate_figure3_supervised_exhibit_boundary",
     "validate_figure4_matrix_discovery_artifact_boundary",
     "validate_figure4_matrix_discovery_exhibit",
     "validate_figure9_matrix_diff_artifact_boundary",

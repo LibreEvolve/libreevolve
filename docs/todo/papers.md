@@ -1984,12 +1984,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     assembled prompt showing prior/current programs and scores, and an LLM
     response containing explanatory prose plus SEARCH/REPLACE edits.
   - Current gap: paper-facing TODOs track mutation parsing, prompt-context
-    policy, preamble handling, and prompt-example-copy diagnostics. They do not
-    preserve Figure 3 as its own paper exhibit with stable figure/subfigure IDs,
-    exact source/prompt/output excerpt artifacts and hashes, displayed metric
-    values, omitted-line/ellipsis policy, source PDF page/caption location,
-    rendering/text artifact paths, or links from the displayed snippets to
-    prompt-history, evaluator, candidate-history, and run artifacts.
+    policy, preamble handling, and prompt-example-copy diagnostics.
+    `papers/figure3_supervised_exhibit_boundary.json` now preserves Figure 3
+    as a manifest-checked missing-exhibit boundary with stable figure/subfigure
+    IDs and required future source/prompt/output excerpt artifacts and hashes,
+    displayed metric values, omitted-line/ellipsis policy, source PDF
+    page/caption location, rendering/text artifact paths, and links from the
+    displayed snippets to prompt-history, evaluator, candidate-history, and run
+    artifacts. It does not produce those exhibit artifacts.
   - Required result: add paper-facing Figure 3 exhibit records and validation:
     figure/subfigure IDs, source file and `evaluate` excerpt artifacts,
     rendered prompt excerpt artifact, LLM-output excerpt artifact, prompt score

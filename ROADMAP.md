@@ -55,6 +55,13 @@ LibreEvolve has:
   `papers/embedded_evaluator_boundary.json` now carrying the paper-manifest-
   validated absence boundary for build isolation, non-static score causality,
   external-validator score linkage, and prompt/response exhibit artifacts
+- Figure 3 supervised-learning exhibit boundary evidence under
+  `papers/figure3_supervised_exhibit_boundary.json`, preserving the distinction
+  between generic embedded-evaluator, prompt-history, candidate-history,
+  SEARCH/REPLACE, preamble, prompt-packing, and prompt-example-copy support and
+  an unreproduced paper-facing Figure 3 exhibit with exact source,
+  assembled-prompt, LLM-output, displayed-score, rendered-hash, and
+  run-artifact-link evidence
 - AlphaEvolve Figure 1/Figure 2 process-exhibit reports under
   `runtime.history.alphaevolve_process_exhibit_report`, preserving stable
   figure IDs, node/edge-to-component mappings, Figure 2 pseudocode-step

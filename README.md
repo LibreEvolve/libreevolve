@@ -153,6 +153,12 @@ Important limits:
   bounded output summaries, not durable output tables, schema-aware retrieval,
   semantic output similarity search, or replayable output-driven sampling;
   that boundary is tracked by `papers/program_output_boundary.json`.
+- Figure 3 supervised-learning example support is generic embedded-evaluator,
+  prompt-history, candidate-history, SEARCH/REPLACE, and preamble handling,
+  not reproduced paper subfigure evidence with exact source/prompt/output
+  excerpts, displayed score values, rendered hashes, or run-artifact links;
+  that boundary is tracked by
+  `papers/figure3_supervised_exhibit_boundary.json`.
 - Artifact indexes are bounded current-run path/hash/redaction/skipped/stage
   metadata and content excerpts, not durable artifact query tables,
   full-content artifact search, semantic artifact similarity search, cross-run

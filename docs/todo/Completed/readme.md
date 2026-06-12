@@ -11715,6 +11715,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: focused runtime execution-filtered proposal lifecycle test
     validates the implemented report.
 
+- [x] Document incorrect-suggestion audit paper-facing sidecar.
+  - Status: README, papers index, run-artifact docs, and TODO ledgers now point
+    to `papers/incorrect_suggestion_audit_boundary.json` as the committed
+    sidecar that preserves the local-execution-grounding-only boundary.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused manifest tests reject premature publication-strength
+    readiness claims.
+
 - [x] Document benchmark-fixture readiness boundary report.
   - Spec evidence: README benchmark wording needed to distinguish smoke
     fixtures from AlphaEvolve-comparable benchmark and paper-claim fixtures.

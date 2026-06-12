@@ -3413,6 +3413,10 @@ is intentional: independent rejudge of accepted or rejected candidates,
 reference/statistical-oracle sufficiency, cross-run proposal lifecycle tables,
 semantic failed-proposal retrieval, and audited false-acceptance/
 false-rejection rates remain unsupported.
+The paper-facing counterpart is
+`papers/incorrect_suggestion_audit_boundary.json`, which manifest validation
+requires at the repository root so local filtering telemetry cannot drift into
+an independent-audit or publication-strength filtering claim.
 
 ## `runtime.history.sample_efficiency_report`
 

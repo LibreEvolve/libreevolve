@@ -88,7 +88,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     wording explicitly keeps this as local execution-grounding evidence rather
     than an independent audit. ROADMAP names
     `papers/proposal_lifecycle_audit_boundary.json` as the committed
-    paper-manifest-validated independent-audit absence boundary.
+    paper-manifest-validated independent-audit absence boundary and
+    `papers/incorrect_suggestion_audit_boundary.json` as the committed
+    incorrect-suggestion filtering absence boundary.
   - Required result: when independent rejudge/reference-checker or statistical
     oracle reports land, update ROADMAP, README, papers index, and code/paper
     TODOs with benchmark-specific evaluator-oracle sufficiency, cross-run

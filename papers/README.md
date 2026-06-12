@@ -1036,6 +1036,9 @@ independent rejudge, cross-run proposal table, or audited false-positive/false-
 negative rate. The committed `papers/proposal_lifecycle_audit_boundary.json`
 sidecar now emits that `not_independently_audited` boundary, and
 `validate_paper_manifest()` requires and validates it at the real repo root.
+The committed `papers/incorrect_suggestion_audit_boundary.json` sidecar also
+preserves the more specific local-execution-grounding boundary for
+`runtime.history.incorrect_suggestion_audit_report`.
 
 AlphaEvolve archive-history consistency note: accepted archive admissions
 prevalidate their strict candidate history record before mutating the live

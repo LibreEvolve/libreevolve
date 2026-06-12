@@ -43,6 +43,10 @@ Important limits:
   AlphaEvolve Table 1 code-scale parity; the boundary is tracked by
   `runtime.history.codebase_scale_benchmark_report` and
   `papers/codebase_scale_benchmark_boundary.json`.
+- Incorrect-suggestion filtering evidence is local execution/evaluator
+  telemetry, not an independent audit; the boundary is tracked by
+  `runtime.history.incorrect_suggestion_audit_report` and
+  `papers/incorrect_suggestion_audit_boundary.json`.
 - The included examples are smoke fixtures and small demos unless explicitly
   documented otherwise.
 - Paper and blog claims are tracked as source boundaries unless local benchmark

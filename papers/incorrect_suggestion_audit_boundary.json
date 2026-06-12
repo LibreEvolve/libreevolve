@@ -1,0 +1,42 @@
+{
+  "schema": "libreevolve.alphaevolve_incorrect_suggestion_audit_boundary.v1",
+  "runtime_report_schema": "libreevolve.incorrect_suggestion_audit_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve uses code execution and automatic evaluation to ground LLM-directed evolution, filter incorrect base-LLM suggestions, and move beyond the initial candidate pool",
+  "boundary_status": "local_execution_grounding_only",
+  "runtime_report_status": "incorrect_suggestion_audit_report_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "generated_candidate_count",
+    "accepted_generated_count",
+    "rejected_generated_count",
+    "execution_filtered_count",
+    "invalid_evaluation_count",
+    "diff_or_parse_error_count",
+    "archive_rejected_count",
+    "accepted_invalid_count",
+    "local_filter_rate",
+    "accepted_invalid_rate",
+    "rejection_reasons",
+    "audit_record_lifecycle_status",
+    "independent_rejudge_status",
+    "false_acceptance_review",
+    "false_rejection_review",
+    "reference_or_statistical_oracle_sufficiency",
+    "cross_run_proposal_lifecycle_table",
+    "semantic_failed_proposal_retrieval",
+    "audited_false_acceptance_rate",
+    "audited_false_rejection_rate",
+    "publication_strength_incorrect_suggestion_filtering"
+  ],
+  "missing_evidence": {
+    "independent_rejudge_of_accepted_candidates": "not_recorded_locally",
+    "independent_rejudge_of_rejected_candidates": "not_recorded_locally",
+    "reference_or_statistical_oracle_sufficiency": "not_recorded_locally",
+    "cross_run_proposal_lifecycle_table": "not_recorded_locally",
+    "semantic_failed_proposal_retrieval": "not_recorded_locally",
+    "audited_false_acceptance_rate": "not_recorded_locally",
+    "audited_false_rejection_rate": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has local execution-grounding telemetry for generated, accepted, rejected, execution-filtered, invalid-evaluation, diff/parse-error, archive-rejected, and accepted-invalid candidates, but does not claim independent rejudge coverage, reference/statistical-oracle sufficiency, cross-run proposal lifecycle tables, semantic failed-proposal retrieval, audited false-acceptance or false-rejection rates, or publication-strength incorrect-suggestion filtering."
+}

@@ -55,7 +55,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     aggregate false-acceptance/false-rejection audit absence, and
     claim-readiness checks. The committed
     `papers/proposal_lifecycle_audit_boundary.json` sidecar preserves the
-    paper-manifest-validated independent-audit absence boundary.
+    paper-manifest-validated independent-audit absence boundary. The committed
+    `papers/incorrect_suggestion_audit_boundary.json` sidecar now preserves
+    the more specific local-execution-grounding boundary for the incorrect-
+    suggestion audit report.
   - Current gap: these reports are local run evidence. They do not
     independently rejudge accepted or rejected proposals, prove
     benchmark-specific evaluator-oracle sufficiency, aggregate cross-run

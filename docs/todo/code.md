@@ -1362,7 +1362,10 @@ Primary evidence:
     persists to `failure_history.jsonl`, and exposes through both reports
     without accepting an invalid generated proposal. The committed
     `papers/proposal_lifecycle_audit_boundary.json` sidecar records the
-    paper-manifest-validated `not_independently_audited` boundary.
+    paper-manifest-validated `not_independently_audited` boundary. The
+    committed `papers/incorrect_suggestion_audit_boundary.json` sidecar now
+    preserves the dedicated local-execution-grounding boundary for incorrect-
+    suggestion filtering.
   - Remaining gap: this is local run-level evidence, not an independent
     adjudication of whether every rejected proposal was truly incorrect or
     every accepted proposal was truly correct. It does not yet provide

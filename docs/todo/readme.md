@@ -52,7 +52,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     claim scoped to local execution-grounding evidence rather than an
     independent benchmark rejudge. README names
     `papers/proposal_lifecycle_audit_boundary.json` as the committed
-    paper-manifest-validated independent-audit absence boundary.
+    paper-manifest-validated independent-audit absence boundary and
+    `papers/incorrect_suggestion_audit_boundary.json` as the committed
+    incorrect-suggestion filtering absence boundary.
   - Required result: when independent rejudge/reference-checker or statistical
     oracle evidence lands, update README, ROADMAP, papers index, and code/paper
     TODOs together with benchmark-specific evaluator-oracle sufficiency,

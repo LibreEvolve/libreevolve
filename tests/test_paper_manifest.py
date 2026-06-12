@@ -2647,6 +2647,60 @@ def test_validate_paper_manifest_requires_proposal_lifecycle_audit_boundary_at_r
     assert "proposal_lifecycle_audit_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_incorrect_suggestion_audit_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.INCORRECT_SUGGESTION_AUDIT_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.incorrect_suggestion_audit_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_incorrect_suggestion_audit_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.incorrect_suggestion_audit_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "publication_strength_ready"
+    record["missing_evidence"]["audited_false_acceptance_rate"] = "recorded"
+    sidecar = tmp_path / paper_manifest.INCORRECT_SUGGESTION_AUDIT_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "incorrect_suggestion_audit_boundary_claim_ready_overclaim" in codes
+    assert "incorrect_suggestion_audit_boundary_invalid_boundary_status" in codes
+    assert (
+        "incorrect_suggestion_audit_boundary_invalid_missing_evidence_audited_false_acceptance_rate"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_incorrect_suggestion_audit_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "incorrect_suggestion_audit_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_evaluation_cascade_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

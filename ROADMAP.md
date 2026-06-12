@@ -165,7 +165,9 @@ LibreEvolve has:
   bounded proposal audit rows, and explicit false readiness for independent
   rejudge, reference/statistical-oracle sufficiency, cross-run proposal tables,
   semantic failed-proposal retrieval, and audited false-acceptance/
-  false-rejection rates
+  false-rejection rates, with
+  `papers/incorrect_suggestion_audit_boundary.json` preserving the
+  paper-facing independent-audit absence boundary
 - single-run sample-efficiency reports under
   `runtime.history.sample_efficiency_report`, derived from proposal lifecycle
   evidence and counting generated proposals, evaluated/valid/admitted

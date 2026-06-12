@@ -191,6 +191,10 @@ from libreevolve.problems.benchmarks.proposal_lifecycle_audit import (
     proposal_lifecycle_audit_boundary_record,
     validate_proposal_lifecycle_audit_boundary,
 )
+from libreevolve.problems.benchmarks.incorrect_suggestion_audit_boundary import (
+    incorrect_suggestion_audit_boundary_record,
+    validate_incorrect_suggestion_audit_boundary,
+)
 from libreevolve.problems.benchmarks.repeated_sampling_baseline_boundary import (
     repeated_sampling_baseline_boundary_record,
     validate_repeated_sampling_baseline_boundary,
@@ -327,6 +331,7 @@ EVALUATOR_ORACLE_BOUNDARY_FILE = "papers/evaluator_oracle_boundary.json"
 EMBEDDED_EVALUATOR_BOUNDARY_FILE = "papers/embedded_evaluator_boundary.json"
 PROCESS_EXHIBIT_BOUNDARY_FILE = "papers/process_exhibit_boundary.json"
 PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_FILE = "papers/proposal_lifecycle_audit_boundary.json"
+INCORRECT_SUGGESTION_AUDIT_BOUNDARY_FILE = "papers/incorrect_suggestion_audit_boundary.json"
 REPEATED_SAMPLING_BASELINE_BOUNDARY_FILE = "papers/repeated_sampling_baseline_boundary.json"
 SAMPLE_EFFICIENCY_BOUNDARY_FILE = "papers/sample_efficiency_boundary.json"
 PARALLEL_EVALUATION_READINESS_BOUNDARY_FILE = "papers/parallel_evaluation_readiness_boundary.json"
@@ -792,6 +797,7 @@ def validate_paper_manifest(
     issues.extend(_validate_embedded_evaluator_boundary(root_path))
     issues.extend(_validate_process_exhibit_boundary(root_path))
     issues.extend(_validate_proposal_lifecycle_audit_boundary(root_path))
+    issues.extend(_validate_incorrect_suggestion_audit_boundary(root_path))
     issues.extend(_validate_repeated_sampling_baseline_boundary(root_path))
     issues.extend(_validate_sample_efficiency_boundary(root_path))
     issues.extend(_validate_parallel_evaluation_readiness_boundary(root_path))
@@ -1598,6 +1604,38 @@ def _validate_proposal_lifecycle_audit_boundary(root_path: Path) -> list[PaperMa
             f"proposal_lifecycle_audit_boundary_{issue.code}",
             issue.message,
             "proposal_lifecycle_audit",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_incorrect_suggestion_audit_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / INCORRECT_SUGGESTION_AUDIT_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = incorrect_suggestion_audit_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "incorrect_suggestion_audit_boundary_manifest_missing",
+                    (
+                        f"{INCORRECT_SUGGESTION_AUDIT_BOUNDARY_FILE} must emit "
+                        "incorrect-suggestion audit availability"
+                    ),
+                    "incorrect_suggestion_audit",
+                )
+            ]
+    report = validate_incorrect_suggestion_audit_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"incorrect_suggestion_audit_boundary_{issue.code}",
+            issue.message,
+            "incorrect_suggestion_audit",
         )
         for issue in report.issues
     ]

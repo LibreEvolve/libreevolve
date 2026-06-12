@@ -9281,6 +9281,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: focused runtime execution-filtered proposal lifecycle test
     validates the implemented report.
 
+- [x] Preserve incorrect-suggestion audit paper-facing sidecar.
+  - Status: ROADMAP and TODO wording now link local incorrect-suggestion
+    telemetry to `papers/incorrect_suggestion_audit_boundary.json`, while
+    preserving independent rejudge, reference/statistical-oracle sufficiency,
+    cross-run proposal table, semantic retrieval, audited rate, and
+    publication-strength filtering gaps.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused manifest tests reject drifted publication-strength
+    readiness claims.
+
 - [x] Preserve benchmark-fixture readiness boundary.
   - Spec evidence: roadmap benchmark claims need to separate smoke examples
     and registry evidence from real AlphaEvolve-comparable benchmark fixtures.

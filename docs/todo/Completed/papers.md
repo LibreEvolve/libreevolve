@@ -12104,6 +12104,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: focused runtime execution-filtered proposal lifecycle test
     validates the implemented report.
 
+- [x] Record incorrect-suggestion audit paper-facing sidecar.
+  - Status: `libreevolve/problems/benchmarks/incorrect_suggestion_audit_boundary.py`
+    and `papers/incorrect_suggestion_audit_boundary.json` now preserve that
+    local execution-grounding telemetry exists, while independent rejudge,
+    reference/statistical-oracle sufficiency, cross-run proposal lifecycle
+    tables, semantic failed-proposal retrieval, audited false-acceptance and
+    false-rejection rates, and publication-strength filtering remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused incorrect-suggestion boundary tests reject premature
+    publication-strength claims.
+
 - [x] Record benchmark-fixture readiness boundary.
   - Spec evidence: AlphaEvolve paper-facing benchmark claims require scoped
     fixtures and result evidence, not only example validators or registry

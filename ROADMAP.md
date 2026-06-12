@@ -302,7 +302,8 @@ LibreEvolve has:
   privacy/redaction policy, and review/signoff readiness; the
   `matrix_multiplication` example carries a reviewed AlphaEvolve pages 21-22
   fixture and a manifest regression for the claim-ready acknowledgement-role
-  boundary
+  boundary, with `papers/acknowledgement_role_provenance_boundary.json`
+  preserving that paper-facing scope
 - optional publication-author metadata under `paper_authors.yaml` or direct
   `Problem.paper_author_metadata`, normalized into
   `problem.paper_author_metadata` and summarized by

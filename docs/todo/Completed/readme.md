@@ -12517,3 +12517,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused collaborator-feedback boundary tests reject premature robustness or
     versatility parity claims.
+
+- [x] Keep README acknowledgement-role boundary tied to paper-index sidecar.
+  - Status: README now scopes acknowledgement-role provenance to the reviewed
+    `matrix_multiplication` fixture's AlphaEvolve pages 21-22 acknowledgement
+    roles and points to
+    `papers/acknowledgement_role_provenance_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused acknowledgement-role tests reject authorship or technical-
+    validation scope drift.

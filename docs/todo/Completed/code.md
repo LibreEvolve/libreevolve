@@ -18281,3 +18281,13 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     claim-ready drift, invalid boundary status, missing required evidence
     fields, and premature AlphaEvolve collaborator-feedback parity.
+
+- [x] Add acknowledgement-role provenance sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/acknowledgement_role_provenance_boundary.py`
+    now emits and validates the claim-ready acknowledgement-role boundary for
+    the reviewed `matrix_multiplication` fixture, and
+    `libreevolve/tools/paper_manifest.py` requires the committed paper sidecar
+    at the repo root.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    claim-ready underclaiming, invalid boundary status, missing role/evidence
+    fields, and publication-author scope drift.

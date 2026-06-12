@@ -17,6 +17,12 @@ from libreevolve.problems.benchmarks.ablation_results import (
     render_ablation_result_summary,
     validate_ablation_result_report,
 )
+from libreevolve.problems.benchmarks.acknowledgement_role_provenance_boundary import (
+    ACKNOWLEDGEMENT_ROLE_PROVENANCE_BOUNDARY_SCHEMA,
+    acknowledgement_role_provenance_boundary_record,
+    render_acknowledgement_role_provenance_boundary_summary,
+    validate_acknowledgement_role_provenance_boundary,
+)
 from libreevolve.problems.benchmarks.alphaevolve_2026_impact_boundary import (
     ALPHAEVOLVE_2026_IMPACT_BOUNDARY_SCHEMA,
     alphaevolve_2026_impact_boundary_record,
@@ -532,6 +538,7 @@ from libreevolve.problems.benchmarks.whole_run_source_workspace_integrity_bounda
 __all__ = [
     "ABLATION_ARTIFACT_INVENTORY_SCHEMA",
     "ABLATION_RESULT_SCHEMA",
+    "ACKNOWLEDGEMENT_ROLE_PROVENANCE_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_COMPANION_COLAB_SCHEMA",
     "ALPHAEVOLVE_FOLLOW_ON_MATH_SOURCE_SCHEMA",
     "ALPHAEVOLVE_FOLLOW_ON_PROBLEM_COVERAGE_SCHEMA",
@@ -633,6 +640,7 @@ __all__ = [
     "UCB1_BOUNDARY_SCHEMA",
     "WHOLE_RUN_SOURCE_WORKSPACE_INTEGRITY_BOUNDARY_SCHEMA",
     "ablation_result_artifact_inventory",
+    "acknowledgement_role_provenance_boundary_record",
     "alphaevolve_2026_impact_boundary_record",
     "appendix_a_matrix_baseline_citation_boundary_from_citations",
     "appendix_a_matrix_baseline_citation_boundary_from_builtin_citations",
@@ -734,6 +742,7 @@ __all__ = [
     "matrix_target_by_id",
     "matrix_target_records",
     "render_ablation_result_summary",
+    "render_acknowledgement_role_provenance_boundary_summary",
     "render_appendix_a_matrix_curation_summary",
     "render_appendix_a_matrix_excluded_target_curation_boundary_summary",
     "render_appendix_a_matrix_baseline_citation_boundary_summary",
@@ -828,6 +837,7 @@ __all__ = [
     "ucb1_boundary_record",
     "whole_run_source_workspace_integrity_boundary_record",
     "validate_ablation_result_report",
+    "validate_acknowledgement_role_provenance_boundary",
     "validate_appendix_a_matrix_curation",
     "validate_appendix_a_matrix_excluded_target_curation_boundary",
     "validate_appendix_a_matrix_baseline_citation_boundary",

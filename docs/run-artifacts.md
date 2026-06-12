@@ -145,7 +145,10 @@ include `runtime.history.acknowledgement_role_provenance_report` with schema
 white-paper review, early exploration, support/advice, practical-application
 management advice, application review, and application-specific advice
 separate from technical validation, benchmark formulation, deployment signoff,
-system-development provenance, and publication-author metadata.
+system-development provenance, and publication-author metadata. The
+paper-facing sidecar `papers/acknowledgement_role_provenance_boundary.json`
+records that the reviewed `matrix_multiplication` fixture is claim-ready only
+for acknowledgement-role parity.
 Problem fixtures can also optionally include `paper_authors.yaml` or
 `paper_authors.yml`; direct callers can set `Problem.paper_author_metadata`.
 Startup manifest validation normalizes this into

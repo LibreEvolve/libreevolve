@@ -1,0 +1,43 @@
+{
+  "schema": "libreevolve.alphaevolve_acknowledgement_role_provenance_boundary.v1",
+  "runtime_report_schema": "libreevolve.acknowledgement_role_provenance_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve Acknowledgements pages 21-22 record white-paper review, early exploration, support/advice, practical-application management advice, application review, and application-specific advice roles",
+  "boundary_status": "acknowledgement_role_claim_ready",
+  "runtime_report_status": "acknowledgement_role_provenance_report_available",
+  "claim_ready": true,
+  "claim_ready_fixture": "libreevolve/problems/examples/matrix_multiplication/acknowledgements.yaml",
+  "source_pages": [
+    21,
+    22
+  ],
+  "required_role_categories": [
+    "white_paper_review",
+    "early_exploration",
+    "support_advice",
+    "practical_application_management_advice",
+    "application_review",
+    "application_specific_advice"
+  ],
+  "required_evidence_fields": [
+    "metadata_present",
+    "all_acknowledgement_role_categories_recorded",
+    "source_page_and_section_recorded",
+    "privacy_redaction_policy_recorded",
+    "paper_process_review_or_owner_signoff",
+    "technical_validation_boundary_separated",
+    "publication_author_boundary_separated",
+    "alphaevolve_acknowledgement_role_parity",
+    "reviewed_matrix_fixture_acknowledgement_records",
+    "source_pages_21_22_recorded"
+  ],
+  "excluded_claims": {
+    "technical_validation_or_benchmark_success": "out_of_scope",
+    "publication_author_metadata": "separate_runtime_report",
+    "title_page_affiliation_metadata": "separate_runtime_report",
+    "system_contribution_provenance": "separate_runtime_report",
+    "local_author_affiliation_or_endorsement": "not_claimed",
+    "deployment_evidence": "not_claimed"
+  },
+  "claim_boundary": "This boundary records that the matrix_multiplication fixture has reviewed acknowledgement-role metadata covering the AlphaEvolve Acknowledgements role categories and source locators needed for acknowledgement-role parity. It does not claim benchmark success, technical validation, publication-author metadata, title-page affiliation metadata, system-contribution provenance, local author or affiliation endorsement, or deployment evidence."
+}

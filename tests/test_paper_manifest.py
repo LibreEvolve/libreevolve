@@ -950,6 +950,60 @@ def test_validate_paper_manifest_requires_collaborator_feedback_provenance_bound
     assert "collaborator_feedback_provenance_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_acknowledgement_role_provenance_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.ACKNOWLEDGEMENT_ROLE_PROVENANCE_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.acknowledgement_role_provenance_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_acknowledgement_role_provenance_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.acknowledgement_role_provenance_boundary_record()
+    record["claim_ready"] = False
+    record["boundary_status"] = "publication_author_ready"
+    record["excluded_claims"]["publication_author_metadata"] = "claimed"
+    sidecar = tmp_path / paper_manifest.ACKNOWLEDGEMENT_ROLE_PROVENANCE_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "acknowledgement_role_provenance_boundary_claim_ready_underclaim" in codes
+    assert "acknowledgement_role_provenance_boundary_invalid_boundary_status" in codes
+    assert (
+        "acknowledgement_role_provenance_boundary_invalid_excluded_claim_publication_author_metadata"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_acknowledgement_role_provenance_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "acknowledgement_role_provenance_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_existing_codebase_integration_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

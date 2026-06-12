@@ -10051,6 +10051,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     root and focused collaborator-feedback tests reject premature parity
     claims.
 
+- [x] Keep roadmap acknowledgement-role boundary tied to sidecar.
+  - Status: ROADMAP now links optional acknowledgement metadata and
+    `runtime.history.acknowledgement_role_provenance_report` to
+    `papers/acknowledgement_role_provenance_boundary.json`, preserving the
+    claim-ready scope for the reviewed `matrix_multiplication` fixture only.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused acknowledgement-role tests reject publication-author or
+    technical-validation scope drift.
+
 - [x] Preserve `2603.28052` Meta-Harness paper-cache scope in roadmap.
   - Status: ROADMAP now identifies arXiv `2603.28052`, `Meta-Harness:
     End-to-End Optimization of Model Harnesses`, as background outer-loop

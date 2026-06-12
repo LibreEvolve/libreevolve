@@ -56,6 +56,11 @@ Important limits:
 - Collaborator-feedback provenance is a metadata/report contract until
   representative fixtures carry reviewed multi-cohort feedback evidence; the
   boundary is tracked by `papers/collaborator_feedback_provenance_boundary.json`.
+- Acknowledgement-role provenance is claim-ready only for the reviewed
+  `matrix_multiplication` fixture's AlphaEvolve pages 21-22 acknowledgement
+  roles; the boundary is tracked by
+  `papers/acknowledgement_role_provenance_boundary.json` and does not claim
+  technical validation, authorship, affiliation, or deployment evidence.
 - The included examples are smoke fixtures and small demos unless explicitly
   documented otherwise.
 - Paper and blog claims are tracked as source boundaries unless local benchmark

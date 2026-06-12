@@ -589,7 +589,11 @@ and governance roles, not implementation authorship, publication-author
 metadata, benchmark validation, or deployment evidence; the
 `matrix_multiplication` example now provides a reviewed `acknowledgements.yaml`
 fixture for AlphaEvolve pages 21-22, and its zero-generation manifest report
-is claim-ready for acknowledgement-role parity.
+is claim-ready for acknowledgement-role parity. The committed
+`papers/acknowledgement_role_provenance_boundary.json` sidecar preserves that
+claim-ready scope while excluding technical validation, publication-author
+metadata, title-page affiliation metadata, system-contribution provenance,
+local endorsement, and deployment evidence.
 
 AlphaEvolve publication-author note: LibreEvolve now has optional
 `paper_authors.yaml` / `Problem.paper_author_metadata` records plus

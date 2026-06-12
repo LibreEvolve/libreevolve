@@ -12845,6 +12845,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     root and focused collaborator-feedback boundary tests reject premature
     parity claims.
 
+- [x] Record acknowledgement-role provenance paper-facing sidecar.
+  - Status: `libreevolve/problems/benchmarks/acknowledgement_role_provenance_boundary.py`
+    and `papers/acknowledgement_role_provenance_boundary.json` now preserve
+    the reviewed `matrix_multiplication` acknowledgement fixture as
+    claim-ready for AlphaEvolve pages 21-22 acknowledgement-role parity.
+    The sidecar explicitly excludes technical validation, publication-author
+    metadata, title-page affiliation metadata, system-contribution
+    provenance, local endorsement, and deployment evidence.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused acknowledgement-role boundary tests reject scope drift.
+
 - [x] Add `2603.28052` Meta-Harness paper-cache coverage.
   - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
     `papers/row_identity.json`, and `papers/README.md` now include

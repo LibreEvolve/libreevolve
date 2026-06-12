@@ -56,6 +56,10 @@ Important limits:
   not task-specific functional-distance proof or "substantially different"
   benchmark evidence; that boundary is tracked by
   `papers/initial_pool_divergence_boundary.json`.
+- Duplicate-work reports are run-local exact-workspace cache diagnostics, not
+  durable cross-run memory, semantic duplicate detection, or resume-spanning
+  cache replay; that boundary is tracked by
+  `papers/duplicate_work_policy_boundary.json`.
 - Related Work positioning is not inferred from the bundled paper list; the
   missing taxonomy and claim gates are tracked by
   `papers/related_work_taxonomy_boundary.json`.

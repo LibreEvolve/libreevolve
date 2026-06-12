@@ -18481,3 +18481,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     functional discovery-distance overclaims, invalid boundary status, missing
     evidence drift, and incomplete required evidence fields.
+
+- [x] Add duplicate-work policy sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/duplicate_work_policy_boundary.py`
+    now emits and validates the run-local-exact-workspace-cache-only boundary
+    for `runtime.history.duplicate_work_policy_report`, separating deterministic
+    workspace-hash grouping, duplicate workspace group counts, run-local
+    evaluator-cache stores/hits, cache-hit controller events, evaluator-budget
+    non-consumption, and candidate metadata cache status from cross-run
+    indexes, durable cache storage, resume-spanning replay, cache migration
+    policy, stochastic re-evaluation policy, semantic near-duplicate
+    detection, source/output-aware cache indexes, and AlphaEvolve-grade
+    fixed-budget memory claim gates.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    durable-memory overclaims, invalid boundary status, missing evidence drift,
+    and incomplete required evidence fields.

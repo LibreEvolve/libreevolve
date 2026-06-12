@@ -1,0 +1,37 @@
+{
+  "schema": "libreevolve.duplicate_work_policy_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve's evolutionary database stores generated programs with scores and program outputs so previously explored programs can be resurfaced under fixed search budgets",
+  "boundary_status": "run_local_exact_workspace_cache_only",
+  "runtime_report_schema": "libreevolve.duplicate_work_policy_report.v1",
+  "runtime_report_status": "duplicate_work_policy_report_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "deterministic_workspace_hash_grouping",
+    "duplicate_workspace_group_counts",
+    "run_local_evaluation_cache_stores",
+    "run_local_evaluation_cache_hits",
+    "candidate_evaluation_cache_hit_events",
+    "evaluator_budget_non_consumption_for_cache_hits",
+    "candidate_metadata_cache_status",
+    "cross_run_workspace_hash_index",
+    "durable_evaluation_cache_storage",
+    "resume_spanning_cache_replay",
+    "cache_invalidation_or_migration_policy",
+    "stochastic_re_evaluation_policy",
+    "semantic_near_duplicate_detection",
+    "source_or_output_aware_cache_indexes",
+    "alphaevolve_grade_fixed_budget_memory_claim_gate"
+  ],
+  "missing_evidence": {
+    "cross_run_workspace_hash_index": "not_recorded_locally",
+    "durable_evaluation_cache_storage": "not_recorded_locally",
+    "resume_spanning_cache_replay": "not_recorded_locally",
+    "cache_invalidation_or_migration_policy": "not_recorded_locally",
+    "stochastic_re_evaluation_policy": "not_recorded_locally",
+    "semantic_near_duplicate_detection": "not_recorded_locally",
+    "source_or_output_aware_cache_indexes": "not_recorded_locally",
+    "alphaevolve_grade_fixed_budget_memory_claim_gate": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve manifests include runtime.history.duplicate_work_policy_report for deterministic workspace-hash grouping, duplicate workspace group counts, run-local evaluation cache stores and hits, cache-hit controller events, evaluator-budget non-consumption for cache hits, and candidate metadata cache status. It does not claim a cross-run workspace hash index, durable evaluation cache storage, resume-spanning cache replay, cache invalidation or migration policy, stochastic re-evaluation policy, semantic near-duplicate detection, source or output aware cache indexes, or an AlphaEvolve-grade fixed-budget memory claim gate."
+}

@@ -485,7 +485,9 @@ is not yet an AlphaEvolve reproduction.
   canonical workspace plus evaluator-contract cache-key scope, cache stores,
   cache hits, and no-op cache-hit controller budget events. Durable cross-run
   cache storage, resume-spanning cache replay, stochastic re-evaluation
-  policy, and semantic near-duplicate detection remain open.
+  policy, and semantic near-duplicate detection remain open. The committed
+  `papers/duplicate_work_policy_boundary.json` sidecar keeps the current
+  run-local exact-cache scope machine-validated.
 - Replace the remaining insertion-time adaptive TF-IDF diversity coordinates
   with evaluator-provided behavior descriptors, a fixed/learned descriptor
   model, or explicit tested rebin/snapshot semantics. Current

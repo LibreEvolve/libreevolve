@@ -279,6 +279,10 @@ from libreevolve.problems.benchmarks.initial_pool_divergence_boundary import (
     initial_pool_divergence_boundary_record,
     validate_initial_pool_divergence_boundary,
 )
+from libreevolve.problems.benchmarks.duplicate_work_policy_boundary import (
+    duplicate_work_policy_boundary_record,
+    validate_duplicate_work_policy_boundary,
+)
 from libreevolve.problems.benchmarks.ramsey_numbers_boundary import (
     ramsey_numbers_boundary_record,
     validate_ramsey_numbers_boundary,
@@ -425,6 +429,7 @@ NATURAL_LANGUAGE_PREAMBLE_BOUNDARY_FILE = "papers/natural_language_preamble_boun
 PROMPT_EXAMPLE_COPY_BOUNDARY_FILE = "papers/prompt_example_copy_boundary.json"
 MUTATION_CONSISTENCY_BOUNDARY_FILE = "papers/mutation_consistency_boundary.json"
 INITIAL_POOL_DIVERGENCE_BOUNDARY_FILE = "papers/initial_pool_divergence_boundary.json"
+DUPLICATE_WORK_POLICY_BOUNDARY_FILE = "papers/duplicate_work_policy_boundary.json"
 EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integration_boundary.json"
 CANDIDATE_ABSTRACTION_BOUNDARY_FILE = "papers/candidate_abstraction_boundary.json"
 CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_FILE = "papers/candidate_language_runner_boundary.json"
@@ -912,6 +917,7 @@ def validate_paper_manifest(
     issues.extend(_validate_prompt_example_copy_boundary(root_path))
     issues.extend(_validate_mutation_consistency_boundary(root_path))
     issues.extend(_validate_initial_pool_divergence_boundary(root_path))
+    issues.extend(_validate_duplicate_work_policy_boundary(root_path))
     issues.extend(_validate_existing_codebase_integration_boundary(root_path))
     issues.extend(_validate_candidate_language_runner_boundary(root_path))
     issues.extend(_validate_candidate_abstraction_boundary(root_path))
@@ -1826,6 +1832,38 @@ def _validate_initial_pool_divergence_boundary(root_path: Path) -> list[PaperMan
             f"initial_pool_divergence_boundary_{issue.code}",
             issue.message,
             "initial_pool_divergence",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_duplicate_work_policy_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / DUPLICATE_WORK_POLICY_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = duplicate_work_policy_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "duplicate_work_policy_boundary_manifest_missing",
+                    (
+                        f"{DUPLICATE_WORK_POLICY_BOUNDARY_FILE} must emit "
+                        "run-local exact workspace cache versus durable memory scope"
+                    ),
+                    "duplicate_work_policy",
+                )
+            ]
+    report = validate_duplicate_work_policy_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"duplicate_work_policy_boundary_{issue.code}",
+            issue.message,
+            "duplicate_work_policy",
         )
         for issue in report.issues
     ]

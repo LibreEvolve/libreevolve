@@ -12676,3 +12676,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused initial-pool divergence tests reject functional discovery-distance
     overclaims.
+
+- [x] Keep README duplicate-work policy boundary tied to sidecar.
+  - Status: README now states that duplicate-work reports are run-local
+    exact-workspace cache diagnostics, not durable cross-run memory, semantic
+    duplicate detection, or resume-spanning cache replay, with the boundary
+    tracked by `papers/duplicate_work_policy_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused duplicate-work policy tests reject durable-memory overclaims.

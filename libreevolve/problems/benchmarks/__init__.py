@@ -347,6 +347,12 @@ from libreevolve.problems.benchmarks.initial_pool_divergence_boundary import (
     render_initial_pool_divergence_boundary_summary,
     validate_initial_pool_divergence_boundary,
 )
+from libreevolve.problems.benchmarks.duplicate_work_policy_boundary import (
+    DUPLICATE_WORK_POLICY_BOUNDARY_SCHEMA,
+    duplicate_work_policy_boundary_record,
+    render_duplicate_work_policy_boundary_summary,
+    validate_duplicate_work_policy_boundary,
+)
 from libreevolve.problems.benchmarks.map_elites_illumination_boundary import (
     MAP_ELITES_ILLUMINATION_BOUNDARY_SCHEMA,
     map_elites_illumination_boundary_record,
@@ -681,6 +687,7 @@ __all__ = [
     "CONTROLLER_BACKTRACKING_BOUNDARY_SCHEMA",
     "DEEPEVOLVE_BOUNDARY_SCHEMA",
     "DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_SCHEMA",
+    "DUPLICATE_WORK_POLICY_BOUNDARY_SCHEMA",
     "EMBEDDED_EVALUATOR_BOUNDARY_SCHEMA",
     "EVALUATOR_ORACLE_BOUNDARY_SCHEMA",
     "EXPECTED_TARGET_COUNT",
@@ -809,6 +816,7 @@ __all__ = [
     "controller_backtracking_boundary_record",
     "deepevolve_boundary_record",
     "distributed_pipeline_topology_boundary_record",
+    "duplicate_work_policy_boundary_record",
     "embedded_evaluator_boundary_record",
     "evaluation_cascade_boundary_record",
     "evaluator_oracle_boundary_record",
@@ -912,6 +920,7 @@ __all__ = [
     "render_controller_backtracking_boundary_summary",
     "render_deepevolve_boundary_summary",
     "render_distributed_pipeline_topology_boundary_summary",
+    "render_duplicate_work_policy_boundary_summary",
     "render_embedded_evaluator_boundary_summary",
     "render_evaluation_cascade_boundary_summary",
     "render_evaluator_oracle_boundary_summary",
@@ -1027,6 +1036,7 @@ __all__ = [
     "validate_controller_backtracking_boundary",
     "validate_deepevolve_boundary",
     "validate_distributed_pipeline_topology_boundary",
+    "validate_duplicate_work_policy_boundary",
     "validate_embedded_evaluator_boundary",
     "validate_evaluation_cascade_boundary",
     "validate_evaluator_oracle_boundary",

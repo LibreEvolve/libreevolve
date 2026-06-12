@@ -2081,7 +2081,9 @@ Primary evidence:
     source/workspace dedup index.
     `papers/whole_run_source_workspace_integrity_boundary.json` now preserves
     the same bounded retained-program integrity absence boundary for
-    paper-manifest validation.
+    paper-manifest validation. `papers/duplicate_work_policy_boundary.json`
+    now validates the duplicate-work cache as run-local exact-workspace reuse,
+    not durable AlphaEvolve-grade memory.
   - Required result: add durable cross-run cache storage, resume-spanning cache
     replay, cache invalidation/migration policy, stochastic re-evaluation
     policy, semantic near-duplicate detection, and source/output-aware cache

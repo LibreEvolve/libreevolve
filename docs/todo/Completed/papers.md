@@ -13577,3 +13577,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused initial-pool divergence tests reject functional
     discovery-distance overclaims.
+
+- [x] Record duplicate-work policy paper-facing sidecar.
+  - Status: `papers/duplicate_work_policy_boundary.json` now records the
+    run-local exact-cache boundary for AlphaEvolve-style duplicate-work memory:
+    runtime manifests can show deterministic workspace-hash grouping,
+    duplicate workspace group counts, run-local cache stores and hits,
+    cache-hit controller events, evaluator-budget non-consumption, and
+    candidate metadata cache status, while cross-run indexes, durable cache
+    storage, resume-spanning replay, cache invalidation/migration policy,
+    stochastic re-evaluation policy, semantic near-duplicate detection,
+    source/output-aware cache indexes, and fixed-budget memory claim gates
+    remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused duplicate-work policy tests reject durable-memory
+    overclaims.

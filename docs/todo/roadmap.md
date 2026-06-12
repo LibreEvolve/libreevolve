@@ -1382,7 +1382,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     workspaces, run-local evaluator cache stores/hits, canonical workspace plus
     evaluator-contract cache-key scope, and replayable no-op cache-hit budget
     events. It should not imply durable cross-run cache storage, semantic
-    near-duplicate handling, or resume-spanning cache replay.
+    near-duplicate handling, or resume-spanning cache replay. ROADMAP now ties
+    that scope to `papers/duplicate_work_policy_boundary.json`.
   - Required result: when durable duplicate-work source/workspace hash indexes,
     cross-run evaluation-cache reuse, resume replay, or documented stochastic
     re-evaluation lands, update ROADMAP, README, papers index, and code/paper

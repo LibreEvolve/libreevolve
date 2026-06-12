@@ -2474,7 +2474,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     exact workspace matches. README can say cache hits reuse evaluator results
     under canonical workspace plus evaluator-contract keys and avoid evaluator-
     call budget, but it should not imply durable cross-run database memory,
-    semantic near-duplicate handling, or resume-spanning cache replay.
+    semantic near-duplicate handling, or resume-spanning cache replay. README
+    now ties that scope to `papers/duplicate_work_policy_boundary.json`.
   - Required result: when durable source/workspace deduplication or cross-run
     evaluation-cache reuse lands, update README, ROADMAP, papers index, and
     code/paper TODOs with cache storage scope, invalidation/migration policy,

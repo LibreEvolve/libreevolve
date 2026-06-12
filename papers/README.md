@@ -1157,7 +1157,9 @@ hash plus evaluator-contract hash; cache hits emit replayable
 evaluator-call budget. The remaining gap is durable cross-run cache lookup,
 resume-spanning cache replay, stochastic re-evaluation policy, semantic
 near-duplicate detection, and broader AlphaEvolve-grade fixed-budget memory
-over previously explored programs.
+over previously explored programs. The committed
+`papers/duplicate_work_policy_boundary.json` sidecar keeps this run-local
+exact-cache scope machine-validated.
 
 AlphaEvolve sampling-balance note: completed manifests now include
 `runtime.history.sampling_balance_report`, which aggregates generated-candidate

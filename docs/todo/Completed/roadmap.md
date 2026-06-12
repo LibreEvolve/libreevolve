@@ -10435,3 +10435,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation requires the committed sidecar and
     focused initial-pool divergence tests reject functional discovery-distance
     overclaims.
+
+- [x] Keep roadmap duplicate-work policy boundary tied to sidecar.
+  - Status: ROADMAP now links
+    `runtime.history.duplicate_work_policy_report` to
+    `papers/duplicate_work_policy_boundary.json`, preserving the current
+    run-local exact-workspace cache scope while keeping cross-run indexes,
+    durable cache storage, resume-spanning cache replay, stochastic
+    re-evaluation policy, semantic near-duplicate detection, source/output-
+    aware cache indexes, and AlphaEvolve-grade fixed-budget memory open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused duplicate-work policy tests reject durable-memory overclaims.

@@ -1661,6 +1661,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     result keyed by canonical workspace hash plus evaluator-contract hash.
     Cache hits emit replayable `candidate_evaluation_cache_hit` controller
     events and do not consume evaluator-call budget.
+    `papers/duplicate_work_policy_boundary.json` now validates this as
+    run-local exact-cache evidence only.
   - Current gap: the cache is still run-local and exact-match only. The paper
     index has no evidence for durable cross-run lookup, resume-spanning cache
     replay, stochastic re-evaluation policy, semantic near-duplicate handling,

@@ -1082,7 +1082,7 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     audit evidence; row id, source URL, and local PDF filename must identify
     the same paper before source-version or rights evidence attaches.
   - Status: `papers/row_identity.json` now emits schema-versioned source
-    identity rows for all 40 paper-cache entries, including manifest row id,
+    identity rows for all 41 paper-cache entries, including manifest row id,
     URL source id where available, local filename source prefix, validation
     booleans, SHA-256, and the AlphaEvolve row's source-version link. The
     paper-manifest gate validates the artifact against `download_manifest.json`.

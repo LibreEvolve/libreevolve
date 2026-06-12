@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 40 cache rows and links the AlphaEvolve row to
+  identities for all 41 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1431,6 +1431,18 @@ resumed-trace proof are still open.
   loops, GenEvolve-Data metadata, GenEvolve-Bench reports, baseline
   comparisons, linked-code audits, and independent reproduction outputs remain
   open before roadmap wording can promote GenEvolve-style multimodal support.
+- Keep EvoRubric self-evolving reward-rubric claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2605.29847`, `EvoRubric: Self-Evolving Rubric-Driven RL for Open-Ended
+  Generation`, cached locally as `papers/2605.29847__EvoRubric.pdf`. This is
+  background self-evolving reward-rubric context only; single-policy
+  Reasoner/Rubric-Generator co-evolution loops, generated-rubric provenance,
+  meta-verifier records, zero-variance pruning records, Leave-One-Out
+  peer-consensus traces, criteria memory-pool artifacts, dense multi-objective
+  reward-vector definitions, expert-prior rubric expansion, medical/writing/
+  science benchmark reports, reward-hacking audits, linked-code audits, and
+  independent reproduction outputs remain open before roadmap wording can
+  promote EvoRubric-style reward-rubric support.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

@@ -12972,3 +12972,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2605.29847` EvoRubric paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2605.29847`, `EvoRubric: Self-Evolving Rubric-Driven RL for Open-Ended
+    Generation`, cached locally as `papers/2605.29847__EvoRubric.pdf` with
+    byte count `1089746` and SHA-256
+    `3579085619610d97a03019d495a584c6dfce76f4ea951dda3103f02395bec1d5`.
+  - Remaining paper gap: source-license details, linked-code or project/demo
+    URL status, Reasoner/Rubric-Generator role schema, generated-rubric
+    provenance, meta-verifier artifacts, zero-variance pruning records,
+    Leave-One-Out peer-consensus traces, criteria memory-pool metadata, dense
+    reward-vector definitions, reward-hacking diagnostics, expert-prior
+    initialization status, medical/writing/science benchmark taxonomy,
+    baseline identities, code/artifact reproducibility status, and independent
+    reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

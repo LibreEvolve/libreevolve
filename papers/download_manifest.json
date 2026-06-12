@@ -380,6 +380,16 @@
     "sha256": "2e38145ffd81f1c2f67b9fe4ee9adeec6284796739616d2778c89600b4455d5c"
   },
   {
+    "id": "2605.29847",
+    "title": "EvoRubric",
+    "url": "https://arxiv.org/pdf/2605.29847.pdf",
+    "file": "papers/2605.29847__EvoRubric.pdf",
+    "ok": true,
+    "bytes": 1089746,
+    "message": "downloaded",
+    "sha256": "3579085619610d97a03019d495a584c6dfce76f4ea951dda3103f02395bec1d5"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

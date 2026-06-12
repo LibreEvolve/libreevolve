@@ -764,7 +764,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     URL, and local PDF label describing the same source before version or
     rights evidence attaches.
   - Status: ROADMAP now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 40 cache
+    companion manifest that emits derived source identities for all 41 cache
     rows and links the AlphaEvolve row to `papers/source_versions.json`.
   - Remaining gap: none for this bounded roadmap wording slice.
 
@@ -9938,7 +9938,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     unverifiable-domain benchmarks, external-judge reward-hacking
     comparisons, linked-code audits, and independent reproduction outputs
     explicitly open.
-  - Verification: paper-manifest validation checks the 40-row manifest,
+  - Verification: paper-manifest validation checks the 41-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.
 
 - [x] Preserve `2605.21605` GenEvolve paper-cache scope in roadmap.
@@ -9953,5 +9953,20 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     supervision records, multimodal policy-update loops, GenEvolve-Data
     metadata, GenEvolve-Bench reports, baseline comparisons, linked-code
     audits, and independent reproduction outputs explicitly open.
-  - Verification: paper-manifest validation checks the 40-row manifest,
+  - Verification: paper-manifest validation checks the 41-row manifest,
+    paper-index row, TODO coverage row, and source-identity sidecar.
+
+- [x] Preserve `2605.29847` EvoRubric paper-cache scope in roadmap.
+  - Status: ROADMAP now identifies arXiv `2605.29847`, `EvoRubric:
+    Self-Evolving Rubric-Driven RL for Open-Ended Generation`, as background
+    self-evolving reward-rubric context only, with the cached
+    `papers/2605.29847__EvoRubric.pdf` row and missing single-policy
+    Reasoner/Rubric-Generator co-evolution loops, generated-rubric
+    provenance, meta-verifier records, zero-variance pruning records,
+    Leave-One-Out peer-consensus traces, criteria memory-pool artifacts,
+    dense multi-objective reward-vector definitions, expert-prior rubric
+    expansion, medical/writing/science benchmark reports, reward-hacking
+    audits, linked-code audits, and independent reproduction outputs
+    explicitly open.
+  - Verification: paper-manifest validation checks the 41-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.

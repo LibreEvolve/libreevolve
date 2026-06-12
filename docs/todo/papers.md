@@ -4943,7 +4943,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     and README/ROADMAP wording that treats GenEvolve as background context
     until those artifacts exist.
 
-- [ ] Track EvoRubric self-evolving reward-rubric paper evidence.
+- [ ] Reproduce EvoRubric self-evolving reward-rubric evidence beyond paper
+      coverage.
   - Paper/source evidence: arXiv `2605.29847`, submitted May 28, 2026, is
     titled `EvoRubric: Self-Evolving Rubric-Driven RL for Open-Ended
     Generation`. Its abstract says RL has advanced LLMs in verifiable domains,
@@ -4955,24 +4956,31 @@ directory and using the AlphaEvolve paper as the primary specification.
     meta-verifier, zero-variance pruning, and Leave-One-Out peer consensus;
     stores validated criteria in memory; and yields dense multi-objective
     rewards across medical, writing, and science domains.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2605.29847`. Existing rows cover AlphaEvolve's evaluator-driven
-    scoring, verifier-free self-play, trace diagnostics, multimodal
-    trajectory distillation, and open-ended source gates, but not
-    self-evolving rubric generation, criteria verification, peer consensus,
-    criteria memory pools, dense rubric reward vectors, expert-prior rubric
-    expansion, or reward-hacking diagnostics for open-ended generation.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2605.29847`: title/authors/arXiv version/date/PDF digest, source license,
-    relation to AlphaEvolve and LibreEvolve evaluator assumptions,
-    Reasoner/Rubric-Generator role schema, generated-rubric provenance,
-    meta-verifier artifacts, zero-variance pruning records, Leave-One-Out peer
-    consensus traces, criteria memory-pool metadata, dense reward-vector
-    definitions, reward-hacking diagnostics, expert-prior initialization
-    status, medical/writing/science benchmark taxonomy, baseline identities,
-    code/artifact availability if any, reproducibility status, and README/
-    ROADMAP wording that treats EvoRubric as missing paper evidence rather
-    than implemented LibreEvolve support.
+  - Current gap: the paper cache, paper index, row identity, README, ROADMAP,
+    and TODO coverage now include `2605.29847`, cached locally as
+    `papers/2605.29847__EvoRubric.pdf` with byte count `1089746` and
+    SHA-256
+    `3579085619610d97a03019d495a584c6dfce76f4ea951dda3103f02395bec1d5`.
+    Reproduction evidence remains absent: no source-license details,
+    linked-code or project/demo URL status, Reasoner/Rubric-Generator role
+    schema, generated-rubric provenance, meta-verifier artifacts,
+    zero-variance pruning records, Leave-One-Out peer-consensus traces,
+    criteria memory-pool metadata, dense reward-vector definitions,
+    reward-hacking diagnostics, expert-prior initialization status,
+    medical/writing/science benchmark taxonomy, baseline identities,
+    code/artifact availability status, reproducibility status, or independent
+    reproduction output exists.
+  - Required result: add reproduction-grade EvoRubric evidence: source
+    license, project/demo URL status, linked-code status, relation to
+    AlphaEvolve and LibreEvolve evaluator assumptions, Reasoner/Rubric-
+    Generator role schema, generated-rubric provenance, meta-verifier
+    artifacts, zero-variance pruning records, Leave-One-Out peer-consensus
+    traces, criteria memory-pool metadata, dense reward-vector definitions,
+    reward-hacking diagnostics, expert-prior initialization status,
+    medical/writing/science benchmark taxonomy, baseline identities,
+    code/artifact reproducibility status, independent reproduction outputs,
+    and README/ROADMAP wording that treats EvoRubric as background context
+    until those artifacts exist.
 
 - [ ] Track LLM-ALSO adaptive learning-signal paper evidence.
   - Paper/source evidence: arXiv `2605.29293`, submitted May 28, 2026, is

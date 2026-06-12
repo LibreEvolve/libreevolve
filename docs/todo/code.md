@@ -5444,7 +5444,8 @@ Primary evidence:
     trajectory distillation as missing implementation evidence until local
     runtime artifacts and reports exist.
 
-- [ ] Add EvoRubric self-evolving reward-rubric source boundary.
+- [ ] Implement EvoRubric self-evolving reward-rubric evidence beyond paper
+      cache coverage.
   - Spec evidence: arXiv `2605.29847`, `EvoRubric: Self-Evolving
     Rubric-Driven RL for Open-Ended Generation`, was submitted May 28, 2026.
     Its abstract says RL has advanced LLMs in verifiable domains, but
@@ -5456,23 +5457,28 @@ Primary evidence:
     Leave-One-Out peer consensus to reduce reward hacking, archives validated
     criteria into memory, and yields dense multi-objective rewards for medical,
     writing, and science domains.
-  - Current evidence: LibreEvolve uses explicit evaluator functions, scalar
-    or structured scores, and MAP-Elites admission/retention rather than
-    learned or self-evolving rubrics. It has no EvoRubric source row, no
-    Reasoner/Rubric-Generator role split, no generated-rubric artifact
-    storage, no meta-verifier, no zero-variance pruning, no Leave-One-Out peer
-    consensus, no rubric memory pool, no dense multi-objective reward schema,
-    and no reward-hacking audit for open-ended generation domains.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2605.29847`: arXiv id/version/date/PDF hash, authors, source license,
-    relation to AlphaEvolve and LibreEvolve's evaluator/scoring contract,
-    Reasoner/Rubric-Generator role schema, generated-rubric provenance,
+  - Current evidence: `papers/download_manifest.*`, `papers/row_identity.json`,
+    `papers/README.md`, README, ROADMAP, and TODO coverage now include
+    `2605.29847`, cached locally as `papers/2605.29847__EvoRubric.pdf` with
+    byte count `1089746` and SHA-256
+    `3579085619610d97a03019d495a584c6dfce76f4ea951dda3103f02395bec1d5`.
+    LibreEvolve still uses explicit evaluator functions, scalar or structured
+    scores, and MAP-Elites admission/retention rather than learned or
+    self-evolving rubrics. It has no Reasoner/Rubric-Generator role split, no
+    generated-rubric artifact storage, no meta-verifier, no zero-variance
+    pruning, no Leave-One-Out peer consensus, no rubric memory pool, no dense
+    multi-objective reward schema, and no reward-hacking audit for open-ended
+    generation domains.
+  - Required result: add implementation-boundary metadata beyond the paper
+    cache: source license, linked-code or project/demo URL status, relation to
+    AlphaEvolve and LibreEvolve's evaluator/scoring contract, Reasoner/
+    Rubric-Generator role schema, generated-rubric provenance,
     meta-verifier records, zero-variance pruning decisions, peer-consensus
     traces, rubric memory-pool entries, dense reward-vector definitions,
     reward-hacking diagnostics, expert-prior initialization metadata,
     medical/writing/science benchmark taxonomy, baseline identities, and
     README/ROADMAP wording that keeps self-evolving rubric rewards as missing
-    evidence until local implementation and reports exist.
+    implementation evidence until local runtime artifacts and reports exist.
 
 - [ ] Add LLM-ALSO adaptive learning-signal source boundary.
   - Spec evidence: arXiv `2605.29293`, `LLM-ALSO: LLM-Driven Adaptive

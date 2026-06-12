@@ -1309,6 +1309,14 @@ token, and configured-cost maps, while `consumed` includes matching
 `*_by_role` counters. Role-budget limits may be exact roles or prefix scopes
 such as `feedback:*`; consumed counters remain exact concrete roles, and scoped
 limits are enforced by summing matching exact-role consumption.
+Each retained LLM call's `scheduler_policy` also records the per-call
+role-policy view used at selection time: `role_reward_accounting` distinguishes
+reward-accounted roles from telemetry-only roles, `role_reward_contract`
+documents the finite non-negative reward clipped by
+`LLMEnsemble.record_reward()`, `role_quota_policy` lists matching pre-selection
+logical-call limit scopes, and `role_selection_state_owner` states whether the
+call read global scheduler state, role-owned scheduler state, or no reward
+state.
 Role-scheduler records use
 `selection_policy: "backend_metadata_role_scoped_when_configured_else_global"`;
 older restored snapshots with the prior global-only marker are accepted and

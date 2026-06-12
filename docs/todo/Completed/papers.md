@@ -11830,3 +11830,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     field.
   - Verification: focused budget-report and runtime manifest tests validate the
     implemented field.
+
+- [x] Record per-call role scheduler policy evidence.
+  - Spec evidence: AlphaEvolve Sections 2.1 and 2.6 require model-call
+    orchestration to be inspectable by work class rather than only as aggregate
+    backend telemetry.
+  - Status: per-call scheduler policy telemetry now records reward-accounted
+    versus telemetry-only role status, the bounded local reward contract,
+    matching logical-call quota scopes, and global versus role-owned scheduler
+    state ownership.
+  - Remaining paper gap: calibrated role-specific reward semantics,
+    experiment-owned quotas, fast/strong model-mix evidence, and reports
+    proving role-specific selection and budget behavior remain open.
+  - Verification: focused ensemble scheduler tests validate the implemented
+    fields.

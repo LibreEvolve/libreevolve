@@ -1452,8 +1452,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current evidence: the roadmap now names opt-in
     `llm_role_scheduler_scope="role_scoped"` live per-role selection state,
     configured reward-accounted roles, role-scoped backend eligibility, logical
-    call caps, and role budget maps, while keeping calibrated reward signals,
-    quota ownership, and budget policy open.
+    call caps, role budget maps, and per-call scheduler policy records for
+    reward-accounted versus telemetry-only roles, the bounded local reward
+    contract, matching quota scopes, and scheduler-state ownership, while
+    keeping calibrated reward signals, experiment-owned quotas, and
+    AlphaEvolve-style budget policy open.
   - Required result: when calibrated per-role scheduler policy lands, update
     the roadmap, README, papers index, and code/paper TODO entries together so
     they neither underclaim current role-owned selection state nor overclaim

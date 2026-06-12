@@ -530,7 +530,10 @@ than it.
   wins are used for reward-accounted role selection. `shared` preserves the
   historical global ensemble bandit. `role_scoped` uses each reward-accounted
   role's restorable `role_scheduler_state` counts, wins, and total pulls for
-  UCB selection while still maintaining aggregate scheduler counters.
+  UCB selection while still maintaining aggregate scheduler counters. Each
+  call's `scheduler_policy` records the effective reward-accounting status,
+  bounded reward contract, matching logical-call quota scopes, and whether the
+  role read global or role-owned scheduler state.
 - `llm_prompt_roles` (`{}`): optional mapping from LLM call role to structured
   prompt-message instructions. Each role entry may define `system` and/or
   `developer` text, capped at 4000 characters per field. Omitted roles keep

@@ -324,9 +324,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     and opt-in `llm_role_scheduler_scope="role_scoped"` live selection that
     uses reward-accounted roles' own counts, wins, and total pulls. Startup
     manifests, scheduler snapshots, runtime accounting, and per-call policy
-    telemetry expose the effective scheduler scope.
-  - Current gap: role-scoped selection is local UCB state ownership, not a
-    calibrated AlphaEvolve scheduler: reward contracts, quota ownership,
+    telemetry expose the effective scheduler scope. Per-call scheduler policy
+    telemetry now also records reward-accounted versus telemetry-only role
+    status, the bounded local reward contract, matching pre-selection logical
+    call quota scopes, and whether selection reads global, role-owned, or no
+    reward state.
+  - Current gap: role-scoped selection and per-call policy telemetry are local
+    UCB/runtime contracts, not a calibrated AlphaEvolve scheduler:
+    role-specific reward calibration, experiment-owned quota policy,
     fast/strong model-mix evidence, and experiment reports proving
     role-specific selection and budget behavior remain absent.
   - Required result: add calibrated per-role scheduler policies for mutation,

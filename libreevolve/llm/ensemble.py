@@ -1052,12 +1052,23 @@ class LLMEnsemble:
         role: str | None = None,
         role_backend_indices: set[int] | None = None,
     ) -> dict:
+        reward_accounted = role is not None and role in self._reward_accounted_roles
         policy = {
             "strategy": self.strategy,
             "selection_scope": "global_backend_bandit",
             "role_selection_policy": "shared_selection_reward_accounting_configurable_by_role",
             "reward_accounted_roles": sorted(self._reward_accounted_roles),
+            "role_reward_accounting": (
+                "rewarded" if reward_accounted else "telemetry_only"
+            ),
+            "role_reward_contract": _scheduler_reward_contract_record(),
+            "role_quota_policy": self._role_quota_policy_record(role),
             "role_scheduler_scope": self.role_scheduler_scope,
+            "role_selection_state_owner": _role_selection_state_owner(
+                role=role,
+                reward_accounted=reward_accounted,
+                role_scheduler_scope=self.role_scheduler_scope,
+            ),
             "explore_coeff": self.c,
             "max_retries": self.max_retries,
             "max_call_attempts": self.max_call_attempts,
@@ -1107,6 +1118,23 @@ class LLMEnsemble:
             policy["role_selection_policy"] = "role_owned_counts_global_backend_eligibility"
             policy["role"] = role
         return policy
+
+    def _role_quota_policy_record(self, role: str | None) -> dict:
+        record: dict = {
+            "policy": "pre_selection_logical_call_limits_v1",
+            "enforcement": "checked_before_backend_selection",
+            "matching_scopes": [],
+            "unmatched_policy": "unbounded_by_role_call_limit",
+        }
+        if role is None:
+            return record
+        for scope, limit in sorted(self.max_calls_by_role.items()):
+            if not _role_scope_matches(scope, role):
+                continue
+            record["matching_scopes"].append({"scope": scope, "limit": limit})
+        if record["matching_scopes"]:
+            record["unmatched_policy"] = "bounded_by_matching_role_call_limits"
+        return record
 
 
 class LLMCallLedgerError(ValueError):
@@ -3298,6 +3326,31 @@ def _empty_role_scheduler_record(
         "unrewarded_success_call_ids": [[] for _ in range(backend_count)],
         "rewarded_call_ids": [],
     }
+
+
+def _scheduler_reward_contract_record() -> dict:
+    return {
+        "policy": "finite_non_negative_reward_clipped_to_max_reward_v1",
+        "reward_update_api": "LLMEnsemble.record_reward",
+        "raw_reward": "finite_non_negative_number",
+        "applied_reward": "min(raw_reward, max_reward)",
+        "max_reward": MAX_REWARD,
+    }
+
+
+def _role_selection_state_owner(
+    *,
+    role: str | None,
+    reward_accounted: bool,
+    role_scheduler_scope: str,
+) -> str:
+    if role is None:
+        return "global_scheduler_state"
+    if not reward_accounted:
+        return "none_telemetry_only"
+    if role_scheduler_scope == "role_scoped":
+        return "role_scheduler_state"
+    return "global_scheduler_state"
 
 
 def _empty_role_accounting_record() -> dict[str, int | float]:

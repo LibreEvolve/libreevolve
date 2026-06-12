@@ -11514,3 +11514,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     `libreevolve.llm_budget_report.v1` validated fields.
   - Verification: focused budget-report and runtime manifest tests validate the
     implemented field.
+
+- [x] Document per-call role scheduler policy evidence.
+  - Spec evidence: README scheduler wording needed to expose current role
+    reward/quota/state-owner telemetry without implying calibrated
+    AlphaEvolve role scheduling.
+  - Status: README now states that per-call `scheduler_policy` records
+    reward-accounted versus telemetry-only role status, the bounded local
+    reward contract, matching role quota scopes, and global versus role-owned
+    scheduler-state ownership.
+  - Verification: focused ensemble scheduler tests validate the implemented
+    fields.

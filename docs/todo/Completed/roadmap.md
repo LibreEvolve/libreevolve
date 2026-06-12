@@ -9046,3 +9046,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     reward signals, quota ownership, budget policy, and experiment reports.
   - Verification: focused budget-report and runtime manifest tests validate the
     implemented field.
+
+- [x] Preserve per-call role scheduler policy evidence.
+  - Spec evidence: roadmap scheduler claims need to distinguish implemented
+    local role-policy telemetry from future calibrated AlphaEvolve scheduler
+    policy.
+  - Status: roadmap/TODO wording now recognizes per-call scheduler policy
+    records for reward-accounted versus telemetry-only roles, the bounded local
+    reward contract, matching quota scopes, and scheduler-state ownership while
+    keeping calibrated reward signals, experiment-owned quotas, and
+    AlphaEvolve-style budget policy open.
+  - Verification: focused ensemble scheduler tests validate the implemented
+    fields.

@@ -483,6 +483,8 @@ def test_role_scoped_scheduler_scope_uses_independent_role_counts():
     assert policy["role_selection_policy"] == (
         "role_owned_counts_global_backend_eligibility"
     )
+    assert policy["role_reward_accounting"] == "rewarded"
+    assert policy["role_selection_state_owner"] == "role_scheduler_state"
     role_state = ens.scheduler_state["role_scheduler_state"]["critique"]
     assert role_state["selection_policy"] == "role_owned_bandit_selection_state"
     assert role_state["counts"] == [1, 0]
@@ -4309,7 +4311,22 @@ def test_throughput_depth_call_telemetry_records_effective_policy():
         "selection_scope": "global_backend_bandit",
         "role_selection_policy": "shared_selection_reward_accounting_configurable_by_role",
         "reward_accounted_roles": ["mutation"],
+        "role_reward_accounting": "rewarded",
+        "role_reward_contract": {
+            "policy": "finite_non_negative_reward_clipped_to_max_reward_v1",
+            "reward_update_api": "LLMEnsemble.record_reward",
+            "raw_reward": "finite_non_negative_number",
+            "applied_reward": "min(raw_reward, max_reward)",
+            "max_reward": 1.0,
+        },
+        "role_quota_policy": {
+            "policy": "pre_selection_logical_call_limits_v1",
+            "enforcement": "checked_before_backend_selection",
+            "matching_scopes": [],
+            "unmatched_policy": "unbounded_by_role_call_limit",
+        },
         "role_scheduler_scope": "shared",
+        "role_selection_state_owner": "global_scheduler_state",
         "explore_coeff": 1.0,
         "max_retries": 0,
         "max_call_attempts": 32,
@@ -4339,7 +4356,34 @@ def test_scheduler_policy_records_role_reward_policy_without_per_role_routing():
         == "shared_selection_reward_accounting_configurable_by_role"
     )
     assert policy["reward_accounted_roles"] == ["critique", "mutation"]
+    assert policy["role_reward_accounting"] == "telemetry_only"
+    assert policy["role_selection_state_owner"] == "none_telemetry_only"
+    assert policy["role_reward_contract"] == {
+        "policy": "finite_non_negative_reward_clipped_to_max_reward_v1",
+        "reward_update_api": "LLMEnsemble.record_reward",
+        "raw_reward": "finite_non_negative_number",
+        "applied_reward": "min(raw_reward, max_reward)",
+        "max_reward": 1.0,
+    }
     assert ens.last_call["scheduler_accounting"] == "telemetry_only"
+
+
+def test_scheduler_policy_records_matching_role_quota_scopes():
+    backend = _b("b1")
+    ens = LLMEnsemble(
+        [backend],
+        max_calls_by_role={"feedback:*": 3, "critique": 1},
+    )
+
+    ens.generate("prompt text", role="feedback:safety")
+    policy = ens.last_call["scheduler_policy"]
+
+    assert policy["role_quota_policy"] == {
+        "policy": "pre_selection_logical_call_limits_v1",
+        "enforcement": "checked_before_backend_selection",
+        "matching_scopes": [{"scope": "feedback:*", "limit": 3}],
+        "unmatched_policy": "bounded_by_matching_role_call_limits",
+    }
 
 
 def test_backend_role_metadata_scopes_live_selection_when_matching_role_exists():
@@ -4369,6 +4413,8 @@ def test_backend_role_metadata_scopes_live_selection_when_matching_role_exists()
         policy["role_selection_policy"]
         == "backend_metadata_role_match_when_available"
     )
+    assert policy["role_reward_accounting"] == "rewarded"
+    assert policy["role_selection_state_owner"] == "global_scheduler_state"
     assert policy["role"] == "critique"
     assert policy["role_matched_backend_indices"] == [1]
     assert ens.counts == [0, 1, 0]

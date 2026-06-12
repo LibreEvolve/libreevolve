@@ -4237,11 +4237,16 @@ Primary evidence:
     use their own `role_scheduler_state` counts, wins, and total pulls for UCB
     selection while preserving aggregate scheduler counters and restore
     validation. Startup manifests and `runtime.llm_accounting` now preserve the
-    configured and effective scheduler scope for run-artifact audits.
+    configured and effective scheduler scope for run-artifact audits. Per-call
+    `scheduler_policy` now records reward-accounted versus telemetry-only role
+    status, the bounded local `LLMEnsemble.record_reward()` contract, matching
+    pre-selection logical-call quota scopes, and whether selection reads global
+    scheduler state, role-owned scheduler state, or no reward state.
   - Remaining gap: role-scoped selection still shares the global exploration
-    coefficient and backend set unless role routing narrows it, and it does not
-    yet provide role-specific reward calibration, quota/budget ownership, or
-    experiment-level reports proving AlphaEvolve-style role behavior.
+    coefficient and backend set unless role routing narrows it, and the new
+    policy fields are local runtime contracts rather than role-specific reward
+    calibration, experiment-owned quotas, or reports proving AlphaEvolve-style
+    role behavior.
   - Required result: add explicit calibrated per-role scheduler policies for
     mutation, critique, feedback, and meta-prompt calls, including
     role-specific reward contracts, quota/budget ownership, restore validation

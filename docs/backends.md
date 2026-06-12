@@ -227,9 +227,12 @@ ledger replay. Completed and aborted runtime manifests also expose the same
 role-accounting counters through compact `runtime.llm_accounting` totals
 alongside the active LLM call/retry/fallback, timeout, prompt, and
 accepted-output caps. Provider-failure categories are likewise summarized by
-role, while role-specific reward policy, quotas, cost budgets, token-budget
-stop policy, quarantine/penalty policy, and separate auxiliary bandit state
-remain known gaps.
+role. Per-call scheduler policy records now state whether the call's role is
+reward-accounted or telemetry-only, the bounded local reward contract enforced
+by `LLMEnsemble.record_reward()`, matching pre-selection logical-call quota
+scopes, and whether selection state is global, role-owned, or telemetry-only.
+Calibrated role-specific reward semantics, experiment-owned quotas, and
+Flash/Pro-style fast/strong scheduling evidence remain known gaps.
 
 For `ensemble_strategy: throughput_depth`, the scheduler uses numeric `cost`,
 `latency`, and `depth` metadata after every non-excluded backend has been

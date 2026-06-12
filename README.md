@@ -1896,7 +1896,10 @@ as the authoritative selection policy. Setting
 from their own restorable `role_scheduler_state` counts, wins, and total pulls
 while still maintaining aggregate scheduler counters. Role routing can narrow
 eligible backends and role budget maps can stop matching roles before later
-calls, but calibrated reward contracts, role-owned quota/budget policy, and
+calls. Per-call `scheduler_policy` records whether the role is reward-accounted
+or telemetry-only, the bounded local reward contract, matching role quota
+scopes, and whether selection reads global or role-owned scheduler state, but
+calibrated role-specific reward semantics, role-owned experiment quotas, and
 experiment-backed fast/strong model-mix validation remain open. Runs
 without a mutation LLM record `not_initialized`; non-ensemble LLM objects
 without scheduler state record `unavailable`; and unvalidated or malformed

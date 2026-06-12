@@ -17202,3 +17202,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Remaining gap: this is budget-report audit metadata, not calibrated
     reward contracts, quota ownership, or experiment-backed model-mix proof.
   - Verification: focused budget-report and runtime manifest tests pass.
+
+- [x] Add per-call role scheduler policy evidence.
+  - Spec evidence: AlphaEvolve-style LLM orchestration needs auditable
+    role-specific model-call behavior for proposal generation, critique,
+    feedback, and prompt-improvement classes.
+  - Status: retained LLM calls now record `scheduler_policy` fields for
+    reward-accounted versus telemetry-only roles, the bounded local
+    `LLMEnsemble.record_reward()` contract, matching pre-selection logical-call
+    quota scopes, and whether selection reads global scheduler state,
+    role-owned scheduler state, or no reward state.
+  - Remaining gap: this is local policy telemetry, not calibrated
+    AlphaEvolve reward semantics, experiment-owned quota policy, or
+    fast/strong model-mix proof.
+  - Verification: focused ensemble scheduler tests pass.

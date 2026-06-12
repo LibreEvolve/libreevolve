@@ -2567,9 +2567,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     selection. It also states that calibrated reward contracts, role-owned
     quota/budget policy, and experiment-backed fast/strong model-mix validation
     remain open, and that runtime accounting copies the effective scheduler
-    scope for audit. README should likewise avoid implying that backend
-    metadata or `throughput_depth` unit coverage proves a Flash/Pro-style
-    fast-breadth plus strong-depth scheduling policy.
+    scope for audit. README now also describes per-call scheduler policy fields
+    for reward-accounted versus telemetry-only roles, the bounded local reward
+    contract, matching quota scopes, and global versus role-owned state
+    ownership. README should likewise avoid implying that backend metadata or
+    `throughput_depth` unit coverage proves a Flash/Pro-style fast-breadth plus
+    strong-depth scheduling policy.
   - Required result: once calibrated reward semantics, quota/budget ownership,
     and experiment-backed fast/
     strong model-mix scheduling land, update the README and matching

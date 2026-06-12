@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.paper_source_identity_manifest.v1",
-  "source_identity_count": 26,
+  "source_identity_count": 27,
   "source_identity_policy": "manifest_id_url_source_id_and_file_source_prefix_must_match_before_source_version_or_rights_claims",
   "sources": [
     {
@@ -431,6 +431,24 @@
       "url_source_id": "2605.14718",
       "url_versioned_id": "2605.14718",
       "file_source_id": "2605.14718",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2605.05921",
+      "title": "Intentmaking_and_Sensemaking",
+      "url": "https://arxiv.org/pdf/2605.05921.pdf",
+      "file": "papers/2605.05921__Intentmaking_and_Sensemaking.pdf",
+      "sha256": "111f99330e60174095f8241c944ca14608a8628b33931c39c0452d7c88ecc63e",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2605.05921",
+      "url_versioned_id": "2605.05921",
+      "file_source_id": "2605.05921",
       "identity_checks": {
         "manifest_id_matches_url_source_id": true,
         "manifest_id_matches_file_source_id": true,

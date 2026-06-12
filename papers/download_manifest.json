@@ -240,6 +240,16 @@
     "sha256": "cf3f6b443a3dc0faf17cc5ddee4297871d96a0b5170679a102470b2e77c85b06"
   },
   {
+    "id": "2605.05921",
+    "title": "Intentmaking_and_Sensemaking",
+    "url": "https://arxiv.org/pdf/2605.05921.pdf",
+    "file": "papers/2605.05921__Intentmaking_and_Sensemaking.pdf",
+    "ok": true,
+    "bytes": 1824806,
+    "message": "downloaded",
+    "sha256": "111f99330e60174095f8241c944ca14608a8628b33931c39c0452d7c88ecc63e"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

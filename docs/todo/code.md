@@ -4960,7 +4960,8 @@ Primary evidence:
     and docs wording that keeps this as a missing application-domain benchmark
     until local FHE kernels, TPU execution, and correctness reports exist.
 
-- [ ] Add AlphaEvolve intentmaking/sensemaking HCI source boundary.
+- [ ] Implement AlphaEvolve intentmaking/sensemaking HCI evidence beyond
+      paper cache coverage.
   - Spec evidence: arXiv `2605.05921`, `Intentmaking and Sensemaking: Human
     Interaction with AI-Guided Mathematical Discovery`, submitted May 7, 2026,
     reports a formative user study with 11 expert mathematicians using
@@ -4969,21 +4970,23 @@ Primary evidence:
     through active system interaction, paired with sensemaking over results,
     and frames AlphaEvolve-style tools as collaborative instruments rather
     than question/answer assistants.
-  - Current evidence: local code/TODOs track prompt construction, run
-    manifests, `libreevolve show`, source provenance, follow-on problem
-    notebooks, and 2026 impact-source UI/API attribution, but no source
-    manifest or feature boundary captures the AlphaEvolve HCI/user-study
-    surface. There is no interactive experiment-planning UI, intent revision
-    log, user-study session model, result-sensemaking dashboard, or workflow
-    metadata distinguishing human goal refinement from autonomous backend
-    evolution.
-  - Required result: add source-manifest and feature-boundary records for
-    `2605.05921`: arXiv id/version/date/PDF hash, authors, study population,
-    task/problem identifiers, interaction/session trace schema, intentmaking
-    and sensemaking event categories, UI/dashboard artifact status, human
-    intervention and goal-revision boundaries, privacy/consent or redaction
-    policy for study data, and README/ROADMAP wording that keeps HCI claims
-    source-scoped until local interactive workflow evidence exists.
+  - Current evidence: `papers/download_manifest.*`, `papers/row_identity.json`,
+    and `papers/README.md` now include `2605.05921`, cached locally as
+    `papers/2605.05921__Intentmaking_and_Sensemaking.pdf` with byte count and
+    SHA-256 digest. README and ROADMAP keep it source-scoped/background-only.
+    Local code/TODOs track prompt construction, run manifests,
+    `libreevolve show`, source provenance, follow-on problem notebooks, and
+    2026 impact-source UI/API attribution, but no feature boundary captures the
+    AlphaEvolve HCI/user-study surface. There is no interactive experiment-
+    planning UI, intent revision log, user-study session model, result-
+    sensemaking dashboard, or workflow metadata distinguishing human goal
+    refinement from autonomous backend evolution.
+  - Required result: add feature-boundary records beyond paper-cache coverage:
+    study population metadata, task/problem identifiers, interaction/session
+    trace schema, intentmaking and sensemaking event categories, UI/dashboard
+    artifact status, human intervention and goal-revision boundaries, privacy/
+    consent or redaction policy for study data, and docs wording that keeps HCI
+    claims source-scoped until local interactive workflow evidence exists.
 
 - [ ] Add AlphaEvolve radar power-allocation application source boundary.
   - Spec evidence: arXiv `2605.01794`, `Discover Fast Power Allocation

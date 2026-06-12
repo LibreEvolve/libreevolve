@@ -764,7 +764,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     URL, and local PDF label describing the same source before version or
     rights evidence attaches.
   - Status: ROADMAP now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 26 cache
+    companion manifest that emits derived source identities for all 27 cache
     rows and links the AlphaEvolve row to `papers/source_versions.json`.
   - Remaining gap: none for this bounded roadmap wording slice.
 
@@ -9763,5 +9763,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     scheme/primitive taxonomy, TPUv5e execution provenance, correctness-test
     evidence, baseline identity, generated-kernel artifacts, latency reports,
     and independent reproduction outputs explicitly scoped as open.
-  - Verification: paper-manifest validation checks the 26-row manifest,
+  - Verification: paper-manifest validation checks the current manifest,
+    paper-index row, TODO coverage row, and source-identity sidecar.
+
+- [x] Preserve `2605.05921` intentmaking/sensemaking paper-cache scope in
+      roadmap.
+  - Status: ROADMAP now identifies arXiv `2605.05921`, `Intentmaking and
+    Sensemaking: Human Interaction with AI-Guided Mathematical Discovery`, as
+    background AlphaEvolve HCI/user-study context only, with the cached
+    `papers/2605.05921__Intentmaking_and_Sensemaking.pdf` row and missing
+    formative-study data, participant/session trace schemas,
+    intentmaking/sensemaking event taxonomies, UI/dashboard artifact
+    inventories, goal-revision records, privacy/redaction protocols, and local
+    collaborative-workflow support explicitly scoped as open.
+  - Verification: paper-manifest validation checks the 27-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.

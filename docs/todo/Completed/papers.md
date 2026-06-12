@@ -12721,3 +12721,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2605.05921` intentmaking/sensemaking HCI paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2605.05921`, `Intentmaking and Sensemaking: Human Interaction with
+    AI-Guided Mathematical Discovery`, cached locally as
+    `papers/2605.05921__Intentmaking_and_Sensemaking.pdf` with byte count
+    `1824806` and SHA-256
+    `111f99330e60174095f8241c944ca14608a8628b33931c39c0452d7c88ecc63e`.
+  - Remaining paper gap: source-license details, study-design metadata,
+    participant/problem-domain records, intentmaking/sensemaking taxonomy,
+    UI/session artifact availability, privacy/redaction policy, coded
+    qualitative-analysis evidence, and local HCI workflow support remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

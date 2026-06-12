@@ -2938,24 +2938,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     FHE-on-TPU optimization without runnable kernels, hardware-execution
     provenance, correctness tests, and latency report artifacts.
 
-- [ ] Keep README AlphaEvolve HCI/user-study claims absent or source-scoped
-      until intentmaking evidence exists.
+- [ ] Keep README AlphaEvolve HCI/user-study claims source-scoped until
+      intentmaking evidence exists.
   - Spec evidence: arXiv `2605.05921` reports 11 expert mathematicians using
     AlphaEvolve and frames effective AI-guided mathematical discovery around
     repeated intentmaking and sensemaking cycles, not a one-shot question/
     answer workflow.
-  - Current evidence: README documents the CLI, run artifacts, prompt/context
-    policies, `show` inspection, source provenance, and current implementation
-    boundaries. It does not list `2605.05921`, preserve user-study evidence,
-    expose an interactive experiment-planning UI, record human goal-revision
-    cycles, or provide a sensemaking dashboard for AlphaEvolve sessions.
+  - Current evidence: README now lists `2605.05921`, `Intentmaking and
+    Sensemaking`, as AlphaEvolve HCI/user-study context only and states that no
+    local intentmaking/sensemaking session-trace workflow exists. It does not
+    preserve user-study evidence, expose an interactive experiment-planning UI,
+    record human goal-revision cycles, or provide a sensemaking dashboard for
+    AlphaEvolve sessions.
   - Required result: if README mentions intentmaking, sensemaking,
     mathematician user studies, collaborative scientific-discovery
     instruments, AlphaEvolve UI workflows, or `2605.05921`, keep the wording
-    source-scoped until the paper is in the manifest and local artifacts can
-    show interaction/session traces, goal-revision metadata, result-analysis
-    dashboard state, and privacy/redaction boundaries. Avoid implying
-    LibreEvolve supports the AlphaEvolve HCI workflow without those artifacts.
+    source-scoped until local artifacts can show interaction/session traces,
+    goal-revision metadata, result-analysis dashboard state, and privacy/
+    redaction boundaries. Avoid implying LibreEvolve supports the AlphaEvolve
+    HCI workflow without those artifacts.
 
 - [ ] Keep README radar power-allocation AlphaEvolve claims absent or
       source-scoped until paper and benchmark evidence exists.

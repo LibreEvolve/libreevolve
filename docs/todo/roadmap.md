@@ -3385,23 +3385,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     speedup records, code/artifact availability status, and benchmark-fixture
     status rules so roadmap claims do not outpace local FHE kernel support.
 
-- [ ] Add AlphaEvolve intentmaking/sensemaking HCI gates before roadmap
-      promotion.
+- [ ] Implement AlphaEvolve intentmaking/sensemaking HCI gates beyond paper
+      cache coverage.
   - Spec evidence: arXiv `2605.05921`, submitted May 7, 2026, reports a
     formative user study with 11 expert mathematicians using AlphaEvolve and
     defines repeated intentmaking and sensemaking cycles as a workflow for
     AI-guided mathematical discovery.
-  - Current evidence: ROADMAP tracks backend evolution, run inspection,
-    source provenance, benchmark/report contracts, and source gates for
-    impact/application papers. It does not mention `2605.05921`, define an HCI
-    source-manifest gate, or require interactive UI/session evidence before
+  - Current evidence: ROADMAP, `papers/download_manifest.*`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2605.05921` as background HCI/user-study context with a local PDF/cache
+    hash. ROADMAP still has no interactive UI/session evidence gate before
     promoting AlphaEvolve-style collaborative discovery workflows.
-  - Required result: add roadmap gates for `2605.05921`: paper/source
-    manifest entry, PDF/cache hash, study metadata, participant/problem
-    taxonomy, intentmaking and sensemaking event schema, UI/session artifact
-    status, goal-revision and human-intervention boundaries, privacy/redaction
-    policy, and a background-only or future-interactive-feature status rule so
-    roadmap claims do not outpace local HCI workflow support.
+  - Required result: add roadmap gates beyond paper-cache coverage: study
+    metadata, participant/problem taxonomy, intentmaking and sensemaking event
+    schema, UI/session artifact status, goal-revision and human-intervention
+    boundaries, privacy/redaction policy, and future-interactive-feature
+    status rules so roadmap claims do not outpace local HCI workflow support.
 
 - [ ] Add AlphaEvolve radar power-allocation application gates before roadmap
       promotion.

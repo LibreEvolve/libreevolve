@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 26 cache rows and links the AlphaEvolve row to
+  identities for all 27 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1266,6 +1266,17 @@ resumed-trace proof are still open.
   baseline implementation identity, generated-kernel artifacts, and latency
   reports for the 2.5x, 1.31x, and 1.18x speedup claims remain open before
   roadmap wording can promote FHE accelerator optimization as supported.
+- Keep AlphaEvolve HCI/user-study claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2605.05921`, `Intentmaking and Sensemaking: Human Interaction with
+  AI-Guided Mathematical Discovery`, cached locally as
+  `papers/2605.05921__Intentmaking_and_Sensemaking.pdf`. This is background
+  HCI context only; formative-study dataset evidence, participant/session
+  trace schemas, intentmaking/sensemaking event taxonomies, UI/dashboard
+  artifact inventories, goal-revision and human-intervention records,
+  privacy/redaction protocol evidence, and local collaborative-workflow
+  support remain open before roadmap wording can promote AlphaEvolve-style HCI
+  workflows as supported.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

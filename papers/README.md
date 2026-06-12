@@ -1339,7 +1339,10 @@ specific pricing readiness false. The committed
 `papers/provider_pricing_boundary.json` sidecar preserves the configured-cost-
 estimate boundary while keeping live provider pricing, provider default-rate
 capture, account/model-specific pricing, and raw provider-payload replay
-absent. Structured
+absent. The committed `papers/provider_diagnostics_replay_boundary.json`
+sidecar preserves the bounded provider-diagnostics boundary while keeping raw
+provider-payload sidecars, provider-output replay, complete provider-call
+replay, and account/model default capture absent. Structured
 system/developer/user prompt roles are serialized as hash-only
 `prompt_role_policy` metadata, not raw instruction text. Endpoint/client context now has an
 explicit validated built-in backend surface for OpenAI `base_url`,
@@ -2264,6 +2267,16 @@ Implemented:
   backend-default count checks, and raw-payload replay overclaim checks. It is
   not evidence of live provider pricing, provider default-rate capture,
   account/model-specific pricing, or raw provider-payload replay.
+- `papers/provider_diagnostics_replay_boundary.json`: provider diagnostics
+  replay sidecar for AlphaEvolve Section 2.4. It records provider usage
+  metadata, request/response ids, finish reasons, adapter retry metadata,
+  provider failure categories, provider status codes, bounded provider
+  diagnostics, backend defaults metadata, retained call-history windows,
+  provider-diagnostics summary schema, records hashes, raw-payload replay
+  overclaim checks, remote provider-default overclaim checks, and
+  backend-default count checks. It is not evidence of raw provider-payload
+  sidecars, provider-output replay, complete provider-call replay, or
+  account/model default capture.
 - `papers/critique_reviewer_pool_boundary.json`: critique reviewer-pool
   sidecar for AlphaEvolve Sections 2.4 and 2.6. It records configured reviewer
   specs, manifest-safe reviewer names, optional reviewer prompts, reviewer role

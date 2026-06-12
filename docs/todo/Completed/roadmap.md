@@ -10614,3 +10614,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     and raw provider-payload replay open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused provider-pricing tests reject live-pricing overclaims.
+
+- [x] Keep roadmap provider-diagnostics replay boundary tied to sidecar.
+  - Status: ROADMAP now links retained provider usage/id/finish/retry/failure
+    metadata, bounded scalar diagnostics, backend defaults, diagnostics summary
+    schema, records hashes, and raw-payload/default overclaim checks to
+    `papers/provider_diagnostics_replay_boundary.json` while keeping raw
+    provider-payload sidecars, provider-output replay, complete provider-call
+    replay, and account/model default capture open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused provider-diagnostics replay tests reject raw provider-replay
+    overclaims.

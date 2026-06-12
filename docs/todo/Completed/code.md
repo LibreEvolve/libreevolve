@@ -18757,3 +18757,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject live
     provider-pricing overclaims, invalid boundary status, missing evidence
     drift, and incomplete required evidence fields.
+
+- [x] Add provider-diagnostics replay sidecar validation.
+  - Status:
+    `libreevolve/problems/benchmarks/provider_diagnostics_replay_boundary.py`
+    now emits and validates the bounded diagnostics boundary, separating
+    provider usage metadata, request/response ids, finish reasons, adapter
+    retry metadata, provider failure categories, provider status codes, bounded
+    provider diagnostics, backend defaults metadata, retained call-history
+    windows, diagnostics summary schema, records hashes, raw-payload replay
+    overclaim checks, remote provider-default overclaim checks, and backend-
+    default count checks from raw provider-payload sidecars, provider-output
+    replay, complete provider-call replay, and account/model default capture.
+  - Verification: focused boundary tests and paper-manifest tests reject raw
+    provider-replay overclaims, invalid boundary status, missing evidence
+    drift, and incomplete required evidence fields.

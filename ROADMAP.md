@@ -938,7 +938,11 @@ resumed-trace proof are still open.
   current `papers/provider_pricing_boundary.json` sidecar preserves the
   configured-cost-estimate boundary while keeping live provider pricing,
   default-rate capture, account/model-specific pricing, and raw provider
-  payload replay open.
+  payload replay open. The current
+  `papers/provider_diagnostics_replay_boundary.json` sidecar preserves the
+  bounded scalar diagnostics boundary while keeping raw provider-payload
+  sidecars, provider-output replay, complete provider-call replay, and
+  account/model default capture open.
 - Extend the current configurable role/backend consecutive-failure quarantine
   and zero-reward scheduler penalty beyond ensemble-local retry/fallback
   handling, restorable scheduler failure-policy state, and strict ledger

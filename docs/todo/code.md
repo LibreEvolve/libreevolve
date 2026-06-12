@@ -4305,7 +4305,10 @@ Primary evidence:
     and composition with async/pending-work controller restore. The remaining
     gap is not one-command restoration of replayable provider-attempt/token/
     configured-cost/latency controller events for the current synchronous
-    runtime bundle.
+    runtime bundle. The committed
+    `papers/provider_diagnostics_replay_boundary.json` sidecar now validates
+    the bounded-diagnostics versus raw-provider-replay boundary at the paper-
+    manifest layer.
   - Required result: add AlphaEvolve-style scheduler validation and reports
     that prove fast-breadth versus strong-depth model-mix behavior,
     breadth/depth/cost/latency selection behavior, and scheduler outcomes over

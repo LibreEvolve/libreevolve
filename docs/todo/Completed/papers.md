@@ -13853,3 +13853,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     payload replay remain absent.
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused provider-pricing tests reject live-pricing overclaims.
+
+- [x] Record provider-diagnostics replay paper-facing sidecar.
+  - Status: `papers/provider_diagnostics_replay_boundary.json` now records the
+    bounded provider-diagnostics boundary for AlphaEvolve Section 2.4: runtime
+    evidence can show provider usage metadata, request/response ids, finish
+    reasons, adapter retry metadata, provider failure categories, provider
+    status codes, bounded provider diagnostics, backend defaults metadata,
+    retained call-history windows, diagnostics summary schema, records hashes,
+    raw-payload replay overclaim checks, remote provider-default overclaim
+    checks, and backend-default count checks, while raw provider-payload
+    sidecars, provider-output replay, complete provider-call replay, and
+    account/model default capture remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused provider-diagnostics replay tests reject raw provider-
+    replay overclaims.

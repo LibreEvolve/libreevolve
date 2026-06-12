@@ -100,6 +100,10 @@ Important limits:
   provider usage, not live provider pricing, provider default-rate capture,
   account/model-specific pricing, or raw provider-payload replay; that boundary
   is tracked by `papers/provider_pricing_boundary.json`.
+- Provider diagnostics are bounded retained scalar/id/finish/retry/failure
+  telemetry, not raw provider-payload sidecars, provider-output replay,
+  complete provider-call replay, or account/model default capture; that
+  boundary is tracked by `papers/provider_diagnostics_replay_boundary.json`.
 - Provider cancellation records are policy/audit evidence for request
   timeouts, ensemble wait deadlines, artifact gates, and quarantine
   observations, not live provider SDK hard cancellation, timeout-driven stop

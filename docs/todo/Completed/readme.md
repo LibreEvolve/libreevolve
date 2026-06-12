@@ -12846,3 +12846,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     `papers/provider_pricing_boundary.json`.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused provider-pricing tests reject live-pricing overclaims.
+
+- [x] Keep README provider-diagnostics replay boundary tied to sidecar.
+  - Status: README now states that provider diagnostics are bounded retained
+    scalar/id/finish/retry/failure telemetry, not raw provider-payload
+    sidecars, provider-output replay, complete provider-call replay, or
+    account/model default capture, with the boundary tracked by
+    `papers/provider_diagnostics_replay_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused provider-diagnostics replay tests reject raw provider-replay
+    overclaims.

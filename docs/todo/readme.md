@@ -2886,7 +2886,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     It correctly states that
     `proposals_per_generation`
     is sequential batch sampling/accounting rather than parallel LLM/evaluator
-    execution. It still marks live provider pricing/default-rate capture beyond
+    execution. README now points to
+    `papers/provider_diagnostics_replay_boundary.json` for bounded provider
+    diagnostics versus raw provider replay. It still marks live provider
+    pricing/default-rate capture beyond
     configured estimates, provider-output/raw-payload replay, cross-run
     provider-failure policy proof, async/pending-work budget composition, and
     mutation-chain-depth policy for slow evaluator feedback as open.

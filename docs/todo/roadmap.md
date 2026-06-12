@@ -1832,7 +1832,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and backend-default record counts that exceed retained call records; this
     is still not full raw provider-native payload replay, live provider
     pricing/default-rate discovery, account/model default capture, or complete
-    replay evidence for provider outputs.
+    replay evidence for provider outputs. The committed
+    `papers/provider_diagnostics_replay_boundary.json` sidecar now preserves
+    this bounded scalar diagnostics boundary for paper-manifest validation.
   - Required result: when raw provider-payload replay, live pricing/default
     capture, provider account/model default evidence, or richer budget-event
     artifacts land, update the roadmap, README, papers index, and code/paper

@@ -1,0 +1,36 @@
+{
+  "schema": "libreevolve.provider_diagnostics_replay_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_section_id": "2.4",
+  "source_claim": "AlphaEvolve-scale provider-call evidence should identify model calls that produced proposals, critiques, feedback, and prompt mutations without confusing retained diagnostics with replayable raw provider outputs",
+  "boundary_status": "bounded_scalar_diagnostics_without_raw_provider_replay",
+  "diagnostics_schema": "libreevolve.llm_provider_diagnostics.v1",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "provider_usage_metadata",
+    "provider_request_response_ids",
+    "finish_reason_metadata",
+    "adapter_retry_metadata",
+    "provider_failure_category",
+    "provider_status_code",
+    "bounded_provider_diagnostics",
+    "backend_defaults_metadata",
+    "retained_call_history_window",
+    "diagnostics_summary_schema",
+    "records_hash",
+    "raw_payload_replay_overclaim_checks",
+    "remote_provider_defaults_overclaim_checks",
+    "backend_default_count_checks",
+    "raw_provider_payload_sidecars",
+    "provider_output_replay",
+    "complete_provider_call_replay",
+    "account_model_default_capture"
+  ],
+  "missing_evidence": {
+    "raw_provider_payload_sidecars": "not_recorded_locally",
+    "provider_output_replay": "not_recorded_locally",
+    "complete_provider_call_replay": "not_recorded_locally",
+    "account_model_default_capture": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has provider usage metadata, request/response ids, finish reasons, adapter retry metadata, provider failure categories, provider status codes, bounded provider diagnostics, backend defaults metadata, retained call-history windows, provider-diagnostics summary schema, records hashes, raw-payload replay overclaim checks, remote provider-default overclaim checks, and backend-default count checks. It does not claim raw provider-payload sidecars, provider output replay, complete provider-call replay, or account/model default capture."
+}

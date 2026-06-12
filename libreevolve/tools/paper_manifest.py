@@ -83,6 +83,10 @@ from libreevolve.problems.benchmarks.provider_pricing_boundary import (
     provider_pricing_boundary_record,
     validate_provider_pricing_boundary,
 )
+from libreevolve.problems.benchmarks.provider_diagnostics_replay_boundary import (
+    provider_diagnostics_replay_boundary_record,
+    validate_provider_diagnostics_replay_boundary,
+)
 from libreevolve.problems.benchmarks.critique_reviewer_pool_boundary import (
     critique_reviewer_pool_boundary_record,
     validate_critique_reviewer_pool_boundary,
@@ -495,6 +499,7 @@ LLM_ROLE_SCHEDULER_BOUNDARY_FILE = "papers/llm_role_scheduler_boundary.json"
 FAST_STRONG_MODEL_MIX_BOUNDARY_FILE = "papers/fast_strong_model_mix_boundary.json"
 PROVIDER_CANCELLATION_BOUNDARY_FILE = "papers/provider_cancellation_boundary.json"
 PROVIDER_PRICING_BOUNDARY_FILE = "papers/provider_pricing_boundary.json"
+PROVIDER_DIAGNOSTICS_REPLAY_BOUNDARY_FILE = "papers/provider_diagnostics_replay_boundary.json"
 CRITIQUE_REVIEWER_POOL_BOUNDARY_FILE = "papers/critique_reviewer_pool_boundary.json"
 PROMPT_SECTION_PACKING_BOUNDARY_FILE = "papers/prompt_section_packing_boundary.json"
 DOCUMENTATION_TRUTHFULNESS_BOUNDARY_FILE = "papers/documentation_truthfulness_boundary.json"
@@ -1000,6 +1005,7 @@ def validate_paper_manifest(
     issues.extend(_validate_fast_strong_model_mix_boundary(root_path))
     issues.extend(_validate_provider_cancellation_boundary(root_path))
     issues.extend(_validate_provider_pricing_boundary(root_path))
+    issues.extend(_validate_provider_diagnostics_replay_boundary(root_path))
     issues.extend(_validate_critique_reviewer_pool_boundary(root_path))
     issues.extend(_validate_prompt_section_packing_boundary(root_path))
     issues.extend(_validate_documentation_truthfulness_boundary(root_path))
@@ -2158,6 +2164,38 @@ def _validate_provider_pricing_boundary(root_path: Path) -> list[PaperManifestIs
             f"provider_pricing_boundary_{issue.code}",
             issue.message,
             "provider_pricing",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_provider_diagnostics_replay_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / PROVIDER_DIAGNOSTICS_REPLAY_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = provider_diagnostics_replay_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "provider_diagnostics_replay_boundary_manifest_missing",
+                    (
+                        f"{PROVIDER_DIAGNOSTICS_REPLAY_BOUNDARY_FILE} must emit "
+                        "bounded provider diagnostics versus raw provider replay scope"
+                    ),
+                    "provider_diagnostics_replay",
+                )
+            ]
+    report = validate_provider_diagnostics_replay_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"provider_diagnostics_replay_boundary_{issue.code}",
+            issue.message,
+            "provider_diagnostics_replay",
         )
         for issue in report.issues
     ]

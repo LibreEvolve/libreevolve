@@ -149,6 +149,12 @@ from libreevolve.problems.benchmarks.provider_pricing_boundary import (
     render_provider_pricing_boundary_summary,
     validate_provider_pricing_boundary,
 )
+from libreevolve.problems.benchmarks.provider_diagnostics_replay_boundary import (
+    PROVIDER_DIAGNOSTICS_REPLAY_BOUNDARY_SCHEMA,
+    provider_diagnostics_replay_boundary_record,
+    render_provider_diagnostics_replay_boundary_summary,
+    validate_provider_diagnostics_replay_boundary,
+)
 from libreevolve.problems.benchmarks.critique_reviewer_pool_boundary import (
     CRITIQUE_REVIEWER_POOL_BOUNDARY_SCHEMA,
     critique_reviewer_pool_boundary_record,
@@ -967,6 +973,7 @@ __all__ = [
     "programmatic_representation_boundary_record",
     "program_output_boundary_record",
     "provider_cancellation_boundary_record",
+    "provider_diagnostics_replay_boundary_record",
     "provider_pricing_boundary_record",
     "qualitative_feedback_boundary_record",
     "related_work_taxonomy_boundary_record",
@@ -1113,6 +1120,7 @@ __all__ = [
     "render_programmatic_representation_boundary_summary",
     "render_program_output_boundary_summary",
     "render_provider_cancellation_boundary_summary",
+    "render_provider_diagnostics_replay_boundary_summary",
     "render_provider_pricing_boundary_summary",
     "render_qualitative_feedback_boundary_summary",
     "render_related_work_taxonomy_boundary_summary",
@@ -1252,6 +1260,7 @@ __all__ = [
     "validate_programmatic_representation_boundary",
     "validate_program_output_boundary",
     "validate_provider_cancellation_boundary",
+    "validate_provider_diagnostics_replay_boundary",
     "validate_provider_pricing_boundary",
     "validate_qualitative_feedback_boundary",
     "validate_related_work_taxonomy_boundary",

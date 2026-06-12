@@ -1261,6 +1261,55 @@ def test_validate_paper_manifest_requires_causalevolve_boundary_at_repo_root(
     assert "causalevolve_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_deepevolve_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.DEEPEVOLVE_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.deepevolve_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_deepevolve_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.deepevolve_boundary_record()
+    record["claim_ready"] = True
+    record["local_evidence"]["cross_file_coding_ready"] = True
+    sidecar = tmp_path / paper_manifest.DEEPEVOLVE_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "deepevolve_boundary_claim_ready_overclaim" in codes
+    assert "deepevolve_boundary_local_evidence_cross_file_coding_ready_overclaim" in codes
+
+
+def test_validate_paper_manifest_requires_deepevolve_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "deepevolve_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_evaluator_oracle_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

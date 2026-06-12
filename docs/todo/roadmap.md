@@ -4888,8 +4888,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     circle packing, and AIME, plus CC BY-NC-SA license and no-dedicated-code-
     link status.
 
-- [ ] Add DeepEvolve cross-file research/debug-loop gates before roadmap
-      promotion.
+- [ ] Implement DeepEvolve cross-file research/debug-loop gates before
+      roadmap promotion.
   - Spec evidence: local arXiv `2510.06056v1`, `Scientific Algorithm Discovery
     by Augmenting AlphaEvolve with Deep Research`, by Gang Liu et al. was
     submitted on October 7, 2025 and combines algorithmic deep research and
@@ -4904,26 +4904,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current evidence: ROADMAP tracks DeepEvolve-inspired retrieval only as
     bounded provenance moving toward audit-grade source integrity, README says
     the plugin is best-effort retrieval context rather than a systematic
-    DeepEvolve debug/refinement loop, and `papers/README.md` excludes cross-file
-    debugging/editing. Roadmap lacks `2510.06056`-specific gates for the
-    six-module workflow, proposal writing, cross-file coding, debugging-budget
-    execution traces, reflection checkpoints, algorithm-description metadata,
+    DeepEvolve debug/refinement loop, and `papers/deepevolve_boundary.json`
+    now carries the source-specific absence boundary for the six-module
+    workflow, proposal writing, cross-file coding, debugging-budget execution
+    traces, reflection checkpoints, algorithm-description metadata,
     source/repository status, nine-task benchmark reports, runtime/GPU budgets,
     qualitative idea-scoring records, and deep-research ablations.
-  - Required result: add roadmap gates for `2510.06056`: paper/source manifest
-    entry, PDF/cache hash, code/source status, problem/input and user-
-    instruction schemas, plan/search/write proposal records, pseudo-code
-    artifacts, retrieved-source provenance, cross-file delimiter/localization
-    policy, self-reflection and debugging attempt records, execution
-    warning/error traces, score-zero fallback semantics, evolutionary database
-    and inspiration/MAP-Elites compatibility reports, Table 1 task/metric rows,
-    Table 2 performance/runtime rows, Table 3 debugging success-rate rows,
-    Figure 3 idea-quality judge records, deep-research ablation rows,
+  - Required result: implement roadmap gates for `2510.06056`: problem/input
+    and user-instruction schemas, plan/search/write proposal records,
+    pseudo-code artifacts, retrieved-source provenance, cross-file
+    delimiter/localization policy, self-reflection and debugging attempt
+    records, execution warning/error traces, score-zero fallback semantics,
+    evolutionary database and inspiration/MAP-Elites compatibility reports,
+    Table 1 task/metric rows, Table 2 performance/runtime rows, Table 3
+    debugging success-rate rows, Figure 3 idea-quality judge records,
     30-minute/single-GPU budget evidence, Table 4 deep-research ablation rows,
-    Appendix C user-query/hyperparameter records, CC BY 4.0 license and GitHub
-    repo status, and README/papers/code wording that keeps DeepEvolve as
-    retrieval/debug-loop inspiration until local execution evidence proves
-    those semantics.
+    Appendix C user-query/hyperparameter records, and README/papers/code
+    wording that keeps DeepEvolve as retrieval/debug-loop inspiration until
+    local execution evidence proves those semantics.
 
 - [ ] Add MAP-Elites illumination-algorithm gates before roadmap promotion.
   - Spec evidence: local arXiv `1504.04909`, `Illuminating search spaces by

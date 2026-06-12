@@ -6304,8 +6304,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     README/ROADMAP/code wording that keeps local fixed regex factor guidance
     marked missing for CausalEvolve causal-scratchpad claims.
 
-- [ ] Track DeepEvolve deep-research/debug-loop paper evidence as a source-
-      specific boundary.
+- [ ] Implement DeepEvolve deep-research/debug-loop paper evidence beyond the
+      source-specific boundary.
   - Paper/source evidence: local arXiv `2510.06056v1`, `Scientific Algorithm
     Discovery by Augmenting AlphaEvolve with Deep Research`, by Gang Liu,
     Yihan Zhu, Jie Chen, and Meng Jiang was submitted on October 7, 2025; the
@@ -6324,28 +6324,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     `https://github.com/liugangcode/deepevolve`.
   - Current gap: `papers/README.md` describes LibreEvolve's DeepResearch row as
     bounded retrieval context with cache/provenance surfaces, while explicitly
-    excluding a DeepEvolve-style cross-file debugging/editing loop. Existing
-    active TODOs focus on transport, replay, and source-integrity evidence, but
-    do not preserve the full DeepEvolve PDF as a source-specific boundary with
-    six-module workflow semantics, algorithm-description fields, cross-file
-    coding, reflection, debugging counts, nine-task benchmarks, runtime
-    budgets, execution-success ablations, qualitative idea scoring, or
-    repository/source status.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2510.06056`: title/authors/arXiv version/date/PDF digest, source/license
-    status for `liugangcode/deepevolve`, task/input schema, textualization
-    function, user-instruction fields, plan/search/write proposal artifacts,
-    retrieved-source provenance, pseudo-code proposal schema, cross-file code
-    delimiter/localization records, reflection and debugging policies, score-
-    zero fallback semantics, evolutionary database and inspiration/MAP-Elites
-    relation, Table 1 task/metric rows, Table 2 performance/runtime rows, Table
-    3 debugging success-rate rows, Figure 3 originality/future-potential/
-    difficulty judge records, deep-research ablation rows, 30-minute/single-GPU
-    budget evidence, Table 4 ablation rows (`Molecule` best `0.797` without
-    deep research vs `0.815` with deep research; `Circle Packing` `2.735` vs
-    `2.981`), Appendix C user-query/hyperparameter rows, source/license
-    metadata, and README/ROADMAP/code wording that keeps current DeepResearch
-    retrieval context marked missing for DeepEvolve execution claims.
+    excluding a DeepEvolve-style cross-file debugging/editing loop.
+    `papers/deepevolve_boundary.json` now preserves the source-specific
+    boundary with title/authors/arXiv version/date/PDF digest, CC BY 4.0
+    license metadata, GitHub source-link status, component rows, the nine task
+    labels, local bounded-retrieval scope, required evidence fields, and
+    missing-evidence keys.
+  - Required result: add executable paper/report coverage for `2510.06056`:
+    task/input schema, textualization function, user-instruction fields,
+    plan/search/write proposal artifacts, retrieved-source provenance,
+    pseudo-code proposal schema, cross-file code delimiter/localization
+    records, reflection and debugging policies, score-zero fallback semantics,
+    evolutionary database and inspiration/MAP-Elites relation, Table 1
+    task/metric rows, Table 2 performance/runtime rows, Table 3 debugging
+    success-rate rows, Figure 3 originality/future-potential/difficulty judge
+    records, deep-research ablation rows, 30-minute/single-GPU budget evidence,
+    Table 4 ablation rows (`Molecule` best `0.797` without deep research vs
+    `0.815` with deep research; `Circle Packing` `2.735` vs `2.981`),
+    Appendix C user-query/hyperparameter rows, and README/ROADMAP/code wording
+    that keeps current DeepResearch retrieval context marked missing for
+    DeepEvolve execution claims.
 
 - [ ] Track MAP-Elites illumination-algorithm paper evidence as a source-
       specific boundary.

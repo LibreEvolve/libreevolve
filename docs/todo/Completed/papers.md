@@ -12509,3 +12509,21 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     remain open.
   - Verification: CausalEvolve boundary tests and paper-manifest tests
     validate the sidecar and reject causal-scratchpad readiness overclaims.
+
+- [x] Record DeepEvolve source boundary.
+  - Spec evidence: paper-facing DeepEvolve claims need to distinguish bounded
+    retrieval context from plan/search/write proposal generation, proposal
+    pseudo-code, cross-file coding, reflection, debugging, benchmark rows,
+    qualitative judge rows, and deep-research ablations.
+  - Status: `papers/deepevolve_boundary.json` now carries the source-specific
+    `2510.06056` boundary with cached PDF digest, arXiv version, CC BY 4.0
+    license metadata, source-linked GitHub status, framework components, local
+    bounded-retrieval status, nine task labels, required evidence fields, and
+    missing-evidence keys.
+  - Remaining paper gap: executable workflow traces, task/input schemas,
+    textualization records, proposal artifacts, cross-file edit records,
+    reflection/debugging traces, result tables, judge rows, ablation rows,
+    Appendix C query/hyperparameter rows, and runtime/GPU evidence remain
+    open.
+  - Verification: DeepEvolve boundary tests and paper-manifest tests validate
+    the sidecar and reject loop-parity readiness overclaims.

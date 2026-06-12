@@ -4380,23 +4380,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     injects best-effort arXiv/web-search summaries and explicitly states that
     it is not a full hypothesis-refinement loop, semantic literature selector,
     source-content verification system, or systematic DeepEvolve-style
-    debug/refinement loop. Existing README TODOs scope retrieval provenance,
-    but README does not require a `2510.06056` source-specific boundary for
-    plan/search/write artifacts, proposal pseudo-code, cross-file edit
-    localization, debugging attempts, reflection agents, algorithm-description
-    records, nine-task benchmark rows, runtime budgets, execution-success
-    ablations, or qualitative idea-scoring claims.
+    debug/refinement loop. README and the paper index now name
+    `papers/deepevolve_boundary.json`, which preserves the `2510.06056`
+    source-specific boundary for plan/search/write artifacts, proposal
+    pseudo-code, cross-file edit localization, debugging attempts, reflection
+    agents, algorithm-description records, nine-task benchmark rows, runtime
+    budgets, execution-success ablations, and qualitative idea-scoring claims.
   - Required result: if README mentions DeepEvolve, deep research, proposal
     writing, cross-file code editing, automatic debugging, reflection,
     hypothesis refinement, external research-guided evolution, or DeepEvolve
-    benchmark improvements, keep wording source-scoped until manifests and
-    reports include the `2510.06056` source row, PDF/code hashes,
-    plan/search/write proposal artifacts, retrieved-source evidence,
-    cross-file coding and debugging records, algorithm-description fields,
-    benchmark/baseline/result rows, execution-success and ablation tables,
-    runtime/GPU budgets, idea-quality judge records, paper license and code
-    repository status, and a clear distinction between bounded retrieval
-    context and DeepEvolve execution semantics.
+    benchmark improvements, keep wording source-scoped until runtime manifests
+    and reports include plan/search/write proposal artifacts, retrieved-source
+    evidence, cross-file coding and debugging records, algorithm-description
+    fields, benchmark/baseline/result rows, execution-success and ablation
+    tables, runtime/GPU budgets, idea-quality judge records, and a clear
+    distinction between bounded retrieval context and DeepEvolve execution
+    semantics.
 
 - [ ] Keep README MAP-Elites wording scoped until illumination evidence exists.
   - Spec evidence: local arXiv `1504.04909`, `Illuminating search spaces by

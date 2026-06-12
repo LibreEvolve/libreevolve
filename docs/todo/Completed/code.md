@@ -17948,3 +17948,24 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     artifacts, Appendix D metrics, and benchmark rows remain open.
   - Verification: CausalEvolve boundary tests and paper-manifest tests cover
     the sidecar, drift rejection, and repo-root sidecar requirement.
+
+- [x] Add DeepEvolve research/debug-loop source-boundary gate.
+  - Spec evidence: `2510.06056v1` describes DeepEvolve as an
+    AlphaEvolve-augmented deep-research framework with problem/algorithm/user
+    input context, plan/search/write proposal generation, proposal
+    pseudo-code, cross-file coding, reflection, execution debugging,
+    score-zero fallback, evolutionary database sampling, island/MAP-Elites
+    inspiration, nine benchmark tasks, performance/runtime rows, debugging
+    rows, qualitative judge rows, and deep-research ablations.
+  - Status: `libreevolve.problems.benchmarks.deepevolve_boundary` now emits
+    and validates `papers/deepevolve_boundary.json` with cached PDF digest,
+    CC BY 4.0 license metadata, source-linked GitHub status, component rows,
+    local `DeepResearchPlugin` bounded-retrieval scope, benchmark task labels,
+    required future evidence fields, missing-evidence keys, and overclaim
+    rejection.
+  - Remaining gap: DeepEvolve's executable six-module workflow, textualization
+    records, proposal pseudo-code, cross-file coding, reflection/debugging,
+    score-zero fallback, benchmark rows, result tables, judge rows, ablation
+    rows, Appendix C query rows, and runtime/GPU budget evidence remain open.
+  - Verification: DeepEvolve boundary tests and paper-manifest tests cover the
+    sidecar, drift rejection, and repo-root sidecar requirement.

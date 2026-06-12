@@ -3471,6 +3471,12 @@ the source generation/event index, synthesis and raw-result hashes, query hash,
 cache snapshot fields, retained-source ranking hash fields,
 `relevance_affects_order`, and transport policy status for the exact retrieval
 text injected into the prompt.
+`papers/deepevolve_boundary.json` records the source-specific DeepEvolve
+boundary: current support is bounded retrieval context with provenance, not the
+paper's plan/search/write/code/evaluation/evolutionary-selection loop,
+proposal pseudo-code, cross-file coding, reflection checkpoints, automatic
+debugging agent, score-zero fallback, nine-task benchmark rows, qualitative
+judge records, or deep-research ablation parity.
 DeepResearch keeps a bounded in-memory retrieval
 event history (`max_events`, default `100`) and prompt metadata records
 `retrieval_retention` counters for retained, emitted, total, and dropped
@@ -4834,7 +4840,7 @@ the complete implementation-status index for all 25 manifest rows.
 | [**ImprovEvolve**](https://arxiv.org/abs/2602.10233) | Kravatskiy et al. | 2026 | Modular-search inspiration only; `papers/improvevolve_boundary.json` records missing interface enforcement, Stage A/B execution, basin hopping, GigaEvo backbone, human-edit, benchmark, ablation, and budget evidence |
 | [**MadEvolve**](https://arxiv.org/abs/2602.15951) | Li, Zang & Münchmeyer | 2026 | Domain-evolution inspiration only; `papers/madevolve_boundary.json` records missing free-parameter tracking, nested optimization, JAX/vmad compatibility, cosmology adapters, innovation reports, run/model statistics, and reward-hacking controls |
 | [**CausalEvolve**](https://arxiv.org/abs/2603.14575) | Chen et al. | 2026 | Causal-guidance inspiration only; `papers/causalevolve_boundary.json` records missing POMDP/SCM framing, causal scratchpad, LLM factor generation, executable factor code, interventions, treatment effects, surprise/abduction artifacts, and benchmark rows |
-| [**DeepEvolve**](https://arxiv.org/abs/2510.06056) | Liu et al. | 2025 | Inspiration for retrieval context; not cross-file-debug-loop complete |
+| [**DeepEvolve**](https://arxiv.org/abs/2510.06056) | Liu et al. | 2025 | Inspiration for retrieval context; `papers/deepevolve_boundary.json` keeps cross-file debug-loop, benchmark, and ablation parity unclaimed |
 
 **Foundational algorithms:**
 

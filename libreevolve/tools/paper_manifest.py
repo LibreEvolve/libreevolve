@@ -64,6 +64,10 @@ from libreevolve.problems.benchmarks.causalevolve_boundary import (
     causalevolve_boundary_record,
     validate_causalevolve_boundary,
 )
+from libreevolve.problems.benchmarks.deepevolve_boundary import (
+    deepevolve_boundary_record,
+    validate_deepevolve_boundary,
+)
 from libreevolve.problems.benchmarks.codeevolve_boundary import (
     codeevolve_boundary_record,
     validate_codeevolve_boundary,
@@ -251,6 +255,7 @@ THETAEVOLVE_BOUNDARY_FILE = "papers/thetaevolve_boundary.json"
 IMPROVEVOLVE_BOUNDARY_FILE = "papers/improvevolve_boundary.json"
 MADEVOLVE_BOUNDARY_FILE = "papers/madevolve_boundary.json"
 CAUSALEVOLVE_BOUNDARY_FILE = "papers/causalevolve_boundary.json"
+DEEPEVOLVE_BOUNDARY_FILE = "papers/deepevolve_boundary.json"
 EXAMPLE_BENCHMARK_SCOPE_FILE = "papers/example_benchmark_scope.json"
 MATH_OUTCOME_BOUNDARY_FILE = "papers/math_outcome_boundary.json"
 MATH_STARTING_CONSTRUCTION_BOUNDARY_FILE = "papers/math_starting_construction_boundary.json"
@@ -635,6 +640,7 @@ def validate_paper_manifest(
     issues.extend(_validate_improvevolve_boundary(root_path))
     issues.extend(_validate_madevolve_boundary(root_path))
     issues.extend(_validate_causalevolve_boundary(root_path))
+    issues.extend(_validate_deepevolve_boundary(root_path))
 
     if set(csv_by_id) - seen_ids:
         for row_id in sorted(set(csv_by_id) - seen_ids):
@@ -1791,6 +1797,38 @@ def _validate_causalevolve_boundary(root_path: Path) -> list[PaperManifestIssue]
             f"causalevolve_boundary_{issue.code}",
             issue.message,
             "causalevolve",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_deepevolve_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / DEEPEVOLVE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = deepevolve_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "deepevolve_boundary_manifest_missing",
+                    (
+                        f"{DEEPEVOLVE_BOUNDARY_FILE} must emit "
+                        "DeepEvolve research/debug-loop evidence availability"
+                    ),
+                    "deepevolve",
+                )
+            ]
+    report = validate_deepevolve_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"deepevolve_boundary_{issue.code}",
+            issue.message,
+            "deepevolve",
         )
         for issue in report.issues
     ]

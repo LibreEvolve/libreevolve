@@ -1,0 +1,187 @@
+{
+  "schema": "libreevolve.deepevolve_boundary.v1",
+  "source_paper_id": "2510.06056",
+  "source_title": "Scientific Algorithm Discovery by Augmenting AlphaEvolve with Deep Research",
+  "source_authors": [
+    "Gang Liu",
+    "Yihan Zhu",
+    "Jie Chen",
+    "Meng Jiang"
+  ],
+  "source_version": "v1",
+  "source_submitted_date": "2025-10-07",
+  "source_url": "https://arxiv.org/pdf/2510.06056.pdf",
+  "source_file": "papers/2510.06056__DeepEvolve.pdf",
+  "source_sha256": "e2f578c3b7979eb72857b1545b244405cf0fa8792bab82645e58c97cf3681f86",
+  "source_bytes": 2681978,
+  "source_license": "http://creativecommons.org/licenses/by/4.0/",
+  "boundary_status": "retrieval_context_inspiration_without_deepevolve_loop_parity",
+  "claim_ready": false,
+  "source_links": [
+    {
+      "url": "https://arxiv.org/abs/2510.06056v1",
+      "status": "source_version_reference_only"
+    },
+    {
+      "url": "https://github.com/liugangcode/deepevolve",
+      "status": "paper_link_resolves_not_verified_as_local_runtime"
+    }
+  ],
+  "framework_components": [
+    {
+      "component_id": "problem_algorithm_instruction_input",
+      "paper_role": "problem, initial algorithm, and user instructions as the update context",
+      "local_status": "partial_problem_config_not_deepevolve_input_schema"
+    },
+    {
+      "component_id": "textualization_function",
+      "paper_role": "tau(P) and tau(f) textualization for problem and algorithm descriptions",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "plan_search_write_research_loop",
+      "paper_role": "planning questions, online search, and proposal writing before coding",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "retrieved_source_provenance",
+      "paper_role": "online research source evidence used to form proposals",
+      "local_status": "partial_bounded_plugin_retrieval_only"
+    },
+    {
+      "component_id": "proposal_pseudocode_schema",
+      "paper_role": "research proposals with pseudo-code for implementation",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "cross_file_code_editing",
+      "paper_role": "coding agent parses multi-file codebases and edits localized regions",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "reflection_checkpoints",
+      "paper_role": "research and coding reflection checkpoints",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "execution_debugging_agent",
+      "paper_role": "automatic debugging agent using execution feedback",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "score_zero_fallback",
+      "paper_role": "assign score zero after exhausted debugging attempts",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "evolutionary_database",
+      "paper_role": "long-term algorithm memory for next and inspiration sampling",
+      "local_status": "partial_current_run_database_not_deepevolve"
+    },
+    {
+      "component_id": "island_candidate_selection",
+      "paper_role": "island-based candidate pool for next sampling",
+      "local_status": "partial_local_islands_not_deepevolve_trace"
+    },
+    {
+      "component_id": "map_elites_inspiration_sampling",
+      "paper_role": "MAP-Elites nearby algorithms used as inspirations",
+      "local_status": "partial_local_map_elites_not_deepevolve_inspiration"
+    },
+    {
+      "component_id": "benchmark_task_rows",
+      "paper_role": "nine task, domain, data-type, and metric rows",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "performance_runtime_debug_ablation_rows",
+      "paper_role": "Table 2 performance/runtime, Table 3 debugging, and Table 4 ablation rows",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "qualitative_judge_rows",
+      "paper_role": "Figure 3 originality, future-potential, and code-difficulty judge rows",
+      "local_status": "not_recorded"
+    }
+  ],
+  "local_evidence": {
+    "current_plugin": "libreevolve/plugins/deep_research.py",
+    "current_scope": "bounded_retrieval_context_not_deepevolve_loop",
+    "retrieval_context_ready": true,
+    "bounded_source_metadata_ready": true,
+    "plan_search_write_loop_ready": false,
+    "proposal_pseudocode_ready": false,
+    "cross_file_coding_ready": false,
+    "reflection_ready": false,
+    "debugging_agent_ready": false,
+    "score_zero_fallback_ready": false,
+    "deepevolve_database_ready": false,
+    "benchmark_rows_ready": false,
+    "ablation_rows_ready": false,
+    "repository_runtime_verified": false
+  },
+  "benchmark_tasks": [
+    "Molecular Prediction",
+    "Molecular Translation",
+    "Circle Packing",
+    "Burgers' Equation",
+    "Parkinson's Disease",
+    "Nuclei Image",
+    "Open Vaccine",
+    "Polymer Prediction",
+    "USP P2P"
+  ],
+  "required_evidence_fields": [
+    "source_license_and_repository_status",
+    "problem_input_schema",
+    "evaluation_data_and_function_records",
+    "textualization_function_records",
+    "user_instruction_records",
+    "algorithm_description_records",
+    "plan_step_question_records",
+    "search_step_source_records",
+    "write_step_proposal_records",
+    "proposal_pseudocode_records",
+    "cross_file_delimiter_records",
+    "code_localization_records",
+    "code_patch_records",
+    "reflection_checkpoint_records",
+    "debugging_attempt_records",
+    "execution_feedback_records",
+    "score_zero_fallback_records",
+    "evolutionary_database_records",
+    "island_sampling_records",
+    "map_elites_inspiration_records",
+    "table1_task_metric_rows",
+    "table2_performance_runtime_rows",
+    "table3_debugging_success_rows",
+    "figure3_judge_score_rows",
+    "table4_deep_research_ablation_rows",
+    "appendix_c_query_hyperparameter_rows",
+    "thirty_minute_single_gpu_budget_evidence",
+    "local_deepevolve_runtime_artifacts"
+  ],
+  "missing_evidence": {
+    "six_module_workflow_trace": "not_implemented_locally",
+    "problem_algorithm_instruction_input_schema": "not_recorded_locally",
+    "textualization_function": "not_implemented_locally",
+    "plan_search_write_research_loop": "not_implemented_locally",
+    "retrieved_source_provenance_as_deepevolve_research": "partial_bounded_retrieval_only",
+    "proposal_pseudocode_schema": "not_recorded_locally",
+    "cross_file_code_editing": "not_implemented_locally",
+    "reflection_checkpoints": "not_implemented_locally",
+    "execution_debugging_agent": "not_implemented_locally",
+    "score_zero_fallback": "not_implemented_locally",
+    "evolutionary_database": "partial_current_run_database_not_deepevolve",
+    "island_candidate_selection": "partial_local_islands_not_deepevolve_trace",
+    "map_elites_inspiration_sampling": "partial_local_archive_not_deepevolve_inspiration",
+    "nine_task_benchmark_rows": "not_recorded_locally",
+    "table2_performance_runtime_rows": "not_recorded_locally",
+    "table3_debugging_success_rows": "not_recorded_locally",
+    "figure3_qualitative_judge_rows": "not_recorded_locally",
+    "table4_deep_research_ablation_rows": "not_recorded_locally",
+    "appendix_c_query_hyperparameter_rows": "not_recorded_locally",
+    "repository_runtime_verification": "not_verified_locally"
+  },
+  "claim_boundary": "This boundary records DeepEvolve as retrieval/debug-loop inspiration only. LibreEvolve's current DeepResearch plugin is bounded retrieval context with provenance; it does not claim DeepEvolve's six-module plan/search/write/code/evaluation/evolutionary-selection loop, proposal pseudo-code, cross-file coding, reflection checkpoints, automatic debugging agent, score-zero fallback, DeepEvolve database semantics, nine-task benchmark rows, qualitative judge records, or deep-research ablation parity."
+}

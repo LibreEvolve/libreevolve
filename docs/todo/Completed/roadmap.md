@@ -9580,3 +9580,19 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     benchmark/ablation rows.
   - Verification: CausalEvolve boundary tests and paper-manifest tests
     validate the sidecar and repo-root requirement.
+
+- [x] Preserve DeepEvolve `2510.06056` boundary scope in roadmap.
+  - Spec evidence: roadmap DeepEvolve claims should not promote bounded
+    retrieval provenance into DeepEvolve's plan/search/write proposal
+    lifecycle, cross-file coding, reflection/debugging, benchmark rows,
+    qualitative judge rows, or deep-research ablation parity.
+  - Status: ROADMAP and roadmap TODO wording now identify
+    `papers/deepevolve_boundary.json` as the source-specific boundary for
+    problem/algorithm/instruction inputs, textualization, proposal generation,
+    retrieved-source provenance, proposal pseudo-code, cross-file coding,
+    reflection checkpoints, debugging attempts, score-zero fallback,
+    evolutionary database semantics, island/MAP-Elites inspiration sampling,
+    nine-task benchmark rows, Table 2/Table 3/Table 4 records, Figure 3 judge
+    rows, Appendix C query rows, and 30-minute/single-GPU budget evidence.
+  - Verification: DeepEvolve boundary tests and paper-manifest tests validate
+    the sidecar and repo-root requirement.

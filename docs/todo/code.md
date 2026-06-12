@@ -6870,8 +6870,8 @@ Primary evidence:
     `AIME` `38.89`/`40.00`) and the corresponding ShinkaEvolve,
     CausalPlanner(Meta), and COAT rows.
 
-- [ ] Add DeepEvolve cross-file research/debug-loop source boundary before
-      retrieval-agent claims.
+- [ ] Implement DeepEvolve cross-file research/debug-loop parity beyond the
+      source boundary.
   - Spec evidence: local arXiv `2510.06056v1`, `Scientific Algorithm
     Discovery by Augmenting AlphaEvolve with Deep Research`, by Gang Liu,
     Yihan Zhu, Jie Chen, and Meng Jiang was submitted on October 7, 2025; the
@@ -6889,22 +6889,28 @@ Primary evidence:
     extracted links also include OpenEvolve, OpenAI/Google Deep Research pages,
     and Kaggle/source URLs for molecular translation, Parkinson's disease,
     nuclei image, Open Vaccine, polymer prediction, and USP P2P.
-  - Current evidence: `libreevolve/plugins/deep_research.py` implements bounded
+  - Current evidence: `papers/deepevolve_boundary.json` now preserves the
+    `2510.06056` source-specific boundary with cached PDF digest, CC BY 4.0
+    license metadata, source-linked GitHub URL status, component rows, local
+    `DeepResearchPlugin` bounded-retrieval scope, benchmark task labels,
+    required future evidence fields, missing-evidence keys, and overclaim
+    rejection. `libreevolve/plugins/deep_research.py` implements bounded
     arXiv/web-search context, query construction, cache snapshots, redacted
     payload sidecars, source-ranking provenance, lexical grounding, and
-    non-authoritative prompt wrappers. README and `papers/README.md` state that
-    this is not a DeepEvolve-style hypothesis-refinement or cross-file
-    debugging loop. Existing active TODOs cover retrieval transport and source
-    integrity, but there is no implemented source-specific code gate for `2510.06056`, no
-    plan/search/write proposal lifecycle, no multi-file edit delimiter schema,
-    no implementation-difficulty/originality/future-potential scoring, no
-    debugging-attempt budget with score-zero fallback, no reflection-agent
-    checkpoints, no algorithm textual description record, no nine-task
-    benchmark fixtures, no `DEEPEVOLVE` block reachability checks, no
-    30-minute/single-GPU budget records, and no success-rate/ablation report
-    tied to this paper.
-  - Required result: add source-boundary metadata and implementation gates for
-    `2510.06056`: arXiv version/date/PDF hash, code repository status,
+    non-authoritative prompt wrappers. README and `papers/README.md` state
+    that this is not a DeepEvolve-style hypothesis-refinement or cross-file
+    debugging loop.
+  - Remaining code gap: no plan/search/write proposal lifecycle, no
+    textualization function records, no pseudo-code proposal schema, no
+    multi-file edit delimiter/localization schema, no implementation-
+    difficulty/originality/future-potential scoring, no debugging-attempt
+    budget with score-zero fallback, no reflection-agent checkpoints, no
+    algorithm textual description record, no nine-task benchmark fixtures, no
+    `DEEPEVOLVE` block reachability checks, no 30-minute/single-GPU budget
+    records, no Table 2/Table 3/Table 4 result rows, no Figure 3 judge rows,
+    no Appendix C query/hyperparameter rows, and no success-rate/ablation
+    report tied to this paper.
+  - Required result: implement DeepEvolve execution gates for `2510.06056`:
     problem/input schema for evaluation code/data/textualization/user
     instructions, algorithm-description schema with motivation, summary,
     pseudo-code, score, originality, future potential, and implementation
@@ -6914,9 +6920,8 @@ Primary evidence:
     attempt records with execution errors/warnings and fallback scoring,
     evolutionary database inspiration records, MAP-Elites/island compatibility,
     benchmark rows for the nine paper tasks, Table 2 performance/runtime
-    values, Table 3 debugging success-rate values, deep-research ablation rows,
-    runtime/GPU budget records, Figure 3 LLM-as-judge originality/future-
-    potential/difficulty records, Table 4 deep-research ablation rows for
+    values, Table 3 debugging success-rate values, runtime/GPU budget records,
+    Figure 3 LLM-as-judge records, Table 4 deep-research ablation rows for
     Molecular Prediction and Circle Packing, Appendix C user-query and
     hyperparameter records, and README/ROADMAP wording that keeps current
     retrieval context separate from DeepEvolve execution semantics.

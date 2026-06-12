@@ -570,7 +570,11 @@ is not yet an AlphaEvolve reproduction.
   default-provider plus custom-provider provenance tests. Current bounded
   audits reject source-ranking metadata that overclaims semantic, learned, or
   external scoring evidence without implementing those rankers, and run-level
-  coverage keeps those ranking/scoring readiness flags false.
+  coverage keeps those ranking/scoring readiness flags false. The committed
+  `papers/deepevolve_boundary.json` sidecar keeps the broader DeepEvolve
+  plan/search/write/code/evaluation/evolutionary-selection loop, cross-file
+  coding, debugging, benchmark rows, qualitative judge rows, and ablation
+  evidence separate from this bounded retrieval surface.
 - Extend the current optional `IDEA`/`RATIONALE`/`HYPOTHESIS` proposal metadata
   preamble, bounded `runtime.history.hypothesis_index` summaries, and
   `runtime.history.hypothesis_branch_report` abandonment evidence, plus
@@ -651,7 +655,15 @@ is not yet an AlphaEvolve reproduction.
   memory, LLM outcome-factor generation, executable factor code,
   CausalPlanner factor-direction interventions, procedure-factor extraction,
   treatment-effect tables, surprise-pattern detection, abductive hypotheses,
-  scratchpad replay, and benchmark/ablation rows.
+  scratchpad replay, and benchmark/ablation rows. The committed
+  `papers/deepevolve_boundary.json` sidecar records the DeepEvolve
+  source-specific boundary for problem/algorithm/instruction inputs,
+  textualization, plan/search/write proposal records, retrieved-source
+  provenance, proposal pseudo-code, cross-file coding, reflection
+  checkpoints, debugging attempts, score-zero fallback, evolutionary database
+  semantics, island/MAP-Elites inspiration sampling, nine-task benchmark rows,
+  Table 2/Table 3/Table 4 records, Figure 3 judge rows, Appendix C query rows,
+  and 30-minute/single-GPU budget evidence.
 
 ## Mid Term
 

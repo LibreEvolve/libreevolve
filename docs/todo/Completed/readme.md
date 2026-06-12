@@ -12039,3 +12039,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     missing.
   - Verification: CausalEvolve boundary and paper-manifest tests validate the
     sidecar that README now references.
+
+- [x] Document DeepEvolve `2510.06056` source boundary.
+  - Spec evidence: README DeepEvolve wording needed to keep bounded retrieval
+    context separate from DeepEvolve's plan/search/write proposal lifecycle,
+    cross-file coding, reflection, debugging, benchmark rows, qualitative
+    judge rows, and deep-research ablations.
+  - Status: README now names `papers/deepevolve_boundary.json` in the
+    DeepResearch plugin section and DeepEvolve reference row, while keeping the
+    six-module loop, proposal pseudo-code, cross-file coding,
+    reflection/debugging, score-zero fallback, nine-task benchmark rows,
+    qualitative judge rows, and ablation evidence explicit as missing.
+  - Verification: DeepEvolve boundary and paper-manifest tests validate the
+    sidecar that README now references.

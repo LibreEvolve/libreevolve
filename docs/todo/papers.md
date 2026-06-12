@@ -4620,7 +4620,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     scientific-task benchmark taxonomy, baseline method identities,
     code/artifact availability if any, and independent verification outputs.
 
-- [ ] Track MLEvolve long-horizon ML-engineering paper evidence.
+- [ ] Reproduce MLEvolve long-horizon ML-engineering evidence beyond paper
+      coverage.
   - Paper/source evidence: arXiv `2606.06473`, submitted June 4, 2026, is
     titled `MLEvolve: A Self-Evolving Framework for Automated Machine
     Learning Algorithm Discovery`. Its abstract says long-horizon MLE agents
@@ -4631,21 +4632,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     reports MLE-Bench state-of-the-art performance under a 12-hour budget plus
     outperformance of AlphaEvolve on mathematical algorithm optimization
     tasks. The arXiv page links code at `https://github.com/InternScience/MLEvolve`.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2606.06473`. Existing rows cover AlphaEvolve, MAP-Elites,
-    UCB/reviewer logic, prompt/history artifacts, DeltaEvolve context memory,
-    EvoX adaptive search, and selected application papers, but not MLE-Bench,
-    Progressive MCGS, cross-branch graph references, retrospective MLE memory,
-    adaptive coding modes, or long-horizon ML-engineering evaluation budgets.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2606.06473`: title/authors/arXiv version/date/PDF digest, source license,
-    linked-code URL/status, relation to AlphaEvolve and LibreEvolve,
-    Progressive MCGS and graph-reference schema, entropy-schedule metadata,
-    retrospective-memory taxonomy, adaptive coding-mode artifacts, MLE-Bench
-    task/submission records, 12-hour budget and metric definitions,
-    mathematical-algorithm baseline identities, code/artifact reproducibility
-    status, and README/ROADMAP wording that treats MLEvolve as missing paper
-    evidence rather than implemented LibreEvolve support.
+  - Current gap: the paper manifest, paper index, row-identity manifest, and
+    TODO coverage now include `2606.06473`, cached locally as
+    `papers/2606.06473__MLEvolve.pdf` with byte count `2661825` and SHA-256
+    `db5a1709ee78cd3d979c47b8734d8449427b6f69787fdb0d5e6f8e43951e9bde`.
+    Existing rows still do not capture MLE-Bench, Progressive MCGS,
+    cross-branch graph references, retrospective MLE memory, adaptive coding
+    modes, or long-horizon ML-engineering evaluation budgets.
+  - Required result: add reproduction-grade evidence for `2606.06473`:
+    source-license metadata, linked-code URL/status, relation to AlphaEvolve
+    and LibreEvolve, Progressive MCGS and graph-reference schema,
+    entropy-schedule metadata, retrospective-memory taxonomy, adaptive
+    coding-mode artifacts, MLE-Bench task/submission records, 12-hour budget
+    and metric definitions, mathematical-algorithm baseline identities,
+    code/artifact reproducibility status, and independent verification outputs.
 
 - [ ] Track LEVI cost-aware search-architecture paper evidence.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

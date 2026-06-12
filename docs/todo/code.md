@@ -5084,7 +5084,8 @@ Primary evidence:
     README/ROADMAP wording that promotes semantic-delta momentum guidance only
     after local storage, prompt assembly, and benchmark artifacts exist.
 
-- [ ] Add MLEvolve long-horizon ML-engineering source boundary.
+- [ ] Implement MLEvolve long-horizon ML-engineering evidence beyond paper
+      cache coverage.
   - Spec evidence: arXiv `2606.06473`, `MLEvolve: A Self-Evolving Framework
     for Automated Machine Learning Algorithm Discovery`, was submitted June 4,
     2026. Its abstract presents an LLM-based self-evolving multi-agent
@@ -5097,22 +5098,27 @@ Primary evidence:
     modes. It reports MLE-Bench state-of-the-art metrics under a 12-hour
     budget and outperformance of AlphaEvolve on mathematical algorithm
     optimization tasks.
-  - Current evidence: LibreEvolve has MAP-Elites archives, islands, prompt
-    history, fixed mixed parent selection, and limited failed-proposal memory,
-    but no MLE-Bench task harness, Progressive Monte Carlo Graph Search,
-    graph-based cross-branch reference edges, entropy-scheduled explore/
-    exploit controller, cold-start MLE knowledge base, dynamic retrospective
-    memory, strategic-planning/code-generation mode separation, or valid
-    submission/medal-rate report artifacts.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2606.06473`: arXiv id/version/date/PDF hash, authors, source license,
-    linked code URL/status, relation to AlphaEvolve and LibreEvolve search,
-    Progressive MCGS state schema, graph-reference edge provenance,
-    entropy-schedule records, retrospective-memory schema, adaptive coding
-    mode artifacts, MLE-Bench task/submission metadata, 12-hour budget and
-    metric definitions, mathematical-algorithm baseline identities, and
-    README/ROADMAP wording that keeps MLEvolve-style long-horizon MLE support
-    as missing evidence until local harnesses and reports exist.
+  - Current evidence: `papers/download_manifest.*`, `papers/row_identity.json`,
+    `papers/README.md`, README, ROADMAP, and TODO coverage now include
+    `2606.06473`, cached locally as `papers/2606.06473__MLEvolve.pdf` with
+    byte count `2661825` and SHA-256
+    `db5a1709ee78cd3d979c47b8734d8449427b6f69787fdb0d5e6f8e43951e9bde`.
+    LibreEvolve has MAP-Elites archives, islands, prompt history, fixed mixed
+    parent selection, and limited failed-proposal memory, but no MLE-Bench task
+    harness, Progressive Monte Carlo Graph Search, graph-based cross-branch
+    reference edges, entropy-scheduled explore/exploit controller, cold-start
+    MLE knowledge base, dynamic retrospective memory, strategic-planning/code-
+    generation mode separation, or valid submission/medal-rate report
+    artifacts.
+  - Required result: add implementation-boundary metadata and runnable
+    evidence beyond the paper cache: source-license and linked-code status,
+    relation to AlphaEvolve and LibreEvolve search, Progressive MCGS state
+    schema, graph-reference edge provenance, entropy-schedule records,
+    retrospective-memory schema, adaptive coding-mode artifacts, MLE-Bench
+    task/submission metadata, 12-hour budget and metric definitions,
+    mathematical-algorithm baseline identities, and README/ROADMAP wording
+    that promotes MLEvolve-style long-horizon MLE only after local harnesses
+    and reports exist.
 
 - [ ] Add LEVI cost-aware search-architecture source boundary.
   - Spec evidence: arXiv `2605.09764`, `LEVI: Stronger Search Architectures

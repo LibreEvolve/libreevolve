@@ -165,7 +165,7 @@ Common run options:
 
 ## Research Sources
 
-LibreEvolve is informed by a local cache of 30 papers on LLM-guided evolution,
+LibreEvolve is informed by a local cache of 31 papers on LLM-guided evolution,
 program synthesis, quality-diversity optimization, and related benchmarks. The
 PDF cache lives locally under `papers/`, but the PDFs themselves are gitignored.
 The committed repository tracks `papers/README.md`, download manifests, and
@@ -176,7 +176,7 @@ not authoritative bibliographic titles. Use `papers/README.md` for paper-facing
 titles, implementation status, and benchmark coverage decisions.
 
 The table below is a curated subset for README context. `papers/README.md` is
-the complete implementation-status index for all 30 manifest rows.
+the complete implementation-status index for all 31 manifest rows.
 
 | Source | Role in LibreEvolve |
 | --- | --- |
@@ -191,6 +191,7 @@ the complete implementation-status index for all 30 manifest rows.
 | [Radar Power Allocation](https://arxiv.org/abs/2605.01794) | AlphaEvolve radar resource-allocation application context only; no local multi-target tracking or power-allocation benchmark exists. |
 | [EvoX](https://arxiv.org/abs/2602.23413) | Adaptive meta-evolution context only; no local strategy-genome, strategy-credit, or dynamic search-policy benchmark exists. |
 | [DeltaEvolve](https://arxiv.org/abs/2602.02919) | Semantic-delta context-memory inspiration only; no local semantic-delta store, progressive disclosure sampler, or token-efficiency benchmark exists. |
+| [MLEvolve](https://arxiv.org/abs/2606.06473) | Long-horizon ML-engineering context only; no local MLE-Bench harness, Progressive MCGS controller, or 12-hour medal-rate report exists. |
 
 Rehydrate the ignored local PDF cache on a fresh checkout:
 

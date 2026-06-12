@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.paper_source_identity_manifest.v1",
-  "source_identity_count": 30,
+  "source_identity_count": 31,
   "source_identity_policy": "manifest_id_url_source_id_and_file_source_prefix_must_match_before_source_version_or_rights_claims",
   "sources": [
     {
@@ -503,6 +503,24 @@
       "url_source_id": "2602.02919",
       "url_versioned_id": "2602.02919",
       "file_source_id": "2602.02919",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2606.06473",
+      "title": "MLEvolve",
+      "url": "https://arxiv.org/pdf/2606.06473.pdf",
+      "file": "papers/2606.06473__MLEvolve.pdf",
+      "sha256": "db5a1709ee78cd3d979c47b8734d8449427b6f69787fdb0d5e6f8e43951e9bde",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2606.06473",
+      "url_versioned_id": "2606.06473",
+      "file_source_id": "2606.06473",
       "identity_checks": {
         "manifest_id_matches_url_source_id": true,
         "manifest_id_matches_file_source_id": true,

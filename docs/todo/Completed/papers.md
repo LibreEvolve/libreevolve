@@ -12788,3 +12788,20 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2606.06473` MLEvolve paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2606.06473`, `MLEvolve: A Self-Evolving Framework for Automated Machine
+    Learning Algorithm Discovery`, cached locally as
+    `papers/2606.06473__MLEvolve.pdf` with byte count `2661825` and SHA-256
+    `db5a1709ee78cd3d979c47b8734d8449427b6f69787fdb0d5e6f8e43951e9bde`.
+  - Remaining paper gap: source-license details, linked-code URL/status,
+    Progressive MCGS and graph-reference schemas, entropy-schedule metadata,
+    retrospective-memory taxonomy, adaptive coding-mode artifacts, MLE-Bench
+    task/submission records, 12-hour budget and metric definitions,
+    mathematical-algorithm baseline identities, code/artifact reproducibility
+    status, and independent reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

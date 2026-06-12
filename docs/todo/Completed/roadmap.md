@@ -764,7 +764,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     URL, and local PDF label describing the same source before version or
     rights evidence attaches.
   - Status: ROADMAP now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 30 cache
+    companion manifest that emits derived source identities for all 31 cache
     rows and links the AlphaEvolve row to `papers/source_versions.json`.
   - Remaining gap: none for this bounded roadmap wording slice.
 
@@ -9812,5 +9812,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     token-savings reports, full-code-history baseline comparisons,
     scientific-task benchmark taxonomies, and independent reproduction outputs
     explicitly open.
-  - Verification: paper-manifest validation checks the 30-row manifest,
+  - Verification: paper-manifest validation checks the current manifest,
+    paper-index row, TODO coverage row, and source-identity sidecar.
+
+- [x] Preserve `2606.06473` MLEvolve paper-cache scope in roadmap.
+  - Status: ROADMAP now identifies arXiv `2606.06473`, `MLEvolve: A
+    Self-Evolving Framework for Automated Machine Learning Algorithm
+    Discovery`, as background long-horizon MLE context only, with the cached
+    `papers/2606.06473__MLEvolve.pdf` row and missing MLE-Bench harnesses,
+    Progressive MCGS graph state, cross-branch reference-edge provenance,
+    entropy-inspired schedules, Retrospective Memory artifacts, adaptive
+    coding-mode traces, 12-hour medal-rate/valid-submission reports,
+    mathematical-algorithm baseline comparisons, linked-code audits, and
+    independent reproduction outputs explicitly open.
+  - Verification: paper-manifest validation checks the 31-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.

@@ -280,6 +280,16 @@
     "sha256": "d4726d81fe96ddb4b370c4a37c06510394597f640187d6ba8e615b5952c3a4d8"
   },
   {
+    "id": "2606.06473",
+    "title": "MLEvolve",
+    "url": "https://arxiv.org/pdf/2606.06473.pdf",
+    "file": "papers/2606.06473__MLEvolve.pdf",
+    "ok": true,
+    "bytes": 2661825,
+    "message": "downloaded",
+    "sha256": "db5a1709ee78cd3d979c47b8734d8449427b6f69787fdb0d5e6f8e43951e9bde"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

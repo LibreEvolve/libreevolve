@@ -3470,7 +3470,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     independent reproduction outputs, and a benchmark-fixture status rule so
     roadmap claims do not outpace local DeltaEvolve-style context support.
 
-- [ ] Add MLEvolve long-horizon ML-engineering gates before roadmap promotion.
+- [ ] Implement MLEvolve long-horizon ML-engineering gates beyond paper cache
+      coverage.
   - Spec evidence: arXiv `2606.06473`, submitted June 4, 2026, introduces
     MLEvolve as a self-evolving multi-agent framework for end-to-end machine
     learning algorithm discovery. The abstract identifies inter-branch
@@ -3480,20 +3481,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     scheduling, Retrospective Memory, and adaptive coding modes. It reports
     MLE-Bench state-of-the-art results under a 12-hour budget and stronger
     mathematical algorithm optimization than AlphaEvolve.
-  - Current evidence: ROADMAP tracks AlphaEvolve alignment, MAP-Elites/islands
-    behavior, prompt/run provenance, benchmark-report contracts, and several
-    paper-source gates. It does not mention `2606.06473`, define an MLE-Bench
-    or Progressive MCGS source gate, or require local evidence before
-    promoting long-horizon ML engineering beyond the current pure-Python
-    problem/evaluator workflow.
-  - Required result: add roadmap gates for `2606.06473`: paper/source
-    manifest entry, PDF/cache hash, source-license and linked-code status,
-    Progressive MCGS graph schema, cross-branch reference-edge provenance,
-    entropy-schedule metrics, retrospective-memory artifacts, adaptive coding
-    mode traces, MLE-Bench task/submission metadata, budget and metric
-    definitions, AlphaEvolve comparison boundary, and a background-only or
-    benchmark-fixture status rule so roadmap claims do not outpace local
-    MLEvolve-style harness support.
+  - Current evidence: ROADMAP, `papers/download_manifest.*`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2606.06473` with local cache hash and background-only status. They still
+    do not require local evidence before promoting long-horizon ML engineering
+    beyond the current pure-Python problem/evaluator workflow.
+  - Required result: add roadmap gates beyond the paper cache: source-license
+    and linked-code status, Progressive MCGS graph schema, cross-branch
+    reference-edge provenance, entropy-schedule metrics, retrospective-memory
+    artifacts, adaptive coding mode traces, MLE-Bench task/submission
+    metadata, budget and metric definitions, AlphaEvolve comparison boundary,
+    independent reproduction outputs, and a benchmark-fixture status rule so
+    roadmap claims do not outpace local MLEvolve-style harness support.
 
 - [ ] Add LEVI cost-aware search-architecture gates before roadmap promotion.
   - Spec evidence: arXiv `2605.09764`, submitted May 10, 2026, introduces

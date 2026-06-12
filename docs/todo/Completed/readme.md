@@ -11713,3 +11713,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     deployment/time-to-market impact, hashes, flags, and artifact refs.
   - Verification: systems-result regression tests validate the documented
     report contract.
+
+- [x] Document TPU rewrite provenance for ready hardware reports.
+  - Spec evidence: README hardware systems wording needed to distinguish the
+    concrete Verilog bit-removal rewrite from broader RTL/EDA validation.
+  - Status: README and run-artifact docs now describe
+    `hardware_rewrite_provenance` for ready hardware reports, including
+    source/modified Verilog hashes, rewrite diff hash, component and
+    matrix-unit context, semantic rewrite category, changed spans, removed-bit
+    inventory, rewrite rationale, PPA linkage, verification linkage, and
+    artifact refs.
+  - Verification: systems-result regression tests validate the documented
+    report contract.

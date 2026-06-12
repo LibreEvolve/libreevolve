@@ -2329,6 +2329,12 @@ time-to-market impact, hashes, confirmation flags, and artifact refs. This is
 report metadata; it does not create real Verilog, synthesis, PPA, verification,
 designer-signoff, downstream-synthesis, integration, or deployment-impact
 artifacts.
+Ready hardware reports also require `hardware_rewrite_provenance`, covering
+the concrete TPU arithmetic-circuit rewrite: source/modified Verilog hashes,
+rewrite diff hash, component and matrix-unit context, semantic rewrite
+category, changed spans, removed-bit inventory, rewrite rationale, PPA linkage,
+verification linkage, and artifact refs. This records the bit-removal rewrite
+boundary; it does not create the real Verilog or diff artifacts.
 `libreevolve.systems_evidence_bundle.v1` is the portable wrapper for those
 records: it embeds the systems report and artifact inventory, records stable
 SHA-256 hashes for each embedded object plus the inventory records hash, checks

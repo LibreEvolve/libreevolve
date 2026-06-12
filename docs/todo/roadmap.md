@@ -2072,16 +2072,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     reducing area and power.
   - Current evidence: roadmap systems-result wording covers generic hardware
     readiness, RTL/EDA verification, PPA metrics, designer signoff, downstream
-    synthesis, adoption, and deployment impact. It does not require hardware
-    fixtures or report validators to preserve the concrete rewrite artifact:
-    before/after Verilog hashes, changed spans, removed-bit or signal
-    inventory, arithmetic-circuit and matrix-unit identifiers, semantic
-    rewrite category, or linkage from removed bits to verification and PPA
+    synthesis, adoption, deployment impact, and now
+    `hardware_rewrite_provenance`. Ready hardware reports preserve the concrete
+    rewrite artifact metadata: before/after Verilog hashes, rewrite diff hash,
+    changed spans, removed-bit or signal inventory, arithmetic-circuit and
+    matrix-unit identifiers, semantic rewrite category, PPA linkage,
+    verification linkage, and artifact refs.
+  - Required result: when hardware fixtures emit real TPU arithmetic-circuit
+    rewrite artifacts, update ROADMAP, README, papers index, and code/paper
+    TODOs so roadmap text separates a reproduced bit-removal rewrite from
+    generic RTL verification, downstream synthesis, and hardware deployment
     evidence.
-  - Required result: when TPU arithmetic-circuit rewrite metadata and
-    validators land, update ROADMAP, README, papers index, and code/paper TODOs
-    so roadmap text separates a reproduced bit-removal rewrite from generic
-    RTL verification, downstream synthesis, and hardware deployment evidence.
 
 - [ ] Keep hardware roadmap wording scoped until Gemini-to-TPU contribution
       attribution exists.

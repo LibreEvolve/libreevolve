@@ -4127,18 +4127,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     area and power.
   - Current gap: paper-facing hardware TODOs require RTL source boundaries,
     synthesis/PPA provenance, equivalence/formal verification, TPU-designer
-    signoff, downstream synthesis confirmation, and adoption/integration
-    evidence. They do not require a paper report to preserve the concrete
-    rewrite artifact behind the claim: before/after Verilog hashes, changed
-    spans, eliminated bit or signal identities, arithmetic-circuit component
-    context, matrix-multiplication-unit context, or a semantic link from
-    removed bits to PPA and verification records.
-  - Required result: add paper/report evidence for the TPU arithmetic-circuit
-    rewrite: source and modified Verilog artifact hashes, exact diff or AST
-    span records, removed-bit inventory, component and matrix-unit identifiers,
-    rewrite-category labels, linkage from eliminated bits to functional
-    verification and PPA records, and README/ROADMAP wording that separates
-    concrete rewrite provenance from broader RTL/EDA validation evidence.
+    signoff, downstream synthesis confirmation, adoption/integration evidence,
+    and now `hardware_rewrite_provenance`. Ready hardware reports preserve the
+    concrete rewrite artifact metadata behind the claim: before/after Verilog
+    hashes, rewrite diff hash, changed spans, eliminated bit or signal
+    identities, arithmetic-circuit component context, matrix-multiplication-
+    unit context, semantic rewrite category, and links from removed bits to PPA
+    and verification records.
+  - Required result: add real paper/report artifacts for the TPU arithmetic-
+    circuit rewrite: source and modified Verilog files, exact diff or AST span
+    records, removed-bit inventory, component and matrix-unit identifiers,
+    rewrite-category labels, and linkage from eliminated bits to functional
+    verification and PPA outputs.
 
 - [ ] Record Gemini-to-TPU self-contribution evidence for hardware results.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.3 says the

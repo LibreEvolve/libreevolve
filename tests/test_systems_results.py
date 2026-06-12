@@ -349,6 +349,35 @@ def _valid_hardware_report() -> dict:
         ),
         "artifact_refs": ["systems/flashattention/reference.json"],
     }
+    report["hardware_rewrite_provenance"] = {
+        "source_verilog_sha256": "d" * 64,
+        "modified_verilog_sha256": "e" * 64,
+        "rewrite_diff_sha256": "f" * 64,
+        "component_id": "tpu_matrix_multiply_arithmetic_circuit",
+        "matrix_unit_context": "key arithmetic circuit in matrix multiplication unit",
+        "semantic_rewrite_category": "unnecessary_bit_removal",
+        "rewrite_rationale": "removed unused high-order bits while preserving function",
+        "ppa_linkage": "removed bits link to power and area report deltas",
+        "verification_linkage": "removed bits link to formal and reference checks",
+        "changed_spans": [
+            {
+                "file": "rtl/tpu_arithmetic.v",
+                "span_kind": "verilog_diff",
+                "start_line": 42,
+                "end_line": 47,
+            }
+        ],
+        "removed_bits": [
+            {
+                "signal_id": "partial_product_unused",
+                "bit_range": "[15:12]",
+                "removal_rationale": "bits do not affect arithmetic output",
+                "ppa_artifact_refs": ["systems/flashattention/optimization-metrics.json"],
+                "verification_artifact_refs": ["systems/flashattention/reference.json"],
+            }
+        ],
+        "artifact_refs": ["systems/flashattention/reference.json"],
+    }
     return report
 
 
@@ -849,6 +878,43 @@ def test_hardware_rtl_eda_provenance_rejects_bad_verification_context():
     assert "invalid_hardware_rtl_eda_artifact_ref" in codes
 
 
+def test_ready_hardware_report_requires_rewrite_provenance():
+    report = _valid_hardware_report()
+
+    report.pop("hardware_rewrite_provenance")
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "missing_hardware_rewrite_provenance" in codes
+    assert "invalid_ready_hardware_rewrite_provenance" in codes
+
+
+def test_hardware_rewrite_provenance_rejects_bad_bit_removal_context():
+    report = _valid_hardware_report()
+    rewrite = report["hardware_rewrite_provenance"]
+    rewrite["source_verilog_sha256"] = "bad"
+    rewrite["semantic_rewrite_category"] = "timing_retune"
+    rewrite["changed_spans"][0]["start_line"] = 50
+    rewrite["changed_spans"][0]["end_line"] = 40
+    rewrite["removed_bits"][0]["bit_range"] = ""
+    rewrite["removed_bits"][0]["ppa_artifact_refs"] = [
+        "systems/flashattention/missing.json"
+    ]
+
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "invalid_hardware_rewrite_source_verilog_sha256" in codes
+    assert "invalid_hardware_rewrite_category" in codes
+    assert "invalid_hardware_rewrite_changed_span_end" in codes
+    assert "invalid_hardware_rewrite_removed_bit_bit_range" in codes
+    assert "invalid_hardware_rewrite_removed_bit_ppa_ref" in codes
+
+
 def test_ready_scheduling_report_requires_ranking_only_safety():
     report = _valid_scheduling_report()
     report.pop("scheduling_safety")
@@ -1032,6 +1098,7 @@ def test_systems_result_summary_renders_gates_and_readiness():
     assert "| compiler_stack_provenance | absent |" in summary
     assert "| compiler_adoption_provenance | absent |" in summary
     assert "| hardware_rtl_eda_provenance | absent |" in summary
+    assert "| hardware_rewrite_provenance | absent |" in summary
     assert "optimization=passed" in summary
     assert "heldout=passed" in summary
     assert "reference_correctness=passed" in summary

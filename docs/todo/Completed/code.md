@@ -17481,3 +17481,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     downstream-synthesis, integration, and deployment-impact artifacts.
   - Verification: systems-result regression tests cover missing ready
     provenance and malformed RTL/EDA verification metadata.
+
+- [x] Require TPU rewrite provenance for ready hardware systems reports.
+  - Spec evidence: AlphaEvolve Section 3.3.3 reports a simple Verilog rewrite
+    in an already optimized TPU arithmetic circuit that removed unnecessary
+    bits while reducing area and power.
+  - Status: `validate_systems_result_report()` now requires
+    `hardware_rewrite_provenance` before accepting `alphaevolve_ready`
+    hardware reports. The record validates source/modified Verilog hashes,
+    rewrite diff hash, component and matrix-unit context, semantic rewrite
+    category, changed spans, removed-bit inventory, rewrite rationale, PPA
+    linkage, verification linkage, and artifact refs.
+  - Remaining gap: real hardware fixtures still need to emit before/after
+    Verilog files, exact diff or AST artifacts, removed-signal inventories,
+    component/matrix-unit records, and per-bit links to verification/PPA
+    outputs.
+  - Verification: systems-result regression tests cover missing ready
+    provenance and malformed TPU rewrite metadata.

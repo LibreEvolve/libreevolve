@@ -4484,6 +4484,11 @@ timing/power/area constraints, equivalence and formal-verification evidence,
 designer validation, downstream synthesis confirmation, RTL-flow placement,
 standard-language adoption rationale, integration target, deployment or
 time-to-market impact, hashes, confirmation flags, and artifact refs.
+Ready hardware reports also require `hardware_rewrite_provenance` records for
+the concrete TPU arithmetic-circuit rewrite: source/modified Verilog hashes,
+rewrite diff hash, component and matrix-unit context, semantic rewrite
+category, changed spans, removed-bit inventory, rewrite rationale, PPA linkage,
+verification linkage, and artifact refs.
 The claim-calibration schema still does not create real scheduling, kernel,
 hardware, or compiler fixtures, nor does it populate calibrated evidence for
 AlphaEvolve Section 3.3 magnitudes such as resource recovery percentages,
@@ -4498,7 +4503,10 @@ Hardware RTL/EDA provenance records the report boundary, but it does not
 generate real Verilog/RTL source artifacts, synthesis/PPA outputs,
 equivalence/formal-verification logs, designer signoff files, downstream
 synthesis reports, upcoming-chip integration records, or time-to-market
-evidence.
+evidence. Hardware rewrite provenance records the concrete bit-removal
+metadata, but it does not generate real before/after Verilog files, diff/AST
+artifacts, removed-signal inventories, or proof that eliminated bits caused the
+reported PPA deltas.
 `libreevolve.systems_result_artifact_inventory.v1` verifies the declared
 systems report artifacts against concrete files under an explicit artifact
 root, including safe relative paths, existence, SHA-256 hashes, and byte

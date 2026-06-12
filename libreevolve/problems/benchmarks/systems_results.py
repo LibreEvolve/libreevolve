@@ -54,6 +54,9 @@ COMPILER_STACK_DECISION_CATEGORIES = frozenset(
     {"memory_access_orchestration", "computation_scheduling"}
 )
 HARDWARE_HDL_LANGUAGES = frozenset({"verilog", "systemverilog"})
+HARDWARE_REWRITE_CATEGORIES = frozenset(
+    {"unnecessary_bit_removal", "logic_simplification"}
+)
 CLAIM_CALIBRATION_KINDS = frozenset(
     {
         "scheduling_resource_recovery",
@@ -174,6 +177,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
         data.get("alphaevolve_ready") is True,
         issues,
     )
+    hardware_rewrite_ready = _validate_hardware_rewrite_provenance(
+        data.get("hardware_rewrite_provenance"),
+        data,
+        domain,
+        data.get("alphaevolve_ready") is True,
+        issues,
+    )
     certification_ready = _validate_certification_reference(data.get("certification"), issues)
     if data.get("alphaevolve_ready") is True and not _gates_are_alphaevolve_ready(gate_statuses):
         issues.append(
@@ -246,6 +256,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
                 SystemsResultIssue(
                     "invalid_ready_hardware_rtl_eda_provenance",
                     "alphaevolve_ready hardware reports require RTL/EDA provenance",
+                )
+            )
+        if domain == "hardware" and not hardware_rewrite_ready:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_ready_hardware_rewrite_provenance",
+                    "alphaevolve_ready hardware reports require TPU rewrite provenance",
                 )
             )
         if certification_ready is False:
@@ -385,6 +402,7 @@ def render_systems_result_summary(report: dict[str, Any]) -> str:
     compiler_stack = report.get("compiler_stack_provenance")
     compiler_adoption = report.get("compiler_adoption_provenance")
     hardware_rtl = report.get("hardware_rtl_eda_provenance")
+    hardware_rewrite = report.get("hardware_rewrite_provenance")
     lines = [
         f"Systems result report: {report.get('benchmark_id', '<unknown>')}",
         "",
@@ -405,6 +423,7 @@ def render_systems_result_summary(report: dict[str, Any]) -> str:
         f"| compiler_stack_provenance | {'present' if isinstance(compiler_stack, dict) else 'absent'} |",
         f"| compiler_adoption_provenance | {'present' if isinstance(compiler_adoption, dict) else 'absent'} |",
         f"| hardware_rtl_eda_provenance | {'present' if isinstance(hardware_rtl, dict) else 'absent'} |",
+        f"| hardware_rewrite_provenance | {'present' if isinstance(hardware_rewrite, dict) else 'absent'} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -1899,6 +1918,194 @@ def _validate_hardware_rtl_eda_provenance(
         issues,
     )
     return len(issues) == before_issues
+
+
+def _validate_hardware_rewrite_provenance(
+    value: object,
+    report: dict[str, Any],
+    domain: str | None,
+    require_ready: bool,
+    issues: list[SystemsResultIssue],
+) -> bool:
+    if domain != "hardware":
+        if value is not None:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_hardware_rewrite_domain",
+                    "hardware_rewrite_provenance is only valid for hardware reports",
+                )
+            )
+        return domain != "hardware"
+    if value is None:
+        if require_ready:
+            issues.append(
+                SystemsResultIssue(
+                    "missing_hardware_rewrite_provenance",
+                    "alphaevolve_ready hardware reports require hardware_rewrite_provenance",
+                )
+            )
+        return False
+    if not isinstance(value, dict):
+        issues.append(
+            SystemsResultIssue(
+                "invalid_hardware_rewrite_provenance",
+                "hardware_rewrite_provenance must be an object",
+            )
+        )
+        return False
+    before_issues = len(issues)
+    artifact_paths = {
+        artifact.get("path")
+        for artifact in report.get("artifacts", [])
+        if isinstance(artifact, dict) and isinstance(artifact.get("path"), str)
+    }
+    for field in (
+        "source_verilog_sha256",
+        "modified_verilog_sha256",
+        "rewrite_diff_sha256",
+    ):
+        _validate_sha(
+            value.get(field),
+            f"invalid_hardware_rewrite_{field}",
+            f"hardware_rewrite_provenance.{field}",
+            issues,
+        )
+    for field in (
+        "component_id",
+        "matrix_unit_context",
+        "rewrite_rationale",
+        "ppa_linkage",
+        "verification_linkage",
+    ):
+        text = value.get(field)
+        if not isinstance(text, str) or not text.strip():
+            issues.append(
+                SystemsResultIssue(
+                    f"invalid_hardware_rewrite_{field}",
+                    f"hardware_rewrite_provenance.{field} must be non-empty text",
+                )
+            )
+    if value.get("semantic_rewrite_category") not in HARDWARE_REWRITE_CATEGORIES:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_hardware_rewrite_category",
+                "hardware_rewrite_provenance.semantic_rewrite_category is unsupported",
+            )
+        )
+    _validate_hardware_changed_spans(value.get("changed_spans"), issues)
+    _validate_hardware_removed_bits(value.get("removed_bits"), artifact_paths, issues)
+    _validate_application_reference_list(
+        value.get("artifact_refs"),
+        artifact_paths,
+        "artifact_refs",
+        "invalid_hardware_rewrite_artifact_ref",
+        "hardware_rewrite_provenance",
+        issues,
+    )
+    return len(issues) == before_issues
+
+
+def _validate_hardware_changed_spans(
+    spans: object,
+    issues: list[SystemsResultIssue],
+) -> None:
+    if not isinstance(spans, list) or not spans:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_hardware_rewrite_changed_spans",
+                "hardware_rewrite_provenance.changed_spans must be non-empty",
+            )
+        )
+        return
+    for index, span in enumerate(spans):
+        prefix = f"hardware_rewrite_provenance.changed_spans[{index}]"
+        if not isinstance(span, dict):
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_hardware_rewrite_changed_span",
+                    "hardware rewrite changed spans must be objects",
+                )
+            )
+            continue
+        for field in ("file", "span_kind"):
+            text = span.get(field)
+            if not isinstance(text, str) or not text.strip():
+                issues.append(
+                    SystemsResultIssue(
+                        f"invalid_hardware_rewrite_changed_span_{field}",
+                        f"{prefix}.{field} must be non-empty text",
+                    )
+                )
+        start_line = span.get("start_line")
+        end_line = span.get("end_line")
+        if not isinstance(start_line, int) or start_line <= 0:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_hardware_rewrite_changed_span_start",
+                    f"{prefix}.start_line must be a positive integer",
+                )
+            )
+        if (
+            not isinstance(end_line, int)
+            or end_line <= 0
+            or (isinstance(start_line, int) and end_line < start_line)
+        ):
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_hardware_rewrite_changed_span_end",
+                    f"{prefix}.end_line must be a positive integer no less than start_line",
+                )
+            )
+
+
+def _validate_hardware_removed_bits(
+    bits: object,
+    artifact_paths: set[str],
+    issues: list[SystemsResultIssue],
+) -> None:
+    if not isinstance(bits, list) or not bits:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_hardware_rewrite_removed_bits",
+                "hardware_rewrite_provenance.removed_bits must be non-empty",
+            )
+        )
+        return
+    for index, bit in enumerate(bits):
+        prefix = f"hardware_rewrite_provenance.removed_bits[{index}]"
+        if not isinstance(bit, dict):
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_hardware_rewrite_removed_bit",
+                    "hardware rewrite removed-bit records must be objects",
+                )
+            )
+            continue
+        for field in ("signal_id", "bit_range", "removal_rationale"):
+            text = bit.get(field)
+            if not isinstance(text, str) or not text.strip():
+                issues.append(
+                    SystemsResultIssue(
+                        f"invalid_hardware_rewrite_removed_bit_{field}",
+                        f"{prefix}.{field} must be non-empty text",
+                    )
+                )
+        _validate_application_reference_list(
+            bit.get("ppa_artifact_refs"),
+            artifact_paths,
+            "ppa_artifact_refs",
+            "invalid_hardware_rewrite_removed_bit_ppa_ref",
+            prefix,
+            issues,
+        )
+        _validate_application_reference_list(
+            bit.get("verification_artifact_refs"),
+            artifact_paths,
+            "verification_artifact_refs",
+            "invalid_hardware_rewrite_removed_bit_verification_ref",
+            prefix,
+            issues,
+        )
 
 
 def _validate_application_provenance(

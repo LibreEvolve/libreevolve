@@ -12086,3 +12086,20 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     integration, or deployment-impact artifacts.
   - Verification: systems-result regression tests validate missing and
     malformed RTL/EDA provenance cases.
+
+- [x] Record TPU rewrite provenance boundary.
+  - Spec evidence: AlphaEvolve Section 3.3.3 says the hardware result was a
+    simple Verilog rewrite of a key TPU arithmetic circuit in the matrix
+    multiplication unit that removed unnecessary bits while reducing area and
+    power.
+  - Status: paper-facing TODOs and validators now require
+    `hardware_rewrite_provenance` for ready hardware reports, including
+    source/modified Verilog hashes, rewrite diff hash, component and
+    matrix-unit context, semantic rewrite category, changed spans, removed-bit
+    inventory, rewrite rationale, PPA linkage, verification linkage, and
+    artifact refs.
+  - Remaining paper gap: this does not generate real before/after Verilog
+    files, exact diff/AST records, removed-bit inventories, component/matrix-
+    unit records, or per-bit verification/PPA output links.
+  - Verification: systems-result regression tests validate missing and
+    malformed TPU rewrite provenance cases.

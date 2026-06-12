@@ -9245,3 +9245,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     and deployment-impact artifacts remain open.
   - Verification: systems-result regression tests validate the implemented
     provenance requirement.
+
+- [x] Preserve TPU rewrite provenance boundary.
+  - Spec evidence: roadmap hardware-rewrite claims need to distinguish a
+    reproduced Verilog bit-removal rewrite from generic RTL/EDA validation and
+    downstream synthesis evidence.
+  - Status: ROADMAP and TODO wording now recognize that ready hardware systems
+    reports require `hardware_rewrite_provenance`, while real before/after
+    Verilog, diff/AST, removed-bit inventory, and per-bit verification/PPA
+    artifacts remain open.
+  - Verification: systems-result regression tests validate the implemented
+    provenance requirement.

@@ -1241,15 +1241,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     multiplication unit that removed unnecessary bits while reducing area and
     power.
   - Current evidence: README documents generic systems reports and the broader
-    RTL/EDA verification gap, but it does not require README wording to wait
+    RTL/EDA verification gap. It now documents `hardware_rewrite_provenance`
     for concrete rewrite provenance: before/after Verilog artifact hashes,
-    changed spans, removed-bit or signal inventory, component/matrix-unit
-    identifiers, rewrite-category labels, or links from the eliminated bits to
-    PPA and verification records.
-  - Required result: once TPU arithmetic-circuit rewrite metadata lands, update
-    README, ROADMAP, papers index, and matching TODOs so README distinguishes
-    a reproduced bit-removal rewrite artifact from generic hardware
-    correctness, PPA, designer-signoff, or downstream synthesis evidence.
+    rewrite diff hash, changed spans, removed-bit or signal inventory,
+    component/matrix-unit identifiers, rewrite-category labels, and links from
+    the eliminated bits to PPA and verification records.
+  - Required result: once hardware fixtures emit real TPU arithmetic-circuit
+    rewrite artifacts, update README, ROADMAP, papers index, and matching TODOs
+    so README distinguishes a reproduced bit-removal rewrite artifact from
+    generic hardware correctness, PPA, designer-signoff, or downstream
+    synthesis evidence.
 
 - [ ] Keep README Gemini-to-TPU contribution wording scoped until hardware
       attribution evidence exists.

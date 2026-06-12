@@ -1636,10 +1636,15 @@ Implemented:
   power, and area constraints, equivalence and formal-verification evidence,
   designer validation, downstream synthesis-tool confirmation, RTL-stage
   workflow placement, standard-language trust/adoption rationale,
-  integration target, and time-to-market impact. The contract still does not
-  emit real RTL source, synthesis/PPA, verification, designer-signoff,
-  downstream-synthesis, upcoming-chip integration, or deployment-impact
-  artifacts. For compiler-generated
+  integration target, and time-to-market impact. They also require
+  `hardware_rewrite_provenance` metadata for the concrete TPU arithmetic-
+  circuit rewrite: source/modified Verilog hashes, rewrite diff hash,
+  component and matrix-unit context, semantic rewrite category, changed spans,
+  removed-bit inventory, rewrite rationale, PPA linkage, verification linkage,
+  and artifact refs. The contract still does not emit real RTL source,
+  before/after Verilog files, diff/AST artifacts, removed-signal inventories,
+  synthesis/PPA, verification, designer-signoff, downstream-synthesis,
+  upcoming-chip integration, or deployment-impact artifacts. For compiler-generated
   IR tasks, ready compiler reports now require `compiler_ir_provenance` and
   `compiler_stack_provenance` metadata for IR origin/editability constraints,
   compiler-generated/already-optimized baseline provenance, reference and

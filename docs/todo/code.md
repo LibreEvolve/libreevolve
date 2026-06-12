@@ -3970,19 +3970,19 @@ Primary evidence:
     that the rewrite removed unnecessary bits while reducing area and power.
   - Current evidence: the RTL/EDA TODO above requires HDL boundaries,
     synthesis/PPA metrics, formal/equivalence verification, designer signoff,
-    downstream synthesis confirmation, and adoption evidence. It does not
-    require the exact candidate rewrite artifact or semantic evidence for the
-    paper's "removed unnecessary bits" claim: before/after Verilog excerpt
-    hashes, affected signal/register/bit-range identities, arithmetic-circuit
-    component id, matrix-multiplication-unit context, or a rewrite rationale
-    linking eliminated bits to the measured area/power objective.
-  - Required result: add hardware-domain report metadata and validators for
-    the TPU rewrite artifact: source and modified Verilog hashes, exact
-    changed-line or AST/diff spans, removed-bit/signal inventory, component and
-    matrix-unit context, semantic rewrite category, linkage from each removed
-    bit to verification/PPA records, and docs that distinguish the concrete
-    rewrite artifact from generic RTL verification and downstream synthesis
-    evidence.
+    downstream synthesis confirmation, and adoption evidence. Ready hardware
+    reports now also require `hardware_rewrite_provenance` for the exact
+    candidate rewrite artifact and semantic evidence behind the paper's
+    "removed unnecessary bits" claim: before/after Verilog hashes, rewrite
+    diff hash, affected changed spans, removed-bit/signal identities,
+    arithmetic-circuit component id, matrix-multiplication-unit context,
+    semantic rewrite category, rewrite rationale, PPA linkage, verification
+    linkage, and artifact refs.
+  - Required result: connect hardware fixtures to real source and modified
+    Verilog files, exact changed-line or AST/diff artifacts, removed-bit/signal
+    inventories, component and matrix-unit records, and per-bit links to
+    verification/PPA outputs before treating the concrete rewrite as reproduced
+    beyond metadata.
 
 - [ ] Add Gemini-to-TPU self-contribution provenance for hardware results.
   - Spec evidence: AlphaEvolve Section 3.3.3 says the TPU arithmetic-circuit

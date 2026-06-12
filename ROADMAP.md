@@ -1291,13 +1291,18 @@ is not yet an AlphaEvolve reproduction.
   provenance, timing/power/area constraints, equivalence/formal verification,
   designer validation, downstream synthesis confirmation, RTL-flow placement,
   standard-language adoption rationale, integration target, deployment impact,
-  hashes, confirmation flags, and artifact refs. Real scheduling resource
-  recovery, kernel/training-time speedup, RTL PPA, compiler speedup fixtures,
-  emitted compiler-stack artifacts, real compiler adoption/integration
-  artifacts, and real hardware RTL/EDA artifacts still need to populate those
-  records.
-- Populate real hardware-adoption evidence for TPU RTL-style reports before
-  claiming Section 3.3.3 parity: emitted RTL, synthesis/PPA, verification,
+  hashes, confirmation flags, and artifact refs. They also require
+  `hardware_rewrite_provenance` for the concrete TPU arithmetic-circuit
+  rewrite: before/after Verilog hashes, diff hash, component and matrix-unit
+  context, semantic rewrite category, changed spans, removed-bit inventory,
+  PPA linkage, verification linkage, and artifact refs. Real scheduling
+  resource recovery, kernel/training-time speedup, RTL PPA, compiler speedup
+  fixtures, emitted compiler-stack artifacts, real compiler adoption/
+  integration artifacts, real hardware RTL/EDA artifacts, and real hardware
+  rewrite artifacts still need to populate those records.
+- Populate real hardware-adoption and rewrite evidence for TPU RTL-style
+  reports before claiming Section 3.3.3 parity: emitted RTL, before/after
+  Verilog diffs, removed-bit inventories, synthesis/PPA, verification,
   designer-signoff, downstream-synthesis, upcoming-chip integration, and
   time-to-market artifacts in addition to report metadata.
 - Add self-improvement evidence boundaries before claiming AlphaEvolve-style

@@ -12067,3 +12067,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     workflow-handoff evidence.
   - Verification: systems-result regression tests validate missing and
     malformed compiler-adoption provenance cases.
+
+- [x] Record RTL/EDA hardware provenance boundary.
+  - Spec evidence: AlphaEvolve Section 3.3.3 reports Verilog RTL optimization
+    of a TPU arithmetic circuit with power/area objectives, robust
+    verification, TPU-designer validation, downstream synthesis confirmation,
+    early RTL-stage placement, standard-language trust, upcoming-chip
+    integration, and time-to-market impact.
+  - Status: paper-facing TODOs and validators now require
+    `hardware_rtl_eda_provenance` for ready hardware reports, including HDL
+    source boundaries, arithmetic-circuit identity, synthesis/PPA provenance,
+    timing/power/area constraints, equivalence/formal verification, designer
+    validation, downstream synthesis confirmation, RTL-flow placement,
+    adoption rationale, integration target, deployment/time-to-market impact,
+    hashes, confirmation flags, and artifact refs.
+  - Remaining paper gap: this does not generate real Verilog/RTL source,
+    synthesis/PPA, verification, designer-signoff, downstream-synthesis,
+    integration, or deployment-impact artifacts.
+  - Verification: systems-result regression tests validate missing and
+    malformed RTL/EDA provenance cases.

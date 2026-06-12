@@ -11701,3 +11701,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     state, rollout/revert state, workflow handoff boundary, and artifact refs.
   - Verification: systems-result regression tests validate the documented
     report contract.
+
+- [x] Document RTL/EDA provenance for ready hardware reports.
+  - Spec evidence: README hardware systems wording needed to distinguish
+    generic systems gates from AlphaEvolve-style TPU RTL evidence.
+  - Status: README and run-artifact docs now describe
+    `hardware_rtl_eda_provenance` for ready hardware reports, including HDL
+    source boundaries, arithmetic-circuit identity, synthesis/PPA provenance,
+    verification evidence, designer validation, downstream synthesis
+    confirmation, RTL-flow placement, adoption rationale, integration target,
+    deployment/time-to-market impact, hashes, flags, and artifact refs.
+  - Verification: systems-result regression tests validate the documented
+    report contract.

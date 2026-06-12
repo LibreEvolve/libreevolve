@@ -2052,18 +2052,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     simplify adoption, and potentially reduce time to market.
   - Current evidence: roadmap systems-result wording covers generic
     optimization, held-out, reference-correctness, deployment, and
-    domain-specific readiness gaps. It does not yet require hardware-specific
-    HDL source boundaries, synthesis/PPA metric provenance, equivalence/formal
-    verification artifacts, timing constraints, designer signoff, or synthesis
-    tool confirmation. It also does not require RTL-flow placement,
-    standard-language adoption evidence, upcoming-chip integration, or
+    domain-specific readiness gaps. ROADMAP now records that ready hardware
+    reports require `hardware_rtl_eda_provenance` for HDL source boundaries,
+    synthesis/PPA provenance, equivalence/formal verification, timing
+    constraints, designer validation, synthesis-tool confirmation, RTL-flow
+    placement, standard-language adoption evidence, integration target, and
     time-to-market impact.
-  - Required result: when hardware fixtures or systems report validators add
-    RTL/EDA source, synthesis, equivalence, PPA, timing, review,
-    workflow-placement, adoption, integration, and deployment-impact evidence,
-    update ROADMAP, README, papers index, and code/paper TODOs so roadmap text
-    distinguishes generic systems readiness from AlphaEvolve-style hardware
-    circuit optimization evidence.
+  - Required result: when hardware fixtures emit real RTL/EDA source,
+    synthesis, equivalence, PPA, timing, review, workflow-placement, adoption,
+    integration, and deployment-impact artifacts, update ROADMAP, README,
+    papers index, and code/paper TODOs so roadmap text distinguishes report
+    metadata from AlphaEvolve-style hardware circuit optimization evidence.
 
 - [ ] Keep hardware roadmap wording scoped until TPU bit-removal rewrite
       provenance exists.

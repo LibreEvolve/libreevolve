@@ -53,6 +53,7 @@ COMPILER_IR_ABSTRACTION_LEVELS = frozenset(
 COMPILER_STACK_DECISION_CATEGORIES = frozenset(
     {"memory_access_orchestration", "computation_scheduling"}
 )
+HARDWARE_HDL_LANGUAGES = frozenset({"verilog", "systemverilog"})
 CLAIM_CALIBRATION_KINDS = frozenset(
     {
         "scheduling_resource_recovery",
@@ -166,6 +167,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
         data.get("alphaevolve_ready") is True,
         issues,
     )
+    hardware_rtl_ready = _validate_hardware_rtl_eda_provenance(
+        data.get("hardware_rtl_eda_provenance"),
+        data,
+        domain,
+        data.get("alphaevolve_ready") is True,
+        issues,
+    )
     certification_ready = _validate_certification_reference(data.get("certification"), issues)
     if data.get("alphaevolve_ready") is True and not _gates_are_alphaevolve_ready(gate_statuses):
         issues.append(
@@ -231,6 +239,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
                 SystemsResultIssue(
                     "invalid_ready_compiler_adoption_provenance",
                     "alphaevolve_ready compiler reports require compiler adoption-path provenance",
+                )
+            )
+        if domain == "hardware" and not hardware_rtl_ready:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_ready_hardware_rtl_eda_provenance",
+                    "alphaevolve_ready hardware reports require RTL/EDA provenance",
                 )
             )
         if certification_ready is False:
@@ -369,6 +384,7 @@ def render_systems_result_summary(report: dict[str, Any]) -> str:
     compiler_ir = report.get("compiler_ir_provenance")
     compiler_stack = report.get("compiler_stack_provenance")
     compiler_adoption = report.get("compiler_adoption_provenance")
+    hardware_rtl = report.get("hardware_rtl_eda_provenance")
     lines = [
         f"Systems result report: {report.get('benchmark_id', '<unknown>')}",
         "",
@@ -388,6 +404,7 @@ def render_systems_result_summary(report: dict[str, Any]) -> str:
         f"| compiler_ir_provenance | {'present' if isinstance(compiler_ir, dict) else 'absent'} |",
         f"| compiler_stack_provenance | {'present' if isinstance(compiler_stack, dict) else 'absent'} |",
         f"| compiler_adoption_provenance | {'present' if isinstance(compiler_adoption, dict) else 'absent'} |",
+        f"| hardware_rtl_eda_provenance | {'present' if isinstance(hardware_rtl, dict) else 'absent'} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -1772,6 +1789,113 @@ def _validate_compiler_adoption_provenance(
         "artifact_refs",
         "invalid_compiler_adoption_artifact_ref",
         "compiler_adoption_provenance",
+        issues,
+    )
+    return len(issues) == before_issues
+
+
+def _validate_hardware_rtl_eda_provenance(
+    value: object,
+    report: dict[str, Any],
+    domain: str | None,
+    require_ready: bool,
+    issues: list[SystemsResultIssue],
+) -> bool:
+    if domain != "hardware":
+        if value is not None:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_hardware_rtl_eda_domain",
+                    "hardware_rtl_eda_provenance is only valid for hardware reports",
+                )
+            )
+        return domain != "hardware"
+    if value is None:
+        if require_ready:
+            issues.append(
+                SystemsResultIssue(
+                    "missing_hardware_rtl_eda_provenance",
+                    "alphaevolve_ready hardware reports require hardware_rtl_eda_provenance",
+                )
+            )
+        return False
+    if not isinstance(value, dict):
+        issues.append(
+            SystemsResultIssue(
+                "invalid_hardware_rtl_eda_provenance",
+                "hardware_rtl_eda_provenance must be an object",
+            )
+        )
+        return False
+    before_issues = len(issues)
+    artifact_paths = {
+        artifact.get("path")
+        for artifact in report.get("artifacts", [])
+        if isinstance(artifact, dict) and isinstance(artifact.get("path"), str)
+    }
+    if value.get("hdl_language") not in HARDWARE_HDL_LANGUAGES:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_hardware_hdl_language",
+                "hardware_rtl_eda_provenance.hdl_language is unsupported",
+            )
+        )
+    for field in (
+        "rtl_source_boundary",
+        "arithmetic_circuit_identity",
+        "synthesis_toolchain",
+        "ppa_metric_provenance",
+        "timing_constraint_provenance",
+        "power_area_constraint_provenance",
+        "equivalence_method",
+        "designer_review_scope",
+        "downstream_synthesis_tool",
+        "downstream_synthesis_confirmation",
+        "rtl_flow_placement",
+        "standard_language_adoption_rationale",
+        "integration_target",
+        "deployment_time_to_market_impact",
+    ):
+        text = value.get(field)
+        if not isinstance(text, str) or not text.strip():
+            issues.append(
+                SystemsResultIssue(
+                    f"invalid_hardware_rtl_eda_{field}",
+                    f"hardware_rtl_eda_provenance.{field} must be non-empty text",
+                )
+            )
+    for field in (
+        "source_rtl_sha256",
+        "synthesis_report_sha256",
+        "ppa_report_sha256",
+        "formal_verification_artifact_sha256",
+        "downstream_synthesis_report_sha256",
+    ):
+        _validate_sha(
+            value.get(field),
+            f"invalid_hardware_rtl_eda_{field}",
+            f"hardware_rtl_eda_provenance.{field}",
+            issues,
+        )
+    for flag in (
+        "equivalence_check_passed",
+        "formal_verification_passed",
+        "designer_validated",
+        "downstream_synthesis_confirmed",
+    ):
+        if value.get(flag) is not True:
+            issues.append(
+                SystemsResultIssue(
+                    f"invalid_hardware_rtl_eda_{flag}",
+                    f"hardware_rtl_eda_provenance.{flag} must be true",
+                )
+            )
+    _validate_application_reference_list(
+        value.get("artifact_refs"),
+        artifact_paths,
+        "artifact_refs",
+        "invalid_hardware_rtl_eda_artifact_ref",
+        "hardware_rtl_eda_provenance",
         issues,
     )
     return len(issues) == before_issues

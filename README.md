@@ -4477,6 +4477,13 @@ compiler workflow itself. The record captures adoption path, target
 compiler/version/pass, use-case scope, optimization artifact identity/hash,
 integration owner, reviewer signoff scope, adoption state, rollout/revert
 state, workflow handoff boundary, and artifact refs.
+Ready hardware reports also require `hardware_rtl_eda_provenance` records for
+AlphaEvolve-style TPU RTL evidence: HDL language and RTL source boundary,
+arithmetic-circuit identity, synthesis toolchain, PPA metric provenance,
+timing/power/area constraints, equivalence and formal-verification evidence,
+designer validation, downstream synthesis confirmation, RTL-flow placement,
+standard-language adoption rationale, integration target, deployment or
+time-to-market impact, hashes, confirmation flags, and artifact refs.
 The claim-calibration schema still does not create real scheduling, kernel,
 hardware, or compiler fixtures, nor does it populate calibrated evidence for
 AlphaEvolve Section 3.3 magnitudes such as resource recovery percentages,
@@ -4487,9 +4494,11 @@ or randomized reference checks. Compiler-adoption provenance records the
 integration-path boundary, but it does not implement or deploy a compiler
 patch, prove rollout/revert behavior, or make AlphaEvolve part of a compiler
 workflow.
-Hardware reports also do not yet identify RTL-stage workflow placement,
-standard-Verilog trust/adoption evidence, upcoming-chip integration, or
-time-to-market impact.
+Hardware RTL/EDA provenance records the report boundary, but it does not
+generate real Verilog/RTL source artifacts, synthesis/PPA outputs,
+equivalence/formal-verification logs, designer signoff files, downstream
+synthesis reports, upcoming-chip integration records, or time-to-market
+evidence.
 `libreevolve.systems_result_artifact_inventory.v1` verifies the declared
 systems report artifacts against concrete files under an explicit artifact
 root, including safe relative paths, existence, SHA-256 hashes, and byte

@@ -305,6 +305,53 @@ def _valid_compiler_report() -> dict:
     return report
 
 
+def _valid_hardware_report() -> dict:
+    report = _valid_report()
+    report["domain"] = "hardware"
+    for record in report["application_provenance"]["records"]:
+        record["domain"] = "hardware"
+    for record in report["claim_calibration"]["records"]:
+        record["domain"] = "hardware"
+        record["claim_kind"] = "hardware_power_area"
+        record["claim_scope"] = "local RTL PPA smoke claim"
+        record["unit"] = "power-area improvement"
+        record["denominator"] = "single arithmetic-circuit synthesis context"
+    report["hardware_rtl_eda_provenance"] = {
+        "hdl_language": "verilog",
+        "rtl_source_boundary": "already optimized TPU arithmetic-circuit RTL",
+        "source_rtl_sha256": "8" * 64,
+        "arithmetic_circuit_identity": "matrix multiplication unit arithmetic circuit",
+        "synthesis_toolchain": "bounded synthesis and PPA flow",
+        "synthesis_report_sha256": "9" * 64,
+        "ppa_metric_provenance": "power, area, and timing report provenance",
+        "ppa_report_sha256": "a" * 64,
+        "timing_constraint_provenance": "timing constraints reviewed for target TPU",
+        "power_area_constraint_provenance": "power and area constraints reviewed",
+        "equivalence_method": "formal equivalence and robust RTL simulation",
+        "formal_verification_artifact_sha256": "b" * 64,
+        "equivalence_check_passed": True,
+        "formal_verification_passed": True,
+        "designer_review_scope": "TPU designer reviewed functionality and PPA scope",
+        "designer_validated": True,
+        "downstream_synthesis_tool": "independent downstream synthesis flow",
+        "downstream_synthesis_confirmation": (
+            "downstream synthesis independently found the same simplification"
+        ),
+        "downstream_synthesis_report_sha256": "c" * 64,
+        "downstream_synthesis_confirmed": True,
+        "rtl_flow_placement": "early RTL-stage contribution before synthesis",
+        "standard_language_adoption_rationale": (
+            "Verilog communication supports hardware-engineer trust"
+        ),
+        "integration_target": "upcoming TPU arithmetic circuit",
+        "deployment_time_to_market_impact": (
+            "records potential time-to-market impact separately from local metrics"
+        ),
+        "artifact_refs": ["systems/flashattention/reference.json"],
+    }
+    return report
+
+
 def _write_systems_files(report: dict, root) -> None:
     for artifact in report["artifacts"]:
         path = root / artifact["path"]
@@ -763,6 +810,45 @@ def test_compiler_adoption_provenance_rejects_bad_integration_path():
     assert "invalid_compiler_adoption_artifact_ref" in codes
 
 
+def test_ready_hardware_report_requires_rtl_eda_provenance():
+    report = _valid_hardware_report()
+
+    validation = validate_systems_result_report(report)
+
+    assert validation.ok is True
+    assert validation.alphaevolve_ready is True
+
+    report.pop("hardware_rtl_eda_provenance")
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "missing_hardware_rtl_eda_provenance" in codes
+    assert "invalid_ready_hardware_rtl_eda_provenance" in codes
+
+
+def test_hardware_rtl_eda_provenance_rejects_bad_verification_context():
+    report = _valid_hardware_report()
+    rtl = report["hardware_rtl_eda_provenance"]
+    rtl["hdl_language"] = "vhdl"
+    rtl["synthesis_report_sha256"] = "bad"
+    rtl["designer_validated"] = False
+    rtl["downstream_synthesis_confirmed"] = False
+    rtl["artifact_refs"] = ["systems/flashattention/missing.json"]
+
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "invalid_hardware_hdl_language" in codes
+    assert "invalid_hardware_rtl_eda_synthesis_report_sha256" in codes
+    assert "invalid_hardware_rtl_eda_designer_validated" in codes
+    assert "invalid_hardware_rtl_eda_downstream_synthesis_confirmed" in codes
+    assert "invalid_hardware_rtl_eda_artifact_ref" in codes
+
+
 def test_ready_scheduling_report_requires_ranking_only_safety():
     report = _valid_scheduling_report()
     report.pop("scheduling_safety")
@@ -945,6 +1031,7 @@ def test_systems_result_summary_renders_gates_and_readiness():
     assert "| compiler_ir_provenance | absent |" in summary
     assert "| compiler_stack_provenance | absent |" in summary
     assert "| compiler_adoption_provenance | absent |" in summary
+    assert "| hardware_rtl_eda_provenance | absent |" in summary
     assert "optimization=passed" in summary
     assert "heldout=passed" in summary
     assert "reference_correctness=passed" in summary

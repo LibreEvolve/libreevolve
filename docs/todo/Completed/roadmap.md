@@ -9233,3 +9233,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     open.
   - Verification: systems-result regression tests validate the implemented
     provenance requirement.
+
+- [x] Preserve RTL/EDA hardware provenance boundary.
+  - Spec evidence: roadmap hardware claims need to distinguish generic systems
+    readiness from AlphaEvolve-style Verilog RTL optimization, PPA,
+    verification, designer validation, downstream synthesis, adoption, and
+    deployment-impact evidence.
+  - Status: ROADMAP and TODO wording now recognize that ready hardware systems
+    reports require `hardware_rtl_eda_provenance`, while real RTL, synthesis,
+    PPA, verification, designer-signoff, downstream-synthesis, integration,
+    and deployment-impact artifacts remain open.
+  - Verification: systems-result regression tests validate the implemented
+    provenance requirement.

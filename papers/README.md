@@ -1630,13 +1630,16 @@ Implemented:
   require Pallas/Gemini-style input-shape corpus provenance, deterministic
   train/eval split records, real TPU runtime measurement artifacts, baseline
   tiling-heuristic identity, or unchanged-operation correctness-by-construction
-  evidence. For hardware, it
-  does not yet require RTL/EDA evidence such as
-  Verilog source boundaries, synthesis/PPA metric provenance, equivalence or
-  formal verification artifacts, timing constraints, designer signoff, or
-  downstream synthesis-tool confirmation, nor hardware adoption evidence such
-  as RTL-stage workflow placement, standard-Verilog trust/adoption rationale,
-  upcoming-chip integration, or time-to-market impact. For compiler-generated
+  evidence. For hardware, ready hardware reports now require
+  `hardware_rtl_eda_provenance` metadata for Verilog/SystemVerilog source
+  boundaries, arithmetic-circuit identity, synthesis/PPA provenance, timing,
+  power, and area constraints, equivalence and formal-verification evidence,
+  designer validation, downstream synthesis-tool confirmation, RTL-stage
+  workflow placement, standard-language trust/adoption rationale,
+  integration target, and time-to-market impact. The contract still does not
+  emit real RTL source, synthesis/PPA, verification, designer-signoff,
+  downstream-synthesis, upcoming-chip integration, or deployment-impact
+  artifacts. For compiler-generated
   IR tasks, ready compiler reports now require `compiler_ir_provenance` and
   `compiler_stack_provenance` metadata for IR origin/editability constraints,
   compiler-generated/already-optimized baseline provenance, reference and

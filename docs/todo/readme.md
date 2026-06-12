@@ -1221,16 +1221,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     Verilog communication fostering trust, simplifying adoption, and
     potentially reducing time to market.
   - Current evidence: README documents systems result reports and artifact
-    inventories as generic readiness/report contracts. It does not yet
-    document hardware-specific evidence for HDL source boundaries,
+    inventories as generic readiness/report contracts. It now documents
+    hardware-specific `hardware_rtl_eda_provenance` for HDL source boundaries,
     synthesis/PPA metrics, equivalence or formal verification, timing/power/
-    area constraints, designer signoff, downstream synthesis confirmation,
+    area constraints, designer validation, downstream synthesis confirmation,
     RTL-stage placement, standard-language adoption/trust evidence,
-    upcoming-chip integration, or time-to-market impact.
-  - Required result: when RTL/EDA report metadata and validators land, update
-    README, ROADMAP, papers index, and matching TODOs so README does not imply
-    generic systems report readiness proves AlphaEvolve-style TPU-circuit
-    optimization, adoption, or deployment evidence.
+    integration target, and time-to-market impact.
+  - Required result: when RTL/EDA fixtures emit real source, synthesis/PPA,
+    verification, designer-signoff, downstream-synthesis, integration, and
+    deployment-impact artifacts, update README, ROADMAP, papers index, and
+    matching TODOs so README does not imply report metadata proves
+    AlphaEvolve-style TPU-circuit optimization, adoption, or deployment
+    evidence.
 
 - [ ] Keep README hardware-rewrite wording scoped until TPU bit-removal
       artifact evidence exists.

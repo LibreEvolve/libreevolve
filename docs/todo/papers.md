@@ -4103,19 +4103,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     TPU, communicated changes directly in Verilog, fostered trust and simpler
     adoption, and could reduce time to market.
   - Current gap: current systems report contracts do not distinguish generic
-    hardware metrics from RTL/EDA evidence. They do not require HDL language
-    identity, synthesis or place-and-route tool provenance, PPA metric units,
-    equivalence/formal verification artifacts, timing constraints, designer
-    signoff, downstream synthesis confirmation, RTL-stage versus synthesis
-    workflow placement, standard-language adoption evidence, upcoming-TPU
-    integration, or time-to-market impact.
-  - Required result: add hardware-domain paper/report fields for Verilog/RTL
-    source boundaries, synthesis/PPA provenance, functional equivalence or
-    formal verification evidence, timing/power/area constraints, designer or
+    hardware metrics from RTL/EDA evidence. Ready hardware reports now require
+    `hardware_rtl_eda_provenance` with HDL language identity, RTL source
+    boundary, synthesis or place-and-route tool provenance, PPA metric
+    provenance, equivalence/formal verification evidence, timing/power/area
+    constraints, designer validation, downstream synthesis confirmation,
+    RTL-stage versus synthesis workflow placement, standard-language adoption
+    evidence, integration target, time-to-market impact, hashes,
+    confirmation flags, and artifact refs.
+  - Required result: add real hardware-domain paper/report artifacts for
+    Verilog/RTL source, synthesis/PPA outputs, functional equivalence or
+    formal verification logs, timing/power/area constraints, designer or
     independent review signoff, synthesis-tool confirmation, RTL-flow
     contribution timing, hardware-engineer trust/adoption rationale,
     integration target, and deployment/time-to-market evidence before making
-    AlphaEvolve-comparable TPU-circuit optimization claims.
+    AlphaEvolve-comparable TPU-circuit optimization claims beyond metadata.
 
 - [ ] Record TPU arithmetic-circuit rewrite artifact evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.3 says

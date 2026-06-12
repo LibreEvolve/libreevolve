@@ -1286,14 +1286,20 @@ is not yet an AlphaEvolve reproduction.
   bounded-use-case adoption versus AlphaEvolve-in-the-compiler-workflow
   integration, with target compiler/pass, optimization artifact hash,
   integration owner, reviewer scope, rollout/revert state, workflow handoff,
-  and artifact refs. Real scheduling resource recovery, kernel/training-time
-  speedup, RTL PPA, compiler speedup fixtures, emitted compiler-stack
-  artifacts, and real compiler adoption/integration artifacts still need to
-  populate those records.
-- Add hardware-adoption evidence for TPU RTL-style reports before claiming
-  Section 3.3.3 parity: RTL-stage workflow placement, standard-Verilog
-  trust/adoption rationale, upcoming-chip integration, and time-to-market
-  impact in addition to PPA and verification artifacts.
+  and artifact refs. Ready hardware reports now require
+  `hardware_rtl_eda_provenance` with HDL/RTL source boundaries, synthesis/PPA
+  provenance, timing/power/area constraints, equivalence/formal verification,
+  designer validation, downstream synthesis confirmation, RTL-flow placement,
+  standard-language adoption rationale, integration target, deployment impact,
+  hashes, confirmation flags, and artifact refs. Real scheduling resource
+  recovery, kernel/training-time speedup, RTL PPA, compiler speedup fixtures,
+  emitted compiler-stack artifacts, real compiler adoption/integration
+  artifacts, and real hardware RTL/EDA artifacts still need to populate those
+  records.
+- Populate real hardware-adoption evidence for TPU RTL-style reports before
+  claiming Section 3.3.3 parity: emitted RTL, synthesis/PPA, verification,
+  designer-signoff, downstream-synthesis, upcoming-chip integration, and
+  time-to-market artifacts in addition to report metadata.
 - Add self-improvement evidence boundaries before claiming AlphaEvolve-style
   infrastructure or base-model uplift: component identity, before/after
   measurements, deployment/adoption status, rollback/safety review, provenance

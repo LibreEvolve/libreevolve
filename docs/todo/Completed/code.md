@@ -17461,3 +17461,23 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     rollout/revert logs, and workflow handoff evidence.
   - Verification: systems-result regression tests cover missing ready
     provenance and malformed compiler-adoption metadata.
+
+- [x] Require RTL/EDA provenance for ready hardware systems reports.
+  - Spec evidence: AlphaEvolve Section 3.3.3 optimizes Verilog RTL for a TPU
+    arithmetic circuit, reduces power and area while preserving functionality,
+    relies on robust verification, TPU-designer validation, downstream
+    synthesis confirmation, early RTL-stage placement, standard-language trust,
+    upcoming-chip integration, and time-to-market impact.
+  - Status: `validate_systems_result_report()` now requires
+    `hardware_rtl_eda_provenance` before accepting `alphaevolve_ready`
+    hardware reports. The record validates HDL language, RTL source boundary,
+    arithmetic-circuit identity, synthesis/PPA provenance, timing/power/area
+    constraints, equivalence/formal verification, designer validation,
+    downstream synthesis confirmation, RTL-flow placement, adoption rationale,
+    integration target, deployment/time-to-market impact, hashes,
+    confirmation flags, and artifact refs.
+  - Remaining gap: real hardware fixtures still need to emit Verilog/RTL
+    source, synthesis/PPA, verification, designer-signoff,
+    downstream-synthesis, integration, and deployment-impact artifacts.
+  - Verification: systems-result regression tests cover missing ready
+    provenance and malformed RTL/EDA verification metadata.

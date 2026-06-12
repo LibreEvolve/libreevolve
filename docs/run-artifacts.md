@@ -2319,6 +2319,16 @@ use-case scope, optimization artifact identity/hash, integration owner,
 reviewer signoff, adoption and rollout/revert state, workflow handoff boundary,
 and artifact refs. This records the integration-path boundary; it does not
 implement, deploy, or prove the compiler integration.
+Ready hardware reports require `hardware_rtl_eda_provenance`, covering
+AlphaEvolve-style TPU RTL evidence: HDL language and RTL source boundary,
+arithmetic-circuit identity, synthesis toolchain, PPA metric provenance,
+timing/power/area constraints, equivalence and formal-verification evidence,
+designer validation, downstream synthesis confirmation, RTL-flow placement,
+standard-language adoption rationale, integration target, deployment or
+time-to-market impact, hashes, confirmation flags, and artifact refs. This is
+report metadata; it does not create real Verilog, synthesis, PPA, verification,
+designer-signoff, downstream-synthesis, integration, or deployment-impact
+artifacts.
 `libreevolve.systems_evidence_bundle.v1` is the portable wrapper for those
 records: it embeds the systems report and artifact inventory, records stable
 SHA-256 hashes for each embedded object plus the inventory records hash, checks

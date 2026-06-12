@@ -3949,19 +3949,19 @@ Primary evidence:
     potentially reducing time to market.
   - Current evidence: `libreevolve.systems_result_report.v1` can represent a
     generic `hardware` domain with optimization, held-out, and
-    reference-correctness gates, but it has no RTL/EDA-specific fields for
-    source HDL language, synthesis toolchain/provenance, power/area/timing
-    metrics, equivalence or formal verification artifacts, designer-review
-    signoff, downstream synthesis confirmation, RTL-stage contribution timing,
-    standard-language trust/adoption evidence, upcoming-chip integration, or
-    time-to-market impact.
-  - Required result: add hardware-domain report metadata and validators for
-    Verilog/RTL source boundaries, synthesis/PPA metric provenance,
-    equivalence/formal verification evidence, timing/power/area constraints,
-    designer or independent review signoff, downstream synthesis-tool
-    confirmation, RTL-flow placement, adoption/trust rationale, integration
-    target, and deployment/time-to-market evidence before treating
-    hardware-circuit results as AlphaEvolve-ready.
+    reference-correctness gates. Ready hardware reports now also require
+    `hardware_rtl_eda_provenance` with HDL language, RTL source boundary,
+    arithmetic-circuit identity, synthesis toolchain/provenance, PPA metric
+    provenance, timing/power/area constraints, equivalence and formal
+    verification evidence, designer validation, downstream synthesis
+    confirmation, RTL-stage contribution timing, standard-language
+    trust/adoption rationale, integration target, deployment/time-to-market
+    impact, hashes, confirmation flags, and artifact refs.
+  - Required result: connect hardware fixtures to real Verilog/RTL source,
+    synthesis/PPA, equivalence/formal verification, timing/power/area,
+    designer-signoff, downstream synthesis, integration-target, and
+    deployment/time-to-market artifacts before treating hardware-circuit
+    results as AlphaEvolve-ready beyond metadata.
 
 - [ ] Add TPU arithmetic-circuit rewrite artifact provenance.
   - Spec evidence: AlphaEvolve Section 3.3.3 says the hardware result was a

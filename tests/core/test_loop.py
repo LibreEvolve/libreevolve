@@ -13738,6 +13738,23 @@ def test_loop_records_prompt_visible_metric_diverse_inspiration_evidence():
         "scalar_and_single_metric_comparison": False,
         "alphaevolve_section_2_4_claim_ready": False,
     }
+    assert diversity["benchmark_comparison_readiness"] == {
+        "schema": "libreevolve.metric_diverse_benchmark_comparison_readiness.v1",
+        "prompt_visible_metric_diversity_evidence": True,
+        "benchmark_prompt_policy_enforced": False,
+        "cross_run_metric_diverse_fixture": False,
+        "scalar_only_baseline_comparison": False,
+        "single_metric_target_baseline_comparison": False,
+        "equal_budget_comparison_report": False,
+        "alphaevolve_section_2_4_claim_ready": False,
+        "remaining_gap": [
+            "benchmark_prompt_policy_enforced",
+            "cross_run_metric_diverse_fixture",
+            "scalar_only_baseline_comparison",
+            "single_metric_target_baseline_comparison",
+            "equal_budget_comparison_report",
+        ],
+    }
     assert diversity["records"][0]["metric_niche"] == "score"
     assert diversity["records"][0]["metric_niche_source"] == (
         "selection_metadata.target_metrics"
@@ -13760,6 +13777,21 @@ def test_loop_records_prompt_visible_metric_diverse_inspiration_evidence():
         "benchmark_required_metric_diverse_prompt_policy"
     ] is False
     assert report["benchmark_policy"]["alphaevolve_section_2_4_claim_ready"] is False
+    assert report["benchmark_comparison_readiness"][
+        "prompt_visible_metric_diversity_evidence"
+    ] is True
+    assert report["benchmark_comparison_readiness"][
+        "benchmark_prompt_policy_enforced"
+    ] is False
+    assert report["benchmark_comparison_readiness"][
+        "scalar_only_baseline_comparison"
+    ] is False
+    assert report["benchmark_comparison_readiness"][
+        "single_metric_target_baseline_comparison"
+    ] is False
+    assert report["benchmark_comparison_readiness"][
+        "equal_budget_comparison_report"
+    ] is False
     assert "scalar_and_single_metric_comparison" in (
         report["benchmark_policy"]["remaining_required_evidence"]
     )
@@ -13769,12 +13801,14 @@ def test_loop_records_prompt_visible_metric_diverse_inspiration_evidence():
     edited = copy.deepcopy(report)
     edited["claim_ready"] = True
     edited["benchmark_policy"]["alphaevolve_section_2_4_claim_ready"] = True
+    edited["benchmark_comparison_readiness"]["equal_budget_comparison_report"] = True
     edited["claim_readiness"]["benchmark_required_metric_diverse_prompt_policy"] = True
     validation = validate_metric_diverse_inspiration_report(edited)
     assert validation["ok"] is False
     assert {
         "invalid_claim_ready",
         "invalid_benchmark_policy",
+        "invalid_benchmark_comparison_readiness",
         "benchmark_claim_overclaim",
     }.issubset({issue["code"] for issue in validation["issues"]})
 

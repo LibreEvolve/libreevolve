@@ -11906,3 +11906,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     primary replacement and durable database surfaces false.
   - Verification: MAP-Elites policy/restore tests validate forged readiness
     overclaim rejection.
+
+- [x] Document metric-diverse benchmark-comparison readiness guards.
+  - Spec evidence: README multiple-score prompt wording needed to distinguish
+    current-run prompt-visible metric diversity from benchmark-enforced
+    multi-score conditioning and equal-budget comparisons.
+  - Status: README and TODO wording now state that
+    `libreevolve.metric_diverse_benchmark_comparison_readiness.v1` keeps
+    benchmark prompt-policy enforcement, cross-run fixtures, scalar-only
+    baselines, single-metric baselines, and equal-budget comparison reports
+    false.
+  - Verification: metric-diverse runtime tests validate forged readiness
+    overclaim rejection.

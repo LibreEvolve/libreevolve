@@ -117,10 +117,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `metadata.inspiration_selection.metric_diversity`, and
     `runtime.history.metric_diverse_inspiration_report`, whose
     `libreevolve.metric_diverse_prompt_benchmark_boundary.v1`
-    `benchmark_policy` keeps AlphaEvolve Section 2.4 readiness false. It
-    should still not imply those current-run evidence surfaces enforce
-    benchmark-wide metric-diverse prompt conditioning or compare against scalar
-    and one-at-a-time metric-targeted sampling.
+    `benchmark_policy` keeps AlphaEvolve Section 2.4 readiness false. README
+    can also mention
+    `libreevolve.metric_diverse_benchmark_comparison_readiness.v1`, which
+    keeps benchmark prompt-policy enforcement, cross-run fixtures, scalar-only
+    baselines, single-metric baselines, and equal-budget comparison reports
+    false. It should still not imply those current-run evidence surfaces
+    enforce benchmark-wide metric-diverse prompt conditioning or compare
+    against scalar and one-at-a-time metric-targeted sampling.
   - Required result: when benchmark-required metric-diverse prompt policies and
     fixtures land, update README, ROADMAP, papers index, and code/paper TODOs
     together so README distinguishes current-run prompt-visible evidence from

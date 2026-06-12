@@ -721,10 +721,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `metadata.inspiration_selection.metric_diversity`, and
     `runtime.history.metric_diverse_inspiration_report`, whose
     `libreevolve.metric_diverse_prompt_benchmark_boundary.v1`
-    `benchmark_policy` keeps AlphaEvolve Section 2.4 readiness false. They
-    still do not require benchmark policies or fixtures proving multi-score
-    runs consistently use and compare prompt slates with different metric
-    niches.
+    `benchmark_policy` keeps AlphaEvolve Section 2.4 readiness false. The
+    report also carries
+    `libreevolve.metric_diverse_benchmark_comparison_readiness.v1`, keeping
+    benchmark prompt-policy enforcement, cross-run fixtures, scalar-only
+    baselines, single-metric baselines, and equal-budget comparison reports
+    false. These current surfaces still do not require benchmark policies or
+    fixtures proving multi-score runs consistently use and compare prompt
+    slates with different metric niches.
   - Required result: when benchmark-required metric-diverse prompt policies and
     fixtures land, update ROADMAP, README, papers index, and code/paper TODOs
     together so roadmap text distinguishes current-run evidence from

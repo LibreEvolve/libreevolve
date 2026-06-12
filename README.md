@@ -1618,7 +1618,10 @@ those records at `runtime.history.metric_diverse_inspiration_report` with schema
 `benchmark_policy` boundary with `alphaevolve_section_2_4_claim_ready: false`,
 keeping benchmark-required metric-diverse prompt policies, cross-run fixtures,
 and scalar/single-metric comparison evidence separate from current-run
-prompt-visible telemetry.
+prompt-visible telemetry. The report also carries
+`libreevolve.metric_diverse_benchmark_comparison_readiness.v1`, keeping
+benchmark prompt-policy enforcement, cross-run fixtures, scalar-only
+baselines, single-metric baselines, and equal-budget comparison reports false.
 Inspiration `mixed` is a deterministic priority cascade:
 metric leaders, novelty-ranked candidates, selection-score leaders, then random
 fill for any remaining slots.

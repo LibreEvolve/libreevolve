@@ -1528,7 +1528,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve.metric_diverse_prompt_benchmark_boundary.v1`
     `benchmark_policy` keeps benchmark-required policy, cross-run fixture,
     scalar/single-metric comparison, and AlphaEvolve Section 2.4 readiness
-    false.
+    false. The report also carries
+    `libreevolve.metric_diverse_benchmark_comparison_readiness.v1`, keeping
+    benchmark prompt-policy enforcement, cross-run fixtures, scalar-only
+    baselines, single-metric baselines, and equal-budget comparison reports
+    false with overclaim validation.
   - Current gap: the paper/status surfaces still do not require benchmark runs
     to use metric-diverse prompt slates, compare those runs with scalar archive
     sampling, or provide cross-run fixtures for different definitions of

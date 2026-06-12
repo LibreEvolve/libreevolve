@@ -12335,3 +12335,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     durable persisted metric-targeted resurfacing remain open.
   - Verification: MAP-Elites tests validate emitted readiness and forged
     readiness overclaim rejection.
+
+- [x] Record metric-diverse benchmark-comparison readiness guards.
+  - Spec evidence: paper-facing multiple-score prompt claims need evidence
+    that current prompt-visible diversity is not benchmark-enforced
+    multi-score conditioning or an equal-budget comparison result.
+  - Status: paper-facing TODOs and the papers overview now record
+    `libreevolve.metric_diverse_benchmark_comparison_readiness.v1` with false
+    readiness for benchmark prompt-policy enforcement, cross-run fixtures,
+    scalar-only baselines, single-metric baselines, and equal-budget
+    comparison reports.
+  - Remaining paper gap: benchmark-required policies/fixtures and
+    scalar/single-metric/equal-budget comparison reports remain open.
+  - Verification: metric-diverse runtime tests validate forged readiness
+    overclaim rejection.

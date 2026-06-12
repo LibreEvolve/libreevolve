@@ -17745,3 +17745,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     persisted metric-targeted resurfacing remain open.
   - Verification: MAP-Elites policy and restore tests cover emitted readiness,
     legacy normalization, and forged overclaim rejection.
+
+- [x] Guard metric-diverse benchmark-comparison readiness overclaims.
+  - Spec evidence: AlphaEvolve Section 2.4 says multiple-score examples in
+    prompts can improve search, but benchmark claims need enforced policies
+    and scalar/single-metric/equal-budget comparisons.
+  - Status: `runtime.history.metric_diverse_inspiration_report` now carries
+    `libreevolve.metric_diverse_benchmark_comparison_readiness.v1` with false
+    readiness for benchmark prompt-policy enforcement, cross-run fixtures,
+    scalar-only baselines, single-metric baselines, and equal-budget
+    comparison reports; validation rejects forged true values.
+  - Remaining gap: benchmark-required policies/fixtures and comparison reports
+    remain open.
+  - Verification: metric-diverse runtime tests cover emitted readiness and
+    forged equal-budget overclaim rejection.

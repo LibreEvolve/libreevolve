@@ -18194,6 +18194,9 @@ def _metric_diverse_inspiration_record(
             "scalar_and_single_metric_comparison": False,
             "alphaevolve_section_2_4_claim_ready": False,
         },
+        "benchmark_comparison_readiness": (
+            _metric_diverse_benchmark_comparison_readiness(metric_diverse)
+        ),
         "claim_ready": False,
         "claim_readiness": {
             "prompt_visible_metric_diversity_evidence": metric_diverse,
@@ -18385,6 +18388,14 @@ def _metric_diverse_inspiration_report(programs: list[Program]) -> dict:
                 "benchmark_policy": copy.deepcopy(diversity.get("benchmark_policy"))
                 if isinstance(diversity.get("benchmark_policy"), Mapping)
                 else {},
+                "benchmark_comparison_readiness": copy.deepcopy(
+                    diversity.get("benchmark_comparison_readiness")
+                )
+                if isinstance(
+                    diversity.get("benchmark_comparison_readiness"),
+                    Mapping,
+                )
+                else {},
                 "records": copy.deepcopy(diversity.get("records", []))
                 if isinstance(diversity.get("records"), list)
                 else [],
@@ -18433,6 +18444,9 @@ def _metric_diverse_inspiration_report(programs: list[Program]) -> dict:
                 "scalar_and_single_metric_comparison",
             ],
         },
+        "benchmark_comparison_readiness": (
+            _metric_diverse_benchmark_comparison_readiness(metric_diverse_count > 0)
+        ),
         "claim_ready": False,
         "claim_readiness": {
             "prompt_visible_metric_diversity_evidence": metric_diverse_count > 0,
@@ -18448,6 +18462,33 @@ def _metric_diverse_inspiration_report(programs: list[Program]) -> dict:
     }
     report["validation"] = validate_metric_diverse_inspiration_report(report)
     return report
+
+
+def _metric_diverse_benchmark_comparison_readiness(
+    prompt_visible_metric_diversity_evidence: bool,
+) -> dict:
+    remaining_gap = [
+        "benchmark_prompt_policy_enforced",
+        "cross_run_metric_diverse_fixture",
+        "scalar_only_baseline_comparison",
+        "single_metric_target_baseline_comparison",
+        "equal_budget_comparison_report",
+    ]
+    if not prompt_visible_metric_diversity_evidence:
+        remaining_gap.insert(0, "prompt_visible_metric_diversity_evidence")
+    return {
+        "schema": "libreevolve.metric_diverse_benchmark_comparison_readiness.v1",
+        "prompt_visible_metric_diversity_evidence": (
+            bool(prompt_visible_metric_diversity_evidence)
+        ),
+        "benchmark_prompt_policy_enforced": False,
+        "cross_run_metric_diverse_fixture": False,
+        "scalar_only_baseline_comparison": False,
+        "single_metric_target_baseline_comparison": False,
+        "equal_budget_comparison_report": False,
+        "alphaevolve_section_2_4_claim_ready": False,
+        "remaining_gap": remaining_gap,
+    }
 
 
 def validate_metric_diverse_inspiration_report(report: object) -> dict:
@@ -18588,6 +18629,19 @@ def validate_metric_diverse_inspiration_report(report: object) -> dict:
                     ),
                 }
             )
+        record_readiness = record.get("benchmark_comparison_readiness")
+        if isinstance(record_readiness, Mapping) and not (
+            _is_metric_diverse_benchmark_comparison_readiness(record_readiness)
+        ):
+            issues.append(
+                {
+                    "code": "invalid_record_benchmark_comparison_readiness",
+                    "message": (
+                        f"record {index} benchmark_comparison_readiness must "
+                        "preserve comparison readiness boundaries"
+                    ),
+                }
+            )
         if not isinstance(slate, list):
             issues.append(
                 {
@@ -18676,6 +18730,18 @@ def validate_metric_diverse_inspiration_report(report: object) -> dict:
                 ),
             }
         )
+    if not _is_metric_diverse_benchmark_comparison_readiness(
+        report.get("benchmark_comparison_readiness")
+    ):
+        issues.append(
+            {
+                "code": "invalid_benchmark_comparison_readiness",
+                "message": (
+                    "benchmark_comparison_readiness must keep prompt-policy, "
+                    "fixture, scalar, single-metric, and equal-budget claims false"
+                ),
+            }
+        )
     readiness = report.get("claim_readiness")
     if not isinstance(readiness, Mapping):
         issues.append(
@@ -18740,6 +18806,41 @@ def _is_metric_diverse_benchmark_boundary(value: object) -> bool:
             "alphaevolve_section_2_4_claim_ready",
         )
     )
+
+
+def _is_metric_diverse_benchmark_comparison_readiness(value: object) -> bool:
+    if not isinstance(value, Mapping):
+        return False
+    if (
+        value.get("schema")
+        != "libreevolve.metric_diverse_benchmark_comparison_readiness.v1"
+    ):
+        return False
+    for field in (
+        "benchmark_prompt_policy_enforced",
+        "cross_run_metric_diverse_fixture",
+        "scalar_only_baseline_comparison",
+        "single_metric_target_baseline_comparison",
+        "equal_budget_comparison_report",
+        "alphaevolve_section_2_4_claim_ready",
+    ):
+        if value.get(field) is not False:
+            return False
+    if value.get("prompt_visible_metric_diversity_evidence") not in {True, False}:
+        return False
+    remaining = value.get("remaining_gap")
+    required = {
+        "benchmark_prompt_policy_enforced",
+        "cross_run_metric_diverse_fixture",
+        "scalar_only_baseline_comparison",
+        "single_metric_target_baseline_comparison",
+        "equal_budget_comparison_report",
+    }
+    if not isinstance(remaining, list) or not required.issubset(
+        {item for item in remaining if isinstance(item, str)}
+    ):
+        return False
+    return True
 
 
 def _duplicate_work_policy_report(programs: list[Program]) -> dict:

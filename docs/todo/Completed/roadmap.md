@@ -9438,3 +9438,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     feedback-calibration runners.
   - Verification: MAP-Elites tests validate emitted readiness and forged
     readiness overclaim rejection.
+
+- [x] Preserve metric-diverse benchmark-comparison readiness boundaries.
+  - Spec evidence: roadmap metric-diverse prompt wording should not imply
+    benchmark policy enforcement, scalar/single-metric baselines, or
+    equal-budget comparison reports from current-run prompt-visible evidence.
+  - Status: ROADMAP and TODO wording now recognize
+    `libreevolve.metric_diverse_benchmark_comparison_readiness.v1` with false
+    readiness for benchmark prompt-policy enforcement, cross-run fixtures,
+    scalar-only baselines, single-metric baselines, and equal-budget
+    comparison reports.
+  - Verification: metric-diverse runtime tests validate forged readiness
+    overclaim rejection.

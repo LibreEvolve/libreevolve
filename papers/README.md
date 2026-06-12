@@ -335,7 +335,10 @@ Completed manifests summarize this evidence in
 `runtime.history.metric_diverse_inspiration_report`; its `benchmark_policy`
 boundary keeps `alphaevolve_section_2_4_claim_ready` false until
 benchmark-required metric-diverse prompt policies, cross-run fixtures, and
-scalar/single-metric comparison reports exist.
+scalar/single-metric comparison reports exist. The same report now carries
+`libreevolve.metric_diverse_benchmark_comparison_readiness.v1`, keeping
+benchmark prompt-policy enforcement, cross-run fixtures, scalar-only
+baselines, single-metric baselines, and equal-budget comparison reports false.
 It can also cap already validated/redacted plugin `extra_context` with
 `extra_context_max_chars`, recording input/rendered/omitted character counts.
 LLM-grader prompt context can now be narrowed with `llm_feedback_fields`, a

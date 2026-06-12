@@ -1823,7 +1823,11 @@ Primary evidence:
     `libreevolve.metric_diverse_prompt_benchmark_boundary.v1`
     `benchmark_policy` and keeps benchmark-required metric-diverse prompt
     policy, cross-run fixture, scalar/single-metric comparison, and
-    AlphaEvolve Section 2.4 readiness claims false.
+    AlphaEvolve Section 2.4 readiness claims false. The report now also
+    carries `libreevolve.metric_diverse_benchmark_comparison_readiness.v1`,
+    keeping benchmark prompt-policy enforcement, cross-run fixtures,
+    scalar-only baselines, single-metric baselines, and equal-budget comparison
+    reports false with overclaim validation.
   - Required result: add benchmark-required policies/fixtures and comparison
     reports showing multi-score runs can deliberately condition the model on
     programs excelling under different metrics in the same prompt.

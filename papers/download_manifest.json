@@ -420,6 +420,16 @@
     "sha256": "0d54f3a598c56fa69137ed4f35d8527734dff851de4a5248a777b5abfb822414"
   },
   {
+    "id": "2605.27276",
+    "title": "SIA",
+    "url": "https://arxiv.org/pdf/2605.27276.pdf",
+    "file": "papers/2605.27276__SIA.pdf",
+    "ok": true,
+    "bytes": 993538,
+    "message": "downloaded",
+    "sha256": "3f75a62487a5fb3fc2db8d06b78e6f6d598fc46b446cdfa9e205c33fb41de265"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

@@ -5096,7 +5096,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     and README/ROADMAP wording that treats ANCHOR as background context until
     those artifacts exist.
 
-- [ ] Track SIA harness-plus-weight self-improvement paper evidence.
+- [ ] Reproduce SIA harness-plus-weight self-improvement evidence beyond
+      paper coverage.
   - Paper/source evidence: arXiv `2605.27276`, submitted May 26, 2026, is
     titled `SIA: Self Improving AI with Harness & Weight Updates`. Its
     abstract says AI improvement remains bottlenecked by humans who write,
@@ -5110,26 +5111,30 @@ directory and using the AlphaEvolve paper as the primary specification.
     optimization, and single-cell RNA denoising. The abstract reports 56.6%
     LawBench gain, 91.9% GPU-kernel runtime reduction, and 502% denoising
     improvement over the initial baseline.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2605.27276`. Existing rows cover AlphaEvolve evaluator-backed
-    program search, ThetaEvolve-style clipped training-data export,
-    harnessed meta-editing, adaptive learning signals, and open-ended reward
-    gates, but not a unified loop where a Feedback-Agent chooses between
-    editable harness updates and actual model-weight updates, nor the
-    corresponding checkpoint, adapter, training-data, ablation, and benchmark
-    evidence.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2605.27276`: title/authors/arXiv version/date/PDF digest, source
-    license, linked-code URL/status, relation to AlphaEvolve and LibreEvolve
-    training assumptions, Meta-Agent/Target-Agent/Feedback-Agent role schema,
-    editable-harness taxonomy, harness patch records, weight-update records,
-    training-data provenance, RL/fine-tuning configuration, adapter/
-    checkpoint artifacts, verifier/reward definitions, harness-only,
-    weight-only, and combined-loop ablation records, LawBench/kernel/scRNA
-    benchmark metadata, compute/cost accounting, performance-delta records,
-    code/artifact availability if any, reproducibility status, and README/
-    ROADMAP wording that treats SIA as missing paper evidence rather than
-    implemented LibreEvolve support.
+  - Current gap: the paper cache, paper index, row identity, README, ROADMAP,
+    and TODO coverage now include `2605.27276`, cached locally as
+    `papers/2605.27276__SIA.pdf` with byte count `993538` and SHA-256
+    `3f75a62487a5fb3fc2db8d06b78e6f6d598fc46b446cdfa9e205c33fb41de265`.
+    Reproduction evidence remains absent: no source-license details,
+    linked-code or project/demo URL status, Meta-Agent/Target-Agent/
+    Feedback-Agent role schema, editable-harness taxonomy, harness patch
+    records, weight-update records, training-data provenance,
+    RL/fine-tuning configuration, adapter/checkpoint artifacts,
+    verifier/reward definitions, harness-only, weight-only, and combined-loop
+    ablation records, LawBench/kernel/scRNA benchmark metadata, compute/cost
+    accounting, performance-delta records, code/artifact availability status,
+    reproducibility status, or independent reproduction output exists.
+  - Required result: add reproduction-grade SIA evidence: source license,
+    project/demo URL status, linked-code status, relation to AlphaEvolve and
+    LibreEvolve training assumptions, Meta-Agent/Target-Agent/Feedback-Agent
+    role schema, editable-harness taxonomy, harness patch records,
+    weight-update records, training-data provenance, RL/fine-tuning
+    configuration, adapter/checkpoint artifacts, verifier/reward definitions,
+    harness-only, weight-only, and combined-loop ablation records,
+    LawBench/kernel/scRNA benchmark metadata, compute/cost accounting,
+    performance-delta records, code/artifact reproducibility status,
+    independent reproduction outputs, and README/ROADMAP wording that treats
+    SIA as background context until those artifacts exist.
 
 - [ ] Track HarnessFix trace-grounded harness repair paper evidence.
   - Paper/source evidence: arXiv `2606.06324`, submitted June 4, 2026, is

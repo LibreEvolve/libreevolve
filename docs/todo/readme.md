@@ -3389,8 +3389,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     Avoid implying LibreEvolve supports
     ANCHOR-style healthy-evolution oversight without those artifacts.
 
-- [ ] Keep README SIA harness-plus-weight self-improvement claims absent or
-      source-scoped until paper and runtime evidence exists.
+- [ ] Keep README SIA harness-plus-weight self-improvement claims
+      source-scoped until runtime evidence exists.
   - Spec evidence: arXiv `2605.27276`, `SIA: Self Improving AI with Harness
     & Weight Updates`, proposes a self-improving loop where a Feedback-Agent
     updates both the harness/scaffold and the weights of a task-specific
@@ -3399,22 +3399,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     both levers outperforms scaffold iteration alone across Chinese legal
     charge classification, low-level GPU kernel optimization, and single-cell
     RNA denoising.
-  - Current evidence: README documents LibreEvolve's current evaluator-first
+  - Current evidence: README now lists `2605.27276`, SIA, as harness-plus-
+    weight self-improvement context only and says no local Feedback-Agent,
+    editable task-agent harness inventory, online weight-update loop,
+    adapter/checkpoint lifecycle, or harness-versus-weight ablation report
+    exists. README also documents LibreEvolve's current evaluator-first
     workflow, fixed LLM backends, prompt/run artifacts, candidate mutation,
-    plugin outputs, and ThetaEvolve-style GRPO export boundary. It does not
-    list `2605.27276`, implement a Feedback-Agent, edit task-agent harnesses
-    as first-class artifacts, train or fine-tune model weights online, retain
-    adapter/checkpoint artifacts, or report harness-only versus
+    plugin outputs, and ThetaEvolve-style GRPO export boundary; it does not
+    claim task-agent harnesses as first-class editable artifacts, online model
+    training/fine-tuning, adapter/checkpoint artifacts, or harness-only versus
     harness-plus-weight benchmark comparisons.
   - Required result: if README mentions SIA, Self Improving AI, harness and
     weight updates, Feedback-Agent loops, task-specific agent scaffolds,
     online RL/fine-tuning, adapter or checkpoint improvement, LawBench,
     kernel-optimization SIA results, scRNA denoising gains, or autonomous
     model-plus-harness self-improvement, keep the wording source-scoped until
-    the paper is in the manifest and local artifacts can show role schemas,
-    harness patch provenance, weight-update records, training-data lineage,
-    checkpoint/adaptor lifecycle, verifier/reward evidence, ablation
-    baselines, compute/cost accounting, and report outcomes. Avoid implying
+    local artifacts can show role schemas, harness patch provenance,
+    weight-update records, training-data lineage, checkpoint/adaptor
+    lifecycle, verifier/reward evidence, ablation baselines, compute/cost
+    accounting, and report outcomes. Avoid implying
     LibreEvolve supports SIA-style harness-plus-weight self-improvement
     without those artifacts.
 

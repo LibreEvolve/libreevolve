@@ -13047,3 +13047,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2605.27276` SIA paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2605.27276`, `SIA: Self Improving AI with Harness & Weight Updates`,
+    cached locally as `papers/2605.27276__SIA.pdf` with byte count `993538`
+    and SHA-256
+    `3f75a62487a5fb3fc2db8d06b78e6f6d598fc46b446cdfa9e205c33fb41de265`.
+  - Remaining paper gap: source-license details, linked-code or project/demo
+    URL status, Meta-Agent/Target-Agent/Feedback-Agent role schema,
+    editable-harness taxonomy, harness patch records, weight-update records,
+    training-data provenance, RL/fine-tuning configuration, adapter/checkpoint
+    artifacts, verifier/reward definitions, harness-only, weight-only, and
+    combined-loop ablation records, LawBench/kernel/scRNA benchmark metadata,
+    compute/cost accounting, performance-delta records, code/artifact
+    reproducibility status, and independent reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

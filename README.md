@@ -165,7 +165,7 @@ Common run options:
 
 ## Research Sources
 
-LibreEvolve is informed by a local cache of 44 papers on LLM-guided evolution,
+LibreEvolve is informed by a local cache of 45 papers on LLM-guided evolution,
 program synthesis, quality-diversity optimization, and related benchmarks. The
 PDF cache lives locally under `papers/`, but the PDFs themselves are gitignored.
 The committed repository tracks `papers/README.md`, download manifests, and
@@ -176,7 +176,7 @@ not authoritative bibliographic titles. Use `papers/README.md` for paper-facing
 titles, implementation status, and benchmark coverage decisions.
 
 The table below is a curated subset for README context. `papers/README.md` is
-the complete implementation-status index for all 44 manifest rows.
+the complete implementation-status index for all 45 manifest rows.
 
 | Source | Role in LibreEvolve |
 | --- | --- |
@@ -205,6 +205,7 @@ the complete implementation-status index for all 44 manifest rows.
 | [LLM-ALSO](https://arxiv.org/abs/2605.29293) | Learning-signal optimization context only; no local sparse-reward MARL harness, Critic/Generator reward-shaping loop, branch-validation trace, or learning-efficiency report exists. |
 | [MemEvolve](https://arxiv.org/abs/2512.18746) | Memory-architecture evolution context only; no local encode/store/retrieve/manage design space, memory-architecture mutation loop, EvolveLab benchmark mapping, or transfer report exists. |
 | [ANCHOR healthy evolution](https://arxiv.org/abs/2606.06114) | Healthy-evolution oversight context only; no local human-like oversight agent, phase-specific norm-correction interface, safety-drift metric lineage, or supervision-cadence report exists. |
+| [SIA](https://arxiv.org/abs/2605.27276) | Harness-plus-weight self-improvement context only; no local Feedback-Agent, editable task-agent harness inventory, online weight-update loop, adapter/checkpoint lifecycle, or harness-versus-weight ablation report exists. |
 
 Rehydrate the ignored local PDF cache on a fresh checkout:
 

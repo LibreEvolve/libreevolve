@@ -3876,8 +3876,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     background-only or benchmark-fixture status rule so roadmap claims do not
     outpace local ANCHOR-style human-like oversight support.
 
-- [ ] Add SIA harness-plus-weight self-improvement gates before roadmap
-      promotion.
+- [ ] Implement SIA harness-plus-weight self-improvement gates beyond paper
+      cache coverage.
   - Spec evidence: arXiv `2605.27276`, submitted May 26, 2026, introduces
     `SIA: Self Improving AI with Harness & Weight Updates`. The abstract says
     previous self-improvement work often separates harness/scaffold updates
@@ -3886,24 +3886,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     Chinese legal charge classification, low-level GPU kernel optimization,
     and single-cell RNA denoising, and reports that combining both levers
     outperforms scaffold iteration alone on all three benchmarks.
-  - Current evidence: ROADMAP tracks fixed backend adapters, evaluator
-    contracts, prompt/run artifacts, ThetaEvolve-style GRPO export, AEvo
-    meta-editing gates, and adaptive reward-source gates. It does not mention
-    `2605.27276`, define SIA gates, require a Feedback-Agent decision log,
-    expose editable harness components for task-specific agents, perform
-    online model-weight updates, retain adapter/checkpoint provenance, or
-    require ablations separating harness-only, weight-only, and combined
-    improvement loops before promoting self-improving AI claims.
-  - Required result: add roadmap gates for `2605.27276`: paper/source
-    manifest entry, PDF/cache hash, source-license and linked-code status,
-    Meta-Agent/Target-Agent/Feedback-Agent schemas, editable harness
-    component inventory, harness patch/version records, weight-update trigger
-    and training records, adapter/checkpoint lifecycle, training-data
-    lineage, verifier/reward sufficiency checks, rollback/resume policy,
-    harness-only versus weight-only versus combined ablation metadata,
-    LawBench/kernel/scRNA benchmark records, compute/cost telemetry, and a
-    background-only or benchmark-fixture status rule so roadmap claims do not
-    outpace local SIA-style harness-plus-weight self-improvement support.
+  - Current evidence: ROADMAP, `papers/download_manifest.*`,
+    `papers/row_identity.json`, `papers/README.md`, README, and TODO coverage
+    now include `2605.27276`, cached locally as `papers/2605.27276__SIA.pdf`
+    with byte count `993538` and SHA-256
+    `3f75a62487a5fb3fc2db8d06b78e6f6d598fc46b446cdfa9e205c33fb41de265`.
+    ROADMAP tracks the paper as background harness-plus-weight
+    self-improvement context only. It still has no SIA gates,
+    Feedback-Agent decision log, editable harness components for
+    task-specific agents, online model-weight updates, adapter/checkpoint
+    provenance, or ablations separating harness-only, weight-only, and
+    combined improvement loops.
+  - Required result: implement roadmap gates beyond paper-cache evidence:
+    source-license and linked-code status, Meta-Agent/Target-Agent/
+    Feedback-Agent schemas, editable harness component inventory, harness
+    patch/version records, weight-update trigger and training records,
+    adapter/checkpoint lifecycle, training-data lineage, verifier/reward
+    sufficiency checks, rollback/resume policy, harness-only versus
+    weight-only versus combined ablation metadata, LawBench/kernel/scRNA
+    benchmark records, compute/cost telemetry, and a background-only or
+    benchmark-fixture status rule so roadmap claims do not outpace local
+    SIA-style harness-plus-weight self-improvement support.
 
 - [ ] Add HarnessFix trace-grounded harness repair gates before roadmap
       promotion.

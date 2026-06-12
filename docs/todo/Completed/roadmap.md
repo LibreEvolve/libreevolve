@@ -2,6 +2,15 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Keep roadmap current-state framing tied to ongoing evidence rather than
+      stale snapshot dates.
+  - Status: `ROADMAP.md` no longer claims to reflect only the codebase as of
+    `2026-05-26`; its intro now describes ongoing AlphaEvolve-alignment passes
+    against the AlphaEvolve paper, local docs, paper index, and checked-in
+    tests.
+  - Remaining guard: future roadmap passes still need to keep the intro and
+    matching README/papers/TODO evidence aligned with the current worktree.
+
 - [x] Preserve Bilateral Trade `2603.08679` boundary scope in roadmap.
   - Evidence: `ROADMAP.md` adds `papers/bilateral_trade_boundary.json` to the
     inspired/application-context source-boundary list and keeps

@@ -623,7 +623,7 @@ is not yet an AlphaEvolve reproduction.
   This remains audit consistency for the declared local-subprocess boundary,
   not OS/container sandbox or quota enforcement.
 - Continue labeling CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve,
-  GigaEvo, CodeEvolve, MadEvolve, and Magellan features as inspired or
+  GigaEvo, CodeEvolve, MadEvolve, Magellan, and ArchAgent features as inspired or
   application context unless paper behavior is actually implemented. The committed
   `papers/gigaevo_framework_boundary.json`
   sidecar records the GigaEvo source-specific boundary for Redis lifecycle
@@ -671,7 +671,14 @@ is not yet an AlphaEvolve reproduction.
   Vizier-style autotuning, LLVM function-inlining rows, register-allocation
   rows, XLA graph-extraction/auto-sharding rows, expert/neural baselines,
   temporal/domain generalization, generated-policy maintainability evidence,
-  and dedicated Magellan runtime-repository status.
+  and dedicated Magellan runtime-repository status. The committed
+  `papers/archagent_boundary.json` sidecar records the ArchAgent
+  source-specific boundary for generated C++ cache policies, ChampSim
+  `policy.h` integration, CRC hardware configurations, SPEC06/Google Workload
+  Trace fixtures, IPC-over-LRU metrics, Policy31/Policy31-Tuned/Policy61/
+  Policy62 artifacts, hardware-realizability and state-budget checks,
+  post-silicon specialization, simulator-escape controls, distributed
+  simulation reliability, and dedicated ArchAgent runtime-repository status.
 
 ## Mid Term
 

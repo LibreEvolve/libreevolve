@@ -5588,7 +5588,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     identities, seed/budget records, compiler build/runtime environment
     metadata, independent checker outputs, and reproducibility status.
 
-- [ ] Track AlphaEvolve ArchAgent computer-architecture paper evidence.
+- [ ] Implement AlphaEvolve ArchAgent computer-architecture paper evidence beyond source boundary.
   - Paper/source evidence: arXiv `2602.22425`, submitted February 25, 2026, is
     titled `ArchAgent: Agentic AI-driven Computer Architecture Discovery`.
     Its abstract presents ArchAgent as an automated architecture-discovery
@@ -5603,36 +5603,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     single/multi-core configurations, IPC normalized to LRU, short feedback
     simulations and longer validation simulations, and manual/rule-based
     checks for hardware realism.
-  - Current gap: `papers/README.md` lists `2602.22425` as background-only
-    computer-architecture application context with no architecture-design
-    simulator or cache-policy benchmark, but the current implementation and
-    paper index do not yet provide local source-boundary artifacts or
-    implementation evidence for this paper. Broad systems gaps do not
-    capture cache replacement policy schemas, simulator integration,
-    workload-trace provenance, single-core/multi-core benchmark splits, IPC
-    speedup objectives, SoTA policy baselines, post-silicon specialization
-    metadata, or simulator-escape risk controls. They also do not preserve
-    paper-facing rows for the `48 KB` policy-state limit, prefetch/no-prefetch
-    CRC tracks, 100M/1B and 20M/50M/75M instruction-count protocols,
-    Policy31/61/62 mechanism descriptions, ablation studies, distributed
-    simulation cancellation/failure handling, or the Policy12 write-bypass
-    simulator escape.
-  - Required result: add paper-manifest and paper-index coverage updates for
-    `2602.22425`: title/authors/arXiv version/date/PDF digest, source
-    license, code/artifact URL/status, relation to AlphaEvolve and
-    LibreEvolve architecture assumptions, cache replacement policy candidate
-    schemas, ChampSim integration metadata, CRC hardware/prefetch
-    configuration rows, Google Workload Trace and SPEC06 dataset provenance,
-    single-core/multi-core benchmark splits, evolution and validation
-    instruction-count protocols, IPC metric definitions, prior-SoTA baseline
-    identities, generated policy artifacts and mechanism labels, state-budget
-    and hardware-realizability checks, ablation rows, post-silicon
-    specialization parameter records, simulator-escape evidence and
-    containment policy, distributed-simulation reliability records,
-    seed/budget records, independent checker outputs, reproducibility status,
-    and README/ROADMAP wording that treats ArchAgent-style computer-
-    architecture discovery as missing paper evidence rather than implemented
-    LibreEvolve support.
+  - Current gap: `papers/archagent_boundary.json` now records title/authors,
+    arXiv version/date, cached PDF digest/license, source-link status,
+    Google Workload Trace and CRC reference links, absence of a dedicated
+    ArchAgent runtime repository in extracted links, background-only local
+    status, component rows, local no-architecture-simulator evidence,
+    required evidence fields, and missing evidence keys. The paper-facing
+    runtime evidence remains absent.
+  - Required result: add executable paper/report evidence for `2602.22425`:
+    cache replacement policy candidate schemas, ChampSim integration metadata,
+    CRC hardware/prefetch configuration rows, Google Workload Trace and SPEC06
+    dataset provenance, single-core/multi-core benchmark splits, evolution and
+    validation instruction-count protocols, IPC metric definitions,
+    prior-SoTA baseline identities, generated policy artifacts and mechanism
+    labels, state-budget and hardware-realizability checks, ablation rows,
+    post-silicon specialization parameter records, simulator-escape evidence
+    and containment policy, distributed-simulation reliability records,
+    seed/budget records, independent checker outputs, and reproducibility
+    status.
 
 - [ ] Track AlphaEvolve Fault2Flow workflow-automation paper evidence.
   - Paper/source evidence: arXiv `2511.12916`, submitted November 17, 2025, is

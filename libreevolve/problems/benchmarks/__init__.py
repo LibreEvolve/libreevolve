@@ -77,6 +77,12 @@ from libreevolve.problems.benchmarks.benchmark_hardening import (
     validate_benchmark_evidence_scope,
     validate_benchmark_hardening_report,
 )
+from libreevolve.problems.benchmarks.archagent_boundary import (
+    ARCHAGENT_BOUNDARY_SCHEMA,
+    archagent_boundary_record,
+    render_archagent_boundary_summary,
+    validate_archagent_boundary,
+)
 from libreevolve.problems.benchmarks.candidate_abstraction import (
     CANDIDATE_ABSTRACTION_BOUNDARY_SCHEMA,
     candidate_abstraction_boundary_record,
@@ -402,6 +408,7 @@ __all__ = [
     "BENCHMARK_HARDENING_ARTIFACT_INVENTORY_SCHEMA",
     "BENCHMARK_EVIDENCE_SCOPE_SCHEMA",
     "BENCHMARK_HARDENING_SCHEMA",
+    "ARCHAGENT_BOUNDARY_SCHEMA",
     "CANDIDATE_ABSTRACTION_BOUNDARY_SCHEMA",
     "CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_SCHEMA",
     "CAUSALEVOLVE_BOUNDARY_SCHEMA",
@@ -473,6 +480,7 @@ __all__ = [
     "appendix_a_matrix_subset_scope_artifact_boundary_from_records",
     "appendix_a_matrix_subset_scope_artifact_boundary_record",
     "appendix_a_matrix_subset_scope_record",
+    "archagent_boundary_record",
     "alphaevolve_companion_colab_source_record",
     "alphaevolve_follow_on_math_source_record",
     "alphaevolve_math_heuristic_handoff_boundary",
@@ -553,6 +561,7 @@ __all__ = [
     "render_alphaevolve_references_section_summary",
     "render_alphaevolve_source_pdf_rights_summary",
     "render_alphaevolve_source_pdf_version_summary",
+    "render_archagent_boundary_summary",
     "render_benchmark_hardening_summary",
     "render_candidate_abstraction_boundary_summary",
     "render_candidate_language_runner_boundary_summary",
@@ -619,6 +628,7 @@ __all__ = [
     "validate_alphaevolve_references_section",
     "validate_alphaevolve_source_pdf_rights",
     "validate_alphaevolve_source_pdf_version",
+    "validate_archagent_boundary",
     "validate_benchmark_evidence_scope",
     "validate_benchmark_hardening_report",
     "validate_candidate_abstraction_boundary",

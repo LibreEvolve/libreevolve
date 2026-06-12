@@ -4,6 +4,14 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add ArchAgent `2602.22425` computer-architecture source-boundary gate.
+  - Evidence: `libreevolve/problems/benchmarks/archagent_boundary.py` records
+    the ArchAgent computer-architecture source boundary, validates the
+    background-only state, rejects premature runtime claims, and is required by
+    `libreevolve/tools/paper_manifest.py`. `tests/test_archagent_boundary.py`
+    and `tests/test_paper_manifest.py` cover the absence record, overclaim
+    rejection, and root-manifest sidecar requirement.
+
 - [x] Add Magellan `2601.21096` compiler-optimization source-boundary gate.
   - Evidence: `libreevolve/problems/benchmarks/magellan_boundary.py` records
     the Magellan compiler-optimization source boundary, validates the

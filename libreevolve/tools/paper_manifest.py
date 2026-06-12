@@ -30,6 +30,10 @@ from libreevolve.problems.benchmarks.ablation_exhibits import (
     figure8_artifact_boundary_record,
     validate_figure8_artifact_boundary,
 )
+from libreevolve.problems.benchmarks.archagent_boundary import (
+    archagent_boundary_record,
+    validate_archagent_boundary,
+)
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     REGISTRY_PATH as APPENDIX_A_MATRIX_REGISTRY_PATH,
     appendix_a_matrix_baseline_citation_boundary_record,
@@ -261,6 +265,7 @@ MADEVOLVE_BOUNDARY_FILE = "papers/madevolve_boundary.json"
 CAUSALEVOLVE_BOUNDARY_FILE = "papers/causalevolve_boundary.json"
 DEEPEVOLVE_BOUNDARY_FILE = "papers/deepevolve_boundary.json"
 MAGELLAN_BOUNDARY_FILE = "papers/magellan_boundary.json"
+ARCHAGENT_BOUNDARY_FILE = "papers/archagent_boundary.json"
 EXAMPLE_BENCHMARK_SCOPE_FILE = "papers/example_benchmark_scope.json"
 MATH_OUTCOME_BOUNDARY_FILE = "papers/math_outcome_boundary.json"
 MATH_STARTING_CONSTRUCTION_BOUNDARY_FILE = "papers/math_starting_construction_boundary.json"
@@ -647,6 +652,7 @@ def validate_paper_manifest(
     issues.extend(_validate_causalevolve_boundary(root_path))
     issues.extend(_validate_deepevolve_boundary(root_path))
     issues.extend(_validate_magellan_boundary(root_path))
+    issues.extend(_validate_archagent_boundary(root_path))
 
     if set(csv_by_id) - seen_ids:
         for row_id in sorted(set(csv_by_id) - seen_ids):
@@ -1867,6 +1873,38 @@ def _validate_magellan_boundary(root_path: Path) -> list[PaperManifestIssue]:
             f"magellan_boundary_{issue.code}",
             issue.message,
             "magellan",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_archagent_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ARCHAGENT_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = archagent_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "archagent_boundary_manifest_missing",
+                    (
+                        f"{ARCHAGENT_BOUNDARY_FILE} must emit "
+                        "ArchAgent computer-architecture evidence availability"
+                    ),
+                    "archagent",
+                )
+            ]
+    report = validate_archagent_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"archagent_boundary_{issue.code}",
+            issue.message,
+            "archagent",
         )
         for issue in report.issues
     ]

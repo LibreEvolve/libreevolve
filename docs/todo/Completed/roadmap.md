@@ -2,6 +2,13 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Preserve ArchAgent `2602.22425` boundary scope in roadmap.
+  - Evidence: `ROADMAP.md` adds `papers/archagent_boundary.json` to the
+    inspired/application-context source-boundary list and keeps ArchAgent
+    computer-architecture support unpromoted until the simulator, benchmark,
+    policy-artifact, baseline, simulator-escape, and reproducibility evidence
+    exists.
+
 - [x] Preserve Magellan `2601.21096` boundary scope in roadmap.
   - Evidence: `ROADMAP.md` adds `papers/magellan_boundary.json` to the
     inspired/application-context source-boundary list and keeps Magellan

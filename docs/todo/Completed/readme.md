@@ -4,6 +4,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document ArchAgent `2602.22425` source boundary in README.
+  - Evidence: `README.md` lists ArchAgent as AlphaEvolve computer-architecture
+    application context only and points to `papers/archagent_boundary.json` for
+    the missing C++ cache-policy, ChampSim, CRC/SPEC06/Google Workload Trace,
+    IPC, policy-artifact, hardware-realizability, state-budget,
+    post-silicon-specialization, simulator-escape, and distributed-simulation
+    evidence.
+
 - [x] Document Magellan `2601.21096` source boundary in README.
   - Evidence: `README.md` lists Magellan as AlphaEvolve compiler-optimization
     application context only and points to `papers/magellan_boundary.json` for

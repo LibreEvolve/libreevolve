@@ -3838,15 +3838,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     ChampSim, reports IPC speedup normalized to LRU, separates short
     evolution runs from longer validation runs, and requires hardware-
     realizability checks.
-  - Current evidence: README documents general AlphaEvolve systems gaps,
-    benchmark-report contracts, paper-cache status, and smoke fixtures. It
-    does not mention `2602.22425`, define cache replacement policy candidates,
-    integrate a microarchitectural simulator, preserve Google Workload Trace
-    or SPEC06 provenance, compare prior SoTA policies, measure IPC speedup,
-    record post-silicon specialization parameters, distinguish short feedback
-    simulations from validation simulations, document policy-state budgets or
-    hardware-realizability checks, preserve ablation evidence, or flag
-    simulator escapes.
+  - Current evidence: README now lists ArchAgent only as AlphaEvolve
+    computer-architecture application context and points to
+    `papers/archagent_boundary.json` for the missing generated C++ cache
+    policies, ChampSim integration, CRC/SPEC06/Google Workload Trace fixtures,
+    IPC-over-LRU rows, policy artifacts, hardware-realizability/state-budget
+    checks, post-silicon specialization, simulator-escape controls, and
+    distributed simulation evidence. It still does not define cache
+    replacement policy candidates, run ChampSim/microarchitectural simulators,
+    use Google Workload Traces or SPEC06, report IPC normalized to LRU, compare
+    LRU/SHiP/Hawkeye/Mockingjay baselines, enforce a 48 KB policy-state budget,
+    document post-silicon specialization, or implement simulator-escape
+    controls.
   - Required result: if README mentions ArchAgent, computer architecture
     discovery, cache replacement policies, ChampSim or microarchitectural
     simulators, Google Workload Traces, SPEC06 cache benchmarks, IPC speedup,

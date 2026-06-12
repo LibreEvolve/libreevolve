@@ -4306,31 +4306,31 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     The paper evaluates generated C++ policies in ChampSim under CRC-style
     single/multi-core cache configurations, short evolution simulations, and
     longer validation simulations.
-  - Current evidence: ROADMAP tracks broad systems fixtures and background
-    paper-index rows, but it does not promote `2602.22425` beyond background-
-    only status. It does not define an architecture-design simulator gate,
-    cache-policy candidate schema, ChampSim-style simulator integration,
-    Google Workload Trace or SPEC06 benchmark provenance, IPC speedup metric,
-    SoTA cache-policy baseline ledger, post-silicon specialization report, or
-    simulator-escape detection/containment policy. It also lacks gates for the
-    `48 KB` replacement-policy state limit, prefetch/no-prefetch tracks,
-    evolution-versus-validation instruction counts, Policy31/61/62 mechanism
-    reports, ablation studies, distributed-simulation failure handling, and
-    optimized-away-assertion/write-bypass escape tests.
-  - Required result: add roadmap gates for `2602.22425`: paper/source
-    manifest entry, PDF/cache hash, source-license and code-artifact status,
-    cache replacement policy candidate schema, simulator integration records,
-    ChampSim/CRC hardware configuration records, workload trace provenance,
-    single-core and multi-core benchmark splits, prefetch/no-prefetch tracks,
-    evolution and validation instruction-count protocols, IPC speedup metric
-    definitions, prior-SoTA baseline identities including LRU, SHiP, Hawkeye,
-    and Mockingjay where applicable, generated policy artifacts and mechanism
-    labels, state-budget and hardware-realizability checks, ablation reports,
-    post-silicon parameter-specialization records, simulator-escape evidence
-    and quarantine rules, distributed-simulation failure records, seed/budget
-    records, independent checker outputs, and a background-only or benchmark-
-    fixture status rule so roadmap claims do not outpace local
-    AlphaEvolve-style ArchAgent computer-architecture support.
+  - Current evidence: ROADMAP now names `papers/archagent_boundary.json` as
+    the source-specific boundary for generated C++ cache policies, ChampSim
+    `policy.h` integration, CRC hardware configurations, SPEC06/Google
+    Workload Trace fixtures, IPC-over-LRU metrics, Policy31/Policy31-Tuned/
+    Policy61/Policy62 artifacts, hardware-realizability and state-budget
+    checks, post-silicon specialization, simulator-escape controls,
+    distributed simulation reliability, and runtime-repository status. It
+    still does not define a cache replacement policy candidate schema,
+    ChampSim simulator runner, CRC-style hardware configuration, Google
+    Workload Trace or SPEC06 workload suite, IPC speedup metric,
+    short-run/long-run validation split, SoTA policy baseline ledger,
+    hardware-realizability/state-budget verifier, post-silicon specialization
+    gate, or simulator-escape control policy.
+  - Required result: implement roadmap gates for `2602.22425`: cache
+    replacement policy candidate schema, ChampSim `policy.h` integration
+    records, CRC cache/core/prefetch/DRAM configuration records, workload
+    trace provenance, single-core and multi-core benchmark splits,
+    evolution-versus-validation instruction-count protocols, IPC speedup
+    metric definitions, prior-SoTA baseline identities, Policy31/61/62
+    generated-policy artifacts and mechanism labels, state-budget and
+    hardware-realizability checks, ablation records, post-silicon
+    specialization parameter records, simulator-escape and write-bypass
+    containment policy, distributed-simulation failure/retry records,
+    seed/budget records, independent checker outputs, and benchmark-fixture
+    status rules before roadmap claims promote ArchAgent support.
 
 - [ ] Add AlphaEvolve Fault2Flow workflow-automation gates before roadmap
       promotion.

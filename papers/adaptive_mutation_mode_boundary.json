@@ -1,0 +1,47 @@
+{
+  "schema": "libreevolve.alphaevolve_adaptive_mutation_mode_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve Section 2.3 requests SEARCH/REPLACE diffs for larger codebases and full-code output for very short code or complete rewrite cases",
+  "boundary_status": "run_wide_mutation_mode_without_adaptive_selection",
+  "claim_ready": false,
+  "supported_modes": [
+    "diff",
+    "full"
+  ],
+  "supporting_surfaces": [
+    "config_mutation_mode",
+    "cli_mutation_mode",
+    "prompt_mutation_mode_fields",
+    "diff_parser",
+    "full_replacement_parser",
+    "mutation_mode_history_metadata"
+  ],
+  "required_evidence_fields": [
+    "run_wide_configured_mode",
+    "per_candidate_mode_selection",
+    "candidate_size_thresholds",
+    "workspace_shape_thresholds",
+    "task_shape_policy",
+    "parent_failure_history_policy",
+    "parser_fallback_policy",
+    "critique_fallback_policy",
+    "prompt_metadata",
+    "selection_reason_telemetry",
+    "large_codebase_diff_selection_test",
+    "short_code_full_selection_test",
+    "mixed_mode_run_history",
+    "paper_visible_selection_report"
+  ],
+  "missing_evidence": {
+    "per_candidate_mode_selection": "not_recorded_locally",
+    "candidate_size_thresholds": "not_recorded_locally",
+    "workspace_shape_thresholds": "not_recorded_locally",
+    "task_shape_policy": "not_recorded_locally",
+    "parent_failure_history_policy": "not_recorded_locally",
+    "parser_fallback_policy": "not_recorded_locally",
+    "critique_fallback_policy": "not_recorded_locally",
+    "selection_reason_telemetry": "not_recorded_locally",
+    "mixed_mode_run_history": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve supports configured run-wide diff and full mutation modes with prompt fields, parsers, and history metadata. It does not claim adaptive per-candidate diff-versus-full selection, candidate-size or task-shape thresholds, failure-aware fallback policy, mixed-mode run telemetry, or AlphaEvolve-style selection tests."
+}

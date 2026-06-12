@@ -1764,6 +1764,60 @@ def test_validate_paper_manifest_requires_mutation_consistency_boundary_at_repo_
     assert "mutation_consistency_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_adaptive_mutation_mode_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.ADAPTIVE_MUTATION_MODE_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.adaptive_mutation_mode_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_adaptive_mutation_mode_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.adaptive_mutation_mode_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "adaptive_mutation_mode_selection_ready"
+    record["missing_evidence"]["selection_reason_telemetry"] = "recorded"
+    sidecar = tmp_path / paper_manifest.ADAPTIVE_MUTATION_MODE_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "adaptive_mutation_mode_boundary_claim_ready_overclaim" in codes
+    assert "adaptive_mutation_mode_boundary_invalid_boundary_status" in codes
+    assert (
+        "adaptive_mutation_mode_boundary_invalid_missing_evidence_selection_reason_telemetry"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_adaptive_mutation_mode_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "adaptive_mutation_mode_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_initial_pool_divergence_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

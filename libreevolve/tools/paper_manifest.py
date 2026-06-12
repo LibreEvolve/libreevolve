@@ -331,6 +331,10 @@ from libreevolve.problems.benchmarks.mutation_consistency_boundary import (
     mutation_consistency_boundary_record,
     validate_mutation_consistency_boundary,
 )
+from libreevolve.problems.benchmarks.adaptive_mutation_mode_boundary import (
+    adaptive_mutation_mode_boundary_record,
+    validate_adaptive_mutation_mode_boundary,
+)
 from libreevolve.problems.benchmarks.initial_pool_divergence_boundary import (
     initial_pool_divergence_boundary_record,
     validate_initial_pool_divergence_boundary,
@@ -523,6 +527,7 @@ TASK_SPECIFICATION_BOUNDARY_FILE = "papers/task_specification_boundary.json"
 NATURAL_LANGUAGE_PREAMBLE_BOUNDARY_FILE = "papers/natural_language_preamble_boundary.json"
 PROMPT_EXAMPLE_COPY_BOUNDARY_FILE = "papers/prompt_example_copy_boundary.json"
 MUTATION_CONSISTENCY_BOUNDARY_FILE = "papers/mutation_consistency_boundary.json"
+ADAPTIVE_MUTATION_MODE_BOUNDARY_FILE = "papers/adaptive_mutation_mode_boundary.json"
 INITIAL_POOL_DIVERGENCE_BOUNDARY_FILE = "papers/initial_pool_divergence_boundary.json"
 DUPLICATE_WORK_POLICY_BOUNDARY_FILE = "papers/duplicate_work_policy_boundary.json"
 EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integration_boundary.json"
@@ -1032,6 +1037,7 @@ def validate_paper_manifest(
     issues.extend(_validate_natural_language_preamble_boundary(root_path))
     issues.extend(_validate_prompt_example_copy_boundary(root_path))
     issues.extend(_validate_mutation_consistency_boundary(root_path))
+    issues.extend(_validate_adaptive_mutation_mode_boundary(root_path))
     issues.extend(_validate_initial_pool_divergence_boundary(root_path))
     issues.extend(_validate_duplicate_work_policy_boundary(root_path))
     issues.extend(_validate_existing_codebase_integration_boundary(root_path))
@@ -1958,6 +1964,38 @@ def _validate_mutation_consistency_boundary(root_path: Path) -> list[PaperManife
             f"mutation_consistency_boundary_{issue.code}",
             issue.message,
             "mutation_consistency",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_adaptive_mutation_mode_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ADAPTIVE_MUTATION_MODE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = adaptive_mutation_mode_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "adaptive_mutation_mode_boundary_manifest_missing",
+                    (
+                        f"{ADAPTIVE_MUTATION_MODE_BOUNDARY_FILE} must emit "
+                        "run-wide mutation-mode versus adaptive selection scope"
+                    ),
+                    "adaptive_mutation_mode",
+                )
+            ]
+    report = validate_adaptive_mutation_mode_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"adaptive_mutation_mode_boundary_{issue.code}",
+            issue.message,
+            "adaptive_mutation_mode",
         )
         for issue in report.issues
     ]

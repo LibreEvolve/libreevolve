@@ -33,6 +33,12 @@ LibreEvolve has:
 - SEARCH/REPLACE diff mutation, including canonical AlphaEvolve fences, and
   configurable full-block/full-code replacement with unknown named block
   targets rejected before partial replacement
+- adaptive mutation-mode absence boundary evidence under
+  `papers/adaptive_mutation_mode_boundary.json`, preserving the distinction
+  between configured run-wide `diff`/`full` prompt/parser support and
+  unimplemented per-candidate diff-versus-full selection by code size,
+  workspace shape, task shape, failure history, fallback behavior, or
+  selection telemetry
 - workspace file topology mutations for create/edit/delete/move/rename and
   primary-file changes
 - candidate path hardening for unsafe, ambiguous, overlong, Unicode-control,

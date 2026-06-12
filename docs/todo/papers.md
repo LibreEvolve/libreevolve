@@ -2008,9 +2008,12 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Partial status: LibreEvolve supports canonical diff parsing and a
     configured `full` mutation mode with full-file, file-section, and
     full-block replacement semantics.
-  - Current gap: `Config.mutation_mode` is a run-wide enum. The prompt and
-    parser contract do not adapt per candidate, code size, workspace shape, or
-    observed failure mode, and paper-facing telemetry does not explain why a
+    `papers/adaptive_mutation_mode_boundary.json` now records the paper-facing
+    boundary for run-wide configured-mode support versus adaptive
+    diff-versus-full selection.
+  - Current gap: `Config.mutation_mode` is still a run-wide enum. The prompt
+    and parser contract do not adapt per candidate, code size, workspace shape,
+    or observed failure mode, and paper-facing telemetry does not explain why a
     given proposal was requested as a diff or a full rewrite.
   - Required result: add paper-visible mutation-mode policy evidence for
     candidate-shape or task-shape selection, per-candidate prompt/output mode

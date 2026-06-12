@@ -13909,3 +13909,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: focused Figure 3 supervised-exhibit boundary and
     paper-manifest tests cover valid, overclaim, and missing-root-sidecar
     cases.
+- [x] Add paper-facing adaptive mutation-mode boundary.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.3 says
+    AlphaEvolve asks for SEARCH/REPLACE diffs for larger codebases and full
+    code output when code is very short or a complete rewrite is better.
+  - Status: `papers/adaptive_mutation_mode_boundary.json` now records the
+    boundary between configured run-wide `diff`/`full` modes and missing
+    adaptive per-candidate selection evidence.
+  - Remaining paper gap: candidate-size/task-shape thresholds,
+    per-candidate mode records, fallback/critique behavior, mixed-mode run
+    telemetry, and benchmark examples remain open.
+  - Verification: focused adaptive mutation-mode boundary and paper-manifest
+    tests cover valid, overclaim, and missing-root-sidecar cases.

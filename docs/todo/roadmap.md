@@ -327,10 +327,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     conditions make that more appropriate.
   - Current evidence: ROADMAP and README can accurately claim implemented
     `diff` and configured `full` mutation modes, including full-file,
-    file-section, and full-block replacement semantics. They do not yet require
-    a policy that selects the prompt/output mode per candidate size, workspace
-    shape, edit scope, prompt arm, or prior failure mode, or records why a
-    candidate received a diff versus full-rewrite contract.
+    file-section, and full-block replacement semantics.
+    `papers/adaptive_mutation_mode_boundary.json` now records the
+    manifest-checked boundary that this is run-wide configured-mode support,
+    not a policy that selects the prompt/output mode per candidate size,
+    workspace shape, edit scope, prompt arm, or prior failure mode, or records
+    why a candidate received a diff versus full-rewrite contract.
   - Required result: when adaptive mutation-mode policy, telemetry, and tests
     land, update roadmap, README, papers index, and code/paper TODO entries so
     roadmap wording includes candidate/task-shape thresholds, per-candidate

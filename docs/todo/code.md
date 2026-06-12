@@ -2318,10 +2318,14 @@ Primary evidence:
     modes, validates the mode through `Config.mutation_mode` and CLI
     `--mutation-mode`, renders matching `{mutation_mode}` and
     `{mutation_instructions}` prompt fields, and applies all candidates in a
-    run with the same configured mode. It does not choose the mutation-output
-    contract per problem, candidate size, file/block count, parent failure
-    history, or model response quality, and it does not report why a candidate
-    was asked for a diff versus a full rewrite.
+    run with the same configured mode.
+    `libreevolve.alphaevolve_adaptive_mutation_mode_boundary.v1` now preserves
+    the absence boundary for per-candidate diff-versus-full selection,
+    candidate-size/task-shape thresholds, failure-aware fallback policy,
+    mixed-mode run telemetry, and AlphaEvolve-style selection tests. It does
+    not choose the mutation-output contract per problem, candidate size,
+    file/block count, parent failure history, or model response quality, and it
+    does not report why a candidate was asked for a diff versus a full rewrite.
   - Required result: add a versioned mutation-mode policy that can choose
     between diff and full-output contracts per candidate or prompt arm,
     including candidate-size/task-shape thresholds, prompt metadata,

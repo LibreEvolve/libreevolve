@@ -18815,3 +18815,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     need to be produced.
   - Verification: focused boundary and paper-manifest tests cover valid,
     overclaim, and missing-root-sidecar cases.
+- [x] Add adaptive mutation-mode absence boundary.
+  - Spec evidence: AlphaEvolve Section 2.3 requests SEARCH/REPLACE diffs for
+    larger codebases and full-code output for very short code or complete
+    rewrite cases.
+  - Status: `libreevolve.alphaevolve_adaptive_mutation_mode_boundary.v1` now
+    records configured run-wide `diff`/`full` support, prompt fields,
+    diff/full parsers, and mutation-mode history metadata while rejecting
+    adaptive-selection overclaims. The paper manifest now requires
+    `papers/adaptive_mutation_mode_boundary.json` at the repo root.
+  - Remaining gap: per-candidate diff-versus-full selection, candidate-size
+    thresholds, task/workspace-shape policy, failure-aware fallback behavior,
+    mixed-mode run telemetry, and AlphaEvolve-style selection tests remain
+    unimplemented.
+  - Verification: focused boundary and paper-manifest tests cover valid,
+    overclaim, and missing-root-sidecar cases.

@@ -2418,9 +2418,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     is more suitable.
   - Current evidence: README correctly says LLM mutations use SEARCH/REPLACE
     diffs by default and full-block/full-code replacements when
-    `mutation_mode: full` is configured. It should not imply that LibreEvolve
-    currently chooses that output contract per candidate size, workspace shape,
-    or prior failure mode.
+    `mutation_mode: full` is configured. README now also points to
+    `papers/adaptive_mutation_mode_boundary.json`, which preserves the
+    manifest-checked boundary that LibreEvolve does not currently choose that
+    output contract per candidate size, workspace shape, task shape, or prior
+    failure mode.
   - Required result: when adaptive mutation-mode selection lands, update
     README, ROADMAP, papers index, and code/paper TODOs with the selection
     policy, per-candidate telemetry, and examples that prove diff prompts and

@@ -1479,7 +1479,9 @@ a run-wide prompt/parser contract. AlphaEvolve Section 2.3 distinguishes
 diff-block output for larger codebases from direct full-code output for very
 short code or rewrite-friendly cases, so LibreEvolve still needs adaptive
 per-candidate mutation-mode policy and telemetry before claiming that
-diff-versus-full prompting follows the paper's conditions.
+diff-versus-full prompting follows the paper's conditions. The committed
+`papers/adaptive_mutation_mode_boundary.json` sidecar preserves this run-wide
+configured-mode-only boundary for paper-manifest validation.
 
 AlphaEvolve multi-edit consistency note: LibreEvolve prompt instructions ask
 models to keep same-response edits consistent, including matching new helpers,
@@ -2257,6 +2259,12 @@ Implemented:
   experiment-level selection traces, reserved fast-breadth or strong-depth
   lane policies, candidate throughput outcomes, candidate quality/depth
   outcomes, or equal-budget scheduler comparisons.
+- `papers/adaptive_mutation_mode_boundary.json`: adaptive mutation-mode
+  sidecar for AlphaEvolve Section 2.3. It records configured run-wide `diff`
+  and `full` mutation modes, prompt fields, diff/full parsers, and history
+  metadata. It is not evidence of per-candidate diff-versus-full selection,
+  candidate-size or task-shape thresholds, failure-aware fallback policy,
+  mixed-mode run telemetry, or AlphaEvolve-style selection tests.
 - `libreevolve/llm/cancellation_policy.py`: provider timeout/cancellation
   policy contract. It validates timeout/cancellation rules, role-scoped budget
   actions, artifact requirements, hard-cancel readiness gated on

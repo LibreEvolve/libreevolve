@@ -12892,3 +12892,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     evidence until those exhibit artifacts exist.
   - Verification: focused boundary and paper-manifest tests cover the sidecar
     and its overclaim rejection.
+- [x] Add README boundary for adaptive diff-versus-full mutation mode.
+  - Spec evidence: AlphaEvolve Section 2.3 chooses SEARCH/REPLACE or full-code
+    output based on codebase size and rewrite suitability.
+  - Status: README now states that mutation mode is a configured run-wide
+    `diff` or `full` prompt/parser contract, not adaptive per-candidate
+    diff-versus-full selection based on code size, workspace shape, task shape,
+    or failure history. It points to
+    `papers/adaptive_mutation_mode_boundary.json`.
+  - Remaining README gap: docs cannot claim adaptive mutation-mode selection
+    until the policy, telemetry, and examples exist.
+  - Verification: focused boundary and paper-manifest tests cover the sidecar
+    and its overclaim rejection.

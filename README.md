@@ -75,6 +75,10 @@ Important limits:
   accepted edits are semantically coherent or that required companion edits are
   inferred; that boundary is tracked by
   `papers/mutation_consistency_boundary.json`.
+- Mutation mode is a configured run-wide `diff` or `full` prompt/parser
+  contract, not adaptive per-candidate diff-versus-full selection based on
+  code size, workspace shape, task shape, or failure history; that boundary is
+  tracked by `papers/adaptive_mutation_mode_boundary.json`.
 - Initial-pool divergence reports are syntactic and shared-metric telemetry,
   not task-specific functional-distance proof or "substantially different"
   benchmark evidence; that boundary is tracked by

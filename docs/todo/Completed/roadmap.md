@@ -10665,3 +10665,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     generated before claiming reproduced Figure 3 example evidence.
   - Verification: focused boundary and paper-manifest tests cover overclaim
     rejection and repo-root sidecar presence.
+- [x] Scope ROADMAP mutation-mode wording with an adaptive-selection sidecar.
+  - Spec evidence: AlphaEvolve Section 2.3 distinguishes diff prompts for
+    larger codebases from direct full-code output for short or rewrite-friendly
+    cases.
+  - Status: ROADMAP now cites `papers/adaptive_mutation_mode_boundary.json`,
+    which preserves the manifest-checked boundary between configured run-wide
+    `diff`/`full` prompt/parser support and unimplemented per-candidate
+    adaptive selection by code size, workspace shape, task shape, prior
+    failures, fallback behavior, or selection telemetry.
+  - Remaining roadmap gap: adaptive policy, telemetry, and examples still need
+    to land before claiming AlphaEvolve-style mutation-output mode selection.
+  - Verification: focused boundary and paper-manifest tests cover overclaim
+    rejection and repo-root sidecar presence.

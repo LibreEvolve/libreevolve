@@ -330,6 +330,16 @@
     "sha256": "b8f592bd68429b4c5f7cee2878a316941acf3cdf80215a0d78c08c25a73722f3"
   },
   {
+    "id": "2605.01120",
+    "title": "Zarankiewicz_Reinforced_Search",
+    "url": "https://arxiv.org/pdf/2605.01120.pdf",
+    "file": "papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf",
+    "ok": true,
+    "bytes": 784207,
+    "message": "downloaded",
+    "sha256": "bebb4ec9e8a114800515c1018b76d9a19c4467edcc1f168bc10be68b0d0ad4f0"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

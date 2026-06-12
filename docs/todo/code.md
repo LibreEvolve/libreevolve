@@ -5262,7 +5262,8 @@ Primary evidence:
     claims source-scoped until local trace diagnostics and replay reports
     exist.
 
-- [ ] Add Zarankiewicz reinforced-search application source boundary.
+- [ ] Implement Zarankiewicz reinforced-search benchmark evidence beyond paper
+      cache coverage.
   - Spec evidence: arXiv `2605.01120`, `New Bounds for Zarankiewicz Numbers
     via Reinforced LLM Evolutionary Search`, was submitted May 1, 2026 and
     revised May 7, 2026. Its abstract says OpenEvolve, an open-source
@@ -5271,22 +5272,27 @@ Primary evidence:
     bounds for 41 more Zarankiewicz numbers; and four matched closed cases.
     It reports generation algorithms, implementation details, and costs under
     `$30` per Zarankiewicz parameter combination.
-  - Current evidence: LibreEvolve tracks AlphaEvolve, selected math sources,
-    benchmark contracts, prompt/run artifacts, and cost-aware search papers,
-    but no Zarankiewicz source row or runnable extremal-graph fixture. There
-    is no bipartite-graph construction evaluator, `K_{s,t}`-free verifier,
-    exact/lower-bound table, generated construction algorithm capture,
-    proof/check artifact, parameter-combination manifest, reproducible cost
-    accounting, or OpenEvolve-to-LibreEvolve application boundary.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2605.01120`: arXiv id/version/date/PDF hash, authors, source license,
-    relation to AlphaEvolve/OpenEvolve and LibreEvolve, Zarankiewicz
-    parameter schema, bipartite graph representation, `K_{s,t}`-free
-    validation logic, exact-value/lower-bound records, generated construction
-    algorithm artifacts, computational-cost report, verifier/proof status,
-    benchmark baselines and upper-bound references, reproducibility metadata,
-    and README/ROADMAP wording that keeps Zarankiewicz discovery claims as
-    missing application evidence until local fixtures and reports exist.
+  - Current evidence: `papers/download_manifest.*`, `papers/README.md`, and
+    TODO coverage now include `2605.01120`, cached locally as
+    `papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf` with byte count
+    `784207` and SHA-256
+    `bebb4ec9e8a114800515c1018b76d9a19c4467edcc1f168bc10be68b0d0ad4f0`.
+    LibreEvolve tracks AlphaEvolve, selected math sources, benchmark
+    contracts, prompt/run artifacts, and cost-aware search papers, but it has
+    no runnable Zarankiewicz extremal-graph fixture. There is no bipartite-
+    graph construction evaluator, `K_{s,t}`-free verifier, exact/lower-bound
+    table, generated construction algorithm capture, proof/check artifact,
+    parameter-combination manifest, reproducible cost accounting, or
+    OpenEvolve-to-LibreEvolve application boundary.
+  - Required result: add evidence beyond paper-cache coverage for
+    `2605.01120`: authors/source-license details, relation to
+    AlphaEvolve/OpenEvolve and LibreEvolve, Zarankiewicz parameter schema,
+    bipartite graph representation, `K_{s,t}`-free validation logic,
+    exact-value/lower-bound records, generated construction algorithm
+    artifacts, computational-cost report, verifier/proof status, benchmark
+    baselines and upper-bound references, reproducibility metadata, and
+    README/ROADMAP wording that keeps Zarankiewicz discovery claims as missing
+    application evidence until local fixtures and reports exist.
 
 - [ ] Add CORAL autonomous multi-agent evolution source boundary.
   - Spec evidence: arXiv `2604.01658`, `CORAL: Towards Autonomous Multi-Agent

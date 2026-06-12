@@ -12877,3 +12877,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2605.01120` Zarankiewicz reinforced-search paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2605.01120`, `New Bounds for Zarankiewicz Numbers via Reinforced LLM
+    Evolutionary Search`, cached locally as
+    `papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf` with byte count
+    `784207` and SHA-256
+    `bebb4ec9e8a114800515c1018b76d9a19c4467edcc1f168bc10be68b0d0ad4f0`.
+  - Remaining paper gap: source-license details, relation to
+    AlphaEvolve/OpenEvolve, Zarankiewicz parameter manifests, bipartite graph
+    construction schemas, `K_{s,t}`-free verifier metadata, exact-value and
+    lower-bound tables, generated construction algorithm artifacts,
+    proof/check status, computational-cost records, upper-bound and baseline
+    references, code/artifact availability, reproducibility status, and
+    independent reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.paper_source_identity_manifest.v1",
-  "source_identity_count": 35,
+  "source_identity_count": 36,
   "source_identity_policy": "manifest_id_url_source_id_and_file_source_prefix_must_match_before_source_version_or_rights_claims",
   "sources": [
     {
@@ -593,6 +593,24 @@
       "url_source_id": "2605.20086",
       "url_versioned_id": "2605.20086",
       "file_source_id": "2605.20086",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2605.01120",
+      "title": "Zarankiewicz_Reinforced_Search",
+      "url": "https://arxiv.org/pdf/2605.01120.pdf",
+      "file": "papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf",
+      "sha256": "bebb4ec9e8a114800515c1018b76d9a19c4467edcc1f168bc10be68b0d0ad4f0",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2605.01120",
+      "url_versioned_id": "2605.01120",
+      "file_source_id": "2605.01120",
       "identity_checks": {
         "manifest_id_matches_url_source_id": true,
         "manifest_id_matches_file_source_id": true,

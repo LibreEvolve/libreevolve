@@ -4769,7 +4769,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     trace diagnostics as missing implementation evidence rather than
     implemented LibreEvolve support.
 
-- [ ] Track Zarankiewicz reinforced-search paper evidence.
+- [ ] Reproduce Zarankiewicz reinforced-search evidence beyond paper coverage.
   - Paper/source evidence: arXiv `2605.01120`, submitted May 1, 2026 and last
     revised May 7, 2026, is titled `New Bounds for Zarankiewicz Numbers via
     Reinforced LLM Evolutionary Search`. Its abstract says OpenEvolve, an
@@ -4779,22 +4779,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     four matched closed cases. The paper also reports generated construction
     algorithms, implementation details, and computational costs under `$30`
     per Zarankiewicz parameter combination.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2605.01120`. Existing rows cover AlphaEvolve, mathematical
-    follow-on problem sources, combinatorics examples, cost-aware routing, and
-    trace diagnostics, but not Zarankiewicz parameter manifests,
-    bipartite-graph construction artifacts, `K_{s,t}`-free validation,
-    exact/lower-bound tables, generated construction algorithms, cost records,
-    or OpenEvolve-to-LibreEvolve application boundaries.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2605.01120`: title/authors/arXiv version/date/PDF digest, source license,
-    relation to AlphaEvolve/OpenEvolve and LibreEvolve, Zarankiewicz parameter
-    schema, graph representation, `K_{s,t}`-free verifier metadata,
-    exact-value and lower-bound records, generated construction algorithm
-    artifacts, proof/check status, computational-cost records, upper-bound and
-    baseline references, code/artifact availability if any, reproducibility
-    status, and README/ROADMAP wording that treats the paper as missing
-    application evidence rather than implemented LibreEvolve support.
+  - Current gap: the paper cache, paper index, row identity, and TODO coverage
+    now include `2605.01120`, cached locally as
+    `papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf` with byte count
+    `784207` and SHA-256
+    `bebb4ec9e8a114800515c1018b76d9a19c4467edcc1f168bc10be68b0d0ad4f0`.
+    Existing evidence still does not reproduce Zarankiewicz parameter
+    manifests, bipartite-graph construction artifacts, `K_{s,t}`-free
+    validation, exact/lower-bound tables, generated construction algorithms,
+    cost records, or OpenEvolve-to-LibreEvolve application boundaries.
+  - Required result: add reproduction-grade evidence beyond paper coverage for
+    `2605.01120`: title/authors/arXiv version/date, source license, relation
+    to AlphaEvolve/OpenEvolve and LibreEvolve, Zarankiewicz parameter schema,
+    graph representation, `K_{s,t}`-free verifier metadata, exact-value and
+    lower-bound records, generated construction algorithm artifacts,
+    proof/check status, computational-cost records, upper-bound and baseline
+    references, code/artifact availability if any, reproducibility status, and
+    README/ROADMAP wording that treats the paper as missing application
+    evidence rather than implemented LibreEvolve support.
 
 - [ ] Track CORAL autonomous multi-agent evolution paper evidence.
   - Paper/source evidence: arXiv `2604.01658`, submitted April 2, 2026 and

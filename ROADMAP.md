@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 35 cache rows and links the AlphaEvolve row to
+  identities for all 36 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1368,6 +1368,18 @@ resumed-trace proof are still open.
   constant-retuning baselines, deleted-line reintroduction/cycling detectors,
   held-out generalization reports, and independent reproduction outputs remain
   open before roadmap wording can promote EvoTrace/EvoReplay-style evidence.
+- Keep Zarankiewicz reinforced-search claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2605.01120`, `New Bounds for Zarankiewicz Numbers via Reinforced LLM
+  Evolutionary Search`, cached locally as
+  `papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf`. This is an
+  unimplemented constructive-math benchmark candidate; Zarankiewicz parameter
+  manifests, bipartite graph construction schemas, `K_{s,t}`-free verifiers,
+  exact-value/lower-bound tables, generated-algorithm artifact hashes,
+  OpenEvolve setup provenance, reward-function specifications, upper-bound
+  comparison ledgers, per-parameter cost accounting, and independent
+  reproduction outputs remain open before roadmap wording can promote
+  Zarankiewicz discovery support.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

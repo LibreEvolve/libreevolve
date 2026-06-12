@@ -764,7 +764,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     URL, and local PDF label describing the same source before version or
     rights evidence attaches.
   - Status: ROADMAP now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 35 cache
+    companion manifest that emits derived source identities for all 36 cache
     rows and links the AlphaEvolve row to `papers/source_versions.json`.
   - Remaining gap: none for this bounded roadmap wording slice.
 
@@ -9879,5 +9879,19 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     component-removal intervention harnesses, constant-retuning baselines,
     deleted-line reintroduction/cycling detectors, held-out generalization
     reports, and independent reproduction outputs explicitly open.
-  - Verification: paper-manifest validation checks the 35-row manifest,
+  - Verification: paper-manifest validation checks the current manifest,
+    paper-index row, TODO coverage row, and source-identity sidecar.
+
+- [x] Preserve `2605.01120` Zarankiewicz reinforced-search paper-cache scope
+      in roadmap.
+  - Status: ROADMAP now identifies arXiv `2605.01120`, `New Bounds for
+    Zarankiewicz Numbers via Reinforced LLM Evolutionary Search`, as an
+    unimplemented constructive-math benchmark candidate, with the cached
+    `papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf` row and missing
+    Zarankiewicz parameter manifests, bipartite graph construction schemas,
+    `K_{s,t}`-free verifiers, exact-value/lower-bound tables, generated-
+    algorithm artifact hashes, OpenEvolve setup provenance, reward-function
+    specifications, upper-bound comparison ledgers, per-parameter cost
+    accounting, and independent reproduction outputs explicitly open.
+  - Verification: paper-manifest validation checks the 36-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.

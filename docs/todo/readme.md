@@ -3155,24 +3155,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     outcomes, baseline-agent identities, and task reports. Avoid implying
     LibreEvolve has trace-level mechanistic evidence without those artifacts.
 
-- [ ] Keep README Zarankiewicz discovery claims absent or source-scoped until
-      paper and benchmark evidence exists.
+- [ ] Keep README Zarankiewicz discovery claims source-scoped until benchmark
+      evidence exists.
   - Spec evidence: arXiv `2605.01120`, `New Bounds for Zarankiewicz Numbers
     via Reinforced LLM Evolutionary Search`, reports exact values for three
     Zarankiewicz numbers, lower bounds for 41 more, four matched closed cases,
     generated construction algorithms, and computational costs under `$30` per
     parameter combination using OpenEvolve.
-  - Current evidence: README documents LibreEvolve's current examples, source
-    provenance, run artifacts, benchmark contracts, and implementation
-    boundaries. It does not list `2605.01120`, provide a Zarankiewicz problem
-    fixture, verify `K_{s,t}`-free bipartite graphs, preserve generated
-    construction algorithms, reproduce exact/lower-bound tables, or report
-    parameter-specific costs.
+  - Current evidence: README now lists `2605.01120`, Zarankiewicz reinforced
+    search, as an extremal-graph benchmark candidate only and states that no
+    local Zarankiewicz fixture, `K_{s,t}` verifier, construction table, or
+    sub-$30 cost report exists. README also documents LibreEvolve's current
+    examples, source provenance, run artifacts, benchmark contracts, and
+    implementation boundaries.
   - Required result: if README mentions Zarankiewicz numbers, extremal
     bipartite graph discovery, OpenEvolve combinatorics results, exact
     `Z(m,n,s,t)` values, 41 lower bounds, or under-`$30` construction costs,
-    keep the wording source-scoped until the paper is in the manifest and
-    local artifacts can show graph fixtures, verifier outputs, construction
+    keep the wording source-scoped until local artifacts can show graph
+    fixtures, verifier outputs, construction
     algorithms, exact/lower-bound records, proof/check status, cost accounting,
     baseline references, and reproducibility reports. Avoid implying
     LibreEvolve supports this application without those artifacts.

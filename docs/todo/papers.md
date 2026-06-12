@@ -5178,7 +5178,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     reproduction outputs, and README/ROADMAP wording that treats HarnessFix as
     background context until those artifacts exist.
 
-- [ ] Track RHO retrospective self-preference harness optimization evidence.
+- [ ] Reproduce RHO retrospective self-preference harness optimization
+      evidence beyond paper coverage.
   - Paper/source evidence: arXiv `2606.05922`, submitted June 4, 2026, is
     titled `Retrospective Harness Optimization: Improving LLM Agents via
     Self-Preference over Trajectory Rollouts`. Its abstract says continually
@@ -5191,26 +5192,32 @@ directory and using the AlphaEvolve paper as the primary specification.
     pairwise self-preference. It reports a single optimization round improving
     SWE-Bench Pro pass rate from 59% to 78% without external grading, and says
     the optimized harness sustains higher accuracy in long-horizon sessions.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2606.05922`. Existing rows cover AlphaEvolve evaluator-backed
-    search, failure traces, HarnessFix trace-grounded repair, SIA harness and
-    weight updates, and AEvo process meta-editing, but not label-free
-    retrospective coreset selection, parallel re-rollouts from past
-    trajectories, self-validation/self-consistency analysis, pairwise
-    self-preference ranking, or harness deployment evidence without external
-    labels.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2606.05922`: title/authors/arXiv version/date/PDF digest, source
-    license, relation to AlphaEvolve and LibreEvolve evaluator assumptions,
-    past-trajectory corpus metadata, hard-task/diversity coreset selection,
-    retrospective rollout batch records, parallel re-solve provenance,
-    self-validation and self-consistency artifacts, candidate harness-update
-    records, pairwise self-preference comparisons, label-free selection
-    policy, deployment and rollback metadata, behavior-pattern shift reports,
-    long-horizon accuracy records, SWE-Bench Pro benchmark metadata, baseline
-    identities, code/artifact availability if any, reproducibility status, and
-    README/ROADMAP wording that treats RHO as missing paper evidence rather
-    than implemented LibreEvolve support.
+  - Current gap: the paper cache, paper index, row identity, README, ROADMAP,
+    and TODO coverage now include `2606.05922`, cached locally as
+    `papers/2606.05922__RHO.pdf` with byte count `1267774` and SHA-256
+    `75b126a2a6350e8ff58c0e6c7f3366894e23f0610f533ac533fc3e3214aa7cd4`.
+    Reproduction evidence remains absent: no source-license details,
+    linked-code or project URL status, past-trajectory corpus metadata, hard-
+    task/diversity coreset selection, DPP coreset record, retrospective
+    rollout batch records, parallel re-solve provenance, self-validation or
+    self-consistency artifacts, candidate harness-update records, pairwise
+    self-preference comparisons, label-free selection policy, deployment and
+    rollback metadata, behavior-pattern shift reports, long-horizon accuracy
+    records, SWE-Bench Pro benchmark metadata, baseline identities,
+    code/artifact reproducibility status, or independent reproduction output
+    exists.
+  - Required result: add reproduction-grade RHO evidence: source license,
+    project URL status, linked-code status, relation to AlphaEvolve and
+    LibreEvolve evaluator assumptions, past-trajectory corpus metadata, hard-
+    task/diversity coreset selection, DPP coreset record, retrospective
+    rollout batch records, parallel re-solve provenance, self-validation and
+    self-consistency artifacts, candidate harness-update records, pairwise
+    self-preference comparisons, label-free selection policy, deployment and
+    rollback metadata, behavior-pattern shift reports, long-horizon accuracy
+    records, SWE-Bench Pro benchmark metadata, baseline identities,
+    code/artifact reproducibility status, independent reproduction outputs,
+    and README/ROADMAP wording that treats RHO as background context until
+    those artifacts exist.
 
 - [ ] Track harness-updating versus harness-benefit paper evidence.
   - Paper/source evidence: arXiv `2605.30621`, submitted May 28, 2026, is

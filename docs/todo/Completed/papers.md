@@ -13086,3 +13086,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2606.05922` RHO paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2606.05922`, `Retrospective Harness Optimization: Improving LLM Agents
+    via Self-Preference over Trajectory Rollouts`, cached locally as
+    `papers/2606.05922__RHO.pdf` with byte count `1267774` and SHA-256
+    `75b126a2a6350e8ff58c0e6c7f3366894e23f0610f533ac533fc3e3214aa7cd4`.
+  - Remaining paper gap: source-license details, linked-code or project URL
+    status, past-trajectory corpus metadata, hard-task/diversity coreset
+    selection, DPP coreset records, retrospective rollout batch records,
+    parallel re-solve provenance, self-validation and self-consistency
+    artifacts, candidate harness-update records, pairwise self-preference
+    comparisons, label-free selection policy, deployment and rollback
+    metadata, behavior-pattern shift reports, long-horizon accuracy records,
+    SWE-Bench Pro benchmark metadata, baseline identities, code/artifact
+    reproducibility status, and independent reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

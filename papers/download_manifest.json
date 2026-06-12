@@ -440,6 +440,16 @@
     "sha256": "00a4236ba8ab24925e3b0409b4c003bd22c57d76faabc888f20734fba5e4cafd"
   },
   {
+    "id": "2606.05922",
+    "title": "RHO",
+    "url": "https://arxiv.org/pdf/2606.05922.pdf",
+    "file": "papers/2606.05922__RHO.pdf",
+    "ok": true,
+    "bytes": 1267774,
+    "message": "downloaded",
+    "sha256": "75b126a2a6350e8ff58c0e6c7f3366894e23f0610f533ac533fc3e3214aa7cd4"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

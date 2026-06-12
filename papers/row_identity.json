@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.paper_source_identity_manifest.v1",
-  "source_identity_count": 46,
+  "source_identity_count": 47,
   "source_identity_policy": "manifest_id_url_source_id_and_file_source_prefix_must_match_before_source_version_or_rights_claims",
   "sources": [
     {
@@ -791,6 +791,24 @@
       "url_source_id": "2606.06324",
       "url_versioned_id": "2606.06324",
       "file_source_id": "2606.06324",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2606.05922",
+      "title": "RHO",
+      "url": "https://arxiv.org/pdf/2606.05922.pdf",
+      "file": "papers/2606.05922__RHO.pdf",
+      "sha256": "75b126a2a6350e8ff58c0e6c7f3366894e23f0610f533ac533fc3e3214aa7cd4",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2606.05922",
+      "url_versioned_id": "2606.05922",
+      "file_source_id": "2606.05922",
       "identity_checks": {
         "manifest_id_matches_url_source_id": true,
         "manifest_id_matches_file_source_id": true,

@@ -1245,6 +1245,17 @@ resumed-trace proof are still open.
   artifacts, rendered artifacts, and reproduced LibreEvolve evidence remains
   open before announcement wording can be treated as audited implementation
   parity.
+- Keep official 2026 AlphaEvolve impact claims separated from local
+  implementation and original-spec parity:
+  `papers/alphaevolve_2026_impact_boundary.json` now records the May 7, 2026
+  Google DeepMind impact article URL/date/title/team, retrieval hash, outbound
+  source links, claim ids and values across genomics, power-grid optimization,
+  Earth AI, quantum circuits, math/gallery examples, infrastructure,
+  compiler/storage, commercial deployments, and UI/API attribution. Local
+  DeepConsensus, AC OPF, Earth AI, Willow, TPU-design, cache-policy, Spanner,
+  compiler-storage, customer-case, public-gallery, UI, API, and independent
+  verification evidence remains open before roadmap or release wording can
+  treat those impact claims as LibreEvolve-supported workflows.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

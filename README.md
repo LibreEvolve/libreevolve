@@ -181,6 +181,7 @@ the complete implementation-status index for all 25 manifest rows.
 | Source | Role in LibreEvolve |
 | --- | --- |
 | [AlphaEvolve](https://arxiv.org/abs/2506.13131) | Main architecture inspiration and comparison target. |
+| [AlphaEvolve 2026 impact update](https://deepmind.google/blog/alphaevolve-impact/) | Official DeepMind impact-claim context only; `papers/alphaevolve_2026_impact_boundary.json` records missing local benchmark evidence for the named DeepConsensus, AC OPF, Earth AI, Willow, TPU, cache-policy, Spanner, compiler-storage, public-gallery, customer, UI, and API workflows. |
 | [MAP-Elites](https://arxiv.org/abs/1504.04909) | Quality-diversity archive inspiration. |
 | [Finite-time Analysis of the Multiarmed Bandit Problem](https://homes.di.unimi.it/~cesabian/Pubblicazioni/ml-02.pdf) | UCB1 background for backend-selection boundaries. |
 | [CodeEvolve](https://arxiv.org/abs/2510.14150) | Related agentic code-evolution work. |

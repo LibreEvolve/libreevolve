@@ -18144,3 +18144,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     remain open.
   - Verification: UCB1 boundary tests and paper-manifest tests cover the
     sidecar, drift rejection, and repo-root sidecar requirement.
+
+- [x] Add official 2026 AlphaEvolve impact source-boundary gate.
+  - Status: `libreevolve.problems.benchmarks.alphaevolve_2026_impact_boundary`
+    now emits and validates `papers/alphaevolve_2026_impact_boundary.json`
+    with the May 7, 2026 Google DeepMind impact article URL/date/title/team,
+    retrieval hash, outbound source links, impact claim ids, domain categories,
+    values/units/baselines, customer cases, UI/API attribution flags,
+    unsupported-local-benchmark evidence keys, and overclaim rejection.
+  - Remaining gap: local DeepConsensus, AC OPF, Earth AI, Willow, TPU-design,
+    cache-policy, Spanner, compiler-storage, public-gallery, customer, UI, API,
+    linked-source snapshot, benchmark-report, and independent verification
+    evidence remains open.
+  - Verification: AlphaEvolve 2026 impact boundary tests and paper-manifest
+    tests cover the sidecar, drift rejection, and repo-root sidecar
+    requirement.

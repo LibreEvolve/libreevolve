@@ -1962,6 +1962,16 @@ Implemented:
   hash, outbound white-paper/Colab/Early Access links, claim ids and
   blog-versus-paper value variants, blog-only availability statements, and
   announcement/illustration role metadata.
+- `papers/alphaevolve_2026_impact_boundary.json`: official DeepMind
+  AlphaEvolve 2026 impact sidecar, not original white-paper specification or
+  reproduced local benchmark evidence. It records the May 7, 2026 impact
+  article URL/date/title/team, retrieval hash, outbound source links, claim
+  ids and values for DeepConsensus, AC OPF, Earth AI, Willow quantum circuits,
+  public-gallery/math examples, TPU design, cache replacement, Spanner,
+  compiler storage, Google Cloud customer cases, and UI/API attribution. It
+  also records unsupported-local-benchmark flags for the named domains and
+  keeps customer/deployment claims source-scoped until linked source snapshots,
+  local fixtures, benchmark reports, and independent verification exist.
 - `libreevolve/problems/benchmarks/follow_on_coverage.py`: follow-on
   AlphaEvolve problem-repository coverage-state contract. It validates the
   pinned root-level status artifacts (`status.json`, `status_grid.png`, and

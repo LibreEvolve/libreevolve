@@ -26,6 +26,11 @@ from libreevolve.problems.benchmarks.ablation_registry import (
     REGISTRY_PATH as ABLATION_REGISTRY_PATH,
     validate_ablation_registry,
 )
+from libreevolve.problems.benchmarks.alphaevolve_2026_impact_boundary import (
+    EXPECTED_IMPACT_BOUNDARY_FILE,
+    alphaevolve_2026_impact_boundary_record,
+    validate_alphaevolve_2026_impact_boundary,
+)
 from libreevolve.problems.benchmarks.autoconvolution_boundary import (
     autoconvolution_boundary_record,
     validate_autoconvolution_boundary,
@@ -325,6 +330,7 @@ AUTOCONVOLUTION_BOUNDARY_FILE = "papers/autoconvolution_boundary.json"
 SUMS_DIFFERENCES_BOUNDARY_FILE = "papers/sums_differences_boundary.json"
 SUMS_DIFFERENCES_SEQUENCE_BOUNDARY_FILE = "papers/sums_differences_sequence_boundary.json"
 UCB1_BOUNDARY_FILE = "papers/ucb1_boundary.json"
+ALPHAEVOLVE_2026_IMPACT_BOUNDARY_FILE = EXPECTED_IMPACT_BOUNDARY_FILE
 BILATERAL_TRADE_BOUNDARY_FILE = "papers/bilateral_trade_boundary.json"
 EXAMPLE_BENCHMARK_SCOPE_FILE = "papers/example_benchmark_scope.json"
 MATH_OUTCOME_BOUNDARY_FILE = "papers/math_outcome_boundary.json"
@@ -724,6 +730,7 @@ def validate_paper_manifest(
     issues.extend(_validate_sums_differences_boundary(root_path))
     issues.extend(_validate_sums_differences_sequence_boundary(root_path))
     issues.extend(_validate_ucb1_boundary(root_path))
+    issues.extend(_validate_alphaevolve_2026_impact_boundary(root_path))
     issues.extend(_validate_bilateral_trade_boundary(root_path))
 
     if set(csv_by_id) - seen_ids:
@@ -2331,6 +2338,38 @@ def _validate_ucb1_boundary(root_path: Path) -> list[PaperManifestIssue]:
             f"ucb1_boundary_{issue.code}",
             issue.message,
             "ucb1",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_alphaevolve_2026_impact_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ALPHAEVOLVE_2026_IMPACT_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = alphaevolve_2026_impact_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_2026_impact_boundary_manifest_missing",
+                    (
+                        f"{ALPHAEVOLVE_2026_IMPACT_BOUNDARY_FILE} must emit "
+                        "official 2026 AlphaEvolve impact-source claim boundaries"
+                    ),
+                    "alphaevolve_2026_impact",
+                )
+            ]
+    report = validate_alphaevolve_2026_impact_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_2026_impact_boundary_{issue.code}",
+            issue.message,
+            "alphaevolve_2026_impact",
         )
         for issue in report.issues
     ]

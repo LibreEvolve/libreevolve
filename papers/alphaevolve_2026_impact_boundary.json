@@ -1,0 +1,463 @@
+{
+  "schema": "libreevolve.alphaevolve_2026_impact_boundary.v1",
+  "source_id": "google-deepmind-alphaevolve-impact-2026-05-07",
+  "source_family": "official_google_deepmind_alphaevolve_impact_article",
+  "source_relation": "newer official impact reporting, not the original AlphaEvolve specification and not reproduced LibreEvolve benchmark evidence",
+  "article": {
+    "title": "AlphaEvolve: How our Gemini-powered coding agent is scaling impact across fields",
+    "url": "https://deepmind.google/blog/alphaevolve-impact/",
+    "date": "2026-05-07",
+    "author": "AlphaEvolve team",
+    "section": "Science",
+    "retrieval": {
+      "retrieved_on": "2026-06-12",
+      "html_bytes": 156554,
+      "html_sha256": "2b56730407c01a316325222beda6c9c45727362505005c81a3bbc40bc5c4c97d",
+      "hash_algorithm": "sha256"
+    }
+  },
+  "boundary_status": "official_2026_impact_article_without_local_deployment_benchmarks",
+  "claim_ready": false,
+  "outbound_links": [
+    {
+      "link_id": "alphaevolve_product_page",
+      "url": "https://deepmind.google/science/alphaevolve/",
+      "category": "product_context",
+      "status": "outbound_reference_only"
+    },
+    {
+      "link_id": "deepconsensus_nature",
+      "url": "https://www.nature.com/articles/s41587-022-01435-7",
+      "category": "linked_scientific_source",
+      "status": "requires_separate_source_record"
+    },
+    {
+      "link_id": "ac_optimal_power_flow_arxiv",
+      "url": "https://arxiv.org/abs/2406.07200",
+      "category": "linked_scientific_source",
+      "status": "requires_separate_source_record"
+    },
+    {
+      "link_id": "earth_ai_accuracy_arxiv",
+      "url": "https://arxiv.org/abs/2507.11095",
+      "category": "linked_scientific_source",
+      "status": "requires_separate_source_record"
+    },
+    {
+      "link_id": "willow_quantum_arxiv",
+      "url": "https://arxiv.org/abs/2506.20661",
+      "category": "linked_scientific_source",
+      "status": "requires_separate_source_record"
+    },
+    {
+      "link_id": "alphaevolve_public_gallery",
+      "url": "https://alphaevolve-examples.web.app/",
+      "category": "public_gallery",
+      "status": "requires_snapshot_inventory"
+    },
+    {
+      "link_id": "cache_replacement_policy_arxiv",
+      "url": "https://arxiv.org/abs/2604.19837",
+      "category": "linked_scientific_source",
+      "status": "requires_separate_source_record"
+    },
+    {
+      "link_id": "compiler_storage_arxiv",
+      "url": "https://arxiv.org/abs/2604.15285",
+      "category": "linked_scientific_source",
+      "status": "requires_separate_source_record"
+    },
+    {
+      "link_id": "fm_logistic_case",
+      "url": "https://cloud.google.com/customers/fm-logistic",
+      "category": "customer_case",
+      "status": "requires_customer_source_snapshot"
+    }
+  ],
+  "framework_components": [
+    {
+      "component_id": "source_artifact_snapshot",
+      "local_status": "boundary_only"
+    },
+    {
+      "component_id": "outbound_link_inventory",
+      "local_status": "boundary_only"
+    },
+    {
+      "component_id": "impact_claim_registry",
+      "local_status": "boundary_only"
+    },
+    {
+      "component_id": "domain_category_taxonomy",
+      "local_status": "boundary_only"
+    },
+    {
+      "component_id": "value_unit_baseline_records",
+      "local_status": "boundary_only"
+    },
+    {
+      "component_id": "customer_case_registry",
+      "local_status": "boundary_only"
+    },
+    {
+      "component_id": "public_gallery_inventory",
+      "local_status": "boundary_only"
+    },
+    {
+      "component_id": "ui_api_attribution_records",
+      "local_status": "boundary_only"
+    },
+    {
+      "component_id": "linked_source_evidence_status",
+      "local_status": "boundary_only"
+    },
+    {
+      "component_id": "local_fixture_support_status",
+      "local_status": "boundary_only"
+    },
+    {
+      "component_id": "independent_verification_status",
+      "local_status": "boundary_only"
+    },
+    {
+      "component_id": "readme_roadmap_claim_boundary",
+      "local_status": "boundary_only"
+    }
+  ],
+  "claim_registry": [
+    {
+      "claim_id": "deepconsensus_variant_error_reduction",
+      "domain": "genomics",
+      "value": 30,
+      "unit": "percent_error_reduction",
+      "baseline": "variant detection errors",
+      "source": "official_2026_impact_article",
+      "evidence_status": "external_claim_requires_reproduction",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "ac_opf_feasibility_improvement",
+      "domain": "power_grid_optimization",
+      "value": "14_to_over_88",
+      "unit": "percent_feasible_solutions",
+      "baseline": "trained GNN model feasibility",
+      "source": "official_2026_impact_article",
+      "evidence_status": "external_claim_requires_reproduction",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "earth_ai_disaster_risk_accuracy_gain",
+      "domain": "earth_sciences",
+      "value": 5,
+      "unit": "percent_accuracy_gain",
+      "baseline": "20-category disaster-risk prediction accuracy",
+      "source": "official_2026_impact_article",
+      "evidence_status": "external_claim_requires_reproduction",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "willow_quantum_circuit_error_reduction",
+      "domain": "quantum_physics",
+      "value": 10,
+      "unit": "x_lower_error",
+      "baseline": "previous conventional optimization baselines",
+      "source": "official_2026_impact_article",
+      "evidence_status": "external_claim_requires_reproduction",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "erdos_public_gallery_examples",
+      "domain": "mathematics",
+      "value": "public_gallery_examples",
+      "unit": "description",
+      "baseline": "public AlphaEvolve examples",
+      "source": "official_2026_impact_article",
+      "evidence_status": "gallery_snapshot_required",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "traveling_salesman_lower_bound",
+      "domain": "mathematics",
+      "value": "improved_lower_bounds",
+      "unit": "description",
+      "baseline": "classic TSP challenge",
+      "source": "official_2026_impact_article",
+      "evidence_status": "linked_source_required",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "ramsey_numbers_lower_bound",
+      "domain": "mathematics",
+      "value": "improved_lower_bounds",
+      "unit": "description",
+      "baseline": "Ramsey number challenge",
+      "source": "official_2026_impact_article",
+      "evidence_status": "linked_source_required",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "neuroscience_interpretable_models",
+      "domain": "neuroscience",
+      "value": "discovering_interpretable_models",
+      "unit": "description",
+      "baseline": "linked bioRxiv source",
+      "source": "official_2026_impact_article",
+      "evidence_status": "linked_source_required",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "microeconomics_market_limits",
+      "domain": "microeconomics",
+      "value": "new_market_limits",
+      "unit": "description",
+      "baseline": "linked arXiv source",
+      "source": "official_2026_impact_article",
+      "evidence_status": "linked_source_required",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "neural_network_building_blocks",
+      "domain": "ai_research",
+      "value": "advancing_neural_network_building_blocks",
+      "unit": "description",
+      "baseline": "linked arXiv source",
+      "source": "official_2026_impact_article",
+      "evidence_status": "linked_source_required",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "cryptography_user_privacy",
+      "domain": "cryptography",
+      "value": "cryptography_for_user_privacy",
+      "unit": "description",
+      "baseline": "linked arXiv source",
+      "source": "official_2026_impact_article",
+      "evidence_status": "linked_source_required",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "synthetic_data_generation",
+      "domain": "ai_research",
+      "value": "synthetic_data_generation",
+      "unit": "description",
+      "baseline": "linked arXiv source",
+      "source": "official_2026_impact_article",
+      "evidence_status": "linked_source_required",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "frontier_ai_safety_mitigations",
+      "domain": "ai_safety",
+      "value": "critical_safety_mitigations",
+      "unit": "description",
+      "baseline": "linked arXiv source",
+      "source": "official_2026_impact_article",
+      "evidence_status": "linked_source_required",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "next_generation_tpu_design",
+      "domain": "ai_infrastructure",
+      "value": "regular_tool_for_next_generation_tpu_design",
+      "unit": "description",
+      "baseline": "Google infrastructure deployment",
+      "source": "official_2026_impact_article",
+      "evidence_status": "deployment_evidence_required",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "cache_replacement_policy_effort",
+      "domain": "ai_infrastructure",
+      "value": "two_days_vs_months",
+      "unit": "time_to_result",
+      "baseline": "human-intensive months",
+      "source": "official_2026_impact_article",
+      "evidence_status": "linked_source_required",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "spanner_write_amplification_reduction",
+      "domain": "database_infrastructure",
+      "value": 20,
+      "unit": "percent_write_amplification_reduction",
+      "baseline": "Spanner LSM compaction heuristics",
+      "source": "official_2026_impact_article",
+      "evidence_status": "external_claim_requires_reproduction",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "compiler_storage_footprint_reduction",
+      "domain": "compiler_optimization",
+      "value": 9,
+      "unit": "nearly_percent_storage_footprint_reduction",
+      "baseline": "software storage footprint",
+      "source": "official_2026_impact_article",
+      "evidence_status": "external_claim_requires_reproduction",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "klarna_training_speed",
+      "domain": "commercial_financial_services",
+      "value": 2,
+      "unit": "x_training_speed",
+      "baseline": "large transformer model",
+      "source": "official_2026_impact_article",
+      "evidence_status": "customer_source_required",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "substrate_lithography_runtime",
+      "domain": "commercial_semiconductors",
+      "value": "multi_fold",
+      "unit": "runtime_speed_increase",
+      "baseline": "computational lithography framework",
+      "source": "official_2026_impact_article",
+      "evidence_status": "customer_source_required",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "fm_logistic_routing_efficiency",
+      "domain": "commercial_logistics",
+      "value": 10.4,
+      "unit": "percent_routing_efficiency_improvement",
+      "baseline": "previous heavily optimized solutions",
+      "source": "official_2026_impact_article",
+      "evidence_status": "customer_source_required",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "wpp_accuracy_gain",
+      "domain": "commercial_advertising",
+      "value": 10,
+      "unit": "percent_accuracy_gain",
+      "baseline": "competitive manual model optimizations",
+      "source": "official_2026_impact_article",
+      "evidence_status": "customer_source_required",
+      "local_benchmark_supported": false
+    },
+    {
+      "claim_id": "schrodinger_mlff_speedup",
+      "domain": "commercial_life_sciences",
+      "value": 4,
+      "unit": "roughly_x_training_and_inference_speedup",
+      "baseline": "MLFF training and inference",
+      "source": "official_2026_impact_article",
+      "evidence_status": "customer_source_required",
+      "local_benchmark_supported": false
+    }
+  ],
+  "customer_cases": [
+    {
+      "customer": "Klarna",
+      "domain": "financial_services",
+      "reported_result": "doubling transformer-model training speed while improving quality",
+      "local_evidence": false
+    },
+    {
+      "customer": "Substrate",
+      "domain": "semiconductor_manufacturing",
+      "reported_result": "multi-fold computational-lithography runtime speed increase",
+      "local_evidence": false
+    },
+    {
+      "customer": "FM Logistic",
+      "domain": "logistics",
+      "reported_result": "10.4% routing-efficiency improvement and over 15000 km saved annually",
+      "local_evidence": false
+    },
+    {
+      "customer": "WPP",
+      "domain": "advertising_and_marketing",
+      "reported_result": "10% accuracy gain over competitive manual optimizations",
+      "local_evidence": false
+    },
+    {
+      "customer": "Schrodinger",
+      "domain": "computational_material_and_life_sciences",
+      "reported_result": "roughly 4x Machine Learned Force Fields training and inference speedup",
+      "local_evidence": false
+    }
+  ],
+  "attribution": {
+    "initial_development_team_recorded": true,
+    "scaling_impact_contributors_recorded": true,
+    "ui_contributors_recorded": true,
+    "api_cloud_contributors_recorded": true,
+    "collaborator_application_names_recorded": true,
+    "local_role_artifact_links_ready": false
+  },
+  "local_evidence": {
+    "deepconsensus_fixture_ready": false,
+    "ac_opf_fixture_ready": false,
+    "earth_ai_fixture_ready": false,
+    "willow_quantum_fixture_ready": false,
+    "gallery_snapshot_ready": false,
+    "tpu_design_fixture_ready": false,
+    "cache_policy_fixture_ready": false,
+    "spanner_fixture_ready": false,
+    "compiler_storage_fixture_ready": false,
+    "customer_case_snapshots_ready": false,
+    "ui_api_artifact_inventory_ready": false,
+    "independent_verification_ready": false,
+    "repository_runtime_verified": false
+  },
+  "required_evidence_fields": [
+    "canonical_url",
+    "publication_date",
+    "article_title",
+    "author_or_team",
+    "source_section",
+    "retrieval_timestamp",
+    "retrieval_html_bytes",
+    "retrieval_html_sha256",
+    "outbound_link_inventory",
+    "claim_ids",
+    "domain_categories",
+    "value_fields",
+    "unit_fields",
+    "baseline_fields",
+    "linked_source_urls",
+    "linked_source_status",
+    "customer_case_names",
+    "deployment_attribution_labels",
+    "public_gallery_url",
+    "ui_contributor_attribution",
+    "api_cloud_contributor_attribution",
+    "local_fixture_status",
+    "local_benchmark_report_status",
+    "unsupported_local_benchmark_flags",
+    "independent_verification_status",
+    "original_spec_separation",
+    "libreevolve_feature_support_separation",
+    "readme_claim_boundary",
+    "roadmap_claim_boundary",
+    "paper_index_claim_boundary"
+  ],
+  "missing_evidence": {
+    "deepconsensus_local_variant_detection_benchmark": "not_implemented_locally",
+    "ac_opf_local_power_grid_fixture": "not_implemented_locally",
+    "earth_ai_local_geospatial_fixture": "not_implemented_locally",
+    "willow_quantum_circuit_fixture": "not_implemented_locally",
+    "public_gallery_snapshot_hashes": "not_recorded_locally",
+    "traveling_salesman_lower_bound_checker": "not_implemented_locally",
+    "ramsey_number_graph_checker": "not_implemented_locally",
+    "neuroscience_model_fixture": "not_implemented_locally",
+    "microeconomics_market_limit_fixture": "not_implemented_locally",
+    "neural_network_building_block_fixture": "not_implemented_locally",
+    "cryptography_privacy_fixture": "not_implemented_locally",
+    "synthetic_data_generation_fixture": "not_implemented_locally",
+    "safety_mitigation_fixture": "not_implemented_locally",
+    "tpu_design_deployment_evidence": "not_recorded_locally",
+    "cache_policy_runtime_reproduction": "not_implemented_locally",
+    "spanner_lsm_compaction_fixture": "not_implemented_locally",
+    "compiler_storage_benchmark": "not_implemented_locally",
+    "customer_case_source_snapshots": "not_recorded_locally",
+    "ui_surface_artifact_inventory": "not_recorded_locally",
+    "api_cloud_customer_artifact_inventory": "not_recorded_locally",
+    "linked_source_independent_verification": "not_recorded_locally",
+    "local_benchmark_reports": "not_implemented_locally",
+    "claim_value_normalization_policy": "not_recorded_locally",
+    "release_note_claim_gate": "not_implemented_locally"
+  },
+  "claim_boundary": "This record preserves the official 2026 DeepMind impact article as source evidence only. It does not claim LibreEvolve implements or reproduces the named DeepConsensus, AC OPF, Earth AI, Willow, TPU, cache-policy, Spanner, compiler-storage, public-gallery, customer, UI, or API workflows."
+}

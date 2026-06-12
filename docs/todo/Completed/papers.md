@@ -12691,3 +12691,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     UCB1-TUNED support evidence, and independent checker outputs remain open.
   - Verification: UCB1 boundary tests and paper-manifest tests validate the
     sidecar and reject canonical-regret overclaims.
+
+- [x] Record official 2026 AlphaEvolve impact source boundary.
+  - Status: `papers/alphaevolve_2026_impact_boundary.json` now carries the
+    official May 7, 2026 Google DeepMind impact article source boundary with
+    article URL/date/title/team, retrieval hash, outbound source links, claim
+    ids/categories/values/units/baselines, public-gallery and customer-case
+    records, UI/API attribution flags, missing-evidence keys, and source-scoped
+    claim policy.
+  - Remaining paper gap: linked source snapshots, customer-source snapshots,
+    public-gallery inventories, local fixtures, reproduced benchmark reports,
+    claim-value normalization evidence, and independent verification outputs
+    remain open before these claims are benchmark evidence.
+  - Verification: AlphaEvolve 2026 impact boundary tests and paper-manifest
+    tests validate the sidecar and reject local-evidence overclaims.

@@ -9744,3 +9744,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     UCB-family variants, and `throughput_depth` non-proof status.
   - Verification: UCB1 boundary tests and paper-manifest tests validate the
     sidecar and repo-root requirement.
+
+- [x] Preserve official 2026 AlphaEvolve impact boundary scope in roadmap.
+  - Status: ROADMAP now identifies
+    `papers/alphaevolve_2026_impact_boundary.json` as the source-specific
+    boundary for the May 7, 2026 official impact article, including retrieval
+    provenance, outbound links, claim categories and values, customer cases,
+    public-gallery/UI/API attribution, local-fixture status, and source-scoped
+    release/README boundaries.
+  - Verification: AlphaEvolve 2026 impact boundary tests and paper-manifest
+    tests validate the sidecar and repo-root requirement.

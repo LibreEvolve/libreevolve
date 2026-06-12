@@ -4464,8 +4464,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     retrieval evidence coverage validation, or the core full-runtime restore
     bundle that deliberately excludes provider-output replay.
 
-- [ ] Track official 2026 AlphaEvolve impact article as a separate source
-      surface.
+- [ ] Reproduce official 2026 AlphaEvolve impact claims beyond the separate
+      source surface.
   - Paper/source evidence: Google DeepMind published
     `AlphaEvolve: How our Gemini-powered coding agent is scaling impact across
     fields` on May 7, 2026. The article describes AlphaEvolve impact after the
@@ -4476,19 +4476,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     design, cache replacement policies, Spanner write amplification, compiler
     storage footprint, Google Cloud/customer deployments, and UI/API scaling
     contributors.
-  - Current gap: the paper cache and TODOs track `2506.13131`, the original
-    companion Colab/repository, the May 2025 DeepMind announcement, follow-on
-    mathematical-problem sources, and selected later theoretical-CS papers.
-    They do not preserve this 2026 official impact article as a source row,
-    claim surface, outbound-link inventory, customer/deployment evidence
-    boundary, or attribution record.
-  - Required result: extend paper/source manifests with the 2026 impact
-    article URL, publication date, author/team, title, retrieval digest,
-    linked sources, claim ids and categories, values/units/baselines, evidence
-    status for each linked paper/repository/customer source, public-gallery
-    and UI/API attribution metadata, and docs checks that keep impact-article
-    claims separate from original specification, reproduced benchmark
-    evidence, and LibreEvolve feature support.
+  - Current gap: `papers/alphaevolve_2026_impact_boundary.json` now preserves
+    this 2026 official impact article as a source surface, claim registry,
+    outbound-link subset, customer/deployment boundary, UI/API attribution
+    record, missing-evidence list, and paper-manifest-required sidecar. It does
+    not provide linked source snapshots, runnable fixtures, reproduced
+    benchmark rows, customer verification, or independent checks for the named
+    claims.
+  - Required result: add evidence beyond the source boundary: linked
+    paper/repository/customer snapshots, public-gallery inventories, local
+    DeepConsensus/AC OPF/Earth AI/Willow/TPU/cache/Spanner/compiler/customer
+    fixtures, benchmark reports, claim-value normalization, and independent
+    verification outputs before the impact claims are treated as reproduced
+    benchmark evidence or LibreEvolve feature support.
 
 - [ ] Track AlphaEvolve FHE-on-TPU paper and application evidence.
   - Paper/source evidence: arXiv `2605.14718`, submitted May 14, 2026, is

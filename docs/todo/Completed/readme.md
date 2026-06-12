@@ -12179,3 +12179,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     missing assumptions and reports recorded in the sidecar.
   - Verification: UCB1 boundary and paper-manifest tests validate the sidecar
     that README now references.
+
+- [x] Document official 2026 AlphaEvolve impact source boundary in README.
+  - Status: README now includes the official 2026 AlphaEvolve impact article
+    as source-scoped context only and points to
+    `papers/alphaevolve_2026_impact_boundary.json`, which records missing
+    local benchmark evidence for the named DeepConsensus, AC OPF, Earth AI,
+    Willow, TPU, cache-policy, Spanner, compiler-storage, public-gallery,
+    customer, UI, and API workflows.
+  - Verification: AlphaEvolve 2026 impact boundary tests and paper-manifest
+    tests validate the sidecar that README now references.

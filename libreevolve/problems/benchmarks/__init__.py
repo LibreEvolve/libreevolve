@@ -17,6 +17,12 @@ from libreevolve.problems.benchmarks.ablation_results import (
     render_ablation_result_summary,
     validate_ablation_result_report,
 )
+from libreevolve.problems.benchmarks.alphaevolve_2026_impact_boundary import (
+    ALPHAEVOLVE_2026_IMPACT_BOUNDARY_SCHEMA,
+    alphaevolve_2026_impact_boundary_record,
+    render_alphaevolve_2026_impact_boundary_summary,
+    validate_alphaevolve_2026_impact_boundary,
+)
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     CURATION_SCHEMA as APPENDIX_A_MATRIX_CURATION_SCHEMA,
     EXCLUDED_TARGET_CURATION_BOUNDARY_SCHEMA as APPENDIX_A_MATRIX_EXCLUDED_TARGET_CURATION_BOUNDARY_SCHEMA,
@@ -463,6 +469,7 @@ __all__ = [
     "ALPHAEVOLVE_COMPANION_COLAB_SCHEMA",
     "ALPHAEVOLVE_FOLLOW_ON_MATH_SOURCE_SCHEMA",
     "ALPHAEVOLVE_FOLLOW_ON_PROBLEM_COVERAGE_SCHEMA",
+    "ALPHAEVOLVE_2026_IMPACT_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_REFERENCES_SECTION_SCHEMA",
     "ALPHAEVOLVE_SOURCE_PDF_RIGHTS_SCHEMA",
     "ALPHAEVOLVE_SOURCE_PDF_VERSION_SCHEMA",
@@ -549,6 +556,7 @@ __all__ = [
     "TTT_DISCOVER_BOUNDARY_SCHEMA",
     "UCB1_BOUNDARY_SCHEMA",
     "ablation_result_artifact_inventory",
+    "alphaevolve_2026_impact_boundary_record",
     "appendix_a_matrix_baseline_citation_boundary_from_citations",
     "appendix_a_matrix_baseline_citation_boundary_from_builtin_citations",
     "appendix_a_matrix_curation_record",
@@ -713,6 +721,7 @@ __all__ = [
     "render_systems_result_summary",
     "render_thetaevolve_boundary_summary",
     "render_ttt_discover_boundary_summary",
+    "render_alphaevolve_2026_impact_boundary_summary",
     "render_ucb1_boundary_summary",
     "systems_result_artifact_inventory",
     "strassen_2x2_publication_bundle_record",
@@ -731,6 +740,7 @@ __all__ = [
     "validate_appendix_a_matrix_subset_scope_artifact_boundary",
     "validate_appendix_a_matrix_subset_scope",
     "validate_alphaevolve_companion_colab_source",
+    "validate_alphaevolve_2026_impact_boundary",
     "validate_alphaevolve_follow_on_math_source",
     "validate_alphaevolve_follow_on_problem_coverage",
     "validate_alphaevolve_references_section",

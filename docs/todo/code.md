@@ -4906,8 +4906,8 @@ Primary evidence:
     without confusing this consistency gate with the separate sandbox/resource-
     enforcement gap.
 
-- [ ] Add official 2026 AlphaEvolve impact-source provenance and claim
-      boundaries.
+- [ ] Implement official 2026 AlphaEvolve impact claims beyond the recorded
+      source boundary.
   - Spec evidence: the May 7, 2026 Google DeepMind article
     `AlphaEvolve: How our Gemini-powered coding agent is scaling impact across
     fields` says the system has broadened from the original 2025 announcement
@@ -4920,22 +4920,18 @@ Primary evidence:
     by nearly 9%, and customer cases involving Klarna, Substrate, FM Logistic,
     WPP, and Schrodinger. The article also introduces public gallery links and
     names UI/API scaling contributors.
-  - Current evidence: existing source TODOs cover the original AlphaEvolve
-    white paper, the original May 2025 DeepMind announcement, the
-    `alphaevolve_results` notebook repository, the follow-on 67-problem
-    repository/paper/blog, and selected later theoretical-CS sources. No code
-    source manifest, claim registry, benchmark report, or paper-index status
-    row captures this 2026 impact article, its outbound links, deployment and
-    customer-claim categories, UI/API attribution, or source-specific
-    claim-value variants.
-  - Required result: add source-artifact and claim-boundary metadata for the
-    2026 impact article: canonical URL, publication date, author/team, title,
-    retrieval timestamp/hash, outbound source links, claim ids, domain
-    category, value/unit/baseline, linked paper/repository/artifact evidence
-    when available, deployment/customer/public-gallery/UI/API attribution
-    labels, unsupported-local-benchmark flags, and README/ROADMAP wording that
-    treats these as newer official impact claims rather than implemented
-    LibreEvolve behavior or original AlphaEvolve specification evidence.
+  - Current evidence: `papers/alphaevolve_2026_impact_boundary.json` now
+    records the official article URL/date/title/team, retrieval hash, outbound
+    link inventory subset, claim ids, domain categories, values/units/
+    baselines, customer cases, UI/API attribution flags, and unsupported-local-
+    benchmark evidence keys. README, ROADMAP, and `papers/README.md` keep these
+    as newer official impact claims rather than implemented LibreEvolve
+    behavior or original AlphaEvolve specification evidence.
+  - Required result: implement or explicitly benchmark the named domains before
+    promoting impact claims: local DeepConsensus, AC OPF, Earth AI, Willow,
+    public-gallery/math, TPU-design, cache-policy, Spanner, compiler-storage,
+    customer, UI, API, linked-source snapshot, local fixture, benchmark report,
+    and independent verification artifacts remain missing.
 
 - [ ] Add AlphaEvolve FHE-on-TPU application source and benchmark boundary.
   - Spec evidence: arXiv `2605.14718`, `Adapting AlphaEvolve to Optimize

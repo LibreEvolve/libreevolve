@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.paper_source_identity_manifest.v1",
-  "source_identity_count": 43,
+  "source_identity_count": 44,
   "source_identity_policy": "manifest_id_url_source_id_and_file_source_prefix_must_match_before_source_version_or_rights_claims",
   "sources": [
     {
@@ -737,6 +737,24 @@
       "url_source_id": "2512.18746",
       "url_versioned_id": "2512.18746",
       "file_source_id": "2512.18746",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2606.06114",
+      "title": "ANCHOR_Healthy_Evolution",
+      "url": "https://arxiv.org/pdf/2606.06114.pdf",
+      "file": "papers/2606.06114__ANCHOR_Healthy_Evolution.pdf",
+      "sha256": "0d54f3a598c56fa69137ed4f35d8527734dff851de4a5248a777b5abfb822414",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2606.06114",
+      "url_versioned_id": "2606.06114",
+      "file_source_id": "2606.06114",
       "identity_checks": {
         "manifest_id_matches_url_source_id": true,
         "manifest_id_matches_file_source_id": true,

@@ -5552,7 +5552,8 @@ Primary evidence:
     meta-evolving memory systems as missing implementation evidence until
     local runtime artifacts and reports exist.
 
-- [ ] Add ANCHOR human-like oversight and norm-correction source boundary.
+- [ ] Implement ANCHOR human-like oversight and norm-correction evidence
+      beyond paper cache coverage.
   - Spec evidence: arXiv `2606.06114`, `Towards Healthy Evolution: Exploring
     the Role and Mechanisms of Human-Agent Interaction in Self-Evolving
     Systems`, was submitted June 4, 2026. Its abstract introduces Agent Norm
@@ -5563,25 +5564,30 @@ Primary evidence:
     performance, that output-verification supervision is the most effective
     intervention point, and that higher supervision frequency has diminishing
     returns.
-  - Current evidence: LibreEvolve records evaluator results, prompt history,
-    failed proposals, quarantine streams, and local validity/admission
-    decisions, but it has no ANCHOR source row, no human-like oversight agent,
-    no phase-specific norm-correction interface, no safety-drift metric
-    lineage, no supervision-cadence policy, no output-verification
-    intervention record, no reflection/review artifact stream, and no
-    experiment report separating core-task performance from safety
-    degradation during self-evolution.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2606.06114`: arXiv id/version/date/PDF hash, authors, source
-    license, relation to AlphaEvolve and LibreEvolve's validator/admission
-    model, ANCHOR oversight-role schema, phase-specific intervention points,
-    norm-correction feedback artifacts, safety-drift metrics, output-
-    verification review records, supervision-frequency/cadence traces,
+  - Current evidence: `papers/download_manifest.*`, `papers/row_identity.json`,
+    `papers/README.md`, README, ROADMAP, and TODO coverage now include
+    `2606.06114`, cached locally as
+    `papers/2606.06114__ANCHOR_Healthy_Evolution.pdf` with byte count
+    `2711376` and SHA-256
+    `0d54f3a598c56fa69137ed4f35d8527734dff851de4a5248a777b5abfb822414`.
+    LibreEvolve still records evaluator results, prompt history, failed
+    proposals, quarantine streams, and local validity/admission decisions, but
+    it has no human-like oversight agent, no phase-specific norm-correction
+    interface, no safety-drift metric lineage, no supervision-cadence policy,
+    no output-verification intervention record, no reflection/review artifact
+    stream, and no experiment report separating core-task performance from
+    safety degradation during self-evolution.
+  - Required result: add implementation-boundary metadata beyond the paper
+    cache: source license, linked-code or project/demo URL status, relation to
+    AlphaEvolve and LibreEvolve's validator/admission model, ANCHOR
+    oversight-role schema, phase-specific intervention points,
+    norm-correction feedback artifacts, safety-drift metrics,
+    output-verification review records, supervision-frequency/cadence traces,
     reflection/review logs, preservation-of-objective-performance reports,
     safety benchmark taxonomy, baseline identities, diminishing-return
     analysis fields, and README/ROADMAP wording that keeps human-like
-    oversight and healthy-evolution claims as missing evidence until local
-    implementation and reports exist.
+    oversight and healthy-evolution claims as missing implementation evidence
+    until local runtime artifacts and reports exist.
 
 - [ ] Add SIA harness-plus-weight self-improvement source boundary.
   - Spec evidence: arXiv `2605.27276`, `SIA: Self Improving AI with Harness

@@ -13028,3 +13028,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2606.06114` ANCHOR paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2606.06114`, `Towards Healthy Evolution: Exploring the Role and
+    Mechanisms of Human-Agent Interaction in Self-Evolving Systems`, cached
+    locally as `papers/2606.06114__ANCHOR_Healthy_Evolution.pdf` with byte
+    count `2711376` and SHA-256
+    `0d54f3a598c56fa69137ed4f35d8527734dff851de4a5248a777b5abfb822414`.
+  - Remaining paper gap: source-license details, linked-code or project/demo
+    URL status, ANCHOR role and feedback schema, supervised phase taxonomy,
+    norm-correction artifact records, output-verification intervention
+    evidence, safety degradation metrics, coding/math/safety benchmark
+    taxonomy, supervision-frequency experiment records, objective-preservation
+    measurements, baseline identities, code/artifact reproducibility status,
+    and independent reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

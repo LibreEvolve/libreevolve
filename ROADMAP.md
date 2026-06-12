@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 43 cache rows and links the AlphaEvolve row to
+  identities for all 44 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1467,6 +1467,18 @@ resumed-trace proof are still open.
   cross-task or cross-LLM transfer reports, performance-delta records,
   linked-code audits, and independent reproduction outputs remain open before
   roadmap wording can promote MemEvolve-style memory support.
+- Keep ANCHOR healthy-evolution oversight claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2606.06114`, `Towards Healthy Evolution: Exploring the Role and Mechanisms
+  of Human-Agent Interaction in Self-Evolving Systems`, cached locally as
+  `papers/2606.06114__ANCHOR_Healthy_Evolution.pdf`. This is background
+  healthy-evolution oversight context only; ANCHOR human-like oversight
+  agents, phase-specific norm-correction interfaces, safety-drift metric
+  lineages, output-verification intervention records, reflection/review
+  artifact streams, supervision-frequency/cadence traces, preservation-of-
+  objective-performance reports, coding/math/safety benchmark reports,
+  linked-code audits, and independent reproduction outputs remain open before
+  roadmap wording can promote ANCHOR-style human-like oversight support.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

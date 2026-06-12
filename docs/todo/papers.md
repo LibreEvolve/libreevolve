@@ -5058,7 +5058,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     and README/ROADMAP wording that treats MemEvolve as background context
     until those artifacts exist.
 
-- [ ] Track ANCHOR healthy-evolution oversight paper evidence.
+- [ ] Reproduce ANCHOR healthy-evolution oversight evidence beyond paper
+      coverage.
   - Paper/source evidence: arXiv `2606.06114`, submitted June 4, 2026, is
     titled `Towards Healthy Evolution: Exploring the Role and Mechanisms of
     Human-Agent Interaction in Self-Evolving Systems`. Its abstract says
@@ -5071,23 +5072,29 @@ directory and using the AlphaEvolve paper as the primary specification.
     mitigates safety degradation while preserving core performance, identifies
     output-verification supervision as the strongest intervention point, and
     finds diminishing returns from increasing supervision frequency.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2606.06114`. Existing rows cover AlphaEvolve evaluator-backed
-    search, open-ended reward/rubric sources, multi-agent autonomy, trace
-    diagnostics, and memory architecture evolution, but not human-like
-    oversight, phase-specific norm correction, safety-drift tracking,
-    output-verification interventions, supervision-frequency tradeoffs, or
-    healthy-evolution reporting for self-evolving agents.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2606.06114`: title/authors/arXiv version/date/PDF digest, source
-    license, relation to AlphaEvolve and LibreEvolve safety assumptions,
-    ANCHOR role and feedback schema, supervised phase taxonomy, norm-
-    correction artifact records, output-verification intervention evidence,
-    safety degradation metrics, coding/math/safety benchmark taxonomy,
-    supervision-frequency experiment records, objective-preservation
-    measurements, baseline identities, code/artifact availability if any,
-    reproducibility status, and README/ROADMAP wording that treats ANCHOR as
-    missing paper evidence rather than implemented LibreEvolve support.
+  - Current gap: the paper cache, paper index, row identity, README, ROADMAP,
+    and TODO coverage now include `2606.06114`, cached locally as
+    `papers/2606.06114__ANCHOR_Healthy_Evolution.pdf` with byte count
+    `2711376` and SHA-256
+    `0d54f3a598c56fa69137ed4f35d8527734dff851de4a5248a777b5abfb822414`.
+    Reproduction evidence remains absent: no source-license details,
+    linked-code or project/demo URL status, ANCHOR role and feedback schema,
+    supervised phase taxonomy, norm-correction artifact records,
+    output-verification intervention evidence, safety degradation metrics,
+    coding/math/safety benchmark taxonomy, supervision-frequency experiment
+    records, objective-preservation measurements, baseline identities,
+    code/artifact availability status, reproducibility status, or independent
+    reproduction output exists.
+  - Required result: add reproduction-grade ANCHOR evidence: source license,
+    project/demo URL status, linked-code status, relation to AlphaEvolve and
+    LibreEvolve safety assumptions, ANCHOR role and feedback schema,
+    supervised phase taxonomy, norm-correction artifact records,
+    output-verification intervention evidence, safety degradation metrics,
+    coding/math/safety benchmark taxonomy, supervision-frequency experiment
+    records, objective-preservation measurements, baseline identities,
+    code/artifact reproducibility status, independent reproduction outputs,
+    and README/ROADMAP wording that treats ANCHOR as background context until
+    those artifacts exist.
 
 - [ ] Track SIA harness-plus-weight self-improvement paper evidence.
   - Paper/source evidence: arXiv `2605.27276`, submitted May 26, 2026, is

@@ -410,6 +410,16 @@
     "sha256": "51ca8a0ca349b7ad111b5380148c6dd34fa4d16f933ac58677fc2246b1566dd5"
   },
   {
+    "id": "2606.06114",
+    "title": "ANCHOR_Healthy_Evolution",
+    "url": "https://arxiv.org/pdf/2606.06114.pdf",
+    "file": "papers/2606.06114__ANCHOR_Healthy_Evolution.pdf",
+    "ok": true,
+    "bytes": 2711376,
+    "message": "downloaded",
+    "sha256": "0d54f3a598c56fa69137ed4f35d8527734dff851de4a5248a777b5abfb822414"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

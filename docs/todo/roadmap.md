@@ -3842,7 +3842,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     status rule so roadmap claims do not outpace local MemEvolve-style memory
     support.
 
-- [ ] Add ANCHOR healthy-evolution oversight gates before roadmap promotion.
+- [ ] Implement ANCHOR healthy-evolution oversight gates beyond paper cache
+      coverage.
   - Spec evidence: arXiv `2606.06114`, submitted June 4, 2026, introduces
     Agent Norm Correction through Human-like Oversight and Review (ANCHOR) in
     `Towards Healthy Evolution: Exploring the Role and Mechanisms of
@@ -3853,22 +3854,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     evolutionary-objective performance. It also reports that supervising the
     output verification phase is most effective and that increasing
     supervision frequency yields diminishing returns.
-  - Current evidence: ROADMAP tracks evaluator contracts, failure artifacts,
-    safety-adjacent reward gates, trace diagnostics, and several open-ended
-    self-evolution source gates. It does not mention `2606.06114`, define an
-    ANCHOR gate, require human-like oversight records, track phase-specific
-    norm-correction feedback, measure safety drift during evolution, or
-    require supervision-cadence evidence before promoting healthy-evolution or
-    human-aligned self-evolution claims.
-  - Required result: add roadmap gates for `2606.06114`: paper/source
-    manifest entry, PDF/cache hash, source-license metadata, ANCHOR oversight
-    role schema, phase-specific supervision taxonomy, norm-correction
-    feedback artifacts, output-verification intervention logs, safety-drift
-    and capability-degradation metrics, objective-preservation reports,
-    supervision-frequency/cadence experiment records, coding/math/safety
-    benchmark metadata, baseline identities, and a background-only or
-    benchmark-fixture status rule so roadmap claims do not outpace local
-    ANCHOR-style human-like oversight support.
+  - Current evidence: ROADMAP, `papers/download_manifest.*`,
+    `papers/row_identity.json`, `papers/README.md`, README, and TODO coverage
+    now include `2606.06114`, cached locally as
+    `papers/2606.06114__ANCHOR_Healthy_Evolution.pdf` with byte count
+    `2711376` and SHA-256
+    `0d54f3a598c56fa69137ed4f35d8527734dff851de4a5248a777b5abfb822414`.
+    ROADMAP tracks the paper as background healthy-evolution oversight context
+    only. It still has no ANCHOR gate, human-like oversight records, phase-
+    specific norm-correction feedback, safety-drift measurement,
+    output-verification intervention logs, supervision-cadence evidence,
+    objective-preservation reports, coding/math/safety benchmark metadata, or
+    baseline identities.
+  - Required result: implement roadmap gates beyond paper-cache evidence:
+    source-license metadata, linked-code or project URL status, ANCHOR
+    oversight role schema, phase-specific supervision taxonomy,
+    norm-correction feedback artifacts, output-verification intervention logs,
+    safety-drift and capability-degradation metrics, objective-preservation
+    reports, supervision-frequency/cadence experiment records,
+    coding/math/safety benchmark metadata, baseline identities, and a
+    background-only or benchmark-fixture status rule so roadmap claims do not
+    outpace local ANCHOR-style human-like oversight support.
 
 - [ ] Add SIA harness-plus-weight self-improvement gates before roadmap
       promotion.

@@ -178,6 +178,9 @@ titles, implementation status, and benchmark coverage decisions.
 The table below is a curated subset for README context. `papers/README.md` is
 the complete implementation-status index for all 53 manifest rows.
 
+<details>
+<summary>Curated source context</summary>
+
 | Source | Role in LibreEvolve |
 | --- | --- |
 | [AlphaEvolve](https://arxiv.org/abs/2506.13131) | Main architecture inspiration and comparison target. |
@@ -214,6 +217,8 @@ the complete implementation-status index for all 53 manifest rows.
 | [Inference-time trajectory alignment](https://arxiv.org/abs/2605.21516) | Harness design context only; no local decomposition/guidance parameter sweep, retry-budget study, over-decomposition/over-pruning/hallucinated-execution report, partial-harnessing benchmark, or terminal-agent reproduction exists. |
 | [Adaptive Auto-Harness](https://arxiv.org/abs/2606.01770) | Open-ended task-stream deployment context only; no local chronological task stream, evolution/adaptation-loss decomposition, harness tree routing, human-steering hook, or prediction-market/security/event benchmark reproduction exists. |
 | [Meta-Harness](https://arxiv.org/abs/2603.28052) | Outer-loop harness-code optimization context only; no local harness-code candidate schema, agentic proposer workspace, execution-trace feedback bundle, cross-task harness benchmark, or end-to-end harness optimization reproduction exists. |
+
+</details>
 
 Rehydrate the ignored local PDF cache on a fresh checkout:
 

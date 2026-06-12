@@ -12419,3 +12419,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     event benchmark reproduction exists.
   - Verification: paper-manifest validation checks README's local paper-cache
     count and curated-subset wording against the 53-row manifest.
+
+- [x] Keep root README project-facing by collapsing the curated source table.
+  - Status: README keeps install, quick-start, run-artifact, CLI, docs, and
+    testing sections visible while moving the long curated research-source
+    table into a collapsed details block. `papers/README.md` remains the
+    complete implementation-status index for all 53 manifest rows.
+  - Verification: paper-manifest validation still accepts README's curated-
+    subset wording and count against the 53-row manifest.

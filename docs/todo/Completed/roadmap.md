@@ -9538,3 +9538,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     benchmark comparisons.
   - Verification: ThetaEvolve boundary tests and paper-manifest tests validate
     the sidecar and repo-root requirement.
+
+- [x] Preserve ImprovEvolve boundary scope in roadmap.
+  - Spec evidence: roadmap ImprovEvolve claims should not promote static
+    modular prompt guidance into interface execution, basin-hopping,
+    GigaEvo-backed evolution, human-edit, benchmark, ablation, or budget
+    parity.
+  - Status: ROADMAP and roadmap TODO wording now identify
+    `papers/improvevolve_boundary.json` as the source-specific boundary for
+    `generate_config`/`improve`/`perturb` interface enforcement, Stage A/B
+    execution, basin hopping, perturbation schedules, monotonic acceptance,
+    GigaEvo outer-loop parity, model/provider provenance, human-edited
+    variants, HEX/ACI2 benchmark rows, ablations, and compute budgets.
+  - Verification: ImprovEvolve boundary tests and paper-manifest tests
+    validate the sidecar and repo-root requirement.

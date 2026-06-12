@@ -4788,13 +4788,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     MAP-Elites archive with `150` fitness bins, `elites = 6`, `parents = 2`,
     `offspring = 10`, and CPU-parallel program execution during evolution.
   - Current evidence: ROADMAP says ImprovEvolve features remain inspired unless
-    paper behavior is implemented, and `papers/README.md` scopes LibreEvolve to
-    static modular guidance with false execution/enforcement flags. Roadmap
-    lacks `2602.10233`-specific gates for source metadata, interface
-    enforcement, validation-loop execution, perturbation schedules, inner/outer
-    loop separation, human-edit provenance, GigaEvo dependency/backbone status,
-    model/provider provenance, HEX/ACI2 benchmark rows, ablations, and budget
-    evidence.
+    paper behavior is implemented, and now names
+    `papers/improvevolve_boundary.json` as the source-specific gate for
+    `2602.10233`. The sidecar records source metadata, rights metadata,
+    linked-code status, component rows, required future evidence fields, and
+    missing-evidence keys while keeping interface enforcement, validation-loop
+    execution, perturbation schedules, inner/outer loop separation, human-edit
+    provenance, GigaEvo dependency/backbone status, model/provider provenance,
+    HEX/ACI2 benchmark rows, ablations, and budget evidence as future gates.
   - Required result: add roadmap gates for `2602.10233`: paper/source manifest
     entry, PDF/cache hash, ACM/preprint rights and linked-code status,
     `generate_config`/`improve`/`perturb` interface schema, Stage A/B runner,

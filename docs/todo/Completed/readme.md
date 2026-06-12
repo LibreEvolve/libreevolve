@@ -12004,3 +12004,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     benchmark-comparison evidence explicit as missing.
   - Verification: ThetaEvolve boundary and paper-manifest tests validate the
     sidecar that README now references.
+
+- [x] Document ImprovEvolve source boundary.
+  - Spec evidence: README ImprovEvolve wording needed to keep static modular
+    prompt guidance separate from actual `generate_config`/`improve`/`perturb`
+    interface execution and benchmark evidence.
+  - Status: README now names `papers/improvevolve_boundary.json` in the
+    ImprovEvolve reference row and keeps interface enforcement, Stage A/B
+    execution, basin hopping, GigaEvo backbone, human-edit, benchmark,
+    ablation, and budget evidence explicit as missing.
+  - Verification: ImprovEvolve boundary and paper-manifest tests validate the
+    sidecar that README now references.

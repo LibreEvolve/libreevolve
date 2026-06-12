@@ -1,0 +1,146 @@
+{
+  "schema": "libreevolve.improvevolve_boundary.v1",
+  "source_paper_id": "2602.10233",
+  "source_title": "ImprovEvolve: Ask AlphaEvolve to Improve the Input Solution and Then Improvise",
+  "source_version": "v1",
+  "source_submitted_date": "2026-02-10",
+  "source_url": "https://arxiv.org/pdf/2602.10233.pdf",
+  "source_file": "papers/2602.10233__ImprovEvolve.pdf",
+  "source_sha256": "8123f1b19d9ba6c891e642be28b1bd4395fff549131d2e45b619dfd28ddfe57a",
+  "source_bytes": 10158341,
+  "source_license": "http://creativecommons.org/licenses/by/4.0/",
+  "rights_note": "CC-BY metadata with KDD 2026/ACM front-matter rights language",
+  "boundary_status": "modular_prompting_inspiration_without_improvevolve_parity",
+  "claim_ready": false,
+  "source_links": [
+    {
+      "url": "https://github.com/FusionBrainLab/gigaevo-core",
+      "status": "related_gigaevo_backbone_not_improvevolve_runtime"
+    },
+    {
+      "url": "<no_improvevolve_specific_code_url_extracted>",
+      "status": "not_found_in_extracted_links"
+    }
+  ],
+  "framework_components": [
+    {
+      "component_id": "class_interface_schema",
+      "paper_role": "generate_config(seed), improve(x), and perturb(x, sigma) methods",
+      "local_status": "static_prompt_description_only"
+    },
+    {
+      "component_id": "interface_enforcement",
+      "paper_role": "validated execution of the modular class interface",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "stage_a_initialization",
+      "paper_role": "multi-seed initialization and initial-program generation",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "stage_b_basin_hopping",
+      "paper_role": "basin-hopping validation loop",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "perturbation_schedule",
+      "paper_role": "scheduled sigma perturbation intensity",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "monotonic_acceptance",
+      "paper_role": "acceptance policy and incremental improvement tracking",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "incumbent_improvement_records",
+      "paper_role": "inner-loop incumbent and improvement-delta artifacts",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "gigaevo_outer_backbone",
+      "paper_role": "GigaEvo outer MAP-Elites evolution backbone",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "model_provider_provenance",
+      "paper_role": "Gemini and OpenRouter model/provider provenance",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "human_edited_variants",
+      "paper_role": "ImprovEvolve+E human-edit attribution",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "hex_aci2_benchmark_rows",
+      "paper_role": "HEX and ACI2 benchmark/baseline/result rows",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "ablation_and_budget_rows",
+      "paper_role": "stage ablations, hyperparameters, and compute budgets",
+      "local_status": "not_recorded"
+    }
+  ],
+  "local_evidence": {
+    "current_plugin": "libreevolve/plugins/modular.py",
+    "current_scope": "static_prompt_guidance_only_not_execution",
+    "described_operations": [
+      "generate_config",
+      "improve",
+      "perturb"
+    ],
+    "operation_selected": "static_modular_guidance",
+    "interface_enforced": false,
+    "operation_executed": false,
+    "basin_hopping_ready": false,
+    "gigaevo_backbone_ready": false,
+    "benchmark_rows_ready": false,
+    "human_edit_provenance_ready": false,
+    "budget_rows_ready": false
+  },
+  "required_evidence_fields": [
+    "source_license_and_rights_status",
+    "improvevolve_specific_code_status",
+    "generate_config_improve_perturb_interface_schema",
+    "interface_enforcement_records",
+    "stage_a_initial_program_records",
+    "stage_b_validation_runner_records",
+    "seed_count_records",
+    "basin_hopping_round_records",
+    "perturbation_schedule_records",
+    "monotonic_acceptance_proofs",
+    "incumbent_and_improvement_delta_artifacts",
+    "gigaevo_backbone_compatibility",
+    "model_provider_provenance",
+    "human_edit_variant_attribution",
+    "hex_benchmark_rows",
+    "aci2_benchmark_rows",
+    "hyperparameter_table_rows",
+    "generalization_table_rows",
+    "stage_ablation_rows",
+    "cpu_gpu_wall_clock_budget_rows",
+    "static_modular_plugin_separation_evidence"
+  ],
+  "missing_evidence": {
+    "class_interface_enforcement": "not_implemented_locally",
+    "stage_a_runner": "not_implemented_locally",
+    "stage_b_basin_hopping_runner": "not_implemented_locally",
+    "perturbation_schedule": "not_recorded_locally",
+    "monotonic_acceptance": "not_recorded_locally",
+    "incumbent_improvement_records": "not_recorded_locally",
+    "gigaevo_outer_backbone": "not_implemented_locally",
+    "model_provider_provenance": "not_recorded_locally",
+    "human_edited_variant_provenance": "not_recorded_locally",
+    "hex_benchmark_rows": "not_recorded_locally",
+    "aci2_benchmark_rows": "not_recorded_locally",
+    "hyperparameter_rows": "not_recorded_locally",
+    "generalization_rows": "not_recorded_locally",
+    "stage_ablation_rows": "not_recorded_locally",
+    "compute_budget_rows": "not_recorded_locally",
+    "improvevolve_specific_code_url": "not_found_in_extracted_links"
+  },
+  "claim_boundary": "This boundary records ImprovEvolve as modular-search inspiration only. It does not claim enforced generate_config/improve/perturb interfaces, Stage A or Stage B execution, basin hopping, perturbation scheduling, monotonic acceptance, GigaEvo outer-loop parity, model/provider provenance, human-edited variant attribution, HEX/ACI2 benchmark rows, ablations, or compute budget reproduction. LibreEvolve's current modular plugin is static prompt guidance, not ImprovEvolve execution."
+}

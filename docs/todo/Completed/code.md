@@ -17892,3 +17892,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     rows remain open.
   - Verification: ThetaEvolve boundary tests and paper-manifest tests cover
     the sidecar, drift rejection, and repo-root sidecar requirement.
+
+- [x] Add ImprovEvolve modular-execution source-boundary gate.
+  - Spec evidence: `2602.10233v1` describes ImprovEvolve as a modular search
+    method that evolves `generate_config`, `improve`, and `perturb` methods,
+    then executes them through Stage A/B basin-hopping validation with
+    perturbation schedules, monotonic acceptance, GigaEvo outer evolution,
+    human-edited variants, HEX/ACI2 benchmarks, ablations, and compute
+    budgets.
+  - Status: `libreevolve.problems.benchmarks.improvevolve_boundary` now emits
+    and validates `papers/improvevolve_boundary.json` with cached PDF digest,
+    CC-BY/ACM rights metadata, linked-code status, component rows, local
+    `ModularPlugin` static-guidance scope, required future evidence fields,
+    missing-evidence keys, and overclaim rejection.
+  - Remaining gap: enforced interface execution, Stage A/B runners,
+    basin-hopping telemetry, perturbation schedules, GigaEvo outer-loop
+    compatibility, model/provider provenance, human-edit provenance,
+    benchmark rows, ablations, and budget rows remain open.
+  - Verification: ImprovEvolve boundary tests and paper-manifest tests cover
+    the sidecar, drift rejection, and repo-root sidecar requirement.

@@ -6194,14 +6194,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     and OpenRouter, but no ImprovEvolve-specific code URL appears in the
     extracted links.
   - Current gap: `papers/README.md` lists `2602.10233` as modular search
-    inspiration and says LibreEvolve only has static modular guidance, not an
-    enforced or executed `generate_config`/`improve`/`perturb` loop. Existing
-    paper TODOs group ImprovEvolve with other inspiration rows, but do not
-    preserve the ImprovEvolve PDF itself as a source-specific evidence
-    boundary with interface semantics, basin-hopping validation parameters,
-    GigaEvo dependency/backbone status, human-edit provenance, benchmark rows,
-    ablations, model/provider provenance, compute budgets, or
-    result-comparison claims.
+    inspiration, and `papers/improvevolve_boundary.json` now preserves the
+    ImprovEvolve PDF as a source-specific evidence boundary with cached source
+    metadata, CC-BY plus ACM front-matter rights caveat, linked-code status,
+    component rows, local static-guidance scope, required future evidence
+    fields, and missing-evidence keys. The remaining paper gap is
+    executable/reportable evidence for interface semantics, basin-hopping
+    validation parameters, GigaEvo dependency/backbone status, human-edit
+    provenance, benchmark rows, ablations, model/provider provenance, compute
+    budgets, and result-comparison claims.
   - Required result: add paper-manifest and paper-index coverage for
     `2602.10233`: title/authors/arXiv version/date/PDF digest, ACM/preprint
     rights metadata, linked code URL/status, class-interface schema,

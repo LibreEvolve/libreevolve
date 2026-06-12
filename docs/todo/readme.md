@@ -4279,14 +4279,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `0.96258` vs AlphaEvolve `0.96102`; Table 3 additionally tracks HEX
     `13..30` generalization and human-edited variants.
   - Current evidence: README describes the ImprovEvolve-inspired modular
-    plugin as static prompt guidance: it does not select, execute, or log a
-    `generate_config`/`improve`/`perturb` operation, and its metadata marks
-    execution/enforcement false. Existing README TODOs group ImprovEvolve with
-    paper-inspired approximations, but README does not require a `2602.10233`
-    source-specific boundary for interface enforcement, basin-hopping records,
+    plugin as static prompt guidance and now points at
+    `papers/improvevolve_boundary.json` for the `2602.10233` source-specific
+    boundary. That sidecar keeps interface enforcement, basin-hopping records,
     perturbation schedules, human-edited variants, GigaEvo-backbone relation,
-    HEX/ACI2 benchmark results, ablations, model/provider provenance, or
-    compute-budget claims.
+    HEX/ACI2 benchmark results, ablations, model/provider provenance, and
+    compute-budget claims unavailable until local artifacts prove them.
   - Required result: if README mentions ImprovEvolve, modular search,
     `generate_config`, `improve`, `perturb`, basin-hopping validation,
     scheduled perturbations, `ImprovEvolve+E`, hexagon-packing improvements,

@@ -12457,3 +12457,20 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     remain open.
   - Verification: ThetaEvolve boundary tests and paper-manifest tests validate
     the sidecar and reject test-time-learning readiness overclaims.
+
+- [x] Record ImprovEvolve source boundary.
+  - Spec evidence: paper-facing ImprovEvolve claims need to distinguish static
+    modular prompt guidance from executed `generate_config`/`improve`/`perturb`
+    interfaces, basin-hopping validation, GigaEvo-backed evolution,
+    human-edited variants, benchmarks, ablations, and budgets.
+  - Status: `papers/improvevolve_boundary.json` now carries the
+    source-specific `2602.10233` boundary with cached PDF digest, arXiv
+    version, rights metadata, linked-code status, framework components, local
+    `ModularPlugin` status, required evidence fields, and missing-evidence
+    keys.
+  - Remaining paper gap: interface semantics, basin-hopping validation
+    parameters, GigaEvo dependency/backbone status, human-edit provenance,
+    benchmark rows, ablations, model/provider provenance, compute budgets, and
+    result-comparison claims remain open.
+  - Verification: ImprovEvolve boundary tests and paper-manifest tests
+    validate the sidecar and reject execution-readiness overclaims.

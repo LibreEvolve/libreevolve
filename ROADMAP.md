@@ -634,7 +634,13 @@ is not yet an AlphaEvolve reproduction.
   source-specific boundary for dynamic-environment architecture, single-LLM
   runtime, large-database scaling, batch sampling, early checks, lazy
   penalties, reward shaping, online GRPO/RL training, checkpoint lifecycle,
-  throughput reports, and benchmark comparisons.
+  throughput reports, and benchmark comparisons. The committed
+  `papers/improvevolve_boundary.json` sidecar records the ImprovEvolve
+  source-specific boundary for `generate_config`/`improve`/`perturb`
+  interface enforcement, Stage A/B execution, basin hopping, perturbation
+  schedules, monotonic acceptance, GigaEvo outer-loop parity, model/provider
+  provenance, human-edited variants, HEX/ACI2 benchmark rows, ablations, and
+  compute budgets.
 
 ## Mid Term
 

@@ -6734,13 +6734,13 @@ Primary evidence:
     discretized into `150` bins, `InsightsStage`, `LineageInsights`, and
     aggregate evolutionary statistics.
   - Current evidence: `papers/README.md` marks ImprovEvolve as modular search
-    inspiration and says LibreEvolve only emits static modular prompt guidance
-    from `libreevolve/plugins/modular.py` with
-    `operation_selected: static_modular_guidance` and false execution/
-    enforcement flags. Existing grouped inspiration TODOs cover the general
-    approximation boundary, but there is no implemented source-specific code
-    gate for `2602.10233`, no enforced `generate_config`/`improve`/`perturb` interface,
-    no basin-hopping validation runner, no inner-loop incumbent/improvement
+    inspiration, and the committed `papers/improvevolve_boundary.json` sidecar
+    now records the source-specific `2602.10233` boundary with cached PDF
+    digest, rights metadata, linked-code status, component rows, local
+    `ModularPlugin` static-guidance scope, required future evidence fields,
+    and missing-evidence keys. The remaining code gap is the actual execution
+    behavior: no enforced `generate_config`/`improve`/`perturb` interface, no
+    basin-hopping validation runner, no inner-loop incumbent/improvement
     records, no perturbation-schedule telemetry, no GigaEvo-backed outer-loop
     compatibility report, no Gemini 3 Pro/Gemini 3 Flash Preview model-split
     provenance, no human-edit attribution boundary, and no hexagon/ACI2

@@ -197,6 +197,10 @@ from libreevolve.problems.benchmarks.gigaevo_boundary import (
     gigaevo_framework_boundary_record,
     validate_gigaevo_framework_boundary,
 )
+from libreevolve.problems.benchmarks.improvevolve_boundary import (
+    improvevolve_boundary_record,
+    validate_improvevolve_boundary,
+)
 from libreevolve.problems.benchmarks.thetaevolve_boundary import (
     thetaevolve_boundary_record,
     validate_thetaevolve_boundary,
@@ -236,6 +240,7 @@ MAP_ELITES_ILLUMINATION_BOUNDARY_FILE = "papers/map_elites_illumination_boundary
 GIGAEVO_FRAMEWORK_BOUNDARY_FILE = "papers/gigaevo_framework_boundary.json"
 CODEEVOLVE_BOUNDARY_FILE = "papers/codeevolve_boundary.json"
 THETAEVOLVE_BOUNDARY_FILE = "papers/thetaevolve_boundary.json"
+IMPROVEVOLVE_BOUNDARY_FILE = "papers/improvevolve_boundary.json"
 EXAMPLE_BENCHMARK_SCOPE_FILE = "papers/example_benchmark_scope.json"
 MATH_OUTCOME_BOUNDARY_FILE = "papers/math_outcome_boundary.json"
 MATH_STARTING_CONSTRUCTION_BOUNDARY_FILE = "papers/math_starting_construction_boundary.json"
@@ -617,6 +622,7 @@ def validate_paper_manifest(
     issues.extend(_validate_gigaevo_framework_boundary(root_path))
     issues.extend(_validate_codeevolve_boundary(root_path))
     issues.extend(_validate_thetaevolve_boundary(root_path))
+    issues.extend(_validate_improvevolve_boundary(root_path))
 
     if set(csv_by_id) - seen_ids:
         for row_id in sorted(set(csv_by_id) - seen_ids):
@@ -1677,6 +1683,38 @@ def _validate_thetaevolve_boundary(root_path: Path) -> list[PaperManifestIssue]:
             f"thetaevolve_boundary_{issue.code}",
             issue.message,
             "thetaevolve",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_improvevolve_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / IMPROVEVOLVE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = improvevolve_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "improvevolve_boundary_manifest_missing",
+                    (
+                        f"{IMPROVEVOLVE_BOUNDARY_FILE} must emit "
+                        "ImprovEvolve modular-execution evidence availability"
+                    ),
+                    "improvevolve",
+                )
+            ]
+    report = validate_improvevolve_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"improvevolve_boundary_{issue.code}",
+            issue.message,
+            "improvevolve",
         )
         for issue in report.issues
     ]

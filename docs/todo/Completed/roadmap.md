@@ -9468,3 +9468,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     indexes as follow-up work.
   - Verification: database tests validate source-key/hash output queries and
     input validation.
+
+- [x] Preserve embedded evaluator workspace dependency scope in roadmap.
+  - Spec evidence: roadmap Figure 3 evaluator wording should distinguish
+    runtime-enforced candidate workspace dependency scope from full build or
+    sandbox parity.
+  - Status: ROADMAP and TODO wording now record embedded local read/import
+    enforcement against the materialized candidate manifest while keeping build
+    isolation and non-static/external-validator score linkage open.
+  - Verification: embedded evaluator and boundary tests validate the narrowed
+    scope.

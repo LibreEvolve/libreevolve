@@ -4484,7 +4484,79 @@ def test_embedded_evaluate_stage_calls_candidate_eval_inputs():
         assert result.metadata["candidate_evaluator"]["entrypoint"] == "main.py"
         assert result.metadata["candidate_evaluator"]["eval_inputs"]["retained"] is False
         assert len(result.metadata["candidate_evaluator"]["eval_inputs"]["sha256"]) == 64
+        assert result.metadata["evaluator_dependency_policy"] == {
+            "policy": "candidate_primary_module_embedded_evaluate_v1",
+            "allowed_scope": "materialized_candidate_workspace",
+            "workspace_dependency_policy": (
+                "materialized_candidate_files_only_for_workspace_local_modules_and_reads"
+            ),
+            "runtime_enforced": True,
+            "file_count": 1,
+            "problem_local_dependency_policy": "not_used",
+            "outside_problem_policy": "not_constrained_by_this_policy",
+        }
         assert "validate_path" not in result.metadata
+    finally:
+        shutil.rmtree(d)
+
+
+def test_embedded_evaluate_stage_allows_materialized_workspace_helpers():
+    p, d = _problem("def evaluate(code): return {'score': 0.0, 'is_valid': False}")
+    workspace = CandidateWorkspace(
+        files={
+            "main.py": (
+                "from pkg.helper import score\n"
+                "def evaluate(eval_inputs):\n"
+                "    return {'score': score(eval_inputs['x']), 'is_valid': True}\n"
+            ),
+            "pkg/__init__.py": "",
+            "pkg/helper.py": "def score(x): return x / 10.0\n",
+        },
+        primary_file="main.py",
+    )
+    try:
+        result = CascadeEvaluator(
+            p,
+            stages=[
+                {
+                    "name": "candidate_eval",
+                    "mode": "embedded_evaluate",
+                    "eval_inputs": {"x": 8},
+                }
+            ],
+        ).evaluate(workspace, None)
+
+        assert result == 0.8
+        assert result.metadata["evaluator_dependency_policy"]["runtime_enforced"] is True
+        assert result.metadata["evaluator_dependency_policy"]["file_count"] == 3
+    finally:
+        shutil.rmtree(d)
+
+
+def test_embedded_evaluate_stage_blocks_unmaterialized_workspace_imports():
+    p, d = _problem("def evaluate(code): return {'score': 0.0, 'is_valid': False}")
+    workspace = CandidateWorkspace(
+        files={
+            "main.py": (
+                "from pathlib import Path\n"
+                "def evaluate(eval_inputs):\n"
+                "    Path('late_helper.py').write_text('VALUE = 1\\n', encoding='utf-8')\n"
+                "    import late_helper\n"
+                "    return {'score': late_helper.VALUE, 'is_valid': True}\n"
+            )
+        },
+        primary_file="main.py",
+    )
+    try:
+        result = CascadeEvaluator(
+            p,
+            stages=[{"name": "candidate_eval", "mode": "embedded_evaluate"}],
+        ).evaluate(workspace, None)
+
+        assert result == -0.2
+        assert result.error == "malformed_metrics"
+        assert "materialized candidate manifest" in result.metadata["malformed_metrics"]["message"]
+        assert result.metadata["evaluator_dependency_policy"]["runtime_enforced"] is True
     finally:
         shutil.rmtree(d)
 

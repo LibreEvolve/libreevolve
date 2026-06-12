@@ -267,6 +267,8 @@ _EMBEDDED_EVALUATE_RUNNER = (
     "primary_path=os.path.abspath(sys.argv[2])\n"
     "stage=json.loads(sys.argv[3])\n"
     "result_path=sys.argv[4]\n"
+    "allowed_workspace_files={os.path.abspath(item) for item in json.loads(sys.argv[5])}\n"
+    "allowed_workspace_files.add(primary_path)\n"
     "_rng_seed=stage.get('rng_seed') if isinstance(stage,dict) else None\n"
     "if _rng_seed is not None:\n"
     "    import random\n"
@@ -287,6 +289,47 @@ _EMBEDDED_EVALUATE_RUNNER = (
     "        handle.write(json.dumps(payload,allow_nan=False))\n"
     "os.chdir(workspace)\n"
     "if workspace not in sys.path: sys.path.insert(0,workspace)\n"
+    "def _within(path,root):\n"
+    "    try:\n"
+    "        return os.path.commonpath([os.path.abspath(path),root])==root\n"
+    "    except ValueError:\n"
+    "        return False\n"
+    "def _path_arg(value):\n"
+    "    if isinstance(value,int): return None\n"
+    "    try:\n"
+    "        return os.path.abspath(os.fsdecode(os.fspath(value)))\n"
+    "    except (TypeError,ValueError,OSError):\n"
+    "        return None\n"
+    "def _workspace_scope_violation(path):\n"
+    "    if path is None: return None\n"
+    "    resolved=os.path.abspath(path)\n"
+    "    if not _within(resolved,workspace): return None\n"
+    "    if resolved in allowed_workspace_files: return None\n"
+    "    return os.path.relpath(resolved,workspace)\n"
+    "def _read_mode(args,kwargs):\n"
+    "    mode=kwargs.get('mode', args[0] if args else 'r')\n"
+    "    if not isinstance(mode,str): return True\n"
+    "    return 'r' in mode or '+' in mode\n"
+    "import builtins,io\n"
+    "_real_open=builtins.open\n"
+    "_real_io_open=io.open\n"
+    "def _checked_open(file,*args,**kwargs):\n"
+    "    violation=_workspace_scope_violation(_path_arg(file)) if _read_mode(args,kwargs) else None\n"
+    "    if violation is not None:\n"
+    "        raise PermissionError('candidate workspace file is not in materialized candidate manifest: '+violation)\n"
+    "    return _real_open(file,*args,**kwargs)\n"
+    "def _checked_io_open(file,*args,**kwargs):\n"
+    "    violation=_workspace_scope_violation(_path_arg(file)) if _read_mode(args,kwargs) else None\n"
+    "    if violation is not None:\n"
+    "        raise PermissionError('candidate workspace file is not in materialized candidate manifest: '+violation)\n"
+    "    return _real_io_open(file,*args,**kwargs)\n"
+    "builtins.open=_checked_open\n"
+    "io.open=_checked_io_open\n"
+    "def _enforce_workspace_module_scope():\n"
+    "    for _name,_module in list(sys.modules.items()):\n"
+    "        violation=_workspace_scope_violation(_path_arg(getattr(_module,'__file__',None)))\n"
+    "        if violation is not None:\n"
+    "            raise PermissionError('candidate workspace module is not in materialized candidate manifest: '+violation)\n"
     "try:\n"
     "    spec=importlib.util.spec_from_file_location('_libreevolve_candidate_embedded_evaluate',primary_path)\n"
     "    if spec is None or spec.loader is None:\n"
@@ -295,6 +338,7 @@ _EMBEDDED_EVALUATE_RUNNER = (
     "    mod=importlib.util.module_from_spec(spec)\n"
     "    sys.modules[spec.name]=mod\n"
     "    spec.loader.exec_module(mod)\n"
+    "    _enforce_workspace_module_scope()\n"
     "    func=getattr(mod,'evaluate',None)\n"
     "    if not callable(func):\n"
     "        _emit(False,error='missing_candidate_evaluate',message='candidate primary module must define callable evaluate(eval_inputs)')\n"
@@ -306,6 +350,7 @@ _EMBEDDED_EVALUATE_RUNNER = (
     "        _emit(False,error='unsupported_candidate_evaluate_signature',message=f'candidate evaluate must have signature evaluate(eval_inputs), got {signature}')\n"
     "        sys.exit(0)\n"
     "    result=func(stage.get('eval_inputs',{}))\n"
+    "    _enforce_workspace_module_scope()\n"
     "except Exception as exc:\n"
     "    _emit(False,error='candidate_evaluate_error',message=f'{exc.__class__.__name__}: {exc}')\n"
     "    sys.exit(0)\n"
@@ -1376,6 +1421,7 @@ class CascadeEvaluator:
                     str(primary),
                     json.dumps(stage_context),
                     str(result_path),
+                    json.dumps([str(cand_root / path) for path in workspace.files]),
                 ],
                 cwd=cand_root,
                 timeout_sec=timeout_sec,
@@ -2549,6 +2595,11 @@ def _eval_metadata(
         metadata["evaluator_dependency_policy"] = {
             "policy": "candidate_primary_module_embedded_evaluate_v1",
             "allowed_scope": "materialized_candidate_workspace",
+            "workspace_dependency_policy": (
+                "materialized_candidate_files_only_for_workspace_local_modules_and_reads"
+            ),
+            "runtime_enforced": True,
+            "file_count": len(workspace.files),
             "problem_local_dependency_policy": "not_used",
             "outside_problem_policy": "not_constrained_by_this_policy",
         }

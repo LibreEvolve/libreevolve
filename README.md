@@ -2678,6 +2678,10 @@ call a candidate-owned `evaluate(eval_inputs)` function instead. The optional
 `eval_inputs` stage field must be JSON-safe config data; evaluation metadata
 records the candidate callable, `evaluator_mode=embedded_evaluate`, and
 eval-input type/size/SHA-256 provenance without retaining the raw input object.
+Embedded evaluation also records a runtime-enforced dependency policy that
+allows candidate-workspace local imports and reads only for files in the
+materialized candidate manifest while still permitting write-only artifact
+creation and normal stdlib/site imports.
 Completed manifests summarize executed embedded stages under
 `runtime.history.embedded_evaluator_entrypoint_report`, including program/stage
 ids, entrypoint, callable, signature, eval-input provenance, dependency scope,
@@ -2686,8 +2690,8 @@ static AST causal attribution when a returned metric expression depends on a
 local EVOLVE-block-backed function or expression. It also records static
 primary-file invocation traces from `evaluate()` through local functions that
 contain EVOLVE blocks when that AST evidence is available. Remaining Figure 3
-gaps cover stronger callable isolation/build policy plus non-static or
-external-validator score linkage. The committed
+gaps cover build isolation beyond the local subprocess/workspace guard plus
+non-static or external-validator score linkage. The committed
 `papers/embedded_evaluator_boundary.json` sidecar now
 records that paper-manifest-validated full-Figure-3 evaluator absence boundary.
 Embedded-only problems may omit `validate.py` when `config.yaml` declares a

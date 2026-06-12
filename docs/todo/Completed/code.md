@@ -17790,3 +17790,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: database tests cover source-key, output-hash,
     omitted-output, exclude-id, invalid-record exclusion, defensive-copy, and
     validation-error behavior.
+
+- [x] Enforce materialized-workspace dependencies for embedded evaluators.
+  - Spec evidence: AlphaEvolve Figure 3 uses a candidate-owned
+    `evaluate(eval_inputs)` entrypoint, so local embedded evaluation needs
+    candidate import/read boundaries before claiming evaluator parity.
+  - Status: the embedded evaluator subprocess now receives the materialized
+    candidate file manifest, wraps local workspace reads/imports, allows only
+    manifest-listed candidate files for workspace-local module imports and
+    read-mode file access, preserves write-only artifact creation, and records
+    `workspace_dependency_policy` plus `runtime_enforced: true` in
+    `evaluation.metadata.evaluator_dependency_policy`.
+  - Remaining gap: build/runtime isolation beyond the local subprocess plus
+    materialized-workspace guard, non-static score causality, and
+    external-validator score linkage remain open.
+  - Verification: embedded evaluator tests cover materialized helper imports,
+    undeclared local module rejection, metadata policy fields, and existing
+    callable/signature diagnostics.

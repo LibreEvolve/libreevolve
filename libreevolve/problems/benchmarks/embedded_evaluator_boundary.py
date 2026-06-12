@@ -26,14 +26,13 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "returned_metric_name",
     "score_to_block_link",
     "callable_isolation_policy",
+    "workspace_dependency_policy",
     "build_isolation_policy",
     "external_validator_score_linkage",
     "figure3_prompt_exhibit_ref",
     "figure3_response_exhibit_ref",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "skeleton_to_evolved_block_invocation_trace": "not_recorded_locally",
-    "stronger_callable_isolation_policy": "not_recorded_locally",
     "build_isolation_policy": "not_recorded_locally",
     "non_static_score_field_causality": "not_recorded_locally",
     "external_validator_score_linkage": "not_recorded_locally",
@@ -78,10 +77,11 @@ def embedded_evaluator_boundary_record() -> dict[str, Any]:
         "claim_boundary": (
             "This boundary records that LibreEvolve has opt-in candidate-owned "
             "evaluate(eval_inputs) runtime evidence and static score-field "
-            "attribution for supported embedded returns, but does not claim full "
-            "AlphaEvolve Figure 3 evaluator parity with skeleton-to-evolved-block "
-            "invocation traces, stronger callable/build isolation, non-static or "
-            "external-validator score linkage, or prompt/response exhibit artifacts."
+            "attribution for supported embedded returns, plus a runtime-enforced "
+            "materialized-candidate workspace dependency policy for local reads "
+            "and imports, but does not claim full AlphaEvolve Figure 3 evaluator "
+            "parity with build isolation, non-static or external-validator score "
+            "linkage, or prompt/response exhibit artifacts."
         ),
     }
 

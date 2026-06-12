@@ -151,15 +151,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `runtime.history.embedded_evaluator_entrypoint_report`. That report now
     also includes static primary-file invocation traces from `evaluate()`
     through EVOLVE-block-backed local functions when AST evidence is present.
+    Embedded candidate-local reads/imports are now runtime-enforced against
+    the materialized candidate file manifest.
     External `validate.py` remains the default path, and the problem loader
     still requires `validate.py` except for all-embedded configured problems.
     ROADMAP now also names `papers/embedded_evaluator_boundary.json` as the
     committed paper-manifest-validated full-Figure-3 evaluator absence boundary.
-  - Required result: when stronger callable isolation/build policy and
-    non-static/external-validator score-field linkage land, update ROADMAP,
-    README, papers index, and code/paper TODOs together so roadmap wording can
-    claim full Figure 3 evaluator parity without overstating the current
-    opt-in report.
+  - Required result: when build/runtime isolation beyond the local subprocess
+    plus workspace guard and non-static/external-validator score-field linkage
+    land, update ROADMAP, README, papers index, and code/paper TODOs together
+    so roadmap wording can claim full Figure 3 evaluator parity without
+    overstating the current opt-in report.
 
 - [ ] Extend Figure 1/Figure 2 roadmap wording from process mappings to full
       diagram parity.

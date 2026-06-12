@@ -12373,3 +12373,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     semantic output similarity, and cross-run output memory remain open.
   - Verification: database tests validate exact output query behavior and
     input validation.
+
+- [x] Record embedded evaluator workspace dependency enforcement.
+  - Spec evidence: paper-facing Figure 3 evaluator claims need evidence that
+    candidate-owned `evaluate(eval_inputs)` local dependencies are bounded.
+  - Status: paper-facing TODOs, the papers overview, and
+    `papers/embedded_evaluator_boundary.json` now record runtime-enforced
+    materialized-candidate workspace local read/import scope for embedded
+    evaluators.
+  - Remaining paper gap: build/runtime isolation beyond the local subprocess
+    plus workspace guard, non-static score causality, external-validator score
+    linkage, and Figure 3 prompt/response exhibits remain open.
+  - Verification: embedded evaluator and embedded-boundary tests validate the
+    narrowed evidence boundary.

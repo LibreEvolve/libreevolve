@@ -149,7 +149,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     materialized candidate primary file, discover a one-argument
     `evaluate(eval_inputs)` callable, invoke it with JSON-safe configured
     inputs, validate returned metrics, and record candidate callable plus
-    eval-input provenance. Completed manifests now include
+    eval-input provenance. Embedded candidate-local reads/imports are now
+    runtime-enforced against the materialized candidate file manifest.
+    Completed manifests now include
     `runtime.history.embedded_evaluator_entrypoint_report` with schema
     `libreevolve.embedded_evaluator_entrypoint_report.v1`, summarizing executed
     embedded entrypoints, dependency scope, eval-input provenance, metric
@@ -160,16 +162,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     static score-field mapping back to specific evolved code paths for
     supported candidate-owned `evaluate` returns, and static local
     skeleton-to-evolved-block invocation paths for direct-name function calls.
-    It still lacks stronger callable isolation/build policy, non-static score
-    causality, and external-validator score linkage. External `validate.py`
-    remains the default problem format outside all-embedded configs. The
+    It still lacks build/runtime isolation beyond the local subprocess plus
+    workspace guard, non-static score causality, and external-validator score
+    linkage. External `validate.py` remains the default problem format outside
+    all-embedded configs. The
     committed
     `papers/embedded_evaluator_boundary.json` sidecar now preserves the
     paper-manifest-validated full-Figure-3 evaluator absence boundary.
-  - Required result: add paper-visible examples and reports proving stronger
-    callable isolation/build policy and non-static/external-validator score
-    linkage before treating local validator execution as AlphaEvolve Figure 3
-    evaluator parity.
+  - Required result: add paper-visible examples and reports proving
+    build/runtime isolation beyond the local subprocess plus workspace guard
+    and non-static/external-validator score linkage before treating local
+    validator execution as AlphaEvolve Figure 3 evaluator parity.
 
 - [ ] Parallelized evaluation and asynchronous throughput.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 2.6.

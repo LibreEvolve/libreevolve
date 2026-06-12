@@ -113,6 +113,11 @@ Primary evidence:
     the existing local metric contract, and records
     `evaluator_mode=embedded_evaluate`, candidate callable metadata, and
     redacted eval-input provenance (`libreevolve.eval_inputs_provenance.v1`).
+    Embedded evaluation now also records and enforces a
+    `materialized_candidate_files_only_for_workspace_local_modules_and_reads`
+    workspace dependency policy: candidate-local reads/imported modules must
+    resolve to materialized candidate files, while write-only artifact creation
+    and normal stdlib/site imports remain allowed.
     Runtime summaries now include
     `runtime.history.embedded_evaluator_entrypoint_report` with executed
     embedded entrypoint records, dependency scope, eval-input provenance,
@@ -133,10 +138,10 @@ Primary evidence:
     format and CLI path. The committed `papers/embedded_evaluator_boundary.json`
     sidecar now records the paper-manifest-validated full-Figure-3 evaluator
     absence boundary.
-  - Required result: finish stronger candidate callable build/import isolation
-    beyond the local subprocess boundary; extend score-link causality beyond
-    the current static embedded AST path to non-static and external-validator
-    cases before claiming arbitrary evaluator parity.
+  - Required result: finish build/runtime isolation beyond the local
+    subprocess plus materialized-workspace guard; extend score-link causality
+    beyond the current static embedded AST path to non-static and
+    external-validator cases before claiming arbitrary evaluator parity.
 
 - [ ] Extend Figure 1/Figure 2 process-exhibit report into rendered diagram
       parity.

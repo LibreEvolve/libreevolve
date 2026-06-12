@@ -693,16 +693,18 @@ AlphaEvolve embedded-evaluator note: configured stages can now opt into
 `mode: embedded_evaluate`, which imports the materialized candidate primary
 file and invokes a candidate-owned `evaluate(eval_inputs)` callable with
 JSON-safe configured inputs. Metadata records the candidate callable and
-eval-input provenance, and completed manifests now summarize executed embedded
-entrypoints under `runtime.history.embedded_evaluator_entrypoint_report`,
+eval-input provenance plus a runtime-enforced materialized-candidate workspace
+dependency policy for local reads/imports, and completed manifests now
+summarize executed embedded entrypoints under
+`runtime.history.embedded_evaluator_entrypoint_report`,
 including per-metric candidate path/block-span link candidates without causal
 attribution claims.
 `validate.py` remains the default problem-loading contract, but
 `load_problem()` now allows missing `validate.py` for a non-empty all-
 `embedded_evaluate` stage list and the `embedded_evaluate_math` fixture covers
-that embedded-only path. Skeleton/block invocation traces, stronger candidate
-import isolation, and broader non-static score-link resolution remain necessary
-before claiming Figure 3 evaluator parity. Supported embedded
+that embedded-only path. Build isolation beyond the local subprocess/workspace
+guard and broader non-static score-link resolution remain necessary before
+claiming Figure 3 evaluator parity. Supported embedded
 `evaluate(eval_inputs)` paths now record static AST score-field attribution
 when a returned metric expression depends on an EVOLVE block.
 The committed `papers/embedded_evaluator_boundary.json` sidecar now emits the

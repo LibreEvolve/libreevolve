@@ -11940,3 +11940,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     sampling engines out of scope.
   - Verification: database tests validate exact output query behavior and
     input validation.
+
+- [x] Document embedded evaluator workspace dependency enforcement.
+  - Spec evidence: README Figure 3 evaluator wording needed to distinguish
+    opt-in embedded evaluation from unbounded candidate imports or full build
+    isolation.
+  - Status: README now says embedded evaluation enforces
+    materialized-candidate workspace local read/import scope while preserving
+    write-only artifact creation and normal stdlib/site imports, and keeps
+    build isolation plus non-static/external-validator score linkage open.
+  - Verification: embedded evaluator tests cover policy metadata, helper
+    imports, and undeclared local module rejection.

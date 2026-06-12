@@ -1,0 +1,207 @@
+{
+  "schema": "libreevolve.autoconvolution_boundary.v1",
+  "source_paper_id": "2506.16750",
+  "source_title": "An improved example for an autoconvolution inequality",
+  "source_authors": [
+    "Christopher Boyer",
+    "Zane Kun Li"
+  ],
+  "source_version": "v2",
+  "source_submitted_date": "2025-06-20",
+  "source_last_revised_date": "2025-08-10",
+  "source_pdf_date": "2025-08-10",
+  "source_url": "https://arxiv.org/pdf/2506.16750.pdf",
+  "source_file": "papers/2506.16750__Autoconvolution.pdf",
+  "source_sha256": "74f3e1781ce06e3752142fa24b60037ae5d27e33ee188273b4a7aa20d54f1c1d",
+  "source_bytes": 446393,
+  "source_license": "http://arxiv.org/licenses/nonexclusive-distrib/1.0/",
+  "boundary_status": "post_alphaevolve_autoconvolution_context_without_local_witness_verifier",
+  "claim_ready": false,
+  "source_links": [
+    {
+      "url": "https://arxiv.org/abs/2506.16750v2",
+      "status": "source_version_reference_only"
+    },
+    {
+      "url": "https://github.com/zkli-math/autoconvolutionHolder",
+      "status": "public_artifact_reference_only"
+    },
+    {
+      "url": "https://github.com/google-deepmind/alphaevolve_results/blob/main/mathematical_results.ipynb",
+      "status": "alphaevolve_baseline_reference_only"
+    },
+    {
+      "url": "https://deepmind.google/discover/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/",
+      "status": "alphaevolve_context_reference_only"
+    },
+    {
+      "url": "https://mathoverflow.net/q/60087",
+      "status": "problem_context_reference_only"
+    }
+  ],
+  "framework_components": [
+    {
+      "component_id": "step_function_witness_schema",
+      "paper_role": "represent nonnegative step-function witnesses",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "interval_575_coefficient_payload",
+      "paper_role": "store the 575 row-major integer coefficients",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "discrete_autoconvolution_checker",
+      "paper_role": "evaluate formula (3) for coefficient lists",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "lj_sequence_recomputation",
+      "paper_role": "recompute L_j convolution samples from coefficients",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "norm_objective_policy",
+      "paper_role": "define L2, Linf, L1 and objective/tolerance policy",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "exact_fraction_result_record",
+      "paper_role": "verify the exact rational lower-bound certificate",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "alphaevolve_baseline_record",
+      "paper_role": "compare against the 50-interval AlphaEvolve witness",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "matolcsi_vinuesa_baseline_record",
+      "paper_role": "compare against the 20-step Matolcsi-Vinuesa witness",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "simulated_annealing_search_provenance",
+      "paper_role": "record coarse and refined simulated-annealing stages",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "gradient_refinement_provenance",
+      "paper_role": "record gradient-based refinement and upscaling stages",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "github_artifact_snapshot",
+      "paper_role": "snapshot public Python coefficient/search artifacts",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "mathematica_verification_notebook",
+      "paper_role": "snapshot Verify.nb coefficient checks",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "coefficient_row_order_parser",
+      "paper_role": "parse Appendix A coefficients by row, not column",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "support_normalization_invariance",
+      "paper_role": "track translation/dilation invariance and support normalization",
+      "local_status": "not_implemented"
+    }
+  ],
+  "local_evidence": {
+    "current_autoconvolution_runner": "<none>",
+    "current_math_scope": "appendix_b_alphaevolve_context_not_post_alphaevolve_575_interval_witness",
+    "witness_schema_ready": false,
+    "coefficient_payload_ready": false,
+    "formula3_checker_ready": false,
+    "norm_recomputation_ready": false,
+    "exact_fraction_ready": false,
+    "alphaevolve_baseline_ready": false,
+    "matolcsi_vinuesa_baseline_ready": false,
+    "search_provenance_ready": false,
+    "github_snapshot_ready": false,
+    "verify_notebook_ready": false,
+    "support_normalization_ready": false,
+    "independent_checker_ready": false,
+    "repository_runtime_verified": false
+  },
+  "reported_result": {
+    "interval_count": 575,
+    "alphaevolve_interval_count": 50,
+    "matolcsi_vinuesa_interval_count": 20,
+    "lower_bound_decimal": 0.901564,
+    "exact_fraction": "96086089410408840289339769 / 106577013451431545242354944",
+    "alphaevolve_bound_reported": 0.8962,
+    "alphaevolve_formula3_recomputed": 0.89628,
+    "matolcsi_vinuesa_recomputed": 0.889226,
+    "found_before_alphaevolve_awareness": "November 2024",
+    "search_methods": [
+      "simulated annealing",
+      "gradient based methods"
+    ],
+    "coefficient_scaling_factor": "2^24",
+    "support_interval_for_comparison": "[-1/4, 1/4]",
+    "coefficient_table_order": "row_major",
+    "mv_vs_bl_autoconvolution_correlation": 0.996342,
+    "alphaevolve_vs_bl_autoconvolution_correlation": 0.848466,
+    "public_artifacts": [
+      "Inital HPC code.py",
+      "Refine HPC code.py",
+      "f95.py",
+      "coeffBL.txt",
+      "Verify.nb"
+    ]
+  },
+  "required_evidence_fields": [
+    "source_license_and_repository_status",
+    "alphaevolve_relation",
+    "post_alphaevolve_improvement_policy",
+    "step_function_witness_schema",
+    "interval_count_and_grid_spacing",
+    "coefficient_payload_hashes",
+    "convolution_integral_recomputation",
+    "l2_linf_l1_norm_definitions",
+    "objective_and_tolerance_policy",
+    "exact_fraction_result_record",
+    "decimal_result_record",
+    "alphaevolve_baseline_record",
+    "matolcsi_vinuesa_baseline_record",
+    "simulated_annealing_provenance",
+    "gradient_search_provenance",
+    "translation_dilation_invariance_records",
+    "support_normalization_records",
+    "row_major_coefficient_order_tests",
+    "github_artifact_snapshot",
+    "python_checker_artifacts",
+    "mathematica_verification_artifacts",
+    "hpc_resource_provenance",
+    "comparison_correlation_records",
+    "independent_checker_outputs"
+  ],
+  "missing_evidence": {
+    "step_function_witness_schema": "not_implemented_locally",
+    "interval_575_coefficient_payload": "not_recorded_locally",
+    "coeffbl_artifact_hashes": "not_recorded_locally",
+    "verify_notebook_snapshot": "not_recorded_locally",
+    "formula_3_checker": "not_implemented_locally",
+    "lj_sequence_recomputation": "not_implemented_locally",
+    "l2_linf_l1_norm_recomputation": "not_implemented_locally",
+    "exact_fraction_validation": "not_recorded_locally",
+    "decimal_tolerance_policy": "not_recorded_locally",
+    "alphaevolve_baseline_coefficients": "not_recorded_locally",
+    "matolcsi_vinuesa_baseline_coefficients": "not_recorded_locally",
+    "github_repository_snapshot": "not_recorded_locally",
+    "initial_hpc_code_artifact": "not_recorded_locally",
+    "refine_hpc_code_artifact": "not_recorded_locally",
+    "f95_artifact": "not_recorded_locally",
+    "simulated_annealing_trace": "not_recorded_locally",
+    "gradient_refinement_trace": "not_recorded_locally",
+    "ncsu_hpc_resource_record": "not_recorded_locally",
+    "support_normalization_checker": "not_implemented_locally",
+    "independent_checker_outputs": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records the post-AlphaEvolve autoconvolution paper as constructive math context only. LibreEvolve currently does not claim a 575-interval witness schema, coefficient payload hashes, formula (3) recomputation, L2/Linf/L1 norm checks, exact-rational verification, AlphaEvolve or Matolcsi-Vinuesa baseline records, simulated-annealing or gradient-search provenance, public GitHub artifact snapshots, Mathematica verification notebook evidence, support-normalization checks, or independent checker outputs."
+}

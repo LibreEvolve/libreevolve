@@ -4034,8 +4034,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     solver logs, solution validation, baseline citations, table-level outcome
     rows, and reproducibility/licensing status for both solvers.
 
-- [ ] Keep README post-AlphaEvolve autoconvolution improvement claims absent
-      or source-scoped until 575-interval witness evidence exists.
+- [ ] Implement README post-AlphaEvolve autoconvolution improvement claims
+      beyond source-scoped absence.
   - Spec evidence: arXiv `2506.16750`, `An improved example for an
     autoconvolution inequality`, reports a nonnegative step function with
     `575` equally spaced intervals and autoconvolution ratio `>= 0.901564`.
@@ -4045,10 +4045,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     an exact rational certificate, a finite coefficient-list formula using
     `L_j` convolution samples, public Python/Mathematica code, and Appendix A
     integer coefficients obtained by scaling by `2^24` and rounding.
-  - Current evidence: README documents Appendix B/autoconvolution gaps,
-    constructive-math benchmark-report contracts, paper-cache status, and
-    smoke fixtures. It does not mention `2506.16750`, store a 575-interval
-    step-function witness, recompute the autoconvolution objective, compare
+  - Current evidence: README now lists `2506.16750` as source-scoped
+    Autoconvolution context and points to `papers/autoconvolution_boundary.json`.
+    It still does not store a 575-interval step-function witness, recompute the
+    autoconvolution objective, compare
     the AlphaEvolve 50-interval baseline against the later result, preserve
     non-LLM search provenance, or define a rounding/tolerance rule for
     `0.901564`. README also lacks source-scoped boundaries for the public

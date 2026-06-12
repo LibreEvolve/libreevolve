@@ -6317,7 +6317,8 @@ Primary evidence:
     rounding/flooring/ceiling policy, and an explicit note that this is a
     direct solver baseline, not an LLM evolutionary-search implementation.
 
-- [ ] Add post-AlphaEvolve autoconvolution improvement boundary.
+- [ ] Implement post-AlphaEvolve autoconvolution improvement beyond the source
+      boundary.
   - Spec evidence: arXiv `2506.16750`, `An improved example for an
     autoconvolution inequality`, was submitted June 20, 2025 and last revised
     August 10, 2025. Its abstract gives a nonnegative step function with
@@ -6332,11 +6333,12 @@ Primary evidence:
     continuous problem to nonnegative coefficients `v_0..v_(N-1)` and
     convolution samples `L_j`, and gives formula `(3)` for recomputing the
     ratio from integer coefficient lists.
-  - Current evidence: `papers/README.md` lists `2506.16750` only as a
-    constructive math benchmark candidate with `Not implemented; potential
-    future benchmark`. LibreEvolve has broad Appendix B autoconvolution TODOs,
-    but no implemented source-boundary gate for this source, no 575-interval
-    witness schema, no objective recomputation report for the post-AlphaEvolve value,
+  - Current evidence: `papers/autoconvolution_boundary.json` now records the
+    source-specific absence boundary for `2506.16750`, and `papers/README.md`
+    lists it as a constructive math benchmark candidate with `Not implemented;
+    potential future benchmark`. LibreEvolve has broad Appendix B
+    autoconvolution TODOs, but still has no 575-interval witness schema, no
+    objective recomputation report for the post-AlphaEvolve value,
     no side-by-side AlphaEvolve `50`-interval baseline row, no simulated-
     annealing/gradient-method provenance, no exact/rounded numerical tolerance
     policy for `0.901564`, and no artifact policy that distinguishes

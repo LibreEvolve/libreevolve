@@ -26,6 +26,10 @@ from libreevolve.problems.benchmarks.ablation_registry import (
     REGISTRY_PATH as ABLATION_REGISTRY_PATH,
     validate_ablation_registry,
 )
+from libreevolve.problems.benchmarks.autoconvolution_boundary import (
+    autoconvolution_boundary_record,
+    validate_autoconvolution_boundary,
+)
 from libreevolve.problems.benchmarks.bilateral_trade_boundary import (
     bilateral_trade_boundary_record,
     validate_bilateral_trade_boundary,
@@ -305,6 +309,7 @@ COMBINATORICS_BERCZY_BOUNDARY_FILE = "papers/combinatorics_berczy_boundary.json"
 BRUHAT_INTERVALS_BOUNDARY_FILE = "papers/bruhat_intervals_boundary.json"
 FAULT2FLOW_BOUNDARY_FILE = "papers/fault2flow_boundary.json"
 GLOBAL_NLP_OPTIMIZATION_BOUNDARY_FILE = "papers/global_nlp_optimization_boundary.json"
+AUTOCONVOLUTION_BOUNDARY_FILE = "papers/autoconvolution_boundary.json"
 BILATERAL_TRADE_BOUNDARY_FILE = "papers/bilateral_trade_boundary.json"
 EXAMPLE_BENCHMARK_SCOPE_FILE = "papers/example_benchmark_scope.json"
 MATH_OUTCOME_BOUNDARY_FILE = "papers/math_outcome_boundary.json"
@@ -700,6 +705,7 @@ def validate_paper_manifest(
     issues.extend(_validate_bruhat_intervals_boundary(root_path))
     issues.extend(_validate_fault2flow_boundary(root_path))
     issues.extend(_validate_global_nlp_optimization_boundary(root_path))
+    issues.extend(_validate_autoconvolution_boundary(root_path))
     issues.extend(_validate_bilateral_trade_boundary(root_path))
 
     if set(csv_by_id) - seen_ids:
@@ -2177,6 +2183,38 @@ def _validate_global_nlp_optimization_boundary(root_path: Path) -> list[PaperMan
             f"global_nlp_optimization_boundary_{issue.code}",
             issue.message,
             "global_nlp_optimization",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_autoconvolution_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / AUTOCONVOLUTION_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = autoconvolution_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "autoconvolution_boundary_manifest_missing",
+                    (
+                        f"{AUTOCONVOLUTION_BOUNDARY_FILE} must emit "
+                        "post-AlphaEvolve autoconvolution evidence availability"
+                    ),
+                    "autoconvolution",
+                )
+            ]
+    report = validate_autoconvolution_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"autoconvolution_boundary_{issue.code}",
+            issue.message,
+            "autoconvolution",
         )
         for issue in report.issues
     ]

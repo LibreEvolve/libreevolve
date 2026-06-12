@@ -12634,3 +12634,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     independent checker outputs remain open.
   - Verification: Global NLP Optimization boundary tests and paper-manifest
     tests validate the sidecar and reject solver-readiness overclaims.
+
+- [x] Record Autoconvolution `2506.16750` source boundary.
+  - Status: `papers/autoconvolution_boundary.json` now carries the
+    source-specific Autoconvolution boundary with cached PDF digest, arXiv v2
+    identity, source license metadata, public repository and AlphaEvolve
+    reference links, 575-interval witness result metadata, exact fraction,
+    AlphaEvolve and Matolcsi-Vinuesa comparison values, search-method labels,
+    public artifact names, required evidence fields, and missing-evidence keys.
+  - Remaining paper gap: local coefficient payloads, artifact hashes, formula
+    (3) recomputation, exact-rational and decimal checker outputs, baseline
+    coefficient snapshots, search traces, HPC provenance, support-normalization
+    checks, and independent reproduction outputs remain open.
+  - Verification: Autoconvolution boundary tests and paper-manifest tests
+    validate the sidecar and reject checker-readiness overclaims.

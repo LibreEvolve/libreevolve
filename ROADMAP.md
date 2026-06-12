@@ -625,7 +625,7 @@ is not yet an AlphaEvolve reproduction.
 - Continue labeling CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve,
   TTT Discover, Bruhat Intervals, GigaEvo, CodeEvolve, MadEvolve, Magellan,
   ArchAgent, Multiagent Learning, Bilateral Trade, Fault2Flow, Global NLP
-  Optimization, Ramsey Numbers, and Berczy
+  Optimization, Autoconvolution, Ramsey Numbers, and Berczy
   local-correction combinatorics
   features as inspired, candidate benchmark, or
   application context unless paper behavior is actually implemented. The committed
@@ -745,6 +745,15 @@ is not yet an AlphaEvolve reproduction.
   policy, AlphaEvolve validation-code outputs, Table 1-3 reproduction rows,
   solver-attribution caveats, dual-bound-detail caveats, and independent
   checker outputs.
+  The committed `papers/autoconvolution_boundary.json` sidecar records the
+  post-AlphaEvolve Autoconvolution source-specific boundary for 575-interval
+  witness schemas, coefficient payload hashes, formula (3) discrete
+  autoconvolution checking, `L_j` sequence recomputation, `L2`/`Linf`/`L1`
+  norm checks, exact fraction and decimal result validation, AlphaEvolve and
+  Matolcsi-Vinuesa baseline records, simulated-annealing and gradient-search
+  provenance, row-major coefficient parsing, public GitHub artifact snapshots,
+  Mathematica `Verify.nb` evidence, support-normalization records, NCSU HPC
+  resource provenance, and independent checker outputs.
 
 ## Mid Term
 

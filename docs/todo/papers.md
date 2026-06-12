@@ -5813,7 +5813,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     distinction between direct optimization baselines and complementary
     LLM-driven model/prototype generation.
 
-- [ ] Track post-AlphaEvolve autoconvolution improvement paper evidence.
+- [ ] Implement post-AlphaEvolve autoconvolution improvement paper evidence
+      beyond the source boundary.
   - Paper/source evidence: arXiv `2506.16750`, submitted June 20, 2025 and
     last revised August 10, 2025, is titled `An improved example for an
     autoconvolution inequality`. Its abstract gives a nonnegative step
@@ -5827,10 +5828,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     `f = sum_{n=0}^{574} v_n 1_[n,n+1)`, with coefficients in Appendix A.
     Section 2 defines convolution samples `L_j` and formula `(3)`, which is
     the direct finite checker for any coefficient list.
-  - Current gap: `papers/README.md` lists `2506.16750` as a constructive math
-    benchmark candidate with `Not implemented; potential future benchmark`,
-    but the current implementation and paper index do not yet provide local
-    source-boundary artifacts or implementation evidence for this paper.
+  - Current gap: `papers/autoconvolution_boundary.json` now records the
+    source-specific absence boundary for `2506.16750`, and `papers/README.md`
+    lists it as a constructive math benchmark candidate with `Not implemented;
+    potential future benchmark`. The current implementation still does not
+    provide local witness artifacts or implementation evidence for this paper.
     Existing Appendix B.1-B.3 autoconvolution gaps cover the
     AlphaEvolve result family, but not this later 575-interval witness,
     non-LLM search provenance, objective recomputation, side-by-side

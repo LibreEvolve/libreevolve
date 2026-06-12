@@ -9695,3 +9695,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     dual-bound-detail caveats, and independent checker outputs.
   - Verification: Global NLP Optimization boundary tests and paper-manifest
     tests validate the sidecar and repo-root requirement.
+
+- [x] Preserve Autoconvolution `2506.16750` boundary scope in roadmap.
+  - Status: ROADMAP and roadmap TODO wording now identify
+    `papers/autoconvolution_boundary.json` as the source-specific boundary for
+    575-interval witness schemas, coefficient payload hashes, formula (3)
+    discrete autoconvolution checking, `L_j` sequence recomputation,
+    `L2`/`Linf`/`L1` norm checks, exact fraction and decimal result validation,
+    AlphaEvolve and Matolcsi-Vinuesa baseline records, simulated-annealing and
+    gradient-search provenance, row-major coefficient parsing, public GitHub
+    artifact snapshots, Mathematica `Verify.nb` evidence, support-normalization
+    records, NCSU HPC resource provenance, and independent checker outputs.
+  - Verification: Autoconvolution boundary tests and paper-manifest tests
+    validate the sidecar and repo-root requirement.

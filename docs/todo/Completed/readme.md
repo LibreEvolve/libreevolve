@@ -12139,3 +12139,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     evidence explicit as missing.
   - Verification: Global NLP Optimization boundary and paper-manifest tests
     validate the sidecar that README now references.
+
+- [x] Document Autoconvolution `2506.16750` source boundary in README.
+  - Status: README now names `papers/autoconvolution_boundary.json` in the
+    source reference table while keeping Autoconvolution as post-AlphaEvolve
+    constructive-math improvement context only, with 575-interval witness
+    payloads, formula (3) checker, norm recomputation, exact fraction
+    validation, AlphaEvolve/MV baselines, search provenance, public artifact
+    snapshots, and independent checker evidence explicit as missing.
+  - Verification: Autoconvolution boundary and paper-manifest tests validate
+    the sidecar that README now references.

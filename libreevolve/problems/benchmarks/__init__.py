@@ -68,6 +68,12 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     validate_appendix_a_matrix_subset_scope_artifact_boundary,
     validate_appendix_a_matrix_subset_scope,
 )
+from libreevolve.problems.benchmarks.autoconvolution_boundary import (
+    AUTOCONVOLUTION_BOUNDARY_SCHEMA,
+    autoconvolution_boundary_record,
+    render_autoconvolution_boundary_summary,
+    validate_autoconvolution_boundary,
+)
 from libreevolve.problems.benchmarks.benchmark_hardening import (
     BENCHMARK_EVIDENCE_SCOPE_SCHEMA,
     BENCHMARK_HARDENING_ARTIFACT_INVENTORY_SCHEMA,
@@ -453,6 +459,7 @@ __all__ = [
     "APPENDIX_A_MATRIX_SUBSET_SCOPE_ARTIFACT_BOUNDARY_SCHEMA",
     "APPENDIX_A_MATRIX_SUBSET_SCOPE_SCHEMA",
     "APPENDIX_A_MATRIX_TARGET_SUITE",
+    "AUTOCONVOLUTION_BOUNDARY_SCHEMA",
     "BENCHMARK_HARDENING_ARTIFACT_INVENTORY_SCHEMA",
     "BENCHMARK_EVIDENCE_SCOPE_SCHEMA",
     "BENCHMARK_HARDENING_SCHEMA",
@@ -537,6 +544,7 @@ __all__ = [
     "appendix_a_matrix_subset_scope_artifact_boundary_record",
     "appendix_a_matrix_subset_scope_record",
     "archagent_boundary_record",
+    "autoconvolution_boundary_record",
     "alphaevolve_companion_colab_source_record",
     "alphaevolve_follow_on_math_source_record",
     "alphaevolve_math_heuristic_handoff_boundary",
@@ -625,6 +633,7 @@ __all__ = [
     "render_alphaevolve_source_pdf_rights_summary",
     "render_alphaevolve_source_pdf_version_summary",
     "render_archagent_boundary_summary",
+    "render_autoconvolution_boundary_summary",
     "render_benchmark_hardening_summary",
     "render_bilateral_trade_boundary_summary",
     "render_bruhat_intervals_boundary_summary",
@@ -701,6 +710,7 @@ __all__ = [
     "validate_alphaevolve_source_pdf_rights",
     "validate_alphaevolve_source_pdf_version",
     "validate_archagent_boundary",
+    "validate_autoconvolution_boundary",
     "validate_benchmark_evidence_scope",
     "validate_benchmark_hardening_report",
     "validate_bilateral_trade_boundary",

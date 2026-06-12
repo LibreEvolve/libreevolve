@@ -18083,3 +18083,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: Global NLP Optimization boundary tests and paper-manifest
     tests cover the sidecar, drift rejection, and repo-root sidecar
     requirement.
+
+- [x] Add Autoconvolution `2506.16750` source-boundary gate.
+  - Status: `libreevolve.problems.benchmarks.autoconvolution_boundary` now
+    emits and validates `papers/autoconvolution_boundary.json` with cached PDF
+    digest, arXiv v2 identity, source license metadata, reference-only source
+    links, 575-interval result metadata, AlphaEvolve and Matolcsi-Vinuesa
+    baseline values, public artifact labels, required future evidence fields,
+    missing-evidence keys, and overclaim rejection.
+  - Remaining gap: witness schemas, coefficient payload hashes, formula (3)
+    checking, norm recomputation, exact fraction validation, baseline artifact
+    rows, simulated-annealing/gradient provenance, GitHub snapshots,
+    Mathematica verification evidence, support normalization, and independent
+    checker outputs remain open.
+  - Verification: Autoconvolution boundary tests and paper-manifest tests cover
+    the sidecar, drift rejection, and repo-root sidecar requirement.

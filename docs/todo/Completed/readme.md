@@ -643,7 +643,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Spec evidence: README points readers to the local paper cache as the source
     ledger for paper-facing implementation status and benchmark decisions.
   - Status: README now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 33 cache
+    companion manifest that emits derived source identities for all 34 cache
     rows, including URL source id, filename source prefix, validation booleans,
     and the AlphaEvolve row's source-version link.
   - Remaining gap: none for this bounded README wording slice.
@@ -1079,7 +1079,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     algorithm subset.
   - Status: corrected and guarded. README now states the visible paper tables
     are a curated subset and that `papers/README.md` is the complete
-    implementation-status index for all 33 manifest rows. The paper-manifest
+    implementation-status index for all 34 manifest rows. The paper-manifest
     validator now flags root README paper summaries that list only a subset of
     manifest ids without this curated-summary disclosure.
   - Verification: `tests/test_paper_manifest.py` covers accepted curated
@@ -12246,4 +12246,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     context-management, momentum-backtracking, or LLM-SR/KernelBench report
     exists.
   - Verification: paper-manifest validation checks README's local paper-cache
-    count and curated-subset wording against the 33-row manifest.
+    count and curated-subset wording against the current manifest.
+
+- [x] Document `2605.08520` FlashEvolve paper coverage in README.
+  - Status: README now includes `2605.08520`, `FlashEvolve`, as asynchronous-
+    stage orchestration context only and states that no local async worker
+    queue, artifact-version DAG, staleness repair, or throughput benchmark
+    exists.
+  - Verification: paper-manifest validation checks README's local paper-cache
+    count and curated-subset wording against the 34-row manifest.

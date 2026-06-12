@@ -3546,7 +3546,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     independent reproduction outputs, and a benchmark-fixture status rule so
     roadmap claims do not outpace local PACEvolve-style support.
 
-- [ ] Add FlashEvolve asynchronous-stage gates before roadmap promotion.
+- [ ] Implement FlashEvolve asynchronous-stage gates beyond paper cache
+      coverage.
   - Spec evidence: arXiv `2605.08520`, submitted May 8, 2026, introduces
     FlashEvolve for asynchronous stage orchestration in LLM-based evolution.
     The abstract identifies synchronized stage execution and LLM-heavy stage
@@ -3556,19 +3557,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     control. It reports 3.5x local-vLLM and 4.9x API proposal-throughput gains
     over synchronous GEPA and says the design also applies to ACE and
     Meta-Harness.
-  - Current evidence: ROADMAP tracks async reviewer gaps, archive restore,
-    prompt/run provenance, benchmark-report contracts, and several
-    long-horizon search gates. It does not mention `2605.08520`, define an
-    asynchronous-stage source gate, or require evidence before promoting
-    overlapping generation/evaluation/admission, artifact-version repair, or
-    throughput gains beyond the current synchronous evolution loop.
-  - Required result: add roadmap gates for `2605.08520`: paper/source
-    manifest entry, PDF/cache hash, source-license metadata, worker/queue
-    architecture, stage-overlap and queue-depth traces, artifact-version
-    lineage, stale-artifact update/discard/patch policy records, reflective
-    stale-patch artifacts, speculative-completion metrics, adaptive workflow
-    control telemetry, throughput/token-efficiency reports, GEPA/vLLM/API
-    baseline identities, ACE/Meta-Harness applicability boundaries, and a
+  - Current evidence: ROADMAP, `papers/download_manifest.*`, and
+    `papers/README.md` now include `2605.08520`, cached locally as
+    `papers/2605.08520__FlashEvolve.pdf` with byte count `627860` and SHA-256
+    `668cb80b2c72e1e2c9a296df9c35f4965f79f03b095310e738c012b6106b0e08`.
+    ROADMAP tracks async reviewer gaps, archive restore, prompt/run
+    provenance, benchmark-report contracts, and several long-horizon search
+    gates, but still has no local asynchronous-stage implementation evidence.
+  - Required result: add roadmap gates beyond paper-cache coverage for
+    `2605.08520`: source-license metadata, worker/queue architecture,
+    stage-overlap and queue-depth traces, artifact-version lineage,
+    stale-artifact update/discard/patch policy records, reflective stale-patch
+    artifacts, speculative-completion metrics, adaptive workflow control
+    telemetry, throughput/token-efficiency reports, GEPA/vLLM/API baseline
+    identities, ACE/Meta-Harness applicability boundaries, and a
     background-only or benchmark-fixture status rule so roadmap claims do not
     outpace local FlashEvolve-style async orchestration support.
 

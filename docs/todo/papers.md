@@ -4706,7 +4706,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     benchmark metadata, baseline method identities, code/artifact availability
     if any, and independent verification outputs.
 
-- [ ] Track FlashEvolve asynchronous-stage paper evidence.
+- [ ] Reproduce FlashEvolve asynchronous-stage evidence beyond paper coverage.
   - Paper/source evidence: arXiv `2605.08520`, submitted May 8, 2026, is
     titled `FlashEvolve: Accelerating Agent Self-Evolution with Asynchronous
     Stage Orchestration`. Its abstract says synchronized stage execution and
@@ -4718,23 +4718,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     adds speculative stage completion and adaptive workflow control; and
     reports 3.5x local-vLLM and 4.9x API proposal-throughput gains over
     synchronous GEPA, with the design also applying to ACE and Meta-Harness.
-  - Current gap: the paper cache, paper index, and TODO coverage do not
-    include `2605.08520`. Existing rows cover AlphaEvolve, prompt/history
-    artifacts, reviewer metadata, async reviewer gaps, archive restore,
-    PACEvolve consistency, LEVI cost-aware routing, and MLEvolve long-horizon
-    MLE, but not asynchronous stage orchestration, queue overlap, artifact
-    versioning, stale-language-artifact repair, speculative completion, or
-    throughput/token-efficiency measurements.
-  - Required result: add paper-manifest and paper-index coverage for
-    `2605.08520`: title/authors/arXiv version/date/PDF digest, source license,
-    relation to AlphaEvolve and LibreEvolve's synchronous loop, worker/queue
-    schema, stage-overlap traces, artifact-version lineage, stale-artifact
+  - Current gap: the paper cache, paper index, row identity, and TODO coverage
+    now include `2605.08520`, cached locally as
+    `papers/2605.08520__FlashEvolve.pdf` with byte count `627860` and SHA-256
+    `668cb80b2c72e1e2c9a296df9c35f4965f79f03b095310e738c012b6106b0e08`.
+    Existing evidence still does not reproduce asynchronous stage
+    orchestration, queue overlap, artifact versioning, stale-language-artifact
+    repair, speculative completion, or throughput/token-efficiency
+    measurements.
+  - Required result: add reproduction-grade evidence beyond paper coverage for
+    `2605.08520`: title/authors/arXiv version/date, source license, relation
+    to AlphaEvolve and LibreEvolve's synchronous loop, worker/queue schema,
+    stage-overlap traces, artifact-version lineage, stale-artifact
     update/discard/patch policies, reflective patch artifacts,
     speculative-completion metrics, adaptive workflow telemetry,
     throughput/token-efficiency records, GEPA/vLLM/API baseline identities,
     ACE/Meta-Harness applicability status, code/artifact availability if any,
-    and README/ROADMAP wording that treats FlashEvolve as missing paper
-    evidence rather than implemented LibreEvolve support.
+    and README/ROADMAP wording that treats FlashEvolve as missing
+    implementation evidence rather than implemented LibreEvolve support.
 
 - [ ] Track evolutionary-agent trace-diagnostics paper evidence.
   - Paper/source evidence: arXiv `2605.20086`, submitted May 25, 2026, is

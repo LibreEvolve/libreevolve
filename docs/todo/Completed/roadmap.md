@@ -764,7 +764,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     URL, and local PDF label describing the same source before version or
     rights evidence attaches.
   - Status: ROADMAP now documents `papers/row_identity.json` as the committed
-    companion manifest that emits derived source identities for all 33 cache
+    companion manifest that emits derived source identities for all 34 cache
     rows and links the AlphaEvolve row to `papers/source_versions.json`.
   - Remaining gap: none for this bounded roadmap wording slice.
 
@@ -9851,5 +9851,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     unified crossover/backtracking samplers, trajectory-collaboration
     diagnostics, LLM-SR/KernelBench/Modded NanoGPT benchmark reports,
     linked-code audits, and independent reproduction outputs explicitly open.
-  - Verification: paper-manifest validation checks the 33-row manifest,
+  - Verification: paper-manifest validation checks the current manifest,
+    paper-index row, TODO coverage row, and source-identity sidecar.
+
+- [x] Preserve `2605.08520` FlashEvolve paper-cache scope in roadmap.
+  - Status: ROADMAP now identifies arXiv `2605.08520`, `FlashEvolve:
+    Accelerating Agent Self-Evolution with Asynchronous Stage Orchestration`,
+    as background async-stage orchestration context only, with the cached
+    `papers/2605.08520__FlashEvolve.pdf` row and missing async worker queues,
+    stage dependency schedulers, artifact-version lineage DAGs, stale-artifact
+    detectors, staleness repair policies, speculative stage-completion
+    records, adaptive workflow controllers, EvolBench/ChatDev/MetaGPT
+    benchmark reports, throughput reproductions, linked-code audits, and
+    independent reproduction outputs explicitly open.
+  - Verification: paper-manifest validation checks the 34-row manifest,
     paper-index row, TODO coverage row, and source-identity sidecar.

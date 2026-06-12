@@ -3105,8 +3105,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     LibreEvolve supports PACEvolve-style consistency controls without those
     implementation and benchmark artifacts.
 
-- [ ] Keep README FlashEvolve async-stage claims absent or source-scoped until
-      paper and benchmark evidence exists.
+- [ ] Keep README FlashEvolve async-stage claims source-scoped until benchmark
+      evidence exists.
   - Spec evidence: arXiv `2605.08520`, `FlashEvolve: Accelerating Agent
     Self-Evolution with Asynchronous Stage Orchestration`, says synchronized
     stage execution and LLM-heavy stage imbalance bottleneck LLM-based
@@ -3115,18 +3115,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     stale-artifact repair, speculative stage completion, adaptive workflow
     control, and reports 3.5x local-vLLM and 4.9x API throughput gains over
     synchronous GEPA.
-  - Current evidence: README documents LibreEvolve's current CLI, evaluator,
-    run artifacts, archive/island behavior, reviewer pool, and implementation
-    boundaries. It does not list `2605.08520`, expose async worker queues,
-    overlap proposal/evaluation/admission stages, track artifact versions for
-    stale queue items, implement reflective stale-patching, or report
-    throughput/token-efficiency gains.
+  - Current evidence: README now lists `2605.08520`, `FlashEvolve`, as
+    asynchronous-stage orchestration context only and states that no local
+    async worker queue, artifact-version DAG, staleness repair, or throughput
+    benchmark exists. README also documents LibreEvolve's current CLI,
+    evaluator, run artifacts, archive/island behavior, reviewer pool, and
+    implementation boundaries.
   - Required result: if README mentions FlashEvolve, asynchronous stage
     orchestration, async workers/queues, stale artifact repair, speculative
     stage completion, adaptive workflow control, GEPA throughput gains,
     local-vLLM/API speedups, ACE, or Meta-Harness applicability, keep the
-    wording source-scoped until the paper is in the manifest and local
-    artifacts can show queue traces, artifact-version lineage, staleness
+    wording source-scoped until local artifacts can show queue traces,
+    artifact-version lineage, staleness
     policies, patch outputs, throughput/token metrics, baseline identities,
     and report outcomes. Avoid implying LibreEvolve supports FlashEvolve-style
     async orchestration without those implementation and benchmark artifacts.

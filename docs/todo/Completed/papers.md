@@ -12840,3 +12840,20 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation with `--require-local-pdfs`
     validates the new manifest row, local PDF hash/readability, row identity,
     implementation-status row, and TODO coverage row.
+
+- [x] Add `2605.08520` FlashEvolve paper-cache coverage.
+  - Status: `papers/download_manifest.json`, `papers/download_manifest.csv`,
+    `papers/row_identity.json`, and `papers/README.md` now include
+    `2605.08520`, `FlashEvolve: Accelerating Agent Self-Evolution with
+    Asynchronous Stage Orchestration`, cached locally as
+    `papers/2605.08520__FlashEvolve.pdf` with byte count `627860` and SHA-256
+    `668cb80b2c72e1e2c9a296df9c35f4965f79f03b095310e738c012b6106b0e08`.
+  - Remaining paper gap: source-license details, linked-code URL/status,
+    asynchronous worker/stage queues, artifact-version lineage DAG,
+    stale-artifact detection/repair policy, speculative stage-completion
+    records, adaptive workflow controller traces, EvolBench/ChatDev/MetaGPT
+    benchmark metadata, throughput metrics, baseline identities, code/artifact
+    reproducibility status, and independent reproduction outputs remain open.
+  - Verification: paper-manifest validation with `--require-local-pdfs`
+    validates the new manifest row, local PDF hash/readability, row identity,
+    implementation-status row, and TODO coverage row.

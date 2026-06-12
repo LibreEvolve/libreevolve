@@ -310,6 +310,16 @@
     "sha256": "fdf49e2e18905a5a836faabd43a57391faf30b4650ac6569c77f7a2469e92d61"
   },
   {
+    "id": "2605.08520",
+    "title": "FlashEvolve",
+    "url": "https://arxiv.org/pdf/2605.08520.pdf",
+    "file": "papers/2605.08520__FlashEvolve.pdf",
+    "ok": true,
+    "bytes": 627860,
+    "message": "downloaded",
+    "sha256": "668cb80b2c72e1e2c9a296df9c35f4965f79f03b095310e738c012b6106b0e08"
+  },
+  {
     "id": "1504.04909",
     "title": "MAP_Elites",
     "url": "https://arxiv.org/pdf/1504.04909.pdf",

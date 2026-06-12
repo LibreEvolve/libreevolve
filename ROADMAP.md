@@ -1126,7 +1126,7 @@ resumed-trace proof are still open.
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
   slug rows use the same filename source-prefix rule. The committed
   `papers/row_identity.json` companion manifest emits those derived source
-  identities for all 33 cache rows and links the AlphaEvolve row to
+  identities for all 34 cache rows and links the AlphaEvolve row to
   `papers/source_versions.json`. This prevents base id/URL/file drift while
   keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
@@ -1345,6 +1345,18 @@ resumed-trace proof are still open.
   LLM-SR/KernelBench/Modded NanoGPT benchmark reports, linked-code audits, and
   independent reproduction outputs remain open before roadmap wording can
   promote PACEvolve-style consistency support.
+- Keep FlashEvolve asynchronous-stage orchestration claims source-scoped:
+  `papers/download_manifest.*` and `papers/README.md` now include arXiv
+  `2605.08520`, `FlashEvolve: Accelerating Agent Self-Evolution with
+  Asynchronous Stage Orchestration`, cached locally as
+  `papers/2605.08520__FlashEvolve.pdf`. This is background async-stage
+  orchestration context only; asynchronous worker queues, stage dependency
+  schedulers, artifact-version lineage DAGs, stale-artifact detectors,
+  staleness repair policies, speculative stage-completion records, adaptive
+  workflow controllers, EvolBench/ChatDev/MetaGPT benchmark reports, 3.5x/4.9x
+  throughput reproductions, linked-code audits, and independent reproduction
+  outputs remain open before roadmap wording can promote FlashEvolve-style
+  async orchestration support.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
   now validates the `papers/README.md` TODO coverage table for exact manifest
   row coverage, duplicate/extra rows, safe active/completed `docs/todo/`

@@ -1149,6 +1149,10 @@ channels stay visible after truncation. Prompt-history metadata stores the
 evidence hash, section list, selected prompt ids, context-policy capability
 summary plus validation, and current-template SHA-256/length/redaction/
 truncation provenance without storing the raw template there.
+Runtime prompt-context policy coverage also keeps retrieval/summarization,
+semantic source selection, non-`PromptSampler` role policy, and DeepEvolve-style
+debug/refinement context-policy readiness flags false, with validation rejecting
+forged true values.
 Meta-prompt responses remain backward compatible with plain template text, but
 may now return a strict JSON object with a revised `template` and optional
 `context_policy`; accepted prompt-history rows persist both policy content and

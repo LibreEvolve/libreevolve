@@ -2421,6 +2421,10 @@ def _runtime_prompt_context_policy_coverage() -> dict:
         "meta_prompt_mutation_accepts_context_policy": True,
         "prompt_history_replay_validates_context_policy_hash": True,
         "alphaevolve_context_policy_complete": False,
+        "retrieval_summarization_policy_tunable": False,
+        "semantic_source_selection_policy_tunable": False,
+        "non_promptsampler_role_policy_tunable": False,
+        "deep_retrieval_debug_refinement_policy_tunable": False,
         "unsupported_surfaces": [
             "retrieval_summarization_policy",
             "learned_or_external_semantic_ranking_policy",
@@ -2546,6 +2550,20 @@ def validate_prompt_context_policy_coverage(record: object) -> dict:
                 "message": "current context-policy coverage must not claim full AlphaEvolve completeness",
             }
         )
+    false_only_fields = {
+        "retrieval_summarization_policy_tunable": "retrieval_summarization_policy_overclaim",
+        "semantic_source_selection_policy_tunable": "semantic_source_selection_policy_overclaim",
+        "non_promptsampler_role_policy_tunable": "non_promptsampler_role_policy_overclaim",
+        "deep_retrieval_debug_refinement_policy_tunable": "deep_retrieval_debug_refinement_policy_overclaim",
+    }
+    for field, code in false_only_fields.items():
+        if record.get(field) is not False:
+            issues.append(
+                {
+                    "code": code,
+                    "message": f"{field} must remain false until implemented",
+                }
+            )
     unsupported = record.get("unsupported_surfaces")
     required_unsupported = {
         "retrieval_summarization_policy",

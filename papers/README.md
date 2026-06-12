@@ -938,7 +938,9 @@ hashes for the structured context-policy surface shown to the meta-prompt
 model, with validation that rejects forged summary counts, hashes, sections, or
 unsupported fields. This is audit metadata for the current validated surface,
 not learned semantic context selection or retrieval/summarization policy
-control.
+control. Runtime prompt-context policy coverage keeps those unsupported policy
+readiness surfaces false for retrieval/summarization, semantic source
+selection, non-`PromptSampler` roles, and DeepEvolve debug/refinement control.
 
 AlphaEvolve island-state note: retained archive-state changes advance the
 island round-robin assignment cursor. Non-admitted MAP-Elites attempts, such as

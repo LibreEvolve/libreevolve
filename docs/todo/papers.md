@@ -2349,9 +2349,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     include `runtime.prompt_context_policy_coverage` with schema
     `libreevolve.prompt_context_policy_coverage.v1` and embedded validation
     against the current policy schema/capability map, while keeping
-    `alphaevolve_context_policy_complete` false and listing unsupported
+    `alphaevolve_context_policy_complete` false, listing unsupported
     retrieval/summarization, learned ranking, and semantic context-selection
-    surfaces. The AlphaEvolve table now scopes the remaining prompt-context
+    surfaces, and rejecting forged readiness flags for retrieval/summarization
+    policy, semantic source selection, non-`PromptSampler` role policy, and
+    DeepEvolve-style debug/refinement context-policy control. The AlphaEvolve table now scopes the remaining prompt-context
     gap to live/retrieval/semantic context selection and deeper per-field policy
     beyond the current validated structured context-policy surface rather than
     implying that structured prompt-context policy is absent.

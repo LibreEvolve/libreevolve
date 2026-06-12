@@ -12217,3 +12217,14 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     context ownership.
   - Verification: meta-prompt evolution tests validate retained capability
     summary schema, count, hashes, and forged-summary rejection.
+
+- [x] Record unsupported prompt-context readiness guards.
+  - Spec evidence: paper-facing prompt-evolution claims need manifest evidence
+    that unavailable context-policy surfaces remain explicitly unavailable.
+  - Status: paper-facing TODOs and the papers overview now record false
+    readiness flags and overclaim validation for retrieval/summarization,
+    semantic source selection, non-`PromptSampler` role policy, and DeepEvolve
+    debug/refinement context-policy control.
+  - Remaining paper gap: this does not implement those controls.
+  - Verification: prompt-context policy coverage tests validate forged
+    readiness overclaims.

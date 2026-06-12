@@ -1060,7 +1060,10 @@ Primary evidence:
     the current tunable field count/hash against
     `libreevolve.meta_prompt_context_policy_capabilities.v1`, records
     context-policy mutation and replay-hash support, and rejects full
-    AlphaEvolve context-policy completeness overclaims.
+    AlphaEvolve context-policy completeness overclaims. It also keeps
+    retrieval/summarization policy, semantic source-selection policy,
+    non-`PromptSampler` role policy, and DeepEvolve debug/refinement
+    context-policy readiness flags false and rejects forged true values.
     However, the policy currently controls only optional channel
     disabling, section-priority overrides, mutation-instruction variants,
     parent-metric selection/caps, and

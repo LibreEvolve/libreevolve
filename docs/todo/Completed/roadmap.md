@@ -9342,3 +9342,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     summarization control open.
   - Verification: meta-prompt evolution tests validate retained capability
     summary schema, count, hashes, and forged-summary rejection.
+
+- [x] Preserve unsupported prompt-context readiness boundaries.
+  - Spec evidence: roadmap prompt-evolution wording should not treat current
+    capability metadata as full retrieval, semantic selection, or non-mutation
+    role context-policy control.
+  - Status: ROADMAP and TODO wording now recognize false manifest readiness
+    flags and overclaim validation for the unsupported prompt-context policy
+    surfaces.
+  - Verification: prompt-context policy coverage tests validate forged
+    readiness overclaims.

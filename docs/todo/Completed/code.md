@@ -17620,3 +17620,15 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: meta-prompt evolution tests validate retained capability
     summary schema, count, hashes, embedded validation, and forged-summary
     rejection without expanding prompt evidence past its bounded section set.
+
+- [x] Reject unsupported prompt-context policy readiness overclaims.
+  - Spec evidence: AlphaEvolve-style prompt evolution should not imply
+    retrieval/summarization, semantic source-selection, non-`PromptSampler`
+    roles, or DeepEvolve debug/refinement policy control from the current
+    structured prompt-context policy surface.
+  - Status: `runtime.prompt_context_policy_coverage` now records explicit
+    false readiness flags for those unsupported surfaces, and validation
+    rejects forged true values.
+  - Remaining gap: this does not implement those context-policy controls.
+  - Verification: prompt-context policy coverage tests cover forged readiness
+    overclaims for all four unsupported surfaces.

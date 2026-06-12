@@ -11812,3 +11812,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     meta-prompt mutation metadata with embedded validation.
   - Verification: meta-prompt evolution tests validate retained capability
     summary schema, count, hashes, and forged-summary rejection.
+
+- [x] Document unsupported prompt-context readiness guards.
+  - Spec evidence: README prompt-policy wording needed to distinguish current
+    structured policy controls from broader AlphaEvolve context-policy
+    ownership.
+  - Status: README and TODO wording now state that manifest coverage keeps
+    retrieval/summarization, semantic source selection, non-`PromptSampler`
+    role policy, and DeepEvolve debug/refinement readiness flags false.
+  - Verification: prompt-context policy coverage tests validate forged
+    readiness overclaims.

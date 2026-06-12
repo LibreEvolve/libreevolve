@@ -16731,6 +16731,10 @@ def test_runtime_prompt_context_policy_coverage_scopes_alphaevolve_completeness(
     assert coverage["meta_prompt_mutation_accepts_context_policy"] is True
     assert coverage["prompt_history_replay_validates_context_policy_hash"] is True
     assert coverage["alphaevolve_context_policy_complete"] is False
+    assert coverage["retrieval_summarization_policy_tunable"] is False
+    assert coverage["semantic_source_selection_policy_tunable"] is False
+    assert coverage["non_promptsampler_role_policy_tunable"] is False
+    assert coverage["deep_retrieval_debug_refinement_policy_tunable"] is False
     assert "retrieval_summarization_policy" in coverage["unsupported_surfaces"]
     assert "semantic_source_selection_policy" in coverage["unsupported_surfaces"]
 
@@ -16755,6 +16759,21 @@ def test_runtime_prompt_context_policy_coverage_scopes_alphaevolve_completeness(
         issue["code"] == "context_policy_completion_overclaim"
         for issue in invalid["issues"]
     )
+    surface_overclaim = copy.deepcopy(coverage)
+    surface_overclaim["retrieval_summarization_policy_tunable"] = True
+    surface_overclaim["semantic_source_selection_policy_tunable"] = True
+    surface_overclaim["non_promptsampler_role_policy_tunable"] = True
+    surface_overclaim["deep_retrieval_debug_refinement_policy_tunable"] = True
+    surface_overclaim.pop("validation")
+
+    invalid_surface = validate_prompt_context_policy_coverage(surface_overclaim)
+
+    assert invalid_surface["ok"] is False
+    surface_codes = {issue["code"] for issue in invalid_surface["issues"]}
+    assert "retrieval_summarization_policy_overclaim" in surface_codes
+    assert "semantic_source_selection_policy_overclaim" in surface_codes
+    assert "non_promptsampler_role_policy_overclaim" in surface_codes
+    assert "deep_retrieval_debug_refinement_policy_overclaim" in surface_codes
 
 
 def test_meta_prompt_context_policy_capabilities_reject_missing_policy_field():

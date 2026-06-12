@@ -2494,7 +2494,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `libreevolve.meta_prompt_context_policy_capability_summary.v1` metadata
     with capability/prompt-policy schemas, field counts, field hash, and
     per-section hashes, plus embedded validation for summary count, hash,
-    section, and unsupported-field overclaims.
+    section, and unsupported-field overclaims. README also documents
+    manifest-level readiness flags that remain false for retrieval/
+    summarization policy, semantic source selection, non-`PromptSampler` role
+    policy, and DeepEvolve-style debug/refinement context-policy control.
   - Required result: when prompt-program policy can control retrieval or
     summarization behavior, learned/semantic context selection, arbitrary
     instruction channels, broader per-role retention, or other prompt surfaces

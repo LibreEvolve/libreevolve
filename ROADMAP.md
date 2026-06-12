@@ -535,7 +535,10 @@ is not yet an AlphaEvolve reproduction.
   quarantine snapshots, and DeepResearch retrieval bodies already have
   bounded configurable retention surfaces, and meta-prompt mutation metadata
   records validated compact capability-summary hashes for the prompt-context
-  policy surface shown to the model.
+  policy surface shown to the model. Runtime coverage keeps retrieval/
+  summarization, semantic source-selection, non-`PromptSampler` role-policy,
+  and DeepEvolve debug/refinement policy-readiness flags false with overclaim
+  validation.
 - Integrate current evaluator-output prompt summaries, aggregate syntax
   diagnostics, and bounded run-local artifact content retrieval with
   selected-backend provider-token section packing. Artifact content can already

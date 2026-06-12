@@ -436,7 +436,9 @@ is not yet an AlphaEvolve reproduction.
   changed-file summary, and numeric metric L1 evidence into task-specific
   functional artifacts, behavior/output-distance metrics, thresholds for
   substantially different claims, and benchmark-level discovery-distance
-  telemetry.
+  telemetry. The committed
+  `papers/initial_pool_divergence_boundary.json` sidecar keeps the current
+  syntactic-and-metric-telemetry-only scope machine-validated.
 - Extend binary/static candidate handling beyond the current bounded encoded
   static members, verified copy-only static assets, and raw direct-workspace
   byte normalization into richer binary mutation/replay policy.

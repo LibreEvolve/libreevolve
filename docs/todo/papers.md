@@ -1636,6 +1636,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     candidates against generation-0 seed programs with canonical workspace
     hashes, bounded primary-file text distance, changed-component summaries,
     and numeric metric L1 distance over shared metric names.
+    `papers/initial_pool_divergence_boundary.json` now validates this as
+    telemetry-only evidence, not functional discovery-distance proof.
   - Current gap: paper-facing evidence still does not include evaluator-output
     distance, task-specific functional-difference artifacts, behavior/output
     distance, or thresholds proving that accepted candidates moved

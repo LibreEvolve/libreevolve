@@ -13562,3 +13562,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused mutation-consistency boundary tests reject semantic-proof
     overclaims.
+
+- [x] Record initial-pool divergence paper-facing sidecar.
+  - Status: `papers/initial_pool_divergence_boundary.json` now records the
+    telemetry-only boundary for AlphaEvolve's syntax-and-function discovery
+    distance claim: runtime manifests can show seed baselines, generated
+    workspace hashes, exact seed-match counts, bounded primary-file text
+    distance, changed-component summaries, numeric metric L1 distance, and
+    candidate-to-seed comparison records, while task-specific functional
+    artifacts, evaluator-output or behavior distance metrics, thresholds for
+    substantially different claims, benchmark-level telemetry, cross-run
+    discovery-distance tables, and joint syntax/function claim gates remain
+    absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused initial-pool divergence tests reject functional
+    discovery-distance overclaims.

@@ -1,0 +1,35 @@
+{
+  "schema": "libreevolve.initial_pool_divergence_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve says feedback-driven evolution can discover candidates substantially different from the initial candidate pool in both syntax and function",
+  "boundary_status": "syntactic_and_metric_divergence_telemetry_only",
+  "runtime_report_schema": "libreevolve.initial_pool_divergence_report.v1",
+  "runtime_report_status": "initial_pool_divergence_report_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "seed_pool_baseline_records",
+    "generated_candidate_workspace_hashes",
+    "exact_seed_workspace_match_counts",
+    "bounded_primary_file_text_distance",
+    "changed_component_summary",
+    "numeric_metric_l1_distance",
+    "candidate_seed_comparison_records",
+    "task_specific_functional_distance_artifacts",
+    "evaluator_output_distance_metrics",
+    "behavior_or_output_distance_metrics",
+    "substantially_different_threshold_policy",
+    "benchmark_level_discovery_distance_telemetry",
+    "cross_run_discovery_distance_table",
+    "syntax_and_function_joint_claim_gate"
+  ],
+  "missing_evidence": {
+    "task_specific_functional_distance_artifacts": "not_recorded_locally",
+    "evaluator_output_distance_metrics": "not_recorded_locally",
+    "behavior_or_output_distance_metrics": "not_recorded_locally",
+    "substantially_different_threshold_policy": "not_recorded_locally",
+    "benchmark_level_discovery_distance_telemetry": "not_recorded_locally",
+    "cross_run_discovery_distance_table": "not_recorded_locally",
+    "syntax_and_function_joint_claim_gate": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve manifests include runtime.history.initial_pool_divergence_report for seed-pool baseline records, generated candidate workspace hashes, exact seed workspace match counts, bounded primary-file text distance, changed component summaries, numeric metric L1 distance, and candidate-to-seed comparison records. It does not claim task-specific functional-distance artifacts, evaluator-output distance metrics, behavior or output distance metrics, substantially-different threshold policy, benchmark-level discovery-distance telemetry, cross-run discovery-distance tables, or a syntax-and-function joint claim gate."
+}

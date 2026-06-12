@@ -52,6 +52,10 @@ Important limits:
   accepted edits are semantically coherent or that required companion edits are
   inferred; that boundary is tracked by
   `papers/mutation_consistency_boundary.json`.
+- Initial-pool divergence reports are syntactic and shared-metric telemetry,
+  not task-specific functional-distance proof or "substantially different"
+  benchmark evidence; that boundary is tracked by
+  `papers/initial_pool_divergence_boundary.json`.
 - Related Work positioning is not inferred from the bundled paper list; the
   missing taxonomy and claim gates are tracked by
   `papers/related_work_taxonomy_boundary.json`.

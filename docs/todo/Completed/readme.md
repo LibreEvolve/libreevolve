@@ -12667,3 +12667,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     tracked by `papers/mutation_consistency_boundary.json`.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused mutation-consistency tests reject semantic-proof overclaims.
+
+- [x] Keep README initial-pool divergence boundary tied to sidecar.
+  - Status: README now states that initial-pool divergence reports are
+    syntactic and shared-metric telemetry, not task-specific functional-
+    distance proof or substantially different benchmark evidence, with the
+    boundary tracked by `papers/initial_pool_divergence_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused initial-pool divergence tests reject functional discovery-distance
+    overclaims.

@@ -275,6 +275,10 @@ from libreevolve.problems.benchmarks.mutation_consistency_boundary import (
     mutation_consistency_boundary_record,
     validate_mutation_consistency_boundary,
 )
+from libreevolve.problems.benchmarks.initial_pool_divergence_boundary import (
+    initial_pool_divergence_boundary_record,
+    validate_initial_pool_divergence_boundary,
+)
 from libreevolve.problems.benchmarks.ramsey_numbers_boundary import (
     ramsey_numbers_boundary_record,
     validate_ramsey_numbers_boundary,
@@ -420,6 +424,7 @@ TASK_SPECIFICATION_BOUNDARY_FILE = "papers/task_specification_boundary.json"
 NATURAL_LANGUAGE_PREAMBLE_BOUNDARY_FILE = "papers/natural_language_preamble_boundary.json"
 PROMPT_EXAMPLE_COPY_BOUNDARY_FILE = "papers/prompt_example_copy_boundary.json"
 MUTATION_CONSISTENCY_BOUNDARY_FILE = "papers/mutation_consistency_boundary.json"
+INITIAL_POOL_DIVERGENCE_BOUNDARY_FILE = "papers/initial_pool_divergence_boundary.json"
 EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integration_boundary.json"
 CANDIDATE_ABSTRACTION_BOUNDARY_FILE = "papers/candidate_abstraction_boundary.json"
 CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_FILE = "papers/candidate_language_runner_boundary.json"
@@ -906,6 +911,7 @@ def validate_paper_manifest(
     issues.extend(_validate_natural_language_preamble_boundary(root_path))
     issues.extend(_validate_prompt_example_copy_boundary(root_path))
     issues.extend(_validate_mutation_consistency_boundary(root_path))
+    issues.extend(_validate_initial_pool_divergence_boundary(root_path))
     issues.extend(_validate_existing_codebase_integration_boundary(root_path))
     issues.extend(_validate_candidate_language_runner_boundary(root_path))
     issues.extend(_validate_candidate_abstraction_boundary(root_path))
@@ -1788,6 +1794,38 @@ def _validate_mutation_consistency_boundary(root_path: Path) -> list[PaperManife
             f"mutation_consistency_boundary_{issue.code}",
             issue.message,
             "mutation_consistency",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_initial_pool_divergence_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / INITIAL_POOL_DIVERGENCE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = initial_pool_divergence_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "initial_pool_divergence_boundary_manifest_missing",
+                    (
+                        f"{INITIAL_POOL_DIVERGENCE_BOUNDARY_FILE} must emit "
+                        "syntactic/metric telemetry versus functional discovery-distance scope"
+                    ),
+                    "initial_pool_divergence",
+                )
+            ]
+    report = validate_initial_pool_divergence_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"initial_pool_divergence_boundary_{issue.code}",
+            issue.message,
+            "initial_pool_divergence",
         )
         for issue in report.issues
     ]

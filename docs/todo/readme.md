@@ -2515,7 +2515,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     hashes, bounded primary-file text distance, changed-component summaries,
     and numeric metric L1 distance over shared metric names. It should not
     imply task-specific functional-distance proof or "substantially different"
-    discovery-distance readiness.
+    discovery-distance readiness, and README now ties that boundary to
+    `papers/initial_pool_divergence_boundary.json`.
   - Required result: when task-specific functional-distance evidence lands,
     update README, ROADMAP, papers index, and code/paper TODO entries together
     with behavior/output-distance metrics, evaluator-output artifacts,

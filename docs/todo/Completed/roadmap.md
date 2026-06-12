@@ -10423,3 +10423,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     gates, and semantic proof open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused mutation-consistency tests reject semantic-proof overclaims.
+
+- [x] Keep roadmap initial-pool divergence boundary tied to sidecar.
+  - Status: ROADMAP now links
+    `runtime.history.initial_pool_divergence_report` to
+    `papers/initial_pool_divergence_boundary.json`, preserving the current
+    syntactic/shared-metric telemetry scope while keeping task-specific
+    functional artifacts, behavior/output distance metrics, substantially-
+    different thresholds, benchmark-level discovery-distance telemetry, and
+    syntax/function joint claim gates open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused initial-pool divergence tests reject functional discovery-distance
+    overclaims.

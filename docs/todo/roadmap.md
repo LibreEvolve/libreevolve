@@ -1400,7 +1400,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     canonical workspace hashes, bounded primary-file text distance,
     changed-file summaries, and numeric metric L1 evidence. It does not yet
     promise task-specific functional-distance reports or readiness for
-    substantially different discovery-distance claims.
+    substantially different discovery-distance claims, and ROADMAP now ties
+    that scope to `papers/initial_pool_divergence_boundary.json`.
   - Required result: add task-specific functional artifacts,
     behavior/output-distance metrics, thresholds for substantially different
     claims, and benchmark-level discovery-distance telemetry before using

@@ -18466,3 +18466,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     semantic-consistency overclaims, invalid boundary status, missing evidence
     drift, and incomplete required evidence fields.
+
+- [x] Add initial-pool divergence sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/initial_pool_divergence_boundary.py`
+    now emits and validates the syntactic-and-metric-divergence-telemetry-only
+    boundary for `runtime.history.initial_pool_divergence_report`, separating
+    seed baselines, generated workspace hashes, exact seed-match counts,
+    bounded primary-file text distance, changed-component summaries, numeric
+    metric L1 distance, and candidate-to-seed comparison records from
+    task-specific functional-distance artifacts, evaluator-output or behavior
+    distance metrics, substantially-different thresholds, benchmark-level
+    discovery-distance telemetry, cross-run tables, and syntax/function joint
+    claim gates.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    functional discovery-distance overclaims, invalid boundary status, missing
+    evidence drift, and incomplete required evidence fields.

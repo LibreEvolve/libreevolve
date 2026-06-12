@@ -2046,7 +2046,8 @@ Primary evidence:
     hashes, bounded primary-file text distance, changed-component summaries,
     and numeric metric L1 distance over shared metric names. It explicitly
     keeps `claim_ready`, task-specific behavior distance, and functional
-    distance artifacts false.
+    distance artifacts false. `papers/initial_pool_divergence_boundary.json`
+    now validates this as syntactic-and-metric telemetry only.
   - Required result: add evaluator-output or task-specific functional-
     difference artifacts, behavior/output-distance metrics, thresholds for
     substantially different claims, and benchmark-level discovery-distance

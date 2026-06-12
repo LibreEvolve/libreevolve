@@ -341,6 +341,12 @@ from libreevolve.problems.benchmarks.mutation_consistency_boundary import (
     render_mutation_consistency_boundary_summary,
     validate_mutation_consistency_boundary,
 )
+from libreevolve.problems.benchmarks.initial_pool_divergence_boundary import (
+    INITIAL_POOL_DIVERGENCE_BOUNDARY_SCHEMA,
+    initial_pool_divergence_boundary_record,
+    render_initial_pool_divergence_boundary_summary,
+    validate_initial_pool_divergence_boundary,
+)
 from libreevolve.problems.benchmarks.map_elites_illumination_boundary import (
     MAP_ELITES_ILLUMINATION_BOUNDARY_SCHEMA,
     map_elites_illumination_boundary_record,
@@ -690,6 +696,7 @@ __all__ = [
     "GEMINI_PROVIDER_PARITY_BOUNDARY_SCHEMA",
     "GIGAEVO_FRAMEWORK_BOUNDARY_SCHEMA",
     "INCORRECT_SUGGESTION_AUDIT_BOUNDARY_SCHEMA",
+    "INITIAL_POOL_DIVERGENCE_BOUNDARY_SCHEMA",
     "INITIAL_PROGRAM_IDEA_PROVENANCE_BOUNDARY_SCHEMA",
     "INITIAL_PROGRAM_VALIDITY_BOUNDARY_SCHEMA",
     "IMPROVEVOLVE_BOUNDARY_SCHEMA",
@@ -809,6 +816,7 @@ __all__ = [
     "existing_codebase_integration_boundary_record",
     "gigaevo_framework_boundary_record",
     "incorrect_suggestion_audit_boundary_record",
+    "initial_pool_divergence_boundary_record",
     "initial_program_idea_provenance_boundary_record",
     "initial_program_validity_boundary_record",
     "improvevolve_boundary_record",
@@ -918,6 +926,7 @@ __all__ = [
     "render_gemini_provider_parity_boundary_summary",
     "render_gigaevo_framework_boundary_summary",
     "render_incorrect_suggestion_audit_boundary_summary",
+    "render_initial_pool_divergence_boundary_summary",
     "render_initial_program_idea_provenance_boundary_summary",
     "render_initial_program_validity_boundary_summary",
     "render_improvevolve_boundary_summary",
@@ -1032,6 +1041,7 @@ __all__ = [
     "validate_gemini_provider_parity_boundary",
     "validate_gigaevo_framework_boundary",
     "validate_incorrect_suggestion_audit_boundary",
+    "validate_initial_pool_divergence_boundary",
     "validate_initial_program_idea_provenance_boundary",
     "validate_initial_program_validity_boundary",
     "validate_improvevolve_boundary",

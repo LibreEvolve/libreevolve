@@ -504,7 +504,9 @@ bounded primary-file text distance, changed-component summaries, and numeric
 metric L1 distance over shared metric names. This is paper-visible syntactic
 and metric-distance evidence, not task-specific functional-distance proof;
 behavior/output-distance artifacts, thresholds for "substantially different"
-claims, and benchmark-level discovery-distance telemetry remain open.
+claims, and benchmark-level discovery-distance telemetry remain open. The
+committed `papers/initial_pool_divergence_boundary.json` sidecar keeps this
+telemetry-only scope machine-validated.
 
 AlphaEvolve mutation-operator note: LibreEvolve supports the edit payload
 surfaces listed in the table, including SEARCH/REPLACE, configured full

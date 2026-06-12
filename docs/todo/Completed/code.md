@@ -4,6 +4,15 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add Ramsey Numbers `2603.09172` graph-witness source-boundary gate.
+  - Evidence: `libreevolve/problems/benchmarks/ramsey_numbers_boundary.py`
+    records the constructive Ramsey-number source boundary, validates the
+    candidate-only state, rejects premature graph-witness runtime claims, and
+    is required by `libreevolve/tools/paper_manifest.py`.
+    `tests/test_ramsey_numbers_boundary.py` and `tests/test_paper_manifest.py`
+    cover the absence record, overclaim rejection, and root-manifest sidecar
+    requirement.
+
 - [x] Add Multiagent Learning `2602.16928` CFR/PSRO source-boundary gate.
   - Evidence: `libreevolve/problems/benchmarks/multiagent_learning_boundary.py`
     records the MARL algorithm-discovery source boundary, validates the

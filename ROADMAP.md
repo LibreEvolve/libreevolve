@@ -623,8 +623,8 @@ is not yet an AlphaEvolve reproduction.
   This remains audit consistency for the declared local-subprocess boundary,
   not OS/container sandbox or quota enforcement.
 - Continue labeling CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve,
-  GigaEvo, CodeEvolve, MadEvolve, Magellan, ArchAgent, and Multiagent
-  Learning features as inspired or
+  GigaEvo, CodeEvolve, MadEvolve, Magellan, ArchAgent, Multiagent Learning,
+  and Ramsey Numbers features as inspired, candidate benchmark, or
   application context unless paper behavior is actually implemented. The committed
   `papers/gigaevo_framework_boundary.json`
   sidecar records the GigaEvo source-specific boundary for Redis lifecycle
@@ -686,7 +686,12 @@ is not yet an AlphaEvolve reproduction.
   metrics, exact-oracle PSRO records, VAD-CFR/SHOR-PSRO rows, WOP-CFR/
   PM-PSRO distillation rows, IQM ablation audits, random normal-form
   validation, generated solver artifacts, and dedicated runtime-repository
-  status.
+  status. The committed `papers/ramsey_numbers_boundary.json` sidecar records
+  the Ramsey Numbers source-specific boundary for graph candidate schemas,
+  `run()` primary/prospect graph contracts, clique/independent-set verifiers,
+  new/matched/exact lower-bound rows, Google Research construction/code links,
+  graph and algorithm artifact hashes, initialization-family records,
+  graph-size-to-lower-bound semantics, and independent checker outputs.
 
 ## Mid Term
 

@@ -4,6 +4,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Ramsey Numbers `2603.09172` source boundary in README.
+  - Evidence: `README.md` lists Ramsey Numbers as a constructive math
+    benchmark candidate only and points to `papers/ramsey_numbers_boundary.json`
+    for the missing graph witness, verifier, lower-bound row,
+    source-artifact snapshot, initialization-family, lower-bound semantics,
+    and independent-checker evidence.
+
 - [x] Document Multiagent Learning `2602.16928` source boundary in README.
   - Evidence: `README.md` lists Multiagent Learning as AlphaEvolve MARL
     algorithm-discovery context only and points to

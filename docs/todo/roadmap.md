@@ -4136,29 +4136,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     against an expected random-graph baseline; Table 1 covers 28 colored
     cells; Table 2 groups initialization families; and the PDF links public
     Google Research construction and search-code artifacts.
-  - Current evidence: ROADMAP tracks AlphaEvolve Appendix B constructive-math
-    gaps, broad benchmark-fixture gaps, graph/certification ideas, and the
-    paper-index background rows. It does not promote `2603.09172` beyond
-    potential-future-benchmark status, define Ramsey graph witness schemas,
-    require `R(s,t)` lower-bound verifier artifacts, store exact-bound
-    recovery records, compare matched best-known bounds, or require a result
-    table that attributes the nine prior/current lower-bound improvements. It
-    also lacks roadmap gates for off-by-one lower-bound normalization,
-    Algorithm 1-compatible primary/prospect scoring, public-artifact ingestion
-    or citation status, Table 1/Table 2 coverage checks, appendix-algorithm
-    provenance for Algorithms 2-34, and baseline caveats distinguishing public
-    computational references, graph-only evidence, and personal
-    communications.
-  - Required result: add roadmap gates for `2603.09172`: paper/source
-    manifest entry, PDF/cache hash, source-license and code-artifact status,
-    Ramsey candidate representation, graph/witness artifact schema,
+  - Current evidence: ROADMAP now names `papers/ramsey_numbers_boundary.json`
+    as the source-specific boundary for graph candidate schemas, `run()`
+    primary/prospect graph contracts, clique/independent-set verifiers,
+    new/matched/exact lower-bound rows, Google Research construction/code
+    links, graph and algorithm artifact hashes, initialization-family records,
+    graph-size-to-lower-bound semantics, and independent checker outputs. It
+    still does not define Ramsey graph witness schemas, require `R(s,t)`
+    lower-bound verifier artifacts, store exact-bound recovery records,
+    compare matched best-known bounds, or require a result table that
+    attributes the nine prior/current lower-bound improvements.
+  - Required result: implement roadmap gates for `2603.09172`: Ramsey
+    candidate representation, graph/witness artifact schema,
     verifier/certifier entrypoints, parameterized `R(s,t)` result rows,
     exact-bound recovery suite, best-known-bound comparison table,
     prior/current value provenance, search-algorithm provenance, seed/budget
     records, witness graph hashes, independent checker outputs, failure and
-    negative-result records, and a background-only or benchmark-fixture status
-    rule so roadmap claims do not outpace local AlphaEvolve-style Ramsey
-    discovery support. Roadmap promotion should additionally require exact
+    negative-result records, and benchmark-fixture status rules before roadmap
+    claims promote Ramsey discovery support. Roadmap promotion should
+    additionally require exact
     `R(r,s) >= n+1` witness semantics, primary/prospect graph run artifacts,
     expected-violation formula inputs, imported or reproducibly regenerated
     Google Research construction/code artifacts, 28-cell Table 1 and

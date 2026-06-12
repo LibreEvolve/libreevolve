@@ -4,6 +4,14 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## Papers Todo: Reference and Specification Gaps
 
+- [x] Record Ramsey Numbers `2603.09172` source boundary.
+  - Evidence: `papers/ramsey_numbers_boundary.json` preserves the source
+    identity, cached PDF digest/license, source-link status, component rows,
+    current no-Ramsey-runner evidence, required evidence fields, and missing
+    graph-witness runtime evidence. `papers/README.md` marks the paper as a
+    candidate benchmark and links completed code/paper/README/roadmap evidence
+    for this boundary.
+
 - [x] Record Multiagent Learning `2602.16928` source boundary.
   - Evidence: `papers/multiagent_learning_boundary.json` preserves the source
     identity, cached PDF digest/license, source-link status, component rows,

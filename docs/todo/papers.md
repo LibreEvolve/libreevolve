@@ -5384,7 +5384,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     limitation/caveat records, seed/budget records, generated solver artifact
     hashes, independent checker outputs, and reproducibility status.
 
-- [ ] Track AlphaEvolve Ramsey-number paper evidence.
+- [ ] Implement AlphaEvolve Ramsey-number paper evidence beyond source boundary.
   - Paper/source evidence: arXiv `2603.09172`, submitted March 10, 2026 and
     last revised April 21, 2026, is titled `Reinforced Generation of
     Combinatorial Structures: Ramsey Numbers`. Its abstract says AlphaEvolve
@@ -5405,32 +5405,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     initialization family, and the appendix summarizes Algorithms 2-34. The
     PDF embeds public Google Research links for the nine improved-bound graph
     constructions and the AI-discovered search algorithms.
-  - Current gap: `papers/README.md` lists `2603.09172` as a constructive math
-    benchmark candidate with `Not implemented; potential future benchmark`,
-    but the current implementation and paper index do not yet provide local
-    source-boundary artifacts or implementation evidence for this paper.
-    Existing Appendix B and constructive-math gaps cover broad
-    family/status registries, but not Ramsey-specific graph witness schemas,
-    `R(s,t)` lower-bound verifier contracts, exact-bound recovery records,
-    matched-best-known result rows, or per-result prior/current attribution
-    for the nine reported improvements. They also do not preserve the
-    off-by-one distinction between graph size and implied Ramsey lower bound,
-    Algorithm 1's primary/prospect graph scoring evidence, artifact URLs for
-    improved-bound constructions and generated code, the 28-cell Table 1
-    coverage boundary, Gemini-3 summary/provenance caveats for Table 2, or the
-    paper's source distinction between public references, graph-only prior
-    evidence, and personal-communication baselines.
-  - Required result: add paper-manifest and paper-index coverage updates for
-    `2603.09172`: title/authors/arXiv version/date/PDF digest, source
-    license, code/artifact URL/status, relation to AlphaEvolve and
-    LibreEvolve constructive-math assumptions, Ramsey-number parameter rows,
-    graph witness artifact schema, verifier/certifier metadata, exact-bound
-    recovery suite records, best-known-bound comparison rows, prior/current
-    value provenance for all reported improvements, search-algorithm
-    provenance, seed/budget records, witness graph hashes, independent checker
-    outputs, reproducibility status, and README/ROADMAP wording that treats
-    Ramsey-number discovery as missing paper evidence rather than implemented
-    LibreEvolve support. Paper evidence should additionally capture the
+  - Current gap: `papers/ramsey_numbers_boundary.json` now records
+    title/authors, arXiv version/revision date, cached PDF digest/license,
+    source-link status, Google Research construction/code links,
+    background-only local status, component rows, local no-Ramsey-runner
+    evidence, required evidence fields, and missing evidence keys. The
+    paper-facing runtime evidence remains absent.
+  - Required result: add executable paper/report evidence for `2603.09172`:
+    Ramsey-number parameter rows, graph witness artifact schemas,
+    verifier/certifier metadata, exact-bound recovery suite records,
+    best-known-bound comparison rows, prior/current value provenance for all
+    reported improvements, search-algorithm provenance, seed/budget records,
+    witness graph hashes, independent checker outputs, and reproducibility
+    status. Paper evidence should additionally capture the
     `R(r,s) >= n+1` witness semantics, primary/prospect graph output schema,
     expected-violation scoring formula inputs, Table 1 status classes
     (exact-match, best-known-match, and new-result), Table 2 initialization

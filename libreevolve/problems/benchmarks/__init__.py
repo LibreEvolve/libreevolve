@@ -368,6 +368,12 @@ from libreevolve.problems.benchmarks.proposal_lifecycle_audit import (
     render_proposal_lifecycle_audit_boundary_summary,
     validate_proposal_lifecycle_audit_boundary,
 )
+from libreevolve.problems.benchmarks.ramsey_numbers_boundary import (
+    RAMSEY_NUMBERS_BOUNDARY_SCHEMA,
+    ramsey_numbers_boundary_record,
+    render_ramsey_numbers_boundary_summary,
+    validate_ramsey_numbers_boundary,
+)
 from libreevolve.problems.benchmarks.result_certification import (
     CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA,
     PAPER_CERTIFICATION_SCHEMA,
@@ -468,6 +474,7 @@ __all__ = [
     "PAPER_CERTIFICATION_SCHEMA",
     "PROCESS_EXHIBIT_BOUNDARY_SCHEMA",
     "PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_SCHEMA",
+    "RAMSEY_NUMBERS_BOUNDARY_SCHEMA",
     "SYSTEMS_ARTIFACT_INVENTORY_SCHEMA",
     "SYSTEMS_RESULT_SCHEMA",
     "THETAEVOLVE_BOUNDARY_SCHEMA",
@@ -520,6 +527,7 @@ __all__ = [
     "multiagent_learning_boundary_record",
     "process_exhibit_boundary_record",
     "proposal_lifecycle_audit_boundary_record",
+    "ramsey_numbers_boundary_record",
     "figure4_matrix_discovery_artifact_boundary_from_exhibit",
     "figure8_exhibit_from_ablation_report",
     "figure8_artifact_boundary_record",
@@ -615,6 +623,7 @@ __all__ = [
     "render_paper_artifact_linkage_summary",
     "render_process_exhibit_boundary_summary",
     "render_proposal_lifecycle_audit_boundary_summary",
+    "render_ramsey_numbers_boundary_summary",
     "render_systems_result_summary",
     "render_thetaevolve_boundary_summary",
     "systems_result_artifact_inventory",
@@ -690,6 +699,7 @@ __all__ = [
     "validate_paper_result_certification",
     "validate_process_exhibit_boundary",
     "validate_proposal_lifecycle_audit_boundary",
+    "validate_ramsey_numbers_boundary",
     "validate_systems_evidence_bundle",
     "validate_systems_result_report",
     "validate_thetaevolve_boundary",

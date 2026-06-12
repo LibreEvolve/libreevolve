@@ -2,6 +2,13 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Preserve Ramsey Numbers `2603.09172` boundary scope in roadmap.
+  - Evidence: `ROADMAP.md` adds `papers/ramsey_numbers_boundary.json` to the
+    inspired/application-context source-boundary list and keeps Ramsey-number
+    discovery unpromoted until graph witness schemas, verifiers, result rows,
+    source-artifact snapshots, lower-bound semantics, and independent checker
+    evidence exist.
+
 - [x] Preserve Multiagent Learning `2602.16928` boundary scope in roadmap.
   - Evidence: `ROADMAP.md` adds `papers/multiagent_learning_boundary.json` to
     the inspired/application-context source-boundary list and keeps MARL

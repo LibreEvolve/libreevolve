@@ -3681,17 +3681,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     larger prospect graph `G2` with violation-count guidance; and its PDF links
     Google Research artifacts for the nine improved graph constructions and
     generated search code.
-  - Current evidence: README documents general constructive-math gaps, paper
-    cache status, benchmark-report contracts, and example smoke fixtures. It
-    does not mention `2603.09172`, define Ramsey graph witnesses, provide a
-    verifier for `R(s,t)` lower-bound certificates, list the nine Ramsey
-    prior/current values, show exact-bound recovery results, compare matched
-    best-known bounds, or store generated search algorithms and witness graph
-    artifacts. It also does not explain graph-size versus lower-bound
-    off-by-one semantics, Algorithm 1 primary/prospect graph scoring, Table 1's
-    28-cell coverage/status classes, Table 2 initialization families, public
-    artifact links, or provenance caveats for graph-only and
-    personal-communication baselines.
+  - Current evidence: README now lists Ramsey Numbers only as a constructive
+    math benchmark candidate and points to `papers/ramsey_numbers_boundary.json`
+    for the missing graph candidate schemas, graph-witness verifier artifacts,
+    new/matched/exact lower-bound rows, Google Research artifact snapshots,
+    initialization-family rows, graph-size/lower-bound semantics, and
+    independent checker outputs. It still does not define Ramsey graph
+    witnesses, provide a verifier for `R(s,t)` lower-bound certificates, list
+    the nine Ramsey prior/current values, show exact-bound recovery results,
+    compare matched best-known bounds, or store generated search algorithms
+    and witness graph artifacts.
   - Required result: if README mentions Ramsey numbers, reinforced
     combinatorial-structure generation, AlphaEvolve-discovered Ramsey lower
     bounds, exact-bound recovery, matched best-known Ramsey bounds, one

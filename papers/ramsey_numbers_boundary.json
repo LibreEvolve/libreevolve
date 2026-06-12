@@ -1,0 +1,181 @@
+{
+  "schema": "libreevolve.ramsey_numbers_boundary.v1",
+  "source_paper_id": "2603.09172",
+  "source_title": "Reinforced Generation of Combinatorial Structures: Ramsey Numbers",
+  "source_authors": [
+    "Ansh Nagda",
+    "Prabhakar Raghavan",
+    "Abhradeep Thakurta"
+  ],
+  "source_version": "v5",
+  "source_submitted_date": "2026-03-10",
+  "source_last_revised_date": "2026-04-21",
+  "source_url": "https://arxiv.org/pdf/2603.09172.pdf",
+  "source_file": "papers/2603.09172__Ramsey_Numbers.pdf",
+  "source_sha256": "f133fe6f2b7db15fad214164359359f0e5ecbc0656b81bb6917c5c40df402ded",
+  "source_bytes": 302923,
+  "source_license": "http://creativecommons.org/licenses/by/4.0/",
+  "boundary_status": "constructive_ramsey_context_without_graph_witness_parity",
+  "claim_ready": false,
+  "source_links": [
+    {
+      "url": "https://arxiv.org/abs/2603.09172v5",
+      "status": "source_version_reference_only"
+    },
+    {
+      "url": "https://github.com/google-research/google-research/tree/master/ramsey_number_bounds/improved_bounds",
+      "status": "source_repository_reference_only_not_local_snapshot"
+    },
+    {
+      "url": "https://github.com/google-research/google-research/tree/master/ramsey_number_bounds/code",
+      "status": "source_repository_reference_only_not_local_snapshot"
+    }
+  ],
+  "framework_components": [
+    {
+      "component_id": "ramsey_graph_candidates",
+      "paper_role": "candidate programs generate Ramsey graph witnesses",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "primary_and_prospect_graph_contract",
+      "paper_role": "program run() returns primary graph G1 and larger prospect graph G2",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "clique_independent_set_verifier",
+      "paper_role": "verify absence of r-cliques and s-independent sets",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "ramsey_parameter_rows",
+      "paper_role": "R(r,s) table rows for small Ramsey numbers",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "new_lower_bound_rows",
+      "paper_role": "nine improved lower-bound rows",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "matched_bound_rows",
+      "paper_role": "matched best-known lower-bound rows",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "exact_bound_recovery_rows",
+      "paper_role": "recovered exact known lower-bound rows",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "google_research_construction_links",
+      "paper_role": "public graph construction repository links",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "search_algorithm_code_links",
+      "paper_role": "public AlphaEvolve-discovered search code repository links",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "initialization_family_taxonomy",
+      "paper_role": "random/stochastic, algebraic, cyclic, and hybrid initialization families",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "prior_sota_baseline_rows",
+      "paper_role": "prior lower-bound citation and graph-size rows",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "graph_size_lower_bound_semantics",
+      "paper_role": "graph with n vertices proves R(r,s) >= n + 1",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "algorithm_generated_witness_artifacts",
+      "paper_role": "generated search algorithms and witness graph artifacts",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "independent_checker_outputs",
+      "paper_role": "independent verification of witness graph constraints",
+      "local_status": "not_recorded"
+    }
+  ],
+  "local_evidence": {
+    "current_ramsey_runner": "<none>",
+    "current_candidate_scope": "python_primary_generic_workspace_not_ramsey_graph_witness_api",
+    "ramsey_candidate_schema_ready": false,
+    "run_return_contract_ready": false,
+    "graph_verifier_ready": false,
+    "parameter_rows_ready": false,
+    "new_lower_bound_rows_ready": false,
+    "matched_bound_rows_ready": false,
+    "exact_recovery_rows_ready": false,
+    "source_artifact_snapshot_ready": false,
+    "algorithm_summary_audit_ready": false,
+    "independent_checker_ready": false,
+    "repository_runtime_verified": false
+  },
+  "reported_improvements": [
+    "R(3,13): 60 to 61",
+    "R(3,18): 99 to 100",
+    "R(4,13): 138 to 139",
+    "R(4,14): 147 to 148",
+    "R(4,15): 158 to 159",
+    "R(4,16): 170 to 174",
+    "R(4,18): 205 to 209",
+    "R(4,19): 213 to 219",
+    "R(4,20): 234 to 237"
+  ],
+  "required_evidence_fields": [
+    "source_license_and_repository_status",
+    "alphaevolve_relation",
+    "constructive_math_fixture_policy",
+    "ramsey_candidate_representation",
+    "run_return_contract",
+    "primary_graph_witness_schema",
+    "prospect_graph_schema",
+    "clique_verifier_records",
+    "independent_set_verifier_records",
+    "ramsey_parameter_table_rows",
+    "new_lower_bound_rows",
+    "matched_best_known_rows",
+    "exact_known_bound_recovery_rows",
+    "graph_vertex_count_records",
+    "implied_lower_bound_records",
+    "off_by_one_semantics",
+    "source_graph_artifact_hashes",
+    "source_algorithm_artifact_hashes",
+    "initialization_family_records",
+    "prior_sota_baseline_citations",
+    "search_budget_records",
+    "random_seed_records",
+    "algorithm_summary_audit_records",
+    "independent_checker_outputs"
+  ],
+  "missing_evidence": {
+    "ramsey_candidate_schema": "not_implemented_locally",
+    "ramsey_run_return_contract": "not_implemented_locally",
+    "graph_witness_artifact_schema": "not_recorded_locally",
+    "clique_independent_set_verifier": "not_implemented_locally",
+    "ramsey_parameter_rows": "not_recorded_locally",
+    "new_lower_bound_rows": "not_recorded_locally",
+    "matched_best_known_rows": "not_recorded_locally",
+    "exact_known_recovery_rows": "not_recorded_locally",
+    "primary_graph_records": "not_recorded_locally",
+    "prospect_graph_records": "not_recorded_locally",
+    "source_graph_artifact_hashes": "not_recorded_locally",
+    "source_algorithm_artifact_hashes": "not_recorded_locally",
+    "initialization_family_taxonomy": "not_recorded_locally",
+    "prior_sota_baseline_rows": "not_recorded_locally",
+    "graph_size_lower_bound_semantics": "not_recorded_locally",
+    "search_budget_records": "not_recorded_locally",
+    "random_seed_records": "not_recorded_locally",
+    "algorithm_summary_audit_records": "not_recorded_locally",
+    "independent_checker_outputs": "not_recorded_locally",
+    "local_google_research_artifact_snapshot": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records Ramsey Numbers as AlphaEvolve constructive combinatorics context only. LibreEvolve currently does not claim Ramsey graph candidate schemas, run() primary/prospect graph contracts, clique/independent-set verifiers, new or matched lower-bound rows, exact-known-bound recovery evidence, graph artifact hashes, source algorithm artifact hashes, initialization family records, graph-size-to-Ramsey-lower-bound semantics, or independent checker outputs."
+}

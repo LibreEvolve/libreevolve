@@ -5841,7 +5841,7 @@ Primary evidence:
     outputs, and benchmark reports before claiming AlphaEvolve-style MARL
     algorithm discovery.
 
-- [ ] Add AlphaEvolve Ramsey-number combinatorial-structure boundary.
+- [ ] Implement AlphaEvolve Ramsey-number combinatorial-structure parity beyond source boundary.
   - Spec evidence: arXiv `2603.09172`, `Reinforced Generation of
     Combinatorial Structures: Ramsey Numbers`, was submitted March 10, 2026
     and last revised April 21, 2026. Its abstract says AlphaEvolve improved
@@ -5862,38 +5862,28 @@ Primary evidence:
     cells and Algorithms 11-34 for the other colored Table 1 cells, while the
     PDF links public Google Research locations for improved-bound
     constructions and AI-discovered search code.
-  - Current evidence: `papers/README.md` lists `2603.09172` only as a
-    constructive math benchmark candidate with `Not implemented; potential
-    future benchmark`. LibreEvolve has no implemented source-boundary gate for
-    this source, no Ramsey graph-construction candidate schema, no graph verifier
-    for `R(s,t)` lower-bound certificates, no exact-bound recovery suite, no
-    matched-best-known benchmark ledger, no per-Ramsey-number result table,
-    no artifact policy for witness graphs or search algorithms, and no
-    single-meta-algorithm report showing one evolved search procedure family
-    covering the new, recovered, and matched bounds. It also lacks a
-    `run()`-return contract for primary/prospect Ramsey graphs, expected
-    violation baseline scoring, off-by-one lower-bound normalization
-    (`n`-vertex witness versus `R(r,s) >= n+1`), artifact ingestion for the
-    linked Google Research improved-bound graphs and code, or implementation
-    hooks for the paper's initialization families: random/stochastic,
-    Paley/cubic/quadratic-residue algebraic seeding, circulant/cyclic/sum-free
-    bootstrap, and hybrid/fractal/spectral seeding.
-  - Required result: add source-manifest and implementation-boundary metadata
-    for `2603.09172`: arXiv id/version/date/PDF hash, authors, source
-    license, code/artifact availability, relation to AlphaEvolve and
-    LibreEvolve constructive-math fixtures, Ramsey candidate representation,
-    graph/witness artifact schema, verifier/certifier entrypoints for
-    `R(s,t)` lower-bound claims, exact-bound recovery suite, best-known-bound
-    comparison table, per-result prior/current values and sources, search
-    algorithm provenance, seed/budget records, witness graph hashes, failed
-    construction records, independent checker outputs, and README/ROADMAP
-    wording that keeps Ramsey-number discovery as missing evidence until
-    local implementation and reports exist. The implementation boundary should
-    include an exact clique/independent-set certifier, normalized result rows
-    that record both witness vertex count and implied Ramsey lower bound,
-    Algorithm 1-compatible primary/prospect scoring fields, imported or
-    reproducibly regenerated public construction artifacts, per-algorithm
-    appendix classifications for all 28 colored Table 1 cells, baseline
+  - Current evidence: `papers/ramsey_numbers_boundary.json` now preserves the
+    source-specific boundary for `2603.09172`, including title/authors/arXiv
+    version/revision date, cached PDF digest/license, arXiv and Google
+    Research graph/code source links, component rows, current no-Ramsey-runner
+    local scope, required evidence fields, and missing-evidence keys.
+    `papers/README.md`, `README.md`, and `ROADMAP.md` keep Ramsey-number
+    discovery candidate-scoped rather than implemented.
+  - Required result: implement the missing runtime evidence for `2603.09172`:
+    Ramsey candidate schemas, `run()` primary/prospect graph contracts, graph
+    witness artifact schemas, clique/independent-set verifiers, parameter
+    rows, nine improved lower-bound rows, matched-best-known rows, exact-known
+    recovery rows, primary/prospect graph records, Google Research
+    construction/code snapshot hashes, initialization-family taxonomy,
+    prior-bound baseline rows, graph-size versus lower-bound semantics,
+    search budget and random-seed records, algorithm-summary audit records,
+    independent checker outputs, and benchmark reports before claiming
+    AlphaEvolve-style Ramsey-number discovery. The implementation boundary
+    should include normalized result rows that record both witness vertex
+    count and implied Ramsey lower bound, Algorithm 1-compatible
+    primary/prospect scoring fields, imported or reproducibly regenerated
+    public construction artifacts, per-algorithm appendix classifications for
+    all 28 colored Table 1 cells, baseline
     comparison metadata for Radziszowski 2024, Exoo/Tatarevic 2015, Exoo 2006,
     Tatarevic 2020, Harborth/Krause 2003, and explicit caveats where prior
     work is only a graph or personal communication rather than a published

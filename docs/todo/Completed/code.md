@@ -18113,3 +18113,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     and independent checker outputs remain open.
   - Verification: Sums and Differences boundary tests and paper-manifest tests
     cover the sidecar, drift rejection, and repo-root sidecar requirement.
+
+- [x] Add Sums and Differences II `2506.01896` source-boundary gate.
+  - Status:
+    `libreevolve.problems.benchmarks.sums_differences_sequence_boundary` now
+    emits and validates `papers/sums_differences_sequence_boundary.json` with
+    cached PDF digest, arXiv v1 identity, CC BY 4.0 license metadata,
+    reference-only source links, reported AlphaEvolve/Gerbicz/paper bounds,
+    MATLAB 2024b tolerance-sweep rows, required future evidence fields,
+    missing-evidence keys, and overclaim rejection.
+  - Remaining gap: sequence-of-U schemas, large-deviation `I(c,B)` checking,
+    asymptotic `W(m,floor(rm),B)` checking, q/s/d bound derivation
+    verification, theta0 recomputation, MATLAB-code provenance, finite-prefix
+    artifact policy, baseline lineage rows, convergence/tail-bound checks, and
+    independent checker outputs remain open.
+  - Verification: Sums and Differences II boundary tests and paper-manifest
+    tests cover the sidecar, drift rejection, and repo-root sidecar
+    requirement.

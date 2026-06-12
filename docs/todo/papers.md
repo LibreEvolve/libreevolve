@@ -5909,8 +5909,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     post-AlphaEvolve sums-and-differences improvement as missing paper
     evidence rather than implemented LibreEvolve support.
 
-- [ ] Track further post-AlphaEvolve sums-and-differences sequence paper
-      evidence.
+- [ ] Implement further post-AlphaEvolve sums-and-differences sequence paper
+      evidence beyond the source boundary.
   - Paper/source evidence: arXiv `2506.01896`, submitted June 2, 2025, is
     titled `Sums and differences of sets: a further improvement over
     AlphaEvolve` and authored by Fan Zheng; the cached PDF hash is
@@ -5928,15 +5928,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     `theta - 1 = 0.173077279785136` for both `1e-8` and `1e-10` tolerances.
     The paper embeds MATLAB code using `fminbnd`, `fminunc`, `logD`, `logW`,
     and a Legendre-transform objective for `I(c, B)`.
-  - Current gap: `papers/README.md` lists `2506.01896` as a constructive math
-    benchmark candidate with `Not implemented; potential future benchmark`,
-    but the current implementation and paper index do not yet provide local
-    source-boundary artifacts or implementation evidence for this paper.
-    Existing sums-and-differences TODOs do not capture this
-    sequence-of-sets construction, limiting lower-bound proof artifact,
-    large-deviation lemma evidence, MATLAB-code provenance, tolerance-sweep
-    reproducibility, convergence/tail-bound verification, or lineage
-    comparison against both AlphaEvolve's `1.1584` finite witness and
+  - Current gap: `papers/sums_differences_sequence_boundary.json` and
+    `papers/README.md` now provide the local source-boundary artifact for this
+    further improvement, but they do not provide local sequence artifacts or
+    implementation evidence. Existing sums-and-differences TODOs do not
+    capture this sequence-of-sets construction, limiting lower-bound proof
+    artifact, large-deviation lemma evidence, MATLAB-code provenance,
+    tolerance-sweep reproducibility, convergence/tail-bound verification, or
+    lineage comparison against both AlphaEvolve's `1.1584` finite witness and
     `2505.16105`'s `1.173050` explicit huge-set witness.
   - Required result: add paper-manifest and paper-index coverage updates for
     `2506.01896`: title/author/arXiv version/date/PDF digest, source license,

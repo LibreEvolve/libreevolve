@@ -6419,7 +6419,8 @@ Primary evidence:
     post-AlphaEvolve sums-and-differences improvement as missing evidence
     until local construction artifacts and reports exist.
 
-- [ ] Add further post-AlphaEvolve sums-and-differences sequence boundary.
+- [ ] Implement further post-AlphaEvolve sums-and-differences sequence
+      construction beyond the source boundary.
   - Spec evidence: arXiv `2506.01896`, `Sums and differences of sets: a
     further improvement over AlphaEvolve`, by Fan Zheng was submitted
     June 2, 2025 as arXiv v1; the cached PDF hash is
@@ -6438,19 +6439,16 @@ Primary evidence:
     `theta - 1 = 0.173077279785136` at tolerances `1e-8` and `1e-10`. The
     embedded MATLAB code uses `fminbnd`, `fminunc`, `logW`, `logD`, and a
     Legendre-transform helper for `I(c, B)`.
-  - Current evidence: `papers/README.md` lists `2506.01896` only as a
-    constructive math benchmark candidate with `Not implemented; potential
-    future benchmark`. LibreEvolve has broad Appendix B sums-and-differences
-    TODOs and a source-specific TODO for `2505.16105`, but no implemented
-    source-boundary support or report schema for this further source, no
-    limiting argument artifact, no large-deviation lemma checker, no
-    asymptotic `W(m, floor(rm), B)` counting metadata, no MATLAB-code
-    extraction/reimplementation harness, no tolerance-sweep regression for
-    `B = 3..10`, no convergence/tail-bound verifier, no
-    `theta = 1.173077` recomputation report, no side-by-side lineage from
-    AlphaEvolve `1.1584` through `2505.16105` `1.173050`, and no artifact
-    policy that distinguishes finite explicit `U` witnesses from asymptotic
-    sequence constructions.
+  - Current evidence: `papers/sums_differences_sequence_boundary.json` and
+    `papers/README.md` now record the `2506.01896` source-boundary gate while
+    keeping the improvement source-scoped. LibreEvolve still has no limiting
+    argument artifact, no large-deviation lemma checker, no asymptotic
+    `W(m, floor(rm), B)` counting metadata, no MATLAB-code extraction or
+    reimplementation harness, no tolerance-sweep regression for `B = 3..10`,
+    no convergence/tail-bound verifier, no `theta = 1.173077` recomputation
+    report, no side-by-side lineage from AlphaEvolve `1.1584` through
+    `2505.16105` `1.173050`, and no artifact policy that distinguishes finite
+    explicit `U` witnesses from asymptotic sequence constructions.
   - Required result: add source-manifest and implementation-boundary metadata
     for `2506.01896`: arXiv id/version/date/PDF hash, author, source license,
     code/artifact availability, relation to AlphaEvolve Appendix B and

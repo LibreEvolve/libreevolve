@@ -12160,3 +12160,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     independent checker evidence explicit as missing.
   - Verification: Sums and Differences boundary and paper-manifest tests
     validate the sidecar that README now references.
+
+- [x] Document Sums and Differences II `2506.01896` source boundary in README.
+  - Status: README now names `papers/sums_differences_sequence_boundary.json`
+    in the source reference table while keeping Sums and Differences II as
+    post-AlphaEvolve asymptotic constructive-math improvement context only,
+    with sequence-of-U schemas, large-deviation and asymptotic W checkers,
+    q/s/d bound derivation records, theta0 recomputation, MATLAB
+    tolerance-sweep provenance, finite-prefix artifact policy, baseline
+    lineage rows, and independent checker evidence explicit as missing.
+  - Verification: Sums and Differences II boundary and paper-manifest tests
+    validate the sidecar that README now references.

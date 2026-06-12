@@ -416,6 +416,12 @@ from libreevolve.problems.benchmarks.sums_differences_boundary import (
     sums_differences_boundary_record,
     validate_sums_differences_boundary,
 )
+from libreevolve.problems.benchmarks.sums_differences_sequence_boundary import (
+    SUMS_DIFFERENCES_SEQUENCE_BOUNDARY_SCHEMA,
+    render_sums_differences_sequence_boundary_summary,
+    sums_differences_sequence_boundary_record,
+    validate_sums_differences_sequence_boundary,
+)
 from libreevolve.problems.benchmarks.result_certification import (
     CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA,
     PAPER_CERTIFICATION_SCHEMA,
@@ -530,6 +536,7 @@ __all__ = [
     "PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_SCHEMA",
     "RAMSEY_NUMBERS_BOUNDARY_SCHEMA",
     "SUMS_DIFFERENCES_BOUNDARY_SCHEMA",
+    "SUMS_DIFFERENCES_SEQUENCE_BOUNDARY_SCHEMA",
     "SYSTEMS_ARTIFACT_INVENTORY_SCHEMA",
     "SYSTEMS_RESULT_SCHEMA",
     "THETAEVOLVE_BOUNDARY_SCHEMA",
@@ -591,6 +598,7 @@ __all__ = [
     "proposal_lifecycle_audit_boundary_record",
     "ramsey_numbers_boundary_record",
     "sums_differences_boundary_record",
+    "sums_differences_sequence_boundary_record",
     "figure4_matrix_discovery_artifact_boundary_from_exhibit",
     "figure8_exhibit_from_ablation_report",
     "figure8_artifact_boundary_record",
@@ -694,6 +702,7 @@ __all__ = [
     "render_proposal_lifecycle_audit_boundary_summary",
     "render_ramsey_numbers_boundary_summary",
     "render_sums_differences_boundary_summary",
+    "render_sums_differences_sequence_boundary_summary",
     "render_systems_result_summary",
     "render_thetaevolve_boundary_summary",
     "render_ttt_discover_boundary_summary",
@@ -779,6 +788,7 @@ __all__ = [
     "validate_proposal_lifecycle_audit_boundary",
     "validate_ramsey_numbers_boundary",
     "validate_sums_differences_boundary",
+    "validate_sums_differences_sequence_boundary",
     "validate_systems_evidence_bundle",
     "validate_systems_result_report",
     "validate_thetaevolve_boundary",

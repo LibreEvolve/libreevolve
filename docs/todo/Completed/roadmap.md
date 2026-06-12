@@ -9720,3 +9720,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     lineage comparison rows, tolerance policy, and independent checker outputs.
   - Verification: Sums and Differences boundary tests and paper-manifest tests
     validate the sidecar and repo-root requirement.
+
+- [x] Preserve Sums and Differences II `2506.01896` boundary scope in roadmap.
+  - Status: ROADMAP and roadmap TODO wording now identify
+    `papers/sums_differences_sequence_boundary.json` as the source-specific
+    boundary for sequence-of-U construction schemas, large-deviation `I(c,B)`
+    records, asymptotic `W(m,floor(rm),B)` checks, Lemma 1/Lemma 2
+    verification, q/s/d bound derivation records, theta0 recomputation,
+    MATLAB 2024b code provenance, B=3..10 tolerance-sweep rows, finite-prefix
+    artifact policy, AlphaEvolve and Gerbicz baseline rows,
+    convergence/tail-bound checks, lineage comparison rows, and independent
+    checker outputs.
+  - Verification: Sums and Differences II boundary tests and paper-manifest
+    tests validate the sidecar and repo-root requirement.

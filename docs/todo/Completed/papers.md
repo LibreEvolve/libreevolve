@@ -12663,3 +12663,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     independent reproduction outputs remain open.
   - Verification: Sums and Differences boundary tests and paper-manifest tests
     validate the sidecar and reject theta-readiness overclaims.
+
+- [x] Record Sums and Differences II `2506.01896` source boundary.
+  - Status: `papers/sums_differences_sequence_boundary.json` now carries the
+    source-specific Sums and Differences II boundary with cached PDF digest,
+    arXiv v1 identity, CC BY 4.0 license metadata, DOI/license/source links,
+    AlphaEvolve and Gerbicz baseline values, paper bound `1.173077`, MATLAB
+    2024b tolerance-sweep records, required evidence fields, and
+    missing-evidence keys.
+  - Remaining paper gap: local sequence artifacts, large-deviation checker
+    outputs, asymptotic W-count records, q/s/d derivation verification,
+    theta0 recomputation, MATLAB extraction/reimplementation, finite-prefix
+    witness artifacts, convergence/tail-bound records, lineage comparison
+    rows, and independent reproduction outputs remain open.
+  - Verification: Sums and Differences II boundary tests and paper-manifest
+    tests validate the sidecar and reject theta0-readiness overclaims.

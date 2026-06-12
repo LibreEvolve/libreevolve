@@ -1,0 +1,228 @@
+{
+  "schema": "libreevolve.sums_differences_sequence_boundary.v1",
+  "source_paper_id": "2506.01896",
+  "source_title": "Sums and differences of sets: a further improvement over AlphaEvolve",
+  "source_authors": [
+    "Fan Zheng"
+  ],
+  "source_version": "v1",
+  "source_submitted_date": "2025-06-02",
+  "source_pdf_date": "2025-06-11",
+  "source_url": "https://arxiv.org/pdf/2506.01896.pdf",
+  "source_file": "papers/2506.01896__Sums_and_Differences_II.pdf",
+  "source_sha256": "3f04c75ccd850eb6e5c785e543f98d12446e9891399cc5246acae9335b4494c2",
+  "source_bytes": 302747,
+  "source_license": "CC BY 4.0",
+  "boundary_status": "post_alphaevolve_sums_differences_sequence_without_local_asymptotic_verifier",
+  "claim_ready": false,
+  "source_links": [
+    {
+      "url": "https://arxiv.org/abs/2506.01896v1",
+      "status": "source_version_reference_only"
+    },
+    {
+      "url": "https://doi.org/10.48550/arXiv.2506.01896",
+      "status": "doi_reference_only"
+    },
+    {
+      "url": "http://creativecommons.org/licenses/by/4.0/",
+      "status": "license_reference_only"
+    },
+    {
+      "url": "https://arxiv.org/abs/2505.16105",
+      "status": "gerbicz_2505_baseline_reference_only"
+    },
+    {
+      "url": "http://bit.ly/4jkeOoX",
+      "status": "alphaevolve_context_reference_only"
+    }
+  ],
+  "framework_components": [
+    {
+      "component_id": "sequence_u_set_construction_schema",
+      "paper_role": "represent a limiting sequence of U sets from W(m,floor(rm),B)",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "large_deviation_i_c_b_checker",
+      "paper_role": "check Legendre-transform I(c,B) large-deviation values",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "asymptotic_w_m_floor_rm_b_checker",
+      "paper_role": "verify asymptotic log |W(m,floor(rm),B)| / m",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "q_bound_derivation_checker",
+      "paper_role": "check q(U) <= (2B+1)^m derivation",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "sumset_upper_bound_checker",
+      "paper_role": "check s(U) upper bound using W(m,floor(2rm),2B)",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "difference_lower_bound_checker",
+      "paper_role": "check d(U) lower bound from k=floor(aL) term",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "theta0_variational_formula_recomputation",
+      "paper_role": "recompute restricted supremum over B,r,a and theta",
+      "local_status": "not_implemented"
+    },
+    {
+      "component_id": "matlab_code_provenance_records",
+      "paper_role": "record MATLAB 2024b fminbnd/fminunc source-code provenance",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "tolerance_sweep_table_records",
+      "paper_role": "record B=3..10 and 1e-4..1e-10 tolerance table",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "finite_prefix_artifact_policy",
+      "paper_role": "separate asymptotic sequence claims from finite witness artifacts",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "alphaevolve_baseline_record",
+      "paper_role": "compare against AlphaEvolve theta=1.1584 baseline",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "gerbicz_2505_baseline_record",
+      "paper_role": "compare against Gerbicz theta=1.173050 finite construction",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "lineage_comparison_rows",
+      "paper_role": "preserve prior-to-current bound lineage",
+      "local_status": "not_recorded"
+    },
+    {
+      "component_id": "independent_checker_outputs",
+      "paper_role": "record independent verification of formulas and numerics",
+      "local_status": "not_recorded"
+    }
+  ],
+  "local_evidence": {
+    "current_sums_differences_runner": "<none>",
+    "current_math_scope": "appendix_b_context_not_post_alphaevolve_sequence_verifier",
+    "sequence_schema_ready": false,
+    "large_deviation_checker_ready": false,
+    "asymptotic_w_checker_ready": false,
+    "q_bound_checker_ready": false,
+    "sumset_bound_checker_ready": false,
+    "difference_bound_checker_ready": false,
+    "theta0_recomputation_ready": false,
+    "matlab_code_records_ready": false,
+    "tolerance_sweep_records_ready": false,
+    "finite_prefix_policy_ready": false,
+    "alphaevolve_baseline_ready": false,
+    "gerbicz_2505_baseline_ready": false,
+    "independent_checker_ready": false,
+    "repository_runtime_verified": false
+  },
+  "reported_result": {
+    "alphaevolve_bound": 1.1584,
+    "gerbicz_2505_bound": 1.17305,
+    "paper_bound": 1.173077,
+    "paper_bound_description": "theta >= 1.173077 in the limiting sequence",
+    "winning_b": 5,
+    "restricted_b_values": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "restricted_r_interval": "(0.5, 2)",
+    "restricted_a_interval": "(0, min(1, 1/r))",
+    "tolerances": [
+      "1e-4",
+      "1e-6",
+      "1e-8",
+      "1e-10"
+    ],
+    "winning_theta_minus_one": {
+      "epsilon_1e_minus_4": 0.173077285664668,
+      "epsilon_1e_minus_6": 0.173077279785044,
+      "epsilon_1e_minus_8": 0.173077279785136,
+      "epsilon_1e_minus_10": 0.173077279785136
+    },
+    "table_1_theta_minus_one_by_b_at_1e_minus_10": {
+      "3": 0.168700179627163,
+      "4": 0.172137890014121,
+      "5": 0.173077279785136,
+      "6": 0.172855932676998,
+      "7": 0.172060243360376,
+      "8": 0.170975345189401,
+      "9": 0.169749936705623,
+      "10": 0.168465310634737
+    },
+    "numerical_tool": "MATLAB 2024b",
+    "matlab_functions": [
+      "fminbnd",
+      "fminunc",
+      "logW",
+      "logD",
+      "sup"
+    ]
+  },
+  "required_evidence_fields": [
+    "source_license_and_artifact_status",
+    "alphaevolve_relation",
+    "post_alphaevolve_sequence_policy",
+    "sequence_u_set_construction_schema",
+    "w_m_floor_rm_b_large_deviation_formula",
+    "i_c_b_legendre_transform_records",
+    "lemma_1_and_lemma_2_checker_outputs",
+    "q_bound_derivation_records",
+    "sumset_upper_bound_records",
+    "difference_lower_bound_records",
+    "theta0_variational_formula_records",
+    "parameter_rows_b_r_a_m",
+    "matlab_2024b_code_provenance",
+    "tolerance_sweep_rows",
+    "independent_python_or_exact_reimplementation",
+    "finite_prefix_witness_artifacts",
+    "convergence_and_tail_bound_checks",
+    "theta_tolerance_policy",
+    "alphaevolve_1_1584_baseline_record",
+    "gerbicz_2505_1_173050_baseline_record",
+    "prior_gyarmati_hennecart_ruzsa_baseline_record",
+    "lineage_comparison_rows",
+    "reproducibility_status",
+    "independent_checker_outputs"
+  ],
+  "missing_evidence": {
+    "sequence_u_set_construction_schema": "not_implemented_locally",
+    "large_deviation_i_c_b_checker": "not_implemented_locally",
+    "asymptotic_w_checker": "not_implemented_locally",
+    "lemma_1_checker": "not_implemented_locally",
+    "lemma_2_checker": "not_implemented_locally",
+    "q_bound_checker": "not_implemented_locally",
+    "sumset_upper_bound_checker": "not_implemented_locally",
+    "difference_lower_bound_checker": "not_implemented_locally",
+    "theta0_recomputation": "not_implemented_locally",
+    "matlab_code_extraction": "not_recorded_locally",
+    "matlab_2024b_provenance": "not_recorded_locally",
+    "tolerance_sweep_reproduction": "not_recorded_locally",
+    "independent_python_reimplementation": "not_recorded_locally",
+    "finite_prefix_artifacts": "not_recorded_locally",
+    "convergence_tail_bounds": "not_recorded_locally",
+    "alphaevolve_baseline": "not_recorded_locally",
+    "gerbicz_2505_baseline": "not_recorded_locally",
+    "prior_baseline_theta_1_14465": "not_recorded_locally",
+    "lineage_comparison_rows": "not_recorded_locally",
+    "independent_checker_outputs": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records Sums and Differences II as post-AlphaEvolve asymptotic constructive-math context only. LibreEvolve currently does not claim a sequence-of-U construction schema, large-deviation I(c,B) checker, W(m,floor(rm),B) asymptotic checker, q/s/d bound derivation verifier, theta0 variational-formula recomputation, MATLAB-code provenance, tolerance-sweep reproduction, finite-prefix artifact policy, AlphaEvolve and Gerbicz baseline comparison rows, or independent checker outputs."
+}

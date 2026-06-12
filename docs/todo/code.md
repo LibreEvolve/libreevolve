@@ -1575,8 +1575,9 @@ Primary evidence:
     repeated-seed pass/fail decisions.
   - Remaining gap: these are configured lower-bound and binomial repeated-
     sample gates, not full AlphaEvolve Section 2.4 hypothesis testing.
-    Benchmark-calibrated thresholds and matrix/tensor repeated-seed promotion
-    fixtures remain absent.
+    `papers/cascade_hypothesis_test_boundary.json` now validates this
+    runtime-policy-only scope. Benchmark-calibrated thresholds and
+    matrix/tensor repeated-seed promotion fixtures remain absent.
   - Required result: add benchmark tests showing noisy repeated-seed candidates
     are promoted or rejected by calibrated hypothesis-testing rules.
 

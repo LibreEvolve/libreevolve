@@ -257,6 +257,12 @@ from libreevolve.problems.benchmarks.evaluation_cascade_boundary import (
     render_evaluation_cascade_boundary_summary,
     validate_evaluation_cascade_boundary,
 )
+from libreevolve.problems.benchmarks.cascade_hypothesis_test_boundary import (
+    CASCADE_HYPOTHESIS_TEST_BOUNDARY_SCHEMA,
+    cascade_hypothesis_test_boundary_record,
+    render_cascade_hypothesis_test_boundary_summary,
+    validate_cascade_hypothesis_test_boundary,
+)
 from libreevolve.problems.benchmarks.evaluator_oracle_boundary import (
     EVALUATOR_ORACLE_BOUNDARY_SCHEMA,
     evaluator_oracle_boundary_record,
@@ -721,6 +727,7 @@ __all__ = [
     "AUTOMATED_EVALUATOR_SCOPE_BOUNDARY_SCHEMA",
     "CANDIDATE_ABSTRACTION_BOUNDARY_SCHEMA",
     "CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_SCHEMA",
+    "CASCADE_HYPOTHESIS_TEST_BOUNDARY_SCHEMA",
     "CI_WORKFLOW_COVERAGE_BOUNDARY_SCHEMA",
     "CAUSALEVOLVE_BOUNDARY_SCHEMA",
     "CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA",
@@ -856,6 +863,7 @@ __all__ = [
     "global_nlp_optimization_boundary_record",
     "candidate_abstraction_boundary_record",
     "candidate_language_runner_boundary_record",
+    "cascade_hypothesis_test_boundary_record",
     "ci_workflow_coverage_boundary_record",
     "causalevolve_boundary_record",
     "certification_artifact_inventory",
@@ -967,6 +975,7 @@ __all__ = [
     "render_global_nlp_optimization_boundary_summary",
     "render_candidate_abstraction_boundary_summary",
     "render_candidate_language_runner_boundary_summary",
+    "render_cascade_hypothesis_test_boundary_summary",
     "render_ci_workflow_coverage_boundary_summary",
     "render_causalevolve_boundary_summary",
     "render_certification_summary",
@@ -1090,6 +1099,7 @@ __all__ = [
     "validate_global_nlp_optimization_boundary",
     "validate_candidate_abstraction_boundary",
     "validate_candidate_language_runner_boundary",
+    "validate_cascade_hypothesis_test_boundary",
     "validate_ci_workflow_coverage_boundary",
     "validate_causalevolve_boundary",
     "validate_certification_evidence_bundle",

@@ -13697,3 +13697,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused artifact-index tests reject full-content search
     overclaims.
+
+- [x] Record cascade hypothesis-test paper-facing sidecar.
+  - Status: `papers/cascade_hypothesis_test_boundary.json` now records the
+    runtime-policy-gates-only boundary for AlphaEvolve Section 2.4 cascade
+    hypothesis-testing language: runtime evidence can show stage-role
+    inference, deterministic threshold/artifact promotion, lower-confidence
+    bound gates, per-sample observations, p-values, sequential stopping,
+    configured error-budget fields, and binomial/Wilson repeated-seed gates,
+    while benchmark-calibrated thresholds, repeated-seed benchmark fixtures,
+    small-filter-to-main-test linkage, and empirical false-promotion or
+    false-rejection validation remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused cascade hypothesis-test tests reject benchmark-calibrated
+    cascade overclaims.

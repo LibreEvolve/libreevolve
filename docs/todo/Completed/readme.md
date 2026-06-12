@@ -12745,3 +12745,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     by `papers/artifact_index_boundary.json`.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused artifact-index tests reject full-content search overclaims.
+
+- [x] Keep README cascade hypothesis-test boundary tied to sidecar.
+  - Status: README now states that cascade hypothesis-test gates are runtime
+    policy evidence, not benchmark-calibrated AlphaEvolve Section 2.4 cascade
+    proof with repeated-seed fixtures and empirical false-promotion/false-
+    rejection validation, with the boundary tracked by
+    `papers/cascade_hypothesis_test_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused cascade hypothesis-test tests reject benchmark-calibrated cascade
+    overclaims.

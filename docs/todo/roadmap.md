@@ -1196,6 +1196,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     diagnostics. ROADMAP also records configured normal-approximation
     false-promotion/false-rejection budget evidence and
     `binomial_success_rate` Wilson-bound repeated-seed gates.
+    `papers/cascade_hypothesis_test_boundary.json` now validates that this is
+    runtime policy-gate evidence only.
     Benchmark-calibrated thresholds and matrix/tensor fixtures remain roadmap
     work.
   - Required result: when richer statistical hypothesis-test cascade execution

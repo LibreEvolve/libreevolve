@@ -18601,3 +18601,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     full-content artifact-search overclaims, invalid boundary status, missing
     evidence drift, and incomplete required evidence fields.
+
+- [x] Add cascade hypothesis-test sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/cascade_hypothesis_test_boundary.py`
+    now emits and validates the runtime-policy-gates-only boundary for
+    `runtime.history.cascade_hypothesis_test_policy_report`, separating
+    inferred/configured stage roles, deterministic threshold/artifact
+    promotion, one-sided lower-confidence-bound gates, retained observations,
+    confidence-bound and p-value evidence, sequential stopping diagnostics,
+    configured error-budget fields, and binomial success-rate Wilson-bound
+    evidence from benchmark-calibrated thresholds, repeated-seed benchmark
+    fixtures, small-filter-to-main-test linkage, and empirical false-promotion
+    or false-rejection validation.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    benchmark-calibrated cascade overclaims, invalid boundary status, missing
+    evidence drift, and incomplete required evidence fields.

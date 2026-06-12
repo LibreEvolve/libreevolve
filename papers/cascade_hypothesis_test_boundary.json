@@ -1,0 +1,38 @@
+{
+  "schema": "libreevolve.cascade_hypothesis_test_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_section_id": "2.4",
+  "source_claim": "AlphaEvolve describes cascades as hypothesis testing where small-scale filters promote sufficiently promising candidates toward larger main-test cases",
+  "boundary_status": "runtime_policy_gates_without_benchmark_calibrated_fixtures",
+  "runtime_report_schema": "libreevolve.cascade_hypothesis_test_policy_report.v1",
+  "runtime_report_status": "cascade_hypothesis_test_policy_report_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "stage_role_inference",
+    "small_scale_filter_role",
+    "main_test_role",
+    "deterministic_threshold_promotion_policy",
+    "artifact_check_promotion_policy",
+    "one_sided_lower_confidence_bound_gate",
+    "retained_per_sample_observations",
+    "confidence_bound_evidence",
+    "p_value_evidence",
+    "sequential_stopping_diagnostics",
+    "error_budget_fields",
+    "binomial_success_rate_gate",
+    "wilson_lower_bound_evidence",
+    "benchmark_calibrated_thresholds",
+    "repeated_seed_benchmark_fixtures",
+    "small_filter_to_main_test_linkage",
+    "empirical_false_promotion_validation",
+    "empirical_false_rejection_validation"
+  ],
+  "missing_evidence": {
+    "benchmark_calibrated_thresholds": "not_recorded_locally",
+    "repeated_seed_benchmark_fixtures": "not_recorded_locally",
+    "small_filter_to_main_test_linkage": "not_recorded_locally",
+    "empirical_false_promotion_validation": "not_recorded_locally",
+    "empirical_false_rejection_validation": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve can report inferred or configured stage roles, deterministic threshold and artifact-check promotion policies, opt-in one-sided lower-confidence-bound gates with retained observations, confidence-bound and p-value evidence, sequential stopping diagnostics, configured error-budget fields, and binomial success-rate gates with Wilson lower-bound evidence. It does not claim benchmark-calibrated thresholds, repeated-seed benchmark fixtures, small-filter-to-main-test linkage, empirical false-promotion validation, or empirical false-rejection validation."
+}

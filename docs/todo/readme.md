@@ -2315,7 +2315,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `min_samples` plus optional normal-approximation `error_budget` evidence
     for configured false-promotion and false-rejection rates. README now also
     documents `binomial_success_rate` gates for Wilson-bound repeated-seed
-    pass/fail evidence.
+    pass/fail evidence, and ties the runtime-policy-only boundary to
+    `papers/cascade_hypothesis_test_boundary.json`.
   - Required result: when richer statistical cascade promotion execution lands,
     update README, ROADMAP, papers index, and code/paper TODOs so README
     distinguishes the current lower-confidence-bound gate from complete

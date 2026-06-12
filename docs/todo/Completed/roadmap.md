@@ -10513,3 +10513,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     replayable artifact-driven sampling open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused artifact-index tests reject full-content search overclaims.
+
+- [x] Keep roadmap cascade hypothesis-test boundary tied to sidecar.
+  - Status: ROADMAP now links current cascade hypothesis-test policy evidence
+    to `papers/cascade_hypothesis_test_boundary.json` while keeping
+    benchmark-calibrated thresholds, repeated-seed matrix/tensor fixtures,
+    small-filter-to-main-test linkage, and empirical false-promotion or
+    false-rejection validation open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused cascade hypothesis-test tests reject benchmark-calibrated cascade
+    overclaims.

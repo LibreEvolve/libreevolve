@@ -161,6 +161,10 @@ from libreevolve.problems.benchmarks.evaluation_cascade_boundary import (
     evaluation_cascade_boundary_record,
     validate_evaluation_cascade_boundary,
 )
+from libreevolve.problems.benchmarks.cascade_hypothesis_test_boundary import (
+    cascade_hypothesis_test_boundary_record,
+    validate_cascade_hypothesis_test_boundary,
+)
 from libreevolve.problems.benchmarks.evaluator_oracle_boundary import (
     evaluator_oracle_boundary_record,
     validate_evaluator_oracle_boundary,
@@ -477,6 +481,7 @@ DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_FILE = "papers/distributed_pipeline_topol
 WHOLE_RUN_SOURCE_WORKSPACE_INTEGRITY_BOUNDARY_FILE = "papers/whole_run_source_workspace_integrity_boundary.json"
 CODEBASE_SCALE_BENCHMARK_BOUNDARY_FILE = "papers/codebase_scale_benchmark_boundary.json"
 EVALUATION_CASCADE_BOUNDARY_FILE = "papers/evaluation_cascade_boundary.json"
+CASCADE_HYPOTHESIS_TEST_BOUNDARY_FILE = "papers/cascade_hypothesis_test_boundary.json"
 CONTROLLER_BACKTRACKING_BOUNDARY_FILE = "papers/controller_backtracking_boundary.json"
 MATRIX_HEADLINE_HISTORICITY_ARTIFACTS_FILE = "papers/matrix_headline_historicity_artifacts.json"
 APPENDIX_A_BASELINE_CITATIONS_FILE = "papers/appendix_a_matrix_baseline_citations.json"
@@ -972,6 +977,7 @@ def validate_paper_manifest(
     issues.extend(_validate_whole_run_source_workspace_integrity_boundary(root_path))
     issues.extend(_validate_codebase_scale_benchmark_boundary(root_path))
     issues.extend(_validate_evaluation_cascade_boundary(root_path))
+    issues.extend(_validate_cascade_hypothesis_test_boundary(root_path))
     issues.extend(_validate_controller_backtracking_boundary(root_path))
     issues.extend(_validate_example_benchmark_scope_records(root_path))
     issues.extend(_validate_math_outcome_boundaries(root_path))
@@ -2834,6 +2840,38 @@ def _validate_evaluation_cascade_boundary(root_path: Path) -> list[PaperManifest
             f"evaluation_cascade_boundary_{issue.code}",
             issue.message,
             "evaluation_cascade",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_cascade_hypothesis_test_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / CASCADE_HYPOTHESIS_TEST_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = cascade_hypothesis_test_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "cascade_hypothesis_test_boundary_manifest_missing",
+                    (
+                        f"{CASCADE_HYPOTHESIS_TEST_BOUNDARY_FILE} must emit "
+                        "runtime hypothesis-test gates versus benchmark-calibrated cascade scope"
+                    ),
+                    "cascade_hypothesis_test",
+                )
+            ]
+    report = validate_cascade_hypothesis_test_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"cascade_hypothesis_test_boundary_{issue.code}",
+            issue.message,
+            "cascade_hypothesis_test",
         )
         for issue in report.issues
     ]

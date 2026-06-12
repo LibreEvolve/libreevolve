@@ -37,6 +37,10 @@ Important limits:
   scope; robust evaluator-environment fixtures, manual-to-code transition
   policies, and LLM-only idea-stage contracts are tracked by
   `papers/automated_evaluator_scope_boundary.json`.
+- Cascade hypothesis-test gates are runtime policy evidence, not
+  benchmark-calibrated AlphaEvolve Section 2.4 cascade proof with repeated-seed
+  fixtures and empirical false-promotion/false-rejection validation; that
+  boundary is tracked by `papers/cascade_hypothesis_test_boundary.json`.
 - Natural-language proposal metadata is context around executable code
   candidates, not AI-Co-Scientist-style hypothesis representation or
   hallucination-resistance evidence; that boundary is tracked by

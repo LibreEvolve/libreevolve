@@ -1822,6 +1822,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     repeated-seed evidence and exact binomial diagnostics.
   - Current gap: paper-facing evidence still lacks benchmark-calibrated
     thresholds and repeated-seed benchmark fixtures.
+    `papers/cascade_hypothesis_test_boundary.json` now validates the current
+    runtime policy-gate scope without claiming benchmark-calibrated cascade
+    readiness.
   - Required result: add paper-facing benchmark promotion/rejection linkage
     from small-scale filters to main test cases.
 

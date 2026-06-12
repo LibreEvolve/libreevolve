@@ -107,7 +107,8 @@ LibreEvolve has:
   gates with confidence-bound, p-value, sequential early-stop, and
   configured false-promotion/false-rejection budget evidence, plus
   `binomial_success_rate` repeated-seed success-rate gates with Wilson
-  lower-bound evidence
+  lower-bound evidence, with `papers/cascade_hypothesis_test_boundary.json`
+  preserving the runtime-policy-only boundary
 - evaluator-workload declarations for configured stages, including
   `simple_check`, `inner_search`, `ml_training`, and `custom` classifications,
   validated dataset/budget/checkpoint/score-field metadata, validator-visible
@@ -544,7 +545,8 @@ is not yet an AlphaEvolve reproduction.
   extending the current `one_sided_lower_confidence_bound` plus
   normal-approximation error-budget support and `binomial_success_rate`
   Wilson-bound gates into benchmark-calibrated thresholds and repeated-seed
-  matrix/tensor fixtures.
+  matrix/tensor fixtures. The current boundary is tracked by
+  `papers/cascade_hypothesis_test_boundary.json`.
 - Extend the evaluator/oracle registry beyond the current arbitration-policy
   matrix and local post-evaluator disagreement outcomes into independent
   reference/statistical oracles, benchmark sufficiency evidence, and

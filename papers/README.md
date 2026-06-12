@@ -759,7 +759,11 @@ confidence-bound, p-value, optional sequential-stop evidence, and configured
 normal-approximation false-promotion/false-rejection budget evidence. The
 `binomial_success_rate` gate adds Wilson lower-bound repeated-seed success-rate
 evidence and exact binomial tail diagnostics. Benchmark-calibrated thresholds
-and full AlphaEvolve Section 2.4 hypothesis-testing parity remain open.
+and full AlphaEvolve Section 2.4 hypothesis-testing parity remain open. The
+committed `papers/cascade_hypothesis_test_boundary.json` sidecar keeps this
+runtime policy-gate scope machine-validated apart from benchmark-calibrated
+thresholds, repeated-seed fixtures, and empirical false-promotion/false-
+rejection validation.
 
 AlphaEvolve embedded-evaluator note: configured stages can now opt into
 `mode: embedded_evaluate`, which imports the materialized candidate primary

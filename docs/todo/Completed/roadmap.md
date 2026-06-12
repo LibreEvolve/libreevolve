@@ -10678,3 +10678,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     to land before claiming AlphaEvolve-style mutation-output mode selection.
   - Verification: focused boundary and paper-manifest tests cover overclaim
     rejection and repo-root sidecar presence.
+- [x] Scope ROADMAP mutation-operator wording with a paper sidecar.
+  - Spec evidence: AlphaEvolve Section 2.3 and Related Work distinguish
+    LLM-guided program mutations from fixed handwritten mutation/crossover
+    operator sets.
+  - Status: ROADMAP now cites `papers/mutation_operator_boundary.json`, which
+    keeps the current fixed edit payload grammar, configured mutation mode,
+    payload-surface count, proposal metadata, and sample generated-candidate
+    evidence separate from operator-family evidence.
+  - Remaining roadmap gap: proposal-level operator-family provenance,
+    task/failure-aware construction, adaptive selection, scoring, and
+    benchmark telemetry remain open.
+  - Verification: focused boundary and paper-manifest tests cover overclaim
+    rejection and repo-root sidecar presence.

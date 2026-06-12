@@ -2438,7 +2438,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `runtime.history.mutation_operator_boundary_report`, which records fixed
     local parser/edit surfaces, configured run-wide mutation mode, observed
     payload surfaces, and the current `claim_ready: false` boundary for
-    LLM-constructed operator families and adaptive strategy selection.
+    LLM-constructed operator families and adaptive strategy selection. README
+    now also points to `papers/mutation_operator_boundary.json` as the
+    manifest-checked sidecar for that fixed-edit-payload boundary.
   - Required result: when mutation-operator construction policy lands, update
     README, ROADMAP, papers index, and code/paper TODOs with proposal-level
     operator-family provenance, adaptive selection/construction evidence,

@@ -18830,3 +18830,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     unimplemented.
   - Verification: focused boundary and paper-manifest tests cover valid,
     overclaim, and missing-root-sidecar cases.
+- [x] Add paper-facing mutation-operator boundary sidecar.
+  - Spec evidence: AlphaEvolve Section 2.3 and Related Work contrast
+    LLM-guided program mutation with systems that depend on fixed handwritten
+    mutation/crossover operator sets.
+  - Status: `libreevolve.alphaevolve_mutation_operator_boundary.v1` now
+    records the fixed edit payload grammar boundary for the runtime
+    `libreevolve.mutation_operator_boundary_report.v1` surface. The paper
+    manifest now requires `papers/mutation_operator_boundary.json` at the repo
+    root and rejects premature operator-family readiness claims.
+  - Remaining gap: proposal-level operator-family provenance,
+    LLM-constructed operator families, task/failure-aware construction,
+    adaptive operator-family selection, operator scoring, and benchmark
+    telemetry remain open.
+  - Verification: focused boundary and paper-manifest tests cover valid,
+    overclaim, and missing-root-sidecar cases.

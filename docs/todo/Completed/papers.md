@@ -13921,3 +13921,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     telemetry, and benchmark examples remain open.
   - Verification: focused adaptive mutation-mode boundary and paper-manifest
     tests cover valid, overclaim, and missing-root-sidecar cases.
+- [x] Add paper-facing mutation-operator sidecar.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.3 and Related
+    Work frame LLM-guided program mutation as distinct from fixed handwritten
+    mutation/crossover operator sets.
+  - Status: `papers/mutation_operator_boundary.json` now records the boundary
+    between fixed local edit grammar/runtime report evidence and missing
+    operator-family provenance.
+  - Remaining paper gap: operator-family declaration schema, proposal-level
+    provenance, task/failure-aware construction, adaptive selection, scoring,
+    and benchmark telemetry remain open.
+  - Verification: focused mutation-operator boundary and paper-manifest tests
+    cover valid, overclaim, and missing-root-sidecar cases.

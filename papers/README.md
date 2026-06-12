@@ -532,7 +532,10 @@ for LLM-constructed operator families or adaptive operator selection. The
 AlphaEvolve Related Work distinction from handwritten mutation/crossover
 operator sets remains open until LibreEvolve records proposal-level
 operator-family provenance, construction or selection evidence, and benchmark
-telemetry beyond those fixed local parser surfaces.
+telemetry beyond those fixed local parser surfaces. The committed
+`papers/mutation_operator_boundary.json` sidecar preserves this fixed edit
+payload grammar versus operator-family evidence boundary for paper-manifest
+validation.
 Completed manifests now also include
 `runtime.history.prompt_example_copy_report`, which inventories the built-in
 mutation-format example sentinels and records exact, normalized
@@ -2265,6 +2268,14 @@ Implemented:
   metadata. It is not evidence of per-candidate diff-versus-full selection,
   candidate-size or task-shape thresholds, failure-aware fallback policy,
   mixed-mode run telemetry, or AlphaEvolve-style selection tests.
+- `papers/mutation_operator_boundary.json`: mutation-operator sidecar for
+  AlphaEvolve Section 2.3 and Related Work. It records the mutation-operator
+  runtime report schema, fixed local parser surfaces, configured mutation
+  mode, payload-surface counts, sample generated-candidate records, proposal
+  metadata fields, and fixed edit grammar policy. It is not evidence of
+  proposal-level operator-family provenance, LLM-constructed operator
+  families, task/failure-aware operator construction, adaptive operator-family
+  selection, operator-family scoring, or benchmark operator telemetry.
 - `libreevolve/llm/cancellation_policy.py`: provider timeout/cancellation
   policy contract. It validates timeout/cancellation rules, role-scoped budget
   actions, artifact requirements, hard-cancel readiness gated on

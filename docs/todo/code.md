@@ -2351,6 +2351,8 @@ Primary evidence:
     generated-candidate mutation records, and `claim_ready: false` for
     LLM-constructed operator families, adaptive selection, operator-family
     scoring, and benchmark telemetry.
+    `libreevolve.alphaevolve_mutation_operator_boundary.v1` now preserves that
+    fixed-edit-payload grammar boundary as a paper-manifest-required sidecar.
   - Required result: add proposal-level operator-family provenance, task/
     candidate/failure-aware operator construction or adaptive strategy
     selection, operator-family scoring, and tests plus benchmark telemetry

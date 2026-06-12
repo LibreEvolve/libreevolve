@@ -1308,6 +1308,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     generated-candidate mutation records, and `claim_ready: false` for
     LLM-constructed mutation-operator families, adaptive selection,
     operator-family scoring, and benchmark telemetry.
+    `papers/mutation_operator_boundary.json` now preserves the same scope as a
+    manifest-checked fixed-edit-payload boundary.
   - Required result: when mutation-operator construction or adaptive
     operator-family selection lands, update ROADMAP, README, papers index, and
     code/paper TODOs together so roadmap wording separates implemented

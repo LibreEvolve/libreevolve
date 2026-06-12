@@ -331,6 +331,10 @@ from libreevolve.problems.benchmarks.mutation_consistency_boundary import (
     mutation_consistency_boundary_record,
     validate_mutation_consistency_boundary,
 )
+from libreevolve.problems.benchmarks.mutation_operator_boundary import (
+    mutation_operator_boundary_record,
+    validate_mutation_operator_boundary,
+)
 from libreevolve.problems.benchmarks.adaptive_mutation_mode_boundary import (
     adaptive_mutation_mode_boundary_record,
     validate_adaptive_mutation_mode_boundary,
@@ -527,6 +531,7 @@ TASK_SPECIFICATION_BOUNDARY_FILE = "papers/task_specification_boundary.json"
 NATURAL_LANGUAGE_PREAMBLE_BOUNDARY_FILE = "papers/natural_language_preamble_boundary.json"
 PROMPT_EXAMPLE_COPY_BOUNDARY_FILE = "papers/prompt_example_copy_boundary.json"
 MUTATION_CONSISTENCY_BOUNDARY_FILE = "papers/mutation_consistency_boundary.json"
+MUTATION_OPERATOR_BOUNDARY_FILE = "papers/mutation_operator_boundary.json"
 ADAPTIVE_MUTATION_MODE_BOUNDARY_FILE = "papers/adaptive_mutation_mode_boundary.json"
 INITIAL_POOL_DIVERGENCE_BOUNDARY_FILE = "papers/initial_pool_divergence_boundary.json"
 DUPLICATE_WORK_POLICY_BOUNDARY_FILE = "papers/duplicate_work_policy_boundary.json"
@@ -1037,6 +1042,7 @@ def validate_paper_manifest(
     issues.extend(_validate_natural_language_preamble_boundary(root_path))
     issues.extend(_validate_prompt_example_copy_boundary(root_path))
     issues.extend(_validate_mutation_consistency_boundary(root_path))
+    issues.extend(_validate_mutation_operator_boundary(root_path))
     issues.extend(_validate_adaptive_mutation_mode_boundary(root_path))
     issues.extend(_validate_initial_pool_divergence_boundary(root_path))
     issues.extend(_validate_duplicate_work_policy_boundary(root_path))
@@ -1964,6 +1970,38 @@ def _validate_mutation_consistency_boundary(root_path: Path) -> list[PaperManife
             f"mutation_consistency_boundary_{issue.code}",
             issue.message,
             "mutation_consistency",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_mutation_operator_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / MUTATION_OPERATOR_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = mutation_operator_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "mutation_operator_boundary_manifest_missing",
+                    (
+                        f"{MUTATION_OPERATOR_BOUNDARY_FILE} must emit "
+                        "fixed edit payload grammar versus operator-family evidence"
+                    ),
+                    "mutation_operator",
+                )
+            ]
+    report = validate_mutation_operator_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"mutation_operator_boundary_{issue.code}",
+            issue.message,
+            "mutation_operator",
         )
         for issue in report.issues
     ]

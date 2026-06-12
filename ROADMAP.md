@@ -429,7 +429,9 @@ is not yet an AlphaEvolve reproduction.
   proposal-level operator-family provenance, task/failure-aware operator
   construction, adaptive operator-family selection, scoring, and benchmark
   telemetry before claiming AlphaEvolve's Related Work distinction from
-  systems with fixed handwritten mutation or crossover operator sets.
+  systems with fixed handwritten mutation or crossover operator sets. The
+  committed `papers/mutation_operator_boundary.json` sidecar keeps the current
+  fixed-edit-payload boundary machine-validated.
 - Extend `runtime.history.prompt_example_copy_report` beyond current built-in
   exact, normalized-region, and example-format skeleton diagnostics into hard
   or configurable acceptance policy, broader semantic/renamed example-copy

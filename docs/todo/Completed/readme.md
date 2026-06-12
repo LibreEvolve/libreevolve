@@ -12904,3 +12904,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     until the policy, telemetry, and examples exist.
   - Verification: focused boundary and paper-manifest tests cover the sidecar
     and its overclaim rejection.
+- [x] Add README boundary for mutation-operator evidence.
+  - Spec evidence: AlphaEvolve's Related Work contrasts LLM-guided mutation
+    with fixed handwritten mutation/crossover operators.
+  - Status: README now states that mutation-operator evidence is fixed edit
+    payload grammar and proposal metadata, not proposal-level operator-family
+    provenance, adaptive operator-family selection, operator scoring, or
+    benchmark telemetry. It points to `papers/mutation_operator_boundary.json`.
+  - Remaining README gap: docs cannot imply AlphaEvolve-style replacement of
+    handwritten mutation operators until operator-family evidence exists.
+  - Verification: focused boundary and paper-manifest tests cover the sidecar
+    and its overclaim rejection.

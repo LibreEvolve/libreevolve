@@ -425,6 +425,12 @@ from libreevolve.problems.benchmarks.mutation_consistency_boundary import (
     render_mutation_consistency_boundary_summary,
     validate_mutation_consistency_boundary,
 )
+from libreevolve.problems.benchmarks.mutation_operator_boundary import (
+    MUTATION_OPERATOR_BOUNDARY_SCHEMA,
+    mutation_operator_boundary_record,
+    render_mutation_operator_boundary_summary,
+    validate_mutation_operator_boundary,
+)
 from libreevolve.problems.benchmarks.initial_pool_divergence_boundary import (
     INITIAL_POOL_DIVERGENCE_BOUNDARY_SCHEMA,
     initial_pool_divergence_boundary_record,
@@ -850,6 +856,7 @@ __all__ = [
     "METRIC_DIVERSE_PROMPT_BOUNDARY_SCHEMA",
     "MULTIAGENT_LEARNING_BOUNDARY_SCHEMA",
     "MUTATION_CONSISTENCY_BOUNDARY_SCHEMA",
+    "MUTATION_OPERATOR_BOUNDARY_SCHEMA",
     "NATURAL_LANGUAGE_PREAMBLE_BOUNDARY_SCHEMA",
     "OBJECTIVE_ARCHIVE_BOUNDARY_SCHEMA",
     "PROMPT_EXAMPLE_COPY_BOUNDARY_SCHEMA",
@@ -990,6 +997,7 @@ __all__ = [
     "metric_diverse_prompt_boundary_record",
     "multiagent_learning_boundary_record",
     "mutation_consistency_boundary_record",
+    "mutation_operator_boundary_record",
     "natural_language_preamble_boundary_record",
     "objective_archive_boundary_record",
     "prompt_example_copy_boundary_record",
@@ -1121,6 +1129,7 @@ __all__ = [
     "render_metric_diverse_prompt_boundary_summary",
     "render_multiagent_learning_boundary_summary",
     "render_mutation_consistency_boundary_summary",
+    "render_mutation_operator_boundary_summary",
     "render_natural_language_preamble_boundary_summary",
     "render_objective_archive_boundary_summary",
     "render_prompt_example_copy_boundary_summary",
@@ -1260,6 +1269,7 @@ __all__ = [
     "validate_metric_diverse_prompt_boundary",
     "validate_multiagent_learning_boundary",
     "validate_mutation_consistency_boundary",
+    "validate_mutation_operator_boundary",
     "validate_natural_language_preamble_boundary",
     "validate_objective_archive_boundary",
     "validate_prompt_example_copy_boundary",

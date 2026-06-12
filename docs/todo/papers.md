@@ -2034,6 +2034,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     configured run-wide mutation mode, observed fixed parser payload surfaces,
     sample generated-candidate mutation records, and `claim_ready: false` for
     LLM-constructed operator families and adaptive selection.
+    `papers/mutation_operator_boundary.json` now records this as a
+    manifest-checked paper-facing boundary.
   - Current gap: the report still shows those are fixed local edit surfaces
     selected by configuration and parser grammar. The paper index has no
     evidence that LibreEvolve declares, generates, selects, scores, or reports

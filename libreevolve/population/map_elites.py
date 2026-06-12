@@ -15,6 +15,9 @@ from libreevolve.population.sampling import validate_exclude_ids, validate_sampl
 MAP_ELITES_OBJECTIVE_ARCHIVE_POLICY_SCHEMA = (
     "libreevolve.map_elites_objective_archive_policy.v1"
 )
+MAP_ELITES_OBJECTIVE_ARCHIVE_READINESS_SCHEMA = (
+    "libreevolve.map_elites_objective_archive_readiness.v1"
+)
 MAP_ELITES_DESCRIPTOR_READINESS_SCHEMA = (
     "libreevolve.map_elites_descriptor_readiness.v1"
 )
@@ -29,6 +32,7 @@ _OBJECTIVE_ARCHIVE_POLICY_REQUIRED_FIELDS = {
     "sampling_policy",
     "cell_replacement_policy",
 }
+_OBJECTIVE_ARCHIVE_POLICY_OPTIONAL_FIELDS = {"readiness"}
 _OBJECTIVE_ARCHIVE_SAMPLING_POLICIES = {
     "eligible_for_metric_and_frontier_sampling_via_island_retained_pool",
     "eligible_for_metric_frontier_and_metric_cell_sampling_via_island_retained_pool",
@@ -110,7 +114,11 @@ def validate_map_elites_objective_archive_policy(
                 f"objective archive policy missing fields: {sorted(missing)}",
             )
         )
-    unsupported = set(policy) - _OBJECTIVE_ARCHIVE_POLICY_REQUIRED_FIELDS
+    unsupported = (
+        set(policy)
+        - _OBJECTIVE_ARCHIVE_POLICY_REQUIRED_FIELDS
+        - _OBJECTIVE_ARCHIVE_POLICY_OPTIONAL_FIELDS
+    )
     if unsupported:
         issues.append(
             ObjectiveArchivePolicyIssue(
@@ -216,6 +224,12 @@ def validate_map_elites_objective_archive_policy(
                 "objective archive policy cell_replacement_policy is unsupported",
             )
         )
+    issues.extend(
+        _objective_archive_readiness_issues(
+            policy.get("readiness"),
+            issue_type=ObjectiveArchivePolicyIssue,
+        )
+    )
     return ObjectiveArchivePolicyValidation(
         ok=not issues,
         archive_policy_ready=not issues,
@@ -224,6 +238,96 @@ def validate_map_elites_objective_archive_policy(
         bound=normalized_bound,
         issues=issues,
     )
+
+
+def map_elites_objective_archive_readiness() -> dict:
+    return {
+        "schema": MAP_ELITES_OBJECTIVE_ARCHIVE_READINESS_SCHEMA,
+        "primary_pareto_archive_replacement": False,
+        "frontier_dominance_cell_replacement": False,
+        "durable_cross_run_metric_database": False,
+        "metric_target_persistence_tables": False,
+        "llm_feedback_calibration_runner": False,
+        "remaining_gap": [
+            "primary_pareto_archive_replacement",
+            "frontier_dominance_cell_replacement",
+            "durable_cross_run_metric_database",
+            "metric_target_persistence_tables",
+            "llm_feedback_calibration_runner",
+        ],
+    }
+
+
+def _objective_archive_readiness_issues(
+    value: object,
+    *,
+    issue_type: type[ObjectiveArchivePolicyIssue],
+) -> list[ObjectiveArchivePolicyIssue]:
+    if value is None:
+        return []
+    issues: list[ObjectiveArchivePolicyIssue] = []
+    if not isinstance(value, dict):
+        return [
+            issue_type(
+                "invalid_readiness_shape",
+                "objective archive policy readiness must be an object",
+            )
+        ]
+    expected = map_elites_objective_archive_readiness()
+    required = set(expected)
+    missing = required - set(value)
+    if missing:
+        issues.append(
+            issue_type(
+                "readiness_missing_fields",
+                f"objective archive policy readiness missing fields: {sorted(missing)}",
+            )
+        )
+    unsupported = set(value) - required
+    if unsupported:
+        issues.append(
+            issue_type(
+                "readiness_unsupported_fields",
+                f"objective archive policy readiness has unsupported fields: {sorted(unsupported)}",
+            )
+        )
+    if value.get("schema") != MAP_ELITES_OBJECTIVE_ARCHIVE_READINESS_SCHEMA:
+        issues.append(
+            issue_type(
+                "readiness_invalid_schema",
+                "objective archive policy readiness schema is unsupported",
+            )
+        )
+    for field in (
+        "primary_pareto_archive_replacement",
+        "frontier_dominance_cell_replacement",
+        "durable_cross_run_metric_database",
+        "metric_target_persistence_tables",
+        "llm_feedback_calibration_runner",
+    ):
+        if value.get(field) is not False:
+            issues.append(
+                issue_type(
+                    f"{field}_overclaim",
+                    f"objective archive policy readiness must not claim {field}",
+                )
+            )
+    remaining_gap = value.get("remaining_gap")
+    if not isinstance(remaining_gap, list) or not remaining_gap:
+        issues.append(
+            issue_type(
+                "readiness_invalid_remaining_gap",
+                "objective archive policy readiness remaining_gap must be a non-empty list",
+            )
+        )
+    elif any(not isinstance(gap, str) or not gap.strip() for gap in remaining_gap):
+        issues.append(
+            issue_type(
+                "readiness_invalid_remaining_gap",
+                "objective archive policy readiness remaining_gap entries must be non-empty text",
+            )
+        )
+    return issues
 
 
 class MAPElites:
@@ -609,6 +713,7 @@ class MAPElites:
                 "cell_replacement_policy": (
                     "scalar_primary_cells_plus_metric_specific_cell_overlays"
                 ),
+                "readiness": map_elites_objective_archive_readiness(),
             },
             "descriptor_policy": {
                 "schema": "libreevolve.map_elites_descriptor_policy.v1",
@@ -1256,7 +1361,7 @@ def _validate_objective_archive_policy(
         raise ValueError(
             f"MAP-Elites snapshot objective_archive_policy missing fields: {sorted(missing)}"
         )
-    unsupported = set(value) - required
+    unsupported = set(value) - required - _OBJECTIVE_ARCHIVE_POLICY_OPTIONAL_FIELDS
     if unsupported:
         raise ValueError(
             "MAP-Elites snapshot objective_archive_policy has unsupported fields: "
@@ -1300,6 +1405,15 @@ def _validate_objective_archive_policy(
     if value["cell_replacement_policy"] not in _OBJECTIVE_ARCHIVE_CELL_REPLACEMENT_POLICIES:
         raise ValueError(
             "MAP-Elites snapshot objective_archive_policy.cell_replacement_policy is unsupported"
+        )
+    readiness_issues = _objective_archive_readiness_issues(
+        value.get("readiness"),
+        issue_type=ObjectiveArchivePolicyIssue,
+    )
+    if readiness_issues:
+        raise ValueError(
+            "MAP-Elites snapshot objective_archive_policy.readiness "
+            f"{readiness_issues[0].message}"
         )
 
 

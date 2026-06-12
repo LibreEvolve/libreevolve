@@ -11896,3 +11896,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     revisioning, and full/partial rebin engines false.
   - Verification: MAP-Elites tests validate emitted readiness and forged
     readiness overclaim rejection.
+
+- [x] Document MAP-Elites objective-archive readiness guards.
+  - Spec evidence: README multi-objective wording needed to distinguish
+    bounded Pareto/metric overlays from primary Pareto/frontier archive
+    replacement and durable metric-target databases.
+  - Status: README and TODO wording now state that
+    `libreevolve.map_elites_objective_archive_readiness.v1` keeps those
+    primary replacement and durable database surfaces false.
+  - Verification: MAP-Elites policy/restore tests validate forged readiness
+    overclaim rejection.

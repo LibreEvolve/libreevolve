@@ -424,6 +424,9 @@ is not yet an AlphaEvolve reproduction.
   Pareto/frontier primary archive replacement, durable cross-run
   metric-specific optimization, or another tested policy beyond the current
   scalar primary grid plus bounded Pareto and metric-cell retained overlays.
+  Current `objective_archive_policy` snapshots carry
+  `libreevolve.map_elites_objective_archive_readiness.v1` with those primary
+  replacement and durable metric-database surfaces false.
 - Extend the current configurable parent/inspiration sampling and run-local
   resurfacing queries beyond score, individual metric excellence, novelty,
   recency, lineage, feedback, and random/mixed policies to persisted

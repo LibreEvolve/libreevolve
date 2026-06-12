@@ -4,6 +4,7 @@ import pytest
 from libreevolve.population.map_elites import (
     MAPElites,
     MAP_ELITES_DESCRIPTOR_READINESS_SCHEMA,
+    MAP_ELITES_OBJECTIVE_ARCHIVE_READINESS_SCHEMA,
     MAP_ELITES_OBJECTIVE_ARCHIVE_POLICY_SCHEMA,
     _descriptor_text,
     validate_map_elites_objective_archive_policy,
@@ -370,6 +371,21 @@ def test_state_snapshot_restores_cells_and_elite_archive():
         "cell_replacement_policy": (
             "scalar_primary_cells_plus_metric_specific_cell_overlays"
         ),
+        "readiness": {
+            "schema": MAP_ELITES_OBJECTIVE_ARCHIVE_READINESS_SCHEMA,
+            "primary_pareto_archive_replacement": False,
+            "frontier_dominance_cell_replacement": False,
+            "durable_cross_run_metric_database": False,
+            "metric_target_persistence_tables": False,
+            "llm_feedback_calibration_runner": False,
+            "remaining_gap": [
+                "primary_pareto_archive_replacement",
+                "frontier_dominance_cell_replacement",
+                "durable_cross_run_metric_database",
+                "metric_target_persistence_tables",
+                "llm_feedback_calibration_runner",
+            ],
+        },
     }
     assert snapshot["descriptor_policy"]["rebin_policy"] == (
         "no_rebin_existing_cells_cell_coordinates_are_insertion_time_snapshots"
@@ -466,6 +482,12 @@ def test_objective_archive_policy_validator_accepts_snapshot_policy():
     assert validation.bound == 3
     assert validation.issues == []
     assert policy["schema"] == MAP_ELITES_OBJECTIVE_ARCHIVE_POLICY_SCHEMA
+    assert policy["readiness"]["schema"] == MAP_ELITES_OBJECTIVE_ARCHIVE_READINESS_SCHEMA
+    assert policy["readiness"]["primary_pareto_archive_replacement"] is False
+    assert policy["readiness"]["frontier_dominance_cell_replacement"] is False
+    assert policy["readiness"]["durable_cross_run_metric_database"] is False
+    assert policy["readiness"]["metric_target_persistence_tables"] is False
+    assert policy["readiness"]["llm_feedback_calibration_runner"] is False
 
 
 def test_objective_archive_policy_validator_rejects_primary_pareto_overclaim():
@@ -490,6 +512,55 @@ def test_objective_archive_policy_validator_rejects_primary_pareto_overclaim():
     assert "metric_order_mismatch" in codes
     assert "bound_mismatch" in codes
     assert "primary_pareto_replacement_overclaim" in codes
+
+
+def test_objective_archive_policy_validator_rejects_readiness_overclaim():
+    archive = MAPElites(metric_order=["accuracy", "latency"], elite_archive_size=3)
+    policy = archive.state_snapshot()["objective_archive_policy"]
+    policy["readiness"]["primary_pareto_archive_replacement"] = True
+
+    validation = validate_map_elites_objective_archive_policy(
+        policy,
+        metric_order=["accuracy", "latency"],
+        elite_archive_size=3,
+    )
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.archive_policy_ready is False
+    assert validation.primary_pareto_replacement_ready is False
+    assert "primary_pareto_archive_replacement_overclaim" in codes
+
+
+def test_restore_state_snapshot_accepts_legacy_objective_policy_without_readiness():
+    source = MAPElites(metric_order=["accuracy", "latency"], elite_archive_size=2)
+    program = _po("balanced", 0.7, {"accuracy": 0.7, "latency": 0.7})
+    source.add(program)
+    snapshot = source.state_snapshot()
+    del snapshot["objective_archive_policy"]["readiness"]
+
+    result = MAPElites(
+        metric_order=["accuracy", "latency"],
+        elite_archive_size=2,
+    ).restore_state_snapshot(snapshot, {program.id: program})
+
+    assert result["status"] == "map_elites_state_restored"
+
+
+def test_restore_state_snapshot_rejects_objective_policy_readiness_overclaim():
+    source = MAPElites(metric_order=["accuracy", "latency"], elite_archive_size=2)
+    program = _po("balanced", 0.7, {"accuracy": 0.7, "latency": 0.7})
+    source.add(program)
+    snapshot = source.state_snapshot()
+    snapshot["objective_archive_policy"]["readiness"][
+        "frontier_dominance_cell_replacement"
+    ] = True
+
+    with pytest.raises(ValueError, match="frontier_dominance_cell_replacement"):
+        MAPElites(
+            metric_order=["accuracy", "latency"],
+            elite_archive_size=2,
+        ).restore_state_snapshot(snapshot, {program.id: program})
 
 
 def test_descriptor_model_revision_only_advances_on_search_state_change():

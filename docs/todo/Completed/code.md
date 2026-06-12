@@ -17731,3 +17731,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     archive rebin semantics remain open.
   - Verification: MAP-Elites snapshot/restore tests cover emitted readiness,
     legacy normalization, and forged overclaim rejection.
+
+- [x] Guard MAP-Elites objective-archive readiness overclaims.
+  - Spec evidence: AlphaEvolve-style multi-objective search needs a durable
+    tradeoff-aware optimization policy, not only scalar cells plus diagnostic
+    Pareto and metric overlays.
+  - Status: `objective_archive_policy` snapshots now carry
+    `libreevolve.map_elites_objective_archive_readiness.v1` with false flags
+    for primary Pareto/frontier replacement, durable cross-run metric
+    databases, metric-target persistence tables, and runtime feedback-
+    calibration runners; validation rejects forged true values.
+  - Remaining gap: primary Pareto/frontier archive replacement and durable
+    persisted metric-targeted resurfacing remain open.
+  - Verification: MAP-Elites policy and restore tests cover emitted readiness,
+    legacy normalization, and forged overclaim rejection.

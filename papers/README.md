@@ -1021,6 +1021,11 @@ final objective annotation, and declared non-primary `source: final_fitness`
 metrics can include the plugin-adjusted final score in the objective vector.
 These records are audit evidence for the current scalar policy and
 metric-specific tradeoffs, not frontier-driven archive replacement.
+MAP-Elites `objective_archive_policy` snapshots now also carry
+`libreevolve.map_elites_objective_archive_readiness.v1`, which keeps primary
+Pareto/frontier archive replacement, durable cross-run metric databases,
+metric-target persistence tables, and runtime feedback-calibration runners
+false with validation that rejects overclaims.
 
 AlphaEvolve database-resurfacing note: bounded current-run resurfacing now exists
 through `runtime.history.resurfacing_index`,

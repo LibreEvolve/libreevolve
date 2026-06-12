@@ -1778,9 +1778,13 @@ Primary evidence:
     `libreevolve.map_elites_objective_archive_policy.v1` snapshot records for
     bounded non-dominated retention, complete normalized declared-metric vector
     requirements, dominance/trim/sampling policy, metric order, retention
-    bound, scalar-primary-cell plus metric-cell overlay semantics, and explicit
-    rejection of primary Pareto/frontier cell-replacement overclaims. Backend
-    reward, admission thresholds, and some parent/inspiration paths still use
+    bound, scalar-primary-cell plus metric-cell overlay semantics, and
+    `libreevolve.map_elites_objective_archive_readiness.v1` false readiness
+    for primary Pareto/frontier replacement, durable cross-run metric
+    databases, metric-target persistence tables, and runtime
+    feedback-calibration runners. Validation rejects primary Pareto/frontier
+    cell-replacement and readiness overclaims. Backend reward, admission
+    thresholds, and some parent/inspiration paths still use
     scalar final fitness, and the primary MAP-Elites cell grid still uses
     scalar selection score rather than Pareto/frontier dominance.
     `ProgramDatabase.resurface_candidates(target_metric=...)` now exposes

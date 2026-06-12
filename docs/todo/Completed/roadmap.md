@@ -9426,3 +9426,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     restore-compatible descriptor revisioning, and full/partial rebin engines.
   - Verification: MAP-Elites tests validate emitted readiness and forged
     readiness overclaim rejection.
+
+- [x] Preserve MAP-Elites objective-archive readiness boundaries.
+  - Spec evidence: roadmap multi-objective wording should not imply primary
+    Pareto/frontier archive replacement or durable metric-specific databases
+    from bounded retained overlays.
+  - Status: ROADMAP and TODO wording now recognize
+    `libreevolve.map_elites_objective_archive_readiness.v1` with false
+    readiness for primary Pareto/frontier replacement, durable cross-run
+    metric databases, metric-target persistence tables, and runtime
+    feedback-calibration runners.
+  - Verification: MAP-Elites tests validate emitted readiness and forged
+    readiness overclaim rejection.

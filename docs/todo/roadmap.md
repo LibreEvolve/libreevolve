@@ -698,7 +698,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     bounded `pareto_frontier_archive()` retention, `metric_cell_archive()`
     overlays, persisted/restored `pareto_frontier_program_ids` and
     `metric_cell_archives`, and policy validation that rejects primary Pareto
-    replacement overclaims.
+    replacement overclaims. Objective archive policies now also carry
+    `libreevolve.map_elites_objective_archive_readiness.v1` with false
+    readiness for primary Pareto/frontier replacement, durable cross-run
+    metric databases, metric-target persistence tables, and runtime
+    feedback-calibration runners.
   - Required result: when Pareto/frontier replacement becomes the primary
     archive policy, or durable cross-run metric-specific optimization lands,
     update the roadmap, README, papers index, and code/paper TODO entries

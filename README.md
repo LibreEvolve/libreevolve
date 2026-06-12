@@ -1540,7 +1540,12 @@ for each declared normalized metric. `validate_objective_history_summary()`
 checks those three runtime history records together for schema/policy values,
 shared metric order, normalized metric ranges, retained counts, retention
 limits, non-dominated frontier records, and explicit limitations that the
-records are diagnostic rather than primary archive policy. Final manifests also include
+records are diagnostic rather than primary archive policy. MAP-Elites
+`objective_archive_policy` snapshots also carry readiness schema
+`libreevolve.map_elites_objective_archive_readiness.v1`, keeping primary
+Pareto/frontier archive replacement, durable cross-run metric databases,
+metric-target persistence tables, and runtime feedback-calibration runners
+false. Final manifests also include
 `runtime.history.score_index`, a bounded diagnostic top-valid-programs view by
 archive selection score and final fitness. Final manifests also include
 `runtime.history.lineage_index`, a bounded diagnostic best-valid-programs view

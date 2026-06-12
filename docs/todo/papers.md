@@ -1481,7 +1481,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     `validate_map_elites_objective_archive_policy()` now validates
     `libreevolve.map_elites_objective_archive_policy.v1` snapshot policy
     records and rejects overclaims that bounded Pareto/frontier retention has
-    replaced the primary scalar MAP-Elites cell policy.
+    replaced the primary scalar MAP-Elites cell policy. Objective archive
+    policies now also carry
+    `libreevolve.map_elites_objective_archive_readiness.v1` with false
+    readiness for primary Pareto/frontier replacement, durable cross-run
+    metric databases, metric-target persistence tables, and runtime
+    feedback-calibration runners; validation rejects forged readiness
+    overclaims.
     `runtime.history.failure_index` now groups failure records by fingerprint
     with bounded repetition/latest-record evidence. `runtime.history.hypothesis_index`
     now exposes bounded redacted proposal idea/rationale/hypothesis evidence

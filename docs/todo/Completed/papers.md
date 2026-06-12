@@ -12321,3 +12321,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     and tested archive rebin semantics remain open.
   - Verification: MAP-Elites tests validate emitted readiness and forged
     readiness overclaim rejection.
+
+- [x] Record MAP-Elites objective-archive readiness guards.
+  - Spec evidence: paper-facing multi-objective claims need evidence that
+    bounded Pareto/metric overlays are not primary Pareto/frontier archive
+    replacement or durable metric-targeted databases.
+  - Status: paper-facing TODOs and the papers overview now record
+    `libreevolve.map_elites_objective_archive_readiness.v1` with false
+    readiness for primary Pareto/frontier replacement, durable cross-run
+    metric databases, metric-target persistence tables, and runtime
+    feedback-calibration runners.
+  - Remaining paper gap: primary Pareto/frontier archive replacement and
+    durable persisted metric-targeted resurfacing remain open.
+  - Verification: MAP-Elites tests validate emitted readiness and forged
+    readiness overclaim rejection.

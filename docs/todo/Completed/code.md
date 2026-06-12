@@ -17808,7 +17808,7 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     undeclared local module rejection, metadata policy fields, and existing
     callable/signature diagnostics.
 
-- [x] Add MAP-Elites illumination source-boundary gate.
+- [x] Add MAP-Elites `1504.04909` illumination source-boundary gate.
   - Spec evidence: Mouret and Clune's MAP-Elites paper defines an
     illumination algorithm with explicit `b(x)`/`f(x)`, `P`/`X` maps,
     per-cell replacement, illumination metrics, and paper-domain experiments.
@@ -17884,8 +17884,8 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Status: `libreevolve.problems.benchmarks.thetaevolve_boundary` now emits
     and validates `papers/thetaevolve_boundary.json` with cached PDF digest,
     CC-BY license metadata, linked code URL, component rows, local `ttt_rl`
-    export scope, required future evidence fields, missing-evidence keys, and
-    overclaim rejection.
+    export scope in `libreevolve/plugins/ttt_rl.py`, required future evidence
+    fields, missing-evidence keys, and overclaim rejection.
   - Remaining gap: ThetaEvolve dynamic-environment execution, batch sampling,
     lazy penalties, reward shaping, online GRPO/RL, checkpoint lifecycle,
     trained-checkpoint inference, throughput reports, and benchmark comparison
@@ -17903,8 +17903,9 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Status: `libreevolve.problems.benchmarks.improvevolve_boundary` now emits
     and validates `papers/improvevolve_boundary.json` with cached PDF digest,
     CC-BY/ACM rights metadata, linked-code status, component rows, local
-    `ModularPlugin` static-guidance scope, required future evidence fields,
-    missing-evidence keys, and overclaim rejection.
+    `ModularPlugin` static-guidance scope in `libreevolve/plugins/modular.py`,
+    required future evidence fields, missing-evidence keys, and overclaim
+    rejection.
   - Remaining gap: enforced interface execution, Stage A/B runners,
     basin-hopping telemetry, perturbation schedules, GigaEvo outer-loop
     compatibility, model/provider provenance, human-edit provenance,

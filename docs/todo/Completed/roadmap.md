@@ -9502,7 +9502,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: theoretical-CS and paper-manifest tests validate the
     sidecar boundary.
 
-- [x] Preserve GigaEvo framework-boundary scope in roadmap.
+- [x] Preserve GigaEvo `2511.17592` framework-boundary scope in roadmap.
   - Spec evidence: roadmap GigaEvo claims should not promote local diff/full
     mutation or MAP-Elites support into GigaEvo framework parity.
   - Status: ROADMAP and roadmap TODO wording now identify
@@ -9513,7 +9513,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: GigaEvo boundary tests and paper-manifest tests validate the
     sidecar and repo-root requirement.
 
-- [x] Preserve CodeEvolve boundary scope in roadmap.
+- [x] Preserve CodeEvolve `2510.14150` boundary scope in roadmap.
   - Spec evidence: roadmap CodeEvolve claims should not promote local
     prompt-program mutation or inspiration sampling into CodeEvolve operator,
     benchmark, ablation, or quality-cost parity.
@@ -9526,7 +9526,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: CodeEvolve boundary tests and paper-manifest tests validate
     the sidecar and repo-root requirement.
 
-- [x] Preserve ThetaEvolve boundary scope in roadmap.
+- [x] Preserve ThetaEvolve `2511.23473` boundary scope in roadmap.
   - Spec evidence: roadmap ThetaEvolve claims should not promote
     clipped-reward JSONL export into dynamic-environment, GRPO/RL,
     checkpointing, throughput, or benchmark-comparison parity.
@@ -9539,7 +9539,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: ThetaEvolve boundary tests and paper-manifest tests validate
     the sidecar and repo-root requirement.
 
-- [x] Preserve ImprovEvolve boundary scope in roadmap.
+- [x] Preserve ImprovEvolve `2602.10233` boundary scope in roadmap.
   - Spec evidence: roadmap ImprovEvolve claims should not promote static
     modular prompt guidance into interface execution, basin-hopping,
     GigaEvo-backed evolution, human-edit, benchmark, ablation, or budget
@@ -9553,7 +9553,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: ImprovEvolve boundary tests and paper-manifest tests
     validate the sidecar and repo-root requirement.
 
-- [x] Preserve MadEvolve boundary scope in roadmap.
+- [x] Preserve MadEvolve `2602.15951` boundary scope in roadmap.
   - Spec evidence: roadmap MadEvolve claims should not promote generic
     evolutionary search, MAP-Elites, or heuristic model routing into
     MadEvolve's parameter-optimization and cosmology-application parity.
@@ -9567,7 +9567,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: MadEvolve boundary tests and paper-manifest tests validate
     the sidecar and repo-root requirement.
 
-- [x] Preserve CausalEvolve boundary scope in roadmap.
+- [x] Preserve CausalEvolve `2603.14575` boundary scope in roadmap.
   - Spec evidence: roadmap CausalEvolve claims should not promote fixed
     token-pattern factor guidance into CausalEvolve's causal scratchpad,
     intervention policy, treatment-effect, abduction, or benchmark parity.

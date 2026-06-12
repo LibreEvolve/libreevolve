@@ -11952,7 +11952,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: embedded evaluator tests cover policy metadata, helper
     imports, and undeclared local module rejection.
 
-- [x] Document MAP-Elites illumination boundary.
+- [x] Document MAP-Elites `1504.04909` illumination boundary.
   - Spec evidence: README MAP-Elites wording needs to keep local archive
     support separate from Mouret-Clune illumination-algorithm reproduction.
   - Status: README now names `papers/map_elites_illumination_boundary.json`
@@ -11973,7 +11973,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: theoretical-CS source and paper-manifest tests validate the
     sidecar that README now references.
 
-- [x] Document GigaEvo framework boundary.
+- [x] Document GigaEvo `2511.17592` framework boundary.
   - Spec evidence: README GigaEvo wording needed to keep framework inspiration
     separate from Redis/DAG/concurrency/LangGraph/runtime parity.
   - Status: README now names `papers/gigaevo_framework_boundary.json` in the
@@ -11983,7 +11983,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: GigaEvo boundary and paper-manifest tests validate the
     sidecar that README now references.
 
-- [x] Document CodeEvolve source boundary.
+- [x] Document CodeEvolve `2510.14150` source boundary.
   - Spec evidence: README CodeEvolve wording needed to keep agentic
     code-evolution inspiration separate from semantic crossover, targeted
     refinement, scheduler, sandbox, benchmark, ablation, and cost parity.
@@ -11994,7 +11994,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: CodeEvolve boundary and paper-manifest tests validate the
     sidecar that README now references.
 
-- [x] Document ThetaEvolve source boundary.
+- [x] Document ThetaEvolve `2511.23473` source boundary.
   - Spec evidence: README ThetaEvolve wording needed to keep clipped-reward
     training-data export separate from actual test-time RL/GRPO training,
     checkpoint, throughput, and benchmark-comparison evidence.
@@ -12005,7 +12005,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: ThetaEvolve boundary and paper-manifest tests validate the
     sidecar that README now references.
 
-- [x] Document ImprovEvolve source boundary.
+- [x] Document ImprovEvolve `2602.10233` source boundary.
   - Spec evidence: README ImprovEvolve wording needed to keep static modular
     prompt guidance separate from actual `generate_config`/`improve`/`perturb`
     interface execution and benchmark evidence.
@@ -12016,7 +12016,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: ImprovEvolve boundary and paper-manifest tests validate the
     sidecar that README now references.
 
-- [x] Document MadEvolve source boundary.
+- [x] Document MadEvolve `2602.15951` source boundary.
   - Spec evidence: README MadEvolve wording needed to keep domain-evolution
     inspiration separate from free-parameter tracking, nested optimization,
     cosmology adapters, generated reports, and benchmark-statistics evidence.
@@ -12028,7 +12028,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: MadEvolve boundary and paper-manifest tests validate the
     sidecar that README now references.
 
-- [x] Document CausalEvolve source boundary.
+- [x] Document CausalEvolve `2603.14575` source boundary.
   - Spec evidence: README CausalEvolve wording needed to keep token-pattern
     factor guidance separate from causal scratchpad, intervention, treatment
     effect, abduction, and benchmark-comparison evidence.

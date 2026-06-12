@@ -1617,7 +1617,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `throughput_depth_lane_evidence` now records eligible lanes, normalized
     metadata inputs, recognized fast-breadth/strong-depth labels, and
     `claim_ready: false` limitations as a metadata trace rather than an
-    experiment report.
+    experiment report. The roadmap now points to
+    `papers/fast_strong_model_mix_boundary.json`, which preserves that
+    metadata-trace-only boundary for manifest validation.
   - Required result: when executable scheduler-validation fixtures,
     experiment-level selection trace artifacts, equal-budget scheduler reports,
     dedicated fast/strong lane policies, or calibrated breadth/depth/cost/

@@ -131,6 +131,12 @@ from libreevolve.problems.benchmarks.llm_role_scheduler_boundary import (
     render_llm_role_scheduler_boundary_summary,
     validate_llm_role_scheduler_boundary,
 )
+from libreevolve.problems.benchmarks.fast_strong_model_mix_boundary import (
+    FAST_STRONG_MODEL_MIX_BOUNDARY_SCHEMA,
+    fast_strong_model_mix_boundary_record,
+    render_fast_strong_model_mix_boundary_summary,
+    validate_fast_strong_model_mix_boundary,
+)
 from libreevolve.problems.benchmarks.release_artifact_reproducibility_boundary import (
     RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_SCHEMA,
     release_artifact_reproducibility_boundary_record,
@@ -900,6 +906,7 @@ __all__ = [
     "expensive_evaluation_budget_boundary_record",
     "evaluator_oracle_boundary_record",
     "example_benchmark_scope_records",
+    "fast_strong_model_mix_boundary_record",
     "existing_codebase_integration_boundary_record",
     "failure_memory_boundary_record",
     "gigaevo_framework_boundary_record",
@@ -1015,6 +1022,7 @@ __all__ = [
     "render_expensive_evaluation_budget_boundary_summary",
     "render_evaluator_oracle_boundary_summary",
     "render_example_benchmark_scope_summary",
+    "render_fast_strong_model_mix_boundary_summary",
     "render_existing_codebase_integration_boundary_summary",
     "render_failure_memory_boundary_summary",
     "render_figure8_exhibit_summary",
@@ -1142,6 +1150,7 @@ __all__ = [
     "validate_expensive_evaluation_budget_boundary",
     "validate_evaluator_oracle_boundary",
     "validate_example_benchmark_scope",
+    "validate_fast_strong_model_mix_boundary",
     "validate_existing_codebase_integration_boundary",
     "validate_failure_memory_boundary",
     "validate_figure8_exhibit",

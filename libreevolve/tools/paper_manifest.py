@@ -71,6 +71,10 @@ from libreevolve.problems.benchmarks.llm_role_scheduler_boundary import (
     llm_role_scheduler_boundary_record,
     validate_llm_role_scheduler_boundary,
 )
+from libreevolve.problems.benchmarks.fast_strong_model_mix_boundary import (
+    fast_strong_model_mix_boundary_record,
+    validate_fast_strong_model_mix_boundary,
+)
 from libreevolve.problems.benchmarks.release_artifact_reproducibility_boundary import (
     release_artifact_reproducibility_boundary_record,
     validate_release_artifact_reproducibility_boundary,
@@ -468,6 +472,7 @@ PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_FILE = "papers/problem_formulation_prove
 PROGRAMMATIC_REPRESENTATION_BOUNDARY_FILE = "papers/programmatic_representation_boundary.json"
 QUALITATIVE_FEEDBACK_BOUNDARY_FILE = "papers/qualitative_feedback_boundary.json"
 LLM_ROLE_SCHEDULER_BOUNDARY_FILE = "papers/llm_role_scheduler_boundary.json"
+FAST_STRONG_MODEL_MIX_BOUNDARY_FILE = "papers/fast_strong_model_mix_boundary.json"
 RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_FILE = "papers/release_artifact_reproducibility_boundary.json"
 RELATED_WORK_TAXONOMY_BOUNDARY_FILE = "papers/related_work_taxonomy_boundary.json"
 TASK_SPECIFICATION_BOUNDARY_FILE = "papers/task_specification_boundary.json"
@@ -967,6 +972,7 @@ def validate_paper_manifest(
     issues.extend(_validate_programmatic_representation_boundary(root_path))
     issues.extend(_validate_qualitative_feedback_boundary(root_path))
     issues.extend(_validate_llm_role_scheduler_boundary(root_path))
+    issues.extend(_validate_fast_strong_model_mix_boundary(root_path))
     issues.extend(_validate_release_artifact_reproducibility_boundary(root_path))
     issues.extend(_validate_related_work_taxonomy_boundary(root_path))
     issues.extend(_validate_task_specification_boundary(root_path))
@@ -2026,6 +2032,38 @@ def _validate_llm_role_scheduler_boundary(root_path: Path) -> list[PaperManifest
             f"llm_role_scheduler_boundary_{issue.code}",
             issue.message,
             "llm_role_scheduler",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_fast_strong_model_mix_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / FAST_STRONG_MODEL_MIX_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = fast_strong_model_mix_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "fast_strong_model_mix_boundary_manifest_missing",
+                    (
+                        f"{FAST_STRONG_MODEL_MIX_BOUNDARY_FILE} must emit "
+                        "throughput/depth metadata versus fast/strong experiment scope"
+                    ),
+                    "fast_strong_model_mix",
+                )
+            ]
+    report = validate_fast_strong_model_mix_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"fast_strong_model_mix_boundary_{issue.code}",
+            issue.message,
+            "fast_strong_model_mix",
         )
         for issue in report.issues
     ]

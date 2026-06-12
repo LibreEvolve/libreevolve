@@ -10552,3 +10552,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     and role-specific budget behavior reports open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused LLM role-scheduler tests reject calibrated scheduler overclaims.
+
+- [x] Keep roadmap fast/strong model-mix boundary tied to sidecar.
+  - Status: ROADMAP now links current focused `throughput_depth` metadata
+    traces to `papers/fast_strong_model_mix_boundary.json` while keeping
+    experiment-level selection traces, reserved fast-breadth and strong-depth
+    lane policies, candidate throughput/quality outcomes, and equal-budget
+    scheduler comparisons open.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused fast/strong model-mix tests reject experiment-ready scheduler
+    overclaims.

@@ -18662,3 +18662,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests and paper-manifest tests reject
     calibrated AlphaEvolve role-scheduler overclaims, invalid boundary status,
     missing evidence drift, and incomplete required evidence fields.
+
+- [x] Add fast/strong model-mix sidecar validation.
+  - Status: `libreevolve/problems/benchmarks/fast_strong_model_mix_boundary.py`
+    now emits and validates the `throughput_depth` metadata-only boundary,
+    separating backend cost/latency/depth metadata, min/max normalization,
+    metadata weights, neutral missing-metadata defaults, backend role/model-lane
+    labels, fast-breadth and strong-depth lane detection, eligible-backend
+    lane traces, per-call scheduler policy records, and explicit false
+    claim-readiness lane evidence from experiment-level selection traces,
+    reserved fast-breadth and strong-depth lane policies, candidate
+    throughput/quality outcomes, and equal-budget scheduler comparisons.
+  - Verification: focused boundary tests and paper-manifest tests reject
+    AlphaEvolve fast/strong scheduler overclaims, invalid boundary status,
+    missing evidence drift, and incomplete required evidence fields.

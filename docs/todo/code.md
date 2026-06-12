@@ -4284,6 +4284,8 @@ Primary evidence:
     backend lanes, normalized cost/latency/depth inputs, missing metadata
     defaults, recognized fast-breadth/strong-depth labels from `model_lane` or
     `role` metadata, and `claim_ready: false` limitations.
+    The committed `papers/fast_strong_model_mix_boundary.json` sidecar now
+    validates this metadata-trace-only boundary at the paper-manifest layer.
     This is not yet AlphaEvolve's Flash/Pro-style scheduler evidence: no
     runtime policy reserves a low-latency breadth lane or strong-depth lane
     under an experiment-owned quota, and no report proves the mix improves

@@ -942,7 +942,11 @@ resumed-trace proof are still open.
   quarantine-evidence, and mutation timeout failure-history paths.
 - Extend current focused `throughput_depth` metadata tests into
   AlphaEvolve-style breadth/depth/cost/latency scheduler validation, including
-  experiment-level selection traces and equal-budget report evidence.
+  experiment-level selection traces and equal-budget report evidence. The
+  current `papers/fast_strong_model_mix_boundary.json` sidecar preserves the
+  metadata-trace-only boundary while keeping reserved fast-breadth and
+  strong-depth lane policies, candidate throughput/quality outcomes, and
+  equal-budget scheduler comparisons open.
 - Extend the current single-run sample-efficiency report into benchmark-level
   proposal-count curves, target-hit evidence, repeated-sampling comparisons,
   and model-size/equal-budget analyses before treating it as AlphaEvolve

@@ -2707,7 +2707,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     Flash/Pro-style fast-breadth plus strong-depth scheduling policy. README
     now points to `papers/llm_role_scheduler_boundary.json`, which preserves
     the local role-scoped scheduler boundary without claiming calibrated
-    AlphaEvolve role reward policy.
+    AlphaEvolve role reward policy. README now also points to
+    `papers/fast_strong_model_mix_boundary.json`, which preserves the
+    `throughput_depth` metadata-trace-only boundary without claiming
+    experiment-level fast/strong model-mix validation.
   - Required result: once calibrated reward semantics, quota/budget ownership,
     and experiment-backed fast/
     strong model-mix scheduling land, update the README and matching

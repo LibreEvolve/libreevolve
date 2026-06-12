@@ -1353,6 +1353,16 @@ The committed `papers/sample_efficiency_boundary.json` sidecar preserves that
 benchmark-level absence boundary while recognizing the current single-run
 `runtime.history.sample_efficiency_report`.
 
+AlphaEvolve's fast/strong model-mix claim is also not yet reproduced as an
+experiment. Current `throughput_depth` call telemetry can record backend
+cost/latency/depth metadata, min/max normalization, fast-breadth and
+strong-depth lane labels, eligible lane traces, and explicit
+`claim_ready: false` lane evidence. The committed
+`papers/fast_strong_model_mix_boundary.json` sidecar preserves that
+metadata-trace-only boundary while keeping reserved lane policies,
+experiment-level selection traces, candidate throughput/quality outcomes, and
+equal-budget comparisons open.
+
 Candidate-abstraction evidence is also still missing: the primary row records
 LibreEvolve's code-file-set abstraction as a current divergence, but Section
 2.1 and the Discussion describe choosing between direct solution search,
@@ -2196,6 +2206,16 @@ Implemented:
   of calibrated role reward policy, experiment-owned quota policy,
   fast/strong model-mix reports, resume replay experiment reports, or
   role-specific budget behavior reports.
+- `papers/fast_strong_model_mix_boundary.json`: fast/strong model-mix
+  sidecar for AlphaEvolve Section 2.4. It records the current
+  `throughput_depth` metadata evidence: backend cost/latency/depth metadata,
+  metadata normalization, metadata weights, neutral missing-metadata defaults,
+  backend role/model-lane labels, fast-breadth and strong-depth lane detection,
+  eligible-backend lane traces, per-call scheduler policy records, and
+  explicit false claim-readiness lane evidence. It is not evidence of
+  experiment-level selection traces, reserved fast-breadth or strong-depth
+  lane policies, candidate throughput outcomes, candidate quality/depth
+  outcomes, or equal-budget scheduler comparisons.
 - `libreevolve/llm/cancellation_policy.py`: provider timeout/cancellation
   policy contract. It validates timeout/cancellation rules, role-scoped budget
   actions, artifact requirements, hard-cancel readiness gated on

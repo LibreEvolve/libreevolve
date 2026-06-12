@@ -12783,3 +12783,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     with the boundary tracked by `papers/llm_role_scheduler_boundary.json`.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused LLM role-scheduler tests reject calibrated scheduler overclaims.
+
+- [x] Keep README fast/strong model-mix boundary tied to sidecar.
+  - Status: README now states that `throughput_depth` backend selection records
+    cost/latency/depth metadata and fast-breadth/strong-depth lane labels, not
+    experiment-level fast/strong model-mix validation, reserved lane policy,
+    candidate throughput/quality outcomes, or equal-budget scheduler
+    comparisons, with the boundary tracked by
+    `papers/fast_strong_model_mix_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused fast/strong model-mix tests reject experiment-ready scheduler
+    overclaims.

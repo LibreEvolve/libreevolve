@@ -378,7 +378,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `throughput_depth_lane_evidence`, including eligible backend lanes,
     normalized cost/latency/depth inputs, missing metadata defaults,
     recognized fast-breadth/strong-depth labels from `model_lane` or `role`
-    metadata, and explicit `claim_ready: false` limitations.
+    metadata, and explicit `claim_ready: false` limitations. The committed
+    `papers/fast_strong_model_mix_boundary.json` sidecar now preserves this
+    metadata-trace-only boundary for paper-manifest validation.
   - Current gap: there is no runtime scheduler policy or experiment report
     proving an experiment-owned fast-breadth lane plus occasional strong-depth
     lane, no equal-budget comparison against single-model or generic UCB

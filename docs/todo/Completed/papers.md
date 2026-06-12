@@ -13757,3 +13757,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused LLM role-scheduler tests reject calibrated scheduler
     overclaims.
+
+- [x] Record fast/strong model-mix paper-facing sidecar.
+  - Status: `papers/fast_strong_model_mix_boundary.json` now records the
+    metadata-only boundary for AlphaEvolve Section 2.4 fast/strong model-mix
+    language: runtime evidence can show `throughput_depth` backend
+    cost/latency/depth metadata, min/max normalization, weights, neutral
+    defaults, role/model-lane labels, fast-breadth and strong-depth lane
+    detection, eligible lane traces, per-call scheduler policy records, and
+    explicit false claim-readiness lane evidence, while experiment-level
+    selection traces, reserved lane policies, candidate throughput outcomes,
+    candidate quality/depth outcomes, and equal-budget scheduler comparisons
+    remain absent.
+  - Verification: paper-manifest validation requires the sidecar at the repo
+    root and focused fast/strong model-mix tests reject experiment-ready
+    scheduler overclaims.

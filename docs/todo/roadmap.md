@@ -10,49 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Add AlphaEvolve bilateral-trade mechanism-design gates before roadmap
-      promotion.
-  - Spec evidence: arXiv `2603.08679`, submitted March 9, 2026, introduces
-    `A New Lower Bound for the Random Offerer Mechanism in Bilateral Trade
-    using AI-Guided Evolutionary Search`. The abstract uses AlphaEvolve to
-    search value distributions for a worst-case Random-Offerer instance and
-    reports `GFT_FB / GFT_RO >= 2.0749`, widening the known gap between
-    first-best efficiency and Random-Offerer gains from trade. The body
-    specifies the roadmap target as a discrete bilateral-trade witness:
-    independent seller and buyer distributions, first-best `E[(b-s)+]`, RO as
-    equal randomization between optimal seller-offering and buyer-offering
-    prices, fixed Discrete Equal Revenue buyer, evolved seller CDF over
-    `H=20000`, `1e-15` rounded integer arithmetic, exact GFT computation, and
-    a modulated-power-law seller distribution yielding the reported component
-    values and ratio.
-  - Current evidence: ROADMAP now names `papers/bilateral_trade_boundary.json`
-    as the source-specific absence boundary for Bilateral Trade
-    mechanism-design evidence. It still does not promote `2603.08679` beyond
-    background-only status, define a
-    bilateral-trade distribution benchmark, compute first-best versus
-    Random-Offerer GFT, preserve BIC/BB assumptions, compare prior
-    counterexample baselines, or verify lower-bound witness distributions. It
-    also lacks gates for fixed-buyer/evolved-seller search, equal-revenue buyer
-    survival-function fixtures, CDF/SF/PMF rounding validation, SO/BO
-    optimal-price records, appendix evaluator traceability, and the
-    rounded-versus-unrounded result caveat.
-  - Required result: implement roadmap promotion gates for `2603.08679`:
-    value-distribution candidate schema, buyer/seller support and probability
-    constraints, FB and RO GFT evaluator records, BIC/BB assumption metadata,
-    ratio objective and tolerance policy, witness distribution artifacts,
-    prior lower-bound/counterexample baselines, seed/budget records,
-    independent checker outputs, and a background-only or benchmark-fixture
-    status rule so roadmap claims do not outpace local AlphaEvolve-style
-    bilateral-trade lower-bound support. Roadmap promotion should additionally
-    require the `H=20000` discrete evaluator, Discrete Equal Revenue buyer,
-    evolved seller CDF formula and code artifact, exact FB/SO/BO/RO component
-    rows, reserve-price witness logs, `1e-15` rounding policy, appendix
-    evaluator hash, comparison to the `2` conjecture and Babaioff et al.
-    `~2.02` baseline, source-scoped handling of the not-detailed `2.08`
-    alternating-search result, and documentation that the verified claim is
-    for the rounded distribution while the exact unrounded-mixture ratio is
-    open.
-
 - [ ] Add AlphaEvolve Magellan compiler-optimization gates before roadmap
       promotion.
   - Spec evidence: arXiv `2601.21096`, submitted January 28, 2026 and

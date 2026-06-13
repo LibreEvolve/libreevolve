@@ -323,6 +323,16 @@ Important limits:
   Gemini-summary artifact hash, reported metric row, conjecture/proof-status
   ledger, repository snapshot, or independent verifier output;
   `papers/combinatorics_berczy_boundary.json` records that absence boundary.
+- AlphaEvolve bilateral-trade mechanism-design coverage is background paper
+  context only: LibreEvolve has no bilateral-trade distribution candidate
+  schema, fixed Discrete Equal Revenue buyer fixture, evolved seller CDF
+  generator runtime, PMF/CDF/survival validator, first-best GFT evaluator,
+  seller-offering GFT evaluator, buyer-offering GFT evaluator,
+  Random-Offerer ratio evaluator, `1e-15` integer-rounding precision policy,
+  witness distribution artifact, evolved/evaluation code hash, prior-baseline
+  row, alternate-search attempt row, BIC/BB/IR assumption record,
+  unrounded-mixture caveat handling, or independent checker output;
+  `papers/bilateral_trade_boundary.json` records that absence boundary.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

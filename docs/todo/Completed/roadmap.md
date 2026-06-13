@@ -2,6 +2,35 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive AlphaEvolve bilateral-trade roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/bilateral_trade_boundary.json` now keep arXiv `2603.08679`
+    source-scoped as background AlphaEvolve mechanism-design result context
+    rather than implemented LibreEvolve bilateral-trade distribution search
+    support.
+  - Current evidence: the cached paper and boundary JSON record Random
+    Offerer bilateral-trade framing, first-best GFT, seller-offering and
+    buyer-offering GFT components, fixed Discrete Equal Revenue buyer,
+    evolved seller CDF over `H=20000`, modulated-power-law seller
+    distribution, `1e-15` rounding-to-integer policy, exact integer GFT
+    computation, reported values `1.2322`, `0.3312`, `0.8565`, `0.5939`, and
+    ratio `2.0749`, prior `~2.02` baseline context, the not-detailed `2.08`
+    alternating-search attempt, and the open unrounded-mixture caveat.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: value-distribution candidate schemas, buyer/seller support and
+    probability constraints, FB and RO GFT evaluator records, BIC/BB/IR
+    assumption metadata, ratio objective and tolerance policy, witness
+    distribution artifacts, Discrete Equal Revenue buyer fixtures, evolved
+    seller CDF generator runtime, PMF/CDF/survival validation, SO/BO optimal
+    price records, evolved/evaluation code hashes, prior-baseline rows,
+    alternate-search attempt rows, appendix evaluator traceability,
+    unrounded-mixture caveat handling, and independent checker outputs.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive AlphaEvolve local-correction combinatorics roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

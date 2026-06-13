@@ -4,6 +4,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Appendix B numeric-result README boundary.
+  - Status: README Important limits now states that Appendix B numeric-result
+    provenance remains absent: the registry enumerates B.1-B.13 family/status
+    metadata and the `19` expected future result ids, including the B.4
+    revision row, not normalized per-result metric/value rows, parameter
+    tuples, inequality or optimization direction records, previous-best
+    values/sources, AlphaEvolve reported-value rows, source locations,
+    construction-representation schemas, construction/verifier artifact hashes,
+    result-version status, recomputed values, or recomputation status.
+  - Verification: Appendix B registry tests cover the current
+    `result_row_boundary`, expected result-id inventory, and
+    `not_recorded_locally` missing-evidence state; family-specific payload and
+    verifier evidence remains tracked by active README/code/paper TODOs.
+
 - [x] Document Appendix B Figures 10-14 README boundary.
   - Status: README Important limits now states that Appendix B Figures 10-14
     figure-exhibit provenance remains absent: the registry names Erdos minimum

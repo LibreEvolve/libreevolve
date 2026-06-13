@@ -941,30 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README Appendix B numeric-result wording scoped until per-result
-      metric/value provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B.1-B.13 reports individual
-    mathematical result values with heterogeneous metric definitions,
-    parameter settings, inequality directions, prior bounds, reported values,
-    source citations, section/figure/caption locations, and heterogeneous
-    construction representations such as step functions, coefficients, finite
-    sets, coordinates, kissing configurations, and packing placements.
-  - Current evidence: README now describes the Appendix B registry's validated
-    `result_row_boundary`, which records the missing per-result row layer for
-    every B.1-B.13 text-level numeric claim. The boundary now names `19`
-    expected future result ids, including the B.4 revision row, plus metric
-    definitions, parameter tuples, upper/lower or maximize/minimize semantics,
-    previous-best values/sources, AlphaEvolve reported values,
-    source locations, construction-representation schemas, construction/
-    verifier artifact hashes, result-version status, recomputed values, and
-    recomputation status as required future evidence. The actual rows and
-    artifacts remain `not_recorded_locally`.
-  - Required result: when Appendix B per-result metric/value provenance lands,
-    update README, ROADMAP, papers index, and code/paper TODOs together so
-    README distinguishes family coverage, aggregate outcomes, figure
-    reproduction, revised-result history, construction-payload evidence, and
-    text-level Appendix B numeric claim evidence.
-
 - [ ] Keep README Appendix B.1-B.3 autocorrelation wording scoped until
       step-function provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.1-B.3 reports three

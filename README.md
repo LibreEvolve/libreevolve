@@ -227,6 +227,13 @@ Important limits:
   previous/current metric rows, construction payload artifacts, rendered panel
   artifacts, rendering parameters, source Colab cells/artifacts, or verifier
   links.
+- Appendix B numeric-result provenance remains absent: the registry enumerates
+  B.1-B.13 family/status metadata and the 19 expected future result ids,
+  including the B.4 revision row, not normalized per-result metric/value rows,
+  parameter tuples, inequality or optimization direction records, previous-best
+  values/sources, AlphaEvolve reported-value rows, source locations,
+  construction-representation schemas, construction/verifier artifact hashes,
+  result-version status, recomputed values, or recomputation status.
 - Matrix-publication evidence is one checked `mm_2x2x2` Strassen baseline
   bundle plus Appendix A registry/status metadata, not full-suite local target
   tensors, discovered decompositions, coefficient data, exactness certificates,

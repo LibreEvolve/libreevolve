@@ -10,26 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep constructive-math roadmap wording scoped until simple/random
-      starting-construction provenance exists.
-  - Spec evidence: AlphaEvolve Section 3.2 says the initial starting point in
-    the constructive-math cases was a simple or random construction.
-  - Current evidence: roadmap/README/paper-index wording now cites the Section
-    3.2 starting-construction absence boundary in
-    `libreevolve.problems.benchmarks.math_outcomes`. It validates the
-    simple-or-random source statement and required future fields for starting
-    class, construction artifact, random generator/seed, baseline metric, and
-    prior-best visibility/seeding policy, while the actual rows and artifacts
-    remain absent. The committed `papers/math_starting_construction_boundary.json`
-    sidecar now emits this boundary for paper-manifest validation alongside the
-    related Section 3.2 outcome, heuristic-handoff, and stage-sequence boundary
-    sidecars.
-  - Required result: when constructive-math reports validate simple/random
-    starting-construction provenance, update ROADMAP, README, papers index, and
-    code/paper TODOs so roadmap wording distinguishes aggregate Appendix B
-    outcome coverage from AlphaEvolve's claim that those runs began from
-    simple or random constructions.
-
 - [ ] Keep Figure 5 roadmap wording scoped until construction-exhibit
       provenance exists.
   - Spec evidence: AlphaEvolve Figure 5 shows selected SOTA-breaking

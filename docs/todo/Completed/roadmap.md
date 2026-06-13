@@ -2,6 +2,32 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive constructive-math starting-construction roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish aggregate Appendix B/Section 3.2 outcome coverage from
+    AlphaEvolve's simple-or-random starting-point claim.
+  - Current evidence: `libreevolve.alphaevolve_math_starting_construction_boundary.v1`
+    preserves the Section 3.2 source statement that the initial starting point
+    was a simple or random construction, allows only `simple` and `random`
+    classes without an explicit non-paper-style label, and lists unsupported
+    classes such as `human_seeded`, `prior_art_seeded`, and `expert_seeded`.
+  - Boundary artifact: `papers/math_starting_construction_boundary.json`
+    records the current `not_recorded_locally` state and the required future
+    fields for instance id, problem family, starting-construction class,
+    construction artifact hash, generator id, random seed, baseline metric,
+    prior-best visibility policy, and prior-best seeding policy.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: per-instance starting-construction rows, simple/random construction
+    payloads or hashes, generator/random-seed provenance, baseline values,
+    prior-best visibility/seeding policy, and aggregate validation that
+    Section 3.2 breadth claims are backed by simple/random starts unless
+    explicitly labeled otherwise.
+  - Verification: focused math starting-construction boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive constructive-math aggregate-outcome roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

@@ -127,6 +127,11 @@ Important limits:
   verification, not local per-problem rows, branch taxonomy rows, prior-best
   references, construction/verifier artifacts, aggregate counts, or percentage
   recomputation.
+- Constructive-math starting-construction records preserve the Section 3.2
+  source claim that the initial starting point was a simple or random
+  construction, not local per-instance starting construction payloads,
+  generator or random-seed records, baseline metric rows, prior-best visibility
+  policy, or prior-best seeding policy evidence.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

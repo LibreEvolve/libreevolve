@@ -715,6 +715,15 @@ Important limits:
   component-removal intervention harness, constant-retuning baseline,
   deterministic deleted-line reintroduction/cycling detector, held-out
   generalization report, or independent reproduction output.
+- ArXiv `2605.01120` is an unimplemented constructive-math benchmark
+  candidate; the README mentions this cached paper as a curated subset while
+  `papers/README.md` remains the complete implementation-status index.
+  LibreEvolve has no Zarankiewicz parameter manifest, bipartite graph
+  construction schema, `K_{s,t}`-free verifier, exact-value/lower-bound table,
+  generated-algorithm artifact hashes, OpenEvolve setup provenance,
+  reward-function specification, upper-bound comparison ledger, per-parameter
+  cost accounting, or independent reproduction output for the three exact
+  values, 41 lower bounds, four matched closed cases, or sub-$30 cost claim.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

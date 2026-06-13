@@ -14741,3 +14741,26 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     interventions, counterfactual outcomes, baseline-agent identities, task
     reports, and EvoTrace/EvoReplay-style diagnostic evidence remain active in
     code and paper TODOs.
+
+- [x] Keep README Zarankiewicz discovery claims source-scoped until benchmark
+      evidence exists.
+  - Spec evidence: arXiv `2605.01120`, `New Bounds for Zarankiewicz Numbers
+    via Reinforced LLM Evolutionary Search`, reports exact values for three
+    Zarankiewicz numbers, lower bounds for 41 more, four matched closed cases,
+    generated construction algorithms, and computational costs under `$30` per
+    parameter combination using OpenEvolve.
+  - Status: README now lists arXiv `2605.01120` as an unimplemented
+    constructive-math benchmark candidate and marks the mention as a curated
+    cached-paper subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no
+    Zarankiewicz parameter manifest, bipartite graph construction schema,
+    `K_{s,t}`-free verifier, exact-value/lower-bound table,
+    generated-algorithm artifact hashes, OpenEvolve setup provenance,
+    reward-function specification, upper-bound comparison ledger,
+    per-parameter cost accounting, or independent reproduction output for the
+    three exact values, 41 lower bounds, four matched closed cases, or sub-$30
+    cost claim.
+  - Remaining README gap: graph fixtures, verifier outputs, construction
+    algorithms, exact/lower-bound records, proof/check status, cost accounting,
+    baseline references, reproducibility reports, and Zarankiewicz benchmark
+    support remain active in code and paper TODOs.

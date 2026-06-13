@@ -2,6 +2,27 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Appendix B revised-result roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish first-version and revised Appendix B.4 uncertainty-inequality
+    claims without treating the family/status registry as reproduced current
+    AlphaEvolve result evidence.
+  - Current evidence: `revision_result_boundary` records the first-version
+    `C4 <= 0.3521` result, Henry Cohn's pointer to `[18]`, the external
+    `0.3284` constant, AlphaEvolve's revised `0.3216` note, required future
+    revision fields, and `not_recorded_locally` revision-artifact,
+    Colab/verifier, comparison-certificate, and recomputation statuses.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: manuscript/source version, superseded/current status, verifier/Colab
+    linkage, comparison-to-`0.3284` certificate, recomputed revised constants,
+    artifact hashes, and validation against mixing stale and current Appendix B
+    result claims.
+  - Verification: Appendix B registry B.4 uncertainty-boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive Appendix B.12-B.13 sum-of-radii roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

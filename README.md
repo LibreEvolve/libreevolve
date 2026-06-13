@@ -229,6 +229,13 @@ Important limits:
   certificates, containment or pairwise non-overlap certificates, rectangle
   dimensions, rectangle-perimeter proof, sum-of-radii formula certificates,
   recomputed sums, or Figure 14 panel artifacts.
+- Appendix B.4 revised-result provenance remains absent: the registry
+  preserves the first-version `C4 <= 0.3521` uncertainty-inequality result,
+  Henry Cohn's pointer to the `[18]` refinement, the external `0.3284`
+  constant, and AlphaEvolve's revised `0.3216` note, not local revision
+  artifacts, Colab or verifier linkage, comparison-to-`0.3284` certificates,
+  recomputed revised constants, artifact hashes, or proof that the current
+  Appendix B value has been locally reproduced.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

@@ -10,25 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Appendix B roadmap wording scoped until revised-result provenance
-      exists.
-  - Spec evidence: AlphaEvolve Appendix B includes result-level revision
-    history, most clearly in the uncertainty-inequality note where an initial
-    `C4 <= 0.3521` result is superseded after the first manuscript version by
-    an improved `0.3216` constant linked to a refined approach and the
-    accompanying Google Colab.
-  - Current evidence: `ROADMAP.md`, README, papers index, and the Appendix B
-    registry now cite a validated B.4 `revision_result_boundary` for the
-    first-version `C4 <= 0.3521`, Henry Cohn's pointer to `[18]`, external
-    `0.3284`, and AlphaEvolve's revised `0.3216`. Local revision artifacts,
-    Colab/verifier linkage, comparison-to-`0.3284` certificates, and
-    recomputation remain absent.
-  - Required result: when actual Appendix B result-version artifacts land,
-    update ROADMAP, README, papers index, and code/paper TODO entries together
-    with revision-aware artifacts and validation so roadmap wording cannot
-    treat a family/status registry as current AlphaEvolve Appendix B result
-    evidence.
-
 - [ ] Keep Appendix B.4 roadmap wording scoped until prior-bound rounding
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.4 reports the known uncertainty

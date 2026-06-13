@@ -349,14 +349,18 @@ Primary evidence:
     `runtime.history.initial_program_validity_report`, validates seed
     evaluator-validity and declared-metric presence, and stops strict runs
     before mutation with `runtime.stop_reason=invalid_initial_programs` when
-    any selected seed violates that contract. The paper-facing sidecar
+    any selected seed violates that contract. The `embedded_evaluate_math`
+    example now opts into strict mode, and
+    `tests/test_cli.py::test_run_records_strict_initial_program_report_for_embedded_fixture`
+    proves the loaded embedded-evaluator fixture records a claim-ready strict
+    single-seed report through the CLI startup path. The paper-facing sidecar
     `papers/initial_program_validity_boundary.json` now records this as a
     strict-policy-available boundary rather than default complete
     initial-program parity.
   - Required result: apply strict mode to benchmark fixtures that make
     AlphaEvolve-parity claims, add fixture/report evidence for complete
-    runnable starts across matrix and constructive-math benchmarks, verify
-    strict mode against multi-seed loaded problem fixtures and provider/CLI
+    runnable starts across matrix and constructive-math benchmarks, extend the
+    checked CLI smoke coverage to multi-seed loaded fixtures and provider
     startup paths, and keep permissive optimization-pressure examples clearly
     separated from strict complete initial implementations.
 

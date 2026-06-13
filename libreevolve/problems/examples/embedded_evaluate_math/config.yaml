@@ -1,3 +1,4 @@
+initial_program_validity_policy: alphaevolve_strict
 eval_stages:
   - name: candidate_eval
     mode: embedded_evaluate

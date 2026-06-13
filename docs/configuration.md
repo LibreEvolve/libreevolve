@@ -96,6 +96,17 @@ from `validate.py` unless explicitly allowlisted.
   extension network sandbox. Startup manifests persist the effective setting in
   `config.validator_network_policy` and summarize the boundary under
   `policies.validator_network`.
+- `initial_program_validity_policy` (`permissive_baseline`): seed-validity
+  policy for generation-0 programs. The default evaluates and records seeds
+  even when they are invalid, preserving optimization-pressure diagnostics.
+  `alphaevolve_strict` requires every selected seed to be evaluator-valid and
+  to return declared metrics before mutation; violating runs stop with
+  `runtime.stop_reason: "invalid_initial_programs"`. Completed manifests record
+  `policies.initial_program_validity` and
+  `runtime.history.initial_program_validity_report`. The
+  `embedded_evaluate_math` smoke fixture opts into strict mode, but benchmark
+  suites still need their own strict evidence before claiming AlphaEvolve
+  complete initial-solution parity.
 - `evaluator_artifact_include` (`[]`): glob patterns for validator-created
   files to copy from the temporary candidate workspace into
   `evaluator_artifacts/`. Empty means no artifact copy-out. Artifact patterns

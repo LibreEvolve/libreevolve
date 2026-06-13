@@ -29,7 +29,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 )
 EXPECTED_MISSING_EVIDENCE = {
     "repo_default_strict_policy": "not_default",
-    "benchmark_suite_strict_policy_runs": "not_recorded_locally",
+    "benchmark_suite_strict_policy_runs": "embedded_evaluate_math_smoke_only",
     "paper_facing_certification_rows": "not_recorded_locally",
     "alphaevolve_complete_initial_program_parity_default_run": "not_recorded_locally",
 }
@@ -75,11 +75,13 @@ def initial_program_validity_boundary_record() -> dict[str, Any]:
             "alphaevolve_strict initial-program validity policy and runtime "
             "report for seed evaluator validity, declared metric presence, "
             "archive admission state, strict valid/invalid counts, and strict "
-            "stop evidence. Strict runtime reports can be claim-ready only for "
-            "configured strict runs where every selected seed is "
-            "evaluator-valid and metric-complete. The default permissive "
-            "baseline keeps invalid seeds as diagnostics and does not claim "
-            "AlphaEvolve complete initial-program parity."
+            "stop evidence. The embedded_evaluate_math fixture is a strict "
+            "single-seed smoke fixture, not a benchmark-suite certification "
+            "row. Strict runtime reports can be claim-ready only for configured "
+            "strict runs where every selected seed is evaluator-valid and "
+            "metric-complete. The default permissive baseline keeps invalid "
+            "seeds as diagnostics and does not claim AlphaEvolve complete "
+            "initial-program parity."
         ),
     }
 

@@ -233,9 +233,11 @@ Important limits:
   `papers/initial_program_idea_provenance_boundary.json`.
 - Initial-program validity can be enforced with
   `initial_program_validity_policy: alphaevolve_strict`, but the default
-  permissive baseline still records invalid seeds as diagnostics and does not
-  prove benchmark-suite strict runs, paper certification rows, or AlphaEvolve
-  complete initial-program parity; that boundary is tracked by
+  permissive baseline still records invalid seeds as diagnostics. The
+  `embedded_evaluate_math` smoke fixture now opts into strict mode and has a
+  CLI-path manifest regression for a claim-ready single-seed strict report, but
+  that does not prove benchmark-suite strict runs, paper certification rows, or
+  AlphaEvolve complete initial-program parity; that boundary is tracked by
   `papers/initial_program_validity_boundary.json`.
 - Problem-formulation metadata and benchmark-fixture readiness reports are
   provenance/readiness telemetry, not populated expert-reviewed matrix or

@@ -80,7 +80,9 @@ mutation with `invalid_initial_programs` when any seed lacks evaluator validity
 or declared metrics. The paper-facing sidecar
 `papers/initial_program_validity_boundary.json` records that strict runtime
 reports can be claim-ready only for configured strict runs, while default
-permissive runs do not claim AlphaEvolve complete initial-program parity.
+permissive runs do not claim AlphaEvolve complete initial-program parity. The
+`embedded_evaluate_math` fixture is a checked strict-mode smoke fixture; it is
+not a benchmark-suite certification row.
 Problem fixtures can optionally include `formulation.yaml` or
 `formulation.yml`; direct callers can set `Problem.formulation_metadata`.
 Startup manifest validation normalizes this into

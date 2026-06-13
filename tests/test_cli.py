@@ -1,6 +1,7 @@
 import base64
 import hashlib, json, random, tempfile
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -236,6 +237,58 @@ def test_run_calls_evolve(tmp_path):
     with patch("libreevolve.cli.evolve", return_value=mock_best) as mock:
         r = CliRunner().invoke(cli, ["run", str(tmp_path), "--max-generations", "1"])
     assert r.exit_code == 0 and mock.called
+
+
+def test_run_records_strict_initial_program_report_for_embedded_fixture(tmp_path):
+    source = (
+        Path(__file__).resolve().parents[1]
+        / "libreevolve"
+        / "problems"
+        / "examples"
+        / "embedded_evaluate_math"
+    )
+    problem_dir = tmp_path / "embedded_evaluate_math"
+    shutil.copytree(source, problem_dir)
+    config_path = problem_dir / "config.yaml"
+    config_path.write_text(
+        config_path.read_text(encoding="utf-8")
+        + f"\nlog_dir: {(tmp_path / 'runs').as_posix()}\n",
+        encoding="utf-8",
+    )
+
+    result = CliRunner().invoke(
+        cli,
+        [
+            "run",
+            str(problem_dir),
+            "--max-generations",
+            "0",
+            "--run-name",
+            "strict_embedded",
+        ],
+    )
+
+    assert result.exit_code == 0, result.output
+    manifest_path = tmp_path / "runs" / "strict_embedded" / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    report = manifest["runtime"]["history"]["initial_program_validity_report"]
+    assert manifest["runtime"]["status"] == "completed"
+    assert manifest["config"]["initial_program_validity_policy"] == "alphaevolve_strict"
+    assert (
+        manifest["policies"]["initial_program_validity"]["policy"]
+        == "alphaevolve_strict"
+    )
+    assert report["strict_policy_enabled"] is True
+    assert report["claim_ready"] is True
+    assert report["strict_invalid_seed_count"] == 0
+    assert report["strict_valid_seed_count"] == 1
+    assert report["claim_readiness"]["alphaevolve_complete_initial_program_parity"] is True
+    assert (
+        manifest["runtime"]["history"]["embedded_evaluator_entrypoint_report"][
+            "embedded_entrypoint_count"
+        ]
+        == 1
+    )
 
 
 def test_run_budget_cli_options_override_config(tmp_path):

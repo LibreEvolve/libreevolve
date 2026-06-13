@@ -19,6 +19,8 @@ is not a production optimizer and not a full AlphaEvolve reproduction.
 Implemented today:
 
 - Python-primary seed programs and bounded text workspaces.
+- Opt-in strict initial-program validity reports for runs that require every
+  selected seed to be evaluator-valid before mutation.
 - SEARCH/REPLACE mutation diffs using canonical AlphaEvolve-style fences, plus
   configurable full-code replacement mode.
 - OpenAI, Anthropic, Ollama, and custom import-path backend support.
@@ -41,6 +43,8 @@ Important limits:
   parity is tracked as missing work.
 - The included examples are smoke fixtures unless they explicitly document
   stronger benchmark evidence.
+- The default initial-program policy is permissive; AlphaEvolve-style complete
+  initial-solution parity requires explicit strict-mode evidence.
 - Paper-derived claims are tracked conservatively in `papers/README.md`,
   sidecar JSON records, `ROADMAP.md`, and `docs/todo/`.
 
@@ -104,9 +108,9 @@ See [docs/problem-format.md](docs/problem-format.md) for the full contract.
 
 The bundled examples are intentionally small:
 
-- Optimization-pressure seeds start from a valid program that leaves room for
-  measurable improvement.
-- neutral plateau/diversity fixtures mainly exercise loading, validation,
+- Optimization-pressure seeds may be valid-but-weak or intentionally invalid
+  baselines that leave room for measurable improvement.
+- Neutral plateau/diversity fixtures mainly exercise loading, validation,
   artifact writing, or archive behavior.
 
 Treat an example as benchmark evidence only when its own docs or paper sidecar

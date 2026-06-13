@@ -571,9 +571,11 @@ skeleton/evaluator. LibreEvolve now has
 `initial_program_validity_policy: alphaevolve_strict` and
 `runtime.history.initial_program_validity_report` for runs that require every
 selected seed to be evaluator-valid and to return declared metrics before
-mutation. Benchmark fixtures still need to opt into strict mode and carry
-problem-specific validity evidence before every initial seed baseline can be
-treated as paper-faithful AlphaEvolve initial-solution evidence. The sidecar
+mutation. The `embedded_evaluate_math` smoke fixture now opts into strict mode
+and has CLI-path manifest evidence for a claim-ready single-seed strict report.
+Benchmark suites still need broader strict-mode runs and problem-specific
+validity evidence before every initial seed baseline can be treated as
+paper-faithful AlphaEvolve initial-solution evidence. The sidecar
 `papers/initial_program_validity_boundary.json` preserves that
 strict-policy-available boundary and keeps default permissive runs outside
 complete initial-program parity claims.

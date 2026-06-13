@@ -14058,3 +14058,13 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     boundaries, referenced local paths, and TODO links.
   - Remaining paper gap: a per-paper status-claim inventory and semantic
     verifier remain active in `docs/todo/papers.md`.
+- [x] Scope LLM request parameters away from deterministic replay claims.
+  - Paper evidence: AlphaEvolve ablations and repeated experiments require
+    controlled model calls, seeds, and budgets, but logged request fields alone
+    do not prove proposal-stream reproducibility.
+  - Status: `papers/README.md` now states that normalized request parameters
+    are request telemetry and best-effort sampling controls, not proof of
+    deterministic provider-output replay across backend families, API modes,
+    model revisions, or repeated identical calls.
+  - Remaining paper gap: stochastic-generation reproducibility reports and
+    provider-output replay boundaries remain active in `docs/todo/papers.md`.

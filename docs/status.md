@@ -560,6 +560,11 @@ Important limits:
   telemetry, not raw provider-payload sidecars, provider-output replay,
   complete provider-call replay, or account/model default capture; that
   boundary is tracked by `papers/provider_diagnostics_replay_boundary.json`.
+- Provider request parameters are normalized and logged for supported backends,
+  including temperature, top-p, stop sequences, and supported seed fields, but
+  this is best-effort sampling-control telemetry rather than a cross-provider
+  deterministic generation contract or proof that identical prompts reproduce
+  identical provider outputs.
 - OpenAI API-mode routing is local adapter policy, not live provider
   capability discovery: omitted or `api_mode: auto` without
   `reasoning_effort` uses Chat Completions, `api_mode: responses` forces the

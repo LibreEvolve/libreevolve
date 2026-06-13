@@ -772,6 +772,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     and notification-safe trigger policy before treating the workflow as full
     AlphaEvolve-grade validation coverage.
 
+- [ ] Track stochastic LLM-generation reproducibility separately from request
+      parameter telemetry.
+  - Paper evidence: AlphaEvolve ablations and repeated experiments require
+    controlled model calls, seeds, and budgets to support comparable claims.
+    Reproducibility claims must separate request-parameter logging from proof
+    that provider sampling behavior is replayable.
+  - Current evidence: built-in backend specs validate and forward supported
+    `temperature`, `top_p`, stop-sequence, and request-seed parameters, and
+    `llm_calls.jsonl` records normalized effective request parameters with
+    backend/model/API-mode telemetry. Provider diagnostics sidecars preserve
+    bounded scalar/id telemetry while explicitly keeping raw provider-payload
+    replay and complete provider-call replay absent.
+  - Current gap: paper-facing evidence does not classify seed determinism by
+    backend/API mode, record provider model-revision stability requirements,
+    validate repeated identical prompt/parameter calls, or prove that logged
+    sampling controls reproduce the same proposal stream.
+  - Required result: add stochastic-generation reproducibility reports and
+    paper-facing boundaries that distinguish best-effort provider request
+    controls from deterministic provider-output replay before using logged
+    request parameters as AlphaEvolve-style reproducibility evidence.
+
 - [ ] Stable behavior descriptor models and archive rebin semantics.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.3 and 2.4.
   - Requirement: a quality-diversity archive should use task-meaningful

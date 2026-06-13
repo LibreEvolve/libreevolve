@@ -1421,7 +1421,10 @@ mode, OpenAI `reasoning_effort`, normalized provider-supported request
 parameters, prompt/output hashes, and scheduler telemetry. Built-in backend
 specs validate and forward `temperature`, `top_p`, supported stop sequences,
 and supported request seeds, and call telemetry persists the effective
-normalized values. Call telemetry also persists `backend_defaults` for
+normalized values. Those fields are request telemetry and best-effort sampling
+controls, not proof of deterministic provider-output replay across backend
+families, API modes, model revisions, or repeated identical calls. Call
+telemetry also persists `backend_defaults` for
 LibreEvolve's effective local output-token caps, provider internal retry caps,
 configured request timeouts, API modes, and OpenAI reasoning/API-mode policy;
 provider diagnostics reject remote default/default-rate capture overclaims, but

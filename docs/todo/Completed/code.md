@@ -18990,3 +18990,13 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Remaining code gap: a machine-readable implementation-evidence map,
     source/module/test/runtime-report/sidecar/TODO links, freshness checks,
     and generated code-audit report remain active in `docs/todo/code.md`.
+- [x] Separate request-parameter telemetry from stochastic replay claims.
+  - Spec evidence: AlphaEvolve-style repeated experiments need controlled model
+    call conditions, but provider sampling parameters are not automatically a
+    deterministic replay contract.
+  - Status: code TODOs now call out that validated `temperature`, `top_p`,
+    stop-sequence, and `seed` forwarding plus `llm_calls.jsonl` telemetry are
+    audit evidence, not cross-provider deterministic generation proof.
+  - Remaining code gap: per-backend seed-determinism classification, repeated-
+    call fixtures, provider/model revision requirements, and replay-readiness
+    validation remain active TODOs.

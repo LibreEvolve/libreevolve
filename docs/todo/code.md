@@ -4210,6 +4210,32 @@ sidecars, tests, and active TODOs.
 
 ## LLM Ensemble
 
+- [ ] Add stochastic LLM-generation reproducibility contracts beyond request
+      parameter forwarding.
+  - Spec evidence: AlphaEvolve-style repeated experiments and ablations depend
+    on knowing which model calls generated which proposals under controlled
+    sampling conditions. A provider `seed` field or `temperature: 0` setting is
+    not by itself a cross-provider deterministic replay guarantee.
+  - Current evidence: built-in backend specs validate and forward provider-
+    supported `temperature`, `top_p`, stop sequences, and request seeds.
+    OpenAI Chat Completions accepts `seed`; OpenAI Responses rejects `seed` and
+    stop through the current compatibility policy; Anthropic rejects `seed`;
+    Ollama accepts `seed`. `llm_calls.jsonl` persists normalized effective
+    request parameters, prompt/output hashes, backend ids, API modes, bounded
+    provider diagnostics, and scheduler telemetry. Provider-output replay and
+    raw payload retention remain explicitly out of scope in current provider
+    diagnostics boundaries.
+  - Current gap: LibreEvolve has no provider-family reproducibility contract
+    that classifies seed determinism by backend/API mode, records provider
+    system-fingerprint or model-revision stability as a replay precondition,
+    verifies repeated identical prompt/parameter calls, or distinguishes
+    deterministic local replay from best-effort provider sampling controls.
+  - Required result: add per-backend stochastic-generation reproducibility
+    metadata, repeated-call fixtures or explicit non-determinism evidence,
+    provider/model revision requirements, and report validation that prevents
+    request-parameter telemetry from being described as deterministic
+    provider-output replay.
+
 - [ ] Add live pricing/default-rate capture, raw provider replay, and
       async-aware budget policy beyond current diagnostics.
   - Spec evidence: AlphaEvolve's scheduler and compute-budget framing depend on

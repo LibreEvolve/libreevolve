@@ -10,28 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement AlphaEvolve radar power-allocation gates beyond paper cache
-      coverage.
-  - Spec evidence: arXiv `2605.01794`, submitted May 3, 2026, reports using
-    AlphaEvolve Evolution to discover a closed-form radar power-allocation
-    solution for multi-target tracking, with physically inspired state
-    features, deterministic feasibility transformation, generalization across
-    scenarios and target counts, 1.51% average relative performance loss, and
-    more than three orders of magnitude speedup over iterative solvers.
-  - Current evidence: ROADMAP, `papers/download_manifest.*`,
-    `papers/row_identity.json`, and `papers/README.md` now include
-    `2605.01794` with local cache hash and background-only status. They still
-    do not define a radar fixture gate, simulator, feasibility transform,
-    baseline solver, metric table, or independent reproduction output before
-    promoting radar resource allocation as a supported LibreEvolve workflow.
-  - Required result: add roadmap gates beyond the paper cache: radar
-    task/scenario/target taxonomy, state-feature schema, evolved scoring
-    function, feasibility transform and constraints, iterative-solver baseline,
-    tracking-accuracy and speedup metrics, generalization split evidence,
-    code/artifact availability status, independent checker output, and a
-    benchmark-fixture status rule so roadmap claims do not outpace local radar
-    benchmark support.
-
 - [ ] Implement EvoX adaptive meta-evolution gates beyond paper cache
       coverage.
   - Spec evidence: arXiv `2602.23413`, submitted February 26, 2026 and last

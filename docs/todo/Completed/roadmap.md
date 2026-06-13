@@ -2,6 +2,30 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive radar power-allocation roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2605.01794` source-scoped as background radar/resource-allocation
+    application context rather than implemented LibreEvolve radar benchmark
+    support.
+  - Current evidence: the cached paper and `papers/README.md` record the
+    AlphaEvolve-driven closed-form radar power-allocation claim, physically
+    inspired features, deterministic constraint-satisfying transformation,
+    1.51% average relative performance-loss claim, cross-scenario and
+    target-count generalization claim, and over-three-orders speedup claim,
+    while marking local radar fixtures, simulators, feasibility transforms,
+    baseline solver identities, metric rows, generalization evidence,
+    speedup reproduction, and independent checker output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: radar task/scenario/target taxonomy, target-count ranges, physically
+    inspired feature schema, evolved scoring-function artifacts,
+    deterministic feasibility-transform constraints, iterative-solver
+    baselines, tracking-accuracy metrics, average relative-loss and speedup
+    records, generalization splits, and independent verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive AlphaEvolve HCI/user-study roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

@@ -99,6 +99,13 @@ Important limits:
   artifact inventory, goal-revision or human-intervention records,
   privacy/redaction protocol for study data, coded qualitative-analysis
   evidence, or collaborative scientific-discovery instrument workflow support.
+- Radar/resource-allocation AlphaEvolve application coverage is background
+  paper context only: LibreEvolve has no radar scenario/target-count taxonomy,
+  physically inspired feature schema, deterministic constraint-satisfying
+  power-allocation transform, multi-target tracking simulator, baseline
+  iterative solver identity, average relative performance-loss benchmark rows,
+  cross-scenario generalization evidence, three-orders speedup reproduction,
+  or independent checker output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

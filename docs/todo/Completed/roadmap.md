@@ -2,6 +2,35 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive workspace-resume roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `README.md`, `ROADMAP.md`,
+    `docs/run-artifacts.md`, `docs/status.md`, `papers/README.md`, and runtime
+    manifests already distinguish terminal `best.py` / `best_workspace/`
+    export artifacts from resumable candidate workspace or controller state.
+  - Current evidence: CLI and core best export write `best.py` plus the
+    complete best candidate workspace, stage the artifact pair before
+    replacement, emit static sidecar metadata for binary/static members, refresh
+    `runtime.best_artifact_export` and `runtime.artifacts.best_workspace` with
+    tree-hash records, and reject unsafe linked or Windows-junction
+    best-artifact paths before replacement or cleanup.
+  - Restore evidence: archive restore separately rehydrates cursor/counter
+    state and, when requested, MAP-Elites cell/elite contents from manifest plus
+    accepted `history.jsonl` rows. `--restore-runtime-from-manifest` composes
+    checked RNG, LLM scheduler, archive, budget, controller-budget, and lineage
+    surfaces, while its validation keeps full replay, provider-output replay,
+    pending-work resume, and resumed-trace proof false.
+  - Remaining guard: workspace-candidate resume, build/input restoration,
+    materialization-state replay, evaluator artifact continuation state,
+    ordered migration-event replay, controller queues, pending-work checkpoints,
+    provider/plugin output replay, and continuation from exported
+    `best_workspace/` artifacts remain future work.
+  - Verification: focused CLI/core tests cover complete multi-file
+    `best_workspace/` export, static sidecar export, manifest export
+    success/failure accounting, unsafe linked/junction path rejection, archive
+    cursor restore, full archive restore inputs, terminal drained controller
+    state, and full-runtime bundle validation without full replay or
+    pending-work resume claims.
+
 - [x] Archive controller-state roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `README.md`, `ROADMAP.md`,
     `papers/README.md`, and runtime manifests already scope

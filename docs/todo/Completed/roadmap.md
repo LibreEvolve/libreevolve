@@ -2,6 +2,33 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive GigaEvo framework roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/gigaevo_framework_boundary.json` now keep arXiv `2511.17592`
+    source-scoped as framework inspiration rather than implemented GigaEvo
+    runtime parity.
+  - Current evidence: the cached paper and boundary JSON record the GigaEvo
+    framework identity, Redis-backed program records, lifecycle state,
+    asynchronous DAG-based evaluation pipelines, MAP-Elites backbone,
+    LLM-driven mutation with insight generation, bidirectional lineage,
+    Hydra/declarative configuration, LangGraph mutation, dual GitHub links,
+    Qwen3-235B-A22B-Thinking-2507 single-island experiment context,
+    Heilbronn `0.0364` versus AlphaEvolve `0.0365`, circle-packing,
+    kissing-number, bin-packing `0.55%` Weibull excess usage, and Jigsaw
+    `0.803` test-AUC context.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: Redis lifecycle storage, optimistic concurrency, async DAG
+    execution, DAG dependency/caching telemetry, concurrent units,
+    Hydra/problem-layout mapping, insight artifacts, bidirectional lineage
+    artifacts, LangGraph mutation-operator provenance, MAP-Elites/island
+    compatibility reports, benchmark reproduction rows, dual source-link
+    disambiguation, and independent checker outputs.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive UCB1 finite-time bandit roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

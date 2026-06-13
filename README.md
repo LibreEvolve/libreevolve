@@ -56,6 +56,15 @@ Important limits:
 - MAP-Elites support is a local quality-diversity archive, not a paper-faithful
   illumination study with full map exports, coverage/reliability/precision
   reports, or domain reproductions.
+- GigaEvo framework coverage is inspiration-only: LibreEvolve has no Redis
+  program lifecycle database, optimistic concurrency records, `asyncio` DAG
+  execution engine, DAG stage-output or caching telemetry, concurrent
+  evolutionary-unit runtime, Hydra component mapping, GigaEvo problem-layout
+  adapter, insight-generation artifacts, bidirectional lineage-analysis
+  artifacts, LangGraph mutation-operator provenance, dual GitHub source-link
+  disambiguation, or Heilbronn/circle-packing/kissing/bin-packing/Jigsaw
+  reproduction rows; `papers/gigaevo_framework_boundary.json` records that
+  absence boundary.
 - The examples are smoke fixtures and small demos unless a fixture documents
   stronger benchmark evidence.
 - Benchmark-hardening records and shipped-example scope validate smoke-scope

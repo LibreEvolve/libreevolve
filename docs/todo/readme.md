@@ -9,34 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README provider-token prompt-packing wording scoped to implemented
-  mutation and final-prompt boundaries.
-  - Spec evidence: AlphaEvolve-scale prompt construction needs prompt sections
-    and context surfaces to fit model-specific context windows without
-    silently dropping important evaluator, parent, inspiration, or retrieval
-    evidence.
-  - Current evidence: README now distinguishes implemented backend
-    context-window heuristic capacity, automatic mutation-path local OpenAI
-    tokenizer discovery, and role-scoped final-prompt exact token counting
-    from the still-open provider-token section-priority packing outside
-    mutation prompts and exact counters across non-OpenAI provider families.
-    Code evidence includes `core.loop.discover_prompt_token_counter(...)`
-    before `PromptSampler` construction, `LLMEnsemble._prompt_token_counter_for_role(...)`
-    before final prompt validation, and tests covering mutation diagnostics and
-    critique-role final-prompt counter telemetry. Runtime prompt-section
-    coverage validation now also rejects complete and role-level overclaims
-    that mark critique, feedback, or meta-prompt as section-packed, and keeps
-    non-OpenAI/custom exact counters, registry/custom role section packing, and
-    retrieval/context/plugin/failure-memory section packing readiness false.
-    README now points to `papers/prompt_section_packing_boundary.json`, which
-    preserves this mutation-section-packing boundary for manifest validation.
-  - Required result: when selected-backend provider-token section packing
-    covers critique, feedback, meta-prompt, registry-created, custom, and
-    retrieval/context/plugin/failure-memory sections across provider families,
-    update README, ROADMAP, papers index, and code/paper TODO entries together
-    so README neither underclaims automatic OpenAI counter discovery nor
-    overclaims full AlphaEvolve-grade context-window fitting.
-
 - [ ] Keep README explicit-context wording scoped beyond source-role reports.
   - Spec evidence: AlphaEvolve Section 2.2 says explicit context can include
     fixed human-written instructions, equations, code snippets, and relevant

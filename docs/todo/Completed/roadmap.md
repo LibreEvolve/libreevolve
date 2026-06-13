@@ -2,6 +2,23 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive metric-diverse prompt-context roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README,
+    `papers/README.md`, runtime
+    `metric_diverse_inspiration_report` records, generated-candidate
+    `metadata.inspiration_selection.metric_diversity`, and
+    `papers/metric_diverse_prompt_boundary.json` already describe the current
+    prompt-visible metric-diverse inspiration boundary with false benchmark
+    readiness.
+  - Remaining guard: benchmark-required metric-diverse prompt policy,
+    cross-run metric-diverse prompt fixtures, scalar-only baselines,
+    single-metric target baselines, equal-budget comparison reports, and
+    AlphaEvolve Section 2.4 benchmark readiness remain active in
+    `docs/todo/code.md` and `docs/todo/papers.md`.
+  - Verification: metric-diverse prompt boundary, runtime report, and
+    paper-manifest validation continue to reject current-run prompt-visible
+    telemetry as AlphaEvolve Section 2.4 benchmark-policy evidence.
+
 - [x] Archive multi-objective archive roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README,
     `papers/README.md`, MAP-Elites objective archive policies, and

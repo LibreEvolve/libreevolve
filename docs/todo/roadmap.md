@@ -10,33 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep multi-metric prompt-context roadmap wording scoped until
-      benchmark-required metric-diverse prompt policies exist.
-  - Spec evidence: AlphaEvolve Section 2.4 says multiple scores can improve
-    search because prompts include examples of diverse high-performing
-    programs, each representing a different definition of "good".
-  - Current evidence: roadmap/README wording can cite declared metrics,
-    normalized archive selection, objective-vector diagnostics, metric leaders,
-    metric-cell overlays, metric/frontier retained pools, metric-targeted
-    resurfacing, generated-candidate
-    `metadata.inspiration_selection.metric_diversity`, and
-    `runtime.history.metric_diverse_inspiration_report`, whose
-    `libreevolve.metric_diverse_prompt_benchmark_boundary.v1`
-    `benchmark_policy` keeps AlphaEvolve Section 2.4 readiness false. The
-    report also carries
-    `libreevolve.metric_diverse_benchmark_comparison_readiness.v1`, keeping
-    benchmark prompt-policy enforcement, cross-run fixtures, scalar-only
-    baselines, single-metric baselines, and equal-budget comparison reports
-    false. ROADMAP now ties that boundary to
-    `papers/metric_diverse_prompt_boundary.json`. These current surfaces still
-    do not require benchmark policies or
-    fixtures proving multi-score runs consistently use and compare prompt
-    slates with different metric niches.
-  - Required result: when benchmark-required metric-diverse prompt policies and
-    fixtures land, update ROADMAP, README, papers index, and code/paper TODOs
-    together so roadmap text distinguishes current-run evidence from
-    AlphaEvolve-style benchmark claims.
-
 - [ ] Keep `show`/metric archive roadmap wording scoped to selected-row CLI
       output versus manifest-level summary records.
   - Spec evidence: AlphaEvolve-scale run inspection should support

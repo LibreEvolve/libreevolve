@@ -462,6 +462,11 @@ Important limits:
   telemetry, not raw provider-payload sidecars, provider-output replay,
   complete provider-call replay, or account/model default capture; that
   boundary is tracked by `papers/provider_diagnostics_replay_boundary.json`.
+- OpenAI API-mode routing is local adapter policy, not live provider
+  capability discovery: omitted or `api_mode: auto` without
+  `reasoning_effort` uses Chat Completions, `api_mode: responses` forces the
+  Responses API, and configured `reasoning_effort` routes through Responses
+  while rejecting `api_mode: chat_completions`.
 - Provider cancellation records are policy/audit evidence for request
   timeouts, ensemble wait deadlines, artifact gates, and quarantine
   observations, not live provider SDK hard cancellation, timeout-driven stop

@@ -37,6 +37,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     release-artifact promotion enforcement, and the README keeps that separate
     from stronger OS/container sandboxing and resource-quota enforcement.
 
+- [x] Keep README and agent-facing OpenAI API-mode wording aligned with adapter
+      routing.
+  - Status: README Important limits now states that OpenAI API-mode routing is
+    local adapter policy, not live provider capability discovery: omitted or
+    `api_mode: auto` without `reasoning_effort` uses Chat Completions,
+    `api_mode: responses` forces the Responses API, and configured
+    `reasoning_effort` routes through Responses while rejecting
+    `api_mode: chat_completions`.
+  - Verification: `AGENTS.md` and `docs/backends.md` already document the same
+    route; `OpenAIBackend` resolves explicit `api_mode: responses` without
+    reasoning into Responses mode, while `api_mode: auto` without reasoning
+    preserves Chat Completions.
+
 - [x] Keep README multi-evaluator wording scoped until independent
       evaluator-oracle evidence exists.
   - Status: README Important limits now states that evaluator/oracle reports

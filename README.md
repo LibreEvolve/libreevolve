@@ -109,6 +109,12 @@ Important limits:
   tensor-identity status, target-tensor refs, exactness-certificate refs, and
   matrix-result links, not local matrix runners that emit AlphaEvolve Section
   3.1 target-tensor/certificate artifacts during search.
+- Constructive-math heuristic-handoff records preserve the Section 3.2 claim
+  that search-heuristic programs run under fixed budgets from strong
+  previous-best construction inputs toward improved constructions, not local
+  heuristic-program artifacts, incumbent or produced construction payloads,
+  fixed-budget execution records, before/after metric rows, scores, or
+  verifier evidence.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

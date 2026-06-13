@@ -2,6 +2,31 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive heuristic-search handoff roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish Section 3.2 search-heuristic handoff claims from generic
+    context injection, final-construction validation, or smoke artifact export.
+  - Current evidence: `libreevolve.alphaevolve_math_heuristic_handoff_boundary.v1`
+    preserves the AlphaEvolve claim that constructive-math programs are search
+    heuristics, run under fixed budgets such as `1000` seconds, receive the
+    previous-best construction, and are selected for improving already strong
+    solutions.
+  - Boundary artifact: `papers/math_heuristic_handoff_boundary.json` records
+    the current `not_recorded_locally` state and the required future handoff
+    fields for heuristic program artifacts, fixed time budget, incumbent and
+    produced construction artifacts, previous-best heuristic id, before/after
+    metrics, improvement delta, evaluator score, and verifier artifacts.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: benchmark-grade heuristic-search fixture contracts, per-instance
+    incumbent-construction rows, fixed-budget execution records, produced
+    construction payloads, verifier/certificate artifacts, and improvement
+    status for at least one constructive-math benchmark family.
+  - Verification: focused math heuristic-handoff boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive non-toy benchmark fixture roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README
     matrix-publication boundary was restored. `README.md`, `ROADMAP.md`,

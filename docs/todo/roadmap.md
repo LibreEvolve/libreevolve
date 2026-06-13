@@ -10,26 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep hardware roadmap wording scoped until TPU bit-removal rewrite
-      provenance exists.
-  - Spec evidence: AlphaEvolve Section 3.3.3 says the hardware result was a
-    simple code rewrite in Verilog for a key TPU arithmetic circuit in the
-    matrix multiplication unit, and that it removed unnecessary bits while
-    reducing area and power.
-  - Current evidence: roadmap systems-result wording covers generic hardware
-    readiness, RTL/EDA verification, PPA metrics, designer signoff, downstream
-    synthesis, adoption, deployment impact, and now
-    `hardware_rewrite_provenance`. Ready hardware reports preserve the concrete
-    rewrite artifact metadata: before/after Verilog hashes, rewrite diff hash,
-    changed spans, removed-bit or signal inventory, arithmetic-circuit and
-    matrix-unit identifiers, semantic rewrite category, PPA linkage,
-    verification linkage, and artifact refs.
-  - Required result: when hardware fixtures emit real TPU arithmetic-circuit
-    rewrite artifacts, update ROADMAP, README, papers index, and code/paper
-    TODOs so roadmap text separates a reproduced bit-removal rewrite from
-    generic RTL verification, downstream synthesis, and hardware deployment
-    evidence.
-
 - [ ] Keep hardware roadmap wording scoped until Gemini-to-TPU contribution
       attribution exists.
   - Spec evidence: AlphaEvolve Section 3.3.3 says the hardware improvement was

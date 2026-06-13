@@ -2,6 +2,28 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive TPU bit-removal rewrite roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    separate a reproduced TPU bit-removal rewrite from generic RTL/EDA
+    metadata, downstream synthesis, and hardware deployment evidence.
+  - Current evidence: `libreevolve.systems_result_report.v1` and focused tests
+    require `hardware_rewrite_provenance` for ready hardware reports, including
+    source/modified Verilog hashes, rewrite diff hash, changed spans, removed
+    bit or signal records, arithmetic-circuit component id,
+    matrix-multiplication-unit context, semantic rewrite category, rewrite
+    rationale, PPA linkage, verification linkage, and artifact refs.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    rewrite artifacts: source and modified Verilog files, exact changed-line or
+    AST/diff artifacts, removed-bit/signal inventories, component and
+    matrix-unit records, component review files, and per-bit functional plus
+    PPA evidence for the TPU arithmetic-circuit rewrite.
+  - Verification: paper-manifest validation, checked-in paper-index TODO
+    coverage, and focused systems-result hardware rewrite tests still pass,
+    while searches confirm the hardware rewrite code and paper TODOs remain
+    active.
+
 - [x] Archive hardware RTL/EDA roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

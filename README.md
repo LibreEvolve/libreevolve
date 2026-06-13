@@ -69,6 +69,10 @@ Important limits:
   Verilog/RTL source, synthesis or PPA runs, verification logs, designer
   signoff, downstream-synthesis artifacts, upcoming-chip integration, or
   deployment/time-to-market evidence.
+- Hardware rewrite records are also metadata only: they do not yet provide real
+  before/after Verilog files, exact diff or AST artifacts, removed-bit
+  inventories, component review files, or per-bit functional and PPA evidence
+  for the TPU arithmetic-circuit rewrite.
 - The docs do not yet reproduce AlphaEvolve Figure 6 or Figure 7 exhibits:
   scheduling heuristic source/heatmap provenance and Pallas tiling-problem
   diagram/source-data/render hashes remain active code and paper TODOs.

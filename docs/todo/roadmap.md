@@ -10,28 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep local domain-paper roadmap wording tied to explicit benchmark or
-      background-only status.
-  - Spec evidence: AlphaEvolve-related application-domain papers should not be
-    implied as supported benchmark coverage unless a concrete fixture,
-    evaluator, target baseline, artifact workflow, and report contract connect
-    the paper row to runnable evidence.
-  - Current evidence: `ROADMAP.md` requires each local domain paper to either
-    gain a benchmark, link to an existing benchmark, or remain background-only
-    in `papers/README.md`. The paper index currently marks Magellan,
-    ArchAgent, Multiagent Learning, Hardness of Approximation, Bilateral
-    Trade, and Fault2Flow as background-only application-context rows, and it
-    keeps constructive-math and comparator rows as potential future benchmarks
-    unless validators are added. The systems-result and benchmark-hardening
-    contracts validate reports once concrete fixtures exist, but they do not
-    create compiler, architecture, game-theoretic, graph-certification,
-    mechanism-design, workflow, or constructive-math benchmark implementations.
-  - Required result: when a local domain-paper row changes status, update
-    `papers/README.md`, the roadmap, README, paper TODOs, and code TODOs
-    together so each row remains either linked to runnable benchmark/report
-    evidence or explicitly background-only/candidate-only without overclaiming
-    AlphaEvolve application coverage.
-
 - [ ] Keep ablation roadmap wording scoped to report validation versus executed
   experiment scripts.
   - Spec evidence: AlphaEvolve Figure 8 compares equal-budget ablation curves

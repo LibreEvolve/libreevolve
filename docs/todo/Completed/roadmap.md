@@ -2,6 +2,27 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive local domain-paper benchmark/background roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `papers/README.md`,
+    `ROADMAP.md`, `README.md`, `docs/status.md`, `docs/todo/code.md`, and
+    `docs/todo/papers.md` now keep local application-domain papers either
+    background-only or candidate-only unless a concrete runnable fixture,
+    evaluator, target baseline, artifact workflow, and report contract exists.
+  - Current evidence: Magellan, ArchAgent, Multiagent Learning, Hardness of
+    Approximation, Bilateral Trade, and Fault2Flow are listed as
+    background-only application-context/result-context rows in the paper
+    index; constructive-math and comparator rows remain future benchmark
+    candidates when no validators exist; root README does not promote those
+    domain rows as implemented benchmark coverage.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: compiler-heuristic runners, architecture simulators, CFR/PSRO
+    evaluators, graph/certification benchmarks, bilateral-trade distribution
+    benchmarks, fault-to-workflow/human-in-the-loop workflow benchmarks, and
+    domain-specific report artifacts.
+  - Verification: application-boundary tests, theoretical-CS source tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive benchmark metric-range roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

@@ -69,26 +69,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README multi-edit consistency wording scoped beyond current
-      diagnostic scan.
-  - Spec evidence: AlphaEvolve Figure 3(b) includes a SEARCH/REPLACE prompt
-    rule requiring proposed edits to be consistent with each other, for
-    example adding a config variable when another replacement references it.
-  - Current evidence: README documents
-    `runtime.history.mutation_consistency_report` as a current-run diagnostic
-    for multi-edit payloads, changed edit units, co-change links, best-effort
-    Python symbol/reference scans, unresolved references, evaluator status,
-    and archive admission. It also says the report is not a semantic proof or
-    archive gate. README now also ties that scope to
-    `papers/mutation_consistency_boundary.json`.
-  - Remaining gap: README must stay scoped until language-aware scope/import
-    resolution, config/resource companion-edit models, required-link
-    inference, benchmark-calibrated consistency taxonomy, and optional gating
-    exist.
-  - Required result: when broader consistency analysis lands, update README,
-    ROADMAP, papers index, and code/paper TODOs with the exact analyzer scope
-    and acceptance policy.
-
 - [ ] Keep README Figure 3 supervised-learning example wording scoped until
       exhibit provenance exists.
   - Spec evidence: AlphaEvolve Figure 3 presents a supervised-learning pipeline

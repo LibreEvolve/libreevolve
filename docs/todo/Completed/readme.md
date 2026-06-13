@@ -13761,6 +13761,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused mutation-consistency tests reject semantic-proof overclaims.
 
+- [x] Keep README multi-edit consistency wording scoped beyond current
+      diagnostic scan.
+  - Status: README now scopes multi-edit consistency reports as current-run
+    diagnostics, not language-aware scope/import resolution, config/resource
+    dependency models, required companion-edit inference, cross-file dataflow,
+    benchmark-calibrated consistency failures, hard/configurable acceptance
+    gates, or semantic proof that accepted edits are coherent.
+  - Verification: paper-manifest validation requires
+    `papers/mutation_consistency_boundary.json`, and focused
+    mutation-consistency tests reject semantic-proof overclaims.
+
 - [x] Keep README initial-pool divergence boundary tied to sidecar.
   - Status: README now states that initial-pool divergence reports are
     syntactic and shared-metric telemetry, not task-specific functional-

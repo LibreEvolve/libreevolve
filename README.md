@@ -168,9 +168,11 @@ Important limits:
   cross-run copy-rate tables, copy-signal-to-acceptance policy, or
   prompt-example revision guidance; that boundary is tracked by
   `papers/prompt_example_copy_boundary.json`.
-- Multi-edit consistency reports are current-run diagnostics, not proof that
-  accepted edits are semantically coherent or that required companion edits are
-  inferred; that boundary is tracked by
+- Multi-edit consistency reports are current-run diagnostics, not
+  language-aware scope/import resolution, config/resource dependency models,
+  required companion-edit inference, cross-file dataflow, benchmark-calibrated
+  consistency failures, hard/configurable acceptance gates, or semantic proof
+  that accepted edits are coherent; that boundary is tracked by
   `papers/mutation_consistency_boundary.json`.
 - Mutation-operator evidence is fixed edit payload grammar and proposal
   metadata, not proposal-level operator-family provenance, adaptive

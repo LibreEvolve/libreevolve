@@ -2481,8 +2481,8 @@ sidecars, tests, and active TODOs.
   - Required result: add proposal-level operator-family provenance, task/
     candidate/failure-aware operator construction or adaptive strategy
     selection, operator-family scoring, and tests plus benchmark telemetry
-    before claiming AlphaEvolve's "no fixed handwritten mutation-operator set"
-    related-work contrast.
+    before claiming AlphaEvolve's Section 5 "no fixed handwritten
+    mutation-operator set" related-work contrast.
 
 - [ ] Extend proposal-diversity and idea-novelty evidence beyond exact
       duplicate counts.

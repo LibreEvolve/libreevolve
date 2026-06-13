@@ -11,6 +11,7 @@ MUTATION_OPERATOR_RUNTIME_REPORT_SCHEMA = (
     "libreevolve.mutation_operator_boundary_report.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
+EXPECTED_SOURCE_SECTION_IDS = ("2.3", "5")
 EXPECTED_BOUNDARY_STATUS = "fixed_edit_payload_grammar_without_operator_family_evidence"
 EXPECTED_FIXED_SURFACES = (
     "search_replace_diff",
@@ -66,10 +67,11 @@ def mutation_operator_boundary_record() -> dict[str, Any]:
         "schema": MUTATION_OPERATOR_BOUNDARY_SCHEMA,
         "runtime_report_schema": MUTATION_OPERATOR_RUNTIME_REPORT_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_claim": (
-            "AlphaEvolve uses LLM-guided program mutation and contrasts that "
-            "with systems depending on fixed handwritten mutation or crossover "
-            "operator sets"
+            "AlphaEvolve Section 2.3 describes LLM-guided creative program "
+            "mutation, and Section 5 contrasts that with systems depending on "
+            "fixed handwritten mutation or crossover operator sets"
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "runtime_report_status": "mutation_operator_boundary_report_available",
@@ -105,6 +107,8 @@ def validate_mutation_operator_boundary(
         issues.append(_issue("invalid_runtime_report_schema", "runtime report schema must identify mutation-operator reports"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['2.3', '5']"))
     source_claim = data.get("source_claim")
     if not isinstance(source_claim, str) or "fixed handwritten mutation" not in source_claim:
         issues.append(_issue("invalid_source_claim", "source_claim must identify the handwritten-operator contrast"))

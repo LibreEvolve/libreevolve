@@ -2161,7 +2161,8 @@ directory and using the AlphaEvolve paper as the primary specification.
 
 - [ ] Extend LLM-constructed mutation-operator evidence beyond the current
       fixed-edit boundary report.
-  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3 and Related Work.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3 and Section 5 Related
+    Work.
   - Requirement: AlphaEvolve uses structured edit payloads, but the paper
     contrasts its LLM-guided mutation with evolutionary systems that depend on
     handwritten mutation/crossover operator sets.

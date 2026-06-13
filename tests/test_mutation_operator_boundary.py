@@ -18,6 +18,7 @@ def test_mutation_operator_boundary_accepts_absence_record():
     assert validation.required_evidence_field_count == 12
     assert validation.missing_evidence_count == 6
     assert boundary["schema"] == MUTATION_OPERATOR_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["2.3", "5"]
     assert "search_replace_diff" in boundary["fixed_local_parser_surfaces"]
     assert "does not claim proposal-level operator-family provenance" in (
         boundary["claim_boundary"]
@@ -28,6 +29,7 @@ def test_mutation_operator_boundary_rejects_premature_operator_claim():
     boundary = mutation_operator_boundary_record()
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "operator_family_evidence_ready"
+    boundary["source_section_ids"] = ["2.3"]
     boundary["missing_evidence"]["operator_family_scoring"] = "recorded"
     boundary["required_evidence_fields"] = ["runtime_report_schema"]
 
@@ -37,6 +39,7 @@ def test_mutation_operator_boundary_rejects_premature_operator_claim():
     assert validation.ok is False
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert "invalid_missing_evidence_operator_family_scoring" in codes
     assert "missing_required_evidence_field" in codes
 

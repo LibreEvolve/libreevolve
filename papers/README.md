@@ -537,7 +537,7 @@ now include `runtime.history.mutation_operator_boundary_report`, which records
 the configured run-wide mutation mode, observed payload surfaces, fixed parser
 policy, sample generated-candidate mutation records, and `claim_ready: false`
 for LLM-constructed operator families or adaptive operator selection. The
-AlphaEvolve Related Work distinction from handwritten mutation/crossover
+AlphaEvolve Section 5 Related Work distinction from handwritten mutation/crossover
 operator sets remains open until LibreEvolve records proposal-level
 operator-family provenance, construction or selection evidence, and benchmark
 telemetry beyond those fixed local parser surfaces. The committed
@@ -2367,7 +2367,7 @@ Implemented:
   candidate-size or task-shape thresholds, failure-aware fallback policy,
   mixed-mode run telemetry, or AlphaEvolve-style selection tests.
 - `papers/mutation_operator_boundary.json`: mutation-operator sidecar for
-  AlphaEvolve Section 2.3 and Related Work. It records the mutation-operator
+  AlphaEvolve Section 2.3 and Section 5 Related Work. It records the mutation-operator
   runtime report schema, fixed local parser surfaces, configured mutation
   mode, payload-surface counts, sample generated-candidate records, proposal
   metadata fields, and fixed edit grammar policy. It is not evidence of

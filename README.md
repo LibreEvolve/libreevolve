@@ -192,6 +192,11 @@ Important limits:
   3.1-style repeated-seed cascade traces, pruning decisions, or early-stop
   provenance; that boundary is tracked by
   `papers/matrix_cascade_run_runtime_boundary.json`.
+- Appendix A matrix target-suite curation records the reported 54 sorted
+  targets, rough paper selection wording, symmetry policy, and included-target
+  rationales, not an exhaustive locally justified corpus for every excluded
+  non-equivalent matrix size outside the reported suite; that boundary is
+  tracked by `papers/appendix_a_matrix_excluded_target_curation.json`.
 - Collaborator-feedback provenance is optional metadata and runtime reporting
   for cohorts, events, affected workflow areas, change links, validation
   outcomes, privacy/redaction policy, and review state, not populated

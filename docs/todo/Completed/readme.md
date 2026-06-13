@@ -4,6 +4,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Appendix A target-suite curation README boundary.
+  - Status: README Important limits now states that Appendix A matrix
+    target-suite curation records the reported 54 sorted targets, rough paper
+    selection wording, symmetry policy, and included-target rationales, not an
+    exhaustive locally justified corpus for every excluded non-equivalent
+    matrix size outside the reported suite. It points to
+    `papers/appendix_a_matrix_excluded_target_curation.json`.
+  - Verification: focused Appendix A matrix curation, excluded-target
+    curation boundary, and paper-manifest tests validate the reported-suite
+    records, current excluded-target absence boundary, and overclaim guards.
+
 - [x] Document matrix cascade-run README boundary.
   - Status: README Important limits now states that matrix per-seed reports
     validate declared seed rows, best rank, and hit fraction, and matrix

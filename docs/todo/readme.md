@@ -869,6 +869,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     build a recorded boundary for supplied excluded-target justifications over
     a declared scope. README still does not document emitted justifications for
     every possible excluded non-equivalent target outside the reported suite.
+    README Important limits now also states that Appendix A matrix
+    target-suite curation records the reported 54 sorted targets, rough paper
+    selection wording, symmetry policy, and included-target rationales, not an
+    exhaustive locally justified corpus for every excluded non-equivalent
+    matrix size outside the reported suite.
   - Required result: when excluded-target justification metadata lands, update
     README, ROADMAP, papers index, and matching TODOs so README does not imply
     the curation record proves full exhaustive target-suite construction.

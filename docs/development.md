@@ -135,9 +135,9 @@ PR. CI also runs a dedicated paper/docs job that validates the committed paper
 manifest and focused docs/paper boundary tests; it does not run
 `--require-local-pdfs` because the PDF cache is intentionally gitignored. The
 release-artifact smoke job builds one wheel and one sdist, installs the wheel
-into an isolated virtual environment, checks representative problem-data files
-inside the wheel, and runs CLI help checks; it is not a complete package-data,
-index-publish, or release-provenance certification.
+into an isolated virtual environment, checks every bundled example file inside
+the wheel, and runs CLI help checks; it is not a complete release-wide
+package-data, index-publish, or release-provenance certification.
 
 For docs-only changes, run at least:
 

@@ -22,9 +22,11 @@ def test_release_artifact_reproducibility_boundary_accepts_editable_boundary():
     assert boundary["partial_evidence"]["install_from_wheel_cli_smoke"] == "ci_smoke"
     assert (
         boundary["partial_evidence"]["package_data_inclusion_check"]
-        == "representative_wheel_smoke"
+        == "complete_bundled_example_wheel_inventory"
     )
-    assert "complete package-data inventory certification" in boundary["claim_boundary"]
+    assert "complete release-wide package-data inventory certification" in (
+        boundary["claim_boundary"]
+    )
 
 
 def test_release_artifact_reproducibility_boundary_rejects_release_overclaim():

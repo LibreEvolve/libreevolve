@@ -4759,14 +4759,14 @@ Primary evidence:
     `release_artifact` job that builds one wheel and one sdist, installs the
     wheel into an isolated virtual environment, and smokes both `libreevolve
     --help` and `python -m libreevolve --help`.
-  - Remaining gap: there is still no complete package-data inventory
-    certification, release checklist, release-artifact provenance tying
+  - Remaining gap: there is still no complete release-wide package-data
+    inventory certification, release checklist, release-artifact provenance tying
     generated distributions back to source and manifest environment evidence,
     or published/private-index artifact verification. The paper-facing sidecar
     `papers/release_artifact_reproducibility_boundary.json` now preserves this
     CI-smoke-only release-artifact boundary.
-  - Required result: extend the representative wheel package-data check into a
-    complete package-data inventory/certification, add release
+  - Required result: extend the bundled-example wheel inventory check into a
+    complete release-wide package-data inventory/certification, add release
     checklist/provenance, and add remote/private-index artifact verification
     without overclaiming full release reproducibility from the current CI smoke.
 
@@ -4780,17 +4780,17 @@ Primary evidence:
     credential-gated integration job. It now also has a dedicated paper/docs
     job that validates the committed paper manifest and focused docs/paper
     tests without requiring ignored local PDFs, plus a release-artifact smoke
-    job that builds wheel/sdist artifacts, checks representative package data,
-    and smokes an installed wheel CLI.
+    job that builds wheel/sdist artifacts, checks every bundled example file in
+    the wheel, and smokes an installed wheel CLI.
     `tests/test_agents_docs.py` verifies required path filters, job names, and
     paper/docs/release commands. The committed
     `papers/ci_workflow_coverage_boundary.json` sidecar now preserves this
     path-scoped Ubuntu workflow boundary.
   - Required result: add full docs/paper verifier coverage, local-PDF paper
     manifest validation where appropriate, release provenance/complete
-    package-data certification, interpreter/platform matrices, branch policy, and
-    notification-safe trigger policy before treating CI as AlphaEvolve-grade
-    validation coverage.
+    release-wide package-data certification, interpreter/platform matrices,
+    branch policy, and notification-safe trigger policy before treating CI as
+    AlphaEvolve-grade validation coverage.
 
 - [ ] Add replayable external build, package-source, and accelerator environment evidence.
   - Spec evidence: AlphaEvolve-scale experiments should be reproducible across

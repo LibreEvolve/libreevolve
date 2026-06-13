@@ -34,7 +34,7 @@ EXPECTED_PARTIAL_EVIDENCE = {
     "wheel_build_check": "ci_smoke",
     "sdist_build_check": "ci_smoke",
     "install_from_wheel_cli_smoke": "ci_smoke",
-    "package_data_inclusion_check": "representative_wheel_smoke",
+    "package_data_inclusion_check": "complete_bundled_example_wheel_inventory",
 }
 
 
@@ -77,10 +77,11 @@ def release_artifact_reproducibility_boundary_record() -> dict[str, Any]:
             "bounded wheel metadata snapshots, direct_url/INSTALLER/RECORD "
             "evidence, and pip freeze/config hashes. CI also builds one wheel "
             "and one sdist, installs the wheel into an isolated virtual "
-            "environment, smokes the console script, and checks representative "
-            "problem-data files inside the wheel. It does not claim complete "
-            "package-data inventory certification, release-artifact provenance, "
-            "published-index verification, or release-checklist readiness."
+            "environment, smokes the console script, and checks every file "
+            "under libreevolve/problems/examples inside the wheel. It does "
+            "not claim complete release-wide package-data inventory "
+            "certification, release-artifact provenance, published-index "
+            "verification, or release-checklist readiness."
         ),
     }
 
@@ -125,8 +126,8 @@ def validate_release_artifact_reproducibility_boundary(
         not isinstance(boundary_text, str)
         or "CI also builds one wheel and one sdist" not in boundary_text
         or "installs the wheel into an isolated virtual environment" not in boundary_text
-        or "representative problem-data files inside the wheel" not in boundary_text
-        or "does not claim complete package-data inventory certification" not in boundary_text
+        or "checks every file under libreevolve/problems/examples inside the wheel" not in boundary_text
+        or "does not claim complete release-wide package-data inventory certification" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must keep editable/local installs separate from verified release artifacts"))
     return ReleaseArtifactReproducibilityBoundaryValidation(

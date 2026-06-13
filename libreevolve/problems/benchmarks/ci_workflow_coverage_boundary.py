@@ -35,7 +35,7 @@ EXPECTED_MISSING_EVIDENCE = {
     "notification_policy": "not_recorded_locally",
 }
 EXPECTED_PARTIAL_EVIDENCE = {
-    "wheel_sdist_ci_smoke": "release_artifact_job_with_representative_package_data_smoke",
+    "wheel_sdist_ci_smoke": "release_artifact_job_with_bundled_example_inventory",
 }
 
 
@@ -78,11 +78,11 @@ def ci_workflow_coverage_boundary_record() -> dict[str, Any]:
             "optional credential-gated integration job, a committed-manifest "
             "paper/docs job that does not require the ignored local PDF cache, "
             "a release-artifact smoke job that builds a wheel and sdist and "
-            "installs the wheel for CLI smoke checks with representative "
-            "package-data inspection, and unit tests that check the workflow "
-            "shape. It does not claim CI local-PDF paper-manifest checks, "
+            "installs the wheel for CLI smoke checks with bundled-example "
+            "wheel inventory inspection, and unit tests that check the "
+            "workflow shape. It does not claim CI local-PDF paper-manifest checks, "
             "semantic documentation-claim verification, release provenance or "
-            "complete package-data certification, cross-platform CI "
+            "complete release-wide package-data certification, cross-platform CI "
             "coverage, branch policy, or notification policy."
         ),
     }
@@ -120,7 +120,7 @@ def validate_ci_workflow_coverage_boundary(
         not isinstance(boundary_text, str)
         or "committed-manifest paper/docs job" not in boundary_text
         or "release-artifact smoke job" not in boundary_text
-        or "representative package-data inspection" not in boundary_text
+        or "bundled-example wheel inventory inspection" not in boundary_text
         or "does not claim CI local-PDF paper-manifest checks" not in boundary_text
         or "cross-platform CI coverage" not in boundary_text
     ):

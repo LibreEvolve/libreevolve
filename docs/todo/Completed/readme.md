@@ -78,6 +78,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     source-specific boundaries, while code and paper TODOs keep faithful
     paper-specific plugin/framework behavior open.
 
+- [x] Keep README custom-plugin provenance claims scoped to entry-point specs
+      versus direct instances.
+  - Status: README Important limits now states that custom plugin provenance is
+    strongest for configured entry-point specs: entry-point plugins can record
+    distribution metadata plus manifest-safe or declared-schema constructor
+    options, while direct custom plugin instances record module/file/version
+    identity and constructor signature shape only. Direct-instance constructor
+    values, arbitrary instance attributes, versioned custom registries, and
+    richer package provenance remain out of scope.
+  - Verification: `docs/plugins.md` documents the same entry-point versus
+    direct-instance boundary; direct-plugin policy tests validate false
+    readiness for constructor values/schemas, direct custom registries, and
+    arbitrary instance-state capture.
+
 - [x] Keep README multi-evaluator wording scoped until independent
       evaluator-oracle evidence exists.
   - Status: README Important limits now states that evaluator/oracle reports

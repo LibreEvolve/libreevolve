@@ -651,6 +651,12 @@ Important limits:
   JSONL examples without training. GigaEvo, CodeEvolve, and MadEvolve are
   currently paper/index inspiration or background context, not implemented
   framework parity.
+- Custom plugin provenance is strongest for configured entry-point specs:
+  entry-point plugins can record distribution metadata plus manifest-safe or
+  declared-schema constructor options, while direct custom plugin instances
+  record module/file/version identity and constructor signature shape only.
+  Direct-instance constructor values, arbitrary instance attributes, versioned
+  custom registries, and richer package provenance remain out of scope.
 - Proposal scores and hypothesis indexes are bounded current-run records, not
   semantic idea-memory retrieval, calibrated proposal-quality models,
   cross-run proposal tables, or score-driven prompt/archive policy; that

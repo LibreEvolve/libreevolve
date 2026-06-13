@@ -69,23 +69,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README custom-plugin provenance claims scoped to entry-point specs
-  versus direct instances.
-  - Spec evidence: AlphaEvolve-grade plugin extensibility should make custom
-    hook code and configuration reproducible without hiding arbitrary
-    constructor state.
-  - Current evidence: README now documents entry-point plugin specs with
-    manifest-safe or declared-schema constructor options, paper-inspiration
-    labels, distribution name/version and hash metadata, while direct custom
-    plugin instances record constructor signature shape only and explicitly
-    exclude constructor values and instance attributes. Direct-plugin policy
-    readiness now keeps direct constructor values/schemas, custom registries,
-    and arbitrary instance-state capture false.
-  - Required result: once direct custom plugin registries, safe constructor
-    value/schema attribution, or richer package provenance land, update README
-    and matching code/paper TODO entries so the README neither underclaims
-    entry-point provenance nor overclaims direct-instance replayability.
-
 - [ ] Keep README proposal-memory claims scoped to bounded heuristic proposal
       scoring.
   - Spec evidence: AlphaEvolve-style evolutionary memory should be able to

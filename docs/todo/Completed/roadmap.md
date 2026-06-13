@@ -10944,3 +10944,21 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     feedback, parent/inspiration resurfacing, archive-driven selection,
     meta-prompt updates, budget parity, and linked target-progress curves
     remain active in code and paper TODOs.
+
+- [x] Keep critique-reviewer roadmap wording scoped to synchronous first/last
+      valid mutation selection.
+  - Spec evidence: AlphaEvolve-style critique/reviewer channels need
+    calibrated reviewer signals, explicit budget/reliability evidence, async
+    or parallel reviewer overlap where useful, and provider isolation strong
+    enough to audit reviewer effects separately from ordinary mutation
+    generation.
+  - Status: ROADMAP asks to extend current synchronous configurable critique
+    reviewer pools, role routing, and first/last-valid aggregation toward
+    async overlap, calibrated scoring, stronger provider isolation, and
+    reviewer-specific runtime artifacts. It points to
+    `papers/critique_reviewer_pool_boundary.json` while keeping
+    AlphaEvolve-grade critique orchestration open.
+  - Remaining roadmap gap: async reviewer overlap, calibrated reviewer
+    scoring, reviewer-pool ablation reports, stronger per-reviewer provider
+    isolation, and external reviewer-specific timeout/failure artifacts remain
+    active in code and paper TODOs.

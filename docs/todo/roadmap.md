@@ -3042,35 +3042,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     metadata from reproduced AlphaEvolve Figure 8 visual evidence tied to real
     ablation runs.
 
-- [ ] Keep critique-reviewer roadmap wording scoped to synchronous first/last
-      valid mutation selection.
-  - Spec evidence: AlphaEvolve-style critique/reviewer channels need calibrated
-    reviewer signals, explicit budget/reliability evidence, async or parallel
-    reviewer overlap where useful, and provider isolation strong enough to
-    audit reviewer effects separately from ordinary mutation generation.
-  - Current evidence: `ROADMAP.md` asks to extend synchronous configurable
-    critique reviewer pools, role routing, and first/last-valid aggregation
-    toward async overlap, calibrated scoring, stronger provider isolation, and
-    reviewer-specific runtime artifacts. README and code TODO evidence show
-    current `critique_reviewers` accepts manifest-safe reviewer specs with
-    optional prompts and role labels such as `critique:correctness`; existing
-    role backend routing, role budgets, and reward-accounting telemetry can
-    apply to those roles; the loop runs a bounded synchronous reviewer pool;
-    `critique_aggregation_policy` selects `first_valid` or `last_valid`
-    revised mutations; and retained `metadata.critique.reviewer_pool` records
-    reviewer status, parser diagnostics, backend indices, outcome/timing
-    telemetry, selected reviewer, and selection provenance. Reviewer calls are
-    still sequential, replacement-only, and chosen by first/last valid mutation
-    rather than calibrated reviewer score or benchmarked reviewer reliability.
-    The roadmap now points to `papers/critique_reviewer_pool_boundary.json`,
-    which preserves this synchronous reviewer boundary for manifest validation.
-  - Required result: when async reviewer overlap, calibrated reviewer scoring,
-    reviewer-pool ablation reports, stronger per-reviewer provider isolation,
-    or external reviewer-specific timeout/failure artifacts land, update the
-    roadmap, README, papers index, and code/paper TODO entries together so
-    roadmap wording neither underclaims current synchronous reviewer-pool
-    metadata nor overclaims AlphaEvolve-grade critique orchestration.
-
 - [ ] Implement 2026 AlphaEvolve impact-domain roadmap gates beyond the
       source boundary.
   - Spec evidence: Google DeepMind's May 7, 2026 article

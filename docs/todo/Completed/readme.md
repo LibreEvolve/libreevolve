@@ -14390,3 +14390,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     repeated-sampling runs, budget-parity checks, disabled evolutionary
     feedback proof, target-progress curves, and linked evolutionary comparator
     evidence remain active in code and paper TODOs.
+
+- [x] Keep README critique-reviewer wording scoped to synchronous first/last
+      valid mutation selection.
+  - Spec evidence: AlphaEvolve-style critique/reviewer channels need
+    calibrated signal, explicit budget policy, and robust provider isolation
+    beyond a sequential mutation-replacement filter.
+  - Status: README states that critique reviewer pools are bounded
+    synchronous first/last-valid mutation filters with reviewer telemetry, not
+    async reviewer overlap, calibrated reviewer scoring, reviewer reliability
+    ablations, per-reviewer provider isolation, or external reviewer timeout
+    artifacts. It points to `papers/critique_reviewer_pool_boundary.json`.
+  - Remaining README gap: async reviewer overlap, calibrated reviewer
+    scoring, reviewer-pool ablations, stronger per-reviewer provider
+    isolation, and external reviewer-specific timeout/failure artifacts remain
+    active in code and paper TODOs.

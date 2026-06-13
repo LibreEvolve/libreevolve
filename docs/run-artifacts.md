@@ -756,11 +756,11 @@ interpretation policy beyond redacted config evidence, live provider
 service/API-version capture, provider cost or remote provider-side default capture, or
 release-distribution verification. The paper-facing sidecar
 `papers/release_artifact_reproducibility_boundary.json` records that
-wheel/sdist build checks, install-from-wheel CLI smoke tests, bundled-example
-package-data checks, CI-generated artifact/source hash provenance, and uploaded
-release-smoke workflow artifacts exist, while complete release-wide package-data
-certification, signed release provenance, published-index verification, and
-release-checklist readiness remain outside current evidence.
+wheel/sdist build checks, install-from-wheel CLI smoke tests, `libreevolve/`
+package-tree inventory checks, CI-generated artifact/source hash provenance,
+and uploaded release-smoke workflow artifacts exist, while signed release
+provenance, published-index verification, and release-checklist readiness remain
+outside current evidence.
 accelerator budget/accounting record.
 Package/build metadata fields include
 `name`, `version`, `requires-python`, license, authors/maintainers,

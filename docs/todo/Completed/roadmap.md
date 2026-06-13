@@ -3663,9 +3663,8 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     console-script declaration, runtime environment/package provenance,
     installed-distribution metadata, bounded wheel metadata snapshots, and
     `papers/release_artifact_reproducibility_boundary.json`.
-  - Remaining guard: complete release-wide package-data certification,
-    release checklist readiness, signed release provenance, and published-index
-    verification remain active in `docs/todo/code.md` and
+  - Remaining guard: release checklist readiness, signed release provenance,
+    and published-index verification remain active in `docs/todo/code.md` and
     `docs/todo/papers.md`.
   - Verification: release-artifact boundary and paper-manifest validation
     continue to reject editable/local package metadata as verified
@@ -14365,8 +14364,8 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 - [x] Keep roadmap release-artifact boundary tied to sidecar.
   - Status: ROADMAP now links editable/local install provenance to
     `papers/release_artifact_reproducibility_boundary.json` while keeping
-    wheel/sdist build checks, package-data validation, install-from-wheel
-    smoke tests, release checklist, and release-artifact provenance open.
+    release checklist readiness, signed release provenance, and published-index
+    verification open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused release-artifact tests reject verified-release overclaims.
 

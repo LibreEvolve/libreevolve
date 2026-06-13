@@ -721,7 +721,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     job that runs `python -m libreevolve.tools.paper_manifest --root .` and
     focused docs/paper tests without requiring ignored local PDFs, plus a
     release-artifact smoke job that builds one wheel and one sdist, checks
-    every bundled example file in the wheel and sdist, writes artifact hash
+    every `libreevolve/` package-tree file in the wheel and sdist, writes artifact hash
     provenance, uploads release smoke artifacts, installs the wheel into an
     isolated virtual environment, and smokes the CLI.
     `tests/test_agents_docs.py` verifies the path filters, job names, and
@@ -729,12 +729,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/ci_workflow_coverage_boundary.json` sidecar preserves this
     path-scoped Ubuntu workflow boundary for paper-manifest validation.
   - Current gap: CI still does not run every paper/docs verifier, does not run
-    paper-manifest local-PDF checks, does not certify complete release-wide
-    package-data inclusion or signed release provenance, does not cover
-    non-Ubuntu platforms, and does not encode richer branch or notification
-    policy.
+    paper-manifest local-PDF checks, does not certify signed release provenance,
+    does not cover non-Ubuntu platforms, and does not encode richer branch or
+    notification policy.
   - Required result: add full paper/docs verifier coverage, release-artifact
-    signed provenance/complete release-wide package-data certification,
+    signed provenance,
     interpreter/platform matrices, branch policy, and notification-safe trigger
     policy before treating the workflow as full AlphaEvolve-grade validation
     coverage.

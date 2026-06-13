@@ -133,14 +133,16 @@ jobs:
               raise SystemExit(f"expected one wheel and one sdist, got {wheels} {sdists}")
           required = {
               path.as_posix()
-              for path in Path("libreevolve/problems/examples").rglob("*")
+              for path in Path("libreevolve").rglob("*")
               if path.is_file()
+              and "__pycache__" not in path.parts
+              and path.suffix not in {".pyc", ".pyo"}
           }
           with zipfile.ZipFile(wheels[0]) as wheel:
               names = set(wheel.namelist())
           missing = sorted(required - names)
           if missing:
-              raise SystemExit(f"wheel is missing bundled example files: {missing}")
+              raise SystemExit(f"wheel is missing package files: {missing}")
           with tarfile.open(sdists[0], "r:gz") as sdist:
               names = {
                   member.name.split("/", 1)[1]
@@ -149,7 +151,7 @@ jobs:
               }
           missing = sorted(required - names)
           if missing:
-              raise SystemExit(f"sdist is missing bundled example files: {missing}")
+              raise SystemExit(f"sdist is missing package files: {missing}")
           print(wheels[0])
           print(sdists[0])
           PY

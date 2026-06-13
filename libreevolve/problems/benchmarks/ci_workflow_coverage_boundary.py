@@ -35,7 +35,7 @@ EXPECTED_MISSING_EVIDENCE = {
     "notification_policy": "not_recorded_locally",
 }
 EXPECTED_PARTIAL_EVIDENCE = {
-    "wheel_sdist_ci_smoke": "release_artifact_job_with_bundled_example_inventory_hash_provenance_and_artifact_upload",
+    "wheel_sdist_ci_smoke": "release_artifact_job_with_package_tree_inventory_hash_provenance_and_artifact_upload",
 }
 
 
@@ -78,14 +78,14 @@ def ci_workflow_coverage_boundary_record() -> dict[str, Any]:
             "optional credential-gated integration job, a committed-manifest "
             "paper/docs job that does not require the ignored local PDF cache, "
             "a release-artifact smoke job that builds a wheel and sdist and "
-            "installs the wheel for CLI smoke checks with bundled-example "
+            "installs the wheel for CLI smoke checks with libreevolve package-tree "
             "wheel and sdist inventory inspection plus release artifact hash "
             "provenance and GitHub Actions artifact upload, and unit tests "
             "that check the workflow shape. It does "
             "not claim CI local-PDF paper-manifest checks, "
             "semantic documentation-claim verification, signed release "
-            "provenance or complete release-wide package-data certification, "
-            "cross-platform CI coverage, branch policy, or notification policy."
+            "provenance, cross-platform CI coverage, branch policy, or "
+            "notification policy."
         ),
     }
 
@@ -122,7 +122,7 @@ def validate_ci_workflow_coverage_boundary(
         not isinstance(boundary_text, str)
         or "committed-manifest paper/docs job" not in boundary_text
         or "release-artifact smoke job" not in boundary_text
-        or "bundled-example wheel and sdist inventory inspection" not in boundary_text
+        or "libreevolve package-tree wheel and sdist inventory inspection" not in boundary_text
         or "release artifact hash provenance" not in boundary_text
         or "GitHub Actions artifact upload" not in boundary_text
         or "does not claim CI local-PDF paper-manifest checks" not in boundary_text

@@ -22,15 +22,13 @@ def test_release_artifact_reproducibility_boundary_accepts_editable_boundary():
     assert boundary["partial_evidence"]["install_from_wheel_cli_smoke"] == "ci_smoke"
     assert (
         boundary["partial_evidence"]["package_data_inclusion_check"]
-        == "complete_bundled_example_wheel_and_sdist_inventory"
+        == "complete_libreevolve_package_tree_wheel_and_sdist_inventory"
     )
     assert (
         boundary["partial_evidence"]["release_artifact_provenance"]
         == "ci_dist_artifact_and_source_hash_manifest"
     )
-    assert "complete release-wide package-data inventory certification" in (
-        boundary["claim_boundary"]
-    )
+    assert "under the libreevolve package tree" in boundary["claim_boundary"]
 
 
 def test_release_artifact_reproducibility_boundary_rejects_release_overclaim():

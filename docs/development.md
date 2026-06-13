@@ -135,12 +135,12 @@ PR. CI also runs a dedicated paper/docs job that validates the committed paper
 manifest and focused docs/paper boundary tests; it does not run
 `--require-local-pdfs` because the PDF cache is intentionally gitignored. The
 release-artifact smoke job builds one wheel and one sdist, installs the wheel
-into an isolated virtual environment, checks every bundled example file inside
-the wheel and sdist, writes `release_artifact_provenance.json` with artifact
+into an isolated virtual environment, checks every file under the `libreevolve/`
+package tree inside the wheel and sdist, writes
+`release_artifact_provenance.json` with artifact
 and selected source-file hashes, uploads the release smoke artifacts as a
-workflow artifact, and runs CLI help checks; it is not a complete release-wide
-package-data, index-publish, signed-provenance, or release-checklist
-certification.
+workflow artifact, and runs CLI help checks; it is not an index-publish,
+signed-provenance, or release-checklist certification.
 
 For docs-only changes, run at least:
 

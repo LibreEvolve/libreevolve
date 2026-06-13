@@ -129,9 +129,9 @@ def test_tests_workflow_covers_docs_papers_and_todo_changes():
     assert "python -m build --wheel --sdist" in release_commands
     assert "zipfile.ZipFile" in release_commands
     assert "tarfile.open" in release_commands
-    assert 'Path("libreevolve/problems/examples").rglob("*")' in release_commands
-    assert "wheel is missing bundled example files" in release_commands
-    assert "sdist is missing bundled example files" in release_commands
+    assert 'Path("libreevolve").rglob("*")' in release_commands
+    assert "wheel is missing package files" in release_commands
+    assert "sdist is missing package files" in release_commands
     assert "python -m libreevolve.tools.release_artifact_provenance --root ." in release_commands
     upload_steps = [
         step
@@ -154,12 +154,14 @@ def test_dev_dependencies_include_release_build_tooling():
     assert pyproject["tool"]["setuptools"]["include-package-data"] is True
 
 
-def test_manifest_includes_problem_example_package_data():
+def test_manifest_includes_package_data():
     manifest = Path("MANIFEST.in").read_text(encoding="utf-8")
 
     assert "recursive-include libreevolve/problems/examples" in manifest
     for pattern in ("*.yaml", "*.txt", "*.json", "*.bin", "*.md"):
         assert pattern in manifest
+    assert "recursive-include libreevolve/problems/benchmarks" in manifest
+    assert "*.ipynb" in manifest
 
 
 def test_run_artifact_docs_list_current_schema_jsonl_streams():

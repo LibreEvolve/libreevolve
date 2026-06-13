@@ -2,6 +2,32 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Figure 6 scheduling-exhibit roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `docs/status.md`,
+    `docs/todo/code.md`, and `docs/todo/papers.md` already state that
+    AlphaEvolve Figure 6 scheduling-exhibit provenance is absent, while
+    `ROADMAP.md` and `papers/README.md` keep generic systems and scheduling
+    readiness separate from reproduced Figure 6 visual/code evidence.
+  - Current evidence: existing systems-result contracts cover scheduling
+    formulation, ranking-only safety, deployment readiness, claim calibration,
+    and application provenance, but no code/report schema records a Figure 6
+    exhibit ID, exact Borg heuristic source artifact/hash, CPU/memory residual
+    feature definitions and units, heatmap grid/data/rendering parameters,
+    rendered artifact paths/hashes, baseline production heuristic identity, or
+    links from the displayed exhibit to simulator, held-out, deployment, and
+    claim-calibration records.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    Figure 6 evidence: stable exhibit ID, scheduling benchmark/candidate link,
+    exact `alpha_evolve_score(required, free)` source and hash,
+    residual-feature definitions, baseline heuristic provenance, heatmap/JSON
+    data, rendered visual artifacts with hashes, rendering parameters,
+    simulator/held-out/deployment report links, and documentation that separates
+    reproduced systems figures from generic scheduling readiness.
+  - Verification: paper-manifest validation and checked-in paper-index TODO
+    coverage still pass, and focused searches confirm the Figure 6 code and
+    paper TODOs remain active while no local Figure 6 exhibit validator or
+    artifact schema is claimed.
+
 - [x] Archive scheduling deployment-readiness roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `docs/status.md`, `papers/README.md`, `docs/todo/code.md`, and

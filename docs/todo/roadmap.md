@@ -10,25 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Figure 6 roadmap wording scoped until scheduling-heuristic exhibit
-      provenance exists.
-  - Spec evidence: AlphaEvolve Figure 6 presents the concrete Borg scheduling
-    heuristic source plus a CPU/memory residual heatmap, and Section 3.3.1
-    links that heuristic to simulator feedback, unseen recent workloads,
-    deployment, and about 0.7% fleet-wide resource recovery.
-  - Current evidence: roadmap systems-result wording covers generic held-out,
-    reference, deployment, metric-calibration, ranking-only feasibility, and
-    interpretability/deployment gaps. It does not require Figure 6 exhibit
-    IDs, exact heuristic source hashes, residual-feature definitions, heatmap
-    data/rendering parameters, visual artifact paths/hashes, baseline
-    production heuristic identity, or links from the displayed exhibit to
-    simulator/held-out/deployment evidence.
-  - Required result: when scheduling-heuristic exhibit provenance lands,
-    update ROADMAP, README, papers index, and code/paper TODO entries together
-    with exhibit-level metadata and validators so roadmap text distinguishes
-    generic scheduling readiness, Section 3.3 result claims, and reproduced
-    Figure 6 visual/code evidence.
-
 - [ ] Keep Figure 7 roadmap wording scoped until Pallas tiling-problem exhibit
       provenance exists.
   - Spec evidence: AlphaEvolve Figure 7 visualizes the matrix-product tiling

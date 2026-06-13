@@ -331,6 +331,12 @@ Important limits:
   invariants, and artifact refs, not proof of Borg-style scheduling safety,
   real feasibility-filter runs, or production placement correctness; that
   boundary is tracked by `papers/systems_result_readiness_boundary.json`.
+- Scheduling formulation records validate online vector-bin-packing schema,
+  CPU/memory bin and item fields, workload/capacity snapshot provenance,
+  stranded-resource objective links, simulator-input hashes, feature mapping,
+  and artifact refs, not proof of populated Borg-style workload fixtures,
+  simulator runs, or AlphaEvolve scheduling problem setup; that boundary is
+  tracked by `papers/systems_result_readiness_boundary.json`.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

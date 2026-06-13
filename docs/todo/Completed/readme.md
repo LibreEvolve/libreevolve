@@ -4,6 +4,21 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document scheduling vector-bin-packing README boundary.
+  - Status: README Important limits now states that scheduling formulation
+    records validate online vector-bin-packing schema, CPU/memory bin and item
+    fields, workload/capacity snapshot provenance, stranded-resource objective
+    links, simulator-input hashes, feature mapping, and artifact refs, not
+    proof of populated Borg-style workload fixtures, simulator runs, or
+    AlphaEvolve scheduling problem setup. It ties that limit to
+    `papers/systems_result_readiness_boundary.json`.
+  - Verification: focused systems-result and systems-readiness tests validate
+    required scheduling formulation records for ready scheduling reports,
+    CPU/memory dimensions, workload/capacity snapshots, simulator-input hashes,
+    artifact refs, non-ready omission rules, non-scheduling rejection, and
+    readiness-boundary overclaim guards; paper-manifest tests validate the
+    sidecar.
+
 - [x] Document scheduling ranking-only safety README boundary.
   - Status: README Important limits now states that scheduling safety records
     validate feasible candidate-set provenance, ranking-only scope,

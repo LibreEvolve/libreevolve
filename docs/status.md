@@ -120,9 +120,12 @@ Important limits:
   resolution reports link initial programs, evaluators, prompts, backends,
   context, candidate representation, metrics, history streams, best exports,
   marked spans, and supported embedded score causality, not external-validator
-  score causality, arbitrary-language/build-runner task specs, user-authored
-  standalone task-spec parity, or full AlphaEvolve task-spec parity; that
-  boundary is tracked by `papers/task_specification_boundary.json`.
+  score causality, standalone schema completeness for the full user-provided
+  Figure 2 contract, user-authored source identity, prompt/config content
+  identity, cross-field consistency validation, task-spec replay preflight,
+  arbitrary-language/build-runner task specs, user-authored standalone
+  task-spec parity, or full AlphaEvolve task-spec parity; that boundary is
+  tracked by `papers/task_specification_boundary.json`.
 - Archive restore uses manifest archive-state snapshots plus accepted-history
   rows for current cursor/cell/elite contents; `archive_events.jsonl` replay is
   audit-only and not an ordered MAP-Elites restore engine. That boundary is

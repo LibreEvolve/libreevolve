@@ -27,7 +27,14 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "prompt_template_manifest_linked",
     "llm_ensemble_manifest_linked",
     "background_knowledge_manifest_linked",
+    "human_problem_formulation_manifest_linked",
     "objective_metrics_manifest_linked",
+    "standalone_schema_completeness",
+    "user_authored_source_identity",
+    "prompt_template_content_identity",
+    "config_artifact_identity",
+    "cross_field_consistency_validation",
+    "task_spec_replay_preflight",
     "runtime_artifact_resolution_report_recorded",
     "candidate_prompt_evaluator_rows_joined",
     "evolvable_component_span_ids_when_marked",
@@ -38,6 +45,12 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "full_alphaevolve_task_spec_parity",
 )
 EXPECTED_MISSING_EVIDENCE = {
+    "standalone_schema_completeness": "generated_bundle_not_full_user_contract",
+    "user_authored_source_identity": "not_recorded_locally",
+    "prompt_template_content_identity": "manifest_metadata_only",
+    "config_artifact_identity": "manifest_metadata_only",
+    "cross_field_consistency_validation": "not_recorded_locally",
+    "task_spec_replay_preflight": "not_recorded_locally",
     "external_validator_score_causality": "not_recorded_locally",
     "arbitrary_language_build_runner_specs": "not_recorded_locally",
     "user_authored_standalone_task_spec": "not_recorded_locally",
@@ -88,9 +101,13 @@ def task_specification_boundary_record() -> dict[str, Any]:
             "manifest paths, candidate history, prompt history, evaluator "
             "rows, LLM calls, controller-budget rows, best exports, marked "
             "evolvable spans, and supported embedded score-field causality. It "
-            "does not claim external-validator score causality, arbitrary "
-            "language or build-runner task specs, user-authored standalone "
-            "task-spec parity, or full AlphaEvolve task-spec parity."
+            "does not claim standalone schema completeness for the full "
+            "user-provided Figure 2 contract, user-authored source identity, "
+            "prompt-template content identity, config artifact identity, "
+            "cross-field consistency validation, task-spec replay preflight, "
+            "external-validator score causality, arbitrary language or build-"
+            "runner task specs, user-authored standalone task-spec parity, or "
+            "full AlphaEvolve task-spec parity."
         ),
     }
 
@@ -132,7 +149,12 @@ def validate_task_specification_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim external-validator score causality" not in boundary_text
+        or "standalone schema completeness" not in boundary_text
+        or "user-authored source identity" not in boundary_text
+        or "prompt-template content identity" not in boundary_text
+        or "cross-field consistency validation" not in boundary_text
+        or "task-spec replay preflight" not in boundary_text
+        or "external-validator score causality" not in boundary_text
         or "full AlphaEvolve task-spec parity" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that current task-spec artifacts are not full AlphaEvolve parity"))

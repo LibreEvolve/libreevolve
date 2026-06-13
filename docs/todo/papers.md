@@ -415,11 +415,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/task_specification_boundary.json` now preserves this
     runtime-artifact-resolution-only boundary.
   - Current gap: paper-facing evidence still lacks full task-spec parity for
-    external validators, arbitrary language/build runners, and user-authored
-    standalone task specs beyond the checked example.
+    standalone schema completeness for the full user-provided Figure 2
+    contract, user-authored source identity, prompt-template content identity,
+    config artifact identity, cross-field consistency validation, task-spec
+    replay preflight, external validators, arbitrary language/build runners,
+    and user-authored standalone task specs beyond the checked example.
   - Required result: extend the current bundle plus artifact-resolution report
-    beyond the embedded static score-field attribution path before treating it
-    as full AlphaEvolve task-spec evidence.
+    beyond generated manifest linkage and the embedded static score-field
+    attribution path before treating it as full AlphaEvolve task-spec evidence:
+    require a complete standalone task-spec schema, source-authored package
+    identity, prompt/config content hashes, consistency validation, replay
+    preflight, external-validator score causality, arbitrary language/build
+    runner task specs, and user-authored task-spec parity.
 
 - [ ] Independent per-role LLM scheduler state and reward policy.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.6.

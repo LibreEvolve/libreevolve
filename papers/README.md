@@ -888,10 +888,13 @@ links with static AST causal attribution for supported candidate-owned
 JSONL row joins. The checked
 `docs/examples/task_specification.embedded_evaluate_math.json` file is a
 validated paper-facing standalone example; external-validator and
-arbitrary-language task-spec parity remain open. The sidecar
-`papers/task_specification_boundary.json` preserves that
-runtime-artifact-resolution-only boundary and prevents the current task-spec
-bundle from being treated as full AlphaEvolve task-spec parity.
+arbitrary-language task-spec parity remain open, as do standalone schema
+completeness for the full user-provided Figure 2 contract, user-authored
+source identity, prompt-template content identity, config artifact identity,
+cross-field consistency validation, and task-spec replay preflight. The
+sidecar `papers/task_specification_boundary.json` preserves that runtime-
+artifact-resolution-only boundary and prevents the current task-spec bundle
+from being treated as full AlphaEvolve task-spec parity.
 
 AlphaEvolve candidate-abstraction note: completed manifests now include
 `runtime.history.candidate_abstraction_choice_report` with schema

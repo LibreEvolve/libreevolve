@@ -280,7 +280,10 @@ LibreEvolve has:
   candidate-owned `evaluate` metric returns depend on EVOLVE blocks, plus
   bounded candidate and prompt/evaluator JSONL row joins, plus a validated
   standalone task-spec example under `docs/examples/`, while leaving
-  arbitrary-validator/build-system task-spec parity open, with
+  standalone schema completeness, user-authored source identity, prompt/config
+  content identity, cross-field consistency validation, replay preflight,
+  arbitrary-validator/build-system task-spec parity, and user-authored
+  full-parity task packages open, with
   `papers/task_specification_boundary.json` preserving the paper-facing
   runtime-artifact-resolution-only boundary
 - runtime prompt prior-score provenance under

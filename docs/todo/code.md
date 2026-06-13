@@ -302,10 +302,20 @@ sidecars, tests, and active TODOs.
     `papers/task_specification_boundary.json` now records this as a
     runtime-artifact-resolution-only boundary rather than full AlphaEvolve
     task-spec parity.
-  - Required result: extend artifact-level parity beyond the current embedded
-    static score-field attribution path: external validators, arbitrary
-    language/build runner task specs, and full user-authored task-spec parity
-    remain open.
+  - Current gap: this is generated runtime artifact-resolution evidence, not a
+    complete user-authored AlphaEvolve Figure 2 task package. It still lacks
+    standalone schema completeness for the full user-provided contract,
+    user-authored source identity, prompt-template content identity, config
+    artifact identity, cross-field consistency validation, task-spec replay
+    preflight, external-validator score causality, arbitrary language/build
+    runner task specs, and full user-authored task-spec parity.
+  - Required result: extend artifact-level parity beyond the current generated
+    bundle and embedded static score-field attribution path: add a complete
+    standalone task-spec schema, source-authored task package identity,
+    prompt/config content hashes, consistency validation across initial
+    program/evaluator/prompt/backend/context fields, replay preflight, external
+    validator score causality, arbitrary language/build runner task specs, and
+    full user-authored task-spec parity.
 
 - [ ] Add an arXiv abstract-page snapshot and refresh gate for the primary
       AlphaEvolve source.

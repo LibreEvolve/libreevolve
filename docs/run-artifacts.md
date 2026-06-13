@@ -35,7 +35,10 @@ manifest paths, ids/hashes/counts, explicit
 unsupported/incomplete labels, a deterministic `task_spec_id`, and embedded
 validation. The same bundle is also emitted as `task_specification.json`.
 It is partial AlphaEvolve task-spec evidence, not a user-authored standalone
-problem definition or full proof of arbitrary-validator score-link parity.
+problem definition, complete user-authored Figure 2 package schema, source
+identity record, prompt/config content identity proof, cross-field consistency
+validation, replay preflight, or full proof of arbitrary-validator score-link
+parity.
 Completed runtime manifests also include
 `runtime.history.task_spec_artifact_resolution_report` with schema
 `libreevolve.task_spec_artifact_resolution_report.v1`. This report consumes the
@@ -55,9 +58,11 @@ add/score rows, plus evaluator row ids in `evaluator_results.jsonl`.
 standalone documentation example. The runtime report can record static AST
 score-field causal attribution for supported candidate-owned embedded
 `evaluate` paths, but `claim_ready: false` still covers external validators,
-arbitrary languages/build systems, and full task-spec parity. The paper-facing
-sidecar `papers/task_specification_boundary.json` preserves this
-runtime-artifact-resolution-only boundary.
+arbitrary languages/build systems, user-authored task-spec source identity,
+prompt/config content identity, cross-field consistency validation, replay
+preflight, and full task-spec parity. The paper-facing sidecar
+`papers/task_specification_boundary.json` preserves this runtime-artifact-
+resolution-only boundary.
 Completed manifests also include
 `runtime.history.initial_program_idea_provenance_report` with schema
 `libreevolve.initial_program_idea_provenance_report.v1`. This report reads

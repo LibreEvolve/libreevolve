@@ -1,0 +1,82 @@
+{
+  "schema": "libreevolve.alphaevolve_initial_program_seed_variant_matrix.v1",
+  "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "2.1",
+    "3.1"
+  ],
+  "matrix_status": "design_matrix_without_equal_budget_seed_results",
+  "claim_ready": false,
+  "comparison_fields": [
+    "seed_variant_id",
+    "idea_origin",
+    "paper_role",
+    "prompt_context_linkage",
+    "generation_zero_metric_linkage",
+    "equal_budget_result_table",
+    "human_contribution_review",
+    "benchmark_scope"
+  ],
+  "seed_variants": [
+    {
+      "seed_variant_id": "simple_initial_program",
+      "idea_origin": "simple_baseline",
+      "paper_role": "most Table 2 matrix results used a simple initial program",
+      "prompt_context_linkage": "not_recorded_locally",
+      "generation_zero_metric_linkage": "metadata_contract_only",
+      "equal_budget_result_table": "not_recorded_locally",
+      "human_contribution_review": "not_recorded_locally",
+      "benchmark_scope": "matrix_and_constructive_math_future_comparison_axis"
+    },
+    {
+      "seed_variant_id": "random_initial_program",
+      "idea_origin": "random_or_uninformed_start",
+      "paper_role": "comparison baseline for seed sensitivity",
+      "prompt_context_linkage": "not_recorded_locally",
+      "generation_zero_metric_linkage": "metadata_contract_only",
+      "equal_budget_result_table": "not_recorded_locally",
+      "human_contribution_review": "not_recorded_locally",
+      "benchmark_scope": "matrix_and_constructive_math_future_comparison_axis"
+    },
+    {
+      "seed_variant_id": "researcher_idea_initial_program",
+      "idea_origin": "researcher_seeded_idea",
+      "paper_role": "researchers seeded some initial programs with their own ideas",
+      "prompt_context_linkage": "not_recorded_locally",
+      "generation_zero_metric_linkage": "metadata_contract_only",
+      "equal_budget_result_table": "not_recorded_locally",
+      "human_contribution_review": "not_recorded_locally",
+      "benchmark_scope": "matrix_seed_variant_future_comparison_axis"
+    },
+    {
+      "seed_variant_id": "stochastic_evaluation_idea",
+      "idea_origin": "researcher_seeded_stochastic_evaluation",
+      "paper_role": "one reported researcher idea class for improved matrix parameters",
+      "prompt_context_linkage": "not_recorded_locally",
+      "generation_zero_metric_linkage": "metadata_contract_only",
+      "equal_budget_result_table": "not_recorded_locally",
+      "human_contribution_review": "not_recorded_locally",
+      "benchmark_scope": "matrix_seed_variant_future_comparison_axis"
+    },
+    {
+      "seed_variant_id": "evolutionary_approach_idea",
+      "idea_origin": "researcher_seeded_evolutionary_approach",
+      "paper_role": "one reported researcher idea class for improved matrix parameters",
+      "prompt_context_linkage": "not_recorded_locally",
+      "generation_zero_metric_linkage": "metadata_contract_only",
+      "equal_budget_result_table": "not_recorded_locally",
+      "human_contribution_review": "not_recorded_locally",
+      "benchmark_scope": "matrix_seed_variant_future_comparison_axis"
+    }
+  ],
+  "missing_evidence": {
+    "prompt_context_linkage": "not_recorded_locally",
+    "equal_budget_seed_variant_results": "not_recorded_locally",
+    "simple_random_researcher_comparison": "not_recorded_locally",
+    "matrix_seed_variant_result_tables": "not_recorded_locally",
+    "constructive_math_seed_variant_result_tables": "not_recorded_locally",
+    "human_contribution_review_or_signoff": "not_recorded_locally",
+    "alphaevolve_human_seeded_benchmark_parity": "not_recorded_locally"
+  },
+  "claim_boundary": "This matrix records paper-derived initial-program seed-variant families and comparison axes for future simple, random, and researcher-idea start comparisons. It does not claim prompt context linkage, equal-budget seed-variant result tables, matrix or constructive-math seed-variant reports, human contribution review/signoff, or AlphaEvolve human-seeded benchmark parity."
+}

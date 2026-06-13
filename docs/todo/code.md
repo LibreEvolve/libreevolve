@@ -385,11 +385,18 @@ sidecars, tests, and active TODOs.
     human-seeded benchmark parity false.
     `papers/initial_program_idea_provenance_boundary.json` now preserves this
     metadata-contract-only boundary as paper-manifest evidence.
+    `papers/initial_program_seed_variant_matrix.json` now records a design-
+    level comparison matrix for simple, random, researcher-idea, stochastic-
+    evaluation, and evolutionary-approach seed variants, including prompt-
+    context, generation-0 metric, equal-budget result, human-review, and
+    benchmark-scope axes, while explicitly marking those evidence classes as
+    not recorded locally.
   - Required result: add prompt/run linkage to exact rendered context,
-    benchmark-level seed-variant result tables, equal-budget comparisons of
-    simple/random/researcher-idea starts, matrix and constructive-math seed
-    variant reports, and human contribution review/signoff before claiming
-    AlphaEvolve-style collaboration or human-seeded matrix benchmark parity.
+    executed benchmark-level seed-variant result tables, equal-budget
+    comparisons of simple/random/researcher-idea starts, matrix and
+    constructive-math seed variant reports, and human contribution review/
+    signoff before claiming AlphaEvolve-style collaboration or human-seeded
+    matrix benchmark parity.
 
 - [ ] Add an AlphaEvolve-strict seed validity policy for complete initial
       programs.

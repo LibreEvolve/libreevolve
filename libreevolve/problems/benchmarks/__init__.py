@@ -722,6 +722,12 @@ from libreevolve.problems.benchmarks.initial_program_idea_provenance_boundary im
     render_initial_program_idea_provenance_boundary_summary,
     validate_initial_program_idea_provenance_boundary,
 )
+from libreevolve.problems.benchmarks.initial_program_seed_variants import (
+    INITIAL_PROGRAM_SEED_VARIANT_MATRIX_SCHEMA,
+    initial_program_seed_variant_matrix_record,
+    render_initial_program_seed_variant_matrix_summary,
+    validate_initial_program_seed_variant_matrix,
+)
 from libreevolve.problems.benchmarks.initial_program_validity_boundary import (
     INITIAL_PROGRAM_VALIDITY_BOUNDARY_SCHEMA,
     initial_program_validity_boundary_record,
@@ -890,6 +896,7 @@ __all__ = [
     "INCORRECT_SUGGESTION_AUDIT_BOUNDARY_SCHEMA",
     "INITIAL_POOL_DIVERGENCE_BOUNDARY_SCHEMA",
     "INITIAL_PROGRAM_IDEA_PROVENANCE_BOUNDARY_SCHEMA",
+    "INITIAL_PROGRAM_SEED_VARIANT_MATRIX_SCHEMA",
     "INITIAL_PROGRAM_VALIDITY_BOUNDARY_SCHEMA",
     "IMPROVEVOLVE_BOUNDARY_SCHEMA",
     "MADEVOLVE_BOUNDARY_SCHEMA",
@@ -1035,6 +1042,7 @@ __all__ = [
     "incorrect_suggestion_audit_boundary_record",
     "initial_pool_divergence_boundary_record",
     "initial_program_idea_provenance_boundary_record",
+    "initial_program_seed_variant_matrix_record",
     "initial_program_validity_boundary_record",
     "improvevolve_boundary_record",
     "llm_role_scheduler_boundary_record",
@@ -1175,6 +1183,7 @@ __all__ = [
     "render_incorrect_suggestion_audit_boundary_summary",
     "render_initial_pool_divergence_boundary_summary",
     "render_initial_program_idea_provenance_boundary_summary",
+    "render_initial_program_seed_variant_matrix_summary",
     "render_initial_program_validity_boundary_summary",
     "render_improvevolve_boundary_summary",
     "render_llm_role_scheduler_boundary_summary",
@@ -1321,6 +1330,7 @@ __all__ = [
     "validate_incorrect_suggestion_audit_boundary",
     "validate_initial_pool_divergence_boundary",
     "validate_initial_program_idea_provenance_boundary",
+    "validate_initial_program_seed_variant_matrix",
     "validate_initial_program_validity_boundary",
     "validate_improvevolve_boundary",
     "validate_llm_role_scheduler_boundary",

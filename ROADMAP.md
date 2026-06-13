@@ -299,9 +299,11 @@ LibreEvolve has:
 - runtime initial-program idea provenance reports under
   `runtime.history.initial_program_idea_provenance_report`, linking optional
   seed idea-origin metadata and seed variant ids from `problem.seed_sources` to
-  generation-0 history rows while leaving equal-budget seed-variant result
-  tables and human contribution signoff open, with
-  `papers/initial_program_idea_provenance_boundary.json` preserving the
+  generation-0 history rows; `papers/initial_program_seed_variant_matrix.json`
+  now records design-level simple/random/researcher/stochastic/evolutionary
+  seed-variant comparison axes while leaving executed equal-budget seed-variant
+  result tables, prompt-context linkage, and human contribution signoff open,
+  with `papers/initial_program_idea_provenance_boundary.json` preserving the
   paper-facing metadata-contract-only boundary
 - configurable initial-program validity policy with
   `runtime.history.initial_program_validity_report`, preserving permissive

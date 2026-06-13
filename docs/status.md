@@ -237,11 +237,13 @@ Important limits:
   benchmark evidence; that boundary is tracked by
   `papers/initial_pool_divergence_boundary.json`.
 - Initial-program idea provenance is optional seed metadata plus a generation-0
-  linkage report, not equal-budget seed-variant result tables, simple/random/
-  researcher-seed comparisons, prompt-context-to-seed linkage, human
-  contribution review/signoff, paper certification rows, or AlphaEvolve
-  human-seeded benchmark parity; that boundary is tracked by
-  `papers/initial_program_idea_provenance_boundary.json`.
+  linkage report and design-level seed-variant comparison matrix, not executed
+  equal-budget seed-variant result tables, simple/random/researcher-seed
+  comparisons, prompt-context-to-seed linkage, human contribution review/
+  signoff, paper certification rows, or AlphaEvolve human-seeded benchmark
+  parity; that boundary is tracked by
+  `papers/initial_program_idea_provenance_boundary.json` and
+  `papers/initial_program_seed_variant_matrix.json`.
 - Initial-program validity can be enforced with
   `initial_program_validity_policy: alphaevolve_strict`, but the default
   permissive baseline still records invalid seeds as diagnostics. The

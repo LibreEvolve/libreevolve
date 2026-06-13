@@ -941,26 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README Appendix B.1-B.3 autocorrelation wording scoped until
-      step-function provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B.1-B.3 reports three
-    autocorrelation/autoconvolution improvements: `600` equally-spaced
-    intervals on `[-1/4, 1/4]` for `C1 <= 1.5053`, `50` intervals on the same
-    domain for `0.8962 <= C2`, and `400` intervals on the same domain for
-    `C3 <= 1.4557`.
-  - Current evidence: README now says the Appendix B registry validates
-    B.1-B.3 step-function summary metadata: interval counts, common domain,
-    sign policy, bound direction, previous bound/source, and reported bound.
-    It also says each row has a validated `step_function_payload_boundary`
-    for the future payload hash, domain/spacing/sign-policy certificates,
-    verifier artifact, and recomputed-bound fields. The actual step-function
-    payloads and recomputation certificates remain absent.
-  - Required result: when Appendix B.1-B.3 autocorrelation metadata lands,
-    update README, ROADMAP, papers index, and code/paper TODOs together so
-    README names the three constants, step-function payload hashes, verifier
-    artifacts, and recomputed values without merging them into one generic
-    autocorrelation claim.
-
 - [x] Keep README Appendix B.1-B.3 labels scoped until paper-heading
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.1-B.3 are titled `First

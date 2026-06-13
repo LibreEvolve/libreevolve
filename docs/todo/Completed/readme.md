@@ -4,6 +4,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Appendix B.1-B.3 autocorrelation README boundary.
+  - Status: README Important limits now states that Appendix B.1-B.3
+    autocorrelation step-function provenance remains absent: the registry
+    preserves the paper-facing C1-C3 labels, interval counts, shared
+    `[-1/4, 1/4]` domain, sign policy, bound direction, previous bound/source,
+    and reported bounds (`C1 <= 1.5053`, `0.8962 <= C2`, and
+    `C3 <= 1.4557`), not local step-function payload hashes,
+    domain/spacing/sign-policy certificates, verifier artifacts, recomputed
+    bound rows, or recomputation certificates.
+  - Verification: Appendix B registry tests cover the exact labels, constants,
+    interval counts, common domain, step-function summary rows, and
+    `not_recorded_locally` payload boundaries; code and paper TODOs still
+    track the missing payload/verifier/recomputation artifacts.
+
 - [x] Document Appendix B numeric-result README boundary.
   - Status: README Important limits now states that Appendix B numeric-result
     provenance remains absent: the registry enumerates B.1-B.13 family/status

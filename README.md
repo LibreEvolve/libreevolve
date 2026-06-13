@@ -234,6 +234,13 @@ Important limits:
   values/sources, AlphaEvolve reported-value rows, source locations,
   construction-representation schemas, construction/verifier artifact hashes,
   result-version status, recomputed values, or recomputation status.
+- Appendix B.1-B.3 autocorrelation step-function provenance remains absent:
+  the registry preserves the paper-facing C1-C3 labels, interval counts,
+  shared `[-1/4, 1/4]` domain, sign policy, bound direction, previous
+  bound/source, and reported bounds (`C1 <= 1.5053`, `0.8962 <= C2`, and
+  `C3 <= 1.4557`), not local step-function payload hashes,
+  domain/spacing/sign-policy certificates, verifier artifacts, recomputed
+  bound rows, or recomputation certificates.
 - Matrix-publication evidence is one checked `mm_2x2x2` Strassen baseline
   bundle plus Appendix A registry/status metadata, not full-suite local target
   tensors, discovered decompositions, coefficient data, exactness certificates,

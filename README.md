@@ -248,6 +248,15 @@ Important limits:
   `4.165849767`), not coordinate payload hashes, point-count/dimension
   certificates, all-pairs distance matrix artifacts, min/max pair-witness
   certificates, recomputed squared-ratio rows, or Figure 12 panel artifacts.
+- Appendix B.5 Erdos minimum-overlap step-function provenance remains absent:
+  the registry preserves the source formulation, `[40]` equivalence,
+  normalized `[0, 2]` step-function reduction, Figure 10 result id, prior
+  `0.379005 <= C5 <= 0.380927` bounds, and reported `C5 <= 0.380924` upper
+  bound, not a step-function payload hash, original-formulation mapping
+  certificate, `[40]` equivalence-reference artifact, shift-domain
+  certificate, value-range or integral-normalization certificates,
+  shift-objective recomputation, recomputed upper bound, or Figure 10 panel
+  artifact.
 - Matrix-publication evidence is one checked `mm_2x2x2` Strassen baseline
   bundle plus Appendix A registry/status metadata, not full-suite local target
   tensors, discovered decompositions, coefficient data, exactness certificates,

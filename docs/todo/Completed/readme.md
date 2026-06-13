@@ -4,6 +4,23 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Appendix B.5 minimum-overlap README boundary.
+  - Status: README Important limits now states that Appendix B.5 Erdos
+    minimum-overlap step-function provenance remains absent: the registry
+    preserves the source formulation, `[40]` equivalence, normalized `[0, 2]`
+    step-function reduction, Figure 10 result id, prior
+    `0.379005 <= C5 <= 0.380927` bounds, and reported `C5 <= 0.380924` upper
+    bound, not a step-function payload hash, original-formulation mapping
+    certificate, `[40]` equivalence-reference artifact, shift-domain
+    certificate, value-range or integral-normalization certificates,
+    shift-objective recomputation, recomputed upper bound, or Figure 10 panel
+    artifact.
+  - Verification: Appendix B registry tests cover the B.5 source formulation,
+    `step_function_result_boundary`, required future payload fields, source
+    mapping consistency, result-bound ordering, artifact-schema metadata, and
+    `not_recorded_locally` overclaim guards; code and paper TODOs still track
+    the missing Figure 10 payload/certificate/recomputation/panel artifacts.
+
 - [x] Document Appendix B.8 point-set witness README boundary.
   - Status: README Important limits now states that Appendix B.8
     max/min-distance point-set witness provenance remains absent: the registry

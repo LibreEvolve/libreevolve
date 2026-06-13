@@ -16,6 +16,7 @@ def test_figure3_supervised_exhibit_boundary_accepts_absence_record():
     assert validation.required_evidence_field_count == 19
     assert validation.missing_evidence_count == 9
     assert boundary["schema"] == FIGURE3_SUPERVISED_EXHIBIT_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["2.3"]
     assert boundary["source_subfigure_ids"] == ["Figure 3a", "Figure 3b", "Figure 3c"]
     assert "does not claim reproduced Figure 3" in boundary["claim_boundary"]
 
@@ -24,6 +25,7 @@ def test_figure3_supervised_exhibit_boundary_rejects_premature_exhibit_claim():
     boundary = figure3_supervised_exhibit_boundary_record()
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "figure3_supervised_exhibit_reproduced"
+    boundary["source_section_ids"] = ["2.4"]
     boundary["missing_evidence"]["llm_output_excerpt_artifact"] = "recorded"
     boundary["required_evidence_fields"] = ["figure_id"]
 
@@ -33,6 +35,7 @@ def test_figure3_supervised_exhibit_boundary_rejects_premature_exhibit_claim():
     assert validation.ok is False
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert "invalid_missing_evidence_llm_output_excerpt_artifact" in codes
     assert "missing_required_evidence_field" in codes
 

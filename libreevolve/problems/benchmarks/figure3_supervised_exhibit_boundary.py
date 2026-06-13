@@ -10,6 +10,7 @@ FIGURE3_SUPERVISED_EXHIBIT_BOUNDARY_SCHEMA = (
     "libreevolve.alphaevolve_figure3_supervised_exhibit_boundary.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
+EXPECTED_SOURCE_SECTION_IDS = ("2.3",)
 EXPECTED_SOURCE_FIGURE_ID = "Figure 3"
 EXPECTED_SUBFIGURE_IDS = ("Figure 3a", "Figure 3b", "Figure 3c")
 EXPECTED_BOUNDARY_STATUS = "figure3_supervised_exhibit_not_reproduced"
@@ -77,6 +78,7 @@ def figure3_supervised_exhibit_boundary_record() -> dict[str, Any]:
     return {
         "schema": FIGURE3_SUPERVISED_EXHIBIT_BOUNDARY_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_figure_id": EXPECTED_SOURCE_FIGURE_ID,
         "source_subfigure_ids": list(EXPECTED_SUBFIGURE_IDS),
         "source_claim": (
@@ -115,6 +117,8 @@ def validate_figure3_supervised_exhibit_boundary(
         issues.append(_issue("invalid_schema", "unsupported Figure 3 supervised-exhibit boundary schema"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['2.3']"))
     if data.get("source_figure_id") != EXPECTED_SOURCE_FIGURE_ID:
         issues.append(_issue("invalid_source_figure_id", "source_figure_id must be Figure 3"))
     if data.get("source_subfigure_ids") != list(EXPECTED_SUBFIGURE_IDS):

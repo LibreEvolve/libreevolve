@@ -315,6 +315,25 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Remaining gap: actual independent audit and cross-run proposal lifecycle
     evidence remain open.
 
+- [x] Archive stale active roadmap execution-grounding wording TODO.
+  - Status: the active roadmap TODO for scoping execution-grounding and
+    incorrect-suggestion wording was stale. `ROADMAP.md`, README, and
+    `papers/README.md` already describe
+    `runtime.history.proposal_lifecycle_report` and
+    `runtime.history.incorrect_suggestion_audit_report` as local run telemetry,
+    with `papers/proposal_lifecycle_audit_boundary.json`,
+    `papers/incorrect_suggestion_audit_boundary.json`, and
+    `papers/failure_memory_boundary.json` preserving the independent rejudge,
+    reference/statistical-oracle sufficiency, cross-run proposal table,
+    semantic failed-proposal retrieval, audited false-acceptance/
+    false-rejection rate, and durable failure-memory gaps.
+  - Verification: `tests/test_proposal_lifecycle_audit_boundary.py`,
+    `tests/test_incorrect_suggestion_audit_boundary.py`,
+    `tests/test_failure_memory_boundary.py`, and `tests/test_paper_manifest.py`
+    validate the sidecars and reject publication-strength or semantic-memory
+    overclaims. The remaining AlphaEvolve implementation gaps stay represented
+    by paper/code TODO evidence rather than by this stale roadmap wording task.
+
 - [x] Emit candidate-abstraction boundary sidecar for roadmap evidence.
   - Status: `papers/candidate_abstraction_boundary.json` now lets roadmap
     wording point to a committed absence boundary for problem-defined

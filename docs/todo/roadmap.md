@@ -6,39 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Keep execution-grounding roadmap wording scoped until independent
-      incorrect-suggestion audit evidence exists.
-  - Spec evidence: AlphaEvolve's introduction says LLM-directed evolution is
-    grounded by code execution and automatic evaluation, and that this
-    mechanism avoids incorrect suggestions from the base LLM while letting
-    feedback drive candidates far from the initial pool.
-  - Current evidence: `ROADMAP.md`, README, and papers index now cite
-    `runtime.history.proposal_lifecycle_report`, a validated
-    `libreevolve.proposal_lifecycle_report.v1` runtime summary with proposal
-    id, backend/call summaries, mutation payload hash, evaluator validity,
-    archive admission/rejection, rejection reason, execution-filtered counts,
-    failure-memory linkage, and false-acceptance/false-rejection review
-    status. They also cite
-    `runtime.history.incorrect_suggestion_audit_report`, a validated
-    `libreevolve.incorrect_suggestion_audit_report.v1` runtime summary with
-    local accepted/rejected/execution-filtered counts, invalid-evaluation and
-    archive-rejection counts, local filter rates, bounded audit rows, and
-    false readiness for independent rejudge and audited error rates. The
-    wording explicitly keeps this as local execution-grounding evidence rather
-    than an independent audit. ROADMAP names
-    `papers/proposal_lifecycle_audit_boundary.json` as the committed
-    paper-manifest-validated independent-audit absence boundary and
-    `papers/incorrect_suggestion_audit_boundary.json` as the committed
-    incorrect-suggestion filtering absence boundary. ROADMAP now also ties
-    run-local failure diagnostics versus semantic failed-proposal memory to
-    `papers/failure_memory_boundary.json`.
-  - Required result: when independent rejudge/reference-checker or statistical
-    oracle reports land, update ROADMAP, README, papers index, and code/paper
-    TODOs with benchmark-specific evaluator-oracle sufficiency, cross-run
-    proposal lifecycle tables, semantic failed-proposal retrieval, and audited
-    false-acceptance/false-rejection rates before claiming publication-strength
-    AlphaEvolve-style filtering of incorrect base-LLM suggestions.
-
 - [ ] Keep cascade roadmap wording scoped to partial promotion/attrition
       reports.
   - Spec evidence: AlphaEvolve Section 2.4 says evaluation cascades can use

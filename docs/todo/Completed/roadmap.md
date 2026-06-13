@@ -2,6 +2,32 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive scheduling vector-bin-packing roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `docs/status.md`, `papers/README.md`, `docs/todo/code.md`, and
+    `docs/todo/papers.md` already scope Borg scheduling formulation to a
+    `scheduling_formulation` report contract, not proof of populated
+    Borg-style workload fixtures, simulator runs, or AlphaEvolve scheduling
+    problem setup.
+  - Current evidence: `libreevolve.systems_result_report.v1` requires
+    `scheduling_formulation` before accepting `alphaevolve_ready` scheduling
+    reports. The validator checks `online_vector_bin_packing`, machine/bin and
+    job/item roles, `stranded_resource_minimization`, CPU and memory resource
+    dimensions with capacity/required/free fields, workload and capacity
+    snapshot provenance, simulator input hashes, stranded-resource definition,
+    feature mapping, and artifact refs.
+  - Remaining guard: active code and paper TODOs still track real missing Borg
+    evidence: reviewed machine/bin and job/item schemas, CPU/memory units and
+    denominators, `required`/`free` feature definitions, workload/capacity
+    snapshot provenance, simulator input artifacts, source/page linkage,
+    paper-facing certification examples, and separation from ranking-only
+    safety, deployment metrics, and Figure 6 exhibit reproduction.
+  - Verification: focused systems-result tests reject ready scheduling reports
+    missing `scheduling_formulation`, missing CPU or memory dimensions, invalid
+    simulator input hashes, bad artifact refs, and scheduling-formulation blocks
+    on non-scheduling reports; systems-readiness boundary and paper-manifest
+    tests preserve the no-real-systems-fixtures boundary.
+
 - [x] Archive scheduling ranking-only feasibility roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `docs/status.md`, `papers/README.md`, `docs/todo/code.md`, and

@@ -10,26 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep scheduling roadmap wording scoped until vector-bin-packing
-      formulation evidence is populated.
-  - Spec evidence: AlphaEvolve Section 3.3.1 formulates Borg scheduling as an
-    online vector bin-packing problem: machines are bins with CPU and memory
-    capacity, pending jobs are items with CPU and memory requirements,
-    stranded resources motivate the objective, and simulator feedback is based
-    on historical workload and capacity snapshots.
-  - Current evidence: roadmap systems-result wording now names
-    `scheduling_formulation` records required for `alphaevolve_ready`
-    scheduling reports: CPU/memory bin-item schema, resource units, workload
-    and capacity snapshot identities, stranded-resource objective, simulator
-    input hashes, artifact refs, and mapping to the heuristic's `required` and
-    `free` features. Existing scheduling fixtures do not yet carry real
-    populated formulation records.
-  - Required result: when scheduling fixtures and certification examples
-    populate Borg-style scheduling formulation metadata, update ROADMAP,
-    README, papers index, and code/paper TODOs so roadmap text neither
-    underclaims the report contract nor overclaims AlphaEvolve-style scheduling
-    problem setup.
-
 - [ ] Keep scheduling roadmap wording scoped until
       interpretability/deployment-readiness evidence is populated.
   - Spec evidence: AlphaEvolve Section 3.3.1 says the scheduling heuristic was

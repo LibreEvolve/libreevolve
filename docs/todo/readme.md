@@ -9,39 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README workspace-topology diagnostics scoped to current
-  materialization and command preflight coverage.
-  - Spec evidence: AlphaEvolve-style codebase evolution should leave stable,
-    inspectable evaluator feedback for generated invalid artifacts, especially
-    as task-defined program artifacts and workspace surfaces grow beyond the
-    current local file-set prototype. The AlphaEvolve PDF describes
-    multi-component codebase evolution, larger-codebase diff-block sequences,
-    and entire-codebase evolution, so README wording needs to separate current
-    local file-workspace support from broader codebase parity.
-  - Current evidence: README documents that collision checks are still
-    incomplete while also describing rejected normalized path collisions,
-    case-folded host-path materialization preflights, structured
-    `materialization_error` evaluation results, bounded redacted diagnostics,
-    structured materialization `reason` and `paths`, exact snapshot
-    materialization, link/junction rejection, static source-copy verification,
-    and workspace topology command prevalidation for duplicate sources/targets,
-    edit/delete/move conflicts, chained operations, host/case-folded target
-    collisions, duplicate `PRIMARY` commands, and non-empty command bodies. It
-    also documents prompt controls for selecting and capping
-    materialization-error fields. These are current local-workspace
-    diagnostics, not proof of arbitrary-language, build-runner,
-    dependency-graph, or remote/container workspace parity. README Important
-    limits now scopes workspace topology and materialization diagnostics to
-    local file-workspace path/case-folding/source-copy preflights,
-    topology-command validation, and prompt-visible `materialization_error`
-    summaries.
-  - Required result: when future topology surfaces such as bulk directory
-    operations, language/build-runner generated artifacts, external
-    materialization paths, or richer artifact runners land, update README,
-    ROADMAP, papers index, and code/paper TODO entries together so README
-    neither underclaims current structured invalid-workspace feedback nor
-    overclaims robust AlphaEvolve-grade codebase-scale diagnostics.
-
 - [ ] Keep README code-scale claims scoped to current workspace support versus
       Table 1 parity.
   - Spec evidence: AlphaEvolve Table 1 claims evolution of entire code files,

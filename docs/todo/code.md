@@ -2076,9 +2076,10 @@ Primary evidence:
     now validates this as syntactic-and-metric telemetry only.
   - Required result: add evaluator-output or task-specific functional-
     difference artifacts, behavior/output-distance metrics, thresholds for
-    substantially different claims, and benchmark-level discovery-distance
-    telemetry before claiming AlphaEvolve-style functional discovery distance
-    from the starting pool.
+    substantially different claims, benchmark-level discovery-distance
+    telemetry, cross-run discovery-distance tables, and a syntax/function
+    joint claim gate before claiming AlphaEvolve-style functional discovery
+    distance from the starting pool.
 
 - [ ] Extend run-local duplicate-work cache into durable source/workspace
       deduplication policy.

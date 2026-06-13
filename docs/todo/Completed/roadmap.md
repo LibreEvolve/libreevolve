@@ -10459,6 +10459,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     focused initial-pool divergence tests reject functional discovery-distance
     overclaims.
 
+- [x] Keep discovery-distance roadmap wording scoped until functional
+      initial-pool divergence reports exist.
+  - Status: ROADMAP now separates current syntactic/shared-metric telemetry
+    from task-specific functional artifacts, evaluator-output distance,
+    behavior/output-distance metrics, substantially-different thresholds,
+    benchmark-level discovery-distance telemetry, cross-run discovery-distance
+    tables, and syntax/function joint claim gates.
+  - Remaining roadmap gap: functional discovery-distance evidence remains
+    tracked in active code and paper TODOs.
+
 - [x] Keep roadmap duplicate-work policy boundary tied to sidecar.
   - Status: ROADMAP now links
     `runtime.history.duplicate_work_policy_report` to

@@ -13793,6 +13793,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     focused initial-pool divergence tests reject functional discovery-distance
     overclaims.
 
+- [x] Keep README discovery-distance wording scoped until functional
+      initial-pool divergence evidence exists.
+  - Status: README now scopes initial-pool divergence reports as syntactic and
+    shared-metric telemetry, not task-specific functional-distance artifacts,
+    evaluator-output distance, behavior/output distance, substantially-
+    different threshold policy, benchmark-level discovery-distance telemetry,
+    cross-run discovery-distance tables, syntax/function joint claim gates, or
+    "substantially different" benchmark evidence.
+  - Verification: `papers/initial_pool_divergence_boundary.json` remains the
+    manifest-checked sidecar for that telemetry-only boundary, while code and
+    paper TODOs for functional discovery-distance evidence stay active.
+
 - [x] Keep README duplicate-work policy boundary tied to sidecar.
   - Status: README now states that duplicate-work reports are run-local
     exact-workspace cache diagnostics, not durable cross-run memory, semantic

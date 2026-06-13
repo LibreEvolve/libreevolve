@@ -91,24 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README discovery-distance wording scoped until functional
-      initial-pool divergence evidence exists.
-  - Spec evidence: AlphaEvolve's introduction says evolution can discover
-    candidates substantially different from the initial candidate pool in both
-    syntax and function.
-  - Current evidence: README now describes
-    `runtime.history.initial_pool_divergence_report`, which compares generated
-    candidates against generation-0 seed programs with canonical workspace
-    hashes, bounded primary-file text distance, changed-component summaries,
-    and numeric metric L1 distance over shared metric names. It should not
-    imply task-specific functional-distance proof or "substantially different"
-    discovery-distance readiness, and README now ties that boundary to
-    `papers/initial_pool_divergence_boundary.json`.
-  - Required result: when task-specific functional-distance evidence lands,
-    update README, ROADMAP, papers index, and code/paper TODO entries together
-    with behavior/output-distance metrics, evaluator-output artifacts,
-    substantially-different thresholds, and benchmark-level telemetry.
-
 - [ ] Keep README/AGENTS failure-memory claims scoped to run-local diagnostics.
   - Spec evidence: AlphaEvolve-style repeated-mutation avoidance should be able
     to reuse failed-proposal evidence across runs through durable, searchable,

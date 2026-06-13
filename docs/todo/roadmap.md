@@ -1356,23 +1356,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `papers/artifact_index_boundary.json`, keeping durable full-content or
     semantic artifact search open.
 
-- [ ] Keep discovery-distance roadmap wording scoped until functional
-      initial-pool divergence reports exist.
-  - Spec evidence: AlphaEvolve's introduction says feedback-driven evolution
-    can produce candidates substantially different from the initial candidate
-    pool in syntax and function.
-  - Current evidence: `ROADMAP.md` now cites
-    `runtime.history.initial_pool_divergence_report` for seed-vs-generated
-    canonical workspace hashes, bounded primary-file text distance,
-    changed-file summaries, and numeric metric L1 evidence. It does not yet
-    promise task-specific functional-distance reports or readiness for
-    substantially different discovery-distance claims, and ROADMAP now ties
-    that scope to `papers/initial_pool_divergence_boundary.json`.
-  - Required result: add task-specific functional artifacts,
-    behavior/output-distance metrics, thresholds for substantially different
-    claims, and benchmark-level discovery-distance telemetry before using
-    AlphaEvolve-style functional discovery-distance claims.
-
 - [ ] Keep meta-prompt context-policy roadmap wording scoped to validated
   current fields.
   - Spec evidence: AlphaEvolve-style meta-prompt evolution should improve both

@@ -452,9 +452,10 @@ is not yet an AlphaEvolve reproduction.
 - Extend `runtime.history.initial_pool_divergence_report` beyond current
   seed-vs-generated workspace hash, bounded primary-file text distance,
   changed-file summary, and numeric metric L1 evidence into task-specific
-  functional artifacts, behavior/output-distance metrics, thresholds for
-  substantially different claims, and benchmark-level discovery-distance
-  telemetry. The committed
+  functional artifacts, evaluator-output distance metrics, behavior/output-
+  distance metrics, thresholds for substantially different claims,
+  benchmark-level discovery-distance telemetry, cross-run discovery-distance
+  tables, and syntax/function joint claim gates. The committed
   `papers/initial_pool_divergence_boundary.json` sidecar keeps the current
   syntactic-and-metric-telemetry-only scope machine-validated.
 - Extend binary/static candidate handling beyond the current bounded encoded

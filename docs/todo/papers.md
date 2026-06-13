@@ -1705,11 +1705,14 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current gap: paper-facing evidence still does not include evaluator-output
     distance, task-specific functional-difference artifacts, behavior/output
     distance, or thresholds proving that accepted candidates moved
-    substantially away from the starting pool in function.
+    substantially away from the starting pool in function. It also lacks
+    cross-run discovery-distance tables and a syntax/function joint claim gate.
   - Required result: add functional-difference artifacts, behavior/output-
-    distance metrics, thresholds for "substantially different" claims, and
-    benchmark-level discovery-distance telemetry before using AlphaEvolve-style
-    functional discovery-distance wording.
+    distance metrics, evaluator-output distance metrics, thresholds for
+    "substantially different" claims, benchmark-level discovery-distance
+    telemetry, cross-run discovery-distance tables, and a syntax/function joint
+    claim gate before using AlphaEvolve-style functional discovery-distance
+    wording.
 
 - [ ] Extend run-local duplicate-work cache into durable paper-visible memory.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.5.

@@ -187,7 +187,10 @@ Important limits:
   AlphaEvolve-style selection tests; that boundary is tracked by
   `papers/adaptive_mutation_mode_boundary.json`.
 - Initial-pool divergence reports are syntactic and shared-metric telemetry,
-  not task-specific functional-distance proof or "substantially different"
+  not task-specific functional-distance artifacts, evaluator-output distance,
+  behavior/output distance, substantially-different threshold policy,
+  benchmark-level discovery-distance telemetry, cross-run discovery-distance
+  tables, syntax/function joint claim gates, or "substantially different"
   benchmark evidence; that boundary is tracked by
   `papers/initial_pool_divergence_boundary.json`.
 - Initial-program idea provenance is optional seed metadata plus a generation-0

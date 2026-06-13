@@ -41,20 +41,23 @@ Primary evidence:
     arbitrary-language and build-system runner contracts, metadata-only
     `candidate_language_runners` and `candidate_build_systems` declarations
     when configured, `runner_declaration_evidence` counts/status records,
-    current-Python-runner environment linkage under
-    `runner_environment_provenance`, unsupported task candidate-abstraction
-    hooks, and the exact remaining executable-contract gaps before
+    bounded retained-workspace path-match records under
+    `runner_declaration_workspace_evidence`, current-Python-runner
+    environment linkage under `runner_environment_provenance`, unsupported
+    task candidate-abstraction hooks, and the exact remaining
+    executable-contract gaps before
     AlphaEvolve-style language/build parity.
     The committed
     `papers/candidate_language_runner_boundary.json` sidecar now records the
     paper-manifest-validated arbitrary-language/build-runner execution absence
     boundary.
-  - Required result: turn metadata declarations into executable language and
-    build runner contracts, add language-aware evolve-block grammars, and add
-    problem-defined candidate abstraction hooks before claiming non-Python or
-    arbitrary-codebase AlphaEvolve fidelity. The remaining gap is implementing
-    those runners and abstractions, not making the current Python-only
-    divergence manifest-visible.
+  - Required result: turn metadata declarations and retained-workspace path
+    matches into executable language and build runner contracts, add
+    language-aware evolve-block grammars, and add problem-defined candidate
+    abstraction hooks before claiming non-Python or arbitrary-codebase
+    AlphaEvolve fidelity. The remaining gap is implementing those runners and
+    abstractions, not making the current Python-only divergence
+    manifest-visible.
 
 - [ ] Extend existing-codebase minimal-marker integration provenance beyond
       runtime workspace evidence.

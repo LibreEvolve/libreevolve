@@ -9,6 +9,7 @@ import builtins
 from collections.abc import Callable, Mapping
 import copy
 import difflib
+import fnmatch
 import hashlib
 import inspect
 import json
@@ -5503,7 +5504,8 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         ),
         "candidate_language_runner_contract_report": (
             _candidate_language_runner_contract_report(
-                db.startup_manifest_snapshot()
+                db.startup_manifest_snapshot(),
+                programs,
             )
         ),
         "marker_spelling_provenance_report": (
@@ -10654,6 +10656,7 @@ def _candidate_abstraction_choice_report(
 
 def _candidate_language_runner_contract_report(
     startup_manifest: Mapping[str, object],
+    programs: list[Program],
 ) -> dict:
     policies = (
         startup_manifest.get("policies")
@@ -10766,6 +10769,13 @@ def _candidate_language_runner_contract_report(
             _candidate_runner_declaration_evidence(
                 language_runner_declarations,
                 build_system_declarations,
+            )
+        ),
+        "runner_declaration_workspace_evidence": (
+            _candidate_runner_declaration_workspace_evidence(
+                language_runner_declarations,
+                build_system_declarations,
+                programs,
             )
         ),
         "runner_environment_provenance": (
@@ -10893,6 +10903,105 @@ def _candidate_runner_declaration_evidence(
     }
 
 
+def _candidate_runner_declaration_workspace_evidence(
+    language_runner_declarations: list[dict],
+    build_system_declarations: list[dict],
+    programs: list[Program],
+) -> dict:
+    workspace_paths = sorted(
+        {
+            path
+            for program in programs
+            for path in program.workspace().files
+            if isinstance(path, str)
+        }
+    )
+    language_matches = [
+        _candidate_runner_workspace_match_record(
+            "language",
+            record.get("language"),
+            record.get("file_patterns", []),
+            workspace_paths,
+        )
+        for record in language_runner_declarations
+        if isinstance(record, Mapping)
+    ]
+    build_matches = [
+        _candidate_runner_workspace_match_record(
+            "build_system",
+            record.get("name"),
+            record.get("build_files", []),
+            workspace_paths,
+        )
+        for record in build_system_declarations
+        if isinstance(record, Mapping)
+    ]
+    matched_language_count = sum(
+        1 for record in language_matches if record["match_status"] == "matched"
+    )
+    matched_build_count = sum(
+        1 for record in build_matches if record["match_status"] == "matched"
+    )
+    declaration_count = len(language_matches) + len(build_matches)
+    return {
+        "schema": "libreevolve.candidate_runner_declaration_workspace_evidence.v1",
+        "source": "retained_candidate_workspace_file_paths",
+        "program_count": len(programs),
+        "workspace_file_path_count": len(workspace_paths),
+        "workspace_file_path_limit": 100,
+        "workspace_file_paths": workspace_paths[:100],
+        "workspace_file_paths_truncated": len(workspace_paths) > 100,
+        "language_runner_matches": language_matches,
+        "build_system_matches": build_matches,
+        "matched_language_runner_declaration_count": matched_language_count,
+        "matched_build_system_declaration_count": matched_build_count,
+        "declaration_workspace_status": (
+            "matched_declared_workspace_files"
+            if matched_language_count or matched_build_count
+            else (
+                "declared_metadata_without_workspace_file_match"
+                if declaration_count
+                else "not_configured"
+            )
+        ),
+        "execution_status": "unsupported",
+    }
+
+
+def _candidate_runner_workspace_match_record(
+    record_kind: str,
+    record_id: object,
+    patterns: object,
+    workspace_paths: list[str],
+) -> dict:
+    pattern_list = [pattern for pattern in patterns if isinstance(pattern, str)]
+    matched_paths = sorted(
+        {
+            path
+            for path in workspace_paths
+            for pattern in pattern_list
+            if fnmatch.fnmatchcase(path, pattern)
+        }
+    )
+    return {
+        f"{record_kind}_id": record_id if isinstance(record_id, str) else None,
+        "patterns": pattern_list,
+        "matched_paths": matched_paths[:50],
+        "matched_path_count": len(matched_paths),
+        "matched_paths_truncated": len(matched_paths) > 50,
+        "match_status": (
+            "matched"
+            if matched_paths
+            else (
+                "no_patterns_declared"
+                if not pattern_list
+                else "no_matching_workspace_files"
+            )
+        ),
+        "execution_status": "unsupported",
+    }
+
+
 def validate_candidate_language_runner_contract_report(report: object) -> dict:
     issues: list[dict] = []
     schema = "libreevolve.candidate_language_runner_contract_report.v1"
@@ -10916,6 +11025,7 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
         "declared_language_runner_records",
         "declared_build_system_records",
         "runner_declaration_evidence",
+        "runner_declaration_workspace_evidence",
         "runner_environment_provenance",
         "task_candidate_abstraction_hooks",
         "alphaevolve_contract_gap",
@@ -11128,6 +11238,21 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
             declared_build_systems,
             issues,
         )
+    workspace_evidence = report.get("runner_declaration_workspace_evidence")
+    if not isinstance(workspace_evidence, Mapping):
+        issues.append(
+            {
+                "code": "invalid_runner_declaration_workspace_evidence",
+                "message": "runner_declaration_workspace_evidence must be an object",
+            }
+        )
+    else:
+        _validate_candidate_runner_declaration_workspace_evidence(
+            workspace_evidence,
+            declared_language_runners,
+            declared_build_systems,
+            issues,
+        )
     environment_provenance = report.get("runner_environment_provenance")
     if not isinstance(environment_provenance, Mapping):
         issues.append(
@@ -11324,6 +11449,245 @@ def _validate_candidate_runner_declaration_evidence(
                 "message": "generated build artifact records must remain not_recorded",
             }
         )
+
+
+def _validate_candidate_runner_declaration_workspace_evidence(
+    evidence: Mapping[str, object],
+    declared_language_runners: list[object],
+    declared_build_systems: list[object],
+    issues: list[dict],
+) -> None:
+    if (
+        evidence.get("schema")
+        != "libreevolve.candidate_runner_declaration_workspace_evidence.v1"
+    ):
+        issues.append(
+            {
+                "code": "invalid_runner_declaration_workspace_evidence_schema",
+                "message": "runner declaration workspace evidence schema is unsupported",
+            }
+        )
+    if evidence.get("source") != "retained_candidate_workspace_file_paths":
+        issues.append(
+            {
+                "code": "invalid_runner_declaration_workspace_evidence_source",
+                "message": "runner declaration workspace evidence source is unsupported",
+            }
+        )
+    for field in ("program_count", "workspace_file_path_count"):
+        value = evidence.get(field)
+        if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    path_limit = evidence.get("workspace_file_path_limit")
+    if not isinstance(path_limit, int) or isinstance(path_limit, bool) or path_limit <= 0:
+        issues.append(
+            {
+                "code": "invalid_workspace_file_path_limit",
+                "message": "workspace_file_path_limit must be a positive integer",
+            }
+        )
+    paths = evidence.get("workspace_file_paths")
+    if not isinstance(paths, list) or not all(isinstance(path, str) and path for path in paths):
+        issues.append(
+            {
+                "code": "invalid_workspace_file_paths",
+                "message": "workspace_file_paths must be a list of path labels",
+            }
+        )
+        paths = []
+    if evidence.get("workspace_file_paths_truncated") not in {True, False}:
+        issues.append(
+            {
+                "code": "invalid_workspace_file_paths_truncated",
+                "message": "workspace_file_paths_truncated must be boolean",
+            }
+        )
+    language_matches = evidence.get("language_runner_matches")
+    build_matches = evidence.get("build_system_matches")
+    if not isinstance(language_matches, list):
+        issues.append(
+            {
+                "code": "invalid_language_runner_workspace_matches",
+                "message": "language_runner_matches must be a list",
+            }
+        )
+        language_matches = []
+    if not isinstance(build_matches, list):
+        issues.append(
+            {
+                "code": "invalid_build_system_workspace_matches",
+                "message": "build_system_matches must be a list",
+            }
+        )
+        build_matches = []
+    language_ids = sorted(
+        record.get("language")
+        for record in declared_language_runners
+        if isinstance(record, Mapping) and isinstance(record.get("language"), str)
+    )
+    build_ids = sorted(
+        record.get("name")
+        for record in declared_build_systems
+        if isinstance(record, Mapping) and isinstance(record.get("name"), str)
+    )
+    _validate_candidate_runner_workspace_match_records(
+        "language",
+        language_matches,
+        language_ids,
+        issues,
+    )
+    _validate_candidate_runner_workspace_match_records(
+        "build_system",
+        build_matches,
+        build_ids,
+        issues,
+    )
+    matched_language_count = sum(
+        1
+        for record in language_matches
+        if isinstance(record, Mapping) and record.get("match_status") == "matched"
+    )
+    matched_build_count = sum(
+        1
+        for record in build_matches
+        if isinstance(record, Mapping) and record.get("match_status") == "matched"
+    )
+    if evidence.get("matched_language_runner_declaration_count") != matched_language_count:
+        issues.append(
+            {
+                "code": "matched_language_runner_declaration_count_mismatch",
+                "message": "matched language declaration count must match match records",
+            }
+        )
+    if evidence.get("matched_build_system_declaration_count") != matched_build_count:
+        issues.append(
+            {
+                "code": "matched_build_system_declaration_count_mismatch",
+                "message": "matched build declaration count must match match records",
+            }
+        )
+    expected_status = (
+        "matched_declared_workspace_files"
+        if matched_language_count or matched_build_count
+        else (
+            "declared_metadata_without_workspace_file_match"
+            if language_ids or build_ids
+            else "not_configured"
+        )
+    )
+    if evidence.get("declaration_workspace_status") != expected_status:
+        issues.append(
+            {
+                "code": "invalid_declaration_workspace_status",
+                "message": "declaration workspace status must match declaration and path matches",
+            }
+        )
+    if evidence.get("execution_status") != "unsupported":
+        issues.append(
+            {
+                "code": "runner_workspace_execution_overclaim",
+                "message": "runner declaration workspace evidence must not claim execution support",
+            }
+        )
+
+
+def _validate_candidate_runner_workspace_match_records(
+    record_kind: str,
+    records: list[object],
+    expected_ids: list[str],
+    issues: list[dict],
+) -> None:
+    id_field = f"{record_kind}_id"
+    seen_ids = sorted(
+        record.get(id_field)
+        for record in records
+        if isinstance(record, Mapping) and isinstance(record.get(id_field), str)
+    )
+    if seen_ids != expected_ids:
+        issues.append(
+            {
+                "code": f"{record_kind}_workspace_match_ids_mismatch",
+                "message": f"{record_kind} workspace match ids must match declared records",
+            }
+        )
+    for index, record in enumerate(records):
+        if not isinstance(record, Mapping):
+            issues.append(
+                {
+                    "code": f"invalid_{record_kind}_workspace_match_record",
+                    "message": f"{record_kind} workspace match records must be objects",
+                }
+            )
+            continue
+        patterns = record.get("patterns")
+        if not isinstance(patterns, list) or not all(
+            isinstance(pattern, str) and pattern for pattern in patterns
+        ):
+            issues.append(
+                {
+                    "code": f"invalid_{record_kind}_workspace_match_patterns",
+                    "message": f"{record_kind} workspace match patterns must be path labels",
+                }
+            )
+        matched_paths = record.get("matched_paths")
+        if not isinstance(matched_paths, list) or not all(
+            isinstance(path, str) and path for path in matched_paths
+        ):
+            issues.append(
+                {
+                    "code": f"invalid_{record_kind}_workspace_match_paths",
+                    "message": f"{record_kind} workspace match paths must be path labels",
+                }
+            )
+            matched_paths = []
+        matched_path_count = record.get("matched_path_count")
+        if (
+            record.get("matched_paths_truncated") is True
+            and (
+                not isinstance(matched_path_count, int)
+                or isinstance(matched_path_count, bool)
+                or matched_path_count < len(matched_paths)
+            )
+        ) or (
+            record.get("matched_paths_truncated") is not True
+            and matched_path_count != len(matched_paths)
+        ):
+            issues.append(
+                {
+                    "code": f"{record_kind}_workspace_match_count_mismatch",
+                    "message": f"{record_kind} workspace match count must match paths",
+                }
+            )
+        if record.get("matched_paths_truncated") not in {True, False}:
+            issues.append(
+                {
+                    "code": f"invalid_{record_kind}_workspace_match_truncation",
+                    "message": f"{record_kind} workspace match truncation must be boolean",
+                }
+            )
+        if record.get("match_status") not in {
+            "matched",
+            "no_patterns_declared",
+            "no_matching_workspace_files",
+        }:
+            issues.append(
+                {
+                    "code": f"invalid_{record_kind}_workspace_match_status",
+                    "message": f"{record_kind} workspace match status is unsupported",
+                }
+            )
+        if record.get("execution_status") != "unsupported":
+            issues.append(
+                {
+                    "code": f"{record_kind}_workspace_execution_overclaim",
+                    "message": f"{record_kind} workspace match {index} must not claim execution support",
+                }
+            )
 
 
 def _validate_candidate_runner_environment_provenance(

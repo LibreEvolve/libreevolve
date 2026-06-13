@@ -253,6 +253,26 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     environment/artifact provenance, and task-defined abstraction hooks remain
     absent.
 
+- [x] Record workspace-match evidence for declared candidate language/build
+      metadata.
+  - Paper evidence: AlphaEvolve Sections 2.1-2.2 make the task artifact and
+    evaluator interface part of the problem contract, so paper-facing runner
+    declarations need evidence that their file patterns map to actual
+    candidate workspace paths.
+  - Status: completed manifests now include
+    `runtime.history.candidate_language_runner_contract_report.runner_declaration_workspace_evidence`,
+    with bounded retained-workspace paths, language/build declaration match
+    records, matched-declaration counts, and explicit unsupported execution
+    status. `papers/candidate_language_runner_boundary.json` now records that
+    this improves metadata evidence without claiming executable non-Python or
+    build-runner support.
+  - Verification: focused candidate-runner loop tests and
+    `tests\core\test_config.py tests\test_candidate_language_runner_boundary.py`
+    passed.
+  - Remaining paper gap: executable non-Python/build runners, language-aware
+    marker grammars, arbitrary-runner environment/artifact provenance, and
+    task-defined abstraction hooks remain absent.
+
 - [x] Emit Figure 1/Figure 2 process-exhibit boundary sidecar.
   - Paper evidence: AlphaEvolve Figure 1 and Figure 2 define the paper's
     high-level discovery process and expanded controller flow.

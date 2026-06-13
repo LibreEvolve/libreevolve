@@ -4659,6 +4659,22 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Remaining gap: none for roadmap scoping; actual non-Python/build-system
     runner implementation remains active in code/paper TODOs.
 
+- [x] Keep candidate-runner roadmap wording aligned with retained-workspace
+      declaration-match evidence.
+  - Spec evidence: AlphaEvolve Sections 2.1-2.2 make language/build/evaluator
+    contracts task-defined, so roadmap wording should separate declaration
+    metadata, workspace-file evidence, and actual execution support.
+  - Status: ROADMAP now states that
+    `runtime.history.candidate_language_runner_contract_report` includes
+    bounded `runner_declaration_workspace_evidence` path-match records against
+    retained candidate workspaces, while executable non-Python/build runner
+    contracts remain absent.
+  - Verification: focused candidate-runner loop tests and
+    `tests\core\test_config.py tests\test_candidate_language_runner_boundary.py`
+    passed.
+  - Remaining gap: none for roadmap scoping; actual non-Python/build-system
+    runner implementation remains active in code/paper TODOs.
+
 - [x] Keep roadmap backlog-integrity wording scoped until stale absence prose
       is detected inside TODO bodies.
   - Spec evidence: ROADMAP planning depends on active TODO entries as a

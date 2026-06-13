@@ -7292,6 +7292,17 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
         "runner_environment_artifacts": "not_recorded",
         "generated_build_artifact_records": "not_recorded",
     }
+    workspace_evidence = report["runner_declaration_workspace_evidence"]
+    assert workspace_evidence["schema"] == (
+        "libreevolve.candidate_runner_declaration_workspace_evidence.v1"
+    )
+    assert workspace_evidence["source"] == "retained_candidate_workspace_file_paths"
+    assert workspace_evidence["program_count"] == 1
+    assert workspace_evidence["workspace_file_paths"] == ["main.py"]
+    assert workspace_evidence["language_runner_matches"] == []
+    assert workspace_evidence["build_system_matches"] == []
+    assert workspace_evidence["declaration_workspace_status"] == "not_configured"
+    assert workspace_evidence["execution_status"] == "unsupported"
     environment_provenance = report["runner_environment_provenance"]
     assert environment_provenance["schema"] == (
         "libreevolve.candidate_runner_environment_provenance.v1"
@@ -7350,6 +7361,18 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
     edited["runner_declaration_evidence"]["generated_build_artifact_records"] = (
         "recorded"
     )
+    edited["runner_declaration_workspace_evidence"]["execution_status"] = "supported"
+    edited["runner_declaration_workspace_evidence"]["language_runner_matches"] = [
+        {
+            "language_id": "rust",
+            "patterns": ["src/*.rs"],
+            "matched_paths": ["src/lib.rs"],
+            "matched_path_count": 1,
+            "matched_paths_truncated": False,
+            "match_status": "matched",
+            "execution_status": "supported",
+        }
+    ]
     edited["runner_environment_provenance"][
         "arbitrary_language_runner_environment_artifacts"
     ] = "recorded"
@@ -7372,6 +7395,8 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
         "runner_declaration_execution_overclaim",
         "runner_environment_artifacts_overclaim",
         "generated_build_artifact_records_overclaim",
+        "runner_workspace_execution_overclaim",
+        "language_workspace_execution_overclaim",
         "arbitrary_runner_environment_overclaim",
         "build_runner_environment_overclaim",
         "runner_environment_replay_overclaim",
@@ -7382,9 +7407,20 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
 
 def test_runtime_history_reports_declared_candidate_language_runner_metadata():
     tmpdir = tempfile.mkdtemp()
+    problem = _problem()
+    problem.initial_workspaces = [
+        CandidateWorkspace(
+            files={
+                "main.py": "x = 1\n",
+                "src/lib.rs": "pub fn score() -> i32 { 1 }\n",
+                "Cargo.toml": "[package]\nname = \"fixture\"\nversion = \"0.1.0\"\n",
+            },
+            primary_file="main.py",
+        )
+    ]
 
     evolve(
-        _problem(),
+        problem,
         Config(
             max_generations=0,
             log_dir=tmpdir,
@@ -7436,6 +7472,39 @@ def test_runtime_history_reports_declared_candidate_language_runner_metadata():
     assert declaration_evidence["execution_status"] == "unsupported"
     assert declaration_evidence["runner_environment_artifacts"] == "not_recorded"
     assert declaration_evidence["generated_build_artifact_records"] == "not_recorded"
+    workspace_evidence = report["runner_declaration_workspace_evidence"]
+    assert workspace_evidence["workspace_file_paths"] == [
+        "Cargo.toml",
+        "main.py",
+        "src/lib.rs",
+    ]
+    assert workspace_evidence["declaration_workspace_status"] == (
+        "matched_declared_workspace_files"
+    )
+    assert workspace_evidence["matched_language_runner_declaration_count"] == 1
+    assert workspace_evidence["matched_build_system_declaration_count"] == 1
+    assert workspace_evidence["language_runner_matches"] == [
+        {
+            "language_id": "rust",
+            "patterns": ["src/*.rs"],
+            "matched_paths": ["src/lib.rs"],
+            "matched_path_count": 1,
+            "matched_paths_truncated": False,
+            "match_status": "matched",
+            "execution_status": "unsupported",
+        }
+    ]
+    assert workspace_evidence["build_system_matches"] == [
+        {
+            "build_system_id": "cargo",
+            "patterns": ["Cargo.toml"],
+            "matched_paths": ["Cargo.toml"],
+            "matched_path_count": 1,
+            "matched_paths_truncated": False,
+            "match_status": "matched",
+            "execution_status": "unsupported",
+        }
+    ]
     environment_provenance = report["runner_environment_provenance"]
     assert environment_provenance["current_python_runner_environment"]["status"] == (
         "recorded"

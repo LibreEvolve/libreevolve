@@ -880,9 +880,11 @@ the current Python subprocess validator runner contract, non-Python text files
 as workspace-only/no-runner members, unsupported arbitrary-language and
 build-system runner contracts, metadata-only `candidate_language_runners` and
 `candidate_build_systems` declarations when configured, declaration-evidence
-counts/status under `runner_declaration_evidence`, current-Python-runner
-environment linkage under `runner_environment_provenance`, unsupported task
-candidate-abstraction hooks, and the remaining contract gaps for executing
+counts/status under `runner_declaration_evidence`, bounded retained-workspace
+path-match evidence under `runner_declaration_workspace_evidence`,
+current-Python-runner environment linkage under
+`runner_environment_provenance`, unsupported task candidate-abstraction hooks,
+and the remaining contract gaps for executing
 declared non-Python/build runners, language-aware evolve-block grammars,
 build-system runners, task-defined abstraction hooks, and arbitrary-runner
 environment/artifact provenance. The committed

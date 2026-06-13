@@ -16,7 +16,7 @@ def test_candidate_language_runner_boundary_accepts_absence_record():
         validation.boundary_status
         == "python_primary_without_arbitrary_language_runner_evidence"
     )
-    assert validation.required_evidence_field_count == 15
+    assert validation.required_evidence_field_count == 16
     assert validation.missing_evidence_count == 7
     assert boundary["schema"] == CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_SCHEMA
     assert "does not claim AlphaEvolve-style arbitrary language" in (
@@ -52,5 +52,5 @@ def test_render_candidate_language_runner_boundary_summary_reports_shape():
         "| boundary_status | python_primary_without_arbitrary_language_runner_evidence |"
         in summary
     )
-    assert "| required_evidence_field_count | 15 |" in summary
+    assert "| required_evidence_field_count | 16 |" in summary
     assert "| missing_evidence_count | 7 |" in summary

@@ -26,6 +26,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "build_command",
     "runtime_command",
     "dependency_manifest",
+    "declared_workspace_path_match",
     "generated_artifact_path",
     "generated_artifact_hash",
     "language_runner_ready",
@@ -35,10 +36,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 )
 EXPECTED_MISSING_EVIDENCE = {
     "configured_non_python_language_runners": (
-        "metadata_declarations_recorded_execution_not_supported"
+        "metadata_declarations_and_workspace_matches_recorded_execution_not_supported"
     ),
     "build_system_runner_contracts": (
-        "metadata_declarations_recorded_runner_contract_not_supported"
+        "metadata_declarations_and_workspace_matches_recorded_runner_contract_not_supported"
     ),
     "language_aware_marker_grammars": "not_recorded_locally",
     "arbitrary_language_validator_contracts": "not_recorded_locally",
@@ -86,12 +87,13 @@ def candidate_language_runner_boundary_record() -> dict[str, Any]:
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
-            "This boundary records that LibreEvolve has a validated "
-            "Python-primary candidate-language policy and runtime runner "
-            "contract report with metadata-only non-Python language and build "
-            "declaration evidence when configured and current Python-runner "
-            "environment linkage, but does not claim AlphaEvolve-style "
-            "arbitrary language or build-system runner execution evidence with "
+        "This boundary records that LibreEvolve has a validated "
+        "Python-primary candidate-language policy and runtime runner "
+        "contract report with metadata-only non-Python language and build "
+        "declaration evidence plus retained-workspace path-match evidence "
+        "when configured and current Python-runner environment linkage, but "
+        "does not claim AlphaEvolve-style "
+        "arbitrary language or build-system runner execution evidence with "
             "language-aware marker grammars, executable build contracts, "
             "task-defined abstraction hooks, arbitrary-runner environment "
             "artifacts, or generated build artifacts."

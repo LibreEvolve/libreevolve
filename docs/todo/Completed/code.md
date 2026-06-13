@@ -289,6 +289,25 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     grammars, runner environment/artifact provenance, and task-defined
     abstraction hooks remain open.
 
+- [x] Add retained-workspace path-match evidence for declared candidate
+      language/build metadata.
+  - Spec evidence: AlphaEvolve Sections 2.1-2.2 require task-defined program
+    artifact and evaluator contracts, so metadata-only runner declarations
+    should be tied to observed workspace files before they can support
+    paper-facing implementation claims.
+  - Status: `runtime.history.candidate_language_runner_contract_report` now
+    includes `runner_declaration_workspace_evidence`, a bounded report over
+    retained candidate workspace paths. It records language-runner
+    `file_patterns` and build-system `build_files` matches, counts matched
+    declarations, distinguishes no-declaration/no-match/matched states, and
+    keeps every declaration match `execution_status: unsupported`.
+  - Verification: focused candidate-runner loop tests and
+    `tests\core\test_config.py tests\test_candidate_language_runner_boundary.py`
+    passed.
+  - Remaining gap: executable non-Python language runners, build-system
+    runners, language-aware marker grammars, runner environment/artifact
+    provenance, and task-defined abstraction hooks remain open.
+
 - [x] Emit Figure 1/Figure 2 process-exhibit boundary sidecar.
   - Spec evidence: AlphaEvolve Figure 1 shows the high-level discovery loop,
     and Figure 2 expands it into database sampling, prompt construction, LLM

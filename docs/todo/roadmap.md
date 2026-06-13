@@ -10,34 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep evaluation-cascade roadmap wording scoped to staged thresholds until
-      statistical hypothesis-test promotion evidence lands.
-  - Spec evidence: AlphaEvolve Section 2.4 calls the cascade "hypothesis
-    testing", with small-scale evaluations filtering candidates before harder
-    main test cases, and Section 3.1 evaluates randomized tensor-decomposition
-    runs where seed-dependent evidence matters.
-  - Current evidence: `ROADMAP.md` accurately tracks configurable staged
-    validators, thresholds, samples, retries, budgets, and the need to expand
-    evaluation cascades. Current code and tests cover deterministic threshold
-    gates, per-seed samples, and budget diagnostics. ROADMAP now also lists
-    `runtime.history.cascade_hypothesis_test_policy_report`, which records
-    configured or fallback-inferred small-scale/main-test roles, deterministic
-    threshold/artifact promotion, and configured
-    `one_sided_lower_confidence_bound` gates with retained observations,
-    confidence-bound evidence, p-values, and optional sequential early-stop
-    diagnostics. ROADMAP also records configured normal-approximation
-    false-promotion/false-rejection budget evidence and
-    `binomial_success_rate` Wilson-bound repeated-seed gates.
-    `papers/cascade_hypothesis_test_boundary.json` now validates that this is
-    runtime policy-gate evidence only.
-    Benchmark-calibrated thresholds and matrix/tensor fixtures remain roadmap
-    work.
-  - Required result: when richer statistical hypothesis-test cascade execution
-    lands, update ROADMAP, README, papers index, and code/paper TODO entries
-    together so roadmap wording neither underclaims current lower-confidence
-    gates nor overclaims complete AlphaEvolve-style hypothesis-testing
-    cascades.
-
 - [ ] Keep mutation-response roadmap wording scoped beyond bounded
       natural-language preamble capture.
   - Spec evidence: AlphaEvolve Figure 3(c) includes explanatory prose before a

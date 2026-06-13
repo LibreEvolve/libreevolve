@@ -2,6 +2,23 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive evaluation-cascade hypothesis-test roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `docs/status.md`, and `papers/README.md` already scope current cascade
+    evidence to configured staged validators, deterministic threshold/artifact
+    gates, `one_sided_lower_confidence_bound` repeated-sample gates,
+    confidence/p-value/sequential-stop diagnostics, normal-approximation error
+    budgets, and `binomial_success_rate` Wilson-bound repeated-seed gates.
+  - Remaining guard: benchmark-calibrated thresholds, repeated-seed matrix or
+    tensor fixtures, small-filter-to-main-test linkage, and empirical
+    false-promotion/false-rejection validation remain future work.
+  - Verification: cascade hypothesis-test policy report validation keeps
+    `alphaevolve_section_2_4_hypothesis_testing=false` and
+    `claim_ready=false`; focused cascade/evaluator tests cover configured lower
+    confidence gates, sequential stopping, binomial success-rate gates, and the
+    `papers/cascade_hypothesis_test_boundary.json` sidecar rejects benchmark-
+    ready overclaims.
+
 - [x] Archive self-improvement feedback-loop cadence roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. Active code and paper TODOs
     already require feedback-loop cadence and environment-expansion evidence:

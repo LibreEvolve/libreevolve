@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document constructive-math heuristic-stage-sequence README boundary.
+  - Status: README Important limits now states that Section 3.2
+    stage-sequence records preserve the AlphaEvolve claim that final
+    constructions often came from multiple specialized heuristics, including
+    early broad-gain stages from random/simple starts and later fine-tuning
+    near optimal configurations, not local per-stage heuristic artifacts,
+    ordered construction transitions, stage-role rows, improvement deltas,
+    budget rows, or verifier evidence.
+  - Verification: math-outcome and paper-manifest tests cover the
+    `not_recorded_locally` stage-sequence boundary, required future stage
+    fields, and minimum early/later stage-role inventory; handoff, aggregate
+    outcome, and starting-construction boundaries remain separate TODO scopes.
+
 - [x] Document constructive-math heuristic-handoff README boundary.
   - Status: README Important limits now states that Section 3.2
     heuristic-handoff records preserve the AlphaEvolve claim that

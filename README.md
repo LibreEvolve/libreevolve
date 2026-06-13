@@ -187,6 +187,13 @@ Important limits:
   payloads, fixed-budget execution records, before/after metric rows,
   evaluator scores, or verifier evidence; that boundary is tracked by
   `papers/math_heuristic_handoff_boundary.json`.
+- Constructive-math Section 3.2 stage-sequence records preserve the
+  AlphaEvolve claim that final constructions often came from multiple
+  specialized heuristics, including early broad-gain stages from random/simple
+  starts and later fine-tuning near optimal configurations, not local
+  per-stage heuristic artifacts, ordered construction transitions, stage-role
+  rows, improvement deltas, budget rows, or verifier evidence; that boundary is
+  tracked by `papers/math_heuristic_stage_sequence_boundary.json`.
 - Matrix-publication evidence is one checked `mm_2x2x2` Strassen baseline
   bundle plus Appendix A registry/status metadata, not full-suite local target
   tensors, discovered decompositions, coefficient data, exactness certificates,

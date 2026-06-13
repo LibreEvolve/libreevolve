@@ -941,27 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README constructive-math wording scoped until heuristic-stage
-      sequence evidence exists.
-  - Spec evidence: AlphaEvolve Section 3.2 says constructive-math heuristics
-    were run with fixed time budgets such as `1000 seconds` and that final
-    constructions often resulted from a sequence of specialized heuristics:
-    early broad-gain stages from random/simple starts and later fine-tuning
-    stages near optimal configurations.
-  - Current evidence: README now points to the Section 3.2 stage-sequence
-    absence boundary in `libreevolve.problems.benchmarks.math_outcomes`. It
-    documents early broad-gain and later fine-tuning roles while saying
-    per-stage ordering, roles, construction transitions, improvement deltas,
-    and verifier artifacts remain `not_recorded_locally`. The committed
-    `papers/math_heuristic_stage_sequence_boundary.json` sidecar now emits
-    this boundary for paper-manifest validation alongside the related Section
-    3.2 outcome, starting-construction, and heuristic-handoff boundary
-    sidecars.
-  - Required result: when heuristic-stage sequence reports land, update README,
-    ROADMAP, papers index, and code/paper TODO entries together so README
-    distinguishes one-shot heuristic handoff support from AlphaEvolve-style
-    multi-stage constructive-math search evidence.
-
 - [ ] Keep README constructive-math coverage wording scoped to Appendix B
       family status until aggregate outcome reports exist.
   - Spec evidence: AlphaEvolve Section 3.2 reports over 50 mathematical

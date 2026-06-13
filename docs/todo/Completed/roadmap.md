@@ -10877,3 +10877,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     experiment-level selection traces, equal-budget scheduler reports,
     dedicated fast/strong lane policies, and calibrated breadth/depth/cost/
     latency evidence remain active in code and paper TODOs.
+
+- [x] Keep provider-roadmap wording explicit about missing Google/Gemini
+      first-class support.
+  - Spec evidence: AlphaEvolve's concrete model ensemble uses Gemini 2.0 Flash
+    and Gemini 2.0 Pro, not only an abstract fast/deep backend pair.
+  - Status: ROADMAP tracks the current Gemini provider-parity boundary report
+    as work to turn into a first-class Google/Gemini adapter or equivalent
+    provider-plugin/substitution contract. It states that completed manifests
+    and `papers/gemini_provider_parity_boundary.json` record built-in provider
+    types, configured Gemini-like custom backends, Flash/Pro-shaped model
+    names, and `claim_ready: false` as evidence for the missing AlphaEvolve
+    provider surface, not provider parity.
+  - Remaining roadmap gap: the first-class Gemini backend, provider-plugin
+    contract, or explicit paper-level substitute remains active in code and
+    paper TODOs.

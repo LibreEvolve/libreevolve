@@ -91,25 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README provider claims explicit about missing Google/Gemini
-      first-class support.
-  - Spec evidence: AlphaEvolve's published model mix uses Gemini 2.0 Flash and
-    Gemini 2.0 Pro for fast/strong scheduling.
-  - Current evidence: README can accurately describe OpenAI, Anthropic,
-    Ollama, and custom backend support, but the built-in registry does not
-    include a Google/Gemini backend. A custom backend is not the same as
-    first-class provider telemetry, credential preflight, capability evidence,
-    or Flash/Pro lane labeling. README now points to
-    `runtime.history.gemini_provider_parity_report`, which records the missing
-    first-class Gemini provider boundary and detects Gemini-like custom model
-    ids without claiming AlphaEvolve Flash/Pro parity. The paper-facing
-    `papers/gemini_provider_parity_boundary.json` sidecar preserves the same
-    first-class-provider absence boundary for manifest validation.
-  - Required result: if Gemini support or an equivalent provider-plugin
-    contract lands, update README, ROADMAP, papers index, and code/paper TODOs
-    so provider claims distinguish generic extensibility from reproducing or
-    deliberately substituting AlphaEvolve's Gemini Flash/Pro ensemble.
-
 - [ ] Keep README parallelized-evaluation wording scoped until compute-hour
       throughput reports exist.
   - Spec evidence: AlphaEvolve Section 2.4 says individual candidate

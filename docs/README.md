@@ -19,7 +19,8 @@ boundaries.
 - [Configuration](./configuration.md): `Config` fields, CLI overrides, and
   `config.yaml` behavior.
 - [Plugins](./plugins.md): Hook order, built-in plugins, and extension guidance.
-- [Backends](./backends.md): OpenAI, Anthropic, and Ollama backend behavior.
+- [Backends](./backends.md): built-in and custom backend behavior, including
+  the Google/Gemini provider-parity absence boundary.
 - [Run Artifacts](./run-artifacts.md): What gets written under `runs/`.
 - [Development](./development.md): Local setup, tests, and contributor workflow.
 - [Paper Cache](../papers/README.md): Local paper roles, implementation status,

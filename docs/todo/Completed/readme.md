@@ -14302,3 +14302,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     quota/budget policy, fast/strong model-mix reports, role-specific budget
     behavior reports, reserved lane policies, and equal-budget scheduler
     comparisons remain active in code and paper TODOs.
+
+- [x] Keep README provider claims explicit about missing Google/Gemini
+      first-class support.
+  - Spec evidence: AlphaEvolve's published model mix uses Gemini 2.0 Flash and
+    Gemini 2.0 Pro for fast/strong scheduling.
+  - Status: README now states that built-in provider adapters are OpenAI,
+    Anthropic, and Ollama; custom import-path backends can wrap other
+    services, but Google/Gemini is not a first-class provider yet. It points
+    to `runtime.history.gemini_provider_parity_report` and
+    `papers/gemini_provider_parity_boundary.json` as the runtime and
+    paper-facing absence boundaries.
+  - Remaining README gap: a Gemini adapter or equivalent provider-plugin /
+    substitution contract, credential preflight, provider-native telemetry,
+    capability lookup, and Flash/Pro lane evidence remain active in code and
+    paper TODOs before README can claim AlphaEvolve provider parity.

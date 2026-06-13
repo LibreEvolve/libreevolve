@@ -33,6 +33,13 @@ Important limits:
 - Evaluators run in local subprocesses, not hardened security sandboxes.
 - The controller, archive, migration, and evaluator flow are local and
   synchronous, not a distributed asynchronous AlphaEvolve-style service.
+- Built-in provider adapters are OpenAI, Anthropic, and Ollama. Custom
+  import-path backends can wrap other services, but Google/Gemini is not a
+  first-class provider yet, so AlphaEvolve's Gemini 2.0 Flash/Gemini 2.0 Pro
+  model mix remains an explicit absence boundary. Runtime histories record
+  `runtime.history.gemini_provider_parity_report`, and
+  `papers/gemini_provider_parity_boundary.json` preserves the same boundary
+  for paper-manifest validation.
 - Figure 1/Figure 2 process-exhibit reports map AlphaEvolve diagram nodes,
   edges, and pseudocode steps to local artifacts, not exact source-diagram
   reproduction, async controller/sampler/evaluator topology, independent

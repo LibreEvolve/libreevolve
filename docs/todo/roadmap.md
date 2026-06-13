@@ -1423,24 +1423,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     absence boundaries, and `No evolution` labels from AlphaEvolve-style
     test-time-compute uplift over repeated base-model sampling.
 
-- [ ] Keep provider-roadmap wording explicit about missing Google/Gemini
-      first-class support.
-  - Spec evidence: AlphaEvolve's concrete model ensemble uses Gemini 2.0 Flash
-    and Gemini 2.0 Pro, not only an abstract fast/deep backend pair.
-  - Current evidence: ROADMAP describes existing or custom LLM choices and
-    fast/deep scheduler validation, while the code's built-in backend registry
-    is OpenAI, Anthropic, and Ollama only. The `custom` backend escape hatch is
-    not equivalent to a self-describing Google/Gemini provider surface. ROADMAP
-    now tracks `runtime.history.gemini_provider_parity_report` as an explicit
-    absence boundary: it records built-in provider types, Gemini-like custom
-    backend specs, Flash/Pro-shaped lanes, and `claim_ready: false`.
-    `papers/gemini_provider_parity_boundary.json` now preserves the same
-    first-class-provider absence boundary for manifest validation.
-  - Required result: when a Gemini backend, provider-plugin contract, or
-    explicit paper-level substitute lands, update ROADMAP, README, papers
-    index, and code/paper TODOs so roadmap language separates generic backend
-    extensibility from AlphaEvolve's published Flash/Pro provider parity.
-
 - [ ] Keep the async/resumable-runtime roadmap wording scoped to compatible
   full-runtime restore versus full replay.
   - Spec evidence: AlphaEvolve-scale runs need reproducible resumed

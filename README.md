@@ -112,6 +112,12 @@ Important limits:
   EvoX task-suite taxonomy, baseline comparison table against AlphaEvolve,
   OpenEvolve, GEPA, and ShinkaEvolve, token-efficiency report, strategy
   ablation records, or independent reproduction output.
+- DeltaEvolve semantic-delta coverage is background paper context only:
+  LibreEvolve has no first-class semantic-delta schema, node-transition effect
+  attribution, semantic-delta memory bank, multi-level database/index
+  metadata, progressive disclosure traces, token-savings report,
+  full-code-history baseline comparison, scientific-task benchmark taxonomy,
+  or independent reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

@@ -2,6 +2,30 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive DeltaEvolve semantic-delta roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2602.02919` source-scoped as background context-memory framework
+    evidence rather than implemented LibreEvolve semantic-delta support.
+  - Current evidence: the cached paper and `papers/README.md` record the
+    critique of AlphaEvolve-style full-code histories, structured semantic
+    deltas that capture how and why node modifications affect performance,
+    multi-level database organization, progressive disclosure, and reduced
+    token-consumption claims, while marking local semantic-delta schemas,
+    node-transition effect attribution, semantic-delta memory, multi-level
+    database/index metadata, progressive disclosure traces, token-savings
+    reports, full-code-history baseline comparisons, task taxonomies, and
+    independent reproduction output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: relation to LibreEvolve prompt/context policy, semantic-delta schema,
+    node-transition provenance, performance-effect attribution, multi-level
+    database/index metadata, progressive-disclosure policy, token-accounting
+    metrics, scientific-task benchmark taxonomy, baseline identities,
+    code/artifact availability, and independent verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive EvoX adaptive meta-evolution roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

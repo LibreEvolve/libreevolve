@@ -9,38 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README matrix-scaling wording scoped until resource-frontier
-      reports exist.
-  - Spec evidence: AlphaEvolve Appendix A notes that runs on matrix sizes
-    beyond the reported suite often ran out of memory with 1000 random seeds
-    on a single GPU accelerator, and that larger-size extension needs further
-    optimization.
-  - Current evidence: README documents matrix report contracts, Appendix A
-    registry checks, one checked Strassen baseline bundle, generic runtime
-    budget surfaces, unsupported resource quotas, and
-    `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1`. The
-    resource-frontier contract documents the paper-only boundary for sizes
-    beyond `<5,5,5>`, 1000 random seeds, single-GPU evaluators, frequent OOM,
-    and further-optimization need.
-    `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1` now
-    documents the local absence/readiness boundary and required fields for
-    measured accelerator-memory profiles, OOM/resource-exhaustion artifacts,
-    reduced-seed tradeoffs, and target-exclusion rationale for sizes beyond
-    the reported suite.
-    `appendix_a_matrix_local_resource_frontier_from_attempts()` can build an
-    `attempts_recorded` boundary from supplied local attempt diagnostics, but
-    README still marks real larger-target attempts and artifacts missing.
-    README Important limits now also states that Appendix A matrix
-    resource-frontier records preserve the paper-source statement about sizes
-    beyond `<5,5,5>`, 1000 random seeds, single-GPU evaluators, frequent OOM,
-    and further-optimization need, not local larger-target runs, measured
-    accelerator-memory profiles, OOM artifacts, reduced-seed tradeoffs, or
-    reproduced scaling evidence.
-  - Required result: when local matrix resource-frontier reports land, update
-    README, ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes paper-source OOM boundary evidence from local larger-target
-    scaling evidence.
-
 - [ ] Keep README matrix wording scoped to result contracts until
       near-integrality prompt/evaluator evidence exists.
   - Spec evidence: AlphaEvolve Section 3.1 says the matrix prompt requested

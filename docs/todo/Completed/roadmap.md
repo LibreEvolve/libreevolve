@@ -2,6 +2,33 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Zarankiewicz reinforced-search roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2605.01120` source-scoped as an unimplemented constructive-math
+    benchmark candidate rather than implemented LibreEvolve Zarankiewicz
+    discovery support.
+  - Current evidence: the cached paper and `papers/README.md` record the
+    OpenEvolve-based exact values `Z(11,21,3,3)=116`, `Z(11,22,3,3)=121`,
+    and `Z(12,22,3,3)=132`, lower bounds for 41 more values, four matched
+    closed cases, generated construction algorithms, implementation details,
+    and under-`$30` per-parameter cost claim, while marking local parameter
+    manifests, bipartite graph schemas, `K_{s,t}`-free verifiers,
+    exact/lower-bound tables, generated algorithm artifacts, OpenEvolve setup
+    provenance, reward specifications, upper-bound ledgers, cost accounting,
+    and independent reproduction output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source/license metadata, relation to AlphaEvolve/OpenEvolve and
+    LibreEvolve, Zarankiewicz parameter schema, graph representation,
+    `K_{s,t}`-free verifier metadata, exact-value and lower-bound records,
+    generated construction algorithm artifacts, proof/check status,
+    computational-cost records, upper-bound and baseline references,
+    code/artifact availability, reproducibility status, and independent
+    verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive evolutionary-agent trace-diagnostics roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

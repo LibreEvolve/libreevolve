@@ -10,32 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement Zarankiewicz reinforced-search gates beyond paper cache
-      coverage.
-  - Spec evidence: arXiv `2605.01120`, submitted May 1, 2026 and revised May
-    7, 2026, reports new bounds for Zarankiewicz numbers from reinforced LLM
-    evolutionary search. The abstract says OpenEvolve produced three exact
-    Zarankiewicz values, lower bounds for 41 more values, and four matched
-    closed cases, with generated algorithms, implementation details, and costs
-    under `$30` per parameter combination.
-  - Current evidence: ROADMAP, `papers/download_manifest.*`, and
-    `papers/README.md` now include `2605.01120`, cached locally as
-    `papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf` with byte count
-    `784207` and SHA-256
-    `bebb4ec9e8a114800515c1018b76d9a19c4467edcc1f168bc10be68b0d0ad4f0`.
-    ROADMAP tracks AlphaEvolve alignment, selected follow-on math/problem
-    sources, benchmark/report contracts, and cost-aware search gates, but
-    still has no local graph-construction/verifier evidence for Zarankiewicz
-    discovery support.
-  - Required result: add roadmap gates beyond paper-cache coverage for
-    `2605.01120`: source-license metadata, relation to
-    AlphaEvolve/OpenEvolve, Zarankiewicz parameter taxonomy, bipartite graph
-    construction schema, `K_{s,t}`-free verifier, exact/lower-bound table,
-    generated construction algorithms, proof/check status, upper-bound
-    references, cost accounting, reproducibility metadata, and a
-    background-only or benchmark-fixture status rule so roadmap claims do not
-    outpace local Zarankiewicz benchmark support.
-
 - [ ] Implement CORAL autonomous multi-agent evolution gates beyond paper
       cache coverage.
   - Spec evidence: arXiv `2604.01658`, submitted April 2, 2026 and last

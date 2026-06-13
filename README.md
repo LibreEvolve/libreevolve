@@ -153,6 +153,14 @@ Important limits:
   constant-retuning baseline, deterministic deleted-line reintroduction/
   cycling detector, held-out generalization report, or independent
   reproduction output.
+- Zarankiewicz reinforced-search coverage is background paper context only:
+  LibreEvolve has no Zarankiewicz parameter manifest, bipartite graph
+  construction schema, `K_{s,t}`-free verifier, exact-value/lower-bound table,
+  generated-algorithm artifact hashes, OpenEvolve setup provenance,
+  reward-function specification, upper-bound comparison ledger,
+  per-parameter cost accounting, or independent reproduction output for the
+  three exact values, 41 lower bounds, four matched closed cases, or sub-$30
+  cost claim.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

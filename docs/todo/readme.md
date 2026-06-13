@@ -9,26 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README Table 1 wording scoped after capability-table exhibit
-      provenance.
-  - Spec evidence: AlphaEvolve Table 1 is a row-by-row FunSearch versus
-    AlphaEvolve comparison covering code scale, language scope, evaluator
-    duration/parallelism/accelerators, sample counts, model scale, prompt
-    context/feedback, and single versus multiple metrics. Local PDF page 2
-    contains the eight comparison rows and caption.
-  - Current evidence: README has a high-level gap table and detailed sections
-    for several Table 1-related capabilities. It now documents
-    `runtime.history.alphaevolve_table1_capability_exhibit_report`, which
-    records stable row ids, FunSearch/AlphaEvolve cell text, source
-    PDF/caption location, row-to-gap mappings, rendered artifact hashes, and
-    row-level implementation status. README Important limits now presents the
-    comparison as exhibit provenance and status evidence, not validated Table 1
-    capability parity.
-  - Required result: when individual Table 1 capability rows are satisfied,
-    update README, ROADMAP, papers index, and code/paper TODOs together so
-    README distinguishes the reproduced capability-comparison table from the
-    separate work needed to prove each Table 1 behavior.
-
 - [ ] Extend README Figure 1 and Figure 2 process-diagram wording beyond the
       current process-overview exhibit map.
   - Spec evidence: AlphaEvolve Figure 1 defines the high-level process among

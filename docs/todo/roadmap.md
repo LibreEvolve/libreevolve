@@ -10,31 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep DeepEvolve retrieval roadmap wording scoped to bounded provenance
-  versus audit-grade source integrity.
-  - Spec evidence: retrieval-augmented AlphaEvolve-style runs should preserve
-    enough source, transport, ranking, and failure evidence to audit what
-    external context was available and why it entered the prompt.
-  - Current evidence: `ROADMAP.md` asks to extend DeepEvolve-inspired retrieval
-    from bounded provenance into audit-grade source integrity with unbounded
-    provider/source payload artifacts, learned or external ranking evidence
-    beyond provider order, replayable transport/failure decisions, and explicit
-    default-provider plus custom-provider provenance tests. README, code TODOs,
-    and paper TODOs already document bounded provider-result/source-content
-    snapshots, retention-budgeted redacted sidecars, deterministic query-overlap
-    ranking, transport-policy classification, and run-level coverage validation,
-    plus semantic-boundary rejection of ranking metadata that overclaims
-    semantic, learned, or external scoring evidence and manifest coverage flags
-    that keep those readiness claims false, while preserving the open
-    raw-payload, semantic-verification, learned-ranking, external scoring,
-    TLS/transport-replay, and full-source replay gaps.
-  - Required result: when unbounded retrieval payload/source artifacts,
-    learned/external ranking provenance, replayable transport/failure decision
-    trees, or default/custom provider provenance tests land, update the
-    roadmap, README, papers index, and code/paper TODO entries together so the
-    roadmap neither underclaims current bounded retrieval provenance nor
-    overclaims DeepEvolve-grade source integrity.
-
 - [ ] Keep explicit-context roadmap wording scoped beyond source-role reports.
   - Spec evidence: AlphaEvolve Section 2.2 names explicit prompt context
     categories: fixed human-written instructions, equations, code snippets,

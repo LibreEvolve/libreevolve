@@ -85,6 +85,28 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     current paper-index/TODO coverage gates without treating them as semantic
     implementation proof.
 
+- [x] Archive DeepEvolve retrieval roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md` already asks to
+    extend DeepEvolve-inspired retrieval from bounded provenance into
+    audit-grade source integrity, explicitly naming unbounded provider/source
+    payload artifacts, learned or externally scored ranking/selection evidence,
+    replayable transport/failure decision trees, and default/custom provider
+    provenance tests as future work. It also states that current audits reject
+    semantic, learned, or external scoring overclaims and that
+    `papers/deepevolve_boundary.json` keeps the broader DeepEvolve loop
+    separate from bounded retrieval context.
+  - Remaining guard: full provider/source payload persistence, learned or
+    externally scored ranking, semantic source verification, replayable
+    transport/failure decisions, TLS/certificate replay, default/custom
+    provider parity, and DeepEvolve plan/search/write/code/debug loop parity
+    remain active in `docs/todo/code.md` and `docs/todo/papers.md`.
+  - Verification: DeepResearch plugin tests cover bounded retrieval events,
+    provider-result/source-content snapshots, query-overlap ranking,
+    transport-policy classification, retention modes, custom-provider
+    provenance limits, and overclaim rejection; DeepEvolve boundary tests and
+    paper-manifest validation keep bounded retrieval context separate from
+    DeepEvolve loop parity.
+
 - [x] Archive metric-diverse prompt-context roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README,
     `papers/README.md`, runtime

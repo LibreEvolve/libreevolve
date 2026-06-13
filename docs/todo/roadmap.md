@@ -10,22 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep custom-plugin roadmap wording scoped to entry-point provenance
-  versus direct-instance value attribution.
-  - Spec evidence: AlphaEvolve-style extension points need reproducible plugin
-    code/configuration boundaries so paper-inspired hooks can be audited across
-    runs.
-  - Current evidence: the roadmap now distinguishes entry-point distribution
-    metadata and declared/manifest-safe constructor options from direct custom
-    plugin instances, where current provenance records module/file/version and
-    constructor signature shape while explicitly excluding constructor values
-    and keeping direct-instance readiness fields false.
-  - Required result: when direct custom plugin constructor-value/schema
-    attribution, versioned custom registries, or richer package policy lands,
-    update the roadmap, README, papers index, and code/paper TODO entries
-    together so they neither underclaim entry-point plugin provenance nor
-    overclaim direct-instance replayability.
-
 - [ ] Keep plugin paper-inspiration/package-version roadmap wording scoped to
       configured entry-point records.
   - Spec evidence: AlphaEvolve-style paper-inspired extensions need clear

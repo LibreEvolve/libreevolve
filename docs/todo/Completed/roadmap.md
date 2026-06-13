@@ -2,6 +2,22 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive custom-plugin provenance roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `docs/status.md`, and `papers/README.md` already distinguish configured
+    entry-point distribution/schema/paper-scope metadata from direct custom
+    plugin instances, where current provenance records module/file/version
+    identity and constructor signature shape while excluding constructor
+    values and arbitrary instance state.
+  - Remaining guard: direct custom plugin constructor-value/schema
+    attribution, versioned custom registries, richer package policy, and full
+    direct-instance replayability remain active as future work in the code and
+    paper TODO ledgers.
+  - Verification: runtime plugin-state tests assert the entry-point policy,
+    direct-instance readiness fields, constructor-option capture boundary, and
+    direct custom signature-only boundary; paper-manifest validation continues
+    to keep the docs index aligned with the bounded implementation claims.
+
 - [x] Archive `show`/metric archive roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README,
     `papers/README.md`, `libreevolve show`, and runtime manifest history

@@ -69,32 +69,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README scientific-discovery wording scoped to automated evaluators
-      until robust evaluator-environment fixtures exist.
-  - Spec evidence: AlphaEvolve states that automated evaluation is a core
-    advantage and limitation: tasks requiring manual experimentation are out
-    of scope, and LLM-provided evaluation of ideas is possible but not the
-    optimized setting. The paper's future bridge is high-level idea feedback
-    before transitioning to an implementation stage with machine feedback
-    through code execution. The Discussion also says future high-value
-    discoveries depend on setting up more problem environments with robust
-    evaluation functions.
-  - Current evidence: README describes automated algorithm discovery, local
-    subprocess evaluators, staged validator cascades, optional LLM feedback,
-    proposal metadata, and `runtime.history.automated_evaluator_scope_report`,
-    which states the AlphaEvolve scope boundary for machine-gradeable tasks
-    versus manual-experiment scientific workflows or pre-code LLM-only idea
-    review. The committed `papers/automated_evaluator_scope_boundary.json`
-    sidecar preserves this machine-gradeable local-scope boundary. It still
-    does not describe evaluator-environment readiness evidence such as robust
-    evaluator design, automatable-domain boundaries, setup effort, and
-    expected discovery value.
-  - Required result: once robust environment fixtures and transition policies
-    exist, update README, ROADMAP, papers index, and matching TODOs so public
-    wording neither underclaims the current executable-evaluator workflow nor
-    overclaims environment-scaling, manual-experiment, or
-    AI-Co-Scientist-style idea-feedback support.
-
 - [ ] Keep README AI-Co-Scientist comparison scoped until measurement and
       bridge evidence exists beyond the current representation-boundary report.
   - Spec evidence: AlphaEvolve Related Work says AI Co-Scientist represents

@@ -13664,6 +13664,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     focused automated-evaluator scope tests reject robust environment-readiness
     overclaims.
 
+- [x] Keep README scientific-discovery wording scoped to automated evaluators.
+  - Status: README, ROADMAP, and the papers index now keep scientific-discovery
+    claims scoped to machine-gradeable local evaluator workflows and call out
+    missing robust evaluator-environment fixtures, automatable-domain
+    boundaries, setup/cost and expected discovery-value evidence,
+    manual-to-code transition policies, and LLM-only idea-stage contracts.
+  - Verification: paper-manifest validation requires
+    `papers/automated_evaluator_scope_boundary.json`, and focused
+    automated-evaluator scope tests reject robust environment-readiness
+    overclaims.
+
 - [x] Keep README programmatic-representation boundary tied to sidecar.
   - Status: README now states that natural-language proposal metadata is
     context around executable code candidates, not AI-Co-Scientist-style

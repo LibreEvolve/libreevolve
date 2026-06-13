@@ -75,7 +75,8 @@ Important limits:
   audit-only and not an ordered MAP-Elites restore engine. That boundary is
   tracked by `papers/archive_event_replay_boundary.json`.
 - Scientific-discovery scope is machine-gradeable local evaluator workflow
-  scope; robust evaluator-environment fixtures, manual-to-code transition
+  scope; robust evaluator-environment fixtures, automatable-domain boundaries,
+  setup/cost and expected discovery-value evidence, manual-to-code transition
   policies, and LLM-only idea-stage contracts are tracked by
   `papers/automated_evaluator_scope_boundary.json`.
 - Evaluation-cascade reports are runtime attrition and promotion telemetry when

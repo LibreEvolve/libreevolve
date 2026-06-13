@@ -582,7 +582,8 @@ is not yet an AlphaEvolve reproduction.
   score-field-to-artifact causality, and stochastic re-evaluation policy.
 - Extend `runtime.history.automated_evaluator_scope_report` beyond the current
   machine-feedback/manual-experiment/LLM-feedback boundary into robust
-  evaluator-environment fixtures, manual-to-code transition policy, and
+  evaluator-environment fixtures, automatable-domain boundaries, setup/cost and
+  expected discovery-value evidence, manual-to-code transition policy, and
   environment-scaling evidence. The committed
   `papers/automated_evaluator_scope_boundary.json` sidecar preserves the
   current machine-gradeable local evaluator scope while keeping robust

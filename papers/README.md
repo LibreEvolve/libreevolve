@@ -1520,8 +1520,9 @@ executable code feedback before scoring. The committed
 `papers/automated_evaluator_scope_boundary.json` sidecar preserves that
 machine-gradeable local-scope boundary. Paper-facing scientific-discovery
 claims should remain scoped to machine-gradeable evaluator workflows until
-robust evaluator-environment fixtures, manual-to-code transition policies, and
-AI-Co-Scientist-style idea-stage contracts are implemented.
+robust evaluator-environment fixtures, automatable-domain boundaries,
+setup/cost and expected discovery-value evidence, manual-to-code transition
+policies, and AI-Co-Scientist-style idea-stage contracts are implemented.
 
 AlphaEvolve representation-boundary note: Related Work contrasts
 AI-Co-Scientist's natural-language hypotheses and evaluation criteria with

@@ -9,33 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README code-scale claims scoped to current workspace support versus
-      Table 1 parity.
-  - Spec evidence: AlphaEvolve Table 1 claims evolution of entire code files,
-    hundreds of lines of code, any language, and complex algorithms spanning
-    multiple functions and components. The local PDF places those code-scale
-    comparison rows on page 2 and later discusses entire-codebase evolution on
-    pages 18-19.
-  - Current evidence: README can accurately describe Python-primary seed
-    workspaces, multi-file candidates, topology mutations, materialization
-    diagnostics, and `best_workspace/` export. It now documents
-    `runtime.history.codebase_scale_benchmark_report` as current-run telemetry
-    for generated-line/component counts, parent-relative changed files/lines,
-    and multi-file/hundreds-line threshold evidence, while keeping Table 1
-    code-scale parity false. Current machine-readable example scope records
-    mark `workspace_math` as a smoke `workspace_packaging_fixture` and not
-    AlphaEvolve-comparable. README Important limits also names
-    `papers/candidate_language_runner_boundary.json` as the committed
-    paper-manifest-validated arbitrary-language/build-runner absence boundary,
-    and `papers/codebase_scale_benchmark_boundary.json` as the committed
-    code-scale absence boundary.
-  - Required result: when realistic codebase-scale benchmark fixtures land,
-    update README, ROADMAP, papers index, and code/paper TODO entries with
-    cross-file dependency edit evidence, evaluator budget, quality-progress
-    results, and language/build-runner scope that justify any AlphaEvolve
-    Table 1 code-scale comparison. The remaining gap is benchmark-backed
-    evidence, not current-run scale telemetry.
-
 - [ ] Keep README Table 1 wording scoped after capability-table exhibit
       provenance.
   - Spec evidence: AlphaEvolve Table 1 is a row-by-row FunSearch versus

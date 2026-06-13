@@ -6,37 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Keep parallel-evaluation roadmap wording scoped until compute-hour
-      throughput evidence exists.
-  - Spec evidence: AlphaEvolve Section 2.4 says candidate evaluation can spend
-    on the order of 100 compute-hours and relies on parallelized evaluator
-    work so wall-clock latency does not stall multiple consecutive mutations.
-  - Current evidence: ROADMAP lists bounded queues for LLM proposals and
-    evaluator workers as future work and notes current sequential
-    `proposals_per_generation` batches plus opt-in local
-    `eval_stages[].sample_workers` fan-out for configured-stage samples.
-    Code/paper TODO evidence already tracks local evaluator-second counters,
-    configured-stage sample counters, and expensive-evaluation budget gaps.
-    Local sample-worker evaluations now preserve summed sample elapsed seconds,
-    observed wall-clock seconds, and compression ratios, but the roadmap should
-    not treat local sample-worker compression or generic async queues as
-    sufficient without cluster-scale compute-hour accounting, distributed
-    evaluator-worker fan-out, and mutation-depth evidence. ROADMAP now points
-    to `runtime.history.parallel_evaluation_readiness_report`, which records
-    local sample-worker fan-out and compression while keeping compute-hour,
-    async queue, distributed worker, mutation-depth, pending-work resume, and
-    equal-budget parallelism readiness false.
-    `papers/parallel_evaluation_readiness_boundary.json` now preserves the
-    same paper-facing absence boundary for manifest validation. ROADMAP now
-    also points to `papers/expensive_evaluation_budget_boundary.json` for the
-    local cooperative-budget versus compute-hour runtime boundary.
-  - Required result: when parallel evaluator execution or reports land, update
-    ROADMAP, README, papers index, and code/paper TODOs with per-candidate
-    compute-hour budgets, evaluator-worker fan-out, randomized-initialization
-    shard counts/seeds, queued/running/completed state, cluster/local execution
-    identity, wall-clock versus compute-hour compression, mutation-chain-depth
-    impact, pending-work resume behavior, and equal-budget report links.
-
 - [ ] Keep Table 1 roadmap wording scoped after capability-table exhibit
       provenance.
   - Spec evidence: AlphaEvolve Table 1 is a row-level comparison between

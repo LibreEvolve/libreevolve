@@ -2,6 +2,24 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive parallel-evaluation roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
+    `papers/README.md` already distinguish sequential sibling batches and
+    local `eval_stages[].sample_workers` fan-out plus
+    `runtime.history.parallel_evaluation_readiness_report` from
+    AlphaEvolve-style compute-hour, distributed evaluator, async queue, and
+    mutation-depth throughput evidence. `papers/parallel_evaluation_readiness_boundary.json`
+    and `papers/expensive_evaluation_budget_boundary.json` preserve the
+    paper-facing absence boundaries.
+  - Remaining guard: per-candidate compute-hour budgets, evaluator-worker
+    fan-out, shard counts/seeds, queued/running/completed state, cluster/local
+    execution identity, compute-hour compression, mutation-chain-depth impact,
+    pending-work resume, and equal-budget parallelism reports remain active in
+    `docs/todo/code.md` and `docs/todo/papers.md`.
+  - Verification: parallel-evaluation readiness, expensive-evaluation budget,
+    and paper-manifest validation continue to reject local sample-worker
+    compression as AlphaEvolve distributed parallel-evaluation parity.
+
 - [x] Archive code-scale roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
     `papers/README.md` already distinguish Python-primary workspace

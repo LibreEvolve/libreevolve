@@ -236,6 +236,13 @@ Important limits:
   artifacts, Colab or verifier linkage, comparison-to-`0.3284` certificates,
   recomputed revised constants, artifact hashes, or proof that the current
   Appendix B value has been locally reproduced.
+- Appendix B.4 prior-bound rounding provenance remains absent: the registry
+  preserves the `[33]` lower bound `0.2025`, source-stated upper bound `0.353`,
+  rounded comparison baseline `0.3523`, and policy that AlphaEvolve's
+  first-version `C4 <= 0.3521` is compared against the rounded baseline, not a
+  `[33]` page or section locator, source-solution artifact, prior-solution
+  rounding artifact, rounding-audit certificate, or locally reproduced
+  certificate for the `0.353` to `0.3523` distinction.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

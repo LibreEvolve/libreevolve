@@ -10,25 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Appendix B.4 roadmap wording scoped until prior-bound rounding
-      provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B.4 reports the known uncertainty
-    inequality range as `0.2025 <= C4 <= 0.3523`, with a parenthetical note
-    that reference `[33]` states the upper bound as `0.353` but rounding that
-    solution to the fourth digit gives `0.3523`. The first-version
-    AlphaEvolve value `C4 <= 0.3521` is positioned as an improvement over that
-    rounded prior bound.
-  - Current evidence: `ROADMAP.md`, README, papers index, and Appendix B TODOs
-    now cite validated B.4 prior-bound rounding evidence: `[33]` source-stated
-    `0.353`, rounded `0.3523` baseline, lower-bound context `0.2025`, and
-    comparison to AlphaEvolve's first-version `0.3521`. The precise `[33]`
-    source locator, source-solution artifact, and rounding-audit certificate
-    remain absent.
-  - Required result: when Appendix B.4 prior-source artifacts or locators land,
-    update ROADMAP, README, papers index, and code/paper TODOs so roadmap
-    claims can cite the rounding evidence directly without treating it as a
-    reproduced local certificate.
-
 - [ ] Keep Appendix B.4 roadmap wording scoped until Hermite-polynomial
       certificate evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.4 derives the `C4 <= 0.3521`

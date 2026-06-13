@@ -2,6 +2,25 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Appendix B.4 prior-bound rounding roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish the `[33]` source-stated upper bound, rounded comparison
+    baseline, and AlphaEvolve first-version comparison policy from a local
+    reproduced rounding certificate.
+  - Current evidence: `prior_bound_rounding_evidence` preserves the `[33]`
+    lower bound `0.2025`, source-stated upper bound `0.353`, rounded
+    comparison baseline `0.3523`, and policy that AlphaEvolve's first-version
+    `C4 <= 0.3521` is compared against the rounded baseline.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: `[33]` page or section locator, source-solution artifact,
+    prior-solution rounding artifact, rounding-audit certificate, and locally
+    reproduced certificate for the `0.353` to `0.3523` distinction.
+  - Verification: Appendix B registry B.4 uncertainty-boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive Appendix B revised-result roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

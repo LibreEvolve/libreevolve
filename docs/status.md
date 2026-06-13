@@ -494,10 +494,11 @@ Important limits:
   `papers/candidate_abstraction_boundary.json`.
 - Candidate language runner reports record metadata-only non-Python language
   and build declarations when configured, including declaration counts and
-  unsupported execution status. They do not implement arbitrary-language
-  runners, build-system execution, runner environment artifacts, generated
-  build artifacts, or language-aware marker grammars; that boundary is tracked
-  by `papers/candidate_language_runner_boundary.json`.
+  unsupported execution status, and link the current Python runner to bounded
+  manifest environment provenance. They do not implement arbitrary-language
+  runners, build-system execution, arbitrary-runner environment artifacts,
+  generated build artifacts, or language-aware marker grammars; that boundary
+  is tracked by `papers/candidate_language_runner_boundary.json`.
 - Configuration validation is local effective-config validation; live
   provider/model API compatibility is tracked by
   `papers/config_validation_boundary.json`.

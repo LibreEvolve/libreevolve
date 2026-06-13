@@ -43,7 +43,9 @@ EXPECTED_MISSING_EVIDENCE = {
     "language_aware_marker_grammars": "not_recorded_locally",
     "arbitrary_language_validator_contracts": "not_recorded_locally",
     "task_defined_candidate_abstraction_hooks": "not_recorded_locally",
-    "runner_environment_artifacts": "not_recorded_locally",
+    "runner_environment_artifacts": (
+        "current_python_runner_environment_link_recorded_arbitrary_runner_artifacts_not_recorded"
+    ),
     "generated_build_artifact_records": "not_recorded_locally",
 }
 
@@ -87,11 +89,12 @@ def candidate_language_runner_boundary_record() -> dict[str, Any]:
             "This boundary records that LibreEvolve has a validated "
             "Python-primary candidate-language policy and runtime runner "
             "contract report with metadata-only non-Python language and build "
-            "declaration evidence when configured, but does not claim "
-            "AlphaEvolve-style arbitrary language or build-system runner "
-            "execution evidence with language-aware marker grammars, executable "
-            "build contracts, task-defined abstraction hooks, runner "
-            "environment provenance, or generated build artifacts."
+            "declaration evidence when configured and current Python-runner "
+            "environment linkage, but does not claim AlphaEvolve-style "
+            "arbitrary language or build-system runner execution evidence with "
+            "language-aware marker grammars, executable build contracts, "
+            "task-defined abstraction hooks, arbitrary-runner environment "
+            "artifacts, or generated build artifacts."
         ),
     }
 

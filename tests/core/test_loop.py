@@ -7292,6 +7292,24 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
         "runner_environment_artifacts": "not_recorded",
         "generated_build_artifact_records": "not_recorded",
     }
+    environment_provenance = report["runner_environment_provenance"]
+    assert environment_provenance["schema"] == (
+        "libreevolve.candidate_runner_environment_provenance.v1"
+    )
+    assert environment_provenance["source_manifest_path"] == "provenance.environment"
+    current_environment = environment_provenance["current_python_runner_environment"]
+    assert current_environment["status"] == "recorded"
+    assert current_environment["runner_id"] == "python_subprocess_validator_entrypoint"
+    assert current_environment["python"]["version"]
+    assert current_environment["python"]["implementation"]
+    assert current_environment["platform"]["system"]
+    assert environment_provenance["arbitrary_language_runner_environment_artifacts"] == (
+        "not_recorded"
+    )
+    assert environment_provenance["build_runner_environment_artifacts"] == (
+        "not_recorded"
+    )
+    assert environment_provenance["environment_replay_ready"] is False
 
     hooks = report["task_candidate_abstraction_hooks"]
     assert hooks["status"] == "unsupported"
@@ -7332,6 +7350,13 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
     edited["runner_declaration_evidence"]["generated_build_artifact_records"] = (
         "recorded"
     )
+    edited["runner_environment_provenance"][
+        "arbitrary_language_runner_environment_artifacts"
+    ] = "recorded"
+    edited["runner_environment_provenance"]["build_runner_environment_artifacts"] = (
+        "recorded"
+    )
+    edited["runner_environment_provenance"]["environment_replay_ready"] = True
     edited["task_candidate_abstraction_hooks"]["serializer_hook"] = "supported"
     edited["claim_readiness"]["alphaevolve_language_runner_parity"] = True
     validation = validate_candidate_language_runner_contract_report(edited)
@@ -7347,6 +7372,9 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
         "runner_declaration_execution_overclaim",
         "runner_environment_artifacts_overclaim",
         "generated_build_artifact_records_overclaim",
+        "arbitrary_runner_environment_overclaim",
+        "build_runner_environment_overclaim",
+        "runner_environment_replay_overclaim",
         "serializer_hook_overclaim",
         "alphaevolve_language_runner_parity_overclaim",
     }
@@ -7408,6 +7436,11 @@ def test_runtime_history_reports_declared_candidate_language_runner_metadata():
     assert declaration_evidence["execution_status"] == "unsupported"
     assert declaration_evidence["runner_environment_artifacts"] == "not_recorded"
     assert declaration_evidence["generated_build_artifact_records"] == "not_recorded"
+    environment_provenance = report["runner_environment_provenance"]
+    assert environment_provenance["current_python_runner_environment"]["status"] == (
+        "recorded"
+    )
+    assert environment_provenance["environment_replay_ready"] is False
     assert report["claim_readiness"]["metadata_runner_declarations_recorded"] is True
     assert report["claim_readiness"]["non_python_language_runners_configured"] is False
     assert report["claim_readiness"]["build_system_runner_contracts_configured"] is False

@@ -549,16 +549,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     arbitrary-language and build-system runner contracts, metadata-only
     `candidate_language_runners` and `candidate_build_systems` declarations
     when configured, `runner_declaration_evidence` counts/status records,
-    unsupported task candidate-abstraction hooks, and the remaining executable
-    contract gaps for AlphaEvolve-style language/build parity. The committed
+    current-Python-runner environment linkage under
+    `runner_environment_provenance`, unsupported task candidate-abstraction
+    hooks, and the remaining executable contract gaps for AlphaEvolve-style
+    language/build parity. The committed
     `papers/candidate_language_runner_boundary.json` sidecar now preserves the
     paper-manifest-validated arbitrary-language/build-runner execution absence
     boundary.
   - Current gap: this is an honest boundary record, not non-Python or
     arbitrary-codebase support. Metadata-only language/build declarations can
     now be recorded, but there are no executable non-Python language runners,
-    build-system execution contracts, language-aware marker grammars, or
-    task-defined candidate abstraction hooks.
+    build-system execution contracts, arbitrary-runner environment artifacts,
+    language-aware marker grammars, or task-defined candidate abstraction
+    hooks.
   - Required result: add executable configured language runners, build-system
     contracts, language-aware marker grammars, and task-defined candidate
     abstraction hooks before treating the current Python-primary workspace

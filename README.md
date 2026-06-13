@@ -34,7 +34,8 @@ Important limits:
 - The controller, archive, migration, and evaluator flow are local and
   synchronous, not a distributed asynchronous AlphaEvolve service.
 - Candidate execution is Python-primary. Non-Python files can be workspace
-  members and metadata-only runner/build declarations can be recorded, but
+  members, metadata-only runner/build declarations can be recorded, and the
+  current Python runner links to bounded environment provenance, but
   arbitrary-language runners and build-system runners are not implemented.
 - Built-in provider adapters are OpenAI, Anthropic, and Ollama. Google/Gemini
   parity is tracked as missing work.

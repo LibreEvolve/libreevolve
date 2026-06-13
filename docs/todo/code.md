@@ -41,8 +41,10 @@ Primary evidence:
     arbitrary-language and build-system runner contracts, metadata-only
     `candidate_language_runners` and `candidate_build_systems` declarations
     when configured, `runner_declaration_evidence` counts/status records,
-    unsupported task candidate-abstraction hooks, and the exact remaining
-    executable-contract gaps before AlphaEvolve-style language/build parity.
+    current-Python-runner environment linkage under
+    `runner_environment_provenance`, unsupported task candidate-abstraction
+    hooks, and the exact remaining executable-contract gaps before
+    AlphaEvolve-style language/build parity.
     The committed
     `papers/candidate_language_runner_boundary.json` sidecar now records the
     paper-manifest-validated arbitrary-language/build-runner execution absence

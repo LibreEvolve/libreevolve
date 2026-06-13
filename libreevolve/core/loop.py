@@ -10681,6 +10681,16 @@ def _candidate_language_runner_contract_report(
         if isinstance(runner_declarations.get("build_system_declarations"), list)
         else []
     )
+    provenance = (
+        startup_manifest.get("provenance")
+        if isinstance(startup_manifest.get("provenance"), Mapping)
+        else {}
+    )
+    environment = (
+        provenance.get("environment")
+        if isinstance(provenance.get("environment"), Mapping)
+        else {}
+    )
     remaining_runner_gaps = [
         (
             "execution_for_declared_non_python_language_or_build_runners"
@@ -10690,7 +10700,7 @@ def _candidate_language_runner_contract_report(
         "language_aware_evolve_block_marker_grammars",
         "build_system_runner_contracts",
         "task_defined_candidate_abstraction_hooks",
-        "runner_artifact_and_environment_provenance",
+        "arbitrary_runner_artifact_and_environment_provenance",
     ]
     report = {
         "schema": "libreevolve.candidate_language_runner_contract_report.v1",
@@ -10758,6 +10768,9 @@ def _candidate_language_runner_contract_report(
                 build_system_declarations,
             )
         ),
+        "runner_environment_provenance": (
+            _candidate_runner_environment_provenance(environment)
+        ),
         "task_candidate_abstraction_hooks": {
             "status": "unsupported",
             "problem_declared_candidate_type": "not_configured",
@@ -10787,6 +10800,44 @@ def _candidate_language_runner_contract_report(
     }
     report["validation"] = validate_candidate_language_runner_contract_report(report)
     return report
+
+
+def _candidate_runner_environment_provenance(environment: Mapping[str, object]) -> dict:
+    python = (
+        environment.get("python")
+        if isinstance(environment.get("python"), Mapping)
+        else {}
+    )
+    platform = (
+        environment.get("platform")
+        if isinstance(environment.get("platform"), Mapping)
+        else {}
+    )
+    recorded = bool(python and platform)
+    return {
+        "schema": "libreevolve.candidate_runner_environment_provenance.v1",
+        "source_manifest_path": "provenance.environment",
+        "current_python_runner_environment": {
+            "status": "recorded" if recorded else "missing_startup_environment",
+            "runner_id": "python_subprocess_validator_entrypoint",
+            "python": {
+                "version": python.get("version"),
+                "implementation": python.get("implementation"),
+                "version_info": copy.deepcopy(python.get("version_info"))
+                if isinstance(python.get("version_info"), list)
+                else [],
+            },
+            "platform": {
+                "system": platform.get("system"),
+                "release": platform.get("release"),
+                "machine": platform.get("machine"),
+                "platform": platform.get("platform"),
+            },
+        },
+        "arbitrary_language_runner_environment_artifacts": "not_recorded",
+        "build_runner_environment_artifacts": "not_recorded",
+        "environment_replay_ready": False,
+    }
 
 
 def _candidate_runner_declaration_evidence(
@@ -10865,6 +10916,7 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
         "declared_language_runner_records",
         "declared_build_system_records",
         "runner_declaration_evidence",
+        "runner_environment_provenance",
         "task_candidate_abstraction_hooks",
         "alphaevolve_contract_gap",
         "claim_ready",
@@ -11076,6 +11128,19 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
             declared_build_systems,
             issues,
         )
+    environment_provenance = report.get("runner_environment_provenance")
+    if not isinstance(environment_provenance, Mapping):
+        issues.append(
+            {
+                "code": "invalid_runner_environment_provenance",
+                "message": "runner_environment_provenance must be an object",
+            }
+        )
+    else:
+        _validate_candidate_runner_environment_provenance(
+            environment_provenance,
+            issues,
+        )
     hooks = report.get("task_candidate_abstraction_hooks")
     if not isinstance(hooks, Mapping):
         issues.append(
@@ -11257,6 +11322,97 @@ def _validate_candidate_runner_declaration_evidence(
             {
                 "code": "generated_build_artifact_records_overclaim",
                 "message": "generated build artifact records must remain not_recorded",
+            }
+        )
+
+
+def _validate_candidate_runner_environment_provenance(
+    provenance: Mapping[str, object],
+    issues: list[dict],
+) -> None:
+    if (
+        provenance.get("schema")
+        != "libreevolve.candidate_runner_environment_provenance.v1"
+    ):
+        issues.append(
+            {
+                "code": "invalid_runner_environment_provenance_schema",
+                "message": "runner environment provenance schema is unsupported",
+            }
+        )
+    if provenance.get("source_manifest_path") != "provenance.environment":
+        issues.append(
+            {
+                "code": "invalid_runner_environment_source",
+                "message": "runner environment provenance must point to manifest environment",
+            }
+        )
+    current = provenance.get("current_python_runner_environment")
+    if not isinstance(current, Mapping):
+        issues.append(
+            {
+                "code": "invalid_current_python_runner_environment",
+                "message": "current_python_runner_environment must be an object",
+            }
+        )
+    else:
+        if current.get("runner_id") != "python_subprocess_validator_entrypoint":
+            issues.append(
+                {
+                    "code": "invalid_current_python_runner_id",
+                    "message": "current Python runner id is invalid",
+                }
+            )
+        if current.get("status") not in {"recorded", "missing_startup_environment"}:
+            issues.append(
+                {
+                    "code": "invalid_current_python_runner_environment_status",
+                    "message": "current Python runner environment status is invalid",
+                }
+            )
+        python = current.get("python")
+        platform = current.get("platform")
+        if current.get("status") == "recorded":
+            if not isinstance(python, Mapping) or not isinstance(
+                python.get("version"), str
+            ):
+                issues.append(
+                    {
+                        "code": "invalid_current_python_runner_python",
+                        "message": "recorded Python runner environment must include python version",
+                    }
+                )
+            if not isinstance(platform, Mapping) or not isinstance(
+                platform.get("system"), str
+            ):
+                issues.append(
+                    {
+                        "code": "invalid_current_python_runner_platform",
+                        "message": "recorded Python runner environment must include platform system",
+                    }
+                )
+    if (
+        provenance.get("arbitrary_language_runner_environment_artifacts")
+        != "not_recorded"
+    ):
+        issues.append(
+            {
+                "code": "arbitrary_runner_environment_overclaim",
+                "message": "arbitrary-language runner environment artifacts must remain not_recorded",
+            }
+        )
+    if provenance.get("build_runner_environment_artifacts") != "not_recorded":
+        issues.append(
+            {
+                "code": "build_runner_environment_overclaim",
+                "message": "build runner environment artifacts must remain not_recorded",
+            }
+        )
+    if provenance.get("environment_replay_ready") is not False:
+        issues.append(
+            {
+                "code": "runner_environment_replay_overclaim",
+                "message": "runner environment provenance must not claim replay readiness",
             }
         )
 

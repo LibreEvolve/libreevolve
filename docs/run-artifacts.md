@@ -960,9 +960,10 @@ the selected startup policy, the current Python subprocess validator runner
 contract, non-Python text members as workspace-only/no-runner records,
 unsupported arbitrary-language and build-system runner contracts, any
 metadata-only language/build declarations, `runner_declaration_evidence`
-counts/status, unsupported task candidate-abstraction hooks, and the exact
-executable contract gaps that must close before AlphaEvolve-style
-arbitrary-language/codebase parity can be claimed.
+counts/status, current-Python-runner environment linkage under
+`runner_environment_provenance`, unsupported task candidate-abstraction hooks,
+and the exact executable contract gaps that must close before
+AlphaEvolve-style arbitrary-language/codebase parity can be claimed.
 The committed `papers/candidate_language_runner_boundary.json` sidecar
 preserves the same arbitrary-language/build-runner execution absence boundary
 for paper-manifest validation.

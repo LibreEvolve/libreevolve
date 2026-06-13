@@ -10,26 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Appendix B figure roadmap wording scoped until Figures 10-14
-      provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B displays construction figures beyond
-    the main-text Figure 5 summary: Figure 10 for Erdos minimum overlap,
-    Figure 11 for regular-hexagon packings, Figure 12 for maximum/minimum
-    distance point sets, Figure 13 for Heilbronn variants, and Figure 14 for
-    circle/rectangle packing sum-of-radii improvements.
-  - Current evidence: `ROADMAP.md`, README, papers index, and code evidence
-    now describe a validated Appendix B `figure_exhibit_boundary` for
-    Figures 10-14. The boundary requires future figure/subfigure IDs,
-    family/result links, figure-caption values, visual artifact paths/hashes,
-    rendering parameters, construction payloads, previous-best sources, source
-    Colab cells/artifacts, and verifier linkage, while the actual rows and
-    artifacts remain `not_recorded_locally`.
-  - Required result: when Appendix B figure-level provenance lands, update
-    ROADMAP, README, papers index, and code/paper TODO entries together with
-    exhibit-level metadata and validators so roadmap text distinguishes broad
-    Appendix B family coverage, main-text Figure 5 exhibits, and reproduced
-    Appendix B construction figures.
-
 - [ ] Keep Appendix B roadmap wording scoped until per-result metric/value
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.1-B.13 reports individual

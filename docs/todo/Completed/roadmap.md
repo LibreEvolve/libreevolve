@@ -2,6 +2,27 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Appendix B Figures 10-14 roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish broad Appendix B family coverage, main-text Figure 5 exhibits,
+    and the missing reproduced Appendix B construction figures.
+  - Current evidence: `figure_exhibit_boundary` records the missing
+    Figures 10-14 exhibit layer separately from family/result boundaries and
+    keeps required future figure/subfigure ids, caption values,
+    previous/current metric values, rendered visual artifacts, render
+    parameters, source Colab locators, and verifier links
+    `not_recorded_locally`.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: normalized Figure 10-14 exhibit rows, subfigure ids,
+    caption-value extraction, previous/current metric rows, construction
+    payload artifacts, rendered panel artifacts, rendering parameters, source
+    Colab cells/artifacts, and verifier links.
+  - Verification: Appendix B registry figure-exhibit tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive Figure 5/B.12 precision roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

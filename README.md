@@ -54,8 +54,16 @@ Important limits:
   for metadata-weighted `throughput_depth` routing; `papers/ucb1_boundary.json`
   records that absence boundary.
 - MAP-Elites support is a local quality-diversity archive, not a paper-faithful
-  illumination study with full map exports, coverage/reliability/precision
-  reports, or domain reproductions.
+  Mouret-Clune illumination study: LibreEvolve has no explicit `b(x)` feature
+  descriptor and `f(x)` performance contracts as paper artifacts, no user-
+  chosen dimension semantics ledger, no `P`/`X` map exports, no initialization
+  and random-variation records, no empty/unfillable-cell diagnostics, no
+  global performance, global reliability, precision, or coverage reports, no
+  feature-performance visualization artifacts, no lineage/stepping-stone
+  analysis, no descriptor rebin compatibility tests, and no retina,
+  simulated-soft-robot, or real-soft-arm reproductions;
+  `papers/map_elites_illumination_boundary.json` records that absence
+  boundary.
 - GigaEvo framework coverage is inspiration-only: LibreEvolve has no Redis
   program lifecycle database, optimistic concurrency records, `asyncio` DAG
   execution engine, DAG stage-output or caching telemetry, concurrent

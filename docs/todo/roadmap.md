@@ -10,47 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement MAP-Elites illumination-algorithm gates beyond source-boundary
-      roadmap promotion.
-  - Spec evidence: local arXiv `1504.04909`, `Illuminating search spaces by
-    mapping elites`, by Jean-Baptiste Mouret and Jeff Clune is a preliminary
-    draft dated April 21, 2015 with cached SHA-256
-    `df7344343b14893a1d79a5459c1f56db50562e246d132cd0269f5201d1455872`.
-    It defines MAP-Elites as a feature-performance map over user-chosen
-    dimensions of variation. The simple algorithm maintains maps `P` and `X`,
-    initializes with random solutions, repeatedly selects an elite from the map,
-    applies random variation, computes feature descriptor `b(x)` and
-    performance `f(x)`, and replaces a cell occupant only when the new
-    candidate improves that cell. The paper evaluates illumination with global
-    performance, global reliability, precision, and coverage over neural
-    networks, simulated soft robots, and a physical soft arm.
-  - Current evidence: ROADMAP describes a configurable local MAP-Elites archive
-    and tracks stable descriptor/rebin gaps, while `papers/README.md` says the
-    default local axes are selection score, serialized-workspace complexity,
-    and TF-IDF diversity. The committed
-    `papers/map_elites_illumination_boundary.json` sidecar now records the
-    `1504.04909` source metadata, local PDF hash, preliminary-draft/cache
-    status, paper pseudocode variables, local archive schemas, and false
-    readiness for full map exports, illumination metrics, and paper-domain
-    reproduction. Roadmap still lacks executable gates for explicit
-    feature-descriptor schemas, user-chosen dimension semantics,
-    initialization/variation evidence, full feature-performance map exports,
-    unfilled-cell diagnostics, illumination metric reports, visualization
-    artifacts, parent-distance/lineage stepping-stone analysis,
-    benchmark/domain reproduction, and descriptor compatibility tests.
-  - Required result: implement roadmap gates for `1504.04909` beyond the
-    sidecar: executable `b(x)`/`f(x)` contracts, dimension declaration and
-    discretization policy, random-initialization and variation policy,
-    per-cell replacement records, `P`/`X` feature-
-    performance map exports, empty/unfillable cell diagnostics, coverage/global
-    reliability/precision/global-performance reports, heatmap/visualization
-    artifacts, lineage parent-cell distance reports, retina and robot
-    experiment schedules, descriptor-model compatibility and rebin validation,
-    NS+LC/MOLE/random/traditional-EA/EA+D/grid-search comparison context,
-    benchmark-domain notes, preliminary-draft caveat, and README/papers/code
-    wording that keeps current 3D archive support separate from full
-    MAP-Elites illumination evidence.
-
 - [ ] Implement hardness-of-approximation proof-element gates beyond
       source-boundary roadmap promotion.
   - Spec evidence: local arXiv `2509.18057v7`, `Reinforced Generation of

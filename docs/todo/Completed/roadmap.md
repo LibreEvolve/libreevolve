@@ -2,6 +2,34 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive MAP-Elites illumination-algorithm roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/map_elites_illumination_boundary.json` now keep arXiv
+    `1504.04909` source-scoped as local MAP-Elites-style quality-diversity
+    support rather than full Mouret-Clune illumination evidence.
+  - Current evidence: the cached paper and boundary JSON record the
+    `Illuminating search spaces by mapping elites` source identity,
+    Jean-Baptiste Mouret and Jeff Clune authorship, preliminary arXiv cache
+    status, source digest, paper `b(x)` feature descriptor and `f(x)`
+    performance contract, `P`/`X` map variables, random initialization and
+    elite-selection/variation semantics, per-cell improvement replacement,
+    global performance, global reliability, precision, coverage,
+    neural-network maze, simulated soft-robot, and real soft-arm domain
+    context.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: explicit paper-contract descriptor/performance artifacts,
+    user-chosen dimension semantics, discretization policy, initialization and
+    variation records, `P`/`X` exports, empty/unfillable-cell diagnostics,
+    illumination metric reports, feature-performance visualizations,
+    lineage/stepping-stone reports, descriptor rebin compatibility tests,
+    paper-domain reproductions, comparison baseline rows, and separation from
+    the current local 3D archive.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive DeepEvolve cross-file research/debug-loop roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

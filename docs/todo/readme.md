@@ -69,23 +69,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README Appendix B.4 interpretation wording scoped until
-      prior-construction similarity evidence exists.
-  - Spec evidence: AlphaEvolve Appendix B.4 says the uncertainty-inequality
-    construction found by AlphaEvolve is qualitatively very similar to the one
-    in reference `[33]`, and presents that similarity as empirical support for
-    the prior hypothesis that the construction is nearly optimal.
-  - Current evidence: README now points to the B.4 qualitative similarity
-    boundary and states that coefficient-level comparison artifacts are not
-    recorded locally: prior and AlphaEvolve coefficient payloads,
-    basis-alignment certificate, coefficient-similarity metric, and hypothesis
-    source artifact. It does not claim the near-optimality hypothesis is
-    locally verified.
-  - Required result: when Appendix B.4 comparison artifacts land, update
-    README, ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes the reported `C4` numeric bound from qualitative similarity
-    to prior work and from any claim that the construction is nearly optimal.
-
 - [ ] Keep README feedback-calibration wording scoped to report contracts
   versus executed calibration experiments.
   - Spec evidence: AlphaEvolve-style feedback and reviewer channels need

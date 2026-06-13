@@ -52,6 +52,23 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     certificates, eventual-nonnegative certificates, and recomputed-bound
     evidence.
 
+- [x] Keep README Appendix B.4 interpretation wording scoped until
+      prior-construction similarity evidence exists.
+  - Status: README Important limits now states that Appendix B.4
+    prior-construction similarity provenance remains absent: the registry
+    preserves the paper's qualitative statement that AlphaEvolve's linear
+    combination is very similar to reference `[33]` and that this supports a
+    near-optimality hypothesis, not local prior/AlphaEvolve coefficient
+    payloads, basis-alignment certificates, coefficient-similarity metrics,
+    hypothesis-source artifacts, or proof that the near-optimality hypothesis
+    is locally verified.
+  - Verification: Appendix B registry tests cover B.4
+    `prior_construction_similarity_evidence`, required future comparison
+    fields, artifact-status overclaim guards, and missing-boundary failures.
+    Code and paper TODOs still track the missing prior construction id,
+    comparable coefficient payloads, source locator, basis-alignment evidence,
+    coefficient-similarity metric, and evidence-strength label.
+
 - [x] Document Appendix B.4 revised-result README boundary.
   - Status: README Important limits now states that Appendix B.4
     revised-result provenance remains absent: the registry preserves the

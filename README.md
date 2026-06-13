@@ -152,8 +152,9 @@ Important limits:
   `papers/fast_strong_model_mix_boundary.json`.
 - Natural-language proposal metadata is context around executable code
   candidates, not AI-Co-Scientist-style hypothesis representation or
-  hallucination-resistance evidence; that boundary is tracked by
-  `papers/programmatic_representation_boundary.json`.
+  hallucination-resistance, long-horizon evolution, natural-language-to-code
+  bridge, proposal-truth model, or combined AI-Co-Scientist workflow evidence;
+  that boundary is tracked by `papers/programmatic_representation_boundary.json`.
 - Natural-language preambles are bounded leading metadata before structured
   mutation markers, not complete freeform rationale handling; that boundary is
   tracked by `papers/natural_language_preamble_boundary.json`.

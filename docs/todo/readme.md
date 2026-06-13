@@ -69,28 +69,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README AI-Co-Scientist comparison scoped until measurement and
-      bridge evidence exists beyond the current representation-boundary report.
-  - Spec evidence: AlphaEvolve Related Work says AI Co-Scientist represents
-    hypotheses and evaluation criteria in natural language, whereas
-    AlphaEvolve evolves code and uses programmatic evaluation functions. The
-    paper says this choice helps sidestep LLM hallucinations and sustain many
-    evolution time steps, while a future system could combine natural-language
-    and programmatic idioms.
-  - Current evidence: README now describes
-    `runtime.history.programmatic_representation_boundary_report`, which
-    separates executable generated candidates from natural-language proposal
-    metadata and records declared evaluator metrics plus deterministic
-    evaluator validity as programmatic criteria. README also links the
-    structural boundary to `papers/programmatic_representation_boundary.json`
-    and states that the report does not measure hallucination resistance, prove
-    long-horizon evolution, or implement a bridge from language-only idea
-    stages into executable candidate evaluation.
-  - Required result: when hallucination-risk measurements, long-horizon
-    evidence, or natural-language-to-programmatic bridge contracts land, update
-    README, ROADMAP, papers index, and code/paper TODOs together so README does
-    not overclaim those properties from generic proposal metadata alone.
-
 - [ ] Keep README Related Work positioning scoped until taxonomy evidence
       exists.
   - Spec evidence: AlphaEvolve Related Work presents the system as

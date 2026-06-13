@@ -13684,6 +13684,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     focused programmatic-representation tests reject hallucination/bridge
     overclaims.
 
+- [x] Keep README AI-Co-Scientist comparison scoped until measurement and
+      bridge evidence exists.
+  - Status: README now says natural-language proposal metadata is context
+    around executable code candidates, not AI-Co-Scientist-style hypothesis
+    representation or hallucination-resistance, long-horizon evolution,
+    natural-language-to-code bridge, proposal-truth model, or combined
+    AI-Co-Scientist workflow evidence.
+  - Verification: paper-manifest validation requires
+    `papers/programmatic_representation_boundary.json`, and focused
+    programmatic-representation tests reject hallucination/bridge overclaims.
+
 - [x] Keep README Related Work positioning boundary tied to sidecar.
   - Status: README now states that Related Work positioning is not inferred
     from the bundled paper list and that the missing taxonomy and claim gates

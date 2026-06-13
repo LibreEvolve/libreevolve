@@ -1573,6 +1573,14 @@ progress on a realistic codebase-scale task. The committed
 `papers/codebase_scale_benchmark_boundary.json` sidecar preserves this Table 1
 code-scale absence boundary for paper-manifest validation.
 
+Table 1 exhibit evidence is also separate from capability parity. LibreEvolve
+can preserve the FunSearch-versus-AlphaEvolve comparison table as a runtime
+source-table exhibit with stable row ids, source location, cell text,
+row-to-gap mappings, and rendered artifact hashes. The committed
+`papers/table1_capability_exhibit_boundary.json` sidecar records that this is
+not benchmark proof for the individual code-scale, language, evaluator,
+sample-efficiency, model-scale, rich-context, or multi-metric rows.
+
 Workspace materialization diagnostics are also scoped: typed
 `CandidateMaterializationError` reasons, bounded paths, casefold collisions,
 recursive link preflight, and static source-copy hash checks are local

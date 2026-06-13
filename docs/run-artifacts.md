@@ -1925,7 +1925,10 @@ deterministic Markdown table and plain-text accessibility export under
 `paper_artifacts/table1_capability_comparison/` and records their SHA-256
 hashes. This is exhibit provenance for the comparison table, not proof of
 code-scale, arbitrary-language, parallel-accelerator, sample-efficiency,
-model-scale, rich-context, or multi-metric Table 1 parity.
+model-scale, rich-context, or multi-metric Table 1 parity. The paper-facing
+counterpart is `papers/table1_capability_exhibit_boundary.json`, which
+manifest validation requires at the repository root so the generated exhibit
+cannot drift into a capability-parity claim.
 Completed manifests also include
 `runtime.history.codebase_scale_benchmark_report` with schema
 `libreevolve.codebase_scale_benchmark_report.v1`. This report measures retained

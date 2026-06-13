@@ -103,7 +103,9 @@ Important limits:
   row text, source location, rendered artifacts, row-to-gap mappings, and
   implementation status, not validated parity for the individual code-scale,
   language, evaluator, sample-count, model-scale, prompt-context, or
-  multi-metric capability rows.
+  multi-metric capability rows. The
+  `papers/table1_capability_exhibit_boundary.json` sidecar keeps that
+  table-provenance-only boundary manifest-validated.
 - The shipped `sorting` example is a solved smoke/plateau fixture, not the
   sorting-network rediscovery benchmark. `sorting_network_8` and
   `sorting_network_9` now provide non-comparable benchmark candidates with

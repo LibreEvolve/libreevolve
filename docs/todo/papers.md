@@ -1087,6 +1087,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     page/caption location, FunSearch and AlphaEvolve cell text, row ordering,
     row-to-implementation status, row-to-TODO/report mappings, rendered table
     artifact hashes, and validation that full Table 1 parity remains false.
+    The committed `papers/table1_capability_exhibit_boundary.json` sidecar
+    keeps this table-provenance-only scope manifest-validated.
   - Required result: satisfy the individual behavioral capability rows with
     benchmark-backed evidence. The remaining gap is not reproducing the
     comparison artifact; it is proving code scale, arbitrary-language,

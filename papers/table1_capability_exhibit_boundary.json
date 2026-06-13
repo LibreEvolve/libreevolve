@@ -1,0 +1,51 @@
+{
+  "schema": "libreevolve.alphaevolve_table1_capability_exhibit_boundary.v1",
+  "runtime_report_schema": "libreevolve.alphaevolve_table1_capability_exhibit_report.v1",
+  "source_paper_id": "2506.13131",
+  "table_id": "alphaevolve_table_1_capability_comparison",
+  "source_table_label": "Table 1",
+  "local_pdf_page": 2,
+  "caption": "Capabilities and typical behaviours of AlphaEvolve and our previous agent.",
+  "row_ids": [
+    "table1.function_vs_file_scope",
+    "table1.code_length_scale",
+    "table1.programming_language_scope",
+    "table1.evaluator_workload_scope",
+    "table1.llm_sample_efficiency",
+    "table1.model_scale_effect",
+    "table1.prompt_context_feedback",
+    "table1.metric_optimization_scope"
+  ],
+  "source_claim": "AlphaEvolve Table 1 compares FunSearch and AlphaEvolve across eight capability and behavior rows, but reproducing the table artifact is not proof that each AlphaEvolve capability row is met",
+  "boundary_status": "table_exhibit_provenance_only",
+  "runtime_report_status": "alphaevolve_table1_capability_exhibit_report_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "stable_table_id",
+    "stable_row_ids",
+    "source_page_caption_location",
+    "funsearch_alphaevolve_cell_text",
+    "row_to_todo_report_mapping",
+    "rendered_artifact_hashes",
+    "table_exhibit_record_ready",
+    "benchmark_backed_code_scale_parity",
+    "arbitrary_language_runner_parity",
+    "parallel_accelerator_evaluator_parity",
+    "equal_budget_sample_efficiency_parity",
+    "sota_model_scale_parity",
+    "full_rich_context_feedback_parity",
+    "multi_metric_benchmark_parity",
+    "full_table1_parity"
+  ],
+  "missing_evidence": {
+    "benchmark_backed_code_scale_parity": "not_recorded_locally",
+    "arbitrary_language_runner_parity": "not_recorded_locally",
+    "parallel_accelerator_evaluator_parity": "not_recorded_locally",
+    "equal_budget_sample_efficiency_parity": "not_recorded_locally",
+    "sota_model_scale_parity": "not_recorded_locally",
+    "full_rich_context_feedback_parity": "not_recorded_locally",
+    "multi_metric_benchmark_parity": "not_recorded_locally",
+    "full_table1_parity": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve can preserve AlphaEvolve Table 1 as a source-table exhibit with stable row ids, source page/caption location, FunSearch and AlphaEvolve cell text, row-to-gap mappings, and rendered artifact hashes, but does not claim benchmark-backed code-scale parity, arbitrary-language runner parity, parallel or accelerator evaluator parity, equal-budget sample-efficiency parity, SOTA model-scale parity, full rich-context feedback parity, multi-metric benchmark parity, or full Table 1 capability parity."
+}

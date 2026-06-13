@@ -105,7 +105,9 @@ LibreEvolve has:
   stable table id, eight ordered row ids, source page/caption location,
   source-cell text, row-to-report/TODO evidence mappings, generated
   Markdown/accessibility artifacts with hashes, and explicit false readiness
-  for individual Table 1 capability-row parity
+  for individual Table 1 capability-row parity, with
+  `papers/table1_capability_exhibit_boundary.json` preserving that
+  table-provenance-only boundary
 - codebase-scale benchmark boundary reports under
   `runtime.history.codebase_scale_benchmark_report`, measuring retained
   program file/line scale, generated-candidate counts, parent-relative changed

@@ -689,7 +689,9 @@ sidecars, tests, and active TODOs.
     table/row ids, source PDF/caption location, FunSearch/AlphaEvolve cell
     text, row-to-gap/evidence mappings, per-row status, generated artifact
     paths/hashes, and a validator that rejects full-table or per-row capability
-    overclaims.
+    overclaims. The committed `papers/table1_capability_exhibit_boundary.json`
+    sidecar preserves that table-exhibit-only scope for paper-manifest
+    validation.
   - Required result: satisfy the individual Table 1 behavioral capability rows
     with benchmark-backed code scale, arbitrary-language/build runners,
     parallel/accelerator evaluator evidence, equal-budget sample-efficiency

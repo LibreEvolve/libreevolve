@@ -2,6 +2,33 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive PACEvolve long-horizon consistency roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2601.10657` source-scoped as background long-horizon consistency
+    framework context rather than implemented LibreEvolve PACEvolve-style
+    consistency support.
+  - Current evidence: the cached paper and `papers/README.md` record the
+    context-pollution, mode-collapse, and weak-collaboration failure modes,
+    hierarchical context management with pruning, momentum-based
+    backtracking, self-adaptive sampling that unifies backtracking and
+    crossover, LLM-SR and KernelBench results, and Modded NanoGPT claim,
+    while marking local detectors, pruning artifacts, mode-collapse
+    diagnostics, backtracking controllers, crossover/backtracking samplers,
+    trajectory-collaboration diagnostics, benchmark reports, linked-code
+    audits, and independent reproduction output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source-license metadata, relation to LibreEvolve prompt/search
+    policy, context-pollution and mode-collapse metrics, hierarchical context
+    schema, pruning and momentum-backtracking artifacts, adaptive sampling and
+    crossover/backtracking coordination records, trajectory-collaboration
+    diagnostics, LLM-SR/KernelBench/Modded-NanoGPT benchmark metadata,
+    baseline identities, code/artifact availability, and independent
+    verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive LEVI cost-aware search-architecture roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

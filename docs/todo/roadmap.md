@@ -10,32 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement PACEvolve long-horizon consistency gates beyond paper cache
-      coverage.
-  - Spec evidence: arXiv `2601.10657`, submitted January 15, 2026 and last
-    revised January 16, 2026, introduces Progress-Aware Consistent Evolution
-    for long-horizon LLM evolutionary search. The abstract names three
-    failure modes: context pollution, mode collapse from poor exploration/
-    exploitation balance, and weak collaboration from rigid crossover. It
-    addresses them with hierarchical context management plus pruning,
-    momentum-based backtracking, and a self-adaptive sampling policy that
-    unifies backtracking and crossover, reporting state-of-the-art results on
-    LLM-SR and KernelBench and record-surpassing Modded NanoGPT solutions.
-  - Current evidence: ROADMAP, `papers/download_manifest.*`,
-    `papers/row_identity.json`, and `papers/README.md` now include
-    `2601.10657` with local cache hash and background-only status. They still
-    do not require local evidence before promoting robust long-horizon
-    consistency, context-pollution control, backtracking, or coordinated
-    crossover beyond current fixed-policy evolution.
-  - Required result: add roadmap gates beyond the paper cache: source-license
-    metadata, context-pollution and mode-collapse metrics, hierarchical
-    context and pruning artifacts, momentum-backtracking traces, adaptive
-    sampling and crossover/backtracking coordination records,
-    parallel-trajectory collaboration diagnostics,
-    LLM-SR/KernelBench/Modded-NanoGPT benchmark metadata, baseline identities,
-    independent reproduction outputs, and a benchmark-fixture status rule so
-    roadmap claims do not outpace local PACEvolve-style support.
-
 - [ ] Implement FlashEvolve asynchronous-stage gates beyond paper cache
       coverage.
   - Spec evidence: arXiv `2605.08520`, submitted May 8, 2026, introduces

@@ -131,6 +131,13 @@ Important limits:
   rank-preserving proxy benchmark, rollout/provider-cost accounting report,
   systems-research benchmark fixture, prompt-optimization budget comparison,
   linked-code audit, or independent reproduction output.
+- PACEvolve long-horizon consistency coverage is background paper context
+  only: LibreEvolve has no context-pollution detector, hierarchical
+  context-management/pruning artifacts, mode-collapse diagnostics,
+  momentum-based backtracking controller, unified crossover/backtracking
+  sampler, trajectory-collaboration diagnostics, LLM-SR/KernelBench/Modded
+  NanoGPT benchmark report, linked-code audit, or independent reproduction
+  output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

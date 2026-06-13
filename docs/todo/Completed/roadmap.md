@@ -2,6 +2,24 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive proposal-memory roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `docs/status.md`, and `papers/README.md` already distinguish optional
+    `IDEA`/`RATIONALE`/`HYPOTHESIS` proposal metadata, bounded
+    `runtime.history.hypothesis_index` summaries, and
+    `runtime.history.proposal_score_report` outcome/exact-novelty score
+    records from AlphaEvolve-grade semantic idea-memory retrieval.
+  - Remaining guard: semantic or embedding-backed proposal-index retrieval,
+    calibrated proposal-quality models, cross-run proposal tables,
+    hypothesis-refinement loops, prompt/archive score-influence policies, and
+    benchmark-linked proposal-quality validation remain future work.
+  - Verification: runtime proposal-score tests assert the report schema,
+    validation, outcome quality scoring, exact signature novelty, duplicate
+    counts, false semantic-similarity/embedding/calibrated-model flags, false
+    prompt/archive score-use readiness, and the committed
+    `papers/proposal_score_boundary.json` sidecar keeps the docs boundary
+    machine-validated.
+
 - [x] Archive plugin artifact-provenance roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md` already scopes
     current plugin provenance to prompt-context/configuration/artifact records

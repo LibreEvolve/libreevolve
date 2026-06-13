@@ -10,25 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep proposal-memory roadmap wording scoped to bounded heuristic scoring
-  versus semantic proposal retrieval.
-  - Spec evidence: AlphaEvolve-style idea memory should be able to score and
-    retrieve prior proposal ideas and hypotheses by quality, novelty, and
-    semantic relation to the current task.
-  - Current evidence: the roadmap now distinguishes optional
-    `IDEA`/`RATIONALE`/`HYPOTHESIS` proposal metadata and bounded manifest
-    `runtime.history.hypothesis_index` evidence, plus
-    `runtime.history.proposal_score_report` outcome/exact-novelty score
-    records, from still-open semantic proposal-index retrieval, calibrated
-    quality models, hypothesis-refinement loops, and field/score-influence
-    policy for retrieval, prompting, and archive resurfacing. ROADMAP now ties
-    that boundary to `papers/proposal_score_boundary.json`.
-  - Required result: when semantic proposal-index retrieval, calibrated
-    proposal-quality models, or score-driven prompt/archive policies land,
-    update the roadmap, README, papers index, and code/paper TODO entries
-    together so they neither underclaim current bounded proposal scoring nor
-    overclaim AlphaEvolve-grade idea memory.
-
 - [ ] Keep backtracking roadmap wording scoped until explicit controller
       backtracking policies exist.
   - Spec evidence: AlphaEvolve's Introduction frames discovery as involving

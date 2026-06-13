@@ -16,6 +16,7 @@ def test_codebase_scale_benchmark_boundary_accepts_absence_record():
     assert validation.required_evidence_field_count == 14
     assert validation.missing_evidence_count == 7
     assert boundary["schema"] == CODEBASE_SCALE_BENCHMARK_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["Table 1", "2.1"]
     assert "does not claim realistic codebase fixtures" in boundary["claim_boundary"]
 
 
@@ -23,6 +24,7 @@ def test_codebase_scale_benchmark_boundary_rejects_premature_table1_claim():
     boundary = codebase_scale_benchmark_boundary_record()
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "table1_code_scale_ready"
+    boundary["source_section_ids"] = ["2.1"]
     boundary["missing_evidence"]["large_multi_component_benchmark_fixture"] = "recorded"
     boundary["required_evidence_fields"] = ["retained_program_file_line_scale"]
 
@@ -32,6 +34,7 @@ def test_codebase_scale_benchmark_boundary_rejects_premature_table1_claim():
     assert validation.ok is False
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert "invalid_missing_evidence_large_multi_component_benchmark_fixture" in codes
     assert "missing_required_evidence_field" in codes
 

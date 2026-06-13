@@ -2,6 +2,10 @@
   "schema": "libreevolve.alphaevolve_codebase_scale_benchmark_boundary.v1",
   "runtime_report_schema": "libreevolve.codebase_scale_benchmark_report.v1",
   "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "Table 1",
+    "2.1"
+  ],
   "source_claim": "AlphaEvolve Table 1 and Section 2.1 report whole-code-file, hundreds-line, arbitrary-language, multi-component algorithm evolution, so local parity needs benchmark-backed codebase-scale evidence rather than only current-run workspace telemetry",
   "boundary_status": "runtime_scale_telemetry_only",
   "runtime_report_status": "codebase_scale_benchmark_report_available",

@@ -3384,6 +3384,7 @@ def test_validate_paper_manifest_rejects_codebase_scale_benchmark_boundary_drift
     record = paper_manifest.codebase_scale_benchmark_boundary_record()
     record["claim_ready"] = True
     record["boundary_status"] = "table1_code_scale_ready"
+    record["source_section_ids"] = ["2.1"]
     record["missing_evidence"]["large_multi_component_benchmark_fixture"] = "recorded"
     sidecar = tmp_path / paper_manifest.CODEBASE_SCALE_BENCHMARK_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
@@ -3394,6 +3395,7 @@ def test_validate_paper_manifest_rejects_codebase_scale_benchmark_boundary_drift
     assert report.ok is False
     assert "codebase_scale_benchmark_boundary_claim_ready_overclaim" in codes
     assert "codebase_scale_benchmark_boundary_invalid_boundary_status" in codes
+    assert "codebase_scale_benchmark_boundary_invalid_source_section_ids" in codes
     assert (
         "codebase_scale_benchmark_boundary_invalid_missing_evidence_large_multi_component_benchmark_fixture"
         in codes

@@ -2,6 +2,26 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive 2026 AlphaEvolve impact-domain roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    the May 7, 2026 Google DeepMind impact article source-scoped and separate
+    from local LibreEvolve benchmark support.
+  - Current evidence: `papers/alphaevolve_2026_impact_boundary.json` records
+    the official article URL/date/title/team, retrieval hash, outbound links,
+    claim ids, values/units/baselines, domain categories, customer cases,
+    UI/API attribution, unsupported-local-benchmark flags, and overclaim
+    guards for named DeepConsensus, AC OPF, Earth AI, Willow, public-gallery,
+    TPU, cache-policy, Spanner, compiler-storage, customer, UI, and API claims.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: linked source snapshots, public-gallery inventories, local fixtures,
+    benchmark reports, claim-value normalization, customer verification, and
+    independent checks before those impact claims can be treated as reproduced
+    evidence or LibreEvolve-supported workflows.
+  - Verification: AlphaEvolve 2026 impact boundary tests, paper-manifest
+    validation, and checked-in paper-index TODO coverage still pass.
+
 - [x] Archive Figure 8 visual roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `README.md`, `ROADMAP.md`,
     `papers/README.md`, `docs/status.md`, `docs/todo/code.md`, and

@@ -82,6 +82,11 @@ Important limits:
   metadata, not executed equal-budget matrix/kissing benchmark runs, proven
   component-isolated ablation setups, rendered paper-quality curves, or
   accelerator/async-worker budget evidence.
+- The May 7, 2026 Google DeepMind AlphaEvolve impact article is official
+  source context, not local LibreEvolve benchmark support; named
+  DeepConsensus, AC OPF, Earth AI, Willow, public-gallery, TPU, cache-policy,
+  Spanner, compiler-storage, customer, UI, and API claims remain bounded by
+  `papers/alphaevolve_2026_impact_boundary.json`.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

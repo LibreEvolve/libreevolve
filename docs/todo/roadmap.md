@@ -10,27 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement 2026 AlphaEvolve impact-domain roadmap gates beyond the
-      source boundary.
-  - Spec evidence: Google DeepMind's May 7, 2026 article
-    `AlphaEvolve: How our Gemini-powered coding agent is scaling impact across
-    fields` reports newer official impact claims across genomics,
-    power-grid optimization, Earth AI, quantum circuits, mathematics gallery
-    examples, TPU design, cache replacement, Spanner, compiler storage, and
-    Google Cloud/customer applications.
-  - Current evidence: ROADMAP now points to
-    `papers/alphaevolve_2026_impact_boundary.json`, which records the 2026
-    impact article URL/date/title/retrieval digest, outbound-link inventory
-    subset, claim categories and value/unit/baseline records, evidence-state
-    classifications, public-gallery/UI/API attribution metadata, local-fixture
-    support status, and release/README claim boundaries.
-  - Required result: implement the roadmap gates beyond source tracking:
-    local fixtures and benchmark reports for DeepConsensus, AC OPF, Earth AI,
-    Willow, TPU design, cache policies, Spanner, compiler storage, customer
-    cases, public-gallery snapshots, UI/API artifacts, linked-source
-    snapshots, and independent verification must exist before roadmap wording
-    promotes those impact domains as LibreEvolve-supported workflows.
-
 - [ ] Implement FHE-on-TPU AlphaEvolve application gates beyond paper cache
       coverage.
   - Spec evidence: arXiv `2605.14718`, submitted May 14, 2026, reports using

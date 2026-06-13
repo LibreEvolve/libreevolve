@@ -6,27 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Keep roadmap mutation-mode wording scoped to configured modes versus
-      adaptive AlphaEvolve-style output contracts.
-  - Spec evidence: AlphaEvolve Section 2.3 chooses SEARCH/REPLACE diffs for
-    larger codebases and direct full-code output when short code or rewrite
-    conditions make that more appropriate.
-  - Current evidence: ROADMAP and README can accurately claim implemented
-    `diff` and configured `full` mutation modes, including full-file,
-    file-section, and full-block replacement semantics.
-    `papers/adaptive_mutation_mode_boundary.json` now records the
-    manifest-checked boundary that this is run-wide configured-mode support,
-    not a policy that selects the prompt/output mode per candidate size,
-    workspace shape, edit scope, prompt arm, or prior failure mode, or records
-    why a candidate received a diff versus full-rewrite contract.
-  - Required result: when adaptive mutation-mode policy, telemetry, and tests
-    land, update roadmap, README, papers index, and code/paper TODO entries so
-    roadmap wording includes candidate/task-shape thresholds, per-candidate
-    mode telemetry, fallback/critique behavior, and examples proving large
-    codebase diff prompts and short-code/full-rewrite prompts are selected
-    under documented AlphaEvolve-style conditions without overclaiming current
-    configured `diff`/`full` support.
-
 - [ ] Keep roadmap seed-provenance wording scoped beyond current idea
       metadata.
   - Spec evidence: AlphaEvolve Section 2.1 treats the initial program and

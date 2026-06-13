@@ -2,6 +2,19 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive adaptive mutation-mode roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
+    `papers/README.md` already describe configured run-wide `diff`/`full`
+    mutation-mode support, full replacement semantics, and
+    `papers/adaptive_mutation_mode_boundary.json` while keeping
+    AlphaEvolve-style adaptive per-candidate diff-versus-full selection false.
+  - Remaining guard: per-candidate mode policy, candidate/task-shape
+    thresholds, prompt metadata, fallback behavior, mixed-mode telemetry, and
+    selection tests remain active in `docs/todo/code.md` and
+    `docs/todo/papers.md`.
+  - Verification: adaptive mutation-mode boundary and paper-manifest
+    validation continue to reject premature adaptive-selection claims.
+
 - [x] Archive candidate-abstraction roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
     `papers/README.md` already describe the current Python-primary

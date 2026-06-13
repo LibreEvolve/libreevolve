@@ -4,6 +4,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Gemini self-training README boundary.
+  - Status: README Important limits now states that Gemini self-training
+    wording remains bounded: README does not yet claim that a deployed Pallas
+    kernel optimization affected the training workload of the same
+    Gemini-family system that powered AlphaEvolve, nor that before/after
+    production training metrics, engineering-velocity evidence, rollout state,
+    or safety/rollback records justify an AlphaEvolve-style self-optimization
+    interpretation.
+  - Verification: code and papers TODOs still track the missing Gemini
+    self-training loop evidence for Pallas deployment claims, while
+    paper-manifest validation keeps README and papers-index references covered.
+
 - [x] Document Pallas autotuning/manual-workflow README boundary.
   - Status: README Important limits now states that Pallas workflow
     documentation does not yet prove AlphaEvolve-style automation of

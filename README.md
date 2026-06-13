@@ -318,11 +318,12 @@ Important limits:
   and context-evolution parity.
 - Paper-result certification and systems-result validation are report,
   artifact-inventory, and evidence-bundle contracts with independence,
-  artifact-hash, domain-readiness, and gate checks, not proof that independent
-  certifiers, reviewer/deployment evidence, or real compiler, hardware, kernel,
-  and scheduling fixtures have emitted held-out, deployment,
-  expert-confirmation, reference-code, or domain-specific result artifacts;
-  that boundary is tracked by
+  artifact-hash, claim-calibration, domain-readiness, and gate checks, not
+  proof that independent certifiers, reviewer/deployment evidence, real
+  Section 3.3 scheduling/kernel/hardware/compiler result magnitudes, or real
+  compiler, hardware, kernel, and scheduling fixtures have emitted held-out,
+  deployment, expert-confirmation, reference-code, or domain-specific result
+  artifacts; that boundary is tracked by
   `papers/systems_result_readiness_boundary.json`.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,

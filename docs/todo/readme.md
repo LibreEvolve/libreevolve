@@ -941,25 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README systems-metric wording scoped until calibrated Section 3.3
-      result claims are populated.
-  - Spec evidence: AlphaEvolve Section 3.3 reports concrete systems outcomes
-    with units and comparison context, including scheduling resource recovery,
-    Pallas/Gemini speedups and training-time reduction, hardware power/area
-    objectives, and FlashAttention kernel plus pre/postprocessing speedups.
-  - Current evidence: README now documents that
-    `libreevolve.systems_result_report.v1` requires `claim_calibration`
-    records for `alphaevolve_ready` reports, including published-style claim
-    ids, units, denominators, baselines, aggregation rules, before/after
-    windows, runtime/deployment/synthesis context, artifact refs, and source
-    refs. Existing fixtures do not yet carry real calibrated Section 3.3
-    result-claim records.
-  - Required result: once systems fixtures and certification examples populate
-    calibrated metric records for scheduling, kernel, hardware, and compiler
-    domains, update README, ROADMAP, papers index, and matching TODOs so README
-    can describe those records without implying the schema alone reproduces
-    AlphaEvolve result magnitudes.
-
 - [ ] Keep README systems-result wording scoped until application-owner and
       domain-review provenance is populated.
   - Spec evidence: AlphaEvolve Section 3.3 frames the Borg scheduling,

@@ -4,6 +4,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document systems metric calibration README boundary.
+  - Status: README Important limits now states that paper-result
+    certification and systems-result validation include claim-calibration
+    contracts but do not prove real AlphaEvolve Section 3.3
+    scheduling/kernel/hardware/compiler result magnitudes. It ties that limit
+    to `papers/systems_result_readiness_boundary.json`.
+  - Verification: focused systems-result and systems-readiness tests validate
+    required `claim_calibration` records for `alphaevolve_ready` reports,
+    metric/unit/baseline/artifact context, summary counts, and readiness
+    boundary overclaim guards; paper-manifest tests validate the sidecar.
+
 - [x] Document certification and systems-result README boundary.
   - Status: README Important limits now states that paper-result
     certification and systems-result validation are report, artifact-inventory,

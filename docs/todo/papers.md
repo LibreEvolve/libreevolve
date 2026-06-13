@@ -160,22 +160,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     embedded entrypoints, dependency scope, eval-input provenance, metric
     names, static primary-file invocation traces from `evaluate()` through
     EVOLVE-block-backed local functions when AST evidence is present, and
-    readiness gaps.
+    readiness gaps. Mixed-stage manifests also summarize external-validator
+    stage metric visibility under a non-causal score-linkage policy.
   - Current gap: paper-facing evidence now covers embedded-only problem loading
     static score-field mapping back to specific evolved code paths for
     supported candidate-owned `evaluate` returns, and static local
     skeleton-to-evolved-block invocation paths for direct-name function calls.
     It still lacks build/runtime isolation beyond the local subprocess plus
-    workspace guard, non-static score causality, and external-validator score
-    linkage. External `validate.py` remains the default problem format outside
-    all-embedded configs. The
+    workspace guard, non-static score causality, and external-validator causal
+    score linkage. External `validate.py` remains the default problem format
+    outside all-embedded configs. The
     committed
     `papers/embedded_evaluator_boundary.json` sidecar now preserves the
     paper-manifest-validated full-Figure-3 evaluator absence boundary.
   - Required result: add paper-visible examples and reports proving
     build/runtime isolation beyond the local subprocess plus workspace guard
-    and non-static/external-validator score linkage before treating local
-    validator execution as AlphaEvolve Figure 3 evaluator parity.
+    and non-static/external-validator causal score linkage before treating
+    local validator execution as AlphaEvolve Figure 3 evaluator parity.
 
 - [ ] Parallelized evaluation and asynchronous throughput.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 2.6.

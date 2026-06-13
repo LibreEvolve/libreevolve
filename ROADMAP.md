@@ -61,10 +61,11 @@ LibreEvolve has:
   path/block-span link candidates, embedded-only problem loading via
   all-`embedded_evaluate` `config.yaml` stages, static local invocation traces
   from `evaluate()` to EVOLVE-block-backed functions when AST evidence is
-  present, and remaining Figure 3 parity gaps, with
+  present, external-validator stage metric visibility without causal linkage,
+  and remaining Figure 3 parity gaps, with
   `papers/embedded_evaluator_boundary.json` now carrying the paper-manifest-
   validated absence boundary for build isolation, non-static score causality,
-  external-validator score linkage, and prompt/response exhibit artifacts
+  external-validator causal score linkage, and prompt/response exhibit artifacts
 - Figure 3 supervised-learning exhibit boundary evidence under
   `papers/figure3_supervised_exhibit_boundary.json`, preserving the distinction
   between generic embedded-evaluator, prompt-history, candidate-history,

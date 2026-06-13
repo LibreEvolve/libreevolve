@@ -35,7 +35,9 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 EXPECTED_MISSING_EVIDENCE = {
     "build_isolation_policy": "not_recorded_locally",
     "non_static_score_field_causality": "not_recorded_locally",
-    "external_validator_score_linkage": "not_recorded_locally",
+    "external_validator_score_linkage": (
+        "stage_metric_visibility_recorded_causal_linkage_not_recorded"
+    ),
     "figure3_prompt_and_response_exhibits": "not_recorded_locally",
 }
 
@@ -79,9 +81,11 @@ def embedded_evaluator_boundary_record() -> dict[str, Any]:
             "evaluate(eval_inputs) runtime evidence and static score-field "
             "attribution for supported embedded returns, plus a runtime-enforced "
             "materialized-candidate workspace dependency policy for local reads "
-            "and imports, but does not claim full AlphaEvolve Figure 3 evaluator "
-            "parity with build isolation, non-static or external-validator score "
-            "linkage, or prompt/response exhibit artifacts."
+            "and imports, and external-validator stage metric visibility without "
+            "causal score linkage, but does not claim full AlphaEvolve Figure 3 "
+            "evaluator parity with build isolation, non-static or "
+            "external-validator causal score linkage, or prompt/response exhibit "
+            "artifacts."
         ),
     }
 

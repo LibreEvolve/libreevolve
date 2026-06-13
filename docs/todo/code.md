@@ -132,7 +132,10 @@ Primary evidence:
     present. For supported embedded
     `evaluate` return expressions, score-field links now include static AST
     causal attribution to EVOLVE blocks through local candidate functions or
-    direct block expressions. Tests cover successful
+    direct block expressions. Mixed-stage runs now also summarize
+    external-validator stage metric visibility under a non-causal
+    `external_validator_score_linkage` section, with validation that rejects
+    causal-linkage overclaims. Tests cover successful
     candidate invocation despite an invalid external validator, diagnostics for
     missing or unsupported candidate callables, and the runtime report contract.
     External `validate.py` remains the default mode, but
@@ -145,7 +148,8 @@ Primary evidence:
   - Required result: finish build/runtime isolation beyond the local
     subprocess plus materialized-workspace guard; extend score-link causality
     beyond the current static embedded AST path to non-static and
-    external-validator cases before claiming arbitrary evaluator parity.
+    external-validator causal-linkage cases before claiming arbitrary evaluator
+    parity.
 
 - [ ] Extend Figure 1/Figure 2 process-exhibit report into rendered diagram
       parity.

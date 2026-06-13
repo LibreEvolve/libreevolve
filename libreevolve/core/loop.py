@@ -28374,6 +28374,7 @@ def _embedded_evaluator_entrypoint_report(
     startup_manifest: Mapping[str, object],
 ) -> dict:
     records = []
+    external_score_records = []
     external_candidate_count = 0
     embedded_candidate_count = 0
     for program in programs:
@@ -28389,6 +28390,9 @@ def _embedded_evaluator_entrypoint_report(
             records.append(_embedded_entrypoint_record(program, metadata))
         elif mode == "external_validator":
             external_candidate_count += 1
+            external_score_records.append(
+                _external_validator_score_linkage_record(program, metadata)
+            )
         configured = metadata.get("configured_stage_results")
         if isinstance(configured, list):
             for stage in configured:
@@ -28407,7 +28411,18 @@ def _embedded_evaluator_entrypoint_report(
                             stage_result=stage,
                         )
                     )
+                elif stage_metadata.get("evaluator_mode") == "external_validator":
+                    external_score_records.append(
+                        _external_validator_score_linkage_record(
+                            program,
+                            stage_metadata,
+                            stage_result=stage,
+                        )
+                    )
     records = _dedupe_embedded_entrypoint_records(records)
+    external_score_records = _dedupe_external_validator_score_records(
+        external_score_records
+    )
     embedded_only_problem_definition = _embedded_only_problem_definition_ready(
         startup_manifest
     )
@@ -28420,6 +28435,7 @@ def _embedded_evaluator_entrypoint_report(
         for record in records
     )
     remaining_gap = [
+        "external_validator_score_causality_linkage",
         "stronger_callable_isolation_or_build_policy",
     ]
     if not has_invocation_trace:
@@ -28433,10 +28449,19 @@ def _embedded_evaluator_entrypoint_report(
         "source": "runtime_history_evaluation_metadata",
         "embedded_candidate_count": embedded_candidate_count,
         "external_validator_candidate_count": external_candidate_count,
+        "external_validator_stage_count": len(external_score_records),
         "embedded_entrypoint_count": len(records),
         "records": records[:50],
         "records_limit": 50,
         "records_truncated": len(records) > 50,
+        "external_validator_score_linkage": {
+            "policy": "external_validator_metrics_visible_without_candidate_evaluate_causality",
+            "causal_linkage_claimed": False,
+            "records": external_score_records[:50],
+            "records_limit": 50,
+            "records_truncated": len(external_score_records) > 50,
+            "remaining_gap": "external_validator_score_causality_linkage",
+        },
         "entrypoint_contract": {
             "mode": "embedded_evaluate",
             "callable": "evaluate",
@@ -28458,6 +28483,7 @@ def _embedded_evaluator_entrypoint_report(
             "score_field_to_evolved_code_path_causal_attribution": (
                 has_score_field_causality
             ),
+            "external_validator_score_linkage": False,
             "remaining_gap": remaining_gap,
         },
     }
@@ -28546,6 +28572,57 @@ def _embedded_entrypoint_record(
             if isinstance(candidate.get("eval_inputs"), Mapping)
             else None
         ),
+    }
+    return {key: value for key, value in record.items() if value is not None}
+
+
+def _external_validator_score_linkage_record(
+    program: Program,
+    metadata: Mapping[str, object],
+    *,
+    stage_result: Mapping[str, object] | None = None,
+) -> dict:
+    stage = metadata.get("stage") if isinstance(metadata.get("stage"), Mapping) else {}
+    dependency = (
+        metadata.get("evaluator_dependency_policy")
+        if isinstance(metadata.get("evaluator_dependency_policy"), Mapping)
+        else {}
+    )
+    metric_names = _embedded_entrypoint_metric_names(
+        stage_result.get("metrics")
+        if isinstance(stage_result, Mapping)
+        else program.metrics
+    )
+    record = {
+        "program_id": program.id,
+        "generation": program.generation,
+        "stage_name": stage.get("name") or (
+            stage_result.get("name") if isinstance(stage_result, Mapping) else None
+        ),
+        "stage_index": stage.get("stage_index"),
+        "evaluator_mode": "external_validator",
+        "validate_path": metadata.get("validate_path"),
+        "candidate_primary_file": metadata.get("primary_file"),
+        "metric_names": metric_names,
+        "passed": stage_result.get("passed")
+        if isinstance(stage_result, Mapping)
+        else program.evaluation.get("is_valid"),
+        "score": _paper_metric_table_number(
+            stage_result.get("score") if isinstance(stage_result, Mapping) else program.fitness
+        ),
+        "score_linkage_policy": (
+            "external_validator_metrics_visible_without_candidate_evaluate_causality"
+        ),
+        "causal_linkage_claimed": False,
+        "dependency_policy": {
+            key: dependency.get(key)
+            for key in (
+                "policy",
+                "problem_local_dependency_policy",
+                "outside_problem_policy",
+            )
+            if key in dependency
+        },
     }
     return {key: value for key, value in record.items() if value is not None}
 
@@ -28960,6 +29037,36 @@ def _dedupe_embedded_entrypoint_records(records: list[dict]) -> list[dict]:
     return deduped
 
 
+def _dedupe_external_validator_score_records(records: list[dict]) -> list[dict]:
+    deduped = []
+    seen = set()
+    for record in records:
+        key = (
+            record.get("program_id"),
+            record.get("stage_name"),
+            record.get("stage_index"),
+            record.get("validate_path"),
+            tuple(record.get("metric_names", []))
+            if isinstance(record.get("metric_names"), list)
+            else (),
+        )
+        if key in seen:
+            continue
+        seen.add(key)
+        deduped.append(record)
+    deduped.sort(
+        key=lambda item: (
+            int(item.get("generation", 0))
+            if isinstance(item.get("generation"), int)
+            and not isinstance(item.get("generation"), bool)
+            else 0,
+            str(item.get("program_id", "")),
+            str(item.get("stage_name", "")),
+        )
+    )
+    return deduped
+
+
 def validate_embedded_evaluator_entrypoint_report(report: object) -> dict:
     issues: list[dict] = []
     if not isinstance(report, dict):
@@ -28975,10 +29082,12 @@ def validate_embedded_evaluator_entrypoint_report(report: object) -> dict:
         "source",
         "embedded_candidate_count",
         "external_validator_candidate_count",
+        "external_validator_stage_count",
         "embedded_entrypoint_count",
         "records",
         "records_limit",
         "records_truncated",
+        "external_validator_score_linkage",
         "entrypoint_contract",
         "claim_ready",
         "claim_readiness",
@@ -29021,10 +29130,23 @@ def validate_embedded_evaluator_entrypoint_report(report: object) -> dict:
     if report.get("records_truncated") is not True:
         if report.get("embedded_entrypoint_count") != len(records):
             issues.append({"code": "invalid_entrypoint_count", "message": "embedded_entrypoint_count must match records when not truncated"})
-    for field in ("embedded_candidate_count", "external_validator_candidate_count"):
+    for field in (
+        "embedded_candidate_count",
+        "external_validator_candidate_count",
+        "external_validator_stage_count",
+    ):
         value = report.get(field)
         if isinstance(value, bool) or not isinstance(value, int) or value < 0:
             issues.append({"code": f"invalid_{field}", "message": f"{field} must be a non-negative integer"})
+    external_linkage = report.get("external_validator_score_linkage")
+    if not isinstance(external_linkage, dict):
+        issues.append({"code": "invalid_external_validator_score_linkage", "message": "external_validator_score_linkage must be an object"})
+    else:
+        _validate_external_validator_score_linkage(
+            external_linkage,
+            report.get("external_validator_stage_count"),
+            issues,
+        )
     contract = report.get("entrypoint_contract")
     if not isinstance(contract, dict) or contract.get("signature") != "evaluate(eval_inputs)":
         issues.append({"code": "invalid_entrypoint_contract", "message": "entrypoint contract must describe evaluate(eval_inputs)"})
@@ -29039,11 +29161,63 @@ def validate_embedded_evaluator_entrypoint_report(report: object) -> dict:
         issues.append({"code": "invalid_invocation_trace_readiness", "message": "invocation-trace readiness must be boolean"})
     elif readiness.get("score_field_to_evolved_code_path_causal_attribution") not in {True, False}:
         issues.append({"code": "invalid_score_field_causal_readiness", "message": "score-field causal readiness must be boolean"})
+    elif readiness.get("external_validator_score_linkage") is not False:
+        issues.append({"code": "external_validator_score_linkage_overclaim", "message": "external validator score linkage must remain false until causal evidence exists"})
     return {
         "schema": "libreevolve.embedded_evaluator_entrypoint_report.v1",
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _validate_external_validator_score_linkage(
+    linkage: Mapping[str, object],
+    expected_count: object,
+    issues: list[dict],
+) -> None:
+    if linkage.get("policy") != (
+        "external_validator_metrics_visible_without_candidate_evaluate_causality"
+    ):
+        issues.append({"code": "invalid_external_validator_score_linkage_policy", "message": "external validator score-linkage policy is invalid"})
+    if linkage.get("causal_linkage_claimed") is not False:
+        issues.append({"code": "external_validator_score_linkage_overclaim", "message": "external validator score linkage must not claim causal attribution"})
+    records = linkage.get("records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_external_validator_score_records", "message": "external validator score records must be a list"})
+        records = []
+    record_limit = linkage.get("records_limit")
+    if isinstance(record_limit, bool) or not isinstance(record_limit, int) or record_limit < 0:
+        issues.append({"code": "invalid_external_validator_score_records_limit", "message": "external validator score record limit must be a non-negative integer"})
+    if linkage.get("records_truncated") not in {True, False}:
+        issues.append({"code": "invalid_external_validator_score_records_truncated", "message": "external validator score record truncation flag must be boolean"})
+    if linkage.get("records_truncated") is not True and expected_count != len(records):
+        issues.append({"code": "invalid_external_validator_stage_count", "message": "external validator stage count must match untruncated score records"})
+    if linkage.get("remaining_gap") != "external_validator_score_causality_linkage":
+        issues.append({"code": "invalid_external_validator_remaining_gap", "message": "external validator linkage must preserve the causal-linkage gap"})
+    for index, record in enumerate(records):
+        if not isinstance(record, Mapping):
+            issues.append({"code": "invalid_external_validator_score_record", "message": f"external validator score record {index} must be an object"})
+            continue
+        if record.get("evaluator_mode") != "external_validator":
+            issues.append({"code": "invalid_external_validator_score_mode", "message": f"external validator score record {index} mode is invalid"})
+        if not isinstance(record.get("program_id"), str) or not record.get("program_id"):
+            issues.append({"code": "invalid_external_validator_score_program", "message": f"external validator score record {index} program_id is invalid"})
+        if not isinstance(record.get("stage_name"), str) or not record.get("stage_name"):
+            issues.append({"code": "invalid_external_validator_score_stage", "message": f"external validator score record {index} stage_name is invalid"})
+        if not isinstance(record.get("validate_path"), str) or not record.get("validate_path"):
+            issues.append({"code": "invalid_external_validator_score_validate_path", "message": f"external validator score record {index} validate_path is invalid"})
+        if not isinstance(record.get("candidate_primary_file"), str) or not record.get("candidate_primary_file"):
+            issues.append({"code": "invalid_external_validator_score_candidate_file", "message": f"external validator score record {index} candidate_primary_file is invalid"})
+        if not isinstance(record.get("metric_names"), list) or not all(
+            isinstance(item, str) and item for item in record.get("metric_names", [])
+        ):
+            issues.append({"code": "invalid_external_validator_score_metrics", "message": f"external validator score record {index} metric_names is invalid"})
+        if record.get("score_linkage_policy") != (
+            "external_validator_metrics_visible_without_candidate_evaluate_causality"
+        ):
+            issues.append({"code": "invalid_external_validator_record_policy", "message": f"external validator score record {index} policy is invalid"})
+        if record.get("causal_linkage_claimed") is not False:
+            issues.append({"code": "external_validator_record_overclaim", "message": f"external validator score record {index} must not claim causal linkage"})
 
 
 def _validate_embedded_score_field_links(

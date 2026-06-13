@@ -798,12 +798,14 @@ dependency policy for local reads/imports, and completed manifests now
 summarize executed embedded entrypoints under
 `runtime.history.embedded_evaluator_entrypoint_report`,
 including per-metric candidate path/block-span link candidates without causal
-attribution claims.
+attribution claims, and external-validator stage metric visibility under a
+non-causal score-linkage policy.
 `validate.py` remains the default problem-loading contract, but
 `load_problem()` now allows missing `validate.py` for a non-empty all-
 `embedded_evaluate` stage list and the `embedded_evaluate_math` fixture covers
 that embedded-only path. Build isolation beyond the local subprocess/workspace
-guard and broader non-static score-link resolution remain necessary before
+guard and broader non-static/external-validator causal score-link resolution
+remain necessary before
 claiming Figure 3 evaluator parity. Supported embedded
 `evaluate(eval_inputs)` paths now record static AST score-field attribution
 when a returned metric expression depends on an EVOLVE block.

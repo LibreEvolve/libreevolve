@@ -7619,6 +7619,15 @@ def test_runtime_history_reports_embedded_evaluator_entrypoint():
     assert validate_embedded_evaluator_entrypoint_report(report)["ok"] is True
     assert report["embedded_candidate_count"] == 1
     assert report["external_validator_candidate_count"] == 0
+    assert report["external_validator_stage_count"] == 0
+    assert report["external_validator_score_linkage"] == {
+        "policy": "external_validator_metrics_visible_without_candidate_evaluate_causality",
+        "causal_linkage_claimed": False,
+        "records": [],
+        "records_limit": 50,
+        "records_truncated": False,
+        "remaining_gap": "external_validator_score_causality_linkage",
+    }
     assert report["embedded_entrypoint_count"] == 1
     assert report["entrypoint_contract"]["signature"] == "evaluate(eval_inputs)"
     assert report["entrypoint_contract"]["dependency_policy"] == (
@@ -7634,6 +7643,10 @@ def test_runtime_history_reports_embedded_evaluator_entrypoint():
     assert report["claim_readiness"][
         "score_field_to_evolved_code_path_causal_attribution"
     ] is True
+    assert report["claim_readiness"]["external_validator_score_linkage"] is False
+    assert "external_validator_score_causality_linkage" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
     assert "skeleton_to_evolved_block_invocation_trace" not in (
         report["claim_readiness"]["remaining_gap"]
     )
@@ -7717,6 +7730,79 @@ def test_runtime_history_reports_embedded_evaluator_entrypoint():
     validation = validate_embedded_evaluator_entrypoint_report(edited)
     assert validation["ok"] is False
     assert "invalid_invocation_trace_method" in {
+        issue["code"] for issue in validation["issues"]
+    }
+
+
+def test_runtime_history_reports_external_validator_score_visibility_without_linkage():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(code):\n"
+        "    return {'score': 0.6, 'is_valid': True}\n"
+    )
+    problem.initial_programs = [
+        "def transform(value):\n"
+        "    # EVOLVE-BLOCK-START scoring_rule\n"
+        "    return value\n"
+        "    # EVOLVE-BLOCK-END\n\n"
+        "def evaluate(eval_inputs):\n"
+        "    return {'score': transform(eval_inputs['score']), 'is_valid': True}\n"
+    ]
+
+    evolve(
+        problem,
+        Config(
+            max_generations=0,
+            log_dir=tmpdir,
+            problem_name="t",
+            eval_stages=[
+                {"name": "external_gate", "min_score": 0.1},
+                {
+                    "name": "candidate_eval",
+                    "mode": "embedded_evaluate",
+                    "eval_inputs": {"score": 0.7},
+                },
+            ],
+        ),
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["embedded_evaluator_entrypoint_report"]
+
+    assert report["validation"]["ok"] is True
+    assert validate_embedded_evaluator_entrypoint_report(report)["ok"] is True
+    assert report["embedded_entrypoint_count"] == 1
+    assert report["external_validator_candidate_count"] == 0
+    assert report["external_validator_stage_count"] == 1
+    linkage = report["external_validator_score_linkage"]
+    assert linkage["policy"] == (
+        "external_validator_metrics_visible_without_candidate_evaluate_causality"
+    )
+    assert linkage["causal_linkage_claimed"] is False
+    assert linkage["records_truncated"] is False
+    assert len(linkage["records"]) == 1
+    record = linkage["records"][0]
+    assert record["stage_name"] == "external_gate"
+    assert record["stage_index"] == 0
+    assert record["evaluator_mode"] == "external_validator"
+    assert record["validate_path"] == "validate.py"
+    assert record["candidate_primary_file"] == "main.py"
+    assert record["metric_names"] == ["score"]
+    assert record["score_linkage_policy"] == (
+        "external_validator_metrics_visible_without_candidate_evaluate_causality"
+    )
+    assert record["causal_linkage_claimed"] is False
+    assert report["claim_readiness"]["external_validator_score_linkage"] is False
+    assert "external_validator_score_causality_linkage" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+
+    edited = copy.deepcopy(report)
+    edited["external_validator_score_linkage"]["causal_linkage_claimed"] = True
+    edited["claim_readiness"]["external_validator_score_linkage"] = True
+    validation = validate_embedded_evaluator_entrypoint_report(edited)
+    assert validation["ok"] is False
+    assert "external_validator_score_linkage_overclaim" in {
         issue["code"] for issue in validation["issues"]
     }
 

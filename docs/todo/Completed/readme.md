@@ -4,6 +4,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document embedded evaluator README boundary.
+  - Status: README Important limits now states that `embedded_evaluate` is
+    opt-in stage evidence, not full AlphaEvolve Figure 3 evaluator parity with
+    default candidate-owned `evaluate(eval_inputs)` problem loading, stronger
+    build/runtime isolation, or non-static/external-validator score linkage.
+    It ties that boundary to `papers/embedded_evaluator_boundary.json`.
+  - Verification: embedded evaluator boundary and paper-manifest tests validate
+    the sidecar that README now references.
+
 - [x] Document Bilateral Trade `2603.08679` source boundary in paper index.
   - Evidence: `papers/README.md` lists Bilateral Trade as AlphaEvolve
     mechanism-design result context only and points to

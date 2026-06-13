@@ -159,7 +159,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     loader still requires `validate.py` by default and build/runtime isolation
     beyond the local subprocess plus workspace guard, along with
     non-static/external-validator score linkage, is not yet
-    evidenced. README now also names
+    evidenced. README Important limits now also names
     `papers/embedded_evaluator_boundary.json` as the committed paper-manifest-
     validated full-Figure-3 evaluator absence boundary.
   - Required result: when build/runtime isolation beyond the local

@@ -56,6 +56,11 @@ Important limits:
   independent reference/statistical-oracle evidence, benchmark sufficiency
   proof, independent disagreement outcomes, or cross-run oracle tables; that
   boundary is tracked by `papers/evaluator_oracle_boundary.json`.
+- Embedded evaluator support is opt-in `embedded_evaluate` stage evidence, not
+  full AlphaEvolve Figure 3 evaluator parity with default candidate-owned
+  `evaluate(eval_inputs)` problem loading, stronger build/runtime isolation, or
+  non-static/external-validator score linkage; that boundary is tracked by
+  `papers/embedded_evaluator_boundary.json`.
 - Execution-grounding and incorrect-suggestion reports are local run telemetry
   over accepted, rejected, execution-filtered, invalid-evaluation, parse-error,
   archive-rejected, and accepted-invalid candidates, not independent rejudge

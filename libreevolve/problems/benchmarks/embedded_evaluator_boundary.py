@@ -14,6 +14,7 @@ EMBEDDED_EVALUATOR_RUNTIME_REPORT_SCHEMA = (
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_ID = "2.1"
+EXPECTED_SOURCE_SECTION_IDS = ("2.1", "2.3")
 EXPECTED_SOURCE_FIGURE_ID = "Figure 3"
 EXPECTED_BOUNDARY_STATUS = "embedded_entrypoint_without_full_figure3_parity"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -65,6 +66,7 @@ def embedded_evaluator_boundary_record() -> dict[str, Any]:
         "runtime_report_schema": EMBEDDED_EVALUATOR_RUNTIME_REPORT_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_section_id": EXPECTED_SOURCE_SECTION_ID,
+        "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_figure_id": EXPECTED_SOURCE_FIGURE_ID,
         "source_claim": (
             "AlphaEvolve Figure 3 shows a candidate codebase skeleton exposing "
@@ -108,6 +110,8 @@ def validate_embedded_evaluator_boundary(
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     if data.get("source_section_id") != EXPECTED_SOURCE_SECTION_ID:
         issues.append(_issue("invalid_source_section_id", "source_section_id must be 2.1"))
+    if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['2.1', '2.3']"))
     if data.get("source_figure_id") != EXPECTED_SOURCE_FIGURE_ID:
         issues.append(_issue("invalid_source_figure_id", "source_figure_id must be Figure 3"))
     if not isinstance(data.get("source_claim"), str) or "evaluate(eval_inputs)" not in data["source_claim"]:

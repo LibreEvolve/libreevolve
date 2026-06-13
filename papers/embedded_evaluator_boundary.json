@@ -3,6 +3,10 @@
   "runtime_report_schema": "libreevolve.embedded_evaluator_entrypoint_report.v1",
   "source_paper_id": "2506.13131",
   "source_section_id": "2.1",
+  "source_section_ids": [
+    "2.1",
+    "2.3"
+  ],
   "source_figure_id": "Figure 3",
   "source_claim": "AlphaEvolve Figure 3 shows a candidate codebase skeleton exposing evaluate(eval_inputs) -> dict[str, float], with evaluators invoking that function to score the modified program",
   "boundary_status": "embedded_entrypoint_without_full_figure3_parity",

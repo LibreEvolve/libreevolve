@@ -5008,6 +5008,7 @@ def test_validate_paper_manifest_rejects_embedded_evaluator_boundary_drift(
     _write_manifest(tmp_path, [row])
     record = paper_manifest.embedded_evaluator_boundary_record()
     record["claim_ready"] = True
+    record["source_section_ids"] = ["2.1"]
     sidecar = tmp_path / paper_manifest.EMBEDDED_EVALUATOR_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -5016,6 +5017,7 @@ def test_validate_paper_manifest_rejects_embedded_evaluator_boundary_drift(
     codes = {issue.code for issue in report.issues}
     assert report.ok is False
     assert "embedded_evaluator_boundary_claim_ready_overclaim" in codes
+    assert "embedded_evaluator_boundary_invalid_source_section_ids" in codes
 
 
 def test_validate_paper_manifest_requires_embedded_evaluator_boundary_at_repo_root(

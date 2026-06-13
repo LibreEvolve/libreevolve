@@ -10,36 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep artifact-content/provider-token roadmap wording scoped to bounded
-  artifact rendering plus mutation/final-prompt caps.
-  - Spec evidence: AlphaEvolve-style prompt construction can use execution
-    results, diagnostics, and artifact evidence from previous attempts, but
-    prompt packing should respect the selected model's context window across
-    all prompt roles and context surfaces.
-  - Current evidence: `ROADMAP.md` asks to integrate evaluator-output prompt
-    summaries, aggregate syntax diagnostics, and bounded run-local artifact
-    content retrieval with selected-backend provider-token section packing.
-    README and paper TODO evidence show copied UTF-8 evaluator artifact content
-    can be rendered from stored excerpts or reopened under bounded-file policy,
-    binary/non-UTF-8 artifacts are explicitly non-renderable, mutation prompts
-    have deterministic section budgets, and final prompts get role-scoped
-    prompt-token cap checks. Runtime prompt-section coverage now rejects
-    complete and role-level section-packing overclaims for critique, feedback,
-    and meta-prompt, with explicit false readiness guards for non-OpenAI/custom
-    exact counters, registry/custom roles, and retrieval/context/plugin/
-    failure-memory packing. The remaining gap is automatic provider-token section-
-    priority packing outside mutation prompts and exact counters across non-
-    OpenAI/custom provider families, not bounded artifact-content rendering
-    itself. The roadmap now points to
-    `papers/prompt_section_packing_boundary.json`, which preserves that
-    mutation-section-packing boundary for manifest validation.
-  - Required result: when selected-backend provider-token section packing covers
-    critique, feedback, meta-prompt, retrieval/context/plugin/failure-memory,
-    and artifact-content sections across provider families, update the roadmap,
-    README, papers index, and code/paper TODO entries together so roadmap
-    wording neither underclaims current bounded artifact rendering nor
-    overclaims AlphaEvolve-grade prompt fitting.
-
 - [ ] Keep strict finite JSONL roadmap wording scoped to current writer
       coverage.
   - Spec evidence: AlphaEvolve-scale run artifacts should remain replayable

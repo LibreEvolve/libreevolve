@@ -35,6 +35,24 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     bounded retained-program integrity reports from durable whole-run query
     surfaces.
 
+- [x] Archive artifact-content/provider-token roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md` already links
+    current prompt caps, mutation-path provider-token section packing,
+    role-scoped final-prompt token counting, backend context-window metadata,
+    role-level overclaim guards, bounded evaluator-output summaries,
+    aggregate syntax diagnostics, and bounded run-local UTF-8 artifact-content
+    retrieval to `papers/prompt_section_packing_boundary.json`.
+  - Remaining guard: selected-backend provider-token section packing across
+    critique, feedback, meta-prompt, retrieval, context, plugin,
+    failure-memory, and artifact-content surfaces, exact non-OpenAI/custom
+    provider counters, registry/custom role packing, and full
+    validator-metadata prompt policy remain active in `docs/todo/code.md` and
+    `docs/todo/papers.md`.
+  - Verification: prompt section-packing boundary tests and paper-manifest
+    validation continue to reject all-role provider-token prompt-fitting
+    overclaims while accepting bounded artifact rendering and mutation/final-
+    prompt cap evidence.
+
 - [x] Archive metric-diverse prompt-context roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README,
     `papers/README.md`, runtime

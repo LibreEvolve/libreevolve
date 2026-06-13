@@ -16,6 +16,7 @@ def test_systems_result_readiness_boundary_accepts_absence_record():
     assert validation.required_evidence_field_count == 25
     assert validation.missing_evidence_count == 7
     assert boundary["schema"] == SYSTEMS_RESULT_READINESS_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["3.3"]
     assert "does not claim real scheduling" in boundary["claim_boundary"]
 
 
@@ -23,6 +24,7 @@ def test_systems_result_readiness_boundary_rejects_premature_ready_claim():
     boundary = systems_result_readiness_boundary_record()
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "real_systems_fixtures_ready"
+    boundary["source_section_ids"] = ["3.2"]
     boundary["missing_evidence"]["real_kernel_fixture_runs"] = "recorded"
     boundary["required_evidence_fields"] = ["systems_result_report_schema"]
 
@@ -32,6 +34,7 @@ def test_systems_result_readiness_boundary_rejects_premature_ready_claim():
     assert validation.ok is False
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert "invalid_missing_evidence_real_kernel_fixture_runs" in codes
     assert "missing_required_evidence_field" in codes
 

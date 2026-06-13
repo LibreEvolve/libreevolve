@@ -16,6 +16,7 @@ SYSTEMS_RESULT_READINESS_BOUNDARY_SCHEMA = (
     "libreevolve.alphaevolve_systems_result_readiness_boundary.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
+EXPECTED_SOURCE_SECTION_IDS = ("3.3",)
 EXPECTED_BOUNDARY_STATUS = "report_contract_without_real_systems_fixtures"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "systems_result_report_schema",
@@ -79,6 +80,7 @@ def systems_result_readiness_boundary_record() -> dict[str, Any]:
         "artifact_inventory_schema": SYSTEMS_ARTIFACT_INVENTORY_SCHEMA,
         "evidence_bundle_schema": SYSTEMS_EVIDENCE_BUNDLE_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_claim": (
             "AlphaEvolve Section 3.3 systems-result claims used domain-specific "
             "evidence: unseen scheduling workloads, held-out kernel shapes, "
@@ -121,6 +123,8 @@ def validate_systems_result_readiness_boundary(
         issues.append(_issue("invalid_evidence_bundle_schema", "evidence bundle schema must identify systems report/inventory bundles"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['3.3']"))
     source_claim = data.get("source_claim")
     if not isinstance(source_claim, str) or "Section 3.3 systems-result claims" not in source_claim:
         issues.append(_issue("invalid_source_claim", "source_claim must identify AlphaEvolve systems-result evidence"))

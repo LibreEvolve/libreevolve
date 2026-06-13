@@ -9,38 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Extend README evaluator-entrypoint wording from opt-in embedded evidence
-      to full Figure 3 parity.
-  - Spec evidence: AlphaEvolve Section 2.1 and Figure 3 show the codebase
-    skeleton exposing `evaluate(eval_inputs) -> dict[str, float]`, which invokes
-    the evolved blocks and returns scores for the generated program. Local PDF
-    page 4 describes this as a Python `evaluate` function with a fixed
-    input/output signature, and Figure 3 on page 6 says evaluators invoke the
-    Figure 3(a) `evaluate` function to obtain the proposed program's scores.
-  - Current evidence: README now describes both external validators and the
-    opt-in configured stage mode `mode: embedded_evaluate`. In that mode
-    LibreEvolve imports the materialized candidate primary file, requires a
-    candidate-owned `evaluate(eval_inputs)` callable, invokes it with JSON-safe
-    configured inputs, maps the returned dictionary through the local metrics
-    contract, records candidate callable plus eval-input provenance, and points
-    completed manifests at `runtime.history.embedded_evaluator_entrypoint_report`.
-    README now also documents static primary-file invocation traces from
-    `evaluate()` through EVOLVE-block-backed local functions when AST evidence
-    is available, plus a runtime-enforced materialized-candidate workspace
-    dependency policy for embedded local reads/imports.
-    README should still not imply full Figure 3 parity because the problem
-    loader still requires `validate.py` by default and build/runtime isolation
-    beyond the local subprocess plus workspace guard, along with
-    non-static/external-validator score linkage, is not yet
-    evidenced. README Important limits now also names
-    `papers/embedded_evaluator_boundary.json` as the committed paper-manifest-
-    validated full-Figure-3 evaluator absence boundary.
-  - Required result: when build/runtime isolation beyond the local
-    subprocess/workspace guard and non-static/external-validator score-field
-    linkage land, update README, ROADMAP, papers index, and code/paper TODOs
-    together so README can make the stronger Figure 3 evaluator claim without
-    overclaiming the current opt-in report.
-
 - [ ] Extend README Figure 1/Figure 2 architecture wording from process
       mappings to full diagram parity.
   - Spec evidence: AlphaEvolve Figure 1 shows the high-level "Human defines

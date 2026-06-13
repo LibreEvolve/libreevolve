@@ -2,6 +2,22 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive mutation-response preamble roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `papers/README.md`, and runtime manifests already distinguish bounded
+    leading explanatory-preamble capture from broader semantic proposal memory
+    and complete AlphaEvolve-style freeform rationale handling.
+  - Remaining guard: configurable preamble policy controls, raw
+    full-replacement disambiguation, semantic rationale-quality scoring, and
+    cross-run proposal-memory or preamble tables remain future work.
+  - Verification: diff/candidate parser tests accept explanatory text only
+    before the first structured mutation marker and reject trailing or
+    interleaved prose; runtime report tests validate
+    `runtime.history.natural_language_preamble_report`, `claim_ready=false`,
+    and false arbitrary-rationale readiness; the
+    `papers/natural_language_preamble_boundary.json` sidecar rejects complete
+    rationale-handling overclaims.
+
 - [x] Archive evaluation-cascade hypothesis-test roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `docs/status.md`, and `papers/README.md` already scope current cascade

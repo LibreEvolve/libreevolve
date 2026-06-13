@@ -10,24 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep mutation-response roadmap wording scoped beyond bounded
-      natural-language preamble capture.
-  - Spec evidence: AlphaEvolve Figure 3(c) includes explanatory prose before a
-    SEARCH/REPLACE diff example, while Section 2.3 still defines the edit
-    payload through structured diff blocks.
-  - Current evidence: ROADMAP now distinguishes bounded leading
-    explanatory-preamble capture and `runtime.history.natural_language_preamble_report`
-    plus `papers/natural_language_preamble_boundary.json` from broader
-    semantic proposal memory. Current code accepts leading preambles before
-    structured mutation markers and rejects prose between or after mutation
-    sections.
-  - Remaining gap: roadmap wording must stay scoped as future work adds
-    configurable preamble policies, raw full-replacement disambiguation,
-    rationale-quality scoring, or cross-run proposal-memory tables.
-  - Required result: when broader preamble handling lands, update ROADMAP,
-    README, papers index, and code/paper TODOs together so they do not imply
-    full AlphaEvolve-style freeform rationale parsing before it exists.
-
 - [ ] Keep prompt-example roadmap wording scoped until copy-detection policy
       is stronger than built-in exact sentinels.
   - Spec evidence: AlphaEvolve Figure 3(b,c) uses concrete current-program

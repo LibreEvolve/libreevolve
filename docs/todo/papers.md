@@ -181,16 +181,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     branch state transitions and observed redirects from abandoned-looking
     branches to a later fallback parent or alternative branch. The committed
     `papers/controller_backtracking_boundary.json` sidecar now preserves the
-    paper-manifest-validated controller-policy absence boundary.
+    paper-manifest-validated controller-policy absence boundary, including
+    missing unpromising-decision rules/thresholds, controller branch-state
+    machine, and prompt-sampling suppression effects.
   - Current gap: these reports are evidence of abandoned-looking branches and
     observed redirects, not proof that the controller deliberately backtracked
     under a configured policy. They still lack suppression/retry events,
-    explicit fallback-target selection, causal resumed-search proof, and
-    cross-run branch tables.
+    unpromising-branch decision thresholds, explicit fallback-target
+    selection, prompt-visible sampling suppression, causal resumed-search
+    proof, and cross-run branch tables.
   - Required result: add controller-owned backtracking policy reports with
-    configured suppression/retry behavior, explicit fallback target selection,
-    causal resumed-search outcomes, and replayable validation before using
-    AlphaEvolve-style backtracking wording without qualification.
+    configured suppression/retry behavior, unpromising decision rules and
+    thresholds, explicit fallback target selection, prompt-sampling suppression
+    effects, causal resumed-search outcomes, and replayable validation before
+    using AlphaEvolve-style backtracking wording without qualification.
 
 - [ ] Extend candidate-embedded evaluator reports into full Figure 3 parity.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Figure 3.

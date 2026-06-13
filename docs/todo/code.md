@@ -2245,17 +2245,22 @@ sidecars, tests, and active TODOs.
     selections after abandoned-looking branches while keeping causal controller
     proof false. The committed
     `papers/controller_backtracking_boundary.json` sidecar now records the
-    paper-manifest-validated controller-policy absence boundary.
+    paper-manifest-validated controller-policy absence boundary, including
+    missing unpromising-decision rules/thresholds, controller branch-state
+    machine, and prompt-sampling suppression effects.
   - Remaining gap: this is observed redirect evidence, not a controller-owned
     backtracking policy. LibreEvolve still does not persist a configured branch
-    state machine, suppression or retry policy event, explicit fallback-target
-    selection event, causal redirected-sampling proof, or cross-run hypothesis
-    branch table.
+    state machine, unpromising-branch decision rule/threshold, suppression or
+    retry policy event, explicit fallback-target selection event, prompt-
+    visible sampling suppression effect, causal redirected-sampling proof, or
+    cross-run hypothesis branch table.
   - Required result: add explicit controller-owned backtracking policy events
-    with configured suppression/retry behavior, selected fallback ancestor or
-    alternative branch, causal resumed-search replay, and cross-run validation
-    before claiming AlphaEvolve-style backtracking on unpromising hypotheses
-    rather than branch-level rejection and observed redirect evidence.
+    with configured suppression/retry behavior, unpromising decision rules and
+    thresholds, selected fallback ancestor or alternative branch, prompt-
+    sampling suppression effects, causal resumed-search replay, and cross-run
+    validation before claiming AlphaEvolve-style backtracking on unpromising
+    hypotheses rather than branch-level rejection and observed redirect
+    evidence.
 
 - [ ] Extend initial-pool divergence reporting beyond bounded syntactic and
       metric evidence.

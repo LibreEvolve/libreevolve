@@ -732,9 +732,11 @@ is not yet an AlphaEvolve reproduction.
   explicit controller-driven backtracking policies, cross-run proposal tables,
   hypothesis-refinement loops, with
   `papers/controller_backtracking_boundary.json` now carrying the
-  paper-manifest-validated absence boundary for suppression/retry policy,
-  fallback-target decision events, causal replay, and cross-run hypothesis
-  branch tables, configurable preamble policy, full-replacement
+  paper-manifest-validated absence boundary for unpromising-decision
+  rules/thresholds, controller branch-state machines, suppression/retry
+  policy, prompt-sampling suppression effects, fallback-target decision
+  events, causal replay, and cross-run hypothesis branch tables,
+  configurable preamble policy, full-replacement
   preamble disambiguation, rationale-quality scoring, and stricter policy for
   which proposal fields may influence retrieval, prompting, and archive
   resurfacing.

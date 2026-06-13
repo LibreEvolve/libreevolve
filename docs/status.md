@@ -186,9 +186,11 @@ Important limits:
   `papers/incorrect_suggestion_audit_boundary.json`.
 - Hypothesis-branch and controller-backtracking reports show abandoned-looking
   branches and observed redirects, not controller-owned backtracking policy
-  with configured suppression/retry behavior, explicit fallback-target events,
-  causal resumed-search replay, or cross-run branch tables; that boundary is
-  tracked by `papers/controller_backtracking_boundary.json`.
+  with unpromising-decision rules/thresholds, controller branch-state
+  machines, configured suppression/retry behavior, prompt-sampling suppression
+  effects, explicit fallback-target events, causal resumed-search replay, or
+  cross-run branch tables; that boundary is tracked by
+  `papers/controller_backtracking_boundary.json`.
 - Qualitative LLM-feedback records are declared criterion/rubric/intent
   provenance and prompt-history audit evidence, not executed calibration,
   task-suite, ablation, or independent feedback-quality validation; that

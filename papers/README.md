@@ -1253,7 +1253,10 @@ state transitions and observed redirects from abandoned-looking branches to a
 later fallback parent or alternative branch, while explicitly marking causal
 controller backtracking proof as absent. The committed
 `papers/controller_backtracking_boundary.json` sidecar now emits that
-`observed_redirects_without_controller_policy` boundary, and
+`observed_redirects_without_controller_policy` boundary for missing
+unpromising-decision rules/thresholds, controller branch-state machines,
+suppression/retry behavior, prompt-sampling suppression effects, explicit
+fallback-target selection, causal replay, and cross-run branch tables, and
 `validate_paper_manifest()` requires and validates it at the real repo root.
 `runtime.history.proposal_diversity_report` also records exact proposal and
 idea hash uniqueness/duplicate counts by generation and proposal batch, with

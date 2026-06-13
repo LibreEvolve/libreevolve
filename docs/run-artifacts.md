@@ -1678,8 +1678,10 @@ Important behavior:
   parent targets, failure-memory and hypothesis-context linkage, and explicit
   claim-readiness flags. A branch with rejected candidates and no accepted
   candidates is marked as `abandoned_evidence`, but controller suppression,
-  fallback selection events, causal redirected-sampling proof, and cross-run
-  branch tables remain unsupported. The committed
+  unpromising-decision rules/thresholds, controller branch-state machines,
+  prompt-sampling suppression effects, fallback selection events, causal
+  redirected-sampling proof, and cross-run branch tables remain unsupported.
+  The committed
   `papers/controller_backtracking_boundary.json` sidecar preserves the same
   controller-policy absence boundary for paper-manifest validation.
 - `runtime.history.proposal_diversity_report` stores exact current-run

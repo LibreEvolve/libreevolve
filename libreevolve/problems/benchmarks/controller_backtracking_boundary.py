@@ -17,8 +17,12 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "branch_id",
     "proposal_hash",
     "abandonment_reason",
+    "unpromising_decision_rule",
+    "unpromising_decision_threshold",
+    "controller_branch_state_machine_ref",
     "configured_suppression_policy",
     "configured_retry_policy",
+    "prompt_sampling_suppression_effect",
     "fallback_target_selection_event",
     "alternative_branch_selection_event",
     "resumed_search_candidate_id",
@@ -28,6 +32,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 EXPECTED_MISSING_EVIDENCE = {
     "controller_owned_suppression_policy": "not_configured",
     "controller_owned_retry_policy": "not_configured",
+    "unpromising_decision_rule": "not_recorded_locally",
+    "unpromising_decision_thresholds": "not_recorded_locally",
+    "controller_branch_state_machine": "not_recorded_locally",
+    "prompt_sampling_suppression_effect": "not_recorded_locally",
     "fallback_target_decision_events": "not_recorded_locally",
     "alternative_branch_decision_events": "not_recorded_locally",
     "causal_resumed_search_replay": "not_recorded_locally",
@@ -60,7 +68,10 @@ def controller_backtracking_boundary_record() -> dict[str, Any]:
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_claim": (
             "scientific/program discovery involves ideation, exploration, "
-            "backtracking on unpromising hypotheses, experimentation, and validation"
+            "backtracking on unpromising hypotheses, experimentation, and "
+            "validation; paper-ready evidence must show which controller rule "
+            "classified a branch as unpromising and how that decision changed "
+            "future sampling"
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "runtime_report_status": "hypothesis_branch_and_observed_redirect_reports_available",
@@ -71,9 +82,11 @@ def controller_backtracking_boundary_record() -> dict[str, Any]:
             "This boundary records that LibreEvolve has runtime evidence for "
             "abandoned-looking branches and observed redirects, but does not claim "
             "AlphaEvolve-style controller-owned backtracking policy evidence with "
-            "configured suppression/retry behavior, explicit fallback-target or "
-            "alternative-branch selection events, causal resumed-search replay, or "
-            "cross-run hypothesis branch tables."
+            "unpromising-decision rules and thresholds, controller branch-state "
+            "machines, configured suppression/retry behavior, prompt-sampling "
+            "suppression effects, explicit fallback-target or alternative-branch "
+            "selection events, causal resumed-search replay, or cross-run "
+            "hypothesis branch tables."
         ),
     }
 
@@ -96,7 +109,11 @@ def validate_controller_backtracking_boundary(
         issues.append(_issue("invalid_controller_backtracking_schema", "controller backtracking schema must identify controller backtracking reports"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
-    if not isinstance(data.get("source_claim"), str) or "backtracking on unpromising hypotheses" not in data["source_claim"]:
+    if (
+        not isinstance(data.get("source_claim"), str)
+        or "backtracking on unpromising hypotheses" not in data["source_claim"]
+        or "future sampling" not in data["source_claim"]
+    ):
         issues.append(_issue("invalid_source_claim", "source_claim must identify backtracking on unpromising hypotheses"))
     status = data.get("boundary_status")
     if status != EXPECTED_BOUNDARY_STATUS:
@@ -108,7 +125,13 @@ def validate_controller_backtracking_boundary(
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
-    if not isinstance(boundary_text, str) or "does not claim" not in boundary_text:
+    if (
+        not isinstance(boundary_text, str)
+        or "does not claim" not in boundary_text
+        or "unpromising-decision rules and thresholds" not in boundary_text
+        or "controller branch-state machines" not in boundary_text
+        or "prompt-sampling suppression effects" not in boundary_text
+    ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim controller-owned backtracking policy evidence"))
     return ControllerBacktrackingBoundaryValidation(
         ok=not issues,

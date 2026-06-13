@@ -3,7 +3,7 @@
   "hypothesis_branch_report_schema": "libreevolve.hypothesis_branch_report.v1",
   "controller_backtracking_report_schema": "libreevolve.controller_backtracking_report.v1",
   "source_paper_id": "2506.13131",
-  "source_claim": "scientific/program discovery involves ideation, exploration, backtracking on unpromising hypotheses, experimentation, and validation",
+  "source_claim": "scientific/program discovery involves ideation, exploration, backtracking on unpromising hypotheses, experimentation, and validation; paper-ready evidence must show which controller rule classified a branch as unpromising and how that decision changed future sampling",
   "boundary_status": "observed_redirects_without_controller_policy",
   "runtime_report_status": "hypothesis_branch_and_observed_redirect_reports_available",
   "claim_ready": false,
@@ -11,8 +11,12 @@
     "branch_id",
     "proposal_hash",
     "abandonment_reason",
+    "unpromising_decision_rule",
+    "unpromising_decision_threshold",
+    "controller_branch_state_machine_ref",
     "configured_suppression_policy",
     "configured_retry_policy",
+    "prompt_sampling_suppression_effect",
     "fallback_target_selection_event",
     "alternative_branch_selection_event",
     "resumed_search_candidate_id",
@@ -22,10 +26,14 @@
   "missing_evidence": {
     "controller_owned_suppression_policy": "not_configured",
     "controller_owned_retry_policy": "not_configured",
+    "unpromising_decision_rule": "not_recorded_locally",
+    "unpromising_decision_thresholds": "not_recorded_locally",
+    "controller_branch_state_machine": "not_recorded_locally",
+    "prompt_sampling_suppression_effect": "not_recorded_locally",
     "fallback_target_decision_events": "not_recorded_locally",
     "alternative_branch_decision_events": "not_recorded_locally",
     "causal_resumed_search_replay": "not_recorded_locally",
     "cross_run_hypothesis_branch_table": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has runtime evidence for abandoned-looking branches and observed redirects, but does not claim AlphaEvolve-style controller-owned backtracking policy evidence with configured suppression/retry behavior, explicit fallback-target or alternative-branch selection events, causal resumed-search replay, or cross-run hypothesis branch tables."
+  "claim_boundary": "This boundary records that LibreEvolve has runtime evidence for abandoned-looking branches and observed redirects, but does not claim AlphaEvolve-style controller-owned backtracking policy evidence with unpromising-decision rules and thresholds, controller branch-state machines, configured suppression/retry behavior, prompt-sampling suppression effects, explicit fallback-target or alternative-branch selection events, causal resumed-search replay, or cross-run hypothesis branch tables."
 }

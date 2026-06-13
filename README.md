@@ -664,6 +664,14 @@ Important limits:
   taxonomy, baseline comparison table against AlphaEvolve/OpenEvolve/GEPA/
   ShinkaEvolve, token-efficiency report, strategy ablation records, or
   independent reproduction output.
+- ArXiv `2602.02919` is context-memory framework evidence only; the README
+  mentions this cached paper as a curated subset while `papers/README.md`
+  remains the complete implementation-status index. LibreEvolve has no
+  first-class semantic-delta schema, node-transition effect attribution,
+  semantic-delta memory bank, multi-level database/index metadata, progressive
+  disclosure traces, token-savings report, full-code-history baseline
+  comparison, scientific-task benchmark taxonomy, or independent reproduction
+  output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

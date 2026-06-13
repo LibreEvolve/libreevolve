@@ -14601,3 +14601,25 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     baseline identities, ablation reports, token-efficiency data, benchmark
     outcomes, and EvoX-style adaptive strategy evolution remain active in code
     and paper TODOs.
+
+- [x] Keep README DeltaEvolve semantic-delta claims source-scoped until
+      benchmark evidence exists.
+  - Spec evidence: arXiv `2602.02919`, `DeltaEvolve: Accelerating Scientific
+    Discovery through Momentum-Driven Evolution`, says AlphaEvolve-style
+    systems can rely on full-code histories that are context-inefficient and
+    provide weak guidance. It proposes structured semantic deltas over
+    successive program-node modifications, a multi-level database, and
+    progressive disclosure to reduce input tokens and improve scientific-task
+    search.
+  - Status: README now lists arXiv `2602.02919` as context-memory framework
+    evidence only and marks the mention as a curated cached-paper subset while
+    `papers/README.md` remains the complete implementation-status index. It
+    states that LibreEvolve has no first-class semantic-delta schema,
+    node-transition effect attribution, semantic-delta memory bank,
+    multi-level database/index metadata, progressive disclosure traces,
+    token-savings report, full-code-history baseline comparison,
+    scientific-task benchmark taxonomy, or independent reproduction output.
+  - Remaining README gap: semantic-delta schemas, node-transition provenance,
+    prompt assembly traces, token accounting, benchmark tasks, baseline
+    identities, outcomes, and DeltaEvolve-style context control remain active
+    in code and paper TODOs.

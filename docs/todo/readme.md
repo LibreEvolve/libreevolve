@@ -9,31 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README seed-provenance wording scoped beyond current idea metadata.
-  - Spec evidence: AlphaEvolve Section 2.1 makes the initial solution and
-    optional background knowledge part of the task specification, and Section
-    3.1 reports matrix targets where researchers seeded the initial program
-    with their own ideas, such as stochastic evaluation or evolutionary
-    approaches. In the local PDF, page 10 says most Table 2 matrix results used
-    a simple initial program, while some parameters improved from
-    researcher-idea-seeded starts.
-  - Current evidence: README documents seed source safety and provenance,
-    including `seed_source_path`, `seed_source_kind`, `seed_index`,
-    `problem.seed_sources`, skipped-seed diagnostics, inline seed labels, and
-    generation-0 baselines. README now also documents optional seed idea
-    metadata fields and
-    `runtime.history.initial_program_idea_provenance_report`, which links seed
-    variant ids, idea origins, contribution roles, prior-technique labels, and
-    background refs to generation-0 history rows and declared metric names.
-    README Important limits now points to
-    `papers/initial_program_idea_provenance_boundary.json` as the committed
-    metadata-contract-only sidecar for this boundary.
-  - Required result: when seed-variant result tables, prompt/context linkage,
-    equal-budget simple/random/researcher-idea comparisons, and contribution
-    review/signoff land, update README, ROADMAP, papers index, and code/paper
-    TODO entries together so README does not imply metadata alone is
-    sufficient for AlphaEvolve-style human-seeded collaboration claims.
-
 - [ ] Keep README seed-validity wording scoped after strict policy/reporting.
   - Spec evidence: AlphaEvolve Section 2.1 describes the initial implementation
     as complete but rudimentary, with the task skeleton and evaluator able to

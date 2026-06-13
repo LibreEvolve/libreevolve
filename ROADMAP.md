@@ -2013,6 +2013,11 @@ resumed-trace proof are still open.
   compiler adoption/integration artifacts, real hardware RTL/EDA artifacts,
   real hardware rewrite artifacts, and real Gemini-to-TPU attribution artifacts
   still need to populate those records.
+- For Pallas/Gemini kernel fixtures, populate workflow-baseline evidence before
+  claiming AlphaEvolve-style automation of tiling-heuristic work: distinguish
+  search-based autotuning, manual heuristics, and expert-hybrid baselines;
+  record retuning burden for input-shape changes, manual authoring/review
+  effort, hardware-expertise assumptions, and model-developer ergonomics.
 - Populate real hardware-adoption and rewrite evidence for TPU RTL-style
   reports before claiming Section 3.3.3 parity: emitted RTL, before/after
   Verilog diffs, removed-bit inventories, synthesis/PPA, verification,

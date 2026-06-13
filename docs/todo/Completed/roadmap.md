@@ -2,6 +2,31 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Pallas workflow-baseline roadmap wording TODO.
+  - Status: the roadmap-specific TODO was resolved as a live-doc boundary.
+    `README.md`, `ROADMAP.md`, `papers/README.md`, `docs/status.md`,
+    `docs/todo/code.md`, and `docs/todo/papers.md` now state that
+    AlphaEvolve-style automation of Pallas tiling workflow is not proven by
+    the current kernel report contracts.
+  - Current evidence: existing kernel systems-result contracts can represent
+    generic optimization, held-out gates, claim calibration, application
+    provenance, and compiler-stack context, but no code/report schema requires
+    baseline workflow class, autotuning search-space or retuning policy,
+    manual-heuristic authoring/review effort, input-shape-change sensitivity,
+    hardware-expertise assumptions, model-developer ergonomics impact, or
+    comparison rows that distinguish AlphaEvolve-generated tiling heuristics
+    from search-based autotuning and manual expert heuristics.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    Pallas workflow evidence: `search_autotuning`, `manual_heuristic`, or
+    `hybrid_expert` baseline classification; retuning burden for changed input
+    shapes; manual authoring/review effort; hardware-expertise assumptions;
+    ergonomics impact; and comparison evidence before describing LibreEvolve
+    kernel reports as AlphaEvolve-style automation of Pallas tiling work.
+  - Verification: paper-manifest validation and checked-in paper-index TODO
+    coverage still pass, and focused searches confirm the Pallas workflow code
+    and paper TODOs remain active while no local workflow-baseline validator or
+    fixture is claimed.
+
 - [x] Archive kernel/Pallas shape-split roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was tightened. `README.md`, `docs/status.md`, `papers/README.md`,

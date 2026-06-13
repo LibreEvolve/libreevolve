@@ -10,25 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Pallas workflow roadmap wording scoped until autotuning/manual
-      heuristic baseline evidence exists.
-  - Spec evidence: AlphaEvolve Section 3.3.2 says traditional Pallas tiling work
-    uses search-based autotuning or manually crafted heuristics. Search-based
-    tuning interrupts research workflow and requires retuning for shape changes;
-    manual heuristics are a major expert-engineering bottleneck. The paper
-    frames AlphaEvolve as a path to automating manual tuning and improving
-    ergonomics for Gemini kernel users and emerging hardware.
-  - Current evidence: roadmap/README/paper-index wording can cite shape-corpus,
-    train/eval split, real TPU runtime, expert-baseline comparison,
-    months-to-days optimization turnaround, and production/workflow adoption
-    gaps. It does not require kernel reports to classify baseline workflow
-    type, record autotuning retune burden, preserve manual heuristic effort, or
-    compare model-developer ergonomics across baseline workflow classes.
-  - Required result: when Pallas workflow-baseline metadata lands, update
-    ROADMAP, README, papers index, and code/paper TODOs together so roadmap
-    wording distinguishes runtime/speedup evidence from AlphaEvolve-style
-    automation of autotuning and manual-heuristic engineering workflows.
-
 - [ ] Keep roadmap Gemini self-training wording scoped until Pallas deployment
       loop evidence exists.
   - Spec evidence: AlphaEvolve Section 3.3.2 says the AlphaEvolve-discovered

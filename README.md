@@ -57,6 +57,10 @@ Important limits:
   TPU runtime artifacts, expert-baseline tiling heuristic identity, tiling-only
   candidate boundaries, unchanged-operation correctness, engineering-effort
   calibration, or production/workflow adoption.
+- Pallas workflow documentation does not yet prove AlphaEvolve-style automation
+  of search-based autotuning or manual tiling-heuristic work: baseline workflow
+  class, retuning burden, manual review effort, hardware-expertise assumptions,
+  and model-developer ergonomics remain active code and paper TODOs.
 - The docs do not yet reproduce AlphaEvolve Figure 6 or Figure 7 exhibits:
   scheduling heuristic source/heatmap provenance and Pallas tiling-problem
   diagram/source-data/render hashes remain active code and paper TODOs.

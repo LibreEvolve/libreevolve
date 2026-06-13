@@ -1962,7 +1962,11 @@ Implemented:
   require Pallas/Gemini-style input-shape corpus provenance, deterministic
   train/eval split records, real TPU runtime measurement artifacts, baseline
   tiling-heuristic identity, or unchanged-operation correctness-by-construction
-  evidence. For hardware, ready hardware reports now require
+  evidence. They also do not yet preserve Pallas workflow-baseline evidence
+  that distinguishes search-based autotuning, manual heuristics, and
+  expert-hybrid baselines; retuning burden for input-shape changes; manual
+  authoring/review effort; hardware-expertise assumptions; or model-developer
+  ergonomics comparisons. For hardware, ready hardware reports now require
   `hardware_rtl_eda_provenance` metadata for Verilog/SystemVerilog source
   boundaries, arithmetic-circuit identity, synthesis/PPA provenance, timing,
   power, and area constraints, equivalence and formal-verification evidence,

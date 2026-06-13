@@ -10,30 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep release-packaging roadmap wording scoped to editable/local use
-  versus verified wheel/sdist artifacts.
-  - Spec evidence: AlphaEvolve-style long-running experiments should be
-    reproducible from the code and dependency environment users install; local
-    editable development metadata is not the same as release-artifact
-    validation.
-  - Current evidence: `ROADMAP.md` currently asks to extend `pyproject.toml`
-    metadata, dev extras, and console-script packaging beyond editable/local
-    use with wheel/sdist build checks, package-data validation,
-    install-from-wheel smoke tests, and release-artifact provenance. Code
-    evidence shows `pyproject.toml` declares setuptools metadata, runtime
-    dependencies, dev extras, package discovery, and the `libreevolve` console
-    script, while runtime manifests record bounded package/build and installed
-    distribution provenance; the code TODO still records that wheel/sdist
-    build checks, install-from-wheel CLI smoke tests, package-data inclusion
-    validation, release checklist, and release-artifact provenance are missing.
-    ROADMAP now also points to
-    `papers/release_artifact_reproducibility_boundary.json` for the
-    editable/local-install-only paper-facing boundary.
-  - Required result: when release-distribution checks land, update the roadmap,
-    README, papers index, and code TODO entries together so roadmap wording
-    neither underclaims current editable/local package metadata nor overclaims
-    verified release-distribution reproducibility.
-
 - [ ] Keep GitHub Actions roadmap wording scoped to the current path-scoped
       Linux workflow.
   - Spec evidence: AlphaEvolve-scale engineering claims should be backed by

@@ -2,6 +2,21 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive release-packaging roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
+    `papers/README.md` already describe the current packaging boundary as
+    editable/local-install evidence: `pyproject.toml` metadata, dev extras,
+    console-script declaration, runtime environment/package provenance,
+    installed-distribution metadata, bounded wheel metadata snapshots, and
+    `papers/release_artifact_reproducibility_boundary.json`.
+  - Remaining guard: wheel/sdist build checks, package-data inclusion
+    validation, install-from-wheel CLI smoke tests, release checklist, and
+    release-artifact provenance remain active in `docs/todo/code.md` and
+    `docs/todo/papers.md`.
+  - Verification: release-artifact boundary and paper-manifest validation
+    continue to reject editable/local package metadata as verified
+    release-distribution reproducibility.
+
 - [x] Archive task-specification roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
     `papers/README.md` already describe startup

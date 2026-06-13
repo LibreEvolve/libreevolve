@@ -145,8 +145,12 @@ Important limits:
 - Related Work positioning is not inferred from the bundled paper list; the
   missing taxonomy and claim gates are tracked by
   `papers/related_work_taxonomy_boundary.json`.
-- Candidate execution is Python-primary. Arbitrary language/build runners and
-  problem-defined candidate abstractions remain open work.
+- Candidate execution is Python-primary code-file-set execution. The
+  abstraction-choice report does not claim AlphaEvolve-style problem-defined
+  serializers/materializers/runners, paired solution/search representations,
+  abstraction-rationale metadata, symmetry/bias evidence, or equal-budget
+  direct-solution/constructor/search comparisons; that boundary is tracked by
+  `papers/candidate_abstraction_boundary.json`.
 - Configuration validation is local effective-config validation; live
   provider/model API compatibility is tracked by
   `papers/config_validation_boundary.json`.

@@ -4,6 +4,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document candidate-abstraction README boundary.
+  - Status: README Important limits now states that candidate execution is
+    Python-primary code-file-set execution, and the abstraction-choice report
+    does not claim AlphaEvolve-style problem-defined serializers,
+    materializers, runners, paired solution/search representations,
+    abstraction-rationale metadata, symmetry/bias evidence, or equal-budget
+    direct-solution/constructor/search comparisons. It ties that boundary to
+    `papers/candidate_abstraction_boundary.json`.
+  - Verification: candidate-abstraction boundary and paper-manifest tests
+    validate the sidecar that README now references.
+
 - [x] Document existing-codebase integration README boundary.
   - Status: README Important limits now states that existing-codebase
     integration reports inventory runtime Python EVOLVE-block marker spans and

@@ -286,7 +286,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `runtime.history.candidate_abstraction_choice_report`, which records the
     selected code-file-set abstraction, policy linkage, unsupported
     constructor/search/paired alternatives, and missing bias/equal-budget
-    evidence. README now also names
+    evidence. README Important limits now also names
     `papers/candidate_abstraction_boundary.json` as the committed
     paper-manifest-validated current absence boundary for problem-defined
     candidate abstractions and abstraction-bias evidence.

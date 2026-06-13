@@ -1215,7 +1215,10 @@ current-run proposal-score scope machine-validated.
 `runtime.history.failure_index` groups failure records by exact fingerprint,
 repetition, and recency with bounded records; the committed
 `papers/failure_memory_boundary.json` sidecar keeps this run-local failure
-diagnostics scope machine-validated.
+diagnostics scope machine-validated apart from durable cross-run failure
+tables, semantic failed-proposal retrieval, learned repetition avoidance,
+replayable failed-mutation payloads, failure-aware sampling policy, and
+cross-run failure-index migrations.
 
 AlphaEvolve duplicate-work note: generated candidate ids include workspace-hash
 identity provenance, and completed manifests now include

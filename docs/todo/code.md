@@ -1902,7 +1902,10 @@ Primary evidence:
     `runtime.history.failure_index` grouped by failure
     fingerprint/repetition evidence, with
     `papers/failure_memory_boundary.json` validating that this remains
-    run-local diagnostic evidence rather than semantic failed-proposal memory.
+    run-local diagnostic evidence rather than durable cross-run failure
+    tables, semantic failed-proposal retrieval, learned repetition avoidance,
+    replayable failed-mutation payloads, failure-aware sampling policy, or
+    cross-run failure-index migrations.
     It persists `runtime.history.hypothesis_index`
     for bounded redacted proposal idea/rationale/hypothesis summaries, includes
     hypothesis evidence in `resurfacing_index`, persists
@@ -1939,9 +1942,12 @@ Primary evidence:
     are still append-only logs plus an in-memory archive and manifest-visible
     rebuilt indexes, not a persisted query/index database. There is no durable
     index over full metric vectors, feedback embeddings/full-text ranking,
-    cross-run failure fingerprints, full lineage subgraphs, semantic/cross-run
-    hypotheses, program-output similarity/schema retrieval, full artifact
-    content, retrieval context, or learned/cross-run novelty; the
+    cross-run failure fingerprints, semantic failed-proposal retrieval, learned
+    repetition avoidance, replayable failed-mutation payloads, failure-aware
+    sampling policy, cross-run failure-index migrations, full lineage
+    subgraphs, semantic/cross-run hypotheses, program-output similarity/schema
+    retrieval, full artifact content, retrieval context, or learned/cross-run
+    novelty; the
     resurfacing index is deterministic rank fusion over bounded current-history
     views, and
     `load_accepted_history_index()` remains an id map for restore/query
@@ -1958,7 +1964,9 @@ Primary evidence:
   - Required result: store rich candidate/evaluation records with queryable
     persisted dimensions, reproducible sampling policies, durable ranked views
     by score/metric/diversity/feedback/lineage/failure/hypothesis/artifact
-    evidence, schema-versioned migration/compatibility rules for legacy/current
+    evidence, semantic failed-proposal retrieval, failure-aware sampling
+    policy, cross-run failure-index migrations, schema-versioned
+    migration/compatibility rules for legacy/current
     run records,
     and tests proving resurfacing decisions can be rebuilt from persisted run
     artifacts rather than only from the live in-memory history/archive facade.

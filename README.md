@@ -446,8 +446,9 @@ Important limits:
   cache indexes, or an AlphaEvolve-grade fixed-budget memory claim gate; that
   boundary is tracked by `papers/duplicate_work_policy_boundary.json`.
 - Failure memory is run-local diagnostic evidence, not durable cross-run
-  semantic failed-proposal memory, learned repetition avoidance, or
-  failure-aware sampling policy; that boundary is tracked by
+  failure tables, semantic failed-proposal retrieval, learned repetition
+  avoidance, replayable failed-mutation payloads, failure-aware sampling
+  policy, or cross-run failure-index migrations; that boundary is tracked by
   `papers/failure_memory_boundary.json`.
 - Related Work positioning is not inferred from the bundled paper list; the
   missing method-family, representation, feedback/evidence, task-stage,

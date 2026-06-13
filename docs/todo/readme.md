@@ -91,29 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README/AGENTS failure-memory claims scoped to run-local diagnostics.
-  - Spec evidence: AlphaEvolve-style repeated-mutation avoidance should be able
-    to reuse failed-proposal evidence across runs through durable, searchable,
-    and semantically meaningful memory rather than only bounded display
-    snippets.
-  - Current evidence: README documents `failure_history.jsonl`,
-    `load_failure_history_records()`, persisted failure fingerprints,
-    repetition counts, and diagnostic-only mutation payload replay policy.
-    Prompt context policy supports `recent_failure_limit`, selection modes,
-    required/excluded error labels, changed files, stage names, text terms,
-    repetition/score thresholds, and per-field caps. Runtime manifests include
-    a bounded failure index grouped by fingerprint/repetition/recency.
-    `AGENTS.md` now scopes this as persisted run-local failure diagnostics and
-    bounded prompt-visible failure memory, not durable cross-run semantic
-    failed-proposal memory. README and AGENTS now tie that boundary to
-    `papers/failure_memory_boundary.json`.
-  - Required result: when cross-run failure tables, semantic failed-proposal
-    retrieval, learned repetition avoidance, replayable failed-mutation
-    payloads, or durable failure-aware sampling policies land, update README,
-    AGENTS.md, ROADMAP, papers index, and code/paper TODO entries together so
-    docs neither underclaim current run-local failure memory nor overclaim
-    AlphaEvolve-grade failed-proposal memory.
-
 - [ ] Keep README meta-prompt context-policy wording scoped to validated
   current fields.
   - Spec evidence: AlphaEvolve-style meta-prompt evolution should improve

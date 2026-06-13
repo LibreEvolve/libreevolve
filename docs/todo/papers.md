@@ -1599,16 +1599,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     `runtime.history.failure_index` now groups failure records by fingerprint
     with bounded repetition/latest-record evidence, and
     `papers/failure_memory_boundary.json` validates this run-local diagnostic
-    boundary. `runtime.history.hypothesis_index`
+    boundary rather than durable cross-run failure tables, semantic
+    failed-proposal retrieval, learned repetition avoidance, replayable
+    failed-mutation payloads, failure-aware sampling policy, or cross-run
+    failure-index migrations. `runtime.history.hypothesis_index`
     now exposes bounded redacted proposal idea/rationale/hypothesis evidence
     and feeds hypothesis records into `resurfacing_index`. This remains a
     heuristic rather than a paper-faithful multi-score database policy:
     primary MAP-Elites cell replacement is still scalar, Pareto/frontier
     dominance does not replace the primary grid, and durable queryable
     multi-objective resurfacing across persisted database tables, embeddings,
-    cross-run failure and hypothesis indexes, full artifact-content indexes,
-    output-similarity or schema-aware program-output indexes, full lineage subgraphs,
-    learned/cross-run novelty indexes, and schema migrations remains open.
+    cross-run failure and hypothesis indexes, semantic failed-proposal
+    retrieval, learned repetition avoidance, replayable failed-mutation
+    payloads, failure-aware sampling policy, cross-run failure-index
+    migrations, full artifact-content indexes, output-similarity or
+    schema-aware program-output indexes, full lineage subgraphs, learned/
+    cross-run novelty indexes, and schema migrations remains open.
     Current evaluator outputs/program outputs can be captured, redacted,
     checked, rendered to prompts, indexed under
     `runtime.history.program_output_index`, and fed into current-run

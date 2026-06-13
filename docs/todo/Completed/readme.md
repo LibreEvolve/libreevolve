@@ -13867,6 +13867,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused failure memory tests reject semantic memory overclaims.
 
+- [x] Keep README/AGENTS failure-memory claims scoped to run-local diagnostics.
+  - Status: README and AGENTS now scope failure memory as run-local diagnostic
+    evidence and bounded prompt-visible failure memory, not durable cross-run
+    failure tables, semantic failed-proposal retrieval, learned repetition
+    avoidance, replayable failed-mutation payloads, failure-aware sampling
+    policy, or cross-run failure-index migrations.
+  - Verification: `papers/failure_memory_boundary.json` remains the manifest-
+    checked sidecar for that boundary, while code and paper TODOs keep the
+    durable/semantic failure-memory implementation gaps active.
+
 - [x] Keep README program-output boundary tied to sidecar.
   - Status: README now states that program-output resurfacing is exact
     current-run source-key/hash lookup over bounded output summaries, not

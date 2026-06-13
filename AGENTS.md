@@ -47,8 +47,11 @@ libreevolve/
   parent-selection strategies bypass that ratio
 - Failed/rejected candidates are persisted to `failure_history.jsonl`, and
   prompts render bounded recent failure memory with configurable filters and
-  limits; durable cross-run/semantic failed-proposal memory remains open work
-  and is tracked by `papers/failure_memory_boundary.json`
+  limits; durable cross-run failure tables, semantic failed-proposal
+  retrieval, learned repetition avoidance, replayable failed-mutation
+  payloads, failure-aware sampling policy, and cross-run failure-index
+  migrations remain open work and are tracked by
+  `papers/failure_memory_boundary.json`
 
 ## Running Tests
 

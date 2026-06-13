@@ -9,31 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README cascade claims scoped to partial promotion/attrition reports.
-  - Spec evidence: AlphaEvolve Section 2.4 says evaluation cascades can use
-    ensembles of test cases with increasing difficulty, promote candidates to
-    the next stage only after sufficiently promising earlier-stage results,
-    prune less promising solutions quickly, and run small-scale tests before
-    main tests. The matrix-multiplication experiment also uses multiple random
-    seeds with the Section 2.4 cascade.
-  - Current evidence: README can now cite
-    `runtime.history.evaluation_cascade_report`, a validated
-    `libreevolve.evaluation_cascade_report.v1` runtime summary with stage
-    candidate counts, pass/fail/threshold-fail counts, failure reasons,
-    sample/retry/subprocess/timeout totals, elapsed seconds, promotion rates,
-    main-test exposure, early-prune counts, and explicit `claim_ready: false`
-    limitations. The README can also mention bounded candidate-stage
-    `history.jsonl` cross-links and runtime denominator-policy boundaries.
-    README should still not imply AlphaEvolve cascade-efficiency parity because
-    stage difficulty/scale labels, evaluator/test-set hashes, benchmark
-    seed/sample policy, and cost-savings counterfactuals remain incomplete.
-    README Important limits now also name
-    `papers/evaluation_cascade_boundary.json` as the committed
-    paper-manifest-validated cascade-efficiency absence boundary.
-  - Required result: update README, ROADMAP, papers index, and code/paper TODOs
-    with the partial cascade report and the remaining difficulty, benchmark
-    denominator, test-set, and cost gaps.
-
 - [ ] Keep README backtracking wording scoped until explicit controller
       backtracking policies exist.
   - Spec evidence: AlphaEvolve's Introduction describes discovery as including

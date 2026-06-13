@@ -651,19 +651,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     source-version row with DOI, subject classes, submitted timestamp, author
     count, TeX source URL, arXiv license URL, and an explicit
     `manual_current_as_of_2026-06-13_without_html_snapshot` status. It also
-    marks missing live-evidence gates for arXiv abstract HTML snapshots,
-    DataCite DOI resolution snapshots, TeX source caching, license-page
-    caching, and submission-history refresh checks. This is still a manually
-    recorded source-version boundary, not a cached arXiv abstract-page
-    artifact or live refresh verifier. `papers/arxiv_abstract_snapshot.json`
-    now pins the current `2506.13131v1` abstract HTML byte count and SHA-256
-    digest, normalized title/authors/subjects/DOI/submission-history metadata,
-    and a validator-supported live snapshot comparison path.
+    marks missing live-evidence gates for DataCite DOI resolution snapshots,
+    TeX source caching, license-page caching, and submission-history refresh
+    checks. This is still a manually recorded source-version boundary, not a
+    full arXiv abstract-page artifact or live refresh verifier.
+    `papers/arxiv_abstract_snapshot.json` now pins the current
+    `2506.13131v1` abstract HTML byte count and SHA-256 digest, normalized
+    title/authors/subjects/DOI/submission-history metadata, and a
+    validator-supported live snapshot comparison path, while explicitly
+    missing full HTML retention, raw HTTP response headers, extraction-script
+    provenance, current-version resolution, floating-PDF drift checks, and
+    cached-PDF header consistency evidence.
   - Required result: before using arXiv abstract-page metadata as
     publication-grade evidence, add DOI/DataCite resolution evidence,
     TeX-source and license-page retrieval records, a committed full-HTML
-    artifact or approved equivalent, and an automated refresh gate that detects
-    arXiv version or metadata drift.
+    artifact or approved equivalent, raw HTTP headers, extraction-script
+    artifacts, current-version resolution, floating-PDF URL drift checking,
+    cached-PDF header consistency evidence, and an automated refresh gate that
+    detects arXiv version or metadata drift.
 
 - [ ] Track Google/Gemini provider parity separately from generic backend
       configurability.

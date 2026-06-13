@@ -61,9 +61,14 @@ EXPECTED_HISTORY = (
 )
 EXPECTED_MISSING_EVIDENCE = {
     "full_html_artifact_committed": "not_recorded_locally",
+    "raw_http_response_headers": "not_recorded_locally",
+    "metadata_extraction_script_artifact": "not_recorded_locally",
     "datacite_doi_resolution_snapshot": "not_recorded_locally",
     "tex_source_archive_digest": "not_recorded_locally",
     "license_page_snapshot": "not_recorded_locally",
+    "current_version_resolution_snapshot": "not_recorded_locally",
+    "floating_pdf_url_version_drift_gate": "not_recorded_locally",
+    "cached_pdf_header_consistency_record": "not_recorded_locally",
     "automated_live_refresh_ci_gate": "not_recorded_locally",
 }
 
@@ -135,8 +140,12 @@ def alphaevolve_arxiv_abstract_snapshot_record() -> dict[str, Any]:
             "This boundary records an arXiv abstract-page HTML byte count, "
             "SHA-256 digest, and normalized source metadata for AlphaEvolve "
             "2506.13131v1. It does not commit the full HTML body, resolve "
-            "DataCite DOI metadata, cache the TeX source archive, cache the "
-            "license page, or install an automated live-refresh CI gate."
+            "raw HTTP response headers, preserve the metadata extraction "
+            "script artifact, resolve DataCite DOI metadata, cache the TeX "
+            "source archive, cache the license page, record current-version "
+            "resolution, install a floating-PDF URL version-drift gate, record "
+            "cached-PDF header consistency, or install an automated live-refresh "
+            "CI gate."
         ),
     }
 
@@ -174,7 +183,12 @@ def validate_alphaevolve_arxiv_abstract_snapshot(
     if (
         not isinstance(boundary_text, str)
         or "does not commit the full HTML body" not in boundary_text
+        or "raw HTTP response headers" not in boundary_text
+        or "metadata extraction script artifact" not in boundary_text
         or "DataCite DOI metadata" not in boundary_text
+        or "current-version resolution" not in boundary_text
+        or "floating-PDF URL version-drift gate" not in boundary_text
+        or "cached-PDF header consistency" not in boundary_text
         or "automated live-refresh CI gate" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate the HTML digest snapshot from uncached source artifacts"))

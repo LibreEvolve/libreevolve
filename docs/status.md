@@ -57,10 +57,13 @@ Important limits:
 - AlphaEvolve source-version evidence now records arXiv abstract-page-adjacent
   metadata for `2506.13131v1` in `papers/source_versions.json`, including DOI,
   subject classes, submitted timestamp, author count, TeX source URL, and
-  source license URL. It remains boundary evidence only: no arXiv abstract HTML
-  byte/hash snapshot, DOI/DataCite resolution artifact, TeX-source cache,
-  license-page cache, normalized author list, or submission-history refresh gate
-  exists yet.
+  source license URL. It remains boundary evidence only:
+  `papers/arxiv_abstract_snapshot.json` now pins an abstract-page byte/hash and
+  normalized metadata snapshot, but no full HTML artifact, raw HTTP headers,
+  extraction-script artifact, DOI/DataCite resolution artifact, TeX-source
+  cache, license-page cache, current-version resolution, floating-PDF drift
+  gate, cached-PDF header consistency record, or automated refresh gate exists
+  yet.
 - Figure 1/Figure 2 process-exhibit reports map AlphaEvolve diagram nodes,
   edges, and pseudocode steps to local artifacts, not exact source-diagram
   reproduction, source figure image/crop hashes, visual node coordinates,
@@ -1174,8 +1177,10 @@ Important limits:
 - AlphaEvolve arXiv abstract-page metadata now has a pinned HTML byte count,
   SHA-256 digest, normalized author list, subject classes, DOI URL, submitted
   timestamp, TeX-source URL, license URL, and submission-history entry. This is
-  not DataCite DOI resolution, TeX-source archive caching, license-page
-  caching, committed full HTML content, or an automated CI refresh gate; that
+  not raw HTTP header retention, extraction-script provenance, DataCite DOI
+  resolution, TeX-source archive caching, license-page caching, committed full
+  HTML content, current-version resolution, floating-PDF drift checking,
+  cached-PDF header consistency evidence, or an automated CI refresh gate; that
   boundary is tracked by `papers/arxiv_abstract_snapshot.json`.
 - Paper-index benchmark coverage validation currently catches structural
   coverage issues and one narrow `Implemented`-but-`not implemented`

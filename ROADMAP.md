@@ -1386,8 +1386,11 @@ resumed-trace proof are still open.
   the current abstract-page byte count, SHA-256 digest, normalized title,
   author list, subject classes, DOI URL, submitted timestamp, TeX-source URL,
   license URL, and submission-history entry. DataCite DOI resolution artifacts,
+  raw HTTP response headers, metadata extraction-script artifacts,
   TeX-source cache digests, license-page cache, committed full HTML content,
-  and automated CI refresh gates remain open.
+  current-version resolution snapshots, floating-PDF URL version-drift gates,
+  cached-PDF header consistency records, and automated CI refresh gates remain
+  open.
 - Keep paper-cache row identity proven before version/rights evidence:
   `libreevolve.tools.paper_manifest` now validates that arXiv PDF/abs URLs
   contain a source id matching the manifest `id`, and that every local PDF

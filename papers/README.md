@@ -2243,8 +2243,11 @@ Implemented:
   abstract-page byte count, SHA-256 digest, normalized author list, subject
   classes, DOI URL, submitted timestamp, TeX-source URL, license URL, and
   submission-history entry. DataCite DOI resolution artifacts, TeX-source
-  archive digests, license-page caching, committed full HTML content, and
-  automated CI refresh checks remain open.
+  archive digests, raw HTTP response headers, metadata extraction-script
+  artifacts, license-page caching, committed full HTML content,
+  current-version resolution snapshots, floating-PDF URL version-drift gates,
+  cached-PDF header consistency records, and automated CI refresh checks remain
+  open.
 - `libreevolve/problems/benchmarks/paper_source_identity.py`: paper-cache row
   identity evidence. It validates `papers/row_identity.json`, whose 24 source
   records emit manifest row id, URL source id where available, local filename
@@ -2564,8 +2567,11 @@ Implemented:
 - `papers/arxiv_abstract_snapshot.json`: AlphaEvolve arXiv abstract-page
   snapshot sidecar with the pinned `2506.13131v1` HTML byte count/digest,
   normalized source metadata, and explicit remaining gaps for full HTML,
-  DataCite DOI, TeX-source, license-page, and automated refresh evidence. It
-  is not full publication-grade source evidence or a live refresh gate.
+  raw HTTP response headers, metadata extraction-script artifacts, DataCite
+  DOI, TeX-source, license-page, current-version resolution, floating-PDF URL
+  version-drift checks, cached-PDF header consistency, and automated refresh
+  evidence. It is not full publication-grade source evidence or a live refresh
+  gate.
 - `papers/candidate_abstraction_bias_matrix.json`: design-level candidate
   abstraction bias matrix for direct-solution, constructor-function,
   bespoke-search, and paired solution/search families. It is not executed

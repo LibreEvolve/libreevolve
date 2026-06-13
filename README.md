@@ -48,6 +48,13 @@ Important limits:
   reports, or domain reproductions.
 - The examples are smoke fixtures and small demos unless a fixture documents
   stronger benchmark evidence.
+- Systems-result schemas and readiness sidecars are report contracts only; they
+  do not yet emit real scheduling, Pallas/kernel, compiler, or hardware fixture
+  runs, deployment measurements, expert confirmations, or domain-specific
+  result artifacts.
+- The docs do not yet reproduce AlphaEvolve Figure 6 or Figure 7 exhibits:
+  scheduling heuristic source/heatmap provenance and Pallas tiling-problem
+  diagram/source-data/render hashes remain active code and paper TODOs.
 - Paper-result reproduction, benchmark-scale claims, release packaging, and
   broader CI/platform guarantees remain tracked in `docs/status.md`,
   `papers/README.md`, `ROADMAP.md`, and `docs/todo/` rather than promised here.

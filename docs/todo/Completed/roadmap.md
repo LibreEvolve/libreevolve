@@ -2,6 +2,32 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Figure 7 Pallas tiling-exhibit roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `docs/status.md`, `docs/todo/code.md`, and
+    `docs/todo/papers.md` state that AlphaEvolve Figure 7 Pallas tiling-
+    problem exhibit provenance is absent, while `ROADMAP.md` and
+    `papers/README.md` keep generic kernel readiness separate from reproduced
+    Figure 7 visual/problem-definition evidence.
+  - Current evidence: existing systems-result contracts cover generic kernel
+    and compiler report contracts, but no code/report schema records a Figure
+    7 exhibit ID, matrix-shape variable definitions, tile-parameter schema,
+    accelerator/memory/fusion/compiler-context annotations, diagram source
+    data, rendered visual artifact paths/hashes, rendering parameters, baseline
+    heuristic relation, or links from the displayed tiling problem to Pallas
+    shape-corpus/runtime reports.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    Figure 7 evidence: stable exhibit ID, kernel benchmark/candidate link,
+    `A B = C` matrix dimension definitions for `M`, `N`, and `P`, tile-
+    parameter definitions, accelerator and shape-corpus context links,
+    diagram/JSON data, rendered visual artifacts with hashes, rendering
+    parameters, baseline heuristic relation, and documentation that separates
+    reproduced Pallas figures from executed kernel-runtime evidence.
+  - Verification: paper-manifest validation and checked-in paper-index TODO
+    coverage still pass, and focused searches confirm the Figure 7 code and
+    paper TODOs remain active while no local Figure 7 exhibit validator or
+    artifact schema is claimed.
+
 - [x] Archive Figure 6 scheduling-exhibit roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `docs/status.md`,
     `docs/todo/code.md`, and `docs/todo/papers.md` already state that

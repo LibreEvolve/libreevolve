@@ -10,26 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Figure 7 roadmap wording scoped until Pallas tiling-problem exhibit
-      provenance exists.
-  - Spec evidence: AlphaEvolve Figure 7 visualizes the matrix-product tiling
-    heuristic problem with dimensions `M`, `N`, and `P`, and Section 3.3.2
-    frames tile-size selection as dependent on accelerator optimal shapes,
-    memory capacity, fused operations, and compiler intricacies.
-  - Current evidence: roadmap systems-result wording covers Pallas
-    shape-corpus, train/eval split, accelerator-runtime, baseline-heuristic,
-    tiling-constraint, and unchanged-operation evidence gaps. It does not
-    require Figure 7 exhibit IDs, matrix-shape variable definitions,
-    tile-parameter schema, accelerator/memory/fusion/compiler annotations,
-    diagram source data, rendered visual artifact paths/hashes, rendering
-    parameters, or links from the displayed tiling problem to Pallas runtime
-    reports.
-  - Required result: when Pallas tiling-problem exhibit provenance lands,
-    update ROADMAP, README, papers index, and code/paper TODO entries together
-    with exhibit-level metadata and validators so roadmap text distinguishes
-    generic kernel readiness, executed Pallas runtime evidence, and reproduced
-    Figure 7 visual/problem-definition evidence.
-
 - [ ] Keep kernel roadmap wording scoped to generic systems reports until
       Pallas shape-split/runtime evidence exists.
   - Spec evidence: AlphaEvolve Section 3.3.2 optimizes Gemini Pallas tiling

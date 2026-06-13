@@ -33,6 +33,13 @@ Important limits:
 - Evaluators run in local subprocesses, not hardened security sandboxes.
 - The controller, archive, migration, and evaluator flow are local and
   synchronous, not a distributed asynchronous AlphaEvolve-style service.
+  Runtime histories record
+  `runtime.history.distributed_pipeline_topology_report`, naming the current
+  single-process controller, in-process database, configured LLM sampler
+  backends, local evaluator nodes, zero queues, blocking dependency edges, and
+  runtime-budget linkage. It keeps AlphaEvolve Section 2.6 async pipeline
+  parity false; `papers/distributed_pipeline_topology_boundary.json` preserves
+  the same single-process synchronous-topology absence boundary.
 - Built-in provider adapters are OpenAI, Anthropic, and Ollama. Custom
   import-path backends can wrap other services, but Google/Gemini is not a
   first-class provider yet, so AlphaEvolve's Gemini 2.0 Flash/Gemini 2.0 Pro

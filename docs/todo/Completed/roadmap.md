@@ -10892,3 +10892,21 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Remaining roadmap gap: the first-class Gemini backend, provider-plugin
     contract, or explicit paper-level substitute remains active in code and
     paper TODOs.
+
+- [x] Keep distributed-pipeline roadmap wording scoped until async topology
+      implementation exists.
+  - Spec evidence: AlphaEvolve Section 2.6 says the system is an asynchronous
+    pipeline made of a controller, LLM samplers, and evaluation nodes; work can
+    run concurrently, block on unfinished dependencies, and is optimized for
+    throughput under an overall computation budget.
+  - Status: ROADMAP now cites terminal controller-state snapshots,
+    controller-budget events, future bounded queues, async-worker gaps, and
+    `runtime.history.distributed_pipeline_topology_report`. It states that
+    completed manifests expose a single-process synchronous topology with
+    local sample-worker fan-out only, while
+    `papers/distributed_pipeline_topology_boundary.json` preserves the
+    paper-facing absence boundary and keeps async pipeline parity false.
+  - Remaining roadmap gap: async distributed-pipeline implementation remains
+    active in code and paper TODOs, including queue capacities, nonblocking
+    dependencies, worker identities, throughput dispatch, completion/admission
+    ordering telemetry, and pending-work checkpoints.

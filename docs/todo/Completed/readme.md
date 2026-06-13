@@ -14337,3 +14337,22 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     queued/running/completed worker state, local-or-cluster execution identity,
     mutation-depth impact, pending-work resume behavior, and equal-budget
     report links remain active in code and paper TODOs.
+
+- [x] Keep README distributed-pipeline wording scoped until async topology
+      implementation exists.
+  - Spec evidence: AlphaEvolve Section 2.6 describes an asynchronous pipeline
+    composed of a controller, LLM samplers, and evaluation nodes, where
+    concurrent computations block on unfinished dependencies and the system is
+    optimized for throughput under a computation budget.
+  - Status: README now states that LibreEvolve's controller, archive,
+    migration, and evaluator flow are local and synchronous, and points to
+    `runtime.history.distributed_pipeline_topology_report` plus
+    `papers/distributed_pipeline_topology_boundary.json` for the current
+    single-process controller, in-process database, configured LLM sampler
+    backends, local evaluator nodes, zero queues, blocking dependency edges,
+    runtime-budget linkage, and false AlphaEvolve Section 2.6 readiness.
+  - Remaining README gap: real async queue capacities, dependency edges,
+    worker role ownership/fan-out, throughput dispatch telemetry,
+    pending-work checkpoints, and validation status remain active in code and
+    paper TODOs before README can claim reproduced distributed-pipeline
+    topology.

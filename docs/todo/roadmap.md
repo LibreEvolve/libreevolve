@@ -531,29 +531,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     identity, wall-clock versus compute-hour compression, mutation-chain-depth
     impact, pending-work resume behavior, and equal-budget report links.
 
-- [ ] Keep distributed-pipeline roadmap wording scoped until async topology
-      implementation exists.
-  - Spec evidence: AlphaEvolve Section 2.6 says the system is an asynchronous
-    pipeline made of a controller, LLM samplers, and evaluation nodes; work can
-    run concurrently, block on unfinished dependencies, and is optimized for
-    throughput under an overall computation budget.
-  - Current evidence: ROADMAP can cite terminal controller-state snapshots,
-    controller-budget events, future bounded queues, async-worker gaps, and
-    `runtime.history.distributed_pipeline_topology_report`. Runtime manifests
-    explicitly validate the current controller as `single_process_serial_loop`
-    with zero queued/running work and limitations that it is not an async queue
-    checkpoint. The topology artifact names controller/sampler/evaluation-node
-    roles, blocking dependency edges, local sample-worker fan-out when
-    configured, and runtime-budget linkage, while keeping queues and async
-    pipeline readiness false. `papers/distributed_pipeline_topology_boundary.json`
-    now preserves the same single-process synchronous-topology absence boundary
-    for manifest validation.
-  - Required result: when async distributed-pipeline implementation lands,
-    update ROADMAP, README, papers index, and code/paper TODOs together so
-    roadmap wording distinguishes the current synchronous/local-sample-worker
-    boundary from AlphaEvolve-style controller/sampler/evaluation-node topology
-    execution.
-
 - [ ] Keep Table 1 roadmap wording scoped after capability-table exhibit
       provenance.
   - Spec evidence: AlphaEvolve Table 1 is a row-level comparison between

@@ -50,6 +50,21 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     reasoning into Responses mode, while `api_mode: auto` without reasoning
     preserves Chat Completions.
 
+- [x] Keep README provider capability lookup wording scoped to static local
+      validation versus live model-registry evidence.
+  - Status: README Important limits now states that provider capability lookup
+    is static/offline policy evidence: `policies.provider_capability_lookup`
+    validates manifest-safe model ids, configured API-mode policy, and local
+    compatibility records while keeping live model-registry lookup,
+    service/API-version lookup, and account-availability validation explicitly
+    false. It does not claim provider/account availability proof or
+    AlphaEvolve-grade provider reproducibility evidence.
+  - Verification: `docs/backends.md` documents the same offline-compatible
+    boundary; capability-policy tests validate `capability_readiness` false
+    fields and reject live lookup overclaims. Code and paper TODOs still track
+    live authenticated request/model-registry evidence beyond credential
+    presence and local client-construction preflight.
+
 - [x] Keep README multi-evaluator wording scoped until independent
       evaluator-oracle evidence exists.
   - Status: README Important limits now states that evaluator/oracle reports

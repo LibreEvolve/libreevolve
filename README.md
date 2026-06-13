@@ -467,6 +467,12 @@ Important limits:
   `reasoning_effort` uses Chat Completions, `api_mode: responses` forces the
   Responses API, and configured `reasoning_effort` routes through Responses
   while rejecting `api_mode: chat_completions`.
+- Provider capability lookup is static/offline policy evidence:
+  `policies.provider_capability_lookup` validates manifest-safe model ids,
+  configured API-mode policy, and local compatibility records while keeping
+  live model-registry lookup, service/API-version lookup, and
+  account-availability validation explicitly false. It is not provider/account
+  availability proof or AlphaEvolve-grade provider reproducibility evidence.
 - Provider cancellation records are policy/audit evidence for request
   timeouts, ensemble wait deadlines, artifact gates, and quarantine
   observations, not live provider SDK hard cancellation, timeout-driven stop

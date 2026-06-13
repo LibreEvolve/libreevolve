@@ -69,29 +69,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README provider capability lookup wording scoped to static local
-  validation versus live model-registry evidence.
-  - Spec evidence: AlphaEvolve-scale model orchestration should preserve enough
-    provider/account capability evidence to explain which backend model ids and
-    API modes were available for a run, especially as provider registries,
-    service API versions, and account entitlements change.
-  - Current evidence: README says LibreEvolve forwards configured model strings
-    to provider SDKs, validates only manifest-safe identifier syntax/secret
-    shape, records `policies.provider_capability_lookup`, and performs no live
-    model-registry, service/API-version, or account-availability lookup before
-    the run. `capability_readiness` now keeps those live surfaces false with
-    validation. `papers/config_validation_boundary.json` now also scopes local
-    effective-config validation separately from live provider/model API
-    compatibility. Code and paper TODO entries already scope the remaining
-    provider auth gap to live authenticated request/model-registry validation
-    rather than credential-presence and local client-construction preflight.
-  - Required result: when live provider model-registry discovery,
-    service/API-version capture, account-availability validation, or provider
-    capability evidence lands, update README, ROADMAP, papers index, and
-    code/paper TODO entries together so README neither underclaims the current
-    static manifest policy nor overclaims AlphaEvolve-grade provider
-    reproducibility evidence.
-
 - [ ] Keep README paper-inspired plugin claims scoped to approximation status.
   - Spec evidence: citing CausalEvolve, DeepEvolve, ImprovEvolve,
     ThetaEvolve, GigaEvo, CodeEvolve, or MadEvolve should not imply faithful

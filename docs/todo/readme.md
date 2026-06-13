@@ -69,29 +69,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README feedback-calibration wording scoped to report contracts
-  versus executed calibration experiments.
-  - Spec evidence: AlphaEvolve-style feedback and reviewer channels need
-    calibrated evidence from real reviewer/task suites and ablations, not only
-    validators for declared calibration records.
-  - Current evidence: README now says
-    `libreevolve.llm_feedback_calibration.v1` validates declared graders,
-    at least two calibrated tasks for readiness, per-grader/task scored
-    records, normalized expected/observed scores, exact absolute-error
-    consistency, and declared calibration artifacts. It also says the
-    artifact-inventory contract verifies calibration report, raw-record,
-    grader-config, and plot artifacts under a safe root, and that the current
-    code does not run feedback-grader calibration experiments. Matching
-    roadmap/paper/code TODOs still require real feedback-calibration fixtures
-    and grader ablation reports. README now points to
-    `papers/feedback_calibration_boundary.json` for the report-contract versus
-    executed-calibration boundary.
-  - Required result: when runtime fixtures or benchmark scripts emit real
-    feedback-calibration reports, reviewer/task suites, or grader ablation
-    evidence, update README, ROADMAP, papers index, and code/paper TODO entries
-    together so README neither underclaims the report and inventory contracts
-    nor overclaims executed AlphaEvolve-style calibration evidence.
-
 - [ ] Keep README qualitative-feedback wording scoped until calibration and
       prompt-history audits exist.
   - Spec evidence: AlphaEvolve Section 2.4 says LLM-generated feedback can

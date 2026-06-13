@@ -85,6 +85,16 @@ Important limits:
   SGLang/vLLM throughput report, AlphaEvolve/ShinkaEvolve/OpenEvolve
   comparison rows, open-problem benchmark rows, or database/reward ablations;
   `papers/thetaevolve_boundary.json` records that absence boundary.
+- ImprovEvolve coverage is modular-search inspiration only: LibreEvolve's
+  `modular` plugin is static prompt guidance and does not enforce or execute a
+  `generate_config`/`improve`/`perturb` interface, Stage A initialization,
+  Stage B basin-hopping validation, perturbation schedule, monotonic
+  acceptance proof, incumbent/improvement-delta artifact, GigaEvo outer
+  backbone, Gemini/OpenRouter model-provider provenance, human-edited
+  `ImprovEvolve+E` attribution, HEX or ACI2 benchmark rows, hyperparameter or
+  generalization tables, stage-ablation rows, CPU/GPU budget records, or
+  wall-clock reproduction; `papers/improvevolve_boundary.json` records that
+  absence boundary.
 - The examples are smoke fixtures and small demos unless a fixture documents
   stronger benchmark evidence.
 - Benchmark-hardening records and shipped-example scope validate smoke-scope

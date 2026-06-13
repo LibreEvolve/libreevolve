@@ -2,6 +2,32 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive ImprovEvolve modular-operator roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/improvevolve_boundary.json` now keep arXiv `2602.10233`
+    source-scoped as modular-search inspiration rather than implemented
+    ImprovEvolve operator or benchmark parity.
+  - Current evidence: the cached paper and boundary JSON record ImprovEvolve
+    source identity, arXiv v1 metadata, CC-BY and ACM/preprint rights context,
+    `generate_config`/`improve`/`perturb` class-interface semantics, Stage A
+    initialization, Stage B basin-hopping validation, scheduled perturbations,
+    monotonic acceptance, incumbent/improvement artifacts, GigaEvo outer
+    backbone context, Gemini 3 Pro and Gemini 3 Flash model provenance
+    context, human-edited `ImprovEvolve+E` variants, HEX/ACI2 benchmark
+    context, ablations, and compute-budget context.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: interface enforcement, Stage A/B runners, seed-count records,
+    basin-hopping rounds, perturbation schedules, monotonic-acceptance proofs,
+    incumbent/improvement-delta artifacts, GigaEvo compatibility, model and
+    provider provenance, human-edit attribution, HEX and ACI2 benchmark rows,
+    hyperparameter/generalization/stage-ablation rows, compute budgets,
+    linked-code status, and separation from static `modular` prompt guidance.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive ThetaEvolve test-time learning roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

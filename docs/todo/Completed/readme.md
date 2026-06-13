@@ -14909,3 +14909,26 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     validation traces, promotion decisions, main-training trajectories, MARL
     baselines, report outcomes, and LLM-ALSO-style adaptive reward shaping
     remain active in code and paper TODOs.
+
+- [x] Keep README MemEvolve memory-architecture claims source-scoped until
+      runtime evidence exists.
+  - Spec evidence: arXiv `2512.18746`, `MemEvolve: Meta-Evolution of Agent
+    Memory Systems`, says agent memory systems usually store trajectories,
+    distill experience, and synthesize reusable tools through manually
+    engineered static architectures. MemEvolve jointly evolves experiential
+    knowledge and the memory architecture itself, using an EvolveLab modular
+    design space over encode, store, retrieve, and manage.
+  - Status: README now lists arXiv `2512.18746` as memory-architecture
+    evolution context only and marks the mention as a curated cached-paper
+    subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no explicit
+    encode/store/retrieve/manage memory-component design space,
+    memory-architecture genotype, memory-system mutation/evaluation loop,
+    experiential-knowledge co-evolution trace, EvolveLab benchmark mapping,
+    static-memory baseline comparison, cross-task or cross-LLM transfer
+    report, performance-delta record, linked-code audit, or independent
+    reproduction output.
+  - Remaining README gap: memory component schemas, mutation records,
+    content/architecture co-evolution traces, benchmark baselines, transfer
+    metrics, report outcomes, and MemEvolve-style memory architecture
+    evolution remain active in code and paper TODOs.

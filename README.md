@@ -783,6 +783,15 @@ Important limits:
   artifact, branch-validation trajectory, validated-update promotion gate,
   main-training trajectory provenance, learning-efficiency report, linked-code
   audit, or independent reproduction output.
+- ArXiv `2512.18746` is memory-architecture evolution context only; the README
+  mentions this cached paper as a curated subset while `papers/README.md`
+  remains the complete implementation-status index. LibreEvolve has no
+  explicit encode/store/retrieve/manage memory-component design space,
+  memory-architecture genotype, memory-system mutation/evaluation loop,
+  experiential-knowledge co-evolution trace, EvolveLab benchmark mapping,
+  static-memory baseline comparison, cross-task or cross-LLM transfer report,
+  performance-delta record, linked-code audit, or independent reproduction
+  output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

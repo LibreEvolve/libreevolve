@@ -10,24 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Figure 5 roadmap wording scoped until construction-exhibit
-      provenance exists.
-  - Spec evidence: AlphaEvolve Figure 5 shows selected SOTA-breaking
-    mathematical construction examples with branch labels, problem labels,
-    before/after metric values, and rendered construction visuals.
-  - Current evidence: `ROADMAP.md`, README, papers index, and code evidence
-    describe Appendix B family/status coverage, smoke fixture boundaries,
-    expected construction/certificate artifacts, aggregate outcome gaps, and
-    result-version provenance gaps. They do not require Figure 5 exhibit IDs,
-    selected result-row links, visual artifact paths/hashes, rendering
-    parameters, previous-best sources, source Colab cells/artifacts, or verifier
-    linkage for the paper's displayed examples.
-  - Required result: when construction-exhibit provenance lands, update
-    roadmap, README, papers index, and code/paper TODO entries together with
-    exhibit-level metadata and validators so roadmap wording distinguishes
-    Appendix B family coverage, aggregate constructive-math outcomes, and
-    reproduced Figure 5 visual/result exhibits.
-
 - [ ] Keep Figure 5 sum-of-radii roadmap wording scoped until source-specific
       precision provenance exists.
   - Spec evidence: AlphaEvolve Figure 5 displays the selected sum-of-radii

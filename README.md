@@ -132,6 +132,12 @@ Important limits:
   construction, not local per-instance starting construction payloads,
   generator or random-seed records, baseline metric rows, prior-best visibility
   policy, or prior-best seeding policy evidence.
+- Figure 5 constructive-math exhibit provenance remains absent: README
+  describes Appendix B family/status coverage, smoke-fixture boundaries, and
+  constructive-math absence boundaries, not main-text Figure 5 exhibit ids,
+  selected result-row links, branch/problem label mappings, before/after metric
+  values, previous-best sources, rendered visual artifact paths or hashes,
+  rendering parameters, source Colab cells/artifacts, or verifier links.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

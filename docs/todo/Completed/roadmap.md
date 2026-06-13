@@ -2,6 +2,27 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Figure 5 construction-exhibit roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish Appendix B family/status coverage, aggregate constructive-math
+    outcomes, smoke-fixture scope, and reproduced main-text Figure 5
+    visual/result exhibits.
+  - Current evidence: `alphaevolve_appendix_b.json` records family/status
+    coverage and a top-level Appendix B figure-exhibit boundary for future
+    figure/subfigure ids, family/result links, caption values, visual artifact
+    paths/hashes, rendering parameters, construction payloads, previous-best
+    sources, source Colab cells/artifacts, and verifier linkage.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    main-text Figure 5 work: stable exhibit ids, selected Appendix B result
+    rows, previous/current metric values, branch/problem labels, visual or JSON
+    artifact paths/hashes, rendering parameters, source Colab locators,
+    construction payloads, previous-best sources, and verifier/certificate
+    links.
+  - Verification: Appendix B registry tests, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive constructive-math starting-construction roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

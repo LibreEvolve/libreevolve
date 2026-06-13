@@ -6325,8 +6325,9 @@ Primary evidence:
     reference links, absence of a dedicated ArchAgent runtime repository in
     extracted links, component rows, current no-architecture-simulator/local
     Python-primary scope, required evidence fields, and missing-evidence keys.
-    `papers/README.md`, `README.md`, and `ROADMAP.md` keep ArchAgent
-    computer-architecture discovery source-scoped rather than implemented.
+    `papers/README.md` and `ROADMAP.md` keep ArchAgent computer-architecture
+    discovery source-scoped rather than implemented, while the root README
+    omits ArchAgent-specific claims.
   - Required result: implement the missing runtime evidence for `2602.22425`:
     cache-policy candidate schemas, ChampSim `policy.h` runners, ChampSim
     build/simulation harnesses, CRC hardware configuration rows, SPEC06 and

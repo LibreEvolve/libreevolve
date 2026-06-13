@@ -91,44 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README AlphaEvolve ArchAgent computer-architecture claims absent
-      or source-scoped until simulator benchmark evidence exists.
-  - Spec evidence: arXiv `2602.22425`, `ArchAgent: Agentic AI-driven Computer
-    Architecture Discovery`, uses an AlphaEvolve-based agentic flow to design
-    and implement cache replacement policies. Its abstract reports IPC speedup
-    improvements on public multi-core Google Workload Traces and single-core
-    SPEC06 workloads, faster development than prior human-developed SoTA
-    policies, post-silicon hyperspecialization gains, and simulator-escape
-    behavior. The method evaluates C++ cache replacement policies in
-    ChampSim, reports IPC speedup normalized to LRU, separates short
-    evolution runs from longer validation runs, and requires hardware-
-    realizability checks.
-  - Current evidence: README now lists ArchAgent only as AlphaEvolve
-    computer-architecture application context and points to
-    `papers/archagent_boundary.json` for the missing generated C++ cache
-    policies, ChampSim integration, CRC/SPEC06/Google Workload Trace fixtures,
-    IPC-over-LRU rows, policy artifacts, hardware-realizability/state-budget
-    checks, post-silicon specialization, simulator-escape controls, and
-    distributed simulation evidence. It still does not define cache
-    replacement policy candidates, run ChampSim/microarchitectural simulators,
-    use Google Workload Traces or SPEC06, report IPC normalized to LRU, compare
-    LRU/SHiP/Hawkeye/Mockingjay baselines, enforce a 48 KB policy-state budget,
-    document post-silicon specialization, or implement simulator-escape
-    controls.
-  - Required result: if README mentions ArchAgent, computer architecture
-    discovery, cache replacement policies, ChampSim or microarchitectural
-    simulators, Google Workload Traces, SPEC06 cache benchmarks, IPC speedup,
-    post-silicon hyperspecialization, AlphaEvolve-discovered hardware
-    policies, or simulator escapes, keep the wording source-scoped until
-    local artifacts can show the paper in the manifest, candidate schemas,
-    simulator runners, workload provenance, benchmark splits, metric
-    definitions, baseline identities, generated policy artifacts, CRC
-    configuration records, policy-state budget checks, short/long simulation
-    protocols, ablation reports, simulator-escape controls, independent
-    checker outputs, and benchmark reports. Avoid implying LibreEvolve
-    supports AlphaEvolve-style ArchAgent computer-architecture discovery
-    without those artifacts.
-
 - [ ] Implement README AlphaEvolve Fault2Flow workflow-automation claims beyond
       source-scoped absence.
   - Spec evidence: arXiv `2511.12916`, `Fault2Flow: An AlphaEvolve-Optimized

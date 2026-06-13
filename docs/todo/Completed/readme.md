@@ -15,6 +15,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     `docs/status.md`, while `papers/README.md`, `ROADMAP.md`, and
     `docs/todo/` remain the deeper paper/status/backlog surfaces.
 
+- [x] Archive README ArchAgent computer-architecture source-scope TODO.
+  - Status: the README-specific TODO was stale after the README realism split.
+    The root README no longer mentions ArchAgent, computer-architecture
+    discovery, cache replacement policies, ChampSim, Google Workload Traces,
+    SPEC06, IPC speedup, post-silicon specialization, or simulator escapes.
+  - Remaining guard: `papers/README.md` keeps `2602.22425` background-only,
+    and the open code, paper, and roadmap TODOs still track the missing
+    generated C++ cache-policy schemas, ChampSim runner, workload fixtures,
+    IPC-over-LRU metrics, baseline rows, hardware-realizability checks, and
+    simulator-escape controls.
+  - Verification: if the root README later reintroduces ArchAgent or related
+    computer-architecture claims, the wording must remain source-scoped until
+    the active code, paper, and roadmap TODO evidence exists.
+
 - [x] Keep README validator sandbox/resource-limit wording scoped to local
       subprocess audit evidence versus OS/container enforcement.
   - Status: README Important limits now states that validator execution policy

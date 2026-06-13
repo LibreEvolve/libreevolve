@@ -107,6 +107,24 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     paper-manifest validation keep bounded retrieval context separate from
     DeepEvolve loop parity.
 
+- [x] Archive explicit-context source-role roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md` already lists
+    `runtime.history.explicit_context_source_role_report`, backed by validated
+    `context.yaml` `source_roles` metadata for human instructions, equations,
+    code snippets, literature PDFs, and background references. `docs/status.md`
+    also states this is classification/reporting evidence, not semantic proof
+    that roles are correct, expert-reviewed formulation evidence, live or
+    external context-source classification, or full AlphaEvolve
+    context-selection/evolution parity.
+  - Remaining guard: role-label correctness checks, expert/formulation signoff,
+    external/live context-source role classification, broader context-selection
+    and context-evolution evidence, and full AlphaEvolve explicit-context
+    parity remain active in `docs/todo/code.md` and `docs/todo/papers.md`.
+  - Verification: loader tests validate `context.yaml` source-role metadata and
+    invalid-role rejection; runtime loop tests validate manifest
+    `explicit_context_source_role_report` shape, allowlisted roles,
+    prompt-inclusion decisions, hash/redaction policy, and overclaim rejection.
+
 - [x] Archive metric-diverse prompt-context roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README,
     `papers/README.md`, runtime

@@ -10,25 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep explicit-context roadmap wording scoped beyond source-role reports.
-  - Spec evidence: AlphaEvolve Section 2.2 names explicit prompt context
-    categories: fixed human-written instructions, equations, code snippets,
-    and relevant literature such as PDF files.
-  - Current evidence: ROADMAP now lists
-    `runtime.history.explicit_context_source_role_report`, backed by validated
-    `context.yaml` `source_roles` metadata for human instructions, equations,
-    code snippets, literature PDFs, and background references. README Important
-    limits now also scopes those reports as classification and reporting
-    evidence, not semantic role-correctness proof, expert-reviewed
-    formulation, live/external context-source classification, or full
-    AlphaEvolve context-selection/evolution parity.
-  - Required result: when role-label correctness checks, expert/formulation
-    signoff, external/live context-source role classification, or broader
-    context-selection/evolution evidence lands, update ROADMAP, README, papers
-    index, and code/paper TODO entries together so roadmap wording keeps typed
-    local context metadata separate from full AlphaEvolve explicit-context
-    parity.
-
 - [ ] Keep paper-inspired roadmap labels scoped to implemented behavior.
   - Spec evidence: roadmap references to paper-inspired systems should remain
     clear about whether LibreEvolve implements the cited paper behavior or only

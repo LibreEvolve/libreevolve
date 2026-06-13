@@ -169,6 +169,16 @@ Important limits:
   knowledge-reuse analysis, 10-task SOTA report, 3-10x improvement-rate
   reproduction, Anthropic kernel-engineering 1363-to-1103 cycle reproduction,
   linked-code audit, or independent reproduction output.
+- AEvo harnessed meta-editing coverage is background paper context only:
+  LibreEvolve has no process-level evolution state exposing accumulated
+  candidates, feedback, traces, failures, or costs, meta-agent procedure or
+  agent-context editor, standardized editable evolution workspace, protected
+  evaluator boundary, searchable candidate history for meta-editing,
+  meta-editing phase/evolution-segment runner, run-plan contract,
+  procedure-versus-agent evolution instantiation, five-baseline
+  agentic/reasoning benchmark report, 26% relative-improvement reproduction,
+  three-task open-ended optimization report, linked-code audit, or independent
+  reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

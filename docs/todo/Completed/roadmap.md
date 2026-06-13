@@ -2,6 +2,33 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive AEvo harnessed meta-editing roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2605.13821` source-scoped as background harnessed meta-editing
+    context rather than implemented LibreEvolve AEvo-style runtime support.
+  - Current evidence: the cached paper and `papers/README.md` record AEvo's
+    process-level evolution state, accumulated candidates, feedback, traces,
+    failures, meta-agent procedure or agent-context editing, five-baseline
+    agentic/reasoning comparison, 26% relative-improvement claim, three
+    open-ended optimization tasks, and same-iteration-budget claim, while
+    marking local process-state schemas, meta-agent roles, procedure/context
+    patch artifacts, protected evaluator boundaries, searchable candidate
+    histories, meta-editing phase runners, run-plan contracts, benchmark
+    reports, linked-code audits, and independent reproduction output as
+    missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source/license metadata, relation to LibreEvolve's fixed
+    controller/config, process-level state schema, accumulated evidence
+    inventory, meta-agent observation and action contracts,
+    procedure/context patch records, control-edit provenance,
+    rollback/versioning policy, drift/stability diagnostics, iteration-budget
+    accounting, benchmark taxonomy, baseline identities, code/artifact
+    reproducibility status, and independent verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive CORAL autonomous multi-agent roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

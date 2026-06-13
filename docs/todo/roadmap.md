@@ -10,33 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement AEvo harnessed meta-editing gates beyond paper cache coverage.
-  - Spec evidence: arXiv `2605.13821`, submitted May 13, 2026, introduces
-    AEvo as a harnessed meta-editing framework for agentic evolution. The
-    abstract says fixed procedures are rigid, general-purpose agents can drift
-    in long-horizon evolution, and both accumulate useful evidence that lacks
-    a stable interface for revising the mechanism that drives future
-    evolution. AEvo turns accumulated candidates, feedback, traces, and
-    failures into process-level state and lets a meta-agent edit the procedure
-    or agent context controlling future evolution, reporting a 26 relative
-    improvement over the strongest baseline and state-of-the-art performance
-    on three open-ended optimization tasks.
-  - Current evidence: ROADMAP, `papers/download_manifest.*`, and
-    `papers/README.md` now include `2605.13821`, cached locally as
-    `papers/2605.13821__AEvo.pdf` with byte count `1450611` and SHA-256
-    `40b5c2cde5b1886488a67b511d7dd780756304a5714d8b3261b8fe35e47beba0`.
-    ROADMAP tracks static config, parent selection, prompt construction, run
-    artifacts, benchmark contracts, and many search-source gates, but still
-    has no local AEvo-style harnessed meta-editing evidence.
-  - Required result: add roadmap gates beyond paper-cache coverage for
-    `2605.13821`: source-license metadata, process-level state schema,
-    accumulated evidence inventory, meta-agent observation and action
-    contracts, procedure/context patch records, control-edit provenance,
-    rollback/versioning policy, drift/stability diagnostics, iteration-budget
-    accounting, benchmark taxonomy, baseline identities, and a background-only
-    or benchmark-fixture status rule so roadmap claims do not outpace local
-    AEvo-style harnessed meta-editing support.
-
 - [ ] Implement G-Zero verifier-free co-evolution gates beyond paper cache
       coverage.
   - Spec evidence: arXiv `2605.09959`, submitted May 11, 2026, introduces

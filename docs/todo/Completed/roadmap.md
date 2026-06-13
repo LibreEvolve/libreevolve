@@ -2,6 +2,33 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive post-AlphaEvolve sums-and-differences roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/sums_differences_boundary.json` now keep arXiv `2505.16105`
+    source-scoped as post-AlphaEvolve constructive-math context rather than
+    implemented LibreEvolve huge-set sums-and-differences verifier support.
+  - Current evidence: the cached paper and boundary JSON record AlphaEvolve's
+    `54265`-integer `1.1584` baseline, the prior `1.14465` bound, the
+    Gerbicz `1.173050` improvement, `U(m,L,B)`/`W(m,L,B)` construction
+    semantics, base-`2B+1` encoding, sumset and difference-set cardinality
+    formulas, `q(U)=2 max(U)+1`, `theta` recomputation, `(80,64,5)` small
+    result, `(81411,65536,5)` exact result, rounded values for `|U|`,
+    `|U+U|`, `|U-U|`, and `q(U)`, GMP arithmetic, bit.ly exact-value
+    artifact status, huge-set compression needs, and source-license absence.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: explicit `U`-set schemas, `W(m,L,B)` formula checkers, base-`2B+1`
+    encoding verifiers, sumset/difference-set cardinality checkers,
+    max-element/q-value verifiers, `theta` recomputation, exact-value payload
+    hashes, GMP/version/arithmetic provenance, floating-point search records,
+    small and large parameter exact rows, AlphaEvolve and prior-baseline rows,
+    huge-set compression artifacts, tolerance policies, lineage comparison
+    rows, and independent checker outputs.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive post-AlphaEvolve autoconvolution roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

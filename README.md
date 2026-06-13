@@ -406,6 +406,17 @@ Important limits:
   normalization checker, NCSU HPC resource record, or independent checker
   output; `papers/autoconvolution_boundary.json` records that absence
   boundary.
+- Post-AlphaEvolve sums-and-differences coverage is constructive-math context
+  only: LibreEvolve has no explicit `U`-set construction schema,
+  `W(m,L,B)` inclusion-exclusion checker, base-`2B+1` injective encoding
+  verifier, sumset or difference-set cardinality checker, max-element or
+  q-value verifier, `theta` recomputation, huge-set compression artifact,
+  exact GMP arithmetic record, floating-point search record,
+  `(80,64,5)` or `(81411,65536,5)` exact result row, bit.ly exact-value
+  artifact snapshot, AlphaEvolve `54265`-integer baseline record, prior
+  `1.14465` baseline row, tolerance policy, lineage comparison row, or
+  independent checker output; `papers/sums_differences_boundary.json`
+  records that absence boundary.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

@@ -1210,7 +1210,9 @@ This report is a scoped readiness boundary for AlphaEvolve Section 2.4
 parallel evaluation. Local configured-stage sample workers can show fan-out and
 wall-clock compression, but `claim_ready` remains false until the runtime
 records per-candidate compute-hour budgets, candidate-level async evaluation
-queues, distributed evaluator worker nodes, randomized-initialization shard
+queues, concurrent LLM sampler queues, queue capacity/backpressure policy,
+distributed evaluator worker nodes, deterministic async result merge/admission
+order, concurrency-safe shared-state mutation, randomized-initialization shard
 identity, mutation-chain-depth impact under slow feedback, pending-work resume
 state, and equal-budget parallelism reports. The committed
 `papers/parallel_evaluation_readiness_boundary.json` sidecar preserves the

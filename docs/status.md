@@ -570,9 +570,11 @@ Important limits:
 - Parallel-evaluation readiness is limited to configured local
   `eval_stages[].sample_workers` fan-out, observed sample wall-clock
   compression, and topology linkage. It is not AlphaEvolve-style
-  per-candidate compute-hour budgeting, candidate-level async evaluator
-  queues, distributed evaluator nodes, mutation-depth impact evidence, or
-  pending-work resume; that boundary is tracked by
+  per-candidate compute-hour budgeting, concurrent LLM sampler queues,
+  candidate-level async evaluator queues, queue capacity/backpressure policy,
+  distributed evaluator nodes, deterministic async result merge/admission
+  order, concurrency-safe shared-state mutation, mutation-depth impact
+  evidence, or pending-work resume; that boundary is tracked by
   `runtime.history.parallel_evaluation_readiness_report` and
   `papers/parallel_evaluation_readiness_boundary.json`.
 - AlphaEvolve Figure 8 ablation support is a validated registry, equal-budget

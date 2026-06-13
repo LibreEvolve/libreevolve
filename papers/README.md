@@ -737,7 +737,10 @@ topology absence boundary for paper-manifest validation. The committed
 `papers/parallel_evaluation_readiness_boundary.json` sidecar preserves the
 parallel-evaluation readiness absence boundary for paper-manifest validation,
 including the still-missing order-of-100-compute-hours candidate budget and
-generation-cadence evidence under slow evaluator feedback.
+generation-cadence evidence under slow evaluator feedback, concurrent LLM
+sampler queues, candidate-level async evaluator queues, queue capacity/
+backpressure policy, deterministic async result merge/admission order,
+concurrency-safe shared-state mutation, and pending-work resume.
 
 AlphaEvolve evaluator-metric note: LibreEvolve now reserves boolean `is_valid`
 as a local admission gate outside declared `metrics.yaml` objectives and stores

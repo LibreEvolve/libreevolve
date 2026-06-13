@@ -280,17 +280,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     async queue checkpoint.
   - Current gap: `evolve()` is still synchronous and evaluates one candidate at
     a time; local stage sample workers are not async LLM sampler queues,
-    distributed evaluator nodes, or
-    explicit mutation-chain-depth policy for expensive/slow-feedback
-    evaluations. Sequential sibling proposal batches are accounting evidence,
-    not AlphaEvolve-style throughput depth.
+    candidate-level async evaluator queues, queue-capacity/backpressure
+    policy, distributed evaluator nodes, deterministic async result merge and
+    archive-admission order, concurrency-safe database/archive/prompt/plugin/
+    budget mutation, or explicit mutation-chain-depth policy for
+    expensive/slow-feedback evaluations. Sequential sibling proposal batches
+    are accounting evidence, not AlphaEvolve-style throughput depth.
   - Required result: add paper-visible parallel-evaluation reports and
     validators that record per-candidate compute-hour budget, wall-clock
     duration, evaluator-worker fan-out, explicit order-of-100-compute-hours
     budget capability, generation cadence under slow feedback, randomized-
     initialization shard counts/seeds, queued/running/completed evaluator-node
-    state, cluster or local fallback identity, mutation-chain-depth impact,
-    and resumed pending-work behavior before treating LibreEvolve's
+    state, concurrent LLM sampler queue state, queue capacity/backpressure
+    decisions, deterministic result merge/admission order, concurrency-safe
+    shared-state mutation evidence, cluster or local fallback identity,
+    mutation-chain-depth impact, and resumed pending-work behavior before
+    treating LibreEvolve's
     synchronous evaluator loop or sequential sibling batches as
     AlphaEvolve-style parallelized evaluation evidence.
 

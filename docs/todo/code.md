@@ -1702,8 +1702,11 @@ sidecars, tests, and active TODOs.
     same absence boundary for paper-manifest validation, including the paper's
     explicit order-of-100-compute-hours evaluator budget and consecutive-
     mutation cadence requirement.
-    This still does not provide async candidate queues, distributed evaluator
-    nodes, or mutation-depth throughput under slow evaluator feedback.
+    This still does not provide concurrent LLM sampler queues, async candidate
+    queues, queue-capacity/backpressure policy, distributed evaluator nodes,
+    deterministic async result merge and archive-admission order, concurrency-
+    safe database/archive/prompt/plugin/budget mutation, or mutation-depth
+    throughput under slow evaluator feedback.
     `RunBudget` explicitly tracks synchronous local consumption; controller
     budget-state validators exist only for future async/resume events.
     Completed manifests now embed

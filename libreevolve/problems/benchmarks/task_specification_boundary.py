@@ -16,6 +16,7 @@ TASK_SPECIFICATION_RUNTIME_REPORT_SCHEMA = (
     "libreevolve.task_spec_artifact_resolution_report.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
+EXPECTED_SOURCE_SECTION_IDS = ("2.1", "Figure 2")
 EXPECTED_BOUNDARY_STATUS = "runtime_artifact_resolution_only"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "startup_task_spec_bundle_recorded",
@@ -66,6 +67,7 @@ def task_specification_boundary_record() -> dict[str, Any]:
         "task_specification_bundle_schema": TASK_SPECIFICATION_BUNDLE_SCHEMA,
         "runtime_report_schema": TASK_SPECIFICATION_RUNTIME_REPORT_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_claim": (
             "AlphaEvolve Section 2.1 and Figure 2 frame the task "
             "specification as user-provided initial program components, "
@@ -109,6 +111,8 @@ def validate_task_specification_boundary(
         issues.append(_issue("invalid_runtime_report_schema", "runtime report schema must identify task-spec artifact-resolution reports"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['2.1', 'Figure 2']"))
     source_claim = data.get("source_claim")
     if not isinstance(source_claim, str) or "Figure 2" not in source_claim:
         issues.append(_issue("invalid_source_claim", "source_claim must identify AlphaEvolve task-specification evidence"))

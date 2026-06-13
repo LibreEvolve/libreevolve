@@ -2557,6 +2557,7 @@ def test_validate_paper_manifest_rejects_task_specification_boundary_drift(
     record = paper_manifest.task_specification_boundary_record()
     record["claim_ready"] = True
     record["boundary_status"] = "full_task_spec_parity_ready"
+    record["source_section_ids"] = ["2.1"]
     record["missing_evidence"]["full_alphaevolve_task_spec_parity"] = "recorded"
     sidecar = tmp_path / paper_manifest.TASK_SPECIFICATION_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
@@ -2567,6 +2568,7 @@ def test_validate_paper_manifest_rejects_task_specification_boundary_drift(
     assert report.ok is False
     assert "task_specification_boundary_claim_ready_overclaim" in codes
     assert "task_specification_boundary_invalid_boundary_status" in codes
+    assert "task_specification_boundary_invalid_source_section_ids" in codes
     assert (
         "task_specification_boundary_invalid_missing_evidence_full_alphaevolve_task_spec_parity"
         in codes

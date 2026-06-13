@@ -765,6 +765,15 @@ Important limits:
   supervision record, multimodal policy-update loop, GenEvolve-Data metadata,
   GenEvolve-Bench task/report, baseline comparison, linked-code audit, or
   independent reproduction output.
+- ArXiv `2605.29847` is self-evolving reward-rubric context only; the README
+  mentions this cached paper as a curated subset while `papers/README.md`
+  remains the complete implementation-status index. LibreEvolve has no
+  single-policy Reasoner/Rubric-Generator co-evolution loop, generated-rubric
+  provenance, meta-verifier records, zero-variance pruning records,
+  Leave-One-Out peer-consensus traces, criteria memory pool, dense
+  multi-objective reward vectors, expert-prior rubric expansion,
+  medical/writing/science benchmark report, reward-hacking audit, linked-code
+  audit, or independent reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

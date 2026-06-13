@@ -14863,3 +14863,26 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     image provenance, distillation traces, token-supervision metadata,
     benchmark baselines, report outcomes, and GenEvolve-style multimodal
     evolution remain active in code and paper TODOs.
+
+- [x] Keep README EvoRubric self-evolving reward-rubric claims source-scoped
+      until runtime evidence exists.
+  - Spec evidence: arXiv `2605.29847`, `EvoRubric: Self-Evolving
+    Rubric-Driven RL for Open-Ended Generation`, proposes alternating
+    Reasoner and Rubric Generator roles under one policy, validating generated
+    criteria with a meta-verifier, zero-variance pruning, and Leave-One-Out
+    peer consensus, archiving criteria into memory, and producing dense
+    multi-objective rewards for open-ended generation.
+  - Status: README now lists arXiv `2605.29847` as self-evolving
+    reward-rubric context only and marks the mention as a curated cached-paper
+    subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no
+    single-policy Reasoner/Rubric-Generator co-evolution loop,
+    generated-rubric provenance, meta-verifier records, zero-variance pruning
+    records, Leave-One-Out peer-consensus traces, criteria memory pool, dense
+    multi-objective reward vectors, expert-prior rubric expansion,
+    medical/writing/science benchmark report, reward-hacking audit,
+    linked-code audit, or independent reproduction output.
+  - Remaining README gap: generated-rubric provenance, verification records,
+    consensus traces, reward vectors, reward-hacking diagnostics, benchmark
+    baselines, report outcomes, and EvoRubric-style reward evolution remain
+    active in code and paper TODOs.

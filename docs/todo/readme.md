@@ -91,34 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README EvoRubric self-evolving reward-rubric claims source-scoped
-      until runtime evidence exists.
-  - Spec evidence: arXiv `2605.29847`, `EvoRubric: Self-Evolving
-    Rubric-Driven RL for Open-Ended Generation`, proposes alternating
-    Reasoner and Rubric Generator roles under one policy, validating generated
-    criteria with a meta-verifier, zero-variance pruning, and Leave-One-Out
-    peer consensus, archiving criteria into memory, and producing dense
-    multi-objective rewards for open-ended generation.
-  - Current evidence: README now lists `2605.29847`, EvoRubric, as
-    self-evolving reward-rubric context only and says no local
-    Reasoner/Rubric-Generator co-evolution, criteria verification, rubric
-    memory pool, or reward-hacking report exists. README also documents
-    LibreEvolve's current evaluator-first workflow, scalar/structured scores,
-    MAP-Elites retention, run artifacts, and benchmark boundaries; it does not
-    claim dynamic rubrics, peer-consensus criteria validation, archived reward
-    criteria, dense rubric reward vectors, or reward-hacking audits in
-    medical, writing, or science generation domains.
-  - Required result: if README mentions EvoRubric, self-evolving rubrics,
-    dynamic open-ended rewards, Reasoner/Rubric-Generator co-evolution,
-    meta-verification, zero-variance pruning, Leave-One-Out peer consensus,
-    criteria memory pools, dense multi-objective rewards, or expert-prior
-    rubric expansion, keep the wording source-scoped until local artifacts can
-    show generated-rubric provenance, verification records, consensus traces,
-    reward vectors, reward-hacking diagnostics, benchmark baselines, and
-    report outcomes. Avoid implying
-    LibreEvolve supports EvoRubric-style reward evolution without those
-    artifacts.
-
 - [ ] Keep README LLM-ALSO adaptive learning-signal claims source-scoped
       until runtime evidence exists.
   - Spec evidence: arXiv `2605.29293`, `LLM-ALSO: LLM-Driven Adaptive

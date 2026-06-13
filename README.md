@@ -180,6 +180,15 @@ Important limits:
   DeepConsensus, AC OPF, Earth AI, Willow, public-gallery, TPU, cache-policy,
   Spanner, compiler-storage, customer, UI, and API claims remain bounded by
   `papers/alphaevolve_2026_impact_boundary.json`.
+- AlphaEvolve theoretical-CS hardness coverage is background proof-element
+  context only: LibreEvolve has no Ramanujan graph witness inventory,
+  MAX-k-CUT gadget edge-list schema, metric-TSP equation-gadget schema,
+  verifier API contract, evolved verifier code, synthetic correctness dataset,
+  judge-LLM records, human-inspection records, independent brute-force
+  verification outputs, theorem/lemma/proof lifting metadata, baseline/SOTA
+  comparison rows, source-repository pin, or local graph/gadget certification
+  benchmark for arXiv `2509.18057`; `papers/theoretical_cs_sources.json`
+  records that nested proof-element artifact boundary.
 - FHE-on-TPU AlphaEvolve application coverage is background paper context only:
   LibreEvolve has no TFHE/Jaxite or CKKS/CROSS primitive harness, Google Cloud
   TPUv5e execution provenance, correctness-test suite, generated
@@ -939,6 +948,7 @@ titles, implementation status, and benchmark coverage decisions.
 manifest rows. It separates implemented behavior, inspiration-only sources,
 candidate benchmark ideas, and source-boundary records so the root README does
 not have to carry the full research ledger.
+The source mentions in this README are a curated subset for README context.
 
 Rehydrate the ignored local PDF cache on a fresh checkout:
 

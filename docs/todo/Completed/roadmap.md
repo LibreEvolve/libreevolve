@@ -2,6 +2,33 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive hardness-of-approximation proof-element roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/theoretical_cs_sources.json` now keep arXiv `2509.18057`
+    source-scoped as theoretical-CS proof-element background rather than
+    local graph/gadget/verifier benchmark support.
+  - Current evidence: the cached paper and theoretical-CS sidecar record the
+    `Reinforced Generation of Combinatorial Structures: Hardness of
+    Approximation` source identity, arXiv v7 metadata, CC BY 4.0 metadata,
+    Google Research article metadata, AlphaEvolve-discovered finite proof
+    elements, Ramanujan graph/random-graph certification context,
+    MAX-3-CUT/MAX-4-CUT gadget reductions, metric Traveling Salesman equation
+    gadget context, evolved verifier speedup claims, judge/human-inspection
+    context, final brute-force verification requirement, lifting framework,
+    and a nested `proof_element_artifact_boundary`.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: graph/gadget inventories, Ramanujan witness schemas, MAX-k-CUT and
+    metric-TSP gadget schemas, verifier API contracts, evolved verifier code,
+    synthetic correctness datasets, judge-LLM records, human-inspection
+    records, independent brute-force outputs, theorem/lemma/proof lifting
+    metadata, source-repository status, baseline/SOTA comparison rows, and
+    local graph/gadget certification benchmarks.
+  - Verification: cached PDF spot-check, theoretical-CS sidecar inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive MAP-Elites illumination-algorithm roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

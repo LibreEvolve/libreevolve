@@ -216,6 +216,13 @@ Important limits:
   co-evolution trace, EvolveLab benchmark mapping, static-memory baseline
   comparison, cross-task or cross-LLM transfer report, performance-delta
   record, linked-code audit, or independent reproduction output.
+- ANCHOR healthy-evolution oversight coverage is background paper context
+  only: LibreEvolve has no ANCHOR human-like oversight agent, phase-specific
+  norm-correction interface, safety-drift metric lineage,
+  output-verification intervention records, reflection/review artifact stream,
+  supervision-frequency/cadence trace, preservation-of-objective-performance
+  report, coding/math/safety benchmark report, linked-code audit, or
+  independent reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

@@ -2,6 +2,35 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive ANCHOR healthy-evolution oversight roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2606.06114` source-scoped as background healthy-evolution
+    oversight context rather than implemented LibreEvolve ANCHOR-style
+    runtime support.
+  - Current evidence: the cached paper and `papers/README.md` record ANCHOR's
+    human-like oversight framing, simulated supervision across self-evolution
+    phases, safety-drift/capability-degradation risk, output-verification
+    intervention finding, supervision-frequency/diminishing-return finding,
+    and coding/math/safety evaluation scope, while marking local oversight
+    role schemas, phase-specific feedback records, norm-correction artifacts,
+    safety-drift metrics, output-verification intervention logs,
+    reflection/review streams, objective-preservation reports, cadence
+    experiments, benchmark reports, linked-code audits, and independent
+    reproduction output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source/license metadata, project/demo and linked-code status,
+    relation to LibreEvolve safety and validator/admission assumptions,
+    ANCHOR role and feedback schema, supervised phase taxonomy,
+    norm-correction artifact records, output-verification intervention
+    evidence, safety-degradation metrics, coding/math/safety benchmark
+    taxonomy, supervision-frequency experiment records,
+    objective-preservation measurements, baseline identities,
+    reproducibility status, and independent verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive MemEvolve memory-architecture roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

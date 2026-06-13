@@ -2,6 +2,37 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive GenEvolve multimodal trajectory-distillation roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2605.21605` source-scoped as background multimodal
+    trajectory-distillation context rather than implemented LibreEvolve
+    GenEvolve-style runtime support.
+  - Current evidence: the cached paper and `papers/README.md` record
+    GenEvolve's image-generation agents, tool-orchestrated trajectories,
+    evidence gathering, reference selection, generation-skill invocation,
+    prompt-reference programs, best-worst trajectory comparisons, structured
+    visual experience, privileged teacher branch, Visual Experience
+    Distillation, dense token-level supervision, GenEvolve-Data,
+    GenEvolve-Bench, and baseline comparison claims, while marking local
+    multimodal image-generation pipelines, visual trajectory schemas,
+    reference/evidence logs, prompt-reference artifacts, structured visual
+    experience taxonomies, teacher/student distillation traces,
+    token-supervision metadata, image lineage, benchmark reports, linked-code
+    audits, and independent reproduction output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source/license metadata, project/demo and linked-code status,
+    relation to LibreEvolve, tool-orchestrated visual trajectory schema,
+    evidence/reference selection metadata, prompt-reference program
+    representation, best-worst comparison records, structured visual
+    experience taxonomy, privileged-teacher/student-distillation traces,
+    token-level supervision artifacts, image artifact provenance,
+    GenEvolve-Data/GenEvolve-Bench metadata, baseline identities,
+    reproducibility status, and independent verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive G-Zero verifier-free co-evolution roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

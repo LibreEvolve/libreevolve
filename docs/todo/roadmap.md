@@ -10,39 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement GenEvolve multimodal trajectory-distillation gates beyond
-      paper cache coverage.
-  - Spec evidence: arXiv `2605.21605`, submitted May 20, 2026 and last revised
-    May 22, 2026, introduces GenEvolve for self-evolving image-generation
-    agents. The abstract models each generation attempt as a tool-orchestrated
-    trajectory that gathers evidence, selects references, invokes generation
-    skills, and creates a prompt-reference program. It compares multiple
-    trajectories for the same request, abstracts best-worst differences into
-    structured visual experience for a privileged teacher, and distills dense
-    token-level supervision into a student.
-  - Current evidence: ROADMAP, `papers/download_manifest.*`,
-    `papers/row_identity.json`, `papers/README.md`, README, and TODO coverage
-    now include `2605.21605`, cached locally as
-    `papers/2605.21605__GenEvolve.pdf` with byte count `23833361` and
-    SHA-256
-    `2e38145ffd81f1c2f67b9fe4ee9adeec6284796739616d2778c89600b4455d5c`.
-    ROADMAP tracks the paper as background multimodal trajectory-distillation
-    context only. It still has no local image-generation agent, multimodal
-    tool-trajectory schema, reference/evidence selection log, prompt-reference
-    program artifact, best-worst comparison record, structured visual
-    experience taxonomy, teacher/student distillation trace, token-supervision
-    metadata, image artifact lineage, GenEvolve-Data metadata,
-    GenEvolve-Bench report, or baseline comparison.
-  - Required result: implement roadmap gates beyond paper-cache evidence:
-    source-license and project URL status, multimodal tool-trajectory schema,
-    reference/evidence selection logs, prompt-reference program artifacts,
-    best-worst comparison records, structured visual experience taxonomy,
-    privileged teacher and student distillation traces, token-supervision
-    metadata, image artifact lineage, GenEvolve-Data/GenEvolve-Bench metadata,
-    baseline identities, and a background-only or benchmark-fixture status
-    rule so roadmap claims do not outpace local GenEvolve-style multimodal
-    support.
-
 - [ ] Implement EvoRubric self-evolving reward-rubric gates beyond paper
       cache coverage.
   - Spec evidence: arXiv `2605.29847`, submitted May 28, 2026, introduces

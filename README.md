@@ -187,6 +187,14 @@ Important limits:
   exploration-coverage report, best-iterate suboptimality fixture,
   unverifiable-domain benchmark, external-judge reward-hacking comparison,
   linked-code audit, or independent reproduction output.
+- GenEvolve multimodal trajectory-distillation coverage is background paper
+  context only: LibreEvolve has no image-generation tool pipeline,
+  visual-reference ingestion, prompt-rewriting/layout-planning/image-
+  generation/refinement trajectory schema, tool-call artifact lineage,
+  Agentic Visual Experience Distillation or Visual Experience Distillation
+  target, dense token-level supervision record, multimodal policy-update
+  loop, GenEvolve-Data metadata, GenEvolve-Bench task/report, baseline
+  comparison, linked-code audit, or independent reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

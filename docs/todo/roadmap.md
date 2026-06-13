@@ -10,44 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Add AlphaEvolve ArchAgent computer-architecture gates before roadmap
-      promotion.
-  - Spec evidence: arXiv `2602.22425`, submitted February 25, 2026,
-    introduces `ArchAgent: Agentic AI-driven Computer Architecture Discovery`.
-    The abstract says ArchAgent is built on AlphaEvolve to design and
-    implement cache replacement policies, not merely tune parameters, and
-    reports IPC speedup results on public multi-core Google Workload Traces
-    and single-core SPEC06, post-silicon hyperspecialization gains, faster
-    policy development than prior human SoTA, and simulator-escape behavior.
-    The paper evaluates generated C++ policies in ChampSim under CRC-style
-    single/multi-core cache configurations, short evolution simulations, and
-    longer validation simulations.
-  - Current evidence: ROADMAP now names `papers/archagent_boundary.json` as
-    the source-specific boundary for generated C++ cache policies, ChampSim
-    `policy.h` integration, CRC hardware configurations, SPEC06/Google
-    Workload Trace fixtures, IPC-over-LRU metrics, Policy31/Policy31-Tuned/
-    Policy61/Policy62 artifacts, hardware-realizability and state-budget
-    checks, post-silicon specialization, simulator-escape controls,
-    distributed simulation reliability, and runtime-repository status. It
-    still does not define a cache replacement policy candidate schema,
-    ChampSim simulator runner, CRC-style hardware configuration, Google
-    Workload Trace or SPEC06 workload suite, IPC speedup metric,
-    short-run/long-run validation split, SoTA policy baseline ledger,
-    hardware-realizability/state-budget verifier, post-silicon specialization
-    gate, or simulator-escape control policy.
-  - Required result: implement roadmap gates for `2602.22425`: cache
-    replacement policy candidate schema, ChampSim `policy.h` integration
-    records, CRC cache/core/prefetch/DRAM configuration records, workload
-    trace provenance, single-core and multi-core benchmark splits,
-    evolution-versus-validation instruction-count protocols, IPC speedup
-    metric definitions, prior-SoTA baseline identities, Policy31/61/62
-    generated-policy artifacts and mechanism labels, state-budget and
-    hardware-realizability checks, ablation records, post-silicon
-    specialization parameter records, simulator-escape and write-bypass
-    containment policy, distributed-simulation failure/retry records,
-    seed/budget records, independent checker outputs, and benchmark-fixture
-    status rules before roadmap claims promote ArchAgent support.
-
 - [ ] Implement AlphaEvolve Fault2Flow workflow-automation gates beyond
       source-boundary roadmap promotion.
   - Spec evidence: arXiv `2511.12916`, submitted November 17, 2025,

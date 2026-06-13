@@ -343,6 +343,16 @@ Important limits:
   temporal/domain generalization report, generated-policy maintainability
   evidence, compiler environment hash, or independent checker output;
   `papers/magellan_boundary.json` records that absence boundary.
+- AlphaEvolve ArchAgent computer-architecture coverage is background paper
+  context only: LibreEvolve has no cache replacement policy candidate schema,
+  ChampSim `policy.h` integration, CRC cache/core/prefetch/DRAM
+  configuration record, SPEC06 or Google Workload Trace fixture,
+  IPC-over-LRU metric row, short-run/long-run validation split,
+  Policy31/Policy31-Tuned/Policy61/Policy62 generated-policy artifact,
+  hardware-realizability or state-budget check, post-silicon specialization
+  record, simulator-escape or write-bypass containment policy,
+  distributed-simulation reliability record, or independent checker output;
+  `papers/archagent_boundary.json` records that absence boundary.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

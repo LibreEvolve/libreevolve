@@ -2,6 +2,37 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive AlphaEvolve ArchAgent roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/archagent_boundary.json` now keep arXiv `2602.22425`
+    source-scoped as background AlphaEvolve computer-architecture application
+    context rather than implemented LibreEvolve ArchAgent-style cache-policy
+    discovery support.
+  - Current evidence: the cached paper and boundary JSON record generated C++
+    cache replacement policy logic, ChampSim `policy.h` integration,
+    distributed ChampSim compile/run/evaluate flow, CRC-style cache/core/
+    prefetch/DRAM configuration rows, SPEC06 and Google Workload Trace
+    provenance, IPC speedup normalized to LRU, Policy31 and Policy31-Tuned
+    rows, Policy61 and Policy62 multi-core rows, hardware-realizability and
+    48 KB state-budget checks, Policy31 ablation rows, Policy12 write-bypass
+    simulator-escape detection, and the absence of a dedicated extracted
+    ArchAgent runtime repository.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: cache-policy candidate schemas, ChampSim `policy.h` runners,
+    ChampSim build/simulation harnesses, CRC hardware configuration rows,
+    SPEC06 and Google Workload Trace fixtures, single-core and multi-core
+    benchmark rows, IPC speedup metric records, evolution-versus-validation
+    instruction-count protocols, generated-policy artifact rows, SoTA
+    baseline ledgers, hardware-realizability and state-budget verifiers,
+    simulator-escape detection, write-bypass containment policy, distributed
+    simulation retry records, development-time comparison rows, and
+    independent checker outputs.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive AlphaEvolve Magellan roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

@@ -143,15 +143,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     `stage_evidence_summary` with role/source/hash/sample/exposure counts and
     explicit absent-evidence statuses. The committed
     `papers/evaluation_cascade_boundary.json` sidecar now preserves the
-    paper-manifest-validated cascade-efficiency absence boundary.
+    paper-manifest-validated cascade-efficiency absence boundary, including
+    missing candidate transition matrix, promotion-decision rule attribution,
+    next-stage exposure linkage, and transition-denominator reconciliation.
   - Current gap: paper-facing evidence still lacks stage difficulty or scale
     rationale, evaluator/test-set identities and hashes, benchmark seed/sample
-    policy, and counterfactual cost/wall-clock savings; the new summary records
-    those absences explicitly. The report therefore remains `claim_ready:
-    false` for AlphaEvolve cascade-efficiency claims.
+    policy, candidate-by-candidate transition proof from each small-filter
+    decision to next-stage exposure or prune outcome, transition denominator
+    reconciliation, and counterfactual cost/wall-clock savings; the new summary
+    records those absences explicitly. The report therefore remains
+    `claim_ready: false` for AlphaEvolve cascade-efficiency claims.
   - Required result: finish cascade-report artifacts and validators with stage
     difficulty/test-set metadata, random-seed/sample coverage beyond the
-    runtime denominator policy, cost summaries, and claim-readiness checks.
+    runtime denominator policy, candidate transition matrix with
+    promotion/prune rule attribution and next-stage linkage, cost summaries,
+    and claim-readiness checks.
 
 - [ ] Track explicit controller backtracking policy beyond observed redirect
       evidence.

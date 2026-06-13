@@ -8,7 +8,7 @@
   "source_section_ids": [
     "2.4"
   ],
-  "source_claim": "evaluation cascades use increasingly difficult test ensembles to promote promising candidates and prune less promising candidates before larger budgets are spent",
+  "source_claim": "evaluation cascades use increasingly difficult test ensembles to promote promising candidates and prune less promising candidates before larger budgets are spent; paper-ready evidence must link candidate-level promotion and prune decisions to next-stage exposure and stage-specific rules",
   "boundary_status": "runtime_attrition_without_benchmark_efficiency_evidence",
   "runtime_report_status": "evaluation_cascade_report_available_when_stages_run",
   "claim_ready": false,
@@ -22,6 +22,10 @@
     "sample_count",
     "random_seed_policy",
     "promotion_rule",
+    "candidate_stage_transition_id",
+    "promotion_decision_reason",
+    "next_stage_exposure_link",
+    "transition_denominator_policy",
     "main_test_exposure_count",
     "early_prune_count",
     "per_stage_elapsed_seconds",
@@ -34,9 +38,13 @@
     "evaluator_test_set_identities": "local_evaluator_source_only",
     "test_set_hashes": "stage_evidence_summary_records_not_recorded",
     "benchmark_seed_sample_policy": "runtime_sample_accounting_only_not_benchmark_policy",
+    "candidate_transition_matrix": "not_recorded_locally",
+    "promotion_decision_rule_attribution": "runtime_stage_counts_only",
+    "next_stage_exposure_linkage": "runtime_stage_counts_only",
+    "transition_denominator_reconciliation": "not_recorded_locally",
     "counterfactual_full_evaluation_costs": "stage_evidence_summary_records_not_recorded",
     "wall_clock_cost_savings": "stage_evidence_summary_records_not_recorded",
     "matrix_multiplication_repeated_seed_policy": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has runtime cascade attrition reports, stage evidence summaries, and hypothesis-test policy reports, but does not claim AlphaEvolve-style cascade-efficiency evidence with stage difficulty rationale, evaluator test-set identities and hashes, benchmark seed/sample policy, counterfactual full-evaluation costs, or observed wall-clock cost savings."
+  "claim_boundary": "This boundary records that LibreEvolve has runtime cascade attrition reports, stage evidence summaries, and hypothesis-test policy reports, but does not claim AlphaEvolve-style cascade-efficiency evidence with stage difficulty rationale, evaluator test-set identities and hashes, benchmark seed/sample policy, candidate transition matrix, promotion-decision rule attribution, next-stage exposure linkage, transition-denominator reconciliation, counterfactual full-evaluation costs, or observed wall-clock cost savings."
 }

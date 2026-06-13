@@ -125,7 +125,9 @@ LibreEvolve has:
   source refs/hashes when available, runtime samples, main-test exposure, and
   early pruning, with `papers/evaluation_cascade_boundary.json` now carrying
   the paper-manifest-validated absence boundary for stage difficulty/test-set
-  identities, benchmark seed/sample policy, and cost-savings evidence
+  identities, benchmark seed/sample policy, candidate transition matrices,
+  promotion-decision rule attribution, next-stage exposure linkage,
+  transition-denominator reconciliation, and cost-savings evidence
 - cascade hypothesis-test boundary reports under
   `runtime.history.cascade_hypothesis_test_policy_report`, naming configured
   or fallback-inferred small-scale-filter/main-test roles, deterministic threshold/artifact

@@ -26,6 +26,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "sample_count",
     "random_seed_policy",
     "promotion_rule",
+    "candidate_stage_transition_id",
+    "promotion_decision_reason",
+    "next_stage_exposure_link",
+    "transition_denominator_policy",
     "main_test_exposure_count",
     "early_prune_count",
     "per_stage_elapsed_seconds",
@@ -42,6 +46,10 @@ EXPECTED_MISSING_EVIDENCE = {
     "benchmark_seed_sample_policy": (
         "runtime_sample_accounting_only_not_benchmark_policy"
     ),
+    "candidate_transition_matrix": "not_recorded_locally",
+    "promotion_decision_rule_attribution": "runtime_stage_counts_only",
+    "next_stage_exposure_linkage": "runtime_stage_counts_only",
+    "transition_denominator_reconciliation": "not_recorded_locally",
     "counterfactual_full_evaluation_costs": (
         "stage_evidence_summary_records_not_recorded"
     ),
@@ -79,7 +87,9 @@ def evaluation_cascade_boundary_record() -> dict[str, Any]:
         "source_claim": (
             "evaluation cascades use increasingly difficult test ensembles to "
             "promote promising candidates and prune less promising candidates "
-            "before larger budgets are spent"
+            "before larger budgets are spent; paper-ready evidence must link "
+            "candidate-level promotion and prune decisions to next-stage "
+            "exposure and stage-specific rules"
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "runtime_report_status": "evaluation_cascade_report_available_when_stages_run",
@@ -92,6 +102,8 @@ def evaluation_cascade_boundary_record() -> dict[str, Any]:
             "but does not claim AlphaEvolve-style cascade-efficiency evidence with "
             "stage difficulty rationale, evaluator test-set identities and hashes, "
             "benchmark seed/sample policy, "
+            "candidate transition matrix, promotion-decision rule attribution, "
+            "next-stage exposure linkage, transition-denominator reconciliation, "
             "counterfactual full-evaluation costs, or observed wall-clock cost "
             "savings."
         ),
@@ -122,7 +134,11 @@ def validate_evaluation_cascade_boundary(
         issues.append(_issue("invalid_source_section_id", "source_section_id must be 2.4"))
     if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
         issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['2.4']"))
-    if not isinstance(data.get("source_claim"), str) or "increasingly difficult" not in data["source_claim"]:
+    if (
+        not isinstance(data.get("source_claim"), str)
+        or "increasingly difficult" not in data["source_claim"]
+        or "candidate-level promotion" not in data["source_claim"]
+    ):
         issues.append(_issue("invalid_source_claim", "source_claim must identify increasingly difficult cascade stages"))
     status = data.get("boundary_status")
     if status != EXPECTED_BOUNDARY_STATUS:
@@ -134,7 +150,13 @@ def validate_evaluation_cascade_boundary(
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
-    if not isinstance(boundary_text, str) or "does not claim" not in boundary_text:
+    if (
+        not isinstance(boundary_text, str)
+        or "does not claim" not in boundary_text
+        or "candidate transition matrix" not in boundary_text
+        or "promotion-decision rule attribution" not in boundary_text
+        or "transition-denominator reconciliation" not in boundary_text
+    ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim cascade-efficiency evidence"))
     return EvaluationCascadeBoundaryValidation(
         ok=not issues,

@@ -234,7 +234,9 @@ totals, elapsed seconds, promotion rates, main-test exposure, early-prune
 counts, stop reasons, bounded candidate-stage records with `history.jsonl`
 metadata paths, evaluator source refs when available, denominator-policy
 boundaries, and `claim_ready: false` limitations for missing difficulty/
-test-set, benchmark seed/sample, and cost evidence. The committed
+test-set, benchmark seed/sample, candidate transition matrix, promotion-
+decision rule attribution, next-stage exposure linkage, transition-denominator
+reconciliation, and cost evidence. The committed
 `papers/evaluation_cascade_boundary.json` sidecar preserves the same
 cascade-efficiency absence boundary for paper-manifest validation.
 Completed manifests also include

@@ -1620,12 +1620,15 @@ sidecars, tests, and active TODOs.
     candidate reaches the final stage and another is pruned at smoke. The
     committed `papers/evaluation_cascade_boundary.json` sidecar now records
     the paper-manifest-validated absence boundary for missing cascade-
-    efficiency evidence.
+    efficiency evidence, including candidate transition matrix, promotion-
+    decision rule attribution, next-stage exposure linkage, and transition-
+    denominator reconciliation.
   - Required result: finish difficulty/scale labels, evaluator/test-set
     identities and hashes, benchmark seed/sample policy beyond runtime
-    accounting, and counterfactual cost-savings evidence before claiming
-    AlphaEvolve-style evaluation-cascade efficiency or hypothesis-testing
-    evidence.
+    accounting, candidate transition matrix with promotion/prune rule
+    attribution and next-stage linkage, transition denominator reconciliation,
+    and counterfactual cost-savings evidence before claiming AlphaEvolve-style
+    evaluation-cascade efficiency or hypothesis-testing evidence.
 
 - [ ] Add evaluator workload provenance for inner search and ML-training tasks.
   - Spec evidence: AlphaEvolve Section 2.1 says the evaluator can be simple,

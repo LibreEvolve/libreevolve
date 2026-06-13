@@ -788,9 +788,11 @@ main-test exposure, early-prune counts, bounded candidate-stage cross-links to
 boundaries, `stage_evidence_summary` role/source/hash/sample/exposure counts,
 and explicit `claim_ready: false` limitations. That summary also records
 stage difficulty rationale, test-set hashes, benchmark seed/sample policy, and
-counterfactual/wall-clock cost-savings evidence as absent. Stage difficulty/
-test-set identities, benchmark seed/sample policy, and cost-savings evidence
-remain open before claiming AlphaEvolve cascade efficiency or
+candidate transition matrices, promotion-decision rule attribution, next-stage
+exposure linkage, transition-denominator reconciliation, and counterfactual/
+wall-clock cost-savings evidence as absent. Stage difficulty/test-set
+identities, benchmark seed/sample policy, transition proof, and cost-savings
+evidence remain open before claiming AlphaEvolve cascade efficiency or
 hypothesis-testing parity. The committed
 `papers/evaluation_cascade_boundary.json` sidecar now emits that
 `runtime_attrition_without_benchmark_efficiency_evidence` boundary, and

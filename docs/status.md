@@ -133,8 +133,10 @@ Important limits:
   main-test exposure, and early pruning, plus explicit absent-evidence statuses.
   They are not AlphaEvolve-style cascade-efficiency evidence with stage
   difficulty rationale, evaluator/test-set identities and hashes, benchmark
-  seed/sample policy, counterfactual full-evaluation costs, or observed
-  wall-clock cost savings; that boundary is tracked by
+  seed/sample policy, candidate transition matrices, promotion-decision rule
+  attribution, next-stage exposure linkage, transition-denominator
+  reconciliation, counterfactual full-evaluation costs, or observed wall-clock
+  cost savings; that boundary is tracked by
   `papers/evaluation_cascade_boundary.json`.
 - Cascade hypothesis-test gates are runtime policy evidence, not
   benchmark-calibrated AlphaEvolve Section 2.4 cascade proof with repeated-seed

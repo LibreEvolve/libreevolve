@@ -758,7 +758,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     prompt identity/source/revision/context policy recorded for the
     human-prompter comparator. Require README wording to distinguish validated
     ablation-result schemas from executed Figure 8-equivalent matrix/kissing
-    target-family runs and rendered curve exhibits.
+    target-family runs and rendered curve exhibits. README Important limits now
+    also states that Figure 8 ablation support is a validated registry,
+    equal-budget report contract, scope-boundary records, and optional
+    exhibit/artifact metadata, not executed equal-budget matrix/kissing
+    benchmark runs, proven component-isolated setups, rendered paper-quality
+    curves, or accelerator/async-worker budget evidence.
 
 - [ ] Keep README Figure 8 visual wording scoped until rendered ablation-curve
       exhibits exist.

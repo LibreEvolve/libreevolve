@@ -212,6 +212,11 @@ Important limits:
   accelerator/worker leases, async queue budgets, or equal-budget execution
   reports; that boundary is tracked by
   `papers/expensive_evaluation_budget_boundary.json`.
+- AlphaEvolve Figure 8 ablation support is a validated registry, equal-budget
+  report contract, scope-boundary records, and optional exhibit/artifact
+  metadata, not executed equal-budget matrix/kissing benchmark runs, proven
+  component-isolated ablation setups, rendered paper-quality curves, or
+  accelerator/async-worker budget evidence.
 - Provider cost evidence is configured token-cost estimates from retained
   provider usage, not live provider pricing, provider default-rate capture,
   account/model-specific pricing, or raw provider-payload replay; that boundary

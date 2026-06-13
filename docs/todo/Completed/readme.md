@@ -4,6 +4,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Figure 8 ablation-contract README boundary.
+  - Status: README Important limits now states that AlphaEvolve Figure 8
+    ablation support is a validated registry, equal-budget report contract,
+    scope-boundary records, and optional exhibit/artifact metadata, not
+    executed equal-budget matrix/kissing benchmark runs, proven
+    component-isolated ablation setups, rendered paper-quality curves, or
+    accelerator/async-worker budget evidence.
+  - Verification: focused ablation registry, ablation-result, Figure 8 exhibit,
+    expensive-budget boundary, and paper-manifest tests validate the current
+    contracts and overclaim guards.
+
 - [x] Document explicit-context source-role README boundary.
   - Status: README Important limits now states that explicit-context
     source-role reports classify configured problem-local `context.yaml`

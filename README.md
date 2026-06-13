@@ -724,6 +724,16 @@ Important limits:
   reward-function specification, upper-bound comparison ledger, per-parameter
   cost accounting, or independent reproduction output for the three exact
   values, 41 lower bounds, four matched closed cases, or sub-$30 cost claim.
+- ArXiv `2604.01658` is autonomous multi-agent evolution context only; the
+  README mentions this cached paper as a curated subset while
+  `papers/README.md` remains the complete implementation-status index.
+  LibreEvolve has no long-running autonomous agent sessions, shared persistent
+  memory repository, asynchronous multi-agent execution runtime,
+  heartbeat-based intervention controller, isolated per-agent workspaces,
+  evaluator separation layer, resource/session/health manager,
+  knowledge-reuse analysis, 10-task SOTA report, 3-10x improvement-rate
+  reproduction, Anthropic kernel-engineering 1363-to-1103 cycle reproduction,
+  linked-code audit, or independent reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

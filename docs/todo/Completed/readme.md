@@ -14764,3 +14764,29 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     algorithms, exact/lower-bound records, proof/check status, cost accounting,
     baseline references, reproducibility reports, and Zarankiewicz benchmark
     support remain active in code and paper TODOs.
+
+- [x] Keep README CORAL autonomous multi-agent claims source-scoped until
+      runtime evidence exists.
+  - Spec evidence: arXiv `2604.01658`, `CORAL: Towards Autonomous Multi-Agent
+    Evolution for Open-Ended Discovery`, describes long-running agents that
+    explore, reflect, and collaborate through shared persistent memory,
+    asynchronous multi-agent execution, and heartbeat interventions, with
+    safeguards for isolated workspaces, evaluator separation, resource
+    management, and agent session/health management. It reports 3-10x higher
+    improvement rates with fewer evaluations and kernel-engineering cycle
+    improvements.
+  - Status: README now lists arXiv `2604.01658` as autonomous multi-agent
+    evolution context only and marks the mention as a curated cached-paper
+    subset while `papers/README.md` remains the complete implementation-status
+    index. It states that LibreEvolve has no long-running autonomous agent
+    sessions, shared persistent memory repository, asynchronous multi-agent
+    execution runtime, heartbeat-based intervention controller, isolated
+    per-agent workspaces, evaluator separation layer, resource/session/health
+    manager, knowledge-reuse analysis, 10-task SOTA report, 3-10x
+    improvement-rate reproduction, Anthropic kernel-engineering
+    1363-to-1103 cycle reproduction, linked-code audit, or independent
+    reproduction output.
+  - Remaining README gap: session state, shared-memory records, communication
+    traces, heartbeat logs, workspace/resource policies, health telemetry,
+    benchmark baselines, report outcomes, and CORAL-style autonomous
+    multi-agent evolution remain active in code and paper TODOs.

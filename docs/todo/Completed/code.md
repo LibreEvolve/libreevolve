@@ -18878,3 +18878,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     restore failures, and controller pending-work restore remain open.
   - Verification: focused boundary and paper-manifest tests cover valid,
     overclaim, and missing-root-sidecar cases.
+- [x] Keep island-count claims scoped to configurable defaults.
+  - Spec evidence: AlphaEvolve describes an evolutionary database inspired by
+    MAP-Elites and island-based population models, but the local implementation
+    must not present its default island count as a fixed runtime invariant.
+  - Status: `Config.n_islands` defaults to `5` and is validated as a
+    configurable positive integer; `IslandModel` and `ProgramDatabase` tests
+    cover one-, two-, and three-island configurations; migration uses the
+    configured island count in a synchronous ring topology. Runtime
+    archive-state snapshots persist `libreevolve.island_topology_policy.v1`
+    with configurable island count, default `5`, and false readiness for
+    adaptive island counts, non-ring topologies, and AlphaEvolve-identical
+    island policy. Restore and manifest validators reject topology overclaims.
+  - Remaining code gap: future adaptive island topologies, non-ring migration
+    policies, or AlphaEvolve-specific migration fidelity must update code
+    comments, README, ROADMAP, papers index, and matching TODO entries
+    together.

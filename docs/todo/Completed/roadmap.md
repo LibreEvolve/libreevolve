@@ -10835,3 +10835,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     descriptor models, descriptor training inputs, restore-compatible
     descriptor revisioning, and full/partial archive rebin engines remain
     active in code and paper TODOs.
+- [x] Keep island-count roadmap wording scoped to configurable defaults.
+  - Spec evidence: AlphaEvolve's paper names MAP-Elites and island-based
+    population models at a high level; local roadmap wording should not turn
+    LibreEvolve's default island count into an unsupported fixed fidelity
+    claim.
+  - Status: ROADMAP says MAP-Elites plus configurable ring-topology island
+    migration defaults to five islands and cites validated
+    `runtime.history.archive_state.topology_policy` evidence. That matches
+    `Config.n_islands`, positive island-count validation, non-default
+    island-count tests, and false readiness for adaptive island counts,
+    non-ring topologies, and AlphaEvolve-identical policy.
+  - Remaining roadmap gap: adaptive island counts, non-ring topologies,
+    AlphaEvolve-specific migration policy fidelity, topology ablations, and
+    richer paper-facing migration-policy reports remain active in code/paper
+    TODOs.

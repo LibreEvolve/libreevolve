@@ -14273,3 +14273,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     descriptor models, tested archive rebin semantics, and reports that
     distinguish task behavior descriptors from local TF-IDF novelty heuristics
     remain active in code and paper TODOs.
+- [x] Keep README island-count claims scoped to configurable defaults.
+  - Spec evidence: AlphaEvolve describes an island-inspired evolutionary
+    database, while LibreEvolve's local implementation exposes island count as
+    configuration rather than a fixed paper-derived constant.
+  - Status: README describes synchronous MAP-Elites and island archives with
+    five islands by default, not a hardcoded paper-fidelity invariant. Related
+    docs and papers index evidence record configured synchronous ring migration
+    with `libreevolve.island_topology_policy.v1`.
+  - Remaining README gap: adaptive island counts, non-ring topologies,
+    topology-specific ablations, richer migration-policy reports, and
+    AlphaEvolve-identical island-policy evidence remain active in code/paper
+    TODOs.

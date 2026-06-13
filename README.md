@@ -207,6 +207,12 @@ Important limits:
   generator or random-seed records, baseline metric rows, prior-best visibility
   policy, or prior-best seeding policy evidence; that boundary is tracked by
   `papers/math_starting_construction_boundary.json`.
+- Figure 5 constructive-math exhibit provenance remains absent: README
+  describes Appendix B family/status coverage, smoke-fixture boundaries, and
+  constructive-math absence boundaries, not main-text Figure 5 exhibit ids,
+  selected result-row links, branch/problem label mappings, before/after metric
+  values, previous-best sources, rendered visual artifact paths or hashes,
+  rendering parameters, source Colab cells/artifacts, or verifier links.
 - Matrix-publication evidence is one checked `mm_2x2x2` Strassen baseline
   bundle plus Appendix A registry/status metadata, not full-suite local target
   tensors, discovered decompositions, coefficient data, exactness certificates,

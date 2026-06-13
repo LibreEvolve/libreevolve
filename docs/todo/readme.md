@@ -941,22 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README Figure 5 constructive-math wording scoped until exhibit
-      provenance exists.
-  - Spec evidence: AlphaEvolve Figure 5 shows selected SOTA-breaking
-    mathematical constructions with branch labels, problem labels,
-    before/after metric values, and rendered visuals.
-  - Current evidence: README describes Appendix B registry/status coverage,
-    smoke fixture boundaries, construction/verifier export gaps, aggregate
-    outcome/report gaps, and result-version provenance gaps. It does not
-    document Figure 5 exhibit mapping, visual artifact paths/hashes,
-    before/after values, previous-best sources, rendering parameters, source
-    Colab cells/artifacts, or verifier links.
-  - Required result: when Figure 5 exhibit provenance lands, update README,
-    ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes family/aggregate constructive-math coverage from reproduced
-    paper figures and exhibit-level visual evidence.
-
 - [ ] Keep README Figure 5 sum-of-radii value wording scoped until
       source-specific precision provenance exists.
   - Spec evidence: AlphaEvolve Figure 5 displays a sum-of-radii improvement

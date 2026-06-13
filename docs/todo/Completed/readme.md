@@ -4,6 +4,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Figure 5 constructive-math exhibit README boundary.
+  - Status: README Important limits now states that Figure 5
+    constructive-math exhibit provenance remains absent: README describes
+    Appendix B family/status coverage, smoke-fixture boundaries, and
+    constructive-math absence boundaries, not main-text Figure 5 exhibit ids,
+    selected result-row links, branch/problem label mappings, before/after
+    metric values, previous-best sources, rendered visual artifact paths or
+    hashes, rendering parameters, source Colab cells/artifacts, or verifier
+    links.
+  - Verification: Appendix B registry tests cover the current family/status,
+    Figure 10-14, and Figure 5/B.12 precision boundaries; code and paper TODOs
+    still track the missing main-text Figure 5 exhibit metadata and visual
+    artifacts.
+
 - [x] Document constructive-math starting-construction README boundary.
   - Status: README Important limits now states that Section 3.2
     starting-construction records preserve the AlphaEvolve source claim that

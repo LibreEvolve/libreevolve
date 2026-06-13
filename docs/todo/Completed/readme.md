@@ -14838,3 +14838,28 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     records, training traces, coverage/noise diagnostics, task baselines,
     report outcomes, and G-Zero-style verifier-free co-evolution remain active
     in code and paper TODOs.
+
+- [x] Keep README GenEvolve multimodal trajectory-distillation claims
+      source-scoped until runtime evidence exists.
+  - Spec evidence: arXiv `2605.21605`, `GenEvolve: Self-Evolving Image
+    Generation Agents via Tool-Orchestrated Visual Experience Distillation`,
+    models image-generation attempts as tool-orchestrated trajectories with
+    evidence gathering, reference selection, generation-skill invocation, and
+    prompt-reference programs. It compares multiple trajectories, converts
+    best-worst differences into structured visual experience for a privileged
+    teacher branch, and distills dense token-level supervision into a student.
+  - Status: README now lists arXiv `2605.21605` as multimodal
+    trajectory-distillation context only and marks the mention as a curated
+    cached-paper subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no
+    image-generation tool pipeline, visual-reference ingestion,
+    prompt-rewriting/layout-planning/image-generation/refinement trajectory
+    schema, tool-call artifact lineage, Agentic Visual Experience Distillation
+    or Visual Experience Distillation target, dense token-level supervision
+    record, multimodal policy-update loop, GenEvolve-Data metadata,
+    GenEvolve-Bench task/report, baseline comparison, linked-code audit, or
+    independent reproduction output.
+  - Remaining README gap: visual trajectory logs, reference/evidence records,
+    image provenance, distillation traces, token-supervision metadata,
+    benchmark baselines, report outcomes, and GenEvolve-style multimodal
+    evolution remain active in code and paper TODOs.

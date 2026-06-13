@@ -755,6 +755,16 @@ Important limits:
   exploration-coverage report, best-iterate suboptimality fixture,
   unverifiable-domain benchmark, external-judge reward-hacking comparison,
   linked-code audit, or independent reproduction output.
+- ArXiv `2605.21605` is multimodal trajectory-distillation context only; the
+  README mentions this cached paper as a curated subset while
+  `papers/README.md` remains the complete implementation-status index.
+  LibreEvolve has no image-generation tool pipeline, visual-reference
+  ingestion, prompt-rewriting/layout-planning/image-generation/refinement
+  trajectory schema, tool-call artifact lineage, Agentic Visual Experience
+  Distillation or Visual Experience Distillation target, dense token-level
+  supervision record, multimodal policy-update loop, GenEvolve-Data metadata,
+  GenEvolve-Bench task/report, baseline comparison, linked-code audit, or
+  independent reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

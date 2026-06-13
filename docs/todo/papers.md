@@ -995,14 +995,15 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current gap: paper-facing evidence still does not enforce the protocol
     needed for search/training-style evaluators: managed model-training or
     search-loop execution, checkpoint or construction-artifact completeness
-    beyond observed files, randomized initialization policy, and causal linkage
-    from produced artifacts to returned scores.
+    beyond observed files, randomized initialization policy, stochastic
+    re-evaluation/replay policy, and causal linkage from produced artifacts to
+    returned scores.
   - Required result: extend report/manifest evidence into executable evaluator
     workload contracts for `inner_search` and `ml_training`, with managed
     training/search loop records, checkpoint/artifact linkage, seed/retry
-    semantics, score-field-to-artifact causality, and examples that keep quick
-    validators distinct from AlphaEvolve-style evaluator workloads that train
-    models or run search.
+    and re-evaluation semantics, score-field-to-artifact causality, and
+    examples that keep quick validators distinct from AlphaEvolve-style
+    evaluator workloads that train models or run search.
 
 - [ ] Complete accelerator/async budgets and executed ablation support.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.6 and 4.

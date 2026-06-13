@@ -1560,14 +1560,15 @@ sidecars, tests, and active TODOs.
   - Remaining gap: the workload declaration/report does not yet enforce a
     managed training/search protocol runner, verify checkpoint completeness
     beyond observed artifact files, validate randomized initialization
-    semantics, or prove causal metric linkage from produced artifacts to
-    candidate-returned scores.
+    semantics, define stochastic re-evaluation/replay policy for repeated
+    search or training workloads, or prove causal metric linkage from produced
+    artifacts to candidate-returned scores.
   - Required result: extend the versioned evaluator-workload contract into
     executable `inner_search` and `ml_training` protocols with managed
     training/search loop records, checkpoint/artifact completeness checks,
-    seed/retry semantics, score-field-to-artifact causality, and report
-    examples before claiming AlphaEvolve-style evaluator support for evolved
-    search algorithms or model-training workloads.
+    seed/retry/re-evaluation semantics, score-field-to-artifact causality, and
+    report examples before claiming AlphaEvolve-style evaluator support for
+    evolved search algorithms or model-training workloads.
 
 - [ ] Add asynchronous evaluator workers and concurrent proposal control.
   - Spec evidence: AlphaEvolve parallelizes evaluation, often distributing

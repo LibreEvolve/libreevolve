@@ -845,7 +845,8 @@ evidence, protocol-readiness counts, and an explicit policy that managed
 `inner_search` and `ml_training` runners remain absent. This is provenance for
 the Section 2.1 claim that evaluators may run inner search or train models, not
 yet proof that LibreEvolve provides workload-specific training/search runners,
-checkpoint completeness, or score-field-to-artifact causality.
+checkpoint completeness, stochastic re-evaluation/replay policy, or
+score-field-to-artifact causality.
 
 AlphaEvolve task-specification note: startup manifests now include
 `task_specification` with schema

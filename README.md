@@ -63,6 +63,11 @@ Important limits:
   traces, but local matrix runners do not yet emit AlphaEvolve Section
   3.1-style repeated-seed cascade traces, pruning decisions, or early-stop
   provenance.
+- Matrix near-integrality records validate declared prompt instructions,
+  integer/half-integer rounding policy, raw-versus-rounded coefficient
+  diagnostics, and exactness-certificate links, not a local matrix runner that
+  emits AlphaEvolve Section 3.1 near-integral prompt/evaluator evidence during
+  search.
 - Figure 4 matrix-discovery records validate main-text exhibit metadata,
   caption linkage, the 15-mutation caption count, `mm_4x4x4` rank-48 target
   mapping, highlighted component categories, source/diff artifact metadata,

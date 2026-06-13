@@ -2,6 +2,30 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive matrix near-integrality roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish internally validated near-integrality evidence from
+    AlphaEvolve Section 3.1-style runner-emitted prompt/evaluator traces.
+  - Current evidence: `libreevolve.matrix_near_integrality_evidence.v1`
+    validates declared prompt instructions, integer/half-integer rounding
+    policy, raw-versus-rounded coefficient diagnostics, rounding-error
+    consistency, and exactness-certificate links.
+    `libreevolve.matrix_near_integrality_runtime_boundary.v1`,
+    `papers/matrix_near_integrality_runtime_boundary.json`, and
+    `matrix_near_integrality_runtime_boundary_from_evidence()` validate the
+    current `not_emitted_by_local_runner` boundary and the future emitted
+    run/target/candidate, seed, prompt, raw/rounded coefficient, rounding-error,
+    certificate-link, matrix-result-ref, artifact-path, and hash fields.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    matrix-runner integration: local matrix benchmark runners do not inject the
+    near-integral prompt/evaluator contract or persist those diagnostics during
+    actual matrix search runs.
+  - Verification: matrix near-integrality evidence/runtime-boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive Figure 4 matrix-discovery roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

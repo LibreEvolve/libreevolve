@@ -10,36 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep matrix roadmap wording scoped to result-report validation versus
-      search-time near-integrality evidence.
-  - Spec evidence: AlphaEvolve Section 3.1 describes prompting for
-    near-integral matrix solutions and rounding entries to the nearest integer
-    or half-integer before exactness verification.
-  - Current evidence: roadmap benchmark language points to stronger matrix
-    fixtures, Appendix A registry coverage, and report contracts that validate
-    coefficient-domain and exactness fields.
-    `libreevolve.matrix_near_integrality_evidence.v1` now validates declared
-    prompt instructions, integer/half-integer rounding policy,
-    raw-versus-rounded coefficient diagnostics, rounding-error consistency, and
-    exactness-certificate links.
-    `libreevolve.matrix_near_integrality_runtime_boundary.v1` now validates
-    the current `not_emitted_by_local_runner` boundary and emitted records for
-    run/target/candidate ids, seeds, prompt hashes/instructions, raw and
-    rounded coefficients, rounding error, exactness-certificate links,
-    matrix-result refs, artifact paths, and artifact hashes.
-    `papers/matrix_near_integrality_runtime_boundary.json` now emits that
-    absence/readiness boundary as a committed sidecar.
-    `matrix_near_integrality_runtime_boundary_from_evidence()` builds runtime
-    rows from validated near-integrality evidence and validation checks linkage
-    to nested target, prompt, candidate, rounding, and certificate evidence.
-    The roadmap still should not imply that local matrix benchmark runners emit
-    those records during evaluator runs.
-  - Required result: when a matrix benchmark runner emits near-integrality
-    prompt/evaluator evidence from real searches, update roadmap, README,
-    papers index, and code/paper TODO entries together so roadmap text
-    distinguishes evidence validation from AlphaEvolve-style matrix search
-    workflow parity.
-
 - [ ] Keep matrix roadmap wording scoped to reported targets until scaling
       resource-frontier evidence exists.
   - Spec evidence: AlphaEvolve Appendix A reports that larger matrix sizes

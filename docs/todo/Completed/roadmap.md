@@ -2,6 +2,37 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive AlphaEvolve MARL algorithm-discovery roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/multiagent_learning_boundary.json` now keep arXiv `2602.16928`
+    source-scoped as background AlphaEvolve MARL algorithm-discovery context
+    rather than implemented LibreEvolve CFR/PSRO runtime support.
+  - Current evidence: the cached paper and boundary JSON record AlphaEvolve
+    searches over CFR and PSRO design spaces, VAD-CFR and SHOR-PSRO evolved
+    results, the 18-game Poker/Goofspiel/Liar's Dice/Blotto/Battleship
+    evaluation suite, OpenSpiel usage, exact exploitability, exact PSRO
+    best-response oracle needs, evolvable CFR and PSRO Python class skeletons,
+    IQM ablation audits, WOP-CFR and PM-PSRO distillation, random
+    normal-form validation, and the absence of a dedicated extracted runtime
+    repository, while marking local candidate schemas, fixtures, metrics,
+    oracle records, result rows, ablation rows, generated solver artifact
+    hashes, and runtime evidence as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: CFR and PSRO candidate schemas, OpenSpiel imperfect-information
+    game fixtures, CFR/PSRO runtime harnesses, exact exploitability metrics,
+    exact-best-response PSRO records, train/test split records, baseline
+    ledgers, VAD-CFR and SHOR-PSRO result rows, WOP-CFR and PM-PSRO
+    distillation/generalization reports, IQM ablation rows,
+    mechanism-coupling records, random normal-form validation rows, generated
+    algorithm artifact hashes, OpenSpiel version records, seed/budget
+    records, independent checker outputs, and benchmark reports before any
+    AlphaEvolve-style MARL discovery claim is promoted.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive Meta-Harness roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored and the benchmark wording was corrected against the cached

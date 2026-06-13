@@ -10,40 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Add AlphaEvolve MARL algorithm-discovery gates before roadmap
-      promotion.
-  - Spec evidence: arXiv `2602.16928`, submitted February 18, 2026 and last
-    revised May 7, 2026, introduces `Discovering Multiagent Learning
-    Algorithms with Large Language Models`. The abstract says AlphaEvolve is
-    deployed over CFR and PSRO design spaces, producing VAD-CFR and SHOR-PSRO,
-    evaluating them on an 18-game suite across Poker, Goofspiel, Liar's Dice,
-    Blotto, and Battleship variants, and distilling them through systematic
-    ablations into WOP-CFR and PM-PSRO minimal solvers with improved
-    generalization and reduced complexity. The paper uses OpenSpiel, exact
-    exploitability by full game-tree traversal, deterministic metrics, and
-    separate CFR/PSRO Python class skeletons as the AlphaEvolve search space.
-  - Current evidence: ROADMAP now names
-    `papers/multiagent_learning_boundary.json` as the source-specific
-    boundary for CFR/PSRO candidate schemas, OpenSpiel imperfect-information
-    game fixtures, exploitability metrics, exact-oracle PSRO records,
-    VAD-CFR/SHOR-PSRO rows, WOP-CFR/PM-PSRO distillation rows, IQM ablation
-    audits, random normal-form validation, generated solver artifacts, and
-    runtime-repository status. It still does not define CFR or PSRO candidate
-    schemas, require an imperfect-information game evaluator, preserve
-    train/evaluation game splits, track VAD-CFR or SHOR-PSRO mechanism
-    provenance, require mechanism-coupling ablations, or define
-    distilled-solver handoff and generalization gates for WOP-CFR and PM-PSRO.
-  - Required result: implement roadmap gates for `2602.16928`: CFR and PSRO
-    candidate schemas, game-suite taxonomy, train/evaluation split hashes,
-    evaluator protocol and metric definitions, exact exploitability and exact
-    best-response oracle records, random-seed and budget records, baseline
-    solver identities, VAD-CFR and SHOR-PSRO result tables, mechanism-coupling
-    IQM ablation records, structural-complexity metrics, distilled
-    WOP-CFR/PM-PSRO solver records, random normal-form validation rows,
-    limitation/caveat records for scale, LLM trajectory, and baseline scope,
-    generalization reports, and benchmark-fixture status rules before roadmap
-    claims promote MARL algorithm-discovery support.
-
 - [ ] Add AlphaEvolve Ramsey-number discovery gates before roadmap promotion.
   - Spec evidence: arXiv `2603.09172`, submitted March 10, 2026 and last
     revised April 21, 2026, introduces `Reinforced Generation of

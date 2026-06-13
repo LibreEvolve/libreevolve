@@ -297,6 +297,14 @@ Important limits:
   IMO-level retrieval-augmented math reproduction, TerminalBench-2
   reproduction, held-out-model transfer report, linked-code audit, or
   independent reproduction output.
+- AlphaEvolve MARL algorithm-discovery coverage is background paper context
+  only: LibreEvolve has no CFR candidate schema, PSRO candidate schema,
+  OpenSpiel imperfect-information game fixture, game-suite split record,
+  exact exploitability metric record, exact best-response oracle record,
+  VAD-CFR result row, SHOR-PSRO result row, WOP-CFR distillation row, PM-PSRO
+  distillation row, IQM ablation audit, random normal-form validation row,
+  generated solver artifact hash, or reproducible CFR/PSRO runtime evidence;
+  `papers/multiagent_learning_boundary.json` records that absence boundary.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

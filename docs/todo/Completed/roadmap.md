@@ -2,6 +2,30 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive constructive-math aggregate-outcome roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish Appendix B family/status registry coverage from AlphaEvolve
+    Section 3.2 aggregate mathematical breadth and outcome-rate evidence.
+  - Current evidence: `libreevolve.alphaevolve_math_outcome_boundary.v1`
+    preserves the source facts for over 50 mathematical problems, more than
+    five branches, roughly 75% best-known rediscovery, roughly 20% SOTA
+    improvement, and definition-based verification.
+  - Boundary artifact: `papers/math_outcome_boundary.json` records the current
+    `not_recorded_locally` state and the required future per-instance and
+    aggregate fields for problem ids, branch labels, parameter settings,
+    prior-best references, outcome status, construction/verifier artifacts,
+    totals, branch counts, rediscovered/improved counts, percentages,
+    rounding policy, and verified-case count.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: per-problem/per-parameter outcome ledgers, branch taxonomy rows,
+    previous-best references, construction/verifier links, matched/improved/
+    failed status, aggregate counts, and percentage recomputation.
+  - Verification: focused math aggregate-outcome boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive constructive-math heuristic-stage roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

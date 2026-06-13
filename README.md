@@ -121,6 +121,12 @@ Important limits:
   fine-tuning near optimal configurations, not local per-stage heuristic
   artifacts, ordered construction transitions, stage-role rows, improvement
   deltas, budget rows, or verifier evidence.
+- Constructive-math aggregate-outcome records preserve the Section 3.2 source
+  claim of over 50 mathematical problems across more than five branches, about
+  75% best-known rediscovery, about 20% SOTA improvement, and definition-based
+  verification, not local per-problem rows, branch taxonomy rows, prior-best
+  references, construction/verifier artifacts, aggregate counts, or percentage
+  recomputation.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

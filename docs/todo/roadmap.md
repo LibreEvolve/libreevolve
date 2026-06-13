@@ -10,28 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep constructive-math coverage roadmap wording scoped to family
-      registries until aggregate outcome reports exist.
-  - Spec evidence: AlphaEvolve Section 3.2 claims breadth over a curated set
-    of more than 50 mathematical problems spanning more than five branches,
-    with best-known constructions matched in about 75% of cases and SOTA
-    improved in about 20%.
-  - Current evidence: `ROADMAP.md`, README, papers index, and code evidence
-    now describe a Section 3.2 aggregate-outcome absence boundary in
-    `libreevolve.problems.benchmarks.math_outcomes`. It validates source facts
-    and required future fields, but per-problem/per-parameter outcome rows,
-    branch labels, prior-best references, matched/improved/fell-behind status,
-    construction/verifier artifacts, and aggregate percentage recomputation
-    remain absent. The committed `papers/math_outcome_boundary.json` sidecar
-    now emits this boundary for paper-manifest validation alongside the related
-    Section 3.2 starting-construction, heuristic-handoff, and stage-sequence
-    boundary sidecars.
-  - Required result: when constructive-math outcome ledgers and validators
-    land, update roadmap, README, papers index, and code/paper TODOs together
-    so roadmap wording neither underclaims the current Appendix B family and
-    Section 3.2 boundary coverage nor overclaims AlphaEvolve-style
-    mathematical breadth evidence.
-
 - [ ] Keep constructive-math roadmap wording scoped until simple/random
       starting-construction provenance exists.
   - Spec evidence: AlphaEvolve Section 3.2 says the initial starting point in

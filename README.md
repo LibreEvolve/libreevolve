@@ -50,6 +50,14 @@ Important limits:
   build-runner artifacts, dependency-graph validation, bulk directory or
   external-path operations, remote/container workspaces, or codebase-scale
   workspace parity.
+- Codebase-scale reports are current-run workspace telemetry for retained
+  file/line counts, generated candidates, multi-file and hundreds-line
+  observations, and parent-relative edits, not realistic multi-component
+  benchmark fixtures, coupled cross-file dependency edits, arbitrary-language
+  or build-runner execution, long-horizon quality progress, retained-rate
+  benchmark summaries, or AlphaEvolve Table 1 code-scale parity; those
+  boundaries are tracked by `papers/codebase_scale_benchmark_boundary.json`
+  and `papers/candidate_language_runner_boundary.json`.
 - Archive restore uses manifest archive-state snapshots plus accepted-history
   rows for current cursor/cell/elite contents; `archive_events.jsonl` replay is
   audit-only and not an ordered MAP-Elites restore engine. That boundary is

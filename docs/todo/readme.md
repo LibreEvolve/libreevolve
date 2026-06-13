@@ -453,7 +453,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and multi-file/hundreds-line threshold evidence, while keeping Table 1
     code-scale parity false. Current machine-readable example scope records
     mark `workspace_math` as a smoke `workspace_packaging_fixture` and not
-    AlphaEvolve-comparable. README also names
+    AlphaEvolve-comparable. README Important limits also names
     `papers/candidate_language_runner_boundary.json` as the committed
     paper-manifest-validated arbitrary-language/build-runner absence boundary,
     and `papers/codebase_scale_benchmark_boundary.json` as the committed

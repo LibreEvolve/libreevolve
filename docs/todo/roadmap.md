@@ -10,24 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep roadmap Gemini self-training wording scoped until Pallas deployment
-      loop evidence exists.
-  - Spec evidence: AlphaEvolve Section 3.3.2 says the AlphaEvolve-discovered
-    Pallas tiling heuristic was deployed in production, enhanced Gemini
-    training efficiency and team velocity, and marked a novel instance where
-    Gemini, through AlphaEvolve, optimized its own training process.
-  - Current evidence: roadmap/README/paper-index wording can cite Pallas
-    shape-corpus, real-TPU runtime, expert-baseline, workflow-baseline, and
-    production-adoption gaps, plus broad self-improvement boundaries. It does
-    not require a Gemini-specific report tying the optimized kernel to the
-    training workload of the Gemini model family, the AlphaEvolve/Gemini model
-    relationship, before/after training-time evidence, and deployment or
-    rollback state.
-  - Required result: when Gemini self-training loop metadata lands, update
-    ROADMAP, README, papers index, and code/paper TODOs so roadmap claims
-    distinguish ordinary production kernel deployment from AlphaEvolve-style
-    self-optimization of Gemini's own training pipeline.
-
 - [ ] Keep hardware roadmap wording scoped to generic systems reports until
       RTL/EDA verification evidence exists.
   - Spec evidence: AlphaEvolve Section 3.3.3 reports Verilog RTL optimization

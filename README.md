@@ -61,6 +61,10 @@ Important limits:
   of search-based autotuning or manual tiling-heuristic work: baseline workflow
   class, retuning burden, manual review effort, hardware-expertise assumptions,
   and model-developer ergonomics remain active code and paper TODOs.
+- Gemini self-training wording remains bounded: the docs do not yet prove that
+  a deployed Pallas kernel optimization affected the same Gemini-family
+  training workload that powered AlphaEvolve, nor before/after training metrics,
+  rollout state, team-velocity evidence, or rollback/safety records.
 - The docs do not yet reproduce AlphaEvolve Figure 6 or Figure 7 exhibits:
   scheduling heuristic source/heatmap provenance and Pallas tiling-problem
   diagram/source-data/render hashes remain active code and paper TODOs.

@@ -2,6 +2,30 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Gemini self-training roadmap wording TODO.
+  - Status: the roadmap-specific TODO was resolved as a live-doc boundary.
+    `README.md`, `ROADMAP.md`, `papers/README.md`, `docs/status.md`,
+    `docs/todo/code.md`, and `docs/todo/papers.md` now state that ordinary
+    Pallas kernel deployment evidence is not enough to claim AlphaEvolve-style
+    self-optimization of Gemini's own training pipeline.
+  - Current evidence: existing kernel systems-result contracts and Pallas TODOs
+    can require shape-corpus, train/eval, real-TPU runtime, expert-baseline,
+    workflow-baseline, production-adoption, and broad self-improvement
+    boundaries, but no code/report schema requires a Gemini-specific feedback
+    loop record tying an optimized Pallas kernel to the training workload of
+    the same Gemini-family system that powered AlphaEvolve.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    Gemini self-training evidence: model/training workload identity,
+    AlphaEvolve backend or Gemini-family relation, optimized Pallas kernel id,
+    deployment date or rollout state, before/after training-time and
+    kernel-runtime evidence, research-velocity or engineering-turnaround
+    evidence, safety/rollback status, and documentation that separates ordinary
+    kernel deployment from AlphaEvolve-style self-optimization.
+  - Verification: paper-manifest validation and checked-in paper-index TODO
+    coverage still pass, and focused searches confirm the Gemini self-training
+    code and paper TODOs remain active while no local deployment-loop validator
+    or fixture is claimed.
+
 - [x] Archive Pallas workflow-baseline roadmap wording TODO.
   - Status: the roadmap-specific TODO was resolved as a live-doc boundary.
     `README.md`, `ROADMAP.md`, `papers/README.md`, `docs/status.md`,

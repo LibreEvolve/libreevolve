@@ -1966,7 +1966,12 @@ Implemented:
   that distinguishes search-based autotuning, manual heuristics, and
   expert-hybrid baselines; retuning burden for input-shape changes; manual
   authoring/review effort; hardware-expertise assumptions; or model-developer
-  ergonomics comparisons. For hardware, ready hardware reports now require
+  ergonomics comparisons. They also do not yet prove the Gemini self-training
+  interpretation of the deployed Pallas heuristic: no evidence row ties an
+  optimized kernel to the same Gemini-family training workload that powered
+  AlphaEvolve, a production rollout state, before/after training-time and
+  kernel-runtime measurements, team-velocity evidence, or rollback/safety
+  status. For hardware, ready hardware reports now require
   `hardware_rtl_eda_provenance` metadata for Verilog/SystemVerilog source
   boundaries, arithmetic-circuit identity, synthesis/PPA provenance, timing,
   power, and area constraints, equivalence and formal-verification evidence,

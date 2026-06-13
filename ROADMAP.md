@@ -2018,6 +2018,12 @@ resumed-trace proof are still open.
   search-based autotuning, manual heuristics, and expert-hybrid baselines;
   record retuning burden for input-shape changes, manual authoring/review
   effort, hardware-expertise assumptions, and model-developer ergonomics.
+- For Gemini self-training claims, add a Pallas deployment-loop evidence row
+  before describing kernel deployment as AlphaEvolve-style optimization of
+  Gemini's own training pipeline: model/training workload identity,
+  AlphaEvolve backend or Gemini-family relation, optimized Pallas kernel id,
+  production rollout state, before/after training-time and kernel-runtime
+  evidence, team-velocity evidence, and rollback/safety status.
 - Populate real hardware-adoption and rewrite evidence for TPU RTL-style
   reports before claiming Section 3.3.3 parity: emitted RTL, before/after
   Verilog diffs, removed-bit inventories, synthesis/PPA, verification,

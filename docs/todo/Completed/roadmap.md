@@ -2,6 +2,22 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive initial-program validity roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
+    `papers/README.md` already document default permissive seed handling,
+    `initial_program_validity_policy: alphaevolve_strict`, strict stop reason
+    `invalid_initial_programs`,
+    `runtime.history.initial_program_validity_report`, and
+    `papers/initial_program_validity_boundary.json` while keeping default-run
+    complete initial-program parity false.
+  - Remaining guard: strict-mode benchmark fixtures, complete/runnable matrix
+    and constructive-math starts, paper-facing certification rows, and
+    multi-seed/provider/CLI startup coverage remain active in
+    `docs/todo/code.md` and `docs/todo/papers.md`.
+  - Verification: initial-program validity boundary and paper-manifest
+    validation continue to reject default permissive runs as
+    AlphaEvolve-complete initial-program evidence.
+
 - [x] Archive initial-program idea provenance roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
     `papers/README.md` already describe source-safe generation-0 seed

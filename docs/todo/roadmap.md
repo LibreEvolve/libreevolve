@@ -6,31 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Keep roadmap seed-validity wording scoped after strict policy/reporting.
-  - Spec evidence: AlphaEvolve Section 2.1 expects the initial implementation
-    inside evolvable blocks to be complete, although possibly rudimentary, and
-    runnable through the supplied task skeleton/evaluator. Local PDF page 5
-    says user-provided code inside evolution blocks serves as the initial
-    solution, while Figure 2 on page 4 shows the initial program as an input
-    before the loop.
-  - Current evidence: ROADMAP and README currently document source-safe seed
-    ingestion, skipped-seed diagnostics, generation-0 baselines, and example
-    seed-score classes. The implementation evaluates seeds, admits valid
-    seeds, logs invalid seed failures, and can complete a seed-only run with
-    all seeds invalid using `stop_reason=no_valid_programs`. Current permissive
-    optimization-pressure seeds are therefore not equivalent to an
-    AlphaEvolve-strict complete initial-program precondition. ROADMAP and
-    README now also document `initial_program_validity_policy:
-    alphaevolve_strict`, strict stop reason `invalid_initial_programs`, and
-    `runtime.history.initial_program_validity_report`, with
-    `papers/initial_program_validity_boundary.json` preserving the
-    strict-policy-available paper-facing boundary.
-  - Required result: when strict mode is applied to benchmark fixtures and
-    complete-start evidence is published for matrix/constructive-math
-    benchmarks, update roadmap text so it neither rejects the current
-    permissive examples nor overclaims that invalid generation-0 baselines
-    satisfy AlphaEvolve's complete initial-implementation requirement.
-
 - [ ] Keep roadmap problem-formulation wording scoped until benchmark fixtures
       carry expert-reviewed metadata.
   - Spec evidence: AlphaEvolve Section 3.2 says external mathematicians

@@ -11,6 +11,7 @@ FAST_STRONG_MODEL_MIX_BOUNDARY_SCHEMA = (
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_ID = "2.3"
+EXPECTED_SOURCE_SECTION_IDS = ("2.3",)
 EXPECTED_BOUNDARY_STATUS = "throughput_depth_metadata_without_experiment_report"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "throughput_depth_strategy",
@@ -68,6 +69,7 @@ def fast_strong_model_mix_boundary_record() -> dict[str, Any]:
         "schema": FAST_STRONG_MODEL_MIX_BOUNDARY_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_section_id": EXPECTED_SOURCE_SECTION_ID,
+        "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_claim": (
             "AlphaEvolve mixes a fast model for high-volume breadth with a "
             "stronger model for occasional deeper suggestions under a fixed "
@@ -111,6 +113,8 @@ def validate_fast_strong_model_mix_boundary(
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     if data.get("source_section_id") != EXPECTED_SOURCE_SECTION_ID:
         issues.append(_issue("invalid_source_section_id", "source_section_id must be 2.3"))
+    if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['2.3']"))
     source_claim = data.get("source_claim")
     if (
         not isinstance(source_claim, str)

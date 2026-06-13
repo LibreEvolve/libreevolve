@@ -1197,6 +1197,7 @@ def test_validate_paper_manifest_rejects_fast_strong_model_mix_boundary_drift(
     record = paper_manifest.fast_strong_model_mix_boundary_record()
     record["claim_ready"] = True
     record["boundary_status"] = "alphaevolve_fast_strong_model_mix_ready"
+    record["source_section_ids"] = ["2.4"]
     record["missing_evidence"]["experiment_level_selection_traces"] = "recorded"
     sidecar = tmp_path / paper_manifest.FAST_STRONG_MODEL_MIX_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
@@ -1207,6 +1208,7 @@ def test_validate_paper_manifest_rejects_fast_strong_model_mix_boundary_drift(
     assert report.ok is False
     assert "fast_strong_model_mix_boundary_claim_ready_overclaim" in codes
     assert "fast_strong_model_mix_boundary_invalid_boundary_status" in codes
+    assert "fast_strong_model_mix_boundary_invalid_source_section_ids" in codes
     assert (
         "fast_strong_model_mix_boundary_invalid_missing_evidence_experiment_level_selection_traces"
         in codes

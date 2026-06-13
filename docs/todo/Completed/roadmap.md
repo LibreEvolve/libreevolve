@@ -2,6 +2,30 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive EvoX adaptive meta-evolution roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2602.23413` source-scoped as background adaptive
+    meta-evolution context rather than implemented LibreEvolve strategy
+    self-optimization support.
+  - Current evidence: the cached paper and `papers/README.md` record the
+    claim that AlphaEvolve-style systems reuse evaluated solutions but can be
+    limited by fixed search strategies, plus EvoX's outer strategy-evolution
+    loop, dynamic strategy shifts, nearly 200-task benchmark framing, and
+    AlphaEvolve/OpenEvolve/GEPA/ShinkaEvolve comparisons, while marking local
+    strategy genomes, controller state, strategy-credit assignment, dynamic
+    policy updates, task-suite taxonomy, baseline comparison rows,
+    token-efficiency reports, strategy ablations, and independent
+    reproduction output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: adaptive strategy-representation schema, controller-state artifacts,
+    strategy-selection provenance, task-suite taxonomy, baseline method
+    identities, win-rate/score/token metrics, ablation requirements,
+    code/artifact availability, and independent verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive radar power-allocation roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

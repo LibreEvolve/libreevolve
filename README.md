@@ -106,6 +106,12 @@ Important limits:
   iterative solver identity, average relative performance-loss benchmark rows,
   cross-scenario generalization evidence, three-orders speedup reproduction,
   or independent checker output.
+- EvoX adaptive meta-evolution coverage is background paper context only:
+  LibreEvolve has no adaptive strategy-genome schema, outer meta-evolution
+  loop, strategy-credit assignment, dynamic search-policy update artifacts,
+  EvoX task-suite taxonomy, baseline comparison table against AlphaEvolve,
+  OpenEvolve, GEPA, and ShinkaEvolve, token-efficiency report, strategy
+  ablation records, or independent reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

@@ -706,6 +706,15 @@ Important limits:
   policy, speculative stage-completion records, adaptive workflow controller,
   EvolBench/ChatDev/MetaGPT benchmark report, 3.5x/4.9x throughput
   reproduction, linked-code audit, or independent reproduction output.
+- ArXiv `2605.20086` is trace-diagnostic evaluation context only; the README
+  mentions this cached paper as a curated subset while `papers/README.md`
+  remains the complete implementation-status index. LibreEvolve has no
+  EvoTrace-compatible trace schema, nine-class edit taxonomy annotation
+  pipeline, LLM-as-judge edit reannotation validation, parent-child search
+  graph export, prompt/context substitution replay, model substitution replay,
+  component-removal intervention harness, constant-retuning baseline,
+  deterministic deleted-line reintroduction/cycling detector, held-out
+  generalization report, or independent reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

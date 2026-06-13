@@ -14717,3 +14717,27 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     policies, patch outputs, throughput/token metrics, baseline identities,
     report outcomes, and FlashEvolve-style async orchestration remain active in
     code and paper TODOs.
+
+- [x] Keep README mechanistic evolutionary-agent claims source-scoped until
+      trace-diagnostic evidence exists.
+  - Spec evidence: arXiv `2605.20086`, `What Do Evolutionary Coding Agents
+    Evolve?`, argues that final benchmark scores hide how evolutionary coding
+    agents improve programs and whether improvements are structural
+    innovations, constant tuning, overfitting, or cycling artifacts. It
+    introduces EvoTrace annotations and EvoReplay interventions for
+    AlphaEvolve-style agents including AlphaEvolve, OpenEvolve, and FunSearch.
+  - Status: README now lists arXiv `2605.20086` as trace-diagnostic evaluation
+    context only and marks the mention as a curated cached-paper subset while
+    `papers/README.md` remains the complete implementation-status index. It
+    states that LibreEvolve has no EvoTrace-compatible trace schema,
+    nine-class edit taxonomy annotation pipeline, LLM-as-judge edit
+    reannotation validation, parent-child search graph export, prompt/context
+    substitution replay, model substitution replay, component-removal
+    intervention harness, constant-retuning baseline, deterministic
+    deleted-line reintroduction/cycling detector, held-out generalization
+    report, or independent reproduction output.
+  - Remaining README gap: edit annotations, dependency graphs,
+    fitness-trajectory classes, cycling/overfitting labels, replay
+    interventions, counterfactual outcomes, baseline-agent identities, task
+    reports, and EvoTrace/EvoReplay-style diagnostic evidence remain active in
+    code and paper TODOs.

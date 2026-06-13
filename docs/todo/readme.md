@@ -91,30 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README mechanistic evolutionary-agent claims source-scoped until
-      trace-diagnostic evidence exists.
-  - Spec evidence: arXiv `2605.20086`, `What Do Evolutionary Coding Agents
-    Evolve?`, argues that final benchmark scores hide how evolutionary coding
-    agents improve programs and whether improvements are structural
-    innovations, constant tuning, overfitting, or cycling artifacts. It
-    introduces EvoTrace annotations and EvoReplay interventions for
-    AlphaEvolve-style agents including AlphaEvolve, OpenEvolve, and FunSearch.
-  - Current evidence: README now lists `2605.20086`, `What Do Evolutionary
-    Coding Agents Evolve?`, as trace-diagnostic evaluation context only and
-    states that no local EvoTrace edit taxonomy, EvoReplay intervention
-    harness, or cycling/overfitting report exists. README also documents run
-    artifacts, history streams, prompt history, archives, evaluator reports,
-    and current implementation boundaries.
-  - Required result: if README mentions mechanistic discovery, structural
-    innovation, interpretable evolutionary progress, overfitting resistance,
-    prompt/population sensitivity, EvoTrace, EvoReplay, or claims that
-    LibreEvolve's best programs represent genuine algorithmic discovery, keep
-    the wording source-scoped until local artifacts can show edit annotations,
-    dependency graphs, fitness-trajectory
-    classes, cycling/overfitting labels, replay interventions, counterfactual
-    outcomes, baseline-agent identities, and task reports. Avoid implying
-    LibreEvolve has trace-level mechanistic evidence without those artifacts.
-
 - [ ] Keep README Zarankiewicz discovery claims source-scoped until benchmark
       evidence exists.
   - Spec evidence: arXiv `2605.01120`, `New Bounds for Zarankiewicz Numbers

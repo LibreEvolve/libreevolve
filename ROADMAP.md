@@ -336,7 +336,9 @@ LibreEvolve has:
   evaluator-valid or lacks declared metrics, with the `embedded_evaluate_math`
   smoke fixture now exercising a claim-ready strict CLI startup path and
   `papers/initial_program_validity_boundary.json` preserving the paper-facing
-  strict-policy-available boundary
+  strict-policy-available boundary while multi-seed, provider-startup, matrix,
+  constructive-math, and optimization-pressure-seed exclusion evidence remains
+  open
 - optional problem-formulation metadata under `formulation.yaml` or direct
   `Problem.formulation_metadata`, normalized into
   `problem.formulation_metadata` and summarized by

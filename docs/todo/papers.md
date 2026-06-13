@@ -3468,8 +3468,10 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Required result: require strict-seed validity for AlphaEvolve-parity
     benchmark fixtures, add paper-facing fixture evidence for complete/runnable
     starts across matrix and constructive-math benchmarks, add multi-seed and
-    provider-startup strict evidence, and keep seed failure logs from being
-    treated as paper-ready initial-solution evidence.
+    provider-startup strict evidence, record selected-seed counts and per-seed
+    failure diagnostics in strict certification rows, and enforce that seed
+    failure logs from permissive optimization-pressure examples are not treated
+    as paper-ready initial-solution evidence.
 
 - [ ] Populate expert-reviewed problem-formulation evidence for mathematical
       benchmarks.

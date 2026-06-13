@@ -22,7 +22,9 @@ Runnable today:
 
 - Python-primary seed programs and bounded text workspaces.
 - Opt-in strict initial-program validity reports for runs that require every
-  selected seed to be evaluator-valid before mutation.
+  selected seed to be evaluator-valid before mutation; multi-seed,
+  provider-startup, matrix, and constructive-math strict evidence remains
+  open work.
 - SEARCH/REPLACE mutation diffs using canonical AlphaEvolve-style fences, plus
   configurable full-code replacement mode.
 - OpenAI, Anthropic, Ollama, and custom import-path backend support.

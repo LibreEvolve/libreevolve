@@ -299,8 +299,11 @@ Important limits:
   permissive baseline still records invalid seeds as diagnostics. The
   `embedded_evaluate_math` smoke fixture now opts into strict mode and has a
   CLI-path manifest regression for a claim-ready single-seed strict report, but
-  that does not prove benchmark-suite strict runs, paper certification rows, or
-  AlphaEvolve complete initial-program parity; that boundary is tracked by
+  that does not prove multi-seed strict fixture reports, provider-startup
+  strict preflight reports, matrix or constructive-math strict seed fixtures,
+  enforced exclusion of optimization-pressure seeds from parity suites, paper
+  certification rows, or AlphaEvolve complete initial-program parity; that
+  boundary is tracked by
   `papers/initial_program_validity_boundary.json`.
 - Problem-formulation metadata and benchmark-fixture readiness reports are
   provenance/readiness telemetry, not populated expert-reviewed matrix or

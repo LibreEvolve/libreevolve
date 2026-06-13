@@ -474,8 +474,10 @@ sidecars, tests, and active TODOs.
     AlphaEvolve-parity claims, add fixture/report evidence for complete
     runnable starts across matrix and constructive-math benchmarks, extend the
     checked CLI smoke coverage to multi-seed loaded fixtures and provider
-    startup paths, and keep permissive optimization-pressure examples clearly
-    separated from strict complete initial implementations.
+    startup paths, record per-seed failure diagnostics and selected-seed
+    counts in paper-facing strict reports, and enforce that permissive
+    optimization-pressure examples are excluded from strict complete initial
+    implementation parity suites.
 
 - [ ] Populate expert-reviewed problem-formulation metadata for benchmark definitions.
   - Spec evidence: AlphaEvolve Section 2.1 frames the task definition,

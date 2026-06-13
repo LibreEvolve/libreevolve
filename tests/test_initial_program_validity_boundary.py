@@ -13,13 +13,18 @@ def test_initial_program_validity_boundary_accepts_strict_policy_boundary():
 
     assert validation.ok is True
     assert validation.boundary_status == "strict_policy_available"
-    assert validation.required_evidence_field_count == 11
-    assert validation.missing_evidence_count == 4
+    assert validation.required_evidence_field_count == 18
+    assert validation.missing_evidence_count == 9
     assert boundary["schema"] == INITIAL_PROGRAM_VALIDITY_BOUNDARY_SCHEMA
     assert boundary["source_section_ids"] == ["2.1"]
     assert boundary["claim_ready"] is False
     assert boundary["strict_policy"] == "alphaevolve_strict"
     assert boundary["default_policy"] == "permissive_baseline"
+    assert "multi_seed_strict_fixture_report" in boundary["required_evidence_fields"]
+    assert (
+        boundary["missing_evidence"]["provider_startup_strict_preflight_report"]
+        == "not_recorded_locally"
+    )
     assert "does not claim AlphaEvolve complete initial-program parity" in (
         boundary["claim_boundary"]
     )
@@ -33,6 +38,7 @@ def test_initial_program_validity_boundary_rejects_default_parity_overclaim():
     boundary["missing_evidence"][
         "alphaevolve_complete_initial_program_parity_default_run"
     ] = "recorded"
+    boundary["missing_evidence"]["multi_seed_strict_fixture_report"] = "recorded"
     boundary["required_evidence_fields"] = ["initial_program_validity_policy_recorded"]
 
     validation = validate_initial_program_validity_boundary(boundary)
@@ -46,6 +52,7 @@ def test_initial_program_validity_boundary_rejects_default_parity_overclaim():
         "invalid_missing_evidence_alphaevolve_complete_initial_program_parity_default_run"
         in codes
     )
+    assert "invalid_missing_evidence_multi_seed_strict_fixture_report" in codes
     assert "missing_required_evidence_field" in codes
 
 
@@ -57,5 +64,5 @@ def test_render_initial_program_validity_boundary_summary_reports_shape():
     assert "AlphaEvolve initial-program validity boundary" in summary
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | strict_policy_available |" in summary
-    assert "| required_evidence_field_count | 11 |" in summary
-    assert "| missing_evidence_count | 4 |" in summary
+    assert "| required_evidence_field_count | 18 |" in summary
+    assert "| missing_evidence_count | 9 |" in summary

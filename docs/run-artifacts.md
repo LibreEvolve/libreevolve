@@ -87,7 +87,8 @@ or declared metrics. The paper-facing sidecar
 reports can be claim-ready only for configured strict runs, while default
 permissive runs do not claim AlphaEvolve complete initial-program parity. The
 `embedded_evaluate_math` fixture is a checked strict-mode smoke fixture; it is
-not a benchmark-suite certification row.
+not a multi-seed, provider-startup, matrix-benchmark, constructive-math
+benchmark, or benchmark-suite certification row.
 Problem fixtures can optionally include `formulation.yaml` or
 `formulation.yml`; direct callers can set `Problem.formulation_metadata`.
 Startup manifest validation normalizes this into

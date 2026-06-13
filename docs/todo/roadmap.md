@@ -10,29 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep strict finite JSONL roadmap wording scoped to current writer
-      coverage.
-  - Spec evidence: AlphaEvolve-scale run artifacts should remain replayable
-    and diagnosable as new JSON/JSONL streams are added, with finite numeric
-    values, duplicate-key-safe reads where applicable, and bounded diagnostics
-    for malformed records.
-  - Current evidence: `ROADMAP.md` asks to extend strict finite JSONL coverage
-    and diagnostics beyond current candidate, prompt, manifest, and GRPO-export
-    writers as new run artifacts are added. README and code evidence show
-    strict finite JSON helpers for history, failure, prompt, and plugin JSONL
-    streams; strict manifest JSON serialization before destructive overwrite
-    cleanup; duplicate-key-free JSON loading for manifest-like inputs; bounded
-    secret-redacted JSONL/quarantine diagnostics; and paper-manifest
-    duplicate-key-free JSON validation. README also keeps a dedicated finite
-    rejected-candidate stream open for hook-mutated or restored non-finite
-    top-level fitness/metric values.
-  - Required result: when new run-artifact JSON/JSONL streams,
-    rejected-candidate finite streams, or broader strict-read/write diagnostics
-    land, update the roadmap, README, papers index, and code/paper TODO
-    entries together so roadmap wording neither underclaims current strict
-    writer coverage nor overclaims complete AlphaEvolve-grade run-artifact
-    serialization.
-
 - [ ] Keep paper-manifest diagnostics roadmap wording scoped to shareable
       cache/index validation.
   - Spec evidence: paper-index evidence used for an AlphaEvolve-alignment

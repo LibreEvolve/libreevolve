@@ -53,6 +53,20 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     overclaims while accepting bounded artifact rendering and mutation/final-
     prompt cap evidence.
 
+- [x] Archive strict finite JSONL roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md` already scopes
+    strict finite JSONL work as extending current candidate, prompt, manifest,
+    and GRPO-export writer coverage as new run artifacts are added, rather
+    than claiming complete AlphaEvolve-grade run-artifact serialization.
+  - Remaining guard: finite rejected-candidate streams for hook-mutated or
+    restored non-finite top-level fitness/metric values, broader strict
+    read/write diagnostics for future run artifacts, and any new JSON/JSONL
+    streams remain active in `docs/todo/code.md` and `docs/todo/papers.md`.
+  - Verification: strict JSONL tests cover atomic strict JSON writes,
+    duplicate-key-safe reads, non-finite rejection, bounded/redacted
+    quarantine diagnostics, and malformed-record handling; paper-manifest
+    validation continues to cover duplicate-key-free paper-index JSON rows.
+
 - [x] Archive metric-diverse prompt-context roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README,
     `papers/README.md`, runtime

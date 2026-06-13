@@ -2,6 +2,33 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive UCB1 finite-time bandit roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/ucb1_boundary.json` now keep
+    `auer-cesa-bianchi-fischer-2002` source-scoped as foundational
+    finite-time bandit context rather than implemented canonical UCB1 regret
+    scheduler support.
+  - Current evidence: the cached paper and boundary JSON record the
+    `Finite-time Analysis of the Multiarmed Bandit Problem` source identity,
+    Machine Learning 47:235-256 venue metadata, UCB1 theorem scope, bounded
+    reward-support assumption, conditional-mean assumption, regret definition,
+    Theorem 1 constants, suboptimal-pull bound, canonical confidence-index
+    term, initialization semantics, adjacent UCB2, `epsilon_n`-GREEDY,
+    UCB1-NORMAL, and UCB1-TUNED variants, and the lack of a UCB1-TUNED regret
+    proof claim.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: bounded reward-distribution evidence, conditional-mean and
+    stationarity checks, regret reports, canonical index equivalence,
+    selected-index traces, stable backend-as-arm audits, reward normalization
+    evidence, exploration-coefficient mapping, UCB-family variant support
+    records, `throughput_depth` proof-scope metadata, and independent checker
+    outputs.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive post-AlphaEvolve sums-and-differences sequence roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

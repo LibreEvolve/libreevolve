@@ -43,6 +43,16 @@ Important limits:
   provider parity remains an explicit absence boundary.
 - Backend selection is a local heuristic inspired by UCB-style routing, not a
   finite-time-regret UCB1 reproduction.
+- Canonical UCB1 finite-time bandit coverage is foundational source context
+  only: LibreEvolve has no proof that backend rewards satisfy bounded
+  `[0,1]` distribution assumptions, no conditional-mean or stationarity audit,
+  no regret-definition runtime report, no Theorem 1 or suboptimal-pull-bound
+  report, no canonical `sqrt(2 ln t / T_i(t))` index-equivalence claim, no
+  per-selection index trace, no stable backend-as-arm audit across roles and
+  runs, no calibrated exploration-coefficient mapping, no UCB2,
+  `epsilon_n`-GREEDY, UCB1-NORMAL, or UCB1-TUNED support, and no regret proof
+  for metadata-weighted `throughput_depth` routing; `papers/ucb1_boundary.json`
+  records that absence boundary.
 - MAP-Elites support is a local quality-diversity archive, not a paper-faithful
   illumination study with full map exports, coverage/reliability/precision
   reports, or domain reproductions.

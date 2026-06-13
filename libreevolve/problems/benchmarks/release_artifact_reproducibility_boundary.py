@@ -10,7 +10,7 @@ RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_SCHEMA = (
     "libreevolve.release_artifact_reproducibility_boundary.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
-EXPECTED_BOUNDARY_STATUS = "editable_local_install_only"
+EXPECTED_BOUNDARY_STATUS = "ci_release_artifact_smoke_available"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "pyproject_metadata_recorded",
     "console_script_declared",
@@ -27,12 +27,14 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "release_checklist",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "wheel_build_check": "not_recorded_locally",
-    "sdist_build_check": "not_recorded_locally",
-    "install_from_wheel_cli_smoke": "not_recorded_locally",
     "package_data_inclusion_check": "not_recorded_locally",
     "release_artifact_provenance": "not_recorded_locally",
     "release_checklist": "not_recorded_locally",
+}
+EXPECTED_PARTIAL_EVIDENCE = {
+    "wheel_build_check": "ci_smoke",
+    "sdist_build_check": "ci_smoke",
+    "install_from_wheel_cli_smoke": "ci_smoke",
 }
 
 
@@ -63,19 +65,21 @@ def release_artifact_reproducibility_boundary_record() -> dict[str, Any]:
             "does not by itself prove a verified release distribution"
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
-        "runtime_report_status": "environment_and_package_provenance_available",
+        "runtime_report_status": "environment_package_and_ci_release_smoke_available",
         "claim_ready": False,
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
+        "partial_evidence": dict(EXPECTED_PARTIAL_EVIDENCE),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records that LibreEvolve has pyproject metadata, a "
             "console-script declaration, and runtime environment/package "
             "provenance for editable or locally installed use, including "
             "bounded wheel metadata snapshots, direct_url/INSTALLER/RECORD "
-            "evidence, and pip freeze/config hashes. It does not claim "
-            "verified wheel or sdist builds, install-from-wheel CLI smoke "
-            "tests, package-data inclusion checks, release-artifact "
-            "provenance, or release-checklist readiness."
+            "evidence, and pip freeze/config hashes. CI also builds one wheel "
+            "and one sdist, installs the wheel into an isolated virtual "
+            "environment, and smokes the console script. It does not claim "
+            "package-data inclusion checks, release-artifact provenance, "
+            "published-index verification, or release-checklist readiness."
         ),
     }
 
@@ -108,17 +112,19 @@ def validate_release_artifact_reproducibility_boundary(
     status = data.get("boundary_status")
     if status != EXPECTED_BOUNDARY_STATUS:
         issues.append(_issue("invalid_boundary_status", f"boundary_status must be {EXPECTED_BOUNDARY_STATUS}"))
-    if data.get("runtime_report_status") != "environment_and_package_provenance_available":
+    if data.get("runtime_report_status") != "environment_package_and_ci_release_smoke_available":
         issues.append(_issue("invalid_runtime_report_status", "runtime report status must stay scoped to environment/package provenance"))
     if data.get("claim_ready") is not False:
         issues.append(_issue("claim_ready_overclaim", "release-artifact boundary must not claim release readiness"))
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
+    _validate_partial_evidence(data.get("partial_evidence"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim verified wheel or sdist builds" not in boundary_text
-        or "install-from-wheel CLI smoke tests" not in boundary_text
+        or "CI also builds one wheel and one sdist" not in boundary_text
+        or "installs the wheel into an isolated virtual environment" not in boundary_text
+        or "does not claim package-data inclusion checks" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must keep editable/local installs separate from verified release artifacts"))
     return ReleaseArtifactReproducibilityBoundaryValidation(
@@ -209,6 +215,27 @@ def _validate_missing_evidence(
     for key, expected_value in EXPECTED_MISSING_EVIDENCE.items():
         if value.get(key) != expected_value:
             issues.append(_issue(f"invalid_missing_evidence_{key}", f"missing_evidence.{key} must be {expected_value}"))
+    return len(actual_keys)
+
+
+def _validate_partial_evidence(
+    value: object,
+    issues: list[ReleaseArtifactReproducibilityBoundaryIssue],
+) -> int:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_partial_evidence", "partial_evidence must be an object"))
+        return 0
+    expected_keys = set(EXPECTED_PARTIAL_EVIDENCE)
+    actual_keys = set(value)
+    missing = sorted(expected_keys - actual_keys)
+    extra = sorted(actual_keys - expected_keys)
+    if missing:
+        issues.append(_issue("missing_partial_evidence_key", f"partial_evidence lacks keys: {', '.join(missing)}"))
+    if extra:
+        issues.append(_issue("extra_partial_evidence_key", f"partial_evidence has unknown keys: {', '.join(extra)}"))
+    for key, expected_value in EXPECTED_PARTIAL_EVIDENCE.items():
+        if value.get(key) != expected_value:
+            issues.append(_issue(f"invalid_partial_evidence_{key}", f"partial_evidence.{key} must be {expected_value}"))
     return len(actual_keys)
 
 

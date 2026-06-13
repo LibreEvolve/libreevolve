@@ -30,10 +30,12 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 EXPECTED_MISSING_EVIDENCE = {
     "paper_manifest_ci_job": "committed_manifest_only_no_local_pdf_cache",
     "docs_semantic_claim_verifier": "not_recorded_locally",
-    "wheel_sdist_ci_smoke": "not_recorded_locally",
     "cross_platform_ci_matrix": "not_recorded_locally",
     "branch_policy": "not_recorded_locally",
     "notification_policy": "not_recorded_locally",
+}
+EXPECTED_PARTIAL_EVIDENCE = {
+    "wheel_sdist_ci_smoke": "release_artifact_job_smoke_only",
 }
 
 
@@ -67,6 +69,7 @@ def ci_workflow_coverage_boundary_record() -> dict[str, Any]:
         "runtime_report_status": "github_actions_workflow_shape_tests_available",
         "claim_ready": False,
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
+        "partial_evidence": dict(EXPECTED_PARTIAL_EVIDENCE),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records that LibreEvolve has a path-scoped GitHub "
@@ -74,9 +77,11 @@ def ci_workflow_coverage_boundary_record() -> dict[str, Any]:
             "filters, a secret scan job, Python 3.11/3.12 Ubuntu unit jobs, an "
             "optional credential-gated integration job, a committed-manifest "
             "paper/docs job that does not require the ignored local PDF cache, "
-            "and unit tests that check the workflow shape. It does not claim "
-            "CI local-PDF paper-manifest checks, semantic documentation-claim "
-            "verification, wheel/sdist CI smoke tests, cross-platform CI "
+            "a release-artifact smoke job that builds a wheel and sdist and "
+            "installs the wheel for CLI smoke checks, and unit tests that check "
+            "the workflow shape. It does not claim CI local-PDF paper-manifest "
+            "checks, semantic documentation-claim verification, release "
+            "provenance or package-data certification, cross-platform CI "
             "coverage, branch policy, or notification policy."
         ),
     }
@@ -107,11 +112,13 @@ def validate_ci_workflow_coverage_boundary(
     if data.get("claim_ready") is not False:
         issues.append(_issue("claim_ready_overclaim", "CI workflow boundary must not claim full CI readiness"))
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
+    _validate_partial_evidence(data.get("partial_evidence"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
         or "committed-manifest paper/docs job" not in boundary_text
+        or "release-artifact smoke job" not in boundary_text
         or "does not claim CI local-PDF paper-manifest checks" not in boundary_text
         or "cross-platform CI coverage" not in boundary_text
     ):
@@ -202,6 +209,27 @@ def _validate_missing_evidence(
     for key, expected_value in EXPECTED_MISSING_EVIDENCE.items():
         if value.get(key) != expected_value:
             issues.append(_issue(f"invalid_missing_evidence_{key}", f"missing_evidence.{key} must be {expected_value}"))
+    return len(actual_keys)
+
+
+def _validate_partial_evidence(
+    value: object,
+    issues: list[CiWorkflowCoverageBoundaryIssue],
+) -> int:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_partial_evidence", "partial_evidence must be an object"))
+        return 0
+    expected_keys = set(EXPECTED_PARTIAL_EVIDENCE)
+    actual_keys = set(value)
+    missing = sorted(expected_keys - actual_keys)
+    extra = sorted(actual_keys - expected_keys)
+    if missing:
+        issues.append(_issue("missing_partial_evidence_key", f"partial_evidence lacks keys: {', '.join(missing)}"))
+    if extra:
+        issues.append(_issue("extra_partial_evidence_key", f"partial_evidence has unknown keys: {', '.join(extra)}"))
+    for key, expected_value in EXPECTED_PARTIAL_EVIDENCE.items():
+        if value.get(key) != expected_value:
+            issues.append(_issue(f"invalid_partial_evidence_{key}", f"partial_evidence.{key} must be {expected_value}"))
     return len(actual_keys)
 
 

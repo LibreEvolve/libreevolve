@@ -622,10 +622,11 @@ is not yet an AlphaEvolve reproduction.
 - Preserve complete transitive environment/package provenance for evaluator
   runtime dependencies beyond the current bounded package/version and
   redacted/hash-backed `pip freeze` snapshots.
-- Preserve the editable/local install boundary for release packaging with
+- Preserve the CI-smoke-only release packaging boundary with
   `papers/release_artifact_reproducibility_boundary.json`; wheel/sdist build
-  checks, package-data validation, install-from-wheel smoke tests, release
-  checklist, and release-artifact provenance remain open.
+  and install-from-wheel CLI smoke checks exist, while package-data validation,
+  release checklist, release-artifact provenance, and index artifact
+  verification remain open.
 - Extend current bounded environment provenance into stronger reproducibility
   evidence: complete install-source interpretation semantics, external build
   execution/options/environment records beyond `pyproject.toml`
@@ -2213,14 +2214,14 @@ resumed-trace proof are still open.
   toward richer archive/prompt/failure drill-downs, durable query views over run
   artifacts, full source-payload replay, and cross-run source/workspace
   indexes.
-- Extend current `pyproject.toml` metadata, dev extras, and console-script
-  packaging beyond editable/local use with wheel/sdist build checks,
-  package-data validation, install-from-wheel smoke tests, and release-artifact
-  provenance.
+- Extend current `pyproject.toml` metadata, dev extras, console-script
+  packaging, and CI wheel/sdist/install smoke beyond smoke validation with
+  package-data checks, release-artifact provenance, and index verification.
 - Extend the current path-scoped GitHub Actions workflow beyond secret scan,
   Python 3.11/3.12 non-integration tests, optional integration tests, and
-  the committed-manifest paper/docs CI job with broader docs/paper-specific
-  validation, local-PDF paper-manifest checks where appropriate, more
+  the committed-manifest paper/docs and release-artifact smoke CI jobs with
+  broader docs/paper-specific validation, local-PDF paper-manifest checks where
+  appropriate, release provenance/package-data checks, more
   interpreter/platform coverage, and notification-safe trigger and branch
   policy. The current paper-facing CI boundary is tracked by
   `papers/ci_workflow_coverage_boundary.json`.

@@ -1317,16 +1317,18 @@ service/API versions beyond false capability-readiness fields, live provider
 pricing/default-rate capture beyond configured estimates, and accelerator
 budget/accounting semantics. The committed
 `papers/release_artifact_reproducibility_boundary.json` sidecar preserves the
-editable/local-install boundary: wheel/sdist build checks, install-from-wheel
-CLI smoke tests, package-data inclusion checks, release-artifact provenance,
-and release-checklist readiness remain absent.
+CI-smoke-only release-artifact boundary: wheel/sdist build checks and
+install-from-wheel CLI smoke checks exist, while package-data inclusion checks,
+release-artifact provenance, published-index verification, and
+release-checklist readiness remain absent.
 The committed `papers/ci_workflow_coverage_boundary.json` sidecar preserves
 the current path-scoped GitHub Actions boundary: manual dispatch,
 push/pull_request path filters, secret scan, Python 3.11/3.12 Ubuntu unit jobs,
 optional integration tests, and a committed-manifest paper/docs job exist,
-while CI local-PDF paper-manifest checks, semantic docs-claim verification,
-wheel/sdist smoke tests, cross-platform matrices, branch policy, and
-notification policy remain absent.
+plus a release-artifact smoke job exists, while CI local-PDF paper-manifest
+checks, semantic docs-claim verification, release provenance/package-data
+certification, cross-platform matrices, branch policy, and notification policy
+remain absent.
 The committed `papers/documentation_truthfulness_boundary.json` sidecar
 preserves the current cross-document documentation guard boundary: README,
 ROADMAP, papers-index, TODO-ledger, path-filter, paper-manifest consistency,

@@ -1,5 +1,6 @@
 from pathlib import Path
 import re
+import tomllib
 
 import yaml
 
@@ -104,6 +105,7 @@ def test_tests_workflow_covers_docs_papers_and_todo_changes():
     assert "secrets" in workflow["jobs"]
     assert "unit" in workflow["jobs"]
     assert "paper_docs" in workflow["jobs"]
+    assert "release_artifact" in workflow["jobs"]
     assert "integration" in workflow["jobs"]
 
     paper_docs = workflow["jobs"]["paper_docs"]
@@ -117,6 +119,24 @@ def test_tests_workflow_covers_docs_papers_and_todo_changes():
         in paper_doc_commands
     )
     assert "--require-local-pdfs" not in paper_doc_commands
+
+    release_artifact = workflow["jobs"]["release_artifact"]
+    assert release_artifact["name"] == "Release Artifact Smoke"
+    release_commands = "\n".join(
+        step.get("run", "") for step in release_artifact.get("steps", [])
+    )
+    assert 'python -m pip install -e ".[dev]"' in release_commands
+    assert "python -m build --wheel --sdist" in release_commands
+    assert "python -m venv .venv-wheel-smoke" in release_commands
+    assert "python -m pip install dist/*.whl" in release_commands
+    assert "libreevolve --help" in release_commands
+    assert "python -m libreevolve --help" in release_commands
+
+
+def test_dev_dependencies_include_release_build_tooling():
+    pyproject = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))
+
+    assert "build>=1.2" in pyproject["project"]["optional-dependencies"]["dev"]
 
 
 def test_run_artifact_docs_list_current_schema_jsonl_streams():

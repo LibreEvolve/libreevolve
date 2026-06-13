@@ -699,7 +699,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     service/default capture, and accelerator budget/accounting semantics. The
     paper-facing sidecar
     `papers/release_artifact_reproducibility_boundary.json` now records the
-    editable/local-install-only release-artifact boundary.
+    CI-release-smoke boundary for wheel/sdist and install-from-wheel checks.
   - Current gap: these records do not form a replayable environment contract:
     external build commands/options/environment, non-project build metadata,
     transitive package-source resolution, private-index policy, remote package
@@ -719,19 +719,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     3.11/3.12 Ubuntu non-integration tests, and an optional
     credential-gated integration job. It now also has a dedicated paper/docs
     job that runs `python -m libreevolve.tools.paper_manifest --root .` and
-    focused docs/paper tests without requiring ignored local PDFs.
+    focused docs/paper tests without requiring ignored local PDFs, plus a
+    release-artifact smoke job that builds one wheel and one sdist, installs
+    the wheel into an isolated virtual environment, and smokes the CLI.
     `tests/test_agents_docs.py` verifies the path filters, job names, and
-    paper/docs commands. The committed
+    paper/docs/release commands. The committed
     `papers/ci_workflow_coverage_boundary.json` sidecar preserves this
     path-scoped Ubuntu workflow boundary for paper-manifest validation.
   - Current gap: CI still does not run every paper/docs verifier, does not run
-    paper-manifest local-PDF checks, does not build wheel/sdist artifacts, does
-    not perform install-from-wheel smoke tests, does not cover non-Ubuntu
-    platforms, and does not encode richer branch or notification policy.
+    paper-manifest local-PDF checks, does not certify package-data inclusion or
+    release provenance, does not cover non-Ubuntu platforms, and does not
+    encode richer branch or notification policy.
   - Required result: add full paper/docs verifier coverage, release-artifact
-    checks, interpreter/platform matrices, branch policy, and notification-safe
-    trigger policy before treating the workflow as full AlphaEvolve-grade
-    validation coverage.
+    provenance/package-data checks, interpreter/platform matrices, branch
+    policy, and notification-safe trigger policy before treating the workflow
+    as full AlphaEvolve-grade validation coverage.
 
 - [ ] Stable behavior descriptor models and archive rebin semantics.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.3 and 2.4.

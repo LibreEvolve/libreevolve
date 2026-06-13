@@ -33,6 +33,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+    "build>=1.2",
     "pre-commit>=4.5",
     "detect-secrets>=1.5",
     "pytest>=8.0",

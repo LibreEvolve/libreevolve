@@ -288,6 +288,15 @@ Important limits:
   prediction-market/security-competition/event-forecasting benchmark
   reproduction, five-baseline comparison, linked-code audit, or independent
   reproduction output.
+- Meta-Harness outer-loop harness-code optimization coverage is background
+  paper context only: LibreEvolve has no first-class harness-code candidate
+  schema, filesystem-visible harness workspace, agentic proposer that edits
+  harness code, candidate harness edit provenance, execution-trace feedback
+  bundle, score/provenance replay package, outer-loop harness search
+  controller, online text-classification reproduction, 200-problem
+  IMO-level retrieval-augmented math reproduction, TerminalBench-2
+  reproduction, held-out-model transfer report, linked-code audit, or
+  independent reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

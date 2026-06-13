@@ -2,6 +2,38 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Meta-Harness roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored and the benchmark wording was corrected against the cached
+    paper. `README.md`, `ROADMAP.md`, `papers/README.md`, `docs/status.md`,
+    `docs/todo/code.md`, and `docs/todo/papers.md` now keep arXiv
+    `2603.28052` source-scoped as background outer-loop harness-code
+    optimization context rather than implemented LibreEvolve Meta-Harness
+    support.
+  - Current evidence: the cached paper and `papers/README.md` record
+    harness-code search, an agentic proposer, filesystem-visible source code,
+    scores and execution traces from prior candidates, online
+    text-classification gains, 200-problem IMO-level retrieval-augmented math
+    gains across five held-out models, TerminalBench-2 agentic-coding gains,
+    and project/artifact links, while marking local harness-code candidate
+    schemas, filesystem-visible proposer workspaces, proposer traces, edit
+    provenance, execution-trace feedback bundles, score/provenance replay
+    packages, outer-loop harness search records, benchmark reproductions,
+    linked-code audits, and independent reproduction output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source/license metadata, project URL status, linked-code status,
+    relation to AlphaEvolve and LibreEvolve harness assumptions,
+    harness-code candidate schema, filesystem-visible harness workspace
+    layout, agentic proposer trace records, candidate harness edit
+    provenance, execution-trace feedback bundles, score/provenance replay
+    packages, outer-loop harness search records, online text-classification
+    benchmark metadata, 200-problem IMO-level retrieval-augmented math
+    benchmark metadata, TerminalBench-2 benchmark metadata, held-out-model
+    transfer reports, baseline identities, code/artifact reproducibility
+    status, and independent verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive Adaptive Auto-Harness roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

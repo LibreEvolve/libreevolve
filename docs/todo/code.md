@@ -6014,10 +6014,11 @@ Primary evidence:
     and LibreEvolve prompt/plugin/runtime assumptions, harness-code candidate
     schema, filesystem-visible harness workspace layout, agentic proposer
     trace records, candidate harness edit provenance, execution-trace
-    feedback bundles, score/provenance replay packages, multi-objective
-    harness search controller, cross-task task-distribution splits,
-    generalization/overfit reports, GSM8K/GPQA/InteractiveQA/ToolQA/
-    TruthfulQA/LLF-Bench benchmark metadata, baseline identities, and
+    feedback bundles, score/provenance replay packages, outer-loop harness
+    search controller, online text-classification benchmark metadata,
+    200-problem IMO-level retrieval-augmented math benchmark metadata,
+    TerminalBench-2 benchmark metadata, held-out-model transfer reports,
+    baseline identities, and
     README/ROADMAP wording that keeps Meta-Harness-style end-to-end harness
     optimization as missing evidence until local runtime artifacts and
     reports exist.

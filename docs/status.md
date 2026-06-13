@@ -883,11 +883,11 @@ Important limits:
   LibreEvolve has no first-class harness-code candidate schema,
   filesystem-visible harness workspace, agentic proposer that edits harness code,
   candidate harness edit provenance, execution-trace feedback bundle,
-  score/provenance replay package, multi-objective harness search controller,
-  cross-task harness benchmark, task-distribution split,
-  generalization/overfit report, GSM8K/GPQA/InteractiveQA/ToolQA/TruthfulQA/
-  LLF-Bench reproduction, linked-code audit, or independent reproduction
-  output.
+  score/provenance replay package, outer-loop harness search controller,
+  online text-classification reproduction, 200-problem IMO-level
+  retrieval-augmented math reproduction, TerminalBench-2 reproduction,
+  held-out-model transfer report, linked-code audit, or independent
+  reproduction output.
 - ArXiv `2602.16928` is AlphaEvolve MARL algorithm-discovery context only; the
   README mentions this cached paper as a curated subset while
   `papers/README.md` remains the complete implementation-status index.

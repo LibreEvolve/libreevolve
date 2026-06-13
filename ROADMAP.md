@@ -1748,10 +1748,10 @@ resumed-trace proof are still open.
   This is background outer-loop harness-code optimization context only;
   harness-code candidate schemas, filesystem-visible harness workspaces,
   agentic proposer traces, execution-trace feedback bundles,
-  score/provenance replay packages, multi-objective harness search
-  controllers, cross-task harness benchmarks, task-distribution splits,
-  generalization/overfit reports, GSM8K/GPQA/InteractiveQA/ToolQA/
-  TruthfulQA/LLF-Bench reproductions, linked-code audits, and independent
+  score/provenance replay packages, outer-loop harness search controllers,
+  online text-classification reproductions, 200-problem IMO-level
+  retrieval-augmented math reproductions, TerminalBench-2 reproductions,
+  held-out-model transfer reports, linked-code audits, and independent
   reproduction outputs remain open before roadmap wording can promote
   Meta-Harness-style end-to-end harness optimization.
 - Keep paper-index backlog traceability explicit: `validate_paper_manifest()`

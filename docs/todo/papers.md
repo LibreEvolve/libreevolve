@@ -5624,21 +5624,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     harness assumptions, harness-code candidate schema, filesystem-visible
     harness workspace layout, agentic proposer trace records, candidate
     harness edit provenance, execution-trace feedback bundles,
-    score/provenance replay packages, multi-objective harness search
-    records, cross-task task-distribution splits, generalization/overfit
-    reports, GSM8K/GPQA/InteractiveQA/ToolQA/TruthfulQA/LLF-Bench benchmark
-    metadata, baseline identities, code/artifact reproducibility status, or
+    score/provenance replay packages, outer-loop harness search records,
+    online text-classification benchmark metadata, 200-problem IMO-level
+    retrieval-augmented math benchmark metadata, TerminalBench-2 benchmark
+    metadata, held-out-model transfer reports, baseline identities,
+    code/artifact reproducibility status, or
     independent reproduction output exists.
   - Required result: add reproduction-grade Meta-Harness evidence: source
     license, project URL status, linked-code status, relation to AlphaEvolve
     and LibreEvolve harness assumptions, harness-code candidate schema,
     filesystem-visible harness workspace layout, agentic proposer trace
     records, candidate harness edit provenance, execution-trace feedback
-    bundles, score/provenance replay packages, multi-objective harness
-    search records, cross-task task-distribution splits, generalization/
-    overfit reports, GSM8K/GPQA/InteractiveQA/ToolQA/TruthfulQA/LLF-Bench
-    benchmark metadata, baseline identities, code/artifact reproducibility
-    status, independent reproduction outputs, and README/ROADMAP wording
+    bundles, score/provenance replay packages, outer-loop harness search
+    records, online text-classification benchmark metadata, 200-problem
+    IMO-level retrieval-augmented math benchmark metadata, TerminalBench-2
+    benchmark metadata, held-out-model transfer reports, baseline identities,
+    code/artifact reproducibility status, independent reproduction outputs,
+    and README/ROADMAP wording
     that treats Meta-Harness as background context until those artifacts
     exist.
 

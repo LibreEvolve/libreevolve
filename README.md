@@ -48,6 +48,12 @@ Important limits:
   reports, or domain reproductions.
 - The examples are smoke fixtures and small demos unless a fixture documents
   stronger benchmark evidence.
+- Benchmark-hardening records and shipped-example scope validate smoke-scope
+  anti-gaming metadata and `alphaevolve_comparable: false` boundaries, not
+  benchmark-grade tensor/geometric/constructive-math runners, randomized or
+  exhaustive anti-gaming evidence, executable construction/certificate
+  validators, target/SOTA baselines, Colab-equivalent Appendix B construction
+  data, or verifier-code artifacts.
 - Systems-result schemas and readiness sidecars are report contracts only; they
   do not yet emit real scheduling, Pallas/kernel, compiler, or hardware fixture
   runs, deployment measurements, expert confirmations, or domain-specific

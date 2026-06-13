@@ -2,6 +2,35 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive representative-fixture roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish checked registries, smoke examples, and report-contract
+    surfaces from AlphaEvolve-scale target suites.
+  - Current evidence: Appendix A registry/status metadata covers the 54 sorted
+    matrix targets, Appendix B registry covers thirteen constructive-math
+    families, the Strassen 2x2 bundle is one checked baseline artifact,
+    example-scope records mark shipped examples `alphaevolve_comparable: false`,
+    and benchmark-hardening records validate smoke-scope anti-gaming metadata,
+    but these do not provide full-suite target tensors, discovered
+    decompositions, coefficient data, per-target certificates, notebook
+    exports, Colab-equivalent construction data, executable verifier-code
+    artifacts, repeated-seed runs, target/SOTA baselines, or real
+    systems-domain fixtures.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    representative evidence: benchmark-grade tensor/geometric/
+    constructive-math runners, matrix target tensors and exact
+    decomposition/certificate artifacts, construction/certificate validators,
+    Appendix B construction-data/verifier exports, randomized or exhaustive
+    anti-gaming evidence, repeated-seed runs, target/SOTA baselines, and at
+    least one safe compiler/hardware/kernel/scheduling-style systems fixture.
+  - Verification: paper-manifest validation, checked-in paper-index TODO
+    coverage, and focused benchmark-hardening, Appendix A, Appendix B, and
+    matrix publication-boundary checks still pass, while searches confirm
+    active code and paper TODOs retain the missing benchmark-grade runner and
+    artifact work.
+
 - [x] Archive compiler-adoption roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

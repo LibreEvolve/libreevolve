@@ -69,27 +69,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README Figure 3 supervised-learning example wording scoped until
-      exhibit provenance exists.
-  - Spec evidence: AlphaEvolve Figure 3 presents a supervised-learning pipeline
-    example with linked subfigures for a user-provided JAX/Jaxline file and
-    `evaluate` function, an assembled prompt with prior/current program scores,
-    and an LLM output containing explanatory prose plus SEARCH/REPLACE edits.
-  - Current evidence: README documents evolve-block parsing, prompt context,
-    SEARCH/REPLACE mutation, strict prose handling, and prompt-example-copy
-    gaps. README now also points to
-    `papers/figure3_supervised_exhibit_boundary.json`, which preserves the
-    manifest-checked absence boundary for Figure 3 exhibit IDs, subfigure
-    labels, exact source/prompt/output excerpt artifact hashes, displayed
-    score values, omitted-line/ellipsis policy, source PDF/caption location,
-    rendered artifact paths/hashes, and links from the displayed example to
-    prompt history, evaluator, candidate, and run artifacts. It does not
-    produce those exhibit artifacts.
-  - Required result: when Figure 3 exhibit provenance lands, update README,
-    ROADMAP, papers index, and matching TODOs so README distinguishes
-    reproduced supervised-learning paper-example evidence from generic
-    prompt/mutation/evaluator feature support.
-
 - [ ] Keep README mutation-mode wording scoped to configured `diff`/`full`
       support versus adaptive prompting.
   - Spec evidence: AlphaEvolve Section 2.3 requests diff blocks for larger

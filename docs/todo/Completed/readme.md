@@ -14006,6 +14006,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     evidence until those exhibit artifacts exist.
   - Verification: focused boundary and paper-manifest tests cover the sidecar
     and its overclaim rejection.
+
+- [x] Keep README Figure 3 supervised-learning wording scoped until exhibit
+      provenance exists.
+  - Status: README now scopes Figure 3 supervised-learning support to generic
+    embedded-evaluator, prompt-history, candidate-history, SEARCH/REPLACE, and
+    preamble handling, not reproduced paper subfigure evidence with source/
+    evaluate/prompt/output excerpt artifacts, subfigure/source locators,
+    displayed score-value links, rendered hashes, or prompt/candidate/
+    evaluator/run-artifact links.
+  - Verification: paper-manifest validation requires
+    `papers/figure3_supervised_exhibit_boundary.json`, and focused Figure 3
+    supervised-exhibit tests reject premature reproduced-exhibit claims.
 - [x] Add README boundary for adaptive diff-versus-full mutation mode.
   - Spec evidence: AlphaEvolve Section 2.3 chooses SEARCH/REPLACE or full-code
     output based on codebase size and rewrite suitability.

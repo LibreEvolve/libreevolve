@@ -683,9 +683,10 @@ Important limits:
   that boundary is tracked by `papers/program_output_boundary.json`.
 - Figure 3 supervised-learning example support is generic embedded-evaluator,
   prompt-history, candidate-history, SEARCH/REPLACE, and preamble handling,
-  not reproduced paper subfigure evidence with exact source/prompt/output
-  excerpts, displayed score values, rendered hashes, or run-artifact links;
-  that boundary is tracked by
+  not reproduced paper subfigure evidence with source/evaluate/prompt/output
+  excerpt artifacts, subfigure/source locators, displayed score-value links,
+  rendered hashes, or prompt/candidate/evaluator/run-artifact links; that
+  boundary is tracked by
   `papers/figure3_supervised_exhibit_boundary.json`.
 - Artifact indexes are bounded current-run path/hash/redaction/skipped/stage
   metadata and content excerpts, not durable artifact query tables,

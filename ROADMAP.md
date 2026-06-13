@@ -94,8 +94,10 @@ LibreEvolve has:
   linked to `runtime.history.distributed_pipeline_topology_report`,
   validated current inline evaluator-pool boundary evidence,
   component-to-TODO links, and explicit gaps for exact source-diagram
-  reproduction, source figure image/crop hashes, visual node coordinates,
-  source edge geometry/routing, Figure 2 line-level pseudocode alignment,
+  reproduction, exact source caption/text identity, source diagram text
+  identity, diagram node-label source alignment, source figure image/crop
+  hashes, visual node coordinates, source edge geometry/routing, Figure 2
+  pseudocode line-number maps, Figure 2 line-level pseudocode alignment,
   visual diff/fidelity checks, and full process parity, with
   `papers/process_exhibit_boundary.json` now carrying the manifest-validated
   boundary for exact source-diagram layout reproduction, AlphaEvolve async

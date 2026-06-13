@@ -1122,11 +1122,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     the manifest-validated absence boundary for full process-diagram parity
     evidence.
   - Current gap: paper-facing evidence still lacks exact diagram/pseudocode
-    text or accessibility reproduction, async topology evidence, independent
-    evaluator-pool evidence. Existing component-level implementation evidence is
-    still not a complete reproduced paper process exhibit.
-  - Required result: add exact diagram text, async topology evidence,
-    independent evaluator-pool evidence, and
+    source caption/text identity, source diagram text identity, diagram
+    node-label source alignment, source figure image/crop hashes, visual node
+    coordinates, source edge geometry/routing, Figure 2 pseudocode line-number
+    maps, line-level pseudocode alignment, visual diff/fidelity checks, async
+    topology evidence, and independent evaluator-pool evidence. Existing
+    component-level implementation evidence is still not a complete reproduced
+    paper process exhibit.
+  - Required result: add source-faithful diagram/caption text identity,
+    source image/crop and coordinate maps, Figure 2 line-level pseudocode
+    alignment, visual fidelity checks, async topology evidence, independent
+    evaluator-pool evidence, and
     README/ROADMAP wording that separates reproducing the paper process
     diagrams from implementing each underlying AlphaEvolve workflow
     capability.

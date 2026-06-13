@@ -24,9 +24,14 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "rendered_diagram_artifact_hash",
     "exact_diagram_text_export",
     "accessibility_export",
+    "source_caption_text_identity",
+    "source_diagram_text_identity",
+    "generated_vs_source_artifact_separation",
+    "diagram_node_label_source_alignment",
     "source_figure_image_or_crop_hash",
     "source_figure_visual_coordinate_map",
     "source_edge_geometry_routing_map",
+    "figure2_pseudocode_line_number_map",
     "figure2_line_level_pseudocode_alignment",
     "visual_diff_against_source_figure",
     "source_diagram_text_record",
@@ -38,9 +43,13 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 )
 EXPECTED_MISSING_EVIDENCE = {
     "exact_source_diagram_layout_reproduction": "not_recorded_locally",
+    "source_caption_text_identity": "not_recorded_locally",
+    "source_diagram_text_identity": "not_recorded_locally",
+    "diagram_node_label_source_alignment": "not_recorded_locally",
     "source_figure_image_or_crop_hash": "not_recorded_locally",
     "source_figure_visual_coordinate_map": "not_recorded_locally",
     "source_edge_geometry_routing_map": "not_recorded_locally",
+    "figure2_pseudocode_line_number_map": "not_recorded_locally",
     "figure2_line_level_pseudocode_alignment": "not_recorded_locally",
     "visual_diff_against_source_figure": "not_recorded_locally",
     "alphaevolve_async_pipeline_topology_implementation": "not_implemented_locally",
@@ -95,9 +104,12 @@ def process_exhibit_boundary_record() -> dict[str, Any]:
             "linked to the distributed-pipeline topology report, a validated "
             "current inline evaluator-pool parallelism boundary, and "
             "component-to-TODO links. It does not claim exact source-diagram "
-            "layout reproduction, source figure image/crop hashes, visual node "
-            "coordinates, source edge geometry/routing, Figure 2 line-level "
-            "pseudocode alignment, visual diff/fidelity checks against the "
+            "layout reproduction, exact source caption/text identity, source "
+            "diagram text identity, diagram node-label source alignment, "
+            "source figure image/crop hashes, visual node coordinates, source "
+            "edge geometry/routing, Figure 2 pseudocode line-number maps, "
+            "Figure 2 line-level pseudocode alignment, visual diff/fidelity "
+            "checks against the "
             "source figures, AlphaEvolve async controller/sampler/evaluator "
             "implementation, independent evaluator-pool implementation, or "
             "full AlphaEvolve process parity."
@@ -140,9 +152,13 @@ def validate_process_exhibit_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim" not in boundary_text
+        or "exact source caption/text identity" not in boundary_text
+        or "source diagram text identity" not in boundary_text
+        or "diagram node-label source alignment" not in boundary_text
         or "source figure image/crop hashes" not in boundary_text
         or "visual node coordinates" not in boundary_text
         or "source edge geometry/routing" not in boundary_text
+        or "Figure 2 pseudocode line-number maps" not in boundary_text
         or "Figure 2 line-level pseudocode alignment" not in boundary_text
         or "visual diff/fidelity checks" not in boundary_text
     ):

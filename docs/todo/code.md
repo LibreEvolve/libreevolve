@@ -726,11 +726,13 @@ sidecars, tests, and active TODOs.
     evaluator-pool boundary records, component-to-TODO links, and explicit
     `claim_ready: false` gaps.
   - Required result: add exact source-diagram layout reproduction, source
-    image/crop hashes, visual coordinate and edge-routing maps, line-level
-    pseudocode alignment, async topology evidence, independent evaluator-pool
-    evidence, and docs checks that prevent README, ROADMAP, or papers-index
-    wording from treating component-level support as full reproduction of the
-    AlphaEvolve process diagrams.
+    caption/text identity, source diagram text identity, diagram node-label
+    source alignment, image/crop hashes, visual coordinate and edge-routing
+    maps, Figure 2 pseudocode line-number maps, line-level pseudocode
+    alignment, visual diff/fidelity checks, async topology evidence,
+    independent evaluator-pool evidence, and docs checks that prevent README,
+    ROADMAP, or papers-index wording from treating component-level support as
+    full reproduction of the AlphaEvolve process diagrams.
 
 - [ ] Add self-improvement and distillation evidence boundaries for
       infrastructure-facing claims.

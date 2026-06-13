@@ -66,8 +66,10 @@ Important limits:
   yet.
 - Figure 1/Figure 2 process-exhibit reports map AlphaEvolve diagram nodes,
   edges, and pseudocode steps to local artifacts, not exact source-diagram
-  reproduction, source figure image/crop hashes, visual node coordinates,
-  source edge geometry/routing, Figure 2 line-level pseudocode alignment,
+  reproduction, exact source caption/text identity, source diagram text
+  identity, diagram node-label source alignment, source figure image/crop
+  hashes, visual node coordinates, source edge geometry/routing, Figure 2
+  pseudocode line-number maps, Figure 2 line-level pseudocode alignment,
   visual diff/fidelity checks, async controller/sampler/evaluator topology,
   independent evaluator-pool implementation, or full process parity; that
   boundary is tracked by `papers/process_exhibit_boundary.json`.

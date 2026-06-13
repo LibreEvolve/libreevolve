@@ -1907,9 +1907,11 @@ components back to the active TODO ledgers. It is a manifest-level
 process-exhibit map for the current synchronous loop, not an exact
 AlphaEvolve diagram reproduction, async pipeline implementation, or
 independent evaluator-pool implementation: exact source-diagram layout,
-source figure image/crop hashes, visual node coordinates, source edge
-geometry/routing, Figure 2 line-level pseudocode alignment, visual
-diff/fidelity checks against the source figures,
+exact source caption/text identity, source diagram text identity, diagram
+node-label source alignment, source figure image/crop hashes, visual node
+coordinates, source edge geometry/routing, Figure 2 pseudocode line-number
+maps, Figure 2 line-level pseudocode alignment, visual diff/fidelity checks
+against the source figures,
 AlphaEvolve-style async controller/sampler/evaluator implementation, and
 independent evaluator-pool implementation remain open.
 The committed `papers/process_exhibit_boundary.json` sidecar preserves that

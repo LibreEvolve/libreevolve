@@ -91,41 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README RHO retrospective harness-optimization claims source-scoped
-      until runtime evidence exists.
-  - Spec evidence: arXiv `2606.05922`, `Retrospective Harness Optimization:
-    Improving LLM Agents via Self-Preference over Trajectory Rollouts`,
-    introduces RHO, a self-supervised method that improves an agent harness
-    from past trajectories without ground-truth validation labels. Its
-    abstract says RHO selects a diverse coreset of challenging tasks, re-solves
-    them in parallel, analyzes the rollouts with self-validation and
-    self-consistency, generates candidate harness updates, and selects the
-    best update through pairwise self-preference. It reports a single-round
-    SWE-Bench Pro pass-rate improvement from 59% to 78% without external
-    grading.
-  - Current evidence: README now lists `2606.05922`, RHO, as retrospective
-    harness optimization context only and says no local hard/diverse
-    trajectory coreset selector, parallel re-rollout workflow, self-
-    validation/self-consistency analysis, pairwise self-preference harness
-    ranking, or SWE-Bench Pro reproduction exists. README also documents
-    LibreEvolve's evaluator-first workflow, run artifacts, prompt history,
-    failure streams, validators, candidate mutation, and benchmark boundaries;
-    it does not claim label-free retrospective harness optimization,
-    trajectory coreset selection, parallel harness-comparison rollouts,
-    self-validation/self-consistency diagnostics, or self-preference-ranked
-    harness updates.
-  - Required result: if README mentions RHO, Retrospective Harness
-    Optimization, self-preference over trajectory rollouts, label-free
-    harness optimization, hard/diverse trajectory coresets, parallel
-    re-rollouts, self-validation, self-consistency, SWE-Bench Pro 59-to-78
-    improvement, or long-horizon harness behavior shifts, keep the wording
-    source-scoped until local artifacts can show trajectory corpus records,
-    coreset criteria, rollout batches,
-    self-analysis artifacts, candidate harness patches, pairwise preference
-    rankings, deployment/rollback metadata, benchmark baselines, and report
-    outcomes. Avoid implying LibreEvolve supports RHO-style retrospective
-    harness optimization without those artifacts.
-
 - [ ] Keep README harness self-evolution benefit claims source-scoped until
       harness-updating and harness-benefit runtime evidence both exist.
   - Spec evidence: arXiv `2605.30621`, `Harness Updating Is Not Harness

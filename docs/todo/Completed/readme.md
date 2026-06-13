@@ -15015,3 +15015,33 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     thresholds, held-out benchmark baselines, report outcomes, and
     HarnessFix-style trace-grounded harness repair remain active in code and
     paper TODOs.
+
+- [x] Keep README RHO retrospective harness-optimization claims source-scoped
+      until runtime evidence exists.
+  - Spec evidence: arXiv `2606.05922`, `Retrospective Harness Optimization:
+    Improving LLM Agents via Self-Preference over Trajectory Rollouts`,
+    introduces RHO, a self-supervised method that improves an agent harness
+    from past trajectories without ground-truth validation labels. Its
+    abstract says RHO selects a diverse coreset of challenging tasks,
+    re-solves them in parallel, analyzes the rollouts with self-validation
+    and self-consistency, generates candidate harness updates, and selects
+    the best update through pairwise self-preference. It reports a
+    single-round SWE-Bench Pro pass-rate improvement from 59% to 78% without
+    external grading.
+  - Status: README now lists arXiv `2606.05922` as retrospective harness
+    optimization context only and marks the mention as a curated cached-paper
+    subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no unlabeled
+    past-trajectory harness optimizer, hard/diverse coreset selector, DPP
+    coreset record, parallel retrospective re-solve workflow, group rollout
+    artifact, self-validation diagnostic, self-consistency diagnostic,
+    candidate harness-update set, pairwise self-preference selector,
+    label-free promotion policy, deployment/rollback metadata,
+    behavior-pattern shift report, long-horizon accuracy report, SWE-Bench Pro
+    59%-to-78% reproduction, linked-code audit, or independent reproduction
+    output.
+  - Remaining README gap: trajectory corpus records, coreset criteria,
+    rollout batches, self-analysis artifacts, candidate harness patches,
+    pairwise preference rankings, deployment/rollback metadata, benchmark
+    baselines, report outcomes, and RHO-style retrospective harness
+    optimization remain active in code and paper TODOs.

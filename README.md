@@ -821,6 +821,17 @@ Important limits:
   unacceptable-regression threshold record, held-out SWE-Bench Verified/
   Terminal-Bench 2.0 Verified/GAIA/AppWorld benchmark report, linked-code
   audit, or independent reproduction output.
+- ArXiv `2606.05922` is retrospective harness optimization context only; the
+  README mentions this cached paper as a curated subset while
+  `papers/README.md` remains the complete implementation-status index.
+  LibreEvolve has no unlabeled past-trajectory harness optimizer, hard/diverse
+  coreset selector, DPP coreset record, parallel retrospective re-solve
+  workflow, group rollout artifact, self-validation diagnostic,
+  self-consistency diagnostic, candidate harness-update set, pairwise
+  self-preference selector, label-free promotion policy, deployment/rollback
+  metadata, behavior-pattern shift report, long-horizon accuracy report,
+  SWE-Bench Pro 59%-to-78% reproduction, linked-code audit, or independent
+  reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

@@ -62,6 +62,22 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     related test-time-training claims, the wording must remain source-scoped
     until the active code, paper, and roadmap TODO evidence exists.
 
+- [x] Archive README Bruhat-interval hypercube source-scope TODO.
+  - Status: the README-specific TODO was stale after the README realism split.
+    The root README no longer mentions Bruhat intervals, poset hypercubes,
+    dyadically well-distributed permutations, AlphaEvolve-suggested
+    permutation patterns, Kazhdan-Lusztig `R`-polynomials, bit-reversal
+    witnesses, Ehresmann matrices, or Bruhat-graph consequences.
+  - Remaining guard: `papers/README.md` keeps `2601.01235` as an unimplemented
+    constructive-math benchmark candidate, and the open code, paper, and
+    roadmap TODOs still track the missing permutation schemas, Bruhat interval
+    records, poset-hypercube witness artifacts, dyadic checkers,
+    power-of-two benchmark rows, theorem/proof-status boundaries, and
+    independent checker outputs.
+  - Verification: if the root README later reintroduces Bruhat or related
+    constructive-math benchmark claims, the wording must remain source-scoped
+    until the active code, paper, and roadmap TODO evidence exists.
+
 - [x] Keep README validator sandbox/resource-limit wording scoped to local
       subprocess audit evidence versus OS/container enforcement.
   - Status: README Important limits now states that validator execution policy

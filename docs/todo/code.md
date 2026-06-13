@@ -6509,9 +6509,10 @@ Primary evidence:
     computation and asymptotic-bound records, Kazhdan-Lusztig `R`-polynomial
     coefficient linkage metadata, cluster-algebra and Bruhat-graph consequence
     fields, finite-test versus general-proof status, seed/budget records,
-    independent checker outputs, and README/ROADMAP wording that keeps
+    independent checker outputs, ROADMAP and paper-index wording that keeps
     Bruhat-interval hypercube discovery as missing evidence until local
-    implementation and reports exist. The implementation boundary should
+    implementation and reports exist, and source-scoped root README wording if
+    those claims are reintroduced. The implementation boundary should
     additionally require bit-string/basic-interval records, `x_m`/`y_m`
     generators, length and inversion-count checks, Ehresmann matrix
     inequalities, `D_m` exact-one fundamental-block checks, complementary-block

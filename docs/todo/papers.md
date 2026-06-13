@@ -6073,9 +6073,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     Kazhdan-Lusztig `R`-polynomial coefficient metadata, cluster-algebra and
     Bruhat-graph consequence records, finite-test versus general-proof status,
     seed/budget records, independent checker outputs, reproducibility status,
-    and README/ROADMAP wording that treats Bruhat-interval hypercube discovery
-    as missing paper evidence rather than implemented LibreEvolve support.
-    Paper evidence should additionally preserve the PDF date/arXiv date
+    ROADMAP and paper-index wording that treats Bruhat-interval hypercube
+    discovery as missing paper evidence rather than implemented LibreEvolve
+    support, and source-scoped root README wording if those claims are
+    reintroduced. Paper evidence should additionally preserve the PDF date/arXiv date
     distinction, Adam Zsolt Wagner acknowledgement/contribution caveat,
     FunSearch/AlphaEvolve prompt and evaluator text, model/cost/run-count
     metadata, public repository artifact status, low-discrepancy `(0,m,2)`-net

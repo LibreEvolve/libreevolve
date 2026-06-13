@@ -69,32 +69,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README provider-cancellation wording scoped to timeout policy and
-  observation evidence versus live hard cancellation.
-  - Spec evidence: AlphaEvolve-scale runs need bounded provider latency,
-    attributable stop behavior, and cancellation semantics that prevent stalled
-    model calls from blocking long budgeted experiments.
-  - Current evidence: README now says
-    `libreevolve.provider_cancellation_policy.v1` validates provider
-    request-timeout, ensemble-deadline, runtime-deadline, and hard-cancel
-    policy rules by role, including artifact requirements and hard-cancel
-    readiness gated on cancellation-record evidence. It also says runtime
-    manifests currently scope provider timeout/deadline rules to active LLM
-    role surfaces and attach scheduler-derived timeout/quarantine observations,
-    while policy `runtime_readiness` keeps live provider SDK cancellation,
-    timeout-driven stop enforcement, and cross-run provider quarantine resume
-    false with overclaim validation. The README further says provider SDK hard
-    cancellation and timeout-driven stop enforcement remain runtime work, and
-    that artifact inventory proves named cancellation evidence files exist
-    rather than proving in-flight SDK calls can be hard-cancelled. README now
-    points to `papers/provider_cancellation_boundary.json`, which preserves
-    that policy/audit-only boundary for manifest validation.
-  - Required result: when live provider SDK cancellation, timeout-driven
-    stop-run behavior, richer timeout/cancellation artifacts, or cross-run
-    quarantine/resume proof lands, update README, ROADMAP, papers index, and
-    code/paper TODO entries together so README neither underclaims current
-    timeout-policy evidence nor overclaims AlphaEvolve-style hard cancellation.
-
 - [ ] Keep README validator sandbox/resource-limit wording scoped to local
   subprocess audit evidence versus OS/container enforcement.
   - Spec evidence: AlphaEvolve-scale systems and codebase experiments need

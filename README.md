@@ -229,6 +229,13 @@ Important limits:
   evidence, not local report/export output that emits rendered Figure 4
   artifacts or accepted 15-mutation lineage; that boundary is tracked by
   `papers/figure4_matrix_discovery_artifacts.json`.
+- Matrix baseline-component records validate Section 3.1 starting-algorithm
+  provenance fields for baseline program ids, initializer, reconstruction
+  loss, Adam optimizer metadata, mutable scopes, fixed hashes, generation-0
+  metrics, mutation lineage, and matrix-result links, not local matrix-runner
+  output that emits the initializer/loss/optimizer provenance during search;
+  that boundary is tracked by
+  `papers/matrix_baseline_component_runtime_boundary.json`.
 - Collaborator-feedback provenance is optional metadata and runtime reporting
   for cohorts, events, affected workflow areas, change links, validation
   outcomes, privacy/redaction policy, and review state, not populated

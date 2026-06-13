@@ -941,27 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README matrix wording scoped to final reports until
-      baseline-component provenance exists.
-  - Spec evidence: AlphaEvolve Section 3.1 says matrix-decomposition search
-    starts from a standard gradient-based algorithm with an initializer,
-    reconstruction loss function, and Adam optimizer before evolving more
-    sophisticated tensor-decomposition algorithms.
-  - Current evidence: README documents matrix result reports, Appendix A
-    registry coverage, checked Strassen artifacts, and open follow-ups for
-    near-integrality, sweep provenance, scalar fields, and scaling limits. It
-    now documents `libreevolve.matrix_baseline_component_runtime_boundary.v1`,
-    which validates the current `not_emitted_by_local_runner` boundary and
-    required future fields for Section 3.1 starting-algorithm records. It also
-    documents the builder that can create emitted records from a component
-    inventory and validate ref/scope/hash linkage, but it does not yet document
-    automatic matrix benchmark runner emission for those records.
-  - Required result: when matrix benchmark runs persist baseline component
-    inventory and mutation-lineage records, update README, ROADMAP, papers
-    index, and code/paper TODO entries together so README distinguishes final
-    matrix result-report validation from AlphaEvolve Section 3.1
-    baseline-to-evolved-program workflow evidence.
-
 - [ ] Keep README matrix wording scoped until scalar-field artifacts exist.
   - Spec evidence: AlphaEvolve Table 2 notes that some improved matrix
     algorithms use complex-valued multiplications and can be used for exact

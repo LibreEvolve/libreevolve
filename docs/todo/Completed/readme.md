@@ -4,6 +4,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document matrix baseline-component README boundary.
+  - Status: README Important limits now states that matrix
+    baseline-component records validate Section 3.1 starting-algorithm
+    provenance fields for baseline program ids, initializer, reconstruction
+    loss, Adam optimizer metadata, mutable scopes, fixed hashes, generation-0
+    metrics, mutation lineage, and matrix-result links, not local
+    matrix-runner output that emits the initializer/loss/optimizer provenance
+    during search. It points to
+    `papers/matrix_baseline_component_runtime_boundary.json`.
+  - Verification: focused matrix baseline-component runtime-boundary and
+    paper-manifest tests validate the current absence record, emitted-record
+    builder, required initializer/reconstruction-loss/optimizer components,
+    Adam metadata checks, linkage checks, and overclaim guards.
+
 - [x] Document Figure 4 matrix-discovery README boundary.
   - Status: README Important limits now states that Figure 4
     matrix-discovery records validate main-text exhibit metadata, page and

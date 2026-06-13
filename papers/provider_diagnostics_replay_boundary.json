@@ -1,8 +1,13 @@
 {
   "schema": "libreevolve.provider_diagnostics_replay_boundary.v1",
   "source_paper_id": "2506.13131",
-  "source_section_id": "2.4",
-  "source_claim": "AlphaEvolve-scale provider-call evidence should identify model calls that produced proposals, critiques, feedback, and prompt mutations without confusing retained diagnostics with replayable raw provider outputs",
+  "source_section_ids": [
+    "2.2",
+    "2.3",
+    "2.4",
+    "4"
+  ],
+  "source_claim": "AlphaEvolve-scale provider-call evidence should identify model calls that produced proposals, LLM feedback, and meta-prompt evolution without confusing retained diagnostics with replayable raw provider outputs; local critique-role diagnostics are extra runtime telemetry rather than a detailed paper-method surface",
   "boundary_status": "bounded_scalar_diagnostics_without_raw_provider_replay",
   "diagnostics_schema": "libreevolve.llm_provider_diagnostics.v1",
   "claim_ready": false,

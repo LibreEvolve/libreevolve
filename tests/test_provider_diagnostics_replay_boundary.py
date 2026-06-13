@@ -19,6 +19,7 @@ def test_provider_diagnostics_replay_boundary_accepts_bounded_diagnostics():
     assert validation.required_evidence_field_count == 18
     assert validation.missing_evidence_count == 4
     assert boundary["schema"] == PROVIDER_DIAGNOSTICS_REPLAY_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["2.2", "2.3", "2.4", "4"]
     assert boundary["claim_ready"] is False
     assert "does not claim raw provider-payload sidecars" in boundary["claim_boundary"]
 

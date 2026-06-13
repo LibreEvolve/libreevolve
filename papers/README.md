@@ -2407,7 +2407,8 @@ Implemented:
   not evidence of live provider pricing, provider default-rate capture,
   account/model-specific pricing, or raw provider-payload replay.
 - `papers/provider_diagnostics_replay_boundary.json`: provider diagnostics
-  replay sidecar for AlphaEvolve Section 2.4. It records provider usage
+  replay sidecar for AlphaEvolve Sections 2.2, 2.3, 2.4, and 4. It records
+  provider usage
   metadata, request/response ids, finish reasons, adapter retry metadata,
   provider failure categories, provider status codes, bounded provider
   diagnostics, backend defaults metadata, retained call-history windows,

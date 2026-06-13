@@ -2,6 +2,35 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive FlashEvolve asynchronous-stage roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2605.08520` source-scoped as background asynchronous-stage
+    orchestration context rather than implemented LibreEvolve FlashEvolve-style
+    async orchestration support.
+  - Current evidence: the cached paper and `papers/README.md` record
+    synchronized stage execution and LLM-heavy imbalance as bottlenecks, plus
+    asynchronous workers/queues, artifact-version tracking, stale-artifact
+    update/discard/patch policies, language-space stale-artifact repair,
+    speculative stage completion, adaptive workflow control, 3.5x local-vLLM
+    and 4.9x API proposal-throughput claims, and ACE/Meta-Harness
+    applicability, while marking local worker queues, stage dependency
+    schedulers, artifact-version lineage DAGs, staleness detectors, repair
+    policies, speculative-completion records, workflow controllers, benchmark
+    reports, linked-code audits, and independent reproduction output as
+    missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source-license metadata, relation to LibreEvolve's synchronous loop,
+    worker/queue schemas, stage-overlap traces, artifact-version provenance,
+    staleness classification and policy outcomes, reflective patch artifacts,
+    speculative-completion records, adaptive workflow telemetry,
+    throughput/token-efficiency records, GEPA/vLLM/API baseline identities,
+    ACE/Meta-Harness applicability status, code/artifact availability, and
+    independent verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive PACEvolve long-horizon consistency roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

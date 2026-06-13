@@ -10,30 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep paper-artifact roadmap wording scoped until creator/assembler role
-      records are bound to artifacts.
-  - Spec evidence: AlphaEvolve's Contributions section identifies the figure
-    creators and the people who assembled the accompanying Google Colab.
-  - Current evidence: roadmap/README/paper-index status can point to PDF
-    manifest validation, planned companion Colab source tracking, and
-    figure/exhibit artifact TODOs.
-    `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
-    figure-creator and companion-Colab assembler role records with stable
-    artifact ids, artifact types, exact initials, source section/page metadata,
-    and source phrases. `libreevolve.alphaevolve_paper_artifact_linkage.v1`
-    now validates the current `not_yet_linked` availability boundary and the
-    digest/link/source-map fields required before rendered figure or notebook
-    artifacts can be claimed. The companion Colab source mapping for
-    constructive math now preserves the Appendix B `result_row_boundary`
-    inventory of `19` expected result ids. It does not bind those roles to
-    rendered figure hashes, companion-notebook URLs/digests, or
-    source-to-artifact maps.
-  - Required result: when role records are linked to concrete rendered or
-    companion-notebook artifacts, update ROADMAP, README, papers index, and
-    code/paper TODO entries together so roadmap wording distinguishes artifact
-    presence/hash verification from paper-attributed creator or assembler
-    provenance.
-
 - [ ] Keep Appendix A matrix-suite roadmap wording scoped to target identities
       versus curation provenance.
   - Spec evidence: AlphaEvolve Appendix A says the 54 reported matrix sizes

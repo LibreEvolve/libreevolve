@@ -2,6 +2,27 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive paper-artifact role roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish paper-attributed creator/assembler role records from concrete
+    artifact availability and byte-level linkage.
+  - Current evidence: `libreevolve.alphaevolve_paper_artifact_roles.v1` and
+    `papers/paper_artifact_roles.json` validate the AlphaEvolve PDF page 23
+    figure-creator and companion-Colab assembler attribution records.
+    `libreevolve.alphaevolve_paper_artifact_linkage.v1` and
+    `papers/paper_artifact_linkage.json` validate the current
+    `not_yet_linked` boundary plus the digest, link, retrieval-provenance, and
+    source-to-artifact-map fields required before rendered figure or notebook
+    artifacts can be claimed.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    binding to rendered figure files, caption/source maps, figure-region
+    artifacts, companion notebook URLs or digests, retrieved notebook exports,
+    cell maps, and source-to-artifact maps.
+  - Verification: paper-artifact role/linkage tests, paper-manifest
+    validation, and checked-in paper-index TODO coverage still pass.
+
 - [x] Archive follow-on problem-count roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

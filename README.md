@@ -65,6 +65,12 @@ Important limits:
   68 numbered HTML pages, and page 68 is classified as an extra duplicate-title
   `Logic puzzles` page outside the declared navigation range with a generic
   Colab landing URL and placeholder paper link.
+- Paper artifact-role records validate AlphaEvolve PDF page 23 figure-creator
+  and companion Google Colab assembler attribution with stable artifact ids,
+  exact contributor initials, source section/page metadata, and source phrases,
+  not linked rendered figure files, caption/source maps, figure-region
+  artifacts, companion notebook URLs or digests, retrieved notebook exports,
+  cell maps, or source-to-artifact maps.
 - Systems-result schemas and readiness sidecars are report contracts only; they
   do not yet emit real scheduling, Pallas/kernel, compiler, or hardware fixture
   runs, deployment measurements, expert confirmations, or domain-specific

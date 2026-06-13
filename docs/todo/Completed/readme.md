@@ -14815,3 +14815,26 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     provenance, rollback/versioning, drift diagnostics, budget accounting,
     baselines, report outcomes, and AEvo-style meta-editing remain active in
     code and paper TODOs.
+
+- [x] Keep README G-Zero verifier-free self-evolution claims source-scoped
+      until runtime evidence exists.
+  - Spec evidence: arXiv `2605.09959`, `G-Zero: Self-Play for Open-Ended
+    Generation from Zero Data`, says open-ended self-evolution can avoid proxy
+    LLM judges by using verifier-free co-evolution. It introduces
+    `Hint-delta`, Generator/Proposer roles, self-generated hints, GRPO
+    training for the Proposer, DPO training for the Generator, exploration
+    coverage requirements, and pseudo-label noise assumptions.
+  - Status: README now lists arXiv `2605.09959` as verifier-free co-evolution
+    context only and marks the mention as a curated cached-paper subset while
+    `papers/README.md` remains the complete implementation-status index. It
+    states that LibreEvolve has no Hint-delta intrinsic-reward computation from
+    unassisted versus hint-conditioned Generator responses, Proposer model,
+    Generator model, self-generated query/hint dataset, GRPO proposer trainer,
+    DPO generator trainer, co-evolution training loop, pseudo-label noise
+    filter, exploration-coverage report, best-iterate suboptimality fixture,
+    unverifiable-domain benchmark, external-judge reward-hacking comparison,
+    linked-code audit, or independent reproduction output.
+  - Remaining README gap: role schemas, response/hint pairs, intrinsic-reward
+    records, training traces, coverage/noise diagnostics, task baselines,
+    report outcomes, and G-Zero-style verifier-free co-evolution remain active
+    in code and paper TODOs.

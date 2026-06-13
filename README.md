@@ -745,6 +745,16 @@ Important limits:
   instantiation, five-baseline agentic/reasoning benchmark report, 26%
   relative-improvement reproduction, three-task open-ended optimization report,
   linked-code audit, or independent reproduction output.
+- ArXiv `2605.09959` is verifier-free co-evolution context only; the README
+  mentions this cached paper as a curated subset while `papers/README.md`
+  remains the complete implementation-status index. LibreEvolve has no
+  Hint-delta intrinsic-reward computation from unassisted versus
+  hint-conditioned Generator responses, Proposer model, Generator model,
+  self-generated query/hint dataset, GRPO proposer trainer, DPO generator
+  trainer, co-evolution training loop, pseudo-label noise filter,
+  exploration-coverage report, best-iterate suboptimality fixture,
+  unverifiable-domain benchmark, external-judge reward-hacking comparison,
+  linked-code audit, or independent reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

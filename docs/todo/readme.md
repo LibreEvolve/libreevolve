@@ -91,30 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README G-Zero verifier-free self-evolution claims source-scoped
-      until runtime evidence exists.
-  - Spec evidence: arXiv `2605.09959`, `G-Zero: Self-Play for Open-Ended
-    Generation from Zero Data`, says open-ended self-evolution can avoid proxy
-    LLM judges by using verifier-free co-evolution. It introduces
-    `Hint-delta`, Generator/Proposer roles, self-generated hints, GRPO
-    training for the Proposer, DPO training for the Generator, exploration
-    coverage requirements, and pseudo-label noise assumptions.
-  - Current evidence: README now lists `2605.09959`, G-Zero, as verifier-free
-    co-evolution context only and states that no local Hint-delta intrinsic
-    reward, Proposer/Generator co-training loop, GRPO/DPO trainer, or
-    verifier-free self-evolution report exists. README also documents
-    LibreEvolve's evaluator-first design, validator contracts, run artifacts,
-    archive behavior, and benchmark boundaries.
-  - Required result: if README mentions G-Zero, verifier-free self-play,
-    open-ended generation without judges, intrinsic rewards, Hint-delta,
-    Generator/Proposer co-evolution, GRPO/DPO self-training, exploration
-    coverage, or reward-hacking resistance, keep the wording source-scoped
-    until local artifacts can show role schemas, response/hint pairs,
-    intrinsic-reward records, training traces,
-    coverage/noise diagnostics, task baselines, and report outcomes. Avoid
-    implying LibreEvolve supports G-Zero-style verifier-free co-evolution
-    without those artifacts.
-
 - [ ] Keep README GenEvolve multimodal trajectory-distillation claims
       source-scoped until runtime evidence exists.
   - Spec evidence: arXiv `2605.21605`, `GenEvolve: Self-Evolving Image

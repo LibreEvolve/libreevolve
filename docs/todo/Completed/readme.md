@@ -4,6 +4,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document compiler-IR README boundary.
+  - Status: README Important limits now states that compiler IR records
+    validate IR-origin/editability boundaries, compiler-generated baseline
+    provenance, reference and input-generator hashes, numerical tolerance
+    policy, final expert-confirmation scope, per-edit reference-check metadata,
+    abstraction-level attribution, and artifact refs, not real
+    XLA/FlashAttention edit artifacts, randomized input coverage,
+    reference-check outputs, tolerance/failure logs, or expert all-input
+    signoff.
+  - Verification: systems-result tests validate required compiler IR records
+    for ready compiler reports and malformed per-edit reference-check metadata;
+    code and papers TODOs still track the missing real compiler edit and
+    reference-check artifacts.
+
 - [x] Document Gemini-to-TPU contribution README boundary.
   - Status: README Important limits now states that hardware contribution
     records validate Gemini/AlphaEvolve model-family relationship, run/backend

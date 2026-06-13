@@ -941,28 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README compiler-IR wording scoped to final reference gates until
-      per-edit randomized checks exist.
-  - Spec evidence: AlphaEvolve Section 3.3.4 checked each FlashAttention
-    compiler-IR modification against reference code on randomized inputs and
-    then separately had the final code confirmed by human experts for all
-    possible inputs; the same section says the optimized XLA IR was intended
-    for debugging rather than direct developer editing and was
-    compiler-generated/already highly optimized.
-  - Current evidence: README documents generic systems result reports and
-    reference-correctness gates. README now describes ready compiler-report
-    `compiler_ir_provenance`: per-edit randomized reference-check records,
-    reference implementation and input-generator hashes, IR-origin/editability
-    boundaries, compiler-generated baseline provenance, numerical tolerance
-    policy, final expert-confirmation scope, and
-    kernel/pre/postprocessing attribution. Real compiler fixtures still do not
-    emit those edit-sequence artifacts.
-  - Required result: once compiler/kernel fixtures emit real per-edit
-    reference checks, randomized input coverage, tolerance/failure-policy
-    outputs, and final expert signoff artifacts, update README, ROADMAP,
-    papers index, and matching TODOs so README does not imply metadata alone
-    proves AlphaEvolve-style compiler-IR traces.
-
 - [ ] Keep README compiler-stack wording scoped until FlashAttention context
       provenance exists.
   - Spec evidence: AlphaEvolve Section 3.3.4 situates the compiler task in a

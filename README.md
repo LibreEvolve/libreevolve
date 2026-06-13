@@ -392,6 +392,12 @@ Important limits:
   flags, and artifact refs, not real model/run/backend records, reviewed
   TPU/circuit identifiers, firstness evidence, integration records, hardware
   signoff files, or synthesis-rediscovery audit artifacts.
+- Compiler IR records validate IR-origin/editability boundaries,
+  compiler-generated baseline provenance, reference and input-generator hashes,
+  numerical tolerance policy, final expert-confirmation scope, per-edit
+  reference-check metadata, abstraction-level attribution, and artifact refs,
+  not real XLA/FlashAttention edit artifacts, randomized input coverage,
+  reference-check outputs, tolerance/failure logs, or expert all-input signoff.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

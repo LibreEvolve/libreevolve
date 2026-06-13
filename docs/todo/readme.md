@@ -335,7 +335,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     alphaevolve_strict`, `runtime.stop_reason: invalid_initial_programs`, and
     `runtime.history.initial_program_validity_report` for runs that require
     every selected seed to be evaluator-valid and metric-complete before
-    mutation. README now also points to
+    mutation. README Important limits now also points to
     `papers/initial_program_validity_boundary.json` for the
     strict-policy-available paper-facing boundary.
   - Required result: when benchmark fixtures opt into strict mode and publish

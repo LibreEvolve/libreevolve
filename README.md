@@ -140,6 +140,12 @@ Important limits:
   contribution review/signoff, paper certification rows, or AlphaEvolve
   human-seeded benchmark parity; that boundary is tracked by
   `papers/initial_program_idea_provenance_boundary.json`.
+- Initial-program validity can be enforced with
+  `initial_program_validity_policy: alphaevolve_strict`, but the default
+  permissive baseline still records invalid seeds as diagnostics and does not
+  prove benchmark-suite strict runs, paper certification rows, or AlphaEvolve
+  complete initial-program parity; that boundary is tracked by
+  `papers/initial_program_validity_boundary.json`.
 - Duplicate-work reports are run-local exact-workspace cache diagnostics, not
   durable cross-run memory, semantic duplicate detection, or resume-spanning
   cache replay; that boundary is tracked by

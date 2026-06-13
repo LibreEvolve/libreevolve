@@ -4,6 +4,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document initial-program validity README boundary.
+  - Status: README Important limits now states that
+    `initial_program_validity_policy: alphaevolve_strict` can enforce selected
+    seed validity, but the default permissive baseline still records invalid
+    seeds as diagnostics and does not prove benchmark-suite strict runs, paper
+    certification rows, or AlphaEvolve complete initial-program parity. It
+    ties that boundary to `papers/initial_program_validity_boundary.json`.
+  - Verification: initial-program validity boundary and paper-manifest tests
+    validate the sidecar that README now references.
+
 - [x] Document initial-program idea provenance README boundary.
   - Status: README Important limits now states that initial-program idea
     provenance is optional seed metadata plus a generation-0 linkage report,

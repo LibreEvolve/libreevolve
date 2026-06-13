@@ -69,26 +69,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README qualitative-feedback wording scoped until calibration and
-      prompt-history audits exist.
-  - Spec evidence: AlphaEvolve Section 2.4 says LLM-generated feedback can
-    grade hard-to-code properties such as simplicity and either add them as
-    scores or discard candidates when a criterion is not fulfilled.
-  - Current evidence: README documents optional LLM feedback graders plus
-    qualitative policy fields, retained `qualitative_policy` records, and
-    `runtime.history.qualitative_feedback_policy_report`. README now also
-    documents
-    `runtime.history.qualitative_feedback_prompt_history_audit_report`, which
-    joins feedback-bearing candidates to prompt-history add/score rows without
-    retaining prompt text. It should not imply AlphaEvolve-style qualitative
-    feedback quality until calibration/task-suite linkage and
-    criterion-quality ablations exist. README now ties that boundary to
-    `papers/qualitative_feedback_boundary.json`.
-  - Required result: when calibration/task-suite and ablation evidence lands,
-    update README, ROADMAP, papers index, and code/paper TODOs together so
-    README distinguishes audited declared hard-to-code criteria from validated
-    qualitative feedback such as simplicity.
-
 - [ ] Keep README provider-cancellation wording scoped to timeout policy and
   observation evidence versus live hard cancellation.
   - Spec evidence: AlphaEvolve-scale runs need bounded provider latency,

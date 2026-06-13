@@ -4,6 +4,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document task-specification README boundary.
+  - Status: README Important limits now states that task-specification
+    bundles, `task_specification.json`, and artifact-resolution reports link
+    initial programs, evaluators, prompts, backends, context, candidate
+    representation, metrics, history streams, best exports, marked spans, and
+    supported embedded score causality, not external-validator score causality,
+    arbitrary-language/build-runner task specs, user-authored standalone
+    task-spec parity, or full AlphaEvolve task-spec parity. It ties that
+    boundary to `papers/task_specification_boundary.json`.
+  - Verification: task-specification boundary and paper-manifest tests
+    validate the sidecar that README now references.
+
 - [x] Document Table 1 capability-exhibit README boundary.
   - Status: README Important limits now states that Table 1
     capability-exhibit reports preserve FunSearch-versus-AlphaEvolve row text,

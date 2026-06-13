@@ -63,6 +63,13 @@ Important limits:
   implementation status, not validated parity for the individual code-scale,
   language, evaluator, sample-count, model-scale, prompt-context, or
   multi-metric capability rows.
+- Task-specification bundles, `task_specification.json`, and artifact-
+  resolution reports link initial programs, evaluators, prompts, backends,
+  context, candidate representation, metrics, history streams, best exports,
+  marked spans, and supported embedded score causality, not external-validator
+  score causality, arbitrary-language/build-runner task specs, user-authored
+  standalone task-spec parity, or full AlphaEvolve task-spec parity; that
+  boundary is tracked by `papers/task_specification_boundary.json`.
 - Archive restore uses manifest archive-state snapshots plus accepted-history
   rows for current cursor/cell/elite contents; `archive_events.jsonl` replay is
   audit-only and not an ordered MAP-Elites restore engine. That boundary is

@@ -26,6 +26,8 @@ EXPECTED_FIGURE9_EXHIBIT_ID = "figure9_matrix_diff_magnified"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_FIGURE4_SOURCE_FIGURE = "Figure 4"
 EXPECTED_SOURCE_FIGURE = "Figures 9a-9c"
+EXPECTED_FIGURE4_SOURCE_FIGURE_IDS = ("Figure 4",)
+EXPECTED_SOURCE_FIGURE_IDS = ("Figure 9a", "Figure 9b", "Figure 9c")
 EXPECTED_TARGET_ID = "mm_4x4x4"
 EXPECTED_TARGET_DIMENSIONS = [4, 4, 4]
 EXPECTED_RESULT_RANK = 48
@@ -365,6 +367,7 @@ def figure4_matrix_discovery_artifact_boundary_record() -> dict[str, Any]:
         "exhibit_schema": FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_figure": EXPECTED_FIGURE4_SOURCE_FIGURE,
+        "source_figure_ids": list(EXPECTED_FIGURE4_SOURCE_FIGURE_IDS),
         "target_id": EXPECTED_TARGET_ID,
         "artifact_status": "not_emitted_by_local_report_export",
         "local_export_scope": "figure4_matrix_discovery_report_export",
@@ -455,6 +458,7 @@ def figure9_matrix_diff_artifact_boundary_record() -> dict[str, Any]:
         "exhibit_schema": FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_figure": EXPECTED_SOURCE_FIGURE,
+        "source_figure_ids": list(EXPECTED_SOURCE_FIGURE_IDS),
         "target_id": EXPECTED_TARGET_ID,
         "artifact_status": "not_emitted_by_local_report_export",
         "local_export_scope": "figure9_matrix_diff_report_export",
@@ -650,6 +654,8 @@ def validate_figure4_matrix_discovery_artifact_boundary(
         issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     if data.get("source_figure") != EXPECTED_FIGURE4_SOURCE_FIGURE:
         issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_source_figure", "source_figure must be Figure 4"))
+    if data.get("source_figure_ids") != list(EXPECTED_FIGURE4_SOURCE_FIGURE_IDS):
+        issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_source_figure_ids", "source_figure_ids must be ['Figure 4']"))
     if data.get("target_id") != EXPECTED_TARGET_ID:
         issues.append(Figure4MatrixDiscoveryExhibitIssue("invalid_target_id", "target_id must be mm_4x4x4"))
     status = data.get("artifact_status")
@@ -702,6 +708,8 @@ def validate_figure9_matrix_diff_artifact_boundary(
         issues.append(Figure9MatrixDiffExhibitIssue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     if data.get("source_figure") != EXPECTED_SOURCE_FIGURE:
         issues.append(Figure9MatrixDiffExhibitIssue("invalid_source_figure", "source_figure must identify Figures 9a-9c"))
+    if data.get("source_figure_ids") != list(EXPECTED_SOURCE_FIGURE_IDS):
+        issues.append(Figure9MatrixDiffExhibitIssue("invalid_source_figure_ids", "source_figure_ids must identify Figure 9a, Figure 9b, and Figure 9c"))
     if data.get("target_id") != EXPECTED_TARGET_ID:
         issues.append(Figure9MatrixDiffExhibitIssue("invalid_target_id", "target_id must be mm_4x4x4"))
     status = data.get("artifact_status")

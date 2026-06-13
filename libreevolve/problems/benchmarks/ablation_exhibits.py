@@ -16,6 +16,7 @@ FIGURE8_ARTIFACT_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_figure8_artifact_bou
 EXPECTED_EXHIBIT_ID = "figure8_ablation_curves"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_FIGURE = "Figure 8"
+EXPECTED_SOURCE_FIGURE_IDS = ("Figure 8",)
 EXPECTED_PANEL_IDS = ("matrix_tensor_decomposition", "kissing_number_sphere_packing")
 EXPECTED_LEGEND_LABELS = {
     "full_system": "Full method",
@@ -82,6 +83,7 @@ def figure8_artifact_boundary_record() -> dict[str, Any]:
         "exhibit_schema": FIGURE8_EXHIBIT_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_figure": EXPECTED_SOURCE_FIGURE,
+        "source_figure_ids": list(EXPECTED_SOURCE_FIGURE_IDS),
         "artifact_status": "not_emitted_by_local_report_export",
         "local_export_scope": "figure8_ablation_curve_report_export",
         "required_artifact_fields": list(FIGURE8_ARTIFACT_REQUIRED_FIELDS),
@@ -198,6 +200,8 @@ def validate_figure8_artifact_boundary(
         issues.append(Figure8ExhibitIssue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     if data.get("source_figure") != EXPECTED_SOURCE_FIGURE:
         issues.append(Figure8ExhibitIssue("invalid_source_figure", "source_figure must be Figure 8"))
+    if data.get("source_figure_ids") != list(EXPECTED_SOURCE_FIGURE_IDS):
+        issues.append(Figure8ExhibitIssue("invalid_source_figure_ids", "source_figure_ids must be ['Figure 8']"))
     status = data.get("artifact_status")
     if status not in FIGURE8_ARTIFACT_STATUSES:
         issues.append(Figure8ExhibitIssue("invalid_artifact_status", "artifact_status must be a known Figure 8 artifact status"))

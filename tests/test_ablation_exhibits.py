@@ -181,12 +181,14 @@ def test_validate_figure8_artifact_boundary_accepts_absence_record():
     assert validation.emitted_artifact_count == 0
     assert validation.required_field_count == 12
     assert boundary["schema"] == FIGURE8_ARTIFACT_BOUNDARY_SCHEMA
+    assert boundary["source_figure_ids"] == ["Figure 8"]
     assert "does not claim local report/export code emits" in boundary["claim_boundary"]
 
 
 def test_validate_figure8_artifact_boundary_rejects_premature_emitted_claim():
     boundary = figure8_artifact_boundary_record()
     boundary["artifact_status"] = "emitted"
+    boundary["source_figure_ids"] = ["Figure 7"]
     boundary["required_artifact_fields"] = ["exhibit_id"]
     boundary["claim_boundary"] = "Figure 8 artifacts are emitted."
 
@@ -194,6 +196,7 @@ def test_validate_figure8_artifact_boundary_rejects_premature_emitted_claim():
     codes = {issue.code for issue in validation.issues}
 
     assert validation.ok is False
+    assert "invalid_source_figure_ids" in codes
     assert "missing_figure8_artifacts" in codes
     assert "missing_required_artifact_field" in codes
 

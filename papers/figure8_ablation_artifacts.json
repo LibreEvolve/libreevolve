@@ -3,6 +3,9 @@
   "exhibit_schema": "libreevolve.alphaevolve_figure8_exhibit.v1",
   "source_paper_id": "2506.13131",
   "source_figure": "Figure 8",
+  "source_figure_ids": [
+    "Figure 8"
+  ],
   "artifact_status": "not_emitted_by_local_report_export",
   "local_export_scope": "figure8_ablation_curve_report_export",
   "required_artifact_fields": [

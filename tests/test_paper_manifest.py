@@ -763,6 +763,7 @@ def test_validate_paper_manifest_rejects_figure8_ablation_artifact_sidecar_drift
     _write_manifest(tmp_path, [row])
     record = paper_manifest.figure8_artifact_boundary_record()
     record["source_figure"] = "Figure 7"
+    record["source_figure_ids"] = ["Figure 7"]
     sidecar = tmp_path / paper_manifest.FIGURE8_ABLATION_ARTIFACTS_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -771,6 +772,7 @@ def test_validate_paper_manifest_rejects_figure8_ablation_artifact_sidecar_drift
     codes = {issue.code for issue in report.issues}
     assert report.ok is False
     assert "figure8_ablation_artifact_invalid_source_figure" in codes
+    assert "figure8_ablation_artifact_invalid_source_figure_ids" in codes
 
 
 def test_validate_paper_manifest_requires_figure8_ablation_artifact_sidecar_at_repo_root(
@@ -7445,6 +7447,7 @@ def test_validate_paper_manifest_checks_figure9_matrix_diff_artifact_boundary(
     )
     boundary = paper_manifest.figure9_matrix_diff_artifact_boundary_record()
     boundary["artifact_status"] = "emitted"
+    boundary["source_figure_ids"] = ["Figure 9a"]
     monkeypatch.setattr(
         paper_manifest,
         "figure9_matrix_diff_artifact_boundary_record",
@@ -7455,6 +7458,7 @@ def test_validate_paper_manifest_checks_figure9_matrix_diff_artifact_boundary(
 
     codes = {issue.code for issue in report.issues}
     assert report.ok is False
+    assert "figure9_matrix_diff_artifact_invalid_source_figure_ids" in codes
     assert "figure9_matrix_diff_artifact_missing_figure9_matrix_diff_artifacts" in codes
 
 
@@ -7494,6 +7498,7 @@ def test_validate_paper_manifest_rejects_figure9_matrix_diff_artifact_sidecar_dr
     )
     record = paper_manifest.figure9_matrix_diff_artifact_boundary_record()
     record["artifact_status"] = "emitted"
+    record["source_figure_ids"] = ["Figure 9a"]
     sidecar = tmp_path / paper_manifest.FIGURE9_MATRIX_DIFF_ARTIFACTS_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -7501,6 +7506,7 @@ def test_validate_paper_manifest_rejects_figure9_matrix_diff_artifact_sidecar_dr
     codes = {issue.code for issue in report.issues}
 
     assert report.ok is False
+    assert "figure9_matrix_diff_artifact_invalid_source_figure_ids" in codes
     assert "figure9_matrix_diff_artifact_missing_figure9_matrix_diff_artifacts" in codes
 
 
@@ -7578,6 +7584,7 @@ def test_validate_paper_manifest_checks_figure4_matrix_discovery_artifact_bounda
     )
     boundary = paper_manifest.figure4_matrix_discovery_artifact_boundary_record()
     boundary["artifact_status"] = "emitted"
+    boundary["source_figure_ids"] = ["Figure 5"]
     monkeypatch.setattr(
         paper_manifest,
         "figure4_matrix_discovery_artifact_boundary_record",
@@ -7588,6 +7595,7 @@ def test_validate_paper_manifest_checks_figure4_matrix_discovery_artifact_bounda
 
     codes = {issue.code for issue in report.issues}
     assert report.ok is False
+    assert "figure4_matrix_discovery_artifact_invalid_source_figure_ids" in codes
     assert "figure4_matrix_discovery_artifact_missing_figure4_matrix_discovery_artifacts" in codes
 
 
@@ -7627,6 +7635,7 @@ def test_validate_paper_manifest_rejects_figure4_matrix_discovery_artifact_sidec
     )
     record = paper_manifest.figure4_matrix_discovery_artifact_boundary_record()
     record["artifact_status"] = "emitted"
+    record["source_figure_ids"] = ["Figure 5"]
     sidecar = tmp_path / paper_manifest.FIGURE4_MATRIX_DISCOVERY_ARTIFACTS_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -7634,6 +7643,7 @@ def test_validate_paper_manifest_rejects_figure4_matrix_discovery_artifact_sidec
     codes = {issue.code for issue in report.issues}
 
     assert report.ok is False
+    assert "figure4_matrix_discovery_artifact_invalid_source_figure_ids" in codes
     assert "figure4_matrix_discovery_artifact_missing_figure4_matrix_discovery_artifacts" in codes
 
 

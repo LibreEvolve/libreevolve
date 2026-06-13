@@ -3,6 +3,11 @@
   "exhibit_schema": "libreevolve.alphaevolve_figure9_matrix_diff_exhibit.v1",
   "source_paper_id": "2506.13131",
   "source_figure": "Figures 9a-9c",
+  "source_figure_ids": [
+    "Figure 9a",
+    "Figure 9b",
+    "Figure 9c"
+  ],
   "target_id": "mm_4x4x4",
   "artifact_status": "not_emitted_by_local_report_export",
   "local_export_scope": "figure9_matrix_diff_report_export",

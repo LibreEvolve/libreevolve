@@ -461,17 +461,20 @@ def test_figure4_matrix_discovery_artifact_boundary_accepts_current_absence():
     assert validation.artifact_status == "not_emitted_by_local_report_export"
     assert validation.emitted_artifact_count == 0
     assert validation.required_field_count == 13
+    assert boundary["source_figure_ids"] == ["Figure 4"]
     assert validation.issues == []
 
 
 def test_figure4_matrix_discovery_artifact_boundary_rejects_absence_with_artifacts():
     boundary = figure4_matrix_discovery_artifact_boundary_record()
+    boundary["source_figure_ids"] = ["Figure 5"]
     boundary["emitted_artifacts"] = [_figure4_artifact()]
 
     validation = validate_figure4_matrix_discovery_artifact_boundary(boundary)
     codes = {issue.code for issue in validation.issues}
 
     assert validation.ok is False
+    assert "invalid_source_figure_ids" in codes
     assert "unexpected_emitted_artifacts" in codes
 
 
@@ -654,17 +657,20 @@ def test_figure9_matrix_diff_artifact_boundary_accepts_current_absence():
     assert validation.artifact_status == "not_emitted_by_local_report_export"
     assert validation.emitted_artifact_count == 0
     assert validation.required_field_count == 13
+    assert boundary["source_figure_ids"] == ["Figure 9a", "Figure 9b", "Figure 9c"]
     assert validation.issues == []
 
 
 def test_figure9_matrix_diff_artifact_boundary_rejects_absence_with_artifacts():
     boundary = figure9_matrix_diff_artifact_boundary_record()
+    boundary["source_figure_ids"] = ["Figure 9a"]
     boundary["emitted_artifacts"] = [_figure9_artifact("figure9a")]
 
     validation = validate_figure9_matrix_diff_artifact_boundary(boundary)
     codes = {issue.code for issue in validation.issues}
 
     assert validation.ok is False
+    assert "invalid_source_figure_ids" in codes
     assert "unexpected_emitted_artifacts" in codes
 
 

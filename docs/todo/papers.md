@@ -2896,12 +2896,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     9-input targets.
   - Current evidence: `libreevolve/problems/examples/sorting` is deliberately
     scoped as a solved smoke/plateau fixture and is listed in the example-scope
-    registry as not AlphaEvolve-comparable. The paper ledger has no
-    sorting-network benchmark row, no zero-one verification artifact, no
-    comparator-count/depth target table, no repeated-run evidence, no
-    negative fixtures for invalid comparators or lookup shortcuts, and no
-    certification row proving that a run rediscovered a known 8- or 9-input
-    target under fixed evaluator/model/seed conditions.
+    registry as not AlphaEvolve-comparable. `sorting_network_8` now exists as
+    a non-comparable benchmark candidate with an exhaustive zero-one
+    verifier, comparator-count/depth metrics, 28-comparator valid seed, and a
+    checked known 19-comparator target. The paper ledger still has no
+    `sorting_network_9` fixture, source-citation sidecar for the zero-one
+    verifier or known comparator targets, repeated-run evidence, negative
+    fixture hardening report, or certification row proving rediscovery under
+    fixed evaluator/model/seed conditions.
   - Required result: add a paper-visible benchmark record for
     `sorting_network_8` and `sorting_network_9`, including source citations
     for the zero-one verifier and known comparator targets, fixture scope,

@@ -1,0 +1,9 @@
+Return an 8-input sorting network as a list of comparator pairs.
+
+Define `network() -> list[tuple[int, int]]`. Each comparator pair `(i, j)` must
+use distinct integer wire indexes in the range `0..7`; the evaluator normalizes
+pair order before applying the comparator.
+
+The evaluator checks every binary input using the zero-one principle. A valid
+network sorts all 256 binary inputs. The target is a valid 8-input sorting
+network with 19 or fewer comparators.

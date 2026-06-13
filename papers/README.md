@@ -2509,6 +2509,11 @@ Implemented:
   fixture. The bubble-sort seed already reaches `accuracy == 1.0`, so this
   example can demonstrate mutation handling and same-score implementation
   variety but is not seed-to-best optimization-pressure evidence.
+- `libreevolve/problems/examples/sorting_network_8`: bounded benchmark
+  candidate with exhaustive zero-one validation, a valid 28-comparator seed,
+  and a checked 19-comparator target. It is not paper-comparable evidence until
+  repeated runs, hardening reports, source-citation sidecars, and certification
+  artifacts are added.
 
 Planned or background-only:
 

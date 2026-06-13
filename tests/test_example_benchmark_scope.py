@@ -6,24 +6,28 @@ from libreevolve.problems.benchmarks.example_scope import (
 )
 
 
-def test_example_scope_records_mark_shipped_examples_as_smoke_only():
+def test_example_scope_records_keep_shipped_examples_non_comparable():
     records = example_benchmark_scope_records()
 
     validation = validate_example_benchmark_scope(records)
 
     assert validation.ok is True
-    assert validation.smoke_only is True
+    assert validation.smoke_only is False
     assert validation.comparable_problem_ids == []
     assert {record["problem_id"] for record in records} == {
         "hello_world",
         "sorting",
+        "sorting_network_8",
         "workspace_math",
         "embedded_evaluate_math",
         "matrix_multiplication",
         "circle_packing",
     }
-    assert {record["level"] for record in records} == {"smoke"}
+    assert {record["level"] for record in records} == {"smoke", "benchmark"}
     assert all(record["alphaevolve_comparable"] is False for record in records)
+    sorting_network = next(record for record in records if record["problem_id"] == "sorting_network_8")
+    assert sorting_network["level"] == "benchmark"
+    assert sorting_network["current_role"] == "bounded_rediscovery_benchmark_candidate"
 
 
 def test_example_scope_rejects_smoke_record_marked_alphaevolve_comparable():
@@ -78,7 +82,8 @@ def test_example_scope_summary_renders_scope_table():
 
     assert "Example benchmark scope" in summary
     assert "| schema_status | ok |" in summary
-    assert "| smoke_only | yes |" in summary
+    assert "| smoke_only | no |" in summary
     assert "| comparable_problem_count | 0 |" in summary
+    assert "| sorting_network_8 | benchmark | no | bounded_rediscovery_benchmark_candidate |" in summary
     assert "| embedded_evaluate_math | smoke | no | embedded_entrypoint_fixture |" in summary
     assert "| matrix_multiplication | smoke | no | operation_counter_smoke_fixture |" in summary

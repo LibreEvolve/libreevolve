@@ -1104,11 +1104,13 @@ resumed-trace proof are still open.
   constructive math, and one safe compiler/hardware/systems/kernel/scheduling
   microbenchmark.
 - Add a bounded sorting-network rediscovery fixture before heavier benchmark
-  families: `sorting_network_8` should exhaustively verify `2^8` Boolean
-  inputs and target 19 comparators, then `sorting_network_9` should verify
-  `2^9` inputs and target 25 comparators. This is the current lowest-risk
-  realistic benchmark candidate because it has cheap objective verification,
-  known targets, and no external solver or accelerator dependency.
+  families: `sorting_network_8` now exhaustively verifies `2^8` Boolean
+  inputs and targets 19 comparators from a valid 28-comparator seed. Add
+  repeated-run and hardening evidence for that fixture, then add
+  `sorting_network_9` with `2^9` verification and a 25-comparator target.
+  This remains the current lowest-risk realistic benchmark path because it has
+  cheap objective verification, known targets, and no external solver or
+  accelerator dependency.
 - Separate smoke examples from benchmark fixtures, with anti-gaming validators,
   fixture-emitted artifacts, SOTA/target baselines, and repeated-seed runs.
   Current example seed-score classes are documented: `hello_world`,

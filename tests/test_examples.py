@@ -41,6 +41,13 @@ SORTING_EXAMPLE_DIR = (
     / "examples"
     / "sorting"
 )
+SORTING_NETWORK_8_EXAMPLE_DIR = (
+    Path(__file__).resolve().parents[1]
+    / "libreevolve"
+    / "problems"
+    / "examples"
+    / "sorting_network_8"
+)
 EMBEDDED_EVALUATE_EXAMPLE_DIR = (
     Path(__file__).resolve().parents[1]
     / "libreevolve"
@@ -114,6 +121,17 @@ def _load_sorting_validator():
     return module
 
 
+def _load_sorting_network_8_validator():
+    spec = spec_from_file_location(
+        "sorting_network_8_validate",
+        SORTING_NETWORK_8_EXAMPLE_DIR / "validate.py",
+    )
+    module = module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+    return module
+
+
 def test_hello_world_accepts_exact_string_contract():
     validate = _load_hello_validator()
     result = validate.evaluate("def greet(name):\n    return f'Hello, {name}!'\n")
@@ -177,7 +195,7 @@ def test_example_seed_pressure_classification_is_documented():
     assert matrix_result["is_valid"] is True
     assert matrix_result["multiplication_count"] == 8
     assert "Optimization-pressure seeds" in readme
-    assert "neutral plateau/diversity fixtures" in readme
+    assert "Neutral plateau/diversity fixtures" in readme
 
 
 def test_sorting_rejects_equality_spoofing_object():
@@ -195,6 +213,75 @@ def test_sorting_rejects_tuple_even_when_values_are_sorted():
     validate = _load_sorting_validator()
     result = validate.evaluate("def sort_list(lst):\n    return tuple(sorted(lst))\n")
     assert result == {"accuracy": 0.0, "is_valid": False}
+
+
+def test_sorting_network_8_seed_is_valid_but_not_target():
+    validate = _load_sorting_network_8_validator()
+    seed = (SORTING_NETWORK_8_EXAMPLE_DIR / "initial_programs" / "seed.py").read_text(
+        encoding="utf-8"
+    )
+
+    result = validate.evaluate(seed)
+
+    assert result["is_valid"] is True
+    assert result["sorted_input_coverage"] == 1.0
+    assert result["comparator_count"] == 28
+    assert result["depth"] == 13
+    assert result["target_achieved"] == 0.0
+
+
+def test_sorting_network_8_known_19_comparator_target_is_valid():
+    validate = _load_sorting_network_8_validator()
+    result = validate.evaluate(
+        "def network():\n"
+        "    return [\n"
+        "        (0,2),(1,3),(4,6),(5,7),\n"
+        "        (0,4),(1,5),(2,6),(3,7),\n"
+        "        (0,1),(2,3),(4,5),(6,7),\n"
+        "        (2,4),(3,5),\n"
+        "        (1,4),(3,6),\n"
+        "        (1,2),(3,4),(5,6),\n"
+        "    ]\n"
+    )
+
+    assert result["is_valid"] is True
+    assert result["sorted_input_coverage"] == 1.0
+    assert result["comparator_count"] == 19
+    assert result["depth"] == 6
+    assert result["target_achieved"] == 1.0
+
+
+def test_sorting_network_8_rejects_invalid_comparator_index():
+    validate = _load_sorting_network_8_validator()
+
+    result = validate.evaluate("def network():\n    return [(0, 8)]\n")
+
+    assert result == {
+        "network_score": 0.0,
+        "sorted_input_coverage": 0.0,
+        "inverse_comparator_count": 0.0,
+        "comparator_count": 0,
+        "depth": 0,
+        "target_achieved": 0.0,
+        "is_valid": False,
+    }
+
+
+def test_sorting_network_8_rejects_import_delegation():
+    validate = _load_sorting_network_8_validator()
+
+    result = validate.evaluate("import itertools\ndef network():\n    return []\n")
+
+    assert result["is_valid"] is False
+    assert result["network_score"] == 0.0
+
+
+def test_sorting_network_8_loads_as_problem():
+    problem = load_problem(SORTING_NETWORK_8_EXAMPLE_DIR)
+
+    assert problem.name == "sorting_network_8"
+    assert problem.primary_metric == "network_score"
+    assert len(problem.initial_programs) == 1
 
 
 def test_circle_packing_seed_is_valid_and_nontrivial():

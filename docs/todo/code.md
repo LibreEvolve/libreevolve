@@ -591,18 +591,22 @@ sidecars, tests, and active TODOs.
   - Current evidence: LibreEvolve ships `libreevolve/problems/examples/sorting`,
     but that fixture asks for a general `sort_list()` function and its seed is
     already fully correct. The example-scope registry intentionally labels it
-    as a neutral plateau/diversity smoke fixture, not a benchmark. There is no
-    fixture whose candidate API returns comparator pairs/layers, no exhaustive
-    zero-one verifier, no comparator-count/depth metrics, no known-target
-    calibration for 8- or 9-channel sorting networks, and no run artifact
-    proving rediscovery or compression from a bloated valid seed.
-  - Required result: add `sorting_network_8` and then `sorting_network_9`
-    benchmark fixtures with complete initial comparator networks, exhaustive
-    Boolean-input validation, invalid-comparator diagnostics, metrics for
-    sorted-input coverage, comparator count, and depth, known-target thresholds
-    (`<=19` for 8 inputs, `<=25` for 9 inputs), repeated-seed run reports,
-    and hardening/negative fixtures before treating sorting as a realistic
-    AlphaEvolve-style benchmark rather than a solved smoke example.
+    as a neutral plateau/diversity smoke fixture, not a benchmark.
+    `libreevolve/problems/examples/sorting_network_8` now provides a
+    comparator-pair candidate API, complete 8-input bubble-network seed,
+    exhaustive `2^8` Boolean-input validation, invalid-comparator diagnostics,
+    sorted-input coverage, comparator-count, depth, inverse-count, and
+    target-achieved metrics, plus focused tests for the 28-comparator seed and
+    a known 19-comparator target. The example-scope registry labels it as a
+    non-comparable benchmark candidate because repeated-run evidence,
+    hardening artifacts, and paper certification are still absent.
+  - Required result: add `sorting_network_9` with complete initial comparator
+    networks and exhaustive `2^9` Boolean-input validation, then add
+    repeated-seed run reports, fixed evaluator/model/budget conditions,
+    hardening/negative fixtures, and certification artifacts for both 8- and
+    9-input targets before treating sorting-network rediscovery as
+    AlphaEvolve-style benchmark evidence rather than executable benchmark
+    scaffolding.
 
 - [ ] Keep Table 1 capability-comparison exhibit provenance scoped to row
       evidence instead of capability parity.

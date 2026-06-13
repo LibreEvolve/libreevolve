@@ -10151,7 +10151,7 @@ def test_benchmark_fixture_readiness_report_keeps_smoke_scope_unready():
     assert validate_benchmark_fixture_readiness_report(report)["ok"] is True
     assert report["problem_name"] == "matrix_multiplication"
     assert report["example_scope_registry"]["validation_ok"] is True
-    assert report["example_scope_registry"]["smoke_only"] is True
+    assert report["example_scope_registry"]["smoke_only"] is False
     assert report["scope_level"] == "smoke"
     assert report["alphaevolve_comparable"] is False
     assert report["matching_example_scope"]["problem_id"] == "matrix_multiplication"

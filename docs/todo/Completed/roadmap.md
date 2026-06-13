@@ -2,6 +2,35 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive AlphaEvolve Ramsey-number roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/ramsey_numbers_boundary.json` now keep arXiv `2603.09172`
+    source-scoped as background AlphaEvolve constructive Ramsey-number
+    context rather than implemented LibreEvolve Ramsey graph-witness support.
+  - Current evidence: the cached paper and boundary JSON record nine improved
+    lower bounds, exact-known and best-known lower-bound matching, `R(r,s)`
+    graph-witness semantics, `R(r,s) >= n+1` off-by-one lower-bound meaning,
+    primary and prospect graph roles, random-graph expected-violation
+    scoring, 28 Table 1 cells, Table 2 initialization families, Google
+    Research graph/code links, prior-baseline references, and the absence of
+    local graph-witness runtime evidence.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: Ramsey candidate schemas, `run()` primary/prospect graph contracts,
+    graph witness artifact schemas, clique/independent-set verifiers,
+    parameter rows, nine improved lower-bound rows, matched-best-known rows,
+    exact-known recovery rows, primary/prospect graph records, Google
+    Research graph/code snapshots, graph and algorithm artifact hashes,
+    initialization-family records, prior-bound baseline rows, graph-size
+    versus lower-bound semantics, search-budget records, random-seed records,
+    algorithm-summary audits, independent checker outputs, Table 1 and Table
+    2 traceability, and benchmark reports before any AlphaEvolve-style Ramsey
+    discovery claim is promoted.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive AlphaEvolve MARL algorithm-discovery roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

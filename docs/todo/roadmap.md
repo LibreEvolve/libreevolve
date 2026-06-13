@@ -10,47 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Add AlphaEvolve Ramsey-number discovery gates before roadmap promotion.
-  - Spec evidence: arXiv `2603.09172`, submitted March 10, 2026 and last
-    revised April 21, 2026, introduces `Reinforced Generation of
-    Combinatorial Structures: Ramsey Numbers`. The abstract says AlphaEvolve
-    improved lower bounds for nine Ramsey numbers, recovered all exact known
-    lower bounds, matched many other best-known lower bounds, and served as a
-    single meta-algorithm yielding search algorithms across those cases. The
-    paper body defines the roadmap target as constructive lower-bound
-    witnesses: an `n`-vertex graph free of `r`-cliques and `s`-independent
-    sets proves `R(r,s) >= n+1`; Algorithm 1 evolves programs from an empty
-    baseline that emit `G1` and prospect `G2`, scoring size and low violations
-    against an expected random-graph baseline; Table 1 covers 28 colored
-    cells; Table 2 groups initialization families; and the PDF links public
-    Google Research construction and search-code artifacts.
-  - Current evidence: ROADMAP now names `papers/ramsey_numbers_boundary.json`
-    as the source-specific boundary for graph candidate schemas, `run()`
-    primary/prospect graph contracts, clique/independent-set verifiers,
-    new/matched/exact lower-bound rows, Google Research construction/code
-    links, graph and algorithm artifact hashes, initialization-family records,
-    graph-size-to-lower-bound semantics, and independent checker outputs. It
-    still does not define Ramsey graph witness schemas, require `R(s,t)`
-    lower-bound verifier artifacts, store exact-bound recovery records,
-    compare matched best-known bounds, or require a result table that
-    attributes the nine prior/current lower-bound improvements.
-  - Required result: implement roadmap gates for `2603.09172`: Ramsey
-    candidate representation, graph/witness artifact schema,
-    verifier/certifier entrypoints, parameterized `R(s,t)` result rows,
-    exact-bound recovery suite, best-known-bound comparison table,
-    prior/current value provenance, search-algorithm provenance, seed/budget
-    records, witness graph hashes, independent checker outputs, failure and
-    negative-result records, and benchmark-fixture status rules before roadmap
-    claims promote Ramsey discovery support. Roadmap promotion should
-    additionally require exact
-    `R(r,s) >= n+1` witness semantics, primary/prospect graph run artifacts,
-    expected-violation formula inputs, imported or reproducibly regenerated
-    Google Research construction/code artifacts, 28-cell Table 1 and
-    34-algorithm appendix traceability, initialization-family coverage, and
-    comparison rows for Radziszowski 2024, Exoo/Tatarevic 2015, Exoo 2006,
-    Tatarevic 2020, Exoo 2012, Harborth/Krause 2003, plus explicit
-    graph-only/personal-communication limitations.
-
 - [ ] Add AlphaEvolve local-correction combinatorics gates before roadmap
       promotion.
   - Spec evidence: arXiv `2603.06692`, submitted March 4, 2026, introduces

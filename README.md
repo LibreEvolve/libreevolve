@@ -305,6 +305,15 @@ Important limits:
   distillation row, IQM ablation audit, random normal-form validation row,
   generated solver artifact hash, or reproducible CFR/PSRO runtime evidence;
   `papers/multiagent_learning_boundary.json` records that absence boundary.
+- AlphaEvolve Ramsey-number coverage is background paper context only:
+  LibreEvolve has no Ramsey graph candidate schema, `run()` primary/prospect
+  graph contract, graph witness artifact schema, clique/independent-set
+  verifier, Ramsey parameter row, new lower-bound row, matched-best-known
+  row, exact-known-bound recovery row, graph vertex-count record, implied
+  lower-bound record, Google Research construction/code snapshot hash,
+  initialization-family record, search-budget record, random-seed record,
+  algorithm-summary audit, or independent checker output;
+  `papers/ramsey_numbers_boundary.json` records that absence boundary.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

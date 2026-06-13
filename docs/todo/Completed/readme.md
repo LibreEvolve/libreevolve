@@ -15673,3 +15673,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     identities, environment hashes, independent checker outputs, benchmark
     reports, and Magellan-style compiler-optimization evidence remain active
     in code and paper TODOs.
+- [x] Make the root README reality-first instead of paper-impression-first.
+  - Spec evidence: AlphaEvolve-alignment docs need the top-level README to
+    distinguish runnable local workbench behavior from paper-facing absence
+    boundaries and cached-source inventory.
+  - Status: README now opens the current status as a local Python-first
+    workbench with artifact and absence-boundary reporting, renames the feature
+    list to "Runnable today", and explicitly says checked-in runs do not
+    reproduce AlphaEvolve benchmark results, scale, model mix, async topology,
+    or systems/compiler/hardware evidence. It also states that many sidecars
+    are validators or absence-boundary records and that cached papers do not
+    imply implemented methods or results.
+  - Remaining README gap: semantic claim verification and per-claim evidence
+    mapping remain active in `docs/todo/readme.md`.

@@ -12,11 +12,13 @@ cited papers.
 
 ## Current Status
 
-LibreEvolve is alpha-stage software. It is useful for local experiments,
-implementation audits, and building small evolutionary-programming fixtures. It
-is not a production optimizer and not a full AlphaEvolve reproduction.
+LibreEvolve is alpha-stage software. The honest current shape is a local,
+Python-first evolutionary-programming workbench with extensive artifact and
+absence-boundary reporting. It is useful for local experiments, implementation
+audits, and building small fixtures. It is not a production optimizer, not a
+distributed service, and not a full AlphaEvolve reproduction.
 
-Implemented today:
+Runnable today:
 
 - Python-primary seed programs and bounded text workspaces.
 - Opt-in strict initial-program validity reports for runs that require every
@@ -32,6 +34,14 @@ Implemented today:
 
 Important limits:
 
+- No checked-in run reproduces AlphaEvolve's published benchmark results,
+  scale, model mix, asynchronous topology, or systems/compiler/hardware
+  application evidence.
+- Many AlphaEvolve-facing JSON sidecars are validators or absence-boundary
+  records. They are evidence that a claim is tracked conservatively, not proof
+  that the underlying feature or benchmark has been reproduced.
+- The local paper cache is source inventory. A cached paper or `papers/README.md`
+  row does not mean the paper's method or results are implemented.
 - Evaluators run in local subprocesses, not hardened security sandboxes.
 - The controller, archive, migration, and evaluator flow are local and
   synchronous, not a distributed asynchronous AlphaEvolve service.
@@ -46,7 +56,8 @@ Important limits:
 - The default initial-program policy is permissive; AlphaEvolve-style complete
   initial-solution parity requires explicit strict-mode evidence.
 - Paper-derived claims are tracked conservatively in `papers/README.md`,
-  sidecar JSON records, `ROADMAP.md`, and `docs/todo/`.
+  sidecar JSON records, `ROADMAP.md`, and `docs/todo/`; the TODO ledgers are
+  active work queues, not just historical notes.
 
 For the full implemented-versus-missing ledger, read
 [docs/status.md](docs/status.md). For paper/source coverage, read

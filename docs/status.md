@@ -112,7 +112,10 @@ Important limits:
   policies, and LLM-only idea-stage contracts are tracked by
   `papers/automated_evaluator_scope_boundary.json`.
 - Evaluation-cascade reports are runtime attrition and promotion telemetry when
-  stages run, not AlphaEvolve-style cascade-efficiency evidence with stage
+  stages run. They now include `stage_evidence_summary` counts for configured
+  stage roles, local stage source refs/hashes when available, runtime samples,
+  main-test exposure, and early pruning, plus explicit absent-evidence statuses.
+  They are not AlphaEvolve-style cascade-efficiency evidence with stage
   difficulty rationale, evaluator/test-set identities and hashes, benchmark
   seed/sample policy, counterfactual full-evaluation costs, or observed
   wall-clock cost savings; that boundary is tracked by

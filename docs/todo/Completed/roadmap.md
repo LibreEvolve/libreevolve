@@ -2,6 +2,23 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive code-scale roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
+    `papers/README.md` already distinguish Python-primary workspace
+    mechanics, the `workspace_math` smoke fixture, and
+    `runtime.history.codebase_scale_benchmark_report` run-local telemetry from
+    AlphaEvolve Table 1 code-scale parity, with
+    `papers/codebase_scale_benchmark_boundary.json` preserving the absence
+    boundary.
+  - Remaining guard: realistic large-codebase fixtures, hundreds-line
+    generated success curves, coupled cross-file dependency edits,
+    arbitrary-language/build-runner execution, evaluator runtime/admission
+    summaries, long-horizon quality progress, and Table 1 code-scale parity
+    remain active in `docs/todo/code.md` and `docs/todo/papers.md`.
+  - Verification: codebase-scale boundary and paper-manifest validation
+    continue to reject run-local telemetry as AlphaEvolve Table 1 code-scale
+    evidence.
+
 - [x] Archive workspace-topology roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
     `papers/README.md` already describe local file-workspace topology

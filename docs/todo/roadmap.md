@@ -6,30 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Keep roadmap code-scale wording scoped to benchmark-backed evidence.
-  - Spec evidence: AlphaEvolve Table 1 says AlphaEvolve evolves entire code
-    files, hundreds of lines of code, arbitrary languages, and complex
-    algorithms with multiple functions/components. Local PDF page 2 contains
-    the Table 1 code-length and file/function comparison rows, while pages
-    18-19 discuss entire-codebase evolution.
-  - Current evidence: ROADMAP correctly lists current workspace mechanics:
-    Python seed workspaces, file topology mutations, materialization
-    diagnostics, and the small `workspace_math` fixture. Completed manifests
-    now include `runtime.history.codebase_scale_benchmark_report`, which
-    measures retained program file/line scale, generated-candidate counts,
-    parent-relative changed files/lines, and multi-file/hundreds-line
-    threshold evidence while keeping Table 1 code-scale parity false. Scope
-    records still mark shipped examples, including `workspace_math`, as smoke
-    fixtures with `alphaevolve_comparable: False`, and ROADMAP still names the
-    arbitrary-language/build-runner absence boundary.
-    `papers/codebase_scale_benchmark_boundary.json` now preserves the
-    paper-facing absence boundary for current run-local scale telemetry versus
-    Table 1 code-scale parity.
-  - Required result: when realistic large-codebase benchmark fixtures land,
-    update roadmap, README, papers index, and code/paper TODO entries together
-    so the roadmap separates current workspace mechanics and run-local scale
-    telemetry from AlphaEvolve Table 1 code-scale parity.
-
 - [ ] Keep parallel-evaluation roadmap wording scoped until compute-hour
       throughput evidence exists.
   - Spec evidence: AlphaEvolve Section 2.4 says candidate evaluation can spend

@@ -324,8 +324,10 @@ LibreEvolve has:
   generation-0 history rows; `papers/initial_program_seed_variant_matrix.json`
   now records design-level simple/random/researcher/stochastic/evolutionary
   seed-variant comparison axes while leaving executed equal-budget seed-variant
-  result tables, prompt-context linkage, and human contribution signoff open,
-  with `papers/initial_program_idea_provenance_boundary.json` preserving the
+  result tables, exact rendered prompt digests, prompt-history spans, seed
+  workspace hash linkage, replicate protocols, prompt-context linkage, and
+  human contribution signoff open, with
+  `papers/initial_program_idea_provenance_boundary.json` preserving the
   paper-facing metadata-contract-only boundary
 - configurable initial-program validity policy with
   `runtime.history.initial_program_validity_report`, preserving permissive

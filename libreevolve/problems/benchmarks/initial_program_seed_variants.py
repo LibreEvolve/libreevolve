@@ -24,13 +24,21 @@ EXPECTED_COMPARISON_FIELDS = (
     "idea_origin",
     "paper_role",
     "prompt_context_linkage",
+    "rendered_prompt_digest",
+    "prompt_history_span_ref",
+    "seed_workspace_hash_linkage",
     "generation_zero_metric_linkage",
+    "replicate_budget_protocol",
     "equal_budget_result_table",
     "human_contribution_review",
     "benchmark_scope",
 )
 EXPECTED_MISSING_EVIDENCE = {
     "prompt_context_linkage": "not_recorded_locally",
+    "rendered_prompt_digest": "not_recorded_locally",
+    "prompt_history_span_ref": "not_recorded_locally",
+    "seed_workspace_hash_linkage": "not_recorded_locally",
+    "replicate_budget_protocol": "not_recorded_locally",
     "equal_budget_seed_variant_results": "not_recorded_locally",
     "simple_random_researcher_comparison": "not_recorded_locally",
     "matrix_seed_variant_result_tables": "not_recorded_locally",
@@ -72,7 +80,11 @@ def initial_program_seed_variant_matrix_record() -> dict[str, Any]:
                 "idea_origin": "simple_baseline",
                 "paper_role": "most Table 2 matrix results used a simple initial program",
                 "prompt_context_linkage": "not_recorded_locally",
+                "rendered_prompt_digest": "not_recorded_locally",
+                "prompt_history_span_ref": "not_recorded_locally",
+                "seed_workspace_hash_linkage": "not_recorded_locally",
                 "generation_zero_metric_linkage": "metadata_contract_only",
+                "replicate_budget_protocol": "not_recorded_locally",
                 "equal_budget_result_table": "not_recorded_locally",
                 "human_contribution_review": "not_recorded_locally",
                 "benchmark_scope": "matrix_and_constructive_math_future_comparison_axis",
@@ -82,7 +94,11 @@ def initial_program_seed_variant_matrix_record() -> dict[str, Any]:
                 "idea_origin": "random_or_uninformed_start",
                 "paper_role": "comparison baseline for seed sensitivity",
                 "prompt_context_linkage": "not_recorded_locally",
+                "rendered_prompt_digest": "not_recorded_locally",
+                "prompt_history_span_ref": "not_recorded_locally",
+                "seed_workspace_hash_linkage": "not_recorded_locally",
                 "generation_zero_metric_linkage": "metadata_contract_only",
+                "replicate_budget_protocol": "not_recorded_locally",
                 "equal_budget_result_table": "not_recorded_locally",
                 "human_contribution_review": "not_recorded_locally",
                 "benchmark_scope": "matrix_and_constructive_math_future_comparison_axis",
@@ -92,7 +108,11 @@ def initial_program_seed_variant_matrix_record() -> dict[str, Any]:
                 "idea_origin": "researcher_seeded_idea",
                 "paper_role": "researchers seeded some initial programs with their own ideas",
                 "prompt_context_linkage": "not_recorded_locally",
+                "rendered_prompt_digest": "not_recorded_locally",
+                "prompt_history_span_ref": "not_recorded_locally",
+                "seed_workspace_hash_linkage": "not_recorded_locally",
                 "generation_zero_metric_linkage": "metadata_contract_only",
+                "replicate_budget_protocol": "not_recorded_locally",
                 "equal_budget_result_table": "not_recorded_locally",
                 "human_contribution_review": "not_recorded_locally",
                 "benchmark_scope": "matrix_seed_variant_future_comparison_axis",
@@ -102,7 +122,11 @@ def initial_program_seed_variant_matrix_record() -> dict[str, Any]:
                 "idea_origin": "researcher_seeded_stochastic_evaluation",
                 "paper_role": "one reported researcher idea class for improved matrix parameters",
                 "prompt_context_linkage": "not_recorded_locally",
+                "rendered_prompt_digest": "not_recorded_locally",
+                "prompt_history_span_ref": "not_recorded_locally",
+                "seed_workspace_hash_linkage": "not_recorded_locally",
                 "generation_zero_metric_linkage": "metadata_contract_only",
+                "replicate_budget_protocol": "not_recorded_locally",
                 "equal_budget_result_table": "not_recorded_locally",
                 "human_contribution_review": "not_recorded_locally",
                 "benchmark_scope": "matrix_seed_variant_future_comparison_axis",
@@ -112,7 +136,11 @@ def initial_program_seed_variant_matrix_record() -> dict[str, Any]:
                 "idea_origin": "researcher_seeded_evolutionary_approach",
                 "paper_role": "one reported researcher idea class for improved matrix parameters",
                 "prompt_context_linkage": "not_recorded_locally",
+                "rendered_prompt_digest": "not_recorded_locally",
+                "prompt_history_span_ref": "not_recorded_locally",
+                "seed_workspace_hash_linkage": "not_recorded_locally",
                 "generation_zero_metric_linkage": "metadata_contract_only",
+                "replicate_budget_protocol": "not_recorded_locally",
                 "equal_budget_result_table": "not_recorded_locally",
                 "human_contribution_review": "not_recorded_locally",
                 "benchmark_scope": "matrix_seed_variant_future_comparison_axis",
@@ -123,8 +151,10 @@ def initial_program_seed_variant_matrix_record() -> dict[str, Any]:
             "This matrix records paper-derived initial-program seed-variant "
             "families and comparison axes for future simple, random, and "
             "researcher-idea start comparisons. It does not claim prompt "
-            "context linkage, equal-budget seed-variant result tables, matrix "
-            "or constructive-math seed-variant reports, human contribution "
+            "context linkage, rendered prompt digests, prompt-history span "
+            "refs, seed workspace hash linkage, replicate budget protocols, "
+            "equal-budget seed-variant result tables, matrix or "
+            "constructive-math seed-variant reports, human contribution "
             "review/signoff, or AlphaEvolve human-seeded benchmark parity."
         ),
     }
@@ -158,6 +188,8 @@ def validate_initial_program_seed_variant_matrix(
     if (
         not isinstance(boundary_text, str)
         or "does not claim prompt context linkage" not in boundary_text
+        or "rendered prompt digests" not in boundary_text
+        or "replicate budget protocols" not in boundary_text
         or "equal-budget seed-variant result tables" not in boundary_text
         or "AlphaEvolve human-seeded benchmark parity" not in boundary_text
     ):

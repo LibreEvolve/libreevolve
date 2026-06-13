@@ -63,6 +63,10 @@ Important limits:
   stronger benchmark evidence.
 - The default initial-program policy is permissive; AlphaEvolve-style complete
   initial-solution parity requires explicit strict-mode evidence.
+- Human-seeded initial-program claims require exact prompt/context linkage,
+  seed workspace hashes, replicate protocols, equal-budget seed-variant
+  tables, and contribution review evidence; current reports are metadata
+  contracts only.
 - Paper-derived claims are tracked conservatively in `papers/README.md`,
   sidecar JSON records, `ROADMAP.md`, and `docs/todo/`; the TODO ledgers are
   active work queues, not just historical notes.

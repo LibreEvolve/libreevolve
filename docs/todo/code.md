@@ -420,15 +420,18 @@ sidecars, tests, and active TODOs.
     `papers/initial_program_seed_variant_matrix.json` now records a design-
     level comparison matrix for simple, random, researcher-idea, stochastic-
     evaluation, and evolutionary-approach seed variants, including prompt-
-    context, generation-0 metric, equal-budget result, human-review, and
-    benchmark-scope axes, while explicitly marking those evidence classes as
-    not recorded locally.
+    context, rendered prompt digest, prompt-history span, seed workspace hash
+    linkage, replicate budget protocol, generation-0 metric, equal-budget
+    result, human-review, and benchmark-scope axes, while explicitly marking
+    those evidence classes as not recorded locally.
   - Required result: add prompt/run linkage to exact rendered context,
-    executed benchmark-level seed-variant result tables, equal-budget
-    comparisons of simple/random/researcher-idea starts, matrix and
-    constructive-math seed variant reports, and human contribution review/
-    signoff before claiming AlphaEvolve-style collaboration or human-seeded
-    matrix benchmark parity.
+    prompt-history span references, seed workspace hashes, per-variant
+    run-artifact manifests, executed benchmark-level seed-variant result
+    tables, equal-budget replicate protocols and comparisons of
+    simple/random/researcher-idea starts, matrix and constructive-math seed
+    variant reports, matrix-parameter seed-idea attribution, and human
+    contribution review/signoff before claiming AlphaEvolve-style
+    collaboration or human-seeded matrix benchmark parity.
 
 - [ ] Add an AlphaEvolve-strict seed validity policy for complete initial
       programs.

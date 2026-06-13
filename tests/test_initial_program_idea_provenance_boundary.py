@@ -13,11 +13,15 @@ def test_initial_program_idea_provenance_boundary_accepts_absence_record():
 
     assert validation.ok is True
     assert validation.boundary_status == "metadata_contract_only"
-    assert validation.required_evidence_field_count == 14
-    assert validation.missing_evidence_count == 8
+    assert validation.required_evidence_field_count == 20
+    assert validation.missing_evidence_count == 14
     assert boundary["schema"] == INITIAL_PROGRAM_IDEA_PROVENANCE_BOUNDARY_SCHEMA
     assert boundary["source_section_ids"] == ["2.1", "3.1"]
     assert boundary["claim_ready"] is False
+    assert "exact_rendered_prompt_context_digest" in boundary["required_evidence_fields"]
+    assert boundary["missing_evidence"]["equal_budget_replicate_protocol"] == (
+        "not_recorded_locally"
+    )
     assert "does not claim equal-budget seed-variant result tables" in boundary["claim_boundary"]
 
 
@@ -27,6 +31,7 @@ def test_initial_program_idea_provenance_boundary_rejects_premature_parity_claim
     boundary["boundary_status"] = "human_seeded_benchmark_ready"
     boundary["source_section_ids"] = ["2.1"]
     boundary["missing_evidence"]["alphaevolve_human_seeded_benchmark_parity"] = "recorded"
+    boundary["missing_evidence"]["exact_rendered_prompt_context_digest"] = "recorded"
     boundary["required_evidence_fields"] = ["seed_source_identity_recorded"]
 
     validation = validate_initial_program_idea_provenance_boundary(boundary)
@@ -37,6 +42,7 @@ def test_initial_program_idea_provenance_boundary_rejects_premature_parity_claim
     assert "invalid_boundary_status" in codes
     assert "invalid_source_section_ids" in codes
     assert "invalid_missing_evidence_alphaevolve_human_seeded_benchmark_parity" in codes
+    assert "invalid_missing_evidence_exact_rendered_prompt_context_digest" in codes
     assert "missing_required_evidence_field" in codes
 
 
@@ -48,5 +54,5 @@ def test_render_initial_program_idea_provenance_boundary_summary_reports_shape()
     assert "AlphaEvolve initial-program idea provenance boundary" in summary
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | metadata_contract_only |" in summary
-    assert "| required_evidence_field_count | 14 |" in summary
-    assert "| missing_evidence_count | 8 |" in summary
+    assert "| required_evidence_field_count | 20 |" in summary
+    assert "| missing_evidence_count | 14 |" in summary

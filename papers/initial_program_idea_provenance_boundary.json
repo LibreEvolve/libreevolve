@@ -17,6 +17,12 @@
     "human_or_background_contribution_labels",
     "seed_variant_ids_recorded",
     "evaluator_metric_linkage",
+    "exact_rendered_prompt_context_digest",
+    "prompt_history_seed_context_span",
+    "seed_workspace_hash_to_prompt_linkage",
+    "per_variant_run_artifact_manifest",
+    "equal_budget_replicate_protocol",
+    "matrix_parameter_seed_idea_attribution",
     "equal_budget_seed_variant_results",
     "alphaevolve_human_seeded_benchmark_parity",
     "prompt_context_to_seed_idea_linkage",
@@ -28,6 +34,12 @@
   ],
   "missing_evidence": {
     "equal_budget_seed_variant_results": "not_recorded_locally",
+    "exact_rendered_prompt_context_digest": "not_recorded_locally",
+    "prompt_history_seed_context_span": "not_recorded_locally",
+    "seed_workspace_hash_to_prompt_linkage": "not_recorded_locally",
+    "per_variant_run_artifact_manifest": "not_recorded_locally",
+    "equal_budget_replicate_protocol": "not_recorded_locally",
+    "matrix_parameter_seed_idea_attribution": "not_recorded_locally",
     "simple_random_researcher_seed_comparison": "not_recorded_locally",
     "matrix_seed_variant_result_tables": "not_recorded_locally",
     "constructive_math_seed_variant_result_tables": "not_recorded_locally",
@@ -36,5 +48,5 @@
     "paper_facing_certification_rows": "not_recorded_locally",
     "alphaevolve_human_seeded_benchmark_parity": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has optional seed idea metadata fields under problem.seed_sources and a runtime report linking seed sources to generation-zero history, seed variant ids, idea-origin classes, contribution roles, prior-technique labels, background references, and evaluator metrics, but does not claim equal-budget seed-variant result tables, simple/random/researcher seed comparisons, matrix or constructive-math seed-variant reports, human contribution review/signoff, prompt-context-to-seed linkage, paper-facing certification rows, or AlphaEvolve human-seeded benchmark parity."
+  "claim_boundary": "This boundary records that LibreEvolve has optional seed idea metadata fields under problem.seed_sources and a runtime report linking seed sources to generation-zero history, seed variant ids, idea-origin classes, contribution roles, prior-technique labels, background references, and evaluator metrics, but does not claim equal-budget seed-variant result tables, exact rendered prompt digests, prompt-history seed-context spans, seed-workspace-hash-to-prompt linkage, per-variant run-artifact manifests, equal-budget replicate protocols, simple/random/researcher seed comparisons, matrix or constructive-math seed-variant reports, matrix-parameter seed-idea attribution, human contribution review/signoff, prompt-context-to-seed linkage, paper-facing certification rows, or AlphaEvolve human-seeded benchmark parity."
 }

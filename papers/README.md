@@ -515,14 +515,16 @@ references. Completed manifests include
 metadata to generation-0 history rows and declared metric names. AlphaEvolve
 Section 3.1 reports matrix runs boosted by human ideas in the initial program,
 such as stochastic evaluation or evolutionary approaches; LibreEvolve still
-needs executed equal-budget seed-variant result evidence and contribution
-review/signoff before making that class of paper claim. The committed
+needs exact rendered prompt digests, prompt-history seed-context spans, seed
+workspace hash linkage, replicate protocols, executed equal-budget
+seed-variant result evidence, and contribution review/signoff before making
+that class of paper claim. The committed
 `papers/initial_program_idea_provenance_boundary.json` sidecar preserves this
 metadata-contract-only boundary for paper-manifest validation, and
 `papers/initial_program_seed_variant_matrix.json` records design-level
 simple/random/researcher/stochastic/evolutionary seed-variant comparison axes
-without claiming prompt-context linkage, benchmark result tables, or
-AlphaEvolve human-seeded benchmark parity.
+without claiming prompt-context linkage, prompt digests, benchmark result
+tables, replicate protocols, or AlphaEvolve human-seeded benchmark parity.
 
 AlphaEvolve initial-pool divergence note: completed manifests now include
 `runtime.history.initial_pool_divergence_report`, which compares generated

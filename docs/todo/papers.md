@@ -3429,13 +3429,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/initial_program_seed_variant_matrix.json` now records the design-
     level comparison axes for simple, random, researcher-idea, stochastic-
     evaluation, and evolutionary-approach seed variants while marking prompt
-    context linkage, equal-budget outcomes, benchmark tables, and human review
-    as not recorded locally.
+    context linkage, rendered prompt digests, prompt-history spans, seed
+    workspace hash linkage, replicate protocols, equal-budget outcomes,
+    benchmark tables, and human review as not recorded locally.
   - Required result: add paper/report evidence for prompt/context linkage,
-    executed equal-budget seed-variant outcomes, simple/random/researcher-
-    idea seed comparisons, matrix and constructive-math seed-variant result
-    tables, and contribution review/signoff before claiming AlphaEvolve-style
-    scientific-collaboration or human-seeded matrix result parity.
+    exact rendered prompt digests, prompt-history span refs, seed workspace
+    hashes, per-variant run-artifact manifests, replicate protocols, executed
+    equal-budget seed-variant outcomes, simple/random/researcher-idea seed
+    comparisons, matrix and constructive-math seed-variant result tables,
+    matrix-parameter seed-idea attribution, and contribution review/signoff
+    before claiming AlphaEvolve-style scientific-collaboration or
+    human-seeded matrix result parity.
 
 - [ ] Track strict completeness of initial programs separately from
       optimization-pressure seeds.

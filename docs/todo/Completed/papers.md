@@ -14036,3 +14036,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     pending-work restore, and full resumed-trace proof remain open.
   - Verification: focused archive-event replay boundary and paper-manifest
     tests cover valid, overclaim, and missing-root-sidecar cases.
+- [x] Add paper-facing cascade stage-evidence summary.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.4 describes
+    increasingly difficult cascade stages and pruning before larger budgets.
+  - Status: `papers/evaluation_cascade_boundary.json` now names
+    `libreevolve.evaluation_cascade_stage_evidence_summary.v1` and requires
+    stage-evidence-summary coverage in the cascade boundary.
+  - Remaining paper gap: the summary is explicit absence accounting, not proof
+    of AlphaEvolve cascade efficiency; stage difficulty rationale, test-set
+    identities/hashes, benchmark seed/sample policy, and cost savings remain
+    open.
+  - Verification: focused cascade report, boundary, and paper-manifest tests
+    cover valid and overclaim cases.

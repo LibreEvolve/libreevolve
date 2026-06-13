@@ -97,13 +97,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     `candidate_stage_records` with `history.jsonl` metadata paths, evaluator
     source refs when available, a denominator policy for runtime candidate,
     stage-entry, main-test exposure, and early-prune populations, and explicit
-    denominator overclaim validation. The committed
+    denominator overclaim validation. It also records a
+    `stage_evidence_summary` with role/source/hash/sample/exposure counts and
+    explicit absent-evidence statuses. The committed
     `papers/evaluation_cascade_boundary.json` sidecar now preserves the
     paper-manifest-validated cascade-efficiency absence boundary.
   - Current gap: paper-facing evidence still lacks stage difficulty or scale
-    rationale, evaluator/test-set identities, benchmark seed/sample policy,
-    and counterfactual cost/wall-clock savings. The report therefore remains
-    `claim_ready: false` for AlphaEvolve cascade-efficiency claims.
+    rationale, evaluator/test-set identities and hashes, benchmark seed/sample
+    policy, and counterfactual cost/wall-clock savings; the new summary records
+    those absences explicitly. The report therefore remains `claim_ready:
+    false` for AlphaEvolve cascade-efficiency claims.
   - Required result: finish cascade-report artifacts and validators with stage
     difficulty/test-set metadata, random-seed/sample coverage beyond the
     runtime denominator policy, cost summaries, and claim-readiness checks.

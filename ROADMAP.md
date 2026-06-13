@@ -115,8 +115,10 @@ LibreEvolve has:
   attrition, threshold failures, work counters, bounded candidate-stage
   history cross-links, denominator-policy boundaries, and explicit
   claim-readiness limitations under `runtime.history.evaluation_cascade_report`,
-  with `papers/evaluation_cascade_boundary.json` now carrying the
-  paper-manifest-validated absence boundary for stage difficulty/test-set
+  including `stage_evidence_summary` counts for configured roles, local stage
+  source refs/hashes when available, runtime samples, main-test exposure, and
+  early pruning, with `papers/evaluation_cascade_boundary.json` now carrying
+  the paper-manifest-validated absence boundary for stage difficulty/test-set
   identities, benchmark seed/sample policy, and cost-savings evidence
 - cascade hypothesis-test boundary reports under
   `runtime.history.cascade_hypothesis_test_policy_report`, naming configured

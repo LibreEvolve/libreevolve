@@ -17270,6 +17270,12 @@ def _evaluation_cascade_report(
     startup_manifest: Mapping[str, object] | None = None,
 ) -> dict:
     stages: dict[str, dict] = {}
+    config = (
+        startup_manifest.get("config")
+        if isinstance(startup_manifest, Mapping)
+        and isinstance(startup_manifest.get("config"), Mapping)
+        else {}
+    )
     problem = (
         startup_manifest.get("problem")
         if isinstance(startup_manifest, Mapping)
@@ -17279,6 +17285,11 @@ def _evaluation_cascade_report(
     evaluator_sources = (
         problem.get("evaluator_sources")
         if isinstance(problem.get("evaluator_sources"), list)
+        else []
+    )
+    eval_stages = (
+        config.get("eval_stages")
+        if isinstance(config.get("eval_stages"), list)
         else []
     )
     source_by_stage = _evaluator_source_by_stage(evaluator_sources)
@@ -17486,6 +17497,12 @@ def _evaluation_cascade_report(
                 if stage.get("source") == {"status": "not_available"}
             ),
         },
+        "stage_evidence_summary": _evaluation_cascade_stage_evidence_summary(
+            ordered_stages,
+            eval_stages,
+            main_test_exposure_count,
+            max(0, configured_candidate_count - main_test_exposure_count),
+        ),
         "main_test_exposure_count": main_test_exposure_count,
         "early_prune_count": max(0, configured_candidate_count - main_test_exposure_count),
         "stop_reasons": dict(sorted(stop_reasons.items())),
@@ -17506,6 +17523,92 @@ def _evaluation_cascade_report(
     }
     report["validation"] = validate_evaluation_cascade_report(report)
     return report
+
+
+def _evaluation_cascade_stage_evidence_summary(
+    stages: list[dict],
+    eval_stages: list,
+    main_test_exposure_count: int,
+    early_prune_count: int,
+) -> dict:
+    configured_stage_records = [
+        stage for stage in eval_stages if isinstance(stage, Mapping)
+    ]
+    stage_sources = [
+        stage.get("source") if isinstance(stage.get("source"), Mapping) else {}
+        for stage in stages
+    ]
+    source_ref_count = sum(
+        1 for source in stage_sources if source and source.get("status") != "not_available"
+    )
+    source_hash_count = sum(
+        1 for source in stage_sources if _is_sha256_hex(source.get("sha256"))
+    )
+    stage_role_count = sum(
+        1 for stage in configured_stage_records if isinstance(stage.get("role"), str)
+    )
+    sample_config_count = sum(
+        1
+        for stage in configured_stage_records
+        if isinstance(stage.get("samples"), int)
+        and not isinstance(stage.get("samples"), bool)
+        and stage.get("samples") > 0
+    )
+    seed_config_count = sum(
+        1
+        for stage in configured_stage_records
+        if isinstance(stage.get("seeds"), list) and bool(stage.get("seeds"))
+    )
+    runtime_sample_count = sum(
+        stage.get("sample_count", 0)
+        for stage in stages
+        if isinstance(stage.get("sample_count"), int)
+        and not isinstance(stage.get("sample_count"), bool)
+    )
+    return {
+        "schema": "libreevolve.evaluation_cascade_stage_evidence_summary.v1",
+        "source": "runtime_cascade_stages_and_startup_eval_stages",
+        "stage_count": len(stages),
+        "configured_stage_count": len(configured_stage_records),
+        "stage_role_declaration_count": stage_role_count,
+        "stage_source_ref_count": source_ref_count,
+        "stage_source_hash_count": source_hash_count,
+        "stage_sample_config_count": sample_config_count,
+        "stage_seed_config_count": seed_config_count,
+        "runtime_sample_count": runtime_sample_count,
+        "main_test_exposure_count": main_test_exposure_count,
+        "early_prune_count": early_prune_count,
+        "difficulty_or_scale_rationale_status": "not_recorded",
+        "evaluator_test_set_identity_status": "local_evaluator_source_only",
+        "test_set_hash_status": "not_recorded",
+        "benchmark_seed_sample_policy_status": (
+            "runtime_samples_and_configured_seeds_only"
+            if sample_config_count or seed_config_count
+            else "runtime_accounting_only"
+        ),
+        "counterfactual_full_evaluation_cost_status": "not_recorded",
+        "wall_clock_cost_savings_status": "not_recorded",
+        "claim_readiness": {
+            "stage_role_declarations": stage_role_count > 0,
+            "local_stage_source_refs": source_ref_count > 0,
+            "local_stage_source_hashes": source_hash_count > 0,
+            "runtime_sample_accounting": runtime_sample_count > 0,
+            "difficulty_or_scale_rationale": False,
+            "evaluator_test_set_identity": False,
+            "test_set_hashes": False,
+            "benchmark_seed_sample_policy": False,
+            "counterfactual_full_evaluation_cost": False,
+            "wall_clock_cost_savings": False,
+            "alphaevolve_cascade_efficiency_evidence": False,
+            "remaining_gap": [
+                "stage_difficulty_or_scale_rationale",
+                "evaluator_test_set_identities_and_hashes",
+                "benchmark_seed_sample_policy",
+                "counterfactual_full_evaluation_costs",
+                "wall_clock_cost_savings",
+            ],
+        },
+    }
 
 
 def _cascade_hypothesis_test_policy_report(
@@ -35003,6 +35106,7 @@ def validate_evaluation_cascade_report(report: object) -> dict:
         "candidate_stage_records",
         "denominator_policy",
         "source_identity_summary",
+        "stage_evidence_summary",
         "main_test_exposure_count",
         "early_prune_count",
         "stop_reasons",
@@ -35091,6 +35195,15 @@ def validate_evaluation_cascade_report(report: object) -> dict:
             issues.append({"code": "cascade_denominator_overclaim", "message": "denominator policy must not claim paper readiness"})
     if not isinstance(report.get("source_identity_summary"), dict):
         issues.append({"code": "invalid_source_identity_summary", "message": "source_identity_summary must be an object"})
+    stage_evidence = report.get("stage_evidence_summary")
+    if not isinstance(stage_evidence, dict):
+        issues.append({"code": "invalid_stage_evidence_summary", "message": "stage_evidence_summary must be an object"})
+    else:
+        _validate_evaluation_cascade_stage_evidence_summary(
+            stage_evidence,
+            len(stages),
+            issues,
+        )
     configured = report.get("configured_candidate_count")
     exposure = report.get("main_test_exposure_count")
     early = report.get("early_prune_count")
@@ -35109,6 +35222,63 @@ def validate_evaluation_cascade_report(report: object) -> dict:
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _validate_evaluation_cascade_stage_evidence_summary(
+    summary: Mapping[str, object],
+    stage_count: int,
+    issues: list[dict],
+) -> None:
+    if summary.get("schema") != "libreevolve.evaluation_cascade_stage_evidence_summary.v1":
+        issues.append({"code": "invalid_stage_evidence_schema", "message": "stage evidence summary schema is unsupported"})
+    if summary.get("source") != "runtime_cascade_stages_and_startup_eval_stages":
+        issues.append({"code": "invalid_stage_evidence_source", "message": "stage evidence summary source is unsupported"})
+    expected_stage_count = summary.get("stage_count")
+    if expected_stage_count != stage_count:
+        issues.append({"code": "stage_evidence_stage_count_mismatch", "message": "stage evidence summary stage_count must match stages"})
+    for field in (
+        "configured_stage_count",
+        "stage_role_declaration_count",
+        "stage_source_ref_count",
+        "stage_source_hash_count",
+        "stage_sample_config_count",
+        "stage_seed_config_count",
+        "runtime_sample_count",
+        "main_test_exposure_count",
+        "early_prune_count",
+    ):
+        value = summary.get(field)
+        if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+            issues.append({"code": f"invalid_stage_evidence_{field}", "message": f"stage evidence {field} must be a non-negative integer"})
+    expected_statuses = {
+        "difficulty_or_scale_rationale_status": {"not_recorded"},
+        "evaluator_test_set_identity_status": {"local_evaluator_source_only"},
+        "test_set_hash_status": {"not_recorded"},
+        "benchmark_seed_sample_policy_status": {
+            "runtime_accounting_only",
+            "runtime_samples_and_configured_seeds_only",
+        },
+        "counterfactual_full_evaluation_cost_status": {"not_recorded"},
+        "wall_clock_cost_savings_status": {"not_recorded"},
+    }
+    for field, allowed in expected_statuses.items():
+        if summary.get(field) not in allowed:
+            issues.append({"code": f"invalid_stage_evidence_{field}", "message": f"stage evidence {field} is unsupported"})
+    readiness = summary.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append({"code": "invalid_stage_evidence_claim_readiness", "message": "stage evidence claim_readiness must be an object"})
+        return
+    for field in (
+        "difficulty_or_scale_rationale",
+        "evaluator_test_set_identity",
+        "test_set_hashes",
+        "benchmark_seed_sample_policy",
+        "counterfactual_full_evaluation_cost",
+        "wall_clock_cost_savings",
+        "alphaevolve_cascade_efficiency_evidence",
+    ):
+        if readiness.get(field) is not False:
+            issues.append({"code": f"{field}_overclaim", "message": f"stage evidence readiness {field} must remain false"})
 
 
 def validate_cascade_hypothesis_test_policy_report(report: object) -> dict:

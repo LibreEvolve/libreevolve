@@ -1435,16 +1435,20 @@ Primary evidence:
     readiness record. It now emits bounded `candidate_stage_records` with
     `history.jsonl` metadata paths, per-stage accounting, evaluator source refs
     when available, and a denominator policy for runtime candidate,
-    stage-entry, main-test exposure, and early-prune populations. Validation
-    rejects denominator overclaims. Tests cover a two-stage run where one
+    stage-entry, main-test exposure, and early-prune populations. It also emits
+    `stage_evidence_summary` counts for configured stage roles, source/hash
+    evidence, runtime samples, main-test exposure, early pruning, and explicit
+    absent-evidence statuses. Validation rejects denominator and stage-evidence
+    overclaims. Tests cover a two-stage run where one
     candidate reaches the final stage and another is pruned at smoke. The
     committed `papers/evaluation_cascade_boundary.json` sidecar now records
     the paper-manifest-validated absence boundary for missing cascade-
     efficiency evidence.
-  - Required result: finish difficulty/scale labels, evaluator/test-set hashes,
-    benchmark seed/sample policy beyond runtime accounting, and counterfactual
-    cost-savings evidence before claiming AlphaEvolve-style evaluation-cascade
-    efficiency or hypothesis-testing evidence.
+  - Required result: finish difficulty/scale labels, evaluator/test-set
+    identities and hashes, benchmark seed/sample policy beyond runtime
+    accounting, and counterfactual cost-savings evidence before claiming
+    AlphaEvolve-style evaluation-cascade efficiency or hypothesis-testing
+    evidence.
 
 - [ ] Add evaluator workload provenance for inner search and ML-training tasks.
   - Spec evidence: AlphaEvolve Section 2.1 says the evaluator can be simple,

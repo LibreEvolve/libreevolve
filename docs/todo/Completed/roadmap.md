@@ -15045,3 +15045,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     budgets, compute-hour accounting, pending-work/provider-output restore
     composition, and equal-budget execution reports remain active in code and
     paper TODOs.
+- [x] Keep roadmap cascade-evidence wording scoped to runtime summaries.
+  - Spec evidence: AlphaEvolve-style cascade claims require more than local
+    promotion and pruning counts; docs must keep missing difficulty,
+    test-set, benchmark-policy, and cost-saving evidence visible.
+  - Status: ROADMAP now names `stage_evidence_summary` as role/source/hash/
+    sample/exposure accounting under `runtime.history.evaluation_cascade_report`
+    while keeping AlphaEvolve cascade-efficiency evidence open.
+  - Remaining roadmap gap: real benchmark cascade-efficiency proof and
+    cost-saving measurements remain active in code and paper TODOs.

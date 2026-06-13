@@ -18967,3 +18967,16 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     policies, or AlphaEvolve-specific migration fidelity must update code
     comments, README, ROADMAP, papers index, and matching TODO entries
     together.
+- [x] Record cascade stage-evidence summaries without efficiency overclaims.
+  - Spec evidence: AlphaEvolve Section 2.4 frames evaluation cascades as
+    increasingly difficult test ensembles with pruning before larger budgets.
+  - Status: `runtime.history.evaluation_cascade_report` now includes
+    `stage_evidence_summary` counts for configured stage roles, local stage
+    source/hash evidence when available, runtime samples, main-test exposure,
+    and early pruning. The validator rejects premature stage-evidence
+    readiness for difficulty rationale, evaluator test-set identity, test-set
+    hashes, benchmark seed/sample policy, counterfactual full-evaluation cost,
+    and observed wall-clock savings.
+  - Remaining code gap: real stage difficulty metadata, test-set identities
+    and hashes, benchmark seed/sample policy, and cost-savings accounting
+    remain active TODOs.

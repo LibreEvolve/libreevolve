@@ -13,7 +13,10 @@ def test_evaluation_cascade_boundary_accepts_absence_record():
 
     assert validation.ok is True
     assert validation.boundary_status == "runtime_attrition_without_benchmark_efficiency_evidence"
-    assert validation.required_evidence_field_count == 14
+    assert validation.required_evidence_field_count == 15
+    assert boundary["stage_evidence_summary_schema"] == (
+        "libreevolve.evaluation_cascade_stage_evidence_summary.v1"
+    )
     assert validation.missing_evidence_count == 7
     assert boundary["schema"] == EVALUATION_CASCADE_BOUNDARY_SCHEMA
     assert "does not claim AlphaEvolve-style cascade-efficiency evidence" in (
@@ -46,5 +49,5 @@ def test_render_evaluation_cascade_boundary_summary_reports_shape():
     assert "AlphaEvolve evaluation cascade boundary" in summary
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | runtime_attrition_without_benchmark_efficiency_evidence |" in summary
-    assert "| required_evidence_field_count | 14 |" in summary
+    assert "| required_evidence_field_count | 15 |" in summary
     assert "| missing_evidence_count | 7 |" in summary

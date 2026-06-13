@@ -9,12 +9,16 @@ from typing import Any
 EVALUATION_CASCADE_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_evaluation_cascade_boundary.v1"
 EVALUATION_CASCADE_RUNTIME_REPORT_SCHEMA = "libreevolve.evaluation_cascade_report.v1"
 CASCADE_HYPOTHESIS_TEST_POLICY_REPORT_SCHEMA = "libreevolve.cascade_hypothesis_test_policy_report.v1"
+EVALUATION_CASCADE_STAGE_EVIDENCE_SUMMARY_SCHEMA = (
+    "libreevolve.evaluation_cascade_stage_evidence_summary.v1"
+)
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_ID = "2.4"
 EXPECTED_BOUNDARY_STATUS = "runtime_attrition_without_benchmark_efficiency_evidence"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "stage_id",
     "stage_role",
+    "stage_evidence_summary",
     "difficulty_scale_label",
     "evaluator_test_set_identity",
     "test_set_sha256",
@@ -29,12 +33,18 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "claim_readiness",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "stage_difficulty_or_scale_rationale": "not_recorded_locally",
-    "evaluator_test_set_identities": "not_recorded_locally",
-    "test_set_hashes": "not_recorded_locally",
-    "benchmark_seed_sample_policy": "not_recorded_locally",
-    "counterfactual_full_evaluation_costs": "not_recorded_locally",
-    "wall_clock_cost_savings": "not_recorded_locally",
+    "stage_difficulty_or_scale_rationale": (
+        "stage_evidence_summary_records_not_recorded"
+    ),
+    "evaluator_test_set_identities": "local_evaluator_source_only",
+    "test_set_hashes": "stage_evidence_summary_records_not_recorded",
+    "benchmark_seed_sample_policy": (
+        "runtime_sample_accounting_only_not_benchmark_policy"
+    ),
+    "counterfactual_full_evaluation_costs": (
+        "stage_evidence_summary_records_not_recorded"
+    ),
+    "wall_clock_cost_savings": "stage_evidence_summary_records_not_recorded",
     "matrix_multiplication_repeated_seed_policy": "not_recorded_locally",
 }
 
@@ -61,6 +71,7 @@ def evaluation_cascade_boundary_record() -> dict[str, Any]:
         "schema": EVALUATION_CASCADE_BOUNDARY_SCHEMA,
         "runtime_report_schema": EVALUATION_CASCADE_RUNTIME_REPORT_SCHEMA,
         "hypothesis_test_policy_report_schema": CASCADE_HYPOTHESIS_TEST_POLICY_REPORT_SCHEMA,
+        "stage_evidence_summary_schema": EVALUATION_CASCADE_STAGE_EVIDENCE_SUMMARY_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_section_id": EXPECTED_SOURCE_SECTION_ID,
         "source_claim": (
@@ -75,9 +86,10 @@ def evaluation_cascade_boundary_record() -> dict[str, Any]:
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records that LibreEvolve has runtime cascade attrition "
-            "and hypothesis-test policy reports, but does not claim AlphaEvolve-style "
-            "cascade-efficiency evidence with stage difficulty rationale, evaluator "
-            "test-set identities and hashes, benchmark seed/sample policy, "
+            "reports, stage evidence summaries, and hypothesis-test policy reports, "
+            "but does not claim AlphaEvolve-style cascade-efficiency evidence with "
+            "stage difficulty rationale, evaluator test-set identities and hashes, "
+            "benchmark seed/sample policy, "
             "counterfactual full-evaluation costs, or observed wall-clock cost "
             "savings."
         ),
@@ -100,6 +112,8 @@ def validate_evaluation_cascade_boundary(
         issues.append(_issue("invalid_runtime_report_schema", "runtime report schema must identify evaluation cascade reports"))
     if data.get("hypothesis_test_policy_report_schema") != CASCADE_HYPOTHESIS_TEST_POLICY_REPORT_SCHEMA:
         issues.append(_issue("invalid_hypothesis_policy_schema", "hypothesis policy schema must identify cascade hypothesis reports"))
+    if data.get("stage_evidence_summary_schema") != EVALUATION_CASCADE_STAGE_EVIDENCE_SUMMARY_SCHEMA:
+        issues.append(_issue("invalid_stage_evidence_summary_schema", "stage evidence summary schema must identify cascade stage evidence summaries"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     if data.get("source_section_id") != EXPECTED_SOURCE_SECTION_ID:

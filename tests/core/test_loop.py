@@ -5924,6 +5924,31 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
     assert report["denominator_policy"]["main_test_exposure_denominator"] == (
         "candidates_whose_final_configured_stage_record_passed"
     )
+    evidence_summary = report["stage_evidence_summary"]
+    assert evidence_summary["schema"] == (
+        "libreevolve.evaluation_cascade_stage_evidence_summary.v1"
+    )
+    assert evidence_summary["stage_count"] == 2
+    assert evidence_summary["configured_stage_count"] == 2
+    assert evidence_summary["stage_role_declaration_count"] == 2
+    assert evidence_summary["stage_source_ref_count"] == 0
+    assert evidence_summary["runtime_sample_count"] == 3
+    assert evidence_summary["main_test_exposure_count"] == 1
+    assert evidence_summary["early_prune_count"] == 1
+    assert evidence_summary["difficulty_or_scale_rationale_status"] == "not_recorded"
+    assert evidence_summary["evaluator_test_set_identity_status"] == (
+        "local_evaluator_source_only"
+    )
+    assert evidence_summary["benchmark_seed_sample_policy_status"] == (
+        "runtime_accounting_only"
+    )
+    assert evidence_summary["claim_readiness"]["stage_role_declarations"] is True
+    assert evidence_summary["claim_readiness"]["runtime_sample_accounting"] is True
+    assert evidence_summary["claim_readiness"]["evaluator_test_set_identity"] is False
+    assert (
+        evidence_summary["claim_readiness"]["alphaevolve_cascade_efficiency_evidence"]
+        is False
+    )
     assert "stage_difficulty_or_scale_labels" in (
         report["claim_readiness"]["remaining_gap"]
     )
@@ -5970,12 +5995,14 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
 
     overclaimed = copy.deepcopy(report)
     overclaimed["denominator_policy"]["paper_claim_ready"] = True
+    overclaimed["stage_evidence_summary"]["claim_readiness"][
+        "alphaevolve_cascade_efficiency_evidence"
+    ] = True
     validation = validate_evaluation_cascade_report(overclaimed)
     assert validation["ok"] is False
-    assert any(
-        issue["code"] == "cascade_denominator_overclaim"
-        for issue in validation["issues"]
-    )
+    codes = {issue["code"] for issue in validation["issues"]}
+    assert "cascade_denominator_overclaim" in codes
+    assert "alphaevolve_cascade_efficiency_evidence_overclaim" in codes
 
     hypothesis_policy = manifest["runtime"]["history"][
         "cascade_hypothesis_test_policy_report"

@@ -771,7 +771,10 @@ stage promotion and attrition counts, threshold failures, failure reasons,
 sample/retry/subprocess/timeout totals, elapsed seconds, promotion rates,
 main-test exposure, early-prune counts, bounded candidate-stage cross-links to
 `history.jsonl`, evaluator source refs when available, denominator-policy
-boundaries, and explicit `claim_ready: false` limitations. Stage difficulty/
+boundaries, `stage_evidence_summary` role/source/hash/sample/exposure counts,
+and explicit `claim_ready: false` limitations. That summary also records
+stage difficulty rationale, test-set hashes, benchmark seed/sample policy, and
+counterfactual/wall-clock cost-savings evidence as absent. Stage difficulty/
 test-set identities, benchmark seed/sample policy, and cost-savings evidence
 remain open before claiming AlphaEvolve cascade efficiency or
 hypothesis-testing parity. The committed

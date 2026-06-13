@@ -14932,3 +14932,29 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     content/architecture co-evolution traces, benchmark baselines, transfer
     metrics, report outcomes, and MemEvolve-style memory architecture
     evolution remain active in code and paper TODOs.
+
+- [x] Keep README ANCHOR healthy-evolution oversight claims source-scoped
+      until runtime evidence exists.
+  - Spec evidence: arXiv `2606.06114`, `Towards Healthy Evolution: Exploring
+    the Role and Mechanisms of Human-Agent Interaction in Self-Evolving
+    Systems`, introduces Agent Norm Correction through Human-like Oversight
+    and Review (ANCHOR). Its abstract frames autonomous self-evolution as a
+    safety-drift and capability-degradation risk, then reports that limited
+    simulated human supervision can mitigate safety degradation while
+    preserving core objective performance, with output verification as the
+    strongest intervention point and diminishing returns from increased
+    supervision frequency.
+  - Status: README now lists arXiv `2606.06114` as healthy-evolution
+    oversight context only and marks the mention as a curated cached-paper
+    subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no ANCHOR
+    human-like oversight agent, phase-specific norm-correction interface,
+    safety-drift metric lineage, output-verification intervention records,
+    reflection/review artifact stream, supervision-frequency/cadence trace,
+    preservation-of-objective-performance report, coding/math/safety
+    benchmark report, linked-code audit, or independent reproduction output.
+  - Remaining README gap: oversight-role schemas, phase-specific feedback
+    records, safety metrics, intervention logs, objective-preservation
+    reports, cadence experiments, benchmark baselines, report outcomes, and
+    ANCHOR-style healthy-evolution oversight remain active in code and paper
+    TODOs.

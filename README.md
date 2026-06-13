@@ -792,6 +792,14 @@ Important limits:
   static-memory baseline comparison, cross-task or cross-LLM transfer report,
   performance-delta record, linked-code audit, or independent reproduction
   output.
+- ArXiv `2606.06114` is healthy-evolution oversight context only; the README
+  mentions this cached paper as a curated subset while `papers/README.md`
+  remains the complete implementation-status index. LibreEvolve has no
+  ANCHOR human-like oversight agent, phase-specific norm-correction interface,
+  safety-drift metric lineage, output-verification intervention records,
+  reflection/review artifact stream, supervision-frequency/cadence trace,
+  preservation-of-objective-performance report, coding/math/safety benchmark
+  report, linked-code audit, or independent reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

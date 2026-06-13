@@ -175,6 +175,22 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     framework-parity claims, the wording must remain source-scoped until the
     active code, paper, and roadmap TODO evidence exists.
 
+- [x] Archive README CodeEvolve operator/benchmark source-scope TODO.
+  - Status: the README-specific TODO was stale after the README realism split.
+    The root README no longer mentions CodeEvolve, semantic crossover,
+    meta-prompting exploration, targeted refinement, prompt/solution dual
+    fitness, Plateau Scheduler behavior, CVT-MAP-Elites parity, open-weight
+    cost comparisons, or CodeEvolve benchmark results.
+  - Remaining guard: `papers/README.md` keeps `2510.14150` as agentic
+    code-evolution inspiration only, and the open code, paper, and roadmap
+    TODOs still track the missing operator artifacts, scheduler traces,
+    prompt/solution fitness metadata, sandbox/runtime-memory evidence,
+    MAP-Elites/CVT compatibility reports, AlphaEvolve/EoH benchmark rows,
+    ablation/cost reports, hyperparameter defaults, and source/code hashes.
+  - Verification: if the root README later reintroduces CodeEvolve or related
+    operator/benchmark claims, the wording must remain source-scoped until
+    the active code, paper, and roadmap TODO evidence exists.
+
 - [x] Keep README validator sandbox/resource-limit wording scoped to local
       subprocess audit evidence versus OS/container enforcement.
   - Status: README Important limits now states that validator execution policy

@@ -91,41 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README CodeEvolve wording scoped until operator and benchmark
-      evidence exists.
-  - Spec evidence: local arXiv `2510.14150`, `CODE EVOLVE: an open-source
-    evolutionary framework for algorithmic discovery and optimization`, by
-    Henrique Assumpcao et al. describes islands-based evolution with weighted
-    LLM ensembles, inspiration-based semantic crossover, meta-prompting
-    exploration, depth-based targeted refinement with `k` nearest ancestors,
-    exploration scheduling, sandboxed evaluation, MAP-Elites/CVT-MAP-Elites
-    archives, and AlphaEvolve/EoH benchmark plus quality-cost comparisons. It
-    defines separate solution and prompt fitness (`fsol`/`fprompt`), reports
-    that CODE EVOLVE matches or surpasses AlphaEvolve on `5` of `9`
-    AlphaEvolve benchmark instances, shows `CirclePackingSquare(n = 26)`
-    `2.63598` vs AlphaEvolve `2.63586` and `n = 32` `2.93956` vs
-    AlphaEvolve `2.93794`, and reports Qwen3-Coder-30B cost advantages over
-    GEMINI-2.5 such as roughly `$6` vs just under `$35` for the `n = 26`
-    circle-packing run.
-  - Current evidence: README and `papers/README.md` mark CodeEvolve as
-    agentic code-evolution inspiration only, and README now points at
-    `papers/codeevolve_boundary.json` for the `2510.14150` source-specific
-    boundary. That sidecar keeps prompt/solution fitness, semantic crossover,
-    meta-prompting exploration, depth-refinement ancestor context, Plateau
-    Scheduler behavior, sandbox parity, MAP-Elites/CVT archive parity,
-    benchmark rows, ablations, hyperparameter guidance, and cost-comparison
-    claims unavailable until local artifacts prove them.
-  - Required result: if README mentions CodeEvolve, inspiration crossover,
-    meta-prompting, targeted refinement, modular orchestration,
-    context-aware recombination, open-weight cost comparisons, or CodeEvolve
-    benchmark results, keep wording source-scoped until manifests and reports
-    include the `2510.14150` source row, PDF/code hashes, operator artifacts,
-    scheduler traces, prompt/solution fitness metadata, sandbox/runtime-memory
-    evidence, MAP-Elites/CVT compatibility reports, AlphaEvolve/EoH benchmark
-    rows, ablation/cost reports, hyperparameter defaults, and a clear
-    distinction between LibreEvolve's current prompt-program features and
-    CodeEvolve framework parity.
-
 - [ ] Keep README ThetaEvolve wording scoped until test-time learning evidence
       exists.
   - Spec evidence: local arXiv `2511.23473`, `ThetaEvolve: Test-time Learning

@@ -417,6 +417,18 @@ Important limits:
   `1.14465` baseline row, tolerance policy, lineage comparison row, or
   independent checker output; `papers/sums_differences_boundary.json`
   records that absence boundary.
+- Post-AlphaEvolve sums-and-differences sequence coverage is asymptotic
+  constructive-math context only: LibreEvolve has no sequence-of-`U`
+  construction schema, large-deviation `I(c,B)` checker, asymptotic
+  `W(m,floor(rm),B)` checker, Lemma 1 or Lemma 2 verifier, q/s/d bound
+  derivation record, `theta0` variational-formula recomputation, MATLAB 2024b
+  code provenance, tolerance-sweep reproduction for `B=3..10` or
+  `1e-4..1e-10`, independent Python or exact reimplementation,
+  finite-prefix artifact policy, convergence or tail-bound check,
+  AlphaEvolve `1.1584` baseline row, Gerbicz `1.173050` baseline row,
+  lineage comparison row, or independent checker output;
+  `papers/sums_differences_sequence_boundary.json` records that absence
+  boundary.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

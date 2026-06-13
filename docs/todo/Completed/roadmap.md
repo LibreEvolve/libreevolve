@@ -2,6 +2,35 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive post-AlphaEvolve sums-and-differences sequence roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/sums_differences_sequence_boundary.json` now keep arXiv
+    `2506.01896` source-scoped as post-AlphaEvolve asymptotic
+    constructive-math context rather than implemented LibreEvolve sequence
+    verifier support.
+  - Current evidence: the cached paper and boundary JSON record AlphaEvolve's
+    `1.1584` baseline, the Gerbicz `2505.16105` `1.173050` baseline, the
+    Fan Zheng `1.173077` sequence lower bound, large-deviation `I(c, B)`
+    estimates, `W(m, floor(rm), B)` asymptotic count context, base-`2B+1`
+    bounded-coordinate integer construction, q/s/d asymptotic bounds,
+    restricted `B=3..10`, `r in (0.5, 2)`, and
+    `a in (0, min(1, 1/r))` optimization, MATLAB 2024b use, `fminbnd`,
+    `fminunc`, `logW`, `logD`, `sup`, and the reported
+    `theta - 1 = 0.173077279785136` best row at `1e-8` and `1e-10`.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: sequence-of-`U` construction schemas, large-deviation checkers,
+    asymptotic `W(m, floor(rm), B)` checkers, Lemma 1 and Lemma 2 verifier
+    outputs, q/s/d bound derivation records, `theta0` recomputation, MATLAB
+    code provenance, tolerance-sweep reproduction, independent Python or
+    exact reimplementation, finite-prefix artifacts, convergence and
+    tail-bound checks, baseline rows, lineage comparison rows, and
+    independent checker outputs.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive post-AlphaEvolve sums-and-differences roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

@@ -29,6 +29,23 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     computer-architecture claims, the wording must remain source-scoped until
     the active code, paper, and roadmap TODO evidence exists.
 
+- [x] Archive README Fault2Flow workflow-automation source-scope TODO.
+  - Status: the README-specific TODO was stale after the README realism split.
+    The root README no longer mentions Fault2Flow, fault-to-workflow
+    automation, PASTA fault trees, regulatory logic extraction,
+    human-in-the-loop expert verification, n8n workflow synthesis,
+    topological consistency, semantic fidelity, or transformer fault-diagnosis
+    benchmarks.
+  - Remaining guard: `papers/README.md` keeps `2511.12916` background-only,
+    and the open code, paper, and roadmap TODOs still track the missing
+    regulatory-source provenance, PASTA schemas, expert-review state records,
+    reasoning-logic optimization traces, n8n workflow artifacts, dataset rows,
+    TC/E2ERC metric definitions, token ledgers, and independent checker
+    outputs.
+  - Verification: if the root README later reintroduces Fault2Flow or related
+    workflow-automation claims, the wording must remain source-scoped until
+    the active code, paper, and roadmap TODO evidence exists.
+
 - [x] Keep README validator sandbox/resource-limit wording scoped to local
       subprocess audit evidence versus OS/container enforcement.
   - Status: README Important limits now states that validator execution policy

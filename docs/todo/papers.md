@@ -5961,10 +5961,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     records, reasoning-logic optimization metadata, n8n workflow artifact
     schema, transformer fault-diagnosis dataset provenance, topological-
     consistency and semantic-fidelity metric definitions, seed/budget
-    records, independent checker outputs, reproducibility status, and
-    README/ROADMAP wording that treats Fault2Flow-style fault-to-workflow
+    records, independent checker outputs, reproducibility status, ROADMAP and
+    paper-index wording that treats Fault2Flow-style fault-to-workflow
     automation as missing paper evidence rather than implemented LibreEvolve
-    support. Paper evidence should additionally preserve DL/T 722-2014 source
+    support, and source-scoped root README wording if those claims are
+    reintroduced. Paper evidence should additionally preserve DL/T 722-2014 source
     scope, three-ratio and characteristic-gas case counts,
     Qwen3-Next-80B-A3B-Instruct configuration, PlantUML and PASTA intermediate
     artifacts, AlphaEvolve/OpenEvolve multi-island optimization claims, n8n API

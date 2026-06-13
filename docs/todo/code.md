@@ -6388,9 +6388,10 @@ Primary evidence:
     artifact schema, transformer fault-diagnosis dataset provenance,
     topological-consistency and semantic-fidelity metric definitions,
     human-in-the-loop audit logs, seed/budget records, independent checker
-    outputs, and README/ROADMAP wording that keeps Fault2Flow-style
+    outputs, ROADMAP and paper-index wording that keep Fault2Flow-style
     fault-to-workflow automation as missing evidence until local
-    implementation and benchmark reports exist. The implementation boundary
+    implementation and benchmark reports exist, and source-scoped root README
+    wording if those claims are reintroduced. The implementation boundary
     should additionally require the three-stage document-understanding/
     knowledge-structuring/workflow-synthesis pipeline, Vue3/Element Plus/
     pdfjs/xlsx/ECharts frontend artifact expectations where relevant,

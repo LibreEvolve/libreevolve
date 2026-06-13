@@ -614,7 +614,11 @@ sidecars, tests, and active TODOs.
     files/lines, multi-file and hundreds-line threshold evidence, static-file
     references, and false readiness for realistic codebase fixtures,
     arbitrary-language/build runners, cross-file dependency-edit evidence,
-    long-horizon quality progress, and Table 1 code-scale parity. Code
+    coupled multi-component edit evidence, dependency-graph validation,
+    non-Python fixture execution, evaluator workload budgets, retained best
+    workspace artifact hashes, reproducibility bundles, long-horizon quality
+    progress, valid/admitted/retained-rate curves, smoke-fixture scope
+    separation, and Table 1 code-scale parity. Code
     evidence still marks `workspace_math` as `level: "smoke"`,
     `alphaevolve_comparable: False`, and
     `current_role: "workspace_packaging_fixture"`. The committed
@@ -623,10 +627,11 @@ sidecars, tests, and active TODOs.
   - Required result: add realistic benchmark fixtures that exercise hundreds
     of generated lines, multiple coupled components, language/build runners if
     claimed, cross-file dependency edits, evaluator runtime, validity/admission
-    rates, and quality progress for a large multi-function or multi-file
-    codebase before README, ROADMAP, or paper-index wording claims
-    AlphaEvolve Table 1 code-scale parity. The remaining gap is benchmark
-    evidence, not run-local workspace scale telemetry.
+    and retention rates, retained artifact hashes, reproducibility bundles, and
+    quality progress for a large multi-function or multi-file codebase before
+    README, ROADMAP, or paper-index wording claims AlphaEvolve Table 1
+    code-scale parity. The remaining gap is benchmark evidence, not run-local
+    workspace scale telemetry.
 
 - [ ] Add a rigorous sorting-network rediscovery benchmark fixture.
   - Spec evidence: AlphaEvolve-style tasks need automated objective

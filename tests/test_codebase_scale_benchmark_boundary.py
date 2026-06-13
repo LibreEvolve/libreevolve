@@ -13,8 +13,8 @@ def test_codebase_scale_benchmark_boundary_accepts_absence_record():
 
     assert validation.ok is True
     assert validation.boundary_status == "runtime_scale_telemetry_only"
-    assert validation.required_evidence_field_count == 14
-    assert validation.missing_evidence_count == 7
+    assert validation.required_evidence_field_count == 24
+    assert validation.missing_evidence_count == 16
     assert boundary["schema"] == CODEBASE_SCALE_BENCHMARK_BOUNDARY_SCHEMA
     assert boundary["source_section_ids"] == ["2.1"]
     assert boundary["source_table_ids"] == ["Table 1"]
@@ -50,5 +50,5 @@ def test_render_codebase_scale_benchmark_boundary_summary_reports_shape():
     assert "AlphaEvolve codebase-scale benchmark boundary" in summary
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | runtime_scale_telemetry_only |" in summary
-    assert "| required_evidence_field_count | 14 |" in summary
-    assert "| missing_evidence_count | 7 |" in summary
+    assert "| required_evidence_field_count | 24 |" in summary
+    assert "| missing_evidence_count | 16 |" in summary

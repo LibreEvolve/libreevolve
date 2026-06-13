@@ -92,9 +92,11 @@ Important limits:
 - Codebase-scale reports are current-run workspace telemetry for retained
   file/line counts, generated candidates, multi-file and hundreds-line
   observations, and parent-relative edits, not realistic multi-component
-  benchmark fixtures, coupled cross-file dependency edits, arbitrary-language
-  or build-runner execution, long-horizon quality progress, retained-rate
-  benchmark summaries, or AlphaEvolve Table 1 code-scale parity; those
+  benchmark fixtures, coupled cross-file dependency edits, dependency-graph
+  validation, non-Python fixtures, arbitrary-language or build-runner
+  execution, evaluator workload budgets, retained artifact hashes,
+  reproducibility bundles, long-horizon quality progress, retained-rate
+  benchmark curves, or AlphaEvolve Table 1 code-scale parity; those
   boundaries are tracked by `papers/codebase_scale_benchmark_boundary.json`
   and `papers/candidate_language_runner_boundary.json`.
 - Table 1 capability-exhibit reports preserve FunSearch-versus-AlphaEvolve

@@ -111,8 +111,11 @@ LibreEvolve has:
   program file/line scale, generated-candidate counts, parent-relative changed
   files/lines, multi-file and hundreds-line threshold evidence, and explicit
   false readiness for realistic codebase fixtures, arbitrary-language/build
-  runners, cross-file dependency-edit evidence, long-horizon quality progress,
-  and Table 1 code-scale parity, with
+  runners, cross-file dependency-edit evidence, coupled multi-component edit
+  evidence, dependency-graph validation, non-Python fixtures, evaluator
+  workload budgets, retained artifact hashes, reproducibility bundles,
+  long-horizon quality progress, valid/admitted/retained-rate curves, and
+  Table 1 code-scale parity, with
   `papers/codebase_scale_benchmark_boundary.json` preserving the paper-facing
   absence boundary
 - distributed-pipeline topology boundary reports under
@@ -487,9 +490,9 @@ is not yet an AlphaEvolve reproduction.
 - Add richer workspace fixtures beyond the current `workspace_math` nested
   package, JSON data, and binary static seed asset smoke case.
 - Add realistic codebase-scale fixtures, arbitrary-language/build runners,
-  evaluator-workload, sample-efficiency, model-scale, prompt-context, and
-  multi-metric benchmark evidence before claiming AlphaEvolve Table 1
-  capability parity; the current
+  evaluator-workload, retained artifact hashes, reproducibility bundles,
+  sample-efficiency, model-scale, prompt-context, and multi-metric benchmark
+  evidence before claiming AlphaEvolve Table 1 capability parity; the current
   `runtime.history.alphaevolve_table1_capability_exhibit_report` preserves the
   comparison table as provenance, and
   `runtime.history.codebase_scale_benchmark_report` measures current run scale

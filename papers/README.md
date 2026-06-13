@@ -1566,9 +1566,10 @@ multi-component algorithms. LibreEvolve currently has Python-primary multi-file
 workspaces, topology mutations, materialization diagnostics, full-workspace
 prompt/export paths, and a small `workspace_math` smoke fixture, but it lacks a
 paper-facing benchmark/report with hundreds-line generated programs, coupled
-cross-file/component edits, non-Python or build-runner execution, evaluator
-budget evidence, validity/admission rates, and score progress on a realistic
-codebase-scale task. The committed
+cross-file/component edits, dependency-graph validation, non-Python or
+build-runner execution, evaluator budget evidence, validity/admission/
+retention curves, retained artifact hashes, reproducibility bundles, and score
+progress on a realistic codebase-scale task. The committed
 `papers/codebase_scale_benchmark_boundary.json` sidecar preserves this Table 1
 code-scale absence boundary for paper-manifest validation.
 

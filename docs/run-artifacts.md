@@ -1935,9 +1935,11 @@ parent-relative changed file and line counts, static-file references, largest
 program summary, bounded per-program records, and threshold evidence for
 multi-component/hundreds-line observations. It is scale telemetry for the
 current run, not a codebase-scale benchmark result: cross-file dependency-edit
-evidence, realistic codebase fixtures, arbitrary-language/build-runner
-execution, long-horizon quality progress, and Table 1 code-scale parity remain
-explicitly false.
+evidence, realistic codebase fixtures, coupled multi-component edits,
+dependency-graph validation, non-Python fixtures, arbitrary-language or
+build-runner execution, evaluator workload budgets, retained artifact hashes,
+reproducibility bundles, valid/admitted/retained-rate curves, long-horizon
+quality progress, and Table 1 code-scale parity remain explicitly false.
 The paper-facing counterpart is
 `papers/codebase_scale_benchmark_boundary.json`, which manifest validation
 requires at the repository root so this telemetry cannot drift into a Table 1

@@ -1059,13 +1059,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     absence boundary for paper-manifest validation.
   - Current gap: there is no realistic benchmark fixture that demonstrates
     hundreds-line generated programs, coupled multi-component edits,
-    non-Python or build-runner execution, realistic codebase dependency edits,
-    evaluator throughput, or quality progress on a large codebase-scale task.
+    dependency-graph validation, non-Python or build-runner execution,
+    realistic codebase dependency edits, evaluator workload budgets, retained
+    best-workspace artifact hashes, reproducibility bundles, smoke-fixture
+    scope separation, valid/admitted/retained-rate curves, or quality progress
+    on a large codebase-scale task.
   - Required result: add codebase-scale benchmark fixtures with dependency-edit
-    evidence, evaluator/runtime budgets, valid/admitted/retained rates, and
-    score progress before treating current workspace support as AlphaEvolve
-    Table 1 code-scale parity. The remaining gap is benchmark-backed evidence,
-    not manifest telemetry for current run scale.
+    evidence, evaluator/runtime budgets, valid/admitted/retained-rate curves,
+    retained artifact hashes, reproducibility bundles, and score progress
+    before treating current workspace support as AlphaEvolve Table 1 code-scale
+    parity. The remaining gap is benchmark-backed evidence, not manifest
+    telemetry for current run scale.
 
 - [ ] Keep Table 1 capability-comparison exhibit evidence scoped to table
       provenance rather than row parity.

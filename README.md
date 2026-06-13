@@ -624,6 +624,13 @@ Important limits:
   held-out, deployment, expert-confirmation, reference-code, or
   domain-specific result artifacts; that boundary is tracked by
   `papers/systems_result_readiness_boundary.json`.
+- The May 7, 2026 Google DeepMind AlphaEvolve impact article is official
+  source context, not local LibreEvolve benchmark support. Its DeepConsensus,
+  AC Optimal Power Flow, Earth AI, Willow quantum-circuit, public-gallery,
+  TPU-design, cache-replacement, Spanner, compiler-storage, UI/API, and
+  customer-deployment claims remain source-scoped until local fixtures,
+  source snapshots, benchmark reports, and independent verification exist;
+  that boundary is tracked by `papers/alphaevolve_2026_impact_boundary.json`.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

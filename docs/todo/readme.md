@@ -91,26 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README 2026 AlphaEvolve impact wording source-scoped until local
-      claim evidence exists.
-  - Spec evidence: the May 7, 2026 Google DeepMind impact article says
-    AlphaEvolve is scaling across health, sustainability, research,
-    infrastructure, and commercial applications, with claims including
-    DeepConsensus, AC Optimal Power Flow, Earth AI, Willow quantum circuits,
-    public gallery examples, TPU design, cache replacement, Spanner, compiler
-    storage, and customer deployments.
-  - Current evidence: README now names the 2026 DeepMind impact article as
-    official impact-claim context only and points to
-    `papers/alphaevolve_2026_impact_boundary.json`. That sidecar records the
-    article URL/date/title/team, retrieval hash, claim ids, domain categories,
-    values/units/baselines, outbound links, customer cases, UI/API attribution,
-    and unsupported-local-benchmark flags.
-  - Required result: keep README source-scoped until local evidence exists for
-    each named claim. Avoid implying local support for DeepConsensus, power-
-    grid, quantum, Earth AI, Spanner, compiler-storage, TPU-design, commercial,
-    UI, API, or public-gallery workflows without runnable fixtures, benchmark
-    reports, linked source snapshots, and independent verification.
-
 - [ ] Keep README FHE-on-TPU AlphaEvolve claims source-scoped until benchmark
       evidence exists.
   - Spec evidence: arXiv `2605.14718` reports adapting AlphaEvolve to optimize

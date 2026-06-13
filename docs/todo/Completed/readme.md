@@ -14497,3 +14497,23 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Remaining README gap: ordered migration-event replay, mid-generation
     controller queues, async pending-work restore, and full resumed-trace proof
     remain active in code and paper TODOs.
+
+- [x] Keep README 2026 AlphaEvolve impact wording source-scoped until local
+      claim evidence exists.
+  - Spec evidence: the May 7, 2026 Google DeepMind impact article says
+    AlphaEvolve is scaling across health, sustainability, research,
+    infrastructure, and commercial applications, with claims including
+    DeepConsensus, AC Optimal Power Flow, Earth AI, Willow quantum circuits,
+    public gallery examples, TPU design, cache replacement, Spanner, compiler
+    storage, and customer deployments.
+  - Status: README now names the May 7, 2026 Google DeepMind AlphaEvolve impact
+    article as official source context rather than local LibreEvolve benchmark
+    support, and points to `papers/alphaevolve_2026_impact_boundary.json`.
+    That sidecar records the article URL/date/title/team, retrieval hash,
+    claim ids, domain categories, values/units/baselines, outbound links,
+    customer cases, UI/API attribution, and unsupported-local-benchmark flags.
+  - Remaining README gap: local DeepConsensus, AC Optimal Power Flow, Earth AI,
+    Willow quantum-circuit, public-gallery, TPU-design, cache-replacement,
+    Spanner, compiler-storage, UI/API, and customer-deployment fixtures,
+    source snapshots, benchmark reports, and independent verification remain
+    active in code and paper TODOs.

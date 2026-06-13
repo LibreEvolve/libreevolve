@@ -9,33 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README multiple-score prompt-context wording scoped until
-      benchmark-required metric-diverse prompt policies exist.
-  - Spec evidence: AlphaEvolve Section 2.4 says multiple metrics can improve a
-    target metric by placing programs that excel under different evaluation
-    criteria into prompts, each as a different definition of "good".
-  - Current evidence: README documents declared metrics, direction/bounds
-    normalization, selection scores, objective-vector diagnostics, metric
-    overlays, metric-targeted parent/inspiration sampling, prompt context
-    filters/ranking, generated-candidate
-    `metadata.inspiration_selection.metric_diversity`, and
-    `runtime.history.metric_diverse_inspiration_report`, whose
-    `libreevolve.metric_diverse_prompt_benchmark_boundary.v1`
-    `benchmark_policy` keeps AlphaEvolve Section 2.4 readiness false. README
-    can also mention
-    `libreevolve.metric_diverse_benchmark_comparison_readiness.v1`, which
-    keeps benchmark prompt-policy enforcement, cross-run fixtures, scalar-only
-    baselines, single-metric baselines, and equal-budget comparison reports
-    false. README now ties that boundary to
-    `papers/metric_diverse_prompt_boundary.json`. It should still not imply
-    those current-run evidence surfaces
-    enforce benchmark-wide metric-diverse prompt conditioning or compare
-    against scalar and one-at-a-time metric-targeted sampling.
-  - Required result: when benchmark-required metric-diverse prompt policies and
-    fixtures land, update README, ROADMAP, papers index, and code/paper TODOs
-    together so README distinguishes current-run prompt-visible evidence from
-    AlphaEvolve-style benchmark claims.
-
 - [ ] Extend README evaluator-entrypoint wording from opt-in embedded evidence
       to full Figure 3 parity.
   - Spec evidence: AlphaEvolve Section 2.1 and Figure 3 show the codebase

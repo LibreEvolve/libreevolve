@@ -10,39 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep matrix roadmap wording scoped until evolved sweep-space records are
-      emitted.
-  - Spec evidence: AlphaEvolve Figures 9a-9c show matrix search programs
-    evolving a `sweep()` function over user-provided `hyper` ranges, not just
-    a final tensor-decomposition artifact.
-  - Current evidence: roadmap benchmark language points to matrix result
-    contracts, Appendix A registry coverage, checked Strassen artifacts, and
-    near-integrality/scalar-field follow-ups. It now records
-    `libreevolve.matrix_sweep_space_evidence.v1` as a declared-evidence
-    validator for `sweep` identity, user-provided `hyper` library provenance,
-    hyperparameter ranges, sampled sweep configuration records, per-sweep
-    outcomes, selected winner identity, and final
-    decomposition/exactness-certificate links.
-    `libreevolve.matrix_sweep_space_runtime_boundary.v1` now validates the
-    current `not_emitted_by_local_runner` boundary and emitted records for
-    run/target/candidate ids, seeds, search-program refs, sweep function
-    identity, hyper-library and hyperparameter declarations, sampled
-    configurations, winning configuration, certificate/decomposition refs,
-    matrix-result refs, artifact paths, and artifact hashes.
-    `papers/matrix_sweep_space_runtime_boundary.json` now emits that
-    absence/readiness boundary as a committed sidecar.
-    `matrix_sweep_space_runtime_boundary_from_evidence()` builds a runtime row
-    from validated sweep-space evidence and validation checks linkage to nested
-    target, search program, `sweep` function, hyper-library, hyperparameters,
-    sampled configurations, winner, and selected certificate/decomposition
-    evidence. Local matrix benchmark runners still do not emit those records.
-  - Required result: when matrix benchmark runners persist evolved sweep
-    functions, hyperparameter ranges, sampled configuration ids, per-sweep
-    diagnostics, and certificate linkage, update ROADMAP, README, papers
-    index, and code/paper TODO entries together so roadmap text distinguishes
-    final result artifacts from AlphaEvolve-style matrix search-program
-    provenance.
-
 - [ ] Keep Appendix A Figure 9 roadmap wording scoped until magnified-diff
       panel artifacts exist.
   - Spec evidence: AlphaEvolve Appendix A Figures 9a-9c are a three-part

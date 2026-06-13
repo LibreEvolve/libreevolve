@@ -2,6 +2,32 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive matrix sweep-space roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish declared sweep-space evidence validation from AlphaEvolve
+    Figure 4/Figure 9-style runner-emitted search-program provenance.
+  - Current evidence: `libreevolve.matrix_sweep_space_evidence.v1` validates
+    declared `sweep` function identity, user-provided `hyper` library
+    provenance, hyperparameter ranges, sampled configuration rows, per-sweep
+    outcomes, selected winner identity, and final decomposition/certificate
+    links. `libreevolve.matrix_sweep_space_runtime_boundary.v1`,
+    `papers/matrix_sweep_space_runtime_boundary.json`, and
+    `matrix_sweep_space_runtime_boundary_from_evidence()` validate the current
+    `not_emitted_by_local_runner` boundary and the future emitted run/target,
+    seed, search-program, sweep-function, hyper-library, hyperparameter,
+    sampled-configuration, winner, certificate/decomposition, matrix-result,
+    artifact-path, and hash fields.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    matrix-runner integration: local matrix benchmark runners do not emit
+    evolved `sweep()` functions, `hyper` range declarations, sampled
+    configuration ids, per-sweep diagnostics, or selected-certificate linkage
+    from candidate-produced search programs.
+  - Verification: matrix sweep-space evidence/runtime-boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive matrix resource-frontier roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

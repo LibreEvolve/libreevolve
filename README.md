@@ -73,6 +73,11 @@ Important limits:
   diagnostics, and exactness-certificate links, not a local matrix runner that
   emits AlphaEvolve Section 3.1 near-integral prompt/evaluator evidence during
   search.
+- Matrix sweep-space records validate declared Figure 9-style `sweep()`
+  provenance, user-provided `hyper` ranges, sampled configurations, selected
+  winners, final decompositions, and exactness-certificate links, not a local
+  matrix runner that emits AlphaEvolve Figure 4/Figure 9 search-program sweep
+  evidence during search.
 - Figure 4 matrix-discovery records validate main-text exhibit metadata,
   caption linkage, the 15-mutation caption count, `mm_4x4x4` rank-48 target
   mapping, highlighted component categories, source/diff artifact metadata,

@@ -2,6 +2,22 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive prompt-example copy-detection roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `papers/README.md`, and runtime manifests already scope
+    `runtime.history.prompt_example_copy_report` to built-in mutation example
+    inventories plus exact, normalized-region, and example-format skeleton copy
+    diagnostics.
+  - Remaining guard: hard or configurable rejection policy, broader
+    semantic/renamed copy detection, custom prompt-template inventories,
+    per-template source mapping, copy-rate tables, acceptance-outcome policy,
+    and prompt-example revision guidance remain future work.
+  - Verification: focused runtime tests validate candidate status, admission
+    metadata, disabled-example policy, copied sentinel signals, normalized
+    region signals, format skeleton signals, and `claim_ready=false`; the
+    `papers/prompt_example_copy_boundary.json` sidecar rejects full
+    copy-detection readiness overclaims.
+
 - [x] Archive mutation-response preamble roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `papers/README.md`, and runtime manifests already distinguish bounded

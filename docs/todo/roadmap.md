@@ -10,29 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep prompt-example roadmap wording scoped until copy-detection policy
-      is stronger than built-in exact sentinels.
-  - Spec evidence: AlphaEvolve Figure 3(b,c) uses concrete current-program
-    context and concrete SEARCH/REPLACE examples; the system should apply
-    model edits to the sampled program rather than accept copied illustrative
-    placeholders as real candidate changes.
-  - Current evidence: README says concrete diff examples reduce observed
-    placeholder-copying mistakes, while current roadmap/code evidence covers
-    parser syntax, canonical diff compatibility, and strict unconsumed-text
-    rejection. ROADMAP now also cites
-    `runtime.history.prompt_example_copy_report`, which inventories built-in
-    mutation-format example sentinels and records exact, normalized
-    file-section-region, and example-format skeleton signals with candidate
-    status/admission metadata. ROADMAP and
-    `papers/prompt_example_copy_boundary.json` now keep that evidence scoped
-    to built-in diagnostics, not full copy-detection policy.
-  - Required result: when stronger example-copy diagnostics land, update
-    ROADMAP, README, papers index, and code/paper TODOs together with
-    configurable rejection, broader semantic/renamed copy detection, and custom
-    prompt-template inventories so roadmap wording separates concrete prompt
-    examples from evidence that accepted mutations are genuine edits to the
-    current program.
-
 - [ ] Keep multi-edit consistency roadmap wording scoped beyond current
       diagnostic scan.
   - Spec evidence: AlphaEvolve Figure 3(b) instructs the model to keep

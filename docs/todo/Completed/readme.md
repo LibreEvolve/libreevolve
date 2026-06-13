@@ -14285,3 +14285,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     topology-specific ablations, richer migration-policy reports, and
     AlphaEvolve-identical island-policy evidence remain active in code/paper
     TODOs.
+- [x] Keep README per-role LLM scheduler claims scoped to current role routing
+  and budget maps.
+  - Spec evidence: AlphaEvolve-style LLM orchestration needs role-specific
+    scheduling and reward semantics for proposal generation, critique,
+    feedback, and prompt improvement, plus fast/strong model-mix evidence.
+  - Status: README states that role-scoped LLM scheduling is opt-in local
+    UCB/runtime evidence with reward-accounted roles, role budget maps,
+    scheduler-state snapshots, and per-call policy telemetry. It also states
+    that `throughput_depth` records cost/latency/depth metadata and
+    fast-breadth/strong-depth lane labels, not experiment-level fast/strong
+    model-mix validation. README points to both
+    `papers/llm_role_scheduler_boundary.json` and
+    `papers/fast_strong_model_mix_boundary.json`.
+  - Remaining README gap: calibrated role reward policy, experiment-owned
+    quota/budget policy, fast/strong model-mix reports, role-specific budget
+    behavior reports, reserved lane policies, and equal-budget scheduler
+    comparisons remain active in code and paper TODOs.

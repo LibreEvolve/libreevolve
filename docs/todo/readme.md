@@ -91,41 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README per-role LLM scheduler claims scoped to current role routing
-  and budget maps.
-  - Spec evidence: AlphaEvolve-style LLM orchestration needs role-specific
-    scheduling and reward semantics for proposal generation, critique,
-    feedback, and prompt improvement, not only role labels on shared telemetry.
-    Its Section 2.4 model mix also uses a fast model for high-volume
-    candidate generation and a stronger model for occasional higher-quality
-    suggestions.
-  - Current evidence: README now says `role_scheduler_state` is restorable and
-    that opt-in `llm_role_scheduler_scope="role_scoped"` makes
-    reward-accounted roles use their own counts, wins, and total pulls for
-    selection. It also states that calibrated reward contracts, role-owned
-    quota/budget policy, and experiment-backed fast/strong model-mix validation
-    remain open, and that runtime accounting copies the effective scheduler
-    scope for audit. README now also describes per-call scheduler policy fields
-    for reward-accounted versus telemetry-only roles, the bounded local reward
-    contract, matching quota scopes, and global versus role-owned state
-    ownership. README now also describes
-    `throughput_depth_lane_evidence` as a metadata trace with fast-breadth/
-    strong-depth labels and `claim_ready: false`. README should likewise avoid
-    implying that backend metadata or `throughput_depth` unit coverage proves a
-    Flash/Pro-style fast-breadth plus strong-depth scheduling policy. README
-    now points to `papers/llm_role_scheduler_boundary.json`, which preserves
-    the local role-scoped scheduler boundary without claiming calibrated
-    AlphaEvolve role reward policy. README now also points to
-    `papers/fast_strong_model_mix_boundary.json`, which preserves the
-    `throughput_depth` metadata-trace-only boundary without claiming
-    experiment-level fast/strong model-mix validation.
-  - Required result: once calibrated reward semantics, quota/budget ownership,
-    and experiment-backed fast/
-    strong model-mix scheduling land, update the README and matching
-    code/paper TODO entries together so the README neither underclaims current
-    role-owned selection state and role-scoped backend eligibility nor
-    overclaims AlphaEvolve-style role or model-mix scheduling.
-
 - [ ] Keep README provider claims explicit about missing Google/Gemini
       first-class support.
   - Spec evidence: AlphaEvolve's published model mix uses Gemini 2.0 Flash and

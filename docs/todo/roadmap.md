@@ -1356,27 +1356,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `papers/artifact_index_boundary.json`, keeping durable full-content or
     semantic artifact search open.
 
-- [ ] Keep per-role scheduler roadmap wording scoped to opt-in role-owned
-  selection state versus calibrated AlphaEvolve scheduler policy.
-  - Spec evidence: AlphaEvolve-scale LLM orchestration needs role-specific
-    model-selection behavior for mutation generation, critique, feedback, and
-    prompt-improvement calls, with budgets and rewards that can be evaluated
-    independently.
-  - Current evidence: the roadmap now names opt-in
-    `llm_role_scheduler_scope="role_scoped"` live per-role selection state,
-    configured reward-accounted roles, role-scoped backend eligibility, logical
-    call caps, role budget maps, and per-call scheduler policy records for
-    reward-accounted versus telemetry-only roles, the bounded local reward
-    contract, matching quota scopes, and scheduler-state ownership, while
-    keeping calibrated reward signals, experiment-owned quotas, and
-    AlphaEvolve-style budget policy open. The roadmap now also points to
-    `papers/llm_role_scheduler_boundary.json`, which preserves this local
-    role-scoped UCB/runtime boundary for manifest validation.
-  - Required result: when calibrated per-role scheduler policy lands, update
-    the roadmap, README, papers index, and code/paper TODO entries together so
-    they neither underclaim current role-owned selection state nor overclaim
-    AlphaEvolve-style per-role scheduling.
-
 - [ ] Keep UCB scheduler roadmap wording scoped to heuristic backend routing.
   - Spec evidence: canonical UCB1 claims require bounded reward assumptions and
     regret-analysis conditions, while AlphaEvolve-style backend scheduling also
@@ -1402,43 +1381,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     papers index, and code/paper TODO entries together so wording neither
     underclaims current heuristic routing nor overclaims regret-analyzed or
     paper-faithful scheduler behavior.
-
-- [ ] Keep `throughput_depth` roadmap wording scoped to metadata/unit tests
-      versus scheduler-validation reports.
-  - Spec evidence: AlphaEvolve-style fast/deep model scheduling needs
-    experiment-level selection traces, budget-normalized comparisons, and
-    breadth/depth/cost/latency evidence across real runs, not only deterministic
-    backend metadata arithmetic. Section 2.4's concrete model mix uses a
-    low-latency model for high-volume idea generation and a stronger model for
-    occasional higher-quality suggestions.
-  - Current evidence: `ROADMAP.md` asks to extend current focused
-    `throughput_depth` metadata tests into AlphaEvolve-style scheduler
-    validation. README and code evidence show the current policy is a
-    heuristic global backend bandit with optional normalized metadata weights
-    (`depth: 0.10`, `cost: -0.05`, `latency: -0.05`) after pull-once
-    initialization. Focused ensemble tests cover metadata validation and
-    defensive copying, secret-safe metadata retention, descriptive
-    breadth/depth role metadata, per-selection min/max normalization against
-    reward scale, metadata-priority selection after all backends are
-    initialized, and call telemetry for the effective policy. They do not run
-    benchmark workloads, emit experiment-level selection traces, compare
-    equal-budget scheduler variants, or prove that breadth/depth/cost/latency
-    choices improve AlphaEvolve-style search outcomes. They also do not prove
-    a dedicated fast-breadth plus strong-depth model-mix policy analogous to
-    AlphaEvolve's Flash/Pro scheduling. Per-call
-    `throughput_depth_lane_evidence` now records eligible lanes, normalized
-    metadata inputs, recognized fast-breadth/strong-depth labels, and
-    `claim_ready: false` limitations as a metadata trace rather than an
-    experiment report. The roadmap now points to
-    `papers/fast_strong_model_mix_boundary.json`, which preserves that
-    metadata-trace-only boundary for manifest validation.
-  - Required result: when executable scheduler-validation fixtures,
-    experiment-level selection trace artifacts, equal-budget scheduler reports,
-    dedicated fast/strong lane policies, or calibrated breadth/depth/cost/
-    latency policy evidence land, update the roadmap, README, papers index,
-    and code/paper TODO entries together so roadmap wording neither
-    underclaims current focused `throughput_depth` coverage nor overclaims
-    AlphaEvolve-grade model-scheduling validation.
 
 - [ ] Keep sample-efficiency roadmap wording scoped to single-run counts
       until benchmark-level curves exist.

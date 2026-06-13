@@ -10850,3 +10850,30 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     AlphaEvolve-specific migration policy fidelity, topology ablations, and
     richer paper-facing migration-policy reports remain active in code/paper
     TODOs.
+- [x] Keep per-role scheduler roadmap wording scoped to opt-in role-owned
+  selection state versus calibrated AlphaEvolve scheduler policy.
+  - Spec evidence: AlphaEvolve-scale LLM orchestration needs role-specific
+    model-selection behavior for mutation generation, critique, feedback, and
+    prompt-improvement calls, with independently auditable budgets and rewards.
+  - Status: ROADMAP names opt-in `llm_role_scheduler_scope="role_scoped"` live
+    per-role selection state, configured reward-accounted roles, role-scoped
+    backend eligibility, logical call caps, role budget maps, per-call
+    scheduler policy records, local reward contracts, quota scopes, and
+    scheduler-state ownership. It links the scoped local UCB/runtime boundary
+    to `papers/llm_role_scheduler_boundary.json`.
+  - Remaining roadmap gap: calibrated reward signals, experiment-owned quotas,
+    AlphaEvolve-style budget policy, and role-specific scheduler reports remain
+    active in code and paper TODOs.
+- [x] Keep `throughput_depth` roadmap wording scoped to metadata/unit tests
+      versus scheduler-validation reports.
+  - Spec evidence: AlphaEvolve-style fast/deep model scheduling needs
+    experiment-level selection traces, budget-normalized comparisons, and
+    breadth/depth/cost/latency evidence across real runs.
+  - Status: ROADMAP asks to extend current focused `throughput_depth` metadata
+    tests into AlphaEvolve-style scheduler validation. It links per-call
+    `throughput_depth_lane_evidence` metadata traces and `claim_ready: false`
+    limitations to `papers/fast_strong_model_mix_boundary.json`.
+  - Remaining roadmap gap: executable scheduler-validation fixtures,
+    experiment-level selection traces, equal-budget scheduler reports,
+    dedicated fast/strong lane policies, and calibrated breadth/depth/cost/
+    latency evidence remain active in code and paper TODOs.

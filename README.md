@@ -87,6 +87,12 @@ Important limits:
   DeepConsensus, AC OPF, Earth AI, Willow, public-gallery, TPU, cache-policy,
   Spanner, compiler-storage, customer, UI, and API claims remain bounded by
   `papers/alphaevolve_2026_impact_boundary.json`.
+- FHE-on-TPU AlphaEvolve application coverage is background paper context only:
+  LibreEvolve has no TFHE/Jaxite or CKKS/CROSS primitive harness, Google Cloud
+  TPUv5e execution provenance, correctness-test suite, generated
+  cryptographic-kernel artifact hashes, latency benchmark rows, baseline
+  implementation identity, or independent reproduction for the reported 2.5x,
+  1.31x, and 1.18x speedups.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

@@ -10,23 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement FHE-on-TPU AlphaEvolve application gates beyond paper cache
-      coverage.
-  - Spec evidence: arXiv `2605.14718`, submitted May 14, 2026, reports using
-    AlphaEvolve for hardware-aware Fully Homomorphic Encryption optimization
-    on Google Cloud TPUv5e, with TFHE/Jaxite and CKKS/CROSS primitives,
-    real-world hardware feedback, rigorous correctness tests, and latency
-    speedups over human-engineered state of the art.
-  - Current evidence: ROADMAP and paper manifests now include `2605.14718` as
-    FHE-on-TPU application context with a local PDF/cache hash and
-    background-only claim scope. ROADMAP still has open hardware/compiler/
-    system benchmark gaps and no FHE/cryptography-on-TPU fixture gate.
-  - Required result: add roadmap gates beyond paper cache coverage: FHE
-    scheme/primitive taxonomy, TPUv5e/hardware-execution provenance, baseline
-    implementation identity, correctness-test evidence, latency metric and
-    speedup records, code/artifact availability status, and benchmark-fixture
-    status rules so roadmap claims do not outpace local FHE kernel support.
-
 - [ ] Implement AlphaEvolve intentmaking/sensemaking HCI gates beyond paper
       cache coverage.
   - Spec evidence: arXiv `2605.05921`, submitted May 7, 2026, reports a

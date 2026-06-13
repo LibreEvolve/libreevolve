@@ -2,6 +2,25 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive FHE-on-TPU roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2605.14718` source-scoped as background AlphaEvolve application
+    context rather than local FHE benchmark support.
+  - Current evidence: `papers/README.md` and paper manifests cache
+    `2605.14718` and record the claimed TFHE/Jaxite and CKKS/CROSS TPUv5e
+    speedups, while marking local primitive harnesses, TPUv5e execution
+    provenance, correctness tests, generated kernel artifacts, latency rows,
+    baseline identity, and independent reproduction as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: FHE scheme/primitive taxonomy, hardware-execution provenance,
+    baseline implementation identity, correctness-test evidence, latency
+    metric and speedup records, code/artifact availability status,
+    benchmark-fixture status rules, and independent checker outputs.
+  - Verification: paper-manifest validation and checked-in paper-index TODO
+    coverage still pass.
+
 - [x] Archive 2026 AlphaEvolve impact-domain roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

@@ -10,39 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep provider-diagnostics roadmap wording scoped to retained scalar
-      telemetry versus raw provider replay.
-  - Spec evidence: AlphaEvolve-grade scheduler and budget evidence needs
-    reliable per-call provider details, pricing/cost evidence, and replayable
-    provenance for the model calls that produced proposals, critiques,
-    feedback, and prompt mutations.
-  - Current evidence: `ROADMAP.md` asks to extend run-scoped call telemetry
-    beyond provider usage, configured cost estimates, request ids, finish
-    reasons, adapter retry summaries, and token/cost/latency stops to raw
-    provider diagnostics, live provider pricing/default-rate capture, and
-    richer budget-event evidence. Code, README, and paper TODO evidence show
-    the current boundary: adapters expose safe usage/id/finish metadata,
-    `adapter_retry` records, bounded scalar `provider_diagnostics`, local
-    `backend_defaults`, failure categories/status codes, configured
-    `cost_estimate` and `cost_estimate_status` records, strict call/reward
-    ledger replay, and final `runtime.llm_provider_diagnostics` summaries
-    validated by `libreevolve.llm_provider_diagnostics.v1`. Those summaries
-    aggregate retained call-history windows and explicitly limit themselves to
-    bounded scalar diagnostics and configured pricing estimates. The validator
-    now rejects raw provider-payload replay claims at the summary, totals, and
-    backend-record scopes, remote provider-default/default-rate capture claims,
-    and backend-default record counts that exceed retained call records; this
-    is still not full raw provider-native payload replay, live provider
-    pricing/default-rate discovery, account/model default capture, or complete
-    replay evidence for provider outputs. The committed
-    `papers/provider_diagnostics_replay_boundary.json` sidecar now preserves
-    this bounded scalar diagnostics boundary for paper-manifest validation.
-  - Required result: when raw provider-payload replay, live pricing/default
-    capture, provider account/model default evidence, or richer budget-event
-    artifacts land, update the roadmap, README, papers index, and code/paper
-    TODO entries together so roadmap wording neither underclaims current
-    bounded diagnostics nor overclaims AlphaEvolve-grade provider-call replay.
-
 - [ ] Keep the provider cancellation roadmap item aligned with current timeout
   policy coverage.
   - Spec evidence: AlphaEvolve-scale provider orchestration needs bounded model

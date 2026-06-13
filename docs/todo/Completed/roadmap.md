@@ -2,6 +2,32 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive provider-diagnostics roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `docs/status.md`, `docs/run-artifacts.md`, `papers/README.md`, the runtime
+    provider-diagnostics summary, and the provider-diagnostics replay boundary
+    sidecar already scope provider telemetry to bounded retained scalar
+    diagnostics, not raw provider-payload replay.
+  - Current evidence: runtime summaries emit
+    `libreevolve.llm_provider_diagnostics.v1` with policy
+    `bounded_retained_call_history_provider_diagnostics`, retained call-history
+    window metadata, provider usage/id/finish/retry/failure/status evidence,
+    bounded `provider_diagnostics`, local `backend_defaults`, configured
+    `cost_estimate` / `cost_estimate_status` aggregation, false
+    `libreevolve.llm_provider_pricing_readiness.v1` readiness fields, record
+    hashes, and explicit limitations for retained windows, bounded scalar
+    diagnostics, configured pricing, and local backend defaults.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    AlphaEvolve-grade provider evidence: raw provider-payload sidecars,
+    provider-output replay, complete provider-call replay, live pricing/default
+    discovery, account/model default capture, richer budget-event artifacts,
+    and hard provider cancellation.
+  - Verification: provider diagnostics policy tests reject raw provider replay,
+    live-pricing readiness overclaims, remote provider-default/default-rate
+    overclaims, backend-default count drift, and configured-pricing drift; the
+    provider diagnostics replay boundary tests reject raw replay readiness
+    overclaims while preserving the bounded-diagnostics sidecar.
+
 - [x] Archive provider-capability roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `README.md`,
     `docs/status.md`, `docs/run-artifacts.md`, `docs/configuration.md`,

@@ -2169,6 +2169,7 @@ def test_validate_paper_manifest_rejects_metric_diverse_prompt_boundary_drift(
     record = paper_manifest.metric_diverse_prompt_boundary_record()
     record["claim_ready"] = True
     record["boundary_status"] = "alphaevolve_section_2_4_benchmark_ready"
+    record["source_section_ids"] = ["2.3"]
     record["missing_evidence"]["equal_budget_comparison_report"] = "recorded"
     sidecar = tmp_path / paper_manifest.METRIC_DIVERSE_PROMPT_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
@@ -2179,6 +2180,7 @@ def test_validate_paper_manifest_rejects_metric_diverse_prompt_boundary_drift(
     assert report.ok is False
     assert "metric_diverse_prompt_boundary_claim_ready_overclaim" in codes
     assert "metric_diverse_prompt_boundary_invalid_boundary_status" in codes
+    assert "metric_diverse_prompt_boundary_invalid_source_section_ids" in codes
     assert (
         "metric_diverse_prompt_boundary_invalid_missing_evidence_equal_budget_comparison_report"
         in codes

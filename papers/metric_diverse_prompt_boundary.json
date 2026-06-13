@@ -1,6 +1,9 @@
 {
   "schema": "libreevolve.metric_diverse_prompt_boundary.v1",
   "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "2.4"
+  ],
   "source_claim": "AlphaEvolve Section 2.4 says multiple scores can improve a primary target because prompts include programs that excel under different criteria, each representing a different definition of good",
   "boundary_status": "prompt_visible_evidence_not_benchmark_policy",
   "runtime_report_schema": "libreevolve.metric_diverse_inspiration_report.v1",

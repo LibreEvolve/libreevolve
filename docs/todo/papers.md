@@ -559,12 +559,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     DataCite DOI resolution snapshots, TeX source caching, license-page
     caching, and submission-history refresh checks. This is still a manually
     recorded source-version boundary, not a cached arXiv abstract-page
-    artifact or live refresh verifier.
+    artifact or live refresh verifier. `papers/arxiv_abstract_snapshot.json`
+    now pins the current `2506.13131v1` abstract HTML byte count and SHA-256
+    digest, normalized title/authors/subjects/DOI/submission-history metadata,
+    and a validator-supported live snapshot comparison path.
   - Required result: before using arXiv abstract-page metadata as
-    publication-grade evidence, add an HTML/source snapshot with byte count and
-    digest, DOI/DataCite resolution evidence, TeX-source and license-page
-    retrieval records, author-list normalization, subject-class verification,
-    and a refresh gate that detects arXiv version or metadata drift.
+    publication-grade evidence, add DOI/DataCite resolution evidence,
+    TeX-source and license-page retrieval records, a committed full-HTML
+    artifact or approved equivalent, and an automated refresh gate that detects
+    arXiv version or metadata drift.
 
 - [ ] Track Google/Gemini provider parity separately from generic backend
       configurability.

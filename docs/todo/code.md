@@ -305,13 +305,17 @@ sidecars, tests, and active TODOs.
     `manual_current_as_of_2026-06-13_without_html_snapshot` status. Its audit
     policy now marks HTML snapshotting, DOI/DataCite resolution, TeX-source
     caching, license-page caching, and submission-history refresh gates as
-    still missing.
+    still missing. `papers/arxiv_abstract_snapshot.json` now records a
+    2026-06-13 arXiv abstract-page HTML byte count, SHA-256 digest, normalized
+    title, author list, subject classes, DOI URL, submitted date/timestamp,
+    TeX-source URL, license URL, and submission-history entry for
+    `2506.13131v1`, plus a validator-supported live-refresh comparison input.
   - Required result: implement a source-metadata verifier that retrieves or
-    pins the arXiv abstract HTML/source metadata with bytes and SHA-256 digest,
-    normalizes authors and subject classes, resolves DOI/DataCite evidence,
-    records TeX and license artifacts, and fails paper/source validation if the
-    live arXiv page or version metadata drifts from the committed source
-    boundary.
+    pins the remaining source artifacts: DOI/DataCite evidence, TeX archive
+    digest, license-page artifact, committed full HTML or approved equivalent,
+    and an automated CI/network refresh gate that fails paper/source
+    validation if the live arXiv page or version metadata drifts from the
+    committed source boundary.
 
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.

@@ -35,6 +35,10 @@ from libreevolve.problems.benchmarks.alphaevolve_2026_impact_boundary import (
     alphaevolve_2026_impact_boundary_record,
     validate_alphaevolve_2026_impact_boundary,
 )
+from libreevolve.problems.benchmarks.arxiv_abstract_snapshot import (
+    alphaevolve_arxiv_abstract_snapshot_record,
+    validate_alphaevolve_arxiv_abstract_snapshot,
+)
 from libreevolve.problems.benchmarks.autoconvolution_boundary import (
     autoconvolution_boundary_record,
     validate_autoconvolution_boundary,
@@ -509,6 +513,7 @@ from libreevolve.problems.benchmarks.ttt_discover_boundary import (
 
 
 REQUIRED_FIELDS = ("id", "title", "url", "file", "ok", "bytes", "sha256", "message")
+ARXIV_ABSTRACT_SNAPSHOT_FILE = "papers/arxiv_abstract_snapshot.json"
 APPENDIX_A_CURATION_FILE = "papers/appendix_a_matrix_curation.json"
 APPENDIX_A_EXCLUDED_TARGET_CURATION_FILE = "papers/appendix_a_matrix_excluded_target_curation.json"
 APPENDIX_A_RESOURCE_FRONTIER_FILE = "papers/appendix_a_matrix_resource_frontier.json"
@@ -1034,6 +1039,7 @@ def validate_paper_manifest(
     issues.extend(_validate_appendix_a_matrix_registry_if_present(root_path))
     issues.extend(_validate_appendix_b_registry_if_present(root_path))
     issues.extend(_validate_ablation_registry_if_present(root_path))
+    issues.extend(_validate_alphaevolve_arxiv_abstract_snapshot(root_path))
     issues.extend(_validate_figure8_ablation_artifacts(root_path))
     issues.extend(_validate_benchmark_fixture_readiness_boundary(root_path))
     issues.extend(_validate_systems_result_readiness_boundary(root_path))
@@ -1706,6 +1712,38 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
         for issue in figure4_artifact_report.issues
     )
     return issues
+
+
+def _validate_alphaevolve_arxiv_abstract_snapshot(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ARXIV_ABSTRACT_SNAPSHOT_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = alphaevolve_arxiv_abstract_snapshot_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_arxiv_abstract_snapshot_manifest_missing",
+                    (
+                        f"{ARXIV_ABSTRACT_SNAPSHOT_FILE} must emit the pinned "
+                        "AlphaEvolve arXiv abstract-page metadata snapshot"
+                    ),
+                    "2506.13131",
+                )
+            ]
+    report = validate_alphaevolve_arxiv_abstract_snapshot(recordset)
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_arxiv_abstract_snapshot_{issue.code}",
+            issue.message,
+            "2506.13131",
+        )
+        for issue in report.issues
+    ]
 
 
 def _validate_appendix_b_registry_if_present(root_path: Path) -> list[PaperManifestIssue]:

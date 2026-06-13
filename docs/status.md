@@ -1114,6 +1114,12 @@ Important limits:
   evidence. This is not an exhaustive source-span coverage matrix or generated
   code-audit report; that boundary is tracked by
   `papers/implementation_evidence_map_boundary.json`.
+- AlphaEvolve arXiv abstract-page metadata now has a pinned HTML byte count,
+  SHA-256 digest, normalized author list, subject classes, DOI URL, submitted
+  timestamp, TeX-source URL, license URL, and submission-history entry. This is
+  not DataCite DOI resolution, TeX-source archive caching, license-page
+  caching, committed full HTML content, or an automated CI refresh gate; that
+  boundary is tracked by `papers/arxiv_abstract_snapshot.json`.
 - Paper-index benchmark coverage validation currently catches structural
   coverage issues and one narrow `Implemented`-but-`not implemented`
   contradiction. It is not semantic proof that every implemented benchmark

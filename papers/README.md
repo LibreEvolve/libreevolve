@@ -2187,10 +2187,13 @@ Implemented:
   than widened source-version row schemas; row-identity and source-rights
   layers are emitted by `papers/row_identity.json` and `papers/source_rights.json`.
   It remains source-version evidence, not full bibliography normalization,
-  source-use rights review, or full arXiv abstract-page evidence. Abstract HTML
-  snapshots, DataCite DOI resolution artifacts, TeX-source caching,
-  license-page caching, normalized author-list records, and submission-history
-  refresh checks remain open.
+  source-use rights review, or full arXiv abstract-page evidence. The
+  companion `papers/arxiv_abstract_snapshot.json` now pins the current
+  abstract-page byte count, SHA-256 digest, normalized author list, subject
+  classes, DOI URL, submitted timestamp, TeX-source URL, license URL, and
+  submission-history entry. DataCite DOI resolution artifacts, TeX-source
+  archive digests, license-page caching, committed full HTML content, and
+  automated CI refresh checks remain open.
 - `libreevolve/problems/benchmarks/paper_source_identity.py`: paper-cache row
   identity evidence. It validates `papers/row_identity.json`, whose 24 source
   records emit manifest row id, URL source id where available, local filename
@@ -2485,6 +2488,11 @@ Implemented:
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive
   audit coverage.
+- `papers/arxiv_abstract_snapshot.json`: AlphaEvolve arXiv abstract-page
+  snapshot sidecar with the pinned `2506.13131v1` HTML byte count/digest,
+  normalized source metadata, and explicit remaining gaps for full HTML,
+  DataCite DOI, TeX-source, license-page, and automated refresh evidence. It
+  is not full publication-grade source evidence or a live refresh gate.
 - `libreevolve/problems/examples/sorting`: neutral plateau/diversity smoke
   fixture. The bubble-sort seed already reaches `accuracy == 1.0`, so this
   example can demonstrate mutation handling and same-score implementation

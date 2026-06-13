@@ -266,6 +266,58 @@ def test_validate_paper_manifest_rejects_source_version_manifest_row_drift(tmp_p
     assert "alphaevolve_source_pdf_version_manifest_sha256_mismatch" in codes
 
 
+def test_validate_paper_manifest_accepts_arxiv_abstract_snapshot(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.ARXIV_ABSTRACT_SNAPSHOT_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.alphaevolve_arxiv_abstract_snapshot_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_arxiv_abstract_snapshot_drift(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.alphaevolve_arxiv_abstract_snapshot_record()
+    record["html_snapshot"]["bytes"] = 1
+    record["normalized_metadata"]["subject_codes"] = ["cs.AI"]
+    record["missing_evidence"]["datacite_doi_resolution_snapshot"] = "recorded"
+    sidecar = tmp_path / paper_manifest.ARXIV_ABSTRACT_SNAPSHOT_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "alphaevolve_arxiv_abstract_snapshot_invalid_html_snapshot_bytes" in codes
+    assert "alphaevolve_arxiv_abstract_snapshot_invalid_metadata_subject_codes" in codes
+    assert (
+        "alphaevolve_arxiv_abstract_snapshot_invalid_missing_evidence_datacite_doi_resolution_snapshot"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_arxiv_abstract_snapshot_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "alphaevolve_arxiv_abstract_snapshot_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_matching_source_identity_manifest(tmp_path):
     source_record = alphaevolve_source_pdf_version_record()
     row = dict(source_record["manifest_row"])

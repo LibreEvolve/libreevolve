@@ -1313,9 +1313,12 @@ resumed-trace proof are still open.
   companion manifest, which emits the `2506.13131v1` source-version row and
   links it to docs/TODO claim surfaces while keeping the legacy CSV/JSON
   download manifests as PDF cache ledgers. Full arXiv abstract-page parity
-  remains open: no abstract HTML byte/hash snapshot, DataCite DOI resolution
-  artifact, TeX-source cache, license-page cache, normalized author list, or
-  submission-history refresh gate is implemented.
+  is still not claimed, but `papers/arxiv_abstract_snapshot.json` now records
+  the current abstract-page byte count, SHA-256 digest, normalized title,
+  author list, subject classes, DOI URL, submitted timestamp, TeX-source URL,
+  license URL, and submission-history entry. DataCite DOI resolution artifacts,
+  TeX-source cache digests, license-page cache, committed full HTML content,
+  and automated CI refresh gates remain open.
 - Keep paper-cache row identity proven before version/rights evidence:
   `libreevolve.tools.paper_manifest` now validates that arXiv PDF/abs URLs
   contain a source id matching the manifest `id`, and that every local PDF

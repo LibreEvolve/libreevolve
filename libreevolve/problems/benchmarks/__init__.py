@@ -35,6 +35,12 @@ from libreevolve.problems.benchmarks.alphaevolve_2026_impact_boundary import (
     render_alphaevolve_2026_impact_boundary_summary,
     validate_alphaevolve_2026_impact_boundary,
 )
+from libreevolve.problems.benchmarks.arxiv_abstract_snapshot import (
+    ALPHAEVOLVE_ARXIV_ABSTRACT_SNAPSHOT_SCHEMA,
+    alphaevolve_arxiv_abstract_snapshot_record,
+    render_alphaevolve_arxiv_abstract_snapshot_summary,
+    validate_alphaevolve_arxiv_abstract_snapshot,
+)
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     CURATION_SCHEMA as APPENDIX_A_MATRIX_CURATION_SCHEMA,
     EXCLUDED_TARGET_CURATION_BOUNDARY_SCHEMA as APPENDIX_A_MATRIX_EXCLUDED_TARGET_CURATION_BOUNDARY_SCHEMA,
@@ -814,6 +820,7 @@ __all__ = [
     "ALPHAEVOLVE_FOLLOW_ON_MATH_SOURCE_SCHEMA",
     "ALPHAEVOLVE_FOLLOW_ON_PROBLEM_COVERAGE_SCHEMA",
     "ALPHAEVOLVE_2026_IMPACT_BOUNDARY_SCHEMA",
+    "ALPHAEVOLVE_ARXIV_ABSTRACT_SNAPSHOT_SCHEMA",
     "ALPHAEVOLVE_REFERENCES_SECTION_SCHEMA",
     "ALPHAEVOLVE_SOURCE_PDF_RIGHTS_SCHEMA",
     "ALPHAEVOLVE_SOURCE_PDF_VERSION_SCHEMA",
@@ -977,6 +984,7 @@ __all__ = [
     "alphaevolve_paper_artifact_role_records",
     "alphaevolve_paper_artifact_linkage_record",
     "alphaevolve_references_section_record",
+    "alphaevolve_arxiv_abstract_snapshot_record",
     "alphaevolve_source_pdf_rights_record",
     "alphaevolve_source_pdf_version_record",
     "archive_event_replay_boundary_record",
@@ -1105,6 +1113,7 @@ __all__ = [
     "render_alphaevolve_follow_on_math_source_summary",
     "render_alphaevolve_follow_on_problem_coverage_summary",
     "render_alphaevolve_references_section_summary",
+    "render_alphaevolve_arxiv_abstract_snapshot_summary",
     "render_alphaevolve_source_pdf_rights_summary",
     "render_alphaevolve_source_pdf_version_summary",
     "render_archive_event_replay_boundary_summary",
@@ -1245,6 +1254,7 @@ __all__ = [
     "validate_appendix_a_matrix_subset_scope",
     "validate_alphaevolve_companion_colab_source",
     "validate_alphaevolve_2026_impact_boundary",
+    "validate_alphaevolve_arxiv_abstract_snapshot",
     "validate_alphaevolve_follow_on_math_source",
     "validate_alphaevolve_follow_on_problem_coverage",
     "validate_alphaevolve_references_section",

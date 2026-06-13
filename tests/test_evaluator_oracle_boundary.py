@@ -13,7 +13,7 @@ def test_evaluator_oracle_boundary_accepts_absence_record():
 
     assert validation.ok is True
     assert validation.boundary_status == "local_arbitration_without_independent_oracle_evidence"
-    assert validation.required_evidence_field_count == 15
+    assert validation.required_evidence_field_count == 17
     assert validation.missing_evidence_count == 7
     assert boundary["schema"] == EVALUATOR_ORACLE_BOUNDARY_SCHEMA
     assert "does not claim AlphaEvolve-style independent evaluator-oracle" in (
@@ -46,5 +46,5 @@ def test_render_evaluator_oracle_boundary_summary_reports_shape():
     assert "AlphaEvolve evaluator-oracle boundary" in summary
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | local_arbitration_without_independent_oracle_evidence |" in summary
-    assert "| required_evidence_field_count | 15 |" in summary
+    assert "| required_evidence_field_count | 17 |" in summary
     assert "| missing_evidence_count | 7 |" in summary

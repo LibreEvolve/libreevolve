@@ -28512,6 +28512,7 @@ def _evaluator_oracle_registry_report(
             llm_feedback,
             "configured_evaluator_cascade" if eval_stages else "evaluator:default",
         ),
+        "oracle_source_evidence": _evaluator_oracle_source_evidence(oracles),
         "merge_policy": _evaluator_oracle_merge_policy(config),
         "arbitration_policy": _evaluator_oracle_arbitration_policy(oracles),
         "runtime_summary": _evaluator_oracle_runtime_summary(programs),
@@ -28664,6 +28665,55 @@ def _evaluator_oracle_source_ref(source: Mapping[str, object]) -> dict:
         "relative_path": source.get("relative_path"),
         "sha256": source.get("sha256"),
         "source_type": source.get("source_type"),
+    }
+
+
+def _evaluator_oracle_source_evidence(oracles: list[dict]) -> dict:
+    records: list[dict] = []
+    for oracle in oracles:
+        source = oracle.get("source") if isinstance(oracle.get("source"), Mapping) else {}
+        has_source = bool(source) and source.get("status") != "not_available"
+        has_hash = _is_sha256_hex(source.get("sha256"))
+        records.append(
+            {
+                "oracle_id": oracle.get("oracle_id"),
+                "oracle_type": oracle.get("oracle_type"),
+                "source_status": "recorded" if has_source else "not_available",
+                "relative_path": source.get("relative_path") if has_source else None,
+                "source_type": source.get("source_type") if has_source else None,
+                "sha256": source.get("sha256") if has_hash else None,
+                "source_hash_recorded": has_hash,
+                "local_source_ref_recorded": has_source,
+                "benchmark_sufficiency_proof": False,
+                "independent_oracle_source": False,
+            }
+        )
+    source_ref_count = sum(1 for record in records if record["local_source_ref_recorded"])
+    source_hash_count = sum(1 for record in records if record["source_hash_recorded"])
+    return {
+        "schema": "libreevolve.evaluator_oracle_source_evidence.v1",
+        "source": "startup_manifest_problem_evaluator_sources",
+        "oracle_count": len(oracles),
+        "source_ref_count": source_ref_count,
+        "source_hash_count": source_hash_count,
+        "unlocated_oracle_count": len(oracles) - source_ref_count,
+        "records": records,
+        "claim_readiness": {
+            "local_oracle_source_refs_recorded": source_ref_count > 0,
+            "all_oracle_source_hashes_recorded": source_hash_count == len(oracles),
+            "benchmark_sufficiency_proof": False,
+            "independent_oracle_source_evidence": False,
+            "remaining_gap": [
+                gap
+                for gap, ready in (
+                    ("source_refs_for_all_registered_oracles", source_ref_count == len(oracles)),
+                    ("source_hashes_for_all_registered_oracles", source_hash_count == len(oracles)),
+                    ("benchmark_sufficiency_proof", False),
+                    ("independent_oracle_source_evidence", False),
+                )
+                if not ready
+            ],
+        },
     }
 
 
@@ -30118,6 +30168,7 @@ def validate_evaluator_oracle_registry(report: object) -> dict:
         "oracle_count",
         "oracles",
         "metric_ownership",
+        "oracle_source_evidence",
         "merge_policy",
         "arbitration_policy",
         "runtime_summary",
@@ -30165,6 +30216,15 @@ def validate_evaluator_oracle_registry(report: object) -> dict:
             issues.append({"code": "invalid_oracle_metric_ownership", "message": f"oracle {index} metric ownership must be a list"})
     if report.get("oracle_count") != len(oracles):
         issues.append({"code": "invalid_oracle_count", "message": "oracle_count must match oracles length"})
+    source_evidence = report.get("oracle_source_evidence")
+    if not isinstance(source_evidence, dict):
+        issues.append({"code": "invalid_oracle_source_evidence", "message": "oracle_source_evidence must be an object"})
+    else:
+        _validate_evaluator_oracle_source_evidence(
+            source_evidence,
+            seen_ids,
+            issues,
+        )
     ownership = report.get("metric_ownership")
     if not isinstance(ownership, list):
         issues.append({"code": "invalid_metric_ownership", "message": "metric_ownership must be a list"})
@@ -30230,6 +30290,142 @@ def validate_evaluator_oracle_registry(report: object) -> dict:
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _validate_evaluator_oracle_source_evidence(
+    report: Mapping[str, object],
+    oracle_ids: set[str],
+    issues: list[dict],
+) -> None:
+    if report.get("schema") != "libreevolve.evaluator_oracle_source_evidence.v1":
+        issues.append(
+            {
+                "code": "invalid_oracle_source_evidence_schema",
+                "message": "oracle source evidence schema is unsupported",
+            }
+        )
+    if report.get("source") != "startup_manifest_problem_evaluator_sources":
+        issues.append(
+            {
+                "code": "invalid_oracle_source_evidence_source",
+                "message": "oracle source evidence source is unsupported",
+            }
+        )
+    records = report.get("records")
+    if not isinstance(records, list):
+        issues.append(
+            {
+                "code": "invalid_oracle_source_evidence_records",
+                "message": "oracle source evidence records must be a list",
+            }
+        )
+        records = []
+    record_ids = {
+        record.get("oracle_id")
+        for record in records
+        if isinstance(record, Mapping) and isinstance(record.get("oracle_id"), str)
+    }
+    if oracle_ids and record_ids != oracle_ids:
+        issues.append(
+            {
+                "code": "oracle_source_evidence_oracle_mismatch",
+                "message": "oracle source evidence records must match registered oracles",
+            }
+        )
+    source_ref_count = 0
+    source_hash_count = 0
+    for index, record in enumerate(records):
+        if not isinstance(record, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_oracle_source_evidence_record",
+                    "message": f"oracle source evidence record {index} must be an object",
+                }
+            )
+            continue
+        if record.get("source_status") not in {"recorded", "not_available"}:
+            issues.append(
+                {
+                    "code": "invalid_oracle_source_status",
+                    "message": f"oracle source evidence record {index} source_status is unsupported",
+                }
+            )
+        for field in (
+            "source_hash_recorded",
+            "local_source_ref_recorded",
+            "benchmark_sufficiency_proof",
+            "independent_oracle_source",
+        ):
+            if not isinstance(record.get(field), bool):
+                issues.append(
+                    {
+                        "code": f"invalid_oracle_source_{field}",
+                        "message": f"oracle source evidence record {index} {field} must be boolean",
+                    }
+                )
+        if record.get("benchmark_sufficiency_proof") is not False:
+            issues.append(
+                {
+                    "code": "oracle_source_benchmark_sufficiency_overclaim",
+                    "message": "oracle source evidence must not claim benchmark sufficiency proof",
+                }
+            )
+        if record.get("independent_oracle_source") is not False:
+            issues.append(
+                {
+                    "code": "oracle_source_independence_overclaim",
+                    "message": "oracle source evidence must not claim independent oracle source evidence",
+                }
+            )
+        if record.get("local_source_ref_recorded") is True:
+            source_ref_count += 1
+        sha256 = record.get("sha256")
+        if record.get("source_hash_recorded") is True:
+            source_hash_count += 1
+            if not _is_sha256_hex(sha256):
+                issues.append(
+                    {
+                        "code": "invalid_oracle_source_hash",
+                        "message": f"oracle source evidence record {index} sha256 is invalid",
+                    }
+                )
+    expected_counts = {
+        "oracle_count": len(oracle_ids),
+        "source_ref_count": source_ref_count,
+        "source_hash_count": source_hash_count,
+        "unlocated_oracle_count": len(oracle_ids) - source_ref_count,
+    }
+    for field, expected in expected_counts.items():
+        if report.get(field) != expected:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"oracle source evidence {field} must match records",
+                }
+            )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_oracle_source_claim_readiness",
+                "message": "oracle source evidence claim_readiness must be an object",
+            }
+        )
+    else:
+        if readiness.get("benchmark_sufficiency_proof") is not False:
+            issues.append(
+                {
+                    "code": "oracle_source_readiness_sufficiency_overclaim",
+                    "message": "oracle source evidence readiness must not claim benchmark sufficiency",
+                }
+            )
+        if readiness.get("independent_oracle_source_evidence") is not False:
+            issues.append(
+                {
+                    "code": "oracle_source_readiness_independence_overclaim",
+                    "message": "oracle source evidence readiness must not claim independent oracle evidence",
+                }
+            )
 
 
 def _validate_evaluator_oracle_disagreement_outcomes(

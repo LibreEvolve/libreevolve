@@ -161,8 +161,9 @@ LibreEvolve has:
   ownership, merge policy, failure policy, prompt-feedback linkage, an
   `arbitration_policy` authority matrix, benchmark-sufficiency labels,
   conflict roles, failure effects, bounded local `disagreement_outcomes` for
-  validator-versus-feedback discard cases, and an explicit limitation for
-  independent multi-oracle arbitration, with
+  validator-versus-feedback discard cases, `oracle_source_evidence` source
+  refs/hashes when available, and an explicit limitation for independent
+  multi-oracle arbitration, with
   `papers/evaluator_oracle_boundary.json` now carrying the paper-manifest-
   validated absence boundary for reference/statistical oracles, benchmark
   sufficiency proof, independent disagreement outcomes, and cross-run oracle

@@ -5413,6 +5413,23 @@ def test_loop_includes_feedback_filled_objective_metric_in_selection_score():
             "paper_evaluator_metric": False,
         },
     ]
+    source_evidence = oracle_registry["oracle_source_evidence"]
+    assert source_evidence["schema"] == "libreevolve.evaluator_oracle_source_evidence.v1"
+    assert source_evidence["oracle_count"] == 2
+    assert source_evidence["source_ref_count"] == 1
+    assert source_evidence["source_hash_count"] == 1
+    assert source_evidence["unlocated_oracle_count"] == 1
+    assert source_evidence["claim_readiness"]["local_oracle_source_refs_recorded"] is True
+    assert source_evidence["claim_readiness"]["benchmark_sufficiency_proof"] is False
+    assert source_evidence["claim_readiness"]["independent_oracle_source_evidence"] is False
+    default_source, feedback_source = source_evidence["records"]
+    assert default_source["oracle_id"] == "evaluator:default"
+    assert default_source["source_status"] == "recorded"
+    assert default_source["source_hash_recorded"] is True
+    assert default_source["benchmark_sufficiency_proof"] is False
+    assert feedback_source["oracle_id"] == "llm_feedback:latency_review"
+    assert feedback_source["source_status"] == "not_available"
+    assert feedback_source["source_hash_recorded"] is False
     assert oracle_registry["merge_policy"]["evaluator_policy"] == "single_default_validator"
     assert oracle_registry["merge_policy"]["llm_feedback_policy"] == (
         "synchronous_post_evaluator_feedback_graders"
@@ -5570,6 +5587,40 @@ def test_evaluator_oracle_registry_validation_rejects_malformed_arbitration_poli
                 "paper_evaluator_metric": True,
             }
         ],
+        "oracle_source_evidence": {
+            "schema": "libreevolve.evaluator_oracle_source_evidence.v1",
+            "source": "startup_manifest_problem_evaluator_sources",
+            "oracle_count": 1,
+            "source_ref_count": 0,
+            "source_hash_count": 0,
+            "unlocated_oracle_count": 1,
+            "records": [
+                {
+                    "oracle_id": "evaluator:default",
+                    "oracle_type": "deterministic_validator",
+                    "source_status": "not_available",
+                    "relative_path": None,
+                    "source_type": None,
+                    "sha256": None,
+                    "source_hash_recorded": False,
+                    "local_source_ref_recorded": False,
+                    "benchmark_sufficiency_proof": False,
+                    "independent_oracle_source": False,
+                }
+            ],
+            "claim_readiness": {
+                "local_oracle_source_refs_recorded": False,
+                "all_oracle_source_hashes_recorded": False,
+                "benchmark_sufficiency_proof": False,
+                "independent_oracle_source_evidence": False,
+                "remaining_gap": [
+                    "source_refs_for_all_registered_oracles",
+                    "source_hashes_for_all_registered_oracles",
+                    "benchmark_sufficiency_proof",
+                    "independent_oracle_source_evidence",
+                ],
+            },
+        },
         "merge_policy": {"schema": "libreevolve.evaluator_oracle_merge_policy.v1"},
         "arbitration_policy": {
             "schema": "libreevolve.evaluator_oracle_arbitration_policy.v1",

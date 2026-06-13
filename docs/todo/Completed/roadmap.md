@@ -4222,6 +4222,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     libreevolve\tools\paper_manifest.py` passed.
   - Remaining gap: real independent evaluator-oracle evidence remains open.
 
+- [x] Keep evaluator-oracle roadmap wording aligned with local source
+      evidence.
+  - Status: ROADMAP now states that
+    `runtime.history.evaluator_oracle_registry` includes
+    `oracle_source_evidence` source refs and hashes when available, while
+    `papers/evaluator_oracle_boundary.json` still preserves the missing
+    independent reference/statistical-oracle, benchmark-sufficiency,
+    independent disagreement, and cross-run table gaps.
+  - Verification: focused evaluator-oracle loop tests and
+    `tests\test_evaluator_oracle_boundary.py` passed.
+  - Remaining gap: real independent evaluator-oracle evidence remains open.
+
 - [x] Archive stale active roadmap multi-evaluator wording TODO.
   - Status: the active roadmap TODO for scoping multi-evaluator wording was
     stale. `ROADMAP.md` and README already describe

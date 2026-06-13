@@ -11,6 +11,9 @@ EVALUATOR_ORACLE_RUNTIME_REGISTRY_SCHEMA = "libreevolve.evaluator_oracle_registr
 EVALUATOR_ORACLE_DISAGREEMENT_OUTCOMES_SCHEMA = (
     "libreevolve.evaluator_oracle_disagreement_outcomes.v1"
 )
+EVALUATOR_ORACLE_SOURCE_EVIDENCE_SCHEMA = (
+    "libreevolve.evaluator_oracle_source_evidence.v1"
+)
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_ID = "2.4"
 EXPECTED_BOUNDARY_STATUS = "local_arbitration_without_independent_oracle_evidence"
@@ -21,6 +24,8 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "input_schema",
     "output_schema",
     "metric_ownership",
+    "oracle_source_ref",
+    "oracle_source_hash",
     "independent_evidence_flag",
     "reference_or_statistical_oracle_id",
     "benchmark_sufficiency_label",
@@ -34,7 +39,9 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 EXPECTED_MISSING_EVIDENCE = {
     "independent_reference_oracle_records": "not_recorded_locally",
     "statistical_oracle_records": "not_recorded_locally",
-    "benchmark_sufficiency_evidence": "not_recorded_locally",
+    "benchmark_sufficiency_evidence": (
+        "local_source_refs_and_hashes_recorded_not_benchmark_sufficiency_proof"
+    ),
     "independent_disagreement_outcomes": "not_recorded_locally",
     "database_admission_effect_records": "not_recorded_locally",
     "score_reporting_effect_records": "not_recorded_locally",
@@ -64,6 +71,7 @@ def evaluator_oracle_boundary_record() -> dict[str, Any]:
         "schema": EVALUATOR_ORACLE_BOUNDARY_SCHEMA,
         "runtime_registry_schema": EVALUATOR_ORACLE_RUNTIME_REGISTRY_SCHEMA,
         "disagreement_outcomes_schema": EVALUATOR_ORACLE_DISAGREEMENT_OUTCOMES_SCHEMA,
+        "source_evidence_schema": EVALUATOR_ORACLE_SOURCE_EVIDENCE_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_section_id": EXPECTED_SOURCE_SECTION_ID,
         "source_claim": (
@@ -78,7 +86,8 @@ def evaluator_oracle_boundary_record() -> dict[str, Any]:
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records that LibreEvolve has local evaluator/cascade/"
-            "feedback arbitration metadata, but does not claim AlphaEvolve-style "
+            "feedback arbitration metadata plus local oracle source refs and "
+            "hashes when available, but does not claim AlphaEvolve-style "
             "independent evaluator-oracle evidence with reference or statistical "
             "oracles, benchmark sufficiency proof, independent disagreement "
             "outcomes affecting validity, score reporting, database admission, "
@@ -101,6 +110,8 @@ def validate_evaluator_oracle_boundary(
         issues.append(_issue("invalid_runtime_registry_schema", "runtime registry schema must identify evaluator-oracle registries"))
     if data.get("disagreement_outcomes_schema") != EVALUATOR_ORACLE_DISAGREEMENT_OUTCOMES_SCHEMA:
         issues.append(_issue("invalid_disagreement_outcomes_schema", "disagreement outcomes schema must identify evaluator-oracle disagreement reports"))
+    if data.get("source_evidence_schema") != EVALUATOR_ORACLE_SOURCE_EVIDENCE_SCHEMA:
+        issues.append(_issue("invalid_source_evidence_schema", "source evidence schema must identify evaluator-oracle source evidence reports"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     if data.get("source_section_id") != EXPECTED_SOURCE_SECTION_ID:

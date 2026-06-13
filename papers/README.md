@@ -752,11 +752,14 @@ conflict role, failure effect, independence flag, and reference/statistical
 status. The report also includes bounded `disagreement_outcomes` for observed
 local validator-versus-feedback cases, such as feedback discards after an
 evaluator pass, while labelling them as post-evaluator feedback effects rather
-than independent reference/statistical-oracle arbitration. The report keeps
-`claim_ready: false` because this is a registry for the current local cascade
-and post-evaluator grader boundary, not yet proof of independent reference/
-statistical oracles, independent disagreement outcome evidence, or per-oracle
-benchmark sufficiency. The committed `papers/evaluator_oracle_boundary.json`
+than independent reference/statistical-oracle arbitration. The report also
+includes `oracle_source_evidence`, which validates local evaluator source refs
+and hashes when available while keeping benchmark sufficiency and independence
+false. The report keeps `claim_ready: false` because this is a registry for
+the current local cascade and post-evaluator grader boundary, not yet proof of
+independent reference/statistical oracles, independent disagreement outcome
+evidence, or per-oracle benchmark sufficiency. The committed
+`papers/evaluator_oracle_boundary.json`
 sidecar now emits that
 `local_arbitration_without_independent_oracle_evidence` boundary, and
 `validate_paper_manifest()` requires and validates it at the real repo root.

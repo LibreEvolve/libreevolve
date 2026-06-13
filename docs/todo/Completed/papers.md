@@ -351,6 +351,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     independent disagreement outcomes, and cross-run oracle tables remain
     open.
 
+- [x] Add paper-visible local source evidence for evaluator-oracle records.
+  - Paper evidence: AlphaEvolve Section 2.4 separates evaluator mechanisms,
+    so the paper-facing runtime registry should distinguish local evaluator
+    source refs from independent oracle evidence.
+  - Status: completed manifests now include
+    `runtime.history.evaluator_oracle_registry.oracle_source_evidence`, with
+    per-oracle source status, local evaluator source refs and hashes when
+    available, unlocated-oracle counts, and explicit non-readiness for
+    benchmark sufficiency and independent oracle source evidence. The
+    evaluator-oracle boundary sidecar now records this as local source
+    evidence rather than benchmark sufficiency proof.
+  - Verification: focused evaluator-oracle loop tests and
+    `tests\test_evaluator_oracle_boundary.py` passed.
+  - Remaining paper gap: independent reference/statistical oracles, benchmark
+    sufficiency proof, independent disagreement outcomes, and cross-run oracle
+    tables remain open.
+
 - [x] Emit controller backtracking policy boundary sidecar.
   - Paper evidence: AlphaEvolve describes discovery as ideation, exploration,
     backtracking on unpromising hypotheses, experimentation, and validation.

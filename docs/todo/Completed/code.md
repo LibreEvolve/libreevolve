@@ -390,6 +390,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     benchmark-sufficiency proof, independent disagreement outcomes affecting
     validity/score/admission, or cross-run oracle table exists.
 
+- [x] Add local evaluator-oracle source evidence to the registry.
+  - Spec evidence: AlphaEvolve Section 2.4 distinguishes evaluator mechanisms,
+    so local registries should prove which local evaluator source artifacts
+    are attached before they can support stronger oracle claims.
+  - Status: `runtime.history.evaluator_oracle_registry` now includes
+    `oracle_source_evidence` with schema
+    `libreevolve.evaluator_oracle_source_evidence.v1`. It records one source
+    evidence row per oracle, local source refs and SHA-256 hashes when
+    available, unlocated-oracle counts, and explicit false readiness for
+    benchmark sufficiency proof and independent oracle source evidence.
+  - Verification: focused evaluator-oracle loop tests and
+    `tests\test_evaluator_oracle_boundary.py` passed.
+  - Remaining gap: this is local source-reference evidence, not independent
+    reference/statistical oracle support, benchmark-sufficiency proof,
+    independent disagreement outcomes, or cross-run oracle tables.
+
 - [x] Emit controller backtracking policy boundary sidecar.
   - Spec evidence: AlphaEvolve frames discovery as including backtracking on
     unpromising hypotheses, which needs controller-owned suppression/retry,

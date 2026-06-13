@@ -19,17 +19,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     configured cascade stages plus optional LLM feedback graders. The matrix
     labels each oracle's benchmark sufficiency, conflict role, failure effect,
     independent-evidence flag, and reference/statistical-oracle status.
+    `oracle_source_evidence` now validates local evaluator source refs and
+    hashes when available while keeping benchmark sufficiency and independence
+    false.
     `disagreement_outcomes` now records bounded local
     validator-versus-feedback outcomes, including feedback discards after an
     evaluator pass, final local validity effects, and an explicit
     post-evaluator/non-independent authority boundary. The committed
     `papers/evaluator_oracle_boundary.json` sidecar now preserves the
     paper-manifest-validated independent-oracle absence boundary.
-  - Current gap: the registry preserves current composition evidence, but it
-    does not prove multiple independent evaluator/oracle sources, reference/
-    statistical oracle support, per-benchmark sufficiency evidence, or
-    independent disagreement outcomes that affect validity, score reporting,
-    database admission, and prompt-visible feedback.
+  - Current gap: the registry preserves current composition and local source
+    reference evidence, but it does not prove multiple independent evaluator/
+    oracle sources, reference/statistical oracle support, per-benchmark
+    sufficiency evidence, or independent disagreement outcomes that affect
+    validity, score reporting, database admission, and prompt-visible
+    feedback.
   - Required result: add independent evaluator-oracle evidence before claiming
     AlphaEvolve-style "one or more evaluators" feedback: reference/statistical
     oracle support, per-benchmark sufficiency labels, disagreement outcome

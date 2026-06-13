@@ -1354,6 +1354,8 @@ Primary evidence:
     authority matrix. The matrix records each oracle's benchmark-sufficiency
     label, conflict role, failure effect, independent-evidence flag, and
     reference/statistical-oracle status. The registry now also includes
+    `oracle_source_evidence` for local evaluator source refs and hashes when
+    available while keeping benchmark sufficiency and independence false, plus
     `disagreement_outcomes` for bounded local validator-versus-feedback cases,
     such as feedback discards after evaluator pass, with final local validity
     effects and a post-evaluator/non-independent authority boundary. It
@@ -1361,11 +1363,11 @@ Primary evidence:
     composition. The committed `papers/evaluator_oracle_boundary.json` sidecar
     now records the paper-manifest-validated independent-oracle absence
     boundary.
-  - Remaining gap: the registry documents current local composition but does
-    not yet provide independent reference-checker/statistical-test oracles,
-    per-benchmark sufficiency evidence, or independent cross-oracle
-    disagreement outcome records beyond configured cascade order and post-hoc
-    feedback.
+  - Remaining gap: the registry documents current local composition and local
+    source-reference evidence but does not yet provide independent reference-
+    checker/statistical-test oracles, per-benchmark sufficiency evidence, or
+    independent cross-oracle disagreement outcome records beyond configured
+    cascade order and post-hoc feedback.
   - Required result: add independent evaluator-oracle evidence with reference-
     checker/statistical-test oracle support, per-benchmark sufficiency labels,
     and disagreement outcome records before claiming AlphaEvolve-style feedback

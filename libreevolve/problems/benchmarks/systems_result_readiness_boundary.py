@@ -38,6 +38,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "scheduling_formulation_records",
     "scheduling_safety_records",
     "scheduling_deployment_readiness_records",
+    "figure6_scheduling_exhibit_records",
+    "figure6_heatmap_artifacts",
+    "figure7_pallas_tiling_exhibit_records",
+    "figure7_diagram_artifacts",
     "real_scheduling_fixture_runs",
     "real_kernel_fixture_runs",
     "real_compiler_fixture_runs",
@@ -53,6 +57,10 @@ EXPECTED_MISSING_EVIDENCE = {
     "deployment_measurement_artifacts": "not_recorded_locally",
     "expert_confirmation_artifacts": "not_recorded_locally",
     "domain_specific_result_artifacts": "not_recorded_locally",
+    "figure6_scheduling_exhibit_artifacts": "not_recorded_locally",
+    "figure7_pallas_tiling_exhibit_artifacts": "not_recorded_locally",
+    "figure6_heldout_deployment_links": "not_recorded_locally",
+    "figure7_shape_corpus_runtime_links": "not_recorded_locally",
 }
 
 
@@ -85,7 +93,8 @@ def systems_result_readiness_boundary_record() -> dict[str, Any]:
             "AlphaEvolve Section 3.3 systems-result claims used domain-specific "
             "evidence: unseen scheduling workloads, held-out kernel shapes, "
             "randomized compiler reference checks, deployment measurements, "
-            "and expert confirmation"
+            "expert confirmation, and Figure 6/Figure 7 engineering-exhibit "
+            "artifacts"
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "claim_ready": False,
@@ -96,9 +105,11 @@ def systems_result_readiness_boundary_record() -> dict[str, Any]:
             "for systems result reports, artifact inventories, evidence bundles, "
             "domain-specific gate policy, claim calibration, application "
             "provenance, scheduling readiness, compiler provenance, and hardware "
-            "provenance. It does not claim real scheduling, kernel, compiler, "
-            "or hardware fixture runs; deployment measurement artifacts; expert "
-            "confirmation artifacts; or domain-specific result artifacts."
+            "provenance. It also records required Figure 6 scheduling-heuristic "
+            "and Figure 7 Pallas-tiling exhibit evidence. It does not claim real "
+            "scheduling, kernel, compiler, or hardware fixture runs; deployment "
+            "measurement artifacts; expert confirmation artifacts; domain-specific "
+            "result artifacts; or rendered engineering-exhibit artifacts."
         ),
     }
 

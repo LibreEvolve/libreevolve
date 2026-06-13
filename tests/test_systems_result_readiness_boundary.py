@@ -13,10 +13,12 @@ def test_systems_result_readiness_boundary_accepts_absence_record():
 
     assert validation.ok is True
     assert validation.boundary_status == "report_contract_without_real_systems_fixtures"
-    assert validation.required_evidence_field_count == 25
-    assert validation.missing_evidence_count == 7
+    assert validation.required_evidence_field_count == 29
+    assert validation.missing_evidence_count == 11
     assert boundary["schema"] == SYSTEMS_RESULT_READINESS_BOUNDARY_SCHEMA
     assert boundary["source_section_ids"] == ["3.3"]
+    assert "figure6_scheduling_exhibit_records" in boundary["required_evidence_fields"]
+    assert "figure7_pallas_tiling_exhibit_artifacts" in boundary["missing_evidence"]
     assert "does not claim real scheduling" in boundary["claim_boundary"]
 
 
@@ -47,5 +49,5 @@ def test_render_systems_result_readiness_boundary_summary_reports_shape():
     assert "AlphaEvolve systems-result readiness boundary" in summary
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | report_contract_without_real_systems_fixtures |" in summary
-    assert "| required_evidence_field_count | 25 |" in summary
-    assert "| missing_evidence_count | 7 |" in summary
+    assert "| required_evidence_field_count | 29 |" in summary
+    assert "| missing_evidence_count | 11 |" in summary

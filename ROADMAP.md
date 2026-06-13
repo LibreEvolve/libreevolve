@@ -2074,11 +2074,13 @@ resumed-trace proof are still open.
   checked boundary that those schemas and validators are report contracts
   without real emitted scheduling, kernel, compiler, or hardware fixture runs,
   deployment measurements, expert confirmations, or domain-specific result
-  artifacts. Real scheduling resource recovery, kernel/training-time speedup,
-  RTL PPA, compiler speedup fixtures, emitted compiler-stack artifacts, real
-  compiler adoption/integration artifacts, real hardware RTL/EDA artifacts,
-  real hardware rewrite artifacts, and real Gemini-to-TPU attribution artifacts
-  still need to populate those records.
+  artifacts. That boundary now also marks Figure 6 scheduling-heuristic
+  heatmap artifacts and Figure 7 Pallas-tiling diagram artifacts as required
+  but missing engineering-exhibit evidence. Real scheduling resource recovery,
+  kernel/training-time speedup, RTL PPA, compiler speedup fixtures, emitted
+  compiler-stack artifacts, real compiler adoption/integration artifacts, real
+  hardware RTL/EDA artifacts, real hardware rewrite artifacts, and real
+  Gemini-to-TPU attribution artifacts still need to populate those records.
 - For Pallas/Gemini kernel fixtures, populate workflow-baseline evidence before
   claiming AlphaEvolve-style automation of tiling-heuristic work: distinguish
   search-based autotuning, manual heuristics, and expert-hybrid baselines;

@@ -4099,12 +4099,15 @@ sidecars, tests, and active TODOs.
     about 0.7% fleet-wide resource recovery.
   - Current evidence: systems report contracts and scheduling TODOs track
     claim-calibrated metrics, ranking-only safety, and
-    interpretability/deployment evidence. No code/report schema records a
-    Figure 6 exhibit ID, exact heuristic source artifact/hash, residual input
-    definitions and units, heatmap grid/rendering parameters, visual artifact
-    paths/hashes, baseline production heuristic identity, or links from the
-    displayed exhibit to simulator, held-out, deployment, and claim-calibration
-    records.
+    interpretability/deployment evidence.
+    `papers/systems_result_readiness_boundary.json` now machine-records that
+    Figure 6 scheduling-exhibit records, heatmap artifacts, and held-out/
+    deployment links are required evidence. Real emitted report records are
+    still absent for the Figure 6 exhibit ID, exact heuristic source artifact/
+    hash, residual input definitions and units, heatmap grid/rendering
+    parameters, visual artifact paths/hashes, baseline production heuristic
+    identity, and links from the displayed exhibit to simulator, held-out,
+    deployment, and claim-calibration records.
   - Required result: add report/inventory metadata for Figure 6-style systems
     exhibits: stable exhibit ID, scheduling benchmark/candidate link, exact
     heuristic code artifact and hash, residual-feature definitions, baseline
@@ -4122,12 +4125,15 @@ sidecars, tests, and active TODOs.
   - Current evidence: kernel/Pallas TODOs require shape-corpus provenance,
     train/evaluation split records, real accelerator runtime measurements,
     expert-baseline comparisons, tiling-only candidate boundaries, and
-    correctness-by-construction evidence. No code/report schema records a
-    Figure 7 exhibit ID, matrix-shape variable definitions, tile-parameter
-    schema, accelerator/memory/fusion/compiler-context annotations, diagram
-    source data, rendered visual artifact paths/hashes, rendering parameters,
-    or links from the displayed tiling problem to the Pallas runtime and
-    shape-corpus reports.
+    correctness-by-construction evidence.
+    `papers/systems_result_readiness_boundary.json` now machine-records that
+    Figure 7 Pallas-tiling exhibit records, diagram artifacts, and shape-
+    corpus/runtime links are required evidence. Real emitted report records are
+    still absent for the Figure 7 exhibit ID, matrix-shape variable
+    definitions, tile-parameter schema, accelerator/memory/fusion/compiler-
+    context annotations, diagram source data, rendered visual artifact paths/
+    hashes, rendering parameters, and links from the displayed tiling problem
+    to the Pallas runtime and shape-corpus reports.
   - Required result: add report/inventory metadata for Figure 7-style kernel
     exhibits: stable exhibit ID, kernel benchmark/candidate link, matrix
     dimension and tile-parameter definitions, shape-corpus and accelerator

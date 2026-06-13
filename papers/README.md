@@ -2016,8 +2016,11 @@ Implemented:
   structure, debuggability/operator review, predictability checks, deployment
   ergonomics, rollout-risk controls, and comparison against less interpretable
   learned-policy baselines. The contract still does not provide real compiler,
-  hardware, kernel, scheduling, or systems fixtures. For kernel reports, it
-  does not yet
+  hardware, kernel, scheduling, or systems fixtures.
+  `papers/systems_result_readiness_boundary.json` now also records Figure 6
+  scheduling-heuristic exhibit artifacts and Figure 7 Pallas-tiling exhibit
+  artifacts as required but missing Section 3.3 evidence. For kernel reports,
+  it does not yet
   require Pallas/Gemini-style input-shape corpus provenance, deterministic
   train/eval split records, real TPU runtime measurement artifacts, baseline
   tiling-heuristic identity, or unchanged-operation correctness-by-construction

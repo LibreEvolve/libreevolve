@@ -4418,11 +4418,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     resource recovery.
   - Current gap: paper-facing systems TODOs require claim-calibrated metrics,
     ranking-only scheduling safety, and interpretability/deployment evidence,
-    but no evidence row or report schema maps a Figure 6 exhibit to exact
-    heuristic code, residual-feature definitions and units, heatmap data,
-    rendering parameters, visual artifact paths/hashes, baseline production
-    heuristic identity, simulator/held-out/deployment reports, or a
-    Section 3.3 claim-calibration record.
+    and `papers/systems_result_readiness_boundary.json` now machine-records
+    that Figure 6 scheduling-exhibit records, heatmap artifacts, and held-out/
+    deployment links are required evidence. The paper-facing record still
+    lacks real Figure 6 exhibit rows mapping exact heuristic code, residual-
+    feature definitions and units, heatmap data, rendering parameters, visual
+    artifact paths/hashes, baseline production heuristic identity, simulator/
+    held-out/deployment reports, or a Section 3.3 claim-calibration record.
   - Required result: add Figure 6-style exhibit metadata with a stable exhibit
     ID, scheduling benchmark/candidate link, exact heuristic source artifact
     and hash, residual grid/units, baseline heuristic provenance, heatmap data
@@ -4445,6 +4447,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     accelerator/memory/fusion/compiler-context annotations, diagram source
     data, visual artifact paths/hashes, rendering parameters, or links to the
     runtime/shape-corpus reports.
+    `papers/systems_result_readiness_boundary.json` now machine-records those
+    Figure 7 exhibit records, diagram artifacts, and shape-corpus/runtime
+    links as missing required evidence.
   - Required result: add Figure 7-style exhibit metadata with a stable exhibit
     ID, kernel benchmark/candidate link, matrix dimension and tile-parameter
     definitions, accelerator and shape-corpus context links, diagram/JSON data

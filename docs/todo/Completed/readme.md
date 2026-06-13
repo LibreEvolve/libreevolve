@@ -14052,6 +14052,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     handwritten mutation operators until operator-family evidence exists.
   - Verification: focused boundary and paper-manifest tests cover the sidecar
     and its overclaim rejection.
+
+- [x] Keep README mutation-operator wording scoped until operator-family
+      construction evidence exists.
+  - Status: README now scopes mutation-operator evidence as fixed edit payload
+    grammar and proposal metadata, not operator-family declaration schemas,
+    proposal-level operator provenance, LLM-constructed operator families,
+    task/failure-aware construction, adaptive operator-family selection,
+    operator scoring, or benchmark telemetry.
+  - Verification: paper-manifest validation requires
+    `papers/mutation_operator_boundary.json`, and focused mutation-operator
+    tests reject premature operator-family readiness claims.
 - [x] Add README boundary for proposal-diversity evidence.
   - Spec evidence: AlphaEvolve Section 2.3 says SOTA LLMs propose new, diverse
     improvements, and Section 4 links model strength to performance.

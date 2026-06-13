@@ -175,9 +175,11 @@ Important limits:
   that accepted edits are coherent; that boundary is tracked by
   `papers/mutation_consistency_boundary.json`.
 - Mutation-operator evidence is fixed edit payload grammar and proposal
-  metadata, not proposal-level operator-family provenance, adaptive
-  operator-family selection, operator scoring, or benchmark telemetry; that
-  boundary is tracked by `papers/mutation_operator_boundary.json`.
+  metadata, not operator-family declaration schemas, proposal-level operator
+  provenance, LLM-constructed operator families, task/failure-aware
+  construction, adaptive operator-family selection, operator scoring, or
+  benchmark telemetry; that boundary is tracked by
+  `papers/mutation_operator_boundary.json`.
 - Mutation mode is a configured run-wide `diff` or `full` prompt/parser
   contract, not adaptive per-candidate diff-versus-full selection based on
   code size, workspace shape, task shape, failure history, parser/critique

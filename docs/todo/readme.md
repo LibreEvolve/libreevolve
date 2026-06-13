@@ -69,24 +69,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README mutation-operator wording scoped until operator-family
-      construction evidence exists beyond the current boundary report.
-  - Spec evidence: AlphaEvolve Section 2.3 uses structured edit payloads, but
-    Related Work distinguishes AlphaEvolve from evolutionary systems that need
-    a handwritten set of mutation or crossover operators.
-  - Current evidence: README now describes
-    `runtime.history.mutation_operator_boundary_report`, which records fixed
-    local parser/edit surfaces, configured run-wide mutation mode, observed
-    payload surfaces, and the current `claim_ready: false` boundary for
-    LLM-constructed operator families and adaptive strategy selection. README
-    now also points to `papers/mutation_operator_boundary.json` as the
-    manifest-checked sidecar for that fixed-edit-payload boundary.
-  - Required result: when mutation-operator construction policy lands, update
-    README, ROADMAP, papers index, and code/paper TODOs with proposal-level
-    operator-family provenance, adaptive selection/construction evidence,
-    operator-family scoring, and benchmark telemetry before README implies
-    AlphaEvolve-style replacement of handwritten mutation operators.
-
 - [ ] Keep README creative-generation wording scoped until semantic proposal-
       diversity evidence exists beyond exact duplicate counts.
   - Spec evidence: AlphaEvolve Section 2.3 says SOTA LLMs digest previous

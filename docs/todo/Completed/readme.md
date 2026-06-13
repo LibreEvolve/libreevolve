@@ -739,6 +739,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     expensive-budget boundary, and paper-manifest tests validate the current
     contracts and overclaim guards.
 
+- [x] Keep README Figure 8 visual wording scoped until rendered
+      ablation-curve exhibits exist.
+  - Status: README Important limits now names the optional
+    `libreevolve.alphaevolve_figure8_exhibit.v1` exhibit metadata and the
+    committed `papers/figure8_ablation_artifacts.json` rendered-artifact
+    absence boundary, while still stating this is not executed equal-budget
+    matrix/kissing benchmark runs, proven component-isolated ablation setups,
+    rendered paper-quality curves, or accelerator/async-worker budget evidence.
+  - Verification: focused Figure 8 exhibit, ablation-result, ablation-registry,
+    and paper-manifest tests validate the exhibit contract, absence sidecar,
+    and current overclaim guards. Real rendered plots and executable
+    matrix/kissing ablation runs remain active code/paper/roadmap gaps.
+
 - [x] Document explicit-context source-role README boundary.
   - Status: README Important limits now states that explicit-context
     source-role reports classify configured problem-local `context.yaml`

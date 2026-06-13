@@ -9,30 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README Figure 8 visual wording scoped until rendered ablation-curve
-      exhibits exist.
-  - Spec evidence: AlphaEvolve Figure 8 is a two-panel ablation plot with
-    matrix tensor-decomposition curves on the left, kissing-number curves on
-    the right, compute-budget fraction on the x-axis, aggregated target metric
-    on the y-axis, named method curves, and shaded standard-deviation bands
-    from three independent seeded runs.
-  - Current evidence: README describes the ablation report contract, hashed
-    curve artifacts, target-family/mean/std validation, and the Figure 8
-    visual-exhibit contract. The exhibit contract validates Figure 8 exhibit
-    IDs, panel definitions, series-to-variant legend mappings, exact paper
-    legend labels such as `Full method`, axis/scale metadata,
-    color/style/shading parameters, rendered plot artifact hashes, and links
-    from plotted visuals to report/curve/raw-trace artifacts. The
-    `figure8_exhibit_from_ablation_report()` builder now derives that two-panel
-    exhibit from a validated equal-budget report plus declared rendered/source
-    artifacts, while still leaving actual plot emission and real run proof open.
-    The committed `papers/figure8_ablation_artifacts.json` sidecar now emits
-    this absence boundary for paper-manifest validation.
-  - Required result: when generated Figure 8 exhibit records and rendered
-    artifacts land, update README, ROADMAP, papers index, and matching TODOs so
-    README distinguishes validated exhibit metadata from reproduced
-    paper-quality Figure 8 visual evidence tied to real ablation runs.
-
 - [ ] Keep README matrix-publication wording scoped to one checked Strassen
   baseline versus full Appendix A discovery.
   - Spec evidence: AlphaEvolve Appendix A reports a matrix-multiplication

@@ -265,6 +265,14 @@ Important limits:
   `|U - U| <= 2 max(U) + 1` admissibility certificates, `|U-U|`/`|U+U|`
   cardinality certificates, max-element certificates, formula-substitution
   certificates, or recomputed lower-bound rows.
+- Appendix B.7 regular-hexagon packing provenance remains absent: the registry
+  preserves the unit-regular-hexagon objective, Figure 11 left/right linkage,
+  prior `[29]` values, `n = 11` and `n = 12` witness summaries, and reported
+  outer-side improvements (`3.943 -> 3.931` and `4.0 -> 3.942`), not
+  placement payload hashes, pose/orientation schemas, inner/outer
+  regular-hexagon geometry certificates, containment or non-overlap
+  certificates, side-length recomputation certificates, recomputed side
+  lengths, or Figure 11 panel artifacts.
 - Matrix-publication evidence is one checked `mm_2x2x2` Strassen baseline
   bundle plus Appendix A registry/status metadata, not full-suite local target
   tensors, discovered decompositions, coefficient data, exactness certificates,

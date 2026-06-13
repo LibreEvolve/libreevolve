@@ -1001,31 +1001,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README Appendix B.7 regular-hexagon wording scoped until packing
-      provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B.7 reports two unit-regular-hexagon
-    packing improvements: `n = 11` improves the outer regular-hexagon side
-    length from `3.943` to `3.931`, and `n = 12` improves it from `4.0` to
-    `3.942`.
-  - Current evidence: README now names the B.7
-    `packing_result_boundary`, including both `n` values, unit/outer hexagon
-    conventions, side-length improvements, Figure 11 panel links, prior
-    source, and required future placement/certificate fields. It still warns
-    that the actual placement payloads, pose/orientation schemas,
-    regular-hexagon geometry certificates, containment certificates,
-    non-overlap certificates, side-length recomputation certificates,
-    recomputed side lengths, and Figure 11 panel artifacts are absent. The
-    boundary now includes explicit pose/orientation, geometry-certificate,
-    side-length recomputation, and Figure 11 panel artifact path/hash fields
-    and keeps those artifacts `not_recorded_locally`.
-  - Required result: when the actual Appendix B.7 placement payloads and
-    certificates land, update README, ROADMAP, papers index, and code/paper
-    TODOs together so README names placement hashes, pose/orientation schemas,
-    regular-hexagon geometry certificates, containment/non-overlap
-    certificates, side-length recomputation certificates, recomputed side
-    lengths, Figure 11 panel artifacts, and source links without merging them
-    into one generic hexagon-packing claim.
-
 - [ ] Keep README Appendix B.9-B.10 Heilbronn wording scoped until
       minimum-area provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.9-B.10 reports three Heilbronn

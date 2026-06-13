@@ -4,6 +4,23 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Appendix B.7 regular-hexagon README boundary.
+  - Status: README Important limits now states that Appendix B.7
+    regular-hexagon packing provenance remains absent: the registry preserves
+    the unit-regular-hexagon objective, Figure 11 left/right linkage, prior
+    `[29]` values, `n = 11` and `n = 12` witness summaries, and reported
+    outer-side improvements (`3.943 -> 3.931` and `4.0 -> 3.942`), not
+    placement payload hashes, pose/orientation schemas, inner/outer
+    regular-hexagon geometry certificates, containment or non-overlap
+    certificates, side-length recomputation certificates, recomputed side
+    lengths, or Figure 11 panel artifacts.
+  - Verification: Appendix B registry tests cover the B.7
+    `packing_result_boundary`, required future placement and
+    geometry-certificate fields, both `n = 11` and `n = 12` missing-witness
+    rows, improvement direction, and `not_recorded_locally` overclaim guards;
+    code and paper TODOs still track the missing placement/certificate/
+    recomputation/panel artifacts.
+
 - [x] Document Appendix B.6 finite-set witness README boundary.
   - Status: README Important limits now states that Appendix B.6 finite-set
     witness provenance remains absent: the registry preserves the `C6`

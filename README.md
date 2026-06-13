@@ -49,6 +49,10 @@ Important limits:
   members, metadata-only runner/build declarations can be recorded, and the
   current Python runner links to bounded environment provenance, but
   arbitrary-language runners and build-system runners are not implemented.
+- Candidate abstractions are code-file/workspace based; problem-defined direct
+  solution objects, constructor-function search, bespoke search-algorithm
+  candidates, and paired solution/search representations are tracked as missing
+  AlphaEvolve-style work.
 - Built-in provider adapters are OpenAI, Anthropic, and Ollama. Google/Gemini
   parity is tracked as missing work.
 - The included examples are smoke fixtures unless they explicitly document

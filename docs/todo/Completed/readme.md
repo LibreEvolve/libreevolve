@@ -4,6 +4,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Surface the candidate-abstraction boundary in the realistic README.
+  - Status: the root README Important Limits section now states that current
+    candidates are code-file/workspace based and that problem-defined direct
+    solution objects, constructor-function search, bespoke search-algorithm
+    candidates, and paired solution/search representations remain missing
+    AlphaEvolve-style work.
+  - Remaining guard: the detailed evidence still belongs in
+    `runtime.history.candidate_abstraction_choice_report`,
+    `docs/status.md`, `ROADMAP.md`, `papers/README.md`, and the active
+    code/paper TODOs, not in a long root README ledger.
+  - Verification: focused documentation checks cover the README/TODO split.
+
 - [x] Archive checked README claim-scoping items after the realistic README
       split.
   - Status: `docs/todo/readme.md` no longer carries completed Appendix B label,

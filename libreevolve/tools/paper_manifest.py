@@ -221,6 +221,10 @@ from libreevolve.problems.benchmarks.table1_capability_exhibit_boundary import (
     table1_capability_exhibit_boundary_record,
     validate_table1_capability_exhibit_boundary,
 )
+from libreevolve.problems.benchmarks.self_improvement_distillation_boundary import (
+    self_improvement_distillation_boundary_record,
+    validate_self_improvement_distillation_boundary,
+)
 from libreevolve.problems.benchmarks.codeevolve_boundary import (
     codeevolve_boundary_record,
     validate_codeevolve_boundary,
@@ -603,6 +607,7 @@ WHOLE_RUN_SOURCE_WORKSPACE_INTEGRITY_BOUNDARY_FILE = "papers/whole_run_source_wo
 CODEBASE_SCALE_BENCHMARK_BOUNDARY_FILE = "papers/codebase_scale_benchmark_boundary.json"
 SORTING_NETWORK_REDISCOVERY_BOUNDARY_FILE = "papers/sorting_network_rediscovery_boundary.json"
 TABLE1_CAPABILITY_EXHIBIT_BOUNDARY_FILE = "papers/table1_capability_exhibit_boundary.json"
+SELF_IMPROVEMENT_DISTILLATION_BOUNDARY_FILE = "papers/self_improvement_distillation_boundary.json"
 EVALUATION_CASCADE_BOUNDARY_FILE = "papers/evaluation_cascade_boundary.json"
 CASCADE_HYPOTHESIS_TEST_BOUNDARY_FILE = "papers/cascade_hypothesis_test_boundary.json"
 CONTROLLER_BACKTRACKING_BOUNDARY_FILE = "papers/controller_backtracking_boundary.json"
@@ -1124,6 +1129,7 @@ def validate_paper_manifest(
     issues.extend(_validate_codebase_scale_benchmark_boundary(root_path))
     issues.extend(_validate_sorting_network_rediscovery_boundary(root_path))
     issues.extend(_validate_table1_capability_exhibit_boundary(root_path))
+    issues.extend(_validate_self_improvement_distillation_boundary(root_path))
     issues.extend(_validate_evaluation_cascade_boundary(root_path))
     issues.extend(_validate_cascade_hypothesis_test_boundary(root_path))
     issues.extend(_validate_controller_backtracking_boundary(root_path))
@@ -3470,6 +3476,38 @@ def _validate_table1_capability_exhibit_boundary(root_path: Path) -> list[PaperM
             f"table1_capability_exhibit_boundary_{issue.code}",
             issue.message,
             "table1_capability_exhibit",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_self_improvement_distillation_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / SELF_IMPROVEMENT_DISTILLATION_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = self_improvement_distillation_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "self_improvement_distillation_boundary_manifest_missing",
+                    (
+                        f"{SELF_IMPROVEMENT_DISTILLATION_BOUNDARY_FILE} must emit "
+                        "self-improvement/distillation absence evidence"
+                    ),
+                    "self_improvement_distillation",
+                )
+            ]
+    report = validate_self_improvement_distillation_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"self_improvement_distillation_boundary_{issue.code}",
+            issue.message,
+            "self_improvement_distillation",
         )
         for issue in report.issues
     ]

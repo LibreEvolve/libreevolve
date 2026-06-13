@@ -4456,12 +4456,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     model-evaluation artifacts derived from evolved programs. The
     ThetaEvolve-inspired `grpo_data.jsonl` export path is a bounded
     prompt/response/reward artifact and is explicitly not online RL training or
-    base-model distillation evidence.
+    base-model distillation evidence. The committed
+    `papers/self_improvement_distillation_boundary.json` sidecar preserves
+    this Discussion-context-only absence boundary for paper-manifest
+    validation.
   - Required result: add paper-facing evidence boundaries for self-improving
     infrastructure and model-uplift claims: component identity, optimization
     objective, before/after measurements, deployment or adoption status,
     rollback/safety review, provenance linking the candidate to LibreEvolve's
-    own execution path, and any distillation dataset/training/evaluation
+    own execution path, production or self-hosted runtime evidence, base-LLM
+    uplift target identity, and any distillation dataset/training/evaluation
     artifacts. Until then, keep Discussion-style self-improvement and
     distillation wording scoped as AlphaEvolve context rather than LibreEvolve
     capability.

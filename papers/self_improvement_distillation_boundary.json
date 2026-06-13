@@ -1,0 +1,49 @@
+{
+  "schema": "libreevolve.alphaevolve_self_improvement_distillation_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "Discussion"
+  ],
+  "local_pdf_page": 21,
+  "source_claim": "AlphaEvolve's Discussion describes practical discoveries that can improve its own infrastructure and future base LLMs, and mentions distilling AlphaEvolve-augmented performance into next-generation base models",
+  "boundary_status": "discussion_context_only",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "optimized_component_identity",
+    "optimization_objective",
+    "before_after_runtime_or_cost_metrics",
+    "candidate_to_libreevolve_execution_path_provenance",
+    "deployment_or_adoption_status",
+    "rollback_safety_review",
+    "production_or_self_hosted_runtime_evidence",
+    "base_llm_uplift_target_identity",
+    "distillation_dataset_provenance",
+    "distillation_training_run",
+    "student_model_evaluation_artifacts",
+    "feedback_loop_cadence_record",
+    "environment_roi_record",
+    "claim_to_artifact_certification_row"
+  ],
+  "missing_evidence": {
+    "optimized_component_identity": "not_recorded_locally",
+    "optimization_objective": "not_recorded_locally",
+    "before_after_runtime_or_cost_metrics": "not_recorded_locally",
+    "candidate_to_libreevolve_execution_path_provenance": "not_recorded_locally",
+    "deployment_or_adoption_status": "not_recorded_locally",
+    "rollback_safety_review": "not_recorded_locally",
+    "production_or_self_hosted_runtime_evidence": "not_recorded_locally",
+    "base_llm_uplift_target_identity": "not_recorded_locally",
+    "distillation_dataset_provenance": "not_recorded_locally",
+    "distillation_training_run": "not_recorded_locally",
+    "student_model_evaluation_artifacts": "not_recorded_locally",
+    "feedback_loop_cadence_record": "not_recorded_locally",
+    "environment_roi_record": "not_recorded_locally",
+    "claim_to_artifact_certification_row": "not_recorded_locally"
+  },
+  "non_evidence_boundaries": {
+    "ttt_rl_grpo_data_jsonl": "bounded prompt/response/reward export; not online RL, base-model distillation, or student-model evaluation",
+    "provider_budget_reports": "runtime-cost telemetry; not an evolved improvement to LibreEvolve's own execution path",
+    "systems_result_schemas": "paper-result metadata contracts; not deployment/adoption or rollback evidence for self-improving infrastructure"
+  },
+  "claim_boundary": "This boundary records AlphaEvolve self-improvement and distillation as Discussion context only. LibreEvolve does not claim evolved optimization of its own runtime/provider/evaluator/compiler/benchmark infrastructure, measured before/after execution-path improvement, deployment or adoption status, rollback/safety review, production or self-hosted runtime evidence, base-LLM uplift, distillation dataset provenance, distillation training runs, student-model evaluation artifacts, feedback-loop cadence, environment ROI, or paper-facing certification rows for those claims."
+}

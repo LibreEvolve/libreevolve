@@ -2190,7 +2190,9 @@ resumed-trace proof are still open.
   infrastructure or base-model uplift: component identity, before/after
   measurements, deployment/adoption status, rollback/safety review, provenance
   tying the candidate to LibreEvolve's own execution path, and any
-  distillation dataset/training/evaluation artifacts.
+  distillation dataset/training/evaluation artifacts. The committed
+  `papers/self_improvement_distillation_boundary.json` sidecar keeps those
+  Discussion claims scoped as context only.
 - For scheduling fixtures, populate mission-critical deployment-readiness
   evidence beyond generic systems gates: interpretable heuristic structure,
   debuggability and operator review, predictable behavior checks, rollout-risk

@@ -753,13 +753,17 @@ sidecars, tests, and active TODOs.
     prompt/response examples to `grpo_data.jsonl`, but its docstring explicitly
     says it accumulates examples only and does not implement online GRPO/RL
     training; that is not a base-model distillation dataset/training/evaluation
-    artifact.
+    artifact. The committed
+    `papers/self_improvement_distillation_boundary.json` sidecar now records
+    that provider budgets, systems-result schemas, and `grpo_data.jsonl` are
+    not self-improvement or distillation evidence.
   - Required result: add explicit scope metadata and report contracts before
     claiming AlphaEvolve-style self-improving infrastructure or base-model
     uplift: target component identity, before/after runtime or cost metrics,
     deployment/adoption status, rollback/safety evidence, relation to the
-    running LibreEvolve system, and, for distillation claims, dataset/export
-    provenance plus training/evaluation evidence.
+    running LibreEvolve system, production or self-hosted runtime evidence,
+    base-LLM uplift target identity, and, for distillation claims,
+    dataset/export provenance plus training/evaluation evidence.
 
 - [ ] Add self-improvement feedback-loop cadence and environment ROI
       provenance.

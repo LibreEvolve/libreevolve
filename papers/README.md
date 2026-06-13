@@ -2639,4 +2639,6 @@ Planned or background-only:
   improvements in LibreEvolve's own runtime/provider/evaluator/compiler/
   benchmark infrastructure, no deployment/adoption or rollback/safety-review
   evidence for such a change, and no distillation dataset, training run, or
-  model-evaluation artifact derived from evolved programs.
+  model-evaluation artifact derived from evolved programs. The committed
+  `papers/self_improvement_distillation_boundary.json` sidecar keeps these
+  Discussion claims scoped as absent local evidence.

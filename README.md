@@ -77,6 +77,11 @@ Important limits:
   artifacts, workflow diffs, validation reruns, privacy/redaction artifacts,
   review versions, follow-up, and claim-to-feedback traces; current feedback
   reports are metadata contracts only.
+- Self-improvement and distillation claims require optimized component
+  identity, before/after execution-path measurements, deployment/adoption,
+  rollback/safety review, and distillation dataset/training/evaluation
+  artifacts; `papers/self_improvement_distillation_boundary.json` records
+  that this evidence is not implemented.
 - Workspace materialization diagnostics are local file-workspace evidence, not
   proof for bulk directory operations, language/build-runner artifacts,
   dependency graphs, portable static-asset source identity, or remote/container

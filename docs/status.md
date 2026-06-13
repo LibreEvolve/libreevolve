@@ -1151,7 +1151,9 @@ Important limits:
   as evolved optimization targets, link evolved candidates to measured
   improvements in LibreEvolve's own execution path, record deployment/adoption
   or rollback/safety evidence, or provide distillation datasets, training runs,
-  or model-evaluation artifacts derived from evolved programs.
+  or model-evaluation artifacts derived from evolved programs. The
+  `papers/self_improvement_distillation_boundary.json` sidecar keeps that
+  Discussion-context-only boundary manifest-validated.
 - Feedback-loop cadence and environment-ROI claims remain absent: README does
   not yet record loop IDs, next-version targets, elapsed-month cadence,
   moderate-gain calibration, setup or maintenance costs for robust evaluator

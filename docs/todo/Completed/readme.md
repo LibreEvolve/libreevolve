@@ -14462,3 +14462,21 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     certificate-chain replay, semantic source correctness, learned/external
     ranking, full retrieval replay, and DeepEvolve-style cross-file
     research/debug-loop parity remain active in code and paper TODOs.
+
+- [x] Keep README environment-provenance claims scoped to bounded audit
+      evidence.
+  - Spec evidence: AlphaEvolve-scale experimental results should be
+    reproducible against the evaluator environment, including external build
+    steps, package sources, accelerator runtime, and compute-budget evidence.
+  - Status: README now states that runtime environment provenance is audit
+    evidence rather than a complete replayable environment. It names
+    `libreevolve.environment_reproducibility_policy.v1` and scopes the covered
+    evidence to project metadata, known lockfile hashes, installed-distribution
+    metadata, bounded/redacted `pip freeze` and `pip config` evidence, NumPy
+    config hashes, built-in provider SDK versions, and bounded accelerator
+    runtime/driver hints.
+  - Remaining README gap: complete install-source interpretation, broader
+    non-project build provenance, private package-source identity or
+    authentication resolution, remote package artifact hashes, live provider
+    service/default capture, accelerator budget accounting, and environment
+    restore/check readiness remain active in code and paper TODOs.

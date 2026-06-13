@@ -493,6 +493,15 @@ Important limits:
 - Configuration validation is local effective-config validation; live
   provider/model API compatibility is tracked by
   `papers/config_validation_boundary.json`.
+- Runtime environment provenance is audit evidence, not a complete replayable
+  environment: `libreevolve.environment_reproducibility_policy.v1` covers
+  project metadata, known lockfile hashes, installed-distribution metadata,
+  bounded/redacted `pip freeze` and `pip config` evidence, NumPy config hashes,
+  built-in provider SDK versions, and bounded accelerator runtime/driver hints.
+  It does not prove complete install-source interpretation, broader
+  non-project build provenance, private package-source identity/authentication,
+  remote package artifact hashes, live provider service/default capture,
+  accelerator budget accounting, or environment restore/check readiness.
 - Runtime budgets are local cooperative generation/evaluation/evaluator-second/
   wall-clock/LLM/provider counters, not per-candidate compute-hour accounting,
   accelerator/worker leases, async queue budgets, or equal-budget execution

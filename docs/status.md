@@ -1090,6 +1090,12 @@ Important limits:
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by
   `papers/documentation_truthfulness_boundary.json`.
+- Paper-index benchmark coverage validation currently catches structural
+  coverage issues and one narrow `Implemented`-but-`not implemented`
+  contradiction. It is not semantic proof that every implemented benchmark
+  bullet has source-span, code/test, sidecar, TODO, limitation, and freshness
+  evidence; that remains part of the paper-index semantic evidence-mapping
+  TODO.
 - Database sampling reports are local strategy/count telemetry, not calibrated
   AlphaEvolve-style exploration/exploitation balance, fallback source-pool
   provenance, selected-program repetition tables, island/cell/metric/lineage/

@@ -15,16 +15,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     references, TODO coverage rows, completed-evidence paths, and stale
     source-specific absence wording for a narrow phrase family. The papers
     README now warns that the implementation-status table is a maintained
-    index, not a proof ledger for every long status-cell sentence.
+    index, not a proof ledger for every long status-cell sentence. The same
+    validator also catches one narrow benchmark-coverage contradiction: an
+    `Implemented` benchmark bullet phrased as not implemented.
   - Current gap: there is no machine-readable evidence map for every natural-
     language phrase in each paper status row, no per-row source-span or code/
-    test/sidecar link inventory for all implemented and missing clauses, and
-    no semantic verifier that checks benchmark qualifiers or absence sentences
-    against the current code and paper evidence.
+    test/sidecar link inventory for all implemented and missing clauses, no
+    per-benchmark coverage-claim inventory for `Implemented` bullets, and no
+    semantic verifier that checks benchmark qualifiers, implemented-bullet
+    scope/limitation wording, or absence sentences against the current code and
+    paper evidence.
   - Required result: create a per-paper status-claim inventory with claim ids,
     source spans, code/test/sidecar/TODO evidence links, freshness checks, and
-    CI validation before treating `papers/README.md` as semantically complete
-    implementation-status proof.
+    benchmark-coverage bullet mappings, then add CI validation before treating
+    `papers/README.md` as semantically complete implementation-status or
+    benchmark-coverage proof.
 
 - [ ] Track independent evaluator-oracle evidence beyond local arbitration
       metadata.

@@ -37,6 +37,8 @@ EXPECTED_COMPONENT_IDS = (
     "linked_source_evidence_status",
     "local_fixture_support_status",
     "independent_verification_status",
+    "google_cloud_private_preview_product_boundary",
+    "gemini_enterprise_pre_ga_access_boundary",
     "readme_roadmap_claim_boundary",
 )
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -61,6 +63,15 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "public_gallery_url",
     "ui_contributor_attribution",
     "api_cloud_contributor_attribution",
+    "google_cloud_launch_post_url",
+    "google_cloud_launch_date",
+    "alphaevolve_service_api_access_model",
+    "google_cloud_private_preview_status",
+    "gemini_enterprise_docs_url",
+    "gemini_enterprise_docs_last_updated",
+    "gemini_enterprise_pre_ga_terms_status",
+    "restricted_access_contact_path",
+    "account_team_documentation_boundary",
     "local_fixture_status",
     "local_benchmark_report_status",
     "unsupported_local_benchmark_flags",
@@ -116,6 +127,12 @@ EXPECTED_MISSING_EVIDENCE = {
     "customer_case_source_snapshots": "not_recorded_locally",
     "ui_surface_artifact_inventory": "not_recorded_locally",
     "api_cloud_customer_artifact_inventory": "not_recorded_locally",
+    "google_cloud_launch_post_snapshot": "not_recorded_locally",
+    "alphaevolve_service_api_access_evidence": "not_recorded_locally",
+    "gemini_enterprise_pre_ga_terms_snapshot": "not_recorded_locally",
+    "restricted_account_team_access_evidence": "not_recorded_locally",
+    "cloud_product_api_console_billing_artifacts": "not_recorded_locally",
+    "customer_availability_source_snapshot": "not_recorded_locally",
     "linked_source_independent_verification": "not_recorded_locally",
     "local_benchmark_reports": "not_implemented_locally",
     "claim_value_normalization_policy": "not_recorded_locally",
@@ -221,6 +238,24 @@ def alphaevolve_2026_impact_boundary_record() -> dict[str, Any]:
                 "category": "customer_case",
                 "status": "requires_customer_source_snapshot",
             },
+            {
+                "link_id": "google_cloud_alphaevolve_private_preview",
+                "url": "https://cloud.google.com/blog/products/ai-machine-learning/alphaevolve-on-google-cloud/",
+                "category": "google_cloud_private_preview",
+                "status": "requires_product_source_snapshot",
+            },
+            {
+                "link_id": "gemini_enterprise_co_scientist_alphaevolve_agents",
+                "url": "https://docs.cloud.google.com/gemini/enterprise/docs/co-scientist-and-alphaevolve",
+                "category": "gemini_enterprise_pre_ga_docs",
+                "status": "requires_product_source_snapshot",
+            },
+            {
+                "link_id": "google_keyword_alphaevolve_one_year_update",
+                "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/alphaevolve-updates/",
+                "category": "google_cloud_customer_update",
+                "status": "requires_product_source_snapshot",
+            },
         ],
         "framework_components": [
             {
@@ -282,6 +317,9 @@ def alphaevolve_2026_impact_boundary_record() -> dict[str, Any]:
             "compiler_storage_fixture_ready": False,
             "customer_case_snapshots_ready": False,
             "ui_api_artifact_inventory_ready": False,
+            "google_cloud_private_preview_snapshot_ready": False,
+            "gemini_enterprise_docs_snapshot_ready": False,
+            "cloud_product_artifact_inventory_ready": False,
             "independent_verification_ready": False,
             "repository_runtime_verified": False,
         },
@@ -292,7 +330,8 @@ def alphaevolve_2026_impact_boundary_record() -> dict[str, Any]:
             "source evidence only. It does not claim LibreEvolve implements or "
             "reproduces the named DeepConsensus, AC OPF, Earth AI, Willow, TPU, "
             "cache-policy, Spanner, compiler-storage, public-gallery, customer, "
-            "UI, or API workflows."
+            "UI, API, Google Cloud private-preview, or Gemini Enterprise managed-agent "
+            "workflows."
         ),
     }
 
@@ -467,7 +506,7 @@ def _validate_outbound_links(
     value: object,
     issues: list[AlphaEvolve2026ImpactBoundaryIssue],
 ) -> None:
-    if not isinstance(value, list) or len(value) < 9:
+    if not isinstance(value, list) or len(value) < 12:
         issues.append(_issue("invalid_outbound_links", "outbound_links must preserve the official article link inventory subset"))
         return
     for link in value:
@@ -482,6 +521,7 @@ def _validate_outbound_links(
             "requires_separate_source_record",
             "requires_snapshot_inventory",
             "requires_customer_source_snapshot",
+            "requires_product_source_snapshot",
         }:
             issues.append(_issue("invalid_outbound_link_status", "outbound links must remain source-boundary references"))
 

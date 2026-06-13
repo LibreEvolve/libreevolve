@@ -2298,7 +2298,11 @@ Implemented:
   local fixtures, benchmark reports, independent verification, and operational
   lifecycle evidence for pilot-to-core adoption, regular-tool use, Google
   Cloud/commercial scope, UI/API artifacts, rollout owners, and release-note
-  claim gates exist.
+  claim gates exist. It also keeps the Google Cloud AlphaEvolve private-preview
+  launch, AlphaEvolve Service API Early Access access model, Gemini Enterprise
+  Pre-GA restricted-access docs, account-team documentation boundary,
+  console/API/billing artifacts, customer availability, and managed-agent
+  workflow semantics source-scoped until product-surface evidence exists.
 - `libreevolve/problems/benchmarks/follow_on_coverage.py`: follow-on
   AlphaEvolve problem-repository coverage-state contract. It validates the
   pinned root-level status artifacts (`status.json`, `status_grid.png`, and

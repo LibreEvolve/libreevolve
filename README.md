@@ -37,6 +37,9 @@ Important limits:
 - No checked-in run reproduces AlphaEvolve's published benchmark results,
   scale, model mix, asynchronous topology, or systems/compiler/hardware
   application evidence.
+- LibreEvolve is not the Google Cloud AlphaEvolve Service API, not a Gemini
+  Enterprise managed agent, and not evidence of access to AlphaEvolve private
+  preview or Pre-GA product surfaces.
 - Many AlphaEvolve-facing JSON sidecars are validators or absence-boundary
   records. They are evidence that a claim is tracked conservatively, not proof
   that the underlying feature or benchmark has been reproduced.

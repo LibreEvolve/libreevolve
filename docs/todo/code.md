@@ -5157,9 +5157,14 @@ sidecars, tests, and active TODOs.
     records the official article URL/date/title/team, retrieval hash, outbound
     link inventory subset, claim ids, domain categories, values/units/
     baselines, customer cases, UI/API attribution flags, and unsupported-local-
-    benchmark evidence keys. README, ROADMAP, and `papers/README.md` keep these
-    as newer official impact claims rather than implemented LibreEvolve
-    behavior or original AlphaEvolve specification evidence.
+    benchmark evidence keys. It now also names the Google Cloud launch post for
+    AlphaEvolve private preview, the AlphaEvolve Service API Early Access
+    Program, the Gemini Enterprise Co-Scientist/AlphaEvolve Pre-GA restricted-
+    access docs, and the Google Keyword one-year update as product/source
+    surfaces rather than local runtime support. README, ROADMAP, and
+    `papers/README.md` keep these as newer official impact claims and product
+    availability surfaces rather than implemented LibreEvolve behavior or
+    original AlphaEvolve specification evidence.
   - Required result: implement or explicitly benchmark the named domains before
     promoting impact claims: local DeepConsensus, AC OPF, Earth AI, Willow,
     public-gallery/math, TPU-design, cache-policy, Spanner, compiler-storage,
@@ -5169,7 +5174,12 @@ sidecars, tests, and active TODOs.
     adoption state, regular-tool usage records, Google Cloud/commercial
     availability scope, UI/API artifact inventory, rollout/owner evidence, and
     release-note gates that distinguish source-reported AlphaEvolve deployment
-    from LibreEvolve feature support.
+    from LibreEvolve feature support. Product-surface parity additionally
+    requires Cloud Service API documentation snapshots, private-preview/Early
+    Access eligibility evidence, Pre-GA terms status, account-team access
+    boundaries, console/API/billing artifacts, customer-availability snapshots,
+    and managed-agent operational semantics before any Cloud AlphaEvolve or
+    Gemini Enterprise claims can be treated as implemented.
 
 - [ ] Implement AlphaEvolve FHE-on-TPU benchmark boundary beyond paper cache
       coverage.

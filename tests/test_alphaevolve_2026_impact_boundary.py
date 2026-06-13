@@ -15,10 +15,10 @@ def test_alphaevolve_2026_impact_boundary_accepts_builtin_record():
     assert validation.boundary_status == (
         "official_2026_impact_article_without_local_deployment_benchmarks"
     )
-    assert validation.component_count == 12
+    assert validation.component_count == 14
     assert validation.claim_count == 22
-    assert validation.required_evidence_field_count == 30
-    assert validation.missing_evidence_count == 24
+    assert validation.required_evidence_field_count == 39
+    assert validation.missing_evidence_count == 30
     assert boundary["schema"] == ALPHAEVOLVE_2026_IMPACT_BOUNDARY_SCHEMA
     assert boundary["article"]["date"] == "2026-05-07"
     assert boundary["article"]["retrieval"]["html_bytes"] == 156554
@@ -27,6 +27,10 @@ def test_alphaevolve_2026_impact_boundary_accepts_builtin_record():
     )
     assert boundary["claim_ready"] is False
     assert boundary["local_evidence"]["spanner_fixture_ready"] is False
+    assert boundary["local_evidence"]["cloud_product_artifact_inventory_ready"] is False
+    link_ids = {link["link_id"] for link in boundary["outbound_links"]}
+    assert "google_cloud_alphaevolve_private_preview" in link_ids
+    assert "gemini_enterprise_co_scientist_alphaevolve_agents" in link_ids
     assert boundary["customer_cases"][0]["customer"] == "Klarna"
     assert boundary["customer_cases"][-1]["customer"] == "Schrodinger"
 

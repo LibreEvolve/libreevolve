@@ -4780,10 +4780,14 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current gap: `papers/alphaevolve_2026_impact_boundary.json` now preserves
     this 2026 official impact article as a source surface, claim registry,
     outbound-link subset, customer/deployment boundary, UI/API attribution
-    record, missing-evidence list, and paper-manifest-required sidecar. It does
-    not provide linked source snapshots, runnable fixtures, reproduced
-    benchmark rows, customer verification, or independent checks for the named
-    claims.
+    record, missing-evidence list, and paper-manifest-required sidecar. It now
+    also records the Google Cloud private-preview launch post, the AlphaEvolve
+    Service API Early Access Program surface, the Gemini Enterprise
+    Co-Scientist/AlphaEvolve Pre-GA restricted-access docs, and the Google
+    Keyword one-year update as product/source surfaces rather than local
+    LibreEvolve evidence. It does not provide linked source snapshots, runnable
+    fixtures, reproduced benchmark rows, customer verification, service-access
+    artifacts, or independent checks for the named claims.
   - Required result: add evidence beyond the source boundary: linked
     paper/repository/customer snapshots, public-gallery inventories, local
     DeepConsensus/AC OPF/Earth AI/Willow/TPU/cache/Spanner/compiler/customer
@@ -4792,7 +4796,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     benchmark evidence or LibreEvolve feature support. Add lifecycle/adoption
     proof for the article's operational claims, including pilot-to-core status,
     regular-tool usage, Google Cloud/commercial scope, UI/API artifact
-    inventory, rollout/owner evidence, and release-note claim gates.
+    inventory, rollout/owner evidence, and release-note claim gates. Add
+    product-boundary evidence for Google Cloud AlphaEvolve and Gemini
+    Enterprise before making service claims: launch/source snapshots, Pre-GA
+    terms status, private-preview or Early Access eligibility, account-team
+    access boundaries, unavailable detailed-product-documentation notes,
+    console/API/billing artifacts, customer availability, and managed-agent
+    workflow semantics.
 
 - [ ] Reproduce AlphaEvolve FHE-on-TPU application evidence beyond paper
       coverage.

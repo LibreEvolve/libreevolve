@@ -662,7 +662,12 @@ Important limits:
   source snapshots, benchmark reports, independent verification, and
   operational lifecycle/adoption evidence for the article's pilot-to-core,
   regular-tool, Google Cloud/commercial, UI/API, rollout, and owner claims
-  exist;
+  exist. The related Google Cloud launch post, AlphaEvolve Service API Early
+  Access wording, Gemini Enterprise Pre-GA restricted-access documentation, and
+  Google Keyword one-year update are product/source surfaces only; Cloud
+  service API docs, private-preview eligibility, Pre-GA terms, account-team
+  access boundaries, console/API/billing artifacts, customer availability, and
+  managed-agent semantics are not implemented or locally verified;
   that boundary is tracked by `papers/alphaevolve_2026_impact_boundary.json`.
 - ArXiv `2605.14718` is FHE-on-TPU AlphaEvolve application context only; the root README now defers source-specific paper lists to
   `papers/README.md`, which remains the complete implementation-status index.

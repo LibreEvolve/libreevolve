@@ -1442,6 +1442,11 @@ resumed-trace proof are still open.
   lifecycle proof is also open for the article's pilot-to-core status,
   regular next-generation-TPU tool use, Google Cloud/commercial availability,
   UI/API artifact inventory, rollout ownership, and release-note claim gates.
+  Product-surface proof is separately open for the Google Cloud AlphaEvolve
+  private-preview launch, AlphaEvolve Service API Early Access access model,
+  Gemini Enterprise Pre-GA restricted-access docs, account-team documentation
+  boundary, console/API/billing artifacts, customer availability, and managed-
+  agent workflow semantics.
 - Keep FHE-on-TPU AlphaEvolve application claims source-scoped:
   `papers/download_manifest.*` and `papers/README.md` now include arXiv
   `2605.14718`, `Adapting AlphaEvolve to Optimize Fully Homomorphic

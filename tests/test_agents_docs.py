@@ -114,10 +114,10 @@ def test_tests_workflow_covers_docs_papers_and_todo_changes():
         step.get("run", "") for step in paper_docs.get("steps", [])
     )
     assert "python -m libreevolve.tools.paper_manifest --root ." in paper_doc_commands
-    assert (
-        "python -m pytest tests/test_agents_docs.py tests/test_paper_manifest.py -q"
-        in paper_doc_commands
-    )
+    assert 'Path("tests").glob("test_paper_*.py")' in paper_doc_commands
+    assert 'Path("tests").glob("test_*boundary.py")' in paper_doc_commands
+    assert 'Path("tests/test_agents_docs.py")' in paper_doc_commands
+    assert 'subprocess.call(command)' in paper_doc_commands
     assert "--require-local-pdfs" not in paper_doc_commands
 
     release_artifact = workflow["jobs"]["release_artifact"]

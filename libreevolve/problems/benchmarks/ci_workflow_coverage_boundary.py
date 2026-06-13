@@ -29,12 +29,12 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 )
 EXPECTED_MISSING_EVIDENCE = {
     "paper_manifest_ci_job": "committed_manifest_only_no_local_pdf_cache",
-    "docs_semantic_claim_verifier": "not_recorded_locally",
     "cross_platform_ci_matrix": "not_recorded_locally",
     "branch_policy": "not_recorded_locally",
     "notification_policy": "not_recorded_locally",
 }
 EXPECTED_PARTIAL_EVIDENCE = {
+    "docs_semantic_claim_verifier": "paper_docs_job_runs_manifest_source_and_boundary_verifier_tests",
     "wheel_sdist_ci_smoke": "release_artifact_job_with_package_tree_inventory_hash_provenance_and_artifact_upload",
 }
 
@@ -77,14 +77,16 @@ def ci_workflow_coverage_boundary_record() -> dict[str, Any]:
             "filters, a secret scan job, Python 3.11/3.12 Ubuntu unit jobs, an "
             "optional credential-gated integration job, a committed-manifest "
             "paper/docs job that does not require the ignored local PDF cache, "
+            "runs paper source, manifest, docs, and boundary verifier tests, "
             "a release-artifact smoke job that builds a wheel and sdist and "
             "installs the wheel for CLI smoke checks with libreevolve package-tree "
             "wheel and sdist inventory inspection plus release artifact hash "
             "provenance and GitHub Actions artifact upload, and unit tests "
             "that check the workflow shape. It does "
             "not claim CI local-PDF paper-manifest checks, "
-            "semantic documentation-claim verification, signed release "
-            "provenance, cross-platform CI coverage, branch policy, or "
+            "fully semantic documentation-claim verification beyond the "
+            "committed verifier suite, signed release provenance, "
+            "cross-platform CI coverage, branch policy, or "
             "notification policy."
         ),
     }
@@ -121,6 +123,7 @@ def validate_ci_workflow_coverage_boundary(
     if (
         not isinstance(boundary_text, str)
         or "committed-manifest paper/docs job" not in boundary_text
+        or "runs paper source, manifest, docs, and boundary verifier tests" not in boundary_text
         or "release-artifact smoke job" not in boundary_text
         or "libreevolve package-tree wheel and sdist inventory inspection" not in boundary_text
         or "release artifact hash provenance" not in boundary_text

@@ -97,8 +97,20 @@ jobs:
       - name: Validate committed paper manifest
         run: python -m libreevolve.tools.paper_manifest --root .
 
-      - name: Run focused docs and paper tests
-        run: python -m pytest tests/test_agents_docs.py tests/test_paper_manifest.py -q
+      - name: Run docs, paper, and boundary verifier tests
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess
+          import sys
+
+          test_paths = [Path("tests/test_agents_docs.py")]
+          test_paths.extend(sorted(Path("tests").glob("test_paper_*.py")))
+          test_paths.extend(sorted(Path("tests").glob("test_*boundary.py")))
+          unique_paths = list(dict.fromkeys(test_paths))
+          command = [sys.executable, "-m", "pytest", *(str(path) for path in unique_paths), "-q"]
+          raise SystemExit(subprocess.call(command))
+          PY
 
   release_artifact:
     name: Release Artifact Smoke

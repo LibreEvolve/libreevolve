@@ -4781,8 +4781,9 @@ Primary evidence:
     path-scoped `push` and `pull_request` triggers, a secret-scan job, Python
     3.11/3.12 Ubuntu non-integration tests, and an optional
     credential-gated integration job. It now also has a dedicated paper/docs
-    job that validates the committed paper manifest and focused docs/paper
-    tests without requiring ignored local PDFs, plus a release-artifact smoke
+    job that validates the committed paper manifest and paper-source,
+    manifest, docs, and boundary verifier tests without requiring ignored local
+    PDFs, plus a release-artifact smoke
     job that builds wheel/sdist artifacts, checks every `libreevolve/`
     package-tree file in the wheel and sdist, writes artifact hash provenance,
     uploads release smoke artifacts, and smokes an installed wheel CLI.
@@ -4790,10 +4791,11 @@ Primary evidence:
     paper/docs/release commands. The committed
     `papers/ci_workflow_coverage_boundary.json` sidecar now preserves this
     path-scoped Ubuntu workflow boundary.
-  - Required result: add full docs/paper verifier coverage, local-PDF paper
-    manifest validation where appropriate, signed release provenance,
-    interpreter/platform matrices, branch policy, and notification-safe trigger
-    policy before treating CI as AlphaEvolve-grade validation coverage.
+  - Required result: add local-PDF paper manifest validation where appropriate,
+    fully semantic docs-claim verification beyond the committed verifier suite,
+    signed release provenance, interpreter/platform matrices, branch policy,
+    and notification-safe trigger policy before treating CI as
+    AlphaEvolve-grade validation coverage.
 
 - [ ] Add replayable external build, package-source, and accelerator environment evidence.
   - Spec evidence: AlphaEvolve-scale experiments should be reproducible across

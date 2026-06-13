@@ -14,12 +14,15 @@ def test_ci_workflow_coverage_boundary_accepts_path_scoped_boundary():
     assert validation.ok is True
     assert validation.boundary_status == "path_scoped_ubuntu_workflow_only"
     assert validation.required_evidence_field_count == 14
-    assert validation.missing_evidence_count == 5
+    assert validation.missing_evidence_count == 4
     assert boundary["schema"] == CI_WORKFLOW_COVERAGE_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
     assert "committed-manifest paper/docs job" in boundary["claim_boundary"]
     assert boundary["partial_evidence"]["wheel_sdist_ci_smoke"] == (
         "release_artifact_job_with_package_tree_inventory_hash_provenance_and_artifact_upload"
+    )
+    assert boundary["partial_evidence"]["docs_semantic_claim_verifier"] == (
+        "paper_docs_job_runs_manifest_source_and_boundary_verifier_tests"
     )
     assert (
         boundary["missing_evidence"]["paper_manifest_ci_job"]
@@ -53,4 +56,4 @@ def test_render_ci_workflow_coverage_boundary_summary_reports_shape():
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | path_scoped_ubuntu_workflow_only |" in summary
     assert "| required_evidence_field_count | 14 |" in summary
-    assert "| missing_evidence_count | 5 |" in summary
+    assert "| missing_evidence_count | 4 |" in summary

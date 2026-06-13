@@ -10,39 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement LLM-ALSO adaptive learning-signal gates beyond paper cache
-      coverage.
-  - Spec evidence: arXiv `2605.29293`, submitted May 28, 2026, introduces
-    LLM-ALSO for LLM-driven adaptive learning-signal optimization in
-    sparse-reward cooperative multi-agent reinforcement learning. The abstract
-    says it decomposes reward adaptation into iterative diagnosis, proposal,
-    and validation: a Critic LLM diagnoses stage-specific learning and
-    coordination failures from sparse-return metrics and compact behavior
-    evidence, a Generator LLM proposes reward-shaping configurations, and
-    branch-validation feedback refines candidates before they affect the main
-    training trajectory.
-  - Current evidence: ROADMAP, `papers/download_manifest.*`,
-    `papers/row_identity.json`, `papers/README.md`, README, and TODO coverage
-    now include `2605.29293`, cached locally as
-    `papers/2605.29293__LLM_ALSO.pdf` with byte count `712323` and SHA-256
-    `06b9bcb459f40437119f2c95153985a0e8682e0509ca12be9bd5f32147c888f5`.
-    ROADMAP tracks the paper as background learning-signal optimization
-    context only. It still has no sparse-reward MARL learning-signal gate,
-    Critic/Generator role schema, sparse-return and compact-behavior evidence
-    records, stage-specific diagnosis artifacts, reward-shaping configuration
-    records, branch-validation traces, update-promotion criteria,
-    main-training trajectory provenance, sparse-reward cooperative MARL
-    benchmark metadata, learning-efficiency metrics, or baseline identities.
-  - Required result: implement roadmap gates beyond paper-cache evidence:
-    source-license metadata, linked-code or project URL status,
-    Critic/Generator role schema, sparse-return and compact-behavior evidence
-    records, stage-specific diagnosis artifacts, reward-shaping configuration
-    records, branch-validation traces, update-promotion criteria,
-    main-training trajectory provenance, sparse-reward cooperative MARL
-    benchmark metadata, learning-efficiency metrics, baseline identities, and
-    a background-only or benchmark-fixture status rule so roadmap claims do
-    not outpace local LLM-ALSO-style learning-signal support.
-
 - [ ] Implement MemEvolve meta-evolving memory-architecture gates beyond paper
       cache coverage.
   - Spec evidence: arXiv `2512.18746`, submitted December 21, 2025, introduces

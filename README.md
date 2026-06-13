@@ -202,6 +202,13 @@ Important limits:
   memory pool, dense multi-objective reward vectors, expert-prior rubric
   expansion, medical/writing/science benchmark report, reward-hacking audit,
   linked-code audit, or independent reproduction output.
+- LLM-ALSO adaptive learning-signal coverage is background paper context only:
+  LibreEvolve has no sparse-reward cooperative MARL harness, Critic LLM
+  diagnosis role, Generator LLM reward-shaping role, compact behavior evidence
+  record, stage-specific coordination-failure diagnosis, reward-shaping
+  configuration artifact, branch-validation trajectory, validated-update
+  promotion gate, main-training trajectory provenance, learning-efficiency
+  report, linked-code audit, or independent reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

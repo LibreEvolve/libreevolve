@@ -2,6 +2,36 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive LLM-ALSO adaptive learning-signal roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2605.29293` source-scoped as background adaptive learning-signal
+    optimization context rather than implemented LibreEvolve LLM-ALSO-style
+    runtime support.
+  - Current evidence: the cached paper and `papers/README.md` record
+    LLM-ALSO's sparse-reward cooperative MARL framing, iterative diagnosis,
+    proposal, and validation loop, Critic LLM diagnosis role, Generator LLM
+    reward-shaping role, sparse-return metrics, compact behavior evidence,
+    stage-specific coordination-failure diagnosis, branch-validation feedback,
+    update promotion into the main training trajectory, and learning-signal
+    optimization claims, while marking local MARL harnesses, role schemas,
+    diagnosis records, reward-shaping configuration artifacts,
+    branch-validation traces, promotion criteria, main-training trajectory
+    provenance, learning-efficiency reports, linked-code audits, and
+    independent reproduction output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source/license metadata, project/demo and linked-code status,
+    relation to LibreEvolve reward/evaluator assumptions,
+    Critic/Generator role schema, sparse-return and compact-behavior evidence
+    metadata, stage-specific diagnosis artifacts, reward-shaping
+    configuration schema, branch-validation records, promotion criteria,
+    main-training trajectory provenance, sparse-reward cooperative MARL task
+    taxonomy, learning-efficiency metrics, baseline identities,
+    reproducibility status, and independent verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive EvoRubric self-evolving reward-rubric roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

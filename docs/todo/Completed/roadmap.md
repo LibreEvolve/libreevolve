@@ -2,6 +2,34 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive systems-result claim-calibration roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, `README.md`,
+    `docs/status.md`, `docs/run-artifacts.md`, `papers/README.md`,
+    `docs/todo/code.md`, and `docs/todo/papers.md` already scope systems-result
+    work to report, inventory, evidence-bundle, claim-calibration, and
+    readiness-boundary contracts rather than reproduced AlphaEvolve Section 3.3
+    systems result magnitudes.
+  - Current evidence: `libreevolve.systems_result_report.v1` requires
+    `claim_calibration` before accepting `alphaevolve_ready` systems reports,
+    validates metric names, units, baselines, denominators, comparison windows,
+    aggregation methods, runtime/deployment/synthesis context, artifact refs,
+    and source refs, and rejects ready claims without those records. The
+    manifest-checked `papers/systems_result_readiness_boundary.json` sidecar
+    records `report_contract_without_real_systems_fixtures` and `claim_ready:
+    false`.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    Section 3.3 evidence: scheduling resource-recovery denominators/windows,
+    kernel speedup and training-time reduction baselines, shape splits and
+    runtime context, RTL power/area/PPA units and synthesis flow, compiler
+    kernel/pre/postprocessing speedup attribution, engineering-effort
+    turnaround, deployment/adoption status, and paper-facing certification
+    examples populated from real systems fixtures.
+  - Verification: focused systems-result tests reject ready reports missing
+    claim calibration, invalid metric/artifact/unit context, contradictory
+    readiness, unsafe artifacts, and missing domain-specific gates; the
+    systems-readiness boundary and paper-manifest tests reject premature real
+    systems-result claims or sidecar drift.
+
 - [x] Archive benchmark-hardening roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, `README.md`,
     `docs/status.md`, `docs/run-artifacts.md`, `papers/README.md`,

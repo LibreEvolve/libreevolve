@@ -10,26 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep systems-result roadmap wording scoped until claim-calibrated result
-      reports are populated.
-  - Spec evidence: AlphaEvolve Section 3.3 reports concrete result magnitudes
-    with domain-specific units and baselines: Borg fleet-wide resource
-    recovery, Gemini/Pallas kernel speedups and training-time reduction,
-    hardware power/area objectives, and FlashAttention kernel plus
-    pre/postprocessing speedups.
-  - Current evidence: roadmap systems-result wording now says
-    `libreevolve.systems_result_report.v1` validates `claim_calibration`
-    records for ready reports, including metric unit, denominator, baseline,
-    aggregation, before/after window, runtime/deployment/synthesis context,
-    artifact refs, source refs, and mapping from finite report metrics to
-    published-style Section 3.3 claims. Existing fixtures do not yet carry real
-    calibrated result-claim records.
-  - Required result: when systems fixtures and certification examples populate
-    claim-calibrated metric records for scheduling, kernel, hardware, and
-    compiler result magnitudes, update ROADMAP, README, papers index, and
-    code/paper TODOs so roadmap text neither underclaims the report contract
-    nor overclaims reproducible AlphaEvolve result-claim evidence.
-
 - [ ] Keep systems roadmap wording scoped until application-owner and
       domain-review provenance is populated.
   - Spec evidence: AlphaEvolve Section 3.3 presents the scheduling, kernel,

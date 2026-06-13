@@ -941,28 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README kernel wording scoped to generic systems reports until
-      Pallas shape-split/runtime evidence exists.
-  - Spec evidence: AlphaEvolve Section 3.3.2 optimizes Gemini Pallas
-    matrix-multiplication tiling heuristics on real TPU accelerators, using
-    realistic user-collected input shapes split into training and evaluation
-    halves, with correctness preserved by changing tiling strategy rather than
-    the underlying operation.
-  - Current evidence: README documents generic systems result reports and
-    held-out/reference gates, but it does not yet document kernel-specific
-    shape-corpus provenance, train/eval split hashes, accelerator runtime
-    artifacts, expert-baseline heuristic identity, tiling-only output
-    constraints, correctness-by-construction scope, or engineering-effort
-    calibration for months-to-days optimization turnaround and deployment/
-    ergonomics impact.
-  - Required result: once kernel report metadata captures shape-corpus,
-    train/eval split, TPU runtime, expert-baseline comparison, tiling
-    constraints, unchanged-operation evidence, engineering-effort baseline,
-    automated-experiment duration, and production/workflow adoption state,
-    update README, ROADMAP, papers index, and matching TODOs so README does not
-    imply generic systems report readiness proves AlphaEvolve-style Pallas
-    kernel optimization.
-
 - [ ] Keep README Pallas workflow wording scoped until autotuning/manual
       heuristic baseline evidence exists.
   - Spec evidence: AlphaEvolve Section 3.3.2 contrasts AlphaEvolve-discovered

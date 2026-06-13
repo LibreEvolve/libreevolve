@@ -354,6 +354,12 @@ Important limits:
   annotations, diagram source data, rendered visual artifact hashes, rendering
   parameters, and links to shape-corpus/runtime reports remain active code and
   paper TODOs.
+- Kernel systems-result reports currently cover generic domain gates and
+  claim-calibration metadata, not Pallas/Gemini input-shape corpus provenance,
+  deterministic train/eval split hashes, real TPU runtime artifacts,
+  expert-baseline tiling heuristic identity, tiling-only candidate boundaries,
+  unchanged-operation correctness-by-construction evidence, engineering-effort
+  calibration, or production/workflow adoption.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

@@ -4,6 +4,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Pallas kernel shape-split/runtime README boundary.
+  - Status: README Important limits now states that kernel systems-result
+    reports currently cover generic domain gates and claim-calibration
+    metadata, not Pallas/Gemini input-shape corpus provenance, deterministic
+    train/eval split hashes, real TPU runtime artifacts, expert-baseline
+    tiling heuristic identity, tiling-only candidate boundaries,
+    unchanged-operation correctness-by-construction evidence,
+    engineering-effort calibration, or production/workflow adoption.
+  - Verification: code and papers TODOs still track the missing Pallas/Gemini
+    shape-corpus, split, runtime, expert-baseline, tiling-boundary,
+    correctness, engineering-effort, and adoption evidence, while the
+    systems-readiness sidecar and paper-manifest validation keep the current
+    report-contract boundary visible.
+
 - [x] Document Figure 7 Pallas tiling-exhibit README boundary.
   - Status: README Important limits now states that kernel documentation does
     not yet reproduce AlphaEvolve Figure 7 Pallas tiling-problem exhibit

@@ -77,6 +77,11 @@ Important limits:
   traces, but local matrix runners do not yet emit AlphaEvolve Section
   3.1-style repeated-seed cascade traces, pruning decisions, or early-stop
   provenance.
+- AlphaEvolve Figure 8 ablation support is a validated registry, equal-budget
+  report contract, scope-boundary records, and optional exhibit/artifact
+  metadata, not executed equal-budget matrix/kissing benchmark runs, proven
+  component-isolated ablation setups, rendered paper-quality curves, or
+  accelerator/async-worker budget evidence.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

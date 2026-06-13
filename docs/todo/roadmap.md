@@ -10,20 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep ablation roadmap wording scoped to report validation versus executed
-  experiment scripts.
-  - Spec evidence: AlphaEvolve Figure 8 compares equal-budget ablation curves
-    from actual runs, not only records that satisfy a result-report schema.
-  - Current evidence: `libreevolve.alphaevolve_ablation_report.v1` validates
-    reports for the Figure 8 full-system baseline plus five component
-    ablations, three seeds, required budget fractions, finite scores, budget
-    consistency, component assertions, and hashed curve artifacts, while
-    README/TODO text still says no benchmark script emits those reports yet.
-  - Required result: when benchmark scripts emit equal-budget ablation reports,
-    update the roadmap, README, papers index, and code/paper TODO entries
-    together so they neither underclaim the report contract nor overclaim
-    executed ablation experiments.
-
 - [ ] Keep benchmark-script roadmap wording scoped to report contracts versus
       runnable ablation harnesses.
   - Spec evidence: AlphaEvolve-style ablations require repeatable benchmark

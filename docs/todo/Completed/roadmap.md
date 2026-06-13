@@ -2,6 +2,26 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive ablation report-contract roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish validated Figure 8 ablation registries/report contracts from
+    executed equal-budget ablation experiments.
+  - Current evidence: `libreevolve.alphaevolve_ablation_report.v1` validates
+    the Figure 8 full-system baseline plus five component ablations, required
+    targets, three seeds, equal-budget fractions, finite scores, consumed
+    budget consistency, passed component assertions, hashed curve artifacts,
+    and matrix/kissing target-family coverage. Figure 8 exhibit metadata and
+    rendered-artifact absence boundaries are also recorded.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: runnable benchmark scripts, executed matrix/kissing runs, proven
+    component-isolated ablation setups, rendered paper-quality curves, and
+    accelerator/async-worker budget evidence.
+  - Verification: ablation registry, ablation-result, Figure 8 exhibit,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive local domain-paper benchmark/background roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `papers/README.md`,
     `ROADMAP.md`, `README.md`, `docs/status.md`, `docs/todo/code.md`, and

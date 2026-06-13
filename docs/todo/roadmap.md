@@ -10,30 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep GitHub Actions roadmap wording scoped to the current path-scoped
-      Linux workflow.
-  - Spec evidence: AlphaEvolve-scale engineering claims should be backed by
-    repeatable validation that covers code, docs, paper evidence, packaging,
-    and relevant supported runtime environments without surprising maintainers
-    with noisy or unsafe triggers.
-  - Current evidence: `ROADMAP.md` asks to extend the current path-scoped
-    GitHub Actions workflow beyond secret scan, Python 3.11/3.12
-    non-integration tests, optional integration tests, and documented
-    paper-manifest commands. README documents the current manual-dispatch and
-    path-scoped `push`/`pull_request` triggers. `.github/workflows/tests.yml`
-    has `secrets`, `unit`, and optional `integration` jobs on Ubuntu only, and
-    `tests/test_agents_docs.py` verifies the required path filters and job
-    names, but it does not make CI run every docs/paper-specific verifier,
-    wheel/sdist smoke, cross-platform jobs, or richer branch/notification
-    policy. ROADMAP now also points to
-    `papers/ci_workflow_coverage_boundary.json` for the paper-facing
-    path-scoped Ubuntu workflow boundary.
-  - Required result: when broader docs/paper validation, release-artifact
-    checks, interpreter/platform matrices, branch policy, or notification-safe
-    trigger policy lands, update the roadmap, README, papers index, and
-    code/paper TODO entries together so roadmap wording neither underclaims the
-    current workflow nor overclaims full AlphaEvolve-grade CI coverage.
-
 - [ ] Keep operational config-validation roadmap wording scoped to local
       effective-config checks.
   - Spec evidence: AlphaEvolve-scale experiments need configuration validation

@@ -2,6 +2,22 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive GitHub Actions roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README,
+    `papers/README.md`, `.github/workflows/tests.yml`, and
+    `papers/ci_workflow_coverage_boundary.json` already describe the current
+    path-scoped Ubuntu workflow boundary: manual dispatch,
+    `push`/`pull_request` path filters, secret scan, Python 3.11/3.12
+    non-integration tests, optional credential-gated integration tests, and
+    workflow-shape tests.
+  - Remaining guard: CI paper-manifest jobs, semantic documentation-claim
+    verification, wheel/sdist CI smoke tests, cross-platform CI matrices,
+    branch policy, and notification policy remain active in
+    `docs/todo/code.md` and `docs/todo/papers.md`.
+  - Verification: CI workflow boundary, workflow-shape, and paper-manifest
+    validation continue to reject the current path-scoped Ubuntu workflow as
+    full AlphaEvolve-grade CI coverage.
+
 - [x] Archive release-packaging roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
     `papers/README.md` already describe the current packaging boundary as

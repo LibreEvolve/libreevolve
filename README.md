@@ -197,6 +197,13 @@ Important limits:
   rationales, not an exhaustive locally justified corpus for every excluded
   non-equivalent matrix size outside the reported suite; that boundary is
   tracked by `papers/appendix_a_matrix_excluded_target_curation.json`.
+- Appendix A matrix resource-frontier records preserve the paper-source
+  statement about sizes beyond `<5,5,5>`, 1000 random seeds, single-GPU
+  evaluators, frequent OOM, and further-optimization need, not local
+  larger-target runs, measured accelerator-memory profiles, OOM artifacts,
+  reduced-seed tradeoffs, or reproduced scaling evidence; those boundaries are
+  tracked by `papers/appendix_a_matrix_resource_frontier.json` and
+  `papers/appendix_a_matrix_local_resource_frontier.json`.
 - Collaborator-feedback provenance is optional metadata and runtime reporting
   for cohorts, events, affected workflow areas, change links, validation
   outcomes, privacy/redaction policy, and review state, not populated

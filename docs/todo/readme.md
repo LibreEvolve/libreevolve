@@ -899,6 +899,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `appendix_a_matrix_local_resource_frontier_from_attempts()` can build an
     `attempts_recorded` boundary from supplied local attempt diagnostics, but
     README still marks real larger-target attempts and artifacts missing.
+    README Important limits now also states that Appendix A matrix
+    resource-frontier records preserve the paper-source statement about sizes
+    beyond `<5,5,5>`, 1000 random seeds, single-GPU evaluators, frequent OOM,
+    and further-optimization need, not local larger-target runs, measured
+    accelerator-memory profiles, OOM artifacts, reduced-seed tradeoffs, or
+    reproduced scaling evidence.
   - Required result: when local matrix resource-frontier reports land, update
     README, ROADMAP, papers index, and code/paper TODOs together so README
     distinguishes paper-source OOM boundary evidence from local larger-target

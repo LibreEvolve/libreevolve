@@ -4,6 +4,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Appendix A matrix resource-frontier README boundary.
+  - Status: README Important limits now states that Appendix A matrix
+    resource-frontier records preserve the paper-source statement about sizes
+    beyond `<5,5,5>`, 1000 random seeds, single-GPU evaluators, frequent OOM,
+    and further-optimization need, not local larger-target runs, measured
+    accelerator-memory profiles, OOM artifacts, reduced-seed tradeoffs, or
+    reproduced scaling evidence. It points to
+    `papers/appendix_a_matrix_resource_frontier.json` and
+    `papers/appendix_a_matrix_local_resource_frontier.json`.
+  - Verification: focused Appendix A matrix resource-frontier, local
+    resource-frontier, and paper-manifest tests validate the paper-source
+    record, local absence boundary, recorded-attempt builder, and overclaim
+    guards.
+
 - [x] Document Appendix A target-suite curation README boundary.
   - Status: README Important limits now states that Appendix A matrix
     target-suite curation records the reported 54 sorted targets, rough paper

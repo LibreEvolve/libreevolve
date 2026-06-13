@@ -2,6 +2,37 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive AlphaEvolve local-correction combinatorics roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/combinatorics_berczy_boundary.json` now keep arXiv `2603.06692`
+    source-scoped as background AlphaEvolve-assisted experimental
+    local-correction combinatorics context rather than implemented
+    LibreEvolve graph/Latin-square/Rota harness support.
+  - Current evidence: the cached paper and boundary JSON record finite
+    correcting-step certificates, graph reconstruction from vertex-deleted
+    subgraphs, Alon-Tarsi Latin-square sign-reversing involutions from local
+    trades, Rota basis local-exchange policies over `F2`, symmetry/isotopy
+    scramble evaluation, hard-negative replay, `1420/1420` bipartite
+    reconstruction, `896/896` planar reconstruction, Tables 1-6, Conjectures
+    4-11, evolved-code/Gemini-summary artifacts, and the absence of local
+    runtime harness parity.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: local-correction candidate schemas, finite-step trace artifacts,
+    graph-reconstruction benchmark records, vertex-deleted subgraph schemas,
+    Latin-square local-trade and sign-reversing-involution records, Rota
+    basis-family and local-exchange-policy records, scoring protocols,
+    seed/budget records, generated-algorithm artifacts, structural-pattern
+    summaries, conjecture/proof-status fields, independent checker hooks,
+    result rows, symmetry-scramble reports, hard-negative replay records,
+    appendix-code artifact hashes, evaluator-hardening records, and
+    documentation gates that separate AI-generated summaries and experimental
+    conjectures from proof-grade claims.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive AlphaEvolve Ramsey-number roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

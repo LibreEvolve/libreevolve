@@ -314,6 +314,15 @@ Important limits:
   initialization-family record, search-budget record, random-seed record,
   algorithm-summary audit, or independent checker output;
   `papers/ramsey_numbers_boundary.json` records that absence boundary.
+- AlphaEvolve-assisted local-correction combinatorics coverage is background
+  paper context only: LibreEvolve has no bipartite graph-reconstruction
+  harness, planar graph-reconstruction harness, Alon-Tarsi Latin-square
+  involution harness, Rota-basis linear-matroid exchange harness, candidate
+  certificate schema, local-correction policy API, symmetry-scramble record,
+  hard-negative replay buffer, evolved code-block artifact hash,
+  Gemini-summary artifact hash, reported metric row, conjecture/proof-status
+  ledger, repository snapshot, or independent verifier output;
+  `papers/combinatorics_berczy_boundary.json` records that absence boundary.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

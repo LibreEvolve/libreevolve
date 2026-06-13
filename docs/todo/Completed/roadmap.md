@@ -2,6 +2,23 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive self-improvement infrastructure/distillation roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md` now requires
+    evidence boundaries before any AlphaEvolve-style self-improving
+    infrastructure or base-model uplift claim, including target-component
+    identity, before/after measurements, deployment/adoption status,
+    rollback/safety review, execution-path provenance, and any distillation
+    dataset/training/evaluation artifacts.
+  - Remaining guard: real self-improving infrastructure and distillation
+    evidence remains active in `docs/todo/code.md` and `docs/todo/papers.md`;
+    `papers/README.md` explicitly says self-improvement/distillation evidence
+    is not implemented, and the ThetaEvolve/TTT export path remains bounded
+    plugin artifact evidence rather than online RL or base-model distillation.
+  - Verification: paper-manifest tests reject unscoped implemented benchmark
+    claims phrased as not implemented, allow scoped not-yet benchmark language,
+    and the ThetaEvolve boundary tests keep clipped-reward export separate from
+    training, checkpoint, throughput, and benchmark-comparison parity.
+
 - [x] Archive Related Work taxonomy roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `docs/status.md`, and `papers/README.md` already scope Related Work

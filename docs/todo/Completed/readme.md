@@ -14356,3 +14356,21 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     pending-work checkpoints, and validation status remain active in code and
     paper TODOs before README can claim reproduced distributed-pipeline
     topology.
+
+- [x] Keep README sample-efficiency claims scoped to budget telemetry until
+      proposal-count evidence exists.
+  - Spec evidence: AlphaEvolve Table 1 contrasts FunSearch's millions of LLM
+    samples with AlphaEvolve's thousands of samples, and Section 4 ties
+    performance to stronger model/full-system components under fixed compute
+    budgets.
+  - Status: README now documents
+    `runtime.history.sample_efficiency_report` as single-run generated
+    proposal, evaluated/valid/admitted candidate, retained-elite,
+    sampling-eligible, logical LLM sample, and bounded best-score-curve
+    evidence. It also points to `papers/sample_efficiency_boundary.json` for
+    the benchmark-level absence boundary.
+  - Remaining README gap: target-hit evidence, thousands-scale benchmark
+    curves, model-size comparisons, repeated-sampling comparators,
+    FunSearch-versus-AlphaEvolve budget reproduction, and useful target
+    progress in thousands-scale proposal counts remain active in code and
+    paper TODOs.

@@ -77,6 +77,13 @@ Important limits:
   implementation status, not validated parity for the individual code-scale,
   language, evaluator, sample-count, model-scale, prompt-context, or
   multi-metric capability rows.
+- Sample-efficiency reports under `runtime.history.sample_efficiency_report`
+  are single-run counts for generated proposals, evaluated/valid/admitted
+  candidates, retained elites, sampling-eligible candidates, logical LLM
+  samples, and a bounded best-score curve. They are not target-hit evidence,
+  thousands-scale benchmark curves, model-size comparisons, repeated-sampling
+  comparators, or FunSearch-versus-AlphaEvolve budget reproduction; that
+  boundary is tracked by `papers/sample_efficiency_boundary.json`.
 - Task-specification bundles, `task_specification.json`, and artifact-
   resolution reports link initial programs, evaluators, prompts, backends,
   context, candidate representation, metrics, history streams, best exports,

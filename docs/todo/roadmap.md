@@ -1359,26 +1359,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     underclaims current heuristic routing nor overclaims regret-analyzed or
     paper-faithful scheduler behavior.
 
-- [ ] Keep sample-efficiency roadmap wording scoped to single-run counts
-      until benchmark-level curves exist.
-  - Spec evidence: AlphaEvolve Table 1 says AlphaEvolve can get useful results
-    with thousands of LLM samples, unlike FunSearch's millions, and Section 4
-    evaluates the impact of powerful models under fixed compute budgets.
-  - Current evidence: `ROADMAP.md` now mentions
-    `runtime.history.sample_efficiency_report`, which records single-run
-    generated/evaluated/valid/admitted/retained counts, logical LLM sample
-    counts, and a bounded cumulative best-score curve. It still keeps
-    target-hit evidence, thousands-scale benchmark curves, equal-budget
-    model-size comparisons, repeated-sampling baselines, and fast/deep
-    scheduler validation as open work. The paper manifest now validates
-    `papers/sample_efficiency_boundary.json` as the benchmark-level absence
-    boundary for these missing sample-efficiency artifacts.
-  - Required result: when benchmark-level sample-budget curves, model-size
-    comparisons, repeated-sampling baselines, or target-hit-per-sample
-    summaries land, update ROADMAP, README, papers index, and code/paper TODOs
-    together so roadmap language distinguishes single-run local counts from
-    AlphaEvolve-style "thousands of samples suffice" evidence.
-
 - [ ] Keep test-time-compute roadmap wording scoped until repeated-sampling
       baselines exist.
   - Spec evidence: AlphaEvolve's Discussion says the evolutionary procedure

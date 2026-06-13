@@ -10910,3 +10910,20 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     active in code and paper TODOs, including queue capacities, nonblocking
     dependencies, worker identities, throughput dispatch, completion/admission
     ordering telemetry, and pending-work checkpoints.
+
+- [x] Keep sample-efficiency roadmap wording scoped to single-run counts
+      until benchmark-level curves exist.
+  - Spec evidence: AlphaEvolve Table 1 says AlphaEvolve can get useful results
+    with thousands of LLM samples, unlike FunSearch's millions, and Section 4
+    evaluates the impact of powerful models under fixed compute budgets.
+  - Status: ROADMAP mentions `runtime.history.sample_efficiency_report` as
+    single-run generated/evaluated/valid/admitted/retained counts, logical LLM
+    sample counts, and a bounded cumulative best-score curve. It also keeps
+    target-hit evidence, thousands-scale benchmark curves, equal-budget
+    model-size comparisons, repeated-sampling baselines, and fast/deep
+    scheduler validation as open work, with
+    `papers/sample_efficiency_boundary.json` preserving the benchmark-level
+    absence boundary.
+  - Remaining roadmap gap: benchmark-level sample-budget curves, model-size
+    comparisons, repeated-sampling baselines, and target-hit-per-sample
+    summaries remain active in code and paper TODOs.

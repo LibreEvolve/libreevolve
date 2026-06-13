@@ -2,6 +2,23 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive mutation-operator roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `papers/README.md`, and `docs/status.md` already scope
+    `runtime.history.mutation_operator_boundary_report` to configured
+    run-wide mutation mode, fixed local parser surfaces, proposal metadata
+    fields, payload-surface counts, sample generated-candidate records, and
+    `claim_ready=false`.
+  - Remaining guard: operator-family declaration schemas, proposal-level
+    operator provenance, LLM-constructed operator families, task/failure-aware
+    operator construction, adaptive operator-family selection, operator-family
+    scoring, and benchmark operator telemetry remain future work.
+  - Verification: focused runtime tests validate fixed SEARCH/REPLACE payload
+    surface reporting, unclassified proposal text, no adaptive selection, no
+    LLM-constructed family, no operator-family scoring, and `claim_ready=false`;
+    the `papers/mutation_operator_boundary.json` sidecar rejects premature
+    operator-family readiness claims.
+
 - [x] Archive Figure 3 supervised-learning exhibit roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `papers/README.md`, and `docs/status.md` already distinguish generic

@@ -10,25 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep mutation-operator roadmap wording scoped until operator-family
-      construction evidence exists beyond the current boundary report.
-  - Spec evidence: AlphaEvolve Section 2.3 uses structured edit outputs, while
-    Related Work contrasts the system with evolutionary approaches that rely
-    on a pre-defined handwritten mutation/crossover operator set.
-  - Current evidence: `ROADMAP.md` can now cite
-    `runtime.history.mutation_operator_boundary_report`, which records fixed
-    local edit payload surfaces, configured run-wide mutation mode, sample
-    generated-candidate mutation records, and `claim_ready: false` for
-    LLM-constructed mutation-operator families, adaptive selection,
-    operator-family scoring, and benchmark telemetry.
-    `papers/mutation_operator_boundary.json` now preserves the same scope as a
-    manifest-checked fixed-edit-payload boundary.
-  - Required result: when mutation-operator construction or adaptive
-    operator-family selection lands, update ROADMAP, README, papers index, and
-    code/paper TODOs together so roadmap wording separates implemented
-    edit-payload boundary reporting from AlphaEvolve's broader claim that LLMs
-    replace handwritten mutation-operator sets.
-
 - [ ] Keep database-query-index follow-up wording scoped to run-local
       resurfacing versus durable cross-run indexes.
   - Spec evidence: AlphaEvolve's program database should support durable

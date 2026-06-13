@@ -2,6 +2,9 @@
   "schema": "libreevolve.alphaevolve_collaborator_feedback_provenance_boundary.v1",
   "runtime_report_schema": "libreevolve.collaborator_feedback_provenance_report.v1",
   "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "Acknowledgements"
+  ],
   "source_claim": "AlphaEvolve Acknowledgements say early users and collaborators contributed diverse use cases and insightful feedback that shaped the system into a more robust and versatile tool",
   "boundary_status": "metadata_contract_only",
   "runtime_report_status": "collaborator_feedback_provenance_report_available",

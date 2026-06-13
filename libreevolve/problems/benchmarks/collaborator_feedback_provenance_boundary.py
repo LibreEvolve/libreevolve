@@ -13,6 +13,7 @@ COLLABORATOR_FEEDBACK_RUNTIME_REPORT_SCHEMA = (
     "libreevolve.collaborator_feedback_provenance_report.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
+EXPECTED_SOURCE_SECTION_IDS = ("Acknowledgements",)
 EXPECTED_BOUNDARY_STATUS = "metadata_contract_only"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "metadata_present",
@@ -62,6 +63,7 @@ def collaborator_feedback_provenance_boundary_record() -> dict[str, Any]:
         "schema": COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_SCHEMA,
         "runtime_report_schema": COLLABORATOR_FEEDBACK_RUNTIME_REPORT_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_claim": (
             "AlphaEvolve Acknowledgements say early users and collaborators "
             "contributed diverse use cases and insightful feedback that shaped "
@@ -104,6 +106,8 @@ def validate_collaborator_feedback_provenance_boundary(
         issues.append(_issue("invalid_runtime_report_schema", "runtime report schema must identify collaborator feedback provenance reports"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['Acknowledgements']"))
     source_claim = data.get("source_claim")
     if not isinstance(source_claim, str) or "Acknowledgements" not in source_claim:
         issues.append(_issue("invalid_source_claim", "source_claim must identify AlphaEvolve acknowledgement feedback evidence"))

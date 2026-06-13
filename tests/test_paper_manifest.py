@@ -2621,6 +2621,7 @@ def test_validate_paper_manifest_rejects_collaborator_feedback_provenance_bounda
     record = paper_manifest.collaborator_feedback_provenance_boundary_record()
     record["claim_ready"] = True
     record["boundary_status"] = "collaborator_feedback_ready"
+    record["source_section_ids"] = ["Contributions"]
     record["missing_evidence"]["alphaevolve_collaborator_feedback_parity"] = "recorded"
     sidecar = tmp_path / paper_manifest.COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
@@ -2631,6 +2632,7 @@ def test_validate_paper_manifest_rejects_collaborator_feedback_provenance_bounda
     assert report.ok is False
     assert "collaborator_feedback_provenance_boundary_claim_ready_overclaim" in codes
     assert "collaborator_feedback_provenance_boundary_invalid_boundary_status" in codes
+    assert "collaborator_feedback_provenance_boundary_invalid_source_section_ids" in codes
     assert (
         "collaborator_feedback_provenance_boundary_invalid_missing_evidence_alphaevolve_collaborator_feedback_parity"
         in codes

@@ -16,6 +16,7 @@ def test_collaborator_feedback_provenance_boundary_accepts_absence_record():
     assert validation.required_evidence_field_count == 14
     assert validation.missing_evidence_count == 6
     assert boundary["schema"] == COLLABORATOR_FEEDBACK_PROVENANCE_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["Acknowledgements"]
     assert "does not claim populated representative-fixture" in boundary["claim_boundary"]
 
 
@@ -23,6 +24,7 @@ def test_collaborator_feedback_provenance_boundary_rejects_premature_parity_clai
     boundary = collaborator_feedback_provenance_boundary_record()
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "collaborator_feedback_ready"
+    boundary["source_section_ids"] = ["Contributions"]
     boundary["missing_evidence"]["alphaevolve_collaborator_feedback_parity"] = "recorded"
     boundary["required_evidence_fields"] = ["metadata_present"]
 
@@ -32,6 +34,7 @@ def test_collaborator_feedback_provenance_boundary_rejects_premature_parity_clai
     assert validation.ok is False
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert "invalid_missing_evidence_alphaevolve_collaborator_feedback_parity" in codes
     assert "missing_required_evidence_field" in codes
 

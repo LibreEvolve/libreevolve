@@ -2,6 +2,10 @@
   "schema": "libreevolve.alphaevolve_process_exhibit_boundary.v1",
   "runtime_report_schema": "libreevolve.alphaevolve_process_exhibit_report.v1",
   "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "2",
+    "2.1"
+  ],
   "source_figure_ids": [
     "Figure 1",
     "Figure 2"

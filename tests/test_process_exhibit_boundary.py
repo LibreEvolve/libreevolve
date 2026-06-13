@@ -18,6 +18,7 @@ def test_process_exhibit_boundary_accepts_absence_record():
     assert report.boundary_status == (
         "process_mapping_with_source_text_boundary_without_full_parity"
     )
+    assert record["source_section_ids"] == ["2", "2.1"]
     assert report.required_evidence_field_count == 17
     assert report.missing_evidence_count == 3
     assert "does not claim exact source-diagram layout reproduction" in record["claim_boundary"]
@@ -42,6 +43,7 @@ def test_process_exhibit_boundary_rejects_premature_parity_claim():
     record = process_exhibit_boundary_record()
     record["claim_ready"] = True
     record["boundary_status"] = "rendered_diagram_parity_recorded"
+    record["source_section_ids"] = ["2.1"]
     record["missing_evidence"]["exact_source_diagram_layout_reproduction"] = "recorded"
     record["missing_evidence"][
         "alphaevolve_async_pipeline_topology_implementation"
@@ -57,6 +59,7 @@ def test_process_exhibit_boundary_rejects_premature_parity_claim():
     assert report.ok is False
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert "invalid_missing_evidence_exact_source_diagram_layout_reproduction" in codes
     assert (
         "invalid_missing_evidence_alphaevolve_async_pipeline_topology_implementation"

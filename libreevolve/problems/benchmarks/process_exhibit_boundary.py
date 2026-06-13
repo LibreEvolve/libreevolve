@@ -9,6 +9,7 @@ from typing import Any
 PROCESS_EXHIBIT_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_process_exhibit_boundary.v1"
 PROCESS_EXHIBIT_RUNTIME_REPORT_SCHEMA = "libreevolve.alphaevolve_process_exhibit_report.v1"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
+EXPECTED_SOURCE_SECTION_IDS = ("2", "2.1")
 EXPECTED_SOURCE_FIGURE_IDS = ("Figure 1", "Figure 2")
 EXPECTED_BOUNDARY_STATUS = "process_mapping_with_source_text_boundary_without_full_parity"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -59,6 +60,7 @@ def process_exhibit_boundary_record() -> dict[str, Any]:
         "schema": PROCESS_EXHIBIT_BOUNDARY_SCHEMA,
         "runtime_report_schema": PROCESS_EXHIBIT_RUNTIME_REPORT_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_figure_ids": list(EXPECTED_SOURCE_FIGURE_IDS),
         "source_claim": (
             "AlphaEvolve Figure 1 presents the high-level discovery loop and "
@@ -106,6 +108,8 @@ def validate_process_exhibit_boundary(
         issues.append(_issue("invalid_runtime_report_schema", "runtime report schema must identify process exhibit reports"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['2', '2.1']"))
     if data.get("source_figure_ids") != list(EXPECTED_SOURCE_FIGURE_IDS):
         issues.append(_issue("invalid_source_figure_ids", "source_figure_ids must be ['Figure 1', 'Figure 2']"))
     if not isinstance(data.get("source_claim"), str) or "Figure 1" not in data["source_claim"] or "Figure 2" not in data["source_claim"]:

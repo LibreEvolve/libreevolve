@@ -10,37 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep matrix roadmap wording scoped to reported targets until scaling
-      resource-frontier evidence exists.
-  - Spec evidence: AlphaEvolve Appendix A reports that larger matrix sizes
-    beyond the table often ran out of memory when evaluated with 1000 random
-    seeds on a single GPU accelerator, making further optimization necessary
-    for extending the target suite.
-  - Current evidence: roadmap and report-contract language cover the reported
-    Appendix A target registry, matrix result artifacts, generic runtime
-    budget accounting, accelerator-environment hints, and
-    `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1`. The
-    resource-frontier contract validates the paper-only boundary for sizes
-    beyond `<5,5,5>`, 1000 random seeds, single-GPU evaluators, frequent OOM,
-    and further-optimization need.
-    `papers/appendix_a_matrix_resource_frontier.json` now emits that
-    paper-only boundary as a committed sidecar.
-    `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1` now
-    validates the local absence/readiness boundary and required future fields
-    for attempted-target rows, measured GPU memory/resource diagnostics,
-    seed-count tradeoff records, artifacts, and target inclusion/exclusion
-    policy beyond the reported suite.
-    `papers/appendix_a_matrix_local_resource_frontier.json` now emits that
-    absence/readiness boundary as a committed sidecar.
-    `appendix_a_matrix_local_resource_frontier_from_attempts()` can build an
-    `attempts_recorded` boundary from supplied local attempt diagnostics, but
-    roadmap wording still treats real larger-target attempts as missing.
-  - Required result: when local matrix scaling/resource-frontier report fields
-    are backed by actual local attempts, update ROADMAP, README, papers index,
-    and code/paper TODOs together so roadmap text distinguishes AlphaEvolve
-    paper-source OOM boundary evidence from local claims about larger matrix
-    target scalability.
-
 - [ ] Keep matrix roadmap wording scoped until evolved sweep-space records are
       emitted.
   - Spec evidence: AlphaEvolve Figures 9a-9c show matrix search programs

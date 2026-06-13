@@ -2,6 +2,30 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive matrix resource-frontier roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish AlphaEvolve's paper-source larger-target OOM boundary from
+    local claims about larger matrix target scalability.
+  - Current evidence: `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1`
+    and `papers/appendix_a_matrix_resource_frontier.json` preserve the
+    paper-only boundary for sizes beyond `<5,5,5>`, 1000 random seeds,
+    single-GPU evaluators, frequent OOM, and further-optimization need.
+    `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1`,
+    `papers/appendix_a_matrix_local_resource_frontier.json`, and
+    `appendix_a_matrix_local_resource_frontier_from_attempts()` validate the
+    current local absence/readiness boundary and the future attempted-target,
+    measured-memory, OOM-diagnostic, reduced-seed, artifact, and
+    inclusion/exclusion-policy fields.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    local matrix scaling evidence: attempted larger targets, accelerator/GPU
+    memory profiles, OOM or resource-exhaustion diagnostics, reduced-seed
+    tradeoffs, attempted-versus-excluded target identities, and resource
+    rationale.
+  - Verification: Appendix A matrix resource-frontier tests, paper-manifest
+    validation, and checked-in paper-index TODO coverage still pass.
+
 - [x] Archive matrix near-integrality roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

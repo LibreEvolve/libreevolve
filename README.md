@@ -58,6 +58,11 @@ Important limits:
   targets, rough paper selection wording, symmetry policy, and included-target
   rationales, not an exhaustive locally justified corpus for every excluded
   non-equivalent matrix size outside the reported suite.
+- Appendix A matrix resource-frontier records preserve the paper-source
+  statement about sizes beyond `<5,5,5>`, 1000 random seeds, single-GPU
+  evaluators, frequent OOM, and further-optimization need, not local
+  larger-target runs, measured accelerator-memory profiles, OOM artifacts,
+  reduced-seed tradeoffs, or reproduced scaling evidence.
 - Matrix per-seed reports validate declared seed rows, best rank, and hit
   fraction, and matrix cascade-run boundary records can link seed rows to stage
   traces, but local matrix runners do not yet emit AlphaEvolve Section

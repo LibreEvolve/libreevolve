@@ -749,6 +749,11 @@ is not yet an AlphaEvolve reproduction.
   ROADMAP claim ids with evidence anchors while keeping complete claim
   coverage, semantic documentation-claim verification, and full
   AlphaEvolve-facing claim proof open.
+- Keep the code-audit completeness boundary explicit:
+  `papers/implementation_evidence_map_boundary.json` records core
+  AlphaEvolve requirement anchors with module, test, sidecar, and TODO links,
+  but it is not an exhaustive source-span coverage matrix, coverage detector,
+  generated code-audit report, or CI exhaustiveness gate.
 - Keep paper-manifest validation diagnostics shareable by using
   repository-relative labels and secret-redacted exception text in text and JSON
   output.

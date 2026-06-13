@@ -1108,6 +1108,12 @@ Important limits:
   is current; that boundary is tracked by
   `papers/documentation_truthfulness_boundary.json` and
   `papers/documentation_claim_inventory.json`.
+- Implementation evidence mapping now has core AlphaEvolve requirement anchors
+  for markers, evaluator cascades, LLM prompting/sampling, evolutionary
+  database behavior, async/distributed topology, and published benchmark
+  evidence. This is not an exhaustive source-span coverage matrix or generated
+  code-audit report; that boundary is tracked by
+  `papers/implementation_evidence_map_boundary.json`.
 - Paper-index benchmark coverage validation currently catches structural
   coverage issues and one narrow `Implemented`-but-`not implemented`
   contradiction. It is not semantic proof that every implemented benchmark

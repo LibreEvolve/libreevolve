@@ -1363,6 +1363,13 @@ coverage, semantic documentation-claim verification, complete
 implementation-evidence mapping, stale completed-entry detection, generated
 alignment reports, and full proof that every AlphaEvolve-facing claim is
 current remain absent.
+Core AlphaEvolve implementation-evidence mapping is now represented by
+`papers/implementation_evidence_map_boundary.json`, which records requirement
+anchors for markers, evaluator cascades, LLM prompting/sampling, the
+evolutionary database, async/distributed topology, and published benchmark
+coverage. It is not an exhaustive requirement inventory, source-span coverage
+matrix, coverage detector, generated code-audit report, or CI exhaustiveness
+gate.
 Environment provenance is useful
 package name/version, selected and extra `[project]` metadata, known-lockfile
 hash, pip-freeze and pip-config hash/preview, installed-distribution `WHEEL`
@@ -2474,6 +2481,10 @@ Implemented:
   inventory sidecar with stable claim ids, document sections, evidence anchors,
   and explicit missing-evidence fields for complete coverage and semantic
   proof.
+- `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
+  implementation-evidence map boundary with requirement ids, module/test/
+  sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive
+  audit coverage.
 - `libreevolve/problems/examples/sorting`: neutral plateau/diversity smoke
   fixture. The bubble-sort seed already reaches `accuracy == 1.0`, so this
   example can demonstrate mutation handling and same-score implementation

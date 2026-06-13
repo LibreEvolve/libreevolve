@@ -197,6 +197,12 @@ from libreevolve.problems.benchmarks.documentation_claim_inventory import (
     render_documentation_claim_inventory_summary,
     validate_documentation_claim_inventory,
 )
+from libreevolve.problems.benchmarks.implementation_evidence_map_boundary import (
+    IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_SCHEMA,
+    implementation_evidence_map_boundary_record,
+    render_implementation_evidence_map_boundary_summary,
+    validate_implementation_evidence_map_boundary,
+)
 from libreevolve.problems.benchmarks.release_artifact_reproducibility_boundary import (
     RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_SCHEMA,
     release_artifact_reproducibility_boundary_record,
@@ -866,6 +872,7 @@ __all__ = [
     "FAILURE_MEMORY_BOUNDARY_SCHEMA",
     "GEMINI_PROVIDER_PARITY_BOUNDARY_SCHEMA",
     "GIGAEVO_FRAMEWORK_BOUNDARY_SCHEMA",
+    "IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_SCHEMA",
     "INCORRECT_SUGGESTION_AUDIT_BOUNDARY_SCHEMA",
     "INITIAL_POOL_DIVERGENCE_BOUNDARY_SCHEMA",
     "INITIAL_PROGRAM_IDEA_PROVENANCE_BOUNDARY_SCHEMA",
@@ -1008,6 +1015,7 @@ __all__ = [
     "existing_codebase_integration_boundary_record",
     "failure_memory_boundary_record",
     "gigaevo_framework_boundary_record",
+    "implementation_evidence_map_boundary_record",
     "incorrect_suggestion_audit_boundary_record",
     "initial_pool_divergence_boundary_record",
     "initial_program_idea_provenance_boundary_record",
@@ -1145,6 +1153,7 @@ __all__ = [
     "render_figure9_matrix_diff_exhibit_summary",
     "render_gemini_provider_parity_boundary_summary",
     "render_gigaevo_framework_boundary_summary",
+    "render_implementation_evidence_map_boundary_summary",
     "render_incorrect_suggestion_audit_boundary_summary",
     "render_initial_pool_divergence_boundary_summary",
     "render_initial_program_idea_provenance_boundary_summary",
@@ -1288,6 +1297,7 @@ __all__ = [
     "validate_figure9_matrix_diff_exhibit",
     "validate_gemini_provider_parity_boundary",
     "validate_gigaevo_framework_boundary",
+    "validate_implementation_evidence_map_boundary",
     "validate_incorrect_suggestion_audit_boundary",
     "validate_initial_pool_divergence_boundary",
     "validate_initial_program_idea_provenance_boundary",

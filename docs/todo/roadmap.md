@@ -6,36 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Extend evolve-block integration roadmap wording beyond runtime
-      minimal-marker evidence.
-  - Spec evidence: AlphaEvolve Section 2.1 says special comment markers let the
-    system evolve multiple components in existing codebases while requiring
-    only minimal changes. The local AlphaEvolve PDF page 4 describes adding
-    `# EVOLVE-BLOCK-START` / `# EVOLVE-BLOCK-END` comments to integrate with
-    existing codebases, and Figure 3 on page 6 shows those marked components
-    beside an `evaluate(eval_inputs)` function used by evaluators.
-  - Current evidence: ROADMAP, README, and papers-index wording can cite
-    Python evolve-block markers, marker validation, unsupported non-Python
-    marker diagnostics, workspace materialization, file topology support,
-    `best_workspace/` export, and the `workspace_math` nested package plus
-    JSON/static-asset smoke fixture. They now also cite
-    `runtime.history.existing_codebase_integration_report`, which records
-    runtime candidate workspace marker spans, stable span ids, skeleton hashes,
-    unmarked-file hashes, seed-source references, marker grammar, and explicit
-    upstream-integration gaps. ROADMAP now also reflects optional
-    `problem.codebase_integration_metadata` source-setup records and
-    `source_setup_metadata` report evidence for upstream identity, pre-marker
-    hashes, marker-only setup diffs, evaluator-call continuity, copied static
-    assets, and source-setup completeness, while keeping full paper parity
-    false. ROADMAP now also names
-    `papers/existing_codebase_integration_boundary.json` as the committed
-    paper-manifest-validated source-setup-level absence boundary.
-  - Required result: when a populated codebase-scale fixture/evidence bundle
-    lands, update ROADMAP, README, papers index, and code/paper TODO entries
-    together so roadmap wording separates declared source-setup metadata from
-    proven AlphaEvolve-style minimal-change integration evidence and does not
-    treat local workspace smoke tests as codebase-integration proof.
-
 - [ ] Keep candidate-abstraction roadmap wording scoped beyond the current
       abstraction-choice report.
   - Spec evidence: AlphaEvolve Section 2.1 and Discussion treat candidate

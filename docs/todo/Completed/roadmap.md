@@ -2,6 +2,19 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive evolve-block integration roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
+    `papers/README.md` already describe current Python evolve-block marker
+    evidence, runtime existing-codebase integration reports, optional
+    source-setup metadata, and
+    `papers/existing_codebase_integration_boundary.json` while keeping
+    paper-faithful minimal-change existing-codebase integration false.
+  - Remaining guard: the real populated codebase-scale fixture/evidence bundle
+    remains active in `docs/todo/code.md` and `docs/todo/papers.md`, so this
+    archive does not close the implementation or paper-evidence gap.
+  - Verification: existing-codebase boundary and paper-manifest validation
+    continue to reject premature source-setup-level integration claims.
+
 - [x] Keep explicit-context roadmap wording current with source-role reports.
   - Status: ROADMAP now lists
     `runtime.history.explicit_context_source_role_report`, backed by validated

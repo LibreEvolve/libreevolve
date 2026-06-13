@@ -91,39 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Implement README further post-AlphaEvolve sums-and-differences claims
-      beyond source-scoped absence.
-  - Spec evidence: arXiv `2506.01896`, `Sums and differences of sets: a
-    further improvement over AlphaEvolve`, improves on both AlphaEvolve's
-    `theta = 1.1584` and the later `2505.16105` explicit-construction result
-    `theta = 1.173050`. Its abstract constructs a sequence of `U` sets whose
-    limit establishes `theta = 1.173077`. The paper, by Fan Zheng, uses
-    large-deviation estimates for `W(m, floor(rm), B)`, a base-`2B + 1`
-    integer-image construction, asymptotic bounds on `q(U)`, `s(U)`, and
-    `d(U)`, and a MATLAB 2024b optimization over `B`, `r`, and `a`; the
-    reported best row is `B = 5` with `theta - 1 = 0.173077279785136` at
-    both `1e-8` and `1e-10` tolerances.
-  - Current evidence: README now mentions `2506.01896` as source-scoped
-    context and points to `papers/sums_differences_sequence_boundary.json`.
-    It still does not define a sequence-of-sets construction, preserve
-    finite-prefix artifacts, verify limiting lower-bound derivations, preserve
-    large-deviation lemma evidence, extract or reimplement the MATLAB
-    optimizer, compare against both the AlphaEvolve and `2505.16105`
-    baselines, or distinguish asymptotic sequence evidence from finite
-    huge-set evidence with local implementation evidence.
-  - Required result: if README mentions the further sums-and-differences
-    improvement, the `1.173077` bound, a sequence of `U` sets, limiting
-    lower-bound constructions, the AlphaEvolve `1.1584` baseline, the
-    `2505.16105` `1.173050` baseline, large-deviation estimates, MATLAB
-    optimization, the `B = 5` tolerance-sweep result, or `2506.01896`, keep
-    the wording source-scoped until local artifacts can show the paper in the
-    manifest, sequence schemas, finite-prefix artifacts, limiting-bound
-    derivation records, large-deviation checker outputs, MATLAB extraction or
-    independent reimplementation, convergence/tail-bound checker outputs,
-    baseline comparison rows, independent checker outputs, and benchmark
-    reports. Avoid implying LibreEvolve supports this further
-    post-AlphaEvolve sums-and-differences improvement without those artifacts.
-
 - [ ] Implement README UCB-style scheduler claims beyond source-scoped
       heuristic routing.
   - Spec evidence: the local `auer-cesa-bianchi-fischer-2002` paper,

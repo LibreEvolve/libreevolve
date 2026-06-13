@@ -6727,9 +6727,10 @@ Primary evidence:
     cardinality records where finite prefixes are used, `theta` formula and
     tolerance policy, AlphaEvolve `1.1584` baseline, `2505.16105`
     `1.173050` baseline, prior/current comparison rows, independent checker
-    outputs, and README/ROADMAP wording that keeps this further
+    outputs, ROADMAP and paper-index wording that keeps this further
     sums-and-differences improvement as missing evidence until local sequence
-    artifacts and reports exist.
+    artifacts and reports exist, and source-scoped root README wording if
+    those claims are reintroduced.
 
 - [ ] Implement canonical UCB1 finite-time scheduler evidence beyond the
       source boundary.

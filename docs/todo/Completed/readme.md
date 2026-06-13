@@ -127,6 +127,22 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     sums-and-differences improvement, the wording must remain source-scoped
     until the active code, paper, and roadmap TODO evidence exists.
 
+- [x] Archive README further sums-and-differences sequence source-scope TODO.
+  - Status: the README-specific TODO was stale after the README realism split.
+    The root README no longer mentions `2506.01896`, the further
+    sums-and-differences improvement, the `1.173077` bound, sequence-of-`U`
+    constructions, large-deviation estimates, MATLAB 2024b optimization,
+    `B = 5` tolerance-sweep rows, or the `2505.16105` `1.173050` baseline.
+  - Remaining guard: `papers/README.md` keeps `2506.01896` as an
+    unimplemented constructive-math benchmark candidate, and the open code,
+    paper, and roadmap TODOs still track the missing sequence schemas,
+    finite-prefix artifacts, limiting-bound derivations, large-deviation
+    checker outputs, MATLAB extraction/reimplementation, convergence and
+    tail-bound checks, baseline rows, and independent checker outputs.
+  - Verification: if the root README later reintroduces this further
+    sums-and-differences improvement, the wording must remain source-scoped
+    until the active code, paper, and roadmap TODO evidence exists.
+
 - [x] Keep README validator sandbox/resource-limit wording scoped to local
       subprocess audit evidence versus OS/container enforcement.
   - Status: README Important limits now states that validator execution policy

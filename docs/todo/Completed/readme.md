@@ -4,6 +4,21 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README multi-evaluator wording scoped until independent
+      evaluator-oracle evidence exists.
+  - Status: README Important limits now states that evaluator/oracle reports
+    register local validators, configured cascade stages, and optional LLM
+    feedback graders with arbitration metadata, not independent
+    reference/statistical-oracle evidence, benchmark sufficiency proof,
+    independent disagreement outcomes, or cross-run oracle tables; it names
+    `papers/evaluator_oracle_boundary.json` as the committed boundary.
+  - Verification: `runtime.history.evaluator_oracle_registry` is implemented
+    and validated with local arbitration metadata and `claim_ready: false`
+    independent-oracle readiness; `papers/evaluator_oracle_boundary.json` is
+    present and paper-manifest validated. Code, roadmap, and paper TODOs still
+    track the missing independent reference/statistical oracles, benchmark
+    sufficiency evidence, disagreement outcomes, and cross-run oracle tables.
+
 - [x] Document Appendix B.4 prior-bound rounding README boundary.
   - Status: README Important limits now states that Appendix B.4 prior-bound
     rounding provenance remains absent: the registry preserves the `[33]`

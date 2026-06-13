@@ -9,28 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README multi-evaluator wording scoped until independent
-      evaluator-oracle evidence exists.
-  - Spec evidence: AlphaEvolve describes feedback from one or more evaluators,
-    with Section 2.4 separating a user-provided evaluation function from
-    optional cascades and LLM-generated feedback.
-  - Current evidence: README now documents
-    `runtime.history.evaluator_oracle_registry` with oracle ids/types,
-    authority, input/output schema, metric ownership, failure policy, merge
-    policy, prompt-feedback linkage, runtime counts, an `arbitration_policy`
-    authority matrix, benchmark-sufficiency labels, conflict roles, failure
-    effects, bounded local `disagreement_outcomes` for validator-versus-
-    feedback cases, and `claim_ready: false` for independent multi-oracle
-    arbitration. README Important limits now also name
-    `papers/evaluator_oracle_boundary.json` as the committed paper-manifest-
-    validated independent-oracle absence boundary.
-  - Required result: when independent reference/statistical oracles,
-    per-benchmark sufficiency evidence, and independent disagreement outcome
-    records land, update README, ROADMAP, papers index, and code/paper TODOs
-    together so README distinguishes local staged validation and feedback
-    graders from AlphaEvolve-style feedback from one or more independent
-    evaluators.
-
 - [ ] Keep README grounding claims scoped until independent incorrect-
       suggestion audit evidence exists.
   - Spec evidence: AlphaEvolve states that code execution and automatic

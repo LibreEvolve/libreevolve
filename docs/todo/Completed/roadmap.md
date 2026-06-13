@@ -2,6 +2,34 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive evolutionary-agent trace-diagnostics roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2605.20086` source-scoped as background trace-diagnostic
+    evaluation context rather than implemented LibreEvolve EvoTrace/EvoReplay
+    support.
+  - Current evidence: the cached paper and `papers/README.md` record the
+    concern that final benchmark scores can hide structural innovation,
+    constant tuning, overfitting, cycling, and task-dependent search behavior,
+    plus EvoTrace edit annotations, nine recurring edit types, LLM-as-judge
+    validation against human reannotation, EvoReplay interventions, model and
+    prompt/context substitution, component-removal interventions, cycling
+    evidence, and AlphaEvolve/OpenEvolve/FunSearch framing, while marking
+    local trace schemas, annotation pipelines, search-graph exports, replay
+    harnesses, constant-retuning baselines, cycling detectors, held-out
+    reports, and independent reproduction output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source/license metadata, relation to LibreEvolve run-history
+    artifacts, edit-type annotation schema, dependency extraction,
+    fitness-trajectory labels, EvoReplay intervention schema, cycling and
+    overfitting diagnostics, constant-tuning versus new-logic classification,
+    prompt/population sensitivity metadata, benchmark/task taxonomy, baseline
+    agent identities, code/artifact availability, and independent
+    verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive FlashEvolve asynchronous-stage roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

@@ -10,32 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement evolutionary-agent trace-diagnostics gates beyond paper cache
-      coverage.
-  - Spec evidence: arXiv `2605.20086`, submitted May 25, 2026, asks what
-    evolutionary coding agents actually evolve. Its abstract says final
-    benchmark scores alone cannot reveal whether gains reflect structural
-    innovation, overfitting, cycling, or task-specific constant tuning. It
-    introduces EvoTrace for edit-type, dependency, and fitness-trajectory
-    annotation plus EvoReplay for interventions on search traces, and studies
-    AlphaEvolve-style agents including AlphaEvolve, OpenEvolve, and FunSearch.
-  - Current evidence: ROADMAP, `papers/download_manifest.*`, and
-    `papers/README.md` now include `2605.20086`, cached locally as
-    `papers/2605.20086__Evolutionary_Coding_Agents.pdf` with byte count
-    `2273394` and SHA-256
-    `b8f592bd68429b4c5f7cee2878a316941acf3cdf80215a0d78c08c25a73722f3`.
-    ROADMAP tracks run manifests, history streams, archive events, prompt
-    history, benchmark-report contracts, and many source gates, but still has
-    no local EvoTrace/EvoReplay-style diagnostic evidence.
-  - Required result: add roadmap gates beyond paper-cache coverage for
-    `2605.20086`: source-license metadata, edit-type annotation schema,
-    dependency-graph extraction, fitness-trajectory classifiers,
-    cycling/overfitting diagnostics, structural-innovation labels, prompt and
-    population ablation records, replay-intervention tool support,
-    counterfactual outcome reports, task/baseline-agent taxonomy, and a
-    background-only or benchmark-fixture status rule so roadmap claims about
-    discovery quality do not outpace local EvoTrace/EvoReplay-style evidence.
-
 - [ ] Implement Zarankiewicz reinforced-search gates beyond paper cache
       coverage.
   - Spec evidence: arXiv `2605.01120`, submitted May 1, 2026 and revised May

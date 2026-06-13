@@ -145,6 +145,14 @@ Important limits:
   controller, EvolBench/ChatDev/MetaGPT benchmark report, 3.5x/4.9x
   throughput reproduction, linked-code audit, or independent reproduction
   output.
+- Evolutionary-agent trace-diagnostic coverage is background paper context
+  only: LibreEvolve has no EvoTrace-compatible trace schema, nine-class edit
+  taxonomy annotation pipeline, LLM-as-judge edit reannotation validation,
+  parent-child search graph export, prompt/context substitution replay, model
+  substitution replay, component-removal intervention harness,
+  constant-retuning baseline, deterministic deleted-line reintroduction/
+  cycling detector, held-out generalization report, or independent
+  reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

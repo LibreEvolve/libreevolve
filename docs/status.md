@@ -111,7 +111,10 @@ Important limits:
   28- and 36-comparator seeds, checked 19- and 25-comparator targets, and a
   helper-generated hardening bundle for generic negative fixtures, detector
   logs, inventories, summaries, and scope validation. LibreEvolve still lacks
-  repeated-run evidence, source-citation sidecars, and paper certification.
+  repeated-run evidence, source-citation sidecars, run-tied hardening
+  certification, best-candidate artifact hashes, and paper certification. The
+  `papers/sorting_network_rediscovery_boundary.json` sidecar keeps that
+  candidate-only boundary manifest-validated.
 - Sample-efficiency reports under `runtime.history.sample_efficiency_report`
   are single-run counts for generated proposals, evaluated/valid/admitted
   candidates, retained elites, sampling-eligible candidates, logical LLM

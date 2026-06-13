@@ -154,7 +154,9 @@ The bundled examples are intentionally small:
   are not paper-comparable evidence until repeated runs, source citations, and
   certification are added. Their hardening bundle helper emits generic
   negative-fixture, inventory, summary, and scope-validation evidence; it is
-  not a certified rediscovery result.
+  not a certified rediscovery result. The checked
+  `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that
+  scope.
 
 Treat an example as benchmark evidence only when its own docs or paper sidecar
 says so.

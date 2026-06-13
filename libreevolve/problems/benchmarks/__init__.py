@@ -324,6 +324,12 @@ from libreevolve.problems.benchmarks.codebase_scale_benchmark_boundary import (
     render_codebase_scale_benchmark_boundary_summary,
     validate_codebase_scale_benchmark_boundary,
 )
+from libreevolve.problems.benchmarks.sorting_network_rediscovery_boundary import (
+    SORTING_NETWORK_REDISCOVERY_BOUNDARY_SCHEMA,
+    render_sorting_network_rediscovery_boundary_summary,
+    sorting_network_rediscovery_boundary_record,
+    validate_sorting_network_rediscovery_boundary,
+)
 from libreevolve.problems.benchmarks.codeevolve_boundary import (
     CODEEVOLVE_BOUNDARY_SCHEMA,
     codeevolve_boundary_record,
@@ -875,6 +881,7 @@ __all__ = [
     "CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA",
     "CODEBASE_SCALE_BENCHMARK_BOUNDARY_SCHEMA",
     "CODEEVOLVE_BOUNDARY_SCHEMA",
+    "SORTING_NETWORK_REDISCOVERY_BOUNDARY_SCHEMA",
     "COMBINATORICS_BERCZY_BOUNDARY_SCHEMA",
     "CONTROLLER_BACKTRACKING_BOUNDARY_SCHEMA",
     "DEEPEVOLVE_BOUNDARY_SCHEMA",
@@ -1027,6 +1034,7 @@ __all__ = [
     "certification_artifact_inventory",
     "codebase_scale_benchmark_boundary_record",
     "codeevolve_boundary_record",
+    "sorting_network_rediscovery_boundary_record",
     "collaborator_feedback_provenance_boundary_record",
     "combinatorics_berczy_boundary_record",
     "controller_backtracking_boundary_record",
@@ -1161,6 +1169,7 @@ __all__ = [
     "render_certification_summary",
     "render_codebase_scale_benchmark_boundary_summary",
     "render_codeevolve_boundary_summary",
+    "render_sorting_network_rediscovery_boundary_summary",
     "render_collaborator_feedback_provenance_boundary_summary",
     "render_combinatorics_berczy_boundary_summary",
     "render_controller_backtracking_boundary_summary",
@@ -1309,6 +1318,7 @@ __all__ = [
     "validate_certification_evidence_bundle",
     "validate_codebase_scale_benchmark_boundary",
     "validate_codeevolve_boundary",
+    "validate_sorting_network_rediscovery_boundary",
     "validate_collaborator_feedback_provenance_boundary",
     "validate_combinatorics_berczy_boundary",
     "validate_controller_backtracking_boundary",

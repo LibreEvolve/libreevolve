@@ -1188,7 +1188,9 @@ resumed-trace proof are still open.
   valid 28- and 36-comparator seeds. Their hardening bundle helper now emits
   negative-fixture descriptors, detector logs, inventories, summaries, and
   scope validation for both candidates. Add repeated-run, source-citation, and
-  paper-certification evidence before treating them as comparable results.
+  paper-certification evidence before treating them as comparable results. The
+  `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that
+  executable-candidate-only boundary.
   This remains the current lowest-risk realistic benchmark path because it has
   cheap objective verification, known targets, and no external solver or
   accelerator dependency.

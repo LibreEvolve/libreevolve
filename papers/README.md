@@ -2610,7 +2610,9 @@ Implemented:
   paper-comparable evidence until repeated runs, source-citation sidecars, and
   certification artifacts are added. Their hardening bundle helper emits
   generic negative-fixture, inventory, summary, and scope-validation evidence,
-  but that is not a run-certified rediscovery record.
+  but that is not a run-certified rediscovery record. The committed
+  `papers/sorting_network_rediscovery_boundary.json` sidecar preserves this
+  executable-candidate-only boundary.
 
 Planned or background-only:
 

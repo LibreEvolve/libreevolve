@@ -3027,16 +3027,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     scope validation for both sorting-network candidates. The paper ledger
     still has no source-citation sidecar for the zero-one verifier or known
     comparator targets, repeated-run evidence, committed run-tied hardening
-    certification, or certification row proving rediscovery under fixed
-    evaluator/model/seed conditions.
+    certification, best-candidate artifact hashes, failure/invalid-candidate
+    summaries, target-hit-rate summaries, or certification row proving
+    rediscovery under fixed evaluator/model/seed conditions. The committed
+    `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that
+    absence boundary for paper-manifest validation.
   - Required result: add a paper-visible benchmark record for
     `sorting_network_8` and `sorting_network_9`, including source citations
     for the zero-one verifier and known comparator targets, fixture scope,
     evaluator artifact hashes, seed-network provenance, repeated-run result
-    tables, comparator-count/depth metrics, negative-fixture hardening
-    evidence tied to the repeated runs, and certification that any claimed
-    rediscovery is calibrated against known targets rather than presented as a
-    novel SOTA result.
+    tables, comparator-count/depth metrics, target-hit-rate summaries,
+    best-candidate artifact hashes, failure/invalid-candidate summaries,
+    negative-fixture hardening evidence tied to the repeated runs, and
+    certification that any claimed rediscovery is calibrated against known
+    targets rather than presented as a novel SOTA result.
 
 - [ ] Track Figure 5 construction-exhibit provenance as paper evidence.
   - Paper evidence: AlphaEvolve Figure 5 presents selected SOTA-breaking

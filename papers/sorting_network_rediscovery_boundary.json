@@ -1,0 +1,57 @@
+{
+  "schema": "libreevolve.alphaevolve_sorting_network_rediscovery_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "problem_ids": [
+    "sorting_network_8",
+    "sorting_network_9"
+  ],
+  "source_claim": "AlphaEvolve-style benchmark evidence needs automated verification, fixed run conditions, repeated-run outcomes, and paper-facing certification before local executable fixtures can be cited as rediscovery evidence",
+  "boundary_status": "executable_candidate_only",
+  "candidate_status": "bounded_sorting_network_fixtures_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "exhaustive_zero_one_validation",
+    "known_comparator_target_checks",
+    "valid_seed_network_provenance",
+    "benchmark_scope_registry_records",
+    "hardening_bundle_artifacts",
+    "zero_one_principle_source_citation",
+    "known_target_source_citations",
+    "fixed_evaluator_model_budget_protocol",
+    "repeated_seed_run_tables",
+    "target_hit_rate_summary",
+    "run_tied_hardening_certification",
+    "best_candidate_artifact_hashes",
+    "failure_and_invalid_candidate_summary",
+    "paper_facing_certification_row",
+    "rediscovery_not_sota_claim_boundary"
+  ],
+  "missing_evidence": {
+    "zero_one_principle_source_citation": "not_recorded_locally",
+    "known_target_source_citations": "not_recorded_locally",
+    "fixed_evaluator_model_budget_protocol": "not_recorded_locally",
+    "repeated_seed_run_tables": "not_recorded_locally",
+    "target_hit_rate_summary": "not_recorded_locally",
+    "run_tied_hardening_certification": "not_recorded_locally",
+    "best_candidate_artifact_hashes": "not_recorded_locally",
+    "failure_and_invalid_candidate_summary": "not_recorded_locally",
+    "paper_facing_certification_row": "not_recorded_locally"
+  },
+  "implemented_candidate_evidence": {
+    "sorting_network_8": {
+      "wire_count": 8,
+      "binary_inputs_checked": 256,
+      "valid_seed_comparators": 28,
+      "known_target_comparators": 19,
+      "scope": "non_comparable_benchmark_candidate"
+    },
+    "sorting_network_9": {
+      "wire_count": 9,
+      "binary_inputs_checked": 512,
+      "valid_seed_comparators": 36,
+      "known_target_comparators": 25,
+      "scope": "non_comparable_benchmark_candidate"
+    }
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has executable 8- and 9-input sorting-network benchmark candidates with exhaustive zero-one validation, valid baseline seeds, checked known target networks, and helper-generated generic hardening artifacts, but does not claim source-cited benchmark calibration, fixed-budget repeated-run rediscovery, run-tied hardening certification, best candidate artifact hashes, failure/invalid-candidate summaries, paper-facing certification rows, or novel SOTA results."
+}

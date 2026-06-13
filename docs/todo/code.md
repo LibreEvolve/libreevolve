@@ -660,8 +660,12 @@ sidecars, tests, and active TODOs.
     descriptors, artifact inventories, summaries, and scope validation for
     both candidates, covering hardcoded-case, library-delegation, and
     invalid-artifact shortcut categories without certifying a benchmark run.
+    The committed `papers/sorting_network_rediscovery_boundary.json` sidecar
+    keeps that executable-candidate-only scope machine-validated.
   - Required result: add repeated-seed run reports, fixed evaluator/model/
-    budget conditions, source-citation sidecars, and certification artifacts
+    budget conditions, source-citation sidecars, target-hit-rate summaries,
+    best-candidate artifact hashes, failure/invalid-candidate summaries,
+    run-tied hardening certification, and paper-facing certification artifacts
     for both 8- and 9-input targets before treating sorting-network
     rediscovery as AlphaEvolve-style benchmark evidence rather than executable
     benchmark scaffolding with helper-generated hardening descriptors.

@@ -2060,8 +2060,11 @@ the opt-in candidate-owned evaluator entrypoint, not full Figure 3 parity:
 embedded-only problem loading and static score-field-to-code-path attribution
 are supported for the embedded path, and static primary-file invocation traces
 now link `evaluate()` call graph functions to EVOLVE-block dependencies when
-that local AST evidence is present. Stronger callable isolation/build policy
-and non-static or external-validator score causality remain open. The committed
+that local AST evidence is present. Default candidate-owned evaluator loading
+as the primary problem contract, Figure 3 codebase fixture identity, typed
+eval-input contracts beyond JSON-safe config provenance, stronger callable
+isolation/build policy, and non-static or external-validator score causality
+remain open. The committed
 `papers/embedded_evaluator_boundary.json` sidecar preserves the same full
 Figure 3 evaluator absence boundary for paper-manifest validation.
 

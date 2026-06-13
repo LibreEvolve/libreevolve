@@ -13,14 +13,23 @@ def test_embedded_evaluator_boundary_accepts_absence_record():
 
     assert validation.ok is True
     assert validation.boundary_status == "embedded_entrypoint_without_full_figure3_parity"
-    assert validation.required_evidence_field_count == 14
-    assert validation.missing_evidence_count == 4
+    assert validation.required_evidence_field_count == 18
+    assert validation.missing_evidence_count == 8
     assert boundary["schema"] == EMBEDDED_EVALUATOR_BOUNDARY_SCHEMA
     assert boundary["source_section_ids"] == ["2.1", "2.3"]
     assert boundary["source_figure_ids"] == ["Figure 3"]
     assert "does not claim full AlphaEvolve Figure 3 evaluator parity" in (
         boundary["claim_boundary"]
     )
+    assert "embedded_only_problem_definition" in boundary["required_evidence_fields"]
+    assert "default_candidate_owned_evaluator_policy" in (
+        boundary["required_evidence_fields"]
+    )
+    assert (
+        boundary["missing_evidence"]["default_candidate_owned_evaluator_loading"]
+        == "not_recorded_locally"
+    )
+    assert "Figure 3 codebase fixture identity" in boundary["claim_boundary"]
 
 
 def test_embedded_evaluator_boundary_rejects_premature_figure3_claim():
@@ -52,5 +61,5 @@ def test_render_embedded_evaluator_boundary_summary_reports_shape():
     assert "AlphaEvolve embedded evaluator boundary" in summary
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | embedded_entrypoint_without_full_figure3_parity |" in summary
-    assert "| required_evidence_field_count | 14 |" in summary
-    assert "| missing_evidence_count | 4 |" in summary
+    assert "| required_evidence_field_count | 18 |" in summary
+    assert "| missing_evidence_count | 8 |" in summary

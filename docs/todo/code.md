@@ -194,12 +194,17 @@ sidecars, tests, and active TODOs.
     `embedded_evaluate_math` fixture proves the checked-in embedded-only problem
     format and CLI path. The committed `papers/embedded_evaluator_boundary.json`
     sidecar now records the paper-manifest-validated full-Figure-3 evaluator
-    absence boundary.
-  - Required result: finish build/runtime isolation beyond the local
-    subprocess plus materialized-workspace guard; extend score-link causality
-    beyond the current static embedded AST path to non-static and
-    external-validator causal-linkage cases before claiming arbitrary evaluator
-    parity.
+    absence boundary, including missing default candidate-owned evaluator
+    loading, Figure 3 codebase fixture identity, typed eval-input contracts
+    beyond JSON-safe config provenance, and the fact that external
+    `validate.py` remains the default outside all-embedded configs.
+  - Required result: make candidate-owned `evaluate(eval_inputs)` the
+    first-class/default Figure 3 problem contract, or add a paper-facing
+    all-embedded fixture with source identity, typed eval-input schema,
+    skeleton-to-evolved-block invocation proof, per-score causal attribution,
+    build/runtime isolation beyond the local subprocess plus materialized-
+    workspace guard, and non-static/external-validator causal-linkage coverage
+    before claiming arbitrary evaluator parity.
 
 - [ ] Extend Figure 1/Figure 2 process-exhibit report into rendered diagram
       parity.

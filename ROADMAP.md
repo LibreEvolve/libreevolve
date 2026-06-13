@@ -68,10 +68,14 @@ LibreEvolve has:
   all-`embedded_evaluate` `config.yaml` stages, static local invocation traces
   from `evaluate()` to EVOLVE-block-backed functions when AST evidence is
   present, external-validator stage metric visibility without causal linkage,
-  and remaining Figure 3 parity gaps, with
+  and remaining Figure 3 parity gaps, including default candidate-owned
+  evaluator loading, Figure 3 codebase fixture identity, typed eval-input
+  contracts beyond JSON-safe config provenance, external `validate.py` still
+  being the default outside all-embedded configs, with
   `papers/embedded_evaluator_boundary.json` now carrying the paper-manifest-
   validated absence boundary for build isolation, non-static score causality,
-  external-validator causal score linkage, and prompt/response exhibit artifacts
+  external-validator causal score linkage, default contract gaps, and
+  prompt/response exhibit artifacts
 - Figure 3 supervised-learning exhibit boundary evidence under
   `papers/figure3_supervised_exhibit_boundary.json`, preserving the distinction
   between generic embedded-evaluator, prompt-history, candidate-history,

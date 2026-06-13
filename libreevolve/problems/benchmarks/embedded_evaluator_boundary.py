@@ -21,6 +21,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "candidate_primary_file",
     "evaluate_signature",
     "eval_inputs_schema",
+    "eval_inputs_type_contract",
+    "embedded_only_problem_definition",
+    "default_candidate_owned_evaluator_policy",
+    "figure3_codebase_fixture_identity",
     "evolved_block_span_id",
     "skeleton_invocation_trace",
     "score_field_name",
@@ -34,6 +38,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "figure3_response_exhibit_ref",
 )
 EXPECTED_MISSING_EVIDENCE = {
+    "default_candidate_owned_evaluator_loading": "not_recorded_locally",
+    "figure3_codebase_fixture_identity": "not_recorded_locally",
+    "eval_inputs_type_contract": "json_safe_config_only",
+    "external_validator_bypass_policy": "external_validate_py_remains_default",
     "build_isolation_policy": "not_recorded_locally",
     "non_static_score_field_causality": "not_recorded_locally",
     "external_validator_score_linkage": (
@@ -71,7 +79,9 @@ def embedded_evaluator_boundary_record() -> dict[str, Any]:
         "source_claim": (
             "AlphaEvolve Figure 3 shows a candidate codebase skeleton exposing "
             "evaluate(eval_inputs) -> dict[str, float], with evaluators invoking "
-            "that function to score the modified program"
+            "that function to score the modified program; paper-ready parity "
+            "requires candidate-owned evaluation to be the primary problem "
+            "contract rather than only an opt-in local stage mode"
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "runtime_report_status": "embedded_evaluator_entrypoint_report_available",
@@ -85,8 +95,10 @@ def embedded_evaluator_boundary_record() -> dict[str, Any]:
             "materialized-candidate workspace dependency policy for local reads "
             "and imports, and external-validator stage metric visibility without "
             "causal score linkage, but does not claim full AlphaEvolve Figure 3 "
-            "evaluator parity with build isolation, non-static or "
-            "external-validator causal score linkage, or prompt/response exhibit "
+            "evaluator parity with default candidate-owned evaluator loading, "
+            "Figure 3 codebase fixture identity, eval-input type contracts "
+            "beyond JSON-safe config, build isolation, non-static or external-"
+            "validator causal score linkage, or prompt/response exhibit "
             "artifacts."
         ),
     }
@@ -114,7 +126,11 @@ def validate_embedded_evaluator_boundary(
         issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['2.1', '2.3']"))
     if data.get("source_figure_ids") != list(EXPECTED_SOURCE_FIGURE_IDS):
         issues.append(_issue("invalid_source_figure_ids", "source_figure_ids must be ['Figure 3']"))
-    if not isinstance(data.get("source_claim"), str) or "evaluate(eval_inputs)" not in data["source_claim"]:
+    if (
+        not isinstance(data.get("source_claim"), str)
+        or "evaluate(eval_inputs)" not in data["source_claim"]
+        or "primary problem contract" not in data["source_claim"]
+    ):
         issues.append(_issue("invalid_source_claim", "source_claim must identify evaluate(eval_inputs)"))
     status = data.get("boundary_status")
     if status != EXPECTED_BOUNDARY_STATUS:
@@ -126,7 +142,13 @@ def validate_embedded_evaluator_boundary(
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
-    if not isinstance(boundary_text, str) or "does not claim" not in boundary_text:
+    if (
+        not isinstance(boundary_text, str)
+        or "does not claim" not in boundary_text
+        or "default candidate-owned evaluator loading" not in boundary_text
+        or "Figure 3 codebase fixture identity" not in boundary_text
+        or "eval-input type contracts" not in boundary_text
+    ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim full Figure 3 evaluator parity"))
     return EmbeddedEvaluatorBoundaryValidation(
         ok=not issues,

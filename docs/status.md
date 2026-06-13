@@ -157,8 +157,10 @@ Important limits:
   re-evaluation policy.
 - Embedded evaluator support is opt-in `embedded_evaluate` stage evidence, not
   full AlphaEvolve Figure 3 evaluator parity with default candidate-owned
-  `evaluate(eval_inputs)` problem loading, stronger build/runtime isolation, or
-  non-static/external-validator causal score linkage; that boundary is tracked by
+  `evaluate(eval_inputs)` problem loading, Figure 3 codebase fixture identity,
+  typed eval-input contracts beyond JSON-safe config provenance, stronger
+  build/runtime isolation, or non-static/external-validator causal score
+  linkage; that boundary is tracked by
   `papers/embedded_evaluator_boundary.json`.
 - Validator execution policy records are local-subprocess audit evidence:
   `policies.validator_execution`, `evaluation.metadata.validator_boundary`,

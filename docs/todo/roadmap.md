@@ -6,35 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Extend Figure 1 and Figure 2 roadmap wording beyond the current
-      process-overview exhibit map.
-  - Spec evidence: AlphaEvolve Figure 1 gives the process-level system view
-    connecting human task inputs, LLM ensemble, prompt sampler, evaluator
-    pool, program database, rich context, proposals, and feedback. Figure 2
-    expands the discovery loop into initial-program/evaluation/config inputs
-    and controller pseudocode for sampling, prompt building, diff generation,
-    diff application, evaluator execution, and database updates. Local PDF
-    pages 3-4 provide the Figure 1/2 captions and Figure 2 displayed
-    controller lines.
-  - Current evidence: `ROADMAP.md`, README, papers index, and code TODOs track
-    several Figure 1/2 component gaps. Completed manifests now include
-    `runtime.history.alphaevolve_process_exhibit_report` with stable figure
-    IDs, diagram-node and edge records, Figure 2 pseudocode-step mappings,
-    source PDF/caption locations, artifact cross-links, step-level status, and
-    validation that keeps full process-diagram parity false. The report also
-    includes generated Mermaid/text artifacts and hashes, per-step
-    artifact-stream validation records, strict JSONL row summaries, generated
-    candidate semantic traces with durable LLM and archive-admission stream rows, and
-    component-to-TODO links. ROADMAP now names
-    `papers/process_exhibit_boundary.json` as the committed sidecar for that
-    absence boundary.
-  - Required result: when exact diagram text or accessibility reproduction,
-    stronger topology evidence and independent evaluator-pool evidence land,
-    update ROADMAP, README, papers index,
-    and code/paper TODO entries together so roadmap wording separates paper
-    process-diagram reproduction from delivering each underlying AlphaEvolve
-    workflow capability.
-
 - [ ] Extend task-specification roadmap wording beyond field-level artifact
       resolution.
   - Spec evidence: AlphaEvolve Section 2.1 and Figure 2 frame task

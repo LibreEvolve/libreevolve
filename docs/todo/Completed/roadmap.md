@@ -2,6 +2,24 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Figure 1/Figure 2 process-exhibit roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
+    `papers/README.md` already describe
+    `runtime.history.alphaevolve_process_exhibit_report` as process-diagram
+    provenance with stable figure IDs, node/edge records, Figure 2
+    pseudocode-step mappings, artifact links/hashes, generated Mermaid/text
+    artifacts, strict JSONL row summaries, generated-candidate semantic
+    traces, durable LLM/archive-admission stream joins, and
+    `papers/process_exhibit_boundary.json` while keeping full AlphaEvolve
+    process parity false.
+  - Remaining guard: exact source-diagram layout reproduction, AlphaEvolve
+    async controller/sampler/evaluator implementation, independent
+    evaluator-pool implementation, and delivery of each underlying workflow
+    capability remain active in `docs/todo/code.md` and `docs/todo/papers.md`.
+  - Verification: process-exhibit boundary and paper-manifest validation
+    continue to reject process-diagram provenance as full AlphaEvolve process
+    parity.
+
 - [x] Archive Table 1 capability-exhibit roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
     `papers/README.md` already describe

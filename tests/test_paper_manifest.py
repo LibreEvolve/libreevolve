@@ -2675,6 +2675,7 @@ def test_validate_paper_manifest_rejects_acknowledgement_role_provenance_boundar
     record = paper_manifest.acknowledgement_role_provenance_boundary_record()
     record["claim_ready"] = False
     record["boundary_status"] = "publication_author_ready"
+    record["source_section_ids"] = ["Contributions"]
     record["excluded_claims"]["publication_author_metadata"] = "claimed"
     sidecar = tmp_path / paper_manifest.ACKNOWLEDGEMENT_ROLE_PROVENANCE_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
@@ -2685,6 +2686,7 @@ def test_validate_paper_manifest_rejects_acknowledgement_role_provenance_boundar
     assert report.ok is False
     assert "acknowledgement_role_provenance_boundary_claim_ready_underclaim" in codes
     assert "acknowledgement_role_provenance_boundary_invalid_boundary_status" in codes
+    assert "acknowledgement_role_provenance_boundary_invalid_source_section_ids" in codes
     assert (
         "acknowledgement_role_provenance_boundary_invalid_excluded_claim_publication_author_metadata"
         in codes

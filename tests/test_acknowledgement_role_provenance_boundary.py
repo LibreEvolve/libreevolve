@@ -17,6 +17,7 @@ def test_acknowledgement_role_provenance_boundary_accepts_claim_ready_record():
     assert validation.excluded_claim_count == 6
     assert boundary["schema"] == ACKNOWLEDGEMENT_ROLE_PROVENANCE_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is True
+    assert boundary["source_section_ids"] == ["Acknowledgements"]
     assert boundary["source_pages"] == [21, 22]
     assert "does not claim benchmark success" in boundary["claim_boundary"]
 
@@ -25,6 +26,7 @@ def test_acknowledgement_role_provenance_boundary_rejects_scope_drift():
     boundary = acknowledgement_role_provenance_boundary_record()
     boundary["claim_ready"] = False
     boundary["boundary_status"] = "publication_author_ready"
+    boundary["source_section_ids"] = ["Contributions"]
     boundary["excluded_claims"]["publication_author_metadata"] = "claimed"
     boundary["required_evidence_fields"] = ["metadata_present"]
     boundary["required_role_categories"] = ["white_paper_review"]
@@ -35,6 +37,7 @@ def test_acknowledgement_role_provenance_boundary_rejects_scope_drift():
     assert validation.ok is False
     assert "claim_ready_underclaim" in codes
     assert "invalid_boundary_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert "invalid_excluded_claim_publication_author_metadata" in codes
     assert "missing_required_evidence_field" in codes
     assert "missing_required_role_category" in codes

@@ -2,6 +2,9 @@
   "schema": "libreevolve.alphaevolve_acknowledgement_role_provenance_boundary.v1",
   "runtime_report_schema": "libreevolve.acknowledgement_role_provenance_report.v1",
   "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "Acknowledgements"
+  ],
   "source_claim": "AlphaEvolve Acknowledgements pages 21-22 record white-paper review, early exploration, support/advice, practical-application management advice, application review, and application-specific advice roles",
   "boundary_status": "acknowledgement_role_claim_ready",
   "runtime_report_status": "acknowledgement_role_provenance_report_available",

@@ -13,6 +13,7 @@ ACKNOWLEDGEMENT_ROLE_RUNTIME_REPORT_SCHEMA = (
     "libreevolve.acknowledgement_role_provenance_report.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
+EXPECTED_SOURCE_SECTION_IDS = ("Acknowledgements",)
 EXPECTED_BOUNDARY_STATUS = "acknowledgement_role_claim_ready"
 EXPECTED_FIXTURE_PATH = "libreevolve/problems/examples/matrix_multiplication/acknowledgements.yaml"
 EXPECTED_REQUIRED_ROLE_CATEGORIES = (
@@ -67,6 +68,7 @@ def acknowledgement_role_provenance_boundary_record() -> dict[str, Any]:
         "schema": ACKNOWLEDGEMENT_ROLE_PROVENANCE_BOUNDARY_SCHEMA,
         "runtime_report_schema": ACKNOWLEDGEMENT_ROLE_RUNTIME_REPORT_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_claim": (
             "AlphaEvolve Acknowledgements pages 21-22 record white-paper review, "
             "early exploration, support/advice, practical-application management "
@@ -110,6 +112,8 @@ def validate_acknowledgement_role_provenance_boundary(
         issues.append(_issue("invalid_runtime_report_schema", "runtime report schema must identify acknowledgement role provenance reports"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['Acknowledgements']"))
     source_claim = data.get("source_claim")
     if not isinstance(source_claim, str) or "Acknowledgements pages 21-22" not in source_claim:
         issues.append(_issue("invalid_source_claim", "source_claim must identify AlphaEvolve Acknowledgements pages 21-22"))

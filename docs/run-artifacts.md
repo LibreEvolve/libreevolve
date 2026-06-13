@@ -3528,9 +3528,12 @@ current runtime has no controlled repeated-sampling comparator configured,
 links the observed generated/accepted/rejected/execution-filtered sample
 counts from the proposal lifecycle report, and lists the controls required for
 AlphaEvolve's "No evolution" comparison: same initial program prompt history,
-fixed model/prompt/seed/evaluator settings, disabled archive feedback, disabled
-parent/inspiration resurfacing, disabled failure feedback, disabled meta-prompt
-updates, budget parity, target-progress curves, and a linked evolutionary
+fixed model/backend request parameters, fixed prompt/seed/candidate-count/LLM
+budget/evaluator settings, same candidate validation pipeline, disabled archive
+and MAP-Elites feedback, disabled parent/inspiration resurfacing, disabled
+failure feedback, disabled critique/feedback, disabled meta-prompt updates,
+sample-index alignment, target metric/threshold linkage, budget parity,
+target-progress curves, comparator artifact hashes, and a linked evolutionary
 comparator run.
 
 The report is an explicit absence boundary. Its `claim_ready: false` status

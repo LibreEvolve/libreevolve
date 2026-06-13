@@ -4650,16 +4650,22 @@ sidecars, tests, and active TODOs.
     `papers/repeated_sampling_baseline_boundary.json` now preserves the same
     controlled-comparator absence boundary for paper-manifest validation. It
     still does not define a repeated-sampling baseline runner that fixes model,
-    prompt, seed, budget, candidate count, and evaluator settings while
-    disabling evolutionary feedback, parent/inspiration resurfacing,
-    archive-driven selection, and meta-prompt updates. The current report and
-    `No evolution` registry label are not enough to prove a base-LLM
+    backend request parameters, prompt, seed, LLM-call budget, candidate count,
+    candidate-validation pipeline, and evaluator settings while disabling
+    archive/MAP-Elites feedback, parent/inspiration resurfacing, failure
+    feedback, critique/feedback, and meta-prompt updates. It also lacks
+    sample-index alignment, target metric/threshold linkage, comparator
+    artifact hashes, and linked evolutionary-run evidence. The current report
+    and `No evolution` registry label are not enough to prove a base-LLM
     repeated-sample comparator.
   - Required result: add benchmark/report support for equal-budget repeated
     base-model sampling baselines with controlled prompts/models/seeds,
-    generated/evaluated sample counts, candidate validity/admission outcomes,
-    target-progress curves, and explicit links to matching evolutionary runs
-    so test-time-compute uplift claims distinguish evolutionary feedback from
+    fixed backend request parameters and LLM-call budgets, generated/evaluated
+    sample counts, candidate validity/admission outcomes, same validation
+    pipeline, disabled evolutionary feedback proof, sample-index alignment,
+    target metric/threshold linkage, target-progress curves, comparator
+    artifact hashes, and explicit links to matching evolutionary runs so
+    test-time-compute uplift claims distinguish evolutionary feedback from
     ordinary repeated sampling.
 
 - [ ] Promote role-scoped LLM routing from shared-bandit audit evidence to

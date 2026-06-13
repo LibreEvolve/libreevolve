@@ -15,24 +15,40 @@ EXPECTED_BOUNDARY_STATUS = "runtime_absence_boundary_only"
 EXPECTED_REQUIRED_COMPARATOR_CONTROLS = (
     "same_initial_program_prompt_history",
     "fixed_model_and_backend",
+    "fixed_backend_request_parameters",
     "fixed_prompt_template",
     "fixed_seed_and_candidate_count",
+    "fixed_llm_call_budget",
     "same_evaluator_configuration",
+    "same_candidate_validation_pipeline",
     "disabled_archive_admission_feedback",
+    "disabled_map_elites_selection",
     "disabled_parent_selection",
     "disabled_inspiration_resurfacing",
     "disabled_failure_feedback",
+    "disabled_critique_and_feedback",
     "disabled_meta_prompt_updates",
+    "sample_index_alignment_policy",
+    "target_metric_threshold_linkage",
     "linked_evolutionary_comparator_run",
+    "comparator_run_artifact_hashes",
 )
 EXPECTED_MISSING_EVIDENCE = {
     "controlled_repeated_sampling_runner": "not_recorded_locally",
     "fixed_prompt_model_seed_evaluator_contract": "not_recorded_locally",
+    "fixed_backend_request_parameters": "not_recorded_locally",
+    "fixed_llm_call_budget": "not_recorded_locally",
+    "same_candidate_validation_pipeline": "not_recorded_locally",
     "budget_parity_validation": "not_recorded_locally",
     "target_progress_curve_linkage": "not_recorded_locally",
     "evolutionary_comparator_run_linkage": "not_recorded_locally",
     "same_initial_program_prompt_history_proof": "not_recorded_locally",
     "archive_feedback_disabled_proof": "not_recorded_locally",
+    "map_elites_selection_disabled_proof": "not_recorded_locally",
+    "critique_feedback_disabled_proof": "not_recorded_locally",
+    "sample_index_alignment_policy": "not_recorded_locally",
+    "target_metric_threshold_linkage": "not_recorded_locally",
+    "comparator_run_artifact_hashes": "not_recorded_locally",
 }
 
 
@@ -73,9 +89,12 @@ def repeated_sampling_baseline_boundary_record() -> dict[str, Any]:
             "This boundary records that LibreEvolve has a runtime absence "
             "report for the No evolution repeated-sampling comparator, but "
             "does not claim an executable controlled repeated-sampling runner, "
-            "fixed prompt/model/seed/evaluator parity, budget parity, target "
-            "progress curves, disabled evolutionary-feedback proof, or linked "
-            "evolutionary comparator runs."
+            "fixed prompt/model/request-parameter/seed/evaluator parity, fixed "
+            "LLM-call budgets, candidate-validation parity, budget parity, "
+            "sample-index alignment policy, target metric/threshold linkage, "
+            "target progress curves, disabled evolutionary-feedback proof, "
+            "disabled critique/feedback proof, comparator artifact hashes, or "
+            "linked evolutionary comparator runs."
         ),
     }
 
@@ -111,7 +130,17 @@ def validate_repeated_sampling_baseline_boundary(
     required_count = _validate_required_controls(data.get("required_comparator_controls"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
-    if not isinstance(boundary_text, str) or "does not claim" not in boundary_text:
+    if (
+        not isinstance(boundary_text, str)
+        or "does not claim" not in boundary_text
+        or "fixed prompt/model/request-parameter/seed/evaluator parity" not in boundary_text
+        or "fixed LLM-call budgets" not in boundary_text
+        or "candidate-validation parity" not in boundary_text
+        or "sample-index alignment policy" not in boundary_text
+        or "target metric/threshold linkage" not in boundary_text
+        or "disabled critique/feedback proof" not in boundary_text
+        or "comparator artifact hashes" not in boundary_text
+    ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim a controlled comparator"))
     return RepeatedSamplingBaselineBoundaryValidation(
         ok=not issues,

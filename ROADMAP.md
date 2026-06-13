@@ -228,8 +228,11 @@ LibreEvolve has:
   `runtime.history.repeated_sampling_baseline_report`, linking observed sample
   counts to an explicit `No evolution` comparator absence boundary, with
   `papers/repeated_sampling_baseline_boundary.json` preserving the missing
-  fixed prompt/model/seed/evaluator controls, budget parity,
-  target-progress curves, and linked evolutionary comparator runs
+  fixed prompt/model/request-parameter/seed/evaluator controls, fixed LLM-call
+  budgets, candidate-validation parity, sample-index alignment, target
+  metric/threshold linkage, disabled feedback/selection proof, budget parity,
+  target-progress curves, comparator artifact hashes, and linked evolutionary
+  comparator runs
 - opt-in evaluator artifact copy-out from temporary candidate workspaces with
   hashes, limits, and text redaction metadata
 - validator subprocess environment allowlisting, persisted stdout/stderr
@@ -1097,9 +1100,13 @@ resumed-trace proof are still open.
   confidence intervals, matched-budget run groups, and cost/latency budget
   curves.
 - Turn the current repeated-sampling boundary report into an executable
-  equal-budget comparator runner with fixed prompt/model/seed/evaluator
-  controls and linked evolutionary runs before making test-time-compute uplift
-  claims over repeated base-model sampling.
+  equal-budget comparator runner with fixed prompt/model/backend-request/
+  seed/candidate-budget/evaluator controls, fixed LLM-call budgets, same
+  candidate-validation pipeline, disabled archive/MAP-Elites/parent/
+  inspiration/failure/critique/feedback/meta-prompt influence, sample-index
+  alignment, target metric/threshold linkage, comparator artifact hashes, and
+  linked evolutionary runs before making test-time-compute uplift claims over
+  repeated base-model sampling.
 - Turn the current Gemini provider-parity boundary report into a first-class
   Google/Gemini adapter or equivalent provider-plugin/substitution contract.
   Completed manifests and `papers/gemini_provider_parity_boundary.json` now

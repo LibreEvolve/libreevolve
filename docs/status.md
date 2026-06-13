@@ -121,9 +121,12 @@ Important limits:
   not-configured absence records for the AlphaEvolve `No evolution` /
   repeated base-model sampling comparator. They list observed local sample
   counts and required comparator controls, but they are not executable
-  fixed prompt/model/seed/evaluator repeated-sampling runs, budget-parity
-  checks, disabled-evolutionary-feedback proof, target-progress curves, or
-  linked evolutionary comparator evidence; that boundary is tracked by
+  fixed prompt/model/request-parameter/seed/evaluator repeated-sampling runs,
+  fixed LLM-call budget evidence, candidate-validation parity,
+  sample-index alignment, target metric/threshold linkage, budget-parity
+  checks, disabled-evolutionary-feedback proof, disabled critique/feedback
+  proof, target-progress curves, comparator artifact hashes, or linked
+  evolutionary comparator evidence; that boundary is tracked by
   `papers/repeated_sampling_baseline_boundary.json`.
 - Task-specification bundles, `task_specification.json`, and artifact-
   resolution reports link initial programs, evaluators, prompts, backends,

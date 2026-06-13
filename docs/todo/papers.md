@@ -622,15 +622,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     preserves that controlled-comparator absence boundary for paper-manifest
     validation.
   - Current gap: paper-facing reports do not define an equal-budget repeated
-    base-model sampling comparator with fixed prompt/model/seed/evaluator
-    conditions, generated/evaluated sample counts, disabled archive feedback,
-    disabled parent/inspiration resurfacing, disabled meta-prompt updates, and
-    target-progress curves linked to the matching evolutionary run.
+    base-model sampling comparator with fixed prompt/model/backend-request/
+    seed/candidate-budget/evaluator conditions, generated/evaluated sample
+    counts, disabled archive feedback, fixed LLM-call budgets, candidate-
+    validation parity, disabled MAP-Elites selection, disabled parent/
+    inspiration resurfacing, disabled failure feedback, disabled critique/
+    feedback, disabled meta-prompt updates, sample-index alignment, target
+    metric/threshold linkage, comparator artifact hashes, and target-progress
+    curves linked to the matching evolutionary run.
   - Required result: add repeated-sampling baseline report fields and
     validation for controlled base-model sampling runs, sample counts,
-    validity/admission outcomes, target attainment, budget parity, and links
-    to evolutionary comparator runs before claiming AlphaEvolve-style
-    test-time-compute uplift over repeated sampling.
+    validity/admission outcomes, target attainment, fixed request parameters
+    and LLM budgets, candidate-validation parity, disabled evolutionary
+    feedback proof, sample-index alignment, target metric/threshold linkage,
+    budget parity, comparator artifact hashes, and links to evolutionary
+    comparator runs before claiming AlphaEvolve-style test-time-compute uplift
+    over repeated sampling.
 
 - [ ] Preserve AlphaEvolve arXiv abstract-page metadata beyond cached-PDF
       source-version evidence.

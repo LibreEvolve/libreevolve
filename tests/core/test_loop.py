@@ -8211,8 +8211,22 @@ def test_runtime_history_reports_execution_filtered_proposal_lifecycle():
     assert repeated_sampling["claim_readiness"][
         "controlled_repeated_sampling_run"
     ] is False
+    assert repeated_sampling["claim_readiness"]["fixed_llm_call_budget"] is False
+    assert repeated_sampling["claim_readiness"][
+        "same_candidate_validation_pipeline"
+    ] is False
+    assert repeated_sampling["claim_readiness"][
+        "sample_index_alignment_policy"
+    ] is False
+    assert repeated_sampling["claim_readiness"]["critique_feedback_disabled"] is False
     assert "disabled_parent_selection" in (
         repeated_sampling["required_comparator_controls"]
+    )
+    assert "fixed_backend_request_parameters" in (
+        repeated_sampling["required_comparator_controls"]
+    )
+    assert "comparator_run_artifact_hashes" in (
+        repeated_sampling["claim_readiness"]["remaining_gap"]
     )
 
 

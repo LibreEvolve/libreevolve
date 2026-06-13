@@ -2,6 +2,24 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Appendix B.4 Hermite-polynomial roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish the quoted `C4` value and Hermite/root formula from missing
+    polynomial certificate artifacts and from revised-result history.
+  - Current evidence: `hermite_result_boundary` preserves the first-version
+    `C4 <= 0.3521` result, `f(x) = P(x) exp(-pi x^2)`, Hermite basis terms,
+    approximate coefficients `[0.32925, -0.01159, -8.9216e-5]`, `P(0)=0`,
+    the `P(x)/x^2` largest-root computation, and `r_max^2 / (2*pi)`.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: coefficient payloads, Hermite-basis and Fourier/test-function
+    certificates, origin-condition and eventual-nonnegative certificates, root
+    certificates, and recomputed-bound evidence.
+  - Verification: Appendix B registry B.4 uncertainty-boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive Appendix B.4 prior-bound rounding roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

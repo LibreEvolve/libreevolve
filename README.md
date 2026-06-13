@@ -243,6 +243,13 @@ Important limits:
   `[33]` page or section locator, source-solution artifact, prior-solution
   rounding artifact, rounding-audit certificate, or locally reproduced
   certificate for the `0.353` to `0.3523` distinction.
+- Appendix B.4 Hermite-polynomial certificate provenance remains absent: the
+  registry preserves the first-version `C4 <= 0.3521` uncertainty-inequality
+  result from the Hermite basis, approximate coefficients
+  `[0.32925, -0.01159, -8.9216e-5]`, `P(x)/x^2` largest-root computation, and
+  `r_max^2 / (2*pi)` formula, not local coefficient payloads,
+  Hermite/Fourier/root certificates, origin-condition certificates,
+  eventual-nonnegative certificates, or recomputed-bound evidence.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

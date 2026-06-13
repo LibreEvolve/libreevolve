@@ -10,23 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Appendix B.4 roadmap wording scoped until Hermite-polynomial
-      certificate evidence exists.
-  - Spec evidence: AlphaEvolve Appendix B.4 derives the `C4 <= 0.3521`
-    uncertainty-inequality bound from a Hermite-polynomial test function
-    `f(x) = P(x) exp(-pi x^2)`, approximate coefficients
-    `[0.32925, -0.01159, -8.9216e-5]`, the largest positive root of
-    `P(x)/x^2`, and the formula `r_max^2 / (2*pi)`.
-  - Current evidence: roadmap/README/paper-index wording now cites the
-    validated B.4 Hermite boundary: basis terms, coefficient precision,
-    `P(0)=0`, `P(x)/x^2`, root calculation target, `r_max^2 / (2*pi)`, and
-    absence of local coefficient, Hermite/Fourier/root,
-    origin-condition, eventual-nonnegative, and recomputation artifacts.
-  - Required result: when actual B.4 Hermite-polynomial certificate artifacts
-    land, update ROADMAP, README, papers index, and code/paper TODOs so roadmap
-    claims separate the quoted `C4` value, the polynomial/root certificate,
-    revised-result history, and qualitative near-optimality interpretation.
-
 - [ ] Keep Appendix B.4 roadmap wording scoped until prior-construction
       similarity evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.4 reports that the

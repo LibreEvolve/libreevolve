@@ -94,6 +94,22 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     solver-baseline claims, the wording must remain source-scoped until the
     active code, paper, and roadmap TODO evidence exists.
 
+- [x] Archive README post-AlphaEvolve autoconvolution source-scope TODO.
+  - Status: the README-specific TODO was stale after the README realism split.
+    The root README no longer mentions the post-AlphaEvolve autoconvolution
+    improvement, the 575-interval witness, `0.901564`, the AlphaEvolve
+    `0.8962` baseline, simulated annealing, gradient refinement,
+    `autoconvolutionHolder`, `coeffBL.txt`, or `Verify.nb`.
+  - Remaining guard: `papers/README.md` keeps `2506.16750` as an unimplemented
+    constructive-math benchmark candidate, and the open code, paper, and
+    roadmap TODOs still track the missing 575-interval witness schema,
+    coefficient payload hashes, autoconvolution/norm recomputation, exact and
+    decimal checker parity, baseline records, non-LLM search provenance, and
+    independent checker outputs.
+  - Verification: if the root README later reintroduces post-AlphaEvolve
+    autoconvolution claims, the wording must remain source-scoped until the
+    active code, paper, and roadmap TODO evidence exists.
+
 - [x] Keep README validator sandbox/resource-limit wording scoped to local
       subprocess audit evidence versus OS/container enforcement.
   - Status: README Important limits now states that validator execution policy

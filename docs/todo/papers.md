@@ -6175,9 +6175,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     recomputation metadata, objective definition and tolerance policy,
     AlphaEvolve 50-interval `0.8962` baseline record, simulated-annealing and
     gradient-method provenance, prior/current result rows, independent checker
-    outputs, reproducibility status, and README/ROADMAP wording that treats
-    this post-AlphaEvolve autoconvolution improvement as missing paper evidence
-    rather than implemented LibreEvolve support. Paper evidence should
+    outputs, reproducibility status, ROADMAP and paper-index wording that
+    treats this post-AlphaEvolve autoconvolution improvement as missing paper
+    evidence rather than implemented LibreEvolve support, and source-scoped
+    root README wording if those claims are reintroduced. Paper evidence should
     additionally preserve the arXiv `v2`/August 10, 2025 version, the claim
     that the example was found in November 2024 before the authors knew about
     AlphaEvolve's example, translation/dilation invariance, support

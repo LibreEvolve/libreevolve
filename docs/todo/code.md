@@ -6621,9 +6621,10 @@ Primary evidence:
     recomputation records, `L2`/`Linf`/`L1` norm definitions, objective and
     tolerance policy, AlphaEvolve `50`-interval `0.8962` baseline record,
     simulated-annealing and gradient-search provenance, prior/current result
-    comparison rows, independent checker outputs, and README/ROADMAP wording
-    that keeps the post-AlphaEvolve autoconvolution improvement as missing
-    evidence until local witness artifacts and reports exist. The
+    comparison rows, independent checker outputs, ROADMAP and paper-index
+    wording that keeps the post-AlphaEvolve autoconvolution improvement as
+    missing evidence until local witness artifacts and reports exist, and
+    source-scoped root README wording if those claims are reintroduced. The
     implementation boundary should additionally require translation/dilation
     invariance handling, support-normalization records for `[-1/4, 1/4]`,
     `L1` equivalence checks, exact-rational and decimal result rows, GitHub

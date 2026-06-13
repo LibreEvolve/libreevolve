@@ -373,6 +373,17 @@ Important limits:
   expert or organizer review artifact, public-code artifact hash, cost
   record, or independent reproduction output; `papers/ttt_discover_boundary.json`
   records that absence boundary.
+- Bruhat Intervals constructive-math coverage is background paper context
+  only: LibreEvolve has no permutation-pair candidate schema,
+  simple-reflection decoder, Kazhdan-Lusztig d-invariant evaluator, Bruhat
+  order or Ehresmann matrix verifier, `x_m`/`y_m` witness generator, dyadic
+  basic-interval checker, dyadically well-distributed permutation checker,
+  fundamental or complementary block validator, poset-hypercube isomorphism
+  checker, Kazhdan-Lusztig R-polynomial linkage row, cluster-algebra or
+  Bruhat-graph consequence row, AlphaEvolve/FunSearch prompt/model/budget
+  provenance, public artifact hash, finite-test versus general-proof status,
+  or independent checker output; `papers/bruhat_intervals_boundary.json`
+  records that absence boundary.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

@@ -2,6 +2,36 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Bruhat Intervals roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/bruhat_intervals_boundary.json` now keep arXiv `2601.01235`
+    source-scoped as background constructive-math context rather than
+    implemented LibreEvolve Bruhat-interval hypercube benchmark support.
+  - Current evidence: the cached paper and boundary JSON record
+    permutation-pair candidate schemas, simple-reflection decoding,
+    Kazhdan-Lusztig d-invariant scoring, Bruhat order and Ehresmann matrix
+    verification, `x_m`/`y_m` bit-reversal affine endpoints, dyadic interval
+    checks, dyadically well-distributed permutation checks, fundamental and
+    complementary block validators, poset-hypercube isomorphism checks,
+    R-polynomial linkage rows, open Richardson cluster-algebra and
+    Bruhat-graph consequences, AlphaEvolve/FunSearch experiment provenance,
+    Gemini 2.5 Flash/Pro model-call context, evaluated-program and cost
+    records, public artifact links, and proof-status boundaries.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: permutation candidate schemas, simple-reflection word decoders,
+    d-invariant evaluators, Bruhat/Ehresmann verifiers, `x_m`/`y_m`
+    generators, dyadic checkers, fundamental/complementary block validators,
+    poset-hypercube isomorphism checkers, dimension-formula verifiers,
+    Kazhdan-Lusztig R-polynomial metadata, cluster-algebra and Bruhat-graph
+    consequence rows, AlphaEvolve prompt/model/budget records, public
+    artifact hashes, finite-test versus general-proof status, and independent
+    checker outputs.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive TTT-Discover roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

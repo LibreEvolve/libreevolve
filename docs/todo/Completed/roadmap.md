@@ -2,6 +2,31 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive benchmark-hardening roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, `README.md`,
+    `docs/status.md`, `docs/run-artifacts.md`, `papers/README.md`,
+    `docs/todo/code.md`, and `docs/todo/papers.md` already scope shipped
+    examples and matrix hardening to smoke-only evidence, not
+    AlphaEvolve-comparable benchmark-grade fixtures.
+  - Current evidence: `libreevolve.benchmark_hardening.v1` validates protected
+    benchmark signals, shortcut threats, detector strategies, passed negative
+    fixtures, and hashed hardening artifacts. The matrix smoke hardening bundle
+    emits report, inventory, summary, and scope-validation files while
+    preserving `alphaevolve_comparable: false`; shipped-example scope records
+    mark examples as smoke/demo and reject smoke-comparable overclaims; runtime
+    manifests surface benchmark-fixture readiness with paper-claim readiness
+    false for smoke examples.
+  - Remaining guard: active code and paper TODOs still track real
+    benchmark-grade runners and fixtures: tensor/geometric/constructive-math
+    target families, randomized or exhaustive anti-gaming evidence,
+    operation/rank instrumentation, saved construction/certificate artifacts,
+    benchmark-hardening reports emitted from actual benchmark runs,
+    equal-budget ablation scripts, and AlphaEvolve-comparable scope records.
+  - Verification: focused hardening, example-scope, runtime-readiness, and
+    paper-manifest tests reject smoke promotion, paper-claim scope mismatches,
+    missing negative fixtures, invalid protected-signal links, unsafe or
+    mismatched artifacts, and example-scope drift.
+
 - [x] Archive qualitative-feedback roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `docs/status.md`, `docs/run-artifacts.md`, `papers/README.md`,

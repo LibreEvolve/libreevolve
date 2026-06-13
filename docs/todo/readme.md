@@ -9,36 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README grounding claims scoped until independent incorrect-
-      suggestion audit evidence exists.
-  - Spec evidence: AlphaEvolve states that code execution and automatic
-    evaluation ground LLM-directed evolution and let the system avoid
-    incorrect suggestions from the base LLM while using feedback to discover
-    candidates substantially different from the initial pool.
-  - Current evidence: README now describes
-    `runtime.history.proposal_lifecycle_report`, a validated
-    `libreevolve.proposal_lifecycle_report.v1` summary with proposal ids,
-    backend/call summaries, mutation hashes, evaluator validity, archive
-    admission or rejection, rejection reasons, execution-filtered counts,
-    failure-memory linkage, and explicit false-acceptance/false-rejection
-    review fields. README also describes
-    `runtime.history.incorrect_suggestion_audit_report`, a validated
-    `libreevolve.incorrect_suggestion_audit_report.v1` summary with local
-    accepted/rejected/execution-filtered counts, invalid-evaluation and
-    archive-rejection counts, local filter rates, bounded audit rows, and false
-    readiness for independent rejudge and audited error rates. It keeps the
-    claim scoped to local execution-grounding evidence rather than an
-    independent benchmark rejudge. README Important limits now name
-    `papers/proposal_lifecycle_audit_boundary.json` as the committed
-    paper-manifest-validated independent-audit absence boundary and
-    `papers/incorrect_suggestion_audit_boundary.json` as the committed
-    incorrect-suggestion filtering absence boundary.
-  - Required result: when independent rejudge/reference-checker or statistical
-    oracle evidence lands, update README, ROADMAP, papers index, and code/paper
-    TODOs together with benchmark-specific evaluator-oracle sufficiency,
-    cross-run proposal lifecycle tables, semantic failed-proposal retrieval,
-    and audited false-acceptance/false-rejection rates.
-
 - [ ] Keep README cascade claims scoped to partial promotion/attrition reports.
   - Spec evidence: AlphaEvolve Section 2.4 says evaluation cascades can use
     ensembles of test cases with increasing difficulty, promote candidates to

@@ -4,6 +4,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document matrix sweep-space README boundary.
+  - Status: README Important limits now states that matrix sweep-space records
+    validate declared Figure 9-style `sweep()` provenance, user-provided
+    `hyper` ranges, sampled configurations, selected winners, final
+    decompositions, and exactness-certificate links, not a local matrix runner
+    that emits AlphaEvolve Figure 4/Figure 9 search-program sweep evidence
+    during search. It points to
+    `papers/matrix_sweep_space_runtime_boundary.json`.
+  - Verification: focused matrix sweep-space evidence/runtime-boundary and
+    paper-manifest tests validate the current absence record, emitted-row
+    builder, linkage checks, required fields, and overclaim guards.
+
 - [x] Document matrix near-integrality README boundary.
   - Status: README Important limits now states that matrix near-integrality
     records validate declared prompt instructions, integer/half-integer

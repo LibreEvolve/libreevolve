@@ -210,6 +210,12 @@ Important limits:
   emits AlphaEvolve Section 3.1 near-integral prompt/evaluator evidence during
   search; that boundary is tracked by
   `papers/matrix_near_integrality_runtime_boundary.json`.
+- Matrix sweep-space records validate declared Figure 9-style `sweep()`
+  provenance, user-provided `hyper` ranges, sampled configurations, selected
+  winners, final decompositions, and exactness-certificate links, not a local
+  matrix runner that emits AlphaEvolve Figure 4/Figure 9 search-program sweep
+  evidence during search; that boundary is tracked by
+  `papers/matrix_sweep_space_runtime_boundary.json`.
 - Collaborator-feedback provenance is optional metadata and runtime reporting
   for cohorts, events, affected workflow areas, change links, validation
   outcomes, privacy/redaction policy, and review state, not populated

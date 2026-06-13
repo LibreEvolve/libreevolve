@@ -10,23 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement AlphaEvolve intentmaking/sensemaking HCI gates beyond paper
-      cache coverage.
-  - Spec evidence: arXiv `2605.05921`, submitted May 7, 2026, reports a
-    formative user study with 11 expert mathematicians using AlphaEvolve and
-    defines repeated intentmaking and sensemaking cycles as a workflow for
-    AI-guided mathematical discovery.
-  - Current evidence: ROADMAP, `papers/download_manifest.*`,
-    `papers/row_identity.json`, and `papers/README.md` now include
-    `2605.05921` as background HCI/user-study context with a local PDF/cache
-    hash. ROADMAP still has no interactive UI/session evidence gate before
-    promoting AlphaEvolve-style collaborative discovery workflows.
-  - Required result: add roadmap gates beyond paper-cache coverage: study
-    metadata, participant/problem taxonomy, intentmaking and sensemaking event
-    schema, UI/session artifact status, goal-revision and human-intervention
-    boundaries, privacy/redaction policy, and future-interactive-feature
-    status rules so roadmap claims do not outpace local HCI workflow support.
-
 - [ ] Implement AlphaEvolve radar power-allocation gates beyond paper cache
       coverage.
   - Spec evidence: arXiv `2605.01794`, submitted May 3, 2026, reports using

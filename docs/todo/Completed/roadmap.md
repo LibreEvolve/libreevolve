@@ -2,6 +2,29 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive AlphaEvolve HCI/user-study roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2605.05921` source-scoped as background HCI/user-study context
+    rather than implemented LibreEvolve interactive workflow support.
+  - Current evidence: the cached paper and `papers/README.md` record the
+    formative user study with 11 expert mathematicians, the
+    intentmaking/sensemaking cycle, AlphaEvolve dashboard context, and
+    collaborative-instrument framing, while marking local study datasets,
+    participant/session traces, event taxonomies, UI/dashboard artifacts,
+    goal-revision records, human-intervention records, privacy/redaction
+    protocols, coded qualitative-analysis evidence, and collaborative
+    workflow support as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: study-design metadata, participant/problem records, session trace
+    schema, intentmaking and sensemaking event categories, UI/dashboard
+    artifact status, human-intervention and goal-revision boundaries, privacy
+    or consent/redaction policy, and docs wording that keeps HCI claims
+    source-scoped until local interactive workflow evidence exists.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive FHE-on-TPU roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

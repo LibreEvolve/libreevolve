@@ -93,6 +93,12 @@ Important limits:
   cryptographic-kernel artifact hashes, latency benchmark rows, baseline
   implementation identity, or independent reproduction for the reported 2.5x,
   1.31x, and 1.18x speedups.
+- AlphaEvolve HCI/user-study coverage is background paper context only:
+  LibreEvolve has no formative-study dataset, participant/session trace
+  schema, intentmaking/sensemaking event taxonomy, AlphaEvolve UI/dashboard
+  artifact inventory, goal-revision or human-intervention records,
+  privacy/redaction protocol for study data, coded qualitative-analysis
+  evidence, or collaborative scientific-discovery instrument workflow support.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

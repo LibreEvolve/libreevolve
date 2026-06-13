@@ -10,30 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep plugin paper-inspiration/package-version roadmap wording scoped to
-      configured entry-point records.
-  - Spec evidence: AlphaEvolve-style paper-inspired extensions need clear
-    attribution for which paper behavior a plugin claims, which package or
-    distribution supplied it, and whether that scope is reproducible across
-    runs.
-  - Current evidence: `ROADMAP.md` asks to extend paper-inspiration scope and
-    package-version attribution beyond current configured entry-point plugin
-    labels/distribution records to direct custom plugins and versioned custom
-    registries. README, papers index, and code evidence show current
-    entry-point plugin specs persist a configured `paper_inspiration` label,
-    entry-point group/name/value, distribution name/version, hash-only
-    `RECORD`/`WHEEL` metadata when available, constructor-option policy, and
-    loaded state. Direct custom plugins only record module/file/version
-    identity plus constructor signature shape and explicitly exclude
-    constructor values, arbitrary instance state, and richer package policy
-    with false direct-instance readiness fields.
-  - Required result: when direct custom plugin paper-scope declarations,
-    versioned custom plugin registries, direct package/distribution source
-    attribution, or richer paper-inspired plugin package policy lands, update
-    the roadmap, README, papers index, and code/paper TODO entries together so
-    roadmap wording neither underclaims current entry-point attribution nor
-    overclaims direct-custom-plugin reproducibility.
-
 - [ ] Keep plugin configuration-schema roadmap wording scoped to built-in and
       entry-point constructor validation.
   - Spec evidence: AlphaEvolve-style extension hooks need explicit,

@@ -2,6 +2,21 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive plugin paper-inspiration/package-version roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `docs/status.md`, and `papers/README.md` already scope
+    paper-inspiration labels and package-version attribution to configured
+    entry-point plugin records, with direct custom plugins limited to
+    module/file/version identity and constructor signature shape.
+  - Remaining guard: direct custom plugin paper-scope declarations, versioned
+    custom plugin registries, direct package/distribution source attribution,
+    and richer paper-inspired plugin package policy remain future work.
+  - Verification: runtime plugin-state tests assert configured
+    `paper_inspiration`, entry-point group/name/value, distribution
+    name/version hashes, hash-only `RECORD` metadata, bounded `WHEEL`
+    metadata, constructor-option policy, loaded state, and false direct
+    readiness for direct-instance surfaces.
+
 - [x] Archive custom-plugin provenance roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `docs/status.md`, and `papers/README.md` already distinguish configured

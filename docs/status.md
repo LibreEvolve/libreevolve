@@ -1123,8 +1123,10 @@ Important limits:
 - Implementation evidence mapping now has core AlphaEvolve requirement anchors
   for markers, evaluator cascades, LLM prompting/sampling, evolutionary
   database behavior, async/distributed topology, and published benchmark
-  evidence. This is not an exhaustive source-span coverage matrix or generated
-  code-audit report; that boundary is tracked by
+  evidence. This is not an exhaustive source-span coverage matrix,
+  paper-index status-claim inventory, status-cell semantic verifier,
+  implemented-benchmark bullet coverage map, absence-sentence freshness
+  matrix, or generated code-audit report; that boundary is tracked by
   `papers/implementation_evidence_map_boundary.json`.
 - AlphaEvolve arXiv abstract-page metadata now has a pinned HTML byte count,
   SHA-256 digest, normalized author list, subject classes, DOI URL, submitted

@@ -41,13 +41,18 @@ sidecars, tests, and active TODOs.
     `papers/implementation_evidence_map_boundary.json` now records core
     AlphaEvolve requirement anchors for markers, evaluator cascades, LLM
     prompting/sampling, the evolutionary database, async/distributed topology,
-    and published benchmarks with module/test/sidecar/TODO references.
+    and published benchmarks with module/test/sidecar/TODO references while
+    explicitly keeping paper-index status-claim inventory, status-row source
+    spans, status-cell semantic verification, implemented-benchmark bullet
+    coverage, and absence-sentence freshness checks as missing evidence.
   - Current gap: there is no machine-readable AlphaEvolve requirement
     inventory that is exhaustive across all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no
     detector flags source modules or paper claims that lack mapped audit
-    coverage; and no generated code-audit report proves that all implemented
-    and missing AlphaEvolve-facing behavior has been classified.
+    coverage; no paper-index status-row claim map proves long status-cell
+    semantics or implemented-benchmark qualifiers; and no generated code-audit
+    report proves that all implemented and missing AlphaEvolve-facing behavior
+    has been classified.
   - Required result: build an implementation-evidence map with requirement ids,
     source-paper spans, relevant modules/tests, runtime/report artifacts,
     sidecar/TODO links, claim status, freshness checks, and CI validation

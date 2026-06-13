@@ -16,6 +16,11 @@ EXPECTED_BOUNDARY_STATUS = (
 EXPECTED_MISSING_EVIDENCE = {
     "exhaustive_requirement_inventory": "not_recorded_locally",
     "source_span_coverage_matrix": "not_recorded_locally",
+    "paper_index_status_claim_inventory": "not_recorded_locally",
+    "status_row_source_span_inventory": "not_recorded_locally",
+    "status_cell_semantic_verifier": "not_recorded_locally",
+    "implemented_benchmark_bullet_coverage_map": "not_recorded_locally",
+    "absence_sentence_freshness_matrix": "not_recorded_locally",
     "module_coverage_detector": "not_recorded_locally",
     "test_and_runtime_artifact_coverage_detector": "not_recorded_locally",
     "generated_code_audit_report": "not_recorded_locally",
@@ -213,7 +218,8 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
         "source_claim": (
             "AlphaEvolve alignment needs traceable evidence from paper "
             "requirements to implementation modules, tests, runtime artifacts, "
-            "sidecars, and active TODOs."
+            "sidecars, active TODOs, and every paper-index implementation "
+            "status claim."
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "claim_ready": False,
@@ -223,9 +229,13 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
             "This boundary records core AlphaEvolve requirement anchors with "
             "module, test, sidecar, and TODO links. It does not claim an "
             "exhaustive requirement inventory, source-span coverage matrix, "
-            "module coverage detector, test/runtime-artifact coverage detector, "
-            "generated code-audit report, CI exhaustiveness gate, or proof that "
-            "every AlphaEvolve-facing implementation claim has been classified."
+            "paper-index status-claim inventory, status-row source-span "
+            "inventory, status-cell semantic verifier, implemented benchmark "
+            "bullet coverage map, absence-sentence freshness matrix, module "
+            "coverage detector, test/runtime-artifact coverage detector, "
+            "generated code-audit report, CI exhaustiveness gate, or proof "
+            "that every AlphaEvolve-facing implementation claim has been "
+            "classified."
         ),
     }
 
@@ -245,7 +255,11 @@ def validate_implementation_evidence_map_boundary(
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     source_claim = data.get("source_claim")
-    if not isinstance(source_claim, str) or "traceable evidence" not in source_claim:
+    if (
+        not isinstance(source_claim, str)
+        or "traceable evidence" not in source_claim
+        or "paper-index implementation status claim" not in source_claim
+    ):
         issues.append(_issue("invalid_source_claim", "source_claim must identify traceable implementation evidence"))
     status = data.get("boundary_status")
     if status != EXPECTED_BOUNDARY_STATUS:
@@ -258,6 +272,9 @@ def validate_implementation_evidence_map_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim an exhaustive requirement inventory" not in boundary_text
+        or "paper-index status-claim inventory" not in boundary_text
+        or "implemented benchmark bullet coverage map" not in boundary_text
+        or "absence-sentence freshness matrix" not in boundary_text
         or "generated code-audit report" not in boundary_text
         or "every AlphaEvolve-facing implementation claim" not in boundary_text
     ):

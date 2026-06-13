@@ -2500,7 +2500,9 @@ Implemented:
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive
-  audit coverage.
+  audit coverage, paper-index status-claim inventory, status-cell semantic
+  verification, implemented-benchmark bullet coverage, and absence-sentence
+  freshness checks.
 - `papers/arxiv_abstract_snapshot.json`: AlphaEvolve arXiv abstract-page
   snapshot sidecar with the pinned `2506.13131v1` HTML byte count/digest,
   normalized source metadata, and explicit remaining gaps for full HTML,

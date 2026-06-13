@@ -17,14 +17,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     README now warns that the implementation-status table is a maintained
     index, not a proof ledger for every long status-cell sentence. The same
     validator also catches one narrow benchmark-coverage contradiction: an
-    `Implemented` benchmark bullet phrased as not implemented.
+    `Implemented` benchmark bullet phrased as not implemented. The committed
+    `papers/implementation_evidence_map_boundary.json` now explicitly preserves
+    missing evidence for the per-row paper-index status-claim inventory,
+    status-row source-span inventory, status-cell semantic verifier,
+    implemented-benchmark bullet coverage map, and absence-sentence freshness
+    matrix.
   - Current gap: there is no machine-readable evidence map for every natural-
     language phrase in each paper status row, no per-row source-span or code/
     test/sidecar link inventory for all implemented and missing clauses, no
-    per-benchmark coverage-claim inventory for `Implemented` bullets, and no
-    semantic verifier that checks benchmark qualifiers, implemented-bullet
-    scope/limitation wording, or absence sentences against the current code and
-    paper evidence.
+    per-benchmark coverage-claim inventory for `Implemented` bullets, no
+    absence-sentence freshness matrix, and no semantic verifier that checks
+    benchmark qualifiers, implemented-bullet scope/limitation wording, or
+    absence sentences against the current code and paper evidence.
   - Required result: create a per-paper status-claim inventory with claim ids,
     source spans, code/test/sidecar/TODO evidence links, freshness checks, and
     benchmark-coverage bullet mappings, then add CI validation before treating

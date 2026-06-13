@@ -14374,3 +14374,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     FunSearch-versus-AlphaEvolve budget reproduction, and useful target
     progress in thousands-scale proposal counts remain active in code and
     paper TODOs.
+
+- [x] Keep README test-time-compute wording scoped until repeated-sampling
+      baselines exist.
+  - Spec evidence: AlphaEvolve's Discussion says the evolutionary procedure
+    enhances base-LLM capability compared with repeated sampling, sustained by
+    machine feedback.
+  - Status: README now documents
+    `runtime.history.repeated_sampling_baseline_report` as an explicit
+    not-configured absence record for the AlphaEvolve `No evolution` /
+    repeated base-model sampling comparator. It points to
+    `papers/repeated_sampling_baseline_boundary.json` for the controlled
+    comparator absence boundary.
+  - Remaining README gap: executable fixed prompt/model/seed/evaluator
+    repeated-sampling runs, budget-parity checks, disabled evolutionary
+    feedback proof, target-progress curves, and linked evolutionary comparator
+    evidence remain active in code and paper TODOs.

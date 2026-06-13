@@ -91,27 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README test-time-compute wording scoped until repeated-sampling
-      baselines exist.
-  - Spec evidence: AlphaEvolve's Discussion says the evolutionary procedure
-    enhances base-LLM capability compared with repeated sampling, sustained by
-    machine feedback.
-  - Current evidence: README now documents
-    `runtime.history.repeated_sampling_baseline_report` as an explicit
-    not-configured boundary linked to observed sample counts and required
-    comparator controls. The paper index now also names
-    `papers/repeated_sampling_baseline_boundary.json` as the paper-facing
-    controlled-comparator absence boundary. README still does not document
-    controlled repeated base-model sampling baselines with matched
-    prompt/model/seed/evaluator settings, disabled evolutionary feedback,
-    disabled parent/inspiration resurfacing, disabled meta-prompt updates, and
-    target-progress comparisons against matching evolutionary runs.
-  - Required result: when executable repeated-sampling comparator reports land,
-    update README, ROADMAP, papers index, and code/paper TODOs so README
-    separates generic LLM-call budget caps, local absence boundaries, and
-    `No evolution` labels from evidence that LibreEvolve's evolutionary loop
-    improves over equal-budget repeated base-model sampling.
-
 - [ ] Keep README critique-reviewer wording scoped to synchronous first/last
   valid mutation selection.
   - Spec evidence: AlphaEvolve-style critique/reviewer channels need calibrated

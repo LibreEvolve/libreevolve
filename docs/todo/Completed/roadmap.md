@@ -10927,3 +10927,20 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Remaining roadmap gap: benchmark-level sample-budget curves, model-size
     comparisons, repeated-sampling baselines, and target-hit-per-sample
     summaries remain active in code and paper TODOs.
+
+- [x] Keep test-time-compute roadmap wording scoped until repeated-sampling
+      baselines exist.
+  - Spec evidence: AlphaEvolve's Discussion says the evolutionary procedure
+    improves the base LLM compared with repeated sampling, using machine
+    feedback to sustain useful test-time compute.
+  - Status: ROADMAP distinguishes ordinary budgeted LLM sampling, local
+    absence boundaries, and the `No evolution` label from executed
+    repeated-sampling comparator evidence. It points to
+    `runtime.history.repeated_sampling_baseline_report` and
+    `papers/repeated_sampling_baseline_boundary.json` while keeping controlled
+    comparator readiness false.
+  - Remaining roadmap gap: executable repeated-sampling comparator reports
+    with matched prompt/model/seed/evaluator settings, disabled evolutionary
+    feedback, parent/inspiration resurfacing, archive-driven selection,
+    meta-prompt updates, budget parity, and linked target-progress curves
+    remain active in code and paper TODOs.

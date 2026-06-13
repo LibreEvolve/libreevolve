@@ -84,6 +84,15 @@ Important limits:
   thousands-scale benchmark curves, model-size comparisons, repeated-sampling
   comparators, or FunSearch-versus-AlphaEvolve budget reproduction; that
   boundary is tracked by `papers/sample_efficiency_boundary.json`.
+- Repeated-sampling baseline reports under
+  `runtime.history.repeated_sampling_baseline_report` are explicit
+  not-configured absence records for the AlphaEvolve `No evolution` /
+  repeated base-model sampling comparator. They list observed local sample
+  counts and required comparator controls, but they are not executable
+  fixed prompt/model/seed/evaluator repeated-sampling runs, budget-parity
+  checks, disabled-evolutionary-feedback proof, target-progress curves, or
+  linked evolutionary comparator evidence; that boundary is tracked by
+  `papers/repeated_sampling_baseline_boundary.json`.
 - Task-specification bundles, `task_specification.json`, and artifact-
   resolution reports link initial programs, evaluators, prompts, backends,
   context, candidate representation, metrics, history streams, best exports,

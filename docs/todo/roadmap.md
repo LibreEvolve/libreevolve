@@ -1359,27 +1359,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     underclaims current heuristic routing nor overclaims regret-analyzed or
     paper-faithful scheduler behavior.
 
-- [ ] Keep test-time-compute roadmap wording scoped until repeated-sampling
-      baselines exist.
-  - Spec evidence: AlphaEvolve's Discussion says the evolutionary procedure
-    improves the base LLM compared with repeated sampling, using machine
-    feedback to sustain useful test-time compute.
-  - Current evidence: roadmap/README/paper-index status can point to LLM
-    budget telemetry, generated candidate ids, archive admission records,
-    sample-efficiency reports, an equal-budget ablation report contract with a
-    `No evolution` variant, and a runtime
-    `repeated_sampling_baseline_report` absence boundary. Those are not yet a
-    controlled repeated-sampling comparator with matched prompt/model/seed/
-    evaluator settings and disabled evolutionary feedback,
-    parent/inspiration resurfacing, archive-driven selection, and meta-prompt
-    updates. `papers/repeated_sampling_baseline_boundary.json` now preserves
-    that controlled-comparator absence boundary for paper-manifest validation.
-  - Required result: when executable repeated-sampling comparator reports land,
-    update ROADMAP, README, papers index, and code/paper TODOs together so
-    roadmap language distinguishes ordinary budgeted LLM sampling, local
-    absence boundaries, and `No evolution` labels from AlphaEvolve-style
-    test-time-compute uplift over repeated base-model sampling.
-
 - [ ] Keep the async/resumable-runtime roadmap wording scoped to compatible
   full-runtime restore versus full replay.
   - Spec evidence: AlphaEvolve-scale runs need reproducible resumed

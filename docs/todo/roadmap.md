@@ -10,30 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Appendix B roadmap wording scoped until per-result metric/value
-      provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B.1-B.13 reports individual
-    mathematical values across different constants, geometric objectives,
-    finite-set ratios, lower/upper bounds, prior references, parameter tuples,
-    and section/figure/caption locations.
-  - Current evidence: `ROADMAP.md`, README, papers index, and code evidence
-    now describe a validated Appendix B `result_row_boundary` in
-    `alphaevolve_appendix_b.json`. The boundary names the missing normalized
-    result-row layer for every B.1-B.13 text-level numeric claim, including
-    `19` expected future result ids, metric definitions, parameter tuples,
-    bound direction or optimization direction, previous-best value/source,
-    AlphaEvolve reported value, source location, construction-representation
-    schema, construction/verifier artifact hashes, result-version status,
-    recomputed values, and
-    recomputation status. The actual rows and artifacts remain
-    `not_recorded_locally`.
-  - Required result: when Appendix B per-result metric/value provenance lands,
-    update ROADMAP, README, papers index, and code/paper TODO entries together
-    with result-row metadata and validators so roadmap text distinguishes
-    family coverage, aggregate outcome claims, figure reproduction,
-    revised-result history, construction-payload evidence, and text-level
-    numeric claim evidence.
-
 - [ ] Keep Appendix B.1-B.3 roadmap wording scoped until autocorrelation
       step-function provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.1-B.3 reports three distinct

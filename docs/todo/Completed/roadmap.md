@@ -2,6 +2,28 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Appendix B per-result roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish family coverage, aggregate outcome claims, figure
+    reproduction, revised-result history, construction-payload evidence, and
+    text-level numeric claim evidence.
+  - Current evidence: `result_row_boundary` records the missing cross-family
+    B.1-B.13 normalized result-row layer, including the `19` expected future
+    result ids, the B.4 revision row, required future metric/parameter/value
+    fields, construction/verifier artifact hashes, result-version status, and
+    recomputation status while keeping those rows and artifacts
+    `not_recorded_locally`.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: normalized per-result metric/value rows, parameter tuples, inequality
+    or optimization direction records, previous-best values/sources,
+    AlphaEvolve reported-value rows, source locations,
+    construction-representation schemas, construction/verifier artifact hashes,
+    result-version status, recomputed values, and recomputation status.
+  - Verification: Appendix B registry result-row tests, paper-manifest
+    validation, and checked-in paper-index TODO coverage still pass.
+
 - [x] Archive Appendix B Figures 10-14 roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

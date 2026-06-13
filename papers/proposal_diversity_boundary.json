@@ -2,6 +2,10 @@
   "schema": "libreevolve.alphaevolve_proposal_diversity_boundary.v1",
   "runtime_report_schema": "libreevolve.proposal_diversity_report.v1",
   "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "2.3",
+    "4"
+  ],
   "source_claim": "AlphaEvolve Section 2.3 says SOTA LLMs digest previous solutions and propose new, diverse ways to improve them, with later ablations connecting model strength to performance",
   "boundary_status": "exact_text_diversity_without_semantic_novelty",
   "runtime_report_status": "proposal_diversity_report_available",

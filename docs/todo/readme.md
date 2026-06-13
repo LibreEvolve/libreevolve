@@ -941,34 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README Appendix A Figure 9 wording scoped until magnified-diff
-      panel artifacts exist.
-  - Spec evidence: AlphaEvolve Appendix A Figures 9a-9c are the three-panel
-    magnified source/diff version of Figure 4's matrix program, showing the
-    rank-48 4x4 search-program changes across ordered code excerpts. The
-    displayed changes include optimizer, initialization, noise, clipping,
-    hallucination/discretization/loss-penalty, and named sweep-field
-    components.
-  - Current evidence: README can document matrix result reports, Appendix A
-    registry coverage, Figure 4 exhibit gaps, Figure 9 sweep-space gaps, and
-    `libreevolve.alphaevolve_figure9_matrix_diff_exhibit.v1`. README now
-    documents that the Figure 9 schema validates Figure 9a/9b/9c panel IDs,
-    PDF pages 35-37, Figure 4 caption linkage, exact code line spans,
-    source/diff excerpt artifact hashes, rendered/OCR text hashes, panel
-    continuity, semantic component labels for the shown code changes, and links
-    from the appendix panels to matrix target rows, sweep metadata, exactness
-    certificates, and companion source evidence. It now also documents
-    `libreevolve.alphaevolve_figure9_matrix_diff_artifact_boundary.v1` as the
-    current `not_emitted_by_local_report_export` boundary and emitted
-    panel-artifact fields. It also documents the builder from Figure 9 exhibit
-    metadata and nested-panel linkage validation, while still stating that the
-    rendered/OCR/source-diff panel artifacts are not emitted or checked in.
-  - Required result: when Appendix A Figure 9 magnified-diff panel artifacts
-    land, update README, ROADMAP, papers index, and matching TODOs so README
-    distinguishes reproduced appendix source/diff panels from Figure 4
-    main-text exhibit evidence, semantic change-component evidence, and generic
-    sweep-space provenance.
-
 - [ ] Keep README Figure 4 matrix-exhibit wording scoped until rendered
       artifacts and mutation lineage exist.
   - Spec evidence: AlphaEvolve Figure 4 is the main-text matrix discovery

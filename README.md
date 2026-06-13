@@ -216,6 +216,12 @@ Important limits:
   matrix runner that emits AlphaEvolve Figure 4/Figure 9 search-program sweep
   evidence during search; that boundary is tracked by
   `papers/matrix_sweep_space_runtime_boundary.json`.
+- Appendix A Figure 9 matrix-diff records validate panel ids, pages, line
+  spans, semantic components, source/diff hashes, rendered/OCR artifact
+  metadata, and links to matrix result, sweep-space, certificate, and companion
+  notebook evidence, not local report/export output that emits rendered panel
+  images, OCR text, or source-diff artifacts for Figures 9a-9c; that boundary
+  is tracked by `papers/figure9_matrix_diff_artifacts.json`.
 - Collaborator-feedback provenance is optional metadata and runtime reporting
   for cohorts, events, affected workflow areas, change links, validation
   outcomes, privacy/redaction policy, and review state, not populated

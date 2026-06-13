@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Appendix A Figure 9 README boundary.
+  - Status: README Important limits now states that Appendix A Figure 9
+    matrix-diff records validate panel ids, pages, line spans, semantic
+    components, source/diff hashes, rendered/OCR artifact metadata, and links to
+    matrix result, sweep-space, certificate, and companion notebook evidence,
+    not local report/export output that emits rendered panel images, OCR text,
+    or source-diff artifacts for Figures 9a-9c. It points to
+    `papers/figure9_matrix_diff_artifacts.json`.
+  - Verification: focused Figure 9 matrix-diff exhibit/artifact-boundary and
+    paper-manifest tests validate the current absence record, emitted-artifact
+    builder, nested panel linkage checks, required fields, and overclaim
+    guards.
+
 - [x] Document matrix sweep-space README boundary.
   - Status: README Important limits now states that matrix sweep-space records
     validate declared Figure 9-style `sweep()` provenance, user-provided

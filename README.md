@@ -689,6 +689,15 @@ Important limits:
   rank-preserving proxy benchmark, rollout/provider-cost accounting report,
   systems-research benchmark fixture, prompt-optimization budget comparison,
   linked-code audit, or independent reproduction output.
+- ArXiv `2601.10657` is long-horizon consistency framework context only; the
+  README mentions this cached paper as a curated subset while
+  `papers/README.md` remains the complete implementation-status index.
+  LibreEvolve has no context-pollution detector, hierarchical
+  context-management/pruning artifacts, mode-collapse diagnostics,
+  momentum-based backtracking controller, unified crossover/backtracking
+  sampler, trajectory-collaboration diagnostics, LLM-SR/KernelBench/Modded
+  NanoGPT benchmark report, linked-code audit, or independent reproduction
+  output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

@@ -14670,3 +14670,26 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     calibration, rank-correlation evidence, budget/cost accounting, benchmark
     baselines, report outcomes, and LEVI-style cost-aware search architecture
     remain active in code and paper TODOs.
+
+- [x] Keep README PACEvolve long-horizon consistency claims source-scoped
+      until benchmark evidence exists.
+  - Spec evidence: arXiv `2601.10657`, `PACEvolve: Enabling Long-Horizon
+    Progress-Aware Consistent Evolution`, says LLM-in-the-loop evolutionary
+    systems suffer from context pollution, mode collapse, and weak
+    collaboration. It proposes hierarchical context management with pruning,
+    momentum-based backtracking, and self-adaptive sampling that unifies
+    backtracking and crossover, with reported LLM-SR, KernelBench, and Modded
+    NanoGPT results.
+  - Status: README now lists arXiv `2601.10657` as long-horizon consistency
+    framework context only and marks the mention as a curated cached-paper
+    subset while `papers/README.md` remains the complete implementation-status
+    index. It states that LibreEvolve has no context-pollution detector,
+    hierarchical context-management/pruning artifacts, mode-collapse
+    diagnostics, momentum-based backtracking controller, unified
+    crossover/backtracking sampler, trajectory-collaboration diagnostics,
+    LLM-SR/KernelBench/Modded NanoGPT benchmark report, linked-code audit, or
+    independent reproduction output.
+  - Remaining README gap: context metrics, pruning traces, backtracking state,
+    sampling-policy records, trajectory collaboration diagnostics, benchmark
+    baselines, report outcomes, and PACEvolve-style consistency controls
+    remain active in code and paper TODOs.

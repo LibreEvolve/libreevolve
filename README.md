@@ -125,6 +125,12 @@ Important limits:
   adaptive coding-mode traces, 12-hour medal-rate/valid-submission report,
   mathematical-algorithm baseline comparison, linked-code audit, or
   independent reproduction output.
+- LEVI cost-aware search-architecture coverage is background paper context
+  only: LibreEvolve has no LEVI-style diversity-preserving solution-database
+  report, large/small model mutation-router policy, role-assignment trace,
+  rank-preserving proxy benchmark, rollout/provider-cost accounting report,
+  systems-research benchmark fixture, prompt-optimization budget comparison,
+  linked-code audit, or independent reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

@@ -2,6 +2,33 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive LEVI cost-aware search-architecture roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2605.09764` source-scoped as background cost-aware
+    search-architecture context rather than implemented LibreEvolve
+    LEVI-style cost-aware search support.
+  - Current evidence: the cached paper and `papers/README.md` record LEVI's
+    claims around diversity-preserving solution databases, smarter mutation
+    routing between large and small LLMs, rank-preserving proxy benchmarks,
+    3.3x-6.7x lower-budget systems results, one 35x lower-cost match,
+    prompt-optimization results below half GEPA's rollout budget, and linked
+    code availability, while marking local diversity reports, mutation-router
+    policies, role-assignment traces, proxy-benchmark construction,
+    rollout/provider-cost accounting, systems/prompt benchmark fixtures,
+    linked-code audits, and independent reproduction output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source-license and linked-code status, relation to LibreEvolve
+    archive/ensemble behavior, diversity metrics, solution-database
+    invariants, mutation-router policy, large/small model assignment traces,
+    proxy-benchmark construction and rank-correlation evidence,
+    rollout/provider-cost accounting, systems/prompt benchmark taxonomy,
+    baseline identities, code/artifact reproducibility status, and independent
+    verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive MLEvolve long-horizon ML-engineering roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

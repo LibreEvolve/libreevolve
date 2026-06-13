@@ -18,6 +18,7 @@ def test_example_scope_records_keep_shipped_examples_non_comparable():
         "hello_world",
         "sorting",
         "sorting_network_8",
+        "sorting_network_9",
         "workspace_math",
         "embedded_evaluate_math",
         "matrix_multiplication",
@@ -28,6 +29,9 @@ def test_example_scope_records_keep_shipped_examples_non_comparable():
     sorting_network = next(record for record in records if record["problem_id"] == "sorting_network_8")
     assert sorting_network["level"] == "benchmark"
     assert sorting_network["current_role"] == "bounded_rediscovery_benchmark_candidate"
+    sorting_network_9 = next(record for record in records if record["problem_id"] == "sorting_network_9")
+    assert sorting_network_9["level"] == "benchmark"
+    assert sorting_network_9["alphaevolve_comparable"] is False
 
 
 def test_example_scope_rejects_smoke_record_marked_alphaevolve_comparable():
@@ -85,5 +89,6 @@ def test_example_scope_summary_renders_scope_table():
     assert "| smoke_only | no |" in summary
     assert "| comparable_problem_count | 0 |" in summary
     assert "| sorting_network_8 | benchmark | no | bounded_rediscovery_benchmark_candidate |" in summary
+    assert "| sorting_network_9 | benchmark | no | bounded_rediscovery_benchmark_candidate |" in summary
     assert "| embedded_evaluate_math | smoke | no | embedded_entrypoint_fixture |" in summary
     assert "| matrix_multiplication | smoke | no | operation_counter_smoke_fixture |" in summary

@@ -2899,11 +2899,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     registry as not AlphaEvolve-comparable. `sorting_network_8` now exists as
     a non-comparable benchmark candidate with an exhaustive zero-one
     verifier, comparator-count/depth metrics, 28-comparator valid seed, and a
-    checked known 19-comparator target. The paper ledger still has no
-    `sorting_network_9` fixture, source-citation sidecar for the zero-one
-    verifier or known comparator targets, repeated-run evidence, negative
-    fixture hardening report, or certification row proving rediscovery under
-    fixed evaluator/model/seed conditions.
+    checked known 19-comparator target. `sorting_network_9` now mirrors that
+    fixture with exhaustive 9-input zero-one validation, a 36-comparator valid
+    seed, and a checked known 25-comparator target. The paper ledger still has
+    no source-citation sidecar for the zero-one verifier or known comparator
+    targets, repeated-run evidence, negative-fixture hardening report, or
+    certification row proving rediscovery under fixed evaluator/model/seed
+    conditions.
   - Required result: add a paper-visible benchmark record for
     `sorting_network_8` and `sorting_network_9`, including source citations
     for the zero-one verifier and known comparator targets, fixture scope,

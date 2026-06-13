@@ -48,6 +48,13 @@ SORTING_NETWORK_8_EXAMPLE_DIR = (
     / "examples"
     / "sorting_network_8"
 )
+SORTING_NETWORK_9_EXAMPLE_DIR = (
+    Path(__file__).resolve().parents[1]
+    / "libreevolve"
+    / "problems"
+    / "examples"
+    / "sorting_network_9"
+)
 EMBEDDED_EVALUATE_EXAMPLE_DIR = (
     Path(__file__).resolve().parents[1]
     / "libreevolve"
@@ -122,10 +129,15 @@ def _load_sorting_validator():
 
 
 def _load_sorting_network_8_validator():
-    spec = spec_from_file_location(
-        "sorting_network_8_validate",
-        SORTING_NETWORK_8_EXAMPLE_DIR / "validate.py",
-    )
+    return _load_sorting_network_validator(SORTING_NETWORK_8_EXAMPLE_DIR, "sorting_network_8_validate")
+
+
+def _load_sorting_network_9_validator():
+    return _load_sorting_network_validator(SORTING_NETWORK_9_EXAMPLE_DIR, "sorting_network_9_validate")
+
+
+def _load_sorting_network_validator(example_dir: Path, module_name: str):
+    spec = spec_from_file_location(module_name, example_dir / "validate.py")
     module = module_from_spec(spec)
     assert spec.loader is not None
     spec.loader.exec_module(module)
@@ -280,6 +292,67 @@ def test_sorting_network_8_loads_as_problem():
     problem = load_problem(SORTING_NETWORK_8_EXAMPLE_DIR)
 
     assert problem.name == "sorting_network_8"
+    assert problem.primary_metric == "network_score"
+    assert len(problem.initial_programs) == 1
+
+
+def test_sorting_network_9_seed_is_valid_but_not_target():
+    validate = _load_sorting_network_9_validator()
+    seed = (SORTING_NETWORK_9_EXAMPLE_DIR / "initial_programs" / "seed.py").read_text(
+        encoding="utf-8"
+    )
+
+    result = validate.evaluate(seed)
+
+    assert result["is_valid"] is True
+    assert result["sorted_input_coverage"] == 1.0
+    assert result["comparator_count"] == 36
+    assert result["depth"] == 15
+    assert result["target_achieved"] == 0.0
+
+
+def test_sorting_network_9_known_25_comparator_target_is_valid():
+    validate = _load_sorting_network_9_validator()
+    result = validate.evaluate(
+        "def network():\n"
+        "    return [\n"
+        "        (0,3),(1,7),(2,5),(4,8),\n"
+        "        (0,7),(2,4),(3,8),(5,6),\n"
+        "        (0,2),(1,3),(4,5),(7,8),\n"
+        "        (1,4),(3,6),(5,7),\n"
+        "        (0,1),(2,4),(3,5),(6,8),\n"
+        "        (2,3),(4,5),(6,7),\n"
+        "        (1,2),(3,4),(5,6),\n"
+        "    ]\n"
+    )
+
+    assert result["is_valid"] is True
+    assert result["sorted_input_coverage"] == 1.0
+    assert result["comparator_count"] == 25
+    assert result["depth"] == 7
+    assert result["target_achieved"] == 1.0
+
+
+def test_sorting_network_9_rejects_invalid_comparator_index():
+    validate = _load_sorting_network_9_validator()
+
+    result = validate.evaluate("def network():\n    return [(0, 9)]\n")
+
+    assert result == {
+        "network_score": 0.0,
+        "sorted_input_coverage": 0.0,
+        "inverse_comparator_count": 0.0,
+        "comparator_count": 0,
+        "depth": 0,
+        "target_achieved": 0.0,
+        "is_valid": False,
+    }
+
+
+def test_sorting_network_9_loads_as_problem():
+    problem = load_problem(SORTING_NETWORK_9_EXAMPLE_DIR)
+
+    assert problem.name == "sorting_network_9"
     assert problem.primary_metric == "network_score"
     assert len(problem.initial_programs) == 1
 

@@ -130,10 +130,10 @@ The bundled examples are intentionally small:
   baselines that leave room for measurable improvement.
 - Neutral plateau/diversity fixtures mainly exercise loading, validation,
   artifact writing, or archive behavior.
-- `sorting_network_8` is a bounded benchmark candidate with exhaustive
-  zero-one validation and a known 19-comparator target, but it is not
-  paper-comparable evidence until repeated runs, hardening artifacts, and
-  certification are added.
+- `sorting_network_8` and `sorting_network_9` are bounded benchmark candidates
+  with exhaustive zero-one validation and known comparator targets, but they
+  are not paper-comparable evidence until repeated runs, hardening artifacts,
+  and certification are added.
 
 Treat an example as benchmark evidence only when its own docs or paper sidecar
 says so.

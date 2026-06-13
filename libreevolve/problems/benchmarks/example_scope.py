@@ -53,6 +53,19 @@ _EXAMPLE_BENCHMARK_SCOPE_RECORDS: tuple[dict[str, Any], ...] = (
     },
     {
         "schema": EXAMPLE_BENCHMARK_SCOPE_SCHEMA,
+        "problem_id": "sorting_network_9",
+        "path": "libreevolve/problems/examples/sorting_network_9",
+        "level": "benchmark",
+        "alphaevolve_comparable": False,
+        "current_role": "bounded_rediscovery_benchmark_candidate",
+        "reason": "Provides exhaustive zero-one sorting-network validation for 9 inputs and a known 25-comparator target, but lacks repeated-run evidence and paper certification.",
+        "required_upgrades": [
+            "Record repeated-seed runs with fixed evaluator/model/budget conditions.",
+            "Emit hardening reports, negative fixtures, and paper-facing certification artifacts.",
+        ],
+    },
+    {
+        "schema": EXAMPLE_BENCHMARK_SCOPE_SCHEMA,
         "problem_id": "workspace_math",
         "path": "libreevolve/problems/examples/workspace_math",
         "level": "smoke",

@@ -223,6 +223,14 @@ Important limits:
   supervision-frequency/cadence trace, preservation-of-objective-performance
   report, coding/math/safety benchmark report, linked-code audit, or
   independent reproduction output.
+- SIA harness-plus-weight self-improvement coverage is background paper
+  context only: LibreEvolve has no Feedback-Agent that chooses between harness
+  and weight updates, editable task-agent harness inventory, harness patch
+  provenance, online RL/fine-tuning loop, adapter/checkpoint lifecycle,
+  trajectory-to-training-data promotion policy, rollback/resume policy,
+  harness-only versus weight-only versus combined ablation report,
+  LawBench/kernel/scRNA benchmark report, linked-code audit, or independent
+  reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

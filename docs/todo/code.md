@@ -5676,8 +5676,10 @@ Primary evidence:
     Feedback-Agent that updates both the harness and the weights of a
     task-specific agent, evaluating Chinese legal charge classification,
     low-level GPU kernel optimization, and single-cell RNA denoising. The
-    reported gains are 56.6% on LawBench, a 91.9% runtime reduction on GPU
-    kernels, and 502% denoising improvement over the initial baseline.
+    abstract reports 25.1% over prior SOTA on LawBench, 12.4% faster GPU
+    kernels than prior SOTA, and 20.4% over prior SOTA on denoising; later
+    kernel text also reports a 91.9% runtime reduction from the harness-only
+    peak.
   - Current evidence: `papers/download_manifest.*`, `papers/row_identity.json`,
     `papers/README.md`, README, ROADMAP, and TODO coverage now include
     `2605.27276`, cached locally as `papers/2605.27276__SIA.pdf` with byte

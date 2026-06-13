@@ -2,6 +2,38 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive SIA harness-plus-weight roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored and unsupported result-magnitude wording in the active SIA
+    code/paper TODOs was corrected. `README.md`, `ROADMAP.md`,
+    `papers/README.md`, `docs/status.md`, `docs/todo/code.md`, and
+    `docs/todo/papers.md` now keep arXiv `2605.27276` source-scoped as
+    background harness-plus-weight self-improvement context rather than
+    implemented LibreEvolve SIA-style runtime support.
+  - Current evidence: the cached paper and `papers/README.md` record SIA's
+    Feedback-Agent, harness/scaffold and weight-update levers, task-specific
+    agent framing, Chinese legal charge classification, low-level GPU kernel
+    optimization, single-cell RNA denoising, abstract-reported 25.1%
+    LawBench gain over prior SOTA, 12.4% faster GPU kernels than prior SOTA,
+    20.4% denoising gain over prior SOTA, later 91.9% runtime reduction from
+    the harness-only kernel peak, and harness-plus-weight ablation framing,
+    while marking local role schemas, editable harness inventories, harness
+    patch records, online RL/fine-tuning loops, adapter/checkpoint lifecycles,
+    training-data lineage, ablation reports, benchmark records, linked-code
+    audits, and independent reproduction output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source/license metadata, project/demo and linked-code status,
+    relation to LibreEvolve training/evaluator assumptions,
+    Meta-Agent/Target-Agent/Feedback-Agent role schema, editable-harness
+    taxonomy, harness patch records, weight-update records, training-data
+    provenance, RL/fine-tuning configuration, adapter/checkpoint artifacts,
+    verifier/reward definitions, harness-only, weight-only, and combined-loop
+    ablation records, LawBench/kernel/scRNA benchmark metadata, compute/cost
+    accounting, performance-delta records, reproducibility status, and
+    independent verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive ANCHOR healthy-evolution oversight roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

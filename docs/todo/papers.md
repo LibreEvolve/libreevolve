@@ -5274,9 +5274,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     the harness remains fixed. SIA proposes a Feedback-Agent loop that
     updates both the harness and weights of a task-specific agent, evaluated
     on Chinese legal charge classification, low-level GPU kernel
-    optimization, and single-cell RNA denoising. The abstract reports 56.6%
-    LawBench gain, 91.9% GPU-kernel runtime reduction, and 502% denoising
-    improvement over the initial baseline.
+    optimization, and single-cell RNA denoising. The abstract reports 25.1%
+    over prior SOTA on LawBench, 12.4% faster GPU kernels than prior SOTA, and
+    20.4% over prior SOTA on denoising; later kernel text also reports a
+    91.9% runtime reduction from the harness-only peak.
   - Current gap: the paper cache, paper index, row identity, README, ROADMAP,
     and TODO coverage now include `2605.27276`, cached locally as
     `papers/2605.27276__SIA.pdf` with byte count `993538` and SHA-256

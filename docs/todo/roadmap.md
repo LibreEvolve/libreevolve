@@ -10,38 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement SIA harness-plus-weight self-improvement gates beyond paper
-      cache coverage.
-  - Spec evidence: arXiv `2605.27276`, submitted May 26, 2026, introduces
-    `SIA: Self Improving AI with Harness & Weight Updates`. The abstract says
-    previous self-improvement work often separates harness/scaffold updates
-    from model-weight updates, then proposes a Feedback-Agent that updates
-    both the harness and weights of a task-specific agent. It evaluates
-    Chinese legal charge classification, low-level GPU kernel optimization,
-    and single-cell RNA denoising, and reports that combining both levers
-    outperforms scaffold iteration alone on all three benchmarks.
-  - Current evidence: ROADMAP, `papers/download_manifest.*`,
-    `papers/row_identity.json`, `papers/README.md`, README, and TODO coverage
-    now include `2605.27276`, cached locally as `papers/2605.27276__SIA.pdf`
-    with byte count `993538` and SHA-256
-    `3f75a62487a5fb3fc2db8d06b78e6f6d598fc46b446cdfa9e205c33fb41de265`.
-    ROADMAP tracks the paper as background harness-plus-weight
-    self-improvement context only. It still has no SIA gates,
-    Feedback-Agent decision log, editable harness components for
-    task-specific agents, online model-weight updates, adapter/checkpoint
-    provenance, or ablations separating harness-only, weight-only, and
-    combined improvement loops.
-  - Required result: implement roadmap gates beyond paper-cache evidence:
-    source-license and linked-code status, Meta-Agent/Target-Agent/
-    Feedback-Agent schemas, editable harness component inventory, harness
-    patch/version records, weight-update trigger and training records,
-    adapter/checkpoint lifecycle, training-data lineage, verifier/reward
-    sufficiency checks, rollback/resume policy, harness-only versus
-    weight-only versus combined ablation metadata, LawBench/kernel/scRNA
-    benchmark records, compute/cost telemetry, and a background-only or
-    benchmark-fixture status rule so roadmap claims do not outpace local
-    SIA-style harness-plus-weight self-improvement support.
-
 - [ ] Implement HarnessFix trace-grounded harness repair gates beyond paper
       cache coverage.
   - Spec evidence: arXiv `2606.06324`, submitted June 4, 2026, introduces

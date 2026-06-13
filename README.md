@@ -433,8 +433,9 @@ Important limits:
   failure-aware sampling policy; that boundary is tracked by
   `papers/failure_memory_boundary.json`.
 - Related Work positioning is not inferred from the bundled paper list; the
-  missing taxonomy and claim gates are tracked by
-  `papers/related_work_taxonomy_boundary.json`.
+  missing method-family, representation, feedback/evidence, task-stage,
+  proof/witness, complementary-mechanism, and AlphaEvolve positioning taxonomy
+  gates are tracked by `papers/related_work_taxonomy_boundary.json`.
 - Candidate execution is Python-primary code-file-set execution. The
   abstraction-choice report does not claim AlphaEvolve-style problem-defined
   serializers/materializers/runners, paired solution/search representations,

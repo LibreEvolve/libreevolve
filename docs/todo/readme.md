@@ -69,33 +69,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README Related Work positioning scoped until taxonomy evidence
-      exists.
-  - Spec evidence: AlphaEvolve Related Work presents the system as
-    execution-feedback code superoptimization and programmatic scientific
-    discovery, compares it with pre-LLM superoptimization, AlphaTensor,
-    GPU-kernel and LLM-agent optimizers, AI-for-science systems, and proof
-    search, emphasizes programmatic hypothesis representations, programmatic
-    evaluation metrics, and witness/counterexample discovery, and treats
-    continuous LLM fine-tuning through reinforcement learning plus
-    LLM-directed concept learning/summaries of high-performing programs as
-    adjacent complementary ideas rather than established AlphaEvolve
-    components.
-  - Current evidence: README can list bundled papers, mention inspirations,
-    and document specific implemented or missing features. It does not yet
-    expose a related-work taxonomy. The committed
-    `papers/related_work_taxonomy_boundary.json` sidecar records that flat
-    source inventory and individual gap rows do not map sources to method
-    families, candidate representation, evaluator/evidence mode, discovery
-    stage, proof-versus-witness status, comparison claim, complementary-
-    mechanism status, and local implementation status.
-  - Required result: when Related Work taxonomy records land, update README,
-    ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes source availability and broad inspiration from
-    AlphaEvolve-style positioning claims about superoptimization,
-    programmatic discovery, proof/witness scope, adjacent fine-tuning or
-    concept-learning mechanisms, and local capability.
-
 - [ ] Keep README cascade wording scoped to staged threshold gates until
       statistical hypothesis-test promotion is implemented.
   - Spec evidence: AlphaEvolve Section 2.4 presents evaluation cascades as

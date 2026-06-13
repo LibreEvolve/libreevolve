@@ -13703,6 +13703,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     focused Related Work taxonomy tests reject positioning-readiness
     overclaims.
 
+- [x] Keep README Related Work positioning scoped until taxonomy evidence
+      exists.
+  - Status: README now separates bundled paper availability from Related Work
+    positioning and names the missing method-family, representation,
+    feedback/evidence, task-stage, proof/witness, complementary-mechanism, and
+    AlphaEvolve positioning taxonomy gates tracked by
+    `papers/related_work_taxonomy_boundary.json`.
+  - Verification: paper-manifest validation requires the committed sidecar and
+    focused Related Work taxonomy tests reject positioning-readiness
+    overclaims.
+
 - [x] Keep README natural-language preamble boundary tied to sidecar.
   - Status: README now states that natural-language preambles are bounded
     leading metadata before structured mutation markers, not complete freeform

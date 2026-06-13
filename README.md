@@ -80,6 +80,10 @@ Important limits:
 - Compiler IR records validate metadata only: they do not yet provide real
   XLA/FlashAttention edit artifacts, randomized input coverage,
   reference-check outputs, tolerance/failure logs, or expert all-input signoff.
+- Compiler stack records validate metadata only: they do not yet provide real
+  Transformer/inference configuration records, Pallas source snapshots, JAX
+  wrapper artifacts, XLA stage outputs, hardware-target records, lowered-IR
+  files, or optimization-decision evidence.
 - The docs do not yet reproduce AlphaEvolve Figure 6 or Figure 7 exhibits:
   scheduling heuristic source/heatmap provenance and Pallas tiling-problem
   diagram/source-data/render hashes remain active code and paper TODOs.

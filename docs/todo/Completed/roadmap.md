@@ -2,6 +2,29 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive compiler-stack context roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish `compiler_stack_provenance` metadata from AlphaEvolve-style
+    FlashAttention/Pallas/JAX/XLA compiler-stack traces.
+  - Current evidence: `libreevolve.systems_result_report.v1` and focused tests
+    require `compiler_stack_provenance` for ready compiler reports, including
+    workload/model configuration, FlashAttention/Pallas kernel identity, Pallas
+    kernel source identity/hash, JAX pre/postprocessing boundaries and hashes,
+    XLA lowering stage, hardware target, lowered-IR hash, optimization decision
+    category, and artifact refs.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    compiler-stack artifacts: Transformer/model or inference configuration
+    records, FlashAttention/Pallas kernel source snapshots, JAX
+    pre/postprocessing wrapper artifacts, XLA IR-stage outputs,
+    hardware-target records, lowered-IR files, and memory-orchestration versus
+    scheduling decision evidence that remains separate from per-edit reference
+    checks and final runtime-speedup claims.
+  - Verification: paper-manifest validation, checked-in paper-index TODO
+    coverage, and focused systems-result compiler-stack tests still pass, while
+    searches confirm the compiler-stack code and paper TODOs remain active.
+
 - [x] Archive compiler-IR reference-check roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

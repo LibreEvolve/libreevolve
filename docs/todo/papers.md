@@ -430,7 +430,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     Flash/Pro scheduling evidence.
 
 - [ ] Validate critique reviewer pools beyond synchronous replacement filters.
-  - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 2.6.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, front overview plus Sections 2.4
+    and 2.6.
   - Requirement: AlphaEvolve-style critique and feedback channels should
     provide attributable, budgeted model-review signal rather than only a
     sequential mutation-replacement filter.

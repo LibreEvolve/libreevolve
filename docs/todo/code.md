@@ -4812,10 +4812,11 @@ sidecars, tests, and active TODOs.
 
 - [ ] Extend critique reviewer pools beyond synchronous first/last-valid
   selection.
-  - Spec evidence: AlphaEvolve-style generation can use multiple model calls
-    and feedback channels under explicit budget policy; reviewer-style critique
-    should contribute calibrated, attributable signal rather than only a
-    sequential replacement filter.
+  - Spec evidence: AlphaEvolve names LLM-supported candidate critique in the
+    front overview, then describes LLM-generated feedback and
+    budget/orchestration behavior in Sections 2.4 and 2.6; reviewer-style
+    critique should contribute calibrated, attributable signal rather than
+    only a sequential replacement filter.
   - Current evidence: `critique_reviewers` accepts up to eight manifest-safe
     reviewer specs with optional prompts and role labels, and
     `critique_aggregation_policy` selects `first_valid` or `last_valid`

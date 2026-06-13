@@ -10,7 +10,7 @@ CRITIQUE_REVIEWER_POOL_BOUNDARY_SCHEMA = (
     "libreevolve.critique_reviewer_pool_boundary.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
-EXPECTED_SOURCE_SECTION_IDS = ("2.4", "2.6")
+EXPECTED_SOURCE_SECTION_IDS = ("front_matter_overview", "2.4", "2.6")
 EXPECTED_BOUNDARY_STATUS = "synchronous_first_last_valid_without_calibrated_reviewers"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "configured_reviewer_specs",
@@ -67,7 +67,10 @@ def critique_reviewer_pool_boundary_record() -> dict[str, Any]:
         "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_claim": (
             "AlphaEvolve-style critique and feedback channels should provide "
-            "attributable model-review signal under explicit budget policy"
+            "attributable model-review signal under explicit budget policy; "
+            "the paper names critique in the front overview, while detailed "
+            "LLM-feedback and budget/orchestration evidence is in Sections "
+            "2.4 and 2.6"
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "runtime_pool_schema": "libreevolve.critique_reviewer_pool.v1",
@@ -105,7 +108,7 @@ def validate_critique_reviewer_pool_boundary(
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
-        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be 2.4 and 2.6"))
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be front_matter_overview, 2.4, and 2.6"))
     source_claim = data.get("source_claim")
     if (
         not isinstance(source_claim, str)

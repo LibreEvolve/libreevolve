@@ -19,6 +19,7 @@ def test_critique_reviewer_pool_boundary_accepts_synchronous_boundary():
     assert validation.required_evidence_field_count == 20
     assert validation.missing_evidence_count == 5
     assert boundary["schema"] == CRITIQUE_REVIEWER_POOL_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["front_matter_overview", "2.4", "2.6"]
     assert boundary["claim_ready"] is False
     assert "does not claim async reviewer overlap" in boundary["claim_boundary"]
 

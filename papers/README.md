@@ -2425,8 +2425,9 @@ Implemented:
   calibration runners, executed task-suite results, grader ablation results,
   or independent feedback-quality validation.
 - `papers/critique_reviewer_pool_boundary.json`: critique reviewer-pool
-  sidecar for AlphaEvolve Sections 2.4 and 2.6. It records configured reviewer
-  specs, manifest-safe reviewer names, optional reviewer prompts, reviewer role
+  sidecar for AlphaEvolve front-overview critique wording plus Sections 2.4
+  and 2.6 feedback/budget evidence. It records configured reviewer specs,
+  manifest-safe reviewer names, optional reviewer prompts, reviewer role
   labels, role backend-routing and budget-accounting compatibility, bounded
   synchronous pool execution, first/last-valid aggregation, reviewer parser
   status, valid revision counts, selected reviewer provenance, reviewer

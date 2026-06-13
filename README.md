@@ -198,6 +198,16 @@ Important limits:
   geometry certificates, containment or non-overlap certificates, side-length
   recomputation certificates, recomputed side lengths, or Figure 11 panel
   artifacts.
+- Appendix B.9-B.10 Heilbronn minimum-area provenance remains absent: the
+  registry preserves Figure 13 left/middle/right linkage, B.9 triangle and
+  B.10 convex-region domains, the `n = 11`, `n = 13`, and `n = 14` witness
+  summaries, prior values (`0.036`, `0.0306`, `0.0277`), and reported values
+  (`minimum_area > 0.0365`, `0.0309`, `0.0278`), not point-coordinate or
+  domain artifact hashes, domain-membership proofs, unit-area or convexity
+  certificates, triple-count enumeration, all-triples minimum-area
+  certificates, minimum-witness-triangle certificates, reported-value
+  comparison certificates, recomputed minimum areas, or Figure 13 panel
+  artifacts.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

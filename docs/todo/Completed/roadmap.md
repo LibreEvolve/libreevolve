@@ -2,6 +2,28 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Appendix B.9-B.10 Heilbronn roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish the three Heilbronn result summaries from missing coordinate,
+    domain, certificate, recomputation, and Figure 13 panel artifacts.
+  - Current evidence: `heilbronn_result_boundary` records the B.9 unit-area
+    triangle row and B.10 convex-region rows for `n = 11`, `n = 13`, and
+    `n = 14`, prior values `0.036`, `0.0306`, and `0.0277`, reported values
+    `minimum_area > 0.0365`, `0.0309`, and `0.0278`, Figure 13 panel linkage,
+    comparison policy, required future point/domain/certificate fields, and
+    `not_recorded_locally` panel-artifact status.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: point-coordinate or domain artifact hashes, domain-membership proofs,
+    unit-area or convexity certificates, triple-count enumeration,
+    all-triples minimum-area certificates, minimum-witness-triangle
+    certificates, reported-value comparison certificates, recomputed minimum
+    areas, and Figure 13 panel artifacts.
+  - Verification: Appendix B registry Heilbronn-boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive Appendix B.7 regular-hexagon roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

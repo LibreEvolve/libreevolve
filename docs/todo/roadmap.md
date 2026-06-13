@@ -10,30 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Appendix B.9-B.10 roadmap wording scoped until Heilbronn
-      minimum-area provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B.9-B.10 reports three Heilbronn
-    minimum-area improvements: `n = 11` points in a unit-area triangle improve
-    the prior `0.036` bound to greater than `0.0365`; `n = 13` points in a
-    unit-area convex region improve `0.0306` to `0.0309`; and `n = 14` points
-    in a unit-area convex region improve `0.0277` to `0.0278`.
-  - Current evidence: roadmap/README/paper-index wording now cites B.9-B.10
-    `heilbronn_result_boundary` entries for the three `n` values, domains,
-    prior and reported values, comparison policies, Figure 13 panel links, and
-    required future point/domain/certificate fields plus Figure 13 panel
-    artifact path/hash fields. It still keeps `figure_panel_artifact_status`
-    at `not_recorded_locally` and does not claim point/region artifact hashes,
-    unit-area proofs, convexity proofs, triple-count enumeration certificates,
-    all-triples minimum-area certificates, minimum-witness-triangle
-    certificates, reported-value comparison certificates, recomputed values,
-    or rendered Figure 13 panel artifacts.
-  - Required result: when the actual Appendix B.9-B.10 Heilbronn payloads and
-    certificates land, update ROADMAP, README, papers index, and code/paper
-    TODOs so roadmap claims distinguish the three `n` values, domains,
-    certificate evidence, triple enumeration, witness-triangle evidence,
-    reported-value comparisons, prior/current values, Figure 13 artifacts,
-    payload hashes, and source locations from aggregate Appendix B coverage.
-
 - [ ] Keep kissing-number roadmap wording scoped until Lemma 1 certificate
       evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.11 proves the dimension-11 kissing

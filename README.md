@@ -353,6 +353,16 @@ Important limits:
   record, simulator-escape or write-bypass containment policy,
   distributed-simulation reliability record, or independent checker output;
   `papers/archagent_boundary.json` records that absence boundary.
+- AlphaEvolve Fault2Flow workflow-automation coverage is background paper
+  context only: LibreEvolve has no regulatory-PDF ingestion runtime,
+  MinerU-to-Markdown extraction record, PlantUML mind-map artifact, PASTA
+  fault-tree schema, human-in-the-loop expert-review state, AlphaEvolve or
+  OpenEvolve reasoning-optimizer trace, n8n workflow synthesis or activation
+  record, workflow verification/refinement loop, `DL/T 722-2014` dataset
+  snapshot, transformer fault-case row, GPT-5 judge output, Table 1
+  reproduction row, token ledger, human-annotation ethics record, or local
+  Fault2Flow repository/runtime snapshot; `papers/fault2flow_boundary.json`
+  records that absence boundary.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

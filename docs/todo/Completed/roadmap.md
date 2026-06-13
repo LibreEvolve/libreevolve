@@ -2,6 +2,36 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive AlphaEvolve Fault2Flow roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/fault2flow_boundary.json` now keep arXiv `2511.12916`
+    source-scoped as background AlphaEvolve-optimized workflow-automation
+    application context rather than implemented LibreEvolve Fault2Flow-style
+    fault-to-workflow support.
+  - Current evidence: the cached paper and boundary JSON record regulatory
+    PDF ingestion, MinerU extraction, MySQL and Milvus storage, Vue3/Element
+    Plus/pdfjs/xlsx/ECharts frontend context, PlantUML mind-map generation,
+    PASTA fault-tree translation, human-in-the-loop review, AlphaEvolve/
+    OpenEvolve reasoning optimization, multi-island archive provenance, n8n
+    workflow synthesis and activation, workflow verification and refinement,
+    `DL/T 722-2014` transformer DGA source material, GPT-5 judge scoring,
+    Table 1 `16/0` Fault2Flow result rows, token ledgers, annotation ethics,
+    placeholder ACM metadata, and the absence of a dedicated extracted
+    Fault2Flow runtime repository.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: regulatory-source provenance, MinerU extraction records,
+    PlantUML and PASTA schemas and artifact hashes, expert-review state
+    records, reasoning-logic optimization metadata, n8n workflow artifacts,
+    activation logs, synthesized verification samples, failure-refinement
+    loops, dataset snapshots, transformer fault-case rows, GPT-5 judge
+    outputs, Table 1 reproduction rows, token-usage records,
+    human-annotation ethics records, and independent checker outputs.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive AlphaEvolve ArchAgent roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

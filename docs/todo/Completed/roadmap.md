@@ -2,6 +2,29 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Appendix B.11 kissing-number roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish rendered construction/figure evidence from proof-grade
+    kissing-number lower-bound verification.
+  - Current evidence: `kissing_result_boundary` records dimension `11`, prior
+    lower bound `592`, reported lower bound `593`, the 593 nonzero
+    integral-coordinate witness count, the max-norm versus
+    minimum-pairwise-distance condition, Lemma 1, the `{2 x / ||x||}`
+    sphere-center transform, required future vector/certificate fields, and
+    `not_recorded_locally` statuses.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: 593-vector payload hash, count/dimension or exact-coordinate
+    certificates, norm and pairwise-distance matrix artifacts, exact max-norm
+    and minimum-pairwise-distance certificates, witness vectors/pairs, strict
+    norm-distance inequality proof, Lemma 1 applicability certificate,
+    transformed-center and unit-sphere certificates, kissing-angle certificate,
+    and recomputed lower-bound row.
+  - Verification: Appendix B registry B.11 kissing-boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive Appendix B.9-B.10 Heilbronn roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

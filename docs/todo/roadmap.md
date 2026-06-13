@@ -10,30 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep kissing-number roadmap wording scoped until Lemma 1 certificate
-      evidence exists.
-  - Spec evidence: AlphaEvolve Appendix B.11 proves the dimension-11 kissing
-    lower bound by checking 593 nonzero integral-coordinate points with a
-    maximum-norm versus minimum-pairwise-distance condition, then applying
-    Lemma 1 to obtain a valid kissing configuration.
-  - Current evidence: roadmap/README/paper-index wording now cites the B.11
-    `kissing_result_boundary`, including dimension, prior/reported lower
-    bounds, 593-vector witness count, integral-coordinate and nonzero
-    requirements, exact max-norm versus minimum-pairwise-distance condition,
-    Lemma 1 applicability, transformed sphere-center formula, and required
-    future vector/certificate fields. It still does not claim a real vector
-    payload, count/dimension certificates, norm/distance matrices, exact
-    max-norm certificate, max-norm witness vector, exact
-    minimum-pairwise-distance certificate, minimum-pair witness, strict
-    norm-distance inequality certificate, transformed-center and unit-sphere
-    certificates, kissing-angle certificate, or recomputed lower bound.
-  - Required result: when the actual Appendix B.11 proof payload and
-    certificates land, update ROADMAP, README, papers index, and code/paper
-    TODOs so roadmap wording distinguishes rendered construction/figure
-    evidence from proof-grade kissing-number lower-bound verification with
-    count/dimension, matrix, strict-inequality, unit-sphere, and kissing-angle
-    evidence.
-
 - [ ] Keep Appendix B.12-B.13 roadmap wording scoped until circle/rectangle
       sum-of-radii provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.12-B.13 reports three packing

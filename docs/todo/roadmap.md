@@ -10,24 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep compiler-adoption roadmap wording scoped until integration-path
-      evidence exists.
-  - Spec evidence: AlphaEvolve Section 3.3.4 says discovered compiler
-    optimizations may be incorporated into existing compilers for specific use
-    cases, while the longer-term possibility is incorporating AlphaEvolve into
-    the compiler workflow itself.
-  - Current evidence: roadmap systems-result wording covers generic compiler
-    readiness, reference-correctness, expert signoff, runtime speedups, and
-    FlashAttention stack context. ROADMAP now records that ready compiler
-    reports require `compiler_adoption_provenance`, including adoption path,
-    target compiler/version/pass identity, integration owner, use-case
-    constraints, reviewer scope, rollout/revert state, workflow handoff, and
-    artifact refs.
-  - Required result: when compiler fixtures emit real integration-path
-    artifacts, update ROADMAP, README, papers index, and code/paper TODOs so
-    roadmap text distinguishes concrete optimization adoption in existing
-    compilers from future AlphaEvolve compiler-workflow integration.
-
 - [ ] Keep representative-fixture roadmap wording scoped to registries and
       smoke examples versus real target suites.
   - Spec evidence: AlphaEvolve-style benchmark coverage should include

@@ -84,6 +84,10 @@ Important limits:
   Transformer/inference configuration records, Pallas source snapshots, JAX
   wrapper artifacts, XLA stage outputs, hardware-target records, lowered-IR
   files, or optimization-decision evidence.
+- Compiler adoption records validate metadata only: they do not yet provide
+  real compiler patch/pass artifacts, use-case integration records, reviewer
+  signoff files, deployment or rollback logs, or AlphaEvolve-in-compiler-loop
+  evidence.
 - The docs do not yet reproduce AlphaEvolve Figure 6 or Figure 7 exhibits:
   scheduling heuristic source/heatmap provenance and Pallas tiling-problem
   diagram/source-data/render hashes remain active code and paper TODOs.

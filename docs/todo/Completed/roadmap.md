@@ -2,6 +2,29 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive compiler-adoption roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish `compiler_adoption_provenance` metadata from real compiler
+    integration-path evidence.
+  - Current evidence: `libreevolve.systems_result_report.v1` and focused tests
+    require `compiler_adoption_provenance` for ready compiler reports,
+    including adoption-path classification, target compiler/version/pass,
+    bounded use-case scope, optimization artifact identity/hash, integration
+    owner, reviewer scope, adoption state, rollout/revert state,
+    workflow-handoff boundary, and artifact refs.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    compiler adoption artifacts: compiler patch or pass artifacts,
+    workload/use-case integration records, integration-review files, reviewer
+    signoff files, deployment or rollback logs, and workflow-handoff evidence
+    that separates concrete optimization adoption from future
+    AlphaEvolve-in-the-compiler-loop integration.
+  - Verification: paper-manifest validation, checked-in paper-index TODO
+    coverage, and focused systems-result compiler-adoption tests still pass,
+    while searches confirm the compiler-adoption code and paper TODOs remain
+    active.
+
 - [x] Archive compiler-stack context roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

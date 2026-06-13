@@ -12957,3 +12957,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     records exist.
   - Verification: paper-manifest validation requires the sidecar and focused
     evaluator-oracle tests cover its overclaim rejection.
+- [x] Add README boundary for incorrect-suggestion execution-grounding evidence.
+  - Spec evidence: AlphaEvolve says code execution and automatic evaluation
+    ground LLM-directed evolution and help avoid incorrect base-LLM
+    suggestions.
+  - Status: README now states that execution-grounding and
+    incorrect-suggestion reports are local run telemetry over accepted,
+    rejected, execution-filtered, invalid-evaluation, parse-error,
+    archive-rejected, and accepted-invalid candidates, not independent rejudge
+    coverage, audited false-acceptance/false-rejection rates, semantic
+    failed-proposal retrieval, or publication-strength filtering proof. It
+    points to `papers/incorrect_suggestion_audit_boundary.json`.
+  - Remaining README gap: docs cannot imply publication-strength filtering of
+    incorrect LLM suggestions until independent rejudge/reference-checker or
+    statistical-oracle evidence and audited error rates exist.
+  - Verification: paper-manifest validation requires the sidecar and focused
+    incorrect-suggestion audit tests cover its overclaim rejection.

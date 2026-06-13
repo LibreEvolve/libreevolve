@@ -50,7 +50,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     archive-rejection counts, local filter rates, bounded audit rows, and false
     readiness for independent rejudge and audited error rates. It keeps the
     claim scoped to local execution-grounding evidence rather than an
-    independent benchmark rejudge. README names
+    independent benchmark rejudge. README Important limits now name
     `papers/proposal_lifecycle_audit_boundary.json` as the committed
     paper-manifest-validated independent-audit absence boundary and
     `papers/incorrect_suggestion_audit_boundary.json` as the committed

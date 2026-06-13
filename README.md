@@ -50,6 +50,12 @@ Important limits:
   independent reference/statistical-oracle evidence, benchmark sufficiency
   proof, independent disagreement outcomes, or cross-run oracle tables; that
   boundary is tracked by `papers/evaluator_oracle_boundary.json`.
+- Execution-grounding and incorrect-suggestion reports are local run telemetry
+  over accepted, rejected, execution-filtered, invalid-evaluation, parse-error,
+  archive-rejected, and accepted-invalid candidates, not independent rejudge
+  coverage, audited false-acceptance/false-rejection rates, semantic failed-
+  proposal retrieval, or publication-strength filtering proof; that boundary
+  is tracked by `papers/incorrect_suggestion_audit_boundary.json`.
 - Qualitative LLM-feedback records are declared criterion/rubric/intent
   provenance and prompt-history audit evidence, not executed calibration,
   task-suite, ablation, or independent feedback-quality validation; that

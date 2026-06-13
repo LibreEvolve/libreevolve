@@ -10,40 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement inference-time trajectory-alignment harness gates beyond paper
-      cache coverage.
-  - Spec evidence: arXiv `2605.21516`, submitted May 15, 2026, introduces
-    `Harnesses for Inference-Time Alignment over Execution Trajectories`. The
-    abstract says more decomposition or guidance can improve execution but can
-    also reduce final task success. It separates harness design into task
-    decomposition and guided execution, analyzes workflow granularity, retry
-    budgets, and guidance-induced action reweighting, and identifies
-    over-decomposition, over-pruning, hallucinated execution, and partial
-    harnessing tradeoffs.
-  - Current evidence: ROADMAP, `papers/download_manifest.*`,
-    `papers/row_identity.json`, `papers/README.md`, README, and TODO coverage
-    now include `2605.21516`, cached locally as
-    `papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf` with byte
-    count `2323632` and SHA-256
-    `5458d316fd5edbfda5cf7355592d41e0c5f3f889e31c92855728c47452f6ca32`.
-    ROADMAP tracks the paper as background inference-time trajectory-
-    alignment context only. It still has no decomposition/guidance parameter
-    gates, pass-rate plus final-bias reporting, retry-budget sensitivity
-    measurement, over-structured workflow failure-mode inventory, partial
-    versus fully structured harness comparison, or alignment evidence before
-    promoting increasingly structured harness workflows.
-  - Required result: implement roadmap gates beyond paper-cache evidence:
-    source-license metadata, harness parameter schema, decomposition-
-    granularity records, guidance-strength and guidance-rule records, sub-
-    goal sequence artifacts, trajectory/action distribution records, retry-
-    budget sensitivity reports, pass-rate and final-bias metrics,
-    granularity-capability alignment reports, guidance-evidence alignment
-    reports, over-decomposition/over-pruning/hallucinated-execution
-    diagnostics, partial-harness benchmark records, Terminal-Bench-2 and
-    synthetic task metadata, baseline identities, and a background-only or
-    benchmark-fixture status rule so roadmap claims do not treat more harness
-    structure as automatically better.
-
 - [ ] Implement Adaptive Auto-Harness open-ended task-stream gates beyond
       paper cache coverage.
   - Spec evidence: arXiv `2606.01770`, submitted June 1, 2026, introduces

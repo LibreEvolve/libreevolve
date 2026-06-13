@@ -2,6 +2,37 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive inference-time trajectory-alignment roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2605.21516` source-scoped as background inference-time
+    trajectory-alignment context rather than implemented LibreEvolve
+    inference-time alignment harness support.
+  - Current evidence: the cached paper and `papers/README.md` record task
+    decomposition, guided execution, workflow granularity, retry budgets,
+    guidance-induced action reweighting, stage-level gap framing,
+    over-decomposition, over-pruning, hallucinated execution, controlled
+    synthetic experiments, real terminal-agent benchmarks, and partial
+    harnessing outperforming fully structured workflows in some cases, while
+    marking local harness parameterization, workflow-granularity sweeps,
+    retry-budget studies, action-reweighting reports, stage-level metrics,
+    failure reports, partial-harness stopping rules, controlled synthetic
+    experiments, terminal-agent benchmark reproductions, linked-code audits,
+    and independent reproduction output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source/license metadata, harness parameter schema,
+    decomposition-granularity records, guidance-strength and guidance-rule
+    records, sub-goal sequence artifacts, trajectory/action distribution
+    records, retry-budget sensitivity reports, pass-rate and final-bias
+    metrics, granularity-capability alignment reports, guidance-evidence
+    alignment reports, over-decomposition/over-pruning/hallucinated-execution
+    diagnostics, partial-harness benchmark records, Terminal-Bench-2 and
+    synthetic task metadata, baseline identities, code/artifact
+    reproducibility status, and independent verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive AI Harness Engineering runtime-substrate roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

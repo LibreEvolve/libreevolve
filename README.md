@@ -271,6 +271,14 @@ Important limits:
   capability equation record, failure-attribution taxonomy report,
   deterministic requirement-check package, structured verification report,
   public-code snapshot audit, or independent reproduction output.
+- Inference-time trajectory-alignment coverage is background paper context
+  only: LibreEvolve has no harness parameterization for decomposition versus
+  guided execution, workflow-granularity sweep, retry-budget study,
+  guidance-induced action-reweighting report, stage-level gap metric,
+  over-decomposition failure report, over-pruning failure report,
+  hallucinated-execution failure report, partial-harnessing stopping rule,
+  controlled synthetic experiment, terminal-agent benchmark reproduction,
+  linked-code audit, or independent reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

@@ -69,25 +69,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README creative-generation wording scoped until semantic proposal-
-      diversity evidence exists beyond exact duplicate counts.
-  - Spec evidence: AlphaEvolve Section 2.3 says SOTA LLMs digest previous
-    solutions and propose new, diverse ways to improve them, while Section 4
-    ablations connect stronger underlying LLMs to better performance.
-  - Current evidence: README now describes
-    `runtime.history.proposal_diversity_report`, including exact proposal and
-    idea hash uniqueness/duplicate counts by generation and proposal batch. It
-    also states that near-duplicate detection, idea-family classification,
-    semantic novelty, model-quality attribution, and benchmark linkage remain
-    future work. README now ties that boundary to
-    `papers/proposal_diversity_boundary.json`.
-  - Required result: when semantic proposal-diversity reporting lands, update
-    README, ROADMAP, papers index, and code/paper TODOs with per-call or
-    per-batch idea/operator-family labels, parent/inspiration relations,
-    prompt/backend model ids, near-duplicate diagnostics, code and semantic or
-    task-output distance measures where available, accepted/rejected outcomes,
-    novelty contribution, and equal-budget/model ablation linkage.
-
 - [x] Keep README database-output claims scoped to prompt-visible output
       capture versus queryable output indexes.
   - Spec evidence: AlphaEvolve's evolutionary database stores generated

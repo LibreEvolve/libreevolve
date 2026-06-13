@@ -10715,6 +10715,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     attribution remain open.
   - Verification: focused boundary and paper-manifest tests cover overclaim
     rejection and repo-root sidecar presence.
+
+- [x] Keep creative-generation roadmap wording scoped until semantic proposal-
+      diversity evidence exists beyond exact duplicate counts.
+  - Status: ROADMAP now separates `runtime.history.proposal_diversity_report`
+    exact duplicate counts from semantic proposal-index retrieval, calibrated
+    proposal-quality models, near-duplicate/idea-family novelty,
+    code/semantic/task-output distance diagnostics, parent/inspiration
+    relation linkage, prompt/backend model attribution, accepted/rejected
+    outcome linkage, model-quality attribution, and equal-budget/model
+    ablation evidence.
+  - Remaining roadmap gap: implementation of those semantic proposal-diversity
+    reports and ablations remains tracked in the active paper TODO.
 - [x] Scope ROADMAP archive-event replay wording with a paper sidecar.
   - Spec evidence: AlphaEvolve-scale resumed experiments need archive
     population state to be reproducible without confusing snapshots with full

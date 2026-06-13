@@ -681,7 +681,9 @@ is not yet an AlphaEvolve reproduction.
   bounded-leading-capture-only scope,
   into semantically searchable proposal memory only if needed; remaining work
   is semantic proposal-index retrieval, calibrated proposal-quality models,
-  near-duplicate/idea-family novelty, model-quality attribution,
+  near-duplicate/idea-family novelty, code/semantic/task-output distance
+  diagnostics, parent/inspiration relation linkage, prompt/backend model
+  attribution, accepted/rejected outcome linkage, model-quality attribution,
   explicit controller-driven backtracking policies, cross-run proposal tables,
   hypothesis-refinement loops, with
   `papers/controller_backtracking_boundary.json` now carrying the

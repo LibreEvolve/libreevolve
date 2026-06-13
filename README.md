@@ -678,8 +678,9 @@ Important limits:
   boundary is tracked by `papers/proposal_score_boundary.json`.
 - Proposal-diversity reports are exact proposal/idea hashes and duplicate
   counts, not semantic novelty, near-duplicate detection, operator-family
-  labels, code or task-output distance, novelty scoring, prompt/backend
-  attribution, or equal-budget/model-ablation evidence; that boundary is
+  labels, code/semantic/task-output distance, parent/inspiration relation
+  evidence, novelty scoring, prompt/backend attribution, accepted/rejected
+  status linkage, or equal-budget/model-ablation evidence; that boundary is
   tracked by `papers/proposal_diversity_boundary.json`.
 - Program-output resurfacing is exact current-run source-key/hash lookup over
   bounded output summaries, not durable output tables, schema-aware retrieval,

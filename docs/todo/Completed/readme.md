@@ -14076,6 +14076,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     creative-generation evidence until those reports and ablations exist.
   - Verification: focused boundary and paper-manifest tests cover the sidecar
     and its overclaim rejection.
+
+- [x] Keep README creative-generation wording scoped until semantic proposal-
+      diversity evidence exists beyond exact duplicate counts.
+  - Status: README now scopes proposal-diversity reports as exact
+    proposal/idea hashes and duplicate counts, not semantic novelty,
+    near-duplicate detection, operator-family labels, code/semantic/task-output
+    distance, parent/inspiration relation evidence, novelty scoring,
+    prompt/backend attribution, accepted/rejected status linkage, or
+    equal-budget/model-ablation evidence.
+  - Verification: `papers/proposal_diversity_boundary.json` remains the
+    manifest-checked sidecar for that exact-text boundary, while the paper TODO
+    for implementing semantic proposal-diversity evidence stays active.
 - [x] Add README boundary for archive-event replay evidence.
   - Spec evidence: AlphaEvolve-style long-running evolutionary search needs
     reproducible population state and clear restore/replay boundaries.

@@ -69,22 +69,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README paper-inspired plugin claims scoped to approximation status.
-  - Spec evidence: citing CausalEvolve, DeepEvolve, ImprovEvolve,
-    ThetaEvolve, GigaEvo, CodeEvolve, or MadEvolve should not imply faithful
-    reproduction unless paper-specific behavior is implemented.
-  - Current evidence: README says built-in plugins are paper-inspired
-    approximations, not full reproductions; it labels CausalEvolve as
-    token-pattern outcome-factor guidance, DeepEvolve as pluggable
-    arXiv/web-search context, ImprovEvolve as modular decomposition prompting,
-    and ThetaEvolve as clipped-reward JSONL export, not training. The README
-    paper table also marks GigaEvo and CodeEvolve as inspiration only and
-    MadEvolve as background context.
-  - Required result: when paper-specific plugin/framework behavior lands,
-    update README, ROADMAP, papers index, code TODO, and paper TODO entries
-    together so the README neither underclaims current approximation metadata
-    nor overclaims faithful paper implementations.
-
 - [ ] Keep README custom-plugin provenance claims scoped to entry-point specs
   versus direct instances.
   - Spec evidence: AlphaEvolve-grade plugin extensibility should make custom

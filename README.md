@@ -644,6 +644,13 @@ Important limits:
   benchmark-required metric-diverse prompt policy, cross-run fixtures, or
   scalar/single-metric equal-budget comparisons; that boundary is tracked by
   `papers/metric_diverse_prompt_boundary.json`.
+- Built-in paper-inspired plugins are approximations, not faithful
+  reproductions: `causal` is token-pattern outcome-factor guidance,
+  `deep_research` is bounded arXiv/web-search context, `modular` is static
+  ImprovEvolve-inspired prompt guidance, and `ttt_rl` exports clipped-reward
+  JSONL examples without training. GigaEvo, CodeEvolve, and MadEvolve are
+  currently paper/index inspiration or background context, not implemented
+  framework parity.
 - Proposal scores and hypothesis indexes are bounded current-run records, not
   semantic idea-memory retrieval, calibrated proposal-quality models,
   cross-run proposal tables, or score-driven prompt/archive policy; that

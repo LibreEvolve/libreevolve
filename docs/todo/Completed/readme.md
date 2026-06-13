@@ -65,6 +65,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     live authenticated request/model-registry evidence beyond credential
     presence and local client-construction preflight.
 
+- [x] Keep README paper-inspired plugin claims scoped to approximation status.
+  - Status: README Important limits now states that built-in paper-inspired
+    plugins are approximations, not faithful reproductions: `causal` is
+    token-pattern outcome-factor guidance, `deep_research` is bounded
+    arXiv/web-search context, `modular` is static ImprovEvolve-inspired prompt
+    guidance, and `ttt_rl` exports clipped-reward JSONL examples without
+    training. It also states that GigaEvo, CodeEvolve, and MadEvolve are
+    paper/index inspiration or background context, not implemented framework
+    parity.
+  - Verification: `docs/plugins.md` and `papers/README.md` preserve the same
+    source-specific boundaries, while code and paper TODOs keep faithful
+    paper-specific plugin/framework behavior open.
+
 - [x] Keep README multi-evaluator wording scoped until independent
       evaluator-oracle evidence exists.
   - Status: README Important limits now states that evaluator/oracle reports

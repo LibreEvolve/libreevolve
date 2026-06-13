@@ -4,6 +4,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document existing-codebase integration README boundary.
+  - Status: README Important limits now states that existing-codebase
+    integration reports inventory runtime Python EVOLVE-block marker spans and
+    optional source-setup metadata, not AlphaEvolve-style minimal-change
+    integration with identified upstream releases, pre-marker hashes,
+    marker-only setup diffs, evaluator-call continuity, portable source-root
+    identity, or setup-change counts. It ties that boundary to
+    `papers/existing_codebase_integration_boundary.json`.
+  - Verification: existing-codebase integration boundary and paper-manifest
+    tests validate the sidecar that README now references.
+
 - [x] Document evaluator-workload README boundary.
   - Status: README Important limits now states that evaluator workload
     metadata and `runtime.history.evaluator_workload_report` record declared

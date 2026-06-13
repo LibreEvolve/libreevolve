@@ -38,6 +38,12 @@ Important limits:
   reproduction, async controller/sampler/evaluator topology, independent
   evaluator-pool implementation, or full process parity; that boundary is
   tracked by `papers/process_exhibit_boundary.json`.
+- Existing-codebase integration reports inventory runtime Python EVOLVE-block
+  marker spans and optional source-setup metadata, not AlphaEvolve-style
+  minimal-change integration with identified upstream releases, pre-marker
+  hashes, marker-only setup diffs, evaluator-call continuity, portable
+  source-root identity, or setup-change counts; that boundary is tracked by
+  `papers/existing_codebase_integration_boundary.json`.
 - Archive restore uses manifest archive-state snapshots plus accepted-history
   rows for current cursor/cell/elite contents; `archive_events.jsonl` replay is
   audit-only and not an ordered MAP-Elites restore engine. That boundary is

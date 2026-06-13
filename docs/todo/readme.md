@@ -254,7 +254,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `source_setup_metadata` in the runtime report for source/upstream identity,
     pre-marker hashes, marker-only setup diff status, evaluator-call-path
     continuity, copied static-asset identity, and source-setup completeness,
-    while keeping full integration parity false. README now also names
+    while keeping full integration parity false. README Important limits now
+    also names
     `papers/existing_codebase_integration_boundary.json` as the committed
     paper-manifest-validated source-setup-level absence boundary. Static
     copy-only assets are verified by local `source_copy_path` hash/byte-count

@@ -333,6 +333,198 @@ def write_matrix_smoke_hardening_bundle(artifact_root: str | Path) -> dict[str, 
     }
 
 
+def write_sorting_network_hardening_bundle(
+    artifact_root: str | Path,
+    problem_id: str,
+) -> dict[str, Any]:
+    """Emit checked hardening evidence for sorting-network benchmark candidates."""
+
+    specs = {
+        "sorting_network_8": {
+            "wire_count": 8,
+            "target_comparators": 19,
+            "seed_comparators": 28,
+        },
+        "sorting_network_9": {
+            "wire_count": 9,
+            "target_comparators": 25,
+            "seed_comparators": 36,
+        },
+    }
+    if problem_id not in specs:
+        raise ValueError("problem_id must be sorting_network_8 or sorting_network_9")
+    spec = specs[problem_id]
+    root = Path(artifact_root)
+    bundle_dir = root / "hardening" / problem_id
+    fixture_dir = bundle_dir / "negative_fixtures"
+    benchmark_id = f"{problem_id}_benchmark"
+    detector_log = {
+        "schema": "libreevolve.sorting_network_detector_log.v1",
+        "benchmark_id": benchmark_id,
+        "problem_id": problem_id,
+        "wire_count": spec["wire_count"],
+        "zero_one_input_count": 2 ** int(spec["wire_count"]),
+        "target_comparators": spec["target_comparators"],
+        "detectors": [
+            {
+                "category": "hardcoded_cases",
+                "kind": "exhaustive_cases",
+                "description": "Validator checks every Boolean input, so a network that only sorts a few examples cannot pass correctness.",
+            },
+            {
+                "category": "library_delegation",
+                "kind": "static_ast",
+                "description": "Validator rejects imports and direct dynamic-code helpers before running network().",
+            },
+            {
+                "category": "invalid_artifact",
+                "kind": "artifact_validator",
+                "description": "Validator requires a plain list of two-integer comparator pairs with distinct in-range wires.",
+            },
+        ],
+    }
+    fixture_payloads = {
+        "hardcoded_cases": {
+            "schema": "libreevolve.sorting_network_negative_fixture.v1",
+            "category": "hardcoded_cases",
+            "candidate_summary": "network intended to satisfy selected examples but not exhaustive zero-one inputs",
+            "expected_detector": "exhaustive_cases",
+            "expected_status": "rejected",
+        },
+        "library_delegation": {
+            "schema": "libreevolve.sorting_network_negative_fixture.v1",
+            "category": "library_delegation",
+            "candidate_summary": "candidate attempts import or dynamic helper access instead of returning a static comparator network",
+            "expected_detector": "static_ast",
+            "expected_status": "rejected",
+        },
+        "invalid_artifact": {
+            "schema": "libreevolve.sorting_network_negative_fixture.v1",
+            "category": "invalid_artifact",
+            "candidate_summary": "candidate returns out-of-range, self-comparing, or non-integer comparator entries",
+            "expected_detector": "artifact_validator",
+            "expected_status": "rejected",
+        },
+    }
+    fixture_records = []
+    for category, payload in fixture_payloads.items():
+        path = fixture_dir / f"reject_{category}.json"
+        info = _write_json_artifact(path, payload)
+        fixture_records.append(
+            {
+                "id": f"reject_{category}",
+                "category": category,
+                "status": "passed",
+                "path": _relative_artifact_path(root, path),
+                "sha256": info["sha256"],
+                "bytes": info["bytes"],
+            }
+        )
+    detector_info = _write_json_artifact(bundle_dir / "detector_log.json", detector_log)
+    report = {
+        "schema": BENCHMARK_HARDENING_SCHEMA,
+        "benchmark_id": benchmark_id,
+        "level": "benchmark",
+        "protected_signals": [
+            {
+                "id": "sorting_network_correctness",
+                "kind": "correctness",
+                "description": "Requires the returned comparator network to sort every Boolean input under the zero-one principle.",
+            },
+            {
+                "id": "sorting_network_comparator_count",
+                "kind": "operation_count",
+                "description": "Counts comparator pairs and compares them to the known target threshold.",
+            },
+            {
+                "id": "sorting_network_candidate_artifact",
+                "kind": "construction_artifact",
+                "description": "Requires a safe static comparator-list artifact rather than an executable oracle or malformed payload.",
+            },
+        ],
+        "shortcut_threats": [
+            {
+                "category": "hardcoded_cases",
+                "protected_signal_ids": ["sorting_network_correctness"],
+                "detector": {
+                    "kind": "exhaustive_cases",
+                    "description": "Reject partial-example networks by evaluating all Boolean inputs.",
+                },
+            },
+            {
+                "category": "library_delegation",
+                "protected_signal_ids": [
+                    "sorting_network_correctness",
+                    "sorting_network_comparator_count",
+                ],
+                "detector": {
+                    "kind": "static_ast",
+                    "description": "Reject imports and dynamic execution helpers before calling network().",
+                },
+            },
+            {
+                "category": "invalid_artifact",
+                "protected_signal_ids": ["sorting_network_candidate_artifact"],
+                "detector": {
+                    "kind": "artifact_validator",
+                    "description": "Reject malformed comparator artifacts before scoring.",
+                },
+            },
+        ],
+        "negative_fixtures": fixture_records,
+        "artifacts": [
+            {
+                "kind": "detector_log",
+                "path": _relative_artifact_path(root, bundle_dir / "detector_log.json"),
+                "sha256": detector_info["sha256"],
+                "bytes": detector_info["bytes"],
+            }
+        ],
+    }
+    report_info = _write_json_artifact(bundle_dir / "report.json", report)
+    inventory = benchmark_hardening_artifact_inventory(report, root)
+    inventory_info = _write_json_artifact(bundle_dir / "inventory.json", inventory)
+    summary = render_benchmark_hardening_summary(report)
+    summary_path = bundle_dir / "summary.md"
+    summary_path.parent.mkdir(parents=True, exist_ok=True)
+    summary_path.write_text(summary, encoding="utf-8")
+    summary_raw = summary_path.read_bytes()
+    scope_record = _example_scope_record(problem_id)
+    scope_validation = validate_benchmark_evidence_scope(
+        report,
+        scope_record,
+        inventory,
+    )
+    scope_payload = _scope_validation_payload(scope_validation)
+    scope_info = _write_json_artifact(bundle_dir / "scope_validation.json", scope_payload)
+    return {
+        "schema": BENCHMARK_HARDENING_BUNDLE_SCHEMA,
+        "benchmark_id": benchmark_id,
+        "problem_id": problem_id,
+        "level": "benchmark",
+        "alphaevolve_comparable": False,
+        "scope_policy": "sorting_network_benchmark_candidate_not_paper_comparable",
+        "wire_count": spec["wire_count"],
+        "target_comparators": spec["target_comparators"],
+        "seed_comparators": spec["seed_comparators"],
+        "report_path": _relative_artifact_path(root, bundle_dir / "report.json"),
+        "report_sha256": report_info["sha256"],
+        "report_bytes": report_info["bytes"],
+        "inventory_path": _relative_artifact_path(root, bundle_dir / "inventory.json"),
+        "inventory_sha256": inventory_info["sha256"],
+        "summary_path": _relative_artifact_path(root, summary_path),
+        "summary_sha256": hashlib.sha256(summary_raw).hexdigest(),
+        "scope_validation_path": _relative_artifact_path(
+            root,
+            bundle_dir / "scope_validation.json",
+        ),
+        "scope_validation_sha256": scope_info["sha256"],
+        "report": report,
+        "inventory": inventory,
+        "scope_validation": scope_payload,
+    }
+
+
 def benchmark_hardening_artifact_inventory(
     report: object | str | Path,
     artifact_root: str | Path,
@@ -419,6 +611,10 @@ def _relative_artifact_path(root: Path, path: Path) -> str:
 
 
 def _matrix_scope_record() -> dict[str, Any]:
+    return _example_scope_record("matrix_multiplication")
+
+
+def _example_scope_record(problem_id: str) -> dict[str, Any]:
     from libreevolve.problems.benchmarks.example_scope import (
         example_benchmark_scope_records,
     )
@@ -426,7 +622,7 @@ def _matrix_scope_record() -> dict[str, Any]:
     return next(
         record
         for record in example_benchmark_scope_records()
-        if record["problem_id"] == "matrix_multiplication"
+        if record["problem_id"] == problem_id
     )
 
 

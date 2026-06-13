@@ -91,9 +91,10 @@ Important limits:
   sorting-network rediscovery benchmark. `sorting_network_8` and
   `sorting_network_9` now provide non-comparable benchmark candidates with
   exhaustive zero-one verification, comparator-count/depth metrics, valid
-  28- and 36-comparator seeds, and checked 19- and 25-comparator targets, but
-  LibreEvolve still lacks repeated-run evidence, paper certification, and
-  hardening negatives.
+  28- and 36-comparator seeds, checked 19- and 25-comparator targets, and a
+  helper-generated hardening bundle for generic negative fixtures, detector
+  logs, inventories, summaries, and scope validation. LibreEvolve still lacks
+  repeated-run evidence, source-citation sidecars, and paper certification.
 - Sample-efficiency reports under `runtime.history.sample_efficiency_report`
   are single-run counts for generated proposals, evaluated/valid/admitted
   candidates, retained elites, sampling-eligible candidates, logical LLM

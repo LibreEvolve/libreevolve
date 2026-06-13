@@ -2513,8 +2513,10 @@ Implemented:
   `libreevolve/problems/examples/sorting_network_9`: bounded benchmark
   candidates with exhaustive zero-one validation, valid 28- and 36-comparator
   seeds, and checked 19- and 25-comparator targets. They are not
-  paper-comparable evidence until repeated runs, hardening reports,
-  source-citation sidecars, and certification artifacts are added.
+  paper-comparable evidence until repeated runs, source-citation sidecars, and
+  certification artifacts are added. Their hardening bundle helper emits
+  generic negative-fixture, inventory, summary, and scope-validation evidence,
+  but that is not a run-certified rediscovery record.
 
 Planned or background-only:
 

@@ -1106,7 +1106,9 @@ resumed-trace proof are still open.
 - Add a bounded sorting-network rediscovery fixture before heavier benchmark
   families: `sorting_network_8` and `sorting_network_9` now exhaustively
   verify `2^8` and `2^9` Boolean inputs and target 19 and 25 comparators from
-  valid 28- and 36-comparator seeds. Add repeated-run, hardening, and
+  valid 28- and 36-comparator seeds. Their hardening bundle helper now emits
+  negative-fixture descriptors, detector logs, inventories, summaries, and
+  scope validation for both candidates. Add repeated-run, source-citation, and
   paper-certification evidence before treating them as comparable results.
   This remains the current lowest-risk realistic benchmark path because it has
   cheap objective verification, known targets, and no external solver or

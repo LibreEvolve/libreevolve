@@ -10,6 +10,7 @@ from libreevolve.problems.benchmarks.benchmark_hardening import (
     validate_benchmark_evidence_scope,
     validate_benchmark_hardening_report,
     write_matrix_smoke_hardening_bundle,
+    write_sorting_network_hardening_bundle,
 )
 from libreevolve.problems.benchmarks.example_scope import (
     example_benchmark_scope_records,
@@ -359,3 +360,59 @@ def test_matrix_smoke_hardening_bundle_writes_scope_checked_evidence(tmp_path):
     assert "Benchmark hardening report: matrix_multiplication_smoke" in summary_path.read_text(
         encoding="utf-8"
     )
+
+
+def test_sorting_network_8_hardening_bundle_writes_benchmark_evidence(tmp_path):
+    bundle = write_sorting_network_hardening_bundle(tmp_path, "sorting_network_8")
+    report = bundle["report"]
+    inventory = bundle["inventory"]
+
+    assert bundle["schema"] == BENCHMARK_HARDENING_BUNDLE_SCHEMA
+    assert bundle["benchmark_id"] == "sorting_network_8_benchmark"
+    assert bundle["problem_id"] == "sorting_network_8"
+    assert bundle["level"] == "benchmark"
+    assert bundle["wire_count"] == 8
+    assert bundle["target_comparators"] == 19
+    assert bundle["seed_comparators"] == 28
+    assert bundle["alphaevolve_comparable"] is False
+    assert bundle["scope_validation"]["ok"] is True
+    assert bundle["scope_validation"]["scope_level"] == "benchmark"
+    assert bundle["scope_validation"]["hardening_level"] == "benchmark"
+    assert validate_benchmark_hardening_report(report).ok is True
+    assert validate_benchmark_hardening_report(report).benchmark_ready is True
+    assert inventory["ok"] is True
+    assert inventory["record_count"] == 4
+    assert {record["status"] for record in inventory["records"]} == {"verified"}
+    assert {fixture["category"] for fixture in report["negative_fixtures"]} == {
+        "hardcoded_cases",
+        "library_delegation",
+        "invalid_artifact",
+    }
+
+    summary_path = tmp_path / bundle["summary_path"]
+    assert summary_path.exists()
+    assert "Benchmark hardening report: sorting_network_8_benchmark" in summary_path.read_text(
+        encoding="utf-8"
+    )
+
+
+def test_sorting_network_9_hardening_bundle_writes_benchmark_evidence(tmp_path):
+    bundle = write_sorting_network_hardening_bundle(tmp_path, "sorting_network_9")
+
+    assert bundle["benchmark_id"] == "sorting_network_9_benchmark"
+    assert bundle["problem_id"] == "sorting_network_9"
+    assert bundle["wire_count"] == 9
+    assert bundle["target_comparators"] == 25
+    assert bundle["seed_comparators"] == 36
+    assert bundle["scope_validation"]["ok"] is True
+    assert bundle["inventory"]["ok"] is True
+    assert validate_benchmark_hardening_report(bundle["report"]).benchmark_ready is True
+
+
+def test_sorting_network_hardening_bundle_rejects_unknown_problem(tmp_path):
+    try:
+        write_sorting_network_hardening_bundle(tmp_path, "sorting_network_10")
+    except ValueError as exc:
+        assert "sorting_network_8 or sorting_network_9" in str(exc)
+    else:
+        raise AssertionError("expected ValueError")

@@ -106,6 +106,7 @@ from libreevolve.problems.benchmarks.benchmark_hardening import (
     render_benchmark_hardening_summary,
     validate_benchmark_evidence_scope,
     validate_benchmark_hardening_report,
+    write_sorting_network_hardening_bundle,
 )
 from libreevolve.problems.benchmarks.benchmark_fixture_readiness_boundary import (
     BENCHMARK_FIXTURE_READINESS_BOUNDARY_SCHEMA,
@@ -1402,4 +1403,5 @@ __all__ = [
     "validate_ucb1_boundary",
     "validate_whole_run_source_workspace_integrity_boundary",
     "write_strassen_2x2_publication_bundle",
+    "write_sorting_network_hardening_bundle",
 ]

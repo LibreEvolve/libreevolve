@@ -132,8 +132,10 @@ The bundled examples are intentionally small:
   artifact writing, or archive behavior.
 - `sorting_network_8` and `sorting_network_9` are bounded benchmark candidates
   with exhaustive zero-one validation and known comparator targets, but they
-  are not paper-comparable evidence until repeated runs, hardening artifacts,
-  and certification are added.
+  are not paper-comparable evidence until repeated runs, source citations, and
+  certification are added. Their hardening bundle helper emits generic
+  negative-fixture, inventory, summary, and scope-validation evidence; it is
+  not a certified rediscovery result.
 
 Treat an example as benchmark evidence only when its own docs or paper sidecar
 says so.

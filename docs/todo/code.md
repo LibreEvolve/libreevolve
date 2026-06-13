@@ -599,16 +599,20 @@ sidecars, tests, and active TODOs.
     target-achieved metrics, plus focused tests for the 28-comparator seed and
     a known 19-comparator target. The example-scope registry labels it as a
     non-comparable benchmark candidate because repeated-run evidence,
-    hardening artifacts, and paper certification are still absent.
+    source-citation sidecars, and paper certification are still absent.
     `libreevolve/problems/examples/sorting_network_9` now mirrors that
     structure for 9 inputs with exhaustive `2^9` Boolean-input validation, a
     complete 36-comparator seed, a checked known 25-comparator target, and the
-    same non-comparable benchmark-candidate scope.
+    same non-comparable benchmark-candidate scope. A sorting-network
+    hardening bundle helper now emits detector logs, generic negative-fixture
+    descriptors, artifact inventories, summaries, and scope validation for
+    both candidates, covering hardcoded-case, library-delegation, and
+    invalid-artifact shortcut categories without certifying a benchmark run.
   - Required result: add repeated-seed run reports, fixed evaluator/model/
-    budget conditions, hardening/negative fixtures, and certification artifacts
+    budget conditions, source-citation sidecars, and certification artifacts
     for both 8- and 9-input targets before treating sorting-network
     rediscovery as AlphaEvolve-style benchmark evidence rather than executable
-    benchmark scaffolding.
+    benchmark scaffolding with helper-generated hardening descriptors.
 
 - [ ] Keep Table 1 capability-comparison exhibit provenance scoped to row
       evidence instead of capability parity.

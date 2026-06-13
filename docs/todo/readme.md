@@ -1001,25 +1001,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README Appendix B.4 prior-bound wording scoped until rounding
-      provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B.4 frames the uncertainty-inequality
-    result against prior work as `0.2025 <= C4 <= 0.3523`, while noting that
-    reference `[33]` states the upper bound as `0.353` and that rounding the
-    referenced solution to the fourth digit gives `0.3523`. AlphaEvolve's
-    first-version `C4 <= 0.3521` result is compared against that rounded
-    baseline.
-  - Current evidence: README now distinguishes the prior `[33]` `0.353`
-    statement, the rounded `0.3523` comparison baseline, AlphaEvolve's
-    `0.3521` first-version bound, the later `0.3216` revision, and the
-    separate Hermite certificate boundary. The underlying `[33]`
-    source-solution artifact, page/section locator, and rounding-audit
-    certificate remain absent.
-  - Required result: when B.4 prior-source artifacts or precise source locators
-    land, update README, ROADMAP, papers index, and code/paper TODOs together
-    so README can cite the rounding evidence directly without treating it as a
-    reproduced local certificate.
-
 - [ ] Keep README Appendix B.4 numeric wording scoped until Hermite-polynomial
       certificate evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.4 derives the `C4 <= 0.3521`

@@ -4,6 +4,21 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Appendix B.4 prior-bound rounding README boundary.
+  - Status: README Important limits now states that Appendix B.4 prior-bound
+    rounding provenance remains absent: the registry preserves the `[33]`
+    lower bound `0.2025`, source-stated upper bound `0.353`, rounded
+    comparison baseline `0.3523`, and policy that AlphaEvolve's first-version
+    `C4 <= 0.3521` is compared against the rounded baseline, not a `[33]` page
+    or section locator, source-solution artifact, prior-solution rounding
+    artifact, rounding-audit certificate, or locally reproduced certificate for
+    the `0.353` to `0.3523` distinction.
+  - Verification: Appendix B registry tests cover B.4
+    `prior_bound_rounding_evidence`, source-formulation bound ordering,
+    rounded-versus-stated ordering, missing locator/artifact/audit statuses,
+    and overclaim guards; code and paper TODOs still track the missing `[33]`
+    source locator, rounded-solution artifact, and rounding-audit certificate.
+
 - [x] Document Appendix B.4 revised-result README boundary.
   - Status: README Important limits now states that Appendix B.4
     revised-result provenance remains absent: the registry preserves the

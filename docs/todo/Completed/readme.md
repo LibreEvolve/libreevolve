@@ -4,6 +4,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Appendix B Figures 10-14 README boundary.
+  - Status: README Important limits now states that Appendix B Figures 10-14
+    figure-exhibit provenance remains absent: the registry names Erdos minimum
+    overlap, regular-hexagon packing, maximum/minimum-distance point sets,
+    Heilbronn variants, and circle/rectangle sum-of-radii packing figure
+    scopes, not normalized figure-exhibit rows, subfigure ids, caption-value
+    extraction, previous/current metric rows, construction payload artifacts,
+    rendered panel artifacts, rendering parameters, source Colab cells/
+    artifacts, or verifier links.
+  - Verification: Appendix B registry tests cover the current
+    `figure_exhibit_boundary` for Figures 10-14 and reject rendered-exhibit
+    overclaims; code and paper TODOs still track the missing normalized figure
+    rows and panel artifacts.
+
 - [x] Document Figure 5/B.12 sum-of-radii precision README boundary.
   - Status: README Important limits now states that Figure 5 versus Appendix
     B.12 sum-of-radii precision remains unreconciled: the registry preserves

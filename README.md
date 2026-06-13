@@ -219,6 +219,14 @@ Important limits:
   locators, Figure 5 panel artifacts, value-extraction certificates,
   normalized values, rounding or canonicalization policy, value-reconciliation
   certificate, recomputed sum, or companion Colab link.
+- Appendix B Figures 10-14 figure-exhibit provenance remains absent: the
+  registry names Erdos minimum overlap, regular-hexagon packing,
+  maximum/minimum-distance point sets, Heilbronn variants, and
+  circle/rectangle sum-of-radii packing figure scopes, not normalized
+  figure-exhibit rows, subfigure ids, caption-value extraction,
+  previous/current metric rows, construction payload artifacts, rendered panel
+  artifacts, rendering parameters, source Colab cells/artifacts, or verifier
+  links.
 - Matrix-publication evidence is one checked `mm_2x2x2` Strassen baseline
   bundle plus Appendix A registry/status metadata, not full-suite local target
   tensors, discovered decompositions, coefficient data, exactness certificates,

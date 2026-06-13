@@ -941,23 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README Appendix B figure wording scoped until Figures 10-14
-      provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B includes construction figures beyond
-    Figure 5: Erdos minimum overlap, regular-hexagon packings,
-    maximum/minimum-distance point sets, Heilbronn variants, and
-    circle/rectangle packing sum-of-radii examples.
-  - Current evidence: README describes Appendix B family/status coverage and a
-    validated `figure_exhibit_boundary` for Figures 10-14. The boundary names
-    required future Figure 10-14 mappings, subfigure labels, figure-caption
-    values, visual artifact paths/hashes, rendering parameters, construction
-    payloads, previous-best sources, source Colab cells/artifacts, and
-    verifier links, while the actual exhibit rows and artifacts remain absent.
-  - Required result: when Appendix B figure-level provenance lands, update
-    README, ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes family/aggregate constructive-math coverage, main-text
-    Figure 5 exhibits, and Appendix B reproduced figure evidence.
-
 - [ ] Keep README Appendix B numeric-result wording scoped until per-result
       metric/value provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.1-B.13 reports individual

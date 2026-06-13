@@ -2887,6 +2887,7 @@ def test_validate_paper_manifest_rejects_initial_program_idea_provenance_boundar
     record = paper_manifest.initial_program_idea_provenance_boundary_record()
     record["claim_ready"] = True
     record["boundary_status"] = "human_seeded_benchmark_ready"
+    record["source_section_ids"] = ["2.1"]
     record["missing_evidence"]["alphaevolve_human_seeded_benchmark_parity"] = "recorded"
     sidecar = tmp_path / paper_manifest.INITIAL_PROGRAM_IDEA_PROVENANCE_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
@@ -2897,6 +2898,7 @@ def test_validate_paper_manifest_rejects_initial_program_idea_provenance_boundar
     assert report.ok is False
     assert "initial_program_idea_provenance_boundary_claim_ready_overclaim" in codes
     assert "initial_program_idea_provenance_boundary_invalid_boundary_status" in codes
+    assert "initial_program_idea_provenance_boundary_invalid_source_section_ids" in codes
     assert (
         "initial_program_idea_provenance_boundary_invalid_missing_evidence_alphaevolve_human_seeded_benchmark_parity"
         in codes

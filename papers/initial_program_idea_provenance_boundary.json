@@ -2,6 +2,10 @@
   "schema": "libreevolve.alphaevolve_initial_program_idea_provenance_boundary.v1",
   "runtime_report_schema": "libreevolve.initial_program_idea_provenance_report.v1",
   "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "2.1",
+    "3.1"
+  ],
   "source_claim": "AlphaEvolve Section 2.1 identifies the initial program and optional background knowledge as user inputs, while Section 3.1 reports matrix runs that improved when researchers seeded initial programs with ideas such as stochastic evaluation or evolutionary approaches",
   "boundary_status": "metadata_contract_only",
   "runtime_report_status": "initial_program_idea_provenance_report_available",

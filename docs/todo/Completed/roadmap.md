@@ -2,6 +2,34 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive MemEvolve memory-architecture roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2512.18746` source-scoped as background memory-architecture
+    evolution context rather than implemented LibreEvolve MemEvolve-style
+    runtime support.
+  - Current evidence: the cached paper and `papers/README.md` record
+    MemEvolve's jointly evolved experiential knowledge and memory
+    architecture, EvolveLab codebase, twelve-memory-system design-space
+    framing, encode/store/retrieve/manage component taxonomy, SmolAgent and
+    Flash-Searcher improvement claim up to 17.06%, cross-task transfer, and
+    cross-LLM generalization, while marking local memory-component schemas,
+    memory-architecture genotypes, mutation/evaluation loops,
+    experiential-knowledge artifacts, joint content/architecture traces,
+    EvolveLab benchmark metadata, transfer reports, linked-code audits, and
+    independent reproduction output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source/license metadata, project/demo and linked-code status,
+    relation to LibreEvolve run memory, memory-component taxonomy,
+    encode/store/retrieve/manage schema, memory-architecture mutation
+    records, experiential-knowledge artifacts, joint content/architecture
+    evolution traces, static-memory baseline identities, EvolveLab benchmark
+    metadata, cross-task and cross-LLM transfer metrics, performance-delta
+    records, reproducibility status, and independent verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive LLM-ALSO adaptive learning-signal roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

@@ -10,40 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement MemEvolve meta-evolving memory-architecture gates beyond paper
-      cache coverage.
-  - Spec evidence: arXiv `2512.18746`, submitted December 21, 2025, introduces
-    MemEvolve for meta-evolution of agent memory systems. The abstract says
-    memory enables agents to store trajectories, distill experience, and
-    synthesize reusable tools, but existing systems keep the memory
-    architecture itself static. MemEvolve jointly evolves experiential
-    knowledge and memory architecture, and EvolveLab defines a modular
-    encode/store/retrieve/manage design space distilled from twelve memory
-    systems, with up to 17.06% framework improvements and cross-task/cross-LLM
-    generalization.
-  - Current evidence: ROADMAP, `papers/download_manifest.*`,
-    `papers/row_identity.json`, `papers/README.md`, README, and TODO coverage
-    now include `2512.18746`, cached locally as
-    `papers/2512.18746__MemEvolve.pdf` with byte count `10951239` and
-    SHA-256
-    `51ca8a0ca349b7ad111b5380148c6dd34fa4d16f933ac58677fc2246b1566dd5`.
-    ROADMAP tracks the paper as background memory-architecture evolution
-    context only. It still has no meta-memory architecture gate, encode/store/
-    retrieve/manage component schema, memory-architecture genotype,
-    experiential-knowledge records, joint content/architecture evolution
-    traces, memory mutation/evaluation policy, static-memory baseline
-    identities, EvolveLab benchmark metadata, cross-task/cross-LLM transfer
-    reports, or performance-delta records.
-  - Required result: implement roadmap gates beyond paper-cache evidence:
-    source-license and linked-code status, encode/store/retrieve/manage
-    component schema, memory-architecture genotype, experiential-knowledge
-    records, joint content/architecture evolution traces, memory
-    mutation/evaluation policy, static-memory baseline identities, EvolveLab
-    benchmark metadata, cross-task/cross-LLM transfer reports,
-    performance-delta records, and a background-only or benchmark-fixture
-    status rule so roadmap claims do not outpace local MemEvolve-style memory
-    support.
-
 - [ ] Implement ANCHOR healthy-evolution oversight gates beyond paper cache
       coverage.
   - Spec evidence: arXiv `2606.06114`, submitted June 4, 2026, introduces

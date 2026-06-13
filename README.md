@@ -209,6 +209,13 @@ Important limits:
   configuration artifact, branch-validation trajectory, validated-update
   promotion gate, main-training trajectory provenance, learning-efficiency
   report, linked-code audit, or independent reproduction output.
+- MemEvolve memory-architecture evolution coverage is background paper context
+  only: LibreEvolve has no explicit encode/store/retrieve/manage
+  memory-component design space, memory-architecture genotype,
+  memory-system mutation/evaluation loop, experiential-knowledge
+  co-evolution trace, EvolveLab benchmark mapping, static-memory baseline
+  comparison, cross-task or cross-LLM transfer report, performance-delta
+  record, linked-code audit, or independent reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

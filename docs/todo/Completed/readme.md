@@ -13743,6 +13743,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused prompt example-copy tests reject full guard-readiness overclaims.
 
+- [x] Keep README prompt-example wording scoped beyond built-in copy signals.
+  - Status: README now scopes prompt example-copy reports as built-in
+    exact/normalized/skeleton diagnostics, not hard/configurable rejection,
+    semantic or renamed-copy detection, custom prompt-template inventories,
+    per-template source mapping, cross-run copy-rate tables,
+    copy-signal-to-acceptance policy, or prompt-example revision guidance.
+  - Verification: paper-manifest validation requires
+    `papers/prompt_example_copy_boundary.json`, and focused prompt
+    example-copy tests reject full guard-readiness overclaims.
+
 - [x] Keep README mutation-consistency boundary tied to sidecar.
   - Status: README now states that multi-edit consistency reports are
     current-run diagnostics, not proof that accepted edits are semantically

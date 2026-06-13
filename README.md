@@ -163,8 +163,10 @@ Important limits:
   handling; that boundary is tracked by
   `papers/natural_language_preamble_boundary.json`.
 - Prompt example-copy reports are built-in exact/normalized/skeleton
-  diagnostics, not hard rejection, semantic-copy detection, or custom-template
-  inventory evidence; that boundary is tracked by
+  diagnostics, not hard/configurable rejection, semantic or renamed-copy
+  detection, custom prompt-template inventories, per-template source mapping,
+  cross-run copy-rate tables, copy-signal-to-acceptance policy, or
+  prompt-example revision guidance; that boundary is tracked by
   `papers/prompt_example_copy_boundary.json`.
 - Multi-edit consistency reports are current-run diagnostics, not proof that
   accepted edits are semantically coherent or that required companion edits are

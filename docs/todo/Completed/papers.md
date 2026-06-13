@@ -13462,7 +13462,7 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     exist, while full release-artifact validation remained absent at the time
     this task was archived. Current active TODOs track the narrower remaining
     gap around signed release provenance, published-index verification, and
-    release-checklist readiness.
+    maintainer-approved release readiness.
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused release-artifact tests reject verified-release
     overclaims.

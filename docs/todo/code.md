@@ -4762,15 +4762,16 @@ Primary evidence:
     the `libreevolve/` package tree inside both the wheel and sdist, and writes
     `release_artifact_provenance.json` with wheel/sdist hashes plus selected
     source-file hashes, then uploads the release smoke artifacts as a GitHub
-    Actions artifact.
-  - Remaining gap: there is still no release checklist, signed release provenance tying
-    generated distributions back to a reviewed release event, full manifest
+    Actions artifact. `docs/release-checklist.md` now records the local
+    release-smoke checklist.
+  - Remaining gap: there is still no signed release provenance tying generated
+    distributions back to a maintainer-approved release event, full manifest
     environment evidence, or published/private-index artifact verification. The
     paper-facing sidecar `papers/release_artifact_reproducibility_boundary.json`
     now preserves this CI-smoke-only release-artifact boundary.
-  - Required result: add release checklist/signed provenance and
-    remote/private-index artifact verification without overclaiming full release
-    reproducibility from the current CI smoke.
+  - Required result: add signed provenance and remote/private-index artifact
+    verification without overclaiming full release reproducibility from the
+    current CI smoke.
 
 - [ ] Expand GitHub Actions workflow coverage beyond path-scoped Ubuntu jobs.
   - Spec evidence: AlphaEvolve-scale engineering claims should be supported by

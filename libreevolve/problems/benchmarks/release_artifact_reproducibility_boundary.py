@@ -25,9 +25,12 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "package_data_inclusion_check",
     "release_artifact_provenance",
     "release_checklist",
+    "signed_release_provenance",
+    "published_index_verification",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "release_checklist": "not_recorded_locally",
+    "signed_release_provenance": "not_recorded_locally",
+    "published_index_verification": "not_recorded_locally",
 }
 EXPECTED_PARTIAL_EVIDENCE = {
     "wheel_build_check": "ci_smoke",
@@ -35,6 +38,7 @@ EXPECTED_PARTIAL_EVIDENCE = {
     "install_from_wheel_cli_smoke": "ci_smoke",
     "package_data_inclusion_check": "complete_libreevolve_package_tree_wheel_and_sdist_inventory",
     "release_artifact_provenance": "ci_dist_artifact_and_source_hash_manifest",
+    "release_checklist": "documented_unsigned_unpublished_release_smoke_checklist",
 }
 
 
@@ -81,9 +85,11 @@ def release_artifact_reproducibility_boundary_record() -> dict[str, Any]:
             "under the libreevolve package tree inside the wheel and sdist. "
             "CI also writes release_artifact_provenance.json with wheel/sdist "
             "hashes and selected source-file hashes, then uploads the release "
-            "smoke artifacts as GitHub Actions artifacts. It does not claim "
-            "signed release provenance, published-index verification, or "
-            "release-checklist readiness."
+            "smoke artifacts as GitHub Actions artifacts. "
+            "docs/release-checklist.md records the local release-smoke "
+            "checklist. It does not claim signed release provenance, "
+            "published-index verification, or maintainer-approved release "
+            "readiness."
         ),
     }
 
@@ -131,7 +137,9 @@ def validate_release_artifact_reproducibility_boundary(
         or "checks every file under the libreevolve package tree inside the wheel and sdist" not in boundary_text
         or "release_artifact_provenance.json with wheel/sdist hashes" not in boundary_text
         or "uploads the release smoke artifacts as GitHub Actions artifacts" not in boundary_text
+        or "docs/release-checklist.md records the local release-smoke checklist" not in boundary_text
         or "does not claim signed release provenance" not in boundary_text
+        or "published-index verification" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must keep editable/local installs separate from verified release artifacts"))
     return ReleaseArtifactReproducibilityBoundaryValidation(

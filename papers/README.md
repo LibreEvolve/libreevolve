@@ -1321,8 +1321,9 @@ CI-smoke-only release-artifact boundary: wheel/sdist build checks and
 install-from-wheel CLI smoke checks exist with complete `libreevolve/`
 package-tree wheel and sdist inventory inspection plus CI-generated
 artifact/source hash provenance and uploaded release-smoke artifacts, while
-signed release provenance, published-index verification, and release-checklist
-readiness remain absent.
+the local release-smoke checklist is documented. Signed release provenance,
+published-index verification, and maintainer-approved release readiness remain
+absent.
 The committed `papers/ci_workflow_coverage_boundary.json` sidecar preserves
 the current path-scoped GitHub Actions boundary: manual dispatch,
 push/pull_request path filters, secret scan, Python 3.11/3.12 Ubuntu unit jobs,

@@ -164,6 +164,22 @@ def test_manifest_includes_package_data():
     assert "*.ipynb" in manifest
 
 
+def test_release_checklist_documents_smoke_and_remaining_release_gates():
+    checklist = Path("docs/release-checklist.md").read_text(encoding="utf-8")
+
+    for expected in (
+        "py -3.12 -m build --wheel --sdist",
+        "`libreevolve/` package tree",
+        "isolated virtual environment",
+        "libreevolve --help",
+        "python -m libreevolve --help",
+        "dist/release_artifact_provenance.json",
+        "Signed release provenance",
+        "Published-index or private-index artifact verification",
+    ):
+        assert expected in checklist
+
+
 def test_run_artifact_docs_list_current_schema_jsonl_streams():
     readme = Path("README.md").read_text(encoding="utf-8")
     run_artifacts = Path("docs/run-artifacts.md").read_text(encoding="utf-8")

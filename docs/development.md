@@ -139,8 +139,9 @@ into an isolated virtual environment, checks every file under the `libreevolve/`
 package tree inside the wheel and sdist, writes
 `release_artifact_provenance.json` with artifact
 and selected source-file hashes, uploads the release smoke artifacts as a
-workflow artifact, and runs CLI help checks; it is not an index-publish,
-signed-provenance, or release-checklist certification.
+workflow artifact, and runs CLI help checks. [docs/release-checklist.md](release-checklist.md)
+records the local release-smoke checklist; it is not index-publish,
+signed-provenance, or maintainer-approval certification.
 
 For docs-only changes, run at least:
 

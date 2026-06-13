@@ -627,8 +627,9 @@ is not yet an AlphaEvolve reproduction.
   checks, complete `libreevolve/` package-tree wheel and sdist inventory
   checks, and install-from-wheel CLI smoke checks exist, with CI-generated
   distribution hash/source-file provenance and uploaded release-smoke artifacts;
-  release checklist readiness, signed release provenance, and index artifact
-  verification remain open.
+  the local release-smoke checklist is documented, while maintainer-approved
+  release readiness, signed release provenance, and index artifact verification
+  remain open.
 - Extend current bounded environment provenance into stronger reproducibility
   evidence: complete install-source interpretation semantics, external build
   execution/options/environment records beyond `pyproject.toml`
@@ -2218,7 +2219,7 @@ resumed-trace proof are still open.
   indexes.
 - Extend current `pyproject.toml` metadata, dev extras, console-script
   packaging, and CI wheel/sdist/install smoke beyond smoke validation with
-  signed release provenance, release checklist evidence, and index
+  signed release provenance, maintainer-approved release evidence, and index
   verification.
 - Extend the current path-scoped GitHub Actions workflow beyond secret scan,
   Python 3.11/3.12 non-integration tests, optional integration tests, and

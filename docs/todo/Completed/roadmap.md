@@ -218,6 +218,24 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Remaining gap: real full Figure 1/Figure 2 process-diagram parity evidence
     remains open.
 
+- [x] Archive stale active roadmap Figure 1/Figure 2 process-exhibit wording TODO.
+  - Status: the active roadmap TODO for extending Figure 1/Figure 2 wording
+    from process mappings to full diagram parity was stale. `ROADMAP.md`,
+    README, and `papers/README.md` already describe
+    `runtime.history.alphaevolve_process_exhibit_report`, generated
+    Mermaid/accessibility artifacts, source-page text hashes, strict stream-row
+    summaries, generated-candidate semantic traces with durable LLM and archive
+    joins, current synchronous topology evidence, current inline evaluator-pool
+    boundary evidence, component-to-TODO links, and
+    `papers/process_exhibit_boundary.json`.
+  - Verification: `tests/test_process_exhibit_boundary.py`,
+    `tests/core/test_loop.py`, and `tests/test_paper_manifest.py` validate the
+    report and sidecar and reject full process-diagram parity overclaims.
+    Exact source-diagram layout reproduction, AlphaEvolve async topology
+    implementation, independent evaluator-pool implementation, and full process
+    parity remain open in code/paper evidence rather than this stale roadmap
+    wording task.
+
 - [x] Emit embedded evaluator Figure 3 boundary sidecar for roadmap evidence.
   - Status: `papers/embedded_evaluator_boundary.json` now lets roadmap wording
     point to a committed absence boundary for skeleton invocation traces,

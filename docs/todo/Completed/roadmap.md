@@ -2,6 +2,34 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive MadEvolve parameter-optimization roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/madevolve_boundary.json` now keep arXiv `2602.15951`
+    source-scoped as domain-evolution inspiration rather than implemented
+    MadEvolve parameter-optimization or cosmology-application parity.
+  - Current evidence: the cached paper and boundary JSON record MadEvolve
+    source identity, arXiv v1 metadata, madevolve.org and GitHub links,
+    framework/application split context, free-parameter tracking,
+    one-shot/derivative-free and autodiff/Adam optimization, JAX/`vmad`
+    compatibility, optimized-value source injection, BAO/iterative-BAO/21cm/
+    tSZ cosmology applications, hybrid population management, UCB model
+    routing, diff/full/synthesis mutation modes, generated
+    lineage/comparative-analysis/synthesis reports, run/model statistics, and
+    reward-hacking/generalization caveats.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: parameter schemas, free-parameter meaning records, child-parent
+    parameter diffs, inner optimizer telemetry, JAX/`vmad` contracts,
+    optimized-source injection, cosmology task fixtures, split provenance,
+    compute environment records, benchmark rows, generated report artifacts,
+    model-contribution statistics, Quijote/LDL/`vmad` provenance,
+    reward-hacking diagnostics, over-parameterization controls,
+    mode-collapse diagnostics, hosted report checks, and linked source status.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive ImprovEvolve modular-operator roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

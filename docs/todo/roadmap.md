@@ -10,44 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement MadEvolve parameter-optimization gates beyond source-boundary
-      roadmap promotion.
-  - Spec evidence: local arXiv `2602.15951`, `MadEvolve: Evolutionary
-    Optimization of Cosmological Algorithms with Large Language Models`, by
-    Tianyi Li, Shihui Zang, and Moritz Munchmeyer was submitted as arXiv v1 on
-    February 17, 2026 and adapts AlphaEvolve-style evolution to scientific
-    algorithms with nested free-parameter optimization, greedy one-shot
-    derivative-free search, autodiff/Adam tuning for differentiable JAX/`vmad`
-    programs, hybrid MAP-Elites/island/elite population management, UCB model
-    routing, diff/full/synthesis mutation modes, automated scientific reports,
-    and BAO, iterative BAO, 21cm, and tSZ benchmark claims. It describes a
-    three-stage report generator (`lineage extraction`, `comparative analysis`,
-    and `synthesis`) and a five-island heterogeneous LLM ensemble with UCB
-    model selection.
-  - Current evidence: ROADMAP says MadEvolve features remain inspired unless
-    paper behavior is implemented, and now names `papers/madevolve_boundary.json`
-    as the source-specific gate for `2602.15951`. The sidecar records source
-    metadata, madevolve.org/GitHub link status, component rows, required future
-    evidence fields, and missing-evidence keys while keeping parameter schemas,
-    inner optimizer execution, differentiability/operator constraints,
-    optimized-value source injection, per-task cosmology fixtures, generated
-    reports, run statistics, model-contribution statistics, compute
-    environment, reward-hacking diagnostics, hosted report-link validation,
-    and over-parameterization/generalization evidence as future gates.
-  - Required result: add roadmap gates for `2602.15951`: paper/source manifest
-    entry, PDF/cache hash, madevolve.org and GitHub source status,
-    framework-vs-application split, parameter-declaration and parameter-meaning
-    schemas, one-shot/grid/Latin-hypercube/Bayesian and autodiff/Adam optimizer
-    records, inner/outer budget accounting, JAX/vmad differentiability
-    validation, optimized-value source-injection provenance, BAO/iterative
-    BAO/21cm/tSZ task prompts and evaluator fixtures, training/validation/test
-    split provenance, generated lineage/comparative-analysis/synthesis report
-    artifacts, Table 1 benchmark rows, Table 2 success/improvement statistics,
-    Table 3 model-contribution statistics, compute environment, reward-hacking
-    and mode-collapse diagnostics, Quijote/LDL/vmad provenance, hosted
-    report-artifact checks, and README/papers/code wording that keeps
-    MadEvolve as background until local evidence proves those semantics.
-
 - [ ] Implement CausalEvolve causal-scratchpad gates beyond source-boundary
       roadmap promotion.
   - Spec evidence: local arXiv `2603.14575v2`, `CausalEvolve: Towards

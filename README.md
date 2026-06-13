@@ -95,6 +95,18 @@ Important limits:
   generalization tables, stage-ablation rows, CPU/GPU budget records, or
   wall-clock reproduction; `papers/improvevolve_boundary.json` records that
   absence boundary.
+- MadEvolve coverage is domain-evolution inspiration only: LibreEvolve has no
+  MadEvolve framework/application split, free-parameter tracking, parameter
+  meaning or parent-child parameter-diff records, nested one-shot/grid/
+  Latin-hypercube/Bayesian optimizer records, autodiff/Adam optimizer,
+  JAX/`vmad` differentiability contract, optimized-value source injection,
+  inner/outer budget accounting, BAO/iterative-BAO/21cm/tSZ task fixtures,
+  training/validation/test split provenance, generated lineage/comparative/
+  synthesis report artifacts, success/improvement statistics,
+  model-contribution statistics, Quijote/LDL/`vmad` provenance,
+  reward-hacking diagnostics, over-parameterization controls,
+  mode-collapse diagnostics, or hosted report reproduction;
+  `papers/madevolve_boundary.json` records that absence boundary.
 - The examples are smoke fixtures and small demos unless a fixture documents
   stronger benchmark evidence.
 - Benchmark-hardening records and shipped-example scope validate smoke-scope

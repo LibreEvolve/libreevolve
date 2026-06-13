@@ -840,6 +840,16 @@ Important limits:
   grouping record, cross-benchmark harness self-evolution report, activation-
   failure audit, adherence-failure audit, capability-budget recommendation
   report, public-code snapshot audit, or independent reproduction output.
+- ArXiv `2604.25850` is agentic harness observability context only; the README
+  mentions this cached paper as a curated subset while `papers/README.md`
+  remains the complete implementation-status index. LibreEvolve has no
+  file-level editable harness component graph, component-observability schema,
+  layered drill-down trajectory evidence corpus, raw-trace-to-digest
+  provenance, decision-observability prediction contract, next-round
+  falsification record, per-edit rollback manifest, ten-iteration
+  Terminal-Bench 2 report, SWE-bench-verified transfer report, cross-family
+  transfer report, tools/middleware/memory ablation, public-code snapshot
+  audit, or independent reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

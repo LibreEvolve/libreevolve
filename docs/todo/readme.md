@@ -91,41 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README AHE observability-driven harness evolution claims source-
-      scoped until runtime evidence exists.
-  - Spec evidence: arXiv `2604.25850`, `Agentic Harness Engineering:
-    Observability-Driven Automatic Evolution of Coding-Agent Harnesses`,
-    introduces AHE, a closed loop for coding-agent harness evolution with
-    component observability, experience observability, and decision
-    observability. Its abstract says every editable harness component has a
-    file-level representation, trajectory evidence is distilled into a
-    layered corpus, and every edit carries a self-declared prediction later
-    verified against task-level outcomes. It reports Terminal-Bench 2 pass@1
-    improvement from 69.7% to 77.0% after ten iterations and transfer of a
-    frozen harness to SWE-bench Verified.
-  - Current evidence: README now lists `2604.25850`, AHE, as observability-
-    driven harness-evolution context only and says no local file-level harness
-    component graph, layered trajectory evidence corpus, edit-prediction
-    contract, falsification loop, or Terminal-Bench 2 reproduction exists.
-    README also documents LibreEvolve's current CLI, prompt history,
-    evaluator artifacts, candidate diffs, MAP-Elites archive, plugins, and
-    benchmark boundaries; it does not claim file-level editable harness
-    components, layered trajectory evidence corpora, falsifiable prediction-
-    paired harness edits, later-outcome verification, component-class gain
-    attribution, or frozen-harness transfer.
-  - Required result: if README mentions AHE, Agentic Harness Engineering,
-    observability-driven harness evolution, component observability,
-    experience observability, decision observability, file-level harness
-    components, drill-down trajectory evidence, falsifiable edit contracts,
-    Terminal-Bench 2 69.7-to-77.0 pass@1, Codex-CLI comparison, or frozen-
-    harness transfer to SWE-bench Verified, keep the wording source-scoped
-    until local artifacts can show component manifests, revertible edit
-    records, evidence corpus records,
-    edit-prediction verification, component-attribution reports, benchmark
-    baselines, token/cost accounting, and report outcomes. Avoid implying
-    LibreEvolve supports AHE-style observability-driven harness evolution
-    without those artifacts.
-
 - [ ] Keep README AI Harness Engineering runtime-substrate claims source-
       scoped until runtime evidence exists.
   - Spec evidence: arXiv `2605.13357`, `AI Harness Engineering: A Runtime

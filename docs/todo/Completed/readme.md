@@ -15068,3 +15068,32 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     telemetry, adherence traces, model-tier comparisons, benchmark baselines,
     report outcomes, and harness self-evolution benefit evidence remain
     active in code and paper TODOs.
+
+- [x] Keep README AHE observability-driven harness evolution claims source-
+      scoped until runtime evidence exists.
+  - Spec evidence: arXiv `2604.25850`, `Agentic Harness Engineering:
+    Observability-Driven Automatic Evolution of Coding-Agent Harnesses`,
+    introduces AHE, a closed loop for coding-agent harness evolution with
+    component observability, experience observability, and decision
+    observability. Its abstract says every editable harness component has a
+    file-level representation, trajectory evidence is distilled into a
+    layered corpus, and every edit carries a self-declared prediction later
+    verified against task-level outcomes. It reports Terminal-Bench 2 pass@1
+    improvement from 69.7% to 77.0% after ten iterations and transfer of a
+    frozen harness to SWE-bench Verified.
+  - Status: README now lists arXiv `2604.25850` as agentic harness
+    observability context only and marks the mention as a curated cached-paper
+    subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no file-level
+    editable harness component graph, component-observability schema, layered
+    drill-down trajectory evidence corpus, raw-trace-to-digest provenance,
+    decision-observability prediction contract, next-round falsification
+    record, per-edit rollback manifest, ten-iteration Terminal-Bench 2
+    report, SWE-bench-verified transfer report, cross-family transfer report,
+    tools/middleware/memory ablation, public-code snapshot audit, or
+    independent reproduction output.
+  - Remaining README gap: component manifests, revertible edit records,
+    evidence corpus records, edit-prediction verification,
+    component-attribution reports, benchmark baselines, token/cost accounting,
+    report outcomes, and AHE-style observability-driven harness evolution
+    remain active in code and paper TODOs.

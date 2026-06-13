@@ -2,6 +2,35 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive post-AlphaEvolve autoconvolution roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/autoconvolution_boundary.json` now keep arXiv `2506.16750`
+    source-scoped as post-AlphaEvolve constructive-math context rather than
+    implemented LibreEvolve autoconvolution witness/verifier support.
+  - Current evidence: the cached paper and boundary JSON record a
+    575-interval nonnegative step-function witness, formula (3)
+    recomputation, `L_j` convolution samples, `L2`/`Linf`/`L1` norm policy,
+    exact fraction
+    `96086089410408840289339769 / 106577013451431545242354944`, decimal
+    bound `0.901564`, AlphaEvolve's 50-interval `0.8962` baseline,
+    Matolcsi-Vinuesa 20-step comparison, simulated-annealing and gradient
+    search methods, coefficient scaling by `2^24`, row-major coefficient
+    order, comparison correlations, and public artifacts `Inital HPC code.py`,
+    `Refine HPC code.py`, `f95.py`, `coeffBL.txt`, and `Verify.nb`.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: witness schemas, 575-interval payload hashes, formula (3)
+    checkers, `L_j` recomputation, norm recomputation, exact-fraction
+    validation, decimal tolerance policy, AlphaEvolve and Matolcsi-Vinuesa
+    baseline coefficients, public repository snapshots, Python and
+    Mathematica checker artifacts, simulated-annealing and gradient traces,
+    NCSU HPC resource records, support-normalization checks, and independent
+    checker outputs.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive Global NLP Optimization roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

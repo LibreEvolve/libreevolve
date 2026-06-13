@@ -10,45 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement post-AlphaEvolve autoconvolution improvement gates beyond
-      source-boundary roadmap promotion.
-  - Spec evidence: arXiv `2506.16750`, submitted June 20, 2025 and last
-    revised August 10, 2025, introduces `An improved example for an
-    autoconvolution inequality`. The abstract reports a nonnegative
-    `575`-interval step function with autoconvolution ratio `>= 0.901564`,
-    improving on AlphaEvolve's `50`-interval `>= 0.8962` result, and says the
-    improvement came from simulated annealing and gradient-based methods
-    rather than LLMs. The body gives a finite discrete checker using samples
-    `L_j`, formula `(3)`, exact rational value
-    `96086089410408840289339769 / 106577013451431545242354944`, and public
-    Python/Mathematica artifacts in `autoconvolutionHolder`.
-  - Current evidence: ROADMAP and `papers/autoconvolution_boundary.json` now
-    keep `2506.16750` source-scoped as potential-future-benchmark status until
-    local witness artifacts exist. ROADMAP still does not define a
-    575-interval witness gate, post-AlphaEvolve baseline comparison, direct
-    recomputation of the `0.901564` objective, simulated-annealing/gradient
-    provenance records, or documentation rules that separate AlphaEvolve's
-    LLM-generated witness from later non-LLM improvements. It also lacks gates
-    for public GitHub artifact hashes, integer-coefficient parsing and scaling
-    by `2^24`, Python/Mathematica checker parity, Matolcsi-Vinuesa `20`-step
-    comparison, AlphaEvolve coefficient-source reversal, translation/dilation
-    normalization, NCSU HPC provenance, and exact-rational result rows.
-  - Required result: add roadmap gates for `2506.16750`: paper/source
-    manifest entry, PDF/cache hash, source-license and code-artifact status,
-    step-function witness schema, 575-interval payload artifacts, interval
-    grid/spacing records, autoconvolution/norm recomputation records,
-    objective and tolerance policy, AlphaEvolve 50-interval baseline value,
-    simulated-annealing and gradient-method provenance, prior/current result
-    rows, independent checker outputs, and a background-only or benchmark-
-    fixture status rule so roadmap claims do not outpace local
-    post-AlphaEvolve autoconvolution-improvement support. Roadmap promotion
-    should additionally require coefficient-table row-order tests, exact
-    fraction and rounded decimal checks, `L_j` sample traces, `L1` equivalence
-    checks, initial/refinement/upscale search-stage metadata, repository
-    status for `Inital HPC code.py`, `Refine HPC code.py`, `f95.py`,
-    `coeffBL.txt`, and `Verify.nb`, and documentation separating theorem
-    certificates from search-procedure provenance.
-
 - [ ] Implement post-AlphaEvolve sums-and-differences gates beyond
       source-boundary roadmap promotion.
   - Spec evidence: arXiv `2505.16105`, submitted May 22, 2025, introduces

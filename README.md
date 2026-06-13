@@ -395,6 +395,17 @@ Important limits:
   evidence, dual-bound improvement record, or independent checker output;
   `papers/global_nlp_optimization_boundary.json` records that absence
   boundary.
+- Post-AlphaEvolve autoconvolution coverage is constructive-math context only:
+  LibreEvolve has no 575-interval step-function witness schema, coefficient
+  payload hash, formula (3) checker, `L_j` recomputation trace,
+  `L2`/`Linf`/`L1` norm recomputation, exact-rational verification,
+  AlphaEvolve 50-interval baseline record, Matolcsi-Vinuesa 20-step baseline
+  record, simulated-annealing or gradient-search provenance, public GitHub
+  snapshot for `Inital HPC code.py`, `Refine HPC code.py`, `f95.py`,
+  `coeffBL.txt`, or `Verify.nb`, coefficient row-order test, support-
+  normalization checker, NCSU HPC resource record, or independent checker
+  output; `papers/autoconvolution_boundary.json` records that absence
+  boundary.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

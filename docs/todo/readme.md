@@ -9,32 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README matrix per-seed wording scoped until cascade-run provenance
-      exists.
-  - Spec evidence: AlphaEvolve Section 3.1 says matrix experiments run over
-    multiple random seeds using the evaluation cascade, then report the best
-    rank and the fraction of seeds that reached it.
-  - Current evidence: README documents the matrix report contract's declared
-    per-seed rows, best-rank consistency checks, and hit-fraction validation,
-    plus generic cascade support elsewhere. It now also documents
-    `libreevolve.matrix_cascade_run_runtime_boundary.v1`, which validates the
-    current `not_emitted_by_local_runner` boundary and emitted repeated-seed
-    matrix cascade traces. README also documents
-    `matrix_cascade_run_runtime_boundary_from_matrix_result()` for building
-    emitted records from seed rows plus per-seed stage traces, including
-    aggregate best-rank/hit-fraction recomputation. It does not document an
-    executed matrix benchmark runner that automatically emits target/seed-level
-    cascade traces or pruning/early-stop reasons. README Important limits now
-    also states that matrix per-seed reports validate declared seed rows, best
-    rank, and hit fraction, and matrix cascade-run boundary records can link
-    seed rows to stage traces, but local matrix runners do not yet emit
-    AlphaEvolve Section 3.1-style repeated-seed cascade traces, pruning
-    decisions, or early-stop provenance.
-  - Required result: when matrix cascade-run evidence lands, update README,
-    ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes post-hoc per-seed report validation from AlphaEvolve
-    Section 3.1-style repeated-seed cascade execution evidence.
-
 - [ ] Keep README Appendix A target-suite wording scoped to registry coverage
       versus curation provenance.
   - Spec evidence: AlphaEvolve Appendix A says the 54 reported matrix sizes

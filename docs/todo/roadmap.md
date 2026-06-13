@@ -6,38 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Keep roadmap problem-formulation wording scoped until benchmark fixtures
-      carry expert-reviewed metadata.
-  - Spec evidence: AlphaEvolve Section 3.2 says external mathematicians
-    suggested open problems and advised on formulation, while Section 2.1 makes
-    task definition and optional background knowledge explicit human inputs;
-    Figure 1 also separates the human-defined "what" from AlphaEvolve's search
-    over "how" by naming evaluation criteria, initial solution, and optional
-    background knowledge as human-provided setup.
-  - Current evidence: ROADMAP and README/code evidence cover local context
-    source ingestion, ranking/filtering, source/problem provenance, optional
-    `formulation.yaml` / `Problem.formulation_metadata`, normalized
-    `problem.formulation_metadata`, a task-spec `human_problem_formulation`
-    field, and
-    `runtime.history.problem_formulation_provenance_report` for roles,
-    rationale, parameter-scope, background refs, and review/signoff readiness.
-    Runtime evidence can now identify the declared formulation metadata, and
-    `papers/problem_formulation_provenance_boundary.json` preserves the
-    paper-facing metadata-contract-only boundary.
-    `runtime.history.benchmark_fixture_readiness_report` also joins startup
-    problem metadata to the example-scope registry and records when a problem
-    remains smoke-only, lacks AlphaEvolve-comparable scope, repeated-seed
-    protocol, SOTA/target baselines, fixture-emitted result artifacts, or
-    anti-gaming negative-fixture evidence. ROADMAP now also names
-    `papers/benchmark_fixture_readiness_boundary.json` as the committed
-    smoke-fixture readiness absence boundary. Existing benchmark fixtures have not yet been populated with real expert-reviewed formulation records or
-    paper-claim-ready benchmark evidence.
-  - Required result: when matrix and constructive-math benchmark fixtures carry
-    reviewed formulation metadata and paper-facing evidence, update roadmap,
-    README, papers index, and code/paper TODO entries together so roadmap text
-    neither underclaims the new provenance surface nor overclaims
-    AlphaEvolve-style expert-guided benchmark formulation.
-
 - [ ] Keep robustness and versatility roadmap wording scoped until populated
       collaborator-feedback evidence exists.
   - Spec evidence: AlphaEvolve's Acknowledgements say early users and

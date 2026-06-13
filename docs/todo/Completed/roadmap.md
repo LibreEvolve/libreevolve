@@ -2,6 +2,25 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive problem-formulation roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
+    `papers/README.md` already describe optional `formulation.yaml` /
+    `Problem.formulation_metadata`,
+    `runtime.history.problem_formulation_provenance_report`,
+    `runtime.history.benchmark_fixture_readiness_report`,
+    `papers/problem_formulation_provenance_boundary.json`, and
+    `papers/benchmark_fixture_readiness_boundary.json` while keeping
+    expert-guided benchmark formulation and paper-claim-ready fixture parity
+    false.
+  - Remaining guard: populated matrix and constructive-math formulation
+    records, evaluator/report linkage, paper-facing certification rows,
+    repeated-seed protocols, SOTA/target baselines, emitted result artifacts,
+    anti-gaming fixtures, and review/signoff evidence remain active in
+    `docs/todo/code.md` and `docs/todo/papers.md`.
+  - Verification: problem-formulation provenance, benchmark-fixture
+    readiness, and paper-manifest validation continue to reject metadata-only
+    records as AlphaEvolve expert-guided benchmark evidence.
+
 - [x] Archive initial-program validity roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
     `papers/README.md` already document default permissive seed handling,

@@ -10,24 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep self-improvement roadmap wording scoped until feedback-loop cadence
-      and environment ROI evidence exists.
-  - Spec evidence: AlphaEvolve's Discussion says current self-improvement
-    gains are moderate, feedback loops for improving the next AlphaEvolve
-    version take months, and those improvements should make setting up more
-    robust-evaluator environments more valuable.
-  - Current evidence: ROADMAP tracks self-improving infrastructure and
-    distillation as future evidence requirements, plus separate automated-
-    evaluator scope and environment-readiness gaps. It does not require
-    roadmap milestones or reports to preserve loop cadence, next-version
-    dependency, gain magnitude calibration, environment setup cost, or realized
-    discovery value from adding new evaluator environments.
-  - Required result: when feedback-loop cadence or environment-expansion
-    reports land, update ROADMAP, README, papers index, and code/paper TODOs
-    together so roadmap text separates generic self-improvement readiness from
-    AlphaEvolve's months-scale feedback-loop and robust-environment ROI
-    claims.
-
 - [ ] Keep evaluation-cascade roadmap wording scoped to staged thresholds until
       statistical hypothesis-test promotion evidence lands.
   - Spec evidence: AlphaEvolve Section 2.4 calls the cascade "hypothesis

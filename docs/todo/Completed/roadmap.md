@@ -2,6 +2,24 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive self-improvement feedback-loop cadence roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. Active code and paper TODOs
+    already require feedback-loop cadence and environment-expansion evidence:
+    loop id, source optimization, affected next-version component, start/end
+    dates or elapsed months, measured gain magnitude, setup/maintenance costs,
+    expected and realized discovery value, gating assumptions, and robust-
+    evaluator readiness.
+  - Remaining guard: the underlying evidence remains unimplemented in
+    `docs/todo/code.md` and `docs/todo/papers.md`; `docs/status.md` says README
+    does not yet record loop IDs, next-version targets, elapsed-month cadence,
+    moderate-gain calibration, environment costs, discovery value, assumptions,
+    or readiness evidence for expanding AlphaEvolve-style evaluator
+    environments.
+  - Verification: automated-evaluator scope reports keep
+    `robust_environment_fixture` and `environment_scaling_evidence` false, and
+    the automated-evaluator boundary sidecar tracks setup-effort/cost and
+    expected high-value discovery scope as missing evidence.
+
 - [x] Archive self-improvement infrastructure/distillation roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md` now requires
     evidence boundaries before any AlphaEvolve-style self-improving

@@ -941,32 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README matrix wording scoped until scalar-field artifacts exist.
-  - Spec evidence: AlphaEvolve Table 2 notes that some improved matrix
-    algorithms use complex-valued multiplications and can be used for exact
-    multiplication of complex or real-valued matrices, while Section 3.1
-    contrasts characteristic-0 and finite-field-only results.
-  - Current evidence: README describes matrix-result fields for coefficient
-    domain and exactness, plus Appendix A target identity and checked Strassen
-    baseline artifacts. It now documents
-    `libreevolve.matrix_scalar_field_evidence.v1`, which validates scalar-field
-    metadata, exact complex coefficient representation,
-    characteristic/applicability claims, paper complex target caveats, and
-    certificate scope for real-versus-complex multiplication. It also
-    documents `libreevolve.matrix_scalar_field_runtime_boundary.v1` as the
-    current `not_emitted_by_local_runner` boundary plus emitted-record
-    validation for run/target/candidate ids, seeds, scalar field,
-    characteristic, applicability, coefficient representation, algorithm refs,
-    certificate refs, matrix-result refs, artifact paths, and artifact hashes.
-    It also documents the builder that turns validated scalar-field evidence
-    into a linked runtime row and states that local runners do not emit exact
-    complex decomposition/certificate artifacts.
-  - Required result: when matrix reports and certificates emit scalar field,
-    complex coefficient data, characteristic, and applicability artifacts,
-    update README, ROADMAP, papers index, and code/paper TODO entries together
-    so README can distinguish schema validation from AlphaEvolve-style
-    complex-valued matrix result evidence.
-
 - [ ] Keep README matrix rank wording scoped until tensor-rank artifacts exist.
   - Spec evidence: AlphaEvolve Section 3.1 frames matrix improvements as
     low-rank tensor decompositions, and footnote 3 says some algorithms using

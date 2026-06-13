@@ -236,6 +236,12 @@ Important limits:
   output that emits the initializer/loss/optimizer provenance during search;
   that boundary is tracked by
   `papers/matrix_baseline_component_runtime_boundary.json`.
+- Matrix scalar-field records validate complex/finite-field metadata,
+  characteristic and applicability claims, exact coefficient representation,
+  algorithm and certificate refs, and matrix-result links, not local matrix
+  runners that emit exact complex decomposition/certificate artifacts for
+  AlphaEvolve Section 3.1 scalar-field claims; that boundary is tracked by
+  `papers/matrix_scalar_field_runtime_boundary.json`.
 - Collaborator-feedback provenance is optional metadata and runtime reporting
   for cohorts, events, affected workflow areas, change links, validation
   outcomes, privacy/redaction policy, and review state, not populated

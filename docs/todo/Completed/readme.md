@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document matrix scalar-field README boundary.
+  - Status: README Important limits now states that matrix scalar-field
+    records validate complex/finite-field metadata, characteristic and
+    applicability claims, exact coefficient representation, algorithm and
+    certificate refs, and matrix-result links, not local matrix runners that
+    emit exact complex decomposition/certificate artifacts for AlphaEvolve
+    Section 3.1 scalar-field claims. It points to
+    `papers/matrix_scalar_field_runtime_boundary.json`.
+  - Verification: focused matrix scalar-field evidence/runtime-boundary and
+    paper-manifest tests validate complex characteristic-zero claims,
+    finite-field caveats, invalid-scope guards, emitted-record builders,
+    linkage checks, required fields, and overclaim guards.
+
 - [x] Document matrix baseline-component README boundary.
   - Status: README Important limits now states that matrix
     baseline-component records validate Section 3.1 starting-algorithm

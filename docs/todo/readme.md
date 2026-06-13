@@ -9,40 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Extend README task-specification wording beyond field-level artifact
-      resolution.
-  - Spec evidence: AlphaEvolve Section 2.1 and Figure 2 define a task
-    specification as the user-provided initial program/components, evaluation
-    code, prompt template and configuration, choice of existing or custom
-    LLMs, and optional background knowledge. Local PDF page 4 labels those
-    Figure 2 inputs and says the user provides the initial program, evaluation
-    code, and optional configurations before AlphaEvolve starts the loop.
-  - Current evidence: README can now cite `manifest.json.task_specification`,
-    a validated `libreevolve.alphaevolve_task_specification_bundle.v1` record
-    that cross-links initial programs, evaluator code or embedded evaluator
-    stages, prompt template/config metadata, backend choices, optional
-    background context, candidate representation, and objective metrics to
-    their manifest paths. It records field statuses, ids/hashes/counts, a
-    deterministic `task_spec_id`, and unsupported/incomplete gaps. README also
-    cites `runtime.history.task_spec_artifact_resolution_report`, which
-    validates task-spec manifest paths and cross-links each field to runtime
-    artifact paths for candidate history, prompt history, LLM calls,
-    controller-budget events, evaluator artifacts, best exports, initial
-    evolvable component spans when markers are present, embedded score-field
-    candidate-path links with static AST causal attribution when supported
-    candidate-owned evaluation ran, and the hashed
-    standalone `task_specification.json` run artifact. It also documents
-    bounded candidate, prompt, and evaluator JSONL row joins plus the checked
-    `docs/examples/task_specification.embedded_evaluate_math.json` example.
-    README Important limits now also names
-    `papers/task_specification_boundary.json` as the runtime-artifact-
-    resolution-only paper-facing boundary.
-    README should still not imply full AlphaEvolve task-spec parity because
-    external validators, arbitrary language/build runner specs, and full
-    user-authored task-spec evidence remain incomplete.
-  - Required result: when those non-embedded task-spec parity gaps land, update
-    README, ROADMAP, papers index, and code/paper TODOs together.
-
 - [ ] Keep README install and CLI wording scoped to editable/local use versus
   release-artifact verification.
   - Spec evidence: AlphaEvolve-style experimental artifacts should be

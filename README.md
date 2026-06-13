@@ -935,6 +935,18 @@ Important limits:
   attempt row, BIC/BB/IR assumption record, unrounded-mixture caveat handling,
   or independent checker output; `papers/bilateral_trade_boundary.json`
   records that absence boundary.
+- ArXiv `2601.21096` is AlphaEvolve compiler-optimization application context
+  only; the README mentions this cached paper as a curated subset while
+  `papers/README.md` remains the complete implementation-status index.
+  LibreEvolve has no executable C++ decision-logic candidate schema, LLVM/XLA
+  compiler-pass integration, EVOLVE-BLOCK compiler-source span record, compiler
+  rebuild record, macro-benchmark harness, binary-size metric record,
+  end-to-end performance metric record, Vizier-style autotuning record, LLVM
+  function-inlining result row, register-allocation priority-rule row, XLA
+  graph-extraction row, XLA auto-sharding row, expert/neural baseline row,
+  temporal/domain generalization row, generated-policy maintainability row, or
+  dedicated Magellan runtime repository; `papers/magellan_boundary.json`
+  records that absence boundary.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

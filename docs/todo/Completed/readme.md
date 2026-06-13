@@ -15320,3 +15320,37 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     artifacts, independent checker outputs, benchmark reports, and
     AlphaEvolve-style bilateral-trade lower-bound evidence remain active in
     code and paper TODOs.
+
+- [x] Keep README AlphaEvolve Magellan compiler-optimization claims absent or
+      source-scoped until compiler benchmark evidence exists.
+  - Spec evidence: arXiv `2601.21096`, `Magellan: Autonomous Discovery of
+    Novel Compiler Optimization Heuristics with AlphaEvolve`, uses
+    AlphaEvolve-style search to synthesize executable C++ decision logic for
+    compiler passes. Its abstract reports a closed loop of generation,
+    user-provided macro-benchmark evaluation, autotuning, and refinement, with
+    LLVM function-inlining, register-allocation, and preliminary XLA
+    optimization results. The paper's concrete loop edits EVOLVE-BLOCK regions
+    in compiler source, emits C++ decision policies with compiler-flag
+    hyperparameters, rebuilds the toolchain, scores macro-benchmarks with
+    binary-size or runtime signals, and feeds best scores, tuning logs, and
+    profiling traces back into AlphaEvolve.
+  - Status: README now lists arXiv `2601.21096` as AlphaEvolve compiler-
+    optimization application context only and marks the mention as a curated
+    cached-paper subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no executable
+    C++ decision-logic candidate schema, LLVM/XLA compiler-pass integration,
+    EVOLVE-BLOCK compiler-source span record, compiler rebuild record,
+    macro-benchmark harness, binary-size metric record, end-to-end performance
+    metric record, Vizier-style autotuning record, LLVM function-inlining
+    result row, register-allocation priority-rule row, XLA graph-extraction
+    row, XLA auto-sharding row, expert/neural baseline row, temporal/domain
+    generalization row, generated-policy maintainability row, or dedicated
+    Magellan runtime repository; `papers/magellan_boundary.json` records that
+    absence boundary.
+  - Remaining README gap: candidate schemas, EVOLVE-BLOCK compiler-source
+    spans, compiler-pass runners, benchmark provenance, metric definitions,
+    feature/full heuristic mode labels, autotuning traces, generalization
+    reports, maintainability reports, XLA task/protocol rows, baseline
+    identities, environment hashes, independent checker outputs, benchmark
+    reports, and Magellan-style compiler-optimization evidence remain active
+    in code and paper TODOs.

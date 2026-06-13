@@ -240,6 +240,15 @@ Important limits:
   validation specification, unacceptable-regression threshold record,
   held-out SWE-Bench Verified/Terminal-Bench 2.0 Verified/GAIA/AppWorld
   benchmark report, linked-code audit, or independent reproduction output.
+- RHO retrospective harness-optimization coverage is background paper context
+  only: LibreEvolve has no unlabeled past-trajectory harness optimizer,
+  hard/diverse coreset selector, DPP coreset record, parallel retrospective
+  re-solve workflow, group rollout artifact, self-validation diagnostic,
+  self-consistency diagnostic, candidate harness-update set, pairwise
+  self-preference selector, label-free promotion policy, deployment/rollback
+  metadata, behavior-pattern shift report, long-horizon accuracy report,
+  SWE-Bench Pro 59%-to-78% reproduction, linked-code audit, or independent
+  reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

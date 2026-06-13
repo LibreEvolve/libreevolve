@@ -2,6 +2,37 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive RHO retrospective harness-optimization roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2606.05922` source-scoped as background retrospective
+    harness-optimization context rather than implemented LibreEvolve
+    RHO-style runtime support.
+  - Current evidence: the cached paper and `papers/README.md` record RHO's
+    unlabeled past-trajectory harness optimization, hard/diverse coreset
+    selection, parallel re-solving, self-validation, self-consistency,
+    candidate harness updates, pairwise self-preference selection,
+    label-free optimization framing, single-round SWE-Bench Pro 59%-to-78%
+    claim, long-horizon behavior-pattern claim, linked-code availability, and
+    project URL availability, while marking local past-trajectory corpus
+    schemas, DPP coreset records, retrospective rollout batches, re-solve
+    provenance, self-analysis artifacts, harness-update artifacts, preference
+    comparisons, deployment/rollback metadata, benchmark records, and
+    independent reproduction output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source/license metadata, project URL and linked-code status,
+    relation to LibreEvolve evaluator assumptions, past-trajectory corpus
+    metadata, hard-task/diversity coreset selection, DPP coreset record,
+    retrospective rollout batch records, parallel re-solve provenance,
+    self-validation and self-consistency artifacts, candidate harness-update
+    records, pairwise self-preference comparisons, label-free selection
+    policy, deployment and rollback metadata, behavior-pattern shift reports,
+    long-horizon accuracy records, SWE-Bench Pro benchmark metadata, baseline
+    identities, reproducibility status, and independent verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive HarnessFix trace-grounded harness-repair roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

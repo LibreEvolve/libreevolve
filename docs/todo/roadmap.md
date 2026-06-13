@@ -10,39 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement RHO retrospective self-preference harness optimization gates
-      beyond paper cache coverage.
-  - Spec evidence: arXiv `2606.05922`, submitted June 4, 2026, introduces
-    Retrospective Harness Optimization (RHO) in `Improving LLM Agents via
-    Self-Preference over Trajectory Rollouts`. The abstract says RHO improves
-    an agent harness without ground-truth validation labels by selecting a
-    diverse coreset of challenging past-trajectory tasks, re-solving them in
-    parallel, analyzing rollouts with self-validation and self-consistency,
-    generating candidate harness updates, and selecting the most effective
-    update through pairwise self-preference.
-  - Current evidence: ROADMAP, `papers/download_manifest.*`,
-    `papers/row_identity.json`, `papers/README.md`, README, and TODO coverage
-    now include `2606.05922`, cached locally as
-    `papers/2606.05922__RHO.pdf` with byte count `1267774` and SHA-256
-    `75b126a2a6350e8ff58c0e6c7f3366894e23f0610f533ac533fc3e3214aa7cd4`.
-    ROADMAP tracks the paper as background retrospective harness optimization
-    context only. It still has no retrospective label-free harness optimizer
-    gate, hard/diverse coreset selection from past trajectories, parallel re-
-    rollout batches for harness comparison, self-validation or self-
-    consistency analyses, pairwise self-preference ranking for candidate
-    harness updates, or long-horizon behavior-pattern evidence before
-    promoting self-supervised harness optimization claims.
-  - Required result: implement roadmap gates beyond paper-cache evidence:
-    source-license metadata, linked-code and project URL status, past-
-    trajectory corpus schema, coreset difficulty/diversity criteria, DPP
-    coreset records, retrospective rollout batch records, parallel re-solve
-    provenance, self-validation and self-consistency evidence, candidate
-    harness-update artifacts, pairwise self-preference ranking, label-free
-    selection policy, deployment/rollback metadata, long-horizon behavior-
-    pattern reports, SWE-Bench Pro benchmark records, baseline identities,
-    and a background-only or benchmark-fixture status rule so roadmap claims
-    do not outpace local RHO-style retrospective harness optimization support.
-
 - [ ] Implement harness-updating versus harness-benefit gates beyond paper
       cache coverage.
   - Spec evidence: arXiv `2605.30621`, submitted May 28, 2026, introduces

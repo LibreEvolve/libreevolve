@@ -1639,7 +1639,7 @@ report, artifact, or evidence work from missing source-specific TODO coverage.
 | 2606.06114 | `docs/todo/code.md`; `docs/todo/papers.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/roadmap.md` |
 | 2605.27276 | `docs/todo/code.md`; `docs/todo/papers.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/roadmap.md` |
 | 2606.06324 | `docs/todo/code.md`; `docs/todo/papers.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/roadmap.md` |
-| 2606.05922 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/roadmap.md` |
+| 2606.05922 | `docs/todo/code.md`; `docs/todo/papers.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/roadmap.md` |
 | 2605.30621 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/roadmap.md` |
 | 2604.25850 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/roadmap.md` |
 | 2605.13357 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/roadmap.md` |

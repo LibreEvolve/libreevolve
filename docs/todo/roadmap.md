@@ -6,24 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Keep roadmap validator-boundary consistency gate scoped to CLI artifact
-      validation until promotion/finalization enforcement exists.
-  - Spec evidence: AlphaEvolve-scale evaluator provenance should let a reader
-    verify that every saved candidate attempt used the execution boundary
-    claimed by the run manifest, not just that the manifest names a policy.
-  - Current evidence: `ROADMAP.md` now records that
-    `validate_run_artifact_validator_boundary_consistency()` loads
-    manifest-backed run directories, validates `policies.validator_execution`,
-    scans `history.jsonl` and `failure_history.jsonl`, requires
-    `evaluation.metadata.validator_boundary` on each persisted attempt, and
-    that `libreevolve show` fails missing, legacy, or mismatched boundary
-    evidence. ROADMAP keeps this distinct from stronger OS/container sandbox
-    and resource-quota enforcement.
-  - Required result: when run-finalization, CI, or release-artifact promotion
-    enforcement lands, update ROADMAP, README, papers index, and code/paper TODO
-    entries together so roadmap wording separates CLI inspection from automatic
-    artifact-promotion gates and from stronger sandbox/resource enforcement.
-
 - [ ] Keep binary/static roadmap scope aligned with implemented static-member
       support.
   - Spec evidence: AlphaEvolve can operate over broader codebase and artifact

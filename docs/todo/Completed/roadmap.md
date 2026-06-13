@@ -252,6 +252,22 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     stochastic re-evaluation policy remain active in code and paper TODO
     evidence rather than this stale roadmap wording task.
 
+- [x] Archive stale active roadmap validator-boundary consistency wording TODO.
+  - Status: the active roadmap TODO for scoping validator-boundary consistency
+    to CLI artifact validation was stale. `ROADMAP.md`, README, and
+    `papers/README.md` already describe
+    `validate_run_artifact_validator_boundary_consistency()` as a manifest-
+    backed run-inspection gate over `policies.validator_execution`,
+    `history.jsonl`, `failure_history.jsonl`, and
+    `evaluation.metadata.validator_boundary`, while explicitly separating it
+    from run-finalization, CI, release-artifact promotion, OS/container
+    sandboxing, and resource-quota enforcement.
+  - Verification: `tests/core/test_validator_policy.py` validates the policy
+    and artifact consistency checker, including missing, legacy, and mismatched
+    boundary rows. Remaining automatic artifact-promotion gates and stronger
+    sandbox/resource enforcement remain active in code and paper TODO evidence
+    rather than this stale roadmap wording task.
+
 - [x] Emit embedded evaluator Figure 3 boundary sidecar for roadmap evidence.
   - Status: `papers/embedded_evaluator_boundary.json` now lets roadmap wording
     point to a committed absence boundary for skeleton invocation traces,

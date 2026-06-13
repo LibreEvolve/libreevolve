@@ -9,34 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README Appendix A target-suite wording scoped to registry coverage
-      versus curation provenance.
-  - Spec evidence: AlphaEvolve Appendix A says the 54 reported matrix sizes
-    were chosen roughly from dimensions with 2 <= m,n <= 5 and a cutoff for p,
-    and that axis-permutation symmetries make equivalent algorithms, so the
-    paper focuses on sorted sizes.
-  - Current evidence: README says the matrix report checks `target_id` and
-    `dimensions` against the 54-row Appendix A Table 3 registry and now
-    documents `libreevolve.alphaevolve_appendix_a_matrix_curation.v1` for
-    rough selection wording, sorted representative policy, omitted
-    symmetry-equivalent target ids, included-target rationales, and the
-    unspecified `p` cutoff. README now also documents
-    `libreevolve.alphaevolve_appendix_a_matrix_excluded_target_curation_boundary.v1`
-    as the current `not_recorded_locally` boundary and required future
-    excluded-target justification fields.
-    `appendix_a_matrix_excluded_target_curation_boundary_from_records()` can
-    build a recorded boundary for supplied excluded-target justifications over
-    a declared scope. README still does not document emitted justifications for
-    every possible excluded non-equivalent target outside the reported suite.
-    README Important limits now also states that Appendix A matrix
-    target-suite curation records the reported 54 sorted targets, rough paper
-    selection wording, symmetry policy, and included-target rationales, not an
-    exhaustive locally justified corpus for every excluded non-equivalent
-    matrix size outside the reported suite.
-  - Required result: when excluded-target justification metadata lands, update
-    README, ROADMAP, papers index, and matching TODOs so README does not imply
-    the curation record proves full exhaustive target-suite construction.
-
 - [ ] Keep README matrix-scaling wording scoped until resource-frontier
       reports exist.
   - Spec evidence: AlphaEvolve Appendix A notes that runs on matrix sizes

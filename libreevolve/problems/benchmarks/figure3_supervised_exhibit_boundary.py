@@ -11,7 +11,7 @@ FIGURE3_SUPERVISED_EXHIBIT_BOUNDARY_SCHEMA = (
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_IDS = ("2.3",)
-EXPECTED_SOURCE_FIGURE_ID = "Figure 3"
+EXPECTED_SOURCE_FIGURE_IDS = ("Figure 3",)
 EXPECTED_SUBFIGURE_IDS = ("Figure 3a", "Figure 3b", "Figure 3c")
 EXPECTED_BOUNDARY_STATUS = "figure3_supervised_exhibit_not_reproduced"
 EXPECTED_SUPPORTING_SURFACES = (
@@ -79,7 +79,7 @@ def figure3_supervised_exhibit_boundary_record() -> dict[str, Any]:
         "schema": FIGURE3_SUPERVISED_EXHIBIT_BOUNDARY_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
-        "source_figure_id": EXPECTED_SOURCE_FIGURE_ID,
+        "source_figure_ids": list(EXPECTED_SOURCE_FIGURE_IDS),
         "source_subfigure_ids": list(EXPECTED_SUBFIGURE_IDS),
         "source_claim": (
             "AlphaEvolve Figure 3 is a supervised-learning pipeline exhibit "
@@ -119,8 +119,8 @@ def validate_figure3_supervised_exhibit_boundary(
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
         issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['2.3']"))
-    if data.get("source_figure_id") != EXPECTED_SOURCE_FIGURE_ID:
-        issues.append(_issue("invalid_source_figure_id", "source_figure_id must be Figure 3"))
+    if data.get("source_figure_ids") != list(EXPECTED_SOURCE_FIGURE_IDS):
+        issues.append(_issue("invalid_source_figure_ids", "source_figure_ids must be ['Figure 3']"))
     if data.get("source_subfigure_ids") != list(EXPECTED_SUBFIGURE_IDS):
         issues.append(_issue("invalid_source_subfigure_ids", "source_subfigure_ids must identify Figure 3a/3b/3c"))
     source_claim = data.get("source_claim")

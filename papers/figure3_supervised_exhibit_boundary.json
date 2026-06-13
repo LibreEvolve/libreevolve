@@ -4,7 +4,9 @@
   "source_section_ids": [
     "2.3"
   ],
-  "source_figure_id": "Figure 3",
+  "source_figure_ids": [
+    "Figure 3"
+  ],
   "source_subfigure_ids": [
     "Figure 3a",
     "Figure 3b",

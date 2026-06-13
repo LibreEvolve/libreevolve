@@ -7,7 +7,9 @@
     "2.1",
     "2.3"
   ],
-  "source_figure_id": "Figure 3",
+  "source_figure_ids": [
+    "Figure 3"
+  ],
   "source_claim": "AlphaEvolve Figure 3 shows a candidate codebase skeleton exposing evaluate(eval_inputs) -> dict[str, float], with evaluators invoking that function to score the modified program",
   "boundary_status": "embedded_entrypoint_without_full_figure3_parity",
   "runtime_report_status": "embedded_evaluator_entrypoint_report_available",

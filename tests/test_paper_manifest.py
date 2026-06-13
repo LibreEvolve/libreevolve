@@ -5029,6 +5029,7 @@ def test_validate_paper_manifest_rejects_embedded_evaluator_boundary_drift(
     record = paper_manifest.embedded_evaluator_boundary_record()
     record["claim_ready"] = True
     record["source_section_ids"] = ["2.1"]
+    record["source_figure_ids"] = ["Figure 2"]
     sidecar = tmp_path / paper_manifest.EMBEDDED_EVALUATOR_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -5038,6 +5039,7 @@ def test_validate_paper_manifest_rejects_embedded_evaluator_boundary_drift(
     assert report.ok is False
     assert "embedded_evaluator_boundary_claim_ready_overclaim" in codes
     assert "embedded_evaluator_boundary_invalid_source_section_ids" in codes
+    assert "embedded_evaluator_boundary_invalid_source_figure_ids" in codes
 
 
 def test_validate_paper_manifest_requires_embedded_evaluator_boundary_at_repo_root(
@@ -5079,6 +5081,7 @@ def test_validate_paper_manifest_rejects_figure3_supervised_exhibit_boundary_dri
     record["claim_ready"] = True
     record["boundary_status"] = "figure3_supervised_exhibit_reproduced"
     record["source_section_ids"] = ["2.4"]
+    record["source_figure_ids"] = ["Figure 2"]
     record["missing_evidence"]["assembled_prompt_excerpt_artifact"] = "recorded"
     sidecar = tmp_path / paper_manifest.FIGURE3_SUPERVISED_EXHIBIT_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
@@ -5090,6 +5093,7 @@ def test_validate_paper_manifest_rejects_figure3_supervised_exhibit_boundary_dri
     assert "figure3_supervised_exhibit_boundary_claim_ready_overclaim" in codes
     assert "figure3_supervised_exhibit_boundary_invalid_boundary_status" in codes
     assert "figure3_supervised_exhibit_boundary_invalid_source_section_ids" in codes
+    assert "figure3_supervised_exhibit_boundary_invalid_source_figure_ids" in codes
     assert (
         "figure3_supervised_exhibit_boundary_invalid_missing_evidence_assembled_prompt_excerpt_artifact"
         in codes

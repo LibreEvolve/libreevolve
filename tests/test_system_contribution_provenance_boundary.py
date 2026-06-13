@@ -17,6 +17,7 @@ def test_system_contribution_provenance_boundary_accepts_claim_ready_record():
     assert validation.excluded_claim_count == 6
     assert boundary["schema"] == SYSTEM_CONTRIBUTION_PROVENANCE_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is True
+    assert boundary["source_section_ids"] == ["Contributions"]
     assert boundary["source_pages"] == [22, 23]
     assert "does not claim generic git history" in boundary["claim_boundary"]
 
@@ -25,6 +26,7 @@ def test_system_contribution_provenance_boundary_rejects_scope_drift():
     boundary = system_contribution_provenance_boundary_record()
     boundary["claim_ready"] = False
     boundary["boundary_status"] = "git_history_ready"
+    boundary["source_section_ids"] = ["Author information"]
     boundary["excluded_claims"]["generic_git_history_or_commit_authorship"] = "claimed"
     boundary["required_evidence_fields"] = ["metadata_present"]
     boundary["required_phases"] = ["initial_design"]
@@ -35,6 +37,7 @@ def test_system_contribution_provenance_boundary_rejects_scope_drift():
     assert validation.ok is False
     assert "claim_ready_underclaim" in codes
     assert "invalid_boundary_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert "invalid_excluded_claim_generic_git_history_or_commit_authorship" in codes
     assert "missing_required_evidence_field" in codes
     assert "missing_required_phase" in codes

@@ -2845,6 +2845,7 @@ def test_validate_paper_manifest_rejects_system_contribution_provenance_boundary
     record = paper_manifest.system_contribution_provenance_boundary_record()
     record["claim_ready"] = False
     record["boundary_status"] = "git_history_ready"
+    record["source_section_ids"] = ["Author information"]
     record["excluded_claims"]["generic_git_history_or_commit_authorship"] = "claimed"
     sidecar = tmp_path / paper_manifest.SYSTEM_CONTRIBUTION_PROVENANCE_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
@@ -2855,6 +2856,7 @@ def test_validate_paper_manifest_rejects_system_contribution_provenance_boundary
     assert report.ok is False
     assert "system_contribution_provenance_boundary_claim_ready_underclaim" in codes
     assert "system_contribution_provenance_boundary_invalid_boundary_status" in codes
+    assert "system_contribution_provenance_boundary_invalid_source_section_ids" in codes
     assert (
         "system_contribution_provenance_boundary_invalid_excluded_claim_generic_git_history_or_commit_authorship"
         in codes

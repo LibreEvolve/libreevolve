@@ -6,10 +6,10 @@ infer behavior from tests and source.
 
 Use the root [README](../README.md) as the practical entry point for setup,
 quick-start commands, current limits, and repository layout. Use this directory
-for operational details. Use [ROADMAP](../ROADMAP.md) and the
-[TODO ledgers](./todo/) for implementation gaps. Use
-[papers/README.md](../papers/README.md) for paper/source status and claim
-boundaries.
+for operational details and the fuller implementation-status ledger. Use
+[ROADMAP](../ROADMAP.md) and the [TODO ledgers](./todo/) for implementation
+gaps. Use [papers/README.md](../papers/README.md) for paper/source status and
+claim boundaries.
 
 ## Operational Guides
 
@@ -22,6 +22,8 @@ boundaries.
 - [Backends](./backends.md): built-in and custom backend behavior, including
   the Google/Gemini provider-parity absence boundary.
 - [Run Artifacts](./run-artifacts.md): What gets written under `runs/`.
+- [Current Status](./status.md): Detailed implemented-versus-absent capability
+  ledger moved out of the root README.
 - [Development](./development.md): Local setup, tests, and contributor workflow.
 - [Paper Cache](../papers/README.md): Local paper roles, implementation status,
   and benchmark coverage decisions.
@@ -29,7 +31,9 @@ boundaries.
 ## Documentation Boundaries
 
 - The root README should stay short enough to be useful on a first read.
-- Detailed runtime behavior belongs in the operational guides above.
+- Detailed runtime behavior belongs in the operational guides above, while the
+  full implementation and absence-boundary ledger belongs in
+  [status.md](./status.md).
 - Long-term status belongs in `ROADMAP.md` and `docs/todo/`.
 - Paper-derived claims belong in `papers/README.md` and validated JSON sidecars.
 

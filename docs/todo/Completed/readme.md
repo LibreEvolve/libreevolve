@@ -4,6 +4,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep the root README realistic by moving the detailed status ledger into
+      docs.
+  - Status: the root README now stays practical: project purpose, concise
+    current status, install, quick start, run artifacts, CLI, docs, research
+    sources, testing, repository layout, contribution notes, and license. The
+    thousand-line implementation and absence-boundary ledger was preserved in
+    `docs/status.md` instead of being deleted.
+  - Verification: `docs/README.md` and the root README both link to
+    `docs/status.md`, while `papers/README.md`, `ROADMAP.md`, and
+    `docs/todo/` remain the deeper paper/status/backlog surfaces.
+
 - [x] Keep README validator sandbox/resource-limit wording scoped to local
       subprocess audit evidence versus OS/container enforcement.
   - Status: README Important limits now states that validator execution policy

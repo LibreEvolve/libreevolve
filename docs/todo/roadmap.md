@@ -10,31 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Related Work roadmap wording scoped until taxonomy evidence exists.
-  - Spec evidence: AlphaEvolve Related Work frames the system as
-    execution-feedback code superoptimization, compares it with pre-LLM
-    enumeration/genetic-search/Monte-Carlo/deep-RL approaches, AlphaTensor,
-    GPU-kernel and LLM-agent optimizers, AI-for-science methods, and proof
-    discovery, distinguishes programmatic hypothesis/evaluation and
-    witness/counterexample discovery from other scientific-discovery stages,
-    and discusses continuous LLM fine-tuning through reinforcement learning
-    plus LLM-directed concept learning/summaries of high-performing programs
-    as adjacent complementary ideas needing more investigation at
-    AlphaEvolve scale.
-  - Current evidence: roadmap/README/paper-index status can cite bundled
-    papers and specific feature gaps, but it does not require a related-work
-    taxonomy. The committed `papers/related_work_taxonomy_boundary.json`
-    sidecar records that source ids, method family, task stage, candidate
-    representation, evaluator/evidence mode, proof-versus-witness status,
-    comparison claim, complementary-mechanism status, and local status are
-    still missing for each AlphaEvolve Related Work category.
-  - Required result: when related-work taxonomy metadata lands, update
-    ROADMAP, README, papers index, and code/paper TODOs so roadmap claims
-    distinguish broad inspiration and paper availability from AlphaEvolve's
-    specific positioning as execution-feedback superoptimization and
-    programmatic scientific discovery, including adjacent fine-tuning and
-    concept-learning mechanisms that are context rather than local capability.
-
 - [ ] Keep self-improvement roadmap wording scoped until infrastructure and
       distillation evidence exists.
   - Spec evidence: AlphaEvolve's Discussion says practical discoveries can

@@ -2,6 +2,23 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Related Work taxonomy roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `docs/status.md`, and `papers/README.md` already scope Related Work
+    positioning to flat paper-index source rows and individual gap TODOs,
+    while `papers/related_work_taxonomy_boundary.json` records that source
+    category mapping, method-family labels, candidate-representation labels,
+    feedback/evidence labels, task-stage labels, proof/witness status,
+    comparison axes, category citations, and AlphaEvolve positioning-claim
+    gates are not yet implemented.
+  - Remaining guard: a real Related Work taxonomy, grouped source labels,
+    AlphaEvolve comparison axes, complementary-mechanism status, and
+    README/ROADMAP/paper-index gates for summary claims remain future work.
+  - Verification: related-work taxonomy boundary tests accept only the flat
+    inventory boundary and reject `related_work_taxonomy_ready`,
+    `claim_ready=true`, and missing-evidence drift; paper-manifest tests
+    require the sidecar and reject positioning-readiness overclaims.
+
 - [x] Archive AI-Co-Scientist roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `docs/status.md`, and `papers/README.md` already scope the

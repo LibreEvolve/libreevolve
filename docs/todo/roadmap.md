@@ -10,30 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Appendix B.8 roadmap wording scoped until point-set distance
-      certificates exist.
-  - Spec evidence: AlphaEvolve Appendix B.8 and Figure 12 report two concrete
-    max/min-distance point-set witnesses: 16 points in 2D with squared ratio
-    `12.889266112` improving prior `12.890`, and 14 points in 3D with squared
-    ratio `4.165849767` improving prior `4.168`.
-  - Current evidence: roadmap/README/paper-index wording now cites B.8
-    convention metadata with point counts, dimensions, prior squared bounds,
-    and Figure 12 panel linkage. It also cites a
-    `witness_certificate_boundary` listing the required future coordinate,
-    point-count/dimension certificate, pairwise distance matrix, min/max
-    pair-witness, squared-ratio recomputation, and Figure 12 panel artifact
-    fields, validating the 16-point/2D and 14-point/3D missing-witness rows,
-    and keeping both witnesses `not_recorded_locally`. It still does not
-    include coordinate payloads, all-pairs distance matrix artifacts, min/max
-    pair-witness certificates, recomputed squared ratios from coordinates, or
-    rendered Figure 12 panel artifacts.
-  - Required result: when Appendix B.8 witness validators land, update ROADMAP,
-    README, papers index, and code/paper TODOs together so roadmap claims
-    separate convention-safe quoting from actual reproduced point-set
-    coordinate artifacts, pairwise-distance matrices, min/max pair witnesses,
-    squared-ratio recomputation certificates, and panel artifacts for the 2D
-    and 3D Figure 12 constructions.
-
 - [ ] Keep Appendix B.5 roadmap wording scoped until minimum-overlap
       step-function provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.5 improves the Erdos

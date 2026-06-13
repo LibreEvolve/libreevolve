@@ -166,6 +166,13 @@ Important limits:
   `C3 <= 1.4557`), not local step-function payload hashes,
   domain/spacing/sign-policy certificates, verifier artifacts, recomputed
   bound rows, or recomputation certificates.
+- Appendix B.8 max/min-distance point-set witness provenance remains absent:
+  the registry preserves the squared-ratio convention, Figure 12 left/right
+  linkage, 16-point/2D and 14-point/3D metadata, prior squared bounds
+  (`12.890`, `4.168`), and reported squared ratios (`12.889266112`,
+  `4.165849767`), not coordinate payload hashes, point-count/dimension
+  certificates, all-pairs distance matrix artifacts, min/max pair-witness
+  certificates, recomputed squared-ratio rows, or Figure 12 panel artifacts.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

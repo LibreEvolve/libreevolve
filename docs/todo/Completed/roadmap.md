@@ -2,6 +2,25 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Appendix B.8 point-set witness roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish B.8 convention-safe squared-ratio quoting from actual
+    reproduced point-set coordinate artifacts and distance certificates.
+  - Current evidence: `witness_certificate_boundary` records the required
+    future coordinate artifact, point-count/dimension certificates, pairwise
+    distance matrix, min/max pair-witness certificate, squared-ratio
+    recomputation, Figure 12 panel artifact fields, and both missing-witness
+    rows while keeping those artifacts `not_recorded_locally`.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: coordinate payload hashes, point-count/dimension certificates,
+    all-pairs distance matrix artifacts, min/max pair-witness certificates,
+    recomputed squared-ratio rows, and Figure 12 panel artifacts.
+  - Verification: Appendix B registry B.8 witness-boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Keep Appendix B.1-B.3 roadmap wording scoped until paper-heading label
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.1-B.3 headings are `First

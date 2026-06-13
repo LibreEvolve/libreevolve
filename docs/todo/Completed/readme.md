@@ -12973,3 +12973,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     statistical-oracle evidence and audited error rates exist.
   - Verification: paper-manifest validation requires the sidecar and focused
     incorrect-suggestion audit tests cover its overclaim rejection.
+- [x] Add README boundary for evaluation-cascade attrition evidence.
+  - Spec evidence: AlphaEvolve Section 2.4 describes cascades as increasingly
+    difficult test ensembles that promote promising candidates and prune less
+    promising ones before larger budgets are spent.
+  - Status: README now states that evaluation-cascade reports are runtime
+    attrition and promotion telemetry when stages run, not AlphaEvolve-style
+    cascade-efficiency evidence with stage difficulty rationale,
+    evaluator/test-set identities and hashes, benchmark seed/sample policy,
+    counterfactual full-evaluation costs, or observed wall-clock cost savings.
+    It points to `papers/evaluation_cascade_boundary.json`.
+  - Remaining README gap: docs cannot imply cascade-efficiency parity until
+    stage/test-set metadata, benchmark sample policy, and counterfactual cost
+    evidence exist.
+  - Verification: paper-manifest validation requires the sidecar and focused
+    evaluation-cascade tests cover its overclaim rejection.

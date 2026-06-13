@@ -41,6 +41,12 @@ Important limits:
   scope; robust evaluator-environment fixtures, manual-to-code transition
   policies, and LLM-only idea-stage contracts are tracked by
   `papers/automated_evaluator_scope_boundary.json`.
+- Evaluation-cascade reports are runtime attrition and promotion telemetry when
+  stages run, not AlphaEvolve-style cascade-efficiency evidence with stage
+  difficulty rationale, evaluator/test-set identities and hashes, benchmark
+  seed/sample policy, counterfactual full-evaluation costs, or observed
+  wall-clock cost savings; that boundary is tracked by
+  `papers/evaluation_cascade_boundary.json`.
 - Cascade hypothesis-test gates are runtime policy evidence, not
   benchmark-calibrated AlphaEvolve Section 2.4 cascade proof with repeated-seed
   fixtures and empirical false-promotion/false-rejection validation; that

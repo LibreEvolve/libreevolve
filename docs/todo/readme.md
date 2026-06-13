@@ -79,8 +79,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README should still not imply AlphaEvolve cascade-efficiency parity because
     stage difficulty/scale labels, evaluator/test-set hashes, benchmark
     seed/sample policy, and cost-savings counterfactuals remain incomplete.
-    README now also names `papers/evaluation_cascade_boundary.json` as the
-    committed paper-manifest-validated cascade-efficiency absence boundary.
+    README Important limits now also name
+    `papers/evaluation_cascade_boundary.json` as the committed
+    paper-manifest-validated cascade-efficiency absence boundary.
   - Required result: update README, ROADMAP, papers index, and code/paper TODOs
     with the partial cascade report and the remaining difficulty, benchmark
     denominator, test-set, and cost gaps.

@@ -506,8 +506,11 @@ is not yet an AlphaEvolve reproduction.
   programs. `runtime.history.duplicate_work_policy_report` now records
   canonical workspace plus evaluator-contract cache-key scope, cache stores,
   cache hits, and no-op cache-hit controller budget events. Durable cross-run
-  cache storage, resume-spanning cache replay, stochastic re-evaluation
-  policy, and semantic near-duplicate detection remain open. The committed
+  workspace indexes, durable evaluation-cache storage, resume-spanning cache
+  replay, cache invalidation/migration policy, stochastic re-evaluation
+  policy, semantic near-duplicate detection, source/output-aware cache
+  indexes, and an AlphaEvolve-grade fixed-budget memory claim gate remain
+  open. The committed
   `papers/duplicate_work_policy_boundary.json` sidecar keeps the current
   run-local exact-cache scope machine-validated.
 - Replace the remaining insertion-time adaptive TF-IDF diversity coordinates

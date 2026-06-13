@@ -1223,9 +1223,10 @@ diff-error-free exact workspace matches. Cache keys include canonical workspace
 hash plus evaluator-contract hash; cache hits emit replayable
 `candidate_evaluation_cache_hit` controller events and do not consume
 evaluator-call budget. The remaining gap is durable cross-run cache lookup,
-resume-spanning cache replay, stochastic re-evaluation policy, semantic
-near-duplicate detection, and broader AlphaEvolve-grade fixed-budget memory
-over previously explored programs. The committed
+resume-spanning cache replay, cache invalidation/migration policy, stochastic
+re-evaluation policy, semantic near-duplicate detection, source/output-aware
+cache indexes, and broader AlphaEvolve-grade fixed-budget memory over
+previously explored programs. The committed
 `papers/duplicate_work_policy_boundary.json` sidecar keeps this run-local
 exact-cache scope machine-validated.
 

@@ -91,27 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README database-memory wording scoped until duplicate-work cache is
-      durable and cross-run.
-  - Spec evidence: AlphaEvolve's database stores generated solutions with
-    attached evaluations and is meant to resurface previously explored ideas
-    under fixed compute budgets.
-  - Current evidence: README can describe deterministic candidate ids,
-    candidate history, workspace hashes, unique program-id validation,
-    current-run resurfacing views, and
-    `runtime.history.duplicate_work_policy_report`, which reports duplicate
-    workspaces plus run-local evaluator cache stores/hits for diff-error-free
-    exact workspace matches. README can say cache hits reuse evaluator results
-    under canonical workspace plus evaluator-contract keys and avoid evaluator-
-    call budget, but it should not imply durable cross-run database memory,
-    semantic near-duplicate handling, or resume-spanning cache replay. README
-    now ties that scope to `papers/duplicate_work_policy_boundary.json`.
-  - Required result: when durable source/workspace deduplication or cross-run
-    evaluation-cache reuse lands, update README, ROADMAP, papers index, and
-    code/paper TODOs with cache storage scope, invalidation/migration policy,
-    stochastic re-evaluation semantics, replay behavior, and source/output-
-    aware duplicate indexes.
-
 - [ ] Keep README database-sampling wording scoped until calibrated sampling-
       balance comparisons exist.
   - Spec evidence: AlphaEvolve's database balances exploration and

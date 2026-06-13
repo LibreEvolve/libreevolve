@@ -1729,12 +1729,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     run-local exact-cache evidence only.
   - Current gap: the cache is still run-local and exact-match only. The paper
     index has no evidence for durable cross-run lookup, resume-spanning cache
-    replay, stochastic re-evaluation policy, semantic near-duplicate handling,
-    or output/source-aware duplicate indexes.
+    replay, cache invalidation/migration policy, stochastic re-evaluation
+    policy, semantic near-duplicate handling, source/output-aware duplicate
+    indexes, or an AlphaEvolve-grade fixed-budget memory claim gate.
   - Required result: add paper-visible durable cache/reuse policy proving how
     repeated source/workspace proposals are skipped, reused, replayed across
     runs/resumes, or intentionally re-evaluated as stochastic samples with
-    documented budget effects.
+    documented invalidation/migration semantics and budget effects.
 
 - [ ] Extend exploration/exploitation sampling-balance evidence into calibrated
       strategy comparisons.

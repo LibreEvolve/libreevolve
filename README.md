@@ -437,9 +437,11 @@ Important limits:
   robustness/versatility parity; that boundary is tracked by
   `papers/collaborator_feedback_provenance_boundary.json`.
 - Duplicate-work reports are run-local exact-workspace cache diagnostics, not
-  durable cross-run memory, semantic duplicate detection, or resume-spanning
-  cache replay; that boundary is tracked by
-  `papers/duplicate_work_policy_boundary.json`.
+  cross-run workspace indexes, durable evaluation-cache storage, resume-
+  spanning replay, cache invalidation/migration policy, stochastic
+  re-evaluation policy, semantic duplicate detection, source/output-aware
+  cache indexes, or an AlphaEvolve-grade fixed-budget memory claim gate; that
+  boundary is tracked by `papers/duplicate_work_policy_boundary.json`.
 - Failure memory is run-local diagnostic evidence, not durable cross-run
   semantic failed-proposal memory, learned repetition avoidance, or
   failure-aware sampling policy; that boundary is tracked by

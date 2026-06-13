@@ -13789,6 +13789,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: paper-manifest validation requires the committed sidecar and
     focused duplicate-work policy tests reject durable-memory overclaims.
 
+- [x] Keep README database-memory wording scoped until duplicate-work cache is
+      durable and cross-run.
+  - Status: README now scopes duplicate-work reports as run-local
+    exact-workspace cache diagnostics, not cross-run workspace indexes,
+    durable evaluation-cache storage, resume-spanning replay, cache
+    invalidation/migration policy, stochastic re-evaluation policy, semantic
+    duplicate detection, source/output-aware cache indexes, or an
+    AlphaEvolve-grade fixed-budget memory claim gate.
+  - Verification: `papers/duplicate_work_policy_boundary.json` remains the
+    manifest-checked sidecar for that run-local exact-cache boundary, while
+    the paper TODO for durable duplicate-work memory stays active.
+
 - [x] Keep README MAP-Elites descriptor boundary tied to sidecar.
   - Status: README now states that MAP-Elites descriptor snapshots are
     insertion-time local descriptor metadata, not stable learned/evaluator-

@@ -10459,6 +10459,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation requires the committed sidecar and
     focused duplicate-work policy tests reject durable-memory overclaims.
 
+- [x] Keep database-memory roadmap wording scoped until duplicate-work cache is
+      durable and cross-run.
+  - Status: ROADMAP now separates run-local exact workspace/evaluator-contract
+    cache evidence from cross-run workspace indexes, durable evaluation-cache
+    storage, resume-spanning cache replay, cache invalidation/migration policy,
+    stochastic re-evaluation policy, semantic near-duplicate detection,
+    source/output-aware cache indexes, and an AlphaEvolve-grade fixed-budget
+    memory claim gate.
+  - Remaining roadmap gap: durable duplicate-work cache/reuse policy remains
+    tracked in the active paper TODO.
+
 - [x] Keep roadmap MAP-Elites descriptor boundary tied to sidecar.
   - Status: ROADMAP now links MAP-Elites `descriptor_model` snapshot readiness
     to `papers/map_elites_descriptor_boundary.json`, preserving the current

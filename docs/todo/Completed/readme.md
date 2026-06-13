@@ -4,6 +4,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Figure 4 matrix-discovery README boundary.
+  - Status: README Important limits now states that Figure 4
+    matrix-discovery records validate main-text exhibit metadata, page and
+    caption linkage, the 15-mutation caption count, `mm_4x4x4` rank-48 target
+    mapping, highlighted component categories, source/diff artifact metadata,
+    and links to Figure 9, matrix-result, certificate, and notebook evidence,
+    not local report/export output that emits rendered Figure 4 artifacts or
+    accepted 15-mutation lineage. It points to
+    `papers/figure4_matrix_discovery_artifacts.json`.
+  - Verification: focused Figure 4 matrix-discovery exhibit/artifact-boundary
+    and paper-manifest tests validate the current absence record,
+    emitted-artifact builder, nested exhibit linkage checks, lineage count,
+    required fields, and overclaim guards.
+
 - [x] Document Appendix A Figure 9 README boundary.
   - Status: README Important limits now states that Appendix A Figure 9
     matrix-diff records validate panel ids, pages, line spans, semantic

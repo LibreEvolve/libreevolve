@@ -222,6 +222,13 @@ Important limits:
   notebook evidence, not local report/export output that emits rendered panel
   images, OCR text, or source-diff artifacts for Figures 9a-9c; that boundary
   is tracked by `papers/figure9_matrix_diff_artifacts.json`.
+- Figure 4 matrix-discovery records validate main-text exhibit metadata, page
+  and caption linkage, the 15-mutation caption count, `mm_4x4x4` rank-48
+  target mapping, highlighted component categories, source/diff artifact
+  metadata, and links to Figure 9, matrix-result, certificate, and notebook
+  evidence, not local report/export output that emits rendered Figure 4
+  artifacts or accepted 15-mutation lineage; that boundary is tracked by
+  `papers/figure4_matrix_discovery_artifacts.json`.
 - Collaborator-feedback provenance is optional metadata and runtime reporting
   for cohorts, events, affected workflow areas, change links, validation
   outcomes, privacy/redaction policy, and review state, not populated

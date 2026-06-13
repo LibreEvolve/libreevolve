@@ -231,6 +231,23 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     libreevolve\tools\paper_manifest.py` passed.
   - Remaining gap: real full-Figure-3 evaluator parity evidence remains open.
 
+- [x] Archive stale active roadmap embedded evaluator wording TODO.
+  - Status: the active roadmap TODO for extending evaluator-entrypoint wording
+    from opt-in embedded support to full Figure 3 parity was stale.
+    `ROADMAP.md`, README, and `papers/README.md` already describe the
+    `eval_stages[].mode: embedded_evaluate` path,
+    `runtime.history.embedded_evaluator_entrypoint_report`, embedded-only
+    problem loading, static invocation/score-field traces, materialized
+    workspace dependency enforcement, and the
+    `papers/embedded_evaluator_boundary.json` absence boundary.
+  - Verification: `tests/test_embedded_evaluator_boundary.py`,
+    `tests/core/test_evaluator.py`, `tests/core/test_loop.py`, and
+    `tests/test_paper_manifest.py` validate the embedded evaluator runtime
+    report and sidecar and reject full Figure 3 parity overclaims. Remaining
+    build isolation, non-static score causality, external-validator score
+    linkage, and prompt/response exhibit gaps stay active in code/paper
+    evidence rather than this stale roadmap wording task.
+
 - [x] Emit candidate language/build runner boundary sidecar for roadmap evidence.
   - Status: `papers/candidate_language_runner_boundary.json` now lets roadmap
     wording point to a committed absence boundary for configured non-Python

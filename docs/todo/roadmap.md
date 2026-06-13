@@ -6,36 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Extend evaluator-entrypoint roadmap wording from opt-in embedded support
-      to full Figure 3 parity.
-  - Spec evidence: AlphaEvolve Section 2.1 and Figure 3 use a candidate
-    codebase with an `evaluate(eval_inputs) -> dict[str, float]` function that
-    invokes the evolved skeleton. Local PDF page 4 describes the user-provided
-    evaluator as a Python `evaluate` function with a fixed input/output
-    signature, and Figure 3 on page 6 says evaluators invoke the Figure 3(a)
-    `evaluate` function to score the modified program.
-  - Current evidence: `ROADMAP.md` now claims configured local validators plus
-    an opt-in `eval_stages[].mode: embedded_evaluate` path. Embedded stages
-    import the materialized candidate primary file, discover a one-argument
-    candidate-owned `evaluate(eval_inputs)` callable, invoke it with JSON-safe
-    configured inputs, map the returned dictionary through local metric
-    validation, record candidate callable plus eval-input provenance, and report
-    executed embedded entrypoints under
-    `runtime.history.embedded_evaluator_entrypoint_report`. That report now
-    also includes static primary-file invocation traces from `evaluate()`
-    through EVOLVE-block-backed local functions when AST evidence is present.
-    Embedded candidate-local reads/imports are now runtime-enforced against
-    the materialized candidate file manifest.
-    External `validate.py` remains the default path, and the problem loader
-    still requires `validate.py` except for all-embedded configured problems.
-    ROADMAP now also names `papers/embedded_evaluator_boundary.json` as the
-    committed paper-manifest-validated full-Figure-3 evaluator absence boundary.
-  - Required result: when build/runtime isolation beyond the local subprocess
-    plus workspace guard and non-static/external-validator score-field linkage
-    land, update ROADMAP, README, papers index, and code/paper TODOs together
-    so roadmap wording can claim full Figure 3 evaluator parity without
-    overstating the current opt-in report.
-
 - [ ] Extend Figure 1/Figure 2 roadmap wording from process mappings to full
       diagram parity.
   - Spec evidence: AlphaEvolve Figure 1 shows the high-level architecture from

@@ -159,6 +159,22 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     scheduler-regret claims, the wording must stay source-scoped until the
     active code, paper, and roadmap TODO evidence exists.
 
+- [x] Archive README GigaEvo framework-parity source-scope TODO.
+  - Status: the README-specific TODO was stale after the README realism split.
+    The root README no longer mentions GigaEvo, Redis lifecycle storage,
+    `asyncio` DAG execution, LangGraph mutation, insight stages,
+    bidirectional lineage, Hydra configuration, concurrent units, or GigaEvo
+    benchmark reproduction.
+  - Remaining guard: `papers/README.md` keeps `2511.17592` as framework
+    inspiration only, and the open code, paper, and roadmap TODOs still track
+    the missing Redis lifecycle schema, DAG topology and caching evidence,
+    concurrency telemetry, insight/lineage artifacts, Hydra/problem-layout
+    mapping, source-code status, LangGraph-equivalent mutation provenance, and
+    benchmark-reproduction rows.
+  - Verification: if the root README later reintroduces GigaEvo or related
+    framework-parity claims, the wording must remain source-scoped until the
+    active code, paper, and roadmap TODO evidence exists.
+
 - [x] Keep README validator sandbox/resource-limit wording scoped to local
       subprocess audit evidence versus OS/container enforcement.
   - Status: README Important limits now states that validator execution policy

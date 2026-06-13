@@ -1970,6 +1970,11 @@ Reviewer records include their manifest-safe role, backend index, retained
 prompt/mutation hashes, provider failure or parser fallback details, and
 selection status. The selected reviewer record is also mirrored at the top of
 `metadata.critique` for compatibility with single-reviewer readers.
+This reviewer-pool metadata is synchronous first/last-valid telemetry; it does
+not prove independent reviewer task definitions, reviewer/generator role
+separation, critique-to-revision attribution, calibrated score-to-selection,
+reviewer budget quotas, equal-budget no-reviewer comparison, or external
+reviewer timeout/failure artifact coverage.
 The selector accepts a valid critique revision, falls back to a valid original
 mutation when the revision is malformed, and preserves the original generated
 mutation as the selected failure payload with

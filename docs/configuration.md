@@ -301,7 +301,12 @@ from `validate.py` unless explicitly allowlisted.
   provider failures are logged but do not replace a valid original mutation.
   Reviewer-pool metadata records the synchronous execution model,
   completed/failed/budget-skipped counts, pool elapsed seconds, summed reviewer
-  elapsed seconds, and per-reviewer outcome/timing fields.
+  elapsed seconds, and per-reviewer outcome/timing fields. This is not
+  calibrated AlphaEvolve-grade reviewer orchestration: it does not define
+  independent reviewer tasks, prove reviewer/generator role separation,
+  attribute critique contents to accepted revisions, score reviewers for
+  selection, own reviewer budget quotas, or compare against equal-budget
+  no-reviewer runs.
 - `llm_feedback` (`[]`): optional LLM grader specs that score or discard
   evaluated candidates after local validation.
 - `feedback_retention_mode` (`"redacted"`): controls how candidate evaluation

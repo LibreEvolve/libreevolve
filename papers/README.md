@@ -2490,9 +2490,13 @@ Implemented:
   synchronous pool execution, first/last-valid aggregation, reviewer parser
   status, valid revision counts, selected reviewer provenance, reviewer
   elapsed seconds, reviewer outcome status, and inline runtime artifact policy.
-  It is not evidence of async reviewer overlap, calibrated reviewer-score
-  reports, reviewer reliability ablations, per-reviewer provider isolation, or
-  external reviewer timeout artifacts.
+  It is not evidence of async reviewer overlap, independent reviewer task
+  definitions, reviewer/generator role separation proof,
+  critique-to-revision attribution, reviewer score-to-selection policy,
+  reviewer budget quota policy, reviewer failure-isolation reports,
+  equal-budget no-reviewer comparisons, calibrated reviewer-score reports,
+  reviewer reliability ablations, per-reviewer provider isolation, or external
+  reviewer timeout artifacts.
 - `papers/prompt_section_packing_boundary.json`: prompt section-packing
   sidecar for AlphaEvolve Sections 2.2, 2.3, and 2.4 prompt-context,
   output-format, and multi-score prompt-diversity evidence. It records prompt

@@ -16,12 +16,15 @@ def test_critique_reviewer_pool_boundary_accepts_synchronous_boundary():
         validation.boundary_status
         == "synchronous_first_last_valid_without_calibrated_reviewers"
     )
-    assert validation.required_evidence_field_count == 20
-    assert validation.missing_evidence_count == 5
+    assert validation.required_evidence_field_count == 27
+    assert validation.missing_evidence_count == 12
     assert boundary["schema"] == CRITIQUE_REVIEWER_POOL_BOUNDARY_SCHEMA
     assert boundary["source_section_ids"] == ["front_matter_overview", "2.4", "2.6"]
     assert boundary["claim_ready"] is False
     assert "does not claim async reviewer overlap" in boundary["claim_boundary"]
+    assert "independent reviewer task definitions" in boundary["claim_boundary"]
+    assert "reviewer/generator role separation proof" in boundary["claim_boundary"]
+    assert "critique-to-revision attribution" in boundary["claim_boundary"]
 
 
 def test_critique_reviewer_pool_boundary_rejects_calibrated_overclaim():
@@ -29,6 +32,7 @@ def test_critique_reviewer_pool_boundary_rejects_calibrated_overclaim():
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "calibrated_async_reviewer_pool_ready"
     boundary["missing_evidence"]["calibrated_reviewer_score_report"] = "recorded"
+    boundary["missing_evidence"]["reviewer_score_to_selection_policy"] = "recorded"
     boundary["required_evidence_fields"] = ["configured_reviewer_specs"]
 
     validation = validate_critique_reviewer_pool_boundary(boundary)
@@ -38,6 +42,7 @@ def test_critique_reviewer_pool_boundary_rejects_calibrated_overclaim():
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
     assert "invalid_missing_evidence_calibrated_reviewer_score_report" in codes
+    assert "invalid_missing_evidence_reviewer_score_to_selection_policy" in codes
     assert "missing_required_evidence_field" in codes
 
 
@@ -52,5 +57,5 @@ def test_render_critique_reviewer_pool_boundary_summary_reports_shape():
         "| boundary_status | synchronous_first_last_valid_without_calibrated_reviewers |"
         in summary
     )
-    assert "| required_evidence_field_count | 20 |" in summary
-    assert "| missing_evidence_count | 5 |" in summary
+    assert "| required_evidence_field_count | 27 |" in summary
+    assert "| missing_evidence_count | 12 |" in summary

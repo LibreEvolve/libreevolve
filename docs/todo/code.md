@@ -4961,14 +4961,22 @@ sidecars, tests, and active TODOs.
     selected by first/last valid mutation rather than calibrated reviewer score
     or benchmarked reviewer reliability. Reviewer pools do not yet overlap
     asynchronously, do not produce calibrated reviewer-score reports, do not
-    isolate provider-failure policy per reviewer beyond the current role label,
-    and do not emit external reviewer-specific timeout/failure artifacts beyond
-    the current inline outcome/timing telemetry.
+    define independent reviewer tasks, do not prove reviewer/generator role
+    separation, do not attribute critique contents to the accepted revision,
+    do not use a reviewer score-to-selection policy, do not own reviewer budget
+    quotas, do not produce reviewer failure-isolation reports, do not compare
+    against equal-budget no-reviewer runs, do not isolate provider-failure
+    policy per reviewer beyond the current role label, and do not emit
+    external reviewer-specific timeout/failure artifacts beyond the current
+    inline outcome/timing telemetry.
   - Required result: add async or parallel reviewer execution where appropriate,
-    calibrated reviewer scoring and ablation reports for reviewer pools,
-    stronger per-reviewer provider isolation and budget policy, and
-    reviewer-specific timeout/failure artifacts before treating critique
-    reviewer pools as AlphaEvolve-grade critique orchestration.
+    independent reviewer task definitions, reviewer/generator role separation,
+    critique-to-revision attribution, calibrated reviewer scoring and
+    score-to-selection policy, reviewer budget quota policy, equal-budget
+    no-reviewer comparisons, ablation reports for reviewer pools, stronger
+    per-reviewer provider isolation and budget policy, and reviewer-specific
+    timeout/failure artifacts before treating critique reviewer pools as
+    AlphaEvolve-grade critique orchestration.
 
 ## Runtime, Reproducibility, and Safety
 

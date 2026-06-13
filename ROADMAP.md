@@ -1105,9 +1105,12 @@ resumed-trace proof are still open.
   reviewer-specific timeout/failure behavior. The current
   `papers/critique_reviewer_pool_boundary.json` sidecar preserves the
   synchronous first/last-valid telemetry boundary while keeping async reviewer
-  overlap, calibrated reviewer scoring, reviewer reliability ablations,
-  per-reviewer provider isolation, and external reviewer timeout artifacts
-  open.
+  overlap, independent reviewer task definitions, reviewer/generator role
+  separation proof, critique-to-revision attribution, reviewer
+  score-to-selection policy, reviewer budget quota policy, reviewer failure-isolation
+  reports, equal-budget no-reviewer comparisons, calibrated reviewer scoring,
+  reviewer reliability ablations, per-reviewer provider isolation, and
+  external reviewer timeout artifacts open.
 
 ### 8. Plugin extensibility
 

@@ -631,9 +631,13 @@ Important limits:
   tracked by `papers/provider_cancellation_boundary.json`.
 - Critique reviewer pools are bounded synchronous first/last-valid mutation
   filters with reviewer telemetry, not async reviewer overlap, calibrated
-  reviewer scoring, reviewer reliability ablations, per-reviewer provider
-  isolation, or external reviewer timeout artifacts; that boundary is tracked
-  by `papers/critique_reviewer_pool_boundary.json`.
+  reviewer scoring, independent reviewer task definitions, reviewer/generator
+  role separation proof, critique-to-revision attribution, reviewer
+  score-to-selection policy, reviewer budget quota policy, reviewer
+  failure-isolation reports, equal-budget no-reviewer comparisons, reviewer
+  reliability ablations, per-reviewer provider isolation, or external reviewer
+  timeout artifacts; that boundary is tracked by
+  `papers/critique_reviewer_pool_boundary.json`.
 - Prompt section packing is mutation-path and final-prompt-boundary evidence,
   not all-role provider-token section packing, exact non-OpenAI provider
   counters, registry/custom role section packing, retrieval/context/plugin/

@@ -28,6 +28,13 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "reviewer_elapsed_seconds",
     "reviewer_outcome_status",
     "inline_runtime_artifact_policy",
+    "independent_reviewer_task_definition",
+    "reviewer_generator_role_separation",
+    "critique_to_revision_attribution",
+    "reviewer_score_to_selection_policy",
+    "reviewer_budget_quota_policy",
+    "reviewer_failure_isolation_report",
+    "equal_budget_no_reviewer_comparison",
     "async_reviewer_overlap",
     "calibrated_reviewer_score_report",
     "reviewer_reliability_ablation",
@@ -35,6 +42,13 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "external_reviewer_timeout_artifacts",
 )
 EXPECTED_MISSING_EVIDENCE = {
+    "independent_reviewer_task_definition": "not_recorded_locally",
+    "reviewer_generator_role_separation": "not_recorded_locally",
+    "critique_to_revision_attribution": "not_recorded_locally",
+    "reviewer_score_to_selection_policy": "not_recorded_locally",
+    "reviewer_budget_quota_policy": "not_recorded_locally",
+    "reviewer_failure_isolation_report": "not_recorded_locally",
+    "equal_budget_no_reviewer_comparison": "not_recorded_locally",
     "async_reviewer_overlap": "not_recorded_locally",
     "calibrated_reviewer_score_report": "not_recorded_locally",
     "reviewer_reliability_ablation": "not_recorded_locally",
@@ -86,6 +100,10 @@ def critique_reviewer_pool_boundary_record() -> dict[str, Any]:
             "status, valid revision counts, selected reviewer provenance, "
             "reviewer elapsed seconds, reviewer outcome status, and inline "
             "runtime artifact policy. It does not claim async reviewer overlap, "
+            "independent reviewer task definitions, reviewer/generator role "
+            "separation proof, critique-to-revision attribution, reviewer "
+            "score-to-selection policy, reviewer budget quota policy, reviewer "
+            "failure-isolation reports, equal-budget no-reviewer comparisons, "
             "calibrated reviewer-score reports, reviewer reliability ablations, "
             "per-reviewer provider isolation, or external reviewer timeout "
             "artifacts."
@@ -130,6 +148,11 @@ def validate_critique_reviewer_pool_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim async reviewer overlap" not in boundary_text
+        or "independent reviewer task definitions" not in boundary_text
+        or "reviewer/generator role separation proof" not in boundary_text
+        or "critique-to-revision attribution" not in boundary_text
+        or "reviewer score-to-selection policy" not in boundary_text
+        or "equal-budget no-reviewer comparisons" not in boundary_text
         or "calibrated reviewer-score reports" not in boundary_text
         or "per-reviewer provider isolation" not in boundary_text
     ):

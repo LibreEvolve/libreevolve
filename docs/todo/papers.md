@@ -521,14 +521,19 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current gap: reviewer calls are sequential, replacement-only, and selected
     by first/last valid mutation rather than calibrated reviewer score or
     benchmarked reviewer reliability. There is no async reviewer overlap,
-    calibrated reviewer-score report, reviewer-pool reliability ablation,
-    stronger per-reviewer provider isolation, or external reviewer timeout
-    artifact bundle.
+    independent reviewer task definition, reviewer/generator role-separation
+    proof, critique-to-revision attribution, reviewer score-to-selection
+    policy, reviewer budget quota policy, reviewer failure-isolation report,
+    equal-budget no-reviewer comparison, calibrated reviewer-score report,
+    reviewer-pool reliability ablation, stronger per-reviewer provider
+    isolation, or external reviewer timeout artifact bundle.
   - Required result: add async/parallel reviewer execution where useful,
-    calibrated reviewer scoring, reviewer reliability reports, per-reviewer
-    provider isolation/budget policy, and external reviewer timeout/failure
-    artifacts before treating reviewer pools as AlphaEvolve-grade critique
-    orchestration.
+    independent reviewer task definitions, explicit reviewer/generator role
+    separation, critique-to-revision attribution, calibrated reviewer scoring
+    and score-to-selection policy, reviewer budget quotas, reviewer reliability
+    reports, equal-budget no-reviewer comparisons, per-reviewer provider
+    isolation/budget policy, and external reviewer timeout/failure artifacts
+    before treating reviewer pools as AlphaEvolve-grade critique orchestration.
 
 - [ ] Track Google/Gemini provider-parity evidence separately from generic
       custom-backend extensibility.

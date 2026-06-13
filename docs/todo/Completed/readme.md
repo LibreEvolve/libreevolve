@@ -14423,3 +14423,25 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     composition, live pricing/default-rate capture beyond configured
     estimates, cross-run provider-failure quarantine/resume proof, and
     consecutive-mutation-depth control remain active in code and paper TODOs.
+
+- [x] Keep README lineage replay wording scoped to loop-owned deterministic
+      ids and provider-output non-replay boundaries.
+  - Spec evidence: AlphaEvolve-scale ablations and repeated-seed comparisons
+    need reproducible lineage records that distinguish deterministic framework
+    ids from stochastic provider/plugin/validator behavior.
+  - Status: README now documents that lineage replay evidence is limited to
+    loop-owned deterministic surfaces: run-local RNG snapshots, prompt-history
+    replay, deterministic seed/generated candidate ids, database-created
+    prompt ids, ordered LLM call ids, and the validated
+    `runtime.lineage_replay_policy` included in full-runtime restore bundles.
+    It also states that direct `Program()` / `PromptProgram()` UUID4 defaults,
+    provider/model outputs, controller pending work, plugin internal
+    randomness, validator subprocess randomness, migration-event replay, and
+    end-to-end resumed-trace proof remain outside the replay contract.
+    `AGENTS.md` also states that `config.seed` initializes the run-local
+    framework RNG rather than reseeding Python's process-global `random`
+    module.
+  - Remaining README gap: provider/plugin output replay, direct UUID replay
+    contracts outside loop-owned ids, plugin/provider RNG capture, ordered
+    migration replay, controller pending-work resume, and resumed-trace proof
+    remain active in code and paper TODOs.

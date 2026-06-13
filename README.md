@@ -506,6 +506,14 @@ Important limits:
   provider-output/raw-payload replay, pending-work or async-worker resume,
   cross-run provider-failure policy proof, or a mutation-chain-depth policy
   for slow evaluator feedback.
+- Lineage replay evidence is limited to loop-owned deterministic surfaces:
+  run-local RNG snapshots, prompt-history replay, deterministic seed/generated
+  candidate ids, database-created prompt ids, ordered LLM call ids, and the
+  validated `runtime.lineage_replay_policy` included in full-runtime restore
+  bundles. Direct `Program()` / `PromptProgram()` UUID4 defaults, provider/model
+  outputs, controller pending work, plugin internal randomness, validator
+  subprocess randomness, migration-event replay, and end-to-end resumed-trace
+  proof remain outside the replay contract.
 - Parallel-evaluation readiness is limited to configured local
   `eval_stages[].sample_workers` fan-out, observed sample wall-clock
   compression, and topology linkage. It is not AlphaEvolve-style

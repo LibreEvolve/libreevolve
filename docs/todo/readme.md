@@ -91,32 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README lineage replay wording scoped to loop-owned deterministic
-  ids and provider-output non-replay boundaries.
-  - Spec evidence: AlphaEvolve-scale ablations and repeated-seed comparisons
-    need reproducible lineage records that distinguish deterministic framework
-    ids from stochastic provider/plugin/validator behavior.
-  - Current evidence: README now documents run-local RNG restore,
-    `load_full_resume_bundle(manifest.json)`,
-    `--restore-runtime-from-manifest`, `runtime.lineage_replay_policy`,
-    deterministic loop-owned candidate, prompt, and LLM call id policy,
-    explicit exclusion of direct `Program()` and `PromptProgram()` UUID4
-    defaults from the replay contract, and the fact that replay-stable LLM call
-    ids do not prove identical provider outputs. `AGENTS.md` now also states
-    that `config.seed` initializes the run-local framework RNG rather than
-    reseeding Python's process-global `random` module. Code TODO evidence still
-    says direct UUID boundaries, plugin/provider RNG boundaries,
-    provider-output replay, and end-to-end resumed-trace lineage proof remain
-    open; full-resume bundle validation now also keeps
-    `resumed_trace_proof_ready: false` and rejects forged readiness.
-  - Required result: when provider/plugin output replay, direct UUID replay
-    contracts, plugin/provider RNG capture, ordered migration replay, or
-    resumed-trace lineage proof lands, update README, AGENTS.md, ROADMAP,
-    papers index, and code/paper TODO entries together so README and
-    agent-facing instructions neither underclaim current loop-owned
-    deterministic id policy nor overclaim full AlphaEvolve-grade lineage
-    replay.
-
 - [ ] Keep README DeepResearch retrieval evidence scoped to bounded redacted
   sidecars and non-semantic provenance.
   - Spec evidence: retrieval-driven AlphaEvolve-style runs should identify the

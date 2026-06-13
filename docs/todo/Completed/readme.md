@@ -4,6 +4,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document problem-formulation and fixture-readiness README boundary.
+  - Status: README Important limits now states that formulation metadata and
+    benchmark-fixture readiness reports are provenance/readiness telemetry, not
+    populated expert-reviewed matrix or constructive-math formulation records,
+    non-smoke AlphaEvolve-comparable fixture scope, repeated-seed protocols,
+    SOTA/target baselines, fixture-emitted result artifacts, anti-gaming
+    negative fixtures, or paper-claim-ready benchmark evidence. It ties those
+    boundaries to `papers/problem_formulation_provenance_boundary.json` and
+    `papers/benchmark_fixture_readiness_boundary.json`.
+  - Verification: problem-formulation, benchmark-fixture readiness, and
+    paper-manifest tests validate the sidecars that README now references.
+
 - [x] Document initial-program validity README boundary.
   - Status: README Important limits now states that
     `initial_program_validity_policy: alphaevolve_strict` can enforce selected

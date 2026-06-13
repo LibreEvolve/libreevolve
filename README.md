@@ -146,6 +146,14 @@ Important limits:
   prove benchmark-suite strict runs, paper certification rows, or AlphaEvolve
   complete initial-program parity; that boundary is tracked by
   `papers/initial_program_validity_boundary.json`.
+- Problem-formulation metadata and benchmark-fixture readiness reports are
+  provenance/readiness telemetry, not populated expert-reviewed matrix or
+  constructive-math formulation records, non-smoke AlphaEvolve-comparable
+  fixture scope, repeated-seed protocols, SOTA/target baselines, fixture-
+  emitted result artifacts, anti-gaming negative fixtures, or paper-claim-ready
+  benchmark evidence; those boundaries are tracked by
+  `papers/problem_formulation_provenance_boundary.json` and
+  `papers/benchmark_fixture_readiness_boundary.json`.
 - Duplicate-work reports are run-local exact-workspace cache diagnostics, not
   durable cross-run memory, semantic duplicate detection, or resume-spanning
   cache replay; that boundary is tracked by

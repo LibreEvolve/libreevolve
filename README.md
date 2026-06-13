@@ -78,6 +78,11 @@ Important limits:
   winners, final decompositions, and exactness-certificate links, not a local
   matrix runner that emits AlphaEvolve Figure 4/Figure 9 search-program sweep
   evidence during search.
+- Appendix A Figure 9 matrix-diff records validate panel ids, pages, line
+  spans, semantic components, source/diff hashes, rendered/OCR artifact
+  metadata, and links to matrix result, sweep-space, certificate, and companion
+  notebook evidence, not local report/export output that emits rendered panel
+  images, OCR text, or source-diff artifacts for Figures 9a-9c.
 - Figure 4 matrix-discovery records validate main-text exhibit metadata,
   caption linkage, the 15-mutation caption count, `mm_4x4x4` rank-48 target
   mapping, highlighted component categories, source/diff artifact metadata,

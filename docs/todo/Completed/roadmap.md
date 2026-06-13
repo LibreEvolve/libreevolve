@@ -2,6 +2,35 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Appendix A Figure 9 matrix-diff roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish declared Appendix A Figure 9 matrix-diff exhibit validation
+    from reproduced rendered/OCR/source-diff panel artifacts.
+  - Current evidence: `libreevolve.alphaevolve_figure9_matrix_diff_exhibit.v1`
+    validates Figure 9a/9b/9c panel ids, pages 35-37, Figure 4 caption
+    linkage, ordered code line spans, source/diff excerpt artifact hashes,
+    rendered image/text artifact hashes, `mm_4x4x4` rank-48 target mapping,
+    semantic optimizer/init/noise/clipping/loss/discretization/sweep labels,
+    sweep-field links, and links to matrix result, sweep metadata, exactness
+    certificate, and companion notebook evidence. It validates declared
+    metadata only.
+  - Artifact boundary: `libreevolve.alphaevolve_figure9_matrix_diff_artifact_boundary.v1`,
+    `papers/figure9_matrix_diff_artifacts.json`, and
+    `figure9_matrix_diff_artifact_boundary_from_exhibit()` preserve the
+    current `not_emitted_by_local_report_export` boundary and future
+    emitted-artifact fields for panel ids/order/pages, line spans,
+    source-diff excerpts, rendered panel images, OCR text, panel-set
+    artifacts, artifact paths/hashes, and nested Figure 9 exhibit metadata.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: local report/export code does not emit or check in the rendered
+    Figure 9 panel images, OCR text, source-diff excerpts, source PDF excerpt
+    hashes, or linked panel artifact records.
+  - Verification: focused Figure 9 matrix-diff exhibit/artifact-boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive matrix sweep-space roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

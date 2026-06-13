@@ -10,38 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Appendix A Figure 9 roadmap wording scoped until magnified-diff
-      panel artifacts exist.
-  - Spec evidence: AlphaEvolve Appendix A Figures 9a-9c are a three-part
-    magnified source/diff exhibit for the 4x4 matrix program from Figure 4,
-    showing the ordered code changes that discover the rank-48 decomposition,
-    including optimizer, initialization, noise, clipping,
-    hallucination/discretization/loss-penalty, and named sweep-field
-    components.
-  - Current evidence: roadmap status can point to matrix result contracts,
-    Appendix A registry coverage, Figure 4 exhibit gaps, sweep-space
-    provenance gaps, and
-    `libreevolve.alphaevolve_figure9_matrix_diff_exhibit.v1`. The Figure 9
-    schema validates Figure 9a/9b/9c panel metadata, pages 35-37, Figure 4
-    caption linkage, exact line-span artifacts, source/diff hashes,
-    rendered/OCR text hashes, continuation ordering, semantic component labels
-    for the displayed source changes, and links from each panel to matrix rows,
-    sweep metadata, exactness certificates, and companion paper/source
-    evidence. It now also points to
-    `libreevolve.alphaevolve_figure9_matrix_diff_artifact_boundary.v1`, which
-    validates the current `not_emitted_by_local_report_export` boundary and
-    emitted panel-artifact fields.
-    `papers/figure9_matrix_diff_artifacts.json` now emits that
-    absence/readiness boundary as a committed sidecar.
-    `figure9_matrix_diff_artifact_boundary_from_exhibit()` builds emitted
-    artifacts from validated Figure 9 exhibit metadata and checks nested panel
-    linkage, but it does not emit or check in the actual panel artifacts.
-  - Required result: when Appendix A Figure 9 panel artifacts land, update
-    ROADMAP, README, papers index, and code/paper TODOs so roadmap wording
-    distinguishes reproduced appendix magnified-diff panels from Figure 4
-    main-text exhibit evidence, semantic change-component evidence, and generic
-    sweep-space provenance.
-
 - [ ] Keep matrix roadmap wording scoped to final reports until
       baseline-component provenance exists.
   - Spec evidence: AlphaEvolve Section 3.1 starts matrix-decomposition search

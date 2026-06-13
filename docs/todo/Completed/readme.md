@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Archive checked README claim-scoping items after the realistic README
+      split.
+  - Status: `docs/todo/readme.md` no longer carries completed Appendix B label,
+    ratio, source-formulation, theorem-wording, or database-output claim
+    blocks as active work. The root README now stays short and links to
+    `docs/status.md`, `papers/README.md`, `ROADMAP.md`, and `docs/todo/` for
+    the detailed evidence surfaces.
+  - Remaining guard: Appendix B and database-output evidence still belongs in
+    `docs/status.md`, `papers/README.md`, sidecar JSON records, and completed
+    TODO evidence rather than in the root README.
+  - Verification: the active README TODO ledger now contains only section
+    headers and no checked-off backlog blocks.
+
 - [x] Keep the root README realistic by moving the detailed status ledger into
       docs.
   - Status: the root README now stays practical: project purpose, concise

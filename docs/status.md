@@ -629,84 +629,80 @@ Important limits:
   customer-deployment claims remain source-scoped until local fixtures,
   source snapshots, benchmark reports, and independent verification exist;
   that boundary is tracked by `papers/alphaevolve_2026_impact_boundary.json`.
-- ArXiv `2605.14718` is FHE-on-TPU AlphaEvolve application context only; the
-  README mentions this cached paper as a curated subset while
-  `papers/README.md` remains the complete implementation-status index.
+- ArXiv `2605.14718` is FHE-on-TPU AlphaEvolve application context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
   LibreEvolve has no TFHE/Jaxite or CKKS/CROSS primitive harness, Google Cloud
   TPUv5e execution provenance, FHE correctness-test suite, generated
   cryptographic-kernel artifacts, baseline implementation identity, latency
   benchmark rows, or local reproduction of the reported 2.5x, 1.31x, and 1.18x
   speedups.
-- ArXiv `2605.05921` is AlphaEvolve HCI/user-study context only; the README
-  mentions this cached paper as a curated subset while `papers/README.md`
-  remains the complete implementation-status index. LibreEvolve has no
+- ArXiv `2605.05921` is AlphaEvolve HCI/user-study context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
+  LibreEvolve has no
   formative-study dataset, participant/session trace schema,
   intentmaking/sensemaking event taxonomy, AlphaEvolve UI/dashboard artifact
   inventory, goal-revision or human-intervention records, privacy/redaction
   protocol for study data, coded qualitative-analysis evidence, or
   collaborative scientific-discovery instrument workflow support.
 - ArXiv `2605.01794` is radar/resource-allocation AlphaEvolve application
-  context only; the README mentions this cached paper as a curated subset while
-  `papers/README.md` remains the complete implementation-status index.
+  context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
   LibreEvolve has no radar scenario/target-count taxonomy, physically inspired
   feature schema, deterministic constraint-satisfying power-allocation
   transform, multi-target tracking simulator, baseline iterative solver
   identity, average relative performance-loss benchmark rows, cross-scenario
   generalization evidence, three-orders speedup reproduction, or independent
   checker output.
-- ArXiv `2602.23413` is adaptive meta-evolution context only; the README
-  mentions this cached paper as a curated subset while `papers/README.md`
-  remains the complete implementation-status index. LibreEvolve has no
+- ArXiv `2602.23413` is adaptive meta-evolution context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
+  LibreEvolve has no
   adaptive strategy-genome schema, outer meta-evolution loop, strategy-credit
   assignment, dynamic search-policy update artifacts, EvoX task-suite
   taxonomy, baseline comparison table against AlphaEvolve/OpenEvolve/GEPA/
   ShinkaEvolve, token-efficiency report, strategy ablation records, or
   independent reproduction output.
-- ArXiv `2602.02919` is context-memory framework evidence only; the README
-  mentions this cached paper as a curated subset while `papers/README.md`
-  remains the complete implementation-status index. LibreEvolve has no
+- ArXiv `2602.02919` is context-memory framework evidence only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
+  LibreEvolve has no
   first-class semantic-delta schema, node-transition effect attribution,
   semantic-delta memory bank, multi-level database/index metadata, progressive
   disclosure traces, token-savings report, full-code-history baseline
   comparison, scientific-task benchmark taxonomy, or independent reproduction
   output.
-- ArXiv `2606.06473` is long-horizon MLE framework context only; the README
-  mentions this cached paper as a curated subset while `papers/README.md`
-  remains the complete implementation-status index. LibreEvolve has no
+- ArXiv `2606.06473` is long-horizon MLE framework context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
+  LibreEvolve has no
   MLE-Bench task harness, Progressive MCGS state schema, graph-based
   reference-edge provenance, entropy-inspired progressive schedule,
   Retrospective Memory knowledge base or global memory artifacts, adaptive
   coding-mode traces, 12-hour medal-rate/valid-submission report,
   mathematical-algorithm baseline comparison, linked-code audit, or
   independent reproduction output.
-- ArXiv `2605.09764` is cost-aware search-architecture context only; the
-  README mentions this cached paper as a curated subset while
-  `papers/README.md` remains the complete implementation-status index.
+- ArXiv `2605.09764` is cost-aware search-architecture context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
   LibreEvolve has no LEVI-style diversity-preserving solution-database report,
   large/small model mutation-router policy, role-assignment trace,
   rank-preserving proxy benchmark, rollout/provider-cost accounting report,
   systems-research benchmark fixture, prompt-optimization budget comparison,
   linked-code audit, or independent reproduction output.
-- ArXiv `2601.10657` is long-horizon consistency framework context only; the
-  README mentions this cached paper as a curated subset while
-  `papers/README.md` remains the complete implementation-status index.
+- ArXiv `2601.10657` is long-horizon consistency framework context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
   LibreEvolve has no context-pollution detector, hierarchical
   context-management/pruning artifacts, mode-collapse diagnostics,
   momentum-based backtracking controller, unified crossover/backtracking
   sampler, trajectory-collaboration diagnostics, LLM-SR/KernelBench/Modded
   NanoGPT benchmark report, linked-code audit, or independent reproduction
   output.
-- ArXiv `2605.08520` is asynchronous-stage orchestration context only; the
-  README mentions this cached paper as a curated subset while
-  `papers/README.md` remains the complete implementation-status index.
+- ArXiv `2605.08520` is asynchronous-stage orchestration context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
   LibreEvolve has no asynchronous worker queue, stage dependency scheduler,
   artifact-version lineage DAG, stale-artifact detector, staleness repair
   policy, speculative stage-completion records, adaptive workflow controller,
   EvolBench/ChatDev/MetaGPT benchmark report, 3.5x/4.9x throughput
   reproduction, linked-code audit, or independent reproduction output.
-- ArXiv `2605.20086` is trace-diagnostic evaluation context only; the README
-  mentions this cached paper as a curated subset while `papers/README.md`
-  remains the complete implementation-status index. LibreEvolve has no
+- ArXiv `2605.20086` is trace-diagnostic evaluation context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
+  LibreEvolve has no
   EvoTrace-compatible trace schema, nine-class edit taxonomy annotation
   pipeline, LLM-as-judge edit reannotation validation, parent-child search
   graph export, prompt/context substitution replay, model substitution replay,
@@ -714,17 +710,16 @@ Important limits:
   deterministic deleted-line reintroduction/cycling detector, held-out
   generalization report, or independent reproduction output.
 - ArXiv `2605.01120` is an unimplemented constructive-math benchmark
-  candidate; the README mentions this cached paper as a curated subset while
-  `papers/README.md` remains the complete implementation-status index.
+  candidate; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
   LibreEvolve has no Zarankiewicz parameter manifest, bipartite graph
   construction schema, `K_{s,t}`-free verifier, exact-value/lower-bound table,
   generated-algorithm artifact hashes, OpenEvolve setup provenance,
   reward-function specification, upper-bound comparison ledger, per-parameter
   cost accounting, or independent reproduction output for the three exact
   values, 41 lower bounds, four matched closed cases, or sub-$30 cost claim.
-- ArXiv `2604.01658` is autonomous multi-agent evolution context only; the
-  README mentions this cached paper as a curated subset while
-  `papers/README.md` remains the complete implementation-status index.
+- ArXiv `2604.01658` is autonomous multi-agent evolution context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
   LibreEvolve has no long-running autonomous agent sessions, shared persistent
   memory repository, asynchronous multi-agent execution runtime,
   heartbeat-based intervention controller, isolated per-agent workspaces,
@@ -732,9 +727,9 @@ Important limits:
   knowledge-reuse analysis, 10-task SOTA report, 3-10x improvement-rate
   reproduction, Anthropic kernel-engineering 1363-to-1103 cycle reproduction,
   linked-code audit, or independent reproduction output.
-- ArXiv `2605.13821` is harnessed meta-editing context only; the README
-  mentions this cached paper as a curated subset while `papers/README.md`
-  remains the complete implementation-status index. LibreEvolve has no
+- ArXiv `2605.13821` is harnessed meta-editing context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
+  LibreEvolve has no
   process-level evolution state exposing accumulated candidates, feedback,
   traces, failures, or costs, meta-agent procedure or agent-context editor,
   standardized editable evolution workspace, protected evaluator boundary,
@@ -743,9 +738,9 @@ Important limits:
   instantiation, five-baseline agentic/reasoning benchmark report, 26%
   relative-improvement reproduction, three-task open-ended optimization report,
   linked-code audit, or independent reproduction output.
-- ArXiv `2605.09959` is verifier-free co-evolution context only; the README
-  mentions this cached paper as a curated subset while `papers/README.md`
-  remains the complete implementation-status index. LibreEvolve has no
+- ArXiv `2605.09959` is verifier-free co-evolution context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
+  LibreEvolve has no
   Hint-delta intrinsic-reward computation from unassisted versus
   hint-conditioned Generator responses, Proposer model, Generator model,
   self-generated query/hint dataset, GRPO proposer trainer, DPO generator
@@ -753,9 +748,8 @@ Important limits:
   exploration-coverage report, best-iterate suboptimality fixture,
   unverifiable-domain benchmark, external-judge reward-hacking comparison,
   linked-code audit, or independent reproduction output.
-- ArXiv `2605.21605` is multimodal trajectory-distillation context only; the
-  README mentions this cached paper as a curated subset while
-  `papers/README.md` remains the complete implementation-status index.
+- ArXiv `2605.21605` is multimodal trajectory-distillation context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
   LibreEvolve has no image-generation tool pipeline, visual-reference
   ingestion, prompt-rewriting/layout-planning/image-generation/refinement
   trajectory schema, tool-call artifact lineage, Agentic Visual Experience
@@ -763,44 +757,43 @@ Important limits:
   supervision record, multimodal policy-update loop, GenEvolve-Data metadata,
   GenEvolve-Bench task/report, baseline comparison, linked-code audit, or
   independent reproduction output.
-- ArXiv `2605.29847` is self-evolving reward-rubric context only; the README
-  mentions this cached paper as a curated subset while `papers/README.md`
-  remains the complete implementation-status index. LibreEvolve has no
+- ArXiv `2605.29847` is self-evolving reward-rubric context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
+  LibreEvolve has no
   single-policy Reasoner/Rubric-Generator co-evolution loop, generated-rubric
   provenance, meta-verifier records, zero-variance pruning records,
   Leave-One-Out peer-consensus traces, criteria memory pool, dense
   multi-objective reward vectors, expert-prior rubric expansion,
   medical/writing/science benchmark report, reward-hacking audit, linked-code
   audit, or independent reproduction output.
-- ArXiv `2605.29293` is learning-signal optimization context only; the README
-  mentions this cached paper as a curated subset while `papers/README.md`
-  remains the complete implementation-status index. LibreEvolve has no
+- ArXiv `2605.29293` is learning-signal optimization context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
+  LibreEvolve has no
   sparse-reward cooperative MARL harness, Critic LLM diagnosis role,
   Generator LLM reward-shaping role, compact behavior evidence record,
   stage-specific coordination-failure diagnosis, reward-shaping configuration
   artifact, branch-validation trajectory, validated-update promotion gate,
   main-training trajectory provenance, learning-efficiency report, linked-code
   audit, or independent reproduction output.
-- ArXiv `2512.18746` is memory-architecture evolution context only; the README
-  mentions this cached paper as a curated subset while `papers/README.md`
-  remains the complete implementation-status index. LibreEvolve has no
+- ArXiv `2512.18746` is memory-architecture evolution context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
+  LibreEvolve has no
   explicit encode/store/retrieve/manage memory-component design space,
   memory-architecture genotype, memory-system mutation/evaluation loop,
   experiential-knowledge co-evolution trace, EvolveLab benchmark mapping,
   static-memory baseline comparison, cross-task or cross-LLM transfer report,
   performance-delta record, linked-code audit, or independent reproduction
   output.
-- ArXiv `2606.06114` is healthy-evolution oversight context only; the README
-  mentions this cached paper as a curated subset while `papers/README.md`
-  remains the complete implementation-status index. LibreEvolve has no
+- ArXiv `2606.06114` is healthy-evolution oversight context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
+  LibreEvolve has no
   ANCHOR human-like oversight agent, phase-specific norm-correction interface,
   safety-drift metric lineage, output-verification intervention records,
   reflection/review artifact stream, supervision-frequency/cadence trace,
   preservation-of-objective-performance report, coding/math/safety benchmark
   report, linked-code audit, or independent reproduction output.
-- ArXiv `2605.27276` is harness-plus-weight self-improvement context only; the
-  README mentions this cached paper as a curated subset while
-  `papers/README.md` remains the complete implementation-status index.
+- ArXiv `2605.27276` is harness-plus-weight self-improvement context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
   LibreEvolve has no Feedback-Agent that chooses between harness and weight
   updates, editable task-agent harness inventory, harness patch provenance,
   online RL/fine-tuning loop, adapter/checkpoint lifecycle,
@@ -808,9 +801,9 @@ Important limits:
   harness-only versus weight-only versus combined ablation report,
   LawBench/kernel/scRNA benchmark report, linked-code audit, or independent
   reproduction output.
-- ArXiv `2606.06324` is trace-grounded harness repair context only; the README
-  mentions this cached paper as a curated subset while `papers/README.md`
-  remains the complete implementation-status index. LibreEvolve has no HTIR
+- ArXiv `2606.06324` is trace-grounded harness repair context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
+  LibreEvolve has no HTIR
   trace-normalization schema, raw-trace normalization record, harness-code
   linkage, step-level provenance, execution/tool/context/lifecycle/
   observability/verification/governance harness-layer attribution taxonomy,
@@ -819,9 +812,8 @@ Important limits:
   unacceptable-regression threshold record, held-out SWE-Bench Verified/
   Terminal-Bench 2.0 Verified/GAIA/AppWorld benchmark report, linked-code
   audit, or independent reproduction output.
-- ArXiv `2606.05922` is retrospective harness optimization context only; the
-  README mentions this cached paper as a curated subset while
-  `papers/README.md` remains the complete implementation-status index.
+- ArXiv `2606.05922` is retrospective harness optimization context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
   LibreEvolve has no unlabeled past-trajectory harness optimizer, hard/diverse
   coreset selector, DPP coreset record, parallel retrospective re-solve
   workflow, group rollout artifact, self-validation diagnostic,
@@ -830,17 +822,16 @@ Important limits:
   metadata, behavior-pattern shift report, long-horizon accuracy report,
   SWE-Bench Pro 59%-to-78% reproduction, linked-code audit, or independent
   reproduction output.
-- ArXiv `2605.30621` is harness-capability disentanglement context only; the
-  README mentions this cached paper as a curated subset while
-  `papers/README.md` remains the complete implementation-status index.
+- ArXiv `2605.30621` is harness-capability disentanglement context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
   LibreEvolve has no harness-updating metric schema, harness-benefit metric
   schema, evolver-versus-task-solver model-pair matrix, capability-tier
   grouping record, cross-benchmark harness self-evolution report, activation-
   failure audit, adherence-failure audit, capability-budget recommendation
   report, public-code snapshot audit, or independent reproduction output.
-- ArXiv `2604.25850` is agentic harness observability context only; the README
-  mentions this cached paper as a curated subset while `papers/README.md`
-  remains the complete implementation-status index. LibreEvolve has no
+- ArXiv `2604.25850` is agentic harness observability context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
+  LibreEvolve has no
   file-level editable harness component graph, component-observability schema,
   layered drill-down trajectory evidence corpus, raw-trace-to-digest
   provenance, decision-observability prediction contract, next-round
@@ -848,18 +839,17 @@ Important limits:
   Terminal-Bench 2 report, SWE-bench-verified transfer report, cross-family
   transfer report, tools/middleware/memory ablation, public-code snapshot
   audit, or independent reproduction output.
-- ArXiv `2605.13357` is AI harness runtime-substrate context only; the README
-  mentions this cached paper as a curated subset while `papers/README.md`
-  remains the complete implementation-status index. LibreEvolve has no
+- ArXiv `2605.13357` is AI harness runtime-substrate context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
+  LibreEvolve has no
   complete eleven-responsibility harness contract, H0-H3 harness-ladder
   fixture, trace-based episode-package schema, controlled validation-task
   reproduction, model-harness-environment capability equation record,
   failure-attribution taxonomy report, deterministic requirement-check
   package, structured verification report, public-code snapshot audit, or
   independent reproduction output.
-- ArXiv `2605.21516` is inference-time trajectory-alignment context only; the
-  README mentions this cached paper as a curated subset while
-  `papers/README.md` remains the complete implementation-status index.
+- ArXiv `2605.21516` is inference-time trajectory-alignment context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
   LibreEvolve has no harness parameterization for decomposition versus guided
   execution, workflow-granularity sweep, retry-budget study, guidance-induced
   action-reweighting report, stage-level gap metric, over-decomposition
@@ -867,9 +857,8 @@ Important limits:
   report, partial-harnessing stopping rule, controlled synthetic experiment,
   terminal-agent benchmark reproduction, linked-code audit, or independent
   reproduction output.
-- ArXiv `2606.01770` is adaptive auto-harness deployment context only; the
-  README mentions this cached paper as a curated subset while
-  `papers/README.md` remains the complete implementation-status index.
+- ArXiv `2606.01770` is adaptive auto-harness deployment context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
   LibreEvolve has no chronological open-ended task-stream schema,
   history-growth record, task-heterogeneity report, distribution-shift
   detector, evolution-loss/adaptation-loss decomposition, stateful multi-agent
@@ -877,9 +866,8 @@ Important limits:
   overfitting/accuracy-peak-decline report, prediction-market/security-
   competition/event-forecasting benchmark reproduction, five-baseline
   comparison, linked-code audit, or independent reproduction output.
-- ArXiv `2603.28052` is outer-loop harness-code optimization context only; the
-  README mentions this cached paper as a curated subset while
-  `papers/README.md` remains the complete implementation-status index.
+- ArXiv `2603.28052` is outer-loop harness-code optimization context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
   LibreEvolve has no first-class harness-code candidate schema,
   filesystem-visible harness workspace, agentic proposer that edits harness code,
   candidate harness edit provenance, execution-trace feedback bundle,
@@ -888,9 +876,8 @@ Important limits:
   retrieval-augmented math reproduction, TerminalBench-2 reproduction,
   held-out-model transfer report, linked-code audit, or independent
   reproduction output.
-- ArXiv `2602.16928` is AlphaEvolve MARL algorithm-discovery context only; the
-  README mentions this cached paper as a curated subset while
-  `papers/README.md` remains the complete implementation-status index.
+- ArXiv `2602.16928` is AlphaEvolve MARL algorithm-discovery context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
   LibreEvolve has no CFR candidate schema, PSRO candidate schema, OpenSpiel
   imperfect-information game fixture, game-suite split record, exact
   exploitability metric record, exact best-response oracle record, VAD-CFR
@@ -900,8 +887,8 @@ Important limits:
   CFR/PSRO runtime evidence; `papers/multiagent_learning_boundary.json`
   records that absence boundary.
 - ArXiv `2603.09172` is AlphaEvolve constructive Ramsey-number context only;
-  the README mentions this cached paper as a curated subset while
-  `papers/README.md` remains the complete implementation-status index.
+  the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
   LibreEvolve has no Ramsey graph candidate schema, `run()` primary/prospect
   graph contract, graph witness artifact schema, clique/independent-set
   verifier, Ramsey parameter row, new lower-bound row, matched-best-known row,
@@ -911,8 +898,8 @@ Important limits:
   audit record, or independent checker output; `papers/ramsey_numbers_boundary.json`
   records that absence boundary.
 - ArXiv `2603.06692` is AlphaEvolve-assisted local-correction combinatorics
-  context only; the README mentions this cached paper as a curated subset
-  while `papers/README.md` remains the complete implementation-status index.
+  context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
   LibreEvolve has no bipartite graph-reconstruction harness, planar
   graph-reconstruction harness, Alon-Tarsi Latin-square involution harness,
   Rota-basis linear-matroid exchange harness, candidate certificate schema,
@@ -921,9 +908,8 @@ Important limits:
   reported metric table, conjecture/proof-status ledger, repository snapshot,
   or independent verifier output; `papers/combinatorics_berczy_boundary.json`
   records that absence boundary.
-- ArXiv `2603.08679` is AlphaEvolve mechanism-design result context only; the
-  README mentions this cached paper as a curated subset while
-  `papers/README.md` remains the complete implementation-status index.
+- ArXiv `2603.08679` is AlphaEvolve mechanism-design result context only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
   LibreEvolve has no bilateral-trade distribution candidate schema, fixed
   Discrete Equal Revenue buyer fixture, evolved seller CDF generator runtime,
   PMF/CDF/survival validator, first-best GFT evaluator, seller-offering GFT
@@ -934,8 +920,8 @@ Important limits:
   or independent checker output; `papers/bilateral_trade_boundary.json`
   records that absence boundary.
 - ArXiv `2601.21096` is AlphaEvolve compiler-optimization application context
-  only; the README mentions this cached paper as a curated subset while
-  `papers/README.md` remains the complete implementation-status index.
+  only; the root README now defers source-specific paper lists to
+  `papers/README.md`, which remains the complete implementation-status index.
   LibreEvolve has no executable C++ decision-logic candidate schema, LLVM/XLA
   compiler-pass integration, EVOLVE-BLOCK compiler-source span record, compiler
   rebuild record, macro-benchmark harness, binary-size metric record,

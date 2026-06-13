@@ -497,9 +497,11 @@ is not yet an AlphaEvolve reproduction.
   `runtime.history.sampling_balance_report` now aggregates
   current-run parent/inspiration strategy decisions, with
   `papers/sampling_balance_boundary.json` preserving the local-counts-only
-  boundary. Benchmark-required policies, cross-run fixtures,
-  scalar/single-metric comparators, and equal-budget strategy-effect analysis
-  remain open.
+  boundary. Calibrated exploration/exploitation balance, fallback source-pool
+  provenance, selected-program repetition tables, island/cell/metric/lineage/
+  descriptor coverage, score-improvement versus diversity effects,
+  equal-budget strategy comparisons, and AlphaEvolve-grade database-balance
+  policy remain open.
 - Extend the current run-local exact-workspace evaluator cache into
   AlphaEvolve-grade duplicate-work memory before treating deterministic
   candidate ids or workspace hashes as durable memory over previously explored

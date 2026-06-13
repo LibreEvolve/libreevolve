@@ -651,8 +651,11 @@ Important limits:
   papers-index, and TODO statement is current; that boundary is tracked by
   `papers/documentation_truthfulness_boundary.json`.
 - Database sampling reports are local strategy/count telemetry, not calibrated
-  AlphaEvolve-style exploration/exploitation evidence; that boundary is tracked
-  by `papers/sampling_balance_boundary.json`.
+  AlphaEvolve-style exploration/exploitation balance, fallback source-pool
+  provenance, selected-program repetition tables, island/cell/metric/lineage/
+  descriptor coverage, score-improvement versus diversity effects,
+  equal-budget strategy comparisons, or an AlphaEvolve-grade database-balance
+  policy; that boundary is tracked by `papers/sampling_balance_boundary.json`.
 - Multi-objective archive data is retained overlay and diagnostic frontier
   evidence, not primary Pareto/frontier archive replacement or durable
   cross-run metric optimization; that boundary is tracked by

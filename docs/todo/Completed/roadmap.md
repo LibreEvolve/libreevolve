@@ -10374,6 +10374,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     focused sampling-balance tests reject calibrated AlphaEvolve database-
     balance overclaims.
 
+- [x] Keep database-sampling roadmap wording scoped until calibrated
+      exploration/exploitation balance evidence exists.
+  - Status: ROADMAP now separates local sampling-count telemetry from
+    calibrated exploration/exploitation balance, fallback source-pool
+    provenance, selected-program repetition tables, island/cell/metric/
+    lineage/descriptor coverage, score-improvement versus diversity effects,
+    equal-budget strategy comparisons, and AlphaEvolve-grade database-balance
+    policy.
+  - Remaining roadmap gap: calibrated sampling-balance evidence remains
+    tracked in active code and paper TODOs.
+
 - [x] Keep roadmap automated-evaluator scope boundary tied to sidecar.
   - Status: ROADMAP now links
     `runtime.history.automated_evaluator_scope_report` to

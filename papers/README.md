@@ -1236,9 +1236,11 @@ parent/inspiration selection metadata into current-run explore/exploit,
 strategy, metric-target, frontier, lineage, and per-generation decision counts.
 The committed `papers/sampling_balance_boundary.json` sidecar preserves that
 local-counts-only boundary. This narrows the remaining Section 2.5
-database-balance gap to equal-budget strategy comparisons, score-improvement
-attribution, diversity-effect analysis, and cross-run calibration rather than
-absence of run-local sampling telemetry.
+database-balance gap to fallback source-pool provenance, selected-program
+repetition tables, island/cell/metric/lineage/descriptor coverage,
+score-improvement attribution versus diversity-effect analysis, equal-budget
+strategy comparisons, and calibrated AlphaEvolve-grade database-balance policy
+rather than absence of run-local sampling telemetry.
 
 AlphaEvolve budget-accounting note: runtime manifests validate current-process
 `RunBudget` counters, elapsed evaluator seconds, seed/candidate totals,

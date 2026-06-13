@@ -1753,14 +1753,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     counts, frontier/lineage indicators, validators, and the committed
     `papers/sampling_balance_boundary.json` local-counts-only sidecar.
   - Current gap: paper-facing reports still do not connect sampling decisions
-    to selected-program repetition, island/cell/descriptor contribution, score
-    improvement, diversity coverage, budget impact, or equal-budget strategy
-    comparisons. The paper index therefore cannot yet claim measured
-    AlphaEvolve-style balance under equal budgets.
+    to fallback source-pool provenance, selected-program repetition,
+    island/cell/metric/lineage/descriptor coverage, score improvement,
+    diversity coverage, budget impact, equal-budget strategy comparisons, or
+    calibrated AlphaEvolve-grade database-balance policy. The paper index
+    therefore cannot yet claim measured AlphaEvolve-style balance under equal
+    budgets.
   - Required result: add calibrated sampling-balance evidence with selected-
-    program provenance, diversity and exploitation metrics, fallback
-    accounting, and equal-budget comparisons of pure exploit, pure explore,
-    default mixed, and metric/frontier/lineage variants.
+    program provenance, fallback source-pool accounting, diversity and
+    exploitation metrics, budget impact, and equal-budget comparisons of pure
+    exploit, pure explore, default mixed, and metric/frontier/lineage variants.
 
 - [ ] Extend AlphaEvolve's automated-evaluator scope boundary into robust
       environment fixtures.

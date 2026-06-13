@@ -1356,27 +1356,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `papers/artifact_index_boundary.json`, keeping durable full-content or
     semantic artifact search open.
 
-- [ ] Keep database-sampling roadmap wording scoped until calibrated
-      exploration / exploitation balance evidence exists.
-  - Spec evidence: AlphaEvolve's database balances exploration and exploitation
-    while maintaining diversity across the search space.
-  - Current evidence: `ROADMAP.md` can describe configurable `explore_ratio`,
-    mixed parent selection, explicit parent/inspiration strategies, MAP-Elites
-    cells, islands, metric/frontier sampling, lineage sampling, novelty
-    sampling, recency sampling, bounded current-run resurfacing, and
-    `runtime.history.sampling_balance_report` with per-run and per-generation
-    parent/inspiration decision counts, plus
-    `papers/sampling_balance_boundary.json` as the local-counts-only evidence
-    boundary. It should not imply that the current knobs are calibrated
-    database-balance evidence or that a run report can explain the
-    improvement/diversity tradeoff.
-  - Required result: when calibrated sampling-balance comparisons land, update
-    ROADMAP, README, papers index, and code/paper TODO entries with fallback
-    and source-pool provenance, selected-program repetition, island/cell/
-    metric/lineage/descriptor coverage, score-improvement versus diversity
-    effects, and equal-budget comparisons across exploit, explore, mixed,
-    metric, frontier, and lineage policies.
-
 - [ ] Keep discovery-distance roadmap wording scoped until functional
       initial-pool divergence reports exist.
   - Spec evidence: AlphaEvolve's introduction says feedback-driven evolution

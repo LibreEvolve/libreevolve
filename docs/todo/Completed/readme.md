@@ -13654,6 +13654,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     focused sampling-balance tests reject calibrated database-balance
     overclaims.
 
+- [x] Keep README database-sampling wording scoped until calibrated sampling-
+      balance comparisons exist.
+  - Status: README now scopes database sampling reports as local
+    strategy/count telemetry, not calibrated exploration/exploitation balance,
+    fallback source-pool provenance, selected-program repetition tables,
+    island/cell/metric/lineage/descriptor coverage, score-improvement versus
+    diversity effects, equal-budget strategy comparisons, or an
+    AlphaEvolve-grade database-balance policy.
+  - Verification: `papers/sampling_balance_boundary.json` remains the
+    manifest-checked sidecar for the local-counts-only boundary, while code
+    and paper TODOs for calibrated sampling-balance evidence stay active.
+
 - [x] Keep README automated-evaluator scope boundary tied to sidecar.
   - Status: README now states that scientific-discovery scope is
     machine-gradeable local evaluator workflow scope and that robust evaluator-

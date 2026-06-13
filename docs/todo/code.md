@@ -1985,12 +1985,13 @@ Primary evidence:
     `papers/sampling_balance_boundary.json` sidecar keeps this scoped to local
     sampling-count telemetry.
   - Required result: extend sampling-balance reports with selected-program
-    repetition, island/cell/descriptor contribution, score improvement,
-    diversity coverage, budget impact, validation hooks, and equal-budget
-    comparisons so reports can distinguish pure exploitation, pure exploration,
-    default mixed sampling, and metric/frontier/lineage variants before docs
-    treat `explore_ratio` or strategy metadata as calibrated database-balance
-    evidence.
+    repetition, fallback source-pool provenance, island/cell/metric/lineage/
+    descriptor contribution, score improvement versus diversity effects,
+    budget impact, validation hooks, equal-budget comparisons, and an explicit
+    calibrated database-balance policy so reports can distinguish pure
+    exploitation, pure exploration, default mixed sampling, and
+    metric/frontier/lineage variants before docs treat `explore_ratio` or
+    strategy metadata as calibrated database-balance evidence.
 
 - [ ] Extend proposal scoring into semantic proposal-index retrieval.
   - Spec evidence: AlphaEvolve-style idea resurfacing should be able to judge

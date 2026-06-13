@@ -91,31 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README database-sampling wording scoped until calibrated sampling-
-      balance comparisons exist.
-  - Spec evidence: AlphaEvolve's database balances exploration and
-    exploitation while resurfacing previously explored ideas.
-  - Current evidence: README can describe configurable `explore_ratio`,
-    `mixed` parent selection, explicit parent/inspiration strategies, selected
-    parent/inspiration metadata, MAP-Elites cells, island pools, metric/frontier
-    sampling, lineage sampling, novelty sampling, recency sampling, bounded
-    current-run resurfacing, objective archive readiness fields that keep
-    primary Pareto/frontier replacement and durable metric-target databases
-    false, and `runtime.history.sampling_balance_report` with aggregate
-    parent/inspiration decision counts, with
-    README now tying that retained-overlay boundary to
-    `papers/objective_archive_boundary.json` and
-    `papers/sampling_balance_boundary.json` preserving the local-counts-only
-    claim boundary. It should not imply that these knobs have been calibrated
-    or measured as an AlphaEvolve-style
-    exploration/exploitation balance.
-  - Required result: when calibrated sampling-balance comparisons land, update
-    README, ROADMAP, papers index, and code/paper TODO entries with fallback
-    and source-pool provenance, selected-program repetition,
-    island/cell/metric/lineage/descriptor coverage, score-improvement versus
-    diversity effects, and equal-budget comparisons across exploit, explore,
-    mixed, metric, frontier, and lineage variants.
-
 - [ ] Keep README discovery-distance wording scoped until functional
       initial-pool divergence evidence exists.
   - Spec evidence: AlphaEvolve's introduction says evolution can discover

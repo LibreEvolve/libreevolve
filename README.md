@@ -65,6 +65,10 @@ Important limits:
   a deployed Pallas kernel optimization affected the same Gemini-family
   training workload that powered AlphaEvolve, nor before/after training metrics,
   rollout state, team-velocity evidence, or rollback/safety records.
+- Hardware RTL/EDA records validate metadata only: they do not yet provide real
+  Verilog/RTL source, synthesis or PPA runs, verification logs, designer
+  signoff, downstream-synthesis artifacts, upcoming-chip integration, or
+  deployment/time-to-market evidence.
 - The docs do not yet reproduce AlphaEvolve Figure 6 or Figure 7 exhibits:
   scheduling heuristic source/heatmap provenance and Pallas tiling-problem
   diagram/source-data/render hashes remain active code and paper TODOs.

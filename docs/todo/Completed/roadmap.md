@@ -2,6 +2,30 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive hardware RTL/EDA roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish ready hardware report metadata from AlphaEvolve-style
+    Verilog/RTL circuit optimization evidence.
+  - Current evidence: `libreevolve.systems_result_report.v1` and focused tests
+    require `hardware_rtl_eda_provenance` for ready hardware reports, including
+    HDL language, RTL source boundary, arithmetic-circuit identity, synthesis
+    toolchain/provenance, PPA metric provenance, timing/power/area constraints,
+    equivalence or formal-verification evidence, designer validation,
+    downstream synthesis confirmation, RTL-flow placement, Verilog adoption
+    rationale, integration target, deployment/time-to-market impact, hashes,
+    confirmation flags, and artifact refs.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    hardware artifacts: Verilog/RTL source files, synthesis/PPA outputs,
+    formal or equivalence logs, timing/power/area constraints, designer or
+    independent signoff, downstream synthesis artifacts, RTL-flow contribution
+    timing, hardware-engineer trust/adoption evidence, integration target, and
+    deployment/time-to-market evidence.
+  - Verification: paper-manifest validation, checked-in paper-index TODO
+    coverage, and focused systems-result RTL/EDA tests still pass, while
+    searches confirm the hardware RTL/EDA code and paper TODOs remain active.
+
 - [x] Archive Gemini self-training roadmap wording TODO.
   - Status: the roadmap-specific TODO was resolved as a live-doc boundary.
     `README.md`, `ROADMAP.md`, `papers/README.md`, `docs/status.md`,

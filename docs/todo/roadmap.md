@@ -10,29 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep hardware roadmap wording scoped to generic systems reports until
-      RTL/EDA verification evidence exists.
-  - Spec evidence: AlphaEvolve Section 3.3.3 reports Verilog RTL optimization
-    for a TPU arithmetic circuit, with power/area objectives, robust
-    functional verification, TPU-designer validation, and downstream synthesis
-    confirmation. It also claims value from refining source RTL early in the
-    design flow, integrating the improvement into an upcoming TPU, and using
-    Verilog as the standard hardware-engineer language to build trust,
-    simplify adoption, and potentially reduce time to market.
-  - Current evidence: roadmap systems-result wording covers generic
-    optimization, held-out, reference-correctness, deployment, and
-    domain-specific readiness gaps. ROADMAP now records that ready hardware
-    reports require `hardware_rtl_eda_provenance` for HDL source boundaries,
-    synthesis/PPA provenance, equivalence/formal verification, timing
-    constraints, designer validation, synthesis-tool confirmation, RTL-flow
-    placement, standard-language adoption evidence, integration target, and
-    time-to-market impact.
-  - Required result: when hardware fixtures emit real RTL/EDA source,
-    synthesis, equivalence, PPA, timing, review, workflow-placement, adoption,
-    integration, and deployment-impact artifacts, update ROADMAP, README,
-    papers index, and code/paper TODOs so roadmap text distinguishes report
-    metadata from AlphaEvolve-style hardware circuit optimization evidence.
-
 - [ ] Keep hardware roadmap wording scoped until TPU bit-removal rewrite
       provenance exists.
   - Spec evidence: AlphaEvolve Section 3.3.3 says the hardware result was a

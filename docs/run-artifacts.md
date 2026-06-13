@@ -3439,8 +3439,10 @@ archive-rejection counts, rejection-reason buckets, failure-memory linkage, and
 explicit false-acceptance/false-rejection review fields. Its
 `claim_ready: false` boundary is intentional: the report proves local
 execution/evaluator gating and bounded failure-memory availability, not an
-independent rejudge of rejected candidates, cross-run semantic failed-proposal
-retrieval, or audited false-positive/false-negative rates. The committed
+independent rejudge of rejected candidates, sampled audit-denominator policy,
+candidate-family filter rates, beyond-initial-pool novelty audit, cross-run
+semantic failed-proposal retrieval, or audited false-positive/false-negative
+rates. The committed
 `papers/proposal_lifecycle_audit_boundary.json` sidecar preserves the same
 independent-audit absence boundary for paper-manifest validation.
 
@@ -3457,9 +3459,10 @@ archive admission, and the fact that no independent rejudge was run.
 
 This is local execution-grounding evidence. Its `claim_ready: false` boundary
 is intentional: independent rejudge of accepted or rejected candidates,
-reference/statistical-oracle sufficiency, cross-run proposal lifecycle tables,
-semantic failed-proposal retrieval, and audited false-acceptance/
-false-rejection rates remain unsupported.
+reference/statistical-oracle sufficiency, sampled audit-denominator policy,
+candidate-family filter rates, beyond-initial-pool novelty audit, cross-run
+proposal lifecycle tables, semantic failed-proposal retrieval, and audited
+false-acceptance/false-rejection rates remain unsupported.
 The paper-facing counterpart is
 `papers/incorrect_suggestion_audit_boundary.json`, which manifest validation
 requires at the repository root so local filtering telemetry cannot drift into

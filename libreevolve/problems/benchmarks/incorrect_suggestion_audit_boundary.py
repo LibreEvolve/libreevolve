@@ -29,6 +29,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "local_filter_rate",
     "accepted_invalid_rate",
     "rejection_reasons",
+    "candidate_family_filter_rates",
+    "initial_pool_distance_audit",
+    "audit_sampling_policy",
+    "audit_denominator",
     "audit_record_lifecycle_status",
     "independent_rejudge_coverage",
     "independent_rejudge_status",
@@ -49,6 +53,9 @@ EXPECTED_MISSING_EVIDENCE = {
         "zero_coverage_recorded_no_independent_rejudge"
     ),
     "reference_or_statistical_oracle_sufficiency": "not_recorded_locally",
+    "sampled_audit_denominator_policy": "not_recorded_locally",
+    "candidate_family_filter_rates": "not_recorded_locally",
+    "beyond_initial_pool_novelty_audit": "not_recorded_locally",
     "cross_run_proposal_lifecycle_table": "not_recorded_locally",
     "semantic_failed_proposal_retrieval": "not_recorded_locally",
     "audited_false_acceptance_rate": "not_recorded_locally",
@@ -95,10 +102,12 @@ def incorrect_suggestion_audit_boundary_record() -> dict[str, Any]:
             "invalid-evaluation, diff/parse-error, archive-rejected, and "
             "accepted-invalid candidates, plus explicit zero-coverage "
             "independent rejudge summaries, but does not claim independent rejudge "
-            "coverage, reference/statistical-oracle sufficiency, cross-run "
-            "proposal lifecycle tables, semantic failed-proposal retrieval, "
-            "audited false-acceptance or false-rejection rates, or "
-            "publication-strength incorrect-suggestion filtering."
+            "coverage, reference/statistical-oracle sufficiency, sampled audit-"
+            "denominator policy, candidate-family filter rates, beyond-initial-"
+            "pool novelty audit, cross-run proposal lifecycle tables, semantic "
+            "failed-proposal retrieval, audited false-acceptance or false-"
+            "rejection rates, or publication-strength incorrect-suggestion "
+            "filtering."
         ),
     }
 
@@ -122,7 +131,11 @@ def validate_incorrect_suggestion_audit_boundary(
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     source_claim = data.get("source_claim")
-    if not isinstance(source_claim, str) or "filter incorrect" not in source_claim:
+    if (
+        not isinstance(source_claim, str)
+        or "filter incorrect" not in source_claim
+        or "initial candidate pool" not in source_claim
+    ):
         issues.append(_issue("invalid_source_claim", "source_claim must identify incorrect-suggestion filtering"))
     status = data.get("boundary_status")
     if status != EXPECTED_BOUNDARY_STATUS:
@@ -134,7 +147,13 @@ def validate_incorrect_suggestion_audit_boundary(
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
-    if not isinstance(boundary_text, str) or "does not claim" not in boundary_text:
+    if (
+        not isinstance(boundary_text, str)
+        or "does not claim" not in boundary_text
+        or "sampled audit-denominator policy" not in boundary_text
+        or "candidate-family filter rates" not in boundary_text
+        or "beyond-initial-pool novelty audit" not in boundary_text
+    ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim independent audit evidence"))
     return IncorrectSuggestionAuditBoundaryValidation(
         ok=not issues,

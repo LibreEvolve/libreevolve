@@ -185,17 +185,19 @@ LibreEvolve has:
   limitations for independent false-acceptance/false-rejection audits, with
   `papers/proposal_lifecycle_audit_boundary.json` now carrying the
   paper-manifest-validated absence boundary for independent rejudge,
-  reference/statistical-oracle audit, cross-run proposal tables, semantic
-  failed-proposal retrieval, and audited error rates
+  reference/statistical-oracle audit, sampled audit denominators, candidate-
+  family filter rates, beyond-initial-pool novelty audits, cross-run proposal
+  tables, semantic failed-proposal retrieval, and audited error rates
 - incorrect-suggestion audit reports under
   `runtime.history.incorrect_suggestion_audit_report`, derived from proposal
   lifecycle records and recording local accepted/rejected/execution-filtered
   counts, invalid-evaluation and archive-rejection counts, local filter rates,
   bounded proposal audit rows, explicit zero-coverage independent rejudge
   summaries, and explicit false readiness for independent rejudge,
-  reference/statistical-oracle sufficiency, cross-run proposal tables,
-  semantic failed-proposal retrieval, and audited false-acceptance/
-  false-rejection rates, with
+  reference/statistical-oracle sufficiency, sampled audit-denominator policy,
+  candidate-family filter rates, beyond-initial-pool novelty audit, cross-run
+  proposal tables, semantic failed-proposal retrieval, and audited false-
+  acceptance/false-rejection rates, with
   `papers/incorrect_suggestion_audit_boundary.json` preserving the
   paper-facing independent-audit absence boundary and
   `papers/failure_memory_boundary.json` preserving the run-local failure

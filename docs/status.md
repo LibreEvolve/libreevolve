@@ -177,9 +177,11 @@ Important limits:
 - Execution-grounding and incorrect-suggestion reports are local run telemetry
   over accepted, rejected, execution-filtered, invalid-evaluation, parse-error,
   archive-rejected, and accepted-invalid candidates, not independent rejudge
-  coverage, audited false-acceptance/false-rejection rates, semantic failed-
-  proposal retrieval, or publication-strength filtering proof; that boundary
-  is tracked by `papers/incorrect_suggestion_audit_boundary.json`.
+  coverage, sampled audit-denominator policy, candidate-family filter rates,
+  beyond-initial-pool novelty audit, audited false-acceptance/false-rejection
+  rates, semantic failed-proposal retrieval, or publication-strength filtering
+  proof; that boundary is tracked by
+  `papers/incorrect_suggestion_audit_boundary.json`.
 - Hypothesis-branch and controller-backtracking reports show abandoned-looking
   branches and observed redirects, not controller-owned backtracking policy
   with configured suppression/retry behavior, explicit fallback-target events,

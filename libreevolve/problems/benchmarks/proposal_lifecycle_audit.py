@@ -20,6 +20,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "execution_validity",
     "archive_admission_status",
     "primary_evaluator_score",
+    "candidate_family_label",
+    "initial_pool_distance_ref",
+    "audit_sampling_policy",
+    "audit_denominator",
     "independent_rejudge_status",
     "reference_or_statistical_oracle_id",
     "benchmark_oracle_sufficiency_label",
@@ -33,6 +37,9 @@ EXPECTED_MISSING_EVIDENCE = {
     "rejected_proposal_rejudge_rows": "not_recorded_locally",
     "reference_or_statistical_oracle_records": "not_recorded_locally",
     "benchmark_oracle_sufficiency_labels": "not_recorded_locally",
+    "sampled_audit_denominator_policy": "not_recorded_locally",
+    "candidate_family_filter_rates": "not_recorded_locally",
+    "beyond_initial_pool_novelty_audit": "not_recorded_locally",
     "cross_run_proposal_lifecycle_table": "not_recorded_locally",
     "semantic_failed_proposal_retrieval": "not_recorded_locally",
     "audited_false_acceptance_rate": "not_recorded_locally",
@@ -64,7 +71,8 @@ def proposal_lifecycle_audit_boundary_record() -> dict[str, Any]:
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_claim": (
             "execution and automatic evaluation ground LLM-directed evolution "
-            "and filter incorrect base-LLM suggestions"
+            "and filter incorrect base-LLM suggestions while enabling accepted "
+            "candidates to move beyond the initial candidate pool"
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "runtime_report_status": "proposal_lifecycle_report_available",
@@ -75,9 +83,11 @@ def proposal_lifecycle_audit_boundary_record() -> dict[str, Any]:
             "This boundary records that LibreEvolve has local proposal lifecycle "
             "execution-grounding evidence, but does not claim independent rejudge "
             "or reference/statistical-oracle audit evidence for accepted and "
-            "rejected proposals, cross-run proposal lifecycle tables, semantic "
-            "failed-proposal retrieval, benchmark-specific oracle sufficiency, or "
-            "audited false-acceptance and false-rejection rates."
+            "rejected proposals, sampled audit-denominator policy, candidate-"
+            "family filter rates, beyond-initial-pool novelty audit, cross-run "
+            "proposal lifecycle tables, semantic failed-proposal retrieval, "
+            "benchmark-specific oracle sufficiency, or audited false-acceptance "
+            "and false-rejection rates."
         ),
     }
 
@@ -98,7 +108,11 @@ def validate_proposal_lifecycle_audit_boundary(
         issues.append(_issue("invalid_runtime_report_schema", "runtime report schema must identify proposal lifecycle reports"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
-    if not isinstance(data.get("source_claim"), str) or "filter incorrect" not in data["source_claim"]:
+    if (
+        not isinstance(data.get("source_claim"), str)
+        or "filter incorrect" not in data["source_claim"]
+        or "initial candidate pool" not in data["source_claim"]
+    ):
         issues.append(_issue("invalid_source_claim", "source_claim must identify incorrect-suggestion filtering"))
     status = data.get("boundary_status")
     if status != EXPECTED_BOUNDARY_STATUS:
@@ -110,7 +124,13 @@ def validate_proposal_lifecycle_audit_boundary(
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
-    if not isinstance(boundary_text, str) or "does not claim" not in boundary_text:
+    if (
+        not isinstance(boundary_text, str)
+        or "does not claim" not in boundary_text
+        or "sampled audit-denominator policy" not in boundary_text
+        or "candidate-family filter rates" not in boundary_text
+        or "beyond-initial-pool novelty audit" not in boundary_text
+    ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim independent audit evidence"))
     return ProposalLifecycleAuditBoundaryValidation(
         ok=not issues,

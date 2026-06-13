@@ -1571,23 +1571,28 @@ sidecars, tests, and active TODOs.
     persists to `failure_history.jsonl`, and exposes through both reports
     without accepting an invalid generated proposal. The committed
     `papers/proposal_lifecycle_audit_boundary.json` sidecar records the
-    paper-manifest-validated `not_independently_audited` boundary. The
+    paper-manifest-validated `not_independently_audited` boundary, including
+    missing sampled audit-denominator policy, candidate-family filter rates,
+    and beyond-initial-pool novelty audit. The
     committed `papers/incorrect_suggestion_audit_boundary.json` sidecar now
     preserves the dedicated local-execution-grounding boundary for incorrect-
-    suggestion filtering.
+    suggestion filtering with the same audit-denominator and novelty boundary.
   - Remaining gap: this is local run-level evidence with explicit zero
     independent-rejudge coverage, not an independent adjudication of whether
     every rejected proposal was truly incorrect or every accepted proposal was
     truly correct. It does not yet provide
     evaluator-oracle sufficiency labels per benchmark, cross-run proposal
-    tables, semantic failed-proposal retrieval beyond bounded recent memory, or
-    audited false-acceptance/false-rejection rates.
+    tables, semantic failed-proposal retrieval beyond bounded recent memory,
+    candidate-family false-filter rates, beyond-initial-pool novelty audit,
+    sampled audit denominator policy, or audited false-acceptance/false-
+    rejection rates.
   - Required result: add independent rejudge/reference-checker or statistical
     oracle evidence for accepted and rejected proposals, cross-run proposal
-    lifecycle tables, benchmark-specific oracle sufficiency labels, and audited
-    false-acceptance/false-rejection rates before claiming AlphaEvolve-style
-    filtering of incorrect base-LLM suggestions at benchmark/publication
-    strength.
+    lifecycle tables, benchmark-specific oracle sufficiency labels, candidate-
+    family false-filter rates, beyond-initial-pool novelty audit, sampled
+    audit denominator policy, and audited false-acceptance/false-rejection
+    rates before claiming AlphaEvolve-style filtering of incorrect base-LLM
+    suggestions at benchmark/publication strength.
 
 - [ ] Finish paper-facing evaluation-cascade promotion and attrition evidence.
   - Spec evidence: AlphaEvolve Section 2.4 describes an evaluation cascade in

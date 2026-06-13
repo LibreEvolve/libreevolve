@@ -2,7 +2,7 @@
   "schema": "libreevolve.alphaevolve_proposal_lifecycle_audit_boundary.v1",
   "runtime_report_schema": "libreevolve.proposal_lifecycle_report.v1",
   "source_paper_id": "2506.13131",
-  "source_claim": "execution and automatic evaluation ground LLM-directed evolution and filter incorrect base-LLM suggestions",
+  "source_claim": "execution and automatic evaluation ground LLM-directed evolution and filter incorrect base-LLM suggestions while enabling accepted candidates to move beyond the initial candidate pool",
   "boundary_status": "not_independently_audited",
   "runtime_report_status": "proposal_lifecycle_report_available",
   "claim_ready": false,
@@ -14,6 +14,10 @@
     "execution_validity",
     "archive_admission_status",
     "primary_evaluator_score",
+    "candidate_family_label",
+    "initial_pool_distance_ref",
+    "audit_sampling_policy",
+    "audit_denominator",
     "independent_rejudge_status",
     "reference_or_statistical_oracle_id",
     "benchmark_oracle_sufficiency_label",
@@ -27,10 +31,13 @@
     "rejected_proposal_rejudge_rows": "not_recorded_locally",
     "reference_or_statistical_oracle_records": "not_recorded_locally",
     "benchmark_oracle_sufficiency_labels": "not_recorded_locally",
+    "sampled_audit_denominator_policy": "not_recorded_locally",
+    "candidate_family_filter_rates": "not_recorded_locally",
+    "beyond_initial_pool_novelty_audit": "not_recorded_locally",
     "cross_run_proposal_lifecycle_table": "not_recorded_locally",
     "semantic_failed_proposal_retrieval": "not_recorded_locally",
     "audited_false_acceptance_rate": "not_recorded_locally",
     "audited_false_rejection_rate": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has local proposal lifecycle execution-grounding evidence, but does not claim independent rejudge or reference/statistical-oracle audit evidence for accepted and rejected proposals, cross-run proposal lifecycle tables, semantic failed-proposal retrieval, benchmark-specific oracle sufficiency, or audited false-acceptance and false-rejection rates."
+  "claim_boundary": "This boundary records that LibreEvolve has local proposal lifecycle execution-grounding evidence, but does not claim independent rejudge or reference/statistical-oracle audit evidence for accepted and rejected proposals, sampled audit-denominator policy, candidate-family filter rates, beyond-initial-pool novelty audit, cross-run proposal lifecycle tables, semantic failed-proposal retrieval, benchmark-specific oracle sufficiency, or audited false-acceptance and false-rejection rates."
 }

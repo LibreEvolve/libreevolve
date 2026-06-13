@@ -13,10 +13,17 @@ def test_proposal_lifecycle_audit_boundary_accepts_absence_record():
 
     assert validation.ok is True
     assert validation.boundary_status == "not_independently_audited"
-    assert validation.required_evidence_field_count == 14
-    assert validation.missing_evidence_count == 8
+    assert validation.required_evidence_field_count == 18
+    assert validation.missing_evidence_count == 11
     assert boundary["schema"] == PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_SCHEMA
     assert "does not claim independent rejudge" in boundary["claim_boundary"]
+    assert "candidate_family_label" in boundary["required_evidence_fields"]
+    assert "audit_denominator" in boundary["required_evidence_fields"]
+    assert (
+        boundary["missing_evidence"]["beyond_initial_pool_novelty_audit"]
+        == "not_recorded_locally"
+    )
+    assert "candidate-family filter rates" in boundary["claim_boundary"]
 
 
 def test_proposal_lifecycle_audit_boundary_rejects_premature_audit_claim():
@@ -44,5 +51,5 @@ def test_render_proposal_lifecycle_audit_boundary_summary_reports_shape():
     assert "AlphaEvolve proposal lifecycle audit boundary" in summary
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | not_independently_audited |" in summary
-    assert "| required_evidence_field_count | 14 |" in summary
-    assert "| missing_evidence_count | 8 |" in summary
+    assert "| required_evidence_field_count | 18 |" in summary
+    assert "| missing_evidence_count | 11 |" in summary

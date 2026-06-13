@@ -959,7 +959,8 @@ is not yet an AlphaEvolve reproduction.
   `runtime.history.parallel_evaluation_readiness_report`, which records local
   sample-worker fan-out and wall-clock compression, and
   `papers/parallel_evaluation_readiness_boundary.json` preserves the
-  paper-facing absence boundary while keeping compute-hour budgets,
+  paper-facing absence boundary while keeping order-of-100-compute-hours
+  candidate budgets, generation-cadence preservation under slow feedback,
   distributed evaluator nodes, mutation-depth impact, pending-work resume, and
   equal-budget parallelism evidence open.
 - Compose the current restored LLM scheduler, prompt-history, RNG, archive, and

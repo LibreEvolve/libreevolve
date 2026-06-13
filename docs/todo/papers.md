@@ -233,10 +233,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve.parallel_evaluation_readiness_report.v1`, which aggregates
     configured local sample-worker fan-out, observed sample-execution
     compression, topology linkage, and explicit false readiness for
-    compute-hour budgets, async evaluator queues, distributed evaluator nodes,
-    mutation-chain-depth impact, and pending-work resume.
+    100-compute-hour candidate budgets, generation-cadence preservation under
+    slow feedback, per-candidate compute-hour budgets, async evaluator queues,
+    distributed evaluator nodes, mutation-chain-depth impact, and pending-work
+    resume.
     `papers/parallel_evaluation_readiness_boundary.json` now preserves the
-    same paper-facing absence boundary for manifest validation.
+    same paper-facing absence boundary for manifest validation, including the
+    paper's explicit order-of-100-compute-hours evaluator budget and
+    consecutive-mutation cadence requirement.
     Completed manifests also embed
     `libreevolve.controller_state_validation.v1` to verify the current
     controller boundary is terminal, synchronous, and drained rather than an
@@ -249,12 +253,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     not AlphaEvolve-style throughput depth.
   - Required result: add paper-visible parallel-evaluation reports and
     validators that record per-candidate compute-hour budget, wall-clock
-    duration, evaluator-worker fan-out, randomized-initialization shard
-    counts/seeds, queued/running/completed evaluator-node state, cluster or
-    local fallback identity, mutation-chain-depth impact, and resumed
-    pending-work behavior before treating LibreEvolve's synchronous evaluator
-    loop or sequential sibling batches as AlphaEvolve-style parallelized
-    evaluation evidence.
+    duration, evaluator-worker fan-out, explicit order-of-100-compute-hours
+    budget capability, generation cadence under slow feedback, randomized-
+    initialization shard counts/seeds, queued/running/completed evaluator-node
+    state, cluster or local fallback identity, mutation-chain-depth impact,
+    and resumed pending-work behavior before treating LibreEvolve's
+    synchronous evaluator loop or sequential sibling batches as
+    AlphaEvolve-style parallelized evaluation evidence.
 
 - [ ] Track distributed-pipeline topology evidence.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.6.

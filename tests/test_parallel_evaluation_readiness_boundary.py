@@ -13,9 +13,14 @@ def test_parallel_evaluation_readiness_boundary_accepts_absence_record():
 
     assert validation.ok is True
     assert validation.boundary_status == "local_sample_worker_fanout_only"
-    assert validation.required_evidence_field_count == 10
-    assert validation.missing_evidence_count == 7
+    assert validation.required_evidence_field_count == 12
+    assert validation.missing_evidence_count == 9
     assert boundary["schema"] == PARALLEL_EVALUATION_READINESS_BOUNDARY_SCHEMA
+    assert "hundred_compute_hour_candidate_budget" in boundary["required_evidence_fields"]
+    assert (
+        boundary["missing_evidence"]["generation_cadence_under_slow_feedback_report"]
+        == "not_recorded_locally"
+    )
     assert "does not claim AlphaEvolve-style" in boundary["claim_boundary"]
 
 
@@ -44,5 +49,5 @@ def test_render_parallel_evaluation_readiness_boundary_summary_reports_shape():
     assert "AlphaEvolve parallel-evaluation readiness boundary" in summary
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | local_sample_worker_fanout_only |" in summary
-    assert "| required_evidence_field_count | 10 |" in summary
-    assert "| missing_evidence_count | 7 |" in summary
+    assert "| required_evidence_field_count | 12 |" in summary
+    assert "| missing_evidence_count | 9 |" in summary

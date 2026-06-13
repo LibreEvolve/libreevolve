@@ -18,6 +18,8 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "local_stage_sample_worker_fanout",
     "observed_wall_clock_compression",
     "distributed_pipeline_topology_ref",
+    "hundred_compute_hour_candidate_budget",
+    "generation_cadence_under_slow_feedback",
     "per_candidate_compute_hour_budget",
     "candidate_level_async_evaluation_queue",
     "distributed_evaluator_worker_nodes",
@@ -27,6 +29,8 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "equal_budget_parallelism_report_ref",
 )
 EXPECTED_MISSING_EVIDENCE = {
+    "hundred_compute_hour_candidate_budget_records": "not_recorded_locally",
+    "generation_cadence_under_slow_feedback_report": "not_recorded_locally",
     "per_candidate_compute_hour_budget_records": "not_recorded_locally",
     "candidate_level_async_evaluation_queue": "not_recorded_locally",
     "distributed_evaluator_worker_nodes": "not_recorded_locally",
@@ -62,7 +66,10 @@ def parallel_evaluation_readiness_boundary_record() -> dict[str, Any]:
         "source_claim": (
             "AlphaEvolve parallelizes expensive candidate evaluation and runs "
             "an asynchronous controller, LLM sampler, and evaluator-node "
-            "pipeline optimized for throughput"
+            "pipeline optimized for throughput; Section 2.4 describes "
+            "spending on the order of 100 compute-hours on a new solution "
+            "while parallelism preserves generation cadence for consecutive "
+            "mutations"
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "runtime_report_status": "parallel_evaluation_readiness_report_available",
@@ -73,11 +80,12 @@ def parallel_evaluation_readiness_boundary_record() -> dict[str, Any]:
             "This boundary records that LibreEvolve has runtime reporting for "
             "configured local stage sample-worker fan-out, observed wall-clock "
             "compression, and distributed-pipeline topology linkage, but does "
-            "not claim AlphaEvolve-style per-candidate compute-hour budgets, "
-            "candidate-level async evaluator queues, distributed evaluator "
-            "nodes, randomized initialization shards, mutation-chain depth "
-            "impact under slow feedback, pending-work resume, or equal-budget "
-            "parallelism reports."
+            "not claim AlphaEvolve-style 100-compute-hour candidate budgets, "
+            "generation-cadence preservation under slow feedback, per-candidate "
+            "compute-hour budgets, candidate-level async evaluator queues, "
+            "distributed evaluator nodes, randomized initialization shards, "
+            "mutation-chain depth impact under slow feedback, pending-work "
+            "resume, or equal-budget parallelism reports."
         ),
     }
 
@@ -99,7 +107,11 @@ def validate_parallel_evaluation_readiness_boundary(
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     source_claim = data.get("source_claim")
-    if not isinstance(source_claim, str) or "asynchronous controller" not in source_claim:
+    if (
+        not isinstance(source_claim, str)
+        or "asynchronous controller" not in source_claim
+        or "100 compute-hours" not in source_claim
+    ):
         issues.append(_issue("invalid_source_claim", "source_claim must identify AlphaEvolve asynchronous throughput"))
     status = data.get("boundary_status")
     if status != EXPECTED_BOUNDARY_STATUS:

@@ -1671,10 +1671,14 @@ sidecars, tests, and active TODOs.
     `libreevolve.parallel_evaluation_readiness_report.v1`, which aggregates
     configured local sample-worker fan-out, observed wall-clock compression,
     and topology linkage while preserving `claim_ready: false` for missing
-    compute-hour budgets, candidate-level async queues, distributed evaluator
-    nodes, mutation-depth impact, and pending-work resume.
+    100-compute-hour candidate budgets, generation-cadence preservation under
+    slow feedback, per-candidate compute-hour budgets, candidate-level async
+    queues, distributed evaluator nodes, mutation-depth impact, and
+    pending-work resume.
     `papers/parallel_evaluation_readiness_boundary.json` now preserves the
-    same absence boundary for paper-manifest validation.
+    same absence boundary for paper-manifest validation, including the paper's
+    explicit order-of-100-compute-hours evaluator budget and consecutive-
+    mutation cadence requirement.
     This still does not provide async candidate queues, distributed evaluator
     nodes, or mutation-depth throughput under slow evaluator feedback.
     `RunBudget` explicitly tracks synchronous local consumption; controller
@@ -1688,6 +1692,7 @@ sidecars, tests, and active TODOs.
     samplers, evaluator workers, bounded queues, deterministic worker ids,
     deterministic result merge/admission order, concurrency-safe database,
     archive, prompt, plugin, and budget mutation, an explicit policy for
+    order-of-100-compute-hours candidate budgets, generation cadence and
     mutation-chain depth under slow or expensive evaluator feedback, and
     replayable controller state for queued/running/completed work.
 

@@ -6125,9 +6125,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     parameter and time-limit records, incumbent/bound/certificate artifacts,
     numerical tolerance policy, prior-literature and AlphaEvolve baseline
     values, reproduced/improved/fell-behind outcome rows, seed/run records,
-    independent checker outputs, reproducibility status, and README/ROADMAP
-    wording that treats global-NLP solver comparison as missing paper evidence
-    rather than implemented LibreEvolve support. Paper evidence should
+    independent checker outputs, reproducibility status, ROADMAP and
+    paper-index wording that treats global-NLP solver comparison as missing
+    paper evidence rather than implemented LibreEvolve support, and
+    source-scoped root README wording if those claims are reintroduced. Paper evidence should
     additionally preserve the selected problem subset, exact formulation
     variables and constraints, instance-size records such as `7` variables/
     `10` constraints through `91` variables/`876` constraints for distance

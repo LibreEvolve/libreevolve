@@ -78,6 +78,22 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     constructive-math benchmark claims, the wording must remain source-scoped
     until the active code, paper, and roadmap TODO evidence exists.
 
+- [x] Archive README global-NLP solver-comparison source-scope TODO.
+  - Status: the README-specific TODO was stale after the README realism split.
+    The root README no longer mentions global NLP solvers, FICO Xpress, SCIP,
+    direct nonlinear-programming formulations of AlphaEvolve benchmarks,
+    Mosel models, solver reproduction of AlphaEvolve discoveries, or direct
+    mathematical-programming baselines.
+  - Remaining guard: `papers/README.md` keeps `2601.05943` as an unimplemented
+    optimization benchmark comparator, and the open code, paper, and roadmap
+    TODOs still track the missing NLP formulation schemas, solver runner
+    abstractions, solver identity/version/license records, incumbent/bound
+    artifacts, tolerance policy, Table 1-3 comparison rows, solver-attribution
+    caveats, and independent checker outputs.
+  - Verification: if the root README later reintroduces global-NLP or direct
+    solver-baseline claims, the wording must remain source-scoped until the
+    active code, paper, and roadmap TODO evidence exists.
+
 - [x] Keep README validator sandbox/resource-limit wording scoped to local
       subprocess audit evidence versus OS/container enforcement.
   - Status: README Important limits now states that validator execution policy

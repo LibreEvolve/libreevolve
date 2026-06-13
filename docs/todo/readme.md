@@ -91,46 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Implement README global-NLP solver comparison claims beyond source-scoped
-      absence.
-  - Spec evidence: arXiv `2601.05943`, `Global Optimization for
-    Combinatorial Geometry Problems`, asks whether off-the-shelf global
-    optimization solvers can match AlphaEvolve benchmark results when hard
-    geometry/combinatorial problems are directly formulated as NLPs. Its
-    abstract reports straightforward NLP formulations evaluated with
-    commercial FICO Xpress and open-source SCIP, reproducing and sometimes
-    improving best known and LLM-driven results without solver modifications.
-    The body focuses on min-max distance ratio, square/rectangle circle
-    packing, and regular-hexagon packing, using Mosel formulations, QCP
-    squared-distance constraints, circle center/radius variables, and Farkas-
-    multiplier hexagon non-overlap constraints.
-  - Current evidence: README now lists `2601.05943` as source-scoped Global
-    NLP Optimization comparator context and points to
-    `papers/global_nlp_optimization_boundary.json`. It still does not define
-    direct NLP formulations for AlphaEvolve benchmark problems, run Xpress or
-    SCIP, record solver licenses/versions,
-    preserve solver incumbents/bounds/certificates, compare solver outputs
-    against AlphaEvolve and literature baselines, or document numerical
-    tolerance and reproducibility for direct solver baselines. README also
-    lacks source-scoped boundaries for Mosel model artifacts, selected
-    distance/circle/hexagon benchmark rows, AlphaEvolve repository validation
-    outputs, Table 1-3 comparisons, solver-attribution caveats, dual-bound
-    omissions, and commercial-license handling for Xpress.
-  - Required result: if README mentions global NLP solvers, FICO Xpress, SCIP,
-    direct nonlinear-programming formulations of AlphaEvolve benchmarks,
-    solver reproduction of AlphaEvolve discoveries, solver improvements over
-    LLM-driven results, or `2601.05943`, keep the wording source-scoped until
-    local artifacts can show the paper in the manifest, NLP formulation
-    schemas, solver-run records, version/license metadata, incumbent/bound/
-    certificate artifacts, tolerance policy, baseline comparisons,
-    independent checker outputs, and benchmark reports. Avoid implying
-    LibreEvolve supports global-NLP solver comparison for AlphaEvolve
-    benchmarks without those artifacts. README wording should also distinguish
-    LibreEvolve's LLM evolutionary code search from direct mathematical
-    programming baselines unless local reports include exported NLP models,
-    solver logs, solution validation, baseline citations, table-level outcome
-    rows, and reproducibility/licensing status for both solvers.
-
 - [ ] Implement README post-AlphaEvolve autoconvolution improvement claims
       beyond source-scoped absence.
   - Spec evidence: arXiv `2506.16750`, `An improved example for an

@@ -6566,9 +6566,10 @@ Primary evidence:
     solver parameter and time-limit metadata, incumbent/bound/certificate
     artifacts, numerical tolerance policy, prior-literature and AlphaEvolve
     baseline values, reproduced/improved/fell-behind outcome rows, seed/run
-    records, independent checker outputs, and README/ROADMAP wording that
+    records, independent checker outputs, ROADMAP and paper-index wording that
     keeps global-NLP solver comparison as missing evidence until local solver
-    harnesses and benchmark reports exist. The implementation boundary should
+    harnesses and benchmark reports exist, and source-scoped root README
+    wording if those claims are reintroduced. The implementation boundary should
     additionally require per-problem formulations for distance-ratio instances
     `(d,n)`, circle-packing `n` and variant rows, hexagon-packing `n` rows,
     Mosel/exported-model artifacts, solver availability and version checks

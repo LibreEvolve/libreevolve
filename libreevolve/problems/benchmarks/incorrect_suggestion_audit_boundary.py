@@ -12,6 +12,9 @@ INCORRECT_SUGGESTION_AUDIT_BOUNDARY_SCHEMA = (
 INCORRECT_SUGGESTION_RUNTIME_REPORT_SCHEMA = (
     "libreevolve.incorrect_suggestion_audit_report.v1"
 )
+INCORRECT_SUGGESTION_REJUDGE_COVERAGE_SCHEMA = (
+    "libreevolve.incorrect_suggestion_rejudge_coverage.v1"
+)
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_BOUNDARY_STATUS = "local_execution_grounding_only"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -27,6 +30,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "accepted_invalid_rate",
     "rejection_reasons",
     "audit_record_lifecycle_status",
+    "independent_rejudge_coverage",
     "independent_rejudge_status",
     "false_acceptance_review",
     "false_rejection_review",
@@ -38,8 +42,12 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "publication_strength_incorrect_suggestion_filtering",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "independent_rejudge_of_accepted_candidates": "not_recorded_locally",
-    "independent_rejudge_of_rejected_candidates": "not_recorded_locally",
+    "independent_rejudge_of_accepted_candidates": (
+        "zero_coverage_recorded_no_independent_rejudge"
+    ),
+    "independent_rejudge_of_rejected_candidates": (
+        "zero_coverage_recorded_no_independent_rejudge"
+    ),
     "reference_or_statistical_oracle_sufficiency": "not_recorded_locally",
     "cross_run_proposal_lifecycle_table": "not_recorded_locally",
     "semantic_failed_proposal_retrieval": "not_recorded_locally",
@@ -69,6 +77,7 @@ def incorrect_suggestion_audit_boundary_record() -> dict[str, Any]:
     return {
         "schema": INCORRECT_SUGGESTION_AUDIT_BOUNDARY_SCHEMA,
         "runtime_report_schema": INCORRECT_SUGGESTION_RUNTIME_REPORT_SCHEMA,
+        "rejudge_coverage_schema": INCORRECT_SUGGESTION_REJUDGE_COVERAGE_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_claim": (
             "AlphaEvolve uses code execution and automatic evaluation to ground "
@@ -84,7 +93,8 @@ def incorrect_suggestion_audit_boundary_record() -> dict[str, Any]:
             "This boundary records that LibreEvolve has local execution-grounding "
             "telemetry for generated, accepted, rejected, execution-filtered, "
             "invalid-evaluation, diff/parse-error, archive-rejected, and "
-            "accepted-invalid candidates, but does not claim independent rejudge "
+            "accepted-invalid candidates, plus explicit zero-coverage "
+            "independent rejudge summaries, but does not claim independent rejudge "
             "coverage, reference/statistical-oracle sufficiency, cross-run "
             "proposal lifecycle tables, semantic failed-proposal retrieval, "
             "audited false-acceptance or false-rejection rates, or "
@@ -107,6 +117,8 @@ def validate_incorrect_suggestion_audit_boundary(
         issues.append(_issue("invalid_schema", "unsupported incorrect-suggestion audit boundary schema"))
     if data.get("runtime_report_schema") != INCORRECT_SUGGESTION_RUNTIME_REPORT_SCHEMA:
         issues.append(_issue("invalid_runtime_report_schema", "runtime report schema must identify incorrect-suggestion audit reports"))
+    if data.get("rejudge_coverage_schema") != INCORRECT_SUGGESTION_REJUDGE_COVERAGE_SCHEMA:
+        issues.append(_issue("invalid_rejudge_coverage_schema", "rejudge coverage schema must identify incorrect-suggestion rejudge coverage reports"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     source_claim = data.get("source_claim")

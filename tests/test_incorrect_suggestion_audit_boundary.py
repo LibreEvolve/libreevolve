@@ -13,7 +13,7 @@ def test_incorrect_suggestion_audit_boundary_accepts_absence_record():
 
     assert validation.ok is True
     assert validation.boundary_status == "local_execution_grounding_only"
-    assert validation.required_evidence_field_count == 21
+    assert validation.required_evidence_field_count == 22
     assert validation.missing_evidence_count == 7
     assert boundary["schema"] == INCORRECT_SUGGESTION_AUDIT_BOUNDARY_SCHEMA
     assert "does not claim independent rejudge coverage" in boundary["claim_boundary"]
@@ -44,5 +44,5 @@ def test_render_incorrect_suggestion_audit_boundary_summary_reports_shape():
     assert "AlphaEvolve incorrect-suggestion audit boundary" in summary
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | local_execution_grounding_only |" in summary
-    assert "| required_evidence_field_count | 21 |" in summary
+    assert "| required_evidence_field_count | 22 |" in summary
     assert "| missing_evidence_count | 7 |" in summary

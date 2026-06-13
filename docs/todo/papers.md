@@ -56,15 +56,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     execution/evaluator validity, archive admission or rejection, rejection
     reasons, execution-filtered counts, invalid-evaluation and
     archive-rejected counts, local filter rates, failure-memory linkage,
-    aggregate false-acceptance/false-rejection audit absence, and
-    claim-readiness checks. The committed
+    aggregate zero-coverage independent-rejudge summaries,
+    false-acceptance/false-rejection audit absence, and claim-readiness
+    checks. The committed
     `papers/proposal_lifecycle_audit_boundary.json` sidecar preserves the
     paper-manifest-validated independent-audit absence boundary. The committed
     `papers/incorrect_suggestion_audit_boundary.json` sidecar now preserves
     the more specific local-execution-grounding boundary for the incorrect-
     suggestion audit report.
-  - Current gap: these reports are local run evidence. They do not
-    independently rejudge accepted or rejected proposals, prove
+  - Current gap: these reports are local run evidence with explicit zero
+    independent-rejudge coverage. They do not independently rejudge accepted
+    or rejected proposals, prove
     benchmark-specific evaluator-oracle sufficiency, aggregate cross-run
     proposal tables, or report audited false-acceptance/false-rejection rates.
   - Required result: add independent rejudge/reference-checker or statistical

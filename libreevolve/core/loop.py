@@ -31234,6 +31234,13 @@ def _incorrect_suggestion_audit_report(
             "cross_run_proposal_table": False,
             "semantic_failed_proposal_retrieval": False,
         },
+        "independent_rejudge_coverage": (
+            _incorrect_suggestion_rejudge_coverage(
+                audited_records,
+                accepted_count,
+                rejected_count,
+            )
+        ),
         "false_acceptance_review": {
             "status": "not_independently_reviewed",
             "accepted_invalid_count": accepted_invalid_count,
@@ -31291,6 +31298,60 @@ def _incorrect_suggestion_audit_record(record: Mapping[str, object]) -> dict:
         "independent_rejudge_status": "not_run",
         "false_acceptance_audited": False,
         "false_rejection_audited": False,
+    }
+
+
+def _incorrect_suggestion_rejudge_coverage(
+    audit_records: list[dict],
+    accepted_count: int,
+    rejected_count: int,
+) -> dict:
+    accepted_reviewed = sum(
+        1
+        for record in audit_records
+        if record.get("lifecycle_status") == "accepted_history"
+        and record.get("independent_rejudge_status") != "not_run"
+    )
+    rejected_reviewed = sum(
+        1
+        for record in audit_records
+        if str(record.get("lifecycle_status", "")).startswith("rejected_")
+        and record.get("independent_rejudge_status") != "not_run"
+    )
+    return {
+        "schema": "libreevolve.incorrect_suggestion_rejudge_coverage.v1",
+        "source": "runtime.history.incorrect_suggestion_audit_report.audit_records",
+        "accepted_candidate_count": accepted_count,
+        "rejected_candidate_count": rejected_count,
+        "accepted_rejudged_count": accepted_reviewed,
+        "rejected_rejudged_count": rejected_reviewed,
+        "accepted_rejudge_coverage_rate": _incorrect_suggestion_rate(
+            accepted_reviewed,
+            accepted_count,
+        ),
+        "rejected_rejudge_coverage_rate": _incorrect_suggestion_rate(
+            rejected_reviewed,
+            rejected_count,
+        ),
+        "coverage_status": (
+            "independent_rejudge_not_run"
+            if accepted_reviewed == 0 and rejected_reviewed == 0
+            else "partial_independent_rejudge_evidence"
+        ),
+        "false_acceptance_reviewed_count": 0,
+        "false_rejection_reviewed_count": 0,
+        "claim_readiness": {
+            "accepted_candidate_rejudge_coverage": False,
+            "rejected_candidate_rejudge_coverage": False,
+            "audited_false_acceptance_rate": False,
+            "audited_false_rejection_rate": False,
+            "remaining_gap": [
+                "independent_rejudge_of_accepted_candidates",
+                "independent_rejudge_of_rejected_candidates",
+                "audited_false_acceptance_rate",
+                "audited_false_rejection_rate",
+            ],
+        },
     }
 
 
@@ -31409,6 +31470,21 @@ def validate_incorrect_suggestion_audit_report(report: object) -> dict:
         for field in ("false_acceptance_audited", "false_rejection_audited"):
             if record.get(field) is not False:
                 issues.append({"code": f"{field}_overclaim", "message": f"{field} must remain false"})
+    rejudge_coverage = report.get("independent_rejudge_coverage")
+    if not isinstance(rejudge_coverage, Mapping):
+        issues.append(
+            {
+                "code": "invalid_independent_rejudge_coverage",
+                "message": "independent_rejudge_coverage must be a mapping",
+            }
+        )
+    else:
+        _validate_incorrect_suggestion_rejudge_coverage(
+            rejudge_coverage,
+            accepted,
+            rejected,
+            issues,
+        )
     for field in ("false_acceptance_review", "false_rejection_review"):
         review = report.get(field)
         if not isinstance(review, Mapping):
@@ -31448,6 +31524,89 @@ def validate_incorrect_suggestion_audit_report(report: object) -> dict:
             }
         )
     return {"schema": schema, "ok": not issues, "issues": issues}
+
+
+def _validate_incorrect_suggestion_rejudge_coverage(
+    coverage: Mapping[str, object],
+    accepted_count: int,
+    rejected_count: int,
+    issues: list[dict[str, str]],
+) -> None:
+    if coverage.get("schema") != "libreevolve.incorrect_suggestion_rejudge_coverage.v1":
+        issues.append(
+            {
+                "code": "invalid_rejudge_coverage_schema",
+                "message": "independent rejudge coverage schema is unsupported",
+            }
+        )
+    if (
+        coverage.get("source")
+        != "runtime.history.incorrect_suggestion_audit_report.audit_records"
+    ):
+        issues.append(
+            {
+                "code": "invalid_rejudge_coverage_source",
+                "message": "independent rejudge coverage source is unsupported",
+            }
+        )
+    expected_counts = {
+        "accepted_candidate_count": accepted_count,
+        "rejected_candidate_count": rejected_count,
+        "accepted_rejudged_count": 0,
+        "rejected_rejudged_count": 0,
+        "false_acceptance_reviewed_count": 0,
+        "false_rejection_reviewed_count": 0,
+    }
+    for field, expected in expected_counts.items():
+        value = coverage.get(field)
+        if value != expected:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"independent rejudge coverage {field} must be {expected}",
+                }
+            )
+    expected_rates = {
+        "accepted_rejudge_coverage_rate": _incorrect_suggestion_rate(0, accepted_count),
+        "rejected_rejudge_coverage_rate": _incorrect_suggestion_rate(0, rejected_count),
+    }
+    for field, expected in expected_rates.items():
+        if coverage.get(field) != expected:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"independent rejudge coverage {field} must match current zero-coverage boundary",
+                }
+            )
+    if coverage.get("coverage_status") != "independent_rejudge_not_run":
+        issues.append(
+            {
+                "code": "independent_rejudge_coverage_overclaim",
+                "message": "independent rejudge coverage must remain not_run",
+            }
+        )
+    readiness = coverage.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_rejudge_coverage_claim_readiness",
+                "message": "independent rejudge coverage claim_readiness must be a mapping",
+            }
+        )
+        return
+    for field in (
+        "accepted_candidate_rejudge_coverage",
+        "rejected_candidate_rejudge_coverage",
+        "audited_false_acceptance_rate",
+        "audited_false_rejection_rate",
+    ):
+        if readiness.get(field) is not False:
+            issues.append(
+                {
+                    "code": f"{field}_overclaim",
+                    "message": f"independent rejudge coverage readiness {field} must remain false",
+                }
+            )
 
 
 def _validate_optional_rate(value: object, field: str, issues: list[dict[str, str]]) -> None:

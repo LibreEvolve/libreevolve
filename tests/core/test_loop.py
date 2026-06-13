@@ -8070,6 +8070,16 @@ def test_runtime_history_reports_execution_filtered_proposal_lifecycle():
     assert audit["audit_scope"]["local_execution_grounding"] is True
     assert audit["audit_scope"]["independent_rejudge"] is False
     assert audit["audit_scope"]["reference_or_statistical_oracle"] is False
+    coverage = audit["independent_rejudge_coverage"]
+    assert coverage["schema"] == "libreevolve.incorrect_suggestion_rejudge_coverage.v1"
+    assert coverage["accepted_candidate_count"] == 0
+    assert coverage["rejected_candidate_count"] == 1
+    assert coverage["accepted_rejudged_count"] == 0
+    assert coverage["rejected_rejudged_count"] == 0
+    assert coverage["accepted_rejudge_coverage_rate"] is None
+    assert coverage["rejected_rejudge_coverage_rate"] == 0.0
+    assert coverage["coverage_status"] == "independent_rejudge_not_run"
+    assert coverage["claim_readiness"]["rejected_candidate_rejudge_coverage"] is False
     assert audit["claim_ready"] is False
     assert audit["claim_readiness"]["local_execution_grounding_counts"] is True
     assert audit["claim_readiness"]["independent_rejudge_of_rejected_candidates"] is False
@@ -8090,6 +8100,13 @@ def test_runtime_history_reports_execution_filtered_proposal_lifecycle():
     overclaimed["audit_scope"]["independent_rejudge"] = True
     overclaimed["claim_readiness"]["audited_false_rejection_rate"] = True
     overclaimed["audit_records"][0]["independent_rejudge_status"] = "passed"
+    overclaimed["independent_rejudge_coverage"]["rejected_rejudged_count"] = 1
+    overclaimed["independent_rejudge_coverage"]["coverage_status"] = (
+        "partial_independent_rejudge_evidence"
+    )
+    overclaimed["independent_rejudge_coverage"]["claim_readiness"][
+        "rejected_candidate_rejudge_coverage"
+    ] = True
     validation = validate_incorrect_suggestion_audit_report(overclaimed)
     assert validation["ok"] is False
     assert {
@@ -8097,6 +8114,9 @@ def test_runtime_history_reports_execution_filtered_proposal_lifecycle():
         "independent_rejudge_overclaim",
         "audited_false_rejection_rate_overclaim",
         "independent_rejudge_status_overclaim",
+        "invalid_rejected_rejudged_count",
+        "independent_rejudge_coverage_overclaim",
+        "rejected_candidate_rejudge_coverage_overclaim",
     }.issubset({issue["code"] for issue in validation["issues"]})
 
     sample_efficiency = manifest["runtime"]["history"]["sample_efficiency_report"]

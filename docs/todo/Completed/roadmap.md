@@ -13344,6 +13344,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: focused runtime execution-filtered proposal lifecycle test
     validates the implemented report.
 
+- [x] Preserve incorrect-suggestion rejudge zero-coverage roadmap boundary.
+  - Status: ROADMAP now states that
+    `runtime.history.incorrect_suggestion_audit_report` includes explicit
+    zero-coverage independent rejudge summaries for accepted and rejected
+    generated candidates, while keeping independent rejudge, audited
+    false-acceptance/false-rejection rates, cross-run tables, and publication-
+    strength filtering open.
+  - Verification: focused runtime execution-filtered proposal lifecycle test
+    validates the implemented report and overclaim checks.
+
 - [x] Preserve incorrect-suggestion audit paper-facing sidecar.
   - Status: ROADMAP and TODO wording now link local incorrect-suggestion
     telemetry to `papers/incorrect_suggestion_audit_boundary.json`, while

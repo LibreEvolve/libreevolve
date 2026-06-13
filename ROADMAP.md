@@ -182,8 +182,9 @@ LibreEvolve has:
   `runtime.history.incorrect_suggestion_audit_report`, derived from proposal
   lifecycle records and recording local accepted/rejected/execution-filtered
   counts, invalid-evaluation and archive-rejection counts, local filter rates,
-  bounded proposal audit rows, and explicit false readiness for independent
-  rejudge, reference/statistical-oracle sufficiency, cross-run proposal tables,
+  bounded proposal audit rows, explicit zero-coverage independent rejudge
+  summaries, and explicit false readiness for independent rejudge,
+  reference/statistical-oracle sufficiency, cross-run proposal tables,
   semantic failed-proposal retrieval, and audited false-acceptance/
   false-rejection rates, with
   `papers/incorrect_suggestion_audit_boundary.json` preserving the

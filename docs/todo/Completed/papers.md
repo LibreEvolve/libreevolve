@@ -12153,15 +12153,31 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Status: paper-facing TODOs and runtime manifests now expose
     `incorrect_suggestion_audit_report`, which records local generated,
     accepted, rejected, execution-filtered, invalid-evaluation,
-    archive-rejected, and accepted-invalid counts plus local filter rates and
-    bounded audit rows while keeping independent rejudge and audited error
-    rates false.
+    archive-rejected, and accepted-invalid counts plus local filter rates,
+    bounded audit rows, and aggregate zero-coverage independent-rejudge
+    summaries while keeping independent rejudge and audited error rates false.
   - Remaining paper gap: this does not independently rejudge accepted or
     rejected proposals, prove benchmark-specific evaluator-oracle sufficiency,
     aggregate cross-run proposal tables, or report audited false-acceptance/
     false-rejection rates.
   - Verification: focused runtime execution-filtered proposal lifecycle test
     validates the implemented report.
+
+- [x] Record aggregate independent-rejudge zero-coverage evidence for
+      incorrect-suggestion audits.
+  - Paper evidence: AlphaEvolve's execution-grounding claim needs any
+    publication-strength incorrect-suggestion filtering statement to separate
+    local evaluator rejection from independent adjudication.
+  - Status: `runtime.history.incorrect_suggestion_audit_report` now includes
+    `independent_rejudge_coverage`, recording accepted/rejected generated-
+    candidate denominators, zero accepted/rejected rejudged counts, zero or
+    null coverage rates, and false readiness for audited false-acceptance and
+    false-rejection rates.
+  - Remaining paper gap: independent rejudge/reference-checker or statistical-
+    oracle evidence and audited false-acceptance/false-rejection rates remain
+    absent.
+  - Verification: focused runtime execution-filtered proposal lifecycle test
+    validates the implemented report and overclaim checks.
 
 - [x] Record incorrect-suggestion audit paper-facing sidecar.
   - Status: `libreevolve/problems/benchmarks/incorrect_suggestion_audit_boundary.py`

@@ -17548,6 +17548,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused runtime execution-filtered proposal lifecycle test
     validates the implemented report.
 
+- [x] Add aggregate independent-rejudge coverage boundary to incorrect-
+      suggestion audits.
+  - Spec evidence: AlphaEvolve-style claims about filtering incorrect base-LLM
+    suggestions need more than local rejection counts; they need to show
+    whether accepted and rejected proposals were independently rejudged.
+  - Status: `runtime.history.incorrect_suggestion_audit_report` now includes
+    `independent_rejudge_coverage` with schema
+    `libreevolve.incorrect_suggestion_rejudge_coverage.v1`. It records
+    accepted/rejected generated-candidate denominators, zero accepted/rejected
+    rejudged counts, zero or null coverage rates, and explicit false readiness
+    for audited false-acceptance and false-rejection rates.
+  - Remaining gap: this is a zero-coverage boundary, not independent rejudge
+    evidence or audited error-rate evidence.
+  - Verification: focused runtime execution-filtered proposal lifecycle test
+    validates the implemented report and overclaim checks.
+
 - [x] Add incorrect-suggestion audit paper-facing sidecar.
   - Status: `libreevolve/problems/benchmarks/incorrect_suggestion_audit_boundary.py`
     and `papers/incorrect_suggestion_audit_boundary.json` now preserve local

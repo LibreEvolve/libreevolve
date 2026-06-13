@@ -1392,7 +1392,8 @@ Primary evidence:
     payload hashes, evaluator validity, archive admission or rejection,
     rejection reasons, execution-filtered/invalid/archive-rejected/
     accepted-invalid counts, local filter rates, bounded failure-memory
-    linkage, and explicit false-acceptance/false-rejection audit absence.
+    linkage, aggregate zero-coverage independent-rejudge summaries, and
+    explicit false-acceptance/false-rejection audit absence.
     Focused tests cover a cleanly parsed LLM mutation that
     execution/evaluation marks invalid, rejects from archive admission,
     persists to `failure_history.jsonl`, and exposes through both reports
@@ -1402,9 +1403,10 @@ Primary evidence:
     committed `papers/incorrect_suggestion_audit_boundary.json` sidecar now
     preserves the dedicated local-execution-grounding boundary for incorrect-
     suggestion filtering.
-  - Remaining gap: this is local run-level evidence, not an independent
-    adjudication of whether every rejected proposal was truly incorrect or
-    every accepted proposal was truly correct. It does not yet provide
+  - Remaining gap: this is local run-level evidence with explicit zero
+    independent-rejudge coverage, not an independent adjudication of whether
+    every rejected proposal was truly incorrect or every accepted proposal was
+    truly correct. It does not yet provide
     evaluator-oracle sufficiency labels per benchmark, cross-run proposal
     tables, semantic failed-proposal retrieval beyond bounded recent memory, or
     audited false-acceptance/false-rejection rates.

@@ -2,6 +2,24 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive multi-edit consistency roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `papers/README.md`, and runtime manifests already scope
+    `runtime.history.mutation_consistency_report` to current-run generated
+    multi-edit candidates, changed edit units, diagnostic co-change links,
+    best-effort Python symbol/reference scans, unresolved-reference diagnostics,
+    evaluator taxonomy, and admission records.
+  - Remaining guard: language-aware scope/import resolution, config/resource
+    dependency models, required companion-edit inference, cross-file
+    dataflow/import resolution, benchmark-calibrated consistency failures, hard
+    or configurable acceptance gates, and semantic consistency proof remain
+    future work.
+  - Verification: focused runtime tests validate multi-edit inventory,
+    changed-file/edit-unit counts, Python symbol scans, unresolved references,
+    evaluator/admission linkage, and `claim_ready=false`; the
+    `papers/mutation_consistency_boundary.json` sidecar rejects semantic-proof
+    and readiness overclaims.
+
 - [x] Archive prompt-example copy-detection roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `papers/README.md`, and runtime manifests already scope

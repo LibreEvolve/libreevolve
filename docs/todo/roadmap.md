@@ -10,25 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep multi-edit consistency roadmap wording scoped beyond current
-      diagnostic scan.
-  - Spec evidence: AlphaEvolve Figure 3(b) instructs the model to keep
-    SEARCH/REPLACE edits consistent with each other, including adding a new
-    config variable when another proposed edit uses it.
-  - Current evidence: `ROADMAP.md` now lists
-    `runtime.history.mutation_consistency_report` as current diagnostic
-    evidence for multi-edit payload inventories, changed edit units,
-    best-effort Python symbol/reference scans, unresolved references,
-    evaluator taxonomy, and admission links. ROADMAP now also ties that
-    diagnostic-only scope to `papers/mutation_consistency_boundary.json`.
-  - Remaining gap: roadmap wording must stay scoped until language-aware
-    scope/import resolution, config/resource dependency models,
-    required-companion-edit inference, cross-file dataflow, and benchmark-
-    calibrated consistency gates exist.
-  - Required result: when broader consistency reports land, update ROADMAP,
-    README, papers index, and code/paper TODOs with the exact analyzer scope
-    and gating policy.
-
 - [ ] Keep Figure 3 roadmap wording scoped until supervised-learning example
       exhibit provenance exists.
   - Spec evidence: AlphaEvolve Figure 3 is a supervised-learning pipeline

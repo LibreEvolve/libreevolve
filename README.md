@@ -89,6 +89,11 @@ Important limits:
   and links to Figure 9, matrix-result, certificate, and notebook evidence, not
   local report/export output that emits rendered Figure 4 artifacts or accepted
   15-mutation lineage.
+- Matrix baseline-component records validate Section 3.1 starting-algorithm
+  provenance fields for baseline program ids, initializer, reconstruction
+  loss, Adam optimizer metadata, mutable scopes, fixed hashes, generation-0
+  metrics, mutation lineage, and matrix-result links, not local matrix-runner
+  output that emits the initializer/loss/optimizer provenance during search.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

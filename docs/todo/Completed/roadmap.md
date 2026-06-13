@@ -2,6 +2,33 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive matrix baseline-component roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish final matrix report/status readiness from AlphaEvolve Section
+    3.1 starting-algorithm component provenance.
+  - Current evidence: `libreevolve.matrix_baseline_component_runtime_boundary.v1`
+    validates the current `not_emitted_by_local_runner` boundary and required
+    future emitted-record fields for run/target ids, baseline program ids,
+    initializer/reconstruction-loss/optimizer component records, Adam optimizer
+    name/version/config, mutable component scopes, fixed component hashes,
+    generation-0 metrics, mutation lineage, matrix-result refs, artifact paths,
+    and artifact hashes.
+  - Artifact boundary: `papers/matrix_baseline_component_runtime_boundary.json`
+    emits the absence/readiness sidecar, and
+    `matrix_baseline_component_runtime_boundary_from_components()` builds
+    emitted records from component inventories with top-level ref,
+    mutable-scope, and fixed-hash linkage checks.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: local matrix benchmark runners do not emit the Section 3.1 baseline
+    component inventory, generation-0 baseline outcomes, mutable/fixed scopes,
+    optimizer provenance, or accepted-mutation lineage that shows which
+    baseline components changed.
+  - Verification: focused matrix baseline-component runtime-boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive Appendix A Figure 9 matrix-diff roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

@@ -6,35 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Keep documentation-truthfulness roadmap wording scoped to partial
-      cross-document guards.
-  - Spec evidence: AlphaEvolve-alignment documentation should keep README,
-    ROADMAP, paper-index, and TODO-ledger claims synchronized with implemented
-    behavior, but path coverage and local consistency checks are not a full
-    semantic proof that every claim is current.
-  - Current evidence: `ROADMAP.md` says to keep README, docs, paper index, and
-    `docs/todo/*` aligned with implemented behavior. Current tests check that
-    the GitHub Actions workflow runs on README, ROADMAP, docs, papers, TODO,
-    source, and test path changes; paper-manifest validation checks README and
-    `papers/README.md` paper-count/status-table consistency; and
-    `tests/test_paper_manifest.py` verifies each manifest id has exactly one
-    TODO-coverage row. The root README has now been narrowed to a practical
-    setup/status entry point, `docs/README.md` routes operational docs versus
-    roadmap/TODO/paper-index ownership, and the long research-source ledger is
-    kept in `papers/README.md` instead of the project landing page. These
-    guards do not prove every README, ROADMAP, paper-index, and TODO statement
-    has matching code evidence, nor do they detect all stale completed TODO
-    references, all missing active TODO links, or all semantic mismatches
-    between implemented behavior and prose. The committed
-    `papers/documentation_truthfulness_boundary.json` sidecar now preserves
-    this cross-document-guard boundary for paper-manifest validation.
-  - Required result: when stronger cross-document claim verification,
-    implementation-evidence mapping, stale completed-entry detection,
-    README/ROADMAP/paper/TODO semantic diffing, or generated alignment reports
-    land, update the roadmap, README, papers index, and TODO ledgers together
-    so they neither underclaim current path/test guards nor overclaim complete
-    documentation truthfulness.
-
 - [ ] Keep multi-evaluator roadmap wording scoped until independent
       evaluator-oracle evidence exists.
   - Spec evidence: AlphaEvolve's abstract describes feedback from one or more

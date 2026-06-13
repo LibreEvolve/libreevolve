@@ -10670,6 +10670,20 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation requires the committed sidecar and
     focused documentation-truthfulness tests reject semantic proof overclaims.
 
+- [x] Archive stale active roadmap documentation-truthfulness TODO.
+  - Status: the active roadmap TODO for partial cross-document documentation
+    truthfulness guards was stale. `ROADMAP.md` already scopes README, docs,
+    paper-index, and TODO-ledger alignment to current implemented behavior,
+    links `papers/documentation_truthfulness_boundary.json`, and keeps semantic
+    claim verification, implementation-evidence mapping, stale completed-entry
+    detection, generated alignment reports, and full AlphaEvolve-facing claim
+    proof open.
+  - Verification: `tests/test_documentation_truthfulness_boundary.py` and
+    `tests/test_paper_manifest.py` already validate the boundary sidecar and
+    reject semantic-proof overclaims, while `papers/README.md` keeps the
+    AlphaEvolve source row covered by completed roadmap evidence rather than an
+    active roadmap gap for this boundary.
+
 - [x] Keep roadmap provider-pricing boundary tied to sidecar.
   - Status: ROADMAP now links current configured-pricing aggregate checks,
     cost-status reason checks, pricing-readiness false fields, provider

@@ -10,25 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Appendix B.4 roadmap wording scoped until prior-construction
-      similarity evidence exists.
-  - Spec evidence: AlphaEvolve Appendix B.4 reports that the
-    uncertainty-inequality linear combination found by AlphaEvolve is
-    qualitatively very similar to the construction in reference `[33]`, and
-    uses that similarity as empirical support for the hypothesis that the
-    construction is nearly optimal.
-  - Current evidence: roadmap/README/paper-index wording now cites a validated
-    B.4 similarity record that ties the AlphaEvolve construction to the prior
-    `[33]` construction and labels the near-optimality hypothesis as a paper
-    claim, while stating that coefficient-level comparison artifacts are not
-    locally recorded: prior and AlphaEvolve coefficient payloads,
-    basis-alignment certificate, coefficient-similarity metric, and hypothesis
-    source artifact.
-  - Required result: when Appendix B.4 prior-construction comparison artifacts
-    land, update ROADMAP, README, papers index, and code/paper TODOs so roadmap
-    claims distinguish value improvement, method similarity, and empirical
-    support for near-optimality.
-
 - [ ] Keep benchmark metric-range roadmap wording scoped to documented smoke
       normalization versus real target/SOTA baselines.
   - Spec evidence: AlphaEvolve-style benchmark fixtures should make reachable

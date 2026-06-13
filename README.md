@@ -250,6 +250,13 @@ Important limits:
   `r_max^2 / (2*pi)` formula, not local coefficient payloads,
   Hermite/Fourier/root certificates, origin-condition certificates,
   eventual-nonnegative certificates, or recomputed-bound evidence.
+- Appendix B.4 prior-construction similarity provenance remains absent: the
+  registry preserves the paper's qualitative statement that AlphaEvolve's
+  linear combination is very similar to reference `[33]` and that this supports
+  a near-optimality hypothesis, not local prior/AlphaEvolve coefficient
+  payloads, basis-alignment certificates, coefficient-similarity metrics,
+  hypothesis-source artifacts, or proof that the near-optimality hypothesis is
+  locally verified.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

@@ -2,6 +2,25 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Appendix B.4 prior-construction similarity roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish value improvement, method similarity, and empirical
+    near-optimality support without claiming local coefficient-comparison
+    artifacts.
+  - Current evidence: `prior_construction_similarity_evidence` preserves the
+    paper claim that AlphaEvolve's Hermite-polynomial linear combination is
+    very similar to reference `[33]`, labels the claim as paper-level
+    near-optimality support, and keeps comparison artifacts
+    `not_recorded_locally`.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: prior and AlphaEvolve coefficient payloads, basis-alignment
+    certificate, coefficient-similarity metric, and hypothesis-source artifact.
+  - Verification: Appendix B registry B.4 uncertainty-boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive Appendix B.4 Hermite-polynomial roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

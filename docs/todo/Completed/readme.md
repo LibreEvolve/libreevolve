@@ -34,6 +34,24 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     and overclaim guards; code and paper TODOs still track the missing `[33]`
     source locator, rounded-solution artifact, and rounding-audit certificate.
 
+- [x] Keep README Appendix B.4 numeric wording scoped until
+      Hermite-polynomial certificate evidence exists.
+  - Status: README Important limits now states that Appendix B.4
+    Hermite-polynomial certificate provenance remains absent: the registry
+    preserves the first-version `C4 <= 0.3521` uncertainty-inequality result
+    from the Hermite basis, approximate coefficients
+    `[0.32925, -0.01159, -8.9216e-5]`, `P(x)/x^2` largest-root computation,
+    and `r_max^2 / (2*pi)` formula, not local coefficient payloads,
+    Hermite/Fourier/root certificates, origin-condition certificates,
+    eventual-nonnegative certificates, or recomputed-bound evidence.
+  - Verification: Appendix B registry tests cover B.4
+    `hermite_result_boundary`, required future coefficient/certificate fields,
+    artifact-status overclaim guards, reported coefficient/value checks, and
+    improvement-direction checks. Code and paper TODOs still track the missing
+    coefficient payload, Hermite/Fourier/root certificates, origin-condition
+    certificates, eventual-nonnegative certificates, and recomputed-bound
+    evidence.
+
 - [x] Document Appendix B.4 revised-result README boundary.
   - Status: README Important limits now states that Appendix B.4
     revised-result provenance remains absent: the registry preserves the

@@ -69,23 +69,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README Appendix B.4 numeric wording scoped until Hermite-polynomial
-      certificate evidence exists.
-  - Spec evidence: AlphaEvolve Appendix B.4 derives the `C4 <= 0.3521`
-    uncertainty-inequality bound from a Hermite-polynomial test function,
-    approximate coefficients `[0.32925, -0.01159, -8.9216e-5]`, the largest
-    positive root of `P(x)/x^2`, and the formula `r_max^2 / (2*pi)`.
-  - Current evidence: README now documents the B.4 Hermite result boundary:
-    coefficient values, Hermite basis, `P(x)/x^2` root computation, formula
-    `r_max^2 / (2*pi)`, and absence of local coefficient payloads,
-    Hermite/Fourier/root certificates, origin-condition certificates,
-    eventual-nonnegative certificates, and recomputed constants.
-  - Required result: when actual B.4 Hermite certificate artifacts land, update
-    README, ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes the quoted uncertainty-inequality value from verified
-    polynomial/root evidence, result-version history, and qualitative
-    near-optimality interpretation.
-
 - [ ] Keep README Appendix B.4 interpretation wording scoped until
       prior-construction similarity evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.4 says the uncertainty-inequality

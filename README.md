@@ -52,6 +52,11 @@ Important limits:
   do not yet emit real scheduling, Pallas/kernel, compiler, or hardware fixture
   runs, deployment measurements, expert confirmations, or domain-specific
   result artifacts.
+- Kernel report contracts do not yet prove AlphaEvolve-style Pallas/Gemini
+  input-shape corpus provenance, deterministic train/eval split hashes, real
+  TPU runtime artifacts, expert-baseline tiling heuristic identity, tiling-only
+  candidate boundaries, unchanged-operation correctness, engineering-effort
+  calibration, or production/workflow adoption.
 - The docs do not yet reproduce AlphaEvolve Figure 6 or Figure 7 exhibits:
   scheduling heuristic source/heatmap provenance and Pallas tiling-problem
   diagram/source-data/render hashes remain active code and paper TODOs.

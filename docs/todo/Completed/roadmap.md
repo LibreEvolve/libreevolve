@@ -2,6 +2,31 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive kernel/Pallas shape-split roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was tightened. `README.md`, `docs/status.md`, `papers/README.md`,
+    `docs/todo/code.md`, and `docs/todo/papers.md` already scope kernel
+    systems-result reports to generic report contracts, not AlphaEvolve-style
+    Gemini/Pallas kernel-tiling evidence.
+  - Current evidence: `libreevolve.systems_result_report.v1` can validate a
+    generic `kernel` domain with optimization and held-out gates, application
+    provenance, and claim-calibration metadata, but it does not require or emit
+    Pallas/Gemini input-shape corpus provenance, deterministic train/eval
+    split hashes, real TPU/runtime artifacts, expert-baseline tiling heuristic
+    identity, tiling-only candidate boundaries, unchanged-operation
+    correctness-by-construction evidence, engineering-effort calibration, or
+    production/workflow adoption.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    kernel evidence: collected input-shape corpora, split provenance,
+    accelerator/runtime measurement artifacts, expert-baseline comparison,
+    tiling-parameter output constraints, unchanged-kernel-math evidence,
+    deployment/readiness provenance, and documentation that distinguishes
+    generic systems readiness from AlphaEvolve-style Pallas kernel results.
+  - Verification: paper-manifest validation and checked-in paper-index TODO
+    coverage still pass, and focused searches confirm the kernel/Pallas code
+    and paper TODOs remain active while no local Pallas shape-corpus/runtime
+    validator or fixture is claimed.
+
 - [x] Archive Figure 7 Pallas tiling-exhibit roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `docs/status.md`, `docs/todo/code.md`, and

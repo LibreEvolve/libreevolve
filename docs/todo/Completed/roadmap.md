@@ -2,6 +2,22 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive initial-program idea provenance roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
+    `papers/README.md` already describe source-safe generation-0 seed
+    provenance, optional seed idea metadata,
+    `runtime.history.initial_program_idea_provenance_report`, and
+    `papers/initial_program_idea_provenance_boundary.json` while keeping
+    AlphaEvolve-style human-seeded benchmark parity false.
+  - Remaining guard: seed-variant result tables, prompt/context-to-seed
+    linkage, equal-budget simple/random/researcher-idea comparisons, matrix
+    and constructive-math seed-variant reports, and human contribution
+    review/signoff remain active in `docs/todo/code.md` and
+    `docs/todo/papers.md`.
+  - Verification: initial-program idea provenance boundary and
+    paper-manifest validation continue to reject premature human-seeded
+    benchmark parity claims.
+
 - [x] Archive adaptive mutation-mode roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
     `papers/README.md` already describe configured run-wide `diff`/`full`

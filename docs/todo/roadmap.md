@@ -6,28 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Keep roadmap seed-provenance wording scoped beyond current idea
-      metadata.
-  - Spec evidence: AlphaEvolve Section 2.1 treats the initial program and
-    optional background knowledge as user-provided inputs, and Section 3.1
-    reports matrix runs where researcher-supplied ideas in the initial program
-    affected performance. In the local PDF, page 10 distinguishes the simple
-    initial program used for most Table 2 matrix results from parameters where
-    researchers seeded the initial program with their own ideas and improved
-    performance.
-  - Current evidence: ROADMAP and README/code evidence show source-safe seed
-    ingestion, generation-0 baseline provenance, optional seed idea metadata,
-    and `runtime.history.initial_program_idea_provenance_report` with seed
-    variant ids, idea-origin labels, contribution roles, prior-technique/
-    background refs, history linkage, and metric linkage.
-    `papers/initial_program_idea_provenance_boundary.json` now preserves the
-    roadmap-visible metadata-contract-only boundary for this runtime surface.
-  - Required result: when seed-variant result tables, prompt/context linkage,
-    equal-budget simple/random/researcher-idea comparisons, and contribution
-    review/signoff land, update roadmap, README, papers index, and code/paper
-    TODO entries together so roadmap text distinguishes metadata/reporting
-    from AlphaEvolve-style human-seeded experiment result provenance.
-
 - [ ] Keep roadmap seed-validity wording scoped after strict policy/reporting.
   - Spec evidence: AlphaEvolve Section 2.1 expects the initial implementation
     inside evolvable blocks to be complete, although possibly rudimentary, and

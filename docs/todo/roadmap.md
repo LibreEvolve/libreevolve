@@ -10,28 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep AI-Co-Scientist roadmap wording scoped until measurement and bridge
-      evidence exists beyond the current representation-boundary report.
-  - Spec evidence: AlphaEvolve Related Work distinguishes AI Co-Scientist as
-    representing hypotheses and evaluation criteria in natural language, while
-    AlphaEvolve evolves code and directs search through programmatic
-    evaluation functions. The paper says this programmatic choice helps
-    sidestep hallucinations and sustain many evolution time steps, while a
-    future method could combine natural-language and programmatic idioms.
-  - Current evidence: roadmap/README/paper-index wording can cite
-    `runtime.history.programmatic_representation_boundary_report`, which
-    classifies generated candidates as executable code workspaces, proposal
-    metadata as natural-language context rather than candidate representation,
-    declared evaluator metrics as programmatic criteria, and optional LLM
-    feedback as post-evaluator. The committed
-    `papers/programmatic_representation_boundary.json` sidecar preserves this
-    structural boundary while hallucination-resistance, long-horizon evolution,
-    and natural-language bridge claims remain unready.
-  - Required result: when hallucination-risk controls, long-horizon step-count
-    evidence, and bridge status for any natural-language hypothesis stage land,
-    update ROADMAP, README, papers index, and code/paper TODOs before claiming
-    AlphaEvolve-style distinction from AI-Co-Scientist.
-
 - [ ] Keep Related Work roadmap wording scoped until taxonomy evidence exists.
   - Spec evidence: AlphaEvolve Related Work frames the system as
     execution-feedback code superoptimization, compares it with pre-LLM

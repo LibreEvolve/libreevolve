@@ -2,6 +2,25 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive AI-Co-Scientist roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `docs/status.md`, and `papers/README.md` already scope the
+    AI-Co-Scientist comparison to structural representation evidence:
+    generated candidates are executable code workspaces, captured proposal
+    fields are natural-language context metadata, declared evaluator metrics
+    are programmatic criteria, and optional LLM feedback is post-evaluator
+    rather than a candidate representation or validity gate.
+  - Remaining guard: hallucination-risk measurement, long-horizon step-count
+    evidence, natural-language hypothesis-stage contracts, a
+    natural-language-to-programmatic bridge, proposal-truth models, and
+    combined AI-Co-Scientist workflow evidence remain future work.
+  - Verification: runtime programmatic-representation tests assert executable
+    candidate representation, natural-language metadata separation,
+    programmatic evaluator criteria, false LLM-feedback validity ownership,
+    false long-horizon evidence, and `claim_ready=false`; the committed
+    `papers/programmatic_representation_boundary.json` sidecar rejects
+    hallucination/bridge overclaims through paper-manifest validation.
+
 - [x] Archive scientific-discovery automated-evaluator roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `docs/status.md`, and `papers/README.md` already scope scientific

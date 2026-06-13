@@ -45,6 +45,11 @@ Important limits:
   benchmark-calibrated AlphaEvolve Section 2.4 cascade proof with repeated-seed
   fixtures and empirical false-promotion/false-rejection validation; that
   boundary is tracked by `papers/cascade_hypothesis_test_boundary.json`.
+- Evaluator/oracle reports register local validators, configured cascade
+  stages, and optional LLM feedback graders with arbitration metadata, not
+  independent reference/statistical-oracle evidence, benchmark sufficiency
+  proof, independent disagreement outcomes, or cross-run oracle tables; that
+  boundary is tracked by `papers/evaluator_oracle_boundary.json`.
 - Qualitative LLM-feedback records are declared criterion/rubric/intent
   provenance and prompt-history audit evidence, not executed calibration,
   task-suite, ablation, or independent feedback-quality validation; that

@@ -12941,3 +12941,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     until those surfaces exist.
   - Verification: focused boundary and paper-manifest tests cover the sidecar
     and its overclaim rejection.
+- [x] Add README boundary for evaluator-oracle evidence.
+  - Spec evidence: AlphaEvolve describes feedback from one or more evaluators,
+    while Section 2.4 distinguishes the user-provided evaluator from optional
+    cascades and generated feedback.
+  - Status: README now states that evaluator/oracle reports register local
+    validators, configured cascade stages, and optional LLM feedback graders
+    with arbitration metadata, not independent reference/statistical-oracle
+    evidence, benchmark sufficiency proof, independent disagreement outcomes,
+    or cross-run oracle tables. It points to
+    `papers/evaluator_oracle_boundary.json`.
+  - Remaining README gap: docs cannot imply AlphaEvolve-style independent
+    multi-evaluator evidence until reference/statistical oracles,
+    per-benchmark sufficiency evidence, and independent disagreement outcome
+    records exist.
+  - Verification: paper-manifest validation requires the sidecar and focused
+    evaluator-oracle tests cover its overclaim rejection.

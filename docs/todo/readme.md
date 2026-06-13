@@ -21,7 +21,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     authority matrix, benchmark-sufficiency labels, conflict roles, failure
     effects, bounded local `disagreement_outcomes` for validator-versus-
     feedback cases, and `claim_ready: false` for independent multi-oracle
-    arbitration. README now also names
+    arbitration. README Important limits now also name
     `papers/evaluator_oracle_boundary.json` as the committed paper-manifest-
     validated independent-oracle absence boundary.
   - Required result: when independent reference/statistical oracles,

@@ -91,46 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README AlphaEvolve bilateral-trade claims absent or source-scoped
-      until mechanism-design benchmark evidence exists.
-  - Spec evidence: arXiv `2603.08679`, `A New Lower Bound for the Random
-    Offerer Mechanism in Bilateral Trade using AI-Guided Evolutionary Search`,
-    uses AlphaEvolve to search value distributions for Random-Offerer
-    worst-case performance. Its abstract reports a witness with
-    `GFT_FB / GFT_RO >= 2.0749` under the bilateral-trade framing of first-best
-    gains from trade versus BIC and BB mechanisms. The paper body fixes the
-    benchmark to independent seller/buyer distributions, a Discrete Equal
-    Revenue buyer, an evolved seller CDF over `H=20000`, exact FB/SO/BO/RO GFT
-    computation after `1e-15` rounding, and a rounded
-    mixture-of-modulated-power-laws seller witness with component values
-    `1.2322`, `0.3312`, `0.8565`, `0.5939`, and ratio `2.0749`.
-  - Current evidence: README now lists `2603.08679` as Bilateral Trade
-    mechanism-design context and points to `papers/bilateral_trade_boundary.json`.
-    README documents benchmark-report contracts, paper-cache status,
-    constructive-math and systems gaps, and example fixtures, but it still
-    does not define bilateral-trade value distributions, compute first-best
-    or Random-Offerer GFT, preserve BIC/BB assumptions,
-    compare the prior `2` conjecture or `~2.02` counterexample, or provide
-    witness distribution artifacts and checker outputs. It also lacks
-    source-scoped wording for the fixed-buyer/evolved-seller search setup,
-    optimal take-it-or-leave-it price evaluation, rounded-integer probability
-    policy, appendix evaluator/code-listing provenance, and the caveat that
-    the unrounded mixture's exact ratio is left open by the paper.
-  - Required result: if README mentions bilateral trade, Random-Offerer,
-    Myerson-Satterthwaite, BIC/BB mechanism design, first-best gains from
-    trade, `GFT_FB / GFT_RO`, AlphaEvolve-discovered value distributions, or
-    the `2.0749` lower bound, keep the wording source-scoped until local
-    artifacts can show the paper in the manifest, distribution schemas,
-    evaluator and ratio definitions, precision/tolerance records, baseline
-    attribution, witness artifacts, independent checker outputs, and benchmark
-    reports. Avoid implying LibreEvolve supports AlphaEvolve-style bilateral-
-    trade lower-bound discovery without those artifacts. README wording should
-    distinguish paper-reported rounded-distribution evidence from local
-    LibreEvolve capability unless the repo has the `H=20000` evaluator,
-    equal-revenue buyer fixture, evolved seller generator artifact, exact
-    FB/SO/BO/RO recomputation, reserve-price witness logs, appendix evaluator
-    hash, and rounded-versus-unrounded caveat recorded.
-
 - [ ] Keep README AlphaEvolve Magellan compiler-optimization claims absent or
       source-scoped until compiler benchmark evidence exists.
   - Spec evidence: arXiv `2601.21096`, `Magellan: Autonomous Discovery of

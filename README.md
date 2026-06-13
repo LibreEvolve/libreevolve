@@ -923,6 +923,18 @@ Important limits:
   reported metric table, conjecture/proof-status ledger, repository snapshot,
   or independent verifier output; `papers/combinatorics_berczy_boundary.json`
   records that absence boundary.
+- ArXiv `2603.08679` is AlphaEvolve mechanism-design result context only; the
+  README mentions this cached paper as a curated subset while
+  `papers/README.md` remains the complete implementation-status index.
+  LibreEvolve has no bilateral-trade distribution candidate schema, fixed
+  Discrete Equal Revenue buyer fixture, evolved seller CDF generator runtime,
+  PMF/CDF/survival validator, first-best GFT evaluator, seller-offering GFT
+  evaluator, buyer-offering GFT evaluator, Random-Offerer ratio evaluator,
+  `1e-15` integer-rounding precision policy, witness distribution artifact,
+  evolved or evaluation code hash, prior-baseline row, alternate-search
+  attempt row, BIC/BB/IR assumption record, unrounded-mixture caveat handling,
+  or independent checker output; `papers/bilateral_trade_boundary.json`
+  records that absence boundary.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

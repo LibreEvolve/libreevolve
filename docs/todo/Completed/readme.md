@@ -15288,3 +15288,35 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     conjecture/proof-status records, benchmark reports, and AlphaEvolve-style
     local-correction combinatorics evidence remain active in code and paper
     TODOs.
+
+- [x] Keep README AlphaEvolve bilateral-trade claims absent or source-scoped
+      until mechanism-design benchmark evidence exists.
+  - Spec evidence: arXiv `2603.08679`, `A New Lower Bound for the Random
+    Offerer Mechanism in Bilateral Trade using AI-Guided Evolutionary Search`,
+    uses AlphaEvolve to search value distributions for Random-Offerer
+    worst-case performance. Its abstract reports a witness with
+    `GFT_FB / GFT_RO >= 2.0749` under the bilateral-trade framing of first-best
+    gains from trade versus BIC and BB mechanisms. The paper body fixes the
+    benchmark to independent seller/buyer distributions, a Discrete Equal
+    Revenue buyer, an evolved seller CDF over `H=20000`, exact FB/SO/BO/RO GFT
+    computation after `1e-15` rounding, and a rounded
+    mixture-of-modulated-power-laws seller witness with component values
+    `1.2322`, `0.3312`, `0.8565`, `0.5939`, and ratio `2.0749`.
+  - Status: README now lists arXiv `2603.08679` as AlphaEvolve
+    mechanism-design result context only and marks the mention as a curated
+    cached-paper subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no bilateral-
+    trade distribution candidate schema, fixed Discrete Equal Revenue buyer
+    fixture, evolved seller CDF generator runtime, PMF/CDF/survival validator,
+    first-best GFT evaluator, seller-offering GFT evaluator, buyer-offering GFT
+    evaluator, Random-Offerer ratio evaluator, `1e-15` integer-rounding
+    precision policy, witness distribution artifact, evolved or evaluation
+    code hash, prior-baseline row, alternate-search attempt row, BIC/BB/IR
+    assumption record, unrounded-mixture caveat handling, or independent
+    checker output; `papers/bilateral_trade_boundary.json` records that
+    absence boundary.
+  - Remaining README gap: distribution schemas, evaluator and ratio
+    definitions, precision/tolerance records, baseline attribution, witness
+    artifacts, independent checker outputs, benchmark reports, and
+    AlphaEvolve-style bilateral-trade lower-bound evidence remain active in
+    code and paper TODOs.

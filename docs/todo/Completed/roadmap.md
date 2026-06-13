@@ -2,6 +2,37 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive CausalEvolve causal-scratchpad roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/causalevolve_boundary.json` now keep arXiv `2603.14575`
+    source-scoped as causal-guidance inspiration rather than implemented
+    CausalEvolve causal-scratchpad parity.
+  - Current evidence: the cached paper and boundary JSON record CausalEvolve
+    source identity, arXiv v2 metadata, CC BY-NC-SA license, no dedicated code
+    link status, POMDP/SCM framing, causal scratchpad memory,
+    LLM-generated outcome-level factors, executable factor code,
+    CausalPlanner factor-direction interventions, inspiration sorting,
+    procedure-factor extraction, treatment-effect estimation,
+    surprise-pattern detection, abductive hypothesis generation, scratchpad
+    replay context, environment-shift caveats, Hadamard/autocorrelation/circle
+    packing/AIME benchmark context, baseline comparisons, Grok-4.1-FR model
+    provenance, Appendix D metric context, and theory boundary context.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: POMDP/SCM task-world metadata, causal scratchpad schemas,
+    outcome-factor prompts, executable factor-code contracts,
+    deterministic factor metrics, CausalPlanner action/reward policies,
+    inspiration-selection records, procedure-factor extraction, approximate
+    treatment-effect tables, surprise-pattern outputs, abductive hypothesis
+    lifecycle, scratchpad memory update/replay, benchmark rows, seed/step
+    schedules, model/runtime provenance, Appendix D metrics, theory
+    nonidentifiability boundaries, and separation from fixed token-pattern
+    plugin guidance.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive MadEvolve parameter-optimization roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

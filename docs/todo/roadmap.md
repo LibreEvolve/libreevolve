@@ -10,49 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement CausalEvolve causal-scratchpad gates beyond source-boundary
-      roadmap promotion.
-  - Spec evidence: local arXiv `2603.14575v2`, `CausalEvolve: Towards
-    Open-Ended Discovery with Causal Scratchpad`, by Yongqiang Chen et al. was
-    submitted as arXiv v1 on March 15, 2026 and revised as v2 on March 29,
-    2026. It models evolve-based scientific discovery as a POMDP over hidden
-    scientific knowledge, uses SCM intervention language for program
-    evaluation, and introduces a causal scratchpad with LLM-generated
-    outcome-level factors, CausalPlanner factor-direction interventions,
-    procedure-level factor discovery, approximate treatment effects,
-    surprise-pattern detection, abductive hypothesis generation, and four-task
-    benchmark comparisons. The CausalPlanner action space is `(factor, +1)` or
-    `(factor, -1)`, inspiration programs are sorted by selected factor
-    direction, rewards use `(child_score - tau * best_so_far)+`, and random
-    actions are alternated for `K` iterations with currently best actions for
-    the next `K` iterations.
-  - Current evidence: ROADMAP says CausalEvolve features remain inspired unless
-    paper behavior is implemented, and now names
-    `papers/causalevolve_boundary.json` as the source-specific gate for
-    `2603.14575`. The sidecar records source metadata, CC BY-NC-SA license,
-    no-dedicated-code status, component rows, required future evidence fields,
-    and missing-evidence keys while keeping POMDP/SCM-scoped task records, LLM
-    factor-generation prompts, executable outcome-factor code, intervention
-    actions, inspiration-sorting traces, procedure-factor extraction,
-    treatment-effect estimates, surprise-pattern and abductive-reasoning
-    artifacts, benchmark rows, ablations, seed/step schedules, model
-    provenance, and environment-shift/generalization caveats as future gates.
-  - Required result: add roadmap gates for `2603.14575`: paper/source manifest
-    entry, PDF/cache hash, code/source status, causal scratchpad schema,
-    POMDP/SCM and environment metadata, outcome-factor and executable
-    factor-code contracts, CausalPlanner action/reward policy with tau and K
-    parameters, inspiration-selection records, procedure-factor extraction
-    artifacts, approximate treatment-effect reports, surprise-pattern detector
-    outputs, abductive hypothesis/factor lifecycle, scratchpad replay
-    artifacts, Hadamard/autocorrelation/circle-packing/AIME benchmark rows,
-    ShinkaEvolve/CausalPlanner(Meta)/COAT comparison rows, Grok-4.1-FR model
-    provenance, seed and step schedules, and README/papers/code wording that
-    keeps CausalEvolve as causal-guidance inspiration until local evidence
-    proves causal-scratchpad semantics. Roadmap result rows must include
-    Table 1 final-step comparisons for Hadamard, second autocorrelation,
-    circle packing, and AIME, plus CC BY-NC-SA license and no-dedicated-code-
-    link status.
-
 - [ ] Implement DeepEvolve cross-file research/debug-loop gates before
       roadmap promotion.
   - Spec evidence: local arXiv `2510.06056v1`, `Scientific Algorithm Discovery

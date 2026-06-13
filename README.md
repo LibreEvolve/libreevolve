@@ -107,6 +107,18 @@ Important limits:
   reward-hacking diagnostics, over-parameterization controls,
   mode-collapse diagnostics, or hosted report reproduction;
   `papers/madevolve_boundary.json` records that absence boundary.
+- CausalEvolve coverage is causal-guidance inspiration only: LibreEvolve's
+  `causal` plugin uses fixed token-pattern outcome-factor guidance and does
+  not implement POMDP/SCM task-world records, causal scratchpad memory,
+  LLM-generated outcome factors, executable factor-code metrics,
+  CausalPlanner factor-direction interventions, factor-direction inspiration
+  sorting, procedure-factor extraction, approximate treatment-effect tables,
+  surprise-pattern detection, abductive hypothesis generation, scratchpad
+  replay, environment-shift generalization checks,
+  Hadamard/autocorrelation/circle-packing/AIME benchmark rows, baseline
+  ablation rows, Grok-4.1-FR provenance, Appendix D metric library, or theory
+  nonidentifiability boundary; `papers/causalevolve_boundary.json` records
+  that absence boundary.
 - The examples are smoke fixtures and small demos unless a fixture documents
   stronger benchmark evidence.
 - Benchmark-hardening records and shipped-example scope validate smoke-scope

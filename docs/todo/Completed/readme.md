@@ -110,6 +110,23 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     autoconvolution claims, the wording must remain source-scoped until the
     active code, paper, and roadmap TODO evidence exists.
 
+- [x] Archive README post-AlphaEvolve sums-and-differences source-scope TODO.
+  - Status: the README-specific TODO was stale after the README realism split.
+    The root README no longer mentions `2505.16105`, the `1.173050`
+    sums-and-differences improvement, huge `U` sets, `10^43546`,
+    AlphaEvolve's `54265`-integer `1.1584` baseline, GMP arithmetic,
+    `W(m, L, B)`, base-`2B + 1` encoding, or the `(81411, 65536, 5)`
+    parameter row.
+  - Remaining guard: `papers/README.md` keeps `2505.16105` as an
+    unimplemented constructive-math benchmark candidate, and the open code,
+    paper, and roadmap TODOs still track the missing explicit or compressed
+    `U`-set construction, sumset/difference-set verification, max-element and
+    q-value checks, `theta` recomputation, exact-value payloads, GMP
+    provenance, baseline rows, and independent checker outputs.
+  - Verification: if the root README later reintroduces this
+    sums-and-differences improvement, the wording must remain source-scoped
+    until the active code, paper, and roadmap TODO evidence exists.
+
 - [x] Keep README validator sandbox/resource-limit wording scoped to local
       subprocess audit evidence versus OS/container enforcement.
   - Status: README Important limits now states that validator execution policy

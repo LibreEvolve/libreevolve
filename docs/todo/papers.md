@@ -6230,9 +6230,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     value payload hashes, AlphaEvolve `54265`-integer `1.1584` baseline
     record, previous `1.14465` bound attribution, GMP/version/arithmetic
     provenance, prior/current result rows, independent checker outputs,
-    reproducibility status, and README/ROADMAP wording that treats this
-    post-AlphaEvolve sums-and-differences improvement as missing paper
-    evidence rather than implemented LibreEvolve support.
+    reproducibility status, ROADMAP and paper-index wording that treats this
+    post-AlphaEvolve sums-and-differences improvement as missing paper evidence
+    rather than implemented LibreEvolve support, and source-scoped root README
+    wording if those claims are reintroduced.
 
 - [ ] Implement further post-AlphaEvolve sums-and-differences sequence paper
       evidence beyond the source boundary.

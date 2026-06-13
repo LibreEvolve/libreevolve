@@ -91,40 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Implement README post-AlphaEvolve sums-and-differences improvement
-      claims beyond source-scoped absence.
-  - Spec evidence: arXiv `2505.16105`, `Sums and differences of sets
-    (improvement over AlphaEvolve)`, by Robert Gerbicz says AlphaEvolve
-    improved the lower bound from `theta = 1.14465` to `theta = 1.1584` using
-    a set of `54265` integers. The paper improves the bound to
-    `theta = 1.173050` with an explicit `U` set containing more than
-    `10^43546` elements and uses GMP for fast integer and floating-point
-    arithmetic. Its construction defines `W(m, L, B)`, encodes bounded
-    coordinates in base `2B + 1`, reports a `theta = 1.162997` small-search
-    case at `m = 80`, `L = 64`, `B = 5`, and confirms
-    `theta = 1.173050` for `m = 81411`, `L = 65536`, `B = 5`; the paper cites
-    GMP code and exact computed values at `https://bit.ly/43mWCVC`.
-  - Current evidence: README now mentions `2505.16105` as source-scoped
-    context and points to `papers/sums_differences_boundary.json`. It still
-    does not store an explicit or compressed `U`-set construction, verify
-    sumset/difference-set cardinalities, recompute `theta = 1.173050`,
-    compare against the AlphaEvolve `54265`-integer `1.1584` baseline,
-    preserve GMP arithmetic provenance, retrieve the cited exact-value
-    artifact, preserve the `W(m, L, B)` and base-`2B + 1` construction
-    details, or distinguish the later explicit construction from
-    AlphaEvolve's LLM-generated witness with local implementation evidence.
-  - Required result: if README mentions this sums-and-differences improvement,
-    the `1.173050` bound, the huge `U` set, `10^43546`, the AlphaEvolve
-    `54265`-integer construction, the `1.1584` or `1.14465` baselines, GMP
-    arithmetic, `W(m, L, B)`, base-`2B + 1` encoding, the `(81411, 65536, 5)`
-    parameter triple, the cited exact-value payload, or `2505.16105`, keep the
-    wording source-scoped until local artifacts can show the paper in the
-    manifest, construction payloads, sumset/difference-set verification,
-    max-element/q-value checks, `theta` recomputation, tolerance policy,
-    baseline comparison rows, arithmetic provenance, independent checker
-    outputs, and benchmark reports. Avoid implying LibreEvolve supports this
-    post-AlphaEvolve sums-and-differences improvement without those artifacts.
-
 - [ ] Implement README further post-AlphaEvolve sums-and-differences claims
       beyond source-scoped absence.
   - Spec evidence: arXiv `2506.01896`, `Sums and differences of sets: a

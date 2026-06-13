@@ -6678,9 +6678,10 @@ Primary evidence:
     policy, exact computed-value payload hashes, AlphaEvolve `54265`-integer
     `1.1584` baseline, previous `1.14465` lower-bound source,
     GMP/version/arithmetic provenance, prior/current comparison rows,
-    independent checker outputs, and README/ROADMAP wording that keeps this
-    post-AlphaEvolve sums-and-differences improvement as missing evidence
-    until local construction artifacts and reports exist.
+    independent checker outputs, ROADMAP and paper-index wording that keeps
+    this post-AlphaEvolve sums-and-differences improvement as missing evidence
+    until local construction artifacts and reports exist, and source-scoped
+    root README wording if those claims are reintroduced.
 
 - [ ] Implement further post-AlphaEvolve sums-and-differences sequence
       construction beyond the source boundary.

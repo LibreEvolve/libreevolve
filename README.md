@@ -363,6 +363,16 @@ Important limits:
   reproduction row, token ledger, human-annotation ethics record, or local
   Fault2Flow repository/runtime snapshot; `papers/fault2flow_boundary.json`
   records that absence boundary.
+- TTT-Discover test-time-training coverage is background paper context only:
+  LibreEvolve has no mutable policy-weight update loop, single-problem RL
+  environment, continuous-reward problem contract, candidate-state schema,
+  PUCT state-reuse trace, adaptive entropic objective execution, Tinker API
+  training-run record, OpenAI `gpt-oss-120b` LoRA backend record,
+  Best-of-25600 or OpenEvolve matched-budget comparator row,
+  Erdos/autocorrelation/GPUMode/AtCoder/single-cell benchmark row,
+  expert or organizer review artifact, public-code artifact hash, cost
+  record, or independent reproduction output; `papers/ttt_discover_boundary.json`
+  records that absence boundary.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

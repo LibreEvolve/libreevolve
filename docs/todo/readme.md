@@ -91,38 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README DeepResearch retrieval evidence scoped to bounded redacted
-  sidecars and non-semantic provenance.
-  - Spec evidence: retrieval-driven AlphaEvolve-style runs should identify the
-    external knowledge injected into prompts while distinguishing replayable
-    retained artifacts from unbounded raw provider/source availability, TLS
-    transport replay, and semantic source correctness.
-  - Current evidence: README now documents
-    `libreevolve.retrieval_payload_artifact.v1` sidecars,
-    `libreevolve.retrieval_payload_artifact_inventory.v1`,
-    `libreevolve.retrieval_source_ranking_provenance.v1`,
-    `libreevolve.retrieval_source_content_trust_policy.v1`,
-    `libreevolve.retrieval_transport_policy.v1`,
-    `libreevolve.retrieval_source_grounding_policy.v1`,
-    `libreevolve.retrieval_evidence_boundary_policy.v1`,
-    `libreevolve.retrieval_context_audit_policy.v1`,
-    `libreevolve.retrieval_semantic_boundary_audit.v1`, and
-    `libreevolve.retrieval_evidence_coverage.v1`. It states that retained
-    under-budget payloads can be checked through secret-redacted sidecar
-    artifacts and inventory hashes; active prompt context links to bounded
-    transport, source-content, lexical-grounding, and evidence-boundary states;
-    semantic-boundary audits and run-level coverage validation reject raw
-    payload, semantic-verification, source-ranking, learned-ranking, TLS-replay,
-    full-replay, authoritative-context, and external-source-scoring overclaims.
-    Unbounded raw payload availability, semantic source correctness,
-    learned/external ranking, and replayable
-    transport/TLS decision evidence remain open.
-  - Required result: when retrieval payload retention, learned/external source
-    ranking, semantic verification, or transport/TLS replay evidence changes,
-    update README, code TODOs, and paper TODOs together so the README neither
-    underclaims bounded redacted sidecar replay nor overclaims DeepEvolve-grade
-    auditability.
-
 - [ ] Keep README environment-provenance claims scoped to bounded audit
   evidence.
   - Spec evidence: AlphaEvolve-scale experimental results should be

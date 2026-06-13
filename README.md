@@ -590,6 +590,14 @@ Important limits:
   hashes, not retrieval/summarization policy, learned or semantic source
   selection, non-`PromptSampler` role policy, DeepEvolve-style debug/
   refinement context control, or full AlphaEvolve-grade prompt evolution.
+- DeepResearch retrieval evidence is bounded, redacted, and non-authoritative:
+  retained payload sidecars and inventories, source-ranking provenance,
+  source-content trust/lexical-grounding policies, transport policy,
+  context-audit policy, semantic-boundary audits, and run-level retrieval
+  evidence coverage can verify selected retained evidence without claiming raw
+  provider/source payload retention, TLS certificate-chain replay, semantic
+  source correctness, learned/external ranking, full retrieval replay, or
+  DeepEvolve-style cross-file research/debug-loop parity.
 - Explicit-context source-role reports classify configured problem-local
   `context.yaml` sources as human instructions, equations, code snippets,
   literature PDFs, or background references with topic, source-location,

@@ -14445,3 +14445,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     contracts outside loop-owned ids, plugin/provider RNG capture, ordered
     migration replay, controller pending-work resume, and resumed-trace proof
     remain active in code and paper TODOs.
+
+- [x] Keep README DeepResearch retrieval evidence scoped to bounded redacted
+      sidecars and non-semantic provenance.
+  - Spec evidence: retrieval-driven AlphaEvolve-style runs should identify the
+    external knowledge injected into prompts while distinguishing replayable
+    retained artifacts from unbounded raw provider/source availability, TLS
+    transport replay, and semantic source correctness.
+  - Status: README now states that DeepResearch retrieval evidence is bounded,
+    redacted, and non-authoritative. It names retained payload sidecars and
+    inventories, source-ranking provenance, source-content trust and lexical-
+    grounding policies, transport policy, context-audit policy,
+    semantic-boundary audits, and run-level retrieval evidence coverage as the
+    current evidence surfaces.
+  - Remaining README gap: raw provider/source payload retention, TLS
+    certificate-chain replay, semantic source correctness, learned/external
+    ranking, full retrieval replay, and DeepEvolve-style cross-file
+    research/debug-loop parity remain active in code and paper TODOs.

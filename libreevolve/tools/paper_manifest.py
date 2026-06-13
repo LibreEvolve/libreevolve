@@ -177,6 +177,10 @@ from libreevolve.problems.benchmarks.candidate_abstraction import (
     candidate_abstraction_boundary_record,
     validate_candidate_abstraction_boundary,
 )
+from libreevolve.problems.benchmarks.candidate_abstraction_bias import (
+    candidate_abstraction_bias_matrix_record,
+    validate_candidate_abstraction_bias_matrix,
+)
 from libreevolve.problems.benchmarks.candidate_language_runner_boundary import (
     candidate_language_runner_boundary_record,
     validate_candidate_language_runner_boundary,
@@ -560,6 +564,7 @@ INITIAL_POOL_DIVERGENCE_BOUNDARY_FILE = "papers/initial_pool_divergence_boundary
 DUPLICATE_WORK_POLICY_BOUNDARY_FILE = "papers/duplicate_work_policy_boundary.json"
 EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE = "papers/existing_codebase_integration_boundary.json"
 CANDIDATE_ABSTRACTION_BOUNDARY_FILE = "papers/candidate_abstraction_boundary.json"
+CANDIDATE_ABSTRACTION_BIAS_MATRIX_FILE = "papers/candidate_abstraction_bias_matrix.json"
 CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_FILE = "papers/candidate_language_runner_boundary.json"
 CI_WORKFLOW_COVERAGE_BOUNDARY_FILE = "papers/ci_workflow_coverage_boundary.json"
 CONFIG_VALIDATION_BOUNDARY_FILE = "papers/config_validation_boundary.json"
@@ -1077,6 +1082,7 @@ def validate_paper_manifest(
     issues.extend(_validate_existing_codebase_integration_boundary(root_path))
     issues.extend(_validate_candidate_language_runner_boundary(root_path))
     issues.extend(_validate_candidate_abstraction_boundary(root_path))
+    issues.extend(_validate_candidate_abstraction_bias_matrix(root_path))
     issues.extend(_validate_ci_workflow_coverage_boundary(root_path))
     issues.extend(_validate_config_validation_boundary(root_path))
     issues.extend(_validate_evaluator_oracle_boundary(root_path))
@@ -2928,6 +2934,38 @@ def _validate_candidate_abstraction_boundary(root_path: Path) -> list[PaperManif
             f"candidate_abstraction_boundary_{issue.code}",
             issue.message,
             "candidate_abstraction",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_candidate_abstraction_bias_matrix(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / CANDIDATE_ABSTRACTION_BIAS_MATRIX_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = candidate_abstraction_bias_matrix_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "candidate_abstraction_bias_matrix_manifest_missing",
+                    (
+                        f"{CANDIDATE_ABSTRACTION_BIAS_MATRIX_FILE} must emit "
+                        "the abstraction-family bias design matrix"
+                    ),
+                    "candidate_abstraction_bias",
+                )
+            ]
+    report = validate_candidate_abstraction_bias_matrix(recordset)
+    return [
+        PaperManifestIssue(
+            f"candidate_abstraction_bias_matrix_{issue.code}",
+            issue.message,
+            "candidate_abstraction_bias",
         )
         for issue in report.issues
     ]

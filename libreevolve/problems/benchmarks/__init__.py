@@ -269,6 +269,12 @@ from libreevolve.problems.benchmarks.candidate_abstraction import (
     render_candidate_abstraction_boundary_summary,
     validate_candidate_abstraction_boundary,
 )
+from libreevolve.problems.benchmarks.candidate_abstraction_bias import (
+    CANDIDATE_ABSTRACTION_BIAS_MATRIX_SCHEMA,
+    candidate_abstraction_bias_matrix_record,
+    render_candidate_abstraction_bias_matrix_summary,
+    validate_candidate_abstraction_bias_matrix,
+)
 from libreevolve.problems.benchmarks.candidate_language_runner_boundary import (
     CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_SCHEMA,
     candidate_language_runner_boundary_record,
@@ -848,6 +854,7 @@ __all__ = [
     "ARTIFACT_INDEX_BOUNDARY_SCHEMA",
     "AUTOMATED_EVALUATOR_SCOPE_BOUNDARY_SCHEMA",
     "CANDIDATE_ABSTRACTION_BOUNDARY_SCHEMA",
+    "CANDIDATE_ABSTRACTION_BIAS_MATRIX_SCHEMA",
     "CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_SCHEMA",
     "CASCADE_HYPOTHESIS_TEST_BOUNDARY_SCHEMA",
     "CI_WORKFLOW_COVERAGE_BOUNDARY_SCHEMA",
@@ -997,6 +1004,7 @@ __all__ = [
     "gemini_provider_parity_boundary_record",
     "global_nlp_optimization_boundary_record",
     "candidate_abstraction_boundary_record",
+    "candidate_abstraction_bias_matrix_record",
     "candidate_language_runner_boundary_record",
     "cascade_hypothesis_test_boundary_record",
     "ci_workflow_coverage_boundary_record",
@@ -1128,6 +1136,7 @@ __all__ = [
     "render_fault2flow_boundary_summary",
     "render_global_nlp_optimization_boundary_summary",
     "render_candidate_abstraction_boundary_summary",
+    "render_candidate_abstraction_bias_matrix_summary",
     "render_candidate_language_runner_boundary_summary",
     "render_cascade_hypothesis_test_boundary_summary",
     "render_ci_workflow_coverage_boundary_summary",
@@ -1273,6 +1282,7 @@ __all__ = [
     "validate_fault2flow_boundary",
     "validate_global_nlp_optimization_boundary",
     "validate_candidate_abstraction_boundary",
+    "validate_candidate_abstraction_bias_matrix",
     "validate_candidate_language_runner_boundary",
     "validate_cascade_hypothesis_test_boundary",
     "validate_ci_workflow_coverage_boundary",

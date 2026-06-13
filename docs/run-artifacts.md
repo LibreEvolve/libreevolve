@@ -217,8 +217,11 @@ mutation/validator-runner surfaces, summarizes runtime workspace shape, and
 lists direct solution, constructor function, bespoke search algorithm, and
 paired solution/search alternatives. It remains `claim_ready: false` because
 LibreEvolve does not yet record problem-level abstraction rationale,
-symmetry/structure assumptions, problem-defined abstraction hooks, paired
-representations, or equal-budget comparison reports for those alternatives.
+problem-defined abstraction hooks, paired representations, or equal-budget
+comparison reports for those alternatives. The committed
+`papers/candidate_abstraction_bias_matrix.json` sidecar now records the
+design-level abstraction-family comparison axes and expected symmetry/bias
+directions, but not executed benchmark evidence.
 The committed `papers/candidate_abstraction_boundary.json` sidecar preserves
 the same candidate-abstraction and bias-evidence absence boundary for
 paper-manifest validation.

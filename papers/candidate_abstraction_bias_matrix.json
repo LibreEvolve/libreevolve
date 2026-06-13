@@ -1,0 +1,74 @@
+{
+  "schema": "libreevolve.alphaevolve_candidate_abstraction_bias_matrix.v1",
+  "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "2.1",
+    "Discussion"
+  ],
+  "matrix_status": "design_matrix_without_executed_bias_benchmarks",
+  "claim_ready": false,
+  "comparison_fields": [
+    "candidate_abstraction_family",
+    "problem_structure_rationale",
+    "symmetry_structure_assumption",
+    "expected_bias_direction",
+    "representation_payload_contract",
+    "runner_or_materializer_contract",
+    "equal_budget_comparison_metric",
+    "paired_solution_search_linkage"
+  ],
+  "abstraction_families": [
+    {
+      "abstraction_id": "direct_solution",
+      "paper_role": "search for solutions directly",
+      "problem_structure_rationale": "simple or directly encodable candidate objects",
+      "symmetry_structure_assumption": "not_specialized_for_high_symmetry",
+      "expected_bias_direction": "least_inductive_bias_from_constructor_or_search_code",
+      "representation_payload_contract": "not_configured_beyond_code_file_set",
+      "runner_or_materializer_contract": "python_workspace_validator_only",
+      "equal_budget_comparison_metric": "not_recorded_locally",
+      "paired_solution_search_linkage": "not_applicable"
+    },
+    {
+      "abstraction_id": "constructor_function",
+      "paper_role": "evolve constructor functions",
+      "problem_structure_rationale": "may suit highly symmetric or rule-generated solutions",
+      "symmetry_structure_assumption": "constructor_functions_can_bias_toward_symmetric_solutions",
+      "expected_bias_direction": "stronger_structure_bias_than_direct_solution",
+      "representation_payload_contract": "not_configured_beyond_code_file_set",
+      "runner_or_materializer_contract": "not_distinguished_from_python_workspace",
+      "equal_budget_comparison_metric": "not_recorded_locally",
+      "paired_solution_search_linkage": "not_applicable"
+    },
+    {
+      "abstraction_id": "bespoke_search_algorithm",
+      "paper_role": "evolve bespoke search algorithms",
+      "problem_structure_rationale": "may suit non-symmetric or search-intensive solution spaces",
+      "symmetry_structure_assumption": "customized_search_can_bias_toward_non_symmetric_solutions",
+      "expected_bias_direction": "search_process_bias_rather_than_solution_encoding_bias",
+      "representation_payload_contract": "not_configured_beyond_code_file_set",
+      "runner_or_materializer_contract": "not_distinguished_from_python_workspace",
+      "equal_budget_comparison_metric": "not_recorded_locally",
+      "paired_solution_search_linkage": "not_applicable"
+    },
+    {
+      "abstraction_id": "coevolved_solution_and_search",
+      "paper_role": "co-evolve intermediate solutions and search algorithms",
+      "problem_structure_rationale": "may expose interaction between solution state and generated search procedure",
+      "symmetry_structure_assumption": "requires_explicit_solution_search_pair_model",
+      "expected_bias_direction": "unknown_until_pair_runtime_and_metrics_exist",
+      "representation_payload_contract": "unsupported",
+      "runner_or_materializer_contract": "unsupported",
+      "equal_budget_comparison_metric": "not_recorded_locally",
+      "paired_solution_search_linkage": "not_supported"
+    }
+  ],
+  "missing_evidence": {
+    "executed_equal_budget_bias_benchmarks": "not_recorded_locally",
+    "problem_defined_serializer_materializer_runner_hooks": "not_configured",
+    "paired_solution_search_runtime_support": "not_supported",
+    "benchmark_result_tables": "not_recorded_locally",
+    "human_abstraction_choice_signoff": "not_recorded_locally"
+  },
+  "claim_boundary": "This matrix records paper-derived abstraction-family roles, problem-structure rationale fields, and expected bias directions for future comparisons. It does not claim problem-defined abstraction hooks, paired solution/search runtime support, executed equal-budget benchmark results, human signoff, or AlphaEvolve-style abstraction-selection evidence."
+}

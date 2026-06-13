@@ -502,9 +502,11 @@ Important limits:
 - Candidate execution is Python-primary code-file-set execution. The
   abstraction-choice report does not claim AlphaEvolve-style problem-defined
   serializers/materializers/runners, paired solution/search representations,
-  abstraction-rationale metadata, symmetry/bias evidence, or equal-budget
-  direct-solution/constructor/search comparisons; that boundary is tracked by
-  `papers/candidate_abstraction_boundary.json`.
+  executed bias evidence, or equal-budget direct-solution/constructor/search
+  comparisons. The design-level abstraction-family matrix records expected
+  rationale and bias fields but not benchmark results; these boundaries are
+  tracked by `papers/candidate_abstraction_boundary.json` and
+  `papers/candidate_abstraction_bias_matrix.json`.
 - Candidate language runner reports record metadata-only non-Python language
   and build declarations when configured, including declaration counts and
   unsupported execution status, and link the current Python runner to bounded

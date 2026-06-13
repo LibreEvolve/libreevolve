@@ -349,7 +349,11 @@ sidecars, tests, and active TODOs.
     `papers/candidate_abstraction_boundary.json` sidecar now records the
     paper-manifest-validated `not_configured_as_problem_defined_abstractions`
     boundary for the missing abstraction-rationale and bias-benchmark
-    evidence.
+    evidence. `papers/candidate_abstraction_bias_matrix.json` now records a
+    design-level matrix of direct-solution, constructor-function, bespoke
+    search-algorithm, and paired solution/search abstraction families with
+    problem-structure rationale fields, symmetry assumptions, expected bias
+    directions, representation/runner contract status, and comparison axes.
   - Required result: add problem-level abstraction rationale,
     symmetry/structure assumptions, typed problem-defined candidate
     abstraction hooks, paired solution/search representations when supported,

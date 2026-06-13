@@ -406,7 +406,9 @@ LibreEvolve has:
   `papers/candidate_abstraction_boundary.json` now carrying the
   paper-manifest-validated absence boundary for abstraction rationale,
   symmetry/bias evidence, problem-defined abstraction hooks, paired
-  representations, and equal-budget abstraction comparisons
+  representations, and equal-budget abstraction comparisons, while
+  `papers/candidate_abstraction_bias_matrix.json` records a design-level
+  abstraction-family bias matrix without executed benchmark results
 - local run-budget stop accounting for generations, evaluations,
   evaluator-seconds, wall-clock runtime, logical LLM calls, provider attempts,
   provider-reported tokens, configured estimated cost, and retained LLM
@@ -429,10 +431,10 @@ is not yet an AlphaEvolve reproduction.
 - Add problem-defined candidate abstraction hooks if LibreEvolve should move
   beyond the documented code-file-set divergence from AlphaEvolve's flexible
   solution-abstraction API.
-- Extend candidate-abstraction reports with benchmark metadata that records why
-  a direct-solution, constructor-function, or search-algorithm formulation was
-  chosen, what symmetry/structure bias was expected, and how alternatives
-  performed under comparable budgets.
+- Extend candidate-abstraction reports beyond the current design matrix with
+  benchmark metadata that records why a direct-solution,
+  constructor-function, or search-algorithm formulation was chosen for an
+  actual problem and how alternatives performed under comparable budgets.
 - Add language-aware evolve-block marker grammars if non-Python workspace files
   should preserve skeleton regions; the current boundary rejects marker-like
   declarations in non-`.py` files instead of treating them as unmarked full-file

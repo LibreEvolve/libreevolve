@@ -883,9 +883,13 @@ bespoke-search-algorithm, and paired solution/search alternatives, and keeps
 committed `papers/candidate_abstraction_boundary.json` sidecar now emits the
 `not_configured_as_problem_defined_abstractions` boundary, and
 `validate_paper_manifest()` requires and validates it at the real repo root.
-Problem-level abstraction rationale, symmetry/structure assumptions,
-problem-defined abstraction hooks, paired representations, and equal-budget
-benchmark comparisons across alternative formulations remain open.
+The committed `papers/candidate_abstraction_bias_matrix.json` sidecar records a
+design-level abstraction-family matrix for direct solutions, constructor
+functions, bespoke search algorithms, and paired solution/search
+representations, including expected symmetry/bias fields and comparison axes.
+Problem-level populated rationale, problem-defined abstraction hooks, paired
+runtime support, and executed equal-budget benchmark comparisons across
+alternative formulations remain open.
 Completed manifests also include
 `runtime.history.candidate_language_runner_contract_report` with schema
 `libreevolve.candidate_language_runner_contract_report.v1`. This report records
@@ -2493,6 +2497,10 @@ Implemented:
   normalized source metadata, and explicit remaining gaps for full HTML,
   DataCite DOI, TeX-source, license-page, and automated refresh evidence. It
   is not full publication-grade source evidence or a live refresh gate.
+- `papers/candidate_abstraction_bias_matrix.json`: design-level candidate
+  abstraction bias matrix for direct-solution, constructor-function,
+  bespoke-search, and paired solution/search families. It is not executed
+  benchmark evidence or support for problem-defined abstraction hooks.
 - `libreevolve/problems/examples/sorting`: neutral plateau/diversity smoke
   fixture. The bubble-sort seed already reaches `accuracy == 1.0`, so this
   example can demonstrate mutation handling and same-score implementation

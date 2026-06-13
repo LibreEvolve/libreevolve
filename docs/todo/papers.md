@@ -703,10 +703,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     fidelity false. The committed `papers/candidate_abstraction_boundary.json`
     sidecar now preserves the paper-manifest-validated current absence
     boundary for typed abstraction APIs and bias/equal-budget evidence.
+    `papers/candidate_abstraction_bias_matrix.json` now preserves a
+    design-level comparison matrix for the four paper abstraction families,
+    expected symmetry/bias directions, representation/runner contract status,
+    and equal-budget comparison fields.
   - Current gap: paper-facing evidence still lacks problem structure
-    rationale, symmetry assumptions, typed problem-defined abstraction hooks,
-    paired solution/search support, or equal-budget comparisons across
-    direct-solution, constructor-function, and search-algorithm formulations.
+    rationale populated for actual benchmarks, typed problem-defined
+    abstraction hooks, paired solution/search support, or executed
+    equal-budget comparisons across direct-solution, constructor-function, and
+    search-algorithm formulations.
   - Required result: add benchmark metadata for candidate abstraction family,
     rationale, expected problem bias, paired solution/search linkage, and
     comparable results for alternative abstractions before claiming

@@ -656,6 +656,14 @@ Important limits:
   identity, average relative performance-loss benchmark rows, cross-scenario
   generalization evidence, three-orders speedup reproduction, or independent
   checker output.
+- ArXiv `2602.23413` is adaptive meta-evolution context only; the README
+  mentions this cached paper as a curated subset while `papers/README.md`
+  remains the complete implementation-status index. LibreEvolve has no
+  adaptive strategy-genome schema, outer meta-evolution loop, strategy-credit
+  assignment, dynamic search-policy update artifacts, EvoX task-suite
+  taxonomy, baseline comparison table against AlphaEvolve/OpenEvolve/GEPA/
+  ShinkaEvolve, token-efficiency report, strategy ablation records, or
+  independent reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

@@ -14579,3 +14579,25 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     artifacts, tracking metrics, generalization splits, iterative-solver
     baselines, benchmark reports, and independent reproduction remain active in
     code and paper TODOs.
+
+- [x] Keep README EvoX adaptive meta-evolution claims source-scoped until
+      benchmark evidence exists.
+  - Spec evidence: arXiv `2602.23413`, `EvoX: Meta-Evolution for Automated
+    Discovery`, says AlphaEvolve-style systems reuse evaluated solutions to
+    guide new candidates, but fixed search strategies with predefined
+    explore/exploit knobs can fail to adapt. It proposes jointly evolving
+    candidate solutions and search strategies, dynamically shifting strategy
+    choices, and reports outperforming AlphaEvolve, OpenEvolve, GEPA, and
+    ShinkaEvolve on the majority of nearly 200 real-world optimization tasks.
+  - Status: README now lists arXiv `2602.23413` as adaptive meta-evolution
+    context only and marks the mention as a curated cached-paper subset while
+    `papers/README.md` remains the complete implementation-status index. It
+    states that LibreEvolve has no adaptive strategy-genome schema, outer
+    meta-evolution loop, strategy-credit assignment, dynamic search-policy
+    update artifacts, EvoX task-suite taxonomy, baseline comparison table
+    against AlphaEvolve/OpenEvolve/GEPA/ShinkaEvolve, token-efficiency report,
+    strategy ablation records, or independent reproduction output.
+  - Remaining README gap: strategy-state traces, task-suite definitions,
+    baseline identities, ablation reports, token-efficiency data, benchmark
+    outcomes, and EvoX-style adaptive strategy evolution remain active in code
+    and paper TODOs.

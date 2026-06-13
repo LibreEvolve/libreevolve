@@ -10,23 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep `show`/metric archive roadmap wording scoped to selected-row CLI
-      output versus manifest-level summary records.
-  - Spec evidence: AlphaEvolve-scale run inspection should support
-    whole-run archive and metric-specific drill-downs, not just the selected
-    best row.
-  - Current evidence: `libreevolve show` prints selected-row
-    archive/objective-vector diagnostics, while final manifests already expose
-    `runtime.history.objective_metric_leaders` and
-    `runtime.history.objective_metric_archives` summary records. `ROADMAP.md`
-    now asks for CLI/report drill-downs over those metric-specific archives
-    instead of implying the manifest-level summaries are absent.
-  - Required result: when metric-specific archive drill-downs, whole-run CLI
-    views, or durable artifact query reports land, update the roadmap, README,
-    papers index, and code/paper TODO entries together so they neither
-    underclaim current manifest summaries nor overclaim the selected-row
-    `show` command.
-
 - [ ] Keep `show`/source-integrity roadmap wording scoped to compact
       selected-row display plus streamed-row validation.
   - Spec evidence: AlphaEvolve-scale generated-program databases need

@@ -2,6 +2,21 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive `show`/metric archive roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README,
+    `papers/README.md`, `libreevolve show`, and runtime manifest history
+    already separate selected-row objective-vector display from manifest-level
+    `runtime.history.objective_metric_leaders` and
+    `runtime.history.objective_metric_archives` summary records.
+  - Remaining guard: metric-specific archive CLI/report drill-downs,
+    whole-run archive views, durable artifact query reports, and durable
+    ranked database views by score, metric, diversity, feedback, lineage,
+    failure, hypothesis, and artifact evidence remain active in
+    `docs/todo/code.md` and `docs/todo/papers.md`.
+  - Verification: objective-history, selected-row `show`, and paper-manifest
+    validation continue to distinguish bounded manifest summaries from
+    AlphaEvolve-grade archive drill-down/query surfaces.
+
 - [x] Archive metric-diverse prompt-context roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README,
     `papers/README.md`, runtime

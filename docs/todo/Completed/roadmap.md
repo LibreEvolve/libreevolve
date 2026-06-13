@@ -2,6 +2,29 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Gemini-to-TPU contribution roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    separate concrete RTL optimization evidence from the broader claim that
+    Gemini directly contributed to TPU arithmetic circuits through AlphaEvolve.
+  - Current evidence: `libreevolve.systems_result_report.v1` and focused tests
+    require `hardware_contribution_provenance` for ready hardware reports,
+    including Gemini/AlphaEvolve model-family relationship, AlphaEvolve run
+    identity, producing backend identity, arithmetic-circuit and TPU generation
+    identity, contribution novelty basis, first-direct-contribution scope,
+    integration milestone, responsible hardware review/signoff scope,
+    synthesis-rediscovery distinction, confirmation flags, and artifact refs.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    attribution artifacts: model/run/backend records, reviewed TPU-generation
+    and circuit identifiers, firstness/novelty review evidence, integration
+    milestone records, responsible hardware signoff files, and downstream
+    synthesis rediscovery audit artifacts.
+  - Verification: paper-manifest validation, checked-in paper-index TODO
+    coverage, and focused systems-result hardware contribution tests still
+    pass, while searches confirm the hardware contribution code and paper TODOs
+    remain active.
+
 - [x] Archive TPU bit-removal rewrite roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

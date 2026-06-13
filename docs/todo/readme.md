@@ -9,27 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README explicit-context wording scoped beyond source-role reports.
-  - Spec evidence: AlphaEvolve Section 2.2 says explicit context can include
-    fixed human-written instructions, equations, code snippets, and relevant
-    literature such as PDF files.
-  - Current evidence: README can now describe validated problem-local
-    `context.yaml` `source_roles` metadata and the runtime
-    `runtime.history.explicit_context_source_role_report` for human
-    instructions, equations, code snippets, literature PDFs, and background
-    references, including task/topic linkage, source location,
-    prompt-inclusion/omission decisions, hashes, and redaction policy. README
-    Important limits now also states that this is classification/reporting
-    evidence, not semantic proof that the role labels are correct,
-    expert-reviewed problem-formulation evidence, live or external
-    context-source classification, or full AlphaEvolve context-selection and
-    context-evolution parity.
-  - Required result: when role-label correctness checks, expert/formulation
-    signoff, external/live context-source role classification, or broader
-    context-selection/evolution evidence lands, update README, ROADMAP, papers
-    index, and code/paper TODO entries together so README separates typed local
-    context metadata from full AlphaEvolve explicit-context parity.
-
 - [ ] Keep README ablation-report wording aligned with current LLM budget
   stops.
   - Spec evidence: AlphaEvolve Figure 8 compares executed equal-budget

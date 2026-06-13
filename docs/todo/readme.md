@@ -2457,7 +2457,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     idea hash uniqueness/duplicate counts by generation and proposal batch. It
     also states that near-duplicate detection, idea-family classification,
     semantic novelty, model-quality attribution, and benchmark linkage remain
-    future work.
+    future work. README now ties that boundary to
+    `papers/proposal_diversity_boundary.json`.
   - Required result: when semantic proposal-diversity reporting lands, update
     README, ROADMAP, papers index, and code/paper TODOs with per-call or
     per-batch idea/operator-family labels, parent/inspiration relations,

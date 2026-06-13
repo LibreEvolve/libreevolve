@@ -157,6 +157,11 @@ Important limits:
   semantic idea-memory retrieval, calibrated proposal-quality models,
   cross-run proposal tables, or score-driven prompt/archive policy; that
   boundary is tracked by `papers/proposal_score_boundary.json`.
+- Proposal-diversity reports are exact proposal/idea hashes and duplicate
+  counts, not semantic novelty, near-duplicate detection, operator-family
+  labels, code or task-output distance, novelty scoring, prompt/backend
+  attribution, or equal-budget/model-ablation evidence; that boundary is
+  tracked by `papers/proposal_diversity_boundary.json`.
 - Program-output resurfacing is exact current-run source-key/hash lookup over
   bounded output summaries, not durable output tables, schema-aware retrieval,
   semantic output similarity search, or replayable output-driven sampling;

@@ -2372,7 +2372,10 @@ Primary evidence:
     `validate_proposal_diversity_report()`. The report records generated
     candidate counts, captured proposal metadata counts, exact proposal and
     idea hash uniqueness/duplicate counts by generation and proposal batch,
-    bounded sample records, and an exact-text-only analysis policy.
+    bounded sample records, and an exact-text-only analysis policy. The
+    `libreevolve.alphaevolve_proposal_diversity_boundary.v1` sidecar now keeps
+    that exact-text-only scope paper-manifest-required without treating it as
+    semantic proposal novelty evidence.
   - Required result: extend proposal-diversity evidence with operator-family
     labels, code-distance and semantic or task-output distance where available,
     near-duplicate detection, parent/inspiration relation, prompt/context/

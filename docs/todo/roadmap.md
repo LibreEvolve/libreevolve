@@ -1324,8 +1324,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current evidence: `ROADMAP.md` can now cite
     `runtime.history.proposal_diversity_report`, which records exact proposal
     and idea hash uniqueness/duplicate counts by generation and proposal batch.
-    That does not yet prove semantic proposal diversity or idea novelty across
-    a call, batch, generation, prompt context, or backend/model comparison.
+    `papers/proposal_diversity_boundary.json` now preserves that exact-text
+    duplicate-count scope as a paper-manifest-required sidecar. That does not
+    yet prove semantic proposal diversity or idea novelty across a call, batch,
+    generation, prompt context, or backend/model comparison.
   - Required result: when semantic proposal-diversity reports land, update
     ROADMAP, README, papers index, and code/paper TODOs with per-call or
     per-batch idea/operator-family labels, near-duplicate diagnostics, code

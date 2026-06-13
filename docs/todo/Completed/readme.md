@@ -12915,3 +12915,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     handwritten mutation operators until operator-family evidence exists.
   - Verification: focused boundary and paper-manifest tests cover the sidecar
     and its overclaim rejection.
+- [x] Add README boundary for proposal-diversity evidence.
+  - Spec evidence: AlphaEvolve Section 2.3 says SOTA LLMs propose new, diverse
+    improvements, and Section 4 links model strength to performance.
+  - Status: README now states that proposal-diversity reports are exact
+    proposal/idea hashes and duplicate counts, not semantic novelty,
+    near-duplicate detection, operator-family labels, code/task-output
+    distance, novelty scoring, prompt/backend attribution, or
+    equal-budget/model-ablation evidence. It points to
+    `papers/proposal_diversity_boundary.json`.
+  - Remaining README gap: docs cannot imply AlphaEvolve-style semantic
+    creative-generation evidence until those reports and ablations exist.
+  - Verification: focused boundary and paper-manifest tests cover the sidecar
+    and its overclaim rejection.

@@ -1188,7 +1188,11 @@ controller backtracking proof as absent. The committed
 `validate_paper_manifest()` requires and validates it at the real repo root.
 `runtime.history.proposal_diversity_report` also records exact proposal and
 idea hash uniqueness/duplicate counts by generation and proposal batch, with
-bounded sample records and an exact-text-only analysis policy.
+bounded sample records and an exact-text-only analysis policy. The committed
+`papers/proposal_diversity_boundary.json` sidecar keeps that exact-text
+duplicate-count scope machine-validated apart from semantic novelty,
+near-duplicate detection, operator-family labels, distance metrics, novelty
+contribution scoring, prompt/backend attribution, and model-ablation linkage.
 `runtime.history.proposal_score_report` now records bounded outcome-linked
 proposal quality plus exact proposal-signature novelty scores. This narrows the
 remaining database gap to durable cross-run query/index tables, full

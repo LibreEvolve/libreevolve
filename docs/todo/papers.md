@@ -2059,7 +2059,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     candidate outcomes, sampling strategies, bounded hypothesis summaries, and
     backend/model telemetry. Paper-facing docs now cite
     `runtime.history.proposal_diversity_report`, which records exact proposal
-    and idea hash uniqueness/duplicate counts by generation and proposal batch.
+    and idea hash uniqueness/duplicate counts by generation and proposal batch,
+    with `papers/proposal_diversity_boundary.json` preserving the exact-text
+    analysis boundary as a manifest-required sidecar.
   - Current gap: the paper index still has no evidence that generated proposals
     are semantically diverse improvement approaches within a call, generation,
     batch, prompt context, or model/backend comparison. Existing

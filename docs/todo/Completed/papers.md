@@ -13933,3 +13933,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     and benchmark telemetry remain open.
   - Verification: focused mutation-operator boundary and paper-manifest tests
     cover valid, overclaim, and missing-root-sidecar cases.
+- [x] Add paper-facing proposal-diversity sidecar.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.3 and Section 4
+    ablations frame SOTA LLMs as proposing diverse improvements and stronger
+    models as improving system performance.
+  - Status: `papers/proposal_diversity_boundary.json` now records the boundary
+    between exact proposal/idea hash duplicate-count evidence and missing
+    semantic proposal-diversity evidence.
+  - Remaining paper gap: operator-family labels, code/semantic/task-output
+    distances, near-duplicate detection, parent/inspiration relations,
+    prompt/backend attribution, accepted/rejected linkage, novelty scoring,
+    and equal-budget/model ablation linkage remain open.
+  - Verification: focused proposal-diversity boundary and paper-manifest tests
+    cover valid, overclaim, and missing-root-sidecar cases.

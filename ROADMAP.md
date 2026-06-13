@@ -671,7 +671,9 @@ is not yet an AlphaEvolve reproduction.
   `runtime.history.natural_language_preamble_report` bounded leading
   explanatory-preamble capture, with
   `papers/proposal_score_boundary.json` preserving the bounded current-run
-  proposal-score versus semantic idea-memory scope and
+  proposal-score versus semantic idea-memory scope,
+  `papers/proposal_diversity_boundary.json` preserving the exact-text
+  duplicate-counts versus semantic proposal-novelty scope, and
   `papers/natural_language_preamble_boundary.json` preserving the
   bounded-leading-capture-only scope,
   into semantically searchable proposal memory only if needed; remaining work

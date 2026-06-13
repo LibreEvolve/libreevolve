@@ -1,0 +1,48 @@
+{
+  "schema": "libreevolve.alphaevolve_proposal_diversity_boundary.v1",
+  "runtime_report_schema": "libreevolve.proposal_diversity_report.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve Section 2.3 says SOTA LLMs digest previous solutions and propose new, diverse ways to improve them, with later ablations connecting model strength to performance",
+  "boundary_status": "exact_text_diversity_without_semantic_novelty",
+  "runtime_report_status": "proposal_diversity_report_available",
+  "claim_ready": false,
+  "current_evidence_fields": [
+    "generated_candidate_count",
+    "captured_proposal_metadata_count",
+    "exact_proposal_hashes",
+    "exact_idea_hashes",
+    "generation_duplicate_counts",
+    "proposal_batch_duplicate_counts",
+    "bounded_sample_records",
+    "exact_text_analysis_policy"
+  ],
+  "required_evidence_fields": [
+    "runtime_report_schema",
+    "exact_proposal_hashes",
+    "exact_idea_hashes",
+    "operator_family_labels",
+    "code_distance_metrics",
+    "semantic_distance_metrics",
+    "task_output_distance_metrics",
+    "near_duplicate_detection",
+    "parent_inspiration_relation",
+    "prompt_context_backend_links",
+    "accepted_rejected_status_linkage",
+    "novelty_contribution_scoring",
+    "equal_budget_model_ablation_linkage",
+    "benchmark_level_proposal_diversity_telemetry"
+  ],
+  "missing_evidence": {
+    "operator_family_labels": "not_recorded_locally",
+    "code_distance_metrics": "not_recorded_locally",
+    "semantic_distance_metrics": "not_recorded_locally",
+    "task_output_distance_metrics": "not_recorded_locally",
+    "near_duplicate_detection": "not_recorded_locally",
+    "parent_inspiration_relation": "not_recorded_locally",
+    "prompt_context_backend_links": "not_recorded_locally",
+    "novelty_contribution_scoring": "not_recorded_locally",
+    "equal_budget_model_ablation_linkage": "not_recorded_locally",
+    "benchmark_level_proposal_diversity_telemetry": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records exact proposal and idea hash diversity, duplicate counts by generation and proposal batch, bounded sample records, and an exact-text analysis policy. It does not claim semantic proposal diversity, near-duplicate detection, operator-family labels, code or task-output distance, novelty contribution scoring, prompt/backend attribution, or equal-budget model-ablation linkage."
+}

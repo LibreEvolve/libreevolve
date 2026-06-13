@@ -2196,6 +2196,60 @@ def test_validate_paper_manifest_requires_proposal_score_boundary_at_repo_root(
     assert "proposal_score_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_proposal_diversity_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.PROPOSAL_DIVERSITY_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.proposal_diversity_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_proposal_diversity_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.proposal_diversity_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "semantic_proposal_diversity_ready"
+    record["missing_evidence"]["near_duplicate_detection"] = "recorded"
+    sidecar = tmp_path / paper_manifest.PROPOSAL_DIVERSITY_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "proposal_diversity_boundary_claim_ready_overclaim" in codes
+    assert "proposal_diversity_boundary_invalid_boundary_status" in codes
+    assert (
+        "proposal_diversity_boundary_invalid_missing_evidence_near_duplicate_detection"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_proposal_diversity_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "proposal_diversity_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_failure_memory_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

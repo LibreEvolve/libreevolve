@@ -10691,3 +10691,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     benchmark telemetry remain open.
   - Verification: focused boundary and paper-manifest tests cover overclaim
     rejection and repo-root sidecar presence.
+- [x] Scope ROADMAP proposal-diversity wording with a paper sidecar.
+  - Spec evidence: AlphaEvolve Section 2.3 frames SOTA LLMs as proposing new,
+    diverse improvements, with later ablations tying stronger models to better
+    performance.
+  - Status: ROADMAP now cites `papers/proposal_diversity_boundary.json`, which
+    keeps exact proposal/idea hash duplicate counts separate from semantic
+    proposal-diversity, near-duplicate, operator-family, distance-metric,
+    novelty-scoring, prompt/backend-attribution, and ablation evidence.
+  - Remaining roadmap gap: semantic novelty evidence and equal-budget/model
+    attribution remain open.
+  - Verification: focused boundary and paper-manifest tests cover overclaim
+    rejection and repo-root sidecar presence.

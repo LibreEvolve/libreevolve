@@ -18845,3 +18845,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     telemetry remain open.
   - Verification: focused boundary and paper-manifest tests cover valid,
     overclaim, and missing-root-sidecar cases.
+- [x] Add paper-facing proposal-diversity boundary sidecar.
+  - Spec evidence: AlphaEvolve Section 2.3 says SOTA LLMs digest previous
+    solutions and propose new, diverse ways to improve them, with ablations
+    connecting model strength to system performance.
+  - Status: `libreevolve.alphaevolve_proposal_diversity_boundary.v1` now
+    records the boundary between
+    `runtime.history.proposal_diversity_report` exact proposal/idea hash
+    duplicate counts and missing semantic proposal-novelty evidence. The paper
+    manifest now requires `papers/proposal_diversity_boundary.json` at the repo
+    root and rejects premature semantic-diversity readiness claims.
+  - Remaining gap: operator-family labels, code/semantic/task-output
+    distances, near-duplicate detection, parent/inspiration relations,
+    prompt/backend attribution, novelty contribution scoring,
+    accepted/rejected linkage, and equal-budget/model ablation evidence remain
+    open.
+  - Verification: focused boundary and paper-manifest tests cover valid,
+    overclaim, and missing-root-sidecar cases.

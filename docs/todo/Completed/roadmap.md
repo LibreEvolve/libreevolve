@@ -2,6 +2,26 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Figure 5/B.12 precision roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish Figure 5 display precision from Appendix B.12/Figure 14 text
+    precision and preserve the remaining source-specific reconciliation gap.
+  - Current evidence: `figure5_b12_precision_boundary` preserves Figure 5's
+    `2.6340 -> 2.6358` display separately from the Appendix B.12/Figure 14
+    `2.634` to `2.635` strings and keeps the local status
+    `not_reconciled_locally`.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source-specific locators, Figure 5 panel artifacts,
+    value-extraction certificates, normalized values,
+    rounding/canonicalization policy, selected canonical value,
+    value-reconciliation certificate, recomputed sum, and companion Colab
+    link.
+  - Verification: Appendix B registry precision-boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive Figure 5 construction-exhibit roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

@@ -10,24 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Figure 5 sum-of-radii roadmap wording scoped until source-specific
-      precision provenance exists.
-  - Spec evidence: AlphaEvolve Figure 5 displays the selected sum-of-radii
-    improvement as `2.6340 -> 2.6358`, while Appendix B.12 and Figure 14 state
-    the `n = 26` unit-square circle-packing improvement as `2.634` to `2.635`.
-  - Current evidence: roadmap/README/paper-index wording now cites
-    `figure5_b12_precision_boundary`, which preserves the Figure 5
-    `2.6340 -> 2.6358` display separately from the Appendix B.12/Figure 14
-    `2.634` to `2.635` strings.
-  - Remaining gap: the roadmap still cannot cite source-specific locators,
-    Figure 5 panel artifacts, value-extraction certificates, normalized
-    values, rounding/canonicalization policy, selected canonical value,
-    value-reconciliation certificate, recomputed sum, or companion Colab link.
-  - Required result: when those precision artifacts land, update ROADMAP,
-    README, papers index, and code/paper TODOs with per-source value records,
-    panel artifacts, extraction/reconciliation certificates, and safeguards
-    against conflating figure-display precision with appendix text precision.
-
 - [ ] Keep Appendix B figure roadmap wording scoped until Figures 10-14
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B displays construction figures beyond

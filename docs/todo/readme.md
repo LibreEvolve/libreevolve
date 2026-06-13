@@ -9,29 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README seed-validity wording scoped after strict policy/reporting.
-  - Spec evidence: AlphaEvolve Section 2.1 describes the initial implementation
-    as complete but rudimentary, with the task skeleton and evaluator able to
-    invoke it before evolution. Local PDF page 5 says user-provided code inside
-    evolution blocks serves as the initial solution.
-  - Current evidence: README documents valid/suboptimal seeds and deliberately
-    invalid optimization-pressure seeds, including `hello_world`, and states
-    that runs can record invalid seed baselines. Code evidence shows the seed
-    loop evaluates seeds, logs rejected seeds through `log_seed_failure()`, and
-    can finish a seed-only run with all seeds invalid as `no_valid_programs`.
-    README now also documents `initial_program_validity_policy:
-    alphaevolve_strict`, `runtime.stop_reason: invalid_initial_programs`, and
-    `runtime.history.initial_program_validity_report` for runs that require
-    every selected seed to be evaluator-valid and metric-complete before
-    mutation. README Important limits now also points to
-    `papers/initial_program_validity_boundary.json` for the
-    strict-policy-available paper-facing boundary.
-  - Required result: when benchmark fixtures opt into strict mode and publish
-    fixture-level complete-start evidence, update README, ROADMAP, papers
-    index, and code/paper TODOs together so README distinguishes the available
-    strict policy/report from benchmark claims that require complete
-    AlphaEvolve-style initial implementations.
-
 - [ ] Keep README problem-formulation wording scoped until benchmark fixtures
       carry expert-reviewed metadata.
   - Spec evidence: AlphaEvolve Section 3.2 reports that many mathematical

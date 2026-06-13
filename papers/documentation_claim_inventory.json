@@ -1,0 +1,109 @@
+{
+  "schema": "libreevolve.documentation_claim_inventory.v1",
+  "source_paper_id": "2506.13131",
+  "inventory_status": "top_level_readme_roadmap_claim_inventory_without_semantic_verifier",
+  "claim_ready": false,
+  "coverage_scope": "Top-level README and ROADMAP claim anchors only. This is not a complete semantic verifier for every documentation sentence.",
+  "claims": [
+    {
+      "claim_id": "readme_current_status_scope",
+      "document_path": "README.md",
+      "document_section": "Current Status",
+      "claim_kind": "status_scope",
+      "claim_summary": "LibreEvolve is alpha-stage, local, Python-first research code and not a production optimizer or full AlphaEvolve reproduction.",
+      "evidence_refs": [
+        "README.md#current-status",
+        "docs/status.md",
+        "papers/documentation_truthfulness_boundary.json",
+        "docs/todo/readme.md"
+      ],
+      "verification_scope": "top_level_claim_anchor_only"
+    },
+    {
+      "claim_id": "readme_runnable_today_scope",
+      "document_path": "README.md",
+      "document_section": "Current Status / Runnable today",
+      "claim_kind": "feature_scope",
+      "claim_summary": "README runnable-today bullets describe Python-primary workspaces, SEARCH/REPLACE mutations, configured provider backends, local MAP-Elites/island archives, local evaluation, hooks, and runs/ artifacts.",
+      "evidence_refs": [
+        "README.md#current-status",
+        "libreevolve/cli.py",
+        "libreevolve/core/loop.py",
+        "libreevolve/core/diff.py",
+        "libreevolve/llm/",
+        "libreevolve/population/",
+        "docs/status.md"
+      ],
+      "verification_scope": "top_level_claim_anchor_only"
+    },
+    {
+      "claim_id": "readme_important_limits_scope",
+      "document_path": "README.md",
+      "document_section": "Current Status / Important limits",
+      "claim_kind": "limitation_scope",
+      "claim_summary": "README important limits keep AlphaEvolve-scale benchmarks, Google/Gemini parity, distributed async topology, arbitrary language runners, hardened sandboxing, and paper-cache claims scoped as missing or non-proof evidence.",
+      "evidence_refs": [
+        "README.md#current-status",
+        "papers/README.md",
+        "papers/documentation_truthfulness_boundary.json",
+        "docs/todo/code.md",
+        "docs/todo/papers.md"
+      ],
+      "verification_scope": "top_level_claim_anchor_only"
+    },
+    {
+      "claim_id": "roadmap_current_state_scope",
+      "document_path": "ROADMAP.md",
+      "document_section": "Current State",
+      "claim_kind": "planning_scope",
+      "claim_summary": "ROADMAP current-state bullets are maintained planning summaries whose authoritative evidence remains code, tests, runtime artifacts, paper sidecars, and TODO ledgers.",
+      "evidence_refs": [
+        "ROADMAP.md#current-state",
+        "docs/status.md",
+        "papers/README.md",
+        "docs/todo/roadmap.md"
+      ],
+      "verification_scope": "top_level_claim_anchor_only"
+    },
+    {
+      "claim_id": "roadmap_documentation_truthfulness_scope",
+      "document_path": "ROADMAP.md",
+      "document_section": "Documentation truthfulness",
+      "claim_kind": "documentation_boundary",
+      "claim_summary": "ROADMAP documentation-truthfulness status records path, manifest, TODO-coverage, and sidecar-registry guards while leaving semantic claim-by-claim proof open.",
+      "evidence_refs": [
+        "ROADMAP.md#documentation-truthfulness",
+        "papers/documentation_truthfulness_boundary.json",
+        "papers/documentation_claim_inventory.json",
+        "docs/todo/readme.md",
+        "docs/todo/roadmap.md",
+        "docs/todo/papers.md"
+      ],
+      "verification_scope": "top_level_claim_anchor_only"
+    },
+    {
+      "claim_id": "roadmap_alphaevolve_gap_scope",
+      "document_path": "ROADMAP.md",
+      "document_section": "Remaining AlphaEvolve gaps",
+      "claim_kind": "gap_scope",
+      "claim_summary": "ROADMAP missing-work sections preserve AlphaEvolve parity gaps instead of treating local validators, sidecars, or fixtures as full paper-result reproduction.",
+      "evidence_refs": [
+        "ROADMAP.md",
+        "papers/2506.13131__AlphaEvolve.pdf",
+        "papers/README.md",
+        "docs/todo/code.md",
+        "docs/todo/papers.md"
+      ],
+      "verification_scope": "top_level_claim_anchor_only"
+    }
+  ],
+  "missing_evidence": {
+    "complete_readme_claim_inventory": "not_recorded_locally",
+    "complete_roadmap_claim_inventory": "not_recorded_locally",
+    "semantic_claim_verifier": "not_recorded_locally",
+    "stale_completed_entry_detection": "not_recorded_locally",
+    "generated_alignment_report": "not_recorded_locally",
+    "full_alphaevolve_claim_truth_proof": "not_recorded_locally"
+  },
+  "claim_boundary": "This inventory gives stable ids and evidence anchors for the top-level README and ROADMAP AlphaEvolve-facing status claims. It does not claim complete README coverage, complete ROADMAP coverage, semantic claim verification, stale completed-entry detection, generated alignment reports, or full proof that every documentation claim is current."
+}

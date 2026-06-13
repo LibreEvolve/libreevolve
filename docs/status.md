@@ -1102,10 +1102,12 @@ Important limits:
   artifacts, companion notebook URLs or digests, retrieved notebook exports,
   cell maps, or source-to-artifact maps; the current linkage sidecar marks
   both artifacts as `not_yet_linked`.
-- Documentation alignment checks are path, manifest, TODO-coverage, and
-  sidecar-registry guards, not semantic proof that every README, ROADMAP,
-  papers-index, and TODO statement is current; that boundary is tracked by
-  `papers/documentation_truthfulness_boundary.json`.
+- Documentation alignment checks are path, manifest, TODO-coverage,
+  sidecar-registry, and top-level README/ROADMAP claim-inventory guards, not
+  semantic proof that every README, ROADMAP, papers-index, and TODO statement
+  is current; that boundary is tracked by
+  `papers/documentation_truthfulness_boundary.json` and
+  `papers/documentation_claim_inventory.json`.
 - Paper-index benchmark coverage validation currently catches structural
   coverage issues and one narrow `Implemented`-but-`not implemented`
   contradiction. It is not semantic proof that every implemented benchmark

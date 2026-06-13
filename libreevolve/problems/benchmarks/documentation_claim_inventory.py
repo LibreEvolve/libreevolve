@@ -1,0 +1,330 @@
+from __future__ import annotations
+
+import json
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
+
+
+DOCUMENTATION_CLAIM_INVENTORY_SCHEMA = (
+    "libreevolve.documentation_claim_inventory.v1"
+)
+EXPECTED_SOURCE_PAPER_ID = "2506.13131"
+EXPECTED_INVENTORY_STATUS = (
+    "top_level_readme_roadmap_claim_inventory_without_semantic_verifier"
+)
+EXPECTED_MISSING_EVIDENCE = {
+    "complete_readme_claim_inventory": "not_recorded_locally",
+    "complete_roadmap_claim_inventory": "not_recorded_locally",
+    "semantic_claim_verifier": "not_recorded_locally",
+    "stale_completed_entry_detection": "not_recorded_locally",
+    "generated_alignment_report": "not_recorded_locally",
+    "full_alphaevolve_claim_truth_proof": "not_recorded_locally",
+}
+EXPECTED_CLAIMS = (
+    {
+        "claim_id": "readme_current_status_scope",
+        "document_path": "README.md",
+        "document_section": "Current Status",
+        "claim_kind": "status_scope",
+        "claim_summary": (
+            "LibreEvolve is alpha-stage, local, Python-first research code and "
+            "not a production optimizer or full AlphaEvolve reproduction."
+        ),
+        "evidence_refs": [
+            "README.md#current-status",
+            "docs/status.md",
+            "papers/documentation_truthfulness_boundary.json",
+            "docs/todo/readme.md",
+        ],
+        "verification_scope": "top_level_claim_anchor_only",
+    },
+    {
+        "claim_id": "readme_runnable_today_scope",
+        "document_path": "README.md",
+        "document_section": "Current Status / Runnable today",
+        "claim_kind": "feature_scope",
+        "claim_summary": (
+            "README runnable-today bullets describe Python-primary workspaces, "
+            "SEARCH/REPLACE mutations, configured provider backends, local "
+            "MAP-Elites/island archives, local evaluation, hooks, and runs/ "
+            "artifacts."
+        ),
+        "evidence_refs": [
+            "README.md#current-status",
+            "libreevolve/cli.py",
+            "libreevolve/core/loop.py",
+            "libreevolve/core/diff.py",
+            "libreevolve/llm/",
+            "libreevolve/population/",
+            "docs/status.md",
+        ],
+        "verification_scope": "top_level_claim_anchor_only",
+    },
+    {
+        "claim_id": "readme_important_limits_scope",
+        "document_path": "README.md",
+        "document_section": "Current Status / Important limits",
+        "claim_kind": "limitation_scope",
+        "claim_summary": (
+            "README important limits keep AlphaEvolve-scale benchmarks, "
+            "Google/Gemini parity, distributed async topology, arbitrary "
+            "language runners, hardened sandboxing, and paper-cache claims "
+            "scoped as missing or non-proof evidence."
+        ),
+        "evidence_refs": [
+            "README.md#current-status",
+            "papers/README.md",
+            "papers/documentation_truthfulness_boundary.json",
+            "docs/todo/code.md",
+            "docs/todo/papers.md",
+        ],
+        "verification_scope": "top_level_claim_anchor_only",
+    },
+    {
+        "claim_id": "roadmap_current_state_scope",
+        "document_path": "ROADMAP.md",
+        "document_section": "Current State",
+        "claim_kind": "planning_scope",
+        "claim_summary": (
+            "ROADMAP current-state bullets are maintained planning summaries "
+            "whose authoritative evidence remains code, tests, runtime "
+            "artifacts, paper sidecars, and TODO ledgers."
+        ),
+        "evidence_refs": [
+            "ROADMAP.md#current-state",
+            "docs/status.md",
+            "papers/README.md",
+            "docs/todo/roadmap.md",
+        ],
+        "verification_scope": "top_level_claim_anchor_only",
+    },
+    {
+        "claim_id": "roadmap_documentation_truthfulness_scope",
+        "document_path": "ROADMAP.md",
+        "document_section": "Documentation truthfulness",
+        "claim_kind": "documentation_boundary",
+        "claim_summary": (
+            "ROADMAP documentation-truthfulness status records path, manifest, "
+            "TODO-coverage, and sidecar-registry guards while leaving semantic "
+            "claim-by-claim proof open."
+        ),
+        "evidence_refs": [
+            "ROADMAP.md#documentation-truthfulness",
+            "papers/documentation_truthfulness_boundary.json",
+            "papers/documentation_claim_inventory.json",
+            "docs/todo/readme.md",
+            "docs/todo/roadmap.md",
+            "docs/todo/papers.md",
+        ],
+        "verification_scope": "top_level_claim_anchor_only",
+    },
+    {
+        "claim_id": "roadmap_alphaevolve_gap_scope",
+        "document_path": "ROADMAP.md",
+        "document_section": "Remaining AlphaEvolve gaps",
+        "claim_kind": "gap_scope",
+        "claim_summary": (
+            "ROADMAP missing-work sections preserve AlphaEvolve parity gaps "
+            "instead of treating local validators, sidecars, or fixtures as "
+            "full paper-result reproduction."
+        ),
+        "evidence_refs": [
+            "ROADMAP.md",
+            "papers/2506.13131__AlphaEvolve.pdf",
+            "papers/README.md",
+            "docs/todo/code.md",
+            "docs/todo/papers.md",
+        ],
+        "verification_scope": "top_level_claim_anchor_only",
+    },
+)
+
+
+@dataclass(frozen=True)
+class DocumentationClaimInventoryIssue:
+    code: str
+    message: str
+
+
+@dataclass(frozen=True)
+class DocumentationClaimInventoryValidation:
+    ok: bool
+    inventory_status: str | None
+    claim_count: int
+    readme_claim_count: int
+    roadmap_claim_count: int
+    missing_evidence_count: int
+    issues: list[DocumentationClaimInventoryIssue]
+
+
+def documentation_claim_inventory_record() -> dict[str, Any]:
+    """Return the current top-level README/ROADMAP claim inventory boundary."""
+
+    return {
+        "schema": DOCUMENTATION_CLAIM_INVENTORY_SCHEMA,
+        "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "inventory_status": EXPECTED_INVENTORY_STATUS,
+        "claim_ready": False,
+        "coverage_scope": (
+            "Top-level README and ROADMAP claim anchors only. This is not a "
+            "complete semantic verifier for every documentation sentence."
+        ),
+        "claims": [dict(claim) for claim in EXPECTED_CLAIMS],
+        "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
+        "claim_boundary": (
+            "This inventory gives stable ids and evidence anchors for the "
+            "top-level README and ROADMAP AlphaEvolve-facing status claims. It "
+            "does not claim complete README coverage, complete ROADMAP "
+            "coverage, semantic claim verification, stale completed-entry "
+            "detection, generated alignment reports, or full proof that every "
+            "documentation claim is current."
+        ),
+    }
+
+
+def validate_documentation_claim_inventory(
+    inventory: object | str | Path | None = None,
+) -> DocumentationClaimInventoryValidation:
+    data, read_issues = _load_inventory(
+        documentation_claim_inventory_record() if inventory is None else inventory
+    )
+    if read_issues:
+        return DocumentationClaimInventoryValidation(False, None, 0, 0, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[DocumentationClaimInventoryIssue] = []
+    if data.get("schema") != DOCUMENTATION_CLAIM_INVENTORY_SCHEMA:
+        issues.append(_issue("invalid_schema", "unsupported documentation claim inventory schema"))
+    if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
+        issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    status = data.get("inventory_status")
+    if status != EXPECTED_INVENTORY_STATUS:
+        issues.append(_issue("invalid_inventory_status", f"inventory_status must be {EXPECTED_INVENTORY_STATUS}"))
+    if data.get("claim_ready") is not False:
+        issues.append(_issue("claim_ready_overclaim", "documentation claim inventory must not claim complete semantic proof"))
+    scope = data.get("coverage_scope")
+    if not isinstance(scope, str) or "Top-level README and ROADMAP" not in scope:
+        issues.append(_issue("invalid_coverage_scope", "coverage_scope must identify top-level README and ROADMAP scope"))
+    claim_count, readme_count, roadmap_count = _validate_claims(data.get("claims"), issues)
+    missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
+    boundary_text = data.get("claim_boundary")
+    if (
+        not isinstance(boundary_text, str)
+        or "does not claim complete README coverage" not in boundary_text
+        or "semantic claim verification" not in boundary_text
+        or "full proof that every documentation claim is current" not in boundary_text
+    ):
+        issues.append(_issue("missing_claim_boundary", "claim_boundary must separate top-level anchors from semantic proof"))
+    return DocumentationClaimInventoryValidation(
+        ok=not issues,
+        inventory_status=status if isinstance(status, str) else None,
+        claim_count=claim_count,
+        readme_claim_count=readme_count,
+        roadmap_claim_count=roadmap_count,
+        missing_evidence_count=missing_count,
+        issues=issues,
+    )
+
+
+def render_documentation_claim_inventory_summary(inventory: dict[str, Any]) -> str:
+    validation = validate_documentation_claim_inventory(inventory)
+    status = "ok" if validation.ok else "invalid"
+    lines = [
+        "Documentation claim inventory",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| inventory_status | {validation.inventory_status or '<unknown>'} |",
+        f"| claim_count | {validation.claim_count} |",
+        f"| readme_claim_count | {validation.readme_claim_count} |",
+        f"| roadmap_claim_count | {validation.roadmap_claim_count} |",
+        f"| missing_evidence_count | {validation.missing_evidence_count} |",
+    ]
+    if validation.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(f"- {issue.code}: {issue.message}" for issue in validation.issues)
+    return "\n".join(lines)
+
+
+def _load_inventory(
+    inventory: object | str | Path,
+) -> tuple[dict[str, Any] | None, list[DocumentationClaimInventoryIssue]]:
+    if isinstance(inventory, dict):
+        return dict(inventory), []
+    if isinstance(inventory, str) and inventory.strip().startswith("{"):
+        try:
+            data = json.loads(inventory)
+        except json.JSONDecodeError as exc:
+            return None, [_issue("invalid_json", f"inventory JSON is invalid: {exc}")]
+    else:
+        try:
+            data = json.loads(Path(inventory).read_text(encoding="utf-8"))
+        except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
+            return None, [_issue("unreadable_inventory", f"inventory could not be loaded: {exc}")]
+    if isinstance(data, dict):
+        return data, []
+    return None, [_issue("invalid_shape", "documentation claim inventory must be a JSON object")]
+
+
+def _validate_claims(
+    value: object,
+    issues: list[DocumentationClaimInventoryIssue],
+) -> tuple[int, int, int]:
+    if not isinstance(value, list):
+        issues.append(_issue("invalid_claims", "claims must be a list"))
+        return 0, 0, 0
+    claims = [claim for claim in value if isinstance(claim, dict)]
+    if len(claims) != len(value):
+        issues.append(_issue("invalid_claim", "each claim must be an object"))
+    expected_by_id = {claim["claim_id"]: claim for claim in EXPECTED_CLAIMS}
+    actual_by_id = {
+        claim.get("claim_id"): claim
+        for claim in claims
+        if isinstance(claim.get("claim_id"), str)
+    }
+    missing = sorted(set(expected_by_id) - set(actual_by_id))
+    extra = sorted(set(actual_by_id) - set(expected_by_id))
+    if missing:
+        issues.append(_issue("missing_claim_id", f"missing claim ids: {', '.join(missing)}"))
+    if extra:
+        issues.append(_issue("extra_claim_id", f"unknown claim ids: {', '.join(extra)}"))
+    for claim_id, expected in expected_by_id.items():
+        actual = actual_by_id.get(claim_id)
+        if not actual:
+            continue
+        for key, expected_value in expected.items():
+            if actual.get(key) != expected_value:
+                issues.append(_issue(f"invalid_{claim_id}_{key}", f"{claim_id}.{key} does not match the expected inventory anchor"))
+    readme_count = sum(
+        1 for claim in claims if claim.get("document_path") == "README.md"
+    )
+    roadmap_count = sum(
+        1 for claim in claims if claim.get("document_path") == "ROADMAP.md"
+    )
+    return len(claims), readme_count, roadmap_count
+
+
+def _validate_missing_evidence(
+    value: object,
+    issues: list[DocumentationClaimInventoryIssue],
+) -> int:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_missing_evidence", "missing_evidence must be an object"))
+        return 0
+    expected_keys = set(EXPECTED_MISSING_EVIDENCE)
+    actual_keys = set(value)
+    missing = sorted(expected_keys - actual_keys)
+    extra = sorted(actual_keys - expected_keys)
+    if missing:
+        issues.append(_issue("missing_missing_evidence_key", f"missing_evidence lacks keys: {', '.join(missing)}"))
+    if extra:
+        issues.append(_issue("extra_missing_evidence_key", f"missing_evidence has unknown keys: {', '.join(extra)}"))
+    for key, expected_value in EXPECTED_MISSING_EVIDENCE.items():
+        if value.get(key) != expected_value:
+            issues.append(_issue(f"invalid_missing_evidence_{key}", f"missing_evidence.{key} must be {expected_value}"))
+    return len(actual_keys)
+
+
+def _issue(code: str, message: str) -> DocumentationClaimInventoryIssue:
+    return DocumentationClaimInventoryIssue(code, message)

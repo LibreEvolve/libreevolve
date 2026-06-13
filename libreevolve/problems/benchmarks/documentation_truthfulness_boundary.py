@@ -24,6 +24,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "paper_manifest_todo_coverage_rows",
     "paper_manifest_stale_absence_wording_checks",
     "boundary_sidecar_registry",
+    "documentation_claim_inventory",
     "focused_boundary_tests",
     "semantic_claim_verifier",
     "implementation_evidence_mapping",
@@ -75,11 +76,12 @@ def documentation_truthfulness_boundary_record() -> dict[str, Any]:
             "completed TODO ledgers, docs/README routing, GitHub Actions docs "
             "path filters, paper-manifest README and papers-index consistency "
             "checks, paper-manifest TODO coverage rows, stale source-specific "
-            "absence wording checks, a boundary sidecar registry, and focused "
-            "boundary tests. It does not claim semantic documentation-claim "
-            "verification, implementation-evidence mapping, stale completed "
-            "entry detection, generated alignment reports, or full proof that "
-            "every AlphaEvolve-facing claim is current."
+            "absence wording checks, a boundary sidecar registry, a top-level "
+            "README/ROADMAP claim inventory, and focused boundary tests. It "
+            "does not claim semantic documentation-claim verification, complete "
+            "implementation-evidence mapping, stale completed entry detection, "
+            "generated alignment reports, or full proof that every "
+            "AlphaEvolve-facing claim is current."
         ),
     }
 
@@ -117,7 +119,7 @@ def validate_documentation_truthfulness_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim semantic documentation-claim verification" not in boundary_text
-        or "implementation-evidence mapping" not in boundary_text
+        or "complete implementation-evidence mapping" not in boundary_text
         or "full proof that every AlphaEvolve-facing claim is current" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate cross-document guards from semantic claim proof"))

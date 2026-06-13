@@ -1356,7 +1356,10 @@ The committed `papers/documentation_truthfulness_boundary.json` sidecar
 preserves the current cross-document documentation guard boundary: README,
 ROADMAP, papers-index, TODO-ledger, path-filter, paper-manifest consistency,
 TODO-coverage, stale source-specific wording, sidecar-registry, and focused
-boundary-test evidence exist, while semantic documentation-claim verification,
+boundary-test evidence exist. The committed
+`papers/documentation_claim_inventory.json` sidecar adds top-level README and
+ROADMAP claim ids with evidence anchors, while complete README/ROADMAP
+coverage, semantic documentation-claim verification, complete
 implementation-evidence mapping, stale completed-entry detection, generated
 alignment reports, and full proof that every AlphaEvolve-facing claim is
 current remain absent.
@@ -2461,11 +2464,16 @@ Implemented:
   truthfulness sidecar for the AlphaEvolve-alignment docs process. It records
   README, ROADMAP, papers-index, active/completed TODO-ledger, docs/README
   routing, GitHub Actions docs path-filter, paper-manifest consistency,
-  TODO-coverage, stale source-specific wording, sidecar-registry, and focused
-  boundary-test evidence. It is not evidence of semantic documentation-claim
-  verification, implementation-evidence mapping, stale completed-entry
-  detection, generated alignment reports, or full proof that every
-  AlphaEvolve-facing claim is current.
+  TODO-coverage, stale source-specific wording, sidecar-registry, top-level
+  README/ROADMAP claim-inventory, and focused boundary-test evidence. It is
+  not evidence of semantic documentation-claim verification, complete
+  implementation-evidence mapping, stale completed-entry detection, generated
+  alignment reports, or full proof that every AlphaEvolve-facing claim is
+  current.
+- `papers/documentation_claim_inventory.json`: top-level README/ROADMAP claim
+  inventory sidecar with stable claim ids, document sections, evidence anchors,
+  and explicit missing-evidence fields for complete coverage and semantic
+  proof.
 - `libreevolve/problems/examples/sorting`: neutral plateau/diversity smoke
   fixture. The bubble-sort seed already reaches `accuracy == 1.0`, so this
   example can demonstrate mutation handling and same-score implementation

@@ -1560,6 +1560,65 @@ def test_validate_paper_manifest_requires_documentation_truthfulness_boundary_at
     assert "documentation_truthfulness_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_documentation_claim_inventory(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.DOCUMENTATION_CLAIM_INVENTORY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.documentation_claim_inventory_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_documentation_claim_inventory_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.documentation_claim_inventory_record()
+    record["claim_ready"] = True
+    record["inventory_status"] = "complete_semantic_documentation_truth_ready"
+    record["claims"][0]["evidence_refs"] = ["README.md"]
+    record["missing_evidence"]["semantic_claim_verifier"] = "recorded"
+    sidecar = tmp_path / paper_manifest.DOCUMENTATION_CLAIM_INVENTORY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "documentation_claim_inventory_claim_ready_overclaim" in codes
+    assert "documentation_claim_inventory_invalid_inventory_status" in codes
+    assert (
+        "documentation_claim_inventory_invalid_readme_current_status_scope_evidence_refs"
+        in codes
+    )
+    assert (
+        "documentation_claim_inventory_invalid_missing_evidence_semantic_claim_verifier"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_documentation_claim_inventory_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "documentation_claim_inventory_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_related_work_taxonomy_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

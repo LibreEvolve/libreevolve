@@ -107,6 +107,10 @@ from libreevolve.problems.benchmarks.documentation_truthfulness_boundary import 
     documentation_truthfulness_boundary_record,
     validate_documentation_truthfulness_boundary,
 )
+from libreevolve.problems.benchmarks.documentation_claim_inventory import (
+    documentation_claim_inventory_record,
+    validate_documentation_claim_inventory,
+)
 from libreevolve.problems.benchmarks.release_artifact_reproducibility_boundary import (
     release_artifact_reproducibility_boundary_record,
     validate_release_artifact_reproducibility_boundary,
@@ -533,6 +537,7 @@ PROVIDER_DIAGNOSTICS_REPLAY_BOUNDARY_FILE = "papers/provider_diagnostics_replay_
 CRITIQUE_REVIEWER_POOL_BOUNDARY_FILE = "papers/critique_reviewer_pool_boundary.json"
 PROMPT_SECTION_PACKING_BOUNDARY_FILE = "papers/prompt_section_packing_boundary.json"
 DOCUMENTATION_TRUTHFULNESS_BOUNDARY_FILE = "papers/documentation_truthfulness_boundary.json"
+DOCUMENTATION_CLAIM_INVENTORY_FILE = "papers/documentation_claim_inventory.json"
 RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_FILE = "papers/release_artifact_reproducibility_boundary.json"
 RELATED_WORK_TAXONOMY_BOUNDARY_FILE = "papers/related_work_taxonomy_boundary.json"
 TASK_SPECIFICATION_BOUNDARY_FILE = "papers/task_specification_boundary.json"
@@ -1046,6 +1051,7 @@ def validate_paper_manifest(
     issues.extend(_validate_critique_reviewer_pool_boundary(root_path))
     issues.extend(_validate_prompt_section_packing_boundary(root_path))
     issues.extend(_validate_documentation_truthfulness_boundary(root_path))
+    issues.extend(_validate_documentation_claim_inventory(root_path))
     issues.extend(_validate_release_artifact_reproducibility_boundary(root_path))
     issues.extend(_validate_related_work_taxonomy_boundary(root_path))
     issues.extend(_validate_task_specification_boundary(root_path))
@@ -2462,6 +2468,38 @@ def _validate_documentation_truthfulness_boundary(root_path: Path) -> list[Paper
             f"documentation_truthfulness_boundary_{issue.code}",
             issue.message,
             "documentation_truthfulness",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_documentation_claim_inventory(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / DOCUMENTATION_CLAIM_INVENTORY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = documentation_claim_inventory_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "documentation_claim_inventory_manifest_missing",
+                    (
+                        f"{DOCUMENTATION_CLAIM_INVENTORY_FILE} must emit "
+                        "top-level README/ROADMAP claim anchors versus semantic proof scope"
+                    ),
+                    "documentation_claim_inventory",
+                )
+            ]
+    report = validate_documentation_claim_inventory(recordset)
+    return [
+        PaperManifestIssue(
+            f"documentation_claim_inventory_{issue.code}",
+            issue.message,
+            "documentation_claim_inventory",
         )
         for issue in report.issues
     ]

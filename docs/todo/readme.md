@@ -22,11 +22,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     that AlphaEvolve-alignment cleanup is a whole-documentation task spanning
     the root README, operational guides, status, ROADMAP, papers index,
     sidecars, and active/completed TODO ledgers.
+    `papers/documentation_claim_inventory.json` now assigns stable claim ids
+    and evidence anchors to top-level README status, runnable-today, and limit
+    claims, while marking complete README coverage and semantic verification as
+    absent.
   - Current gap: there is still no semantic claim verifier, machine-readable
-    implementation-evidence mapping for every README claim, cross-document
-    claim inventory, stale completed-entry detector, generated alignment
-    report, or full proof that every AlphaEvolve-facing README or docs claim is
-    current.
+    implementation-evidence mapping for every README claim, complete
+    cross-document claim inventory, stale completed-entry detector, generated
+    alignment report, or full proof that every AlphaEvolve-facing README or
+    docs claim is current.
   - Required result: add a README claim inventory that links each feature,
     limit, research-source, and paper-derived statement to code/tests/docs/
     sidecars/TODO evidence, extend it to the linked documentation surfaces,

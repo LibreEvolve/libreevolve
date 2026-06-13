@@ -744,9 +744,11 @@ is not yet an AlphaEvolve reproduction.
 - Keep README, docs, paper index, and `docs/todo/*` aligned with implemented
   behavior. The committed
   `papers/documentation_truthfulness_boundary.json` sidecar preserves the
-  current cross-document guard boundary while keeping semantic
-  documentation-claim verification and full AlphaEvolve-facing claim proof
-  open.
+  current cross-document guard boundary, and
+  `papers/documentation_claim_inventory.json` now gives top-level README and
+  ROADMAP claim ids with evidence anchors while keeping complete claim
+  coverage, semantic documentation-claim verification, and full
+  AlphaEvolve-facing claim proof open.
 - Keep paper-manifest validation diagnostics shareable by using
   repository-relative labels and secret-redacted exception text in text and JSON
   output.

@@ -132,6 +132,15 @@ def test_tests_workflow_covers_docs_papers_and_todo_changes():
     assert 'Path("libreevolve/problems/examples").rglob("*")' in release_commands
     assert "wheel is missing bundled example files" in release_commands
     assert "sdist is missing bundled example files" in release_commands
+    assert "python -m libreevolve.tools.release_artifact_provenance --root ." in release_commands
+    upload_steps = [
+        step
+        for step in release_artifact.get("steps", [])
+        if step.get("uses") == "actions/upload-artifact@v4"
+    ]
+    assert upload_steps
+    assert upload_steps[0]["with"]["name"] == "libreevolve-release-smoke-artifacts"
+    assert upload_steps[0]["with"]["path"] == "dist/*"
     assert "python -m venv .venv-wheel-smoke" in release_commands
     assert "python -m pip install dist/*.whl" in release_commands
     assert "libreevolve --help" in release_commands

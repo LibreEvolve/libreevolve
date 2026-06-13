@@ -14,7 +14,7 @@ def test_release_artifact_reproducibility_boundary_accepts_editable_boundary():
     assert validation.ok is True
     assert validation.boundary_status == "ci_release_artifact_smoke_available"
     assert validation.required_evidence_field_count == 13
-    assert validation.missing_evidence_count == 2
+    assert validation.missing_evidence_count == 1
     assert boundary["schema"] == RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
     assert boundary["partial_evidence"]["wheel_build_check"] == "ci_smoke"
@@ -23,6 +23,10 @@ def test_release_artifact_reproducibility_boundary_accepts_editable_boundary():
     assert (
         boundary["partial_evidence"]["package_data_inclusion_check"]
         == "complete_bundled_example_wheel_and_sdist_inventory"
+    )
+    assert (
+        boundary["partial_evidence"]["release_artifact_provenance"]
+        == "ci_dist_artifact_and_source_hash_manifest"
     )
     assert "complete release-wide package-data inventory certification" in (
         boundary["claim_boundary"]
@@ -33,7 +37,7 @@ def test_release_artifact_reproducibility_boundary_rejects_release_overclaim():
     boundary = release_artifact_reproducibility_boundary_record()
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "verified_release_distribution"
-    boundary["missing_evidence"]["release_artifact_provenance"] = "recorded"
+    boundary["partial_evidence"]["release_artifact_provenance"] = "signed_release_ready"
     boundary["required_evidence_fields"] = ["pyproject_metadata_recorded"]
 
     validation = validate_release_artifact_reproducibility_boundary(boundary)
@@ -42,7 +46,7 @@ def test_release_artifact_reproducibility_boundary_rejects_release_overclaim():
     assert validation.ok is False
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
-    assert "invalid_missing_evidence_release_artifact_provenance" in codes
+    assert "invalid_partial_evidence_release_artifact_provenance" in codes
     assert "missing_required_evidence_field" in codes
 
 
@@ -55,4 +59,4 @@ def test_render_release_artifact_reproducibility_boundary_summary_reports_shape(
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | ci_release_artifact_smoke_available |" in summary
     assert "| required_evidence_field_count | 13 |" in summary
-    assert "| missing_evidence_count | 2 |" in summary
+    assert "| missing_evidence_count | 1 |" in summary

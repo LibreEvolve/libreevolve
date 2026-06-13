@@ -2489,7 +2489,7 @@ def test_validate_paper_manifest_rejects_release_artifact_reproducibility_bounda
     record = paper_manifest.release_artifact_reproducibility_boundary_record()
     record["claim_ready"] = True
     record["boundary_status"] = "verified_release_distribution"
-    record["missing_evidence"]["release_artifact_provenance"] = "recorded"
+    record["partial_evidence"]["release_artifact_provenance"] = "signed_release_ready"
     sidecar = tmp_path / paper_manifest.RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -2500,7 +2500,7 @@ def test_validate_paper_manifest_rejects_release_artifact_reproducibility_bounda
     assert "release_artifact_reproducibility_boundary_claim_ready_overclaim" in codes
     assert "release_artifact_reproducibility_boundary_invalid_boundary_status" in codes
     assert (
-        "release_artifact_reproducibility_boundary_invalid_missing_evidence_release_artifact_provenance"
+        "release_artifact_reproducibility_boundary_invalid_partial_evidence_release_artifact_provenance"
         in codes
     )
 

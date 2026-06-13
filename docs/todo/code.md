@@ -4759,17 +4759,21 @@ Primary evidence:
     `release_artifact` job that builds one wheel and one sdist, installs the
     wheel into an isolated virtual environment, and smokes both `libreevolve
     --help` and `python -m libreevolve --help`. It also checks every bundled
-    example file inside both the wheel and sdist.
+    example file inside both the wheel and sdist, and writes
+    `release_artifact_provenance.json` with wheel/sdist hashes plus selected
+    source-file hashes, then uploads the release smoke artifacts as a GitHub
+    Actions artifact.
   - Remaining gap: there is still no complete release-wide package-data
-    inventory certification, release checklist, release-artifact provenance tying
-    generated distributions back to source and manifest environment evidence,
-    or published/private-index artifact verification. The paper-facing sidecar
-    `papers/release_artifact_reproducibility_boundary.json` now preserves this
-    CI-smoke-only release-artifact boundary.
+    inventory certification, release checklist, signed release provenance tying
+    generated distributions back to a reviewed release event, full manifest
+    environment evidence, or published/private-index artifact verification. The
+    paper-facing sidecar `papers/release_artifact_reproducibility_boundary.json`
+    now preserves this CI-smoke-only release-artifact boundary.
   - Required result: extend the bundled-example wheel/sdist inventory check into a
     complete release-wide package-data inventory/certification, add release
-    checklist/provenance, and add remote/private-index artifact verification
-    without overclaiming full release reproducibility from the current CI smoke.
+    checklist/signed provenance, and add remote/private-index artifact
+    verification without overclaiming full release reproducibility from the
+    current CI smoke.
 
 - [ ] Expand GitHub Actions workflow coverage beyond path-scoped Ubuntu jobs.
   - Spec evidence: AlphaEvolve-scale engineering claims should be supported by
@@ -4782,13 +4786,14 @@ Primary evidence:
     job that validates the committed paper manifest and focused docs/paper
     tests without requiring ignored local PDFs, plus a release-artifact smoke
     job that builds wheel/sdist artifacts, checks every bundled example file in
-    the wheel and sdist, and smokes an installed wheel CLI.
+    the wheel and sdist, writes artifact hash provenance, uploads release smoke
+    artifacts, and smokes an installed wheel CLI.
     `tests/test_agents_docs.py` verifies required path filters, job names, and
     paper/docs/release commands. The committed
     `papers/ci_workflow_coverage_boundary.json` sidecar now preserves this
     path-scoped Ubuntu workflow boundary.
   - Required result: add full docs/paper verifier coverage, local-PDF paper
-    manifest validation where appropriate, release provenance/complete
+    manifest validation where appropriate, signed release provenance/complete
     release-wide package-data certification, interpreter/platform matrices,
     branch policy, and notification-safe trigger policy before treating CI as
     AlphaEvolve-grade validation coverage.

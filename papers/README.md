@@ -1319,15 +1319,16 @@ budget/accounting semantics. The committed
 `papers/release_artifact_reproducibility_boundary.json` sidecar preserves the
 CI-smoke-only release-artifact boundary: wheel/sdist build checks and
 install-from-wheel CLI smoke checks exist with complete bundled-example wheel
-and sdist inventory inspection, while complete release-wide package-data inventory
-certification, release-artifact provenance, published-index verification, and
-release-checklist readiness remain absent.
+and sdist inventory inspection plus CI-generated artifact/source hash
+provenance and uploaded release-smoke artifacts, while complete release-wide
+package-data inventory certification, signed release provenance, published-index
+verification, and release-checklist readiness remain absent.
 The committed `papers/ci_workflow_coverage_boundary.json` sidecar preserves
 the current path-scoped GitHub Actions boundary: manual dispatch,
 push/pull_request path filters, secret scan, Python 3.11/3.12 Ubuntu unit jobs,
 optional integration tests, and a committed-manifest paper/docs job exist,
 plus a release-artifact smoke job exists, while CI local-PDF paper-manifest
-checks, semantic docs-claim verification, release provenance/complete
+checks, semantic docs-claim verification, signed release provenance/complete
 release-wide package-data certification, cross-platform matrices, branch
 policy, and notification policy remain absent.
 The committed `papers/documentation_truthfulness_boundary.json` sidecar

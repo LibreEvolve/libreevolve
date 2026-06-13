@@ -13459,9 +13459,10 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Status: `papers/release_artifact_reproducibility_boundary.json` now
     records the editable/local-install-only boundary: pyproject metadata,
     console-script declarations, and runtime package/environment provenance
-    exist, while wheel/sdist build checks, install-from-wheel smoke tests,
-    package-data checks, release-artifact provenance, and release-checklist
-    readiness remain absent.
+    exist, while full release-artifact validation remained absent at the time
+    this task was archived. Current active TODOs track the narrower remaining
+    gap around complete package-data certification, signed release provenance,
+    published-index verification, and release-checklist readiness.
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused release-artifact tests reject verified-release
     overclaims.

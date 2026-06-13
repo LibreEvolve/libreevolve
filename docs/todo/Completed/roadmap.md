@@ -3663,9 +3663,9 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     console-script declaration, runtime environment/package provenance,
     installed-distribution metadata, bounded wheel metadata snapshots, and
     `papers/release_artifact_reproducibility_boundary.json`.
-  - Remaining guard: wheel/sdist build checks, package-data inclusion
-    validation, install-from-wheel CLI smoke tests, release checklist, and
-    release-artifact provenance remain active in `docs/todo/code.md` and
+  - Remaining guard: complete release-wide package-data certification,
+    release checklist readiness, signed release provenance, and published-index
+    verification remain active in `docs/todo/code.md` and
     `docs/todo/papers.md`.
   - Verification: release-artifact boundary and paper-manifest validation
     continue to reject editable/local package metadata as verified

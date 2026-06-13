@@ -24,11 +24,11 @@
     "wheel_build_check": "ci_smoke",
     "sdist_build_check": "ci_smoke",
     "install_from_wheel_cli_smoke": "ci_smoke",
-    "package_data_inclusion_check": "complete_bundled_example_wheel_and_sdist_inventory"
+    "package_data_inclusion_check": "complete_bundled_example_wheel_and_sdist_inventory",
+    "release_artifact_provenance": "ci_dist_artifact_and_source_hash_manifest"
   },
   "missing_evidence": {
-    "release_artifact_provenance": "not_recorded_locally",
     "release_checklist": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has pyproject metadata, a console-script declaration, and runtime environment/package provenance for editable or locally installed use, including bounded wheel metadata snapshots, direct_url/INSTALLER/RECORD evidence, and pip freeze/config hashes. CI also builds one wheel and one sdist, installs the wheel into an isolated virtual environment, smokes the console script, and checks every file under libreevolve/problems/examples inside the wheel and sdist. It does not claim complete release-wide package-data inventory certification, release-artifact provenance, published-index verification, or release-checklist readiness."
+  "claim_boundary": "This boundary records that LibreEvolve has pyproject metadata, a console-script declaration, and runtime environment/package provenance for editable or locally installed use, including bounded wheel metadata snapshots, direct_url/INSTALLER/RECORD evidence, and pip freeze/config hashes. CI also builds one wheel and one sdist, installs the wheel into an isolated virtual environment, smokes the console script, and checks every file under libreevolve/problems/examples inside the wheel and sdist. CI also writes release_artifact_provenance.json with wheel/sdist hashes and selected source-file hashes, then uploads the release smoke artifacts as GitHub Actions artifacts. It does not claim complete release-wide package-data inventory certification, signed release provenance, published-index verification, or release-checklist readiness."
 }

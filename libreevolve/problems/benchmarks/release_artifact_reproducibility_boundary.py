@@ -27,7 +27,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "release_checklist",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "release_artifact_provenance": "not_recorded_locally",
     "release_checklist": "not_recorded_locally",
 }
 EXPECTED_PARTIAL_EVIDENCE = {
@@ -35,6 +34,7 @@ EXPECTED_PARTIAL_EVIDENCE = {
     "sdist_build_check": "ci_smoke",
     "install_from_wheel_cli_smoke": "ci_smoke",
     "package_data_inclusion_check": "complete_bundled_example_wheel_and_sdist_inventory",
+    "release_artifact_provenance": "ci_dist_artifact_and_source_hash_manifest",
 }
 
 
@@ -79,9 +79,12 @@ def release_artifact_reproducibility_boundary_record() -> dict[str, Any]:
             "and one sdist, installs the wheel into an isolated virtual "
             "environment, smokes the console script, and checks every file "
             "under libreevolve/problems/examples inside the wheel and sdist. "
-            "It does not claim complete release-wide package-data inventory "
-            "certification, release-artifact provenance, published-index "
-            "verification, or release-checklist readiness."
+            "CI also writes release_artifact_provenance.json with wheel/sdist "
+            "hashes and selected source-file hashes, then uploads the release "
+            "smoke artifacts as GitHub Actions artifacts. It does not claim "
+            "complete release-wide package-data inventory certification, signed "
+            "release provenance, published-index verification, or "
+            "release-checklist readiness."
         ),
     }
 
@@ -127,6 +130,8 @@ def validate_release_artifact_reproducibility_boundary(
         or "CI also builds one wheel and one sdist" not in boundary_text
         or "installs the wheel into an isolated virtual environment" not in boundary_text
         or "checks every file under libreevolve/problems/examples inside the wheel and sdist" not in boundary_text
+        or "release_artifact_provenance.json with wheel/sdist hashes" not in boundary_text
+        or "uploads the release smoke artifacts as GitHub Actions artifacts" not in boundary_text
         or "does not claim complete release-wide package-data inventory certification" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must keep editable/local installs separate from verified release artifacts"))

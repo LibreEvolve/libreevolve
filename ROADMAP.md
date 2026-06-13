@@ -625,9 +625,10 @@ is not yet an AlphaEvolve reproduction.
 - Preserve the CI-smoke-only release packaging boundary with
   `papers/release_artifact_reproducibility_boundary.json`; wheel/sdist build
   checks, complete bundled-example wheel and sdist inventory checks, and
-  install-from-wheel CLI smoke checks exist, while complete release-wide
-  package-data certification, release checklist, release-artifact provenance,
-  and index artifact verification remain open.
+  install-from-wheel CLI smoke checks exist, with CI-generated distribution
+  hash/source-file provenance and uploaded release-smoke artifacts; complete
+  release-wide package-data certification, release checklist, signed release
+  provenance, and index artifact verification remain open.
 - Extend current bounded environment provenance into stronger reproducibility
   evidence: complete install-source interpretation semantics, external build
   execution/options/environment records beyond `pyproject.toml`
@@ -2217,15 +2218,15 @@ resumed-trace proof are still open.
   indexes.
 - Extend current `pyproject.toml` metadata, dev extras, console-script
   packaging, and CI wheel/sdist/install smoke beyond smoke validation with
-  complete release-wide package-data certification, release-artifact
-  provenance, and index verification.
+  complete release-wide package-data certification, signed release provenance,
+  release checklist evidence, and index verification.
 - Extend the current path-scoped GitHub Actions workflow beyond secret scan,
   Python 3.11/3.12 non-integration tests, optional integration tests, and
   the committed-manifest paper/docs and release-artifact smoke CI jobs with
   broader docs/paper-specific validation, local-PDF paper-manifest checks where
-  appropriate, release provenance/complete release-wide package-data checks, more
-  interpreter/platform coverage, and notification-safe trigger and branch
-  policy. The current paper-facing CI boundary is tracked by
+  appropriate, signed release provenance/complete release-wide package-data
+  checks, more interpreter/platform coverage, and notification-safe trigger and
+  branch policy. The current paper-facing CI boundary is tracked by
   `papers/ci_workflow_coverage_boundary.json`.
 
 ## Non-Goals For Now

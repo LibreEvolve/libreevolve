@@ -35,7 +35,7 @@ EXPECTED_MISSING_EVIDENCE = {
     "notification_policy": "not_recorded_locally",
 }
 EXPECTED_PARTIAL_EVIDENCE = {
-    "wheel_sdist_ci_smoke": "release_artifact_job_with_bundled_example_wheel_and_sdist_inventory",
+    "wheel_sdist_ci_smoke": "release_artifact_job_with_bundled_example_inventory_hash_provenance_and_artifact_upload",
 }
 
 
@@ -79,11 +79,13 @@ def ci_workflow_coverage_boundary_record() -> dict[str, Any]:
             "paper/docs job that does not require the ignored local PDF cache, "
             "a release-artifact smoke job that builds a wheel and sdist and "
             "installs the wheel for CLI smoke checks with bundled-example "
-            "wheel and sdist inventory inspection, and unit tests that check the "
-            "workflow shape. It does not claim CI local-PDF paper-manifest checks, "
-            "semantic documentation-claim verification, release provenance or "
-            "complete release-wide package-data certification, cross-platform CI "
-            "coverage, branch policy, or notification policy."
+            "wheel and sdist inventory inspection plus release artifact hash "
+            "provenance and GitHub Actions artifact upload, and unit tests "
+            "that check the workflow shape. It does "
+            "not claim CI local-PDF paper-manifest checks, "
+            "semantic documentation-claim verification, signed release "
+            "provenance or complete release-wide package-data certification, "
+            "cross-platform CI coverage, branch policy, or notification policy."
         ),
     }
 
@@ -121,6 +123,8 @@ def validate_ci_workflow_coverage_boundary(
         or "committed-manifest paper/docs job" not in boundary_text
         or "release-artifact smoke job" not in boundary_text
         or "bundled-example wheel and sdist inventory inspection" not in boundary_text
+        or "release artifact hash provenance" not in boundary_text
+        or "GitHub Actions artifact upload" not in boundary_text
         or "does not claim CI local-PDF paper-manifest checks" not in boundary_text
         or "cross-platform CI coverage" not in boundary_text
     ):

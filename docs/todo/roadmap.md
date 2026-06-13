@@ -10,28 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep provider capability roadmap wording scoped to static backend
-  validation versus live provider/account discovery.
-  - Spec evidence: AlphaEvolve-scale backend comparisons need provider
-    capability evidence that survives changing model registries, service API
-    versions, and account entitlements; local static checks alone cannot prove
-    a model/API mode was available to an account at run time.
-  - Current evidence: the roadmap already names live provider service/default
-    capture and provider pricing as open environment/backend gaps, while README
-    and manifest policies make the narrower capability boundary explicit:
-    LibreEvolve performs manifest-safe model-id validation and local OpenAI
-    compatibility checks only, with no live model-registry,
-    service/API-version, or account-availability lookup before a run.
-    `capability_readiness` keeps those live surfaces false with validation.
-    Code and paper TODO entries already track live authenticated provider
-    request/model-registry evidence beyond credential-presence and local client
-    construction.
-  - Required result: when live provider model-registry discovery,
-    service/API-version capture, account-availability validation, or
-    provider-capability provenance lands, update the roadmap, README, papers
-    index, and code/paper TODO entries together so they neither underclaim the
-    current static capability policy nor overclaim live provider discovery.
-
 - [ ] Keep provider-diagnostics roadmap wording scoped to retained scalar
       telemetry versus raw provider replay.
   - Spec evidence: AlphaEvolve-grade scheduler and budget evidence needs

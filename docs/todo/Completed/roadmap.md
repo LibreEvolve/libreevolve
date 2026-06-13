@@ -2,6 +2,31 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive provider-capability roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `README.md`,
+    `docs/status.md`, `docs/run-artifacts.md`, `docs/configuration.md`,
+    `docs/backends.md`, `papers/README.md`, and manifest policy records
+    already scope provider capability lookup to static local validation, not
+    live provider/account discovery.
+  - Current evidence: manifests emit
+    `libreevolve.provider_capability_lookup_policy.v1` with policy
+    `local_static_validation_no_live_provider_lookup`, no pre-run network calls
+    for capability discovery, provider model registry and service/API-version
+    marked not queried, account availability marked not checked, record
+    count/hash integrity, and per-backend records for manifest-safe model ids,
+    client-context fields, OpenAI API-mode policy linkage, and offline
+    compatibility.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    AlphaEvolve-grade provider evidence: live provider model-registry
+    discovery, service/API-version capture, account/model availability proof,
+    remote provider defaults, live pricing, first-class Google/Gemini parity,
+    and provider-output/raw-payload replay.
+  - Verification: focused provider capability-policy tests validate static
+    records, JSON-file loading, record count/hash integrity, OpenAI API-mode
+    policy references, false readiness fields for live registry/service/account
+    lookup, and rejection of forged live-lookup overclaims. Config-boundary
+    tests reject live provider/model API compatibility overclaims.
+
 - [x] Archive environment-provenance roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `docs/development.md`, `docs/status.md`, `docs/architecture.md`,

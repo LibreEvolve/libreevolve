@@ -2,6 +2,23 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive task-specification roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
+    `papers/README.md` already describe startup
+    `task_specification` bundles, the standalone `task_specification.json`
+    artifact, `runtime.history.task_spec_artifact_resolution_report`, the
+    checked `docs/examples/task_specification.embedded_evaluate_math.json`
+    example, and `papers/task_specification_boundary.json` as a
+    runtime-artifact-resolution-only boundary rather than full AlphaEvolve
+    task-spec parity.
+  - Remaining guard: external-validator score causality, arbitrary
+    language/build-runner task specs, user-authored standalone task-spec
+    parity, and full AlphaEvolve task-spec parity remain active in
+    `docs/todo/code.md` and `docs/todo/papers.md`.
+  - Verification: task-specification boundary, task-spec example, runtime
+    task-spec report, and paper-manifest validation continue to reject current
+    artifact-resolution evidence as full AlphaEvolve task-spec parity.
+
 - [x] Archive Figure 1/Figure 2 process-exhibit roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
     `papers/README.md` already describe

@@ -6,41 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Extend task-specification roadmap wording beyond field-level artifact
-      resolution.
-  - Spec evidence: AlphaEvolve Section 2.1 and Figure 2 frame task
-    specification as one user-provided input bundle: initial program/components
-    to evolve, evaluation code, prompt template/configuration, LLM choices,
-    and optional background knowledge. On local PDF page 4, Figure 2 labels
-    "Initial program", "Prompt template", "Evaluation code", "LLMs ensemble",
-    and "Background knowledge"; the caption says the user provides the initial
-    program, evaluation code, and optional configurations before the loop.
-  - Current evidence: startup manifests now include
-    `task_specification` with schema
-    `libreevolve.alphaevolve_task_specification_bundle.v1`. The bundle
-    cross-links initial programs, evaluator code or embedded evaluator stages,
-    prompt template/config metadata, backend choices, optional background
-    context, candidate representation, and objective metrics to their manifest
-    paths, plus field statuses, ids/hashes/counts, `task_spec_id`, validation,
-    and unsupported/incomplete labels. Runtime manifests now also include
-    `runtime.history.task_spec_artifact_resolution_report`, which validates
-    task-spec manifest paths and links each field to runtime artifact paths for
-    candidate history, prompt history, LLM calls, controller-budget events,
-    evaluator artifacts, best exports, initial evolvable component spans when
-    markers are present, embedded score-field candidate-path links with static
-    AST causal attribution when supported candidate-owned evaluation ran, and a
-    hashed standalone
-    `task_specification.json` run artifact. It also includes bounded candidate
-    prompt, and evaluator JSONL row joins, plus the checked
-    `docs/examples/task_specification.embedded_evaluate_math.json` example. It
-    is still a partial artifact, not full AlphaEvolve task-spec parity for
-    external validators, arbitrary language/build runner specs, or full
-    user-authored task-spec evidence. ROADMAP now also names
-    `papers/task_specification_boundary.json` as the
-    runtime-artifact-resolution-only paper-facing boundary.
-  - Required result: when those non-embedded task-spec parity gaps land, update
-    ROADMAP, README, papers index, and code/paper TODOs together.
-
 ## Missing Roadmap Items
 
 ## Existing Items That Need Tightening

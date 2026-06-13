@@ -119,6 +119,18 @@ Important limits:
   ablation rows, Grok-4.1-FR provenance, Appendix D metric library, or theory
   nonidentifiability boundary; `papers/causalevolve_boundary.json` records
   that absence boundary.
+- DeepEvolve coverage is retrieval/debug-loop inspiration only:
+  LibreEvolve's `deep_research` plugin provides bounded retrieval context and
+  provenance, but does not implement DeepEvolve's six-module
+  plan/search/write/code/evaluation/evolutionary-selection workflow,
+  problem/algorithm textualization, plan-step question records, proposal
+  pseudo-code, cross-file coding/localization, `DEEPEVOLVE` edit block
+  execution, reflection checkpoints, automatic debugging from execution
+  feedback, score-zero fallback after a debugging budget, DeepEvolve database
+  semantics, island/MAP-Elites inspiration traces, nine-task benchmark rows,
+  qualitative judge records, deep-research ablations, Appendix C query rows,
+  or 30-minute single-GPU budget evidence; `papers/deepevolve_boundary.json`
+  records that absence boundary.
 - The examples are smoke fixtures and small demos unless a fixture documents
   stronger benchmark evidence.
 - Benchmark-hardening records and shipped-example scope validate smoke-scope

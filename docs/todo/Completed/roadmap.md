@@ -2,6 +2,35 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive DeepEvolve cross-file research/debug-loop roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/deepevolve_boundary.json` now keep arXiv `2510.06056`
+    source-scoped as retrieval/debug-loop inspiration rather than implemented
+    DeepEvolve cross-file research/debug execution parity.
+  - Current evidence: the cached paper and boundary JSON record DeepEvolve
+    source identity, arXiv v1 metadata, CC BY 4.0 license, linked GitHub
+    status, problem/algorithm/user-instruction input context, textualization
+    functions, plan/search/write research loop, proposal pseudo-code,
+    cross-file code editing, `DEEPEVOLVE` edit blocks, reflection checkpoints,
+    automatic debugging from execution feedback, score-zero fallback,
+    evolutionary database and island/MAP-Elites inspiration context, nine-task
+    benchmark context, Table 2 performance/runtime rows, Table 3 debugging
+    rows, Figure 3 qualitative judge rows, Table 4 ablation context, Appendix
+    C query context, and 30-minute single-GPU budget context.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: input/textualization schemas, plan/search/write records, proposal
+    pseudo-code artifacts, cross-file localization and patch records,
+    reflection checkpoints, debugging-attempt and execution-feedback records,
+    score-zero fallback, DeepEvolve database semantics, island/MAP-Elites
+    inspiration traces, task/metric rows, performance/runtime rows, debugging
+    success rows, qualitative judge rows, ablation rows, Appendix C query
+    rows, budget evidence, and separation from bounded retrieval context.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive CausalEvolve causal-scratchpad roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

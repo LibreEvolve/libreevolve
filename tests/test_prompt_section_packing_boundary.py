@@ -19,6 +19,7 @@ def test_prompt_section_packing_boundary_accepts_mutation_only_boundary():
     assert validation.required_evidence_field_count == 22
     assert validation.missing_evidence_count == 5
     assert boundary["schema"] == PROMPT_SECTION_PACKING_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["2.2", "2.3", "2.4"]
     assert boundary["claim_ready"] is False
     assert (
         "does not claim all-role provider-token section packing"

@@ -1,8 +1,12 @@
 {
   "schema": "libreevolve.prompt_section_packing_boundary.v1",
   "source_paper_id": "2506.13131",
-  "source_section_id": "2.2",
-  "source_claim": "AlphaEvolve prompt context can include previous program execution results, outputs, scores, and other feedback while fitting the selected model context",
+  "source_section_ids": [
+    "2.2",
+    "2.3",
+    "2.4"
+  ],
+  "source_claim": "AlphaEvolve prompt context can include previous program execution results, outputs, scores, and other feedback; prompt/output formatting and multi-score prompt diversity must remain bounded to the selected model context",
   "boundary_status": "mutation_section_packing_without_all_role_provider_token_policy",
   "section_budget_schema": "libreevolve.prompt_section_budget.v1",
   "coverage_schema": "libreevolve.prompt_section_packing_coverage.v1",

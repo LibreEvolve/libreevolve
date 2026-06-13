@@ -10,7 +10,7 @@ PROMPT_SECTION_PACKING_BOUNDARY_SCHEMA = (
     "libreevolve.prompt_section_packing_boundary.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
-EXPECTED_SOURCE_SECTION_ID = "2.2"
+EXPECTED_SOURCE_SECTION_IDS = ("2.2", "2.3", "2.4")
 EXPECTED_BOUNDARY_STATUS = "mutation_section_packing_without_all_role_provider_token_policy"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "prompt_max_chars",
@@ -66,11 +66,12 @@ def prompt_section_packing_boundary_record() -> dict[str, Any]:
     return {
         "schema": PROMPT_SECTION_PACKING_BOUNDARY_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
-        "source_section_id": EXPECTED_SOURCE_SECTION_ID,
+        "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_claim": (
             "AlphaEvolve prompt context can include previous program execution "
-            "results, outputs, scores, and other feedback while fitting the "
-            "selected model context"
+            "results, outputs, scores, and other feedback; prompt/output "
+            "formatting and multi-score prompt diversity must remain bounded "
+            "to the selected model context"
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "section_budget_schema": "libreevolve.prompt_section_budget.v1",
@@ -113,8 +114,8 @@ def validate_prompt_section_packing_boundary(
         issues.append(_issue("invalid_schema", "unsupported prompt section-packing boundary schema"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
-    if data.get("source_section_id") != EXPECTED_SOURCE_SECTION_ID:
-        issues.append(_issue("invalid_source_section_id", "source_section_id must be 2.2"))
+    if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be 2.2, 2.3, and 2.4"))
     source_claim = data.get("source_claim")
     if (
         not isinstance(source_claim, str)

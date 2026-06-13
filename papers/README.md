@@ -2436,17 +2436,19 @@ Implemented:
   reports, reviewer reliability ablations, per-reviewer provider isolation, or
   external reviewer timeout artifacts.
 - `papers/prompt_section_packing_boundary.json`: prompt section-packing
-  sidecar for AlphaEvolve Section 2.2. It records prompt caps, heuristic
-  token estimates, provider token-counter hooks, mutation common-counter
-  discovery, final-prompt role-counter discovery, prompt section-budget
-  records, section-priority packing decisions, required-section fit status,
-  provider-counter boundary fields, runtime prompt-section-packing coverage,
-  mutation as the only current section-packed prompt role, critique/feedback/
-  meta-prompt as final-prompt-boundary-only roles, bounded validator metadata
-  summaries, and bounded evaluator artifact excerpts. It is not evidence of
-  all-role provider-token section packing, exact non-OpenAI provider counters,
-  registry/custom role section packing, retrieval/context/plugin/failure-
-  memory section packing, or full validator-metadata prompt policy.
+  sidecar for AlphaEvolve Sections 2.2, 2.3, and 2.4 prompt-context,
+  output-format, and multi-score prompt-diversity evidence. It records prompt
+  caps, heuristic token estimates, provider token-counter hooks, mutation
+  common-counter discovery, final-prompt role-counter discovery, prompt
+  section-budget records, section-priority packing decisions, required-section
+  fit status, provider-counter boundary fields, runtime prompt-section-packing
+  coverage, mutation as the only current section-packed prompt role,
+  critique/feedback/meta-prompt as final-prompt-boundary-only roles, bounded
+  validator metadata summaries, and bounded evaluator artifact excerpts. It is
+  not evidence of all-role provider-token section packing, exact non-OpenAI
+  provider counters, registry/custom role section packing, retrieval/context/
+  plugin/failure-memory section packing, or full validator-metadata prompt
+  policy.
 - `papers/systems_result_readiness_boundary.json`: systems-result readiness
   sidecar for AlphaEvolve Section 3.3. It records the systems-result report
   schema, artifact-inventory schema, evidence-bundle schema, optimization,

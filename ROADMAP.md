@@ -624,7 +624,7 @@ is not yet an AlphaEvolve reproduction.
   redacted/hash-backed `pip freeze` snapshots.
 - Preserve the CI-smoke-only release packaging boundary with
   `papers/release_artifact_reproducibility_boundary.json`; wheel/sdist build
-  checks, complete bundled-example wheel inventory checks, and
+  checks, complete bundled-example wheel and sdist inventory checks, and
   install-from-wheel CLI smoke checks exist, while complete release-wide
   package-data certification, release checklist, release-artifact provenance,
   and index artifact verification remain open.

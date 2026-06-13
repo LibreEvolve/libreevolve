@@ -4758,14 +4758,15 @@ Primary evidence:
     and accelerator hints. `.github/workflows/tests.yml` now has a
     `release_artifact` job that builds one wheel and one sdist, installs the
     wheel into an isolated virtual environment, and smokes both `libreevolve
-    --help` and `python -m libreevolve --help`.
+    --help` and `python -m libreevolve --help`. It also checks every bundled
+    example file inside both the wheel and sdist.
   - Remaining gap: there is still no complete release-wide package-data
     inventory certification, release checklist, release-artifact provenance tying
     generated distributions back to source and manifest environment evidence,
     or published/private-index artifact verification. The paper-facing sidecar
     `papers/release_artifact_reproducibility_boundary.json` now preserves this
     CI-smoke-only release-artifact boundary.
-  - Required result: extend the bundled-example wheel inventory check into a
+  - Required result: extend the bundled-example wheel/sdist inventory check into a
     complete release-wide package-data inventory/certification, add release
     checklist/provenance, and add remote/private-index artifact verification
     without overclaiming full release reproducibility from the current CI smoke.
@@ -4781,7 +4782,7 @@ Primary evidence:
     job that validates the committed paper manifest and focused docs/paper
     tests without requiring ignored local PDFs, plus a release-artifact smoke
     job that builds wheel/sdist artifacts, checks every bundled example file in
-    the wheel, and smokes an installed wheel CLI.
+    the wheel and sdist, and smokes an installed wheel CLI.
     `tests/test_agents_docs.py` verifies required path filters, job names, and
     paper/docs/release commands. The committed
     `papers/ci_workflow_coverage_boundary.json` sidecar now preserves this

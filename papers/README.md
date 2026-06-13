@@ -1319,7 +1319,7 @@ budget/accounting semantics. The committed
 `papers/release_artifact_reproducibility_boundary.json` sidecar preserves the
 CI-smoke-only release-artifact boundary: wheel/sdist build checks and
 install-from-wheel CLI smoke checks exist with complete bundled-example wheel
-inventory inspection, while complete release-wide package-data inventory
+and sdist inventory inspection, while complete release-wide package-data inventory
 certification, release-artifact provenance, published-index verification, and
 release-checklist readiness remain absent.
 The committed `papers/ci_workflow_coverage_boundary.json` sidecar preserves

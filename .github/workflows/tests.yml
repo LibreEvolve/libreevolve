@@ -125,6 +125,7 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+          import tarfile
           import zipfile
           wheels = sorted(Path("dist").glob("*.whl"))
           sdists = sorted(Path("dist").glob("*.tar.gz"))
@@ -140,6 +141,15 @@ jobs:
           missing = sorted(required - names)
           if missing:
               raise SystemExit(f"wheel is missing bundled example files: {missing}")
+          with tarfile.open(sdists[0], "r:gz") as sdist:
+              names = {
+                  member.name.split("/", 1)[1]
+                  for member in sdist.getmembers()
+                  if member.isfile() and "/" in member.name
+              }
+          missing = sorted(required - names)
+          if missing:
+              raise SystemExit(f"sdist is missing bundled example files: {missing}")
           print(wheels[0])
           print(sdists[0])
           PY

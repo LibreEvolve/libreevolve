@@ -22,7 +22,7 @@
     "notification_policy"
   ],
   "partial_evidence": {
-    "wheel_sdist_ci_smoke": "release_artifact_job_with_bundled_example_inventory"
+    "wheel_sdist_ci_smoke": "release_artifact_job_with_bundled_example_wheel_and_sdist_inventory"
   },
   "missing_evidence": {
     "paper_manifest_ci_job": "committed_manifest_only_no_local_pdf_cache",
@@ -31,5 +31,5 @@
     "branch_policy": "not_recorded_locally",
     "notification_policy": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has a path-scoped GitHub Actions workflow with manual dispatch, push/pull_request path filters, a secret scan job, Python 3.11/3.12 Ubuntu unit jobs, an optional credential-gated integration job, a committed-manifest paper/docs job that does not require the ignored local PDF cache, a release-artifact smoke job that builds a wheel and sdist and installs the wheel for CLI smoke checks with bundled-example wheel inventory inspection, and unit tests that check the workflow shape. It does not claim CI local-PDF paper-manifest checks, semantic documentation-claim verification, release provenance or complete release-wide package-data certification, cross-platform CI coverage, branch policy, or notification policy."
+  "claim_boundary": "This boundary records that LibreEvolve has a path-scoped GitHub Actions workflow with manual dispatch, push/pull_request path filters, a secret scan job, Python 3.11/3.12 Ubuntu unit jobs, an optional credential-gated integration job, a committed-manifest paper/docs job that does not require the ignored local PDF cache, a release-artifact smoke job that builds a wheel and sdist and installs the wheel for CLI smoke checks with bundled-example wheel and sdist inventory inspection, and unit tests that check the workflow shape. It does not claim CI local-PDF paper-manifest checks, semantic documentation-claim verification, release provenance or complete release-wide package-data certification, cross-platform CI coverage, branch policy, or notification policy."
 }

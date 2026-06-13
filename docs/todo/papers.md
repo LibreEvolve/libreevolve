@@ -721,7 +721,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     job that runs `python -m libreevolve.tools.paper_manifest --root .` and
     focused docs/paper tests without requiring ignored local PDFs, plus a
     release-artifact smoke job that builds one wheel and one sdist, checks
-    every bundled example file in the wheel, installs the wheel into an
+    every bundled example file in the wheel and sdist, installs the wheel into an
     isolated virtual environment, and smokes the CLI.
     `tests/test_agents_docs.py` verifies the path filters, job names, and
     paper/docs/release commands. The committed

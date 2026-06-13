@@ -128,8 +128,10 @@ def test_tests_workflow_covers_docs_papers_and_todo_changes():
     assert 'python -m pip install -e ".[dev]"' in release_commands
     assert "python -m build --wheel --sdist" in release_commands
     assert "zipfile.ZipFile" in release_commands
+    assert "tarfile.open" in release_commands
     assert 'Path("libreevolve/problems/examples").rglob("*")' in release_commands
     assert "wheel is missing bundled example files" in release_commands
+    assert "sdist is missing bundled example files" in release_commands
     assert "python -m venv .venv-wheel-smoke" in release_commands
     assert "python -m pip install dist/*.whl" in release_commands
     assert "libreevolve --help" in release_commands

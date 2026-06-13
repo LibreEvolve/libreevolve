@@ -136,7 +136,7 @@ manifest and focused docs/paper boundary tests; it does not run
 `--require-local-pdfs` because the PDF cache is intentionally gitignored. The
 release-artifact smoke job builds one wheel and one sdist, installs the wheel
 into an isolated virtual environment, checks every bundled example file inside
-the wheel, and runs CLI help checks; it is not a complete release-wide
+the wheel and sdist, and runs CLI help checks; it is not a complete release-wide
 package-data, index-publish, or release-provenance certification.
 
 For docs-only changes, run at least:

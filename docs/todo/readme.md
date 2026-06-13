@@ -9,40 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README problem-formulation wording scoped until benchmark fixtures
-      carry expert-reviewed metadata.
-  - Spec evidence: AlphaEvolve Section 3.2 reports that many mathematical
-    problems were suggested by external mathematicians who advised on how to
-    formulate them as AlphaEvolve inputs, while Section 2.1 treats task
-    definition and optional background knowledge as human-provided setup.
-    Figure 1 further frames the setup boundary as humans defining the "what"
-    by setting evaluation criteria, providing the initial solution, and adding
-    optional background knowledge.
-  - Current evidence: README documents problem/source provenance, context file
-    selection, local paper context, seed source identity, optional
-    `formulation.yaml` / `Problem.formulation_metadata`, normalized
-    `problem.formulation_metadata`, and
-    `runtime.history.problem_formulation_provenance_report`. It distinguishes
-    context-source artifact tracking from expert formulation evidence and says
-    claim readiness requires expert roles, rationale, parameter-scope,
-    background refs, and review/signoff. README Important limits now also names
-    `papers/problem_formulation_provenance_boundary.json` as the committed
-    metadata-contract-only formulation sidecar. README now also documents
-    `runtime.history.benchmark_fixture_readiness_report`, which records
-    smoke-only fixture scope, missing AlphaEvolve-comparable benchmark scope,
-    missing repeated-seed protocols, missing SOTA/target baselines, missing
-    fixture-emitted result artifacts, and missing anti-gaming negative-fixture
-    evidence. README Important limits now also names
-    `papers/benchmark_fixture_readiness_boundary.json` as the committed
-    smoke-fixture readiness absence boundary. Existing benchmark fixtures do not yet carry real
-    expert-reviewed formulation records or paper-claim-ready benchmark
-    evidence.
-  - Required result: when matrix and constructive-math benchmark fixtures are
-    populated with reviewed formulation metadata and paper-facing evidence,
-    update README, ROADMAP, papers index, and code/paper TODO entries together
-    so README can describe the benchmark claim without implying the schema
-    alone proves AlphaEvolve-style human expert problem formulation.
-
 - [ ] Keep README robustness and versatility wording scoped until populated
       collaborator-feedback evidence exists.
   - Spec evidence: AlphaEvolve's Acknowledgements say early users and

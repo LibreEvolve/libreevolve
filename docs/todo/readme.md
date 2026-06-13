@@ -91,32 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README MLEvolve long-horizon ML-engineering claims source-scoped
-      until benchmark evidence exists.
-  - Spec evidence: arXiv `2606.06473`, `MLEvolve: A Self-Evolving Framework
-    for Automated Machine Learning Algorithm Discovery`, describes
-    self-evolving multi-agent MLE with Progressive MCGS, graph-based
-    cross-branch reference edges, entropy-inspired explore/exploit scheduling,
-    Retrospective Memory, adaptive coding modes, MLE-Bench state-of-the-art
-    metrics under a 12-hour budget, and stronger mathematical algorithm
-    optimization than AlphaEvolve.
-  - Current evidence: README now lists `2606.06473`, `MLEvolve`, as
-    long-horizon ML-engineering context only and says no local MLE-Bench
-    harness, Progressive MCGS controller, or 12-hour medal-rate report exists.
-    It still does not expose an MLE-Bench integration, store Progressive MCGS
-    graphs or reference edges, maintain Retrospective Memory, separate
-    strategic planning from coding modes, or report medal-rate/valid
-    submission metrics.
-  - Required result: if README mentions MLEvolve, MLE-Bench, Progressive MCGS,
-    cross-branch information flow, retrospective memory, adaptive coding
-    modes, 12-hour MLE budgets, valid submission or medal rates, or
-    outperformance of AlphaEvolve on mathematical algorithm optimization,
-    keep the wording source-scoped until local artifacts can show task
-    harnesses, graph-search state, memory records, mode traces, baseline
-    identities, budget accounting, and report outcomes. Avoid implying
-    LibreEvolve supports MLEvolve-style long-horizon MLE without those
-    implementation and benchmark artifacts.
-
 - [ ] Keep README LEVI cost-aware search-architecture claims source-scoped
       until benchmark evidence exists.
   - Spec evidence: arXiv `2605.09764`, `LEVI: Stronger Search Architectures

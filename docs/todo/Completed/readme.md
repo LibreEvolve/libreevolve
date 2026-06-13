@@ -14623,3 +14623,26 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     prompt assembly traces, token accounting, benchmark tasks, baseline
     identities, outcomes, and DeltaEvolve-style context control remain active
     in code and paper TODOs.
+
+- [x] Keep README MLEvolve long-horizon ML-engineering claims source-scoped
+      until benchmark evidence exists.
+  - Spec evidence: arXiv `2606.06473`, `MLEvolve: A Self-Evolving Framework
+    for Automated Machine Learning Algorithm Discovery`, describes
+    self-evolving multi-agent MLE with Progressive MCGS, graph-based
+    cross-branch reference edges, entropy-inspired explore/exploit scheduling,
+    Retrospective Memory, adaptive coding modes, MLE-Bench state-of-the-art
+    metrics under a 12-hour budget, and stronger mathematical algorithm
+    optimization than AlphaEvolve.
+  - Status: README now lists arXiv `2606.06473` as long-horizon MLE framework
+    context only and marks the mention as a curated cached-paper subset while
+    `papers/README.md` remains the complete implementation-status index. It
+    states that LibreEvolve has no MLE-Bench task harness, Progressive MCGS
+    state schema, graph-based reference-edge provenance, entropy-inspired
+    progressive schedule, Retrospective Memory knowledge base or global memory
+    artifacts, adaptive coding-mode traces, 12-hour medal-rate/valid-submission
+    report, mathematical-algorithm baseline comparison, linked-code audit, or
+    independent reproduction output.
+  - Remaining README gap: task harnesses, graph-search state, memory records,
+    mode traces, baseline identities, budget accounting, report outcomes, and
+    MLEvolve-style long-horizon MLE support remain active in code and paper
+    TODOs.

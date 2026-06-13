@@ -672,6 +672,15 @@ Important limits:
   disclosure traces, token-savings report, full-code-history baseline
   comparison, scientific-task benchmark taxonomy, or independent reproduction
   output.
+- ArXiv `2606.06473` is long-horizon MLE framework context only; the README
+  mentions this cached paper as a curated subset while `papers/README.md`
+  remains the complete implementation-status index. LibreEvolve has no
+  MLE-Bench task harness, Progressive MCGS state schema, graph-based
+  reference-edge provenance, entropy-inspired progressive schedule,
+  Retrospective Memory knowledge base or global memory artifacts, adaptive
+  coding-mode traces, 12-hour medal-rate/valid-submission report,
+  mathematical-algorithm baseline comparison, linked-code audit, or
+  independent reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

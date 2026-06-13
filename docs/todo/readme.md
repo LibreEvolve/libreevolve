@@ -9,41 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Extend README Figure 1 and Figure 2 process-diagram wording beyond the
-      current process-overview exhibit map.
-  - Spec evidence: AlphaEvolve Figure 1 defines the high-level process among
-    human task inputs, the LLM ensemble, prompt sampler, evaluator pool,
-    program database, rich context, proposals, and quality feedback. Figure 2
-    defines the expanded discovery-process diagram and controller pseudocode
-    for sampling parents/inspirations, building prompts, generating and
-    applying diffs, executing evaluators, and adding results to the database.
-    Local PDF page 3 carries Figure 1; page 4 carries Figure 2 and the
-    expanded-process caption.
-  - Current evidence: README describes LibreEvolve's loop, ensemble,
-    evaluator, database, and diff mechanics, and related TODOs track many of
-    those behaviors separately. It now documents
-    `runtime.history.alphaevolve_process_exhibit_report`, which records Figure
-    1/2 exhibit IDs, diagram-node/edge labels, source page/caption locations,
-    Figure 2 pseudocode-step mappings, artifact cross-links, generated
-    Mermaid/text artifacts and hashes, per-step artifact-stream validation
-    records, strict JSONL row summaries, generated candidate semantic traces
-    with durable LLM and archive-admission stream rows, component-to-TODO links, and
-    `claim_ready: false` process-parity gaps. It
-    also names
-    `papers/process_exhibit_boundary.json` as the committed sidecar for that
-    absence boundary, and README Important limits now keeps that process-exhibit
-    map scoped away from exact source-diagram reproduction, async topology,
-    independent evaluator-pool implementation, and full process parity. README
-    workflow text should still remain local
-    documentation, not a validated reproduction of the paper process diagrams.
-  - Required result: when exact diagram/pseudocode text, rendered artifact
-    parity, async topology evidence and independent evaluator-pool evidence
-    land, update README, ROADMAP, papers
-    index, and code/paper TODOs together so README can explain which
-    process-diagram steps LibreEvolve implements, which are partial or
-    missing, and why process-diagram reproduction is separate from satisfying
-    each underlying workflow capability.
-
 - [ ] Extend README task-specification wording beyond field-level artifact
       resolution.
   - Spec evidence: AlphaEvolve Section 2.1 and Figure 2 define a task

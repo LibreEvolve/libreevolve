@@ -180,6 +180,13 @@ Important limits:
   benchmark evidence; those boundaries are tracked by
   `papers/problem_formulation_provenance_boundary.json` and
   `papers/benchmark_fixture_readiness_boundary.json`.
+- Constructive-math Section 3.2 heuristic-handoff records preserve the
+  AlphaEvolve claim that search-heuristic programs run under fixed budgets from
+  strong previous-best construction inputs toward improved constructions, not
+  local heuristic-program artifacts, incumbent or produced construction
+  payloads, fixed-budget execution records, before/after metric rows,
+  evaluator scores, or verifier evidence; that boundary is tracked by
+  `papers/math_heuristic_handoff_boundary.json`.
 - Matrix-publication evidence is one checked `mm_2x2x2` Strassen baseline
   bundle plus Appendix A registry/status metadata, not full-suite local target
   tensors, discovered decompositions, coefficient data, exactness certificates,

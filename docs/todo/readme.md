@@ -941,26 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README constructive-math wording scoped to static context/artifacts
-      versus AlphaEvolve-style incumbent handoff.
-  - Spec evidence: AlphaEvolve Section 3.2 evolved heuristic search programs
-    that use a fixed budget and a strong previously discovered construction as
-    input, then return an improved construction for verification.
-  - Current evidence: README now points to the Section 3.2 heuristic-handoff
-    absence boundary in `libreevolve.problems.benchmarks.math_outcomes`. It
-    describes search-heuristic programs, fixed budgets such as `1000` seconds,
-    previous-best construction input, and better-construction selection, while
-    saying local heuristic program artifacts, incumbent/produced construction
-    artifacts, before/after metrics, scores, and verifier evidence remain
-    `not_recorded_locally`. The committed
-    `papers/math_heuristic_handoff_boundary.json` sidecar now emits this
-    boundary for paper-manifest validation alongside the related Section 3.2
-    outcome, starting-construction, and stage-sequence boundary sidecars.
-  - Required result: when real heuristic-search handoff support lands, update
-    README, ROADMAP, papers index, and code/paper TODO entries together so
-    README distinguishes static problem context and post-run artifacts from
-    first-class incumbent-construction benchmark handoff evidence.
-
 - [ ] Keep README constructive-math wording scoped until heuristic-stage
       sequence evidence exists.
   - Spec evidence: AlphaEvolve Section 3.2 says constructive-math heuristics

@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document constructive-math heuristic-handoff README boundary.
+  - Status: README Important limits now states that Section 3.2
+    heuristic-handoff records preserve the AlphaEvolve claim that
+    search-heuristic programs run under fixed budgets from strong previous-best
+    construction inputs toward improved constructions, not local
+    heuristic-program artifacts, incumbent or produced construction payloads,
+    fixed-budget execution records, before/after metric rows, evaluator
+    scores, or verifier evidence.
+  - Verification: math-outcome and paper-manifest tests cover the
+    `not_recorded_locally` handoff boundary and required future handoff fields;
+    stage-sequence, aggregate-outcome, and starting-construction boundaries
+    remain separate active README TODOs.
+
 - [x] Document paper artifact-role README boundary.
   - Status: README Important limits now states that paper artifact-role
     records validate AlphaEvolve PDF page 23 figure-creator and companion

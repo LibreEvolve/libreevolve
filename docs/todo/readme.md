@@ -91,38 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README inference-time harness-alignment claims source-scoped until
-      decomposition and guidance runtime tradeoffs are evidenced.
-  - Spec evidence: arXiv `2605.21516`, `Harnesses for Inference-Time
-    Alignment over Execution Trajectories`, says harnesses improve agents
-    through task decomposition and guided execution, but more elaborate
-    harnesses are not uniformly better. Its abstract identifies workflow
-    granularity, retry budgets, and guidance-induced action reweighting as
-    key levers, with over-decomposition, over-pruning, and hallucinated
-    execution as failure modes. It also shows partial harnesses can outperform
-    fully structured workflows.
-  - Current evidence: README now lists `2605.21516`, inference-time
-    trajectory alignment, as harness design context only and says no local
-    decomposition/guidance parameter sweep, retry-budget study, over-
-    decomposition/over-pruning/hallucinated-execution report, partial-
-    harnessing benchmark, or terminal-agent reproduction exists. README also
-    documents LibreEvolve's prompt construction, context sources, evaluator
-    stages, retries, plugins, and benchmark boundaries; it does not claim
-    decomposition granularity reports, guidance-strength reports, local
-    guidance-rule experiments, pass-rate/final-bias tradeoffs, retry-budget
-    sensitivity, over-structure failure diagnostics, hallucinated-execution
-    metrics, or partial-harness comparisons.
-  - Required result: if README mentions inference-time harness alignment,
-    task decomposition, guided execution, workflow granularity, retry-budget
-    optimization, guidance strength, partial harnessing, over-decomposition,
-    over-pruning, hallucinated execution, or claims that more structured
-    workflows improve long-horizon performance, keep the wording
-    source-scoped until local artifacts can show parameter records, trajectory
-    evidence, pass-rate/final-bias metrics,
-    retry and guidance sweeps, partial-harness baselines, and report outcomes.
-    Avoid implying LibreEvolve has proven that increased harness structure is
-    beneficial without those artifacts.
-
 - [ ] Keep README Adaptive Auto-Harness deployment claims source-scoped until
       open-ended task-stream runtime evidence exists.
   - Spec evidence: arXiv `2606.01770`, `Adaptive Auto-Harness: Sustained

@@ -859,6 +859,16 @@ Important limits:
   failure-attribution taxonomy report, deterministic requirement-check
   package, structured verification report, public-code snapshot audit, or
   independent reproduction output.
+- ArXiv `2605.21516` is inference-time trajectory-alignment context only; the
+  README mentions this cached paper as a curated subset while
+  `papers/README.md` remains the complete implementation-status index.
+  LibreEvolve has no harness parameterization for decomposition versus guided
+  execution, workflow-granularity sweep, retry-budget study, guidance-induced
+  action-reweighting report, stage-level gap metric, over-decomposition
+  failure report, over-pruning failure report, hallucinated-execution failure
+  report, partial-harnessing stopping rule, controlled synthetic experiment,
+  terminal-agent benchmark reproduction, linked-code audit, or independent
+  reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

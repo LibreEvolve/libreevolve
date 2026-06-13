@@ -15120,3 +15120,29 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     trace bundles, verification reports, entropy audits, intervention logs,
     benchmark baselines, report outcomes, and AI Harness Engineering runtime-
     substrate evidence remain active in code and paper TODOs.
+
+- [x] Keep README inference-time harness-alignment claims source-scoped until
+      decomposition and guidance runtime tradeoffs are evidenced.
+  - Spec evidence: arXiv `2605.21516`, `Harnesses for Inference-Time
+    Alignment over Execution Trajectories`, says harnesses improve agents
+    through task decomposition and guided execution, but more elaborate
+    harnesses are not uniformly better. Its abstract identifies workflow
+    granularity, retry budgets, and guidance-induced action reweighting as
+    key levers, with over-decomposition, over-pruning, and hallucinated
+    execution as failure modes. It also shows partial harnesses can outperform
+    fully structured workflows.
+  - Status: README now lists arXiv `2605.21516` as inference-time trajectory-
+    alignment context only and marks the mention as a curated cached-paper
+    subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no harness
+    parameterization for decomposition versus guided execution,
+    workflow-granularity sweep, retry-budget study, guidance-induced action-
+    reweighting report, stage-level gap metric, over-decomposition failure
+    report, over-pruning failure report, hallucinated-execution failure
+    report, partial-harnessing stopping rule, controlled synthetic experiment,
+    terminal-agent benchmark reproduction, linked-code audit, or independent
+    reproduction output.
+  - Remaining README gap: parameter records, trajectory evidence,
+    pass-rate/final-bias metrics, retry and guidance sweeps, partial-harness
+    baselines, report outcomes, and inference-time trajectory-alignment
+    evidence remain active in code and paper TODOs.

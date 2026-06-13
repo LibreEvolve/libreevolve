@@ -941,23 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README Figure 6 scheduling wording scoped until heuristic-exhibit
-      provenance exists.
-  - Spec evidence: AlphaEvolve Figure 6 shows the exact Borg scheduling
-    heuristic source and a CPU/memory residual heatmap, while Section 3.3.1
-    ties the heuristic to simulator feedback, unseen workloads, deployment,
-    and about 0.7% fleet-wide resource recovery.
-  - Current evidence: README documents generic systems reports, scheduling
-    ranking-only safety gaps, interpretability/deployment gaps, and
-    Section 3.3 metric-calibration gaps. It does not document Figure 6 exhibit
-    mapping, exact heuristic code hashes, residual-feature definitions,
-    heatmap data/rendering parameters, visual artifact paths/hashes, baseline
-    production heuristic identity, or simulator/deployment report links.
-  - Required result: when Figure 6 exhibit provenance lands, update README,
-    ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes generic scheduling readiness and result claims from
-    reproduced paper figure/exhibit evidence.
-
 - [ ] Keep README Figure 7 Pallas wording scoped until tiling-problem exhibit
       provenance exists.
   - Spec evidence: AlphaEvolve Figure 7 visualizes the Pallas matrix-product

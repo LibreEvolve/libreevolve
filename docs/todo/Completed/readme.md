@@ -4,6 +4,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Figure 6 scheduling-exhibit README boundary.
+  - Status: README Important limits now states that scheduling documentation
+    does not yet reproduce AlphaEvolve Figure 6 exhibit provenance: exact Borg
+    heuristic source/hash, CPU/memory residual-feature definitions, heatmap
+    data and rendering parameters, rendered artifact hashes, baseline
+    production heuristic identity, or simulator/held-out/deployment report
+    links remain active code and paper TODOs.
+  - Verification: code and papers TODOs still track the missing Figure 6
+    exhibit metadata and artifacts, while paper-manifest/documentation
+    validation keeps README and papers-index references covered.
+
 - [x] Document scheduling deployment-readiness README boundary.
   - Status: README Important limits now states that scheduling
     deployment-readiness records validate interpretable heuristic structure,

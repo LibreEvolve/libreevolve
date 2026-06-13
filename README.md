@@ -343,6 +343,11 @@ Important limits:
   refs, not proof of real mission-critical rollout, operator acceptance,
   deployment measurements, or AlphaEvolve-comparable Borg scheduling readiness;
   that boundary is tracked by `papers/systems_result_readiness_boundary.json`.
+- Scheduling documentation does not yet reproduce AlphaEvolve Figure 6 exhibit
+  provenance: exact Borg heuristic source/hash, CPU/memory residual-feature
+  definitions, heatmap data and rendering parameters, rendered artifact hashes,
+  baseline production heuristic identity, or simulator/held-out/deployment
+  report links remain active code and paper TODOs.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

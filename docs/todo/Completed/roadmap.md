@@ -2,6 +2,30 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive scheduling ranking-only feasibility roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `docs/status.md`, `papers/README.md`, `docs/todo/code.md`, and
+    `docs/todo/papers.md` already scope Borg-style scheduling safety to a
+    `scheduling_safety` report contract, not proof of real feasibility-filter
+    runs, admission/placement correctness, or production scheduling safety.
+    `README.md` remains high-level and does not overclaim scheduling evidence.
+  - Current evidence: `libreevolve.systems_result_report.v1` requires
+    `scheduling_safety` before accepting `alphaevolve_ready` scheduling
+    reports. The validator checks feasible candidate-set source,
+    feasibility-filter identity, simulator/admission/placement boundaries,
+    ranking-function scope, `ranking_only: true`, no direct admit/reject/place
+    authority, resource invariants, and artifact refs.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    Borg evidence: populated scheduling fixtures with reviewed feasible
+    candidate-set provenance, ranking-only function boundaries,
+    resource/capacity invariant checks, simulator/admission-boundary artifacts,
+    deployment/simulator confirmation, and paper-facing certification examples.
+  - Verification: focused systems-result tests reject ready scheduling reports
+    missing `scheduling_safety`, direct admission/rejection/placement authority,
+    empty resource invariants, bad artifact refs, and scheduling-safety blocks
+    on non-scheduling reports; systems-readiness boundary and paper-manifest
+    tests preserve the no-real-systems-fixtures boundary.
+
 - [x] Archive systems application-provenance roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, `README.md`,
     `docs/status.md`, `papers/README.md`, `docs/todo/code.md`, and

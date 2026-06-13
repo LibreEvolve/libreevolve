@@ -10,25 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep scheduling roadmap wording scoped until ranking-only feasibility
-      evidence is populated.
-  - Spec evidence: AlphaEvolve's Borg scheduling heuristic only scores
-    machines that Borg already determined were available and capable of
-    running the job, so the heuristic influences ranking without owning
-    feasibility or admission decisions.
-  - Current evidence: roadmap systems-result wording now names
-    `scheduling_safety` records required for `alphaevolve_ready` scheduling
-    reports: feasible candidate-set source, ranking-only boundaries,
-    resource/capacity invariants, simulator/admission/placement boundaries,
-    authority flags, and artifact refs. Existing scheduling fixtures do not
-    yet carry real populated safety records.
-  - Required result: when scheduling fixtures and certification examples
-    populate feasible candidate-set provenance, ranking-only boundaries,
-    resource/capacity invariant checks, and simulator/admission-boundary
-    evidence, update ROADMAP, README, papers index, and code/paper TODOs so
-    roadmap text neither underclaims the report contract nor overclaims
-    Borg-style correctness-by-construction scheduling evidence.
-
 - [ ] Keep scheduling roadmap wording scoped until vector-bin-packing
       formulation evidence is populated.
   - Spec evidence: AlphaEvolve Section 3.3.1 formulates Borg scheduling as an

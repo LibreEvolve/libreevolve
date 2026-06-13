@@ -18,13 +18,25 @@ EXPECTED_BOUNDARY_STATUS = "metadata_contract_only"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "metadata_present",
     "diverse_use_case_cohorts",
+    "cohort_identity_or_safe_label_recorded",
+    "minimum_cohort_coverage_policy",
     "feedback_event_ids_recorded",
+    "feedback_event_source_artifacts",
     "affected_workflow_areas_recorded",
+    "affected_workflow_taxonomy",
     "change_artifact_links_recorded",
+    "code_or_docs_diff_links",
     "validation_outcomes_recorded",
+    "validation_rerun_artifacts",
     "privacy_redaction_policy_recorded",
+    "privacy_redaction_artifact_links",
     "collaborator_review_or_owner_signoff",
+    "review_or_signoff_identity_recorded",
+    "review_or_signoff_version_recorded",
+    "longitudinal_feedback_followup",
     "robustness_or_versatility_claim_linked",
+    "claim_to_feedback_traceability",
+    "external_feedback_separated_from_llm_feedback",
     "alphaevolve_collaborator_feedback_parity",
     "representative_fixture_feedback_records",
     "paper_facing_certification_rows",
@@ -34,6 +46,15 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 EXPECTED_MISSING_EVIDENCE = {
     "representative_fixture_feedback_records": "not_recorded_locally",
     "multi_cohort_reviewed_feedback_records": "not_recorded_locally",
+    "minimum_cohort_coverage_policy": "not_recorded_locally",
+    "feedback_event_source_artifacts": "not_recorded_locally",
+    "code_or_docs_diff_links": "not_recorded_locally",
+    "validation_rerun_artifacts": "not_recorded_locally",
+    "privacy_redaction_artifact_links": "not_recorded_locally",
+    "review_or_signoff_identity_records": "not_recorded_locally",
+    "review_or_signoff_version_records": "not_recorded_locally",
+    "longitudinal_feedback_followup": "not_recorded_locally",
+    "claim_to_feedback_traceability": "not_recorded_locally",
     "paper_facing_certification_rows": "not_recorded_locally",
     "workflow_change_artifact_links": "not_recorded_locally",
     "reviewed_validation_outcomes": "not_recorded_locally",
@@ -81,7 +102,11 @@ def collaborator_feedback_provenance_boundary_record() -> dict[str, Any]:
             "validation outcomes, privacy/redaction policy, review/signoff state, "
             "and robustness/versatility claim links, but does not claim populated "
             "representative-fixture feedback records, multi-cohort reviewed "
-            "feedback evidence, paper-facing certification rows, workflow change "
+            "feedback evidence, cohort-coverage policy, source feedback "
+            "artifacts, code/docs diff links, validation rerun artifacts, "
+            "privacy/redaction artifact links, review/signoff identity or "
+            "version records, longitudinal follow-up, claim-to-feedback "
+            "traceability, paper-facing certification rows, workflow change "
             "artifact links, reviewed validation outcomes, or AlphaEvolve "
             "collaborator-feedback parity."
         ),

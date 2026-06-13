@@ -150,7 +150,10 @@ and collaborator review or owner signoff are present before robustness or
 versatility claims are marked claim-ready. The paper-facing sidecar
 `papers/collaborator_feedback_provenance_boundary.json` preserves that this is
 a metadata/report contract until representative fixtures carry reviewed
-multi-cohort feedback evidence.
+multi-cohort feedback evidence, source artifacts, code/docs diff links,
+validation rerun artifacts, privacy/redaction artifact links, review/signoff
+identity and version records, longitudinal follow-up, and claim-to-feedback
+traceability.
 Problem fixtures can also optionally include `acknowledgements.yaml` or
 `acknowledgements.yml`; direct callers can set
 `Problem.acknowledgement_metadata`. Startup manifest validation normalizes this

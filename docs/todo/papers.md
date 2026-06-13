@@ -850,12 +850,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/collaborator_feedback_provenance_boundary.json` preserves this
     metadata-contract-only boundary as manifest-validated paper evidence.
     Existing fixtures still lack real populated broad collaborator-feedback
-    records and paper-facing certification examples.
+    records, cohort-coverage policy, source feedback artifacts, linked
+    code/docs/report diffs, validation rerun artifacts, privacy/redaction
+    artifacts, review/signoff versions, longitudinal follow-up,
+    claim-to-feedback traces, and paper-facing certification examples.
   - Required result: populate representative fixtures with reviewed use-case
     feedback records, link events to actual workflow/artifact changes and
-    validation outcomes, add paper-facing examples or certification rows, and
-    keep documented local breadth separate from AlphaEvolve-style broad
-    collaborator-feedback evidence until those records exist.
+    validation outcomes, add source/redaction artifacts, review/signoff
+    versions, follow-up, traceability, paper-facing examples or certification
+    rows, and keep documented local breadth separate from AlphaEvolve-style
+    broad collaborator-feedback evidence until those records exist.
 
 - [ ] Add replayable evaluator environment, package-source, and accelerator
   provenance.

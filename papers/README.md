@@ -632,7 +632,10 @@ change-artifact links, validation outcomes, privacy/redaction policy, and
 review/signoff state. This is separate from in-run `llm_feedback` graders.
 AlphaEvolve's Acknowledgements say broad early-user and collaborator feedback
 shaped robustness and versatility, so paper-facing claims still need populated
-multi-cohort feedback records with reviewed validation/change evidence. The
+multi-cohort feedback records with source artifacts, reviewed code/docs
+change evidence, validation rerun artifacts, privacy/redaction artifacts,
+review/signoff versions, longitudinal follow-up, and claim-to-feedback traces.
+The
 committed `papers/collaborator_feedback_provenance_boundary.json` sidecar
 preserves this metadata-contract-only boundary for paper-manifest validation.
 

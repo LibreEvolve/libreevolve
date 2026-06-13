@@ -539,8 +539,12 @@ Important limits:
   for cohorts, events, affected workflow areas, change links, validation
   outcomes, privacy/redaction policy, and review state, not populated
   representative-fixture feedback records, multi-cohort reviewed evidence,
-  paper certification rows, reviewed validation outcomes, or AlphaEvolve
-  robustness/versatility parity; that boundary is tracked by
+  minimum cohort-coverage policy, feedback source artifacts, code/docs diff
+  links, validation rerun artifacts, privacy/redaction artifacts,
+  review/signoff identity and version records, longitudinal follow-up,
+  claim-to-feedback traceability, paper certification rows, reviewed validation
+  outcomes, or AlphaEvolve robustness/versatility parity; that boundary is
+  tracked by
   `papers/collaborator_feedback_provenance_boundary.json`.
 - Duplicate-work reports are run-local exact-workspace cache diagnostics, not
   cross-run workspace indexes, durable evaluation-cache storage, resume-

@@ -548,11 +548,14 @@ sidecars, tests, and active TODOs.
     records. `papers/collaborator_feedback_provenance_boundary.json` preserves
     the paper-facing metadata-contract-only boundary for this runtime surface.
   - Required result: populate representative fixtures with reviewed
-    collaborator-feedback metadata, link feedback events to actual code/docs/
-    report changes and validation outcomes, add paper-facing examples or
-    certification rows, and keep README, ROADMAP, or papers-index wording from
-    claiming AlphaEvolve-style robustness or versatility until broad
-    collaborator feedback evidence exists.
+    collaborator-feedback metadata, define cohort-coverage policy, preserve
+    source feedback artifacts, link feedback events to actual code/docs/report
+    diffs and validation rerun artifacts, add privacy/redaction artifact links,
+    record review/signoff identity and versions, add longitudinal follow-up and
+    claim-to-feedback traceability, add paper-facing examples or certification
+    rows, and keep README, ROADMAP, or papers-index wording from claiming
+    AlphaEvolve-style robustness or versatility until broad collaborator
+    feedback evidence exists.
 
 - [ ] Tighten remaining workspace topology collision diagnostics and keep
   materialization diagnostics complete for future edge cases.

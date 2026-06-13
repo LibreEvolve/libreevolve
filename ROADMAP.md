@@ -366,7 +366,10 @@ LibreEvolve has:
   change-artifact links, validation outcomes, privacy/redaction policy, and
   robustness/versatility claim readiness, with
   `papers/collaborator_feedback_provenance_boundary.json` preserving the
-  paper-facing metadata-contract-only boundary
+  paper-facing metadata-contract-only boundary while cohort coverage, feedback
+  source artifacts, code/docs diff links, validation reruns, privacy/redaction
+  artifacts, review/signoff versions, follow-up, and claim-to-feedback traces
+  remain open
 - optional acknowledgement metadata under `acknowledgements.yaml` or direct
   `Problem.acknowledgement_metadata`, normalized into
   `problem.acknowledgement_metadata` and summarized by

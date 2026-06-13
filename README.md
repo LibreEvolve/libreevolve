@@ -73,6 +73,10 @@ Important limits:
   expert/owner identity, evaluator/report artifact linkage, signoff versions,
   background-reference artifacts, and anti-gaming review evidence; current
   formulation reports are metadata contracts only.
+- Collaborator-feedback robustness claims require multi-cohort source
+  artifacts, workflow diffs, validation reruns, privacy/redaction artifacts,
+  review versions, follow-up, and claim-to-feedback traces; current feedback
+  reports are metadata contracts only.
 - Paper-derived claims are tracked conservatively in `papers/README.md`,
   sidecar JSON records, `ROADMAP.md`, and `docs/todo/`; the TODO ledgers are
   active work queues, not just historical notes.

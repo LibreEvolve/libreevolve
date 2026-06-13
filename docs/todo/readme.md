@@ -9,28 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README evaluator-workload wording scoped until inner-search and
-      ML-training execution contracts exist.
-  - Spec evidence: AlphaEvolve Section 2.1 says an evaluator may perform a
-    simple property check, run an evolved search algorithm, or train and
-    evaluate a machine-learning model before returning scalar metrics.
-  - Current evidence: README now documents `eval_stages[].workload` metadata,
-    validator-visible `stage["workload"]`, validated dataset/budget/
-    checkpoint/artifact/score-field declarations, and
-    `runtime.history.evaluator_workload_report`. It also says the report is
-    not a workload-specific runner and remains `claim_ready: false`. README can
-    now cite dataset-digest completeness, score-field-to-returned-metric
-    linkage, observed artifact evidence, protocol-readiness counts, and the
-    managed-runner overclaim guard. README Important limits now scopes
-    evaluator workload metadata/report evidence away from managed
-    training/search runners, checkpoint completeness, score-field-to-artifact
-    causality, and stochastic re-evaluation policy.
-  - Required result: when executable workload-specific training/search
-    contracts land, update README, ROADMAP, papers index, and code/paper TODOs
-    together so README distinguishes declarative workload provenance from
-    AlphaEvolve-style evaluators that actually train models or run substantial
-    search loops with artifact and score linkage.
-
 - [ ] Extend README evolve-block integration wording beyond runtime
       minimal-marker evidence.
   - Spec evidence: AlphaEvolve Section 2.1 says evolve-block markers enable

@@ -4,6 +4,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document collaborator-feedback README boundary.
+  - Status: README Important limits now states that collaborator-feedback
+    provenance is optional metadata and runtime reporting for cohorts, events,
+    affected workflow areas, change links, validation outcomes,
+    privacy/redaction policy, and review state, not populated
+    representative-fixture feedback records, multi-cohort reviewed evidence,
+    paper certification rows, reviewed validation outcomes, or AlphaEvolve
+    robustness/versatility parity. It ties that boundary to
+    `papers/collaborator_feedback_provenance_boundary.json`.
+  - Verification: collaborator-feedback provenance boundary and
+    paper-manifest tests validate the sidecar that README now references.
+
 - [x] Document problem-formulation and fixture-readiness README boundary.
   - Status: README Important limits now states that formulation metadata and
     benchmark-fixture readiness reports are provenance/readiness telemetry, not

@@ -154,6 +154,13 @@ Important limits:
   benchmark evidence; those boundaries are tracked by
   `papers/problem_formulation_provenance_boundary.json` and
   `papers/benchmark_fixture_readiness_boundary.json`.
+- Collaborator-feedback provenance is optional metadata and runtime reporting
+  for cohorts, events, affected workflow areas, change links, validation
+  outcomes, privacy/redaction policy, and review state, not populated
+  representative-fixture feedback records, multi-cohort reviewed evidence,
+  paper certification rows, reviewed validation outcomes, or AlphaEvolve
+  robustness/versatility parity; that boundary is tracked by
+  `papers/collaborator_feedback_provenance_boundary.json`.
 - Duplicate-work reports are run-local exact-workspace cache diagnostics, not
   durable cross-run memory, semantic duplicate detection, or resume-spanning
   cache replay; that boundary is tracked by

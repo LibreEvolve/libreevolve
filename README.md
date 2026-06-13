@@ -281,6 +281,13 @@ Important limits:
   full-content artifact search, semantic artifact similarity search, cross-run
   artifact indexes, content-ranking policy, or replayable artifact-driven
   sampling; that boundary is tracked by `papers/artifact_index_boundary.json`.
+- `libreevolve show` and whole-run source/workspace integrity reports provide
+  streamed-row validation, selected-row display, retained-program workspace
+  hashes, source-payload shape checks, static-file reference counts, and
+  selected runtime artifact hashes, not a durable whole-run query surface, full
+  source-payload replay, cross-run workspace deduplication, static-file content
+  replay, or selected/unselected source-diff views; that boundary is tracked by
+  `papers/whole_run_source_workspace_integrity_boundary.json`.
 - MAP-Elites descriptor snapshots are insertion-time local descriptor metadata,
   not stable learned/evaluator-provided behavior descriptors or archive rebin
   semantics; that boundary is tracked by

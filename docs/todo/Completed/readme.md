@@ -4,6 +4,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document run-inspection README boundary.
+  - Status: README Important limits now states that `libreevolve show` and
+    whole-run source/workspace integrity reports provide streamed-row
+    validation, selected-row display, retained-program workspace hashes,
+    source-payload shape checks, static-file reference counts, and selected
+    runtime artifact hashes, not a durable whole-run query surface, full
+    source-payload replay, cross-run workspace deduplication, static-file
+    content replay, or selected/unselected source-diff views. It ties that
+    boundary to `papers/whole_run_source_workspace_integrity_boundary.json`.
+  - Verification: whole-run source/workspace integrity boundary and
+    paper-manifest tests validate the sidecar that README now references.
+
 - [x] Document task-specification README boundary.
   - Status: README Important limits now states that task-specification
     bundles, `task_specification.json`, and artifact-resolution reports link

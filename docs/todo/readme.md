@@ -619,7 +619,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     cross-run dedup claims. The paper-facing
     `papers/whole_run_source_workspace_integrity_boundary.json` sidecar
     preserves the same bounded retained-program integrity absence boundary for
-    manifest validation.
+    manifest validation. README Important limits now also names that sidecar as
+    the selected-row/retained-program-integrity-only boundary for run
+    inspection.
   - Required result: when durable run-artifact query views, richer
     archive/prompt/failure drill-downs, full source-payload replay, or
     cross-run source/workspace indexes land, update README, ROADMAP, papers

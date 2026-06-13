@@ -4,6 +4,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Figure 7 Pallas tiling-exhibit README boundary.
+  - Status: README Important limits now states that kernel documentation does
+    not yet reproduce AlphaEvolve Figure 7 Pallas tiling-problem exhibit
+    provenance: matrix-shape variable definitions, tile-parameter schema,
+    accelerator/memory/fusion/compiler-context annotations, diagram source
+    data, rendered visual artifact hashes, rendering parameters, and links to
+    shape-corpus/runtime reports remain active code and paper TODOs.
+  - Verification: code and papers TODOs still track the missing Figure 7
+    exhibit metadata and artifacts, while paper-manifest/documentation
+    validation keeps README and papers-index references covered.
+
 - [x] Document Figure 6 scheduling-exhibit README boundary.
   - Status: README Important limits now states that scheduling documentation
     does not yet reproduce AlphaEvolve Figure 6 exhibit provenance: exact Borg

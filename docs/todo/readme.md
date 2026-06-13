@@ -941,23 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README Figure 7 Pallas wording scoped until tiling-problem exhibit
-      provenance exists.
-  - Spec evidence: AlphaEvolve Figure 7 visualizes the Pallas matrix-product
-    tiling heuristic problem with dimensions `M`, `N`, and `P`; Section 3.3.2
-    explains that tile-size selection depends on accelerator shapes, memory
-    capacity, fused operations, and compiler details.
-  - Current evidence: README documents generic systems reports and Pallas
-    shape-split/runtime gaps. It does not document Figure 7 exhibit mapping,
-    matrix-shape variable definitions, tile-parameter schema,
-    accelerator/memory/fusion/compiler-context annotations, diagram data,
-    rendered visual artifact paths/hashes, rendering parameters, or links from
-    the visualization to shape-corpus/runtime reports.
-  - Required result: when Figure 7 exhibit provenance lands, update README,
-    ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes generic kernel readiness and Pallas runtime evidence from
-    reproduced paper figure/tiling-problem visual evidence.
-
 - [ ] Keep README kernel wording scoped to generic systems reports until
       Pallas shape-split/runtime evidence exists.
   - Spec evidence: AlphaEvolve Section 3.3.2 optimizes Gemini Pallas

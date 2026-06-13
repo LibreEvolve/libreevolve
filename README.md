@@ -348,6 +348,12 @@ Important limits:
   definitions, heatmap data and rendering parameters, rendered artifact hashes,
   baseline production heuristic identity, or simulator/held-out/deployment
   report links remain active code and paper TODOs.
+- Kernel documentation does not yet reproduce AlphaEvolve Figure 7 Pallas
+  tiling-problem exhibit provenance: matrix-shape variable definitions,
+  tile-parameter schema, accelerator/memory/fusion/compiler-context
+  annotations, diagram source data, rendered visual artifact hashes, rendering
+  parameters, and links to shape-corpus/runtime reports remain active code and
+  paper TODOs.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

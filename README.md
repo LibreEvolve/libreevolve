@@ -524,6 +524,12 @@ Important limits:
   requests include bounded prompt-performance evidence; calibrated
   prompt-specific reward models, prompt-lineage ablation reports, and stronger
   prompt-policy attribution remain open.
+- `PromptDatabase` is a deterministic local prompt-arm history/scoring store
+  with append-only prompt-history replay, lineage ids, duplicate-arm audit
+  identity, and optional interval-based template/context-policy mutation. It is
+  not yet a prompt-side analogue of the solution database with MAP-Elites or
+  island retention, descriptor/objective indexes, archive-event streams,
+  migration/rebin semantics, or async/controller-resumable prompt work.
 - Meta-prompt context-policy mutation is validated only for the current
   `libreevolve.prompt_context_policy.v1` fields exposed in
   `runtime.prompt_context_policy_coverage` and meta-prompt capability-summary

@@ -14247,3 +14247,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Remaining README gap: calibrated prompt-specific reward models,
     prompt-lineage ablation reports, and stronger prompt-policy attribution
     remain open in code and paper TODOs.
+- [x] Keep README prompt-program database wording scoped to local prompt-arm
+  history versus a solution-database analogue.
+  - Spec evidence: AlphaEvolve Section 2.2 says meta-prompt instructions and
+    context are co-evolved in a separate database analogous to solution
+    programs.
+  - Status: README now states that `PromptDatabase` is a deterministic local
+    prompt-arm history/scoring store with prompt-history replay, lineage ids,
+    duplicate-arm audit identity, and optional interval-based
+    template/context-policy mutation.
+  - Remaining README gap: prompt-side MAP-Elites/island retention,
+    descriptor/objective indexes, archive-event streams, migration/rebin
+    semantics, and async/controller-resumable prompt work remain open in code
+    and paper TODOs before claiming solution-database parity.

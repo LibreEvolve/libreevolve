@@ -1356,23 +1356,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `papers/artifact_index_boundary.json`, keeping durable full-content or
     semantic artifact search open.
 
-- [ ] Keep prompt-database roadmap wording scoped to local prompt-arm history
-  versus a solution-database analogue.
-  - Spec evidence: AlphaEvolve Section 2.2 describes meta-prompt evolution as
-    co-evolving prompt instructions/context in a separate database analogous to
-    the solution programs.
-  - Current evidence: `ROADMAP.md` accurately lists a local prompt-program
-    database with prompt selection, scoring, lineage, and optional
-    interval-based LLM template mutation. Code evidence shows a deterministic
-    `PromptDatabase` backed by prompt history and UCB-style prompt-arm
-    selection, not prompt-side MAP-Elites/island retention, prompt archive
-    events, descriptor/objective indexes, or controller-resumable prompt work.
-  - Required result: when prompt-side archive/retention policy, prompt
-    descriptors/objectives, replay/migration semantics, and benchmark evidence
-    land, update ROADMAP, README, papers index, and code/paper TODOs together
-    so roadmap wording neither underclaims the current prompt-history store nor
-    overclaims an AlphaEvolve-grade co-evolved prompt database.
-
 - [ ] Keep MAP-Elites descriptor roadmap wording scoped to insertion-time
   TF-IDF coordinates versus stable learned descriptors.
   - Spec evidence: AlphaEvolve-style quality-diversity search needs

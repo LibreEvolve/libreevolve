@@ -10806,3 +10806,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Remaining roadmap gap: calibrated meta-prompt reward models,
     prompt-lineage ablation reports, and stronger prompt-policy attribution
     remain open in code and paper TODOs.
+- [x] Keep prompt-database roadmap wording scoped to local prompt-arm history
+  versus a solution-database analogue.
+  - Spec evidence: AlphaEvolve Section 2.2 describes meta-prompt evolution as
+    co-evolving prompt instructions/context in a separate database analogous to
+    the solution programs.
+  - Status: ROADMAP now keeps the implemented state scoped to local
+    `PromptDatabase` prompt selection, lineage, UCB-style prompt-arm selection
+    over normalized child-score rewards, and optional interval-based LLM
+    template mutation. It separately lists prompt-side archive/retention
+    policy, descriptors/objectives, archive-event streams, replay/migration
+    semantics, async/controller-resumable prompt work, and benchmark evidence
+    as required before claiming AlphaEvolve-style prompt-database parity.
+  - Remaining roadmap gap: the actual prompt-side archive/database work remains
+    active in code and paper TODOs.

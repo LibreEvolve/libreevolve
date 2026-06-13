@@ -91,23 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README prompt-program database wording scoped to local prompt-arm
-  history versus a solution-database analogue.
-  - Spec evidence: AlphaEvolve Section 2.2 says meta-prompt instructions and
-    context are co-evolved in a separate database analogous to solution
-    programs.
-  - Current evidence: README documents prompt-program selection, scoring,
-    logging, duplicate-arm retention, prompt-history replay, and optional
-    meta-prompt mutation. Current code implements that as a deterministic
-    local prompt-arm store, not a prompt-side MAP-Elites/island database with
-    descriptor/objective retention, archive events, migration/rebin semantics,
-    or async/controller resume state.
-  - Required result: when prompt-side archive semantics or benchmark evidence
-    for a solution-database-equivalent prompt database land, update README,
-    ROADMAP, papers index, and code/paper TODOs so README distinguishes the
-    current prompt-history selector from AlphaEvolve's separate co-evolved
-    prompt database.
-
 - [ ] Keep README MAP-Elites descriptor claims scoped to insertion-time
   TF-IDF coordinates.
   - Spec evidence: AlphaEvolve-grade quality-diversity search should use

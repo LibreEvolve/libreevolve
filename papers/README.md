@@ -1035,11 +1035,11 @@ models, prompt-lineage ablation reports, and stronger prompt-policy
 attribution remain open.
 Broader prompt-context evolution remains open for live/external context-source
 selection, retrieval/summarization, inspiration selection, and finer-grained
-evaluator/LLM-feedback field policy. Prompt-database parity with the solution
-program database is also still open: the current `PromptDatabase` is a local
-prompt-arm history/scoring store, not a prompt-side MAP-Elites/island archive
-with descriptor/objective indexes, archive events, migration/rebin semantics,
-or async/controller-resumable prompt work.
+evaluator/LLM-feedback field policy. Prompt-database parity with AlphaEvolve's
+separate co-evolved prompt database is also still open: the current
+`PromptDatabase` is a local prompt-arm history/scoring store, not a prompt-side
+MAP-Elites/island archive with descriptor/objective indexes, archive events,
+migration/rebin semantics, or async/controller-resumable prompt work.
 
 AlphaEvolve validator-network note: `validator_network_policy` now records host
 network inheritance by default and can install a Python socket-level deny hook

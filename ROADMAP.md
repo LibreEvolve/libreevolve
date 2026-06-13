@@ -706,6 +706,12 @@ is not yet an AlphaEvolve reproduction.
 - Improve meta-prompt scoring beyond the current absolute/improvement child
   score reward modes and UCB-style prompt-arm selection; add calibrated reward
   signals plus ablation reporting for prompt-program lineages.
+- Promote the current local `PromptDatabase` beyond prompt-arm history and
+  scoring before claiming AlphaEvolve-style prompt-database parity: define
+  prompt-side archive/retention policy, prompt descriptors/objectives,
+  archive-event streams, replay/migration semantics, async/controller-resumable
+  prompt work, and benchmark evidence that it behaves as more than a local
+  UCB-style prompt selector.
 
 ### 5. Documentation truthfulness
 

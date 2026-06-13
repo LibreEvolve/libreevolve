@@ -9,35 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README candidate-abstraction wording scoped beyond the current
-      abstraction-choice report.
-  - Spec evidence: AlphaEvolve Section 2.1 and Discussion say users can choose
-    different candidate abstractions for the same problem, and those choices
-    carry biases: constructor functions can favor highly symmetric solutions,
-    while customized search algorithms may work better for non-symmetric
-    solutions. In the local PDF, page 5 describes flexibility in abstraction
-    choice, and page 21 reiterates that direct search, constructor functions,
-    and evolved search algorithms suit different problems because of different
-    biases.
-  - Current evidence: README says LibreEvolve currently uses a deliberate
-    code-file-set abstraction with a primary text file and lacks first-class
-    non-code serializers or paired solution/search APIs. The underlying
-    manifest policy records this as `python_primary_text_workspace_v1` with
-    `problem_defined_solution_abstractions: unsupported` and
-    `language_runner_ready: False`. README now also documents
-    `runtime.history.candidate_abstraction_choice_report`, which records the
-    selected code-file-set abstraction, policy linkage, unsupported
-    constructor/search/paired alternatives, and missing bias/equal-budget
-    evidence. README Important limits now also names
-    `papers/candidate_abstraction_boundary.json` as the committed
-    paper-manifest-validated current absence boundary for problem-defined
-    candidate abstractions and abstraction-bias evidence.
-  - Required result: when benchmark rationale, problem-structure labels, typed
-    candidate-abstraction hooks, paired solution/search APIs, or equal-budget
-    abstraction-comparison reports land, update README, ROADMAP, papers index,
-    and code/paper TODOs so README distinguishes the current partial report
-    from AlphaEvolve-style abstraction-selection evidence.
-
 - [ ] Keep README seed-provenance wording scoped beyond current idea metadata.
   - Spec evidence: AlphaEvolve Section 2.1 makes the initial solution and
     optional background knowledge part of the task specification, and Section

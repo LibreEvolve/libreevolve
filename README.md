@@ -69,6 +69,10 @@ Important limits:
   seed workspace hashes, replicate protocols, equal-budget seed-variant
   tables, and contribution review evidence; current reports are metadata
   contracts only.
+- Expert-guided mathematical benchmark formulation claims require populated
+  expert/owner identity, evaluator/report artifact linkage, signoff versions,
+  background-reference artifacts, and anti-gaming review evidence; current
+  formulation reports are metadata contracts only.
 - Paper-derived claims are tracked conservatively in `papers/README.md`,
   sidecar JSON records, `ROADMAP.md`, and `docs/todo/`; the TODO ledgers are
   active work queues, not just historical notes.

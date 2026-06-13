@@ -510,14 +510,18 @@ sidecars, tests, and active TODOs.
     evidence. The committed
     `papers/benchmark_fixture_readiness_boundary.json` sidecar now preserves
     this smoke-fixture readiness boundary. Existing benchmark fixtures have
-    not yet been populated with
-    real expert-formulation records or paper-claim-ready benchmark evidence.
+    not yet been populated with real expert/owner identity records,
+    evaluator/result artifact links, signoff versions, background-reference
+    artifact links, anti-gaming review evidence, or paper-claim-ready
+    benchmark evidence.
   - Required result: populate matrix and constructive-math benchmark fixtures
-    with expert-reviewed formulation metadata, link those records to evaluator
-    and report artifacts, add paper-facing examples/certification rows, and
-    keep mathematical discovery claims gated on review/signoff evidence instead
-    of treating the metadata schema alone as AlphaEvolve-style expert-guided
-    benchmark formulation.
+    with expert-reviewed formulation metadata, external expert and
+    problem-owner identity records, evaluator and report artifact links,
+    parameter-scope signoff, background-reference artifact links, review
+    timestamps or versions, anti-gaming review evidence, and paper-facing
+    examples/certification rows, and keep mathematical discovery claims gated
+    on review/signoff evidence instead of treating the metadata schema alone
+    as AlphaEvolve-style expert-guided benchmark formulation.
 
 - [ ] Populate broad collaborator-feedback evidence for robustness claims.
   - Spec evidence: AlphaEvolve's Acknowledgements thank early users and

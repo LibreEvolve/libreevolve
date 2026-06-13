@@ -346,7 +346,10 @@ LibreEvolve has:
   contributor roles, problem origin, formulation notes, objective/evaluator
   rationale, parameter-scope decisions, background refs, and review/signoff
   readiness, with `papers/problem_formulation_provenance_boundary.json`
-  preserving the paper-facing metadata-contract-only boundary
+  preserving the paper-facing metadata-contract-only boundary while
+  expert/owner identity, evaluator/result artifact linkage, signoff versions,
+  background-reference artifacts, anti-gaming review, and paper certification
+  rows remain open
 - benchmark-fixture readiness reports under
   `runtime.history.benchmark_fixture_readiness_report`, joining startup
   problem metadata to the example-scope registry and preserving explicit false

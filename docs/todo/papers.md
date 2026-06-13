@@ -3502,14 +3502,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/benchmark_fixture_readiness_boundary.json` sidecar now preserves
     this smoke-fixture readiness boundary for paper-manifest validation.
     Current mathematical benchmark fixtures still lack real populated
-    expert-reviewed records,
-    paper-facing certification examples, and paper-claim-ready benchmark
-    evidence.
+    expert/owner identity records, evaluator/report artifact links,
+    parameter-scope signoff, background-reference artifact links, review
+    timestamps or versions, anti-gaming review evidence, paper-facing
+    certification examples, and paper-claim-ready benchmark evidence.
   - Required result: populate matrix and constructive-math benchmark fixtures
-    with reviewed formulation records, link them to evaluator/report artifacts,
-    add paper-facing examples or certification rows, and require review/signoff
-    state before claiming AlphaEvolve-style expert-guided mathematical
-    discovery setup.
+    with reviewed formulation records, external expert and problem-owner
+    identity evidence, evaluator/report artifact links, parameter-scope
+    signoff, background-reference artifact links, review timestamps or
+    versions, anti-gaming review evidence, and paper-facing examples or
+    certification rows, and require review/signoff state before claiming
+    AlphaEvolve-style expert-guided mathematical discovery setup.
 
 - [ ] Track Section 3.2 incumbent-construction handoff evidence separately
       from generic benchmark artifacts.

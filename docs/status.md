@@ -307,10 +307,13 @@ Important limits:
   `papers/initial_program_validity_boundary.json`.
 - Problem-formulation metadata and benchmark-fixture readiness reports are
   provenance/readiness telemetry, not populated expert-reviewed matrix or
-  constructive-math formulation records, non-smoke AlphaEvolve-comparable
-  fixture scope, repeated-seed protocols, SOTA/target baselines, fixture-
-  emitted result artifacts, anti-gaming negative fixtures, or paper-claim-ready
-  benchmark evidence; those boundaries are tracked by
+  constructive-math formulation records, external expert or problem-owner
+  identity records, evaluator/result artifact linkage, parameter-scope signoff,
+  background-reference artifacts, review timestamps or versions, anti-gaming
+  review evidence, non-smoke AlphaEvolve-comparable fixture scope,
+  repeated-seed protocols, SOTA/target baselines, fixture-emitted result
+  artifacts, anti-gaming negative fixtures, or paper-claim-ready benchmark
+  evidence; those boundaries are tracked by
   `papers/problem_formulation_provenance_boundary.json` and
   `papers/benchmark_fixture_readiness_boundary.json`.
 - Constructive-math Section 3.2 heuristic-handoff records preserve the

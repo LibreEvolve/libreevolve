@@ -606,7 +606,10 @@ problem origin, formulation notes, objective/evaluator rationale,
 parameter-scope decisions, background refs, and review/signoff state. Section
 3.2 reports external mathematicians suggesting problems and advising
 formulation, so mathematical benchmark fixtures still need populated,
-expert-reviewed formulation metadata before making that class of paper claim.
+expert-reviewed formulation metadata, expert/owner identity records,
+evaluator/result artifact links, parameter-scope signoff, background-reference
+artifacts, review timestamps or versions, and anti-gaming review evidence
+before making that class of paper claim.
 The committed `papers/problem_formulation_provenance_boundary.json` sidecar
 preserves that metadata-contract-only boundary for paper-manifest validation.
 The committed `papers/benchmark_fixture_readiness_boundary.json` sidecar

@@ -13,17 +13,25 @@ PROBLEM_FORMULATION_RUNTIME_REPORT_SCHEMA = (
     "libreevolve.problem_formulation_provenance_report.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
-EXPECTED_SOURCE_SECTION_IDS = ("3.2",)
+EXPECTED_SOURCE_SECTION_IDS = ("2.1", "3.2")
 EXPECTED_BOUNDARY_STATUS = "metadata_contract_only"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "metadata_present",
+    "problem_owner_identity_recorded",
     "expert_contributor_roles_recorded",
+    "external_expert_identity_or_role_recorded",
     "formulation_notes_recorded",
     "objective_rationale_recorded",
     "evaluator_rationale_recorded",
+    "evaluator_artifact_linkage",
     "parameter_scope_recorded",
+    "parameter_scope_signoff",
     "background_knowledge_linkage_recorded",
+    "background_reference_artifact_links",
     "expert_review_or_domain_owner_signoff",
+    "review_timestamp_or_version_recorded",
+    "result_report_artifact_linkage",
+    "anti_gaming_review_evidence",
     "alphaevolve_expert_guided_formulation_parity",
     "benchmark_fixture_linkage",
     "paper_facing_certification_rows",
@@ -34,6 +42,14 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 EXPECTED_MISSING_EVIDENCE = {
     "matrix_fixture_expert_reviewed_formulation": "not_recorded_locally",
     "constructive_math_fixture_expert_reviewed_formulation": "not_recorded_locally",
+    "external_expert_identity_or_role_records": "not_recorded_locally",
+    "problem_owner_identity_records": "not_recorded_locally",
+    "evaluator_artifact_linkage": "not_recorded_locally",
+    "result_report_artifact_linkage": "not_recorded_locally",
+    "parameter_scope_signoff": "not_recorded_locally",
+    "background_reference_artifact_links": "not_recorded_locally",
+    "review_timestamp_or_version_records": "not_recorded_locally",
+    "anti_gaming_review_evidence": "not_recorded_locally",
     "paper_facing_certification_rows": "not_recorded_locally",
     "review_signoff_artifact_links": "not_recorded_locally",
     "benchmark_fixture_formulation_result_linkage": "not_recorded_locally",
@@ -65,10 +81,13 @@ def problem_formulation_provenance_boundary_record() -> dict[str, Any]:
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_claim": (
-            "AlphaEvolve Section 3.2 reports external mathematicians suggesting "
-            "problems and advising how to formulate them, so paper-facing "
-            "mathematical benchmark claims need populated expert-guided "
-            "formulation evidence rather than only a metadata schema"
+            "AlphaEvolve Section 2.1 frames problem setup, evaluation "
+            "criteria, initial solutions, and optional background knowledge as "
+            "human-provided inputs, while Section 3.2 reports external "
+            "mathematicians suggesting problems and advising how to formulate "
+            "them, so paper-facing mathematical benchmark claims need "
+            "populated expert-guided formulation evidence rather than only a "
+            "metadata schema"
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "runtime_report_status": "problem_formulation_provenance_report_available",
@@ -81,9 +100,13 @@ def problem_formulation_provenance_boundary_record() -> dict[str, Any]:
             "roles, formulation notes, objective/evaluator rationale, parameter "
             "scope, background references, and review/signoff readiness, but "
             "does not claim populated expert-reviewed matrix or constructive-"
-            "math benchmark formulation records, paper-facing certification "
-            "rows, review/signoff artifact links, benchmark-result linkage, or "
-            "AlphaEvolve expert-guided formulation parity."
+            "math benchmark formulation records, external expert identity "
+            "records, problem-owner identity records, evaluator/result-artifact "
+            "linkage, parameter-scope signoff, background-reference artifact "
+            "links, review timestamps or versions, anti-gaming review evidence, "
+            "paper-facing certification rows, review/signoff artifact links, "
+            "benchmark-result linkage, or AlphaEvolve expert-guided formulation "
+            "parity."
         ),
     }
 
@@ -107,10 +130,14 @@ def validate_problem_formulation_provenance_boundary(
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
-        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['3.2']"))
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['2.1', '3.2']"))
     source_claim = data.get("source_claim")
-    if not isinstance(source_claim, str) or "Section 3.2" not in source_claim:
-        issues.append(_issue("invalid_source_claim", "source_claim must identify AlphaEvolve Section 3.2 formulation evidence"))
+    if (
+        not isinstance(source_claim, str)
+        or "Section 2.1" not in source_claim
+        or "Section 3.2" not in source_claim
+    ):
+        issues.append(_issue("invalid_source_claim", "source_claim must identify AlphaEvolve Sections 2.1 and 3.2 formulation evidence"))
     status = data.get("boundary_status")
     if status != EXPECTED_BOUNDARY_STATUS:
         issues.append(_issue("invalid_boundary_status", f"boundary_status must be {EXPECTED_BOUNDARY_STATUS}"))

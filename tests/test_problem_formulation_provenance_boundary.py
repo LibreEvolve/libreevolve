@@ -13,10 +13,16 @@ def test_problem_formulation_provenance_boundary_accepts_absence_record():
 
     assert validation.ok is True
     assert validation.boundary_status == "metadata_contract_only"
-    assert validation.required_evidence_field_count == 14
-    assert validation.missing_evidence_count == 6
+    assert validation.required_evidence_field_count == 22
+    assert validation.missing_evidence_count == 14
     assert boundary["schema"] == PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_SCHEMA
-    assert boundary["source_section_ids"] == ["3.2"]
+    assert boundary["source_section_ids"] == ["2.1", "3.2"]
+    assert "external_expert_identity_or_role_recorded" in (
+        boundary["required_evidence_fields"]
+    )
+    assert boundary["missing_evidence"]["evaluator_artifact_linkage"] == (
+        "not_recorded_locally"
+    )
     assert "does not claim populated expert-reviewed" in boundary["claim_boundary"]
 
 
@@ -24,8 +30,9 @@ def test_problem_formulation_provenance_boundary_rejects_premature_parity_claim(
     boundary = problem_formulation_provenance_boundary_record()
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "expert_guided_formulation_ready"
-    boundary["source_section_ids"] = ["2.1"]
+    boundary["source_section_ids"] = ["3.2"]
     boundary["missing_evidence"]["alphaevolve_expert_guided_formulation_parity"] = "recorded"
+    boundary["missing_evidence"]["external_expert_identity_or_role_records"] = "recorded"
     boundary["required_evidence_fields"] = ["metadata_present"]
 
     validation = validate_problem_formulation_provenance_boundary(boundary)
@@ -36,6 +43,7 @@ def test_problem_formulation_provenance_boundary_rejects_premature_parity_claim(
     assert "invalid_boundary_status" in codes
     assert "invalid_source_section_ids" in codes
     assert "invalid_missing_evidence_alphaevolve_expert_guided_formulation_parity" in codes
+    assert "invalid_missing_evidence_external_expert_identity_or_role_records" in codes
     assert "missing_required_evidence_field" in codes
 
 
@@ -47,5 +55,5 @@ def test_render_problem_formulation_provenance_boundary_summary_reports_shape():
     assert "AlphaEvolve problem-formulation provenance boundary" in summary
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | metadata_contract_only |" in summary
-    assert "| required_evidence_field_count | 14 |" in summary
-    assert "| missing_evidence_count | 6 |" in summary
+    assert "| required_evidence_field_count | 22 |" in summary
+    assert "| missing_evidence_count | 14 |" in summary

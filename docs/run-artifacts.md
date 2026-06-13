@@ -107,7 +107,10 @@ parity claim-ready.
 The paper-facing counterpart is
 `papers/problem_formulation_provenance_boundary.json`, which manifest
 validation requires at the repository root so formulation metadata/report
-support cannot drift into populated expert-guided benchmark formulation parity.
+support cannot drift into populated expert-guided benchmark formulation parity;
+it still requires populated expert/owner identity, evaluator/result artifact
+links, parameter-scope signoff, background-reference artifact links, review
+timestamps or versions, anti-gaming review, and paper certification rows.
 Completed manifests also include
 `runtime.history.benchmark_fixture_readiness_report` with schema
 `libreevolve.benchmark_fixture_readiness_report.v1`. It joins startup problem

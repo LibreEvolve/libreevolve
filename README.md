@@ -242,6 +242,12 @@ Important limits:
   runners that emit exact complex decomposition/certificate artifacts for
   AlphaEvolve Section 3.1 scalar-field claims; that boundary is tracked by
   `papers/matrix_scalar_field_runtime_boundary.json`.
+- Matrix tensor-rank records validate tensor-decomposition versus non-tensor
+  algorithm claims, rank, recursive applicability, certificate scope,
+  tensor-identity status, target-tensor refs, exactness-certificate refs, and
+  matrix-result links, not local matrix runners that emit AlphaEvolve Section
+  3.1 target-tensor/certificate artifacts during search; that boundary is
+  tracked by `papers/matrix_tensor_rank_runtime_boundary.json`.
 - Collaborator-feedback provenance is optional metadata and runtime reporting
   for cohorts, events, affected workflow areas, change links, validation
   outcomes, privacy/redaction policy, and review state, not populated

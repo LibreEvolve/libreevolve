@@ -941,34 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README matrix rank wording scoped until tensor-rank artifacts exist.
-  - Spec evidence: AlphaEvolve Section 3.1 frames matrix improvements as
-    low-rank tensor decompositions, and footnote 3 says some algorithms using
-    fewer than 49 multiplications do not correspond to matrix-multiplication
-    tensor decompositions and cannot be applied recursively to larger matrix
-    multiplication.
-  - Current evidence: README describes Appendix A target/rank/outcome
-    validation, coefficient-domain/exactness fields, scalar-field gaps, and
-    checked Strassen artifacts. It now documents
-    `libreevolve.matrix_tensor_rank_evidence.v1`, which validates
-    algorithm-kind metadata, tensor-decomposition certificate scope, recursive
-    applicability, target-tensor/certificate links, and footnote-level caveats
-    that separate tensor-rank evidence from non-recursive multiplication
-    algorithms. It also documents
-    `libreevolve.matrix_tensor_rank_runtime_boundary.v1` as the current
-    `not_emitted_by_local_runner` boundary plus emitted-record validation for
-    run/target/candidate ids, seeds, algorithm kind, rank, recursive
-    applicability, certificate scope, tensor-identity status, target-tensor
-    refs, exactness-certificate refs, matrix-result refs, artifact paths, and
-    artifact hashes. It also documents the builder that turns validated
-    tensor-rank evidence into a linked runtime row and states that
-    target-tensor/certificate artifacts are not emitted.
-  - Required result: when matrix reports or companion artifacts capture
-    tensor-rank applicability and recursive-use caveats, update README,
-    ROADMAP, papers index, and code/paper TODO entries together so README
-    qualifies rank comparisons and does not imply every fewer-multiplication
-    algorithm is a recursive tensor-decomposition baseline.
-
 - [ ] Keep README certification and systems-result wording scoped to report
   contracts versus executed independent evidence.
   - Spec evidence: AlphaEvolve Section 3.3 reports confirmation beyond local

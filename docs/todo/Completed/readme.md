@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document matrix tensor-rank README boundary.
+  - Status: README Important limits now states that matrix tensor-rank records
+    validate tensor-decomposition versus non-tensor algorithm claims, rank,
+    recursive applicability, certificate scope, tensor-identity status,
+    target-tensor refs, exactness-certificate refs, and matrix-result links,
+    not local matrix runners that emit AlphaEvolve Section 3.1
+    target-tensor/certificate artifacts during search. It points to
+    `papers/matrix_tensor_rank_runtime_boundary.json`.
+  - Verification: focused matrix tensor-rank evidence/runtime-boundary and
+    paper-manifest tests validate recursive tensor-decomposition claims,
+    non-tensor caveats, invalid-scope guards, emitted-record builders, linkage
+    checks, required fields, and overclaim guards.
+
 - [x] Document matrix scalar-field README boundary.
   - Status: README Important limits now states that matrix scalar-field
     records validate complex/finite-field metadata, characteristic and

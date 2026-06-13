@@ -10,34 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [x] Keep Appendix B.1-B.3 roadmap wording scoped until paper-heading label
-      provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B.1-B.3 headings are `First
-    autocorrelation inequality`, `Second autocorrelation inequality`, and
-    `Third autocorrelation inequality`; the constants are `C1`, `C2`, and
-    `C3`. The paper does not describe them with `k=3`, `k=4`, or `k=5`
-    labels.
-  - Status: ROADMAP now records that B.1-B.3 public labels are tied to exact
-    paper section/constant metadata, while `autocorrelation_bounds_k*` remains
-    internal-only implementation id vocabulary. The registry validator and
-    tests reject missing paper labels, drifted constants, and public `k=`
-    names.
-  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
-    passes.
-
-- [x] Keep Appendix B.8 roadmap wording scoped until squared-ratio convention
-      provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B.8 reports min max/min-distance
-    point-set results for 16 points in two dimensions and 14 points in three
-    dimensions. The published values `12.889266112` and `4.165849767` are
-    squared-ratio values, not direct max/min distance ratios.
-  - Status: ROADMAP now states that B.8 registry evidence validates raw squared
-    values, square-root-derived ratios, point counts, dimensions, prior squared
-    bounds, Figure 12 panel labels, and comparison policy, while leaving
-    coordinate payloads and all-pairs distance certificates open.
-  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
-    passes.
-
 - [ ] Keep Appendix B.8 roadmap wording scoped until point-set distance
       certificates exist.
   - Spec evidence: AlphaEvolve Appendix B.8 and Figure 12 report two concrete
@@ -88,21 +60,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     shift-objective recomputation, recomputed upper bound, Figure 10 panel
     artifact, and source location from aggregate Appendix B coverage.
 
-- [x] Keep Appendix B.5 roadmap wording scoped until source-formulation
-      equivalence exists.
-  - Spec evidence: AlphaEvolve Appendix B.5 first defines `C5` through
-    non-negative `f,g: [-1,1] -> [0,1]` with `f + g = 1`,
-    `integral f = 1`, zero extension outside `[-1,1]`, and
-    `sup_{x in [-2,2]} integral_{-1}^1 f(t) g(x+t) dt`. It then cites `[40]`
-    for equality with the normalized step-function infimum on `[0,2]`.
-  - Status: ROADMAP now states that the Appendix B registry validates the B.5
-    source Erdős formulation, zero-extension convention, shift-supremum
-    objective, known bounds, `[40]` equivalence, and mapping to the normalized
-    `[0,2]` step-function row, while leaving the Figure 10 construction payload
-    and recomputation certificate open.
-  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
-    passes.
-
 - [ ] Keep Appendix B.6 roadmap wording scoped until finite-set witness
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.6 improves the
@@ -128,25 +85,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     feasibility evidence, set-algebra certificates, formula-substitution
     certificates, derived lower-bound values, payload hashes, and source links
     from aggregate Appendix B coverage.
-
-- [x] Keep Appendix B.6 roadmap wording scoped until theorem-condition
-      provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B.6 defines the `C6` problem through
-    arbitrarily large finite integer sets `A` and `B`, explicit
-    sumset/difference-set definitions, asymptotic `<<`/`>>` notation whose
-    constants are independent of sufficiently large sets, and source anchors
-    `[39, Corollary 3]` for `C6 <= 4/3` and `[39, Theorem 1]` for the
-    Gyarmati lower-bound theorem. The finite-set theorem applies only to
-    non-negative integer `U` containing zero and satisfying
-    `|U - U| <= 2 max(U) + 1`.
-  - Status: ROADMAP, README, and papers index now distinguish B.6 theorem
-    scope and admissibility evidence from `U1`/`U2` witness payloads:
-    theorem-condition evidence records the `C6` statement,
-    sumset/difference-set definitions, asymptotic-notation scope, cited
-    theorem/corollary ids, admissible-`U` preconditions, and lower-bound
-    formula, while witness payloads remain explicitly absent.
-  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
-    passes.
 
 - [ ] Keep Appendix B.7 roadmap wording scoped until regular-hexagon packing
       provenance exists.

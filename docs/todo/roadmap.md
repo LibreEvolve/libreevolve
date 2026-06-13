@@ -10,27 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep systems roadmap wording scoped until application-owner and
-      domain-review provenance is populated.
-  - Spec evidence: AlphaEvolve Section 3.3 presents the scheduling, kernel,
-    TPU RTL, and XLA/FlashAttention IR systems results as practical
-    applications, while the Acknowledgements and Contributions sections name
-    application co-leads, domain advisors, reviewers, validation-infrastructure
-    owners, TPU designers, and XLA modification reviewers connected to those
-    results.
-  - Current evidence: roadmap systems-result wording now points to
-    `application_provenance` records required for `alphaevolve_ready` systems
-    reports: application-owner/advisor roles, domain-reviewer roles,
-    reviewer/signoff scope, validation or source-data ownership, production
-    approval state, claim links, artifact refs, and local-benchmark versus
-    production-claim boundary text. Existing fixtures do not yet carry real
-    reviewed owner/reviewer records.
-  - Required result: when practical systems fixtures and certification examples
-    are populated with reviewed owner/reviewer provenance, update ROADMAP,
-    README, papers index, and code/paper TODOs so roadmap wording neither
-    underclaims the report contract nor overclaims AlphaEvolve-style
-    domain-owner validated production evidence.
-
 - [ ] Keep scheduling roadmap wording scoped until ranking-only feasibility
       evidence is populated.
   - Spec evidence: AlphaEvolve's Borg scheduling heuristic only scores

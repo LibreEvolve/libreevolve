@@ -2,6 +2,30 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive systems application-provenance roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, `README.md`,
+    `docs/status.md`, `papers/README.md`, `docs/todo/code.md`, and
+    `docs/todo/papers.md` already scope practical systems application
+    provenance to a required report contract, not real domain-owner validated
+    production evidence.
+  - Current evidence: `libreevolve.systems_result_report.v1` requires
+    `application_provenance` before accepting `alphaevolve_ready` systems
+    reports. The validator checks owner/advisor, domain-reviewer,
+    validation/data-owner, and production-approver role coverage; domain,
+    responsible labels, review/signoff scope, ownership scope, approval or
+    deployment state, claim links, artifact refs, and boundary text separating
+    local benchmark evidence from domain-owner production claims.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    systems evidence: populated reviewed owner/reviewer records linked to
+    calibrated Section 3.3 claims, source evidence, concrete artifacts,
+    paper-facing certification examples, deployment/reviewer records, and
+    proof that practical fixtures rather than schemas carry the provenance.
+  - Verification: focused systems-result tests reject ready reports missing
+    `application_provenance`, missing required owner/reviewer/validation/
+    approver role coverage, bad artifact links, missing approval, and
+    contradictory ready claims; systems-readiness boundary and paper-manifest
+    tests preserve the no-real-systems-fixtures boundary.
+
 - [x] Archive systems-result claim-calibration roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, `README.md`,
     `docs/status.md`, `docs/run-artifacts.md`, `papers/README.md`,

@@ -125,10 +125,23 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+          import zipfile
           wheels = sorted(Path("dist").glob("*.whl"))
           sdists = sorted(Path("dist").glob("*.tar.gz"))
           if len(wheels) != 1 or len(sdists) != 1:
               raise SystemExit(f"expected one wheel and one sdist, got {wheels} {sdists}")
+          required = {
+              "libreevolve/problems/examples/sorting/metrics.yaml",
+              "libreevolve/problems/examples/sorting/task_description.txt",
+              "libreevolve/problems/examples/embedded_evaluate_math/config.yaml",
+              "libreevolve/problems/examples/workspace_math/initial_programs/baseline/data/config.json",
+              "libreevolve/problems/examples/workspace_math/initial_programs/baseline/assets/offset.bin",
+          }
+          with zipfile.ZipFile(wheels[0]) as wheel:
+              names = set(wheel.namelist())
+          missing = sorted(required - names)
+          if missing:
+              raise SystemExit(f"wheel is missing package data: {missing}")
           print(wheels[0])
           print(sdists[0])
           PY

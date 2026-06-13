@@ -127,6 +127,8 @@ def test_tests_workflow_covers_docs_papers_and_todo_changes():
     )
     assert 'python -m pip install -e ".[dev]"' in release_commands
     assert "python -m build --wheel --sdist" in release_commands
+    assert "zipfile.ZipFile" in release_commands
+    assert "wheel is missing package data" in release_commands
     assert "python -m venv .venv-wheel-smoke" in release_commands
     assert "python -m pip install dist/*.whl" in release_commands
     assert "libreevolve --help" in release_commands
@@ -137,6 +139,15 @@ def test_dev_dependencies_include_release_build_tooling():
     pyproject = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))
 
     assert "build>=1.2" in pyproject["project"]["optional-dependencies"]["dev"]
+    assert pyproject["tool"]["setuptools"]["include-package-data"] is True
+
+
+def test_manifest_includes_problem_example_package_data():
+    manifest = Path("MANIFEST.in").read_text(encoding="utf-8")
+
+    assert "recursive-include libreevolve/problems/examples" in manifest
+    for pattern in ("*.yaml", "*.txt", "*.json", "*.bin", "*.md"):
+        assert pattern in manifest
 
 
 def test_run_artifact_docs_list_current_schema_jsonl_streams():

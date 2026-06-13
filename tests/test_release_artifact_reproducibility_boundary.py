@@ -14,13 +14,17 @@ def test_release_artifact_reproducibility_boundary_accepts_editable_boundary():
     assert validation.ok is True
     assert validation.boundary_status == "ci_release_artifact_smoke_available"
     assert validation.required_evidence_field_count == 13
-    assert validation.missing_evidence_count == 3
+    assert validation.missing_evidence_count == 2
     assert boundary["schema"] == RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
     assert boundary["partial_evidence"]["wheel_build_check"] == "ci_smoke"
     assert boundary["partial_evidence"]["sdist_build_check"] == "ci_smoke"
     assert boundary["partial_evidence"]["install_from_wheel_cli_smoke"] == "ci_smoke"
-    assert "does not claim package-data inclusion checks" in boundary["claim_boundary"]
+    assert (
+        boundary["partial_evidence"]["package_data_inclusion_check"]
+        == "representative_wheel_smoke"
+    )
+    assert "complete package-data inventory certification" in boundary["claim_boundary"]
 
 
 def test_release_artifact_reproducibility_boundary_rejects_release_overclaim():
@@ -49,4 +53,4 @@ def test_render_release_artifact_reproducibility_boundary_summary_reports_shape(
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | ci_release_artifact_smoke_available |" in summary
     assert "| required_evidence_field_count | 13 |" in summary
-    assert "| missing_evidence_count | 3 |" in summary
+    assert "| missing_evidence_count | 2 |" in summary

@@ -19,7 +19,7 @@ def test_ci_workflow_coverage_boundary_accepts_path_scoped_boundary():
     assert boundary["claim_ready"] is False
     assert "committed-manifest paper/docs job" in boundary["claim_boundary"]
     assert boundary["partial_evidence"]["wheel_sdist_ci_smoke"] == (
-        "release_artifact_job_smoke_only"
+        "release_artifact_job_with_representative_package_data_smoke"
     )
     assert (
         boundary["missing_evidence"]["paper_manifest_ci_job"]

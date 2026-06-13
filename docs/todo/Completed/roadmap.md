@@ -2,6 +2,29 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive database-query-index roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `papers/README.md`, and runtime manifests already distinguish bounded
+    current-run resurfacing from AlphaEvolve-grade durable database query
+    indexes.
+  - Current evidence: `runtime.history.resurfacing_index` and
+    `ProgramDatabase` expose defensive current-run resurfacing by score,
+    metric, frontier, lineage, descriptor/novelty, feedback, hypothesis,
+    artifact metadata, and exact program-output source/hash evidence, while
+    `validate_resurfacing_index_summary()` preserves
+    `durable_database_ready=false`.
+  - Remaining guard: persisted cross-run query/index tables, full
+    metric-vector and feedback/artifact/program-output ranking, semantic or
+    schema-aware output retrieval, full-content/semantic artifact search,
+    cross-run hypothesis/novelty retrieval, schema migrations, and replayable
+    durable sampling policies remain future work.
+  - Verification: focused database/runtime tests validate rank-fused
+    resurfacing indexes, exact program-output lookup APIs, defensive snapshots,
+    manifest-visible `program_output_index`, and invalid query rejection; the
+    `papers/program_output_boundary.json` and
+    `papers/artifact_index_boundary.json` sidecars reject semantic/durable
+    output and full-content artifact search overclaims.
+
 - [x] Archive mutation-operator roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `papers/README.md`, and `docs/status.md` already scope

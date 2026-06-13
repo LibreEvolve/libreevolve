@@ -10,44 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep database-query-index follow-up wording scoped to run-local
-      resurfacing versus durable cross-run indexes.
-  - Spec evidence: AlphaEvolve's program database should support durable
-    resurfacing of previously explored programs and ideas across score,
-    metric, diversity/novelty, feedback, lineage, failure, hypothesis, and
-    artifact evidence, with reproducible sampling policies rather than only
-    live in-memory archive views.
-  - Current evidence: `ROADMAP.md` lists "Persist database query indexes
-    beyond run-local metric/novelty/lineage/feedback resurfacing" as a good
-    first follow-up. Code and paper TODO evidence now show bounded
-    current-run `runtime.history.resurfacing_index` support plus defensive
-    `ProgramDatabase.resurface_candidates(target_metric=...)`,
-    `resurface_by_metric()`, `resurface_by_lineage()`,
-    `resurface_by_descriptor()`, `resurface_by_novelty()`, and
-    `resurface_by_feedback()` APIs over score, metric, frontier, lineage,
-    descriptor/novelty, hypothesis, artifact, and feedback views.
-    `ProgramDatabase.resurface_by_program_output()` adds exact source-key/hash
-    queries over bounded program-output records. These
-    records preserve `durable_database_ready: false` and remain append-only
-    logs, an in-memory archive, and manifest-visible bounded summaries rather
-    than persisted cross-run query/index tables, full metric-vector and
-    feedback/artifact-content ranking, output-similarity or schema-aware
-    output retrieval, semantic/cross-run hypothesis retrieval, learned/cross-run
-    novelty, schema migrations, or replayable durable sampling policies.
-  - Required result: when persisted database tables, cross-run query indexes,
-    replayable ranked sampling policies, schema migration support, or
-    durable full-content/semantic resurfacing lands, update the roadmap,
-    README, papers index, and code/paper TODO entries together so roadmap
-    wording neither underclaims current run-local resurfacing nor overclaims
-    AlphaEvolve-grade queryable database support. Treat the new bounded
-    evaluator program-output index and exact source/hash query API as
-    current-run evidence, not durable output retrieval or semantic similarity
-    search. ROADMAP now ties that boundary to
-    `papers/program_output_boundary.json`. It also ties bounded evaluator
-    artifact metadata/content-excerpt resurfacing to
-    `papers/artifact_index_boundary.json`, keeping durable full-content or
-    semantic artifact search open.
-
 - [ ] Keep UCB scheduler roadmap wording scoped to heuristic backend routing.
   - Spec evidence: canonical UCB1 claims require bounded reward assumptions and
     regret-analysis conditions, while AlphaEvolve-style backend scheduling also

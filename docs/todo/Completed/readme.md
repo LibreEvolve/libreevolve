@@ -15257,3 +15257,34 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     hashes, search-algorithm provenance, independent checker evidence,
     benchmark reports, and AlphaEvolve-style Ramsey-number discovery evidence
     remain active in code and paper TODOs.
+
+- [x] Keep README AlphaEvolve local-correction combinatorics claims absent or
+      source-scoped until certificate benchmark evidence exists.
+  - Spec evidence: arXiv `2603.06692`, `Evolving Local Corrections for Global
+    Constructions in Combinatorics`, uses AlphaEvolve as an experimental
+    engine for finite correcting-step certificates in graph reconstruction,
+    Latin-square Alon-Tarsi parity, and Rota's Basis Conjecture. Its abstract
+    says the paper produces explicit algorithms and structural patterns for
+    later mathematical analysis, and does not claim proofs. The body frames
+    success as fixed mathematical harnesses evaluating short Python evolvable
+    blocks with hard constraints, shaped progress scores, symmetry-scramble
+    robustness, and experimental run summaries; it reports concrete
+    graph-reconstruction, Latin-square, and Rota benchmark tables rather than
+    a general theorem.
+  - Status: README now lists arXiv `2603.06692` as AlphaEvolve-assisted
+    local-correction combinatorics context only and marks the mention as a
+    curated cached-paper subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no bipartite
+    graph-reconstruction harness, planar graph-reconstruction harness,
+    Alon-Tarsi Latin-square involution harness, Rota-basis linear-matroid
+    exchange harness, candidate certificate schema, local-correction policy
+    API, symmetry-scramble record, hard-negative replay buffer, evolved
+    code-block artifact hash, Gemini experiment-summary artifact, reported
+    metric table, conjecture/proof-status ledger, repository snapshot, or
+    independent verifier output; `papers/combinatorics_berczy_boundary.json`
+    records that absence boundary.
+  - Remaining README gap: certificate schemas, case-study fixtures, scoring
+    protocols, finite-step traces, generated algorithms, checker outputs,
+    conjecture/proof-status records, benchmark reports, and AlphaEvolve-style
+    local-correction combinatorics evidence remain active in code and paper
+    TODOs.

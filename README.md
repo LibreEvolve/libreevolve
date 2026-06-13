@@ -912,6 +912,17 @@ Important limits:
   initialization-family record, search budget or seed record, algorithm-summary
   audit record, or independent checker output; `papers/ramsey_numbers_boundary.json`
   records that absence boundary.
+- ArXiv `2603.06692` is AlphaEvolve-assisted local-correction combinatorics
+  context only; the README mentions this cached paper as a curated subset
+  while `papers/README.md` remains the complete implementation-status index.
+  LibreEvolve has no bipartite graph-reconstruction harness, planar
+  graph-reconstruction harness, Alon-Tarsi Latin-square involution harness,
+  Rota-basis linear-matroid exchange harness, candidate certificate schema,
+  local-correction policy API, symmetry-scramble record, hard-negative replay
+  buffer, evolved code-block artifact hash, Gemini experiment-summary artifact,
+  reported metric table, conjecture/proof-status ledger, repository snapshot,
+  or independent verifier output; `papers/combinatorics_berczy_boundary.json`
+  records that absence boundary.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

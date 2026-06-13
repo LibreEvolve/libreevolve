@@ -19,6 +19,7 @@ def test_existing_codebase_integration_boundary_accepts_absence_record():
     assert validation.required_evidence_field_count == 10
     assert validation.missing_evidence_count == 9
     assert boundary["schema"] == EXISTING_CODEBASE_INTEGRATION_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["2.1"]
     assert "smoke fixture with source-setup metadata" in boundary["claim_boundary"]
     assert "does not claim AlphaEvolve-style minimal-change integration" in boundary["claim_boundary"]
 
@@ -27,6 +28,7 @@ def test_existing_codebase_integration_boundary_rejects_premature_claim():
     boundary = existing_codebase_integration_boundary_record()
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "recorded"
+    boundary["source_section_ids"] = ["2.3"]
     boundary["missing_evidence"]["pre_marker_source_hashes"] = "recorded"
     boundary["required_evidence_fields"] = ["original_codebase_id"]
 
@@ -36,6 +38,7 @@ def test_existing_codebase_integration_boundary_rejects_premature_claim():
     assert validation.ok is False
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert "invalid_missing_evidence_pre_marker_source_hashes" in codes
     assert "missing_required_evidence_field" in codes
 

@@ -1089,6 +1089,7 @@ def test_validate_paper_manifest_rejects_feedback_calibration_boundary_drift(
     record = paper_manifest.feedback_calibration_boundary_record()
     record["claim_ready"] = True
     record["boundary_status"] = "executed_feedback_calibration_ready"
+    record["source_section_ids"] = ["2.3"]
     record["missing_evidence"]["runtime_calibration_runner"] = "recorded"
     sidecar = tmp_path / paper_manifest.FEEDBACK_CALIBRATION_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
@@ -1099,6 +1100,7 @@ def test_validate_paper_manifest_rejects_feedback_calibration_boundary_drift(
     assert report.ok is False
     assert "feedback_calibration_boundary_claim_ready_overclaim" in codes
     assert "feedback_calibration_boundary_invalid_boundary_status" in codes
+    assert "feedback_calibration_boundary_invalid_source_section_ids" in codes
     assert (
         "feedback_calibration_boundary_invalid_missing_evidence_runtime_calibration_runner"
         in codes
@@ -3018,6 +3020,7 @@ def test_validate_paper_manifest_rejects_existing_codebase_integration_boundary_
     _write_manifest(tmp_path, [row])
     record = paper_manifest.existing_codebase_integration_boundary_record()
     record["claim_ready"] = True
+    record["source_section_ids"] = ["2.3"]
     sidecar = tmp_path / paper_manifest.EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -3026,6 +3029,7 @@ def test_validate_paper_manifest_rejects_existing_codebase_integration_boundary_
     codes = {issue.code for issue in report.issues}
     assert report.ok is False
     assert "existing_codebase_integration_boundary_claim_ready_overclaim" in codes
+    assert "existing_codebase_integration_boundary_invalid_source_section_ids" in codes
 
 
 def test_validate_paper_manifest_requires_existing_codebase_boundary_at_repo_root(
@@ -3115,6 +3119,7 @@ def test_validate_paper_manifest_rejects_candidate_abstraction_boundary_drift(
     _write_manifest(tmp_path, [row])
     record = paper_manifest.candidate_abstraction_boundary_record()
     record["selected_abstraction"] = "constructor_function"
+    record["source_section_ids"] = ["2.1"]
     sidecar = tmp_path / paper_manifest.CANDIDATE_ABSTRACTION_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -3123,6 +3128,7 @@ def test_validate_paper_manifest_rejects_candidate_abstraction_boundary_drift(
     codes = {issue.code for issue in report.issues}
     assert report.ok is False
     assert "candidate_abstraction_boundary_invalid_selected_abstraction" in codes
+    assert "candidate_abstraction_boundary_invalid_source_section_ids" in codes
 
 
 def test_validate_paper_manifest_requires_candidate_abstraction_boundary_at_repo_root(

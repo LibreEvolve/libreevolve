@@ -10,6 +10,7 @@ CANDIDATE_ABSTRACTION_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_candidate_abstr
 CANDIDATE_ABSTRACTION_RUNTIME_REPORT_SCHEMA = "libreevolve.candidate_abstraction_choice_report.v1"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_ID = "2.1"
+EXPECTED_SOURCE_SECTION_IDS = ("2.1", "Discussion")
 EXPECTED_BOUNDARY_STATUS = "not_configured_as_problem_defined_abstractions"
 EXPECTED_SELECTED_ABSTRACTION = "code_file_set"
 EXPECTED_ABSTRACTION_OPTION_IDS = (
@@ -65,6 +66,7 @@ def candidate_abstraction_boundary_record() -> dict[str, Any]:
         "runtime_report_schema": CANDIDATE_ABSTRACTION_RUNTIME_REPORT_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_section_id": EXPECTED_SOURCE_SECTION_ID,
+        "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_discussion_ref": "Discussion",
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "runtime_report_status": "candidate_abstraction_choice_report_available",
@@ -137,6 +139,8 @@ def validate_candidate_abstraction_boundary(
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     if data.get("source_section_id") != EXPECTED_SOURCE_SECTION_ID:
         issues.append(_issue("invalid_source_section_id", "source_section_id must be 2.1"))
+    if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['2.1', 'Discussion']"))
     if data.get("source_discussion_ref") != "Discussion":
         issues.append(_issue("invalid_source_discussion_ref", "source_discussion_ref must identify the Discussion"))
     status = data.get("boundary_status")

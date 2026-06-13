@@ -19,6 +19,7 @@ def test_feedback_calibration_boundary_accepts_report_contract_boundary():
     assert validation.required_evidence_field_count == 12
     assert validation.missing_evidence_count == 4
     assert boundary["schema"] == FEEDBACK_CALIBRATION_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["2.4"]
     assert boundary["claim_ready"] is False
     assert "does not claim a runtime calibration runner" in boundary["claim_boundary"]
 
@@ -27,6 +28,7 @@ def test_feedback_calibration_boundary_rejects_executed_calibration_overclaim():
     boundary = feedback_calibration_boundary_record()
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "executed_feedback_calibration_ready"
+    boundary["source_section_ids"] = ["2.3"]
     boundary["missing_evidence"]["runtime_calibration_runner"] = "recorded"
     boundary["required_evidence_fields"] = ["feedback_calibration_report_schema"]
 
@@ -36,6 +38,7 @@ def test_feedback_calibration_boundary_rejects_executed_calibration_overclaim():
     assert validation.ok is False
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert "invalid_missing_evidence_runtime_calibration_runner" in codes
     assert "missing_required_evidence_field" in codes
 

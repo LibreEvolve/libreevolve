@@ -3,6 +3,9 @@
   "runtime_report_schema": "libreevolve.existing_codebase_integration_report.v1",
   "source_paper_id": "2506.13131",
   "source_section_id": "2.1",
+  "source_section_ids": [
+    "2.1"
+  ],
   "source_figures": [
     "Figure 2",
     "Figure 3"

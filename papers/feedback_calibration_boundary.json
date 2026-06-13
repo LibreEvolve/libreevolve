@@ -2,6 +2,9 @@
   "schema": "libreevolve.feedback_calibration_boundary.v1",
   "source_paper_id": "2506.13131",
   "source_section_id": "2.4",
+  "source_section_ids": [
+    "2.4"
+  ],
   "source_claim": "AlphaEvolve-style LLM feedback graders need calibration evidence from real reviewer or task suites before their qualitative scores can be treated as validated evaluator feedback",
   "boundary_status": "report_contract_without_executed_calibration_fixtures",
   "feedback_calibration_report_schema": "libreevolve.llm_feedback_calibration.v1",

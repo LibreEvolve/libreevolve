@@ -3,6 +3,10 @@
   "runtime_report_schema": "libreevolve.candidate_abstraction_choice_report.v1",
   "source_paper_id": "2506.13131",
   "source_section_id": "2.1",
+  "source_section_ids": [
+    "2.1",
+    "Discussion"
+  ],
   "source_discussion_ref": "Discussion",
   "boundary_status": "not_configured_as_problem_defined_abstractions",
   "runtime_report_status": "candidate_abstraction_choice_report_available",

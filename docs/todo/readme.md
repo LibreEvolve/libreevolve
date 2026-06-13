@@ -199,7 +199,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     a validated current synchronous topology boundary linked to
     `runtime.history.distributed_pipeline_topology_report`,
     a validated current inline evaluator-pool parallelism boundary,
-    component-to-TODO links, and names
+    component-to-TODO links, and README Important limits names
     `papers/process_exhibit_boundary.json` as the committed sidecar for the
     paper-manifest-validated absence boundary.
   - Required result: when exact source-diagram layout reproduction,
@@ -499,7 +499,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `claim_ready: false` process-parity gaps. It
     also names
     `papers/process_exhibit_boundary.json` as the committed sidecar for that
-    absence boundary. README workflow text should still remain local
+    absence boundary, and README Important limits now keeps that process-exhibit
+    map scoped away from exact source-diagram reproduction, async topology,
+    independent evaluator-pool implementation, and full process parity. README
+    workflow text should still remain local
     documentation, not a validated reproduction of the paper process diagrams.
   - Required result: when exact diagram/pseudocode text, rendered artifact
     parity, async topology evidence and independent evaluator-pool evidence

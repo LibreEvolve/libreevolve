@@ -4,6 +4,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document process-exhibit README boundary.
+  - Status: README Important limits now states that Figure 1/Figure 2
+    process-exhibit reports are local node/edge/pseudocode-to-artifact maps,
+    not exact source-diagram reproduction, async controller/sampler/evaluator
+    topology, independent evaluator-pool implementation, or full process
+    parity. It ties that boundary to `papers/process_exhibit_boundary.json`.
+  - Verification: process-exhibit boundary and paper-manifest tests validate
+    the sidecar that README now references.
+
 - [x] Document embedded evaluator README boundary.
   - Status: README Important limits now states that `embedded_evaluate` is
     opt-in stage evidence, not full AlphaEvolve Figure 3 evaluator parity with

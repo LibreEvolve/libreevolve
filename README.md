@@ -33,6 +33,11 @@ Important limits:
 - Evaluators run in local subprocesses, not hardened security sandboxes.
 - The controller, archive, migration, and evaluator flow are local and
   synchronous, not a distributed asynchronous AlphaEvolve-style service.
+- Figure 1/Figure 2 process-exhibit reports map AlphaEvolve diagram nodes,
+  edges, and pseudocode steps to local artifacts, not exact source-diagram
+  reproduction, async controller/sampler/evaluator topology, independent
+  evaluator-pool implementation, or full process parity; that boundary is
+  tracked by `papers/process_exhibit_boundary.json`.
 - Archive restore uses manifest archive-state snapshots plus accepted-history
   rows for current cursor/cell/elite contents; `archive_events.jsonl` replay is
   audit-only and not an ordered MAP-Elites restore engine. That boundary is

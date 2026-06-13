@@ -941,24 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README constructive-math starting-point wording scoped until
-      simple/random construction provenance exists.
-  - Spec evidence: AlphaEvolve Section 3.2 says the initial starting point for
-    the constructive-math cases was a simple or random construction.
-  - Current evidence: README now points to the Section 3.2 starting-point
-    absence boundary in `libreevolve.problems.benchmarks.math_outcomes`. It
-    documents the simple-or-random source statement and says per-instance
-    starting construction artifacts, generator/seed records, baseline metrics,
-    and prior-best seeding policies remain `not_recorded_locally`. The
-    committed `papers/math_starting_construction_boundary.json` sidecar now
-    emits this boundary for paper-manifest validation alongside the related
-    Section 3.2 outcome, heuristic-handoff, and stage-sequence boundary
-    sidecars.
-  - Required result: when constructive-math starting-construction provenance
-    lands, update README, ROADMAP, papers index, and code/paper TODOs together
-    so README distinguishes Appendix B family coverage and aggregate outcomes
-    from the paper's simple/random-start claim.
-
 - [ ] Keep README Figure 5 constructive-math wording scoped until exhibit
       provenance exists.
   - Spec evidence: AlphaEvolve Figure 5 shows selected SOTA-breaking

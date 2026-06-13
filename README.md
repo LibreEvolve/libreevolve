@@ -201,6 +201,12 @@ Important limits:
   taxonomy rows, prior-best references, construction/verifier artifacts,
   aggregate counts, or percentage recomputation; that boundary is tracked by
   `papers/math_outcome_boundary.json`.
+- Constructive-math Section 3.2 starting-construction records preserve the
+  AlphaEvolve source claim that the initial starting point was a simple or
+  random construction, not local per-instance starting construction payloads,
+  generator or random-seed records, baseline metric rows, prior-best visibility
+  policy, or prior-best seeding policy evidence; that boundary is tracked by
+  `papers/math_starting_construction_boundary.json`.
 - Matrix-publication evidence is one checked `mm_2x2x2` Strassen baseline
   bundle plus Appendix A registry/status metadata, not full-suite local target
   tensors, discovered decompositions, coefficient data, exactness certificates,

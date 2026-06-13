@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document constructive-math starting-construction README boundary.
+  - Status: README Important limits now states that Section 3.2
+    starting-construction records preserve the AlphaEvolve source claim that
+    the initial starting point was a simple or random construction, not local
+    per-instance starting construction payloads, generator or random-seed
+    records, baseline metric rows, prior-best visibility policy, or prior-best
+    seeding policy evidence.
+  - Verification: math-outcome and paper-manifest tests cover the
+    `not_recorded_locally` starting-construction boundary, allowed
+    simple/random classes, required future fields, and missing evidence keys;
+    figure and Appendix B provenance boundaries remain separate active README
+    TODOs.
+
 - [x] Document constructive-math aggregate-outcome README boundary.
   - Status: README Important limits now states that Section 3.2
     aggregate-outcome records preserve the AlphaEvolve source claim of over

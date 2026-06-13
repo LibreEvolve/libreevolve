@@ -4,6 +4,28 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## Papers Todo: Reference and Specification Gaps
 
+- [x] Track follow-on problem-repository coverage-state evidence.
+  - Paper/source evidence: the
+    `google-deepmind/alphaevolve_repository_of_problems` README describes a
+    live repository with pages for the declared `67` mathematical problems and
+    many-but-not-all Colab notebooks. Root-level status artifacts expose the
+    status buckets used by the follow-on source evidence.
+  - Status: `papers/follow_on_sources.json`,
+    `papers/follow_on_runtime_absence.json`, and the
+    `libreevolve.alphaevolve_follow_on_problem_coverage.v1` record now preserve
+    pinned source identity, status-bucket evidence, page URLs, sections, link
+    diagnostics, page hashes, notebook-link mappings, absence reasons,
+    notebook hashes, scoped prompt/verifier/initial/final/visualization
+    artifact flags, the 67-versus-68 numbered-page boundary, page-68
+    classification, and Appendix B crosswalk links.
+  - Remaining guard: active paper TODOs still track the missing normalized
+    follow-on result rows, construction payloads, verifier artifacts,
+    recomputed values, and full notebook cell inventory before citing this
+    follow-on source as reproduced benchmark evidence.
+  - Verification: follow-on source/coverage tests, paper-manifest validation,
+    and checked-in paper-index TODO coverage cover the committed sidecars and
+    keep citation wording scoped.
+
 - [x] Record Bilateral Trade `2603.08679` source boundary.
   - Evidence: `papers/bilateral_trade_boundary.json` preserves the source
     identity, cached PDF digest/license, source-link status, component rows,

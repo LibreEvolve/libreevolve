@@ -2466,48 +2466,6 @@ Primary evidence:
 
 ## Benchmarks and Problem Fixtures
 
-- [ ] Add follow-on problem-repository coverage-state provenance.
-  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
-    README describes the repository as live, with plans to expand and improve
-    it over time. It says the repository contains problem pages for all 67
-    mathematical problems and Colab notebooks for many, but not all, problems,
-    with prompts, verification code, initial programs, final evolved programs,
-    and visualization/analysis code where appropriate. It gives the hosted
-    problem-page URL pattern
-    `https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/{n}.html`,
-    says no installation is required, and says notebooks can be opened in
-    Google Colab while webpages can be opened in any browser. The README's
-    distribution graphic points to root-level `status_grid.png`, and the
-    repository tree also exposes root-level status artifacts such as
-    `status.json` and `result_distribution.png`. Current `status.json` uses
-    explicit buckets `world_record`, `former_record`, `worse_than_record`, and
-    `matched_optimal`, listing 43 problem ids total.
-  - Current evidence: `libreevolve.alphaevolve_follow_on_problem_coverage.v1`
-    now validates the pinned repository URL/commit/date, live-update policy,
-    declared 67-problem id range, browser-page and many-but-not-all Colab
-    access modes, root-level `status.json`, `status_grid.png`, and
-    `result_distribution.png` paths/hashes, parsed status bucket membership,
-    43 listed ids, 24 `not_listed_in_status_json` ids, and the declared-67
-    versus observed-68 numbered HTML page boundary. It now also links to the
-    follow-on runtime-absence notebook inventory, preserving `28` pinned
-    notebook paths and validated notebook-link/absence-reason mapping. The
-    standard paper-manifest gate validates the built-in coverage record. It
-    now classifies page 68 as an extra
-    numbered duplicate-title `Logic puzzles` page outside the declared
-    67-page navigation range and records all-page resource-link diagnostics:
-    `36` GitHub notebook blob URLs, `6` direct Google Colab URLs, `25`
-    under-construction Colab placeholders, `1` generic Colab landing URL, and
-    `1` paper-link placeholder. It also pins raw-page byte counts and SHA-256
-    hashes for all `68` numbered HTML pages and emits per-page source rows
-    with titles, paper sections, page URLs, hashes, link-status diagnostics,
-    status-bucket labels, notebook-link mappings, and absence reasons. It
-    now also validates raw SHA-256 hashes and scoped prompt/verifier/initial/
-    final/visualization artifact flags for the `28` pinned repository
-    notebooks. It still does not claim a full notebook cell inventory.
-  - Required result: keep README/ROADMAP wording scoped so completed declared
-    problem-page coverage, notebook-link mapping, notebook hashes, and
-    artifact flags are separated from full notebook cell inventories.
-
 - [x] Complete follow-on notebook artifact flags on emitted per-page rows.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
     README says the repository contains problem descriptions for 67

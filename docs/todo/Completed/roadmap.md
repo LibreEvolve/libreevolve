@@ -2,6 +2,44 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive follow-on problem-count roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    the follow-on problem-count mismatch snapshot-scoped.
+  - Current evidence: `libreevolve.alphaevolve_follow_on_problem_coverage.v1`
+    and `papers/follow_on_sources.json` distinguish the source README/paper's
+    declared `67` mathematical problems from the pinned snapshot's observed
+    `68` numbered HTML pages. Page 68 remains classified as an extra
+    duplicate-title `Logic puzzles` page outside the declared navigation range,
+    with generic Colab and placeholder paper links.
+  - Remaining guard: active paper TODOs still track the missing normalized
+    follow-on result rows, construction payloads, verifier artifacts,
+    recomputed values, and full notebook cell inventory before any stronger
+    benchmark or result-reproduction claim can be made from `2511.02864`.
+  - Verification: follow-on coverage/source tests, paper-manifest validation,
+    and checked-in paper-index TODO coverage still pass.
+
+- [x] Archive follow-on problem-repository coverage roadmap TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored and the active code/paper coverage-state TODOs were archived.
+    `README.md`, `ROADMAP.md`, `papers/README.md`, `docs/status.md`, and the
+    TODO ledgers now distinguish pinned snapshot coverage from live repository
+    completeness and full notebook inventories.
+  - Current evidence: `libreevolve.alphaevolve_follow_on_problem_coverage.v1`
+    validates pinned repository identity, status artifacts, 43 status-listed
+    ids, 24 ids not listed in `status.json`, all-page link diagnostics, raw
+    page hashes for 68 numbered pages, 28 pinned notebook paths and hashes,
+    scoped prompt/verifier/initial/final/visualization artifact flags, page-68
+    classification, Appendix B crosswalk links, and artifact-rights-template
+    evidence.
+  - Remaining guard: active paper TODOs still track missing normalized
+    follow-on result rows, construction payloads, verifier artifacts,
+    recomputed values, and full notebook cell inventories; current coverage
+    records are source/snapshot evidence, not reproduced mathematical results.
+  - Verification: follow-on coverage/source tests, paper-manifest validation,
+    and checked-in paper-index TODO coverage still pass.
+
 - [x] Archive representative-fixture roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

@@ -4,6 +4,27 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add follow-on problem-repository coverage-state provenance.
+  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
+    README describes the repository as live, with problem pages for all `67`
+    mathematical problems and Colab notebooks for many but not all problems;
+    the pinned source also exposes status artifacts and the counted
+    67-versus-68 numbered-page mismatch.
+  - Status: `libreevolve.alphaevolve_follow_on_problem_coverage.v1` validates
+    the pinned repository URL/commit/date, live-update policy, declared
+    67-problem range, browser-page and many-but-not-all Colab access modes,
+    root-level `status.json`, `status_grid.png`, and
+    `result_distribution.png` paths/hashes, parsed status buckets, 43 listed
+    ids, 24 `not_listed_in_status_json` ids, the observed 68 numbered pages,
+    page-68 classification, all-page link diagnostics, raw page hashes, 28
+    pinned notebook paths and hashes, notebook-link/absence mappings, and
+    scoped prompt/verifier/initial/final/visualization artifact flags.
+  - Remaining guard: the record intentionally does not claim live repository
+    completeness, full notebook cell inventories, normalized result rows,
+    construction payloads, verifier artifacts, or recomputed values.
+  - Verification: follow-on coverage/source tests and paper-manifest
+    validation cover the pinned snapshot and claim-boundary records.
+
 - [x] Add Bilateral Trade `2603.08679` mechanism-design source-boundary gate.
   - Evidence: `libreevolve/problems/benchmarks/bilateral_trade_boundary.py`
     records the source identity, cached-PDF digest, reported `2.0749`

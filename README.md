@@ -54,6 +54,17 @@ Important limits:
   exhaustive anti-gaming evidence, executable construction/certificate
   validators, target/SOTA baselines, Colab-equivalent Appendix B construction
   data, or verifier-code artifacts.
+- Follow-on problem-repository coverage records validate pinned snapshot
+  problem-page, status-bucket, link, hash, notebook-link, absence-reason,
+  notebook-hash, scoped artifact-flag, Appendix B crosswalk, and
+  artifact-rights-template evidence, not live repository completeness, full
+  notebook cell inventories, normalized result rows, construction payloads,
+  verifier artifacts, recomputed values, or copied/adapted generated artifacts.
+- Follow-on problem-count wording remains snapshot-scoped: the source
+  README/paper declares 67 mathematical problems, pinned diagnostics observe
+  68 numbered HTML pages, and page 68 is classified as an extra duplicate-title
+  `Logic puzzles` page outside the declared navigation range with a generic
+  Colab landing URL and placeholder paper link.
 - Systems-result schemas and readiness sidecars are report contracts only; they
   do not yet emit real scheduling, Pallas/kernel, compiler, or hardware fixture
   runs, deployment measurements, expert confirmations, or domain-specific

@@ -3587,41 +3587,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     row-note artifact so Appendix A matrix claims carry the concurrent-work
     caveat wherever rank/outcome rows are published.
 
-- [ ] Track follow-on problem-repository coverage-state evidence.
-  - Paper/source evidence: the
-    `google-deepmind/alphaevolve_repository_of_problems` README describes a
-    live repository that will expand and improve over time. It says every one
-    of the 67 mathematical problems has a problem page, while Colab notebooks
-    exist for many but not all problems and may contain prompts, verification
-    code, initial programs, final evolved programs, and visualization/analysis
-    code where appropriate. It gives the hosted problem-page URL pattern
-    `https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/{n}.html`,
-    says no installation is required, and says notebooks can be opened in
-    Google Colab while webpages can be opened in any browser. The README's
-    distribution graphic points to root-level `status_grid.png`, and the
-    repository tree also exposes root-level status artifacts such as
-    `status.json` and `result_distribution.png`. Current `status.json` uses
-    explicit buckets `world_record`, `former_record`, `worse_than_record`, and
-    `matched_optimal`, listing 43 problem ids total.
-  - Current gap: `libreevolve.alphaevolve_follow_on_problem_coverage.v1` now
-    preserves the pinned repository URL/commit/date, live-update policy,
-    declared 67-problem id range, browser-page and many-but-not-all Colab
-    access modes, root-level status artifact paths/hashes for `status.json`,
-    `status_grid.png`, and `result_distribution.png`, parsed status bucket
-    membership, 43 listed ids, 24 `not_listed_in_status_json` ids, and the
-    declared-67 versus observed-68 numbered HTML page boundary. It also links
-    to the runtime-absence notebook inventory with `28` pinned notebook paths
-    and validated notebook-link/absence-reason mapping. The standard
-    paper-manifest gate validates the built-in coverage record. Paper-facing
-    rows now exist with page URL, section, link status, pinned hash,
-    status-bucket evidence, notebook-link mappings, absence reasons, raw
-    SHA-256 hashes, and scoped prompt/verifier/initial/final/visualization
-    flags for linked pinned notebooks.
-  - Required result: keep citation wording from implying full notebook cell
-    inventory when only problem-page, status-bucket, resource-link,
-    raw-page-hash, notebook-link, absence-reason, notebook-hash, scoped
-    artifact-flag, and row evidence is currently available.
-
 - [ ] Track follow-on mathematical-discovery result rows from `2511.02864`.
   - Paper/source evidence: arXiv `2511.02864v3`, `Mathematical exploration
     and discovery at scale`, is the follow-on source named by the AlphaEvolve

@@ -4,6 +4,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document matrix cascade-run README boundary.
+  - Status: README Important limits now states that matrix per-seed reports
+    validate declared seed rows, best rank, and hit fraction, and matrix
+    cascade-run boundary records can link seed rows to stage traces, but local
+    matrix runners do not yet emit AlphaEvolve Section 3.1-style repeated-seed
+    cascade traces, pruning decisions, or early-stop provenance. It points to
+    `papers/matrix_cascade_run_runtime_boundary.json`.
+  - Verification: focused matrix cascade-run boundary and paper-manifest tests
+    validate the current absence record, emitted-record builder, aggregation
+    checks, and overclaim guards.
+
 - [x] Document matrix-publication README boundary.
   - Status: README Important limits now states that matrix-publication
     evidence is one checked `mm_2x2x2` Strassen baseline bundle plus Appendix A

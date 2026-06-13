@@ -839,7 +839,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     emitted records from seed rows plus per-seed stage traces, including
     aggregate best-rank/hit-fraction recomputation. It does not document an
     executed matrix benchmark runner that automatically emits target/seed-level
-    cascade traces or pruning/early-stop reasons.
+    cascade traces or pruning/early-stop reasons. README Important limits now
+    also states that matrix per-seed reports validate declared seed rows, best
+    rank, and hit fraction, and matrix cascade-run boundary records can link
+    seed rows to stage traces, but local matrix runners do not yet emit
+    AlphaEvolve Section 3.1-style repeated-seed cascade traces, pruning
+    decisions, or early-stop provenance.
   - Required result: when matrix cascade-run evidence lands, update README,
     ROADMAP, papers index, and code/paper TODOs together so README
     distinguishes post-hoc per-seed report validation from AlphaEvolve

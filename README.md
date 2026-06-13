@@ -186,6 +186,12 @@ Important limits:
   notebooks, per-seed reports, or publication bundles for every registered
   Appendix A target; that boundary is tracked by
   `papers/matrix_suite_publication_artifacts.json`.
+- Matrix per-seed reports validate declared seed rows, best rank, and hit
+  fraction, and matrix cascade-run boundary records can link seed rows to
+  stage traces, but local matrix runners do not yet emit AlphaEvolve Section
+  3.1-style repeated-seed cascade traces, pruning decisions, or early-stop
+  provenance; that boundary is tracked by
+  `papers/matrix_cascade_run_runtime_boundary.json`.
 - Collaborator-feedback provenance is optional metadata and runtime reporting
   for cohorts, events, affected workflow areas, change links, validation
   outcomes, privacy/redaction policy, and review state, not populated

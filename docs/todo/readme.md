@@ -69,24 +69,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README validator-boundary consistency wording scoped to CLI
-  artifact validation until promotion/finalization enforcement exists.
-  - Spec evidence: README-facing AlphaEvolve alignment should distinguish
-    manifest-visible audit fields from automated verification over the run
-    artifacts used to justify discoveries.
-  - Current evidence: README says startup manifests record
-    `policies.validator_execution`, the
-    `validate_validator_boundary_consistency.v1` contract, and
-    `validate_run_artifact_validator_boundary_consistency()` for scanning
-    manifest-backed `history.jsonl` and `failure_history.jsonl` rows. README
-    also states that `libreevolve show` invokes this artifact check and fails
-    missing, legacy, or drifting boundary evidence with stream/line diagnostics.
-  - Required result: when run-finalization, CI, or release-artifact promotion
-    enforcement lands, update README, ROADMAP, papers index, and code/paper TODO
-    entries together so README distinguishes the current CLI inspection gate
-    from automatic artifact-promotion enforcement and from stronger OS/container
-    sandboxing.
-
 - [ ] Keep README and agent-facing OpenAI API-mode wording aligned with adapter
   routing.
   - Spec evidence: AlphaEvolve-style runs should make provider request

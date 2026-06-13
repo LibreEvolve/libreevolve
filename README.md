@@ -112,6 +112,13 @@ Important limits:
   GPU, disk, and process-count quotas. They are not OS/container sandboxing,
   OS-enforced filesystem capabilities, kernel/container network isolation, or
   AlphaEvolve-scale resource-limit enforcement.
+- Validator-boundary consistency checks are CLI/run-inspection evidence:
+  `validate_run_artifact_validator_boundary_consistency()` scans manifest-
+  backed `history.jsonl` and `failure_history.jsonl` rows, and
+  `libreevolve show` reports missing, legacy, or drifting boundary evidence
+  with stream/line diagnostics. This is not run-finalization, CI, or release-
+  artifact promotion enforcement, and it remains separate from stronger
+  OS/container sandboxing and resource-quota enforcement.
 - Execution-grounding and incorrect-suggestion reports are local run telemetry
   over accepted, rejected, execution-filtered, invalid-evaluation, parse-error,
   archive-rejected, and accepted-invalid candidates, not independent rejudge

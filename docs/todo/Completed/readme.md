@@ -24,6 +24,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     capability policy, CPU/memory/GPU/disk/process quotas, and distributed
     evaluator worker state.
 
+- [x] Keep README validator-boundary consistency wording scoped to CLI
+      artifact validation until promotion/finalization enforcement exists.
+  - Status: README Important limits now states that validator-boundary
+    consistency checks are CLI/run-inspection evidence:
+    `validate_run_artifact_validator_boundary_consistency()` scans
+    manifest-backed `history.jsonl` and `failure_history.jsonl` rows, and
+    `libreevolve show` reports missing, legacy, or drifting boundary evidence
+    with stream/line diagnostics.
+  - Verification: `docs/run-artifacts.md` documents the same artifact gate;
+    code and paper TODOs still track the missing run-finalization, CI, or
+    release-artifact promotion enforcement, and the README keeps that separate
+    from stronger OS/container sandboxing and resource-quota enforcement.
+
 - [x] Keep README multi-evaluator wording scoped until independent
       evaluator-oracle evidence exists.
   - Status: README Important limits now states that evaluator/oracle reports

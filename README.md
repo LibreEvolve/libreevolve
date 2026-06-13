@@ -832,6 +832,14 @@ Important limits:
   metadata, behavior-pattern shift report, long-horizon accuracy report,
   SWE-Bench Pro 59%-to-78% reproduction, linked-code audit, or independent
   reproduction output.
+- ArXiv `2605.30621` is harness-capability disentanglement context only; the
+  README mentions this cached paper as a curated subset while
+  `papers/README.md` remains the complete implementation-status index.
+  LibreEvolve has no harness-updating metric schema, harness-benefit metric
+  schema, evolver-versus-task-solver model-pair matrix, capability-tier
+  grouping record, cross-benchmark harness self-evolution report, activation-
+  failure audit, adherence-failure audit, capability-budget recommendation
+  report, public-code snapshot audit, or independent reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

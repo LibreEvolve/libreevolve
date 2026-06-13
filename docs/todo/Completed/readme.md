@@ -15045,3 +15045,26 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     pairwise preference rankings, deployment/rollback metadata, benchmark
     baselines, report outcomes, and RHO-style retrospective harness
     optimization remain active in code and paper TODOs.
+
+- [x] Keep README harness self-evolution benefit claims source-scoped until
+      harness-updating and harness-benefit runtime evidence both exist.
+  - Spec evidence: arXiv `2605.30621`, `Harness Updating Is Not Harness
+    Benefit: Disentangling Evolution Capabilities in Self-Evolving LLM
+    Agents`, distinguishes harness-updating from harness-benefit. Its
+    abstract reports that models across capability tiers can produce harness
+    updates with similar gains, but the ability to benefit from updated
+    harnesses is non-monotonic and can fail when agents do not activate
+    relevant harness artifacts or do not follow them faithfully.
+  - Status: README now lists arXiv `2605.30621` as harness-capability
+    disentanglement context only and marks the mention as a curated
+    cached-paper subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no
+    harness-updating metric schema, harness-benefit metric schema,
+    evolver-versus-task-solver model-pair matrix, capability-tier grouping
+    record, cross-benchmark harness self-evolution report, activation-failure
+    audit, adherence-failure audit, capability-budget recommendation report,
+    public-code snapshot audit, or independent reproduction output.
+  - Remaining README gap: separate update and benefit metrics, activation
+    telemetry, adherence traces, model-tier comparisons, benchmark baselines,
+    report outcomes, and harness self-evolution benefit evidence remain
+    active in code and paper TODOs.

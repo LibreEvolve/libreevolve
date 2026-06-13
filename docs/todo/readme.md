@@ -91,37 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README harness self-evolution benefit claims source-scoped until
-      harness-updating and harness-benefit runtime evidence both exist.
-  - Spec evidence: arXiv `2605.30621`, `Harness Updating Is Not Harness
-    Benefit: Disentangling Evolution Capabilities in Self-Evolving LLM
-    Agents`, distinguishes harness-updating from harness-benefit. Its
-    abstract reports that models across capability tiers can produce harness
-    updates with similar gains, but the ability to benefit from updated
-    harnesses is non-monotonic and can fail when agents do not activate
-    relevant harness artifacts or do not follow them faithfully.
-  - Current evidence: README now lists `2605.30621`, Harness Updating Is Not
-    Harness Benefit, as harness-capability disentanglement context only and
-    says no local harness-updating versus harness-benefit metric schema,
-    cross-model capability-tier experiment, activation/adherence failure
-    audit, or benchmark reproduction exists. README also documents
-    LibreEvolve's current prompt context, backend ensemble, candidate
-    mutation, failure streams, and benchmark boundaries; it does not claim
-    separate harness-update quality measurement, task-agent benefit
-    measurement, prompt/context artifact activation telemetry, long-horizon
-    adherence tracking, evolver/task-agent tier comparison, or capability-
-    budget tradeoff reporting.
-  - Required result: if README mentions harness self-evolution, harness
-    updating, harness benefit, persistent harness updates, artifact activation,
-    skill or memory load rates, adherence to harness instructions, mid-tier
-    benefit peaks, weak-agent activation failures, or capability-budget
-    guidance for evolver versus task agent, keep the wording source-scoped
-    until local artifacts can show separate update and benefit metrics,
-    activation telemetry, adherence traces, model-tier comparisons, benchmark
-    baselines, and report outcomes. Avoid
-    implying LibreEvolve benefits from harness self-evolution merely because
-    it can generate or record update-like artifacts.
-
 - [ ] Keep README AHE observability-driven harness evolution claims source-
       scoped until runtime evidence exists.
   - Spec evidence: arXiv `2604.25850`, `Agentic Harness Engineering:

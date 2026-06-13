@@ -4560,12 +4560,15 @@ sidecars, tests, and active TODOs.
   - Required result: add AlphaEvolve-style scheduler validation and reports
     that prove fast-breadth versus strong-depth model-mix behavior,
     breadth/depth/cost/latency selection behavior, and scheduler outcomes over
-    real experiment traces and equal-budget runs; bounded raw/provider-specific
-    diagnostic retention; remote provider-side default/pricing capture;
-    provider-output replay boundaries; and async/pending-work budget policy
-    that composes with the existing safe usage, retry, status,
-    controller-event, ledger, runtime budget-report telemetry, and focused
-    `throughput_depth` unit coverage.
+    real experiment traces and equal-budget runs, including fixed budget
+    identity, matched problem/seed/evaluator controls, provider-model identity,
+    lane quota schedules, lane-switching traces, per-lane token/cost/latency
+    accounting, breadth-volume attribution, and breakthrough-quality
+    attribution; bounded raw/provider-specific diagnostic retention; remote
+    provider-side default/pricing capture; provider-output replay boundaries;
+    and async/pending-work budget policy that composes with the existing safe
+    usage, retry, status, controller-event, ledger, runtime budget-report
+    telemetry, and focused `throughput_depth` unit coverage.
 
 - [ ] Add first-class Google/Gemini backend parity for AlphaEvolve model-mix
       reproduction.

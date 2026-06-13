@@ -28,6 +28,14 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "eligible_backend_lane_trace",
     "per_call_scheduler_policy",
     "claim_ready_false_lane_evidence",
+    "fixed_compute_budget_definition",
+    "matched_problem_seed_evaluator_identity",
+    "fast_strong_provider_model_identity",
+    "lane_quota_schedule",
+    "per_lane_token_cost_latency_accounting",
+    "lane_switching_trace",
+    "breadth_volume_attribution",
+    "breakthrough_quality_attribution",
     "experiment_level_selection_traces",
     "reserved_fast_breadth_lane_policy",
     "reserved_strong_depth_lane_policy",
@@ -37,6 +45,14 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "equal_budget_generic_ucb_comparison",
 )
 EXPECTED_MISSING_EVIDENCE = {
+    "fixed_compute_budget_definition": "not_recorded_locally",
+    "matched_problem_seed_evaluator_identity": "not_recorded_locally",
+    "fast_strong_provider_model_identity": "not_recorded_locally",
+    "lane_quota_schedule": "not_recorded_locally",
+    "per_lane_token_cost_latency_accounting": "not_recorded_locally",
+    "lane_switching_trace": "not_recorded_locally",
+    "breadth_volume_attribution": "not_recorded_locally",
+    "breakthrough_quality_attribution": "not_recorded_locally",
     "experiment_level_selection_traces": "not_recorded_locally",
     "reserved_fast_breadth_lane_policy": "not_recorded_locally",
     "reserved_strong_depth_lane_policy": "not_recorded_locally",
@@ -89,10 +105,14 @@ def fast_strong_model_mix_boundary_record() -> dict[str, Any]:
             "strong-depth lane detection, eligible-backend lane traces, "
             "per-call scheduler policy records, and explicit false "
             "claim-readiness lane evidence. It does not claim experiment-level "
-            "selection traces, reserved fast-breadth lane policy, reserved "
-            "strong-depth lane policy, candidate throughput outcomes, "
-            "candidate quality/depth outcomes, equal-budget single-model "
-            "comparison, or equal-budget generic-UCB comparison."
+            "selection traces, fixed compute budget definition, matched "
+            "problem/seed/evaluator identity, fast/strong provider-model "
+            "identity, lane quota schedule, per-lane token/cost/latency "
+            "accounting, lane switching traces, breadth-volume attribution, "
+            "breakthrough-quality attribution, reserved fast-breadth lane "
+            "policy, reserved strong-depth lane policy, candidate throughput "
+            "outcomes, candidate quality/depth outcomes, equal-budget "
+            "single-model comparison, or equal-budget generic-UCB comparison."
         ),
     }
 
@@ -136,6 +156,10 @@ def validate_fast_strong_model_mix_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim experiment-level selection traces" not in boundary_text
+        or "fixed compute budget definition" not in boundary_text
+        or "fast/strong provider-model identity" not in boundary_text
+        or "per-lane token/cost/latency accounting" not in boundary_text
+        or "breakthrough-quality attribution" not in boundary_text
         or "reserved fast-breadth lane policy" not in boundary_text
         or "equal-budget generic-UCB comparison" not in boundary_text
     ):

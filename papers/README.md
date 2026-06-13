@@ -2411,9 +2411,13 @@ Implemented:
   backend role/model-lane labels, fast-breadth and strong-depth lane detection,
   eligible-backend lane traces, per-call scheduler policy records, and
   explicit false claim-readiness lane evidence. It is not evidence of
-  experiment-level selection traces, reserved fast-breadth or strong-depth
-  lane policies, candidate throughput outcomes, candidate quality/depth
-  outcomes, or equal-budget scheduler comparisons.
+  experiment-level selection traces, fixed compute budget identity, matched
+  problem/seed/evaluator controls, provider-model identity for the fast and
+  strong lanes, lane quota schedules, per-lane token/cost/latency accounting,
+  lane switching traces, breadth-volume attribution, breakthrough-quality
+  attribution, reserved fast-breadth or strong-depth lane policies, candidate
+  throughput outcomes, candidate quality/depth outcomes, or equal-budget
+  scheduler comparisons.
 - `papers/adaptive_mutation_mode_boundary.json`: adaptive mutation-mode
   sidecar for AlphaEvolve Section 2.3. It records configured run-wide `diff`
   and `full` mutation modes, prompt fields, diff/full parsers, and history

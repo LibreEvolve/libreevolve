@@ -220,8 +220,12 @@ Important limits:
   `papers/llm_role_scheduler_boundary.json`.
 - `throughput_depth` backend selection records cost/latency/depth metadata and
   fast-breadth/strong-depth lane labels, not experiment-level fast/strong
-  model-mix validation, reserved lane policy, candidate throughput/quality
-  outcomes, or equal-budget scheduler comparisons; that boundary is tracked by
+  model-mix validation, fixed compute budget identity, matched
+  problem/seed/evaluator controls, provider-model identity for fast/strong
+  lanes, lane quota schedules, per-lane token/cost/latency accounting, lane
+  switching traces, breadth-volume or breakthrough-quality attribution,
+  reserved lane policy, candidate throughput/quality outcomes, or equal-budget
+  scheduler comparisons; that boundary is tracked by
   `papers/fast_strong_model_mix_boundary.json`.
 - Natural-language proposal metadata is context around executable code
   candidates, not AI-Co-Scientist-style hypothesis representation or

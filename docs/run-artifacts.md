@@ -3627,7 +3627,11 @@ includes `throughput_depth_lane_evidence`, a metadata trace of eligible backend
 indices, normalized cost/latency/depth values, missing-default markers, and
 recognized fast-breadth/strong-depth labels from backend `model_lane` or
 `role` metadata. That lane record is marked
-`metadata_trace_not_experiment_report` and `claim_ready: false`.
+`metadata_trace_not_experiment_report` and `claim_ready: false`; it is not
+fixed-budget fast/strong experiment evidence, provider-model identity proof,
+per-lane token/cost/latency accounting, lane-switching trace evidence,
+breadth-volume attribution, breakthrough-quality attribution, or equal-budget
+single-model/generic-UCB comparison evidence.
 Built-in provider adapters also add
 `adapter_retry` with their configured `provider_max_retries`, actual provider
 attempts, failed attempt count, and safe exception type labels for failed

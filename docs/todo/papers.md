@@ -487,11 +487,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     lane, no equal-budget comparison against single-model or generic UCB
     routing, and no paper-level evidence that the configured mix increases
     evaluated idea volume while preserving breakthrough-quality proposals.
+    The current sidecar also records missing fixed-budget identity, matched
+    problem/seed/evaluator controls, provider-model identity for the fast and
+    strong lanes, lane quota schedules, per-lane token/cost/latency accounting,
+    lane switching traces, breadth-volume attribution, and
+    breakthrough-quality attribution.
   - Required result: add scheduler-validation fixtures and reports that record
-    model lane roles, selection traces, consumed budget, candidate throughput,
-    quality/depth outcomes, and equal-budget comparisons for fast/strong
-    model mixes before treating LibreEvolve's ensemble as AlphaEvolve-style
-    Flash/Pro scheduling evidence.
+    fixed budget identity, model lane roles, provider-model identity, lane
+    quota schedules, selection and lane-switching traces, per-lane consumed
+    token/cost/latency budget, candidate throughput, quality/depth outcomes,
+    breadth-volume and breakthrough-quality attribution, and equal-budget
+    comparisons for fast/strong model mixes before treating LibreEvolve's
+    ensemble as AlphaEvolve-style Flash/Pro scheduling evidence.
 
 - [ ] Validate critique reviewer pools beyond synchronous replacement filters.
   - Paper: `2506.13131__AlphaEvolve.pdf`, front overview plus Sections 2.4

@@ -25,6 +25,14 @@
     "eligible_backend_lane_trace",
     "per_call_scheduler_policy",
     "claim_ready_false_lane_evidence",
+    "fixed_compute_budget_definition",
+    "matched_problem_seed_evaluator_identity",
+    "fast_strong_provider_model_identity",
+    "lane_quota_schedule",
+    "per_lane_token_cost_latency_accounting",
+    "lane_switching_trace",
+    "breadth_volume_attribution",
+    "breakthrough_quality_attribution",
     "experiment_level_selection_traces",
     "reserved_fast_breadth_lane_policy",
     "reserved_strong_depth_lane_policy",
@@ -34,6 +42,14 @@
     "equal_budget_generic_ucb_comparison"
   ],
   "missing_evidence": {
+    "fixed_compute_budget_definition": "not_recorded_locally",
+    "matched_problem_seed_evaluator_identity": "not_recorded_locally",
+    "fast_strong_provider_model_identity": "not_recorded_locally",
+    "lane_quota_schedule": "not_recorded_locally",
+    "per_lane_token_cost_latency_accounting": "not_recorded_locally",
+    "lane_switching_trace": "not_recorded_locally",
+    "breadth_volume_attribution": "not_recorded_locally",
+    "breakthrough_quality_attribution": "not_recorded_locally",
     "experiment_level_selection_traces": "not_recorded_locally",
     "reserved_fast_breadth_lane_policy": "not_recorded_locally",
     "reserved_strong_depth_lane_policy": "not_recorded_locally",
@@ -42,5 +58,5 @@
     "equal_budget_single_model_comparison": "not_recorded_locally",
     "equal_budget_generic_ucb_comparison": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has a throughput_depth strategy with backend cost, latency, and depth metadata, min/max normalization, metadata weights, neutral missing-metadata defaults, backend role/model-lane labels, fast-breadth and strong-depth lane detection, eligible-backend lane traces, per-call scheduler policy records, and explicit false claim-readiness lane evidence. It does not claim experiment-level selection traces, reserved fast-breadth lane policy, reserved strong-depth lane policy, candidate throughput outcomes, candidate quality/depth outcomes, equal-budget single-model comparison, or equal-budget generic-UCB comparison."
+  "claim_boundary": "This boundary records that LibreEvolve has a throughput_depth strategy with backend cost, latency, and depth metadata, min/max normalization, metadata weights, neutral missing-metadata defaults, backend role/model-lane labels, fast-breadth and strong-depth lane detection, eligible-backend lane traces, per-call scheduler policy records, and explicit false claim-readiness lane evidence. It does not claim experiment-level selection traces, fixed compute budget definition, matched problem/seed/evaluator identity, fast/strong provider-model identity, lane quota schedule, per-lane token/cost/latency accounting, lane switching traces, breadth-volume attribution, breakthrough-quality attribution, reserved fast-breadth lane policy, reserved strong-depth lane policy, candidate throughput outcomes, candidate quality/depth outcomes, equal-budget single-model comparison, or equal-budget generic-UCB comparison."
 }

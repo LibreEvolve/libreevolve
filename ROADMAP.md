@@ -1078,9 +1078,12 @@ resumed-trace proof are still open.
   AlphaEvolve-style breadth/depth/cost/latency scheduler validation, including
   experiment-level selection traces and equal-budget report evidence. The
   current `papers/fast_strong_model_mix_boundary.json` sidecar preserves the
-  metadata-trace-only boundary while keeping reserved fast-breadth and
-  strong-depth lane policies, candidate throughput/quality outcomes, and
-  equal-budget scheduler comparisons open.
+  metadata-trace-only boundary while keeping fixed compute budget identity,
+  matched problem/seed/evaluator controls, provider-model identity for
+  fast/strong lanes, lane quota schedules, per-lane token/cost/latency
+  accounting, lane switching traces, breadth-volume and breakthrough-quality
+  attribution, reserved fast-breadth and strong-depth lane policies, candidate
+  throughput/quality outcomes, and equal-budget scheduler comparisons open.
 - Extend the current single-run sample-efficiency report into benchmark-level
   proposal-count curves, target-hit evidence, repeated-sampling comparisons,
   and model-size/equal-budget analyses before treating it as AlphaEvolve

@@ -333,6 +333,16 @@ Important limits:
   row, alternate-search attempt row, BIC/BB/IR assumption record,
   unrounded-mixture caveat handling, or independent checker output;
   `papers/bilateral_trade_boundary.json` records that absence boundary.
+- AlphaEvolve Magellan compiler-optimization coverage is background paper
+  context only: LibreEvolve has no executable C++ decision-logic candidate
+  schema, LLVM/XLA compiler-pass integration, EVOLVE-BLOCK compiler-source
+  span record, compiler-flag hyperparameter schema, local compiler rebuild
+  record, macro-benchmark harness, Vizier-style autotuning record, LLVM
+  function-inlining result row, register-allocation result row, XLA
+  graph-extraction or auto-sharding row, expert/neural baseline comparison,
+  temporal/domain generalization report, generated-policy maintainability
+  evidence, compiler environment hash, or independent checker output;
+  `papers/magellan_boundary.json` records that absence boundary.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

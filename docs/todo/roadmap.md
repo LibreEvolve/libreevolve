@@ -10,43 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Add AlphaEvolve Magellan compiler-optimization gates before roadmap
-      promotion.
-  - Spec evidence: arXiv `2601.21096`, submitted January 28, 2026 and
-    accepted to `C4ML@CGO'26`, introduces `Magellan: Autonomous Discovery of
-    Novel Compiler Optimization Heuristics with AlphaEvolve`. The abstract
-    says Magellan synthesizes executable C++ decision logic for compiler
-    passes, couples an LLM coding agent with evolutionary search and
-    autotuning, evaluates candidates on user-provided macro-benchmarks, and
-    reports LLVM function-inlining, register-allocation, and preliminary XLA
-    results. The design section specifies policy proposal, local evaluation,
-    hyperparameter tuning, and feedback incorporation around compiler rebuilds
-    and end-to-end macro-benchmark rewards.
-  - Current evidence: ROADMAP now names `papers/magellan_boundary.json` as the
-    source-specific boundary for executable C++ decision logic,
-    compiler-pass integration, EVOLVE-BLOCK compiler spans, compiler
-    rebuild/macro-benchmark evaluation, autotuning, LLVM/register-allocation/
-    XLA rows, baselines, generalization, maintainability, and runtime-
-    repository status. It still does not define a compiler-heuristic candidate
-    schema, compiler pass runner, macro-benchmark dataset contract, LLVM
-    inlining benchmark, register-allocation benchmark, XLA portability
-    benchmark, autotuning loop report, expert-baseline comparison, or
-    production-style metric report for binary size and end-to-end performance.
-  - Required result: add roadmap gates for `2601.21096`: paper/source
-    manifest entry, PDF/cache hash, source-license and code-artifact status,
-    executable C++ decision-logic candidate schema, compiler-pass integration
-    records, EVOLVE-BLOCK compiler-source provenance, compiler-flag
-    hyperparameter schema, LLVM function-inlining benchmark with partial/full
-    heuristic modes, register-allocation priority-rule benchmark, XLA graph-
-    extraction and auto-sharding benchmarks, macro-benchmark provenance,
-    binary-size and performance metric definitions, autotuning loop records
-    including tuner identity, batch/round counts, and invalid-sample metrics,
-    expert/neural baseline identities, temporal/domain generalization reports,
-    generated-code maintainability caveats, seed/budget records, compiler
-    environment hashes, independent checker outputs, and a background-only or
-    benchmark-fixture status rule so roadmap claims do not outpace local
-    AlphaEvolve-style Magellan compiler-optimization support.
-
 - [ ] Add AlphaEvolve ArchAgent computer-architecture gates before roadmap
       promotion.
   - Spec evidence: arXiv `2602.22425`, submitted February 25, 2026,

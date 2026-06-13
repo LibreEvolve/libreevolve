@@ -2,6 +2,38 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive AlphaEvolve Magellan roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/magellan_boundary.json` now keep arXiv `2601.21096`
+    source-scoped as background AlphaEvolve compiler-optimization application
+    context rather than implemented LibreEvolve Magellan-style compiler
+    optimization support.
+  - Current evidence: the cached paper and boundary JSON record executable
+    C++ decision logic for compiler passes, EVOLVE-BLOCK compiler-source
+    regions, LLVM/XLA compiler-pass integration, compiler rebuilds,
+    user-provided macro-benchmark evaluation, compiler-flag hyperparameters,
+    Vizier-style autotuning, LLVM function-inlining size and performance
+    tasks, RegAllocGreedy live-range priority rules, XLA graph extraction,
+    XLA auto-sharding, expert/neural baselines, temporal/domain
+    generalization, maintainability rows, and the absence of a dedicated
+    extracted Magellan runtime repository.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: executable C++ decision-logic schemas, compiler-pass runners,
+    EVOLVE-BLOCK compiler-source span records, compiler-flag hyperparameter
+    schemas, policy-proposal records, compiler rebuilds, macro-benchmark
+    dataset provenance, binary-size and end-to-end performance metrics,
+    autotuner identity and batch records, invalid-sample-rate records,
+    feedback-generation records, LLVM inlining rows, register-allocation rows,
+    XLA graph-extraction/auto-sharding rows, expert/neural baseline rows,
+    temporal/domain generalization reports, generated-policy
+    maintainability rows, compiler environment hashes, and independent
+    checker outputs.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive AlphaEvolve bilateral-trade roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

@@ -322,15 +322,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     paper-manifest validation.
   - Current gap: this is paper-facing negative boundary evidence, not Section
     2.6 topology parity. It does not implement or preserve async queues,
-    queue capacities, nonblocking dependencies, real sampler/evaluator worker
-    fan-out, cluster-local execution ownership beyond the current
+    queue capacities/backpressure, async task/coroutine identities,
+    nonblocking dependency graphs, dependency wait-event telemetry, real
+    sampler/evaluator worker fan-out, worker lifecycle/liveness records,
+    async scheduler state snapshots, deterministic async completion/admission
+    order, cluster-local execution ownership beyond the current
     process/subprocess boundary, throughput dispatch telemetry, or resumable
     pending-work checkpoints.
   - Required result: implement real async runtime topology artifacts and
     validators for controller/sampler/evaluation-node worker ids, queue
-    capacities, nonblocking/blocking dependency graphs, worker role ownership,
-    throughput-budget dispatch telemetry, pending-work checkpoint state, and
-    claim-readiness checks.
+    capacities/backpressure policy, task/coroutine identities, nonblocking/
+    blocking dependency graphs, dependency wait-event telemetry, worker role
+    ownership and liveness, scheduler-state snapshots, deterministic
+    completion/admission order, throughput-budget dispatch telemetry,
+    pending-work checkpoint state, and claim-readiness checks.
 
 - [ ] Extend Figure 1/Figure 2 architecture-process exhibit provenance into
       full paper evidence.

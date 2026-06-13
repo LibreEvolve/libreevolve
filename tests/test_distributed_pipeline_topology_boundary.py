@@ -13,10 +13,17 @@ def test_distributed_pipeline_topology_boundary_accepts_absence_record():
 
     assert validation.ok is True
     assert validation.boundary_status == "single_process_synchronous_topology"
-    assert validation.required_evidence_field_count == 11
-    assert validation.missing_evidence_count == 8
+    assert validation.required_evidence_field_count == 17
+    assert validation.missing_evidence_count == 14
     assert boundary["schema"] == DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_SCHEMA
     assert boundary["source_section_ids"] == ["2.6"]
+    assert "async_task_coroutine_identity" in boundary["required_evidence_fields"]
+    assert "scheduler_state_snapshot" in boundary["required_evidence_fields"]
+    assert (
+        boundary["missing_evidence"]["deterministic_async_completion_admission_order"]
+        == "not_recorded_locally"
+    )
+    assert "async task/coroutine identities" in boundary["claim_boundary"]
     assert "does not claim AlphaEvolve-style Python asyncio" in boundary["claim_boundary"]
 
 
@@ -47,5 +54,5 @@ def test_render_distributed_pipeline_topology_boundary_summary_reports_shape():
     assert "AlphaEvolve distributed-pipeline topology boundary" in summary
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | single_process_synchronous_topology |" in summary
-    assert "| required_evidence_field_count | 11 |" in summary
-    assert "| missing_evidence_count | 8 |" in summary
+    assert "| required_evidence_field_count | 17 |" in summary
+    assert "| missing_evidence_count | 14 |" in summary

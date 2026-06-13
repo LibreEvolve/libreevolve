@@ -1751,16 +1751,21 @@ sidecars, tests, and active TODOs.
     paper-manifest validation.
   - Remaining gap: the topology report is still current-boundary evidence, not
     Section 2.6 parity. It does not implement async controller queues, queue
-    capacities, a Python `asyncio` runtime identity, nonblocking dependency
-    edges, real sampler/evaluator worker fan-out, cluster/local worker ownership
-    beyond the local process/subprocess boundary, throughput dispatch telemetry,
-    or resumable pending-work checkpoints.
+    capacities/backpressure, a Python `asyncio` runtime identity, async task/
+    coroutine identities, nonblocking dependency graphs, dependency wait-event
+    telemetry, real sampler/evaluator worker fan-out, worker lifecycle/liveness
+    records, async scheduler-state snapshots, deterministic async completion/
+    admission order, cluster/local worker ownership beyond the local
+    process/subprocess boundary, throughput dispatch telemetry, or resumable
+    pending-work checkpoints.
   - Required result: implement the async distributed-pipeline runtime and
     extend the topology artifact with real queue names/capacities,
-    Python `asyncio` runtime identity, dependency/blocking edges, worker
-    identities, throughput dispatch and completion/admission ordering telemetry,
-    and pending-work checkpoints while keeping README/ROADMAP claims scoped to
-    the validated report.
+    backpressure policy, Python `asyncio` runtime identity, task/coroutine
+    identities, dependency wait/blocking edges, worker identities and
+    lifecycle/liveness, scheduler-state snapshots, throughput dispatch and
+    deterministic completion/admission ordering telemetry, and pending-work
+    checkpoints while keeping README/ROADMAP claims scoped to the validated
+    report.
 
 - [ ] Add statistical hypothesis-test gates to evaluation cascades.
   - Spec evidence: AlphaEvolve Section 2.4 describes the evaluation cascade as

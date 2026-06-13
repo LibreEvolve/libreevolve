@@ -120,7 +120,10 @@ LibreEvolve has:
   runtime-budget linkage, with
   `papers/distributed_pipeline_topology_boundary.json` preserving the
   paper-facing absence boundary while keeping AlphaEvolve async pipeline parity
-  explicitly false
+  explicitly false, including missing async task/coroutine identities,
+  dependency wait-event telemetry, worker lifecycle/liveness records,
+  scheduler-state snapshots, deterministic async completion/admission order,
+  queue backpressure, and pending-work checkpoints
 - runtime cascade summaries that aggregate configured-stage promotion,
   attrition, threshold failures, work counters, bounded candidate-stage
   history cross-links, denominator-policy boundaries, and explicit
@@ -964,8 +967,10 @@ is not yet an AlphaEvolve reproduction.
   `runtime.history.distributed_pipeline_topology_report`, with
   `papers/distributed_pipeline_topology_boundary.json` preserving the
   paper-facing single-process synchronous-topology absence boundary, including
-  the missing Python `asyncio` runtime identity required by AlphaEvolve Section
-  2.6. It
+  the missing Python `asyncio` runtime identity, async task/coroutine
+  identities, dependency wait telemetry, worker lifecycle/liveness records,
+  scheduler-state snapshots, and deterministic async completion/admission order
+  required by AlphaEvolve Section 2.6. It
   supports sequential `proposals_per_generation` batches plus opt-in local
   `eval_stages[].sample_workers` fan-out for configured-stage samples, but not
   concurrent proposal/evaluation queues. Completed manifests also expose

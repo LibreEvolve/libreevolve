@@ -21,9 +21,15 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "program_database_node_identity",
     "llm_sampler_node_identity",
     "evaluation_node_identity",
+    "async_task_coroutine_identity",
     "queue_count",
+    "queue_capacity_backpressure_policy",
     "blocking_dependency_edges",
+    "dependency_wait_event_telemetry",
     "dispatch_policy",
+    "scheduler_state_snapshot",
+    "worker_lifecycle_liveness",
+    "deterministic_async_completion_admission_order",
     "throughput_budget_linkage",
     "pending_work_checkpoint",
     "async_topology_claim_readiness",
@@ -32,9 +38,15 @@ EXPECTED_MISSING_EVIDENCE = {
     "python_asyncio_runtime": "not_recorded_locally",
     "async_controller_queues": "not_recorded_locally",
     "queue_capacity_records": "not_recorded_locally",
+    "queue_backpressure_policy": "not_recorded_locally",
+    "async_task_coroutine_identity": "not_recorded_locally",
     "nonblocking_dependency_graph": "not_recorded_locally",
+    "dependency_wait_event_telemetry": "not_recorded_locally",
     "distributed_llm_sampler_worker_nodes": "not_recorded_locally",
     "distributed_evaluator_worker_nodes": "not_recorded_locally",
+    "worker_lifecycle_liveness": "not_recorded_locally",
+    "async_scheduler_state_snapshot": "not_recorded_locally",
+    "deterministic_async_completion_admission_order": "not_recorded_locally",
     "throughput_dispatch_telemetry": "not_recorded_locally",
     "pending_work_checkpoint_state": "not_recorded_locally",
 }
@@ -80,9 +92,12 @@ def distributed_pipeline_topology_boundary_record() -> dict[str, Any]:
             "blocking dependency edges, synchronous dispatch, runtime-budget "
             "linkage, and unsupported pending-work checkpoints, but does not "
             "claim AlphaEvolve-style Python asyncio runtime identity, async "
-            "controller queues, queue capacities, nonblocking dependency "
-            "graphs, distributed sampler/evaluator worker nodes, throughput "
-            "dispatch telemetry, or pending-work checkpoint state."
+            "controller queues, queue capacities and backpressure policy, "
+            "async task/coroutine identities, nonblocking dependency graphs, "
+            "dependency wait-event telemetry, distributed sampler/evaluator "
+            "worker nodes, worker lifecycle/liveness records, async scheduler "
+            "state snapshots, deterministic async completion/admission order, "
+            "throughput dispatch telemetry, or pending-work checkpoint state."
         ),
     }
 
@@ -118,7 +133,15 @@ def validate_distributed_pipeline_topology_boundary(
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
-    if not isinstance(boundary_text, str) or "does not claim" not in boundary_text:
+    if (
+        not isinstance(boundary_text, str)
+        or "does not claim" not in boundary_text
+        or "async task/coroutine identities" not in boundary_text
+        or "dependency wait-event telemetry" not in boundary_text
+        or "worker lifecycle/liveness records" not in boundary_text
+        or "async scheduler state snapshots" not in boundary_text
+        or "deterministic async completion/admission order" not in boundary_text
+    ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim AlphaEvolve topology parity"))
     return DistributedPipelineTopologyBoundaryValidation(
         ok=not issues,

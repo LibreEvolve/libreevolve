@@ -1197,7 +1197,10 @@ and fails async-pipeline, async-worker, pending-checkpoint, or AlphaEvolve
 async-topology overclaims. The committed
 `papers/distributed_pipeline_topology_boundary.json` sidecar preserves the
 same single-process synchronous-topology absence boundary for paper-manifest
-validation.
+validation, including missing async task/coroutine identities, dependency
+wait-event telemetry, worker lifecycle/liveness records, async scheduler-state
+snapshots, deterministic async completion/admission order, queue backpressure,
+and pending-work checkpoints.
 Completed runtime history also records
 `runtime.history.parallel_evaluation_readiness_report` with schema
 `libreevolve.parallel_evaluation_readiness_report.v1`. It aggregates the

@@ -38,7 +38,10 @@ Important limits:
   runtime-budget linkage. It keeps AlphaEvolve Section 2.6 Python `asyncio`
   pipeline parity false; `papers/distributed_pipeline_topology_boundary.json`
   preserves the same single-process synchronous-topology absence boundary,
-  including the missing asyncio runtime identity.
+  including the missing asyncio runtime identity, async task/coroutine
+  identities, dependency wait-event telemetry, worker lifecycle/liveness
+  records, scheduler-state snapshots, deterministic async completion/admission
+  order, queue backpressure, and pending-work checkpoints.
 - Built-in provider adapters are OpenAI, Anthropic, and Ollama. Custom
   import-path backends can wrap other services, but Google/Gemini is not a
   first-class provider yet, so AlphaEvolve's Gemini 2.0 Flash/Gemini 2.0 Pro

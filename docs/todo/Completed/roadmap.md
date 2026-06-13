@@ -2,6 +2,27 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive async/resumable-runtime roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `README.md`, `ROADMAP.md`,
+    `papers/README.md`, and `docs/status.md` already scope
+    `--restore-runtime-from-manifest` to a compatible synchronous restore
+    bundle, not full AlphaEvolve-style experiment replay.
+  - Current evidence: `load_full_resume_bundle()` composes runtime RNG, LLM
+    scheduler, archive state and contents, runtime budget snapshots,
+    controller-budget event replay, runtime RNG replay boundaries, and lineage
+    replay policy into validated `evolve()` kwargs.
+  - Remaining guard: provider/plugin output replay, controller pending-work
+    restore, plugin internal state, validator subprocess state, ordered
+    migration-event restore engines, async controller queues, mutation-chain
+    depth policy, and end-to-end resumed-trace proof remain future work.
+  - Verification: focused full-resume tests validate
+    `compatible_resume_ready=true`, while `full_replay_ready`,
+    `provider_output_replay_ready`, `pending_work_resume_ready`, and
+    `resumed_trace_proof_ready` remain false; CLI tests validate the composed
+    restore flag and reject combining it with individual restore flags; the
+    `papers/archive_event_replay_boundary.json` sidecar rejects ordered
+    archive-event restore-engine overclaims.
+
 - [x] Archive UCB scheduler roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `README.md`, `ROADMAP.md`,
     `papers/README.md`, and `docs/status.md` already describe

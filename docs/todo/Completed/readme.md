@@ -14536,3 +14536,23 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     cryptographic kernels, hardware-execution provenance, correctness tests,
     latency report artifacts, baseline identity, and independent reproduction
     remain active in code and paper TODOs.
+
+- [x] Keep README AlphaEvolve HCI/user-study claims source-scoped until
+      intentmaking evidence exists.
+  - Spec evidence: arXiv `2605.05921`, submitted May 7, 2026, reports a
+    formative user study with 11 expert mathematicians using AlphaEvolve and
+    frames effective AI-guided mathematical discovery around repeated
+    intentmaking and sensemaking cycles rather than a one-shot question/answer
+    workflow.
+  - Status: README now lists arXiv `2605.05921` as AlphaEvolve HCI/user-study
+    context only and marks the mention as a curated cached-paper subset while
+    `papers/README.md` remains the complete implementation-status index. It
+    states that LibreEvolve has no formative-study dataset, participant/session
+    trace schema, intentmaking/sensemaking event taxonomy, AlphaEvolve
+    UI/dashboard artifact inventory, goal-revision or human-intervention
+    records, privacy/redaction protocol, coded qualitative-analysis evidence,
+    or collaborative-instrument workflow support.
+  - Remaining README gap: local interaction/session traces, goal-revision
+    metadata, result-analysis dashboard state, privacy/redaction boundaries,
+    user-study evidence, and collaborative scientific-discovery instrument
+    artifacts remain active in code and paper TODOs.

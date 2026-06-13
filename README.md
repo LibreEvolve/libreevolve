@@ -639,6 +639,14 @@ Important limits:
   cryptographic-kernel artifacts, baseline implementation identity, latency
   benchmark rows, or local reproduction of the reported 2.5x, 1.31x, and 1.18x
   speedups.
+- ArXiv `2605.05921` is AlphaEvolve HCI/user-study context only; the README
+  mentions this cached paper as a curated subset while `papers/README.md`
+  remains the complete implementation-status index. LibreEvolve has no
+  formative-study dataset, participant/session trace schema,
+  intentmaking/sensemaking event taxonomy, AlphaEvolve UI/dashboard artifact
+  inventory, goal-revision or human-intervention records, privacy/redaction
+  protocol for study data, coded qualitative-analysis evidence, or
+  collaborative scientific-discovery instrument workflow support.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

@@ -191,6 +191,23 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     operator/benchmark claims, the wording must remain source-scoped until
     the active code, paper, and roadmap TODO evidence exists.
 
+- [x] Archive README ThetaEvolve test-time-learning source-scope TODO.
+  - Status: the README-specific TODO was stale after the README realism split.
+    The root README no longer mentions ThetaEvolve, test-time learning,
+    GRPO/RL training, lazy penalties, reward shaping, batch sampling, large
+    program databases, trained checkpoints, or ThetaEvolve benchmark results.
+  - Remaining guard: `papers/README.md` keeps `2511.23473` as test-time
+    training inspiration only, and the open code, paper, and roadmap TODOs
+    still track the missing dynamic-environment metadata, batch-sampling
+    records, lazy-penalty and reward-shaping schemas, training/checkpoint
+    artifacts, evaluator-compatibility caveats, AlphaEvolve/ShinkaEvolve/
+    OpenEvolve comparison rows, database-size and batch-throughput ablations,
+    checkpoint-transfer rows, and the distinction between clipped-reward JSONL
+    export and actual test-time RL.
+  - Verification: if the root README later reintroduces ThetaEvolve or related
+    test-time-learning claims, the wording must remain source-scoped until
+    the active code, paper, and roadmap TODO evidence exists.
+
 - [x] Keep README validator sandbox/resource-limit wording scoped to local
       subprocess audit evidence versus OS/container enforcement.
   - Status: README Important limits now states that validator execution policy

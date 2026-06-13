@@ -91,38 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README ThetaEvolve wording scoped until test-time learning evidence
-      exists.
-  - Spec evidence: local arXiv `2511.23473`, `ThetaEvolve: Test-time Learning
-    on Open Problems`, by Yiping Wang et al. describes an
-    AlphaEvolve-inspired dynamic environment with a single LLM, large program
-    database, batch sampling, early checks, lazy penalties, reward shaping,
-    optional GRPO/RL training at test time, RL-trained checkpoints, and
-    open-problem benchmark claims. It reports DeepSeek-R1-0528-Qwen3-8B
-    improving `CirclePacking` and `FirstAutoCorrIneq` bounds mentioned in
-    AlphaEvolve, including Table 1 rows `2.63598308` vs AlphaEvolve
-    `2.63586276` for circle packing and `1.503133` vs AlphaEvolve `1.503164`
-    for FACI, plus a `3` second circle-packing program vs ShinkaEvolve's
-    roughly `75` second program.
-  - Current evidence: README says the ThetaEvolve-inspired `ttt_rl` plugin
-    writes clipped-reward training data and is not a real GRPO/RL trainer, and
-    now points at `papers/thetaevolve_boundary.json` for the `2511.23473`
-    source-specific boundary. That sidecar keeps batch-sampled dynamic
-    environments, large database scaling, lazy penalties, reward-shaping
-    parameters, GRPO telemetry, checkpoint provenance, evaluator caveats,
-    transfer reports, throughput reports, and benchmark comparison claims
-    unavailable until local artifacts prove them.
-  - Required result: if README mentions ThetaEvolve, test-time learning,
-    GRPO/RL training, lazy penalties, reward shaping, batch sampling, large
-    program databases, trained checkpoints, or ThetaEvolve benchmark results,
-    keep wording source-scoped until manifests and reports include the
-    `2511.23473` source row, PDF/code hashes, dynamic-environment metadata,
-    batch-sampling records, lazy-penalty and reward-shaping schemas, training
-    and checkpoint artifacts, evaluator-compatibility caveats,
-    AlphaEvolve/ShinkaEvolve/OpenEvolve comparison rows, database-size and
-    batch-throughput ablations, checkpoint-transfer rows, and a clear
-    distinction between clipped-reward JSONL export and actual test-time RL.
-
 - [ ] Keep README ImprovEvolve wording scoped until modular-operator execution
       evidence exists.
   - Spec evidence: local arXiv `2602.10233`, `ImprovEvolve: Ask AlphaEvolve

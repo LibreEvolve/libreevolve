@@ -161,6 +161,14 @@ Important limits:
   per-parameter cost accounting, or independent reproduction output for the
   three exact values, 41 lower bounds, four matched closed cases, or sub-$30
   cost claim.
+- CORAL autonomous multi-agent evolution coverage is background paper context
+  only: LibreEvolve has no long-running autonomous agent sessions, shared
+  persistent memory repository, asynchronous multi-agent execution runtime,
+  heartbeat-based intervention controller, isolated per-agent workspaces,
+  evaluator separation layer, resource/session/health manager,
+  knowledge-reuse analysis, 10-task SOTA report, 3-10x improvement-rate
+  reproduction, Anthropic kernel-engineering 1363-to-1103 cycle reproduction,
+  linked-code audit, or independent reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

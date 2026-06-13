@@ -2,6 +2,36 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive CORAL autonomous multi-agent roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2604.01658` source-scoped as background autonomous multi-agent
+    evolution context rather than implemented LibreEvolve CORAL-style runtime
+    support.
+  - Current evidence: the cached paper and `papers/README.md` record CORAL's
+    long-running collaborative agents, shared persistent memory, asynchronous
+    multi-agent execution, heartbeat interventions, isolated workspaces,
+    evaluator separation, resource/session/health management, 10-task SOTA
+    claim, 3-10x higher improvement-rate claim, Anthropic kernel-engineering
+    1363-to-1103 cycle claim, and linked-code availability, while marking
+    local agent sessions, shared memory, async collaboration runtime,
+    heartbeat controllers, workspace isolation, evaluator separation,
+    resource/session/health managers, knowledge-reuse analysis, benchmark
+    reports, linked-code audits, and independent reproduction output as
+    missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source-license and linked-code status, relation to LibreEvolve
+    islands, agent-session schema, shared-memory/index metadata, async
+    execution and communication traces, heartbeat intervention records,
+    workspace-isolation and evaluator-separation policies, resource and health
+    telemetry, knowledge-reuse/mechanistic analysis artifacts, benchmark
+    taxonomy, kernel-engineering metric records, baseline identities,
+    code/artifact reproducibility status, and independent verification
+    outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive Zarankiewicz reinforced-search roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

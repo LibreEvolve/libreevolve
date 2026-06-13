@@ -10,35 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement CORAL autonomous multi-agent evolution gates beyond paper
-      cache coverage.
-  - Spec evidence: arXiv `2604.01658`, submitted April 2, 2026 and last
-    revised May 17, 2026, introduces CORAL for autonomous multi-agent
-    evolution on open-ended discovery tasks. The abstract says fixed
-    heuristics and hard-coded exploration rules limit current LLM-based
-    evolution, then proposes long-running collaborative agents with shared
-    persistent memory, asynchronous execution, heartbeat-based interventions,
-    isolated workspaces, evaluator separation, resource management, and agent
-    session/health management. It reports state-of-the-art results on 10
-    tasks, 3-10x higher improvement rates with fewer evaluations, and an
-    Anthropic kernel-engineering improvement from 1363 to 1103 cycles.
-  - Current evidence: ROADMAP, `papers/download_manifest.*`, and
-    `papers/README.md` now include `2604.01658`, cached locally as
-    `papers/2604.01658__CORAL.pdf` with byte count `3096184` and SHA-256
-    `6baf82f122d884380dea1ce2a20a92fd4e75216f430f652819d56bb2b893085c`.
-    ROADMAP tracks MAP-Elites islands, ring migration, async reviewer gaps,
-    archive restore, benchmark/report contracts, and many search-source gates,
-    but still has no local CORAL-style autonomous multi-agent evidence.
-  - Required result: add roadmap gates beyond paper-cache coverage for
-    `2604.01658`: source-license and linked-code status, agent-session and
-    shared-memory schemas, async execution and communication traces, heartbeat
-    intervention logs, isolated-workspace policy, evaluator-separation
-    contract, resource-management telemetry, session health events,
-    knowledge-reuse/mechanistic analyses, benchmark taxonomy,
-    kernel-engineering metric records, baseline identities, and a
-    background-only or benchmark-fixture status rule so roadmap claims do not
-    outpace local CORAL-style autonomous multi-agent support.
-
 - [ ] Implement AEvo harnessed meta-editing gates beyond paper cache coverage.
   - Spec evidence: arXiv `2605.13821`, submitted May 13, 2026, introduces
     AEvo as a harnessed meta-editing framework for agentic evolution. The

@@ -1388,6 +1388,13 @@ separately from telemetry-only roles, `role_scheduler_scope`, and
 configured per-role logical-call limits plus consumed logical calls by role.
 They also copy `role_backend_policy`, which records explicit configured
 role-to-backend lanes, backend metadata role lanes, and the fallback policy.
+This is role-scoped audit evidence, not AlphaEvolve-calibrated scheduler
+parity: role-specific backend-pool policy, role-specific exploration
+parameters, reward normalization reports, outcome-attribution datasets, async
+role work queues, cross-role interference analysis, experiment-owned quota
+policy, fast/strong model-mix reports, resume replay experiment reports, and
+role-specific budget behavior reports remain open under
+`papers/llm_role_scheduler_boundary.json`.
 Runtime budget `limits` also include the configured per-role provider-attempt,
 token, and configured-cost maps, while `consumed` includes matching
 `*_by_role` counters. Role-budget limits may be exact roles or prefix scopes

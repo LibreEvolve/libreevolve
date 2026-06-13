@@ -4670,14 +4670,18 @@ sidecars, tests, and active TODOs.
     this local role-scoped scheduler boundary at the paper-manifest layer.
   - Remaining gap: role-scoped selection still shares the global exploration
     coefficient and backend set unless role routing narrows it, and the new
-    policy fields are local runtime contracts rather than role-specific reward
-    calibration, experiment-owned quotas, or reports proving AlphaEvolve-style
-    role behavior.
+    policy fields are local runtime contracts rather than role-specific backend
+    pool policy, role-specific exploration parameters, reward normalization
+    reports, outcome-attribution datasets, async role work queues, cross-role
+    interference analysis, role-specific reward calibration, experiment-owned
+    quotas, or reports proving AlphaEvolve-style role behavior.
   - Required result: add explicit calibrated per-role scheduler policies for
     mutation, critique, feedback, and meta-prompt calls, including
-    role-specific reward contracts, quota/budget ownership, restore validation
-    across real run resumes, and experiment-level reports proving that role
-    selection behavior improves over shared global-bandit telemetry.
+    backend-pool policy, exploration parameters, role-specific reward
+    contracts, normalized outcome attribution datasets, async role-queue
+    behavior, cross-role interference checks, quota/budget ownership, restore
+    validation across real run resumes, and experiment-level reports proving
+    that role selection behavior improves over shared global-bandit telemetry.
 
 - [ ] Complete hard cancellation, async/accelerator budgets, and executed
       ablation scripts beyond current live LLM budget stops.

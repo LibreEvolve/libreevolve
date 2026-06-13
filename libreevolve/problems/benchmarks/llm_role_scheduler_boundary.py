@@ -26,6 +26,12 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "reward_accounted_vs_telemetry_only_status",
     "role_selection_state_owner",
     "opt_in_role_scoped_selection",
+    "role_specific_backend_pool_policy",
+    "role_specific_exploration_parameters",
+    "role_reward_normalization_report",
+    "role_outcome_attribution_dataset",
+    "async_role_work_queue_policy",
+    "cross_role_interference_analysis",
     "role_scheduler_state_snapshots",
     "scheduler_state_restore_validation",
     "runtime_llm_accounting_summary",
@@ -37,6 +43,12 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "role_specific_budget_behavior_report",
 )
 EXPECTED_MISSING_EVIDENCE = {
+    "role_specific_backend_pool_policy": "not_recorded_locally",
+    "role_specific_exploration_parameters": "global_ucb_coefficient_only",
+    "role_reward_normalization_report": "not_recorded_locally",
+    "role_outcome_attribution_dataset": "not_recorded_locally",
+    "async_role_work_queue_policy": "not_recorded_locally",
+    "cross_role_interference_analysis": "not_recorded_locally",
     "calibrated_role_reward_policy": "not_recorded_locally",
     "experiment_owned_quota_policy": "not_recorded_locally",
     "fast_strong_model_mix_report": "not_recorded_locally",
@@ -87,9 +99,13 @@ def llm_role_scheduler_boundary_record() -> dict[str, Any]:
             "status, role selection state-owner telemetry, opt-in role-scoped "
             "local UCB selection, role scheduler state snapshots, scheduler-state "
             "restore validation, runtime LLM accounting summaries, and LLM budget "
-            "report role budgets. It does not claim calibrated role reward policy, "
-            "experiment-owned quota policy, fast/strong model-mix reports, resume "
-            "replay experiment reports, or role-specific budget behavior reports."
+            "report role budgets. It does not claim role-specific backend-pool "
+            "policy, role-specific exploration parameters, role reward "
+            "normalization reports, role outcome-attribution datasets, async "
+            "role work queues, cross-role interference analysis, calibrated role "
+            "reward policy, experiment-owned quota policy, fast/strong model-mix "
+            "reports, resume replay experiment reports, or role-specific budget "
+            "behavior reports."
         ),
     }
 
@@ -129,7 +145,13 @@ def validate_llm_role_scheduler_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim calibrated role reward policy" not in boundary_text
+        or "does not claim role-specific backend-pool policy" not in boundary_text
+        or "role-specific exploration parameters" not in boundary_text
+        or "role reward normalization reports" not in boundary_text
+        or "role outcome-attribution datasets" not in boundary_text
+        or "async role work queues" not in boundary_text
+        or "cross-role interference analysis" not in boundary_text
+        or "calibrated role reward policy" not in boundary_text
         or "fast/strong model-mix reports" not in boundary_text
         or "role-specific budget behavior reports" not in boundary_text
     ):

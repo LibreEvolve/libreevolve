@@ -212,8 +212,11 @@ Important limits:
 - Role-scoped LLM scheduling is opt-in local UCB/runtime evidence with
   reward-accounted roles, role budget maps, scheduler-state snapshots, and
   per-call policy telemetry, not calibrated AlphaEvolve role reward policy,
-  experiment-owned quota policy, fast/strong model-mix reports, or
-  role-specific budget behavior reports; that boundary is tracked by
+  role-specific backend-pool policy, role-specific exploration parameters,
+  reward normalization reports, outcome-attribution datasets, async role work
+  queues, cross-role interference analysis, experiment-owned quota policy,
+  fast/strong model-mix reports, or role-specific budget behavior reports; that
+  boundary is tracked by
   `papers/llm_role_scheduler_boundary.json`.
 - `throughput_depth` backend selection records cost/latency/depth metadata and
   fast-breadth/strong-depth lane labels, not experiment-level fast/strong

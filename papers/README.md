@@ -1028,11 +1028,13 @@ reward-accounted role policy. Successful feedback grader records now include
 the exact feedback role is reward-accounted. These are audit summaries; live
 provider-attempt/token/configured-cost/latency stop checks now exist, but live
 provider pricing/default-rate capture beyond configured estimates, full async
-worker accounting, calibrated reward semantics, and experiment-owned
-quota/budget policy beyond opt-in role-scoped local UCB selection and role
-budget maps remain open. The static sidecar
-`papers/llm_role_scheduler_boundary.json` preserves that role-scheduler
-evidence boundary. Live
+worker accounting, role-specific backend-pool policy, role-specific
+exploration parameters, reward normalization reports, outcome-attribution
+datasets, async role work queues, cross-role interference analysis, calibrated
+reward semantics, and experiment-owned quota/budget policy beyond opt-in
+role-scoped local UCB selection and role budget maps remain open. The static
+sidecar `papers/llm_role_scheduler_boundary.json` preserves that
+role-scheduler evidence boundary. Live
 synchronous budget deltas are now also persisted as contiguous
 `controller_budget_events.jsonl` rows for seed evaluations, generation
 lifecycle events, LLM calls, candidate evaluations, and terminal stop reasons.
@@ -2397,9 +2399,11 @@ Implemented:
   budget maps, per-call scheduler policy telemetry, opt-in role-scoped local
   UCB selection, role scheduler snapshots, restore validation, runtime LLM
   accounting summaries, and LLM budget report role budgets. It is not evidence
-  of calibrated role reward policy, experiment-owned quota policy,
-  fast/strong model-mix reports, resume replay experiment reports, or
-  role-specific budget behavior reports.
+  of role-specific backend-pool policy, role-specific exploration parameters,
+  reward normalization reports, outcome-attribution datasets, async role work
+  queues, cross-role interference analysis, calibrated role reward policy,
+  experiment-owned quota policy, fast/strong model-mix reports, resume replay
+  experiment reports, or role-specific budget behavior reports.
 - `papers/fast_strong_model_mix_boundary.json`: fast/strong model-mix
   sidecar for AlphaEvolve Section 2.3. It records the current
   `throughput_depth` metadata evidence: backend cost/latency/depth metadata,

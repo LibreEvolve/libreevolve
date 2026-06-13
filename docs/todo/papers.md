@@ -451,13 +451,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     for paper-manifest validation.
   - Current gap: role-scoped selection and per-call policy telemetry are local
     UCB/runtime contracts, not a calibrated AlphaEvolve scheduler:
-    role-specific reward calibration, experiment-owned quota policy,
-    fast/strong model-mix evidence, and experiment reports proving
-    role-specific selection and budget behavior remain absent.
+    role-specific backend-pool policy, role-specific exploration parameters,
+    reward normalization reports, outcome-attribution datasets, async role work
+    queues, cross-role interference analysis, role-specific reward
+    calibration, experiment-owned quota policy, fast/strong model-mix evidence,
+    and experiment reports proving role-specific selection and budget behavior
+    remain absent.
   - Required result: add calibrated per-role scheduler policies for mutation,
-    critique, feedback, and meta-prompt calls, plus restore validation across
-    real run resumes and experiment reports proving role-specific selection and
-    budget behavior.
+    critique, feedback, and meta-prompt calls, including role-specific backend
+    pools, exploration parameters, normalized reward contracts, outcome
+    attribution datasets, async role queues, cross-role interference checks,
+    restore validation across real run resumes, and experiment reports proving
+    role-specific selection and budget behavior.
 
 - [ ] Validate fast/strong model-mix scheduling beyond local metadata tests.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3, "Models used".

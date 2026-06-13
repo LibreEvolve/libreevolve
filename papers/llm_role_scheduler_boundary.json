@@ -24,6 +24,12 @@
     "reward_accounted_vs_telemetry_only_status",
     "role_selection_state_owner",
     "opt_in_role_scoped_selection",
+    "role_specific_backend_pool_policy",
+    "role_specific_exploration_parameters",
+    "role_reward_normalization_report",
+    "role_outcome_attribution_dataset",
+    "async_role_work_queue_policy",
+    "cross_role_interference_analysis",
     "role_scheduler_state_snapshots",
     "scheduler_state_restore_validation",
     "runtime_llm_accounting_summary",
@@ -35,11 +41,17 @@
     "role_specific_budget_behavior_report"
   ],
   "missing_evidence": {
+    "role_specific_backend_pool_policy": "not_recorded_locally",
+    "role_specific_exploration_parameters": "global_ucb_coefficient_only",
+    "role_reward_normalization_report": "not_recorded_locally",
+    "role_outcome_attribution_dataset": "not_recorded_locally",
+    "async_role_work_queue_policy": "not_recorded_locally",
+    "cross_role_interference_analysis": "not_recorded_locally",
     "calibrated_role_reward_policy": "not_recorded_locally",
     "experiment_owned_quota_policy": "not_recorded_locally",
     "fast_strong_model_mix_report": "not_recorded_locally",
     "resume_replay_experiment_report": "not_recorded_locally",
     "role_specific_budget_behavior_report": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has configured role-backend indices, backend metadata role matching, configured reward-accounted roles, feedback-grader reward wiring, per-role logical call limits, role provider-attempt, token, configured-cost, and latency limits, scheduler-policy telemetry, reward-accounted versus telemetry-only status, role selection state-owner telemetry, opt-in role-scoped local UCB selection, role scheduler state snapshots, scheduler-state restore validation, runtime LLM accounting summaries, and LLM budget report role budgets. It does not claim calibrated role reward policy, experiment-owned quota policy, fast/strong model-mix reports, resume replay experiment reports, or role-specific budget behavior reports."
+  "claim_boundary": "This boundary records that LibreEvolve has configured role-backend indices, backend metadata role matching, configured reward-accounted roles, feedback-grader reward wiring, per-role logical call limits, role provider-attempt, token, configured-cost, and latency limits, scheduler-policy telemetry, reward-accounted versus telemetry-only status, role selection state-owner telemetry, opt-in role-scoped local UCB selection, role scheduler state snapshots, scheduler-state restore validation, runtime LLM accounting summaries, and LLM budget report role budgets. It does not claim role-specific backend-pool policy, role-specific exploration parameters, role reward normalization reports, role outcome-attribution datasets, async role work queues, cross-role interference analysis, calibrated role reward policy, experiment-owned quota policy, fast/strong model-mix reports, resume replay experiment reports, or role-specific budget behavior reports."
 }

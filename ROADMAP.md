@@ -1037,9 +1037,11 @@ resumed-trace proof are still open.
   critique, feedback grading, and meta-prompt mutation calls. The current
   sidecar `papers/llm_role_scheduler_boundary.json` preserves the local
   role-scoped UCB/runtime evidence boundary while keeping calibrated role
-  reward policy, experiment-owned quota policy, fast/strong model-mix reports,
-  resume replay experiment reports, and role-specific budget behavior reports
-  open.
+  reward policy, role-specific backend-pool policy, role-specific exploration
+  parameters, reward normalization reports, outcome-attribution datasets, async
+  role work queues, cross-role interference analysis, experiment-owned quota
+  policy, fast/strong model-mix reports, resume replay experiment reports, and
+  role-specific budget behavior reports open.
 - Extend current run-scoped call telemetry beyond provider usage, configured
   cost estimates, request ids, finish reasons, adapter-internal retry
   summaries, configured-pricing aggregate consistency checks, raw-payload

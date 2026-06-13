@@ -3023,6 +3023,7 @@ def test_validate_paper_manifest_rejects_existing_codebase_integration_boundary_
     record = paper_manifest.existing_codebase_integration_boundary_record()
     record["claim_ready"] = True
     record["source_section_ids"] = ["2.3"]
+    record["source_figure_ids"] = ["Figure 1"]
     sidecar = tmp_path / paper_manifest.EXISTING_CODEBASE_INTEGRATION_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -3032,6 +3033,7 @@ def test_validate_paper_manifest_rejects_existing_codebase_integration_boundary_
     assert report.ok is False
     assert "existing_codebase_integration_boundary_claim_ready_overclaim" in codes
     assert "existing_codebase_integration_boundary_invalid_source_section_ids" in codes
+    assert "existing_codebase_integration_boundary_invalid_source_figure_ids" in codes
 
 
 def test_validate_paper_manifest_requires_existing_codebase_boundary_at_repo_root(

@@ -13,6 +13,7 @@ EXISTING_CODEBASE_RUNTIME_REPORT_SCHEMA = "libreevolve.existing_codebase_integra
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_ID = "2.1"
 EXPECTED_SOURCE_SECTION_IDS = ("2.1",)
+EXPECTED_SOURCE_FIGURE_IDS = ("Figure 2", "Figure 3")
 EXPECTED_BOUNDARY_STATUS = "smoke_source_setup_fixture_recorded_missing_real_upstream"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "original_codebase_id",
@@ -63,7 +64,7 @@ def existing_codebase_integration_boundary_record() -> dict[str, Any]:
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_section_id": EXPECTED_SOURCE_SECTION_ID,
         "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
-        "source_figures": ["Figure 2", "Figure 3"],
+        "source_figure_ids": list(EXPECTED_SOURCE_FIGURE_IDS),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "runtime_report_status": (
             "runtime_workspace_marker_inventory_and_smoke_source_setup_metadata_available"
@@ -108,8 +109,8 @@ def validate_existing_codebase_integration_boundary(
         issues.append(_issue("invalid_source_section_id", "source_section_id must be 2.1"))
     if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
         issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['2.1']"))
-    if data.get("source_figures") != ["Figure 2", "Figure 3"]:
-        issues.append(_issue("invalid_source_figures", "source_figures must link Figure 2 and Figure 3"))
+    if data.get("source_figure_ids") != list(EXPECTED_SOURCE_FIGURE_IDS):
+        issues.append(_issue("invalid_source_figure_ids", "source_figure_ids must link Figure 2 and Figure 3"))
     status = data.get("boundary_status")
     if status != EXPECTED_BOUNDARY_STATUS:
         issues.append(_issue("invalid_boundary_status", f"boundary_status must be {EXPECTED_BOUNDARY_STATUS}"))

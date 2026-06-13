@@ -58,6 +58,11 @@ Important limits:
   benchmark summaries, or AlphaEvolve Table 1 code-scale parity; those
   boundaries are tracked by `papers/codebase_scale_benchmark_boundary.json`
   and `papers/candidate_language_runner_boundary.json`.
+- Table 1 capability-exhibit reports preserve FunSearch-versus-AlphaEvolve
+  row text, source location, rendered artifacts, row-to-gap mappings, and
+  implementation status, not validated parity for the individual code-scale,
+  language, evaluator, sample-count, model-scale, prompt-context, or
+  multi-metric capability rows.
 - Archive restore uses manifest archive-state snapshots plus accepted-history
   rows for current cursor/cell/elite contents; `archive_events.jsonl` replay is
   audit-only and not an ordered MAP-Elites restore engine. That boundary is

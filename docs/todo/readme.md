@@ -477,9 +477,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `runtime.history.alphaevolve_table1_capability_exhibit_report`, which
     records stable row ids, FunSearch/AlphaEvolve cell text, source
     PDF/caption location, row-to-gap mappings, rendered artifact hashes, and
-    row-level implementation status. README still presents the comparison as
-    exhibit provenance and status evidence, not validated Table 1 capability
-    parity.
+    row-level implementation status. README Important limits now presents the
+    comparison as exhibit provenance and status evidence, not validated Table 1
+    capability parity.
   - Required result: when individual Table 1 capability rows are satisfied,
     update README, ROADMAP, papers index, and code/paper TODOs together so
     README distinguishes the reproduced capability-comparison table from the

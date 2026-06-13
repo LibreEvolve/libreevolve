@@ -4,6 +4,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Table 1 capability-exhibit README boundary.
+  - Status: README Important limits now states that Table 1
+    capability-exhibit reports preserve FunSearch-versus-AlphaEvolve row text,
+    source location, rendered artifacts, row-to-gap mappings, and
+    implementation status, not validated parity for individual code-scale,
+    language, evaluator, sample-count, model-scale, prompt-context, or
+    multi-metric capability rows.
+  - Verification: focused runtime Table 1 capability-exhibit tests validate
+    the report, rendered artifacts, row mappings, and full-parity overclaim
+    guard.
+
 - [x] Document codebase-scale README boundary.
   - Status: README Important limits now states that codebase-scale reports are
     current-run workspace telemetry for retained file/line counts, generated

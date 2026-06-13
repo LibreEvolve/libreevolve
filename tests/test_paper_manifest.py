@@ -5316,6 +5316,7 @@ def test_validate_paper_manifest_rejects_cascade_hypothesis_test_boundary_drift(
     record = paper_manifest.cascade_hypothesis_test_boundary_record()
     record["claim_ready"] = True
     record["boundary_status"] = "benchmark_calibrated_hypothesis_cascade_ready"
+    record["source_section_ids"] = ["2.3"]
     record["missing_evidence"]["benchmark_calibrated_thresholds"] = "recorded"
     sidecar = tmp_path / paper_manifest.CASCADE_HYPOTHESIS_TEST_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
@@ -5326,6 +5327,7 @@ def test_validate_paper_manifest_rejects_cascade_hypothesis_test_boundary_drift(
     assert report.ok is False
     assert "cascade_hypothesis_test_boundary_claim_ready_overclaim" in codes
     assert "cascade_hypothesis_test_boundary_invalid_boundary_status" in codes
+    assert "cascade_hypothesis_test_boundary_invalid_source_section_ids" in codes
     assert (
         "cascade_hypothesis_test_boundary_invalid_missing_evidence_benchmark_calibrated_thresholds"
         in codes

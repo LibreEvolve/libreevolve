@@ -2,6 +2,9 @@
   "schema": "libreevolve.cascade_hypothesis_test_boundary.v1",
   "source_paper_id": "2506.13131",
   "source_section_id": "2.4",
+  "source_section_ids": [
+    "2.4"
+  ],
   "source_claim": "AlphaEvolve describes cascades as hypothesis testing where small-scale filters promote sufficiently promising candidates toward larger main-test cases",
   "boundary_status": "runtime_policy_gates_without_benchmark_calibrated_fixtures",
   "runtime_report_schema": "libreevolve.cascade_hypothesis_test_policy_report.v1",

@@ -20,6 +20,7 @@ def test_cascade_hypothesis_test_boundary_accepts_runtime_policy_boundary():
     assert validation.missing_evidence_count == 5
     assert boundary["schema"] == CASCADE_HYPOTHESIS_TEST_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
+    assert boundary["source_section_ids"] == ["2.4"]
     assert "does not claim benchmark-calibrated thresholds" in boundary["claim_boundary"]
 
 
@@ -27,6 +28,7 @@ def test_cascade_hypothesis_test_boundary_rejects_benchmark_ready_overclaim():
     boundary = cascade_hypothesis_test_boundary_record()
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "benchmark_calibrated_hypothesis_cascade_ready"
+    boundary["source_section_ids"] = ["2.3"]
     boundary["missing_evidence"]["benchmark_calibrated_thresholds"] = "recorded"
     boundary["required_evidence_fields"] = ["confidence_bound_evidence"]
 
@@ -36,6 +38,7 @@ def test_cascade_hypothesis_test_boundary_rejects_benchmark_ready_overclaim():
     assert validation.ok is False
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert "invalid_missing_evidence_benchmark_calibrated_thresholds" in codes
     assert "missing_required_evidence_field" in codes
 

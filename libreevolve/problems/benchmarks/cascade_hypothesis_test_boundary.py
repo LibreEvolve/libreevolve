@@ -11,6 +11,7 @@ CASCADE_HYPOTHESIS_TEST_BOUNDARY_SCHEMA = (
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_ID = "2.4"
+EXPECTED_SOURCE_SECTION_IDS = ("2.4",)
 EXPECTED_RUNTIME_REPORT_SCHEMA = (
     "libreevolve.cascade_hypothesis_test_policy_report.v1"
 )
@@ -68,6 +69,7 @@ def cascade_hypothesis_test_boundary_record() -> dict[str, Any]:
         "schema": CASCADE_HYPOTHESIS_TEST_BOUNDARY_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_section_id": EXPECTED_SOURCE_SECTION_ID,
+        "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_claim": (
             "AlphaEvolve describes cascades as hypothesis testing where "
             "small-scale filters promote sufficiently promising candidates "
@@ -109,6 +111,8 @@ def validate_cascade_hypothesis_test_boundary(
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     if data.get("source_section_id") != EXPECTED_SOURCE_SECTION_ID:
         issues.append(_issue("invalid_source_section_id", "source_section_id must be 2.4"))
+    if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['2.4']"))
     source_claim = data.get("source_claim")
     if (
         not isinstance(source_claim, str)

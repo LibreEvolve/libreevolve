@@ -2,6 +2,24 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive benchmark metric-range roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish the checked-in matrix smoke fixture's reachable inverse-count
+    normalization from real AlphaEvolve target/SOTA benchmark calibration.
+  - Current evidence: the `matrix_multiplication` example declares
+    `inverse_multiplications` as the primary metric with bounds `[0.0, 1.0]`;
+    focused example tests cover improvement ordering without clamped metric
+    diagnostics; shipped-example scope remains `alphaevolve_comparable: false`.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: benchmark-grade metric-range catalogs, target/SOTA baselines,
+    normalization-policy records, repeated-seed reports, and comparable
+    report-generation scripts for tensor, geometric, compiler, hardware,
+    kernel, scheduling, and systems fixtures.
+  - Verification: matrix smoke metric-bound tests, paper-manifest validation,
+    and checked-in paper-index TODO coverage still pass.
+
 - [x] Archive Appendix B.4 prior-construction similarity roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

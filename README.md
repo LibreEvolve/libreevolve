@@ -54,6 +54,10 @@ Important limits:
   exhaustive anti-gaming evidence, executable construction/certificate
   validators, target/SOTA baselines, Colab-equivalent Appendix B construction
   data, or verifier-code artifacts.
+- The checked-in `matrix_multiplication` example remains a 2x2 smoke fixture:
+  its primary inverse-count metric is normalized over the reachable `1/count`
+  range, but it does not provide target/SOTA catalogs, repeated-seed reports,
+  or AlphaEvolve-comparable tensor-decomposition benchmark evidence.
 - Matrix-publication evidence is one checked `mm_2x2x2` Strassen baseline
   bundle plus Appendix A registry/status metadata, not full-suite local target
   tensors, discovered decompositions, coefficient data, exactness

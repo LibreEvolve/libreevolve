@@ -1001,30 +1001,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README kissing-number wording scoped until Lemma 1 certificate
-      evidence exists.
-  - Spec evidence: AlphaEvolve Appendix B.11 derives the dimension-11 kissing
-    number lower bound of 593 from 593 nonzero integral-coordinate points plus
-    exact max-norm versus minimum-pairwise-distance condition and Lemma 1's
-    transformation into a valid kissing configuration.
-  - Current evidence: README now names the B.11 `kissing_result_boundary`,
-    including dimension, prior/reported lower bounds, 593-vector witness count,
-    coordinate domain, exact max-norm versus minimum-pairwise-distance
-    condition, Lemma 1 applicability, transformed sphere-center formula, and
-    required future vector/certificate fields. It still warns that the actual
-    593-vector payload, count/dimension certificates, norm/distance matrices,
-    exact max-norm certificate, max-norm witness vector, exact
-    minimum-pairwise-distance certificate, minimum-pair witness, strict
-    norm-distance inequality certificate, transformed-center and unit-sphere
-    certificates, kissing-angle certificate, and recomputed lower bound are
-    absent.
-  - Required result: when the actual Appendix B.11 vector payload and
-    certificates land, update README, ROADMAP, papers index, and code/paper
-    TODOs together so README distinguishes visual Appendix B construction
-    evidence from proof-grade kissing-number lower-bound verification with
-    count/dimension, matrix, strict-inequality, unit-sphere, and kissing-angle
-    evidence.
-
 - [ ] Keep README Appendix B.12-B.13 circle/rectangle wording scoped until
       sum-of-radii provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.12-B.13 reports three sum-of-radii

@@ -4,6 +4,25 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Appendix B.11 kissing-number README boundary.
+  - Status: README Important limits now states that Appendix B.11
+    kissing-number proof provenance remains absent: the registry preserves
+    dimension `11`, prior lower bound `592`, reported lower bound `593`, the
+    593 nonzero integral-coordinate witness count, the max-norm versus
+    minimum-pairwise-distance condition, Lemma 1, and the `{2 x / ||x||}`
+    sphere-center transform, not a 593-vector payload hash, count/dimension or
+    exact-coordinate certificates, norm and pairwise-distance matrix
+    artifacts, exact max-norm or minimum-pairwise-distance certificates,
+    witness vectors/pairs, strict norm-distance inequality proof, Lemma 1
+    applicability certificate, transformed-center and unit-sphere
+    certificates, kissing-angle certificate, or recomputed lower-bound row.
+  - Verification: Appendix B registry tests cover the B.11
+    `kissing_result_boundary`, required future vector/norm/distance/Lemma
+    certificate fields, the 593-vector missing-witness row, lower-bound
+    improvement direction, and `not_recorded_locally` overclaim guards; code
+    and paper TODOs still track the missing vector/certificate/recomputation
+    artifacts.
+
 - [x] Document Appendix B.9-B.10 Heilbronn README boundary.
   - Status: README Important limits now states that Appendix B.9-B.10
     Heilbronn minimum-area provenance remains absent: the registry preserves

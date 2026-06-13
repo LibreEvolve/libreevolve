@@ -2,6 +2,20 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive candidate-abstraction roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
+    `papers/README.md` already describe the current Python-primary
+    code-file-set candidate abstraction, the
+    `runtime.history.candidate_abstraction_choice_report`, and
+    `papers/candidate_abstraction_boundary.json` while keeping
+    AlphaEvolve-style problem-defined abstraction-selection fidelity false.
+  - Remaining guard: problem-level abstraction rationale,
+    symmetry/structure assumptions, typed abstraction hooks, paired
+    solution/search support, and equal-budget abstraction comparisons remain
+    active in `docs/todo/code.md` and `docs/todo/papers.md`.
+  - Verification: candidate-abstraction boundary and paper-manifest
+    validation continue to reject premature abstraction-selection claims.
+
 - [x] Archive evolve-block integration roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
     `papers/README.md` already describe current Python evolve-block marker

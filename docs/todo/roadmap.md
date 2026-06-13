@@ -6,36 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Keep candidate-abstraction roadmap wording scoped beyond the current
-      abstraction-choice report.
-  - Spec evidence: AlphaEvolve Section 2.1 and Discussion treat candidate
-    abstraction as a problem-dependent experimental choice with known biases:
-    direct solution search, constructor functions, bespoke search algorithms,
-    or paired intermediate solution/search representations can suit different
-    problem structures. In the local PDF, page 5 names "Flexibility in choosing
-    the abstraction" and page 21 states that direct search, constructors, and
-    search algorithms bring different biases.
-  - Current evidence: `ROADMAP.md` asks for problem-defined candidate
-    abstraction hooks and README identifies the current code-file-set
-    abstraction boundary. Current manifests also record
-    `policies.candidate_language` as `python_primary_text_workspace_v1`,
-    `bounded_utf8_text_workspace_with_typed_static_members`,
-    `language_runner_ready: False`, and
-    `problem_defined_solution_abstractions: unsupported`. Completed manifests
-    now include `runtime.history.candidate_abstraction_choice_report`, which
-    records the selected code-file-set abstraction, policy/runner linkage,
-    unsupported constructor/search/paired alternatives, runtime workspace
-    shape, and remaining bias/equal-budget evidence gaps. ROADMAP now also
-    names `papers/candidate_abstraction_boundary.json` as the committed
-    paper-manifest-validated current absence boundary for problem-defined
-    candidate abstractions and bias-comparison evidence.
-  - Required result: when rationale fields, symmetry/structure labels, typed
-    candidate-abstraction hooks, paired solution/search support, or
-    equal-budget abstraction-comparison reports land, update ROADMAP, README,
-    papers index, and code/paper TODOs together so roadmap language does not
-    confuse the partial report with AlphaEvolve-style abstraction-selection
-    evidence.
-
 - [ ] Keep roadmap mutation-mode wording scoped to configured modes versus
       adaptive AlphaEvolve-style output contracts.
   - Spec evidence: AlphaEvolve Section 2.3 chooses SEARCH/REPLACE diffs for

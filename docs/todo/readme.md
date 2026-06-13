@@ -1001,32 +1001,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README Appendix B.9-B.10 Heilbronn wording scoped until
-      minimum-area provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B.9-B.10 reports three Heilbronn
-    improvements: `n = 11` points in a unit-area triangle improve the minimum
-    triangle area from `0.036` to greater than `0.0365`; `n = 13` points in a
-    unit-area convex region improve `0.0306` to `0.0309`; and `n = 14` points
-    in a unit-area convex region improve `0.0277` to `0.0278`.
-  - Current evidence: README now names B.9-B.10
-    `heilbronn_result_boundary` entries for the three `n` values, domains,
-    prior and reported values, comparison policies, Figure 13 panel links, and
-    required future point/domain/certificate fields plus Figure 13 panel
-    artifact path/hash fields. It still warns that `figure_panel_artifact_status`
-    is `not_recorded_locally` and that the actual coordinate payloads, domain
-    artifacts, unit-area proofs, convexity proofs, triple-count enumeration
-    certificates, all-triples certificates, minimum-witness-triangle
-    certificates, reported-value comparison certificates, recomputed minimum
-    areas, and panel artifacts are absent.
-  - Required result: when the actual Appendix B.9-B.10 Heilbronn payloads and
-    certificates land, update README, ROADMAP, papers index, and code/paper
-    TODOs together so README names point/domain artifact hashes, unit-area and
-    convexity certificates, triple-count enumeration certificates,
-    all-triples minimum-area certificates, minimum-witness-triangle
-    certificates, reported-value comparison certificates, recomputed values,
-    Figure 13 panel artifacts, and source links without merging them into one
-    generic Heilbronn claim.
-
 - [ ] Keep README kissing-number wording scoped until Lemma 1 certificate
       evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.11 derives the dimension-11 kissing

@@ -15,6 +15,7 @@ DISTRIBUTED_PIPELINE_RUNTIME_REPORT_SCHEMA = (
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_BOUNDARY_STATUS = "single_process_synchronous_topology"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
+    "asyncio_runtime_identity",
     "controller_node_identity",
     "program_database_node_identity",
     "llm_sampler_node_identity",
@@ -27,6 +28,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "async_topology_claim_readiness",
 )
 EXPECTED_MISSING_EVIDENCE = {
+    "python_asyncio_runtime": "not_recorded_locally",
     "async_controller_queues": "not_recorded_locally",
     "queue_capacity_records": "not_recorded_locally",
     "nonblocking_dependency_graph": "not_recorded_locally",
@@ -60,7 +62,7 @@ def distributed_pipeline_topology_boundary_record() -> dict[str, Any]:
         "runtime_report_schema": DISTRIBUTED_PIPELINE_RUNTIME_REPORT_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_claim": (
-            "AlphaEvolve Section 2.6 describes an asynchronous controller, "
+            "AlphaEvolve Section 2.6 describes a Python asyncio asynchronous controller, "
             "LLM-sampler, and evaluator-node pipeline optimized for throughput "
             "with computations that can block on unfinished dependencies"
         ),
@@ -75,10 +77,10 @@ def distributed_pipeline_topology_boundary_record() -> dict[str, Any]:
             "configured LLM sampler nodes, evaluator nodes, zero queues, "
             "blocking dependency edges, synchronous dispatch, runtime-budget "
             "linkage, and unsupported pending-work checkpoints, but does not "
-            "claim AlphaEvolve-style async controller queues, queue capacities, "
-            "nonblocking dependency graphs, distributed sampler/evaluator "
-            "worker nodes, throughput dispatch telemetry, or pending-work "
-            "checkpoint state."
+            "claim AlphaEvolve-style Python asyncio runtime identity, async "
+            "controller queues, queue capacities, nonblocking dependency "
+            "graphs, distributed sampler/evaluator worker nodes, throughput "
+            "dispatch telemetry, or pending-work checkpoint state."
         ),
     }
 

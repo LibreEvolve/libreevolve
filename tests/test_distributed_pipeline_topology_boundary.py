@@ -13,10 +13,10 @@ def test_distributed_pipeline_topology_boundary_accepts_absence_record():
 
     assert validation.ok is True
     assert validation.boundary_status == "single_process_synchronous_topology"
-    assert validation.required_evidence_field_count == 10
-    assert validation.missing_evidence_count == 7
+    assert validation.required_evidence_field_count == 11
+    assert validation.missing_evidence_count == 8
     assert boundary["schema"] == DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_SCHEMA
-    assert "does not claim AlphaEvolve-style async" in boundary["claim_boundary"]
+    assert "does not claim AlphaEvolve-style Python asyncio" in boundary["claim_boundary"]
 
 
 def test_distributed_pipeline_topology_boundary_rejects_premature_topology_claim():
@@ -44,5 +44,5 @@ def test_render_distributed_pipeline_topology_boundary_summary_reports_shape():
     assert "AlphaEvolve distributed-pipeline topology boundary" in summary
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | single_process_synchronous_topology |" in summary
-    assert "| required_evidence_field_count | 10 |" in summary
-    assert "| missing_evidence_count | 7 |" in summary
+    assert "| required_evidence_field_count | 11 |" in summary
+    assert "| missing_evidence_count | 8 |" in summary

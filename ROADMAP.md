@@ -939,7 +939,9 @@ is not yet an AlphaEvolve reproduction.
   the current loop reports its synchronous topology under
   `runtime.history.distributed_pipeline_topology_report`, with
   `papers/distributed_pipeline_topology_boundary.json` preserving the
-  paper-facing single-process synchronous-topology absence boundary. It
+  paper-facing single-process synchronous-topology absence boundary, including
+  the missing Python `asyncio` runtime identity required by AlphaEvolve Section
+  2.6. It
   supports sequential `proposals_per_generation` batches plus opt-in local
   `eval_stages[].sample_workers` fan-out for configured-stage samples, but not
   concurrent proposal/evaluation queues. Completed manifests also expose

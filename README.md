@@ -47,7 +47,7 @@ Important limits:
   row does not mean the paper's method or results are implemented.
 - Evaluators run in local subprocesses, not hardened security sandboxes.
 - The controller, archive, migration, and evaluator flow are local and
-  synchronous, not a distributed asynchronous AlphaEvolve service.
+  synchronous, not a distributed Python `asyncio` AlphaEvolve service.
 - Candidate execution is Python-primary. Non-Python files can be workspace
   members, metadata-only runner/build declarations can be recorded, and the
   current Python runner links to bounded environment provenance, but

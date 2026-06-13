@@ -319,11 +319,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     component-to-TODO links for the remaining process gaps.
   - Current gap: paper-facing evidence still lacks exact source-diagram
     layout reproduction, AlphaEvolve-style async controller/sampler/evaluator
-    implementation, and independent evaluator-pool implementation strong enough
-    to treat the local mapping as full reproduced AlphaEvolve architecture
-    evidence.
+    implementation with Python `asyncio` runtime identity, and independent
+    evaluator-pool implementation strong enough to treat the local mapping as
+    full reproduced AlphaEvolve architecture evidence.
   - Required result: add exact source diagram layout reproduction, async
-    topology implementation evidence, independent evaluator-pool
+    topology implementation evidence including Python `asyncio` runtime
+    identity, independent evaluator-pool
     implementation evidence, and README/ROADMAP wording that separates local
     workflow diagrams, generated Mermaid artifacts, artifact-link records, row
     summaries, semantic candidate traces, source-text evidence, and

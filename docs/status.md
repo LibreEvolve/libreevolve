@@ -35,9 +35,10 @@ Important limits:
   `runtime.history.distributed_pipeline_topology_report`, naming the current
   single-process controller, in-process database, configured LLM sampler
   backends, local evaluator nodes, zero queues, blocking dependency edges, and
-  runtime-budget linkage. It keeps AlphaEvolve Section 2.6 async pipeline
-  parity false; `papers/distributed_pipeline_topology_boundary.json` preserves
-  the same single-process synchronous-topology absence boundary.
+  runtime-budget linkage. It keeps AlphaEvolve Section 2.6 Python `asyncio`
+  pipeline parity false; `papers/distributed_pipeline_topology_boundary.json`
+  preserves the same single-process synchronous-topology absence boundary,
+  including the missing asyncio runtime identity.
 - Built-in provider adapters are OpenAI, Anthropic, and Ollama. Custom
   import-path backends can wrap other services, but Google/Gemini is not a
   first-class provider yet, so AlphaEvolve's Gemini 2.0 Flash/Gemini 2.0 Pro

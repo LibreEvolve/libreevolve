@@ -6,25 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Keep evaluator-workload roadmap wording scoped until inner-search and
-      ML-training execution contracts exist.
-  - Spec evidence: AlphaEvolve Section 2.1 says the evaluator can perform a
-    simple property check, run an evolved search algorithm, or train and
-    evaluate a machine-learning model before returning scalar metrics.
-  - Current evidence: ROADMAP now cites configured-stage workload declarations
-    for `simple_check`, `inner_search`, `ml_training`, and `custom`, validated
-    dataset/budget/checkpoint/score-field metadata, validator-visible
-    `stage["workload"]`, and aggregation under
-    `runtime.history.evaluator_workload_report`. The near-term roadmap still
-    cites runtime dataset-digest, score-field, artifact-evidence, and
-    protocol-readiness boundaries, and still requires workload-specific
-    execution contracts before broader claims.
-  - Required result: when executable workload-specific training/search
-    contracts land, update ROADMAP, README, papers index, and code/paper TODOs
-    together so roadmap wording distinguishes declarative workload provenance
-    from AlphaEvolve-style evaluator workloads that actually perform
-    substantial search or model training.
-
 - [ ] Keep roadmap validator-boundary consistency gate scoped to CLI artifact
       validation until promotion/finalization enforcement exists.
   - Spec evidence: AlphaEvolve-scale evaluator provenance should let a reader

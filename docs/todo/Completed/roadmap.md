@@ -236,6 +236,22 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     parity remain open in code/paper evidence rather than this stale roadmap
     wording task.
 
+- [x] Archive stale active roadmap evaluator-workload wording TODO.
+  - Status: the active roadmap TODO for scoping evaluator-workload wording was
+    stale. `ROADMAP.md`, README, and `papers/README.md` already describe
+    configured `simple_check`, `inner_search`, `ml_training`, and `custom`
+    workload declarations, validator-visible `stage["workload"]` metadata,
+    dataset/budget/checkpoint/score-field validation, runtime
+    dataset/score-field/artifact readiness evidence, managed-runner overclaim
+    guards, and aggregation under
+    `runtime.history.evaluator_workload_report`.
+  - Verification: `tests/core/test_loop.py` validates
+    `libreevolve.evaluator_workload_report.v1` and rejects workload-protocol
+    overclaims. The remaining managed inner-search/ML-training runners,
+    checkpoint-completeness checks, score-field-to-artifact causality, and
+    stochastic re-evaluation policy remain active in code and paper TODO
+    evidence rather than this stale roadmap wording task.
+
 - [x] Emit embedded evaluator Figure 3 boundary sidecar for roadmap evidence.
   - Status: `papers/embedded_evaluator_boundary.json` now lets roadmap wording
     point to a committed absence boundary for skeleton invocation traces,

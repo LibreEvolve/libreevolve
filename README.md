@@ -75,6 +75,16 @@ Important limits:
   Qwen3-Coder-30B versus GEMINI-2.5 quality-cost report, or recommended
   hyperparameter evidence; `papers/codeevolve_boundary.json` records that
   absence boundary.
+- ThetaEvolve coverage is test-time-training inspiration only: LibreEvolve's
+  `ttt_rl` support writes clipped-reward JSONL examples and does not implement
+  a ThetaEvolve dynamic environment, single-LLM training runtime, large program
+  database scaling report, batch parent/response sampling, early-check penalty
+  schema, lazy penalties, reward shaping, online GRPO/RL training, asymmetric
+  clipping configuration, checkpoint lifecycle, trained-checkpoint inference,
+  transfer/generalization report, concurrent verifier throughput,
+  SGLang/vLLM throughput report, AlphaEvolve/ShinkaEvolve/OpenEvolve
+  comparison rows, open-problem benchmark rows, or database/reward ablations;
+  `papers/thetaevolve_boundary.json` records that absence boundary.
 - The examples are smoke fixtures and small demos unless a fixture documents
   stronger benchmark evidence.
 - Benchmark-hardening records and shipped-example scope validate smoke-scope

@@ -2,6 +2,33 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive ThetaEvolve test-time learning roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/thetaevolve_boundary.json` now keep arXiv `2511.23473`
+    source-scoped as test-time-training inspiration rather than implemented
+    ThetaEvolve dynamic-environment or GRPO/RL parity.
+  - Current evidence: the cached paper and boundary JSON record ThetaEvolve
+    source identity, arXiv v1 metadata, CC-BY license, linked code URL,
+    dynamic environment, single-LLM runtime, large program database context,
+    batch parent/response sampling, early checks, lazy penalties, reward
+    shaping, GRPO/RL training, checkpoint lifecycle, trained-checkpoint
+    inference, transfer/generalization context, concurrent verifier
+    throughput, SGLang/vLLM context, and AlphaEvolve/ShinkaEvolve/OpenEvolve
+    benchmark-comparison context.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: dynamic-environment schemas, batch sampling, early-check and
+    lazy-penalty schemas, reward shaping, GRPO/RL run telemetry, asymmetric
+    clipping configuration, checkpoint artifacts, trained-checkpoint
+    inference reports, transfer/generalization reports, generated-sample and
+    compute-budget telemetry, concurrent verifier telemetry, throughput rows,
+    evaluator caveats, benchmark rows, database/reward ablations, linked-code
+    status, and separation from the bounded `ttt_rl` export.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive CodeEvolve operator and benchmark roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

@@ -6,34 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Keep workspace-topology roadmap scope aligned with current
-      materialization diagnostics.
-  - Spec evidence: AlphaEvolve-style codebase evolution should turn invalid
-    generated artifacts into stable evaluator feedback instead of opaque local
-    filesystem failures, especially as program artifacts and runners become
-    broader than the current local workspace. The AlphaEvolve PDF describes
-    evolving multiple codebase components on page 4, larger-codebase diff
-    sequences on page 7, and entire-codebase evolution on pages 18-19.
-  - Current evidence: `ROADMAP.md` currently names workspace file topology
-    mutations for create/edit/delete/move/rename and primary-file changes, and
-    its near-term workspace section asks to keep topology-operation collision
-    policy and structured materialization-failure diagnostics complete as new
-    workspace, language, and build-runner edge cases are introduced. Code and
-    paper TODO evidence already scope the implemented coverage to current
-    `CandidateMaterializationError` reason/path diagnostics, bounded
-    `materialization_error` metadata, link/junction rejection, static
-    source-copy verification, topology command prevalidation, and prompt
-    rendering controls for selected materialization-error fields. That coverage
-    is still local-workspace oriented and should not be presented as complete
-    for arbitrary language runners, build outputs, dependency manifests, or
-    remote/containerized execution surfaces.
-  - Required result: when future topology surfaces such as bulk directory
-    operations, language/build-runner generated artifacts, external
-    materialization paths, or richer artifact runners land, update the roadmap,
-    README, papers index, and code/paper TODO entries together so roadmap
-    wording neither underclaims current structured invalid-workspace feedback
-    nor overclaims AlphaEvolve-grade codebase-scale diagnostics.
-
 - [ ] Keep roadmap code-scale wording scoped to benchmark-backed evidence.
   - Spec evidence: AlphaEvolve Table 1 says AlphaEvolve evolves entire code
     files, hundreds of lines of code, arbitrary languages, and complex

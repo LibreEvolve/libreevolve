@@ -2,6 +2,24 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive workspace-topology roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
+    `papers/README.md` already describe local file-workspace topology
+    mutations, structured materialization diagnostics, prompt-visible
+    `materialization_error` summaries, and the boundary against
+    arbitrary-language/build-runner artifacts, dependency graphs, bulk
+    directory operations, remote/container workspaces, and codebase-scale
+    workspace parity.
+  - Remaining guard: future bulk directory operations, build-runner generated
+    artifacts, portable copied-static source identities, dependency manifests,
+    remote/containerized materialization roots, and preservation of stable
+    `CandidateMaterializationError` reason/path contracts remain active in
+    `docs/todo/code.md` and `docs/todo/papers.md`.
+  - Verification: focused candidate/evaluator/prompt tests cover the current
+    local materialization diagnostic contract, and paper-manifest validation
+    continues to preserve the broader code-scale and language-runner absence
+    boundaries.
+
 - [x] Archive collaborator-feedback roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
     `papers/README.md` already describe optional

@@ -54,8 +54,9 @@ Important limits:
   arbitrary-language runners and build-system runners are not implemented.
 - Candidate abstractions are code-file/workspace based; problem-defined direct
   solution objects, constructor-function search, bespoke search-algorithm
-  candidates, and paired solution/search representations are tracked as missing
-  AlphaEvolve-style work.
+  candidates, paired solution/search representations, abstraction-specific
+  prompts/validators/archive descriptors, migration policies, and equal-budget
+  cross-abstraction reports are tracked as missing AlphaEvolve-style work.
 - Built-in provider adapters are OpenAI, Anthropic, and Ollama. Google/Gemini
   parity is tracked as missing work.
 - The included examples are smoke fixtures unless they explicitly document

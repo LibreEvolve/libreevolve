@@ -383,11 +383,15 @@ sidecars, tests, and active TODOs.
     problem-structure rationale fields, symmetry assumptions, expected bias
     directions, representation/runner contract status, and comparison axes.
   - Required result: add problem-level abstraction rationale,
-    symmetry/structure assumptions, typed problem-defined candidate
-    abstraction hooks, paired solution/search representations when supported,
-    and benchmark reports comparing direct-solution, constructor, and
-    search-algorithm approaches under equal budgets before claiming
-    AlphaEvolve-style abstraction selection fidelity.
+    problem-declared abstraction schema, symmetry/structure assumptions,
+    typed problem-defined candidate abstraction hooks for direct-solution,
+    constructor-function, bespoke-search, and paired solution/search families,
+    abstraction-specific prompt templates, validator contracts, archive
+    descriptor mappings, migration policy, paired solution/search
+    representations when supported, and benchmark reports comparing
+    direct-solution, constructor, search-algorithm, and paired approaches
+    under equal budgets before claiming AlphaEvolve-style abstraction
+    selection fidelity.
 
 - [ ] Add structured initial-program idea provenance for benchmark seeds.
   - Spec evidence: AlphaEvolve Section 2.1 says the human provides the initial

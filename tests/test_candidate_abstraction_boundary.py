@@ -15,10 +15,15 @@ def test_candidate_abstraction_boundary_accepts_absence_record():
     assert validation.boundary_status == "not_configured_as_problem_defined_abstractions"
     assert validation.selected_abstraction == "code_file_set"
     assert validation.abstraction_option_count == 4
-    assert validation.required_evidence_field_count == 10
-    assert validation.missing_evidence_count == 6
+    assert validation.required_evidence_field_count == 21
+    assert validation.missing_evidence_count == 17
     assert boundary["schema"] == CANDIDATE_ABSTRACTION_BOUNDARY_SCHEMA
     assert boundary["source_section_ids"] == ["2.1", "Discussion"]
+    assert "constructor_function_abstraction_api" in boundary["required_evidence_fields"]
+    assert (
+        boundary["missing_evidence"]["abstraction_specific_validator_contracts"]
+        == "not_configured"
+    )
     assert "does not claim AlphaEvolve-style problem-defined candidate abstractions" in (
         boundary["claim_boundary"]
     )
@@ -32,6 +37,7 @@ def test_candidate_abstraction_boundary_rejects_premature_parity_claim():
     boundary["abstraction_options"][1]["typed_abstraction_api"] = "configured"
     boundary["abstraction_options"][1]["bias_evidence"] = "recorded"
     boundary["missing_evidence"]["benchmark_bias_report"] = "recorded"
+    boundary["missing_evidence"]["constructor_function_abstraction_api"] = "configured"
 
     validation = validate_candidate_abstraction_boundary(boundary)
     codes = {issue.code for issue in validation.issues}
@@ -43,6 +49,7 @@ def test_candidate_abstraction_boundary_rejects_premature_parity_claim():
     assert "typed_abstraction_api_overclaim" in codes
     assert "bias_evidence_overclaim" in codes
     assert "invalid_missing_evidence_benchmark_bias_report" in codes
+    assert "invalid_missing_evidence_constructor_function_abstraction_api" in codes
 
 
 def test_render_candidate_abstraction_boundary_summary_reports_shape():
@@ -55,3 +62,5 @@ def test_render_candidate_abstraction_boundary_summary_reports_shape():
     assert "| boundary_status | not_configured_as_problem_defined_abstractions |" in summary
     assert "| selected_abstraction | code_file_set |" in summary
     assert "| abstraction_option_count | 4 |" in summary
+    assert "| required_evidence_field_count | 21 |" in summary
+    assert "| missing_evidence_count | 17 |" in summary

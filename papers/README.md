@@ -1545,8 +1545,10 @@ LibreEvolve's code-file-set abstraction as a current divergence, but Section
 constructor functions, bespoke search algorithms, and paired solution/search
 representations, with different biases for symmetric and non-symmetric
 problems. The committed candidate-abstraction sidecar preserves this absence
-boundary; LibreEvolve still needs benchmark metadata and equal-budget reports
-that justify and compare those abstraction choices.
+boundary across per-abstraction APIs, selection policy, prompts, validators,
+archive descriptor mapping, migration, and paired solution/search support;
+LibreEvolve still needs benchmark metadata and equal-budget reports that
+justify and compare those abstraction choices.
 
 Code-scale evidence is separate from workspace mechanics. AlphaEvolve Table 1
 reports evolving entire code files, hundreds of lines, arbitrary languages, and

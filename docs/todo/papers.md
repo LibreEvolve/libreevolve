@@ -813,14 +813,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     expected symmetry/bias directions, representation/runner contract status,
     and equal-budget comparison fields.
   - Current gap: paper-facing evidence still lacks problem structure
-    rationale populated for actual benchmarks, typed problem-defined
-    abstraction hooks, paired solution/search support, or executed
-    equal-budget comparisons across direct-solution, constructor-function, and
-    search-algorithm formulations.
+    rationale populated for actual benchmarks, a problem-declared abstraction
+    schema, typed problem-defined abstraction APIs for direct-solution,
+    constructor-function, bespoke-search, and paired solution/search
+    formulations, abstraction-specific prompt templates, validator contracts,
+    archive descriptor mappings, migration policy, paired solution/search
+    support, or executed equal-budget comparisons across abstraction
+    formulations.
   - Required result: add benchmark metadata for candidate abstraction family,
-    rationale, expected problem bias, paired solution/search linkage, and
-    comparable results for alternative abstractions before claiming
-    AlphaEvolve-style abstraction-selection evidence.
+    rationale, expected problem bias, prompt/validator/archive descriptor
+    contracts, paired solution/search linkage, migration rules, and comparable
+    results for alternative abstractions before claiming AlphaEvolve-style
+    abstraction-selection evidence.
 
 - [ ] Populate early-user and collaborator feedback provenance as paper
       evidence.

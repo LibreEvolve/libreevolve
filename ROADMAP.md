@@ -429,8 +429,10 @@ LibreEvolve has:
   unsupported constructor/search/paired alternatives, with
   `papers/candidate_abstraction_boundary.json` now carrying the
   paper-manifest-validated absence boundary for abstraction rationale,
-  symmetry/bias evidence, problem-defined abstraction hooks, paired
-  representations, and equal-budget abstraction comparisons, while
+  per-abstraction APIs, selection policy, abstraction-specific prompts,
+  validators, archive descriptor mappings, migration policy, symmetry/bias
+  evidence, problem-defined abstraction hooks, paired representations, and
+  equal-budget abstraction comparisons, while
   `papers/candidate_abstraction_bias_matrix.json` records a design-level
   abstraction-family bias matrix without executed benchmark results
 - local run-budget stop accounting for generations, evaluations,
@@ -458,7 +460,9 @@ is not yet an AlphaEvolve reproduction.
 - Extend candidate-abstraction reports beyond the current design matrix with
   benchmark metadata that records why a direct-solution,
   constructor-function, or search-algorithm formulation was chosen for an
-  actual problem and how alternatives performed under comparable budgets.
+  actual problem, which abstraction-specific prompts, validators, archive
+  descriptors, and migration policies were used, and how alternatives
+  performed under comparable budgets.
 - Add language-aware evolve-block marker grammars if non-Python workspace files
   should preserve skeleton regions; the current boundary rejects marker-like
   declarations in non-`.py` files instead of treating them as unmarked full-file

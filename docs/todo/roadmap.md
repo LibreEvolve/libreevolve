@@ -10,49 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement global NLP solver comparator gates beyond source-boundary
-      roadmap promotion.
-  - Spec evidence: arXiv `2601.05943`, submitted January 9, 2026, introduces
-    `Global Optimization for Combinatorial Geometry Problems`. The abstract
-    frames AlphaEvolve's geometric/combinatorial discoveries as a benchmark
-    for modern off-the-shelf global optimization solvers, reformulates a
-    subset of those problems as nonlinear optimization problems, evaluates
-    FICO Xpress and SCIP without solver modifications, and reports reproduced
-    and sometimes improved best-known solutions including recent LLM-driven
-    results. The body covers min-max distance ratio, square/rectangle circle
-    packing, and regular-hexagon packing with explicit nonlinear
-    formulations, Mosel implementations, squared-distance QCPs, and Farkas-
-    multiplier separation for hexagon non-overlap.
-  - Current evidence: ROADMAP and `papers/global_nlp_optimization_boundary.json`
-    now keep `2601.05943` source-scoped as potential-future-benchmark status
-    until local solver artifacts exist. ROADMAP still does not define a direct NLP
-    formulation gate, Xpress/SCIP runner abstraction, solver license/status
-    handling, selected benchmark subset, solver parameter/time-limit policy,
-    incumbent/bound/certificate artifact records, numerical tolerance policy,
-    or side-by-side result table versus AlphaEvolve and literature baselines.
-    It also lacks gates for Mosel/exported model artifacts, AlphaEvolve
-    validation-code outputs, Table 1-3 value rows, rounding policy, source-link
-    provenance for prior packing data and OpenEvolve/SciPy/SCIP, commercial
-    Xpress availability handling, solver-attribution caveats, and dual-bound
-    reporting expectations.
-  - Required result: add roadmap gates for `2601.05943`: paper/source
-    manifest entry, PDF/cache hash, source-license and code-artifact status,
-    selected AlphaEvolve benchmark subset, NLP formulation schema,
-    variable/domain/constraint/objective records, FICO Xpress and SCIP solver
-    identity/version/license records, solver parameter and resource-limit
-    metadata, incumbent/bound/certificate artifacts, numerical tolerance
-    policy, prior-literature and AlphaEvolve baseline values,
-    reproduced/improved/fell-behind outcome rows, seed/run records,
-    independent checker outputs, and a background-only or benchmark-fixture
-    status rule so roadmap claims do not outpace local global-NLP solver
-    comparison support. Roadmap promotion should additionally require per-
-    family distance-ratio/circle/hexagon formulation fixtures, solver logs,
-    primal incumbent and optional dual-bound records, AlphaEvolve/literature
-    baseline citations, AlphaEvolve repository validation artifacts, Table 1-3
-    reproduction reports, license/reproducibility status, and documentation
-    that direct NLP solver baselines complement but do not implement
-    AlphaEvolve's LLM evolutionary-search mechanism.
-
 - [ ] Implement post-AlphaEvolve autoconvolution improvement gates beyond
       source-boundary roadmap promotion.
   - Spec evidence: arXiv `2506.16750`, submitted June 20, 2025 and last

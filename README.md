@@ -384,6 +384,17 @@ Important limits:
   provenance, public artifact hash, finite-test versus general-proof status,
   or independent checker output; `papers/bruhat_intervals_boundary.json`
   records that absence boundary.
+- Global NLP Optimization coverage is direct-solver comparator context only:
+  LibreEvolve has no nonlinear-optimization formulation schema, Mosel model
+  artifact, min-max distance-ratio fixture, square or perimeter-4 rectangle
+  circle-packing fixture, unit-hexagon packing fixture, Farkas non-overlap
+  certificate, FICO Xpress or SCIP runner, solver identity/version/license
+  record, solver parameter or time-limit record, incumbent/bound/certificate
+  artifact, numerical tolerance and rounding policy, AlphaEvolve validation-
+  code output, Table 1-3 reproduction row, solver log, solver-attribution
+  evidence, dual-bound improvement record, or independent checker output;
+  `papers/global_nlp_optimization_boundary.json` records that absence
+  boundary.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

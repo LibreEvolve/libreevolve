@@ -2,6 +2,33 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Global NLP Optimization roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/global_nlp_optimization_boundary.json` now keep arXiv
+    `2601.05943` source-scoped as direct solver comparator context rather than
+    implemented LibreEvolve global-NLP solver-comparison support.
+  - Current evidence: the cached paper and boundary JSON record selected
+    min-max distance-ratio, square/rectangle circle-packing, and regular
+    hexagon-packing benchmark families; direct NLP formulations; Mosel models;
+    nonconvex QCP and Farkas non-overlap formulations; FICO Xpress and SCIP
+    solver usage; solver identity/license/version requirements; AlphaEvolve
+    validation-code use; Table 1 distance-ratio rows, Table 2 circle-packing
+    rows, and Table 3 hexagon-packing rows; rounding policies; source links
+    for prior packing data and OpenEvolve/SciPy/SCIP; solver-attribution
+    caveats; and the paper's lack of detailed dual-bound discussion.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: NLP formulation schemas, Mosel artifacts, Xpress/SCIP runners,
+    solver license/version records, solver parameter and time-limit records,
+    incumbent/bound/certificate artifacts, numerical tolerance and rounding
+    policies, AlphaEvolve validation-code outputs, Table 1-3 reproduction
+    rows, solver logs, solver-attribution evidence, dual-bound improvement
+    records, and independent checker outputs.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive Bruhat Intervals roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

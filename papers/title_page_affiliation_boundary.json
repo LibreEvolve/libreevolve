@@ -2,6 +2,9 @@
   "schema": "libreevolve.alphaevolve_title_page_affiliation_boundary.v1",
   "runtime_report_schema": "libreevolve.title_page_affiliation_report.v1",
   "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "title_page"
+  ],
   "source_claim": "AlphaEvolve title page page 1 records the Google DeepMind affiliation footnote, equal-contribution footnote, and source rights linkage used as publication metadata",
   "boundary_status": "title_page_affiliation_claim_ready",
   "runtime_report_status": "title_page_affiliation_report_available",

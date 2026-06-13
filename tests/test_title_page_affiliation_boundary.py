@@ -17,6 +17,7 @@ def test_title_page_affiliation_boundary_accepts_claim_ready_record():
     assert validation.excluded_claim_count == 6
     assert boundary["schema"] == TITLE_PAGE_AFFILIATION_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is True
+    assert boundary["source_section_ids"] == ["title_page"]
     assert boundary["source_pages"] == [1]
     assert boundary["affiliation_organization"] == "Google DeepMind"
     assert "does not claim local LibreEvolve affiliation" in boundary["claim_boundary"]
@@ -26,6 +27,7 @@ def test_title_page_affiliation_boundary_rejects_scope_drift():
     boundary = title_page_affiliation_boundary_record()
     boundary["claim_ready"] = False
     boundary["boundary_status"] = "local_affiliation_ready"
+    boundary["source_section_ids"] = ["Acknowledgements"]
     boundary["excluded_claims"]["local_libreevolve_affiliation_or_endorsement"] = "claimed"
     boundary["required_evidence_fields"] = ["metadata_present"]
     boundary["required_marker_kinds"] = ["affiliation"]
@@ -36,6 +38,7 @@ def test_title_page_affiliation_boundary_rejects_scope_drift():
     assert validation.ok is False
     assert "claim_ready_underclaim" in codes
     assert "invalid_boundary_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert "invalid_excluded_claim_local_libreevolve_affiliation_or_endorsement" in codes
     assert "missing_required_evidence_field" in codes
     assert "invalid_required_marker_kinds" in codes

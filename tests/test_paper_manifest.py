@@ -2787,6 +2787,7 @@ def test_validate_paper_manifest_rejects_title_page_affiliation_boundary_drift(
     record = paper_manifest.title_page_affiliation_boundary_record()
     record["claim_ready"] = False
     record["boundary_status"] = "local_affiliation_ready"
+    record["source_section_ids"] = ["Acknowledgements"]
     record["excluded_claims"]["local_libreevolve_affiliation_or_endorsement"] = "claimed"
     sidecar = tmp_path / paper_manifest.TITLE_PAGE_AFFILIATION_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
@@ -2797,6 +2798,7 @@ def test_validate_paper_manifest_rejects_title_page_affiliation_boundary_drift(
     assert report.ok is False
     assert "title_page_affiliation_boundary_claim_ready_underclaim" in codes
     assert "title_page_affiliation_boundary_invalid_boundary_status" in codes
+    assert "title_page_affiliation_boundary_invalid_source_section_ids" in codes
     assert (
         "title_page_affiliation_boundary_invalid_excluded_claim_local_libreevolve_affiliation_or_endorsement"
         in codes

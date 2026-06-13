@@ -91,23 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README meta-prompt scoring wording scoped to absolute/improvement
-  reward modes and UCB-style prompt-arm selection.
-  - Spec evidence: AlphaEvolve-style prompt evolution needs calibrated reward
-    signals and ablation evidence for prompt-program lineages, not only direct
-    child fitness or immediate score improvement.
-  - Current evidence: README documents prompt-program selection, scoring,
-    lineage, reward bounds/modes, normalized prompt reward metadata,
-    reward-policy-compatible history replay, bounded prompt-performance
-    evidence in meta-prompt requests, and UCB-style prompt-arm selection. Code
-    currently supports `absolute` and `improvement` prompt reward modes rather
-    than calibrated prompt-specific reward models or lineage ablation reports.
-  - Required result: when calibrated meta-prompt rewards,
-    prompt-lineage ablation reporting, or stronger prompt-policy attribution
-    lands, update README, ROADMAP, papers index, and code/paper TODO entries
-    together so README neither underclaims current prompt reward accounting nor
-    overclaims AlphaEvolve-grade prompt evolution scoring.
-
 - [ ] Keep README prompt-program database wording scoped to local prompt-arm
   history versus a solution-database analogue.
   - Spec evidence: AlphaEvolve Section 2.2 says meta-prompt instructions and

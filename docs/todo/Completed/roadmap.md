@@ -10792,3 +10792,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     pending-work restore, and end-to-end resumed-trace proof remain open.
   - Verification: focused boundary and paper-manifest tests cover overclaim
     rejection and repo-root sidecar presence.
+- [x] Keep meta-prompt scoring roadmap wording scoped to current child-score
+  rewards and prompt-arm UCB selection.
+  - Spec evidence: AlphaEvolve-style meta-prompt evolution should have
+    calibrated reward signals and ablation evidence that can attribute outcomes
+    to prompt-program lineages.
+  - Status: ROADMAP now lists the current prompt-program database as local
+    prompt selection, lineage, UCB-style prompt-arm selection over normalized
+    `absolute` or `improvement` child-score rewards, and optional
+    interval-based LLM template mutation. Its open work still calls for
+    calibrated reward signals plus ablation reporting for prompt-program
+    lineages.
+  - Remaining roadmap gap: calibrated meta-prompt reward models,
+    prompt-lineage ablation reports, and stronger prompt-policy attribution
+    remain open in code and paper TODOs.

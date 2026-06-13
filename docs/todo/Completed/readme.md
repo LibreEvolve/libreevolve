@@ -14233,3 +14233,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     fallback selection, and replayable causal resumed-search evidence exist.
   - Verification: paper-manifest validation requires the sidecar and focused
     controller-backtracking tests cover its overclaim rejection.
+- [x] Keep README meta-prompt scoring wording scoped to absolute/improvement
+  reward modes and UCB-style prompt-arm selection.
+  - Spec evidence: AlphaEvolve-style prompt evolution needs calibrated reward
+    signals and ablation evidence for prompt-program lineages, not only direct
+    child fitness or immediate score improvement.
+  - Status: README now states that meta-prompt scoring is local
+    `PromptDatabase` accounting over configured `absolute` or `improvement`
+    child-score rewards, normalized to finite bounds and selected with a
+    UCB-style prompt-arm heuristic. It also says prompt history records reward
+    policy metadata and meta-prompt mutation requests include bounded
+    prompt-performance evidence.
+  - Remaining README gap: calibrated prompt-specific reward models,
+    prompt-lineage ablation reports, and stronger prompt-policy attribution
+    remain open in code and paper TODOs.

@@ -1356,23 +1356,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `papers/artifact_index_boundary.json`, keeping durable full-content or
     semantic artifact search open.
 
-- [ ] Keep meta-prompt scoring roadmap wording scoped to current child-score
-  rewards and prompt-arm UCB selection.
-  - Spec evidence: AlphaEvolve-style meta-prompt evolution should have
-    calibrated reward signals and ablation evidence that can attribute outcomes
-    to prompt-program lineages.
-  - Current evidence: `ROADMAP.md` already says the current state is
-    absolute/improvement child score reward modes plus UCB-style prompt-arm
-    selection. README and code evidence show finite reward bounds, normalized
-    prompt reward metadata, reward-policy-compatible history replay, and
-    bounded prompt-performance evidence for meta-prompt calls, but no calibrated
-    prompt reward model or prompt-lineage ablation report.
-  - Required result: when calibrated meta-prompt reward signals,
-    prompt-lineage ablation reports, or stronger prompt-policy attribution
-    land, update the roadmap, README, papers index, and code/paper TODO entries
-    together so the roadmap neither underclaims current prompt scoring nor
-    overclaims AlphaEvolve-grade meta-prompt reward calibration.
-
 - [ ] Keep prompt-database roadmap wording scoped to local prompt-arm history
   versus a solution-database analogue.
   - Spec evidence: AlphaEvolve Section 2.2 describes meta-prompt evolution as

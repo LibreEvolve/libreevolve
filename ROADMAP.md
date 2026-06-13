@@ -214,12 +214,13 @@ LibreEvolve has:
 - recursive problem-local context ingestion for `.txt`, `.md`, `.py`, and
   `.pdf` files with context-manifest include/exclude rules, source hashes,
   extraction spans, and bounded prompt rendering
-- a local prompt-program database with prompt selection, scoring, lineage, and
-  optional interval-based LLM template mutation; configured and evolved
-  templates are validated for known placeholders, compatible format specs, and
-  parent-placeholder retention during mutation; configured prompt templates can
-  also use weighted `[[prompt:name]]` stochastic formatting markers backed by
-  `prompt_format_options`
+- a local prompt-program database with prompt selection, lineage, UCB-style
+  prompt-arm selection over normalized `absolute` or `improvement` child-score
+  rewards, and optional interval-based LLM template mutation; configured and
+  evolved templates are validated for known placeholders, compatible format
+  specs, and parent-placeholder retention during mutation; configured prompt
+  templates can also use weighted `[[prompt:name]]` stochastic formatting
+  markers backed by `prompt_format_options`
 - optional synchronous LLM critique/revision before mutation application
 - optional LLM feedback graders with qualitative criterion provenance, discard
   rules, and weighted score composition using normalized bounded reviewer

@@ -517,6 +517,13 @@ Important limits:
   deterministic ids and shared `template_sha256`, not deduplicated into one
   prompt policy; role-specific compatibility for critique, feedback, and
   meta-prompt call surfaces remains open.
+- Meta-prompt scoring currently means local `PromptDatabase` accounting over
+  configured `absolute` or `improvement` child-score rewards, normalized to
+  configured finite bounds and selected with a UCB-style prompt-arm heuristic.
+  Prompt history records reward policy metadata and meta-prompt mutation
+  requests include bounded prompt-performance evidence; calibrated
+  prompt-specific reward models, prompt-lineage ablation reports, and stronger
+  prompt-policy attribution remain open.
 - Meta-prompt context-policy mutation is validated only for the current
   `libreevolve.prompt_context_policy.v1` fields exposed in
   `runtime.prompt_context_policy_coverage` and meta-prompt capability-summary

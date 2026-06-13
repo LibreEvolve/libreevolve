@@ -1026,6 +1026,13 @@ evolved template text remains separate prompt programs with independent ids and
 shared `template_sha256` rather than being deduplicated. Role-specific
 compatibility for critique, feedback grading, and meta-prompt call surfaces
 remains open.
+Prompt reward accounting is limited to configured `absolute` and `improvement`
+child-score reward modes normalized against finite prompt reward bounds, with
+UCB-style prompt-arm selection over mean normalized rewards. Prompt history
+records reward-policy metadata, and meta-prompt mutation requests can include
+bounded prompt-performance evidence, but calibrated prompt-specific reward
+models, prompt-lineage ablation reports, and stronger prompt-policy
+attribution remain open.
 Broader prompt-context evolution remains open for live/external context-source
 selection, retrieval/summarization, inspiration selection, and finer-grained
 evaluator/LLM-feedback field policy. Prompt-database parity with the solution

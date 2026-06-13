@@ -593,11 +593,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     generated/evaluated LLM proposals, compares thousands-scale runs against
     much larger or smaller sample budgets, or separates sample-efficiency
     gains from generic budget stopping, fast/strong routing, and the
-    `Small base LLM only` ablation label.
+    `Small base LLM only` ablation label. The current report also lacks fixed
+    run seed/evaluator identity, fixed compute-budget definitions,
+    target-definition provenance, score-direction and normalization policy,
+    target-attainment curves by logical sample and generated candidate,
+    target-hit indexes, replicate seed sets, variance/confidence reports,
+    matched-budget run groups, and cost/latency budget curves.
   - Required result: add sample-efficiency report fields and validation for
-    target attainment versus sample count, thousands-scale budget curves, and
-    equal-budget model-size comparisons before claiming AlphaEvolve-style
-    "thousands of samples suffice" behavior.
+    target attainment versus sample count, fixed seed/evaluator identity,
+    fixed compute-budget definitions, target-definition provenance,
+    score-direction and normalization policy, thousands-scale budget curves,
+    replicate statistics, matched-budget run groups, cost/latency budget
+    curves, and equal-budget model-size comparisons before claiming
+    AlphaEvolve-style "thousands of samples suffice" behavior.
 
 - [ ] Track repeated-sampling baselines for test-time-compute uplift claims.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Discussion.

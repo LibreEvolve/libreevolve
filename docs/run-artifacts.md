@@ -3512,9 +3512,13 @@ curve over proposal sample index with best score so far.
 
 The report currently records `target_policy.status: "not_configured"` and
 `claim_ready: false`. It is local sample-count/runtime evidence, not proof of
-AlphaEvolve Table 1 sample efficiency, target-hit-per-sample behavior,
-thousands-scale benchmark success, equal-budget model-size comparison, or a
-repeated-sampling baseline.
+AlphaEvolve Table 1 sample efficiency, fixed run seed/evaluator identity,
+fixed compute-budget conditions, target-definition provenance,
+score-direction/normalization policy, target-attainment curves by logical
+sample or generated candidate, target-hit indexes, replicate statistics,
+matched-budget run groups, cost/latency budget curves, thousands-scale
+benchmark success, equal-budget model-size comparison, or a repeated-sampling
+baseline.
 
 ## `runtime.history.repeated_sampling_baseline_report`
 

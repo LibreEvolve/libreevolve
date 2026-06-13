@@ -1517,6 +1517,11 @@ budgets and ablation schemas can
 account for LLM calls and provider usage, but no report yet proves useful
 target progress in thousands-scale generated/evaluated proposal counts versus
 FunSearch-style much larger sample budgets or small-base-model alternatives.
+The missing evidence includes fixed run seed/evaluator identity, fixed compute
+budget definitions, target-definition provenance, score-direction and
+normalization policy, target-attainment curves by logical sample and generated
+candidate, target-hit indexes, replicate seed sets, variance/confidence
+reports, matched-budget run groups, and cost/latency budget curves.
 The committed `papers/sample_efficiency_boundary.json` sidecar preserves that
 benchmark-level absence boundary while recognizing the current single-run
 `runtime.history.sample_efficiency_report`.

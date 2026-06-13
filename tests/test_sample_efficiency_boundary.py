@@ -13,10 +13,12 @@ def test_sample_efficiency_boundary_accepts_absence_record():
 
     assert validation.ok is True
     assert validation.boundary_status == "single_run_counts_only"
-    assert validation.required_evidence_field_count == 16
-    assert validation.missing_evidence_count == 7
+    assert validation.required_evidence_field_count == 28
+    assert validation.missing_evidence_count == 19
     assert boundary["schema"] == SAMPLE_EFFICIENCY_BOUNDARY_SCHEMA
-    assert "does not claim AlphaEvolve-style target-hit" in boundary["claim_boundary"]
+    assert "fixed compute budget definition" in boundary["claim_boundary"]
+    assert "target-attainment curves by logical sample" in boundary["claim_boundary"]
+    assert "replicate seed sets" in boundary["claim_boundary"]
 
 
 def test_sample_efficiency_boundary_rejects_premature_efficiency_claim():
@@ -24,6 +26,7 @@ def test_sample_efficiency_boundary_rejects_premature_efficiency_claim():
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "benchmark_sample_efficiency_ready"
     boundary["missing_evidence"]["target_hit_sample_index"] = "recorded"
+    boundary["missing_evidence"]["matched_budget_run_group"] = "recorded"
     boundary["required_evidence_fields"] = ["run_id"]
 
     validation = validate_sample_efficiency_boundary(boundary)
@@ -33,6 +36,7 @@ def test_sample_efficiency_boundary_rejects_premature_efficiency_claim():
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
     assert "invalid_missing_evidence_target_hit_sample_index" in codes
+    assert "invalid_missing_evidence_matched_budget_run_group" in codes
     assert "missing_required_evidence_field" in codes
 
 
@@ -44,5 +48,5 @@ def test_render_sample_efficiency_boundary_summary_reports_shape():
     assert "AlphaEvolve sample-efficiency boundary" in summary
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | single_run_counts_only |" in summary
-    assert "| required_evidence_field_count | 16 |" in summary
-    assert "| missing_evidence_count | 7 |" in summary
+    assert "| required_evidence_field_count | 28 |" in summary
+    assert "| missing_evidence_count | 19 |" in summary

@@ -4619,9 +4619,18 @@ sidecars, tests, and active TODOs.
     does not require target-hit or model-size sample-count efficiency curves.
     `papers/sample_efficiency_boundary.json` now preserves this benchmark-level
     absence boundary for paper-manifest validation.
+    The runtime report now explicitly keeps run seed/evaluator identity, fixed
+    compute budget definition, target-definition source, score-direction and
+    normalization policy, target-attainment curves, target-hit indexes,
+    replicate seed sets, variance/confidence reports, matched-budget run
+    groups, and cost/latency budget curves out of readiness claims.
   - Required result: add benchmark/report schemas and runtime summaries that
-    extend the single-run counts into target hits by sample budget, validate
-    score/target progress versus thousands-scale proposal counts, and compare
+    extend the single-run counts into target hits by sample budget, record
+    fixed run seed/evaluator identity, fixed compute budget definitions,
+    target-definition provenance, score-direction and normalization policy,
+    target-attainment curves by logical sample and generated candidate,
+    target-hit indexes, replicate seed sets, variance/confidence reports,
+    matched-budget run groups, and cost/latency budget curves, then compare
     SOTA/strong-model runs with small-base or generic routing runs before
     claiming AlphaEvolve-style sample efficiency.
 

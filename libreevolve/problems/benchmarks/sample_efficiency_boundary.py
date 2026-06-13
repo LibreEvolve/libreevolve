@@ -13,8 +13,13 @@ EXPECTED_BOUNDARY_STATUS = "single_run_counts_only"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "run_id",
     "problem_id",
+    "run_seed",
+    "evaluator_identity",
+    "fixed_compute_budget_definition",
     "target_metric",
     "target_threshold",
+    "target_definition_source",
+    "score_direction_and_normalization",
     "llm_sample_count",
     "generated_candidate_count",
     "evaluated_candidate_count",
@@ -22,15 +27,34 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "admitted_candidate_count",
     "retained_elite_count",
     "best_score_by_sample",
+    "target_attainment_curve_by_sample",
+    "target_attainment_curve_by_generated_candidate",
     "target_hit_sample_index",
+    "target_hit_generated_candidate_index",
+    "replicate_seed_set",
+    "variance_or_confidence_interval_report",
+    "matched_budget_run_group",
+    "cost_latency_budget_curve",
     "thousands_scale_budget_curve_ref",
     "repeated_sampling_baseline_ref",
     "model_size_comparison_ref",
     "equal_budget_comparator_ref",
 )
 EXPECTED_MISSING_EVIDENCE = {
+    "run_seed_records": "not_recorded_locally",
+    "evaluator_identity_records": "not_recorded_locally",
+    "fixed_compute_budget_definition": "not_recorded_locally",
+    "target_definition_source": "not_recorded_locally",
     "target_threshold_records": "not_recorded_locally",
+    "score_direction_and_normalization": "not_recorded_locally",
+    "target_attainment_curve_by_sample": "not_recorded_locally",
+    "target_attainment_curve_by_generated_candidate": "not_recorded_locally",
     "target_hit_sample_index": "not_recorded_locally",
+    "target_hit_generated_candidate_index": "not_recorded_locally",
+    "replicate_seed_set": "not_recorded_locally",
+    "variance_or_confidence_interval_report": "not_recorded_locally",
+    "matched_budget_run_group": "not_recorded_locally",
+    "cost_latency_budget_curve": "not_recorded_locally",
     "thousands_scale_budget_curves": "not_recorded_locally",
     "repeated_sampling_comparator_runs": "not_recorded_locally",
     "small_vs_strong_model_sample_curves": "not_recorded_locally",
@@ -74,9 +98,14 @@ def sample_efficiency_boundary_record() -> dict[str, Any]:
             "This boundary records that LibreEvolve has single-run generated, "
             "evaluated, valid, admitted, retained-elite, sampling-eligible, "
             "logical-sample, and bounded best-score counts, but does not claim "
-            "AlphaEvolve-style target-hit sample-efficiency, thousands-scale "
-            "proposal curves, repeated-sampling comparisons, model-size "
-            "comparisons, or FunSearch-versus-AlphaEvolve budget reproduction."
+            "AlphaEvolve-style run-seed/evaluator identity, fixed compute "
+            "budget definition, target-definition source, score-direction and "
+            "normalization policy, target-attainment curves by logical sample "
+            "or generated candidate, target-hit sample indexes, replicate seed "
+            "sets, variance/confidence reports, matched-budget run groups, "
+            "cost/latency budget curves, thousands-scale proposal curves, "
+            "repeated-sampling comparisons, model-size comparisons, or "
+            "FunSearch-versus-AlphaEvolve budget reproduction."
         ),
     }
 
@@ -110,7 +139,15 @@ def validate_sample_efficiency_boundary(
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
-    if not isinstance(boundary_text, str) or "does not claim" not in boundary_text:
+    if (
+        not isinstance(boundary_text, str)
+        or "does not claim" not in boundary_text
+        or "fixed compute budget definition" not in boundary_text
+        or "target-definition source" not in boundary_text
+        or "target-attainment curves by logical sample" not in boundary_text
+        or "replicate seed sets" not in boundary_text
+        or "matched-budget run groups" not in boundary_text
+    ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim benchmark-level sample efficiency"))
     return SampleEfficiencyBoundaryValidation(
         ok=not issues,

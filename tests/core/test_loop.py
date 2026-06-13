@@ -8164,7 +8164,14 @@ def test_runtime_history_reports_execution_filtered_proposal_lifecycle():
     assert sample_efficiency["logical_llm_sample_count"] == 1
     assert sample_efficiency["target_policy"]["status"] == "not_configured"
     assert sample_efficiency["claim_ready"] is False
+    assert sample_efficiency["claim_readiness"]["fixed_compute_budget_definition"] is False
+    assert sample_efficiency["claim_readiness"]["target_definition_source"] is False
+    assert sample_efficiency["claim_readiness"]["target_hit_sample_index"] is False
+    assert sample_efficiency["claim_readiness"]["matched_budget_run_group"] is False
     assert "cross_run_sample_budget_curves" in (
+        sample_efficiency["claim_readiness"]["remaining_gap"]
+    )
+    assert "target_attainment_curve_by_generated_candidate" in (
         sample_efficiency["claim_readiness"]["remaining_gap"]
     )
     assert sample_efficiency["cumulative_curve"] == [

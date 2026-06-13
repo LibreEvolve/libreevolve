@@ -31786,12 +31786,35 @@ def _sample_efficiency_report(proposal_lifecycle_report: Mapping[str, object]) -
         "claim_ready": False,
         "claim_readiness": {
             "single_run_sample_counts": True,
+            "run_seed_and_evaluator_identity": False,
+            "fixed_compute_budget_definition": False,
+            "target_definition_source": False,
+            "score_direction_and_normalization": False,
             "target_attainment_curve": False,
+            "target_attainment_curve_by_generated_candidate": False,
+            "target_hit_sample_index": False,
+            "replicate_seed_set": False,
+            "variance_or_confidence_interval_report": False,
+            "matched_budget_run_group": False,
+            "cost_latency_budget_curve": False,
             "thousands_scale_budget_validation": False,
             "equal_budget_model_size_comparison": False,
             "separates_evolution_from_repeated_sampling": False,
             "remaining_gap": [
-                "target_threshold_configuration",
+                "run_seed_records",
+                "evaluator_identity_records",
+                "fixed_compute_budget_definition",
+                "target_definition_source",
+                "target_threshold_records",
+                "score_direction_and_normalization",
+                "target_attainment_curve_by_sample",
+                "target_attainment_curve_by_generated_candidate",
+                "target_hit_sample_index",
+                "target_hit_generated_candidate_index",
+                "replicate_seed_set",
+                "variance_or_confidence_interval_report",
+                "matched_budget_run_group",
+                "cost_latency_budget_curve",
                 "cross_run_sample_budget_curves",
                 "equal_budget_small_base_model_comparison",
                 "repeated_sampling_baseline_linkage",
@@ -32034,6 +32057,31 @@ def validate_sample_efficiency_report(report: object) -> dict:
             {
                 "code": "invalid_claim_readiness",
                 "message": "claim_readiness must preserve single-run sample-count status",
+            }
+        )
+    elif any(
+        readiness.get(field) is not False
+        for field in (
+            "run_seed_and_evaluator_identity",
+            "fixed_compute_budget_definition",
+            "target_definition_source",
+            "score_direction_and_normalization",
+            "target_attainment_curve",
+            "target_attainment_curve_by_generated_candidate",
+            "target_hit_sample_index",
+            "replicate_seed_set",
+            "variance_or_confidence_interval_report",
+            "matched_budget_run_group",
+            "cost_latency_budget_curve",
+            "thousands_scale_budget_validation",
+            "equal_budget_model_size_comparison",
+            "separates_evolution_from_repeated_sampling",
+        )
+    ):
+        issues.append(
+            {
+                "code": "sample_efficiency_readiness_overclaim",
+                "message": "benchmark-level sample-efficiency readiness fields must remain false",
             }
         )
     return {

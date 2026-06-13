@@ -220,8 +220,10 @@ LibreEvolve has:
   evidence and counting generated proposals, evaluated/valid/admitted
   candidates, retained elites, sampling-eligible candidates, logical LLM
   samples, and a bounded best-score cumulative curve while
-  `papers/sample_efficiency_boundary.json` keeps target-hit, thousands-scale,
-  repeated-sampling, and model-size comparison evidence open
+  `papers/sample_efficiency_boundary.json` keeps run seed/evaluator identity,
+  fixed compute budgets, target-definition provenance, target-attainment
+  curves, target-hit indexes, replicate statistics, matched-budget run groups,
+  thousands-scale, repeated-sampling, and model-size comparison evidence open
 - repeated-sampling baseline boundary reports under
   `runtime.history.repeated_sampling_baseline_report`, linking observed sample
   counts to an explicit `No evolution` comparator absence boundary, with
@@ -1088,7 +1090,12 @@ resumed-trace proof are still open.
   proposal-count curves, target-hit evidence, repeated-sampling comparisons,
   and model-size/equal-budget analyses before treating it as AlphaEvolve
   Table 1 evidence that useful results can be reached with thousands rather
-  than millions of LLM-generated samples.
+  than millions of LLM-generated samples. Required evidence includes fixed
+  run seed/evaluator identity, target-definition provenance, score-direction
+  and normalization policy, target-attainment curves by logical sample and
+  generated candidate, target-hit indexes, replicate seed sets, variance or
+  confidence intervals, matched-budget run groups, and cost/latency budget
+  curves.
 - Turn the current repeated-sampling boundary report into an executable
   equal-budget comparator runner with fixed prompt/model/seed/evaluator
   controls and linked evolutionary runs before making test-time-compute uplift

@@ -108,10 +108,14 @@ Important limits:
 - Sample-efficiency reports under `runtime.history.sample_efficiency_report`
   are single-run counts for generated proposals, evaluated/valid/admitted
   candidates, retained elites, sampling-eligible candidates, logical LLM
-  samples, and a bounded best-score curve. They are not target-hit evidence,
-  thousands-scale benchmark curves, model-size comparisons, repeated-sampling
-  comparators, or FunSearch-versus-AlphaEvolve budget reproduction; that
-  boundary is tracked by `papers/sample_efficiency_boundary.json`.
+  samples, and a bounded best-score curve. They are not run seed/evaluator
+  identity evidence, fixed compute-budget evidence, target-definition
+  provenance, score-direction/normalization policy, target-attainment curves,
+  target-hit indexes, replicate statistics, matched-budget run groups,
+  cost/latency budget curves, thousands-scale benchmark curves, model-size
+  comparisons, repeated-sampling comparators, or FunSearch-versus-AlphaEvolve
+  budget reproduction; that boundary is tracked by
+  `papers/sample_efficiency_boundary.json`.
 - Repeated-sampling baseline reports under
   `runtime.history.repeated_sampling_baseline_report` are explicit
   not-configured absence records for the AlphaEvolve `No evolution` /

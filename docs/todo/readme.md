@@ -312,7 +312,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `runtime.history.initial_program_idea_provenance_report`, which links seed
     variant ids, idea origins, contribution roles, prior-technique labels, and
     background refs to generation-0 history rows and declared metric names.
-    README now points to
+    README Important limits now points to
     `papers/initial_program_idea_provenance_boundary.json` as the committed
     metadata-contract-only sidecar for this boundary.
   - Required result: when seed-variant result tables, prompt/context linkage,

@@ -4,6 +4,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document initial-program idea provenance README boundary.
+  - Status: README Important limits now states that initial-program idea
+    provenance is optional seed metadata plus a generation-0 linkage report,
+    not equal-budget seed-variant result tables, simple/random/researcher-seed
+    comparisons, prompt-context-to-seed linkage, human contribution
+    review/signoff, paper certification rows, or AlphaEvolve human-seeded
+    benchmark parity. It ties that boundary to
+    `papers/initial_program_idea_provenance_boundary.json`.
+  - Verification: initial-program idea provenance boundary and paper-manifest
+    tests validate the sidecar that README now references.
+
 - [x] Document candidate-abstraction README boundary.
   - Status: README Important limits now states that candidate execution is
     Python-primary code-file-set execution, and the abstraction-choice report

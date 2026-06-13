@@ -134,6 +134,12 @@ Important limits:
   not task-specific functional-distance proof or "substantially different"
   benchmark evidence; that boundary is tracked by
   `papers/initial_pool_divergence_boundary.json`.
+- Initial-program idea provenance is optional seed metadata plus a generation-0
+  linkage report, not equal-budget seed-variant result tables, simple/random/
+  researcher-seed comparisons, prompt-context-to-seed linkage, human
+  contribution review/signoff, paper certification rows, or AlphaEvolve
+  human-seeded benchmark parity; that boundary is tracked by
+  `papers/initial_program_idea_provenance_boundary.json`.
 - Duplicate-work reports are run-local exact-workspace cache diagnostics, not
   durable cross-run memory, semantic duplicate detection, or resume-spanning
   cache replay; that boundary is tracked by

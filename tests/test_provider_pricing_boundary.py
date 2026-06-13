@@ -19,6 +19,7 @@ def test_provider_pricing_boundary_accepts_configured_cost_boundary():
     assert validation.required_evidence_field_count == 17
     assert validation.missing_evidence_count == 4
     assert boundary["schema"] == PROVIDER_PRICING_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["2.6", "4"]
     assert boundary["claim_ready"] is False
     assert "does not claim live provider pricing" in boundary["claim_boundary"]
 

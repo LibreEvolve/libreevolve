@@ -2395,7 +2395,8 @@ Implemented:
   resume, richer role-specific timeout artifacts, or provider-output
   raw-payload replay.
 - `papers/provider_pricing_boundary.json`: provider pricing sidecar for
-  AlphaEvolve Section 2.4. It records configured
+  AlphaEvolve Sections 2.6 and 4 fixed-compute-budget evidence. It records
+  configured
   `cost_usd_per_million_tokens` backend metadata, provider usage
   `total_tokens`, per-call configured `cost_estimate` records,
   `cost_estimate_status` records, runtime configured-cost accounting, LLM

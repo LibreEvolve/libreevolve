@@ -1,7 +1,10 @@
 {
   "schema": "libreevolve.provider_pricing_boundary.v1",
   "source_paper_id": "2506.13131",
-  "source_section_id": "2.4",
+  "source_section_ids": [
+    "2.6",
+    "4"
+  ],
   "source_claim": "AlphaEvolve-scale LLM scheduling and budget reports need reproducible cost evidence for the model calls that produced proposals and feedback",
   "boundary_status": "configured_cost_estimates_without_live_provider_pricing",
   "pricing_readiness_schema": "libreevolve.llm_provider_pricing_readiness.v1",

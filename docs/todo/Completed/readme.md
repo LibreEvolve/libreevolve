@@ -4,6 +4,22 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Appendix B.4 revised-result README boundary.
+  - Status: README Important limits now states that Appendix B.4
+    revised-result provenance remains absent: the registry preserves the
+    first-version `C4 <= 0.3521` uncertainty-inequality result, Henry Cohn's
+    pointer to the `[18]` refinement, the external `0.3284` constant, and
+    AlphaEvolve's revised `0.3216` note, not local revision artifacts, Colab or
+    verifier linkage, comparison-to-`0.3284` certificates, recomputed revised
+    constants, artifact hashes, or proof that the current Appendix B value has
+    been locally reproduced.
+  - Verification: Appendix B registry tests cover the B.4
+    `revision_result_boundary`, required future revision fields, the
+    first-version/external/revised value ordering, artifact-status overclaim
+    guards, and `not_recorded_locally` recomputation status; code and paper
+    TODOs still track the missing revision-artifact/comparison/recomputation
+    evidence.
+
 - [x] Document Appendix B.12-B.13 sum-of-radii README boundary.
   - Status: README Important limits now states that Appendix B.12-B.13
     circle/rectangle sum-of-radii provenance remains absent: the registry

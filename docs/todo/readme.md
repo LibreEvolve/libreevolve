@@ -1001,24 +1001,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README Appendix B result wording scoped until revised-result
-      provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B.4 records a result revision for the
-    uncertainty inequality: the text first reports `C4 <= 0.3521`, then notes
-    a post-first-version refinement after Henry Cohn's observation that
-    improved the reported constant to `0.3216`.
-  - Current evidence: README now describes the B.4
-    `revision_result_boundary`: first-version `C4 <= 0.3521`, Henry Cohn's
-    pointer to `[18]`, external `0.3284`, and AlphaEvolve's revised `0.3216`
-    note. It also says local revision artifacts, Colab/verifier linkage,
-    comparison-to-`0.3284` certificates, and recomputed constants remain
-    absent.
-  - Required result: when actual Appendix B result-version artifacts land,
-    update README, ROADMAP, papers index, and code/paper TODOs together so
-    README does not imply the family registry is enough to reproduce current
-    AlphaEvolve Appendix B constants or accidentally mix stale and revised
-    bounds.
-
 - [ ] Keep README Appendix B.4 prior-bound wording scoped until rounding
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.4 frames the uncertainty-inequality

@@ -173,6 +173,15 @@ Important limits:
   `4.165849767`), not coordinate payload hashes, point-count/dimension
   certificates, all-pairs distance matrix artifacts, min/max pair-witness
   certificates, recomputed squared-ratio rows, or Figure 12 panel artifacts.
+- Appendix B.5 Erdos minimum-overlap step-function provenance remains absent:
+  the registry preserves the source formulation, `[40]` equivalence,
+  normalized `[0, 2]` step-function reduction, Figure 10 result id, prior
+  `0.379005 <= C5 <= 0.380927` bounds, and reported `C5 <= 0.380924` upper
+  bound, not a step-function payload hash, original-formulation mapping
+  certificate, `[40]` equivalence-reference artifact, shift-domain
+  certificate, value-range or integral-normalization certificates,
+  shift-objective recomputation, recomputed upper bound, or Figure 10 panel
+  artifact.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

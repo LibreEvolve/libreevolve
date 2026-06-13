@@ -2,6 +2,27 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Appendix B.5 minimum-overlap roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish validated B.5 source/problem evidence from the missing Figure
+    10 step-function payload, certificates, recomputation, and panel artifact.
+  - Current evidence: `step_function_result_boundary` records the Figure 10
+    result id, normalized `[0, 2]` domain, `[0, 1]` range, integral
+    normalization, shift objective, prior `0.379005 <= C5 <= 0.380927`
+    bounds, reported `C5 <= 0.380924` upper bound, and required future mapping
+    and artifact fields while keeping those artifacts `not_recorded_locally`.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: step-function payload hash, original-formulation mapping
+    certificate, `[40]` equivalence-reference artifact, shift-domain
+    certificate, value-range and integral-normalization certificates,
+    shift-objective recomputation, recomputed upper bound, and Figure 10 panel
+    artifact.
+  - Verification: Appendix B registry B.5 source-formulation and
+    step-function-boundary tests, paper-manifest validation, and checked-in
+    paper-index TODO coverage still pass.
+
 - [x] Archive Appendix B.8 point-set witness roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

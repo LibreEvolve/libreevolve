@@ -10,32 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Appendix B.5 roadmap wording scoped until minimum-overlap
-      step-function provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B.5 improves the Erdos
-    minimum-overlap upper bound from `C5 <= 0.380927` to `C5 <= 0.380924`.
-    The Figure 10 construction is a step function on `[0, 2]` with values in
-    `[0, 1]`, integral normalization `integral_0^2 h(x) dx = 1`, and an
-    objective that minimizes the maximum shifted overlap integral.
-  - Current evidence: roadmap/README/paper-index wording now cites the B.5
-    `step_function_result_boundary`, including the Figure 10 result id,
-    normalized-domain constraint, shift objective, prior
-    `0.379005 <= C5 <= 0.380927` bounds, reported `C5 <= 0.380924` upper
-    bound, and required future mapping, equivalence-reference, shift-domain,
-    step-function payload, and certificate fields. It now keeps the payload,
-    original-formulation mapping certificate, `[40]` equivalence-reference
-    artifact, shift-domain certificate, value-range certificate,
-    integral-normalization certificate, shift-objective certificate,
-    recomputed upper bound, and Figure 10 panel artifact statuses
-    `not_recorded_locally`.
-  - Required result: when the actual Appendix B.5 Figure 10 payload and
-    certificates land, update ROADMAP, README, papers index, and code/paper
-    TODOs so roadmap claims distinguish B.5's payload hash,
-    original-formulation mapping certificate, `[40]` equivalence-reference
-    artifact, shift-domain certificate, value-range/integral certificates,
-    shift-objective recomputation, recomputed upper bound, Figure 10 panel
-    artifact, and source location from aggregate Appendix B coverage.
-
 - [ ] Keep Appendix B.6 roadmap wording scoped until finite-set witness
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.6 improves the

@@ -118,6 +118,13 @@ Important limits:
   metadata, progressive disclosure traces, token-savings report,
   full-code-history baseline comparison, scientific-task benchmark taxonomy,
   or independent reproduction output.
+- MLEvolve long-horizon ML-engineering coverage is background paper context
+  only: LibreEvolve has no MLE-Bench task harness, Progressive MCGS state
+  schema, graph-based reference-edge provenance, entropy-inspired progressive
+  schedule, Retrospective Memory knowledge base or global memory artifacts,
+  adaptive coding-mode traces, 12-hour medal-rate/valid-submission report,
+  mathematical-algorithm baseline comparison, linked-code audit, or
+  independent reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

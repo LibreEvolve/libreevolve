@@ -2,6 +2,31 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive MLEvolve long-horizon ML-engineering roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2606.06473` source-scoped as background long-horizon MLE context
+    rather than implemented LibreEvolve MLEvolve-style harness support.
+  - Current evidence: the cached paper and `papers/README.md` record the
+    MLEvolve claims around Progressive MCGS, graph-based cross-branch
+    reference edges, entropy-inspired scheduling, Retrospective Memory,
+    adaptive coding modes, MLE-Bench 12-hour metrics, stronger mathematical
+    algorithm optimization than AlphaEvolve, and linked-code availability,
+    while marking local MLE-Bench harnesses, graph state, reference-edge
+    provenance, entropy schedules, memory artifacts, mode traces,
+    medal-rate/valid-submission reports, baseline comparisons, linked-code
+    audits, and independent reproduction output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source-license and linked-code status, relation to LibreEvolve
+    search, Progressive MCGS schema, graph-reference provenance,
+    entropy-schedule records, retrospective-memory taxonomy, adaptive
+    coding-mode artifacts, MLE-Bench task/submission metadata, 12-hour budget
+    and metric definitions, mathematical-algorithm baseline identities, and
+    independent verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive DeltaEvolve semantic-delta roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

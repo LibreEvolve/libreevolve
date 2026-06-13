@@ -410,6 +410,12 @@ Important limits:
   rollout/revert state, workflow-handoff boundary, and artifact refs, not real
   compiler patch/pass artifacts, use-case integration records, reviewer signoff
   files, deployment or rollback logs, or AlphaEvolve-in-compiler-loop evidence.
+- Self-improvement and distillation claims remain absent: README does not yet
+  identify LibreEvolve runtime/provider/evaluator/compiler/benchmark components
+  as evolved optimization targets, link evolved candidates to measured
+  improvements in LibreEvolve's own execution path, record deployment/adoption
+  or rollback/safety evidence, or provide distillation datasets, training runs,
+  or model-evaluation artifacts derived from evolved programs.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

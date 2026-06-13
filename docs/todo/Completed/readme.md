@@ -4,6 +4,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document self-improvement/distillation README boundary.
+  - Status: README Important limits now states that self-improvement and
+    distillation claims remain absent: README does not yet identify LibreEvolve
+    runtime/provider/evaluator/compiler/benchmark components as evolved
+    optimization targets, link evolved candidates to measured improvements in
+    LibreEvolve's own execution path, record deployment/adoption or
+    rollback/safety evidence, or provide distillation datasets, training runs,
+    or model-evaluation artifacts derived from evolved programs.
+  - Verification: code and papers TODOs still track the missing
+    self-improving-infrastructure and model-uplift evidence, while paper
+    manifest validation keeps the README and papers-index boundary covered.
+
 - [x] Document compiler-adoption README boundary.
   - Status: README Important limits now states that compiler adoption records
     validate adoption-path classification, target compiler/version/pass

@@ -941,28 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README self-improvement wording scoped until infrastructure and
-      distillation evidence exists.
-  - Spec evidence: AlphaEvolve's Discussion says practical discoveries can
-    improve the efficiency of its own infrastructure and future base LLMs, and
-    frames distillation of AlphaEvolve-augmented performance into base models
-    as a natural next step. Local PDF page 21 contains those Discussion
-    statements.
-  - Current evidence: README documents provider budgets, systems-result
-    schemas, benchmark contracts, and paper-result certification boundaries.
-    It does not describe any LibreEvolve runtime, provider, compiler,
-    evaluator, or benchmark component as an evolved optimization target for
-    the tool itself, and it has no distillation dataset, training, or
-    model-evaluation evidence derived from evolved candidates. The
-    ThetaEvolve-inspired export plugin can write clipped reward examples, but
-    that export is not model training, model evaluation, or proof of
-    AlphaEvolve-augmented base-model uplift.
-  - Required result: when self-improvement reports, deployment/adoption
-    measurements, rollback/safety evidence, or distillation artifacts land,
-    update README, ROADMAP, papers index, and matching TODOs so README neither
-    underclaims concrete infrastructure improvements nor overclaims
-    AlphaEvolve-style self-improving or model-uplift capability.
-
 - [ ] Keep README feedback-loop cadence wording scoped until environment ROI
       evidence exists.
   - Spec evidence: AlphaEvolve's Discussion says current self-improvement gains

@@ -85,8 +85,10 @@ Important limits:
   prompt-visible `materialization_error` summaries. Metadata-only language and
   build runner declarations can be recorded, but arbitrary-language or
   build-runner artifacts, dependency-graph validation, bulk directory or
-  external-path operations, remote/container workspaces, or codebase-scale
-  workspace parity are still not implemented.
+  external-path operations, portable static source-copy identity,
+  remote/container workspaces, paper-facing invalid-workspace fixture rows, or
+  codebase-scale workspace parity are still not implemented; that boundary is
+  tracked by `papers/workspace_materialization_boundary.json`.
 - Codebase-scale reports are current-run workspace telemetry for retained
   file/line counts, generated candidates, multi-file and hundreds-line
   observations, and parent-relative edits, not realistic multi-component

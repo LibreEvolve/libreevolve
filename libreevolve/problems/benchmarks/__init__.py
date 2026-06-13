@@ -312,6 +312,12 @@ from libreevolve.problems.benchmarks.distributed_pipeline_topology_boundary impo
     render_distributed_pipeline_topology_boundary_summary,
     validate_distributed_pipeline_topology_boundary,
 )
+from libreevolve.problems.benchmarks.workspace_materialization_boundary import (
+    WORKSPACE_MATERIALIZATION_BOUNDARY_SCHEMA,
+    render_workspace_materialization_boundary_summary,
+    validate_workspace_materialization_boundary,
+    workspace_materialization_boundary_record,
+)
 from libreevolve.problems.benchmarks.codebase_scale_benchmark_boundary import (
     CODEBASE_SCALE_BENCHMARK_BOUNDARY_SCHEMA,
     codebase_scale_benchmark_boundary_record,
@@ -875,6 +881,7 @@ __all__ = [
     "DOCUMENTATION_CLAIM_INVENTORY_SCHEMA",
     "DOCUMENTATION_TRUTHFULNESS_BOUNDARY_SCHEMA",
     "DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_SCHEMA",
+    "WORKSPACE_MATERIALIZATION_BOUNDARY_SCHEMA",
     "DUPLICATE_WORK_POLICY_BOUNDARY_SCHEMA",
     "EMBEDDED_EVALUATOR_BOUNDARY_SCHEMA",
     "EVALUATOR_ORACLE_BOUNDARY_SCHEMA",
@@ -1028,6 +1035,7 @@ __all__ = [
     "documentation_claim_inventory_record",
     "documentation_truthfulness_boundary_record",
     "distributed_pipeline_topology_boundary_record",
+    "workspace_materialization_boundary_record",
     "duplicate_work_policy_boundary_record",
     "embedded_evaluator_boundary_record",
     "evaluation_cascade_boundary_record",
@@ -1161,6 +1169,7 @@ __all__ = [
     "render_documentation_claim_inventory_summary",
     "render_documentation_truthfulness_boundary_summary",
     "render_distributed_pipeline_topology_boundary_summary",
+    "render_workspace_materialization_boundary_summary",
     "render_duplicate_work_policy_boundary_summary",
     "render_embedded_evaluator_boundary_summary",
     "render_evaluation_cascade_boundary_summary",
@@ -1308,6 +1317,7 @@ __all__ = [
     "validate_documentation_claim_inventory",
     "validate_documentation_truthfulness_boundary",
     "validate_distributed_pipeline_topology_boundary",
+    "validate_workspace_materialization_boundary",
     "validate_duplicate_work_policy_boundary",
     "validate_embedded_evaluator_boundary",
     "validate_evaluation_cascade_boundary",

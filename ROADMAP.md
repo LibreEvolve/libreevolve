@@ -418,6 +418,13 @@ LibreEvolve has:
   mark arbitrary-language/build-system runners as unsupported, while
   preserving metadata-only `candidate_language_runners` and
   `candidate_build_systems` declarations when configured
+- local workspace materialization diagnostics with typed
+  `CandidateMaterializationError` reasons, bounded paths, casefold collision
+  checks, recursive link preflight, and static source-copy hash checks, with
+  `papers/workspace_materialization_boundary.json` preserving the absence
+  boundary for portable static source identity, bulk directory operations,
+  dependency graphs, language/build-runner artifacts, remote/container mounts,
+  invalid-workspace fixture rows, and future-surface reason/path stability
 - runtime candidate-language runner contract reports under
   `runtime.history.candidate_language_runner_contract_report`, recording the
   current Python subprocess validator runner, non-Python text files as

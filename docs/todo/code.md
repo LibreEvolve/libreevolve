@@ -587,12 +587,15 @@ sidecars, tests, and active TODOs.
     artifact reference. This is strong local file-workspace coverage, not a
     complete future policy for arbitrary languages, build systems, generated
     dependency graphs, or non-local runner workspace mounts.
+    `papers/workspace_materialization_boundary.json` now preserves this local
+    file-workspace diagnostic boundary for paper-manifest validation.
   - Required result: extend topology diagnostics for future topology surfaces
     such as bulk directory operations or language/build-runner generated
-    artifacts; add a portable source-root/release-artifact policy for copied
-    static members; and preserve the stable `CandidateMaterializationError`
-    reason/path contract whenever new materialization filesystem paths are
-    added.
+    artifacts; add dependency-graph diagnostics and remote/container mount
+    diagnostics; add a portable source-root/release-artifact policy for copied
+    static members; add paper-facing invalid-workspace fixture rows; and
+    preserve the stable `CandidateMaterializationError` reason/path contract
+    whenever new materialization filesystem paths are added.
 
 - [ ] Add codebase-scale benchmark evidence for multi-component generated
       programs.

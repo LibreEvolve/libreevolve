@@ -205,6 +205,10 @@ from libreevolve.problems.benchmarks.distributed_pipeline_topology_boundary impo
     distributed_pipeline_topology_boundary_record,
     validate_distributed_pipeline_topology_boundary,
 )
+from libreevolve.problems.benchmarks.workspace_materialization_boundary import (
+    validate_workspace_materialization_boundary,
+    workspace_materialization_boundary_record,
+)
 from libreevolve.problems.benchmarks.codebase_scale_benchmark_boundary import (
     codebase_scale_benchmark_boundary_record,
     validate_codebase_scale_benchmark_boundary,
@@ -586,6 +590,7 @@ SAMPLE_EFFICIENCY_BOUNDARY_FILE = "papers/sample_efficiency_boundary.json"
 PARALLEL_EVALUATION_READINESS_BOUNDARY_FILE = "papers/parallel_evaluation_readiness_boundary.json"
 EXPENSIVE_EVALUATION_BUDGET_BOUNDARY_FILE = "papers/expensive_evaluation_budget_boundary.json"
 DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_FILE = "papers/distributed_pipeline_topology_boundary.json"
+WORKSPACE_MATERIALIZATION_BOUNDARY_FILE = "papers/workspace_materialization_boundary.json"
 WHOLE_RUN_SOURCE_WORKSPACE_INTEGRITY_BOUNDARY_FILE = "papers/whole_run_source_workspace_integrity_boundary.json"
 CODEBASE_SCALE_BENCHMARK_BOUNDARY_FILE = "papers/codebase_scale_benchmark_boundary.json"
 EVALUATION_CASCADE_BOUNDARY_FILE = "papers/evaluation_cascade_boundary.json"
@@ -1104,6 +1109,7 @@ def validate_paper_manifest(
     issues.extend(_validate_parallel_evaluation_readiness_boundary(root_path))
     issues.extend(_validate_expensive_evaluation_budget_boundary(root_path))
     issues.extend(_validate_distributed_pipeline_topology_boundary(root_path))
+    issues.extend(_validate_workspace_materialization_boundary(root_path))
     issues.extend(_validate_whole_run_source_workspace_integrity_boundary(root_path))
     issues.extend(_validate_codebase_scale_benchmark_boundary(root_path))
     issues.extend(_validate_evaluation_cascade_boundary(root_path))
@@ -3292,6 +3298,38 @@ def _validate_distributed_pipeline_topology_boundary(root_path: Path) -> list[Pa
             f"distributed_pipeline_topology_boundary_{issue.code}",
             issue.message,
             "distributed_pipeline_topology",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_workspace_materialization_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / WORKSPACE_MATERIALIZATION_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = workspace_materialization_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "workspace_materialization_boundary_manifest_missing",
+                    (
+                        f"{WORKSPACE_MATERIALIZATION_BOUNDARY_FILE} must emit "
+                        "workspace materialization diagnostics availability"
+                    ),
+                    "workspace_materialization",
+                )
+            ]
+    report = validate_workspace_materialization_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"workspace_materialization_boundary_{issue.code}",
+            issue.message,
+            "workspace_materialization",
         )
         for issue in report.issues
     ]

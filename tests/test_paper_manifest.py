@@ -4352,6 +4352,62 @@ def test_validate_paper_manifest_requires_distributed_pipeline_topology_boundary
     assert "distributed_pipeline_topology_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_workspace_materialization_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.WORKSPACE_MATERIALIZATION_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.workspace_materialization_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_workspace_materialization_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.workspace_materialization_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "future_topology_surfaces_ready"
+    record["source_section_ids"] = ["2.6"]
+    record["missing_evidence"]["bulk_directory_operation_diagnostics"] = "recorded"
+    sidecar = tmp_path / paper_manifest.WORKSPACE_MATERIALIZATION_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "workspace_materialization_boundary_claim_ready_overclaim" in codes
+    assert "workspace_materialization_boundary_invalid_boundary_status" in codes
+    assert "workspace_materialization_boundary_invalid_source_section_ids" in codes
+    assert (
+        "workspace_materialization_boundary_invalid_missing_evidence_bulk_directory_operation_diagnostics"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_workspace_materialization_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "workspace_materialization_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_whole_run_source_workspace_integrity_boundary(
     tmp_path,
 ):

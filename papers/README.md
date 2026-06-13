@@ -1572,6 +1572,16 @@ codebase-scale task. The committed
 `papers/codebase_scale_benchmark_boundary.json` sidecar preserves this Table 1
 code-scale absence boundary for paper-manifest validation.
 
+Workspace materialization diagnostics are also scoped: typed
+`CandidateMaterializationError` reasons, bounded paths, casefold collisions,
+recursive link preflight, and static source-copy hash checks are local
+file-workspace evidence. The committed
+`papers/workspace_materialization_boundary.json` sidecar preserves the missing
+portable static source-copy identity, bulk directory operation diagnostics,
+generated dependency graph diagnostics, language/build-runner artifact
+diagnostics, remote/container mount diagnostics, paper-facing invalid-workspace
+fixture rows, and future-surface reason/path contract proof.
+
 LLM feedback artifact note: successful and failed feedback records can keep
 compatibility `raw_response` and parsed `feedback` previews, suppress them to
 hashes, or suppress text and hashes according to `feedback_retention_mode`.

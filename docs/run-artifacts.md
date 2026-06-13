@@ -2603,6 +2603,12 @@ parent/temp root creation failures, backup placeholder deletion, existing-root
 backup, final swap, restore, cleanup deletion failures, static source-copy
 link/read/not-file failures, and static source-copy byte-count or SHA-256
 mismatches.
+The paper-facing sidecar `papers/workspace_materialization_boundary.json`
+keeps this scoped to local file-workspace diagnostics and records missing
+portable static source-copy identity, bulk directory operation diagnostics,
+dependency-graph diagnostics, language/build-runner artifact diagnostics,
+remote/container mount diagnostics, paper-facing invalid-workspace fixture
+rows, and future-surface reason/path contract evidence.
 Prompt-visible summaries are bounded separately.
 Use `evaluator_artifact_include` for large diagnostics that should be retained
 as separate files with hashes. Metric schemas reject boolean bounds before run

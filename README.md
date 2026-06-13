@@ -77,6 +77,10 @@ Important limits:
   artifacts, workflow diffs, validation reruns, privacy/redaction artifacts,
   review versions, follow-up, and claim-to-feedback traces; current feedback
   reports are metadata contracts only.
+- Workspace materialization diagnostics are local file-workspace evidence, not
+  proof for bulk directory operations, language/build-runner artifacts,
+  dependency graphs, portable static-asset source identity, or remote/container
+  mounts.
 - Paper-derived claims are tracked conservatively in `papers/README.md`,
   sidecar JSON records, `ROADMAP.md`, and `docs/todo/`; the TODO ledgers are
   active work queues, not just historical notes.

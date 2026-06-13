@@ -1028,11 +1028,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     filesystem paths must preserve the stable reason/path diagnostic contract
     before LibreEvolve can claim robust codebase-scale invalid-artifact
     feedback across arbitrary-language runners, build-system outputs,
-    dependency manifests, or remote/containerized execution roots.
+    dependency manifests, or remote/containerized execution roots. The
+    committed `papers/workspace_materialization_boundary.json` sidecar now
+    preserves that local-file-workspace-only boundary for paper-manifest
+    validation.
   - Required result: add diagnostics and paper-facing validation for future
     bulk directory operations, build-runner generated artifacts, portable static
-    asset source identities, dependency manifests, and remote/containerized
-    materialization roots while preserving stable reason/path metadata.
+    asset source identities, dependency manifests, remote/containerized
+    materialization roots, and invalid-workspace fixture rows while preserving
+    stable reason/path metadata.
 
 - [ ] Track Table 1 code-scale benchmark evidence.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 and Section 2.1.

@@ -10,7 +10,7 @@ FAST_STRONG_MODEL_MIX_BOUNDARY_SCHEMA = (
     "libreevolve.fast_strong_model_mix_boundary.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
-EXPECTED_SOURCE_SECTION_ID = "2.4"
+EXPECTED_SOURCE_SECTION_ID = "2.3"
 EXPECTED_BOUNDARY_STATUS = "throughput_depth_metadata_without_experiment_report"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "throughput_depth_strategy",
@@ -110,7 +110,7 @@ def validate_fast_strong_model_mix_boundary(
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     if data.get("source_section_id") != EXPECTED_SOURCE_SECTION_ID:
-        issues.append(_issue("invalid_source_section_id", "source_section_id must be 2.4"))
+        issues.append(_issue("invalid_source_section_id", "source_section_id must be 2.3"))
     source_claim = data.get("source_claim")
     if (
         not isinstance(source_claim, str)

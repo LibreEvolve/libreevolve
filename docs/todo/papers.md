@@ -401,7 +401,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     budget behavior.
 
 - [ ] Validate fast/strong model-mix scheduling beyond local metadata tests.
-  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4, "Models used".
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3, "Models used".
   - Requirement: AlphaEvolve's LLM ensemble mixes Gemini Flash for low-latency,
     high-volume candidate generation with Gemini Pro for occasional stronger
     suggestions that can advance search depth. A faithful implementation needs
@@ -460,7 +460,7 @@ directory and using the AlphaEvolve paper as the primary specification.
 
 - [ ] Track Google/Gemini provider-parity evidence separately from generic
       custom-backend extensibility.
-  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4, "Models used".
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3, "Models used".
   - Requirement: the concrete AlphaEvolve implementation used Gemini 2.0 Flash
     and Gemini 2.0 Pro. Paper-facing provider parity therefore needs a
     self-describing Google/Gemini provider surface, or an explicit substitute
@@ -567,7 +567,7 @@ directory and using the AlphaEvolve paper as the primary specification.
 
 - [ ] Track Google/Gemini provider parity separately from generic backend
       configurability.
-  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3/2.4, "Models used".
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3, "Models used".
   - Requirement: the published AlphaEvolve ensemble used Gemini 2.0 Flash and
     Gemini 2.0 Pro; a reproduction-oriented implementation should either
     provide a first-class Google/Gemini backend surface or explicitly document

@@ -4452,7 +4452,7 @@ sidecars, tests, and active TODOs.
 
 - [ ] Add first-class Google/Gemini backend parity for AlphaEvolve model-mix
       reproduction.
-  - Spec evidence: AlphaEvolve Section 2.3/2.4 says the published system used
+  - Spec evidence: AlphaEvolve Section 2.3 says the published system used
     an ensemble of Gemini 2.0 Flash and Gemini 2.0 Pro so low-latency Flash
     could generate high-volume candidates while Pro occasionally supplied
     stronger suggestions.

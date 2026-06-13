@@ -19,6 +19,7 @@ def test_fast_strong_model_mix_boundary_accepts_metadata_only_boundary():
     assert validation.required_evidence_field_count == 21
     assert validation.missing_evidence_count == 7
     assert boundary["schema"] == FAST_STRONG_MODEL_MIX_BOUNDARY_SCHEMA
+    assert boundary["source_section_id"] == "2.3"
     assert boundary["claim_ready"] is False
     assert "does not claim experiment-level selection traces" in boundary["claim_boundary"]
 

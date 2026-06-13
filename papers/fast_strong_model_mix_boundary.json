@@ -1,7 +1,7 @@
 {
   "schema": "libreevolve.fast_strong_model_mix_boundary.v1",
   "source_paper_id": "2506.13131",
-  "source_section_id": "2.4",
+  "source_section_id": "2.3",
   "source_claim": "AlphaEvolve mixes a fast model for high-volume breadth with a stronger model for occasional deeper suggestions under a fixed compute budget",
   "boundary_status": "throughput_depth_metadata_without_experiment_report",
   "scheduler_policy_schema": "libreevolve.llm_scheduler_policy.v1",

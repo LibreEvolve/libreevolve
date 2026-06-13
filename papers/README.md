@@ -2351,7 +2351,7 @@ Implemented:
   fast/strong model-mix reports, resume replay experiment reports, or
   role-specific budget behavior reports.
 - `papers/fast_strong_model_mix_boundary.json`: fast/strong model-mix
-  sidecar for AlphaEvolve Section 2.4. It records the current
+  sidecar for AlphaEvolve Section 2.3. It records the current
   `throughput_depth` metadata evidence: backend cost/latency/depth metadata,
   metadata normalization, metadata weights, neutral missing-metadata defaults,
   backend role/model-lane labels, fast-breadth and strong-depth lane detection,

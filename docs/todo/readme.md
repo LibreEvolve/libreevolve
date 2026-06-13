@@ -91,36 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README parallelized-evaluation wording scoped until compute-hour
-      throughput reports exist.
-  - Spec evidence: AlphaEvolve Section 2.4 says individual candidate
-    evaluations can consume roughly 100 compute-hours and should be
-    parallelized so slow evaluator wall-clock time does not prevent several
-    consecutive mutations.
-  - Current evidence: README can describe the synchronous loop,
-    `proposals_per_generation` sequential sibling batches, staged samples and
-    retries, local `eval_stages[].sample_workers` fan-out for configured-stage
-    samples, stage/sample wall-clock budgets, evaluator-second accounting,
-    sample-execution compression metadata, and future parallel LLM/evaluator
-    workers. It should not imply that current sequential batches or local
-    sample workers prove evaluation-cluster fan-out, cluster-scale compute-hour
-    accounting, or preserved mutation-chain depth under expensive evaluation.
-    README now points to `runtime.history.parallel_evaluation_readiness_report`,
-    which records local sample-worker fan-out and wall-clock compression while
-    preserving false readiness for compute-hour budgets, async evaluator
-    queues, distributed worker nodes, mutation-depth impact, and pending-work
-    resume. The paper-facing
-    `papers/parallel_evaluation_readiness_boundary.json` sidecar preserves the
-    same absence boundary for manifest validation. README now also points to
-    `papers/expensive_evaluation_budget_boundary.json` for the local
-    cooperative-budget versus compute-hour runtime boundary.
-  - Required result: when parallelized-evaluation reports land, update README,
-    ROADMAP, papers index, and code/paper TODOs with per-candidate compute-hour
-    budget, wall-clock duration, evaluator-worker fan-out, randomized
-    initialization shard counts/seeds, queued/running/completed worker state,
-    local-or-cluster execution identity, mutation-depth impact, pending-work
-    resume behavior, and equal-budget report links.
-
 - [ ] Keep README distributed-pipeline wording scoped until async topology
       implementation exists.
   - Spec evidence: AlphaEvolve Section 2.6 describes an asynchronous pipeline

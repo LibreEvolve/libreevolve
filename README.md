@@ -475,6 +475,14 @@ Important limits:
   accelerator/worker leases, async queue budgets, or equal-budget execution
   reports; that boundary is tracked by
   `papers/expensive_evaluation_budget_boundary.json`.
+- Parallel-evaluation readiness is limited to configured local
+  `eval_stages[].sample_workers` fan-out, observed sample wall-clock
+  compression, and topology linkage. It is not AlphaEvolve-style
+  per-candidate compute-hour budgeting, candidate-level async evaluator
+  queues, distributed evaluator nodes, mutation-depth impact evidence, or
+  pending-work resume; that boundary is tracked by
+  `runtime.history.parallel_evaluation_readiness_report` and
+  `papers/parallel_evaluation_readiness_boundary.json`.
 - AlphaEvolve Figure 8 ablation support is a validated registry, equal-budget
   report contract, scope-boundary records, and optional
   `libreevolve.alphaevolve_figure8_exhibit.v1` exhibit metadata; the committed

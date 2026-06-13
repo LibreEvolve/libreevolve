@@ -14317,3 +14317,23 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     substitution contract, credential preflight, provider-native telemetry,
     capability lookup, and Flash/Pro lane evidence remain active in code and
     paper TODOs before README can claim AlphaEvolve provider parity.
+
+- [x] Keep README parallelized-evaluation wording scoped until compute-hour
+      throughput reports exist.
+  - Spec evidence: AlphaEvolve Section 2.4 says individual candidate
+    evaluations can consume roughly 100 compute-hours and should be
+    parallelized so slow evaluator wall-clock time does not prevent several
+    consecutive mutations.
+  - Status: README now distinguishes local `eval_stages[].sample_workers`
+    fan-out, observed sample wall-clock compression, and topology linkage from
+    AlphaEvolve-style per-candidate compute-hour budgeting, async evaluator
+    queues, distributed evaluator nodes, mutation-depth impact evidence, and
+    pending-work resume. It points to
+    `runtime.history.parallel_evaluation_readiness_report`,
+    `papers/parallel_evaluation_readiness_boundary.json`, and
+    `papers/expensive_evaluation_budget_boundary.json`.
+  - Remaining README gap: per-candidate compute-hour budgets, evaluator-worker
+    fan-out reports, randomized initialization shard counts/seeds,
+    queued/running/completed worker state, local-or-cluster execution identity,
+    mutation-depth impact, pending-work resume behavior, and equal-budget
+    report links remain active in code and paper TODOs.

@@ -15054,3 +15054,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     while keeping AlphaEvolve cascade-efficiency evidence open.
   - Remaining roadmap gap: real benchmark cascade-efficiency proof and
     cost-saving measurements remain active in code and paper TODOs.
+- [x] Clarify ROADMAP current-state proof boundary.
+  - Spec evidence: AlphaEvolve-alignment planning needs ROADMAP to coordinate
+    code, README, paper-index, and TODO evidence without implying that every
+    current-state phrase has been semantically verified.
+  - Status: ROADMAP now states that current-state bullets are a maintained
+    planning summary, not a machine-verified proof ledger, and points readers
+    to code, tests, runtime artifacts, paper sidecars, and active TODO ledgers
+    as the authoritative evidence.
+  - Remaining roadmap gap: semantic claim inventory, per-bullet evidence
+    mapping, stale-priority detection, and generated alignment reports remain
+    active in `docs/todo/roadmap.md`.

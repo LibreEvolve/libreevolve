@@ -5,6 +5,12 @@ passes against `papers/2506.13131__AlphaEvolve.pdf`, local docs, the paper
 index, and the checked-in tests. It is a practical development plan, not a
 promise.
 
+Treat the current-state bullets as a maintained planning summary, not as a
+machine-verified proof ledger for every implementation phrase. The code, tests,
+runtime artifacts, paper sidecars, and active TODO ledgers remain the
+authoritative evidence; semantic claim-by-claim roadmap verification is still
+tracked as open documentation work.
+
 ## Current State
 
 LibreEvolve has:

@@ -91,30 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README AEvo meta-editing claims source-scoped until runtime
-      evidence exists.
-  - Spec evidence: arXiv `2605.13821`, `Harnessing Agentic Evolution`,
-    formulates agentic evolution as an interactive environment where
-    accumulated candidates, feedback, traces, and failures are process-level
-    state. AEvo uses a meta-agent to edit the procedure or agent context that
-    controls future evolution, rather than directly proposing the next
-    candidate, and reports stronger results than several evolution baselines.
-  - Current evidence: README now lists `2605.13821`, AEvo, as harnessed
-    meta-editing context only and states that no local process-level state,
-    meta-agent procedure editor, protected evaluator harness, or meta-edit
-    benchmark report exists. README also documents LibreEvolve's current
-    static config, CLI, prompt/run artifacts, failure streams, parent
-    selection, archive behavior, and benchmark boundaries.
-  - Required result: if README mentions AEvo, harnessed meta-editing,
-    process-level evolution state, meta-agent controller edits, procedure or
-    context patching, adaptive revision of the evolution mechanism, or
-    open-ended optimization gains from controller self-modification, keep the
-    wording source-scoped until local artifacts can show process-state
-    records, meta-agent actions, patch
-    provenance, rollback/versioning, drift diagnostics, budget accounting,
-    baselines, and report outcomes. Avoid implying LibreEvolve supports
-    AEvo-style meta-editing without those artifacts.
-
 - [ ] Keep README G-Zero verifier-free self-evolution claims source-scoped
       until runtime evidence exists.
   - Spec evidence: arXiv `2605.09959`, `G-Zero: Self-Play for Open-Ended

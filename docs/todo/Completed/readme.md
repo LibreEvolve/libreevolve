@@ -14790,3 +14790,28 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     traces, heartbeat logs, workspace/resource policies, health telemetry,
     benchmark baselines, report outcomes, and CORAL-style autonomous
     multi-agent evolution remain active in code and paper TODOs.
+
+- [x] Keep README AEvo meta-editing claims source-scoped until runtime
+      evidence exists.
+  - Spec evidence: arXiv `2605.13821`, `Harnessing Agentic Evolution`,
+    formulates agentic evolution as an interactive environment where
+    accumulated candidates, feedback, traces, and failures are process-level
+    state. AEvo uses a meta-agent to edit the procedure or agent context that
+    controls future evolution, rather than directly proposing the next
+    candidate, and reports stronger results than several evolution baselines.
+  - Status: README now lists arXiv `2605.13821` as harnessed meta-editing
+    context only and marks the mention as a curated cached-paper subset while
+    `papers/README.md` remains the complete implementation-status index. It
+    states that LibreEvolve has no process-level evolution state exposing
+    accumulated candidates, feedback, traces, failures, or costs, meta-agent
+    procedure or agent-context editor, standardized editable evolution
+    workspace, protected evaluator boundary, searchable candidate history for
+    meta-editing, meta-editing phase/evolution segment runner, run-plan
+    contract, procedure-versus-agent evolution instantiation, five-baseline
+    agentic/reasoning benchmark report, 26% relative-improvement reproduction,
+    three-task open-ended optimization report, linked-code audit, or
+    independent reproduction output.
+  - Remaining README gap: process-state records, meta-agent actions, patch
+    provenance, rollback/versioning, drift diagnostics, budget accounting,
+    baselines, report outcomes, and AEvo-style meta-editing remain active in
+    code and paper TODOs.

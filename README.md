@@ -734,6 +734,17 @@ Important limits:
   knowledge-reuse analysis, 10-task SOTA report, 3-10x improvement-rate
   reproduction, Anthropic kernel-engineering 1363-to-1103 cycle reproduction,
   linked-code audit, or independent reproduction output.
+- ArXiv `2605.13821` is harnessed meta-editing context only; the README
+  mentions this cached paper as a curated subset while `papers/README.md`
+  remains the complete implementation-status index. LibreEvolve has no
+  process-level evolution state exposing accumulated candidates, feedback,
+  traces, failures, or costs, meta-agent procedure or agent-context editor,
+  standardized editable evolution workspace, protected evaluator boundary,
+  searchable candidate history for meta-editing, meta-editing phase/evolution
+  segment runner, run-plan contract, procedure-versus-agent evolution
+  instantiation, five-baseline agentic/reasoning benchmark report, 26%
+  relative-improvement reproduction, three-task open-ended optimization report,
+  linked-code audit, or independent reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

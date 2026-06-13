@@ -2,6 +2,40 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Adaptive Auto-Harness roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2606.01770` source-scoped as background adaptive auto-harness
+    deployment context rather than implemented LibreEvolve sustained
+    open-ended task-stream support.
+  - Current evidence: the cached paper and `papers/README.md` record
+    open-ended task streams, growing histories, heterogeneous tasks,
+    distribution shift, brittleness from a single densely updated harness,
+    oracle-harness gap decomposition into evolution loss and adaptation loss,
+    a stateful multi-agent evolver, harness tree, solve-time routing,
+    human-steering hooks, prediction-market/security/event-forecasting
+    streams, five-baseline comparisons, and ablations, while marking local
+    stream schemas, history-growth records, distribution-shift detectors,
+    loss decompositions, harness-tree artifacts, routing policies,
+    human-steering records, sustained-performance curves, benchmark
+    reproductions, linked-code audits, and independent reproduction output as
+    missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source/license metadata, project URL status, linked-code status,
+    relation to AlphaEvolve and LibreEvolve deployment assumptions,
+    open-ended task-stream schema, history-growth records, task-heterogeneity
+    metadata, distribution-shift metrics, oracle-harness definition,
+    evolution-loss and adaptation-loss records, stateful multi-agent evolver
+    roles, cross-cycle memory, harness tree artifacts, solve-time routing
+    records, human-steering hook provenance, targeted steering outcomes,
+    sustained-performance and degradation curves, prediction-market/
+    security-competition/event-forecasting benchmark metadata, five-baseline
+    comparison outputs, code/artifact reproducibility status, and independent
+    verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive inference-time trajectory-alignment roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

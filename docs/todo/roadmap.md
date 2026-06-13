@@ -10,40 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement Adaptive Auto-Harness open-ended task-stream gates beyond
-      paper cache coverage.
-  - Spec evidence: arXiv `2606.01770`, submitted June 1, 2026, introduces
-    `Adaptive Auto-Harness: Sustained Self-Improvement for Agentic System
-    Deployment on Open-Ended Task Streams`. The abstract says fixed offline
-    benchmarks miss deployment conditions where histories grow, tasks are
-    heterogeneous, and distributions shift. It warns that a single densely
-    updated harness can become brittle, decomposes the oracle-harness gap into
-    evolution loss and adaptation loss, and uses a stateful multi-agent
-    evolver, harness tree, solve-time routing, and human-steering hooks for
-    task-wise adaptation.
-  - Current evidence: ROADMAP, `papers/download_manifest.*`,
-    `papers/row_identity.json`, `papers/README.md`, README, and TODO coverage
-    now include `2606.01770`, cached locally as
-    `papers/2606.01770__Adaptive_Auto_Harness.pdf` with byte count `1895729`
-    and SHA-256
-    `50454c1eec069b668b515c6d322e4c5ac55f24655298b3381f91f461a9c39b3e`.
-    ROADMAP tracks the paper as background adaptive auto-harness deployment
-    context only. It still has no open-ended task-stream deployment gates,
-    history-growth or distribution-shift evidence, evolution/adaptation loss
-    separation, harness tree, solve-time routing to harness variants, or human
-    steering records for cases where historical evidence is insufficient.
-  - Required result: implement roadmap gates beyond paper-cache evidence:
-    source-license and linked-code status, open-ended task-stream schema,
-    history-growth records, task-heterogeneity and distribution-shift
-    telemetry, oracle-harness definition, evolution-loss/adaptation-loss
-    metrics, stateful multi-agent evolver schemas, cross-cycle memory, harness
-    tree records, solve-time routing telemetry, human-steering hook records,
-    targeted-steering outcomes, sustained-performance and degradation curves,
-    prediction-market/security-competition/event-forecasting benchmark
-    records, baseline/ablation identities, and a background-only or benchmark-
-    fixture status rule so roadmap claims do not outpace local Adaptive Auto-
-    Harness-style sustained deployment support.
-
 - [ ] Implement Meta-Harness outer-loop harness-code search gates beyond paper
       cache coverage.
   - Spec evidence: arXiv `2603.28052`, submitted March 30, 2026, introduces

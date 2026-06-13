@@ -279,6 +279,15 @@ Important limits:
   hallucinated-execution failure report, partial-harnessing stopping rule,
   controlled synthetic experiment, terminal-agent benchmark reproduction,
   linked-code audit, or independent reproduction output.
+- Adaptive Auto-Harness deployment coverage is background paper context only:
+  LibreEvolve has no chronological open-ended task-stream schema,
+  history-growth record, task-heterogeneity report, distribution-shift
+  detector, evolution-loss/adaptation-loss decomposition, stateful
+  multi-agent evolver, harness tree, solve-time routing policy,
+  human-steering hook, overfitting/accuracy-peak-decline report,
+  prediction-market/security-competition/event-forecasting benchmark
+  reproduction, five-baseline comparison, linked-code audit, or independent
+  reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

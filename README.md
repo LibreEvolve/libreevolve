@@ -39,6 +39,9 @@ Important limits:
   provider parity remains an explicit absence boundary.
 - Backend selection is a local heuristic inspired by UCB-style routing, not a
   finite-time-regret UCB1 reproduction.
+- MAP-Elites support is a local quality-diversity archive, not a paper-faithful
+  illumination study with full map exports, coverage/reliability/precision
+  reports, or domain reproductions.
 - The examples are smoke fixtures and small demos unless a fixture documents
   stronger benchmark evidence.
 - Paper-result reproduction, benchmark-scale claims, release packaging, and

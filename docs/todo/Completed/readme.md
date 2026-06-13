@@ -208,6 +208,107 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     test-time-learning claims, the wording must remain source-scoped until
     the active code, paper, and roadmap TODO evidence exists.
 
+- [x] Archive README ImprovEvolve modular-operator source-scope TODO.
+  - Status: the README-specific TODO was stale after the README realism split.
+    The root README no longer mentions ImprovEvolve, `generate_config`,
+    `improve`, `perturb`, basin-hopping validation, scheduled perturbations,
+    human-edited variants, HEX/ACI2 improvements, or GigaEvo-backed modular
+    execution.
+  - Remaining guard: `papers/README.md` keeps `2602.10233` as modular-search
+    inspiration only, and the open code, paper, and roadmap TODOs still track
+    missing interface schemas, executed validation-loop artifacts, perturbation
+    and seed records, human-edit provenance, benchmark/baseline rows, ablation
+    and budget reports, model/provider provenance, and the static-guidance
+    versus executed-loop boundary.
+  - Verification: if the root README later reintroduces ImprovEvolve or
+    modular-operator execution claims, the wording must remain source-scoped
+    until the active code, paper, and roadmap TODO evidence exists.
+
+- [x] Archive README MadEvolve parameter-optimization source-scope TODO.
+  - Status: the README-specific TODO was stale after the README realism split.
+    The root README no longer mentions MadEvolve, domain evolution,
+    free-parameter optimization, nested optimization, autodiff/JAX/vmad
+    support, innovation reports, BAO/21cm/tSZ results, model-contribution
+    statistics, or MadEvolve public-code status.
+  - Remaining guard: `papers/README.md` keeps `2602.15951` as domain-evolution
+    inspiration only, and the open code, paper, and roadmap TODOs still track
+    missing parameter/optimizer schemas, inner-loop artifacts,
+    differentiability checks, report-generator artifacts, benchmark rows,
+    success/improvement/model-contribution tables, compute environment,
+    task prompts/evaluators, reward-hacking caveats, hosted reports, and
+    source-status evidence.
+  - Verification: if the root README later reintroduces MadEvolve or related
+    parameter-optimization claims, the wording must remain source-scoped until
+    the active code, paper, and roadmap TODO evidence exists.
+
+- [x] Archive README CausalEvolve causal-scratchpad source-scope TODO.
+  - Status: the README-specific TODO was stale after the README realism split.
+    The root README no longer mentions CausalEvolve, causal scratchpads,
+    outcome/procedure factors, causal planning, treatment-effect guidance,
+    surprise-pattern reasoning, abductive causal hypotheses, or CausalEvolve
+    benchmark improvements.
+  - Remaining guard: `papers/README.md` keeps `2603.14575` as causal-guidance
+    inspiration only, and the open code, paper, and roadmap TODOs still track
+    missing factor-generation prompts, executable factor metrics,
+    intervention/action records, scratchpad memory artifacts,
+    procedure-factor and treatment-effect tables, abduction outputs,
+    benchmark rows, model/seed/step provenance, license/source status, and the
+    fixed-token-pattern versus causal-scratchpad boundary.
+  - Verification: if the root README later reintroduces CausalEvolve or
+    causal-scratchpad claims, the wording must remain source-scoped until the
+    active code, paper, and roadmap TODO evidence exists.
+
+- [x] Archive README DeepEvolve research/debug-loop source-scope TODO.
+  - Status: the README-specific TODO was stale after the README realism split.
+    The root README no longer mentions DeepEvolve, deep research, proposal
+    writing, cross-file code editing, automatic debugging, reflection,
+    hypothesis refinement, external research-guided evolution, or DeepEvolve
+    benchmark improvements.
+  - Remaining guard: `papers/README.md` keeps `2510.06056` as retrieval/debug
+    loop inspiration only, and the open code, paper, and roadmap TODOs still
+    track missing plan/search/write artifacts, retrieved-source evidence,
+    cross-file coding/debugging records, algorithm-description fields,
+    benchmark rows, execution-success and ablation tables, runtime/GPU budgets,
+    idea-quality judge records, and bounded-retrieval versus execution-loop
+    semantics.
+  - Verification: if the root README later reintroduces DeepEvolve or
+    research/debug-loop claims, the wording must remain source-scoped until
+    the active code, paper, and roadmap TODO evidence exists.
+
+- [x] Scope README MAP-Elites wording to local archive support.
+  - Status: the root README still mentions MAP-Elites, but now explicitly says
+    MAP-Elites support is a local quality-diversity archive, not a
+    paper-faithful illumination study with full map exports,
+    coverage/reliability/precision reports, or domain reproductions.
+  - Remaining guard: `papers/README.md` keeps `1504.04909` as the foundational
+    archive source, and the open code, paper, and roadmap TODOs still track
+    missing `b(x)`/`f(x)` schemas, dimension/discretization records, full map
+    exports, illumination metrics, visualization artifacts, lineage evidence,
+    retina/soft-robot/physical-arm schedules, and descriptor compatibility
+    tests.
+  - Verification: if the root README later expands MAP-Elites, illumination,
+    descriptor, or feature-performance-map claims, the wording must stay
+    source-scoped until the active code, paper, and roadmap TODO evidence
+    exists.
+
+- [x] Archive README hardness-of-approximation proof-element source-scope TODO.
+  - Status: the README-specific TODO was stale after the README realism split.
+    The root README no longer mentions AlphaEvolve complexity-theory results,
+    hardness of approximation, MAX-k-CUT, metric TSP, random regular graph
+    certification, Ramanujan graph witnesses, proof elements, verifier
+    speedups, or theorem-lifting applications.
+  - Remaining guard: `papers/README.md` keeps `2509.18057` as background only,
+    and the open code, paper, and roadmap TODOs still track missing
+    graph/gadget schemas, verifier-speed and correctness records, judge-LLM
+    and human-inspection records, brute-force verification outputs,
+    theorem/proof cross-links, baseline/SOTA rows, source/repository status,
+    human/proof-handoff attribution, and proof-element implementation
+    boundaries.
+  - Verification: if the root README later reintroduces hardness,
+    complexity-theory, graph/gadget, verifier-speed, or proof-element claims,
+    the wording must remain source-scoped until the active code, paper, and
+    roadmap TODO evidence exists.
+
 - [x] Keep README validator sandbox/resource-limit wording scoped to local
       subprocess audit evidence versus OS/container enforcement.
   - Status: README Important limits now states that validator execution policy

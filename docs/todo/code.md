@@ -6451,9 +6451,10 @@ Primary evidence:
     GPUMode/AtCoder/single-cell benchmark records, prior-art and
     AlphaEvolve/OpenEvolve baseline identities, expert/organizer review
     artifacts, cost and budget accounting, seed/run records, independent
-    checker outputs, and README/ROADMAP wording that keeps TTT-Discover-style
-    test-time training as missing evidence until local implementation and
-    benchmark reports exist. The implementation boundary should additionally
+    checker outputs, ROADMAP and paper-index wording that keeps
+    TTT-Discover-style test-time training as missing evidence until local
+    implementation and benchmark reports exist, and source-scoped root README
+    wording if those claims are reintroduced. The implementation boundary should additionally
     require Algorithm 1 event logs, mutable-weight/checkpoint and LoRA records,
     per-step rollout batches, adaptive-beta KL solves, PUCT parent/reuse and
     top-1000 archive-retention traces, reward-validity zeroing, public code

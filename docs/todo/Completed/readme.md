@@ -46,6 +46,22 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     workflow-automation claims, the wording must remain source-scoped until
     the active code, paper, and roadmap TODO evidence exists.
 
+- [x] Archive README TTT-Discover test-time-training source-scope TODO.
+  - Status: the README-specific TODO was stale after the README realism split.
+    The root README no longer mentions TTT-Discover, test-time training,
+    reinforcement learning at test time, mutable model-policy state, Tinker,
+    `gpt-oss-120b`, LoRA checkpoints, PUCT traces, GPUMode, AtCoder,
+    OpenProblems, or single-cell denoising benchmarks.
+  - Remaining guard: `papers/README.md` keeps `2601.16175` background-only,
+    and the open code, paper, and roadmap TODOs still track the missing
+    mutable policy/training-state schema, RL objective and rollout metadata,
+    Tinker/API training-run records, checkpoint provenance, continuous-reward
+    benchmark rows, baseline identities, expert/organizer review artifacts,
+    cost records, official submissions, and independent checker outputs.
+  - Verification: if the root README later reintroduces TTT-Discover or
+    related test-time-training claims, the wording must remain source-scoped
+    until the active code, paper, and roadmap TODO evidence exists.
+
 - [x] Keep README validator sandbox/resource-limit wording scoped to local
       subprocess audit evidence versus OS/container enforcement.
   - Status: README Important limits now states that validator execution policy

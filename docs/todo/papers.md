@@ -6018,9 +6018,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     definitions, Erdos/autocorrelation/GPUMode/AtCoder/single-cell benchmark
     records, prior-art and AlphaEvolve/OpenEvolve baseline identities, expert
     or organizer review artifacts, cost/budget accounting, seed/run records,
-    independent checker outputs, reproducibility status, and README/ROADMAP
-    wording that treats TTT-Discover-style test-time training as missing
-    paper evidence rather than implemented LibreEvolve support. Paper evidence
+    independent checker outputs, reproducibility status, ROADMAP and
+    paper-index wording that treats TTT-Discover-style test-time training as
+    missing paper evidence rather than implemented LibreEvolve support, and
+    source-scoped root README wording if those claims are reintroduced. Paper evidence
     should additionally preserve the exact public URLs, result notebook paths,
     GPUMode and AtCoder submission links, Modal and OpenProblems harness
     provenance, per-domain verifier limits, LoRA/checkpoint lineage, adaptive-

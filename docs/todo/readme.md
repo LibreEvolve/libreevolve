@@ -91,49 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Implement README TTT-Discover claims beyond source-scoped absence.
-  - Spec evidence: arXiv `2601.16175`, `Learning to Discover at Test Time`,
-    contrasts AlphaEvolve-style frozen-LLM prompting with reinforcement
-    learning at test time, where the LLM keeps training on one specific
-    discovery problem. Its abstract reports continuous-reward results across
-    math, GPU kernel engineering, algorithm design, and biology, with open
-    model `OpenAI gpt-oss-120b`, public code, Tinker runs, expert or
-    organizer review, and low per-problem costs. The body uses mutable
-    test-time weights, adaptive entropic RL, PUCT reuse, LoRA rank `32`, `50`
-    steps of `512` rollouts, Tinker `32768`-token context windows, and
-    benchmark-specific verifiers for math constructions, Triton kernels, C++
-    AtCoder submissions, and single-cell denoising.
-  - Current evidence: README now keeps `2601.16175` source-scoped through
-    `papers/ttt_discover_boundary.json`, which records the missing local
-    test-time-training evidence. README documents provider adapters, feedback
-    graders, benchmark-report contracts, paper-cache status, and smoke fixtures,
-    but it still does not implement test-time RL, mutate model weights or policy
-    state, record Tinker/API training runs, preserve open-
-    model checkpoint provenance, define continuous-reward task rows for the
-    cited domains, record expert/organizer review, or compare frozen-search
-    AlphaEvolve/OpenEvolve baselines against a trained-at-test-time policy.
-    README also lacks source-scoped boundaries for public TTT-Discover URLs,
-    LoRA/checkpoint lineage, adaptive-beta/PUCT traces, GPUMode/AtCoder/
-    OpenProblems harness provenance, Table 2-10 result rows, OpenEvolve
-    truncation caveats, official submission links, and the sampling-budget
-    inconsistency in the paper text.
-  - Required result: before README can promote TTT-Discover, test-time training,
-    reinforcement learning at test time, mutable LLM policy state, Tinker
-    discovery runs, `gpt-oss-120b` reproduction, continuous-reward discovery
-    benchmarks, Erdos minimum overlap, autocorrelation, GPUMode, AtCoder,
-    single-cell denoising, or open-model alternatives to AlphaEvolve beyond the
-    source-scoped boundary, local artifacts must show policy/training-state
-    schemas, training-run provenance, checkpoint records, benchmark definitions,
-    baseline identities, expert review artifacts, budget/cost records,
-    independent checker outputs, and benchmark reports. Avoid implying
-    LibreEvolve supports TTT-Discover-style
-    test-time training without those artifacts. README wording should also
-    distinguish provider inference, critique, and feedback grading from
-    weight-updating test-time RL unless local artifacts include mutable
-    checkpoints, rollout batches, adaptive-beta and PUCT records, table-level
-    result reproduction, official score/runtime submissions, and source
-    caveats for paper-text inconsistencies.
-
 - [ ] Implement README AlphaEvolve Bruhat-interval claims beyond source-scoped
       absence.
   - Spec evidence: arXiv `2601.01235`, `Bruhat intervals that are large

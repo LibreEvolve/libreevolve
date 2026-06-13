@@ -2,6 +2,37 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive harness-updating versus harness-benefit roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2605.30621` source-scoped as background harness-capability
+    disentanglement context rather than implemented LibreEvolve
+    harness-benefit evaluation support.
+  - Current evidence: the cached paper and `papers/README.md` record the
+    distinction between harness-updating and harness-benefit, flat
+    harness-updating across model capability tiers, non-monotonic
+    harness-benefit, weak-tier activation and adherence failure modes,
+    evolver/task-agent role separation, SWE-Bench Verified, MCP-Atlas, and
+    SkillsBench evaluation scope, and public-code availability, while marking
+    local update/benefit metric schemas, evolver-versus-task-solver model-pair
+    matrices, capability-tier records, persistent harness update artifacts,
+    activation/load telemetry, adherence traces, capability-budget accounting,
+    benchmark reports, public-code snapshot audits, and independent
+    reproduction output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source/license metadata, linked-code URL/status, relation to
+    LibreEvolve harness assumptions, harness-updating metric definitions,
+    harness-benefit metric definitions, evolver/task-agent pairing matrix,
+    persistent harness update artifacts, activation/load-rate telemetry,
+    adherence/following traces across long trajectories, model-tier taxonomy,
+    weak/mid/strong baseline identities, capability-budget accounting,
+    post-evolution performance deltas, SWE-Bench Verified/MCP-Atlas/
+    SkillsBench benchmark metadata if reproduced, reproducibility status, and
+    independent verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive RHO retrospective harness-optimization roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

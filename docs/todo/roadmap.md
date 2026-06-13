@@ -10,40 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement harness-updating versus harness-benefit gates beyond paper
-      cache coverage.
-  - Spec evidence: arXiv `2605.30621`, submitted May 28, 2026, introduces
-    `Harness Updating Is Not Harness Benefit: Disentangling Evolution
-    Capabilities in Self-Evolving LLM Agents`. The abstract distinguishes
-    generating useful persistent harness updates from actually benefiting
-    from those updates during task solving. It reports flat harness-updating
-    across base capability tiers, non-monotonic harness-benefit with mid-tier
-    agents benefiting most, and weak-agent failure modes around harness
-    artifact activation and faithful long-horizon following.
-  - Current evidence: ROADMAP, `papers/download_manifest.*`,
-    `papers/row_identity.json`, `papers/README.md`, README, and TODO coverage
-    now include `2605.30621`, cached locally as
-    `papers/2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf` with
-    byte count `2463998` and SHA-256
-    `a3a09f90dc278f1c6ceee5a3f7bf807b5a92b642cbcb0123d20b824a0e880d6b`.
-    ROADMAP tracks the paper as background harness-capability
-    disentanglement context only. It still has no separate harness-updating
-    and harness-benefit readiness gates, artifact activation metrics,
-    adherence measurement for updated harness instructions over long
-    trajectories, model-tier comparison for evolver versus task-solving
-    roles, or capability-budget evidence before promoting harness self-
-    evolution gains.
-  - Required result: implement roadmap gates beyond paper-cache evidence:
-    source-license and linked-code status, harness-updating metric schema,
-    harness-benefit metric schema, evolver/task-agent pairing matrix,
-    persistent harness update records, harness artifact activation/load
-    telemetry, adherence/following traces, long-horizon instruction-following
-    reports, model-tier taxonomy, weak/mid/strong baseline identities,
-    capability-budget accounting, benchmark records for SWE-Bench Verified,
-    MCP-Atlas, and SkillsBench if reproduced, and a background-only or
-    benchmark-fixture status rule so roadmap claims do not conflate harness
-    update generation with downstream harness benefit.
-
 - [ ] Implement AHE observability-driven harness evolution gates beyond paper
       cache coverage.
   - Spec evidence: arXiv `2604.25850`, submitted April 28, 2026, introduces

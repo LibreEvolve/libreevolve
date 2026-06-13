@@ -249,6 +249,13 @@ Important limits:
   metadata, behavior-pattern shift report, long-horizon accuracy report,
   SWE-Bench Pro 59%-to-78% reproduction, linked-code audit, or independent
   reproduction output.
+- Harness-updating versus harness-benefit coverage is background paper context
+  only: LibreEvolve has no harness-updating metric schema, harness-benefit
+  metric schema, evolver-versus-task-solver model-pair matrix,
+  capability-tier grouping record, cross-benchmark harness self-evolution
+  report, activation-failure audit, adherence-failure audit,
+  capability-budget recommendation report, public-code snapshot audit, or
+  independent reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

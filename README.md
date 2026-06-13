@@ -698,6 +698,14 @@ Important limits:
   sampler, trajectory-collaboration diagnostics, LLM-SR/KernelBench/Modded
   NanoGPT benchmark report, linked-code audit, or independent reproduction
   output.
+- ArXiv `2605.08520` is asynchronous-stage orchestration context only; the
+  README mentions this cached paper as a curated subset while
+  `papers/README.md` remains the complete implementation-status index.
+  LibreEvolve has no asynchronous worker queue, stage dependency scheduler,
+  artifact-version lineage DAG, stale-artifact detector, staleness repair
+  policy, speculative stage-completion records, adaptive workflow controller,
+  EvolBench/ChatDev/MetaGPT benchmark report, 3.5x/4.9x throughput
+  reproduction, linked-code audit, or independent reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

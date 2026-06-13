@@ -14693,3 +14693,27 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     sampling-policy records, trajectory collaboration diagnostics, benchmark
     baselines, report outcomes, and PACEvolve-style consistency controls
     remain active in code and paper TODOs.
+
+- [x] Keep README FlashEvolve async-stage claims source-scoped until benchmark
+      evidence exists.
+  - Spec evidence: arXiv `2605.08520`, `FlashEvolve: Accelerating Agent
+    Self-Evolution with Asynchronous Stage Orchestration`, says synchronized
+    stage execution and LLM-heavy stage imbalance bottleneck LLM-based
+    evolution. It proposes asynchronous workers and queues, artifact-version
+    tracking, staleness-aware update/discard/patch policies, language-space
+    stale-artifact repair, speculative stage completion, adaptive workflow
+    control, and reports 3.5x local-vLLM and 4.9x API throughput gains over
+    synchronous GEPA.
+  - Status: README now lists arXiv `2605.08520` as asynchronous-stage
+    orchestration context only and marks the mention as a curated cached-paper
+    subset while `papers/README.md` remains the complete implementation-status
+    index. It states that LibreEvolve has no asynchronous worker queue, stage
+    dependency scheduler, artifact-version lineage DAG, stale-artifact
+    detector, staleness repair policy, speculative stage-completion records,
+    adaptive workflow controller, EvolBench/ChatDev/MetaGPT benchmark report,
+    3.5x/4.9x throughput reproduction, linked-code audit, or independent
+    reproduction output.
+  - Remaining README gap: queue traces, artifact-version lineage, staleness
+    policies, patch outputs, throughput/token metrics, baseline identities,
+    report outcomes, and FlashEvolve-style async orchestration remain active in
+    code and paper TODOs.

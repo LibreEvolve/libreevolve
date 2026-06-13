@@ -91,32 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README FlashEvolve async-stage claims source-scoped until benchmark
-      evidence exists.
-  - Spec evidence: arXiv `2605.08520`, `FlashEvolve: Accelerating Agent
-    Self-Evolution with Asynchronous Stage Orchestration`, says synchronized
-    stage execution and LLM-heavy stage imbalance bottleneck LLM-based
-    evolution. It proposes asynchronous workers and queues, artifact-version
-    tracking, staleness-aware update/discard/patch policies, language-space
-    stale-artifact repair, speculative stage completion, adaptive workflow
-    control, and reports 3.5x local-vLLM and 4.9x API throughput gains over
-    synchronous GEPA.
-  - Current evidence: README now lists `2605.08520`, `FlashEvolve`, as
-    asynchronous-stage orchestration context only and states that no local
-    async worker queue, artifact-version DAG, staleness repair, or throughput
-    benchmark exists. README also documents LibreEvolve's current CLI,
-    evaluator, run artifacts, archive/island behavior, reviewer pool, and
-    implementation boundaries.
-  - Required result: if README mentions FlashEvolve, asynchronous stage
-    orchestration, async workers/queues, stale artifact repair, speculative
-    stage completion, adaptive workflow control, GEPA throughput gains,
-    local-vLLM/API speedups, ACE, or Meta-Harness applicability, keep the
-    wording source-scoped until local artifacts can show queue traces,
-    artifact-version lineage, staleness
-    policies, patch outputs, throughput/token metrics, baseline identities,
-    and report outcomes. Avoid implying LibreEvolve supports FlashEvolve-style
-    async orchestration without those implementation and benchmark artifacts.
-
 - [ ] Keep README mechanistic evolutionary-agent claims source-scoped until
       trace-diagnostic evidence exists.
   - Spec evidence: arXiv `2605.20086`, `What Do Evolutionary Coding Agents

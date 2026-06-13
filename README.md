@@ -264,6 +264,13 @@ Important limits:
   manifest, ten-iteration Terminal-Bench 2 report, SWE-bench-verified
   transfer report, cross-family transfer report, tools/middleware/memory
   ablation, public-code snapshot audit, or independent reproduction output.
+- AI Harness Engineering runtime-substrate coverage is background paper
+  context only: LibreEvolve has no complete eleven-responsibility harness
+  contract, H0-H3 harness-ladder fixture, trace-based episode-package schema,
+  controlled validation-task reproduction, model-harness-environment
+  capability equation record, failure-attribution taxonomy report,
+  deterministic requirement-check package, structured verification report,
+  public-code snapshot audit, or independent reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

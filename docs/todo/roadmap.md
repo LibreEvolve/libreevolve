@@ -10,38 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement AI Harness Engineering runtime-substrate gates beyond paper
-      cache coverage.
-  - Spec evidence: arXiv `2605.13357`, submitted May 13, 2026, introduces
-    `AI Harness Engineering: A Runtime Substrate for Foundation-Model Software
-    Agents`. The abstract reframes software-engineering capability as emerging
-    from a model-harness-environment system and names eleven harness
-    responsibilities: task specification, context selection, tool access,
-    project memory, task state, observability, failure attribution,
-    verification, permissions, entropy auditing, and intervention recording.
-    It proposes an H0-H3 ladder and an auditable episode-package protocol.
-  - Current evidence: ROADMAP, `papers/download_manifest.*`,
-    `papers/row_identity.json`, `papers/README.md`, README, and TODO coverage
-    now include `2605.13357`, cached locally as
-    `papers/2605.13357__AI_Harness_Engineering.pdf` with byte count `263956`
-    and SHA-256
-    `a1e2d7ce307c662411ca6bd5f833d7dae7f122ce6ef1ddd6d2370e82575b2fb9`.
-    ROADMAP tracks the paper as background AI harness runtime-substrate
-    context only. It still has no general runtime-substrate gate, all-eleven-
-    responsibility harness contract, H0-H3 maturity levels, episode packages,
-    maintenance-entropy audit, human-intervention logs, or structured
-    requirement-level verification evidence tied to task completion.
-  - Required result: implement roadmap gates beyond paper-cache evidence:
-    source-license metadata, model-harness-environment schema, eleven
-    responsibility records, H0-H3 harness-level taxonomy, runtime-resource
-    exposure matrix, task/context/tool/memory/state records, observability
-    traces, failure-attribution logs, verification protocol/report artifacts,
-    permission-boundary events, entropy audits, intervention logs, episode-
-    package records, deterministic requirement-check evidence, maintenance-
-    burden reports, controlled validation metadata, and a background-only or
-    benchmark-fixture status rule so roadmap claims do not outpace local AI-
-    harness runtime-substrate support.
-
 - [ ] Implement inference-time trajectory-alignment harness gates beyond paper
       cache coverage.
   - Spec evidence: arXiv `2605.21516`, submitted May 15, 2026, introduces

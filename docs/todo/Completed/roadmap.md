@@ -2,6 +2,37 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive AI Harness Engineering runtime-substrate roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2605.13357` source-scoped as background AI harness
+    runtime-substrate context rather than implemented LibreEvolve
+    runtime-substrate support.
+  - Current evidence: the cached paper and `papers/README.md` record the
+    model/harness/environment framing, eleven harness responsibilities, H0-H3
+    runtime-support ladder, trace-based auditable episode packages,
+    controlled validation-task context, reproduction logs, failure
+    attribution, deterministic requirement checks, and structured
+    verification reports, while marking local all-responsibility contracts,
+    H0-H3 fixtures, episode-package schemas, controlled reproduction,
+    capability-equation records, failure-attribution taxonomy reports,
+    deterministic requirement-check packages, public-code snapshot audits,
+    and independent reproduction output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source/license metadata, project URL status, linked-code status,
+    relation to AlphaEvolve and LibreEvolve harness assumptions,
+    model-harness-environment schema, eleven responsibility taxonomy, H0-H3
+    harness-level records, runtime-resource exposure matrix, task/context/
+    tool/memory/state records, observability traces, failure-attribution logs,
+    verification protocol artifacts, permission-boundary events, entropy
+    audit records, intervention logs, trace-based episode packages,
+    deterministic requirement-check evidence, structured verification
+    reports, controlled validation metadata, code/artifact reproducibility
+    status, and independent verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive AHE observability-driven harness-evolution roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

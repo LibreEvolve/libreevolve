@@ -2,6 +2,33 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive scheduling deployment-readiness roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `docs/status.md`, `papers/README.md`, `docs/todo/code.md`, and
+    `docs/todo/papers.md` already scope scheduling deployment readiness to a
+    `scheduling_deployment_readiness` report contract, not proof of real
+    mission-critical rollout, operator acceptance, deployment measurements, or
+    AlphaEvolve-comparable Borg scheduling readiness. `README.md` remains
+    high-level and does not overclaim scheduling deployment evidence.
+  - Current evidence: `libreevolve.systems_result_report.v1` requires
+    `scheduling_deployment_readiness` before accepting `alphaevolve_ready`
+    scheduling reports. The validator checks interpretable heuristic structure,
+    operator review, debuggability notes, deployment ergonomics, rollout-risk
+    controls, learned-policy comparison, predictability checks,
+    `human_reviewed`, `black_box_baseline_compared`, `rollout_risk_reviewed`,
+    and artifact refs.
+  - Remaining guard: active code and paper TODOs still track real missing Borg
+    deployment evidence: reviewed interpretable code/rule structure, operator
+    and debuggability artifacts, predictability or monotonicity checks,
+    rollout/deployment-risk evidence, black-box or less-interpretable baseline
+    comparison, mission-critical rollout evidence, and paper-facing
+    certification examples.
+  - Verification: focused systems-result tests reject ready scheduling reports
+    missing `scheduling_deployment_readiness`, false review flags, empty
+    predictability checks, bad artifact refs, and deployment-readiness blocks on
+    non-scheduling reports; systems-readiness boundary and paper-manifest tests
+    preserve the no-real-systems-fixtures boundary.
+
 - [x] Archive scheduling vector-bin-packing roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `docs/status.md`, `papers/README.md`, `docs/todo/code.md`, and

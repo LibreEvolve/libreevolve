@@ -16,6 +16,7 @@ def test_evaluator_oracle_boundary_accepts_absence_record():
     assert validation.required_evidence_field_count == 17
     assert validation.missing_evidence_count == 7
     assert boundary["schema"] == EVALUATOR_ORACLE_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["2.4"]
     assert "does not claim AlphaEvolve-style independent evaluator-oracle" in (
         boundary["claim_boundary"]
     )
@@ -25,6 +26,7 @@ def test_evaluator_oracle_boundary_rejects_premature_independence_claim():
     boundary = evaluator_oracle_boundary_record()
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "independent_oracle_evidence_recorded"
+    boundary["source_section_ids"] = ["2.3"]
     boundary["missing_evidence"]["independent_reference_oracle_records"] = "recorded"
     boundary["required_evidence_fields"] = ["evaluator_id"]
 
@@ -34,6 +36,7 @@ def test_evaluator_oracle_boundary_rejects_premature_independence_claim():
     assert validation.ok is False
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert "invalid_missing_evidence_independent_reference_oracle_records" in codes
     assert "missing_required_evidence_field" in codes
 

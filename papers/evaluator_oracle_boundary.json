@@ -5,6 +5,9 @@
   "source_evidence_schema": "libreevolve.evaluator_oracle_source_evidence.v1",
   "source_paper_id": "2506.13131",
   "source_section_id": "2.4",
+  "source_section_ids": [
+    "2.4"
+  ],
   "source_claim": "AlphaEvolve improves candidates by continuously receiving feedback from one or more evaluators, with optional cascades and generated feedback layered around the user-provided evaluation function",
   "boundary_status": "local_arbitration_without_independent_oracle_evidence",
   "runtime_report_status": "evaluator_oracle_registry_available",

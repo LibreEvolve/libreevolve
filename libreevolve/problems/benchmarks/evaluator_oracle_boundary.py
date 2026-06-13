@@ -16,6 +16,7 @@ EVALUATOR_ORACLE_SOURCE_EVIDENCE_SCHEMA = (
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_ID = "2.4"
+EXPECTED_SOURCE_SECTION_IDS = ("2.4",)
 EXPECTED_BOUNDARY_STATUS = "local_arbitration_without_independent_oracle_evidence"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "evaluator_id",
@@ -74,6 +75,7 @@ def evaluator_oracle_boundary_record() -> dict[str, Any]:
         "source_evidence_schema": EVALUATOR_ORACLE_SOURCE_EVIDENCE_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_section_id": EXPECTED_SOURCE_SECTION_ID,
+        "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_claim": (
             "AlphaEvolve improves candidates by continuously receiving feedback "
             "from one or more evaluators, with optional cascades and generated "
@@ -116,6 +118,8 @@ def validate_evaluator_oracle_boundary(
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     if data.get("source_section_id") != EXPECTED_SOURCE_SECTION_ID:
         issues.append(_issue("invalid_source_section_id", "source_section_id must be 2.4"))
+    if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['2.4']"))
     if not isinstance(data.get("source_claim"), str) or "one or more evaluators" not in data["source_claim"]:
         issues.append(_issue("invalid_source_claim", "source_claim must identify feedback from one or more evaluators"))
     status = data.get("boundary_status")

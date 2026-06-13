@@ -959,13 +959,13 @@ Completed manifests include
 the selected startup policy, the current Python subprocess validator runner
 contract, non-Python text members as workspace-only/no-runner records,
 unsupported arbitrary-language and build-system runner contracts, any
-metadata-only language/build declarations, unsupported task
-candidate-abstraction hooks, and the exact executable contract gaps that must
-close before AlphaEvolve-style arbitrary-language/codebase parity can be
-claimed.
+metadata-only language/build declarations, `runner_declaration_evidence`
+counts/status, unsupported task candidate-abstraction hooks, and the exact
+executable contract gaps that must close before AlphaEvolve-style
+arbitrary-language/codebase parity can be claimed.
 The committed `papers/candidate_language_runner_boundary.json` sidecar
-preserves the same arbitrary-language/build-runner absence boundary for
-paper-manifest validation.
+preserves the same arbitrary-language/build-runner execution absence boundary
+for paper-manifest validation.
 For runs that can perform mutation LLM calls, backend client construction is
 preflighted before overwrite cleanup in the core runtime. The CLI also checks
 OpenAI and Anthropic credentials as non-blank after trimming. Seed-only runs

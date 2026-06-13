@@ -40,11 +40,13 @@ Primary evidence:
     non-Python text members as workspace-only/no-runner records, unsupported
     arbitrary-language and build-system runner contracts, metadata-only
     `candidate_language_runners` and `candidate_build_systems` declarations
-    when configured, unsupported task candidate-abstraction hooks, and the
-    exact remaining executable-contract gaps before AlphaEvolve-style
-    language/build parity. The committed
+    when configured, `runner_declaration_evidence` counts/status records,
+    unsupported task candidate-abstraction hooks, and the exact remaining
+    executable-contract gaps before AlphaEvolve-style language/build parity.
+    The committed
     `papers/candidate_language_runner_boundary.json` sidecar now records the
-    paper-manifest-validated arbitrary-language/build-runner absence boundary.
+    paper-manifest-validated arbitrary-language/build-runner execution absence
+    boundary.
   - Required result: turn metadata declarations into executable language and
     build runner contracts, add language-aware evolve-block grammars, and add
     problem-defined candidate abstraction hooks before claiming non-Python or

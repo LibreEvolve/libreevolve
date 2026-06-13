@@ -877,7 +877,8 @@ Completed manifests also include
 the current Python subprocess validator runner contract, non-Python text files
 as workspace-only/no-runner members, unsupported arbitrary-language and
 build-system runner contracts, metadata-only `candidate_language_runners` and
-`candidate_build_systems` declarations when configured, unsupported task
+`candidate_build_systems` declarations when configured, declaration-evidence
+counts/status under `runner_declaration_evidence`, unsupported task
 candidate-abstraction hooks, and the remaining contract gaps for executing
 declared non-Python/build runners, language-aware evolve-block grammars,
 build-system runners, task-defined abstraction hooks, and runner

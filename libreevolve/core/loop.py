@@ -10752,6 +10752,12 @@ def _candidate_language_runner_contract_report(
         },
         "declared_language_runner_records": language_runner_declarations,
         "declared_build_system_records": build_system_declarations,
+        "runner_declaration_evidence": (
+            _candidate_runner_declaration_evidence(
+                language_runner_declarations,
+                build_system_declarations,
+            )
+        ),
         "task_candidate_abstraction_hooks": {
             "status": "unsupported",
             "problem_declared_candidate_type": "not_configured",
@@ -10783,6 +10789,59 @@ def _candidate_language_runner_contract_report(
     return report
 
 
+def _candidate_runner_declaration_evidence(
+    language_runner_declarations: list[dict],
+    build_system_declarations: list[dict],
+) -> dict:
+    language_ids = [
+        record["language"]
+        for record in language_runner_declarations
+        if isinstance(record, Mapping) and isinstance(record.get("language"), str)
+    ]
+    build_ids = [
+        record["name"]
+        for record in build_system_declarations
+        if isinstance(record, Mapping) and isinstance(record.get("name"), str)
+    ]
+    runner_command_count = sum(
+        1
+        for record in language_runner_declarations
+        if isinstance(record, Mapping)
+        and isinstance(record.get("runner_command"), list)
+        and bool(record.get("runner_command"))
+    )
+    build_command_count = sum(
+        1
+        for record in build_system_declarations
+        if isinstance(record, Mapping)
+        and isinstance(record.get("build_command"), list)
+        and bool(record.get("build_command"))
+    )
+    artifact_pattern_count = sum(
+        len(record.get("artifact_patterns", []))
+        for record in build_system_declarations
+        if isinstance(record, Mapping)
+        and isinstance(record.get("artifact_patterns"), list)
+    )
+    declaration_count = len(language_ids) + len(build_ids)
+    return {
+        "schema": "libreevolve.candidate_runner_declaration_evidence.v1",
+        "declaration_status": (
+            "metadata_only_no_execution" if declaration_count else "not_configured"
+        ),
+        "language_runner_declaration_count": len(language_ids),
+        "build_system_declaration_count": len(build_ids),
+        "declared_language_ids": sorted(language_ids),
+        "declared_build_system_ids": sorted(build_ids),
+        "runner_command_metadata_count": runner_command_count,
+        "build_command_metadata_count": build_command_count,
+        "artifact_pattern_metadata_count": artifact_pattern_count,
+        "execution_status": "unsupported",
+        "runner_environment_artifacts": "not_recorded",
+        "generated_build_artifact_records": "not_recorded",
+    }
+
+
 def validate_candidate_language_runner_contract_report(report: object) -> dict:
     issues: list[dict] = []
     schema = "libreevolve.candidate_language_runner_contract_report.v1"
@@ -10805,6 +10864,7 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
         "build_system_runner_contracts",
         "declared_language_runner_records",
         "declared_build_system_records",
+        "runner_declaration_evidence",
         "task_candidate_abstraction_hooks",
         "alphaevolve_contract_gap",
         "claim_ready",
@@ -11001,6 +11061,21 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
                     "message": "declared build systems must not claim supported execution",
                 }
             )
+    declaration_evidence = report.get("runner_declaration_evidence")
+    if not isinstance(declaration_evidence, Mapping):
+        issues.append(
+            {
+                "code": "invalid_runner_declaration_evidence",
+                "message": "runner_declaration_evidence must be an object",
+            }
+        )
+    else:
+        _validate_candidate_runner_declaration_evidence(
+            declaration_evidence,
+            declared_language_runners,
+            declared_build_systems,
+            issues,
+        )
     hooks = report.get("task_candidate_abstraction_hooks")
     if not isinstance(hooks, Mapping):
         issues.append(
@@ -11098,6 +11173,92 @@ def _candidate_abstraction_runtime_record(program: Program) -> dict:
         "static_member_count": len(workspace.static_files),
         "representational_role": "direct_solution_code_workspace",
     }
+
+
+def _validate_candidate_runner_declaration_evidence(
+    evidence: Mapping[str, object],
+    declared_language_runners: list[object],
+    declared_build_systems: list[object],
+    issues: list[dict],
+) -> None:
+    if evidence.get("schema") != "libreevolve.candidate_runner_declaration_evidence.v1":
+        issues.append(
+            {
+                "code": "invalid_runner_declaration_evidence_schema",
+                "message": "runner declaration evidence schema is unsupported",
+            }
+        )
+    language_ids = sorted(
+        record.get("language")
+        for record in declared_language_runners
+        if isinstance(record, Mapping) and isinstance(record.get("language"), str)
+    )
+    build_ids = sorted(
+        record.get("name")
+        for record in declared_build_systems
+        if isinstance(record, Mapping) and isinstance(record.get("name"), str)
+    )
+    if evidence.get("language_runner_declaration_count") != len(language_ids):
+        issues.append(
+            {
+                "code": "language_runner_declaration_count_mismatch",
+                "message": "language runner declaration count must match declared records",
+            }
+        )
+    if evidence.get("build_system_declaration_count") != len(build_ids):
+        issues.append(
+            {
+                "code": "build_system_declaration_count_mismatch",
+                "message": "build system declaration count must match declared records",
+            }
+        )
+    if evidence.get("declared_language_ids") != language_ids:
+        issues.append(
+            {
+                "code": "declared_language_ids_mismatch",
+                "message": "declared language ids must match declared records",
+            }
+        )
+    if evidence.get("declared_build_system_ids") != build_ids:
+        issues.append(
+            {
+                "code": "declared_build_system_ids_mismatch",
+                "message": "declared build system ids must match declared records",
+            }
+        )
+    expected_status = (
+        "metadata_only_no_execution"
+        if language_ids or build_ids
+        else "not_configured"
+    )
+    if evidence.get("declaration_status") != expected_status:
+        issues.append(
+            {
+                "code": "invalid_runner_declaration_status",
+                "message": "runner declaration status must match configured records",
+            }
+        )
+    if evidence.get("execution_status") != "unsupported":
+        issues.append(
+            {
+                "code": "runner_declaration_execution_overclaim",
+                "message": "runner declaration evidence must not claim execution support",
+            }
+        )
+    if evidence.get("runner_environment_artifacts") != "not_recorded":
+        issues.append(
+            {
+                "code": "runner_environment_artifacts_overclaim",
+                "message": "runner environment artifacts must remain not_recorded",
+            }
+        )
+    if evidence.get("generated_build_artifact_records") != "not_recorded":
+        issues.append(
+            {
+                "code": "generated_build_artifact_records_overclaim",
+                "message": "generated build artifact records must remain not_recorded",
+            }
+        )
 
 
 def validate_candidate_abstraction_choice_report(report: object) -> dict:

@@ -7277,6 +7277,21 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
     assert build_contracts["compiled_artifact_capture"] == "unsupported"
     assert report["declared_language_runner_records"] == []
     assert report["declared_build_system_records"] == []
+    declaration_evidence = report["runner_declaration_evidence"]
+    assert declaration_evidence == {
+        "schema": "libreevolve.candidate_runner_declaration_evidence.v1",
+        "declaration_status": "not_configured",
+        "language_runner_declaration_count": 0,
+        "build_system_declaration_count": 0,
+        "declared_language_ids": [],
+        "declared_build_system_ids": [],
+        "runner_command_metadata_count": 0,
+        "build_command_metadata_count": 0,
+        "artifact_pattern_metadata_count": 0,
+        "execution_status": "unsupported",
+        "runner_environment_artifacts": "not_recorded",
+        "generated_build_artifact_records": "not_recorded",
+    }
 
     hooks = report["task_candidate_abstraction_hooks"]
     assert hooks["status"] == "unsupported"
@@ -7312,6 +7327,11 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
     edited["declared_build_system_records"] = [
         {"name": "cargo", "execution_status": "supported"}
     ]
+    edited["runner_declaration_evidence"]["execution_status"] = "supported"
+    edited["runner_declaration_evidence"]["runner_environment_artifacts"] = "recorded"
+    edited["runner_declaration_evidence"]["generated_build_artifact_records"] = (
+        "recorded"
+    )
     edited["task_candidate_abstraction_hooks"]["serializer_hook"] = "supported"
     edited["claim_readiness"]["alphaevolve_language_runner_parity"] = True
     validation = validate_candidate_language_runner_contract_report(edited)
@@ -7324,6 +7344,9 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
         "build_runner_overclaim",
         "declared_language_runner_execution_overclaim",
         "declared_build_system_execution_overclaim",
+        "runner_declaration_execution_overclaim",
+        "runner_environment_artifacts_overclaim",
+        "generated_build_artifact_records_overclaim",
         "serializer_hook_overclaim",
         "alphaevolve_language_runner_parity_overclaim",
     }
@@ -7373,6 +7396,18 @@ def test_runtime_history_reports_declared_candidate_language_runner_metadata():
     assert report["build_system_runner_contracts"]["declared_build_files"] == [
         "Cargo.toml"
     ]
+    declaration_evidence = report["runner_declaration_evidence"]
+    assert declaration_evidence["declaration_status"] == "metadata_only_no_execution"
+    assert declaration_evidence["language_runner_declaration_count"] == 1
+    assert declaration_evidence["build_system_declaration_count"] == 1
+    assert declaration_evidence["declared_language_ids"] == ["rust"]
+    assert declaration_evidence["declared_build_system_ids"] == ["cargo"]
+    assert declaration_evidence["runner_command_metadata_count"] == 1
+    assert declaration_evidence["build_command_metadata_count"] == 1
+    assert declaration_evidence["artifact_pattern_metadata_count"] == 1
+    assert declaration_evidence["execution_status"] == "unsupported"
+    assert declaration_evidence["runner_environment_artifacts"] == "not_recorded"
+    assert declaration_evidence["generated_build_artifact_records"] == "not_recorded"
     assert report["claim_readiness"]["metadata_runner_declarations_recorded"] is True
     assert report["claim_readiness"]["non_python_language_runners_configured"] is False
     assert report["claim_readiness"]["build_system_runner_contracts_configured"] is False

@@ -61,10 +61,11 @@ Important limits:
   `papers/existing_codebase_integration_boundary.json`.
 - Workspace topology and materialization diagnostics cover local file-workspace
   path/case-folding/source-copy preflights, topology-command validation, and
-  prompt-visible `materialization_error` summaries, not arbitrary-language or
+  prompt-visible `materialization_error` summaries. Metadata-only language and
+  build runner declarations can be recorded, but arbitrary-language or
   build-runner artifacts, dependency-graph validation, bulk directory or
   external-path operations, remote/container workspaces, or codebase-scale
-  workspace parity.
+  workspace parity are still not implemented.
 - Codebase-scale reports are current-run workspace telemetry for retained
   file/line counts, generated candidates, multi-file and hundreds-line
   observations, and parent-relative edits, not realistic multi-component
@@ -491,6 +492,12 @@ Important limits:
   abstraction-rationale metadata, symmetry/bias evidence, or equal-budget
   direct-solution/constructor/search comparisons; that boundary is tracked by
   `papers/candidate_abstraction_boundary.json`.
+- Candidate language runner reports record metadata-only non-Python language
+  and build declarations when configured, including declaration counts and
+  unsupported execution status. They do not implement arbitrary-language
+  runners, build-system execution, runner environment artifacts, generated
+  build artifacts, or language-aware marker grammars; that boundary is tracked
+  by `papers/candidate_language_runner_boundary.json`.
 - Configuration validation is local effective-config validation; live
   provider/model API compatibility is tracked by
   `papers/config_validation_boundary.json`.

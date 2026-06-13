@@ -1438,7 +1438,10 @@ resumed-trace proof are still open.
   DeepConsensus, AC OPF, Earth AI, Willow, TPU-design, cache-policy, Spanner,
   compiler-storage, customer-case, public-gallery, UI, API, and independent
   verification evidence remains open before roadmap or release wording can
-  treat those impact claims as LibreEvolve-supported workflows.
+  treat those impact claims as LibreEvolve-supported workflows. Operational
+  lifecycle proof is also open for the article's pilot-to-core status,
+  regular next-generation-TPU tool use, Google Cloud/commercial availability,
+  UI/API artifact inventory, rollout ownership, and release-note claim gates.
 - Keep FHE-on-TPU AlphaEvolve application claims source-scoped:
   `papers/download_manifest.*` and `papers/README.md` now include arXiv
   `2605.14718`, `Adapting AlphaEvolve to Optimize Fully Homomorphic

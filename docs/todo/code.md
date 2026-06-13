@@ -5149,7 +5149,10 @@ sidecars, tests, and active TODOs.
     write-amplification reduction by 20%, compiler storage footprint reduction
     by nearly 9%, and customer cases involving Klarna, Substrate, FM Logistic,
     WPP, and Schrodinger. The article also introduces public gallery links and
-    names UI/API scaling contributors.
+    names UI/API scaling contributors. It also states that AlphaEvolve has
+    graduated from pilot testing into a core infrastructure component, is used
+    as a regular tool for next-generation TPU design, and is being brought to
+    commercial enterprises through Google Cloud.
   - Current evidence: `papers/alphaevolve_2026_impact_boundary.json` now
     records the official article URL/date/title/team, retrieval hash, outbound
     link inventory subset, claim ids, domain categories, values/units/
@@ -5161,7 +5164,12 @@ sidecars, tests, and active TODOs.
     promoting impact claims: local DeepConsensus, AC OPF, Earth AI, Willow,
     public-gallery/math, TPU-design, cache-policy, Spanner, compiler-storage,
     customer, UI, API, linked-source snapshot, local fixture, benchmark report,
-    and independent verification artifacts remain missing.
+    and independent verification artifacts remain missing. Also add
+    operational-lifecycle evidence for the official impact claims: pilot-to-core
+    adoption state, regular-tool usage records, Google Cloud/commercial
+    availability scope, UI/API artifact inventory, rollout/owner evidence, and
+    release-note gates that distinguish source-reported AlphaEvolve deployment
+    from LibreEvolve feature support.
 
 - [ ] Implement AlphaEvolve FHE-on-TPU benchmark boundary beyond paper cache
       coverage.

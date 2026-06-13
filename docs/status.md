@@ -659,7 +659,10 @@ Important limits:
   AC Optimal Power Flow, Earth AI, Willow quantum-circuit, public-gallery,
   TPU-design, cache-replacement, Spanner, compiler-storage, UI/API, and
   customer-deployment claims remain source-scoped until local fixtures,
-  source snapshots, benchmark reports, and independent verification exist;
+  source snapshots, benchmark reports, independent verification, and
+  operational lifecycle/adoption evidence for the article's pilot-to-core,
+  regular-tool, Google Cloud/commercial, UI/API, rollout, and owner claims
+  exist;
   that boundary is tracked by `papers/alphaevolve_2026_impact_boundary.json`.
 - ArXiv `2605.14718` is FHE-on-TPU AlphaEvolve application context only; the root README now defers source-specific paper lists to
   `papers/README.md`, which remains the complete implementation-status index.

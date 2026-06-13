@@ -2295,7 +2295,10 @@ Implemented:
   compiler storage, Google Cloud customer cases, and UI/API attribution. It
   also records unsupported-local-benchmark flags for the named domains and
   keeps customer/deployment claims source-scoped until linked source snapshots,
-  local fixtures, benchmark reports, and independent verification exist.
+  local fixtures, benchmark reports, independent verification, and operational
+  lifecycle evidence for pilot-to-core adoption, regular-tool use, Google
+  Cloud/commercial scope, UI/API artifacts, rollout owners, and release-note
+  claim gates exist.
 - `libreevolve/problems/benchmarks/follow_on_coverage.py`: follow-on
   AlphaEvolve problem-repository coverage-state contract. It validates the
   pinned root-level status artifacts (`status.json`, `status_grid.png`, and

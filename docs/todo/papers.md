@@ -4773,7 +4773,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     quantum-circuit optimization, public gallery examples, next-generation TPU
     design, cache replacement policies, Spanner write amplification, compiler
     storage footprint, Google Cloud/customer deployments, and UI/API scaling
-    contributors.
+    contributors. It also makes an operational-lifecycle claim: AlphaEvolve has
+    moved from pilot testing to a core infrastructure component, is a regular
+    tool for next-generation TPU design, and is being brought to commercial
+    enterprises through Google Cloud.
   - Current gap: `papers/alphaevolve_2026_impact_boundary.json` now preserves
     this 2026 official impact article as a source surface, claim registry,
     outbound-link subset, customer/deployment boundary, UI/API attribution
@@ -4786,7 +4789,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     DeepConsensus/AC OPF/Earth AI/Willow/TPU/cache/Spanner/compiler/customer
     fixtures, benchmark reports, claim-value normalization, and independent
     verification outputs before the impact claims are treated as reproduced
-    benchmark evidence or LibreEvolve feature support.
+    benchmark evidence or LibreEvolve feature support. Add lifecycle/adoption
+    proof for the article's operational claims, including pilot-to-core status,
+    regular-tool usage, Google Cloud/commercial scope, UI/API artifact
+    inventory, rollout/owner evidence, and release-note claim gates.
 
 - [ ] Reproduce AlphaEvolve FHE-on-TPU application evidence beyond paper
       coverage.

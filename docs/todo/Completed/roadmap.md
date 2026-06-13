@@ -2,6 +2,30 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive controller-state roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `README.md`, `ROADMAP.md`,
+    `papers/README.md`, and runtime manifests already scope
+    `runtime.history.controller_state` to terminal synchronous controller
+    evidence, not async queue checkpoints or mid-generation resume.
+  - Current evidence: controller state records schema
+    `libreevolve.controller_state.v1`, status
+    `terminal_synchronous_controller_drained`, resume scope
+    `terminal_drained_state_only`, zero queued/running proposal/evaluation
+    work, zero in-flight LLM calls, zero pending archive admissions, a
+    `controller_budget_events.jsonl` budget-counter stream summary, embedded
+    `libreevolve.controller_state_validation.v1` diagnostics, and artifact
+    inventory verification for the controller event stream.
+  - Remaining guard: async controller queues, evaluator-worker state, in-flight
+    provider-output replay, pending archive admissions, partially completed
+    generation state, deterministic mid-generation resume ledgers, nonblocking
+    queue dependencies, and AlphaEvolve async topology parity remain future
+    work.
+  - Verification: focused runtime tests validate terminal drained controller
+    snapshots, zero pending work, controller-event stream linkage,
+    distributed-topology reports with zero queues and blocking edges, and
+    overclaim rejection for pending work, async resume, full replay, and
+    nonblocking queue support.
+
 - [x] Archive async/resumable-runtime roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `README.md`, `ROADMAP.md`,
     `papers/README.md`, and `docs/status.md` already scope

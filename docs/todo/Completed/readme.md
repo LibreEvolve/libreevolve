@@ -12988,3 +12988,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     evidence exist.
   - Verification: paper-manifest validation requires the sidecar and focused
     evaluation-cascade tests cover its overclaim rejection.
+- [x] Add README boundary for controller-backtracking evidence.
+  - Spec evidence: AlphaEvolve frames discovery as including backtracking on
+    unpromising hypotheses, while cascades can prune less-promising solutions
+    before larger budgets are spent.
+  - Status: README now states that hypothesis-branch and
+    controller-backtracking reports show abandoned-looking branches and
+    observed redirects, not controller-owned backtracking policy with
+    configured suppression/retry behavior, explicit fallback-target events,
+    causal resumed-search replay, or cross-run branch tables. It points to
+    `papers/controller_backtracking_boundary.json`.
+  - Remaining README gap: docs cannot imply AlphaEvolve-style
+    controller-owned backtracking until suppression/retry policies, explicit
+    fallback selection, and replayable causal resumed-search evidence exist.
+  - Verification: paper-manifest validation requires the sidecar and focused
+    controller-backtracking tests cover its overclaim rejection.

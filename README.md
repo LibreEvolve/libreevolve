@@ -62,6 +62,11 @@ Important limits:
   coverage, audited false-acceptance/false-rejection rates, semantic failed-
   proposal retrieval, or publication-strength filtering proof; that boundary
   is tracked by `papers/incorrect_suggestion_audit_boundary.json`.
+- Hypothesis-branch and controller-backtracking reports show abandoned-looking
+  branches and observed redirects, not controller-owned backtracking policy
+  with configured suppression/retry behavior, explicit fallback-target events,
+  causal resumed-search replay, or cross-run branch tables; that boundary is
+  tracked by `papers/controller_backtracking_boundary.json`.
 - Qualitative LLM-feedback records are declared criterion/rubric/intent
   provenance and prompt-history audit evidence, not executed calibration,
   task-suite, ablation, or independent feedback-quality validation; that

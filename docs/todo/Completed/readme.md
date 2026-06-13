@@ -15097,3 +15097,26 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     component-attribution reports, benchmark baselines, token/cost accounting,
     report outcomes, and AHE-style observability-driven harness evolution
     remain active in code and paper TODOs.
+
+- [x] Keep README AI Harness Engineering runtime-substrate claims source-
+      scoped until runtime evidence exists.
+  - Spec evidence: arXiv `2605.13357`, `AI Harness Engineering: A Runtime
+    Substrate for Foundation-Model Software Agents`, frames reliable
+    autonomous software engineering as a model-harness-environment property.
+    Its abstract identifies eleven harness responsibilities, proposes an
+    H0-H3 ladder of runtime support, and defines a trace-based evaluation
+    protocol where each run becomes an auditable episode package.
+  - Status: README now lists arXiv `2605.13357` as AI harness runtime-
+    substrate context only and marks the mention as a curated cached-paper
+    subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no complete
+    eleven-responsibility harness contract, H0-H3 harness-ladder fixture,
+    trace-based episode-package schema, controlled validation-task
+    reproduction, model-harness-environment capability equation record,
+    failure-attribution taxonomy report, deterministic requirement-check
+    package, structured verification report, public-code snapshot audit, or
+    independent reproduction output.
+  - Remaining README gap: responsibility records, runtime-resource exposure,
+    trace bundles, verification reports, entropy audits, intervention logs,
+    benchmark baselines, report outcomes, and AI Harness Engineering runtime-
+    substrate evidence remain active in code and paper TODOs.

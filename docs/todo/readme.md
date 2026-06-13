@@ -91,37 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README AI Harness Engineering runtime-substrate claims source-
-      scoped until runtime evidence exists.
-  - Spec evidence: arXiv `2605.13357`, `AI Harness Engineering: A Runtime
-    Substrate for Foundation-Model Software Agents`, frames reliable
-    autonomous software engineering as a model-harness-environment property.
-    Its abstract identifies eleven harness responsibilities, proposes an
-    H0-H3 ladder of runtime support, and defines a trace-based evaluation
-    protocol where each run becomes an auditable episode package.
-  - Current evidence: README now lists `2605.13357`, AI Harness Engineering,
-    as runtime-substrate context only and says no complete eleven-
-    responsibility harness contract, H0-H3 ladder, trace-based episode
-    package, controlled validation task, or structured verification report
-    exists. README also documents LibreEvolve's current CLI, config, prompt
-    history, evaluator artifacts, LLM-call logs, failure/quarantine streams,
-    plugins, and benchmark boundaries; it does not claim a complete eleven-
-    responsibility harness contract, H0-H3 run classification, episode
-    packages, entropy or maintenance-burden audits, human-intervention logs,
-    or structured requirement-level verification reports before task
-    completion claims.
-  - Required result: if README mentions AI Harness Engineering, runtime
-    substrate, model-harness-environment capability, H0-H3 harness levels,
-    auditable episode packages, entropy auditing, intervention recording,
-    permission-boundary traces, requirement-level verification, task-state
-    files, context/tool/project-memory traces, or maintainable autonomous
-    software-engineering behavior, keep the wording source-scoped until local
-    artifacts can show responsibility records, runtime-resource exposure,
-    trace bundles, verification reports,
-    entropy audits, intervention logs, benchmark baselines, and report
-    outcomes. Avoid implying LibreEvolve implements an AI Harness Engineering
-    runtime substrate without those artifacts.
-
 - [ ] Keep README inference-time harness-alignment claims source-scoped until
       decomposition and guidance runtime tradeoffs are evidenced.
   - Spec evidence: arXiv `2605.21516`, `Harnesses for Inference-Time

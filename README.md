@@ -850,6 +850,15 @@ Important limits:
   Terminal-Bench 2 report, SWE-bench-verified transfer report, cross-family
   transfer report, tools/middleware/memory ablation, public-code snapshot
   audit, or independent reproduction output.
+- ArXiv `2605.13357` is AI harness runtime-substrate context only; the README
+  mentions this cached paper as a curated subset while `papers/README.md`
+  remains the complete implementation-status index. LibreEvolve has no
+  complete eleven-responsibility harness contract, H0-H3 harness-ladder
+  fixture, trace-based episode-package schema, controlled validation-task
+  reproduction, model-harness-environment capability equation record,
+  failure-attribution taxonomy report, deterministic requirement-check
+  package, structured verification report, public-code snapshot audit, or
+  independent reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

@@ -2183,6 +2183,33 @@ directory and using the AlphaEvolve paper as the primary specification.
     novelty contribution, and equal-budget/model ablation linkage before
     claiming AlphaEvolve-style creative generation from SOTA LLMs.
 
+- [ ] Track stochastic prompt-format separate config-file provenance.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.
+  - Requirement: stochastic formatting uses template placeholders with
+    human-provided alternatives for increased diversity, instantiated using
+    probability distributions provided in a separate config file.
+  - Partial status: LibreEvolve supports weighted `prompt_format_options` and
+    prompt-template markers such as `[[prompt:name]]`. Completed manifests now
+    include `runtime.history.stochastic_prompt_format_distribution_report`
+    with prompt ids, marker names, option-set ids, normalized probabilities,
+    selected alternative hashes/indexes, weight override source, prompt/call
+    linkage, inline/effective config source boundary, and run-local RNG replay
+    boundary.
+  - Current gap: this is probability/selection provenance for effective
+    configuration, not paper-faithful source provenance. There is no distinct
+    separate config-file identity for the stochastic formatting distribution,
+    no source-file hash/byte/count precedence record, no certified
+    human-authored alternative provenance, no author/reviewer or revision
+    metadata, and no paper-facing validator that distinguishes inline
+    `prompt_format_options` from an AlphaEvolve-style separate distribution
+    file.
+  - Required result: add paper-visible stochastic-format distribution
+    source-file records and validation, including safe source path, source
+    hash, config precedence, author/reviewer or declared human-authorship
+    metadata when present, selected alternative linkage, and overclaim checks
+    that keep inline/effective-config reports from being treated as full
+    AlphaEvolve stochastic-formatting parity.
+
 - [ ] Complete full validator-metadata rendering and provider-token prompt
   packing.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.

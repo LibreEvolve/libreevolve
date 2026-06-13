@@ -649,6 +649,36 @@ sidecars, tests, and active TODOs.
 
 ## Prompt Sampling and Context
 
+- [ ] Add separate-source provenance for stochastic prompt-format
+      alternatives.
+  - Spec evidence: AlphaEvolve Section 2.2 describes stochastic formatting as
+    template placeholders with human-provided alternatives, instantiated using
+    probability distributions supplied in a separate config file.
+  - Current evidence: LibreEvolve supports `[[prompt:name]]` markers in
+    prompt templates and `prompt_format_options` with weighted alternatives.
+    Completed manifests include
+    `runtime.history.stochastic_prompt_format_distribution_report`, which
+    joins generated prompt records to startup prompt-format option sets,
+    records normalized probabilities, selected alternative hashes/indexes,
+    weight source or prompt-context override source, prompt/call linkage, an
+    inline/effective-config source boundary, and the run-local RNG replay
+    boundary. Completed code and paper ledgers already note that separate
+    config-file source attribution and certified human-authored alternative
+    provenance remain non-parity boundaries.
+  - Current gap: the active implementation ledger did not carry the remaining
+    work as an open item. The current runtime report treats prompt-format
+    alternatives as effective config data; it does not preserve a distinct
+    source-file identity for the probability distribution, author/reviewer
+    provenance for human-provided alternatives, revision/change history, or a
+    validator that proves an AlphaEvolve-style separate config file supplied
+    the stochastic formatting distribution.
+  - Required result: add source-file provenance for prompt-format option
+    distributions, including safe relative source path, source hash, byte
+    count, config precedence, revision or author/reviewer metadata when
+    declared, and validation that keeps inline/effective config data separate
+    from AlphaEvolve-style human-authored separate-file stochastic-formatting
+    evidence.
+
 - [ ] Complete provider-token prompt section fitting beyond mutation prompts
       and async/pending-work budget composition.
   - Spec evidence: AlphaEvolve prompt sampling supports long contexts and

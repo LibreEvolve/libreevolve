@@ -4,6 +4,27 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Appendix B.12-B.13 sum-of-radii README boundary.
+  - Status: README Important limits now states that Appendix B.12-B.13
+    circle/rectangle sum-of-radii provenance remains absent: the registry
+    preserves Figure 14 left/middle/right linkage, `n = 26` and `n = 32`
+    unit-square rows, the `n = 21` perimeter-4 rectangle row, prior sums
+    (`2.634`, `2.936`, `2.364`), reported sums (`2.635`, `2.937`,
+    `2.3658`), the B.13 caption display, and the checked-in 26-circle fixture
+    as smoke-only, not AlphaEvolve container hashes, circle placement payloads,
+    exact-count checks, payload-schema validation certificates,
+    positive-radius certificates, containment or pairwise non-overlap
+    certificates, rectangle dimensions, rectangle-perimeter proof,
+    sum-of-radii formula certificates, recomputed sums, or Figure 14 panel
+    artifacts.
+  - Verification: Appendix B registry tests cover the B.12-B.13
+    `sum_of_radii_result_boundary` rows, required future placement/container/
+    certificate fields, all three Figure 14 missing-witness rows, the
+    smoke-only fixture boundary, rectangle-specific statuses, improvement
+    direction, and `not_recorded_locally` overclaim guards; code and paper
+    TODOs still track the missing container/placement/certificate/
+    recomputation/panel artifacts.
+
 - [x] Document Appendix B.11 kissing-number README boundary.
   - Status: README Important limits now states that Appendix B.11
     kissing-number proof provenance remains absent: the registry preserves

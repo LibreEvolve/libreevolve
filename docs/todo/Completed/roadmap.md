@@ -2,6 +2,23 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive multi-objective archive roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README,
+    `papers/README.md`, MAP-Elites objective archive policies, and
+    `papers/objective_archive_boundary.json` already describe the current
+    scalar-primary MAP-Elites grid plus bounded Pareto retention,
+    metric-cell overlays, metric/frontier sampling pools, diagnostic objective
+    frontiers, and readiness-overclaim rejection.
+  - Remaining guard: primary Pareto archive replacement,
+    frontier-dominance cell replacement, durable cross-run metric databases,
+    metric-target persistence tables, LLM feedback calibration runners,
+    cross-run metric-specific optimization, and frontier primary-archive
+    replay remain active in `docs/todo/code.md` and `docs/todo/papers.md`.
+  - Verification: objective archive boundary, MAP-Elites policy, and
+    paper-manifest validation continue to reject retained overlays and
+    diagnostic frontiers as AlphaEvolve-grade primary multi-objective archive
+    policy.
+
 - [x] Archive config-validation roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README,
     `papers/README.md`, local `Config` validation, and

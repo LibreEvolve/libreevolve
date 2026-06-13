@@ -54,6 +54,10 @@ Important limits:
   exhaustive anti-gaming evidence, executable construction/certificate
   validators, target/SOTA baselines, Colab-equivalent Appendix B construction
   data, or verifier-code artifacts.
+- Appendix A matrix target-suite curation records the reported 54 sorted
+  targets, rough paper selection wording, symmetry policy, and included-target
+  rationales, not an exhaustive locally justified corpus for every excluded
+  non-equivalent matrix size outside the reported suite.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

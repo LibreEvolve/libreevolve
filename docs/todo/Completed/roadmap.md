@@ -2,6 +2,29 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Appendix A matrix curation roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish the checked Appendix A target registry and reported-suite
+    curation record from exhaustive target-suite construction evidence.
+  - Current evidence: `libreevolve.alphaevolve_appendix_a_matrix_registry.v1`
+    records the 54 reported target identities, dimensions, ranks, and outcomes.
+    `libreevolve.alphaevolve_appendix_a_matrix_curation.v1` and
+    `papers/appendix_a_matrix_curation.json` preserve the paper's rough
+    size-selection wording, sorted-representative policy, symmetry-equivalent
+    omissions, included-target rationales, and unspecified `p` cutoff.
+    `libreevolve.alphaevolve_appendix_a_matrix_excluded_target_curation_boundary.v1`
+    and `papers/appendix_a_matrix_excluded_target_curation.json` validate the
+    current `not_recorded_locally` boundary and required future fields for
+    excluded non-equivalent target justifications.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    broad excluded-target justification corpus for non-equivalent matrix sizes
+    outside the reported suite, kept separate from construction artifacts and
+    larger-target resource-frontier or OOM evidence.
+  - Verification: Appendix A matrix registry/curation tests, paper-manifest
+    validation, and checked-in paper-index TODO coverage still pass.
+
 - [x] Archive paper-artifact role roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

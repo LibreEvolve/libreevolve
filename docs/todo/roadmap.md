@@ -10,34 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Appendix A matrix-suite roadmap wording scoped to target identities
-      versus curation provenance.
-  - Spec evidence: AlphaEvolve Appendix A says the 54 reported matrix sizes
-    were chosen roughly from dimensions with 2 <= m,n <= 5 and a reasonable
-    cutoff for p, while tensor symmetries make axis permutations equivalent and
-    motivate sorted target representatives.
-  - Current evidence: roadmap/README/paper-index status points to the checked
-    54-target Appendix A registry and
-    `libreevolve.alphaevolve_appendix_a_matrix_curation.v1`, which records the
-    paper's rough size-selection wording, sorted representative policy,
-    omitted axis-permutation equivalents, included-target rationales, and
-    unspecified `p` cutoff. `papers/appendix_a_matrix_curation.json` now emits
-    that reported-suite curation record as a committed sidecar. Roadmap now
-    also points to
-    `libreevolve.alphaevolve_appendix_a_matrix_excluded_target_curation_boundary.v1`,
-    which validates the current `not_recorded_locally` boundary and required
-    future excluded-target justification fields.
-    `papers/appendix_a_matrix_excluded_target_curation.json` now emits that
-    absence boundary as a committed sidecar.
-    `appendix_a_matrix_excluded_target_curation_boundary_from_records()` can
-    build a recorded boundary for supplied excluded-target justifications over
-    a declared scope. It does not justify every possible excluded
-    non-equivalent target outside the reported suite.
-  - Required result: when excluded-target justification metadata lands, update
-    ROADMAP, README, papers index, and code/paper TODOs so roadmap text
-    distinguishes reported-suite curation provenance from exhaustive
-    target-suite construction evidence.
-
 - [ ] Keep matrix per-seed roadmap wording scoped until cascade-run provenance
       exists.
   - Spec evidence: AlphaEvolve Section 3.1 says matrix experiments are run

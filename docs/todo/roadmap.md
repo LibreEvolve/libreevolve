@@ -10,26 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Appendix B.1-B.3 roadmap wording scoped until autocorrelation
-      step-function provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B.1-B.3 reports three distinct
-    autocorrelation/autoconvolution step-function witnesses: `600`
-    equally-spaced intervals on `[-1/4, 1/4]` for `C1 <= 1.5053`, `50`
-    intervals on the same domain for `0.8962 <= C2`, and `400` intervals on
-    the same domain for `C3 <= 1.4557`.
-  - Current evidence: roadmap/README/paper-index wording now cites validated
-    B.1-B.3 step-function summary metadata in the Appendix B registry:
-    interval counts, common domain, sign policy, previous bound/source, bound
-    direction, reported bound, and explicit missing construction-payload
-    status. It now also cites the validated `step_function_payload_boundary`
-    rows that require future payload hashes, domain/spacing/sign-policy
-    certificates, verifier artifacts, and recomputed-bound fields while
-    keeping those artifacts `not_recorded_locally`.
-  - Required result: when Appendix B.1-B.3 autocorrelation metadata and
-    validators land, update ROADMAP, README, papers index, and code/paper
-    TODOs so roadmap claims distinguish payload hashes, verifier artifacts,
-    and recomputed values from aggregate Appendix B coverage.
-
 - [x] Keep Appendix B.1-B.3 roadmap wording scoped until paper-heading label
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.1-B.3 headings are `First

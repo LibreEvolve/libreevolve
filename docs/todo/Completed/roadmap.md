@@ -2,6 +2,26 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Appendix B.1-B.3 step-function roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish the three B.1-B.3 autocorrelation step-function witnesses
+    from aggregate Appendix B coverage.
+  - Current evidence: the registry validates B.1-B.3 paper-facing labels,
+    interval counts `600`/`50`/`400`, shared `[-1/4, 1/4]` domain, sign
+    policy, bound direction, previous bound/source, reported bounds, and
+    `step_function_payload_boundary` rows while keeping payload hashes,
+    domain/spacing/sign-policy certificates, verifier artifacts, recomputed
+    bounds, and recomputation certificates `not_recorded_locally`.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    B.1-B.3 work: step-function payload hashes, metric-formula ids, verifier
+    artifacts, reported/recomputed value rows, domain/spacing/sign-policy
+    certificates, and recomputation evidence.
+  - Verification: Appendix B registry step-function summary and payload
+    boundary tests, paper-manifest validation, and checked-in paper-index TODO
+    coverage still pass.
+
 - [x] Archive Appendix B per-result roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

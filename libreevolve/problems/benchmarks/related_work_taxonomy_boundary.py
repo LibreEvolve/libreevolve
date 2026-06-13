@@ -10,6 +10,7 @@ RELATED_WORK_TAXONOMY_BOUNDARY_SCHEMA = (
     "libreevolve.related_work_taxonomy_boundary.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
+EXPECTED_SOURCE_SECTION_IDS = ("5",)
 EXPECTED_BOUNDARY_STATUS = "paper_index_rows_without_related_work_taxonomy"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "source_paper_inventory",
@@ -63,8 +64,9 @@ def related_work_taxonomy_boundary_record() -> dict[str, Any]:
     return {
         "schema": RELATED_WORK_TAXONOMY_BOUNDARY_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_claim": (
-            "AlphaEvolve's Related Work positions the system as "
+            "AlphaEvolve Section 5 Related Work positions the system as "
             "execution-feedback code superoptimization and algorithm discovery "
             "against pre-LLM search, AlphaTensor, GPU-kernel and LLM-agent "
             "optimizers, AI-for-science systems, and proof discovery"
@@ -101,6 +103,8 @@ def validate_related_work_taxonomy_boundary(
         issues.append(_issue("invalid_schema", "unsupported related-work taxonomy boundary schema"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['5']"))
     source_claim = data.get("source_claim")
     if (
         not isinstance(source_claim, str)

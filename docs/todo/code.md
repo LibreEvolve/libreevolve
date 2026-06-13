@@ -2298,8 +2298,8 @@ sidecars, tests, and active TODOs.
     hypothesis stages and programmatic candidate evaluation before claiming
     AlphaEvolve-style distinction from AI-Co-Scientist workflows.
 
-- [ ] Add AlphaEvolve Related Work taxonomy and positioning evidence.
-  - Spec evidence: AlphaEvolve Related Work frames the system as code
+- [ ] Add AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.
+  - Spec evidence: AlphaEvolve Section 5 Related Work frames the system as code
     superoptimization using execution feedback, situates it against
     enumeration, genetic search, Monte Carlo sampling, deep reinforcement
     learning, AlphaTensor, GPU-kernel agents, LLM multi-agent approaches, and

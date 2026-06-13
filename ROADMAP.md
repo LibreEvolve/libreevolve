@@ -759,7 +759,7 @@ is not yet an AlphaEvolve reproduction.
   an `Implemented` bullet is phrased as not implemented. It does not yet prove
   arbitrary natural-language semantics for every long status phrase, benchmark
   qualifier, implemented-benchmark limitation, or paper claim.
-- Keep Related Work positioning scoped to flat source inventory until a
+- Keep Section 5 Related Work positioning scoped to flat source inventory until a
   validated taxonomy lands. The committed
   `papers/related_work_taxonomy_boundary.json` sidecar records that source
   rows and individual TODOs do not yet prove source-category mapping,

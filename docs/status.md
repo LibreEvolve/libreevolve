@@ -495,7 +495,7 @@ Important limits:
   avoidance, replayable failed-mutation payloads, failure-aware sampling
   policy, or cross-run failure-index migrations; that boundary is tracked by
   `papers/failure_memory_boundary.json`.
-- Related Work positioning is not inferred from the bundled paper list; the
+- Section 5 Related Work positioning is not inferred from the bundled paper list; the
   missing method-family, representation, feedback/evidence, task-stage,
   proof/witness, complementary-mechanism, and AlphaEvolve positioning taxonomy
   gates are tracked by `papers/related_work_taxonomy_boundary.json`.

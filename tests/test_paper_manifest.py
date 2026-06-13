@@ -1571,6 +1571,7 @@ def test_validate_paper_manifest_rejects_related_work_taxonomy_boundary_drift(
     record = paper_manifest.related_work_taxonomy_boundary_record()
     record["claim_ready"] = True
     record["boundary_status"] = "related_work_taxonomy_ready"
+    record["source_section_ids"] = ["4"]
     record["missing_evidence"]["method_family_taxonomy"] = "recorded"
     sidecar = tmp_path / paper_manifest.RELATED_WORK_TAXONOMY_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
@@ -1581,6 +1582,7 @@ def test_validate_paper_manifest_rejects_related_work_taxonomy_boundary_drift(
     assert report.ok is False
     assert "related_work_taxonomy_boundary_claim_ready_overclaim" in codes
     assert "related_work_taxonomy_boundary_invalid_boundary_status" in codes
+    assert "related_work_taxonomy_boundary_invalid_source_section_ids" in codes
     assert (
         "related_work_taxonomy_boundary_invalid_missing_evidence_method_family_taxonomy"
         in codes

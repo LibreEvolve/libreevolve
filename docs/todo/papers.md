@@ -1934,8 +1934,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     feedback graders with AlphaEvolve's Related Work distinction from
     AI-Co-Scientist.
 
-- [ ] Track AlphaEvolve Related Work taxonomy and positioning evidence.
-  - Paper: `2506.13131__AlphaEvolve.pdf`, Related Work.
+- [ ] Track AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 5 Related Work.
   - Requirement: AlphaEvolve positions itself as execution-feedback code
     superoptimization and algorithm discovery, contrasts with pre-LLM
     enumeration/genetic-search/Monte-Carlo/deep-RL approaches, AlphaTensor,

@@ -631,6 +631,14 @@ Important limits:
   customer-deployment claims remain source-scoped until local fixtures,
   source snapshots, benchmark reports, and independent verification exist;
   that boundary is tracked by `papers/alphaevolve_2026_impact_boundary.json`.
+- ArXiv `2605.14718` is FHE-on-TPU AlphaEvolve application context only; the
+  README mentions this cached paper as a curated subset while
+  `papers/README.md` remains the complete implementation-status index.
+  LibreEvolve has no TFHE/Jaxite or CKKS/CROSS primitive harness, Google Cloud
+  TPUv5e execution provenance, FHE correctness-test suite, generated
+  cryptographic-kernel artifacts, baseline implementation identity, latency
+  benchmark rows, or local reproduction of the reported 2.5x, 1.31x, and 1.18x
+  speedups.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

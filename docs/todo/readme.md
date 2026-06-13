@@ -91,25 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README FHE-on-TPU AlphaEvolve claims source-scoped until benchmark
-      evidence exists.
-  - Spec evidence: arXiv `2605.14718` reports adapting AlphaEvolve to optimize
-    Fully Homomorphic Encryption kernels on TPUs, using hardware execution and
-    correctness tests for TFHE/Jaxite and CKKS/CROSS on Google Cloud TPUv5e,
-    with latency improvements over human-engineered baselines.
-  - Current evidence: README now lists `2605.14718` as FHE-on-TPU
-    AlphaEvolve application context only and states that no local
-    cryptographic-kernel or hardware-execution benchmark exists. It does not
-    claim FHE schemes, TPUv5e cryptographic-kernel execution,
-    hardware-feedback traces, correctness-test evidence, or FHE latency
-    benchmarks as LibreEvolve support.
-  - Required result: if README mentions FHE, cryptography, TPUv5e hardware
-    execution, Jaxite, CROSS, or the `2605.14718` speedups, keep the wording
-    source-scoped until the paper is in the manifest and a local benchmark or
-    explicit background-only row exists. Avoid implying LibreEvolve supports
-    FHE-on-TPU optimization without runnable kernels, hardware-execution
-    provenance, correctness tests, and latency report artifacts.
-
 - [ ] Keep README AlphaEvolve HCI/user-study claims source-scoped until
       intentmaking evidence exists.
   - Spec evidence: arXiv `2605.05921` reports 11 expert mathematicians using

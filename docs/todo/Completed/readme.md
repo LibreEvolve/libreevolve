@@ -14517,3 +14517,22 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     Spanner, compiler-storage, UI/API, and customer-deployment fixtures,
     source snapshots, benchmark reports, and independent verification remain
     active in code and paper TODOs.
+
+- [x] Keep README FHE-on-TPU AlphaEvolve claims source-scoped until benchmark
+      evidence exists.
+  - Spec evidence: arXiv `2605.14718`, submitted May 14, 2026, reports
+    adapting AlphaEvolve to optimize Fully Homomorphic Encryption kernels on
+    TPUs, using hardware execution and correctness tests for TFHE/Jaxite and
+    CKKS/CROSS on Google Cloud TPUv5e, with 2.5x, 1.31x, and 1.18x latency
+    improvements over human-engineered baselines.
+  - Status: README now lists arXiv `2605.14718` as FHE-on-TPU AlphaEvolve
+    application context only and notes that `papers/2605.14718__FHE_on_TPU.pdf`
+    is cached. It states that LibreEvolve does not have TFHE/Jaxite or
+    CKKS/CROSS primitive harnesses, Google Cloud TPUv5e execution provenance,
+    an FHE correctness-test suite, generated cryptographic-kernel artifacts,
+    baseline implementation identity, latency benchmark rows, or local
+    reproduction of the reported speedups.
+  - Remaining README gap: local FHE scheme/primitive taxonomy, runnable
+    cryptographic kernels, hardware-execution provenance, correctness tests,
+    latency report artifacts, baseline identity, and independent reproduction
+    remain active in code and paper TODOs.

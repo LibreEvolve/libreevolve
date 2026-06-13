@@ -58,6 +58,11 @@ Important limits:
   targets, rough paper selection wording, symmetry policy, and included-target
   rationales, not an exhaustive locally justified corpus for every excluded
   non-equivalent matrix size outside the reported suite.
+- Matrix per-seed reports validate declared seed rows, best rank, and hit
+  fraction, and matrix cascade-run boundary records can link seed rows to stage
+  traces, but local matrix runners do not yet emit AlphaEvolve Section
+  3.1-style repeated-seed cascade traces, pruning decisions, or early-stop
+  provenance.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

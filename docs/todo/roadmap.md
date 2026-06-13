@@ -10,29 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep matrix per-seed roadmap wording scoped until cascade-run provenance
-      exists.
-  - Spec evidence: AlphaEvolve Section 3.1 says matrix experiments are run
-    over multiple random seeds using the evaluation cascade, with performance
-    reported as the best rank and the fraction of seeds that achieved it.
-  - Current evidence: roadmap/README/paper-index status can point to generic
-    evaluator cascades and declared matrix result reports with per-seed rank
-    rows and hit-fraction checks. It now also points to
-    `libreevolve.matrix_cascade_run_runtime_boundary.v1`, which validates the
-    current `not_emitted_by_local_runner` boundary and emitted repeated-seed
-    matrix cascade traces. `papers/matrix_cascade_run_runtime_boundary.json`
-    now emits that absence/readiness boundary as a committed sidecar. It also
-    points to
-    `matrix_cascade_run_runtime_boundary_from_matrix_result()`, which builds
-    emitted records from seed rows plus per-seed stage traces and checks final
-    stage/result-row linkage plus best-rank/hit-fraction aggregation. It does
-    not yet require local matrix benchmark runners to emit matrix-specific
-    execution traces, pruning or early-stop reasons, or target/seed lineage.
-  - Required result: when matrix cascade-run provenance lands, update ROADMAP,
-    README, papers index, and code/paper TODOs together so roadmap text
-    distinguishes declared per-seed report validation from executed
-    AlphaEvolve-style matrix cascade evidence.
-
 - [ ] Keep Figure 4 matrix-exhibit roadmap wording scoped until rendered
       artifacts and mutation lineage exist.
   - Spec evidence: AlphaEvolve Figure 4 presents the main-text matrix

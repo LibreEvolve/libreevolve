@@ -2,6 +2,27 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive matrix per-seed cascade-run roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish declared per-seed matrix result reports from executed
+    AlphaEvolve Section 3.1-style cascade traces.
+  - Current evidence: `libreevolve.matrix_result_report.v1` validates declared
+    per-seed rank rows and hit-fraction checks. `libreevolve.matrix_cascade_run_runtime_boundary.v1`,
+    `papers/matrix_cascade_run_runtime_boundary.json`, and
+    `matrix_cascade_run_runtime_boundary_from_matrix_result()` validate the
+    current `not_emitted_by_local_runner` boundary and the future emitted
+    target/seed, cascade, stage-trace, final-rank, candidate/result reference,
+    artifact-path, and hash fields needed for matrix cascade evidence.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    matrix-runner integration: local matrix benchmark runners do not emit
+    matrix-specific cascade configurations, stage traces, pruning or early-stop
+    decisions, candidate lineage, or executed target/seed provenance behind
+    reported rank and hit-fraction rows.
+  - Verification: matrix cascade-run boundary tests, paper-manifest
+    validation, and checked-in paper-index TODO coverage still pass.
+
 - [x] Archive Appendix A matrix curation roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

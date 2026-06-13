@@ -2,6 +2,27 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive benchmark-script ablation-harness roadmap wording TODO.
+  - Status: the roadmap-specific coordination TODO was stale. `README.md`,
+    `ROADMAP.md`, `papers/README.md`, `docs/status.md`,
+    `docs/todo/code.md`, and `docs/todo/papers.md` already distinguish
+    ablation report contracts from runnable benchmark scripts and keep the
+    executable harness work active.
+  - Current evidence: `libreevolve.alphaevolve_ablation_report.v1` and
+    `alphaevolve_ablations.json` validate Figure 8 report/variant metadata,
+    target-family coverage, required seeds, equal-budget fractions, curve
+    summaries, and variant scope boundaries, while `papers/README.md` states
+    that no benchmark script emits those reports yet.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: runnable matrix/kissing ablation scripts, component-assertion-to-
+    config/runtime bindings, progress-at-budget-fraction exports, generated
+    report bundles, run-artifact links, and the per-variant proof needed to
+    retire the no-evolution, no-context, small-base, no-meta-prompt, and
+    no-full-file scope boundaries.
+  - Verification: ablation registry, ablation-result, Figure 8 exhibit,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive ablation report-contract roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

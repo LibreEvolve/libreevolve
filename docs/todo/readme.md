@@ -9,37 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README matrix wording scoped to result contracts until
-      near-integrality prompt/evaluator evidence exists.
-  - Spec evidence: AlphaEvolve Section 3.1 says the matrix prompt requested
-    near-integral solutions and the reported decompositions were rounded to
-    the nearest integer or half-integer before exactness verification.
-  - Current evidence: README describes the matrix-result report contract,
-    Appendix A registry, and checked Strassen baseline bundle, including
-    coefficient-domain and exactness restrictions for AlphaEvolve-comparable
-    reports. It now documents `libreevolve.matrix_near_integrality_evidence.v1`
-    as a validation contract for declared prompt instructions,
-    integer/half-integer rounding policy, raw-versus-rounded coefficient
-    diagnostics, and exactness-certificate links. It now also documents
-    `libreevolve.matrix_near_integrality_runtime_boundary.v1` as the current
-    `not_emitted_by_local_runner` boundary plus emitted-record validation for
-    run/target/candidate ids, seeds, prompt hashes/instructions, raw and
-    rounded coefficients, rounding error, exactness-certificate links,
-    matrix-result refs, artifact paths, and artifact hashes. It also documents
-    the builder that turns validated near-integrality evidence into linked
-    runtime rows. It does not document a local matrix benchmark
-    prompt/evaluator path that emits those records during search. README
-    Important limits now also states that matrix near-integrality records
-    validate declared prompt instructions, integer/half-integer rounding
-    policy, raw-versus-rounded coefficient diagnostics, and
-    exactness-certificate links, not a local matrix runner that emits
-    AlphaEvolve Section 3.1 near-integral prompt/evaluator evidence during
-    search.
-  - Required result: when local benchmark prompt/evaluator emission lands,
-    update README, ROADMAP, papers index, and code/paper TODO entries together
-    so README distinguishes evidence-schema validation from AlphaEvolve Section
-    3.1 search-workflow parity.
-
 - [x] Keep README Appendix B.1-B.3 labels scoped until paper-heading
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.1-B.3 are titled `First

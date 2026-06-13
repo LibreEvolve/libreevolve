@@ -91,36 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README Meta-Harness optimization claims absent or source-scoped
-      until harness-code search evidence exists.
-  - Spec evidence: arXiv `2603.28052`, `Meta-Harness: End-to-End
-    Optimization of Model Harnesses`, introduces an outer-loop system that
-    searches over harness code using an agentic proposer with filesystem
-    access to prior source code, scores, and execution traces. Its abstract
-    reports gains in online text classification with fewer context tokens,
-    retrieval-augmented IMO-level math reasoning across held-out models, and
-    TerminalBench-2 agentic coding.
-  - Current evidence: README now lists `2603.28052`, Meta-Harness, as
-    outer-loop harness-code optimization context only and says no local
-    harness-code candidate schema, agentic proposer workspace, execution-
-    trace feedback bundle, cross-task harness benchmark, or end-to-end
-    harness optimization reproduction exists. README also documents
-    LibreEvolve's current prompt/plugin/runtime boundaries, run artifacts,
-    candidate mutations, evaluator streams, failure histories, and benchmark
-    boundaries; it does not claim harness-code candidate schemas, proposer
-    workspaces, harness edit provenance, execution-trace feedback bundles,
-    cross-task generalization tests, or Meta-Harness benchmark reproduction.
-  - Required result: if README mentions Meta-Harness, end-to-end harness
-    optimization, harness-code search, agentic proposer, filesystem-visible
-    prior candidates, source/score/trace search history, context-token
-    efficiency, held-out model transfer, online text classification, RAG math,
-    or TerminalBench-2 discovered harnesses, keep the wording source-scoped
-    until local artifacts can show harness
-    candidate schemas, proposer records, corpus layout, mutation/evaluation
-    traces, transfer reports, benchmark baselines, and report outcomes. Avoid
-    implying LibreEvolve supports Meta-Harness-style harness-code optimization
-    without those artifacts.
-
 - [ ] Keep README AlphaEvolve MARL algorithm-discovery claims absent or
       source-scoped until CFR/PSRO benchmark evidence exists.
   - Spec evidence: arXiv `2602.16928`, `Discovering Multiagent Learning

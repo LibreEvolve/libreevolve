@@ -879,6 +879,17 @@ Important limits:
   overfitting/accuracy-peak-decline report, prediction-market/security-
   competition/event-forecasting benchmark reproduction, five-baseline
   comparison, linked-code audit, or independent reproduction output.
+- ArXiv `2603.28052` is outer-loop harness-code optimization context only; the
+  README mentions this cached paper as a curated subset while
+  `papers/README.md` remains the complete implementation-status index.
+  LibreEvolve has no first-class harness-code candidate schema,
+  filesystem-visible harness workspace, agentic proposer that edits harness code,
+  candidate harness edit provenance, execution-trace feedback bundle,
+  score/provenance replay package, multi-objective harness search controller,
+  cross-task harness benchmark, task-distribution split,
+  generalization/overfit report, GSM8K/GPQA/InteractiveQA/ToolQA/TruthfulQA/
+  LLF-Bench reproduction, linked-code audit, or independent reproduction
+  output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

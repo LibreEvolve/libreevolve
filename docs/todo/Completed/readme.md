@@ -15172,3 +15172,28 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     harness-tree artifacts, routing traces, steering logs, sustained-
     performance curves, benchmark baselines, report outcomes, and adaptive
     auto-harness deployment evidence remain active in code and paper TODOs.
+
+- [x] Keep README Meta-Harness optimization claims absent or source-scoped
+      until harness-code search evidence exists.
+  - Spec evidence: arXiv `2603.28052`, `Meta-Harness: End-to-End
+    Optimization of Model Harnesses`, introduces an outer-loop system that
+    searches over harness code using an agentic proposer with filesystem
+    access to prior source code, scores, and execution traces. Its abstract
+    reports gains in online text classification with fewer context tokens,
+    retrieval-augmented IMO-level math reasoning across held-out models, and
+    TerminalBench-2 agentic coding.
+  - Status: README now lists arXiv `2603.28052` as outer-loop harness-code
+    optimization context only and marks the mention as a curated cached-paper
+    subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no
+    first-class harness-code candidate schema, filesystem-visible harness
+    workspace, agentic proposer that edits harness code, candidate harness edit
+    provenance, execution-trace feedback bundle, score/provenance replay
+    package, multi-objective harness search controller, cross-task harness
+    benchmark, task-distribution split, generalization/overfit report, GSM8K/
+    GPQA/InteractiveQA/ToolQA/TruthfulQA/LLF-Bench reproduction, linked-code
+    audit, or independent reproduction output.
+  - Remaining README gap: harness candidate schemas, proposer records, corpus
+    layout, mutation/evaluation traces, transfer reports, benchmark baselines,
+    report outcomes, and Meta-Harness-style harness-code optimization evidence
+    remain active in code and paper TODOs.

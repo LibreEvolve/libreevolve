@@ -18,13 +18,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `papers/documentation_truthfulness_boundary.json` records README status
     scoping, ROADMAP and papers-index scoping, TODO ledgers, docs routing,
     paper-manifest checks, stale source-specific wording checks, sidecar
-    registry coverage, and focused boundary tests.
+    registry coverage, and focused boundary tests. `docs/README.md` now states
+    that AlphaEvolve-alignment cleanup is a whole-documentation task spanning
+    the root README, operational guides, status, ROADMAP, papers index,
+    sidecars, and active/completed TODO ledgers.
   - Current gap: there is still no semantic claim verifier, machine-readable
-    implementation-evidence mapping for every README claim, stale completed-
-    entry detector, generated alignment report, or full proof that every
-    AlphaEvolve-facing README claim is current.
+    implementation-evidence mapping for every README claim, cross-document
+    claim inventory, stale completed-entry detector, generated alignment
+    report, or full proof that every AlphaEvolve-facing README or docs claim is
+    current.
   - Required result: add a README claim inventory that links each feature,
     limit, research-source, and paper-derived statement to code/tests/docs/
-    sidecars/TODO evidence, then validate stale or unsupported claims in CI.
+    sidecars/TODO evidence, extend it to the linked documentation surfaces,
+    then validate stale or unsupported claims in CI.
 
 ## Architecture Description

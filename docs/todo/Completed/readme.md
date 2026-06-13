@@ -15699,3 +15699,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     imply implemented methods or results.
   - Remaining README gap: semantic claim verification and per-claim evidence
     mapping remain active in `docs/todo/readme.md`.
+
+- [x] State that README cleanup is part of a whole-docs alignment pass.
+  - Spec evidence: AlphaEvolve-alignment documentation can become misleading
+    if only the root README is tightened while operational guides, status,
+    ROADMAP, papers index, sidecars, or TODO ledgers retain stronger claims.
+  - Status: `docs/README.md` now says AlphaEvolve-alignment cleanup is a
+    whole-documentation task and names the surfaces that must be checked
+    together. `docs/todo/readme.md` now scopes its semantic-verification gap to
+    README claims plus linked documentation surfaces.
+  - Remaining README gap: there is still no machine-readable cross-document
+    claim inventory, semantic stale-claim verifier, or CI-generated evidence
+    map proving every AlphaEvolve-facing docs claim is current.

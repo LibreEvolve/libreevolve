@@ -223,7 +223,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     not a workload-specific runner and remains `claim_ready: false`. README can
     now cite dataset-digest completeness, score-field-to-returned-metric
     linkage, observed artifact evidence, protocol-readiness counts, and the
-    managed-runner overclaim guard.
+    managed-runner overclaim guard. README Important limits now scopes
+    evaluator workload metadata/report evidence away from managed
+    training/search runners, checkpoint completeness, score-field-to-artifact
+    causality, and stochastic re-evaluation policy.
   - Required result: when executable workload-specific training/search
     contracts land, update README, ROADMAP, papers index, and code/paper TODOs
     together so README distinguishes declarative workload provenance from

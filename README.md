@@ -61,6 +61,11 @@ Important limits:
   independent reference/statistical-oracle evidence, benchmark sufficiency
   proof, independent disagreement outcomes, or cross-run oracle tables; that
   boundary is tracked by `papers/evaluator_oracle_boundary.json`.
+- Evaluator workload metadata and `runtime.history.evaluator_workload_report`
+  record declared `simple_check`, `inner_search`, `ml_training`, and `custom`
+  stage provenance, not managed workload-specific training/search runners,
+  checkpoint completeness, score-field-to-artifact causality, or stochastic
+  re-evaluation policy.
 - Embedded evaluator support is opt-in `embedded_evaluate` stage evidence, not
   full AlphaEvolve Figure 3 evaluator parity with default candidate-owned
   `evaluate(eval_inputs)` problem loading, stronger build/runtime isolation, or

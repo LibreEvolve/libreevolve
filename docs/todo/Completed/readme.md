@@ -4,6 +4,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document evaluator-workload README boundary.
+  - Status: README Important limits now states that evaluator workload
+    metadata and `runtime.history.evaluator_workload_report` record declared
+    stage provenance, not managed workload-specific training/search runners,
+    checkpoint completeness, score-field-to-artifact causality, or stochastic
+    re-evaluation policy.
+  - Verification: config and runtime tests validate workload metadata, runtime
+    report fields, and the managed-runner overclaim guard.
+
 - [x] Document process-exhibit README boundary.
   - Status: README Important limits now states that Figure 1/Figure 2
     process-exhibit reports are local node/edge/pseudocode-to-artifact maps,

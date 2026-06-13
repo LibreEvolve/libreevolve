@@ -10,30 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Appendix B.7 roadmap wording scoped until regular-hexagon packing
-      provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B.7 reports two regular-hexagon
-    packing improvements: for `n = 11`, the outer side length improves from
-    `3.943` to `3.931`, and for `n = 12`, it improves from `4.0` to `3.942`.
-    Figure 11 shows the two constructions as left/right panels.
-  - Current evidence: roadmap/README/paper-index wording now cites the B.7
-    `packing_result_boundary`, including both `n` values, unit/outer hexagon
-    conventions, side-length improvements, Figure 11 panel links, prior
-    source, and required future placement/certificate fields. It still does
-    not claim placement artifact hashes, pose/orientation schemas,
-    regular-hexagon geometry certificates, containment certificates,
-    non-overlap certificates, side-length recomputation certificates,
-    recomputed side lengths, or rendered Figure 11 panel artifacts. The
-    boundary now includes explicit pose/orientation, geometry-certificate,
-    side-length recomputation, and Figure 11 panel artifact path/hash fields
-    and keeps those artifacts `not_recorded_locally`.
-  - Required result: when the actual Appendix B.7 placement payloads and
-    certificates land, update ROADMAP, README, papers index, and code/paper
-    TODOs so roadmap claims distinguish both `n` values, geometry
-    conventions, pose/orientation schemas, regular-hexagon geometry
-    certificates, side-length recomputation certificates, Figure 11 artifacts,
-    payload hashes, and source locations from aggregate Appendix B coverage.
-
 - [ ] Keep Appendix B.9-B.10 roadmap wording scoped until Heilbronn
       minimum-area provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.9-B.10 reports three Heilbronn

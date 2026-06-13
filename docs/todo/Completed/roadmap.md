@@ -2,6 +2,27 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Appendix B.7 regular-hexagon roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish the B.7 result-boundary summaries from missing placement
+    payloads, pose/orientation schemas, geometry certificates, recomputation,
+    and Figure 11 panel artifacts.
+  - Current evidence: `packing_result_boundary` records both rows: `n = 11`
+    from outer side length `3.943` to `3.931` in Figure 11 left, and `n = 12`
+    from `4.0` to `3.942` in Figure 11 right, along with unit/outer hexagon
+    conventions, prior source, required future placement/certificate fields,
+    and `not_recorded_locally` statuses.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: placement payload hashes, pose/orientation schemas, inner/outer
+    regular-hexagon geometry certificates, containment or non-overlap
+    certificates, side-length recomputation certificates, recomputed side
+    lengths, and Figure 11 panel artifacts.
+  - Verification: Appendix B registry B.7 packing-boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive Appendix B.6 finite-set witness roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

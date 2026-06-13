@@ -190,6 +190,14 @@ Important limits:
   `|U - U| <= 2 max(U) + 1` admissibility certificates, `|U-U|`/`|U+U|`
   cardinality certificates, max-element certificates, formula-substitution
   certificates, or recomputed lower-bound rows.
+- Appendix B.7 regular-hexagon packing provenance remains absent: the registry
+  preserves the unit-regular-hexagon objective, Figure 11 left/right linkage,
+  prior `[29]` values, `n = 11` and `n = 12` witness summaries, and reported
+  outer-side improvements (`3.943 -> 3.931` and `4.0 -> 3.942`), not placement
+  payload hashes, pose/orientation schemas, inner/outer regular-hexagon
+  geometry certificates, containment or non-overlap certificates, side-length
+  recomputation certificates, recomputed side lengths, or Figure 11 panel
+  artifacts.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

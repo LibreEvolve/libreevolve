@@ -300,6 +300,23 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Remaining gap: real benchmark-grade cascade efficiency evidence remains
     open.
 
+- [x] Archive stale active roadmap cascade wording TODO.
+  - Status: the active roadmap TODO for scoping cascade wording to partial
+    promotion/attrition reports was stale. `ROADMAP.md`, README, and
+    `papers/README.md` already describe
+    `runtime.history.evaluation_cascade_report` as runtime cascade attrition
+    telemetry with candidate-stage cross-links, denominator-policy boundaries,
+    and explicit false readiness, while
+    `papers/evaluation_cascade_boundary.json` preserves the stage-difficulty,
+    evaluator/test-set identity, test-set hash, benchmark seed/sample policy,
+    counterfactual full-evaluation cost, observed cost-savings, and repeated-
+    seed matrix-cascade gaps.
+  - Verification: `tests/test_evaluation_cascade_boundary.py`,
+    `tests/core/test_loop.py`, and `tests/test_paper_manifest.py` validate the
+    runtime report and sidecar and reject premature cascade-efficiency claims.
+    Remaining AlphaEvolve cascade implementation gaps stay represented by
+    active code/paper/roadmap evidence rather than by this stale wording task.
+
 - [x] Emit proposal lifecycle audit boundary sidecar for roadmap evidence.
   - Status: `papers/proposal_lifecycle_audit_boundary.json` now lets roadmap
     wording point to a committed absence boundary for independent rejudge,

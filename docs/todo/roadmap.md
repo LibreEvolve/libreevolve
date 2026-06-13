@@ -6,30 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Keep cascade roadmap wording scoped to partial promotion/attrition
-      reports.
-  - Spec evidence: AlphaEvolve Section 2.4 says evaluation cascades can use
-    ensembles of test cases with increasing difficulty, promote candidates to
-    later stages only after promising earlier-stage results, prune less
-    promising solutions quickly, and run small-scale checks before main tests.
-    The matrix-multiplication experiment also evaluates targets with multiple
-    random seeds using that cascade.
-  - Current evidence: ROADMAP and README can now reference
-    `runtime.history.evaluation_cascade_report`, a validated
-    `libreevolve.evaluation_cascade_report.v1` runtime summary with configured
-    candidate count, per-stage entry/pass/fail/threshold-fail counts, failure
-    reasons, sample/retry/subprocess/timeout totals, elapsed seconds, promotion
-    rates, main-test exposure, early-prune counts, and explicit
-    `claim_ready: false` limitations. ROADMAP can also cite bounded
-    candidate-stage `history.jsonl` cross-links and runtime denominator-policy
-    boundaries. ROADMAP now also names
-    `papers/evaluation_cascade_boundary.json` as the committed paper-manifest-
-    validated cascade-efficiency absence boundary.
-  - Required result: update ROADMAP, README, papers index, and code/paper TODOs
-    with the partial report and remaining work for stage difficulty/scale
-    labels, evaluator/test-set hashes, benchmark seed/sample policy, and
-    cost-savings evidence.
-
 - [ ] Extend evaluator-entrypoint roadmap wording from opt-in embedded support
       to full Figure 3 parity.
   - Spec evidence: AlphaEvolve Section 2.1 and Figure 3 use a candidate

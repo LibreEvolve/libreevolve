@@ -2,6 +2,29 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive compiler-IR reference-check roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish `compiler_ir_provenance` metadata from AlphaEvolve-style
+    per-edit randomized reference-check traces on compiler-generated XLA IR.
+  - Current evidence: `libreevolve.systems_result_report.v1` and focused tests
+    require `compiler_ir_provenance` for ready compiler reports, including IR
+    origin/editability boundaries, compiler-generated baseline provenance,
+    reference implementation hash, randomized input-generator id/hash,
+    numerical tolerance policy, final expert-confirmation scope, per-edit
+    randomized reference-check records, abstraction-level attribution, and
+    artifact refs.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    compiler-IR artifacts: candidate edit sequences, emitted per-edit
+    randomized reference-check artifacts, input-generator seed and coverage
+    records, tolerance/failure-policy outputs, abstraction-level attribution
+    artifacts, real XLA/FlashAttention edit artifacts, and final expert
+    all-input signoff evidence.
+  - Verification: paper-manifest validation, checked-in paper-index TODO
+    coverage, and focused systems-result compiler-IR tests still pass, while
+    searches confirm the compiler-IR code and paper TODOs remain active.
+
 - [x] Archive Gemini-to-TPU contribution roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

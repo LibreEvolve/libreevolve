@@ -10,29 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep compiler-IR roadmap wording scoped to final reference gates until
-      per-edit randomized checks exist.
-  - Spec evidence: AlphaEvolve Section 3.3.4 checks each FlashAttention
-    compiler-IR modification against reference code on randomized inputs, then
-    separately reports final expert confirmation for all possible inputs. It
-    also says the XLA-generated IR was designed for debugging rather than
-    direct developer editing and was compiler-generated/already highly
-    optimized.
-  - Current evidence: roadmap systems-result wording covers generic
-    reference-correctness and expert-confirmation gates. Ready compiler
-    reports now also require `compiler_ir_provenance` for per-edit randomized
-    reference-check records, input-generator provenance, IR-origin/editability
-    constraints, compiler-generated baseline provenance, numerical tolerance
-    policy, and kernel/pre/postprocessing attribution. Real compiler fixtures
-    still do not emit those edit-sequence artifacts or expert/all-input
-    signoff evidence.
-  - Required result: when compiler/kernel fixtures emit edit-sequence
-    reference-check artifacts, reference-code hashes, randomized-input
-    coverage, tolerance/failure-policy outputs, and expert signoff scope,
-    update ROADMAP, README, papers index, and code/paper TODOs so roadmap text
-    distinguishes report-contract metadata from AlphaEvolve-style
-    compiler-IR optimization traces.
-
 - [ ] Keep compiler-stack roadmap wording scoped until FlashAttention context
       provenance exists.
   - Spec evidence: AlphaEvolve Section 3.3.4 describes a concrete compiler

@@ -77,6 +77,9 @@ Important limits:
   model/run/backend records, reviewed TPU/circuit identifiers,
   novelty/firstness evidence, integration records, hardware signoff files, or
   synthesis-rediscovery audit artifacts for the Gemini-to-TPU attribution claim.
+- Compiler IR records validate metadata only: they do not yet provide real
+  XLA/FlashAttention edit artifacts, randomized input coverage,
+  reference-check outputs, tolerance/failure logs, or expert all-input signoff.
 - The docs do not yet reproduce AlphaEvolve Figure 6 or Figure 7 exhibits:
   scheduling heuristic source/heatmap provenance and Pallas tiling-problem
   diagram/source-data/render hashes remain active code and paper TODOs.

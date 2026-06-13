@@ -554,16 +554,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     paper-manifest validation.
   - Current gap: a custom backend can wrap Gemini externally, but the paper
     ledger has no first-class evidence for Gemini credential preflight,
-    provider-native usage/default/capability telemetry, safe provider
-    diagnostics, model-family labels, Flash/Pro lane identity, or an explicit
-    paper-level substitution rule that keeps Gemini absence distinct from
-    fast/strong scheduling experiments.
+    Gemini client-context configuration, request-parameter mapping,
+    provider-native usage/default/capability/error telemetry, safe provider
+    diagnostics, model-registry snapshots, account/model availability checks,
+    model-family labels, Flash/Pro lane identity, scheduler Flash/Pro lane
+    integration, paper-level substitution rules, or substitution-equivalence
+    justification that keeps Gemini absence distinct from fast/strong
+    scheduling experiments.
   - Required result: add a built-in Google/Gemini adapter or versioned
     provider-plugin/substitution contract with model-family capability
-    metadata, credential/client preflight, request/usage/default telemetry,
-    diagnostic retention policy, and report fields proving whether a run
-    reproduced or intentionally substituted AlphaEvolve's Flash/Pro provider
-    mix before claiming provider-parity evidence.
+    metadata, credential/client preflight, safe client-context and
+    request-parameter mapping, request/usage/default/error telemetry,
+    model-registry and account/model availability evidence, diagnostic
+    retention policy, scheduler lane integration, and report fields proving
+    whether a run reproduced or intentionally substituted AlphaEvolve's
+    Flash/Pro provider mix before claiming provider-parity evidence.
 
 - [ ] Track AlphaEvolve sample-efficiency evidence separately from call caps.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 and Section 4.
@@ -661,12 +666,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     absence boundary for manifest validation.
   - Current gap: no built-in Google/Gemini backend exists, and `custom`
     backends do not by themselves supply provider-native usage/default
-    telemetry, account/model capability evidence, credential preflight, or
-    Flash/Pro lane labels for scheduler-validation reports.
+    telemetry, account/model capability evidence, credential preflight, Gemini
+    client-context configuration, request-parameter mapping, provider-native
+    error diagnostics, model-registry snapshots, substitution-equivalence
+    justification, or Flash/Pro lane labels for scheduler-validation reports.
   - Required result: add a Gemini backend or provider-plugin contract with
-    safe request metadata, usage/default diagnostics, model-family capability
-    policy, credential/client preflight, and paper-facing evidence that the
-    fast/strong model mix is reproduced or intentionally substituted.
+    safe request metadata, client-context and request-parameter mapping,
+    usage/default/error diagnostics, model-family capability policy,
+    credential/client preflight, account/model availability evidence, scheduler
+    lane integration, and paper-facing evidence that the fast/strong model mix
+    is reproduced or intentionally substituted.
 
 - [ ] Add AlphaEvolve-grade candidate language, build, and runner contracts.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.2.

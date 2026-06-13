@@ -1498,8 +1498,12 @@ server selection remain outside self-describing artifacts. There is also no
 first-class Google/Gemini backend yet, so AlphaEvolve's published Gemini 2.0
 Flash/Gemini 2.0 Pro model mix currently requires either a custom backend with
 separate evidence or a future provider/plugin contract before it can be treated
-as provider-parity reproduction evidence. The committed
-`papers/gemini_provider_parity_boundary.json` sidecar preserves that
+as provider-parity reproduction evidence. The current boundary also excludes
+Gemini client-context configuration, request-parameter mapping, provider-native
+usage/default/error diagnostics, model-registry snapshots, account/model
+availability checks, scheduler Flash/Pro lane integration, paper-level
+substitution contracts, and substitution-equivalence justification. The
+committed `papers/gemini_provider_parity_boundary.json` sidecar preserves that
 first-class-provider absence boundary for paper-manifest validation.
 The committed `papers/config_validation_boundary.json` sidecar separately
 preserves that current configuration validation is local effective-config
@@ -2497,6 +2501,16 @@ Implemented:
   equal-budget no-reviewer comparisons, calibrated reviewer-score reports,
   reviewer reliability ablations, per-reviewer provider isolation, or external
   reviewer timeout artifacts.
+- `papers/gemini_provider_parity_boundary.json`: Google/Gemini provider
+  parity sidecar for AlphaEvolve Section 2.3. It records the runtime absence
+  report schema, built-in provider list evidence, Gemini-like custom-model
+  detection, Flash/Pro-shaped lane counts, and false provider-parity readiness.
+  It is not evidence of a first-class Google/Gemini adapter, credential
+  preflight, Gemini client-context configuration, request-parameter mapping,
+  provider-native usage/default/error diagnostics, capability lookup,
+  model-registry snapshots, Flash and Pro lane identity, scheduler Flash/Pro
+  lane integration, account/model availability checks, paper-level
+  substitution contracts, or substitution-equivalence justification.
 - `papers/prompt_section_packing_boundary.json`: prompt section-packing
   sidecar for AlphaEvolve Sections 2.2, 2.3, and 2.4 prompt-context,
   output-format, and multi-score prompt-diversity evidence. It records prompt

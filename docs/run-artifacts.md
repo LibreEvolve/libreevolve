@@ -3549,7 +3549,11 @@ parity. In the current codebase `gemini_builtin_available` is false,
 `claim_ready` is false. A custom backend whose model id contains `gemini` is
 reported as an opaque Gemini-like substitution, not as first-class Google/
 Gemini credential preflight, provider-native usage/default telemetry,
-capability lookup, safe diagnostics, or validated Flash/Pro lane parity.
+capability lookup, safe diagnostics, Gemini client-context configuration,
+request-parameter mapping, model-registry snapshots, account/model
+availability checks, scheduler Flash/Pro lane integration, paper-level
+substitution contract, substitution-equivalence justification, or validated
+Flash/Pro lane parity.
 The committed `papers/gemini_provider_parity_boundary.json` sidecar preserves
 the same absence boundary for paper-manifest validation.
 

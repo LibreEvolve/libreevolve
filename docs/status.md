@@ -48,7 +48,12 @@ Important limits:
   model mix remains an explicit absence boundary. Runtime histories record
   `runtime.history.gemini_provider_parity_report`, and
   `papers/gemini_provider_parity_boundary.json` preserves the same boundary
-  for paper-manifest validation.
+  for paper-manifest validation. Missing parity gates include Gemini
+  credential preflight, client-context configuration, request-parameter
+  mapping, provider-native usage/default/error diagnostics, capability and
+  model-registry snapshots, account/model availability checks, first-class
+  Flash/Pro lane identity, scheduler lane integration, substitution contracts,
+  and substitution-equivalence justification.
 - AlphaEvolve source-version evidence now records arXiv abstract-page-adjacent
   metadata for `2506.13131v1` in `papers/source_versions.json`, including DOI,
   subject classes, submitted timestamp, author count, TeX source URL, and

@@ -1099,6 +1099,12 @@ resumed-trace proof are still open.
   record built-in provider types, configured Gemini-like custom backends,
   Flash/Pro-shaped model names, and `claim_ready: false`; this is evidence for
   the missing AlphaEvolve Flash/Pro provider surface, not provider parity.
+  Remaining provider-parity gates include credential preflight, Gemini
+  client-context configuration, request-parameter mapping, provider-native
+  usage/default/error diagnostics, model-registry snapshots, account/model
+  availability checks, first-class Flash and Pro lane identity, scheduler lane
+  integration, paper-level substitution contracts, and
+  substitution-equivalence justification.
 - Extend current synchronous configurable critique reviewer pools, role routing,
   and first/last-valid aggregation toward async reviewer overlap, calibrated
   reviewer scoring, stronger provider isolation, and runtime artifacts for

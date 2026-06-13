@@ -619,9 +619,12 @@ backend specs with the built-in registry. The current supported backend types
 remain `anthropic`, `openai`, `ollama`, and `custom`; custom backend model
 names containing `gemini` can be reported as Gemini-like substitutions, but
 they do not provide first-class Google/Gemini credential preflight,
-provider-native telemetry, capability lookup, or validated AlphaEvolve
-Flash/Pro lane parity. The matching paper-facing absence boundary is preserved
-in `papers/gemini_provider_parity_boundary.json`.
+Gemini client-context configuration, request-parameter mapping,
+provider-native usage/default/error diagnostics, model-registry or
+account/model availability checks, scheduler lane integration, substitution
+equivalence justification, or validated AlphaEvolve Flash/Pro lane parity. The
+matching paper-facing absence boundary is preserved in
+`papers/gemini_provider_parity_boundary.json`.
 Restored/replay prompt payloads can be preflighted with
 `validate_restored_llm_prompt()`, which delegates to the same non-empty text
 boundary used by live ensemble and bundled direct-adapter calls. Oversized and

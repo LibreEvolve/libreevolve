@@ -1335,8 +1335,14 @@ def test_runtime_history_records_gemini_provider_parity_boundary():
     )
     assert report["claim_ready"] is False
     assert report["claim_readiness"]["credential_preflight"] is False
+    assert report["claim_readiness"]["gemini_client_context_config"] is False
+    assert report["claim_readiness"]["gemini_request_parameter_mapping"] is False
     assert report["claim_readiness"]["provider_native_usage_telemetry"] is False
+    assert report["claim_readiness"]["provider_native_error_diagnostics"] is False
+    assert report["claim_readiness"]["scheduler_flash_pro_lane_integration"] is False
     assert report["claim_readiness"]["substitution_contract"] is False
+    assert "gemini_flash_lane_identity" in report["claim_readiness"]["remaining_gap"]
+    assert "substitution_equivalence_justification" in report["claim_readiness"]["remaining_gap"]
     assert report["configured_backends"][1]["provider_family"] == "gemini"
     assert report["configured_backends"][1]["lane"] == "flash"
     assert report["configured_backends"][1]["first_class_provider"] is False

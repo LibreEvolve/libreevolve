@@ -32098,19 +32098,36 @@ def _gemini_provider_parity_report(startup_manifest: Mapping[str, object]) -> di
         "claim_readiness": {
             "first_class_gemini_backend": has_first_class_gemini,
             "credential_preflight": False,
+            "gemini_client_context_config": False,
+            "gemini_request_parameter_mapping": False,
             "provider_native_usage_telemetry": False,
             "provider_native_default_telemetry": False,
+            "provider_native_error_diagnostics": False,
             "provider_capability_lookup": False,
+            "gemini_model_registry_snapshot": False,
             "flash_pro_lane_contract": has_first_class_gemini
             and flash_count > 0
             and pro_count > 0,
+            "scheduler_flash_pro_lane_integration": False,
+            "account_model_availability_check": False,
             "substitution_contract": False,
+            "substitution_equivalence_justification": False,
             "remaining_gap": [
                 "built_in_google_gemini_adapter",
                 "gemini_credential_preflight",
-                "provider_native_gemini_usage_and_default_telemetry",
-                "gemini_flash_pro_lane_labels",
+                "gemini_client_context_config",
+                "gemini_request_parameter_mapping",
+                "provider_native_usage_telemetry",
+                "provider_native_default_telemetry",
+                "provider_native_error_diagnostics",
+                "provider_capability_lookup",
+                "gemini_model_registry_snapshot",
+                "gemini_flash_lane_identity",
+                "gemini_pro_lane_identity",
+                "scheduler_flash_pro_lane_integration",
+                "account_model_availability_check",
                 "paper_level_substitution_contract",
+                "substitution_equivalence_justification",
             ],
         },
     }
@@ -32342,10 +32359,17 @@ def validate_gemini_provider_parity_report(report: object) -> dict:
     else:
         for field in (
             "credential_preflight",
+            "gemini_client_context_config",
+            "gemini_request_parameter_mapping",
             "provider_native_usage_telemetry",
             "provider_native_default_telemetry",
+            "provider_native_error_diagnostics",
             "provider_capability_lookup",
+            "gemini_model_registry_snapshot",
+            "scheduler_flash_pro_lane_integration",
+            "account_model_availability_check",
             "substitution_contract",
+            "substitution_equivalence_justification",
         ):
             if readiness.get(field) is not False:
                 issues.append(

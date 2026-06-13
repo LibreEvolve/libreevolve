@@ -282,6 +282,11 @@ with schema `libreevolve.gemini_provider_parity_report.v1`: the report lists
 the built-in backend types, configured backend specs, Gemini-like custom
 models, Flash/Pro-shaped lanes, and `claim_ready: false` until a first-class
 Gemini adapter or equivalent provider-plugin/substitution contract exists.
+The report also keeps Gemini client-context configuration, request-parameter
+mapping, provider-native usage/default/error diagnostics, model-registry and
+account/model availability checks, scheduler lane integration, and
+substitution-equivalence justification out of parity claims until those
+surfaces exist.
 The paper-facing absence boundary is also preserved in
 `papers/gemini_provider_parity_boundary.json` for manifest validation.
 

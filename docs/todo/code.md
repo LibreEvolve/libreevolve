@@ -4580,20 +4580,25 @@ sidecars, tests, and active TODOs.
     `anthropic`, and `ollama` built-in constructors; backend validation accepts
     those types plus `custom`. A custom backend can be written by users, but it
     does not provide a first-class Google/Gemini config surface, provider-native
-    usage/default/capability telemetry, credential preflight, or Flash/Pro lane
-    labels that the paper-facing scheduler reports can validate. Runtime
-    histories now include `libreevolve.gemini_provider_parity_report.v1`,
-    which records the built-in provider list, detects Gemini-like custom model
-    ids and Flash/Pro-shaped lanes, and preserves `claim_ready: false` while no
-    first-class Google/Gemini backend exists.
+    usage/default/capability/error telemetry, credential preflight, Gemini
+    client-context configuration, request-parameter mapping, model-registry or
+    account/model availability checks, substitution-equivalence justification,
+    or Flash/Pro lane labels that the paper-facing scheduler reports can
+    validate. Runtime histories now include
+    `libreevolve.gemini_provider_parity_report.v1`, which records the built-in
+    provider list, detects Gemini-like custom model ids and Flash/Pro-shaped
+    lanes, and preserves `claim_ready: false` while no first-class
+    Google/Gemini backend exists.
     `papers/gemini_provider_parity_boundary.json` now preserves the same
     first-class-provider absence boundary for paper-manifest validation.
   - Required result: add a built-in Google/Gemini backend or an explicitly
     equivalent provider plugin contract with model-family capability metadata,
-    credential/client preflight, safe request/usage/default telemetry,
-    provider-diagnostic retention policy, and tests/reports that can reproduce
-    or intentionally substitute the paper's Flash/Pro fast/strong ensemble
-    without hiding behind an opaque custom backend.
+    credential/client preflight, safe client-context and request-parameter
+    mapping, usage/default/error telemetry, model-registry and account/model
+    availability evidence, provider-diagnostic retention policy, scheduler
+    Flash/Pro lane integration, and tests/reports that can reproduce or
+    intentionally substitute the paper's Flash/Pro fast/strong ensemble without
+    hiding behind an opaque custom backend.
 
 - [ ] Add sample-efficiency reporting for AlphaEvolve-scale LLM proposal
       budgets.

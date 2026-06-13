@@ -1,6 +1,9 @@
 {
   "schema": "libreevolve.alphaevolve_adaptive_mutation_mode_boundary.v1",
   "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "2.3"
+  ],
   "source_claim": "AlphaEvolve Section 2.3 requests SEARCH/REPLACE diffs for larger codebases and full-code output for very short code or complete rewrite cases",
   "boundary_status": "run_wide_mutation_mode_without_adaptive_selection",
   "claim_ready": false,

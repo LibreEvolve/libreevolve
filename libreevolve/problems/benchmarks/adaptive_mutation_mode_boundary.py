@@ -10,6 +10,7 @@ ADAPTIVE_MUTATION_MODE_BOUNDARY_SCHEMA = (
     "libreevolve.alphaevolve_adaptive_mutation_mode_boundary.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
+EXPECTED_SOURCE_SECTION_IDS = ("2.3",)
 EXPECTED_BOUNDARY_STATUS = "run_wide_mutation_mode_without_adaptive_selection"
 EXPECTED_SUPPORTED_MODES = ("diff", "full")
 EXPECTED_SUPPORTING_SURFACES = (
@@ -70,6 +71,7 @@ def adaptive_mutation_mode_boundary_record() -> dict[str, Any]:
     return {
         "schema": ADAPTIVE_MUTATION_MODE_BOUNDARY_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_claim": (
             "AlphaEvolve Section 2.3 requests SEARCH/REPLACE diffs for larger "
             "codebases and full-code output for very short code or complete "
@@ -106,6 +108,8 @@ def validate_adaptive_mutation_mode_boundary(
         issues.append(_issue("invalid_schema", "unsupported adaptive mutation-mode boundary schema"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['2.3']"))
     source_claim = data.get("source_claim")
     if not isinstance(source_claim, str) or "SEARCH/REPLACE diffs" not in source_claim or "full-code output" not in source_claim:
         issues.append(_issue("invalid_source_claim", "source_claim must identify diff and full-code output selection"))

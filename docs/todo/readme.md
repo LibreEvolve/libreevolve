@@ -811,6 +811,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     generated boundary and validation checks nested matrix-result report
     linkage, while README still marks full-suite generation missing.
     Matching paper TODO and paper-index entries now make the same distinction.
+    README Important limits now also states that matrix-publication evidence is
+    one checked `mm_2x2x2` Strassen baseline bundle plus Appendix A
+    registry/status metadata, not full-suite local target tensors, discovered
+    decompositions, coefficient data, exactness certificates, notebooks,
+    per-seed reports, or publication bundles for every registered Appendix A
+    target.
   - Required result: when real tensor-decomposition benchmark runs emit
     target tensors, discovered algorithms, coefficient data, certificates,
     notebooks, or publication bundles across Appendix A targets, update

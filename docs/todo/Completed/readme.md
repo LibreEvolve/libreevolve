@@ -4,6 +4,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document matrix-publication README boundary.
+  - Status: README Important limits now states that matrix-publication
+    evidence is one checked `mm_2x2x2` Strassen baseline bundle plus Appendix A
+    registry/status metadata, not full-suite local target tensors, discovered
+    decompositions, coefficient data, exactness certificates, notebooks,
+    per-seed reports, or publication bundles for every registered Appendix A
+    target. It points to `papers/matrix_suite_publication_artifacts.json`.
+  - Verification: focused matrix publication-bundle, matrix suite artifact
+    boundary, and paper-manifest tests validate the checked Strassen bundle,
+    current full-suite absence boundary, and overclaim guards.
+
 - [x] Document Figure 8 ablation-contract README boundary.
   - Status: README Important limits now states that AlphaEvolve Figure 8
     ablation support is a validated registry, equal-budget report contract,

@@ -180,6 +180,12 @@ Important limits:
   benchmark evidence; those boundaries are tracked by
   `papers/problem_formulation_provenance_boundary.json` and
   `papers/benchmark_fixture_readiness_boundary.json`.
+- Matrix-publication evidence is one checked `mm_2x2x2` Strassen baseline
+  bundle plus Appendix A registry/status metadata, not full-suite local target
+  tensors, discovered decompositions, coefficient data, exactness certificates,
+  notebooks, per-seed reports, or publication bundles for every registered
+  Appendix A target; that boundary is tracked by
+  `papers/matrix_suite_publication_artifacts.json`.
 - Collaborator-feedback provenance is optional metadata and runtime reporting
   for cohorts, events, affected workflow areas, change links, validation
   outcomes, privacy/redaction policy, and review state, not populated

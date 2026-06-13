@@ -1356,28 +1356,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `papers/artifact_index_boundary.json`, keeping durable full-content or
     semantic artifact search open.
 
-- [ ] Keep MAP-Elites descriptor roadmap wording scoped to insertion-time
-  TF-IDF coordinates versus stable learned descriptors.
-  - Spec evidence: AlphaEvolve-style quality-diversity search needs
-    task-meaningful behavior descriptors or stable descriptor models with
-    tested compatibility when descriptors change.
-  - Current evidence: the roadmap now names evaluator-provided behavior
-    descriptors, fixed descriptor models, or explicit rebin/snapshot semantics
-    as the remaining work. Current archive snapshots already record descriptor
-    axes, current diversity reference ids, descriptor-model revision, dynamic
-    TF-IDF reference status, and the no-rebin insertion-time coordinate policy.
-    They also carry `libreevolve.map_elites_descriptor_readiness.v1` with
-    false readiness for stable behavior-descriptor contracts,
-    learned/evaluator descriptor models, descriptor training inputs,
-    restore-compatible descriptor revisioning, and full/partial rebin engines.
-    ROADMAP now ties that scope to
-    `papers/map_elites_descriptor_boundary.json`.
-  - Required result: when learned/evaluator-provided descriptor models or
-    archive rebin semantics land, update the roadmap, README, papers index,
-    and code/paper TODO entries together so they neither underclaim current
-    descriptor-policy snapshots nor overclaim stable AlphaEvolve-grade
-    behavior descriptors.
-
 - [ ] Keep island-count roadmap wording scoped to configurable defaults.
   - Spec evidence: AlphaEvolve's paper names MAP-Elites and island-based
     population models at a high level; local roadmap wording should not turn

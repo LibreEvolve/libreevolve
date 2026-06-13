@@ -10820,3 +10820,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     as required before claiming AlphaEvolve-style prompt-database parity.
   - Remaining roadmap gap: the actual prompt-side archive/database work remains
     active in code and paper TODOs.
+- [x] Keep MAP-Elites descriptor roadmap wording scoped to insertion-time
+  TF-IDF coordinates versus stable learned descriptors.
+  - Spec evidence: AlphaEvolve-style quality-diversity search needs
+    task-meaningful behavior descriptors or stable descriptor models with
+    tested compatibility when descriptors change.
+  - Status: ROADMAP now names evaluator-provided behavior descriptors,
+    fixed/learned descriptor models, or explicit tested rebin/snapshot
+    semantics as replacement work for the current insertion-time adaptive
+    TF-IDF diversity coordinates. It also cites
+    `papers/map_elites_descriptor_boundary.json` as the machine-validated
+    descriptor snapshot boundary.
+  - Remaining roadmap gap: stable descriptor contracts, learned/evaluator
+    descriptor models, descriptor training inputs, restore-compatible
+    descriptor revisioning, and full/partial archive rebin engines remain
+    active in code and paper TODOs.

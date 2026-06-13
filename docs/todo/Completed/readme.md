@@ -14260,3 +14260,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     descriptor/objective indexes, archive-event streams, migration/rebin
     semantics, and async/controller-resumable prompt work remain open in code
     and paper TODOs before claiming solution-database parity.
+- [x] Keep README MAP-Elites descriptor claims scoped to insertion-time
+  TF-IDF coordinates.
+  - Spec evidence: AlphaEvolve-grade quality-diversity search should use
+    task-meaningful behavior descriptors or stable learned descriptor models,
+    with explicit archive compatibility when descriptors change.
+  - Status: README states that MAP-Elites descriptor snapshots are
+    insertion-time local descriptor metadata, not stable learned or
+    evaluator-provided behavior descriptors or archive rebin semantics, and
+    points to `papers/map_elites_descriptor_boundary.json`.
+  - Remaining README gap: evaluator-provided behavior descriptors, learned
+    descriptor models, tested archive rebin semantics, and reports that
+    distinguish task behavior descriptors from local TF-IDF novelty heuristics
+    remain active in code and paper TODOs.

@@ -91,41 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README AlphaEvolve MARL algorithm-discovery claims absent or
-      source-scoped until CFR/PSRO benchmark evidence exists.
-  - Spec evidence: arXiv `2602.16928`, `Discovering Multiagent Learning
-    Algorithms with Large Language Models`, applies AlphaEvolve to CFR and
-    PSRO game-theoretic algorithm design. Its abstract reports VAD-CFR and
-    SHOR-PSRO, an 18-game evaluation suite covering Poker, Goofspiel, Liar's
-    Dice, Blotto, and Battleship variants, and ablation/distillation into
-    WOP-CFR and PM-PSRO minimal solvers that improve generalization with lower
-    structural complexity. The method uses OpenSpiel, exact exploitability,
-    deterministic metrics, and train-test ablation to separate overfit
-    mechanisms from minimal algorithmic cores.
-  - Current evidence: README now lists Multiagent Learning only as
-    AlphaEvolve MARL algorithm-discovery context and points to
-    `papers/multiagent_learning_boundary.json` for the missing CFR/PSRO
-    candidate schemas, OpenSpiel game fixtures, exploitability metrics,
-    exact-oracle PSRO records, VAD-CFR/SHOR-PSRO rows, WOP-CFR/PM-PSRO
-    distillation rows, IQM ablations, random normal-form validation, and
-    generated solver artifact provenance. It still does not provide CFR or
-    PSRO candidate interfaces, include an imperfect-information game
-    evaluator, define game-suite train/generalization splits, compare against
-    human-designed MARL baselines, report evolved mechanism coupling, or show
-    ablation/distillation evidence for minimal generalizing solvers.
-  - Required result: if README mentions AlphaEvolve MARL discovery,
-    game-theoretic learning, CFR, PSRO, VAD-CFR, SHOR-PSRO, WOP-CFR,
-    PM-PSRO, Poker/Goofspiel/Liar's Dice/Blotto/Battleship benchmarks,
-    evolved multiagent-learning algorithms, mechanism distillation, or
-    generalized MARL solver discovery, keep the wording source-scoped until
-    local artifacts can show the paper in the manifest, candidate schemas,
-    OpenSpiel or equivalent evaluator protocols, game-suite split records,
-    exact-exploitability and exact-oracle records, baseline identities,
-    result tables, IQM ablation/distillation traces, structural-complexity
-    metrics, random normal-form validation, limitation records, and
-    generalization reports. Avoid implying LibreEvolve supports
-    AlphaEvolve-style MARL algorithm discovery without those artifacts.
-
 - [ ] Keep README AlphaEvolve Ramsey-number claims absent or source-scoped
       until graph-witness benchmark evidence exists.
   - Spec evidence: arXiv `2603.09172`, `Reinforced Generation of

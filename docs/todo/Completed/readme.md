@@ -15197,3 +15197,32 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     layout, mutation/evaluation traces, transfer reports, benchmark baselines,
     report outcomes, and Meta-Harness-style harness-code optimization evidence
     remain active in code and paper TODOs.
+
+- [x] Keep README AlphaEvolve MARL algorithm-discovery claims absent or
+      source-scoped until CFR/PSRO benchmark evidence exists.
+  - Spec evidence: arXiv `2602.16928`, `Discovering Multiagent Learning
+    Algorithms with Large Language Models`, applies AlphaEvolve to CFR and
+    PSRO game-theoretic algorithm design. Its abstract reports VAD-CFR and
+    SHOR-PSRO, an 18-game evaluation suite covering Poker, Goofspiel, Liar's
+    Dice, Blotto, and Battleship variants, and ablation/distillation into
+    WOP-CFR and PM-PSRO minimal solvers that improve generalization with lower
+    structural complexity. The method uses OpenSpiel, exact exploitability,
+    deterministic metrics, and train-test ablation to separate overfit
+    mechanisms from minimal algorithmic cores.
+  - Status: README now lists arXiv `2602.16928` as AlphaEvolve MARL
+    algorithm-discovery context only and marks the mention as a curated
+    cached-paper subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no CFR
+    candidate schema, PSRO candidate schema, OpenSpiel imperfect-information
+    game fixture, game-suite split record, exact exploitability metric record,
+    exact best-response oracle record, VAD-CFR result row, SHOR-PSRO result
+    row, WOP-CFR distillation row, PM-PSRO distillation row, IQM ablation
+    audit, random normal-form validation row, baseline solver ledger,
+    generated solver artifact hash, or reproducible CFR/PSRO runtime evidence;
+    `papers/multiagent_learning_boundary.json` records that absence boundary.
+  - Remaining README gap: candidate schemas, evaluator protocols, game-suite
+    split records, exact-exploitability and exact-oracle records, baseline
+    identities, result tables, IQM ablation/distillation traces,
+    structural-complexity metrics, random normal-form validation, limitation
+    records, generalization reports, and AlphaEvolve-style MARL
+    algorithm-discovery evidence remain active in code and paper TODOs.

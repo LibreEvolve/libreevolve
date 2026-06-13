@@ -890,6 +890,17 @@ Important limits:
   generalization/overfit report, GSM8K/GPQA/InteractiveQA/ToolQA/TruthfulQA/
   LLF-Bench reproduction, linked-code audit, or independent reproduction
   output.
+- ArXiv `2602.16928` is AlphaEvolve MARL algorithm-discovery context only; the
+  README mentions this cached paper as a curated subset while
+  `papers/README.md` remains the complete implementation-status index.
+  LibreEvolve has no CFR candidate schema, PSRO candidate schema, OpenSpiel
+  imperfect-information game fixture, game-suite split record, exact
+  exploitability metric record, exact best-response oracle record, VAD-CFR
+  result row, SHOR-PSRO result row, WOP-CFR distillation row, PM-PSRO
+  distillation row, IQM ablation audit, random normal-form validation row,
+  baseline solver ledger, generated solver artifact hash, or reproducible
+  CFR/PSRO runtime evidence; `papers/multiagent_learning_boundary.json`
+  records that absence boundary.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

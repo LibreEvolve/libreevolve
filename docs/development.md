@@ -131,7 +131,9 @@ secret scan, non-integration unit tests on Python 3.11 and 3.12, and optional
 integration tests when an Anthropic API key is available. A green `Tests` badge
 means the last completed workflow passed for the paths that triggered it; local
 commands are still the fastest validation path while working before a push or
-PR.
+PR. CI also runs a dedicated paper/docs job that validates the committed paper
+manifest and focused docs/paper boundary tests; it does not run
+`--require-local-pdfs` because the PDF cache is intentionally gitignored.
 
 For docs-only changes, run at least:
 

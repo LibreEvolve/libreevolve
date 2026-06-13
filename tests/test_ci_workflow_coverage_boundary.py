@@ -17,7 +17,11 @@ def test_ci_workflow_coverage_boundary_accepts_path_scoped_boundary():
     assert validation.missing_evidence_count == 6
     assert boundary["schema"] == CI_WORKFLOW_COVERAGE_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
-    assert "does not claim a CI paper-manifest job" in boundary["claim_boundary"]
+    assert "committed-manifest paper/docs job" in boundary["claim_boundary"]
+    assert (
+        boundary["missing_evidence"]["paper_manifest_ci_job"]
+        == "committed_manifest_only_no_local_pdf_cache"
+    )
 
 
 def test_ci_workflow_coverage_boundary_rejects_full_ci_overclaim():

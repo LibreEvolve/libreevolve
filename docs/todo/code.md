@@ -4776,14 +4776,17 @@ Primary evidence:
   - Current evidence: `.github/workflows/tests.yml` has manual dispatch,
     path-scoped `push` and `pull_request` triggers, a secret-scan job, Python
     3.11/3.12 Ubuntu non-integration tests, and an optional
-    credential-gated integration job. `tests/test_agents_docs.py` verifies
-    required path filters and job names. The committed
+    credential-gated integration job. It now also has a dedicated paper/docs
+    job that validates the committed paper manifest and focused docs/paper
+    tests without requiring ignored local PDFs. `tests/test_agents_docs.py`
+    verifies required path filters, job names, and paper/docs commands. The
+    committed
     `papers/ci_workflow_coverage_boundary.json` sidecar now preserves this
     path-scoped Ubuntu workflow boundary.
-  - Required result: add broader docs/paper-specific CI validation,
-    paper-manifest CI commands, wheel/sdist smoke checks, interpreter/platform
-    matrices, branch policy, and notification-safe trigger policy before
-    treating CI as AlphaEvolve-grade validation coverage.
+  - Required result: add full docs/paper verifier coverage, local-PDF paper
+    manifest validation where appropriate, wheel/sdist smoke checks,
+    interpreter/platform matrices, branch policy, and notification-safe trigger
+    policy before treating CI as AlphaEvolve-grade validation coverage.
 
 - [ ] Add replayable external build, package-source, and accelerator environment evidence.
   - Spec evidence: AlphaEvolve-scale experiments should be reproducible across

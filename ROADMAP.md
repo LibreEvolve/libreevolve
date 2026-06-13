@@ -2219,9 +2219,10 @@ resumed-trace proof are still open.
   provenance.
 - Extend the current path-scoped GitHub Actions workflow beyond secret scan,
   Python 3.11/3.12 non-integration tests, optional integration tests, and
-  documented paper-manifest commands with broader docs/paper-specific
-  validation, more interpreter/platform coverage, and notification-safe trigger
-  and branch policy. The current paper-facing CI boundary is tracked by
+  the committed-manifest paper/docs CI job with broader docs/paper-specific
+  validation, local-PDF paper-manifest checks where appropriate, more
+  interpreter/platform coverage, and notification-safe trigger and branch
+  policy. The current paper-facing CI boundary is tracked by
   `papers/ci_workflow_coverage_boundary.json`.
 
 ## Non-Goals For Now

@@ -28,7 +28,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "notification_policy",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "paper_manifest_ci_job": "not_recorded_locally",
+    "paper_manifest_ci_job": "committed_manifest_only_no_local_pdf_cache",
     "docs_semantic_claim_verifier": "not_recorded_locally",
     "wheel_sdist_ci_smoke": "not_recorded_locally",
     "cross_platform_ci_matrix": "not_recorded_locally",
@@ -72,11 +72,12 @@ def ci_workflow_coverage_boundary_record() -> dict[str, Any]:
             "This boundary records that LibreEvolve has a path-scoped GitHub "
             "Actions workflow with manual dispatch, push/pull_request path "
             "filters, a secret scan job, Python 3.11/3.12 Ubuntu unit jobs, an "
-            "optional credential-gated integration job, and unit tests that "
-            "check the workflow shape. It does not claim a CI paper-manifest "
-            "job, semantic documentation-claim verification, wheel/sdist CI "
-            "smoke tests, cross-platform CI coverage, branch policy, or "
-            "notification policy."
+            "optional credential-gated integration job, a committed-manifest "
+            "paper/docs job that does not require the ignored local PDF cache, "
+            "and unit tests that check the workflow shape. It does not claim "
+            "CI local-PDF paper-manifest checks, semantic documentation-claim "
+            "verification, wheel/sdist CI smoke tests, cross-platform CI "
+            "coverage, branch policy, or notification policy."
         ),
     }
 
@@ -110,7 +111,8 @@ def validate_ci_workflow_coverage_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim a CI paper-manifest job" not in boundary_text
+        or "committed-manifest paper/docs job" not in boundary_text
+        or "does not claim CI local-PDF paper-manifest checks" not in boundary_text
         or "cross-platform CI coverage" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must keep current path-scoped CI separate from full validation coverage"))

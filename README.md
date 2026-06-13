@@ -121,11 +121,15 @@ says so.
 Runs write to `runs/<run-name>/`, which is gitignored. Common outputs include:
 
 - `manifest.json`
-- `history.jsonl`
-- `failure_history.jsonl`
-- `llm_calls.jsonl`
-- `prompt_history.jsonl`
 - `archive_events.jsonl`
+- `controller_budget_events.jsonl`
+- `evaluator_results.jsonl`
+- `failure_history.jsonl`
+- `history.jsonl`
+- `llm_calls.jsonl`
+- `prompt_current_binding_table.jsonl`
+- `prompt_history.jsonl`
+- `prompt_prior_score_table.jsonl`
 - `best.py`
 - `best_workspace/`
 - `evaluator_artifacts/`
@@ -175,8 +179,8 @@ py -3.12 -m libreevolve.tools.paper_manifest --require-local-pdfs
 ```
 
 Manifest `title` values are inventory/display slugs derived from local cache
-names. Use `papers/README.md` for paper-facing titles, implementation status,
-and benchmark coverage decisions.
+names, not authoritative bibliographic titles. Use `papers/README.md` for
+paper-facing titles, implementation status, and benchmark coverage decisions.
 
 ## Testing
 
@@ -216,6 +220,9 @@ long-term implementation status belongs in `ROADMAP.md` or `docs/todo/`.
 
 Before opening a change, run focused tests for touched code and the paper
 manifest check when source-boundary files change.
+The secret scan uses `.secrets.baseline`; intentional synthetic provider/API failure
+examples should use `# pragma: allowlist secret`, and regenerated baselines
+must be staged with the code that needs them rather than left unstaged.
 
 ## License
 

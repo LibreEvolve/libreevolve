@@ -103,7 +103,20 @@ def test_tests_workflow_covers_docs_papers_and_todo_changes():
 
     assert "secrets" in workflow["jobs"]
     assert "unit" in workflow["jobs"]
+    assert "paper_docs" in workflow["jobs"]
     assert "integration" in workflow["jobs"]
+
+    paper_docs = workflow["jobs"]["paper_docs"]
+    assert paper_docs["name"] == "Paper and Docs Checks"
+    paper_doc_commands = "\n".join(
+        step.get("run", "") for step in paper_docs.get("steps", [])
+    )
+    assert "python -m libreevolve.tools.paper_manifest --root ." in paper_doc_commands
+    assert (
+        "python -m pytest tests/test_agents_docs.py tests/test_paper_manifest.py -q"
+        in paper_doc_commands
+    )
+    assert "--require-local-pdfs" not in paper_doc_commands
 
 
 def test_run_artifact_docs_list_current_schema_jsonl_streams():

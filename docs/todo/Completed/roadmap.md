@@ -2,6 +2,25 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Figure 8 visual roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `README.md`, `ROADMAP.md`,
+    `papers/README.md`, `docs/status.md`, `docs/todo/code.md`, and
+    `docs/todo/papers.md` already distinguish validated Figure 8 exhibit
+    metadata and sidecar absence boundaries from reproduced rendered
+    AlphaEvolve Figure 8 visual evidence.
+  - Current evidence: `libreevolve.alphaevolve_figure8_exhibit.v1`,
+    `figure8_exhibit_from_ablation_report()`, and
+    `papers/figure8_ablation_artifacts.json` validate exhibit metadata,
+    rendered-artifact declarations, report/raw-trace/curve-summary links, and
+    the current `not_emitted_by_local_report_export` boundary.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: emitted rendered visual artifacts from runnable matrix/kissing
+    ablation scripts, source PDF page/caption location, concrete report/raw-
+    trace/curve artifact hashes, rendering parameters, and run links.
+  - Verification: Figure 8 exhibit, ablation-result, ablation-registry,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive benchmark-script ablation-harness roadmap wording TODO.
   - Status: the roadmap-specific coordination TODO was stale. `README.md`,
     `ROADMAP.md`, `papers/README.md`, `docs/status.md`,

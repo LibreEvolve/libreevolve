@@ -10,31 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Figure 8 roadmap visual wording scoped until rendered ablation-curve
-      exhibits exist.
-  - Spec evidence: AlphaEvolve Figure 8 presents a two-panel visual comparison
-    of ablation curves for matrix tensor decomposition and kissing-number
-    sphere packing, with compute-budget fraction on the x-axis, aggregated
-    target metric on the y-axis, named method curves, and shaded intra-target
-    standard-deviation bands over three independent seeded runs.
-  - Current evidence: roadmap/README/paper-index status can cite the ablation
-    report contract, hashed curve artifacts, target-family/aggregation
-    validation, and `libreevolve.alphaevolve_figure8_exhibit.v1`, which
-    validates Figure 8 exhibit ID, panel IDs, series/legend mappings, exact
-    paper legend labels, axis labels/scales, plot style and standard-deviation
-    band metadata, rendered plot artifact hashes, and links from the displayed
-    visual to report, curve-summary, and raw-seed-trace artifacts.
-    `figure8_exhibit_from_ablation_report()` now derives the two-panel exhibit
-    from a validated equal-budget report plus declared rendered/source
-    artifacts, while actual plot emission and real run proof remain open. The
-    committed `papers/figure8_ablation_artifacts.json` sidecar now emits this
-    absence boundary for paper-manifest validation.
-  - Required result: when generated Figure 8 visual exhibit records and
-    rendered artifacts land, update ROADMAP, README, papers index, and
-    code/paper TODOs so roadmap wording distinguishes validated exhibit
-    metadata from reproduced AlphaEvolve Figure 8 visual evidence tied to real
-    ablation runs.
-
 - [ ] Implement 2026 AlphaEvolve impact-domain roadmap gates beyond the
       source boundary.
   - Spec evidence: Google DeepMind's May 7, 2026 article

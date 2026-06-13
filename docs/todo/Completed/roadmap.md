@@ -2,6 +2,34 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive CodeEvolve operator and benchmark roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/codeevolve_boundary.json` now keep arXiv `2510.14150`
+    source-scoped as agentic code-evolution inspiration rather than
+    implemented CodeEvolve operator or benchmark parity.
+  - Current evidence: the cached paper and boundary JSON record CodeEvolve
+    source identity, arXiv v4 metadata, source license, linked code and
+    experiment URLs, islands population context, prompt/solution dual fitness,
+    weighted LLM ensemble context, SEARCH/REPLACE editing, semantic
+    inspiration crossover, `MetaPromptingLLM`, depth-targeted refinement,
+    Plateau Scheduler, rank-based inspiration selection, sandboxed runtime and
+    memory limits, MAP-Elites/CVT archive variants, AlphaEvolve/EoH benchmark
+    rows, ablation context, Qwen3-Coder-30B versus GEMINI-2.5 quality-cost
+    rows, and recommended hyperparameter context.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: prompt/solution dual-fitness schemas, semantic crossover,
+    meta-prompting artifacts, depth-refinement ancestor context,
+    exploration-scheduler traces, rank-based inspiration selection, elitist
+    migration, sandbox runtime/memory evidence, CVT-MAP-Elites archive
+    metadata, AlphaEvolve/EoH benchmark rows, ablation rows, open-framework
+    comparison rows, quality-cost rows, hyperparameter records, and linked
+    experiment artifact status.
+  - Verification: cached PDF spot-check, boundary JSON inspection,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive GigaEvo framework roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

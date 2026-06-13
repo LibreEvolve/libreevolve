@@ -65,6 +65,16 @@ Important limits:
   disambiguation, or Heilbronn/circle-packing/kissing/bin-packing/Jigsaw
   reproduction rows; `papers/gigaevo_framework_boundary.json` records that
   absence boundary.
+- CodeEvolve coverage is agentic code-evolution inspiration only:
+  LibreEvolve has no prompt/solution dual-fitness population,
+  inspiration-based semantic crossover, `MetaPromptingLLM` exploration branch,
+  depth-targeted refinement using nearest ancestors, Plateau Scheduler trace,
+  rank-based inspiration selection, elitist migration record, sandbox
+  runtime/memory evidence, CVT-MAP-Elites archive parity, AlphaEvolve/EoH
+  benchmark rows, component-ablation rows, open-framework comparison rows,
+  Qwen3-Coder-30B versus GEMINI-2.5 quality-cost report, or recommended
+  hyperparameter evidence; `papers/codeevolve_boundary.json` records that
+  absence boundary.
 - The examples are smoke fixtures and small demos unless a fixture documents
   stronger benchmark evidence.
 - Benchmark-hardening records and shipped-example scope validate smoke-scope

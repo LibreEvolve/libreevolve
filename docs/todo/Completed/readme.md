@@ -13723,6 +13723,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     focused natural-language preamble tests reject complete rationale-handling
     overclaims.
 
+- [x] Keep README mutation-response wording scoped beyond bounded
+      natural-language preamble capture.
+  - Status: README now scopes natural-language preambles as bounded leading
+    metadata before structured mutation markers, not configurable preamble
+    policy controls, raw full-replacement disambiguation, rationale-quality
+    scoring, cross-run preamble tables, proposal-memory joins, or arbitrary
+    unparsed rationale handling.
+  - Verification: paper-manifest validation requires
+    `papers/natural_language_preamble_boundary.json`, and focused
+    natural-language preamble tests reject complete rationale-handling
+    overclaims.
+
 - [x] Keep README prompt example-copy boundary tied to sidecar.
   - Status: README now states that prompt example-copy reports are built-in
     exact/normalized/skeleton diagnostics, not hard rejection, semantic-copy

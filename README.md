@@ -157,8 +157,11 @@ Important limits:
   bridge, proposal-truth model, or combined AI-Co-Scientist workflow evidence;
   that boundary is tracked by `papers/programmatic_representation_boundary.json`.
 - Natural-language preambles are bounded leading metadata before structured
-  mutation markers, not complete freeform rationale handling; that boundary is
-  tracked by `papers/natural_language_preamble_boundary.json`.
+  mutation markers, not configurable preamble policy controls, raw
+  full-replacement disambiguation, rationale-quality scoring, cross-run
+  preamble tables, proposal-memory joins, or arbitrary unparsed rationale
+  handling; that boundary is tracked by
+  `papers/natural_language_preamble_boundary.json`.
 - Prompt example-copy reports are built-in exact/normalized/skeleton
   diagnostics, not hard rejection, semantic-copy detection, or custom-template
   inventory evidence; that boundary is tracked by

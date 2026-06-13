@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document constructive-math aggregate-outcome README boundary.
+  - Status: README Important limits now states that Section 3.2
+    aggregate-outcome records preserve the AlphaEvolve source claim of over
+    `50` mathematical problems across more than five branches, about `75%`
+    best-known rediscovery, about `20%` SOTA improvement, and definition-based
+    verification, not local per-problem rows, branch taxonomy rows, prior-best
+    references, construction/verifier artifacts, aggregate counts, or
+    percentage recomputation.
+  - Verification: math-outcome and paper-manifest tests cover the
+    `not_recorded_locally` aggregate boundary, required future instance and
+    aggregate fields, and source percentages; starting-construction and figure
+    provenance boundaries remain separate active README TODOs.
+
 - [x] Document constructive-math heuristic-stage-sequence README boundary.
   - Status: README Important limits now states that Section 3.2
     stage-sequence records preserve the AlphaEvolve claim that final

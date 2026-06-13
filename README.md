@@ -194,6 +194,13 @@ Important limits:
   per-stage heuristic artifacts, ordered construction transitions, stage-role
   rows, improvement deltas, budget rows, or verifier evidence; that boundary is
   tracked by `papers/math_heuristic_stage_sequence_boundary.json`.
+- Constructive-math Section 3.2 aggregate-outcome records preserve the
+  AlphaEvolve source claim of over 50 mathematical problems across more than
+  five branches, about 75% best-known rediscovery, about 20% SOTA improvement,
+  and definition-based verification, not local per-problem rows, branch
+  taxonomy rows, prior-best references, construction/verifier artifacts,
+  aggregate counts, or percentage recomputation; that boundary is tracked by
+  `papers/math_outcome_boundary.json`.
 - Matrix-publication evidence is one checked `mm_2x2x2` Strassen baseline
   bundle plus Appendix A registry/status metadata, not full-suite local target
   tensors, discovered decompositions, coefficient data, exactness certificates,

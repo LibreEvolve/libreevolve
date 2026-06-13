@@ -18980,3 +18980,13 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Remaining code gap: real stage difficulty metadata, test-set identities
     and hashes, benchmark seed/sample policy, and cost-savings accounting
     remain active TODOs.
+- [x] Clarify code TODO coverage is not exhaustive proof.
+  - Spec evidence: the active AlphaEvolve-alignment goal requires finding all
+    missing or incorrect implementation behavior, which needs a requirement-
+    to-code evidence map rather than only individual feature TODOs.
+  - Status: `docs/todo/code.md` now states that the checklist is a maintained
+    implementation-gap ledger, not proof that every AlphaEvolve-facing code
+    claim has been exhaustively mapped to source and tests.
+  - Remaining code gap: a machine-readable implementation-evidence map,
+    source/module/test/runtime-report/sidecar/TODO links, freshness checks,
+    and generated code-audit report remain active in `docs/todo/code.md`.

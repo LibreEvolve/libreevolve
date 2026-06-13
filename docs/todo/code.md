@@ -15,6 +15,40 @@ Primary evidence:
 - Current implementation in `libreevolve/core`, `libreevolve/population`,
   `libreevolve/problems`, `libreevolve/llm`, and `libreevolve/plugins`.
 
+The checklist below is a maintained implementation-gap ledger, not proof that
+every AlphaEvolve-facing code claim has been exhaustively mapped to source and
+tests. Full code-audit completeness still requires a machine-readable evidence
+map from specification requirements to implementation modules, runtime reports,
+sidecars, tests, and active TODOs.
+
+## Code-Audit Coverage
+
+- [ ] Add exhaustive implementation-evidence mapping for AlphaEvolve
+      specification gaps.
+  - Spec evidence: the active goal requires reviewing the code against
+    AlphaEvolve and identifying everything missing, incorrect, or not true to
+    the specification. That is stronger than having many individual boundary
+    sidecars; it requires proof that the requirement inventory itself is
+    complete enough to audit.
+  - Current evidence: code, paper, README, and ROADMAP TODOs now track hundreds
+    of concrete gaps. `papers/documentation_truthfulness_boundary.json`
+    records cross-document guardrails and explicitly keeps
+    implementation-evidence mapping, generated alignment reports, stale
+    completed-entry detection, semantic documentation-claim verification, and
+    full proof that every AlphaEvolve-facing claim is current as absent.
+    Focused tests and paper-manifest validation check many individual
+    boundary records and TODO links.
+  - Current gap: there is no machine-readable AlphaEvolve requirement
+    inventory keyed to code modules, tests, runtime report schemas, sidecar
+    JSON records, TODO entries, and completion evidence; no detector flags
+    source modules or paper claims that lack mapped audit coverage; and no
+    generated code-audit report proves that all implemented and missing
+    AlphaEvolve-facing behavior has been classified.
+  - Required result: build an implementation-evidence map with requirement ids,
+    source-paper spans, relevant modules/tests, runtime/report artifacts,
+    sidecar/TODO links, claim status, freshness checks, and CI validation
+    before treating the code audit as exhaustive.
+
 ## Candidate Workspace Fidelity
 
 - [ ] Extend the Python-primary candidate-language policy to real language and

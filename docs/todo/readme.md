@@ -969,32 +969,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README Appendix B.8 witness wording scoped until distance
-      certificates exist.
-  - Spec evidence: AlphaEvolve Appendix B.8 and Figure 12 report 16 points in
-    two dimensions achieving squared max/min-distance ratio `12.889266112`
-    versus the prior squared bound `12.890`, and 14 points in three dimensions
-    achieving squared ratio `4.165849767` versus the prior squared bound
-    `4.168`.
-  - Current evidence: README now points to B.8 squared-ratio convention
-    metadata with point counts, dimensions, prior squared bounds, and Figure 12
-    panel linkage. It also points to a `witness_certificate_boundary` that
-    records required future coordinate, point-count/dimension, pairwise
-    distance matrix, min/max pair-witness, squared-ratio recomputation, and
-    Figure 12 panel artifact fields, validates the 16-point/2D and 14-point/3D
-    missing-witness rows, and keeps both witnesses `not_recorded_locally`. It
-    still warns that coordinate payloads, point-count/dimension certificates,
-    all-pairs distance matrices, min/max pair-witness certificates,
-    squared-ratio recomputation, and rendered Figure 12 panel artifacts remain
-    open.
-  - Required result: when Appendix B.8 distance-certificate metadata lands,
-    update README, ROADMAP, papers index, and code/paper TODOs together so
-    README distinguishes raw convention metadata from validated point-set
-    witness evidence with coordinate artifacts, point-count/dimension
-    certificates, pairwise distance matrix artifacts, recomputed distances,
-    min/max pair witnesses, prior/current squared ratios, Figure 12 panel
-    artifact hashes, and Figure 12 panel linkage.
-
 - [ ] Keep README Appendix B.5 minimum-overlap wording scoped until
       step-function provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.5 improves the Erdos

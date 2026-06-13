@@ -4,6 +4,21 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Appendix B.8 point-set witness README boundary.
+  - Status: README Important limits now states that Appendix B.8
+    max/min-distance point-set witness provenance remains absent: the registry
+    preserves the squared-ratio convention, Figure 12 left/right linkage,
+    16-point/2D and 14-point/3D metadata, prior squared bounds (`12.890`,
+    `4.168`), and reported squared ratios (`12.889266112`, `4.165849767`),
+    not coordinate payload hashes, point-count/dimension certificates,
+    all-pairs distance matrix artifacts, min/max pair-witness certificates,
+    recomputed squared-ratio rows, or Figure 12 panel artifacts.
+  - Verification: Appendix B registry tests cover the B.8 convention rows,
+    `witness_certificate_boundary`, required future witness fields, the
+    16-point/2D and 14-point/3D missing-witness rows, and
+    `not_recorded_locally` overclaim guards; code and paper TODOs still track
+    the missing coordinate/certificate/recomputation/panel artifacts.
+
 - [x] Document Appendix B.1-B.3 autocorrelation README boundary.
   - Status: README Important limits now states that Appendix B.1-B.3
     autocorrelation step-function provenance remains absent: the registry

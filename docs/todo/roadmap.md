@@ -10,31 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep provider-pricing roadmap wording scoped to configured estimates
-  versus live/default-rate capture.
-  - Spec evidence: AlphaEvolve-scale provider accounting needs cost evidence
-    that survives provider, model, and default-rate changes; configured local
-    rates are useful run policy but are not live provider pricing discovery.
-  - Current evidence: backend specs can now set
-    `cost_usd_per_million_tokens`, provider usage `total_tokens` feeds
-    configured `cost_estimate` records, runtime accounting accumulates
-    configured cost, and diagnostics explicitly mark live pricing as
-    not fetched. Provider diagnostics now also reject configured-pricing count
-    drift and cost-status reason drift so aggregate summaries cannot imply
-    more configured pricing evidence than retained call rows support. They also
-    reject raw provider-payload replay overclaims at the summary, totals, and
-    backend-record scopes, remote provider-default/default-rate capture claims,
-    explicit pricing-readiness overclaims, and backend-default counts that
-    exceed retained calls. The roadmap now names live provider pricing/default-
-    rate capture beyond configured token-cost estimates and raw provider replay
-    as remaining gaps. The committed `papers/provider_pricing_boundary.json`
-    sidecar now preserves this configured-cost-estimate boundary for paper-
-    manifest validation.
-  - Required result: when live provider pricing discovery, provider default
-    rate capture, or account/model-specific pricing evidence lands, update the
-    roadmap, README, papers index, and code/paper TODO entries together so they
-    neither underclaim configured cost accounting nor overclaim live pricing.
-
 - [ ] Keep feedback-calibration roadmap wording scoped to report contracts
   versus executed calibration fixtures.
   - Spec evidence: AlphaEvolve-style feedback graders need calibration evidence

@@ -2,6 +2,33 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive provider-pricing roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `docs/status.md`, `docs/run-artifacts.md`, `docs/architecture.md`,
+    `papers/README.md`, runtime diagnostics, and
+    `papers/provider_pricing_boundary.json` already scope provider cost
+    evidence to configured token-cost estimates, not live provider pricing.
+  - Current evidence: backend metadata can declare
+    `cost_usd_per_million_tokens`; provider usage `total_tokens` drives
+    per-call configured `cost_estimate` records; `cost_estimate_status` records
+    preserve estimated versus not-estimated reasons with
+    `pricing_source: configured_backend_metadata` and
+    `live_pricing_status: not_fetched`; role accounting accumulates
+    `cost_microusd`; runtime LLM budget reports render configured `cost_usd`;
+    `runtime.llm_provider_diagnostics` reports configured-pricing counts,
+    not-estimated reasons, false `libreevolve.llm_provider_pricing_readiness.v1`
+    readiness fields, and configured-pricing/cost-status aggregate checks.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    AlphaEvolve-grade pricing evidence: live provider pricing discovery,
+    provider default-rate capture, account/model-specific pricing evidence,
+    remote provider-side default/pricing capture, raw provider-payload replay,
+    provider-output replay, and async/pending-work budget composition.
+  - Verification: focused ensemble, diagnostics-policy, provider-pricing
+    boundary, and paper-manifest tests cover configured cost estimates,
+    not-estimated reasons, live-pricing readiness false fields,
+    configured-pricing drift rejection, remote default/default-rate overclaim
+    rejection, and live-pricing paper-boundary overclaim rejection.
+
 - [x] Archive provider-cancellation roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `docs/status.md`, `docs/run-artifacts.md`, `docs/backends.md`,

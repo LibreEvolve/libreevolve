@@ -9,36 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README `show` and run-inspection wording scoped to selected-row
-  display plus streamed-row validation.
-  - Spec evidence: AlphaEvolve-scale runs need auditable generated-program
-    databases and whole-run source/workspace integrity reports, not only a
-    compact best-candidate view.
-  - Current evidence: README documents `show` as a compact history view that
-    selects the best archive-retained valid record, prints selected-row
-    metrics, archive diagnostics, bounded run-inspection summaries, and
-    selected-row workspace files, and validates streamed current and legacy
-    history rows before printing. It also states that malformed unselected,
-    invalid, or non-admitted rows fail inspection before any best-looking row
-    is printed, with source/workspace paths, `files`, and `primary_file`
-    checked under the runtime candidate path grammar. README now documents
-    `runtime.history.whole_run_source_workspace_integrity_report` as bounded
-    manifest evidence for retained-program workspace hashes, primary-file
-    coherence, source-payload shape, static-file references, and selected
-    runtime artifact hashes, while excluding durable query, full replay, and
-    cross-run dedup claims. The paper-facing
-    `papers/whole_run_source_workspace_integrity_boundary.json` sidecar
-    preserves the same bounded retained-program integrity absence boundary for
-    manifest validation. README Important limits now also names that sidecar as
-    the selected-row/retained-program-integrity-only boundary for run
-    inspection.
-  - Required result: when durable run-artifact query views, richer
-    archive/prompt/failure drill-downs, full source-payload replay, or
-    cross-run source/workspace indexes land, update README, ROADMAP, papers
-    index, and code/paper TODO entries together so README neither underclaims
-    current streamed-row validation and bounded manifest reports nor overclaims
-    AlphaEvolve-grade run inspection.
-
 - [ ] Keep README provider-token prompt-packing wording scoped to implemented
   mutation and final-prompt boundaries.
   - Spec evidence: AlphaEvolve-scale prompt construction needs prompt sections

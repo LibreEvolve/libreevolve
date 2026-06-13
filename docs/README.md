@@ -4,12 +4,24 @@ These notes document the current implementation of LibreEvolve. They are intende
 to make the codebase easier to understand and extend without forcing readers to
 infer behavior from tests and source.
 
-Use the root [README](../README.md) as the practical entry point for setup,
-quick-start commands, current limits, and repository layout. Use this directory
-for operational details and the fuller implementation-status ledger. Use
-[ROADMAP](../ROADMAP.md) and the [TODO ledgers](./todo/) for implementation
-gaps. Use [papers/README.md](../papers/README.md) for paper/source status and
-claim boundaries.
+Use the root [README](../README.md) as the practical entry point for install,
+smoke checks, provider-backed first runs, current limits, and repository layout.
+Use this directory for operational details and the fuller implementation-status
+ledger. Use [ROADMAP](../ROADMAP.md) and the [TODO ledgers](./todo/) for
+implementation gaps. Use [papers/README.md](../papers/README.md) for
+paper/source status and claim boundaries.
+
+## Reader Paths
+
+- New user: start with the root README, run the provider-free smoke command,
+  then read [Problem Format](./problem-format.md) before creating a custom
+  problem.
+- Operator/debugger: use [Run Artifacts](./run-artifacts.md),
+  [Configuration](./configuration.md), and [Backends](./backends.md).
+- Contributor: use [Development](./development.md), then the active TODO files
+  under [todo](./todo/).
+- Paper/spec reviewer: use [Current Status](./status.md),
+  [ROADMAP](../ROADMAP.md), and [papers/README.md](../papers/README.md).
 
 ## Operational Guides
 
@@ -31,8 +43,8 @@ claim boundaries.
 ## Documentation Boundaries
 
 - The root README should stay short enough to be useful on a first read.
-- Detailed runtime behavior belongs in the operational guides above, while the
-  full implementation and absence-boundary ledger belongs in
+- Detailed runtime behavior belongs in the operational guides above.
+- The full implementation and absence-boundary ledger belongs in
   [status.md](./status.md).
 - Long-term status belongs in `ROADMAP.md` and `docs/todo/`.
 - Paper-derived claims belong in `papers/README.md` and validated JSON sidecars.

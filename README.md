@@ -1,21 +1,25 @@
 # LibreEvolve
 
-LibreEvolve is a Python research prototype for LLM-guided evolutionary program
-discovery. It takes a problem directory, asks configured LLM backends to propose
-code mutations, evaluates the resulting candidates, and keeps the best programs
-in a small quality-diversity archive.
+LibreEvolve is a Python research workbench for LLM-guided evolutionary program
+discovery. Given a problem directory, it evaluates one or more seed programs,
+asks configured LLM backends to propose code mutations, evaluates the resulting
+candidates, and keeps retained programs in a small quality-diversity archive.
 
-It is inspired by AlphaEvolve, Karpathy's `autoresearch`, MAP-Elites, and recent
-work on LLM-guided program search. It is an independent project and is not
-affiliated with or endorsed by Google DeepMind or the authors of the cited
-papers.
+The project is inspired by AlphaEvolve, Karpathy's `autoresearch`, MAP-Elites,
+and recent work on LLM-guided program search. It is an independent project and
+is not affiliated with or endorsed by Google DeepMind or the authors of the
+cited papers.
 
 ## Status
 
-This is an alpha-stage research codebase, not a production optimizer and not a
-full AlphaEvolve reproduction. The README is intentionally kept as the practical
-entry point; the detailed implementation and absence-boundary ledger now lives
-in [docs/status.md](docs/status.md).
+This is an alpha-stage research codebase. It is useful for local experiments and
+for studying implementation boundaries, but it is not a production optimizer and
+not a full AlphaEvolve reproduction.
+
+This README is the practical entry point. The detailed implementation and
+absence-boundary ledger lives in [docs/status.md](docs/status.md), paper-source
+evidence lives in [papers/README.md](papers/README.md), and active backlog items
+live under [docs/todo/](docs/todo/).
 
 Implemented today:
 
@@ -48,7 +52,7 @@ Important limits:
   broader CI/platform guarantees remain tracked in `docs/status.md`,
   `papers/README.md`, `ROADMAP.md`, and `docs/todo/` rather than promised here.
 
-## Installation
+## Install
 
 Use Python 3.11 or newer. On this Windows machine, use `py -3.12`.
 
@@ -56,7 +60,7 @@ Use Python 3.11 or newer. On this Windows machine, use `py -3.12`.
 py -3.12 -m pip install -e ".[dev]"
 ```
 
-Create a `.env` file at the project root for any provider keys you plan to use:
+Create a `.env` file at the project root for provider keys you plan to use:
 
 ```dotenv
 OPENAI_API_KEY=sk-...
@@ -69,7 +73,19 @@ keys.
 
 ## Quick Start
 
-Run one of the bundled examples with a backend available in your environment:
+First verify the CLI and artifact writer without making any provider calls:
+
+```bash
+py -3.12 -m libreevolve run libreevolve/problems/examples/sorting --run-name readme_smoke_sorting --max-llm-calls 0 --overwrite
+py -3.12 -m libreevolve show runs/readme_smoke_sorting
+```
+
+That command evaluates the bundled sorting seed, writes the normal run
+artifacts, and stops before constructing LLM providers. It is a smoke check, not
+an evolution run.
+
+To run evolution, choose a backend that is actually available in your
+environment and account:
 
 ```bash
 py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world --max-generations 10 --backends "openai:<openai-model-id>"
@@ -95,6 +111,10 @@ py -3.12 -m libreevolve show runs/hello_world
 
 Use a fresh `--run-name` for repeat runs, or pass `--overwrite` when you
 intentionally want to replace the existing run directory.
+
+Provider-backed runs can spend API credits and may fail during backend preflight
+if credentials, model ids, local Ollama state, or account access are not
+available.
 
 ## Run Artifacts
 
@@ -165,9 +185,9 @@ Common run options:
 - `--parent-selection-strategy`
 - `--overwrite`
 
-## Documentation
+## Where To Read Next
 
-- [docs/README.md](docs/README.md): documentation index.
+- [docs/README.md](docs/README.md): complete documentation map.
 - [docs/architecture.md](docs/architecture.md): runtime architecture.
 - [docs/configuration.md](docs/configuration.md): config fields and CLI
   overrides.
@@ -179,6 +199,11 @@ Common run options:
 - [ROADMAP.md](ROADMAP.md): implementation status and remaining work.
 - [papers/README.md](papers/README.md): source papers, status rows, and
   claim-boundary records.
+
+The docs are intentionally split by purpose. Setup and first-run usage belongs
+here; operational details belong in `docs/`; paper-derived claim evidence
+belongs in `papers/`; backlog and truthfulness checks belong in `docs/todo/`
+and `ROADMAP.md`.
 
 ## Research Sources
 

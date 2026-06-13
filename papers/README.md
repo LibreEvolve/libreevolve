@@ -769,8 +769,10 @@ includes `oracle_source_evidence`, which validates local evaluator source refs
 and hashes when available while keeping benchmark sufficiency and independence
 false. The report keeps `claim_ready: false` because this is a registry for
 the current local cascade and post-evaluator grader boundary, not yet proof of
-independent reference/statistical oracles, independent disagreement outcome
-evidence, or per-oracle benchmark sufficiency. The committed
+candidate-level oracle lineage through the evolutionary loop, primary
+evaluator contract proof, independent reference/statistical oracles,
+independent disagreement outcome evidence, or per-oracle benchmark
+sufficiency. The committed
 `papers/evaluator_oracle_boundary.json`
 sidecar now emits that
 `local_arbitration_without_independent_oracle_evidence` boundary, and

@@ -58,16 +58,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     evaluator pass, final local validity effects, and an explicit
     post-evaluator/non-independent authority boundary. The committed
     `papers/evaluator_oracle_boundary.json` sidecar now preserves the
-    paper-manifest-validated independent-oracle absence boundary.
+    paper-manifest-validated independent-oracle absence boundary, including
+    missing candidate-level oracle lineage, per-generation feedback traces,
+    primary evaluator contract proof, and explicit separation between the
+    primary evaluator contract and optional post-evaluator LLM feedback.
   - Current gap: the registry preserves current composition and local source
     reference evidence, but it does not prove multiple independent evaluator/
-    oracle sources, reference/statistical oracle support, per-benchmark
-    sufficiency evidence, or independent disagreement outcomes that affect
-    validity, score reporting, database admission, and prompt-visible
-    feedback.
+    oracle sources, reference/statistical oracle support, candidate-level
+    oracle lineage through the evolutionary loop, per-benchmark sufficiency
+    evidence, or independent disagreement outcomes that affect validity, score
+    reporting, database admission, and prompt-visible feedback.
   - Required result: add independent evaluator-oracle evidence before claiming
     AlphaEvolve-style "one or more evaluators" feedback: reference/statistical
-    oracle support, per-benchmark sufficiency labels, disagreement outcome
+    oracle support, per-benchmark sufficiency labels, candidate-generation
+    oracle lineage, primary evaluator contract proof, disagreement outcome
     records, and wording that separates independent evaluator composition from
     local cascade stages or post-evaluation LLM graders.
 

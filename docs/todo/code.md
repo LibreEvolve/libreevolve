@@ -1529,15 +1529,20 @@ sidecars, tests, and active TODOs.
     explicitly keeps `claim_ready: false` for independent multi-oracle
     composition. The committed `papers/evaluator_oracle_boundary.json` sidecar
     now records the paper-manifest-validated independent-oracle absence
-    boundary.
+    boundary, including missing candidate-level oracle lineage,
+    per-generation feedback traces, primary evaluator contract proof, and
+    explicit separation between the primary evaluator contract and optional
+    post-evaluator LLM feedback.
   - Remaining gap: the registry documents current local composition and local
     source-reference evidence but does not yet provide independent reference-
-    checker/statistical-test oracles, per-benchmark sufficiency evidence, or
+    checker/statistical-test oracles, per-benchmark sufficiency evidence,
+    candidate-level oracle lineage through the evolutionary loop, or
     independent cross-oracle disagreement outcome records beyond configured
     cascade order and post-hoc feedback.
   - Required result: add independent evaluator-oracle evidence with reference-
     checker/statistical-test oracle support, per-benchmark sufficiency labels,
-    and disagreement outcome records before claiming AlphaEvolve-style feedback
+    candidate-generation oracle lineage, primary evaluator contract proof, and
+    disagreement outcome records before claiming AlphaEvolve-style feedback
     from one or more independent evaluators.
 
 - [ ] Extend execution-grounded filtering evidence into independent audit

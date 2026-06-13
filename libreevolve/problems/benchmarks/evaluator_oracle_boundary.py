@@ -25,8 +25,12 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "input_schema",
     "output_schema",
     "metric_ownership",
+    "candidate_generation_ref",
+    "primary_evaluator_contract_ref",
+    "evaluator_feedback_timing",
     "oracle_source_ref",
     "oracle_source_hash",
+    "llm_feedback_separation_policy",
     "independent_evidence_flag",
     "reference_or_statistical_oracle_id",
     "benchmark_sufficiency_label",
@@ -40,6 +44,9 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 EXPECTED_MISSING_EVIDENCE = {
     "independent_reference_oracle_records": "not_recorded_locally",
     "statistical_oracle_records": "not_recorded_locally",
+    "candidate_level_oracle_lineage": "not_recorded_as_independent_oracle_evidence",
+    "per_generation_feedback_trace": "not_recorded_as_independent_oracle_evidence",
+    "primary_evaluator_contract_proof": "local_contract_metadata_only",
     "benchmark_sufficiency_evidence": (
         "local_source_refs_and_hashes_recorded_not_benchmark_sufficiency_proof"
     ),
@@ -79,7 +86,10 @@ def evaluator_oracle_boundary_record() -> dict[str, Any]:
         "source_claim": (
             "AlphaEvolve improves candidates by continuously receiving feedback "
             "from one or more evaluators, with optional cascades and generated "
-            "feedback layered around the user-provided evaluation function"
+            "feedback layered around the user-provided evaluation function; "
+            "paper-ready evidence must distinguish the primary evaluator "
+            "contract from optional post-evaluator LLM feedback and trace "
+            "that feedback through the evolutionary loop"
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "runtime_report_status": "evaluator_oracle_registry_available",
@@ -90,10 +100,12 @@ def evaluator_oracle_boundary_record() -> dict[str, Any]:
             "This boundary records that LibreEvolve has local evaluator/cascade/"
             "feedback arbitration metadata plus local oracle source refs and "
             "hashes when available, but does not claim AlphaEvolve-style "
-            "independent evaluator-oracle evidence with reference or statistical "
-            "oracles, benchmark sufficiency proof, independent disagreement "
-            "outcomes affecting validity, score reporting, database admission, "
-            "or cross-run oracle tables."
+            "candidate-level oracle lineage, per-generation feedback traces, "
+            "primary evaluator contract proof, independent evaluator-oracle "
+            "evidence with reference or statistical oracles, benchmark "
+            "sufficiency proof, independent disagreement outcomes affecting "
+            "validity, score reporting, database admission, or cross-run "
+            "oracle tables."
         ),
     }
 
@@ -120,7 +132,12 @@ def validate_evaluator_oracle_boundary(
         issues.append(_issue("invalid_source_section_id", "source_section_id must be 2.4"))
     if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
         issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['2.4']"))
-    if not isinstance(data.get("source_claim"), str) or "one or more evaluators" not in data["source_claim"]:
+    if (
+        not isinstance(data.get("source_claim"), str)
+        or "one or more evaluators" not in data["source_claim"]
+        or "user-provided evaluation function" not in data["source_claim"]
+        or "evolutionary loop" not in data["source_claim"]
+    ):
         issues.append(_issue("invalid_source_claim", "source_claim must identify feedback from one or more evaluators"))
     status = data.get("boundary_status")
     if status != EXPECTED_BOUNDARY_STATUS:
@@ -132,7 +149,13 @@ def validate_evaluator_oracle_boundary(
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
-    if not isinstance(boundary_text, str) or "does not claim" not in boundary_text:
+    if (
+        not isinstance(boundary_text, str)
+        or "does not claim" not in boundary_text
+        or "candidate-level oracle lineage" not in boundary_text
+        or "per-generation feedback traces" not in boundary_text
+        or "primary evaluator contract proof" not in boundary_text
+    ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim independent evaluator-oracle evidence"))
     return EvaluatorOracleBoundaryValidation(
         ok=not issues,

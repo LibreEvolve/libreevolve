@@ -143,9 +143,11 @@ Important limits:
   boundary is tracked by `papers/cascade_hypothesis_test_boundary.json`.
 - Evaluator/oracle reports register local validators, configured cascade
   stages, and optional LLM feedback graders with arbitration metadata, not
-  independent reference/statistical-oracle evidence, benchmark sufficiency
-  proof, independent disagreement outcomes, or cross-run oracle tables; that
-  boundary is tracked by `papers/evaluator_oracle_boundary.json`.
+  candidate-level oracle lineage, per-generation feedback traces, primary
+  evaluator contract proof, independent reference/statistical-oracle evidence,
+  benchmark sufficiency proof, independent disagreement outcomes, or cross-run
+  oracle tables; that boundary is tracked by
+  `papers/evaluator_oracle_boundary.json`.
 - Evaluator workload metadata and `runtime.history.evaluator_workload_report`
   record declared `simple_check`, `inner_search`, `ml_training`, and `custom`
   stage provenance, not managed workload-specific training/search runners,

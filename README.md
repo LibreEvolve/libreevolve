@@ -219,6 +219,16 @@ Important limits:
   norm-distance inequality proof, Lemma 1 applicability certificate,
   transformed-center and unit-sphere certificates, kissing-angle certificate,
   or recomputed lower-bound row.
+- Appendix B.12-B.13 circle/rectangle sum-of-radii provenance remains absent:
+  the registry preserves Figure 14 left/middle/right linkage, `n = 26` and
+  `n = 32` unit-square rows, the `n = 21` perimeter-4 rectangle row, prior
+  sums (`2.634`, `2.936`, `2.364`), reported sums (`2.635`, `2.937`,
+  `2.3658`), the B.13 caption display, and the checked-in 26-circle fixture
+  as smoke-only, not AlphaEvolve container hashes, circle placement payloads,
+  exact-count checks, payload-schema validation certificates, positive-radius
+  certificates, containment or pairwise non-overlap certificates, rectangle
+  dimensions, rectangle-perimeter proof, sum-of-radii formula certificates,
+  recomputed sums, or Figure 14 panel artifacts.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

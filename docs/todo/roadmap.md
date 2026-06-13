@@ -10,31 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Appendix B.12-B.13 roadmap wording scoped until circle/rectangle
-      sum-of-radii provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B.12-B.13 reports three packing
-    improvements: `n = 26` circles in a unit square improve the prior `2.634`
-    sum of radii to `2.635`; `n = 32` circles in a unit square improve
-    `2.936` to `2.937`; and `n = 21` circles in a perimeter-4 rectangle
-    improve `2.364` to `2.3658`.
-  - Current evidence: roadmap/README/paper-index wording now cites B.12-B.13
-    `sum_of_radii_result_boundary` entries for all three `n`/container rows,
-    prior and reported values, Figure 14 panel links, the B.13 caption display,
-    and required future placement/container/certificate fields while keeping
-    the checked-in 26-circle fixture smoke-only. It still does not claim
-    container artifact hashes, placement payload hashes, exact-count checks,
-    payload-schema validation certificates, positive-radius certificates,
-    containment/non-overlap certificates, rectangle dimensions,
-    rectangle-perimeter proof, sum-of-radii formula certificates, recomputed
-    sums, or rendered Figure 14 panel artifacts.
-  - Required result: when the actual Appendix B.12-B.13 packing payloads and
-    certificates land, update ROADMAP, README, papers index, and code/paper
-    TODOs so roadmap claims distinguish all three `n`/container rows,
-    certificates, payload-schema validation, positive-radius checks,
-    sum-of-radii formula proofs, sum-of-radii values, Figure 14 artifacts,
-    container hashes, payload hashes, and source locations from the existing
-    26-circle smoke fixture.
-
 - [ ] Keep Appendix B roadmap wording scoped until revised-result provenance
       exists.
   - Spec evidence: AlphaEvolve Appendix B includes result-level revision

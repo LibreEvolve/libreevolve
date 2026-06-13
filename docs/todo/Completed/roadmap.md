@@ -2,6 +2,28 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Appendix B.12-B.13 sum-of-radii roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish all three Appendix B.12-B.13 packing rows from the checked-in
+    26-circle smoke fixture and from full paper-claim evidence.
+  - Current evidence: `sum_of_radii_result_boundary` records the `n = 26` and
+    `n = 32` unit-square rows, the `n = 21` perimeter-4 rectangle row, prior
+    sums `2.634`, `2.936`, and `2.364`, reported sums `2.635`, `2.937`, and
+    `2.3658`, Figure 14 panel links, the B.13 caption display, required future
+    placement/container/certificate fields, and the smoke-only 26-circle
+    fixture boundary.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: AlphaEvolve container hashes, circle placement payloads, exact-count
+    checks, payload-schema validation certificates, positive-radius
+    certificates, containment or pairwise non-overlap certificates, rectangle
+    dimensions, rectangle-perimeter proof, sum-of-radii formula certificates,
+    recomputed sums, and Figure 14 panel artifacts.
+  - Verification: Appendix B registry sum-of-radii and rectangle-boundary
+    tests, paper-manifest validation, and checked-in paper-index TODO coverage
+    still pass.
+
 - [x] Archive Appendix B.11 kissing-number roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

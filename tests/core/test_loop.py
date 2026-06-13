@@ -7013,6 +7013,37 @@ def test_existing_codebase_setup_metadata_reaches_manifest_and_report():
     }
 
 
+def test_workspace_math_fixture_reports_smoke_codebase_setup_metadata():
+    tmpdir = tempfile.mkdtemp()
+    problem = load_problem(Path("libreevolve/problems/examples/workspace_math"))
+
+    evolve(
+        problem,
+        Config(max_generations=0, log_dir=tmpdir, problem_name="workspace_math"),
+    )
+
+    manifest = json.loads((Path(tmpdir) / "workspace_math" / "manifest.json").read_text())
+    metadata = manifest["problem"]["codebase_integration_metadata"]
+    report = manifest["runtime"]["history"]["existing_codebase_integration_report"]
+
+    assert metadata["status"] == "provided"
+    assert metadata["metadata_complete"] is True
+    assert metadata["original_codebase_id"] == "workspace_math_fixture_lib_v1"
+    assert report["validation"]["ok"] is True
+    assert validate_existing_codebase_integration_report(report)["ok"] is True
+    assert report["source_setup_metadata"]["status"] == "provided"
+    assert report["integration_boundary"]["original_codebase_identity"] == (
+        "workspace_math_fixture_lib_v1"
+    )
+    assert report["integration_boundary"]["pre_marker_source_hash_count"] == 2
+    assert report["claim_readiness"]["source_setup_metadata_recorded"] is True
+    assert report["claim_readiness"]["source_setup_metadata_complete"] is True
+    assert report["claim_readiness"]["marker_only_setup_diff"] is True
+    assert report["claim_readiness"]["codebase_scale_fixture_with_upstream_identity"] is True
+    assert report["claim_readiness"]["paper_faithful_existing_codebase_integration"] is False
+    assert report["claim_ready"] is False
+
+
 def test_codebase_setup_metadata_rejects_secret_like_text(tmp_path):
     problem = _problem()
     problem.codebase_integration_metadata = {

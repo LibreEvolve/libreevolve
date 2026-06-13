@@ -84,16 +84,20 @@ Primary evidence:
     identity, pre-marker hash count, marker-only setup-diff status,
     evaluator-call continuity, copied static-asset source identity, and
     `source_setup_metadata_complete` without flipping full paper parity. The
-    committed
+    checked-in `workspace_math` fixture now includes
+    `codebase_integration.yaml` plus `source_setup/fixture_lib_v1/`
+    pre-marker Python sources and a source-setup manifest. A real
+    `workspace_math` run reports complete smoke source-setup metadata while
+    keeping `claim_ready: false`. The committed
     `papers/existing_codebase_integration_boundary.json` sidecar now records
-    the paper-manifest-validated `not_recorded_at_source_setup_level` boundary
-    for source-setup-level integration evidence that is still absent.
-  - Required result: populate a real codebase-scale fixture/evidence bundle
-    with upstream identity, pre-marker source hashes, marker-only setup diff,
-    evaluator-call path before/after marker insertion, setup-change counts, and
-    portable static-source identities, then update the paper boundary and
-    docs/TODO wording so the project can distinguish declared source-setup
-    metadata from proven AlphaEvolve-style minimal-change integration.
+    the paper-manifest-validated
+    `smoke_source_setup_fixture_recorded_missing_real_upstream` boundary.
+  - Required result: replace the smoke fixture boundary with a real
+    codebase-scale fixture/evidence bundle backed by an external or
+    release-like upstream identity, independently checkable setup diff,
+    pre-marker source artifacts, evaluator-call path proof before/after marker
+    insertion, setup-change counts, and portable static-source identities
+    before claiming AlphaEvolve-style minimal-change integration.
 
 - [ ] Finish candidate-embedded `evaluate(eval_inputs)` entrypoint support and
       evidence.

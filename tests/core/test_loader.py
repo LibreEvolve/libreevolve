@@ -86,6 +86,24 @@ def test_reads_codebase_integration_metadata():
         }
 
 
+def test_workspace_math_fixture_declares_codebase_integration_metadata():
+    problem = load_problem(
+        Path("libreevolve/problems/examples/workspace_math")
+    )
+
+    metadata = problem.codebase_integration_metadata
+    assert metadata["original_codebase_id"] == "workspace_math_fixture_lib_v1"
+    assert metadata["upstream_release_artifact"]["path"] == (
+        "source_setup/fixture_lib_v1/MANIFEST.md"
+    )
+    assert len(metadata["pre_marker_source_sha256"]) == 2
+    assert metadata["marker_added_setup_diff"]["non_marker_lines_changed"] == 0
+    assert len(metadata["copied_static_asset_source_identity"]) == 2
+    assert metadata["codebase_scale_fixture"]["status"] == (
+        "smoke_source_setup_fixture"
+    )
+
+
 def test_rejects_duplicate_codebase_integration_metadata_files():
     with tempfile.TemporaryDirectory() as t:
         d = _make(t)

@@ -142,6 +142,8 @@ _SEED_SOURCE_ALLOWED_KEYS = {
     "primary_file",
     "file_count",
     "files",
+    "static_file_count",
+    "static_files",
     "allowed_reserved_paths",
     "seed_variant_id",
     "seed_idea_origin",
@@ -7886,6 +7888,45 @@ def _validate_seed_source_record(index: int, source: object | None) -> dict:
     if "primary_file" in normalized and "files" in normalized:
         if normalized["primary_file"] not in normalized["files"]:
             raise StrictJsonlError(f"{label}.primary_file must be present in files")
+    if "static_files" in source:
+        static_files = source["static_files"]
+        if not isinstance(static_files, list):
+            raise StrictJsonlError(f"{label}.static_files must be a list of path labels")
+        seen_static_files: set[str] = set()
+        normalized_static_files = []
+        for file_index, file_path in enumerate(static_files):
+            path = _normalize_seed_source_path(
+                f"{label}.static_files[{file_index}]",
+                file_path,
+                allowed_reserved_paths=allowed_reserved_paths,
+            )
+            if path in seen_static_files:
+                raise StrictJsonlError(
+                    f"{label}.static_files must not contain duplicates"
+                )
+            seen_static_files.add(path)
+            normalized_static_files.append(path)
+        normalized["static_files"] = sorted(normalized_static_files)
+    if "static_file_count" in source:
+        static_file_count = source["static_file_count"]
+        if (
+            isinstance(static_file_count, bool)
+            or not isinstance(static_file_count, int)
+            or static_file_count < 0
+        ):
+            raise StrictJsonlError(
+                f"{label}.static_file_count must be a non-negative integer"
+            )
+        if (
+            "static_files" in normalized
+            and static_file_count != len(normalized["static_files"])
+        ):
+            raise StrictJsonlError(
+                f"{label}.static_file_count must match static_files length"
+            )
+        normalized["static_file_count"] = static_file_count
+    elif "static_files" in normalized:
+        normalized["static_file_count"] = len(normalized["static_files"])
     _normalize_seed_idea_metadata(label, source, normalized)
     _validate_seed_source_json_size(label, normalized)
     return normalized

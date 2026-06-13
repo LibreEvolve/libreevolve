@@ -926,12 +926,17 @@ runtime candidate workspaces for Python `# EVOLVE-BLOCK-START/END` marker
 spans, stable span ids, skeleton hashes, unmarked-file hashes, seed-source
 references, and the current marker grammar. The committed
 `papers/existing_codebase_integration_boundary.json` sidecar now emits the
-source-setup-level `not_recorded_at_source_setup_level` boundary, and
+source-setup-level
+`smoke_source_setup_fixture_recorded_missing_real_upstream` boundary, and
 `validate_paper_manifest()` requires and validates it at the real repo root.
-The runtime report remains `claim_ready: false` because original upstream
-codebase identity, pre-marker source hashes, marker-only setup diffs,
-evaluator-call continuity before/after marker insertion, portable release/
-source-root identity, and setup-change counts remain open.
+The checked-in `workspace_math` fixture now has `codebase_integration.yaml`
+and a `source_setup/fixture_lib_v1/` pre-marker source bundle, so completed
+manifests can show smoke source-setup metadata, pre-marker source hashes,
+marker-only setup counts, evaluator-call continuity declarations, and copied
+static-asset identity. The runtime report remains `claim_ready: false`
+because this is not a real external upstream or codebase-scale integration
+fixture, and independent setup-diff artifacts plus verified before/after
+evaluator-call proof remain open.
 
 AlphaEvolve marker-spelling note: completed manifests now include
 `runtime.history.marker_spelling_provenance_report` with schema

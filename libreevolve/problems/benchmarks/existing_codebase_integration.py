@@ -12,7 +12,7 @@ EXISTING_CODEBASE_INTEGRATION_BOUNDARY_SCHEMA = (
 EXISTING_CODEBASE_RUNTIME_REPORT_SCHEMA = "libreevolve.existing_codebase_integration_report.v1"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_ID = "2.1"
-EXPECTED_BOUNDARY_STATUS = "not_recorded_at_source_setup_level"
+EXPECTED_BOUNDARY_STATUS = "smoke_source_setup_fixture_recorded_missing_real_upstream"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "original_codebase_id",
     "upstream_release_artifact",
@@ -26,15 +26,15 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "runtime_report_linkage",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "original_codebase_id": "not_recorded_locally",
-    "upstream_release_artifact": "not_recorded_locally",
-    "pre_marker_source_hashes": "not_recorded_locally",
-    "marker_added_setup_diff": "not_recorded_locally",
-    "setup_change_counts": "not_recorded_locally",
-    "evaluator_call_path_before_marker_insertion": "not_recorded_locally",
-    "evaluator_call_path_after_marker_insertion": "not_recorded_locally",
-    "copied_static_asset_source_identity": "not_recorded_locally",
-    "codebase_scale_fixture": "not_recorded_locally",
+    "original_codebase_id": "smoke_fixture_id_recorded_not_external_upstream",
+    "upstream_release_artifact": "local_fixture_manifest_recorded_not_external_release",
+    "pre_marker_source_hashes": "smoke_fixture_hashes_recorded",
+    "marker_added_setup_diff": "smoke_marker_only_diff_recorded",
+    "setup_change_counts": "smoke_setup_counts_recorded",
+    "evaluator_call_path_before_marker_insertion": "declared_for_smoke_fixture",
+    "evaluator_call_path_after_marker_insertion": "declared_for_smoke_fixture",
+    "copied_static_asset_source_identity": "smoke_static_asset_hashes_recorded",
+    "codebase_scale_fixture": "smoke_fixture_recorded_not_codebase_scale",
 }
 
 
@@ -63,7 +63,9 @@ def existing_codebase_integration_boundary_record() -> dict[str, Any]:
         "source_section_id": EXPECTED_SOURCE_SECTION_ID,
         "source_figures": ["Figure 2", "Figure 3"],
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
-        "runtime_report_status": "runtime_workspace_marker_inventory_available",
+        "runtime_report_status": (
+            "runtime_workspace_marker_inventory_and_smoke_source_setup_metadata_available"
+        ),
         "claim_ready": False,
         "marker_contract": {
             "language": "python",
@@ -75,10 +77,11 @@ def existing_codebase_integration_boundary_record() -> dict[str, Any]:
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records that LibreEvolve has runtime workspace marker "
-            "inventory evidence, but does not claim AlphaEvolve-style minimal-change "
-            "integration with an identified upstream codebase, pre-marker source "
-            "hashes, marker-only setup diffs, setup-change counts, or evaluator-call "
-            "continuity before and after marker insertion."
+            "inventory evidence plus a checked-in smoke fixture with source-setup "
+            "metadata, but does not claim AlphaEvolve-style minimal-change "
+            "integration with a real external upstream codebase, codebase-scale "
+            "fixture, independent setup-diff artifact, or verified evaluator-call "
+            "continuity beyond the smoke fixture."
         ),
     }
 
@@ -106,8 +109,11 @@ def validate_existing_codebase_integration_boundary(
     status = data.get("boundary_status")
     if status != EXPECTED_BOUNDARY_STATUS:
         issues.append(_issue("invalid_boundary_status", f"boundary_status must be {EXPECTED_BOUNDARY_STATUS}"))
-    if data.get("runtime_report_status") != "runtime_workspace_marker_inventory_available":
-        issues.append(_issue("invalid_runtime_report_status", "runtime report status must stay scoped to workspace marker inventory"))
+    if (
+        data.get("runtime_report_status")
+        != "runtime_workspace_marker_inventory_and_smoke_source_setup_metadata_available"
+    ):
+        issues.append(_issue("invalid_runtime_report_status", "runtime report status must stay scoped to marker inventory plus smoke source-setup metadata"))
     if data.get("claim_ready") is not False:
         issues.append(_issue("claim_ready_overclaim", "existing-codebase integration boundary must not claim paper readiness"))
     _validate_marker_contract(data.get("marker_contract"), issues)

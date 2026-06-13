@@ -51,10 +51,13 @@ Important limits:
   evaluator-pool implementation, or full process parity; that boundary is
   tracked by `papers/process_exhibit_boundary.json`.
 - Existing-codebase integration reports inventory runtime Python EVOLVE-block
-  marker spans and optional source-setup metadata, not AlphaEvolve-style
-  minimal-change integration with identified upstream releases, pre-marker
-  hashes, marker-only setup diffs, evaluator-call continuity, portable
-  source-root identity, or setup-change counts; that boundary is tracked by
+  marker spans and optional source-setup metadata. The `workspace_math`
+  example now includes a smoke-scoped `codebase_integration.yaml` and
+  `source_setup/fixture_lib_v1/` pre-marker source bundle so a real run can
+  surface complete smoke source-setup metadata. This is still not
+  AlphaEvolve-style minimal-change integration with a real external upstream,
+  codebase-scale fixture, independent setup-diff artifact, or verified
+  before/after evaluator-call proof; that boundary is tracked by
   `papers/existing_codebase_integration_boundary.json`.
 - Workspace topology and materialization diagnostics cover local file-workspace
   path/case-folding/source-copy preflights, topology-command validation, and

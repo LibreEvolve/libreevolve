@@ -12,10 +12,14 @@ def test_existing_codebase_integration_boundary_accepts_absence_record():
     validation = validate_existing_codebase_integration_boundary(boundary)
 
     assert validation.ok is True
-    assert validation.boundary_status == "not_recorded_at_source_setup_level"
+    assert (
+        validation.boundary_status
+        == "smoke_source_setup_fixture_recorded_missing_real_upstream"
+    )
     assert validation.required_evidence_field_count == 10
     assert validation.missing_evidence_count == 9
     assert boundary["schema"] == EXISTING_CODEBASE_INTEGRATION_BOUNDARY_SCHEMA
+    assert "smoke fixture with source-setup metadata" in boundary["claim_boundary"]
     assert "does not claim AlphaEvolve-style minimal-change integration" in boundary["claim_boundary"]
 
 
@@ -43,6 +47,9 @@ def test_render_existing_codebase_integration_boundary_summary_reports_shape():
 
     assert "AlphaEvolve existing-codebase integration boundary" in summary
     assert "| schema_status | ok |" in summary
-    assert "| boundary_status | not_recorded_at_source_setup_level |" in summary
+    assert (
+        "| boundary_status | "
+        "smoke_source_setup_fixture_recorded_missing_real_upstream |"
+    ) in summary
     assert "| required_evidence_field_count | 10 |" in summary
     assert "| missing_evidence_count | 9 |" in summary

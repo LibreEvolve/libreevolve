@@ -99,6 +99,18 @@ problem usually contains:
 
 See [docs/problem-format.md](docs/problem-format.md) for the full contract.
 
+## Example Scope
+
+The bundled examples are intentionally small:
+
+- Optimization-pressure seeds start from a valid program that leaves room for
+  measurable improvement.
+- neutral plateau/diversity fixtures mainly exercise loading, validation,
+  artifact writing, or archive behavior.
+
+Treat an example as benchmark evidence only when its own docs or paper sidecar
+says so.
+
 ## Run Artifacts
 
 Runs write to `runs/<run-name>/`, which is gitignored. Common outputs include:

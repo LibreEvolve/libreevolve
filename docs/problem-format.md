@@ -252,6 +252,12 @@ record in `runtime.history.existing_codebase_integration_report` as
 without setting `paper_faithful_existing_codebase_integration` or `claim_ready`
 to true.
 
+The checked-in `workspace_math` example includes a smoke-scoped
+`codebase_integration.yaml` and `source_setup/fixture_lib_v1/` pre-marker
+source bundle. Use it as a metadata-shape example only; it is not a
+third-party upstream project or AlphaEvolve-scale existing-codebase
+integration proof.
+
 ## `task_description.txt`
 
 This file is inserted into the mutation prompt. Keep it concrete and

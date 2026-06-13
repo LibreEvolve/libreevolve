@@ -25,10 +25,14 @@ LibreEvolve has:
   `problem.codebase_integration_metadata` source-setup records for upstream
   identity, pre-marker hashes, marker-added setup diffs, evaluator-call
   continuity, static-asset source identity, and codebase-scale fixture
-  declarations, with
+  declarations. The checked-in `workspace_math` fixture now supplies a
+  smoke-scoped `codebase_integration.yaml` plus
+  `source_setup/fixture_lib_v1/` pre-marker Python sources and static-asset
+  identity hashes, with
   `papers/existing_codebase_integration_boundary.json` now carrying the
-  paper-manifest-validated boundary; a populated codebase-scale fixture and
-  evidence bundle remain required before claiming paper-faithful minimal-change
+  paper-manifest-validated smoke-source-setup boundary; a real external or
+  release-like codebase-scale fixture and independently checkable evidence
+  bundle remain required before claiming paper-faithful minimal-change
   existing-codebase integration
 - SEARCH/REPLACE diff mutation, including canonical AlphaEvolve fences, and
   configurable full-block/full-code replacement with unknown named block

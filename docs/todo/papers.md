@@ -578,9 +578,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     `runtime.history.existing_codebase_integration_report`, which records
     runtime candidate workspace marker spans, stable span ids,
     skeleton-preservation hashes, language/comment syntax, unmarked-file
-    hashes, seed-source references, and claim-readiness gaps. The committed
+    hashes, seed-source references, and claim-readiness gaps. The checked-in
+    `workspace_math` fixture now includes `codebase_integration.yaml` plus
+    `source_setup/fixture_lib_v1/` pre-marker Python sources and a
+    source-setup manifest, so completed manifests can expose smoke
+    source-setup metadata. The committed
     `papers/existing_codebase_integration_boundary.json` sidecar now preserves
-    the source-setup-level `not_recorded_at_source_setup_level` boundary, and
+    the source-setup-level
+    `smoke_source_setup_fixture_recorded_missing_real_upstream` boundary, and
     the paper manifest requires and validates it at the real repo root.
     Problem fixtures and direct callers now also support optional
     `codebase_integration.yaml` / `Problem.codebase_integration_metadata`,
@@ -589,17 +594,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     pre-marker hashes, marker-only setup diff status, evaluator-call
     continuity, copied static-asset identity, and source-setup completeness.
   - Current gap: paper-facing evidence still does not prove that a real
-    pre-existing codebase was integrated with a marker-only or minimal setup
-    diff, that pre-marker source hashes and upstream identity are preserved,
-    that evaluator invocation worked through the existing codebase structure
-    before and after marker insertion, or that copied static assets have
-    portable source-root/release identities.
+    pre-existing external or release-like codebase was integrated with a
+    marker-only or minimal setup diff, that pre-marker source artifacts are
+    independently preserved, that evaluator invocation actually worked through
+    the existing codebase structure before and after marker insertion, or that
+    copied static assets have portable source-root/release identities outside a
+    smoke fixture.
   - Required result: add a populated paper-facing codebase-scale fixture and
-    evidence bundle with original codebase id, pre-marker source hashes,
-    marker-added setup diff summary, evaluator invocation path before/after
-    marker insertion, setup-change counts, portable source-root/release
-    identity, and wording that distinguishes declared source-setup metadata
-    from AlphaEvolve-style minimal-change integration evidence.
+    evidence bundle with original codebase id, pre-marker source artifacts and
+    hashes, independently checkable marker-added setup diff summary, evaluator
+    invocation proof before/after marker insertion, setup-change counts,
+    portable source-root/release identity, and wording that distinguishes smoke
+    source-setup metadata from AlphaEvolve-style minimal-change integration
+    evidence.
 
 - [ ] Track candidate-abstraction choice and bias evidence.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Discussion.

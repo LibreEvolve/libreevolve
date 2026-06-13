@@ -316,11 +316,13 @@ Important limits:
   roles are correct, expert-reviewed problem-formulation evidence, live or
   external context-source classification, or full AlphaEvolve context-selection
   and context-evolution parity.
-- Systems-result validation is a report, artifact-inventory, and
-  evidence-bundle contract with domain-specific readiness gates, not proof
-  that real compiler, hardware, kernel, or scheduling fixtures have emitted
-  held-out, deployment, expert-confirmation, or domain-specific result
-  artifacts; that boundary is tracked by
+- Paper-result certification and systems-result validation are report,
+  artifact-inventory, and evidence-bundle contracts with independence,
+  artifact-hash, domain-readiness, and gate checks, not proof that independent
+  certifiers, reviewer/deployment evidence, or real compiler, hardware, kernel,
+  and scheduling fixtures have emitted held-out, deployment,
+  expert-confirmation, reference-code, or domain-specific result artifacts;
+  that boundary is tracked by
   `papers/systems_result_readiness_boundary.json`.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,

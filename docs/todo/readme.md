@@ -941,38 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README certification and systems-result wording scoped to report
-  contracts versus executed independent evidence.
-  - Spec evidence: AlphaEvolve Section 3.3 reports confirmation beyond local
-    optimizer feedback, including post-deployment fleet measurements, held-out
-    kernel-shape evaluation, randomized reference-code checks, and human expert
-    confirmation for final FlashAttention changes.
-  - Current evidence: README now says
-    `libreevolve.paper_result_certification.v1` distinguishes local validator
-    records from paper-claim-ready independent certifications, and that the
-    accompanying artifact inventory proves named evidence files are present,
-    not that independent verifiers, deployment measurements, or human review
-    have been performed. README also says
-    `libreevolve.systems_result_report.v1` is a readiness/report schema only,
-    while `libreevolve.systems_result_artifact_inventory.v1` proves artifact
-    availability, not unseen workloads, reference-code checks, deployment
-    evidence, or independent certification. Matching paper/code TODOs still
-    require real verifier scripts, reviewer/deployment provenance, systems
-    fixtures, held-out case sets, and randomized/reference-correctness checks.
-    README now also documents that ready scheduling/kernel reports require
-    passed held-out gates, ready compiler/hardware reports require passed
-    reference-correctness gates, and generic ready systems reports require
-    both rather than accepting generic `not_applicable` rationales. README now
-    also points to `papers/systems_result_readiness_boundary.json` as the
-    manifest-checked boundary separating report/inventory/bundle validation
-    from real systems fixtures, deployment measurements, expert confirmation,
-    and domain-specific result artifacts.
-  - Required result: when benchmark runs emit real certification reports,
-    deployment/reviewer evidence, held-out systems reports, or reference-code
-    checks, update README, ROADMAP, papers index, and code/paper TODO entries
-    together so README neither underclaims the current report and inventory
-    contracts nor overclaims AlphaEvolve-style confirmed result evidence.
-
 - [ ] Keep README systems-metric wording scoped until calibrated Section 3.3
       result claims are populated.
   - Spec evidence: AlphaEvolve Section 3.3 reports concrete systems outcomes

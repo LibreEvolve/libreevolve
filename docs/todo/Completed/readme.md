@@ -4,6 +4,21 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document certification and systems-result README boundary.
+  - Status: README Important limits now states that paper-result
+    certification and systems-result validation are report, artifact-inventory,
+    and evidence-bundle contracts with independence, artifact-hash,
+    domain-readiness, and gate checks, not proof that independent certifiers,
+    reviewer/deployment evidence, or real compiler, hardware, kernel, and
+    scheduling fixtures have emitted held-out, deployment, expert-confirmation,
+    reference-code, or domain-specific result artifacts. It points to
+    `papers/systems_result_readiness_boundary.json`.
+  - Verification: focused result-certification, systems-result, systems
+    readiness-boundary, and paper-manifest tests validate local-versus-paper
+    certification readiness, artifact inventories, gate requirements,
+    premature ready-claim rejection, missing-evidence tracking, and manifest
+    overclaim guards.
+
 - [x] Document matrix tensor-rank README boundary.
   - Status: README Important limits now states that matrix tensor-rank records
     validate tensor-decomposition versus non-tensor algorithm claims, rank,

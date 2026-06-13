@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document compiler-stack README boundary.
+  - Status: README Important limits now states that compiler stack records
+    validate workload/model configuration, FlashAttention/Pallas kernel
+    identity, JAX pre/postprocessing boundaries, XLA lowering stage, hardware
+    target, lowered-IR hash, optimization decision category, and artifact refs,
+    not real Transformer/inference configuration records, Pallas source
+    snapshots, JAX wrapper artifacts, XLA stage outputs, hardware-target
+    records, lowered-IR files, or decision-evidence artifacts.
+  - Verification: systems-result tests validate required compiler stack records
+    for ready compiler reports and malformed stack-context metadata; code and
+    papers TODOs still track the missing real FlashAttention/Pallas/JAX/XLA
+    artifacts.
+
 - [x] Document compiler-IR README boundary.
   - Status: README Important limits now states that compiler IR records
     validate IR-origin/editability boundaries, compiler-generated baseline

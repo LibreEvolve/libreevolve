@@ -398,6 +398,12 @@ Important limits:
   reference-check metadata, abstraction-level attribution, and artifact refs,
   not real XLA/FlashAttention edit artifacts, randomized input coverage,
   reference-check outputs, tolerance/failure logs, or expert all-input signoff.
+- Compiler stack records validate workload/model configuration,
+  FlashAttention/Pallas kernel identity, JAX pre/postprocessing boundaries,
+  XLA lowering stage, hardware target, lowered-IR hash, optimization decision
+  category, and artifact refs, not real Transformer/inference configuration
+  records, Pallas source snapshots, JAX wrapper artifacts, XLA stage outputs,
+  hardware-target records, lowered-IR files, or decision-evidence artifacts.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

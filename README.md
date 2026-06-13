@@ -774,6 +774,15 @@ Important limits:
   multi-objective reward vectors, expert-prior rubric expansion,
   medical/writing/science benchmark report, reward-hacking audit, linked-code
   audit, or independent reproduction output.
+- ArXiv `2605.29293` is learning-signal optimization context only; the README
+  mentions this cached paper as a curated subset while `papers/README.md`
+  remains the complete implementation-status index. LibreEvolve has no
+  sparse-reward cooperative MARL harness, Critic LLM diagnosis role,
+  Generator LLM reward-shaping role, compact behavior evidence record,
+  stage-specific coordination-failure diagnosis, reward-shaping configuration
+  artifact, branch-validation trajectory, validated-update promotion gate,
+  main-training trajectory provenance, learning-efficiency report, linked-code
+  audit, or independent reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

@@ -14886,3 +14886,26 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     consensus traces, reward vectors, reward-hacking diagnostics, benchmark
     baselines, report outcomes, and EvoRubric-style reward evolution remain
     active in code and paper TODOs.
+
+- [x] Keep README LLM-ALSO adaptive learning-signal claims source-scoped
+      until runtime evidence exists.
+  - Spec evidence: arXiv `2605.29293`, `LLM-ALSO: LLM-Driven Adaptive
+    Learning-Signal Optimization for Multi-Agent Reinforcement Learning`,
+    proposes iterative diagnosis, proposal, and validation for sparse-reward
+    cooperative MARL: a Critic LLM diagnoses stage-specific failures, a
+    Generator LLM proposes reward-shaping configurations, and branch
+    validation gates updates before they affect the main training trajectory.
+  - Status: README now lists arXiv `2605.29293` as learning-signal
+    optimization context only and marks the mention as a curated cached-paper
+    subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no
+    sparse-reward cooperative MARL harness, Critic LLM diagnosis role,
+    Generator LLM reward-shaping role, compact behavior evidence record,
+    stage-specific coordination-failure diagnosis, reward-shaping
+    configuration artifact, branch-validation trajectory, validated-update
+    promotion gate, main-training trajectory provenance, learning-efficiency
+    report, linked-code audit, or independent reproduction output.
+  - Remaining README gap: diagnosis records, reward-shaping configs,
+    validation traces, promotion decisions, main-training trajectories, MARL
+    baselines, report outcomes, and LLM-ALSO-style adaptive reward shaping
+    remain active in code and paper TODOs.

@@ -91,31 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README LLM-ALSO adaptive learning-signal claims source-scoped
-      until runtime evidence exists.
-  - Spec evidence: arXiv `2605.29293`, `LLM-ALSO: LLM-Driven Adaptive
-    Learning-Signal Optimization for Multi-Agent Reinforcement Learning`,
-    proposes iterative diagnosis, proposal, and validation for sparse-reward
-    cooperative MARL: a Critic LLM diagnoses stage-specific failures, a
-    Generator LLM proposes reward-shaping configurations, and branch
-    validation gates updates before they affect the main training trajectory.
-  - Current evidence: README now lists `2605.29293`, LLM-ALSO, as
-    learning-signal optimization context only and says no local sparse-reward
-    MARL harness, Critic/Generator reward-shaping loop, branch-validation
-    trace, or learning-efficiency report exists. README also documents
-    LibreEvolve's evaluator-first workflow, plugins, scoring artifacts, run
-    manifests, and benchmark boundaries; it does not claim sparse-reward MARL
-    environments, Critic/Generator learning-signal roles, generated reward-
-    shaping configs, branch validation, or MARL learning-efficiency gains.
-  - Required result: if README mentions LLM-ALSO, adaptive learning-signal
-    optimization, sparse-reward MARL, stage-aware reward shaping, Critic/
-    Generator reward roles, branch validation, or promoted reward updates,
-    keep the wording source-scoped until local artifacts can show diagnosis
-    records, reward-shaping configs, validation traces, promotion decisions,
-    main-training trajectories, MARL baselines, and report outcomes. Avoid
-    implying LibreEvolve supports
-    LLM-ALSO-style adaptive reward shaping without those artifacts.
-
 - [ ] Keep README MemEvolve memory-architecture claims source-scoped until
       runtime evidence exists.
   - Spec evidence: arXiv `2512.18746`, `MemEvolve: Meta-Evolution of Agent

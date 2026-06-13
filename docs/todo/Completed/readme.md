@@ -4,6 +4,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document hardware rewrite README boundary.
+  - Status: README Important limits now states that hardware rewrite records
+    validate before/after Verilog hashes, rewrite diff hashes, changed spans,
+    removed-bit or signal metadata, component and matrix-unit context, rewrite
+    category/rationale, and PPA/verification refs, not real before/after
+    Verilog files, exact diff or AST artifacts, removed-bit inventories,
+    component review files, or per-bit functional and PPA evidence for the TPU
+    arithmetic-circuit rewrite.
+  - Verification: systems-result tests validate required hardware rewrite
+    records for ready hardware reports and malformed bit-removal metadata; code
+    and papers TODOs still track the missing real rewrite artifacts.
+
 - [x] Document hardware RTL/EDA README boundary.
   - Status: README Important limits now states that hardware RTL/EDA records
     validate HDL source boundaries, synthesis/PPA provenance, timing/power/area

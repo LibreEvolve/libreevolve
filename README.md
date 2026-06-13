@@ -379,6 +379,12 @@ Important limits:
   flags, and artifact refs, not real Verilog/RTL source, synthesis/PPA runs,
   verification logs, designer signoff, downstream-synthesis artifacts,
   upcoming-chip integration, or deployment/time-to-market evidence.
+- Hardware rewrite records validate before/after Verilog hashes, rewrite diff
+  hashes, changed spans, removed-bit or signal metadata, component and
+  matrix-unit context, rewrite category/rationale, and PPA/verification refs,
+  not real before/after Verilog files, exact diff or AST artifacts,
+  removed-bit inventories, component review files, or per-bit functional and
+  PPA evidence for the TPU arithmetic-circuit rewrite.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

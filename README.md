@@ -372,6 +372,13 @@ Important limits:
   production training metrics, engineering-velocity evidence, rollout state,
   or safety/rollback records justify an AlphaEvolve-style self-optimization
   interpretation.
+- Hardware RTL/EDA records validate HDL source boundaries, synthesis/PPA
+  provenance, timing/power/area constraints, equivalence or formal-verification
+  evidence, designer validation, downstream synthesis confirmation, RTL-flow
+  placement, adoption rationale, integration targets, deployment impact, hashes,
+  flags, and artifact refs, not real Verilog/RTL source, synthesis/PPA runs,
+  verification logs, designer signoff, downstream-synthesis artifacts,
+  upcoming-chip integration, or deployment/time-to-market evidence.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

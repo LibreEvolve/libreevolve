@@ -941,29 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README hardware wording scoped to generic systems reports until
-      RTL/EDA verification evidence exists.
-  - Spec evidence: AlphaEvolve Section 3.3.3 optimizes Verilog RTL for a TPU
-    arithmetic circuit, tracks power/area objectives, requires robust
-    functional verification, and reports TPU-designer plus downstream
-    synthesis-tool confirmation. It also frames the result as an early
-    RTL-stage contribution integrated into an upcoming TPU, with direct
-    Verilog communication fostering trust, simplifying adoption, and
-    potentially reducing time to market.
-  - Current evidence: README documents systems result reports and artifact
-    inventories as generic readiness/report contracts. It now documents
-    hardware-specific `hardware_rtl_eda_provenance` for HDL source boundaries,
-    synthesis/PPA metrics, equivalence or formal verification, timing/power/
-    area constraints, designer validation, downstream synthesis confirmation,
-    RTL-stage placement, standard-language adoption/trust evidence,
-    integration target, and time-to-market impact.
-  - Required result: when RTL/EDA fixtures emit real source, synthesis/PPA,
-    verification, designer-signoff, downstream-synthesis, integration, and
-    deployment-impact artifacts, update README, ROADMAP, papers index, and
-    matching TODOs so README does not imply report metadata proves
-    AlphaEvolve-style TPU-circuit optimization, adoption, or deployment
-    evidence.
-
 - [ ] Keep README hardware-rewrite wording scoped until TPU bit-removal
       artifact evidence exists.
   - Spec evidence: AlphaEvolve Section 3.3.3 says the TPU hardware result was

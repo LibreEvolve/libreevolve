@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document hardware RTL/EDA README boundary.
+  - Status: README Important limits now states that hardware RTL/EDA records
+    validate HDL source boundaries, synthesis/PPA provenance, timing/power/area
+    constraints, equivalence or formal-verification evidence, designer
+    validation, downstream synthesis confirmation, RTL-flow placement, adoption
+    rationale, integration targets, deployment impact, hashes, flags, and
+    artifact refs, not real Verilog/RTL source, synthesis/PPA runs,
+    verification logs, designer signoff, downstream-synthesis artifacts,
+    upcoming-chip integration, or deployment/time-to-market evidence.
+  - Verification: systems-result tests validate required hardware RTL/EDA
+    records for ready hardware reports and malformed provenance cases; code and
+    papers TODOs still track the missing real hardware fixture artifacts.
+
 - [x] Document Gemini self-training README boundary.
   - Status: README Important limits now states that Gemini self-training
     wording remains bounded: README does not yet claim that a deployed Pallas

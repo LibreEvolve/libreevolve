@@ -13,6 +13,7 @@ DISTRIBUTED_PIPELINE_RUNTIME_REPORT_SCHEMA = (
     "libreevolve.distributed_pipeline_topology_report.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
+EXPECTED_SOURCE_SECTION_IDS = ("2.6",)
 EXPECTED_BOUNDARY_STATUS = "single_process_synchronous_topology"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "asyncio_runtime_identity",
@@ -61,6 +62,7 @@ def distributed_pipeline_topology_boundary_record() -> dict[str, Any]:
         "schema": DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_SCHEMA,
         "runtime_report_schema": DISTRIBUTED_PIPELINE_RUNTIME_REPORT_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_claim": (
             "AlphaEvolve Section 2.6 describes a Python asyncio asynchronous controller, "
             "LLM-sampler, and evaluator-node pipeline optimized for throughput "
@@ -101,6 +103,8 @@ def validate_distributed_pipeline_topology_boundary(
         issues.append(_issue("invalid_runtime_report_schema", "runtime report schema must identify distributed-pipeline topology reports"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['2.6']"))
     source_claim = data.get("source_claim")
     if not isinstance(source_claim, str) or "asynchronous controller" not in source_claim:
         issues.append(_issue("invalid_source_claim", "source_claim must identify AlphaEvolve asynchronous topology"))

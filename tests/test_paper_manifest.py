@@ -3990,6 +3990,7 @@ def test_validate_paper_manifest_rejects_distributed_pipeline_topology_boundary_
     record = paper_manifest.distributed_pipeline_topology_boundary_record()
     record["claim_ready"] = True
     record["boundary_status"] = "async_distributed_topology_ready"
+    record["source_section_ids"] = ["2.4"]
     record["missing_evidence"]["async_controller_queues"] = "recorded"
     sidecar = tmp_path / paper_manifest.DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
@@ -4000,6 +4001,7 @@ def test_validate_paper_manifest_rejects_distributed_pipeline_topology_boundary_
     assert report.ok is False
     assert "distributed_pipeline_topology_boundary_claim_ready_overclaim" in codes
     assert "distributed_pipeline_topology_boundary_invalid_boundary_status" in codes
+    assert "distributed_pipeline_topology_boundary_invalid_source_section_ids" in codes
     assert (
         "distributed_pipeline_topology_boundary_invalid_missing_evidence_async_controller_queues"
         in codes

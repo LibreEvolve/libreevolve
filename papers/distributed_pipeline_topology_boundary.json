@@ -2,6 +2,9 @@
   "schema": "libreevolve.alphaevolve_distributed_pipeline_topology_boundary.v1",
   "runtime_report_schema": "libreevolve.distributed_pipeline_topology_report.v1",
   "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "2.6"
+  ],
   "source_claim": "AlphaEvolve Section 2.6 describes a Python asyncio asynchronous controller, LLM-sampler, and evaluator-node pipeline optimized for throughput with computations that can block on unfinished dependencies",
   "boundary_status": "single_process_synchronous_topology",
   "runtime_report_status": "distributed_pipeline_topology_report_available",

@@ -16,6 +16,7 @@ def test_distributed_pipeline_topology_boundary_accepts_absence_record():
     assert validation.required_evidence_field_count == 11
     assert validation.missing_evidence_count == 8
     assert boundary["schema"] == DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["2.6"]
     assert "does not claim AlphaEvolve-style Python asyncio" in boundary["claim_boundary"]
 
 
@@ -23,6 +24,7 @@ def test_distributed_pipeline_topology_boundary_rejects_premature_topology_claim
     boundary = distributed_pipeline_topology_boundary_record()
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "async_distributed_topology_ready"
+    boundary["source_section_ids"] = ["2.4"]
     boundary["missing_evidence"]["async_controller_queues"] = "recorded"
     boundary["required_evidence_fields"] = ["controller_node_identity"]
 
@@ -32,6 +34,7 @@ def test_distributed_pipeline_topology_boundary_rejects_premature_topology_claim
     assert validation.ok is False
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert "invalid_missing_evidence_async_controller_queues" in codes
     assert "missing_required_evidence_field" in codes
 

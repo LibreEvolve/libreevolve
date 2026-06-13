@@ -10,31 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep backtracking roadmap wording scoped until explicit controller
-      backtracking policies exist.
-  - Spec evidence: AlphaEvolve's Introduction frames discovery as involving
-    ideation, exploration, backtracking on unpromising hypotheses,
-    experimentation, and validation, while Section 2.4 describes pruning less
-    promising solutions through evaluation cascades.
-  - Current evidence: `ROADMAP.md` now references
-    `runtime.history.hypothesis_branch_report`, which groups generated
-    candidates by captured proposal text hashes, includes rejected candidates,
-    marks rejected/no-accepted branches as `abandoned_evidence`, and records
-    fallback-parent inference, prompt/failure-memory linkage, suppression/
-    retry status, resumed-search status, and claim-readiness limits.
-    `ROADMAP.md` also references
-    `runtime.history.controller_backtracking_report`, which records current-run
-    branch state transitions and observed redirects after abandoned-looking
-    branches while keeping causal controller proof false. ROADMAP now also
-    names `papers/controller_backtracking_boundary.json` as the committed
-    paper-manifest-validated controller-policy absence boundary.
-  - Required result: when explicit controller-owned backtracking policy lands,
-    update ROADMAP, README, papers index, and code/paper TODOs with configured
-    suppression/retry behavior, selected fallback ancestor or alternative
-    branch events, causal resumed-search outcome, and replayable validation so
-    roadmap wording separates observed redirect evidence from AlphaEvolve-style
-    controller backtracking.
-
 - [ ] Keep scientific-discovery roadmap wording scoped to automated evaluators
       until robust evaluator-environment fixtures exist.
   - Spec evidence: AlphaEvolve's Discussion says its main limitation is that

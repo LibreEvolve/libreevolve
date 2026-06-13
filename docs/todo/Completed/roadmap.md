@@ -2,6 +2,24 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive backtracking roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `docs/status.md`, and `papers/README.md` already scope backtracking
+    evidence to `runtime.history.hypothesis_branch_report` abandonment records
+    and `runtime.history.controller_backtracking_report` observed redirects,
+    while keeping AlphaEvolve-style controller-owned suppression/retry policy,
+    fallback-target decision events, causal replay, and cross-run hypothesis
+    branch tables open.
+  - Remaining guard: explicit controller-owned branch state machines,
+    configured suppression/retry policy, fallback-target selection events,
+    causal resumed-search replay, and replayable validation remain future work.
+  - Verification: runtime report tests assert abandoned branch evidence,
+    fallback-parent inference, failure-memory linkage, false controller
+    backtracking readiness, `controller_suppression="not_configured"`,
+    observed redirect events, and false causal proof; the committed
+    `papers/controller_backtracking_boundary.json` sidecar rejects premature
+    policy/parity claims through paper-manifest validation.
+
 - [x] Archive proposal-memory roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `docs/status.md`, and `papers/README.md` already distinguish optional

@@ -13827,6 +13827,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     focused cascade hypothesis-test tests reject benchmark-calibrated cascade
     overclaims.
 
+- [x] Keep README cascade wording scoped beyond runtime policy gates.
+  - Status: README now scopes cascade hypothesis-test gates as runtime policy
+    evidence, not benchmark-calibrated AlphaEvolve Section 2.4 proof with
+    repeated-seed fixtures, small-filter-to-main-test linkage,
+    benchmark-calibrated thresholds, or empirical false-promotion/false-
+    rejection validation.
+  - Verification: paper-manifest validation requires
+    `papers/cascade_hypothesis_test_boundary.json`, and focused cascade
+    hypothesis-test tests reject benchmark-calibrated cascade overclaims.
+
 - [x] Keep README qualitative-feedback boundary tied to sidecar.
   - Status: README now states that qualitative LLM-feedback records are
     declared criterion/rubric/intent provenance and prompt-history audit

@@ -87,7 +87,8 @@ Important limits:
   `papers/evaluation_cascade_boundary.json`.
 - Cascade hypothesis-test gates are runtime policy evidence, not
   benchmark-calibrated AlphaEvolve Section 2.4 cascade proof with repeated-seed
-  fixtures and empirical false-promotion/false-rejection validation; that
+  fixtures, small-filter-to-main-test linkage, benchmark-calibrated
+  thresholds, or empirical false-promotion/false-rejection validation; that
   boundary is tracked by `papers/cascade_hypothesis_test_boundary.json`.
 - Evaluator/oracle reports register local validators, configured cascade
   stages, and optional LLM feedback graders with arbitration metadata, not

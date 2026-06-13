@@ -69,31 +69,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README cascade wording scoped to staged threshold gates until
-      statistical hypothesis-test promotion is implemented.
-  - Spec evidence: AlphaEvolve Section 2.4 presents evaluation cascades as
-    hypothesis testing: candidates are tried on small-scale tests before main
-    test cases, and only sufficiently promising candidates advance. Section
-    3.1 uses multiple randomized initializations for matrix tensor targets.
-  - Current evidence: README describes cascade evaluation, staged validators,
-    samples, retries, thresholds, stage/sample budgets, and prompt-visible
-    diagnostics. README now also documents
-    `runtime.history.cascade_hypothesis_test_policy_report`, which records
-    configured or fallback-inferred small-scale/main-test roles, observed promotion counts,
-    configured sample/seed counts, and the supported opt-in
-    `one_sided_lower_confidence_bound` gate with retained observations,
-    confidence-bound evidence, p-values, and `hypothesis_test_not_met`
-    rejection. README also documents optional sequential stopping after
-    `min_samples` plus optional normal-approximation `error_budget` evidence
-    for configured false-promotion and false-rejection rates. README now also
-    documents `binomial_success_rate` gates for Wilson-bound repeated-seed
-    pass/fail evidence, and ties the runtime-policy-only boundary to
-    `papers/cascade_hypothesis_test_boundary.json`.
-  - Required result: when richer statistical cascade promotion execution lands,
-    update README, ROADMAP, papers index, and code/paper TODOs so README
-    distinguishes the current lower-confidence-bound gate from complete
-    AlphaEvolve-style hypothesis-testing cascades.
-
 - [ ] Keep README mutation-response wording scoped beyond bounded
       natural-language preamble capture.
   - Spec evidence: AlphaEvolve Figure 3(c) shows explanatory natural-language

@@ -54,6 +54,11 @@ Important limits:
   exhaustive anti-gaming evidence, executable construction/certificate
   validators, target/SOTA baselines, Colab-equivalent Appendix B construction
   data, or verifier-code artifacts.
+- Matrix-publication evidence is one checked `mm_2x2x2` Strassen baseline
+  bundle plus Appendix A registry/status metadata, not full-suite local target
+  tensors, discovered decompositions, coefficient data, exactness
+  certificates, notebooks, per-seed reports, or publication bundles for every
+  registered Appendix A target.
 - Appendix A matrix target-suite curation records the reported 54 sorted
   targets, rough paper selection wording, symmetry policy, and included-target
   rationales, not an exhaustive locally justified corpus for every excluded

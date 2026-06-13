@@ -10,37 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep the non-toy benchmark follow-up scoped to an executed fixture with
-      expected artifacts.
-  - Spec evidence: AlphaEvolve-style benchmark evidence needs repeatable
-    target-family runs with saved outputs, validator/certifier artifacts,
-    target/SOTA baselines, and expected report files, not only smoke examples
-    or schema validators for reports that may exist later.
-  - Current evidence: `ROADMAP.md` lists "Add one non-toy benchmark run
-    fixture with expected artifacts" as a good first follow-up. Current code
-    and docs provide smoke fixtures (`hello_world`, `sorting`,
-    `workspace_math`, `matrix_multiplication`, and `circle_packing`),
-    Appendix A/B registries, benchmark hardening/report contracts, systems and
-    certification report contracts, ablation report contracts, and one checked
-    Strassen baseline bundle. Those surfaces validate scope, schemas, and
-    declared artifact availability.
-    `libreevolve.matrix_suite_publication_artifact_boundary.v1` now also
-    validates the current `not_generated_locally` boundary for suite-wide
-    target tensors, algorithms, certificates, notebooks, per-seed reports, and
-    publication-bundle refs.
-    `papers/matrix_suite_publication_artifacts.json` now emits that
-    absence/readiness boundary as a committed sidecar.
-    `matrix_suite_publication_artifact_boundary_from_artifacts()` can build the
-    generated boundary from one record per registered target and validation
-    checks nested matrix-result report linkage, but it does not yet provide a non-toy
-    benchmark run fixture whose command produces expected benchmark artifacts
-    from an actual repeated-seed target run.
-  - Required result: when the first non-toy benchmark fixture lands, update the
-    roadmap, README, papers index, and code/paper TODO entries together with
-    the runnable command, expected artifact paths, verifier/report contracts,
-    target/SOTA baseline, seed/budget policy, and evidence that the fixture is
-    not merely a smoke example or predeclared static artifact bundle.
-
 - [ ] Keep heuristic-search benchmark roadmap wording scoped to real
       incumbent-construction handoff support.
   - Spec evidence: AlphaEvolve Section 3.2 mathematical applications evolved

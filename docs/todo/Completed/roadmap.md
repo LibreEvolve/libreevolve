@@ -2,6 +2,35 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive non-toy benchmark fixture roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README
+    matrix-publication boundary was restored. `README.md`, `ROADMAP.md`,
+    `papers/README.md`, `docs/status.md`, `docs/todo/code.md`, and
+    `docs/todo/papers.md` now distinguish smoke fixtures, checked Strassen
+    baseline evidence, Appendix A suite publication-artifact readiness, and
+    benchmark-grade runner evidence.
+  - Current evidence: shipped examples remain smoke fixtures unless a fixture
+    documents stronger benchmark evidence. `libreevolve.example_benchmark_scope.v1`
+    classifies shipped examples as smoke-only, and
+    `validate_benchmark_evidence_scope()` rejects smoke-only example promotion
+    when hardening reports try to claim benchmark-level evidence.
+  - Matrix publication boundary:
+    `libreevolve.matrix_suite_publication_artifact_boundary.v1`,
+    `papers/matrix_suite_publication_artifacts.json`, and
+    `matrix_suite_publication_artifact_boundary_from_artifacts()` preserve the
+    current `not_generated_locally` boundary and future required fields for
+    full-suite target tensors, algorithms, coefficient data, exactness
+    certificates, notebooks, per-seed reports, embedded matrix-result reports,
+    artifact inventories, publication-bundle refs, artifact paths, and hashes.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    non-toy benchmark work: benchmark-grade tensor/geometric/constructive-math
+    runners, repeated-seed evaluation, target/SOTA baselines, executable
+    construction/certificate validators, Colab-equivalent Appendix B data and
+    verifier-code exports, and suite-wide matrix publication artifacts.
+  - Verification: focused benchmark-hardening/scope tests, matrix suite
+    publication-artifact boundary tests, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive matrix tensor-rank roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

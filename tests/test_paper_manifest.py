@@ -2941,6 +2941,7 @@ def test_validate_paper_manifest_rejects_initial_program_validity_boundary_drift
     record = paper_manifest.initial_program_validity_boundary_record()
     record["claim_ready"] = True
     record["boundary_status"] = "complete_initial_program_ready"
+    record["source_section_ids"] = ["2.2"]
     record["missing_evidence"][
         "alphaevolve_complete_initial_program_parity_default_run"
     ] = "recorded"
@@ -2953,6 +2954,7 @@ def test_validate_paper_manifest_rejects_initial_program_validity_boundary_drift
     assert report.ok is False
     assert "initial_program_validity_boundary_claim_ready_overclaim" in codes
     assert "initial_program_validity_boundary_invalid_boundary_status" in codes
+    assert "initial_program_validity_boundary_invalid_source_section_ids" in codes
     assert (
         "initial_program_validity_boundary_invalid_missing_evidence_alphaevolve_complete_initial_program_parity_default_run"
         in codes

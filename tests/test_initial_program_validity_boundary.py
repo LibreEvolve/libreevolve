@@ -16,6 +16,7 @@ def test_initial_program_validity_boundary_accepts_strict_policy_boundary():
     assert validation.required_evidence_field_count == 11
     assert validation.missing_evidence_count == 4
     assert boundary["schema"] == INITIAL_PROGRAM_VALIDITY_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["2.1"]
     assert boundary["claim_ready"] is False
     assert boundary["strict_policy"] == "alphaevolve_strict"
     assert boundary["default_policy"] == "permissive_baseline"
@@ -28,6 +29,7 @@ def test_initial_program_validity_boundary_rejects_default_parity_overclaim():
     boundary = initial_program_validity_boundary_record()
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "complete_initial_program_ready"
+    boundary["source_section_ids"] = ["2.2"]
     boundary["missing_evidence"][
         "alphaevolve_complete_initial_program_parity_default_run"
     ] = "recorded"
@@ -39,6 +41,7 @@ def test_initial_program_validity_boundary_rejects_default_parity_overclaim():
     assert validation.ok is False
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert (
         "invalid_missing_evidence_alphaevolve_complete_initial_program_parity_default_run"
         in codes

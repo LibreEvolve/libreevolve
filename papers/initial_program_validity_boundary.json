@@ -2,6 +2,9 @@
   "schema": "libreevolve.alphaevolve_initial_program_validity_boundary.v1",
   "runtime_report_schema": "libreevolve.initial_program_validity_report.v1",
   "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "2.1"
+  ],
   "source_claim": "AlphaEvolve Section 2.1 describes the user-provided code inside evolvable blocks as a complete initial solution that is runnable through the supplied task skeleton and evaluator before evolution",
   "boundary_status": "strict_policy_available",
   "runtime_report_status": "initial_program_validity_report_available",

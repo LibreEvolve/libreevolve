@@ -421,6 +421,13 @@ Important limits:
   moderate-gain calibration, setup or maintenance costs for robust evaluator
   environments, expected versus realized discovery value, gating assumptions,
   or readiness evidence for expanding AlphaEvolve-style evaluator environments.
+- Benchmark hardening records and shipped-example scope validate smoke-scope
+  anti-gaming metadata, negative-fixture files, detector logs, artifact hashes,
+  and `alphaevolve_comparable: false` boundaries for shipped examples, not
+  benchmark-grade tensor/geometric/constructive-math runners, randomized or
+  exhaustive anti-gaming evidence, executable construction/certificate
+  validators, target/SOTA baselines, Colab-equivalent Appendix B construction
+  data, or verifier-code artifacts.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

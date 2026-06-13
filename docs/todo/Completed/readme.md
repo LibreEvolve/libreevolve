@@ -4,6 +4,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document benchmark-hardening README boundary.
+  - Status: README Important limits now states that benchmark hardening records
+    and shipped-example scope validate smoke-scope anti-gaming metadata,
+    negative-fixture files, detector logs, artifact hashes, and
+    `alphaevolve_comparable: false` boundaries for shipped examples, not
+    benchmark-grade tensor/geometric/constructive-math runners, randomized or
+    exhaustive anti-gaming evidence, executable construction/certificate
+    validators, target/SOTA baselines, Colab-equivalent Appendix B construction
+    data, or verifier-code artifacts.
+  - Verification: focused benchmark-hardening, example-scope, and paper
+    manifest tests cover the smoke-scope boundary; code and papers TODOs still
+    track missing benchmark-grade runners and Appendix B verifier-data
+    artifacts.
+
 - [x] Document feedback-loop cadence and environment-ROI README boundary.
   - Status: README Important limits now states that feedback-loop cadence and
     environment-ROI claims remain absent: README does not yet record loop IDs,

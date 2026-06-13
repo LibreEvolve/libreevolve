@@ -941,39 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README benchmark-hardening wording scoped to smoke evidence versus
-  benchmark-grade anti-gaming fixtures.
-  - Spec evidence: AlphaEvolve-comparable benchmark claims require robust target
-    suites whose reported improvements cannot be explained by hardcoded cases,
-    shortcut access to reference answers, artifact spoofing, or local smoke
-    validator quirks.
-  - Current evidence: README now says
-    `libreevolve.benchmark_hardening.v1` validates protected signals, shortcut
-    threats, detector strategy, negative fixtures, and hashed hardening
-    artifacts; it also says the artifact inventory proves named anti-gaming
-    evidence files exist, not that a real benchmark runner generated them.
-    Matching roadmap/paper/code TODOs distinguish the checked matrix smoke
-    hardening bundle, which preserves `alphaevolve_comparable: false`, from
-    still-missing benchmark-grade tensor/geometric/compiler/systems fixtures
-    with real randomized or exhaustive anti-gaming evidence. Matching paper and
-    code TODOs also mark the Appendix B registry as a family/status ledger:
-    paper-result families still have null target-baseline values, and
-    construction/certificate artifact-schema strings are not executable
-    validators, reported constructions, SOTA thresholds, or verifier scripts.
-    AlphaEvolve Appendix B says the reported construction data and verification
-    code are available in an accompanying Google Colab; README should not imply
-    the registry has that Colab-equivalent verifier-data surface yet. The
-    shipped-example scope registry is validated in focused tests, smoke
-    hardening evidence, and README's routine paper-cache validation command.
-  - Required result: when real target-family benchmark runners emit
-    benchmark-grade hardening reports, negative fixtures, detector logs, and
-    artifact inventories, and when Appendix B families gain executable
-    construction/certificate validators, target baselines, construction-data
-    exports, and verifier-code artifacts, update README, ROADMAP, papers
-    index, and code/paper TODO entries together so README neither underclaims the
-    checked smoke hardening evidence nor overclaims AlphaEvolve-comparable
-    benchmark hardening.
-
 - [ ] State follow-on problem-repository coverage as snapshot-scoped.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
     README says the repository is live and expected to expand/improve over

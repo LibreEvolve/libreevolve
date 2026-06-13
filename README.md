@@ -647,6 +647,15 @@ Important limits:
   inventory, goal-revision or human-intervention records, privacy/redaction
   protocol for study data, coded qualitative-analysis evidence, or
   collaborative scientific-discovery instrument workflow support.
+- ArXiv `2605.01794` is radar/resource-allocation AlphaEvolve application
+  context only; the README mentions this cached paper as a curated subset while
+  `papers/README.md` remains the complete implementation-status index.
+  LibreEvolve has no radar scenario/target-count taxonomy, physically inspired
+  feature schema, deterministic constraint-satisfying power-allocation
+  transform, multi-target tracking simulator, baseline iterative solver
+  identity, average relative performance-loss benchmark rows, cross-scenario
+  generalization evidence, three-orders speedup reproduction, or independent
+  checker output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

@@ -91,26 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README radar power-allocation AlphaEvolve claims source-scoped
-      until benchmark evidence exists.
-  - Spec evidence: arXiv `2605.01794` reports using AlphaEvolve Evolution to
-    discover a fast closed-form power-allocation solution for multi-target
-    tracking, with physically inspired features, a deterministic
-    constraint-satisfying transform, 1.51% average relative performance loss,
-    cross-scenario/target-count generalization, and over three orders of
-    magnitude speedup versus iterative solvers.
-  - Current evidence: README now lists `2605.01794`, `Radar Power Allocation`,
-    as AlphaEvolve radar resource-allocation application context only and says
-    no local multi-target tracking or power-allocation benchmark exists. It
-    still does not claim radar fixtures, feasibility-transform artifacts,
-    tracking metrics, generalization splits, or iterative-solver baselines.
-  - Required result: if README mentions radar, multi-target tracking,
-    real-time resource allocation, closed-form power allocation, or the
-    `2605.01794` performance/speedup claims, keep the wording source-scoped
-    until local benchmark/report artifacts exist. Avoid implying LibreEvolve
-    supports this application without runnable radar fixtures, constraint
-    checks, baselines, and metric reports.
-
 - [ ] Keep README EvoX adaptive meta-evolution claims source-scoped until
       benchmark evidence exists.
   - Spec evidence: arXiv `2602.23413`, `EvoX: Meta-Evolution for Automated

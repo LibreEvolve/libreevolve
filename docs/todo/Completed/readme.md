@@ -14556,3 +14556,26 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     metadata, result-analysis dashboard state, privacy/redaction boundaries,
     user-study evidence, and collaborative scientific-discovery instrument
     artifacts remain active in code and paper TODOs.
+
+- [x] Keep README radar power-allocation AlphaEvolve claims source-scoped
+      until benchmark evidence exists.
+  - Spec evidence: arXiv `2605.01794`, submitted May 3, 2026, reports using
+    AlphaEvolve Evolution to discover a fast closed-form power-allocation
+    solution for multi-target tracking, with physically inspired features, a
+    deterministic constraint-satisfying transform, 1.51% average relative
+    performance loss, cross-scenario/target-count generalization, and over
+    three orders of magnitude speedup versus iterative solvers.
+  - Status: README now lists arXiv `2605.01794` as
+    radar/resource-allocation AlphaEvolve application context only and marks
+    the mention as a curated cached-paper subset while `papers/README.md`
+    remains the complete implementation-status index. It states that
+    LibreEvolve has no radar scenario/target-count taxonomy, physically
+    inspired feature schema, deterministic constraint-satisfying
+    power-allocation transform, multi-target tracking simulator, baseline
+    iterative solver identity, average relative performance-loss benchmark
+    rows, cross-scenario generalization evidence, three-orders speedup
+    reproduction, or independent checker output.
+  - Remaining README gap: runnable radar fixtures, feasibility-transform
+    artifacts, tracking metrics, generalization splits, iterative-solver
+    baselines, benchmark reports, and independent reproduction remain active in
+    code and paper TODOs.

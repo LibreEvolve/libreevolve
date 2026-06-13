@@ -2170,7 +2170,8 @@ probabilities, selected alternative index/hash, prompt-format weight source or
 prompt-context override source, prompt/call linkage, inline/effective-config
 source boundary, and run-local framework RNG replay boundary. It does not
 claim separate config-file source attribution or certified human-authored
-alternatives.
+alternatives; the paper-facing overclaim boundary is tracked by
+`papers/stochastic_prompt_format_boundary.json`.
 LLM feedback workspace prompts use the shared versioned secret-pattern grammar
 before provider calls. Prompt history and quarantine streams still contain
 some fixed-policy retention surfaces. Feedback provider outputs are retained according to

@@ -694,7 +694,9 @@ Important limits:
   probabilities, selected alternative hashes/indexes, prompt/call linkage, and
   run-local RNG replay boundaries, not distinct separate config-file source
   identity, certified human-authored alternatives, author/reviewer provenance,
-  or revision history for AlphaEvolve Section 2.2 stochastic-formatting parity.
+  or revision history for AlphaEvolve Section 2.2 stochastic-formatting parity;
+  that boundary is tracked by
+  `papers/stochastic_prompt_format_boundary.json`.
 - Configured `llm_prompt_roles` can send bounded system/developer instruction
   text through built-in backend provider payloads and records hash-only
   `prompt_role_policy` call telemetry. The primary-prompt instruction report

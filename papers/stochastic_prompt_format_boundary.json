@@ -1,0 +1,41 @@
+{
+  "schema": "libreevolve.stochastic_prompt_format_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "2.2"
+  ],
+  "source_claim": "AlphaEvolve uses stochastic prompt formatting with template placeholders, human-provided alternatives, and probability distributions supplied in a separate config file",
+  "boundary_status": "effective_config_distribution_without_separate_source_identity",
+  "runtime_report_schema": "libreevolve.stochastic_prompt_format_distribution_report.v1",
+  "runtime_report_status": "effective_config_distribution_report_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "prompt_format_markers",
+    "prompt_format_options",
+    "normalized_probabilities",
+    "selected_alternative_hashes",
+    "prompt_call_linkage",
+    "weight_source_boundary",
+    "prompt_context_override_source",
+    "run_local_rng_replay_boundary",
+    "separate_distribution_config_source_path",
+    "separate_distribution_config_source_hash",
+    "separate_distribution_config_byte_count",
+    "config_precedence_record",
+    "human_authored_alternative_provenance",
+    "author_reviewer_metadata",
+    "revision_or_change_history",
+    "paper_facing_separate_file_validator"
+  ],
+  "missing_evidence": {
+    "separate_distribution_config_source_path": "not_recorded_locally",
+    "separate_distribution_config_source_hash": "not_recorded_locally",
+    "separate_distribution_config_byte_count": "not_recorded_locally",
+    "config_precedence_record": "not_recorded_locally",
+    "human_authored_alternative_provenance": "not_recorded_locally",
+    "author_reviewer_metadata": "not_recorded_locally",
+    "revision_or_change_history": "not_recorded_locally",
+    "paper_facing_separate_file_validator": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve runtime histories include stochastic prompt-format markers, configured prompt_format_options, normalized probabilities, selected alternative hashes, prompt/call linkage, weight-source boundaries, prompt-context override source, and the run-local RNG replay boundary. It does not claim separate distribution config source path, separate distribution config source hash, byte-count provenance, config precedence records, human-authored alternative provenance, author/reviewer metadata, revision history, or a paper-facing separate-file validator."
+}

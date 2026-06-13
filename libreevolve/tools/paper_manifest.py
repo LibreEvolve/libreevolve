@@ -107,6 +107,10 @@ from libreevolve.problems.benchmarks.prompt_section_packing_boundary import (
     prompt_section_packing_boundary_record,
     validate_prompt_section_packing_boundary,
 )
+from libreevolve.problems.benchmarks.stochastic_prompt_format_boundary import (
+    stochastic_prompt_format_boundary_record,
+    validate_stochastic_prompt_format_boundary,
+)
 from libreevolve.problems.benchmarks.documentation_truthfulness_boundary import (
     documentation_truthfulness_boundary_record,
     validate_documentation_truthfulness_boundary,
@@ -574,6 +578,7 @@ PROVIDER_PRICING_BOUNDARY_FILE = "papers/provider_pricing_boundary.json"
 PROVIDER_DIAGNOSTICS_REPLAY_BOUNDARY_FILE = "papers/provider_diagnostics_replay_boundary.json"
 CRITIQUE_REVIEWER_POOL_BOUNDARY_FILE = "papers/critique_reviewer_pool_boundary.json"
 PROMPT_SECTION_PACKING_BOUNDARY_FILE = "papers/prompt_section_packing_boundary.json"
+STOCHASTIC_PROMPT_FORMAT_BOUNDARY_FILE = "papers/stochastic_prompt_format_boundary.json"
 DOCUMENTATION_TRUTHFULNESS_BOUNDARY_FILE = "papers/documentation_truthfulness_boundary.json"
 DOCUMENTATION_CLAIM_INVENTORY_FILE = "papers/documentation_claim_inventory.json"
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_FILE = "papers/implementation_evidence_map_boundary.json"
@@ -1097,6 +1102,7 @@ def validate_paper_manifest(
     issues.extend(_validate_provider_diagnostics_replay_boundary(root_path))
     issues.extend(_validate_critique_reviewer_pool_boundary(root_path))
     issues.extend(_validate_prompt_section_packing_boundary(root_path))
+    issues.extend(_validate_stochastic_prompt_format_boundary(root_path))
     issues.extend(_validate_documentation_truthfulness_boundary(root_path))
     issues.extend(_validate_documentation_claim_inventory(root_path))
     issues.extend(_validate_implementation_evidence_map_boundary(root_path))
@@ -2522,6 +2528,38 @@ def _validate_prompt_section_packing_boundary(root_path: Path) -> list[PaperMani
             f"prompt_section_packing_boundary_{issue.code}",
             issue.message,
             "prompt_section_packing",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_stochastic_prompt_format_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / STOCHASTIC_PROMPT_FORMAT_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = stochastic_prompt_format_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "stochastic_prompt_format_boundary_manifest_missing",
+                    (
+                        f"{STOCHASTIC_PROMPT_FORMAT_BOUNDARY_FILE} must emit "
+                        "effective config distribution versus separate-source scope"
+                    ),
+                    "stochastic_prompt_format",
+                )
+            ]
+    report = validate_stochastic_prompt_format_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"stochastic_prompt_format_boundary_{issue.code}",
+            issue.message,
+            "stochastic_prompt_format",
         )
         for issue in report.issues
     ]

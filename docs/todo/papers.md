@@ -2363,7 +2363,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     with prompt ids, marker names, option-set ids, normalized probabilities,
     selected alternative hashes/indexes, weight override source, prompt/call
     linkage, inline/effective config source boundary, and run-local RNG replay
-    boundary.
+    boundary. `papers/stochastic_prompt_format_boundary.json` now preserves
+    the effective-config distribution versus separate-source parity boundary
+    in the paper manifest.
   - Current gap: this is probability/selection provenance for effective
     configuration, not paper-faithful source provenance. There is no distinct
     separate config-file identity for the stochastic formatting distribution,

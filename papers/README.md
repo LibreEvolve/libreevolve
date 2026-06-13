@@ -2569,6 +2569,15 @@ Implemented:
   provider counters, registry/custom role section packing, retrieval/context/
   plugin/failure-memory section packing, or full validator-metadata prompt
   policy.
+- `papers/stochastic_prompt_format_boundary.json`: stochastic prompt-format
+  sidecar for AlphaEvolve Section 2.2. It records runtime evidence for
+  stochastic prompt markers, configured `prompt_format_options`, normalized
+  probabilities, selected alternative hashes, prompt/call linkage,
+  weight-source boundaries, prompt-context override source, and run-local RNG
+  replay. It is not evidence of separate distribution config source paths,
+  source hashes, byte-count provenance, config precedence records,
+  human-authored alternative provenance, author/reviewer metadata, revision
+  history, or a paper-facing separate-file validator.
 - `papers/systems_result_readiness_boundary.json`: systems-result readiness
   sidecar for AlphaEvolve Section 3.3. It records the systems-result report
   schema, artifact-inventory schema, evidence-bundle schema, optimization,

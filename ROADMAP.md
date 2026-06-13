@@ -726,6 +726,15 @@ is not yet an AlphaEvolve reproduction.
   `papers/prompt_section_packing_boundary.json` sidecar preserves this
   mutation-section-packing boundary while keeping all-role provider-token
   section packing and full validator-metadata prompt policy open.
+- Preserve stochastic prompt-format parity as effective-config distribution
+  evidence only until separate source-file attribution exists. Runtime history
+  links `[[prompt:name]]` selections to configured `prompt_format_options`,
+  normalized probabilities, selected alternative hashes, prompt/call ids,
+  weight-source boundaries, prompt-context overrides, and run-local RNG replay.
+  The current `papers/stochastic_prompt_format_boundary.json` sidecar keeps
+  separate distribution config paths/hashes/byte counts, config precedence,
+  human-authored alternative provenance, author/reviewer metadata, revision
+  history, and a paper-facing separate-file validator open.
 - Extend current prompt/history retention controls into replay-retention
   policy and richer context-policy ownership. Mutation prompts, explicit
   context spans, critique prompts/mutations, feedback raw/parsed fields,

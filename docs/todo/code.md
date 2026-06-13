@@ -805,9 +805,11 @@ sidecars, tests, and active TODOs.
     records normalized probabilities, selected alternative hashes/indexes,
     weight source or prompt-context override source, prompt/call linkage, an
     inline/effective-config source boundary, and the run-local RNG replay
-    boundary. Completed code and paper ledgers already note that separate
-    config-file source attribution and certified human-authored alternative
-    provenance remain non-parity boundaries.
+    boundary. `papers/stochastic_prompt_format_boundary.json` now preserves
+    this effective-config distribution versus separate-source parity boundary
+    in the paper manifest. Completed code and paper ledgers already note that
+    separate config-file source attribution and certified human-authored
+    alternative provenance remain non-parity boundaries.
   - Current gap: the active implementation ledger did not carry the remaining
     work as an open item. The current runtime report treats prompt-format
     alternatives as effective config data; it does not preserve a distinct

@@ -326,6 +326,11 @@ Important limits:
   held-out, deployment, expert-confirmation, reference-code, or
   domain-specific result artifacts; that boundary is tracked by
   `papers/systems_result_readiness_boundary.json`.
+- Scheduling safety records validate feasible candidate-set provenance,
+  ranking-only scope, simulator/admission/placement boundaries, resource
+  invariants, and artifact refs, not proof of Borg-style scheduling safety,
+  real feasibility-filter runs, or production placement correctness; that
+  boundary is tracked by `papers/systems_result_readiness_boundary.json`.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

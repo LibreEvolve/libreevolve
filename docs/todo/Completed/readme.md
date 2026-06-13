@@ -4,6 +4,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document scheduling ranking-only safety README boundary.
+  - Status: README Important limits now states that scheduling safety records
+    validate feasible candidate-set provenance, ranking-only scope,
+    simulator/admission/placement boundaries, resource invariants, and artifact
+    refs, not proof of Borg-style scheduling safety, real feasibility-filter
+    runs, or production placement correctness. It ties that limit to
+    `papers/systems_result_readiness_boundary.json`.
+  - Verification: focused systems-result and systems-readiness tests validate
+    required scheduling safety records for ready scheduling reports,
+    ranking-only constraints, no direct admission/rejection/placement
+    authority, resource invariants, artifact refs, non-ready omission rules,
+    and readiness-boundary overclaim guards; paper-manifest tests validate the
+    sidecar.
+
 - [x] Document systems application-provenance README boundary.
   - Status: README Important limits now states that systems-result validation
     includes application-provenance contracts but does not prove real

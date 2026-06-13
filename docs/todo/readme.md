@@ -941,25 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README scheduling wording scoped until ranking-only safety
-      provenance is populated.
-  - Spec evidence: AlphaEvolve Section 3.3.1 says the Borg scheduling
-    heuristic scores only machines already determined by Borg to be available
-    and capable of running the pending job, so correctness is effectively by
-    construction.
-  - Current evidence: README now documents `scheduling_safety` records required
-    for `alphaevolve_ready` scheduling reports, including feasible
-    candidate-set source, ranking-only scope, resource invariants,
-    simulator/admission/placement boundaries, authority flags, and artifact
-    refs. Existing scheduling fixtures do not yet carry real populated safety
-    records.
-  - Required result: once scheduling fixtures and certification examples
-    populate feasibility-filter provenance, ranking-only scope, resource
-    invariants, and simulator/admission-boundary evidence, update README,
-    ROADMAP, papers index, and matching TODOs so README can describe those
-    records without implying the schema alone proves Borg-style scheduling
-    safety.
-
 - [ ] Keep README scheduling wording scoped until vector-bin-packing
       formulation evidence is populated.
   - Spec evidence: AlphaEvolve Section 3.3.1 formulates Borg scheduling as an

@@ -257,6 +257,14 @@ Important limits:
   certificate, value-range or integral-normalization certificates,
   shift-objective recomputation, recomputed upper bound, or Figure 10 panel
   artifact.
+- Appendix B.6 finite-set witness provenance remains absent: the registry
+  preserves the `C6` theorem/admissibility statement, `U1`/`U2` witness labels,
+  set sizes `2003` and `54265`, reported lower bounds `1.1479 <= C6` and
+  `1.1584 <= C6`, and required future finite-set fields, not sorted integer
+  payload hashes, contains-zero or non-negative certificates,
+  `|U - U| <= 2 max(U) + 1` admissibility certificates, `|U-U|`/`|U+U|`
+  cardinality certificates, max-element certificates, formula-substitution
+  certificates, or recomputed lower-bound rows.
 - Matrix-publication evidence is one checked `mm_2x2x2` Strassen baseline
   bundle plus Appendix A registry/status metadata, not full-suite local target
   tensors, discovered decompositions, coefficient data, exactness certificates,

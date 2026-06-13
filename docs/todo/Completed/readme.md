@@ -4,6 +4,22 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Appendix B.6 finite-set witness README boundary.
+  - Status: README Important limits now states that Appendix B.6 finite-set
+    witness provenance remains absent: the registry preserves the `C6`
+    theorem/admissibility statement, `U1`/`U2` witness labels, set sizes
+    `2003` and `54265`, reported lower bounds `1.1479 <= C6` and
+    `1.1584 <= C6`, and required future finite-set fields, not sorted integer
+    payload hashes, contains-zero or non-negative certificates,
+    `|U - U| <= 2 max(U) + 1` admissibility certificates, `|U-U|`/`|U+U|`
+    cardinality certificates, max-element certificates, formula-substitution
+    certificates, or recomputed lower-bound rows.
+  - Verification: Appendix B registry tests cover the B.6 theorem condition,
+    `finite_set_witness_boundary`, required future witness fields, the
+    `U1`/`U2` missing-witness rows, theorem linkage, bound progression, and
+    `not_recorded_locally` overclaim guards; code and paper TODOs still track
+    the missing finite-set payload/certificate/recomputation artifacts.
+
 - [x] Document Appendix B.5 minimum-overlap README boundary.
   - Status: README Important limits now states that Appendix B.5 Erdos
     minimum-overlap step-function provenance remains absent: the registry

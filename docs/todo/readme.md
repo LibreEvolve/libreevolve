@@ -985,31 +985,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README Appendix B.6 finite-set wording scoped until witness
-      provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B.6 improves the sums-and-differences
-    lower bound with two finite integer-set witnesses: `U1` has size `2003`
-    and gives `1.1479 <= C6`, while `U2` has size `54265` and gives
-    `1.1584 <= C6`. The derivation uses the Gyarmati et al. inequality with
-    `U` containing zero, `|U - U| <= 2 max(U) + 1`, and recomputed
-    `|U-U|`/`|U+U|` counts.
-  - Current evidence: README now names the B.6
-    `finite_set_witness_boundary`, including `U1`/`U2`, set sizes `2003` and
-    `54265`, reported lower bounds `1.1479 <= C6` and `1.1584 <= C6`, theorem
-    linkage, and required future payload/certificate fields. It now separates
-    contains-zero, non-negative, sumset-cardinality, difference-set-
-    cardinality, max-element, and lower-bound formula-substitution certificate
-    hashes/statuses from the broader admissibility certificate. It still warns
-    that the actual finite-set payloads, feasibility certificates, set-algebra
-    certificates, formula-substitution certificates, and recomputed lower
-    bounds are absent.
-  - Required result: when the actual Appendix B.6 witness payloads and
-    certificates land, update README, ROADMAP, papers index, and code/paper
-    TODOs together so README names both witness sets, payload hashes,
-    feasibility checks, set-algebra certificates, formula-substitution
-    certificates, derived lower-bound values, and source links without
-    collapsing the result to one aggregate finite-set claim.
-
 - [x] Keep README Appendix B.6 theorem wording scoped until admissibility
       evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.6 defines `C6` via arbitrarily large

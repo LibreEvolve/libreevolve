@@ -13,6 +13,7 @@ PROBLEM_FORMULATION_RUNTIME_REPORT_SCHEMA = (
     "libreevolve.problem_formulation_provenance_report.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
+EXPECTED_SOURCE_SECTION_IDS = ("3.2",)
 EXPECTED_BOUNDARY_STATUS = "metadata_contract_only"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "metadata_present",
@@ -62,6 +63,7 @@ def problem_formulation_provenance_boundary_record() -> dict[str, Any]:
         "schema": PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_SCHEMA,
         "runtime_report_schema": PROBLEM_FORMULATION_RUNTIME_REPORT_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_claim": (
             "AlphaEvolve Section 3.2 reports external mathematicians suggesting "
             "problems and advising how to formulate them, so paper-facing "
@@ -104,6 +106,8 @@ def validate_problem_formulation_provenance_boundary(
         issues.append(_issue("invalid_runtime_report_schema", "runtime report schema must identify problem formulation provenance reports"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['3.2']"))
     source_claim = data.get("source_claim")
     if not isinstance(source_claim, str) or "Section 3.2" not in source_claim:
         issues.append(_issue("invalid_source_claim", "source_claim must identify AlphaEvolve Section 3.2 formulation evidence"))

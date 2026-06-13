@@ -2,6 +2,9 @@
   "schema": "libreevolve.alphaevolve_problem_formulation_provenance_boundary.v1",
   "runtime_report_schema": "libreevolve.problem_formulation_provenance_report.v1",
   "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "3.2"
+  ],
   "source_claim": "AlphaEvolve Section 3.2 reports external mathematicians suggesting problems and advising how to formulate them, so paper-facing mathematical benchmark claims need populated expert-guided formulation evidence rather than only a metadata schema",
   "boundary_status": "metadata_contract_only",
   "runtime_report_status": "problem_formulation_provenance_report_available",

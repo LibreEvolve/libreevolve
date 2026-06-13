@@ -16,6 +16,7 @@ def test_problem_formulation_provenance_boundary_accepts_absence_record():
     assert validation.required_evidence_field_count == 14
     assert validation.missing_evidence_count == 6
     assert boundary["schema"] == PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["3.2"]
     assert "does not claim populated expert-reviewed" in boundary["claim_boundary"]
 
 
@@ -23,6 +24,7 @@ def test_problem_formulation_provenance_boundary_rejects_premature_parity_claim(
     boundary = problem_formulation_provenance_boundary_record()
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "expert_guided_formulation_ready"
+    boundary["source_section_ids"] = ["2.1"]
     boundary["missing_evidence"]["alphaevolve_expert_guided_formulation_parity"] = "recorded"
     boundary["required_evidence_fields"] = ["metadata_present"]
 
@@ -32,6 +34,7 @@ def test_problem_formulation_provenance_boundary_rejects_premature_parity_claim(
     assert validation.ok is False
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert "invalid_missing_evidence_alphaevolve_expert_guided_formulation_parity" in codes
     assert "missing_required_evidence_field" in codes
 

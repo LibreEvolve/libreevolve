@@ -919,6 +919,7 @@ def test_validate_paper_manifest_rejects_problem_formulation_provenance_boundary
     record = paper_manifest.problem_formulation_provenance_boundary_record()
     record["claim_ready"] = True
     record["boundary_status"] = "expert_guided_formulation_ready"
+    record["source_section_ids"] = ["2.1"]
     record["missing_evidence"]["alphaevolve_expert_guided_formulation_parity"] = "recorded"
     sidecar = tmp_path / paper_manifest.PROBLEM_FORMULATION_PROVENANCE_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
@@ -929,6 +930,7 @@ def test_validate_paper_manifest_rejects_problem_formulation_provenance_boundary
     assert report.ok is False
     assert "problem_formulation_provenance_boundary_claim_ready_overclaim" in codes
     assert "problem_formulation_provenance_boundary_invalid_boundary_status" in codes
+    assert "problem_formulation_provenance_boundary_invalid_source_section_ids" in codes
     assert (
         "problem_formulation_provenance_boundary_invalid_missing_evidence_alphaevolve_expert_guided_formulation_parity"
         in codes

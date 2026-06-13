@@ -204,6 +204,12 @@ Important limits:
   reduced-seed tradeoffs, or reproduced scaling evidence; those boundaries are
   tracked by `papers/appendix_a_matrix_resource_frontier.json` and
   `papers/appendix_a_matrix_local_resource_frontier.json`.
+- Matrix near-integrality records validate declared prompt instructions,
+  integer/half-integer rounding policy, raw-versus-rounded coefficient
+  diagnostics, and exactness-certificate links, not a local matrix runner that
+  emits AlphaEvolve Section 3.1 near-integral prompt/evaluator evidence during
+  search; that boundary is tracked by
+  `papers/matrix_near_integrality_runtime_boundary.json`.
 - Collaborator-feedback provenance is optional metadata and runtime reporting
   for cohorts, events, affected workflow areas, change links, validation
   outcomes, privacy/redaction policy, and review state, not populated

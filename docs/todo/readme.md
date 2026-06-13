@@ -929,7 +929,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     matrix-result refs, artifact paths, and artifact hashes. It also documents
     the builder that turns validated near-integrality evidence into linked
     runtime rows. It does not document a local matrix benchmark
-    prompt/evaluator path that emits those records during search.
+    prompt/evaluator path that emits those records during search. README
+    Important limits now also states that matrix near-integrality records
+    validate declared prompt instructions, integer/half-integer rounding
+    policy, raw-versus-rounded coefficient diagnostics, and
+    exactness-certificate links, not a local matrix runner that emits
+    AlphaEvolve Section 3.1 near-integral prompt/evaluator evidence during
+    search.
   - Required result: when local benchmark prompt/evaluator emission lands,
     update README, ROADMAP, papers index, and code/paper TODO entries together
     so README distinguishes evidence-schema validation from AlphaEvolve Section

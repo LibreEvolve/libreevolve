@@ -10703,3 +10703,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     attribution remain open.
   - Verification: focused boundary and paper-manifest tests cover overclaim
     rejection and repo-root sidecar presence.
+- [x] Scope ROADMAP archive-event replay wording with a paper sidecar.
+  - Spec evidence: AlphaEvolve-scale resumed experiments need archive
+    population state to be reproducible without confusing snapshots with full
+    ordered event-stream replay.
+  - Status: ROADMAP now cites `papers/archive_event_replay_boundary.json`,
+    which keeps current archive-state snapshot restore and audit-only
+    archive-event reconciliation separate from ordered event-stream
+    restore-engine readiness.
+  - Remaining roadmap gap: ordered migration-event replay, controller queues,
+    pending-work restore, and end-to-end resumed-trace proof remain open.
+  - Verification: focused boundary and paper-manifest tests cover overclaim
+    rejection and repo-root sidecar presence.

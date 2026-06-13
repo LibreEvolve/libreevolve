@@ -33,6 +33,10 @@ Important limits:
 - Evaluators run in local subprocesses, not hardened security sandboxes.
 - The controller, archive, migration, and evaluator flow are local and
   synchronous, not a distributed asynchronous AlphaEvolve-style service.
+- Archive restore uses manifest archive-state snapshots plus accepted-history
+  rows for current cursor/cell/elite contents; `archive_events.jsonl` replay is
+  audit-only and not an ordered MAP-Elites restore engine. That boundary is
+  tracked by `papers/archive_event_replay_boundary.json`.
 - Scientific-discovery scope is machine-gradeable local evaluator workflow
   scope; robust evaluator-environment fixtures, manual-to-code transition
   policies, and LLM-only idea-stage contracts are tracked by

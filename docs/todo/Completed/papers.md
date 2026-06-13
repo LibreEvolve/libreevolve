@@ -13946,3 +13946,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     and equal-budget/model ablation linkage remain open.
   - Verification: focused proposal-diversity boundary and paper-manifest tests
     cover valid, overclaim, and missing-root-sidecar cases.
+- [x] Add paper-facing archive-event replay sidecar.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` treats the evolutionary
+    database as active search state; archive restore evidence must separate
+    durable snapshots from ordered migration-event replay.
+  - Status: `papers/archive_event_replay_boundary.json` now records the
+    boundary between current archive-state snapshot restore plus audit-only
+    event reconciliation and missing ordered archive-event restore-engine
+    support.
+  - Remaining paper gap: skipped-event reconstruction, replacement-history
+    replay, descriptor-policy mismatch restore failure, controller
+    pending-work restore, and full resumed-trace proof remain open.
+  - Verification: focused archive-event replay boundary and paper-manifest
+    tests cover valid, overclaim, and missing-root-sidecar cases.

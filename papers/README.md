@@ -1098,7 +1098,10 @@ full-runtime restore now composes that compatible archive restore bundle with
 the runtime RNG, LLM scheduler, budget, and controller-budget replay surfaces;
 bundle validation keeps resumed-trace proof readiness false, and ordered
 migration-event replay plus async/provider-output/pending-work resume remain
-part of the broader resume gap.
+part of the broader resume gap. The committed
+`papers/archive_event_replay_boundary.json` sidecar keeps the current
+archive-state snapshot restore plus audit-only event reconciliation scope
+machine-validated apart from ordered archive-event restore-engine support.
 
 AlphaEvolve rejected-diagnostics note: rejected archive-admission metadata is
 kept JSON-safe, but hook-mutated/restored programs with non-finite top-level

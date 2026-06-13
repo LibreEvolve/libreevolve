@@ -2420,7 +2420,10 @@ Primary evidence:
     before manifest use, including schema/status, audit-only and
     no-restore-engine flags, event and placement count consistency, retained
     mismatch shape, mismatch retention limits, verified/absent status
-    invariants, and required audit-boundary limitations.
+    invariants, and required audit-boundary limitations. The
+    `libreevolve.alphaevolve_archive_event_replay_boundary.v1` sidecar now
+    keeps the snapshot-restore plus audit-only event-reconciliation scope
+    paper-manifest-required.
     Remaining gap: `archive_events.jsonl` is still not applied as a full
     migration restore engine.
   - Required result: implement an ordered `archive_events.jsonl` replay engine

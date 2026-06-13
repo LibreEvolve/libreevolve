@@ -2209,7 +2209,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     including schema/status, audit-only and no-restore-engine flags, event and
     placement count consistency, retained mismatch shape, mismatch retention
     limits, verified/absent status invariants, and required audit-boundary
-    limitations.
+    limitations. The paper manifest now requires
+    `papers/archive_event_replay_boundary.json` to preserve the current
+    snapshot-restore plus audit-only archive-event reconciliation scope.
   - Current gap: cursor and archive-content restore are implemented, but
     migration placement rows are reconciled only as audit evidence rather than
     replayed as an ordered restore engine. Completed manifests now include

@@ -465,7 +465,9 @@ is not yet an AlphaEvolve reproduction.
   edge cases are introduced.
 - Extend workspace-candidate resume beyond the current archive-content restore
   bundle to ordered migration-event replay, controller queues, and pending-work
-  resume.
+  resume. The committed `papers/archive_event_replay_boundary.json` sidecar
+  keeps current snapshot restore plus audit-only archive-event reconciliation
+  separate from ordered event-stream restore-engine readiness.
 
 ### 2. Strengthen multi-objective search
 
@@ -910,7 +912,9 @@ is not yet an AlphaEvolve reproduction.
   cell/elite placements from a previous manifest/history bundle, and
   `--restore-runtime-from-manifest` composes those compatible synchronous
   restore surfaces into a checked full-runtime bundle, but it is not a full
-  replay or resumed experiment trace.
+  replay or resumed experiment trace. The committed
+  `papers/archive_event_replay_boundary.json` sidecar preserves that
+  snapshot-restore versus ordered-event-replay boundary.
 - Complete run manifest hardening for direct custom plugin package-registry and
   constructor-value/schema attribution beyond the current direct-instance
   signature-only policy, plus aggregate hashes for artifacts emitted after

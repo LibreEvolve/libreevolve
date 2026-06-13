@@ -434,6 +434,10 @@ from libreevolve.problems.benchmarks.objective_archive_boundary import (
     objective_archive_boundary_record,
     validate_objective_archive_boundary,
 )
+from libreevolve.problems.benchmarks.archive_event_replay_boundary import (
+    archive_event_replay_boundary_record,
+    validate_archive_event_replay_boundary,
+)
 from libreevolve.problems.benchmarks.metric_diverse_prompt_boundary import (
     metric_diverse_prompt_boundary_record,
     validate_metric_diverse_prompt_boundary,
@@ -573,6 +577,7 @@ MATRIX_TENSOR_RANK_RUNTIME_FILE = "papers/matrix_tensor_rank_runtime_boundary.js
 MAP_ELITES_ILLUMINATION_BOUNDARY_FILE = "papers/map_elites_illumination_boundary.json"
 MAP_ELITES_DESCRIPTOR_BOUNDARY_FILE = "papers/map_elites_descriptor_boundary.json"
 OBJECTIVE_ARCHIVE_BOUNDARY_FILE = "papers/objective_archive_boundary.json"
+ARCHIVE_EVENT_REPLAY_BOUNDARY_FILE = "papers/archive_event_replay_boundary.json"
 METRIC_DIVERSE_PROMPT_BOUNDARY_FILE = "papers/metric_diverse_prompt_boundary.json"
 PROPOSAL_SCORE_BOUNDARY_FILE = "papers/proposal_score_boundary.json"
 PROPOSAL_DIVERSITY_BOUNDARY_FILE = "papers/proposal_diversity_boundary.json"
@@ -1079,6 +1084,7 @@ def validate_paper_manifest(
     issues.extend(_validate_map_elites_illumination_boundary(root_path))
     issues.extend(_validate_map_elites_descriptor_boundary(root_path))
     issues.extend(_validate_objective_archive_boundary(root_path))
+    issues.extend(_validate_archive_event_replay_boundary(root_path))
     issues.extend(_validate_metric_diverse_prompt_boundary(root_path))
     issues.extend(_validate_proposal_score_boundary(root_path))
     issues.extend(_validate_proposal_diversity_boundary(root_path))
@@ -3576,6 +3582,38 @@ def _validate_objective_archive_boundary(root_path: Path) -> list[PaperManifestI
             f"objective_archive_boundary_{issue.code}",
             issue.message,
             "objective_archive",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_archive_event_replay_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ARCHIVE_EVENT_REPLAY_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = archive_event_replay_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "archive_event_replay_boundary_manifest_missing",
+                    (
+                        f"{ARCHIVE_EVENT_REPLAY_BOUNDARY_FILE} must emit "
+                        "archive snapshot restore versus ordered event replay scope"
+                    ),
+                    "archive_event_replay",
+                )
+            ]
+    report = validate_archive_event_replay_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"archive_event_replay_boundary_{issue.code}",
+            issue.message,
+            "archive_event_replay",
         )
         for issue in report.issues
     ]

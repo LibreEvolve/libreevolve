@@ -1714,7 +1714,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     readiness false. The near-term workspace section now scopes resume work to
     ordered migration-event replay, controller queues, and pending-work resume
     beyond the current archive-content restore bundle. It also keeps full
-    replay and end-to-end resumed-trace proof open.
+    replay and end-to-end resumed-trace proof open, with
+    `papers/archive_event_replay_boundary.json` preserving the current
+    snapshot-restore plus audit-only event-reconciliation scope.
   - Required result: when provider/plugin output replay, ordered
     migration-event replay, async controller queues, pending-work restore,
     mutation-chain-depth policy, or resumed-trace lineage proof lands, update

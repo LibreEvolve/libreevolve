@@ -2088,6 +2088,60 @@ def test_validate_paper_manifest_requires_objective_archive_boundary_at_repo_roo
     assert "objective_archive_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_archive_event_replay_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.ARCHIVE_EVENT_REPLAY_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.archive_event_replay_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_archive_event_replay_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.archive_event_replay_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "ordered_archive_event_restore_engine_ready"
+    record["missing_evidence"]["ordered_archive_event_restore_engine"] = "recorded"
+    sidecar = tmp_path / paper_manifest.ARCHIVE_EVENT_REPLAY_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "archive_event_replay_boundary_claim_ready_overclaim" in codes
+    assert "archive_event_replay_boundary_invalid_boundary_status" in codes
+    assert (
+        "archive_event_replay_boundary_invalid_missing_evidence_ordered_archive_event_restore_engine"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_archive_event_replay_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "archive_event_replay_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_metric_diverse_prompt_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

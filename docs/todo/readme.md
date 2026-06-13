@@ -3004,7 +3004,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     ordered migration-event replay remains audit-only rather than a MAP-Elites
     restore engine. Both the early runtime-provenance section and the archive
     section now distinguish cursor-only restore from
-    `--restore-archive-from-manifest` full archive bundle restore.
+    `--restore-archive-from-manifest` full archive bundle restore. README now
+    ties that boundary to `papers/archive_event_replay_boundary.json`.
   - Required result: when ordered migration-event replay or async
     controller/pending-work resume lands, update README archive sections,
     roadmap, papers index, and code/paper TODO entries together so they do not

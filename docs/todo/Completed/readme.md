@@ -12928,3 +12928,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     creative-generation evidence until those reports and ablations exist.
   - Verification: focused boundary and paper-manifest tests cover the sidecar
     and its overclaim rejection.
+- [x] Add README boundary for archive-event replay evidence.
+  - Spec evidence: AlphaEvolve-style long-running evolutionary search needs
+    reproducible population state and clear restore/replay boundaries.
+  - Status: README now states that archive restore uses manifest archive-state
+    snapshots plus accepted-history rows for current cursor/cell/elite
+    contents, while `archive_events.jsonl` replay is audit-only and not an
+    ordered MAP-Elites restore engine. It points to
+    `papers/archive_event_replay_boundary.json`.
+  - Remaining README gap: docs cannot imply ordered event-stream replay,
+    controller pending-work restore, or full resumed experiment trace proof
+    until those surfaces exist.
+  - Verification: focused boundary and paper-manifest tests cover the sidecar
+    and its overclaim rejection.

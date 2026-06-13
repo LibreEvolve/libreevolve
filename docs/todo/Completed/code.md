@@ -18862,3 +18862,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     open.
   - Verification: focused boundary and paper-manifest tests cover valid,
     overclaim, and missing-root-sidecar cases.
+- [x] Add paper-facing archive-event replay boundary sidecar.
+  - Spec evidence: AlphaEvolve's evolutionary database is active population
+    state; restoring and comparing runs must distinguish current archive
+    snapshots from ordered migration-event replay.
+  - Status: `libreevolve.alphaevolve_archive_event_replay_boundary.v1` now
+    records that LibreEvolve validates `archive_events.jsonl`, restores current
+    archive cursor/cell/elite contents from manifest snapshots plus accepted
+    history, and emits `runtime.history.archive_event_replay_audit` as
+    audit-only reconciliation. The paper manifest now requires
+    `papers/archive_event_replay_boundary.json` at the repo root and rejects
+    premature ordered restore-engine claims.
+  - Remaining gap: ordered archive-event restore, skipped-event
+    reconstruction, replacement-history replay, descriptor-policy mismatch
+    restore failures, and controller pending-work restore remain open.
+  - Verification: focused boundary and paper-manifest tests cover valid,
+    overclaim, and missing-root-sidecar cases.

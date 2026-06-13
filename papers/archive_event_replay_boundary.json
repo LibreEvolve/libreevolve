@@ -1,0 +1,36 @@
+{
+  "schema": "libreevolve.alphaevolve_archive_event_replay_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve's evolutionary database is active population state, so archive resume should distinguish durable current-state snapshots from ordered migration-event replay",
+  "boundary_status": "archive_snapshot_restore_with_audit_only_event_replay",
+  "runtime_audit_schema": "libreevolve.archive_event_replay_audit.v1",
+  "migration_replay_policy_schema": "libreevolve.island_migration_replay_policy.v1",
+  "runtime_report_status": "archive_event_replay_audit_available",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "archive_events_jsonl_schema_validation",
+    "non_decreasing_migration_sequence_validation",
+    "archive_state_cursor_snapshot_restore",
+    "archive_contents_cell_elite_snapshot_restore",
+    "accepted_history_program_snapshot_join",
+    "archive_event_replay_audit_schema",
+    "final_migration_placement_audit",
+    "archive_contents_comparison",
+    "migration_replay_policy_no_restore_engine_flag",
+    "cli_cursor_restore_entrypoint",
+    "cli_full_archive_restore_entrypoint",
+    "ordered_archive_event_restore_engine",
+    "skip_event_reconstruction",
+    "replacement_history_replay",
+    "descriptor_policy_mismatch_restore_failure",
+    "controller_pending_work_restore"
+  ],
+  "missing_evidence": {
+    "ordered_archive_event_restore_engine": "not_recorded_locally",
+    "skip_event_reconstruction": "not_recorded_locally",
+    "replacement_history_replay": "not_recorded_locally",
+    "descriptor_policy_mismatch_restore_failure": "not_recorded_locally",
+    "controller_pending_work_restore": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve validates archive_events.jsonl, checks non-decreasing migration sequences, restores archive cursor state and current cell/elite archive contents from manifest snapshots joined with accepted history, and emits an archive-event replay audit that compares final migration placements against archive contents. It does not claim ordered archive-event restore-engine support, skip event reconstruction, replacement-history replay, descriptor-policy mismatch restore failures, or controller pending-work restore."
+}

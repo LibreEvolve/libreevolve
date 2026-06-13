@@ -10,29 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Figure 3 roadmap wording scoped until supervised-learning example
-      exhibit provenance exists.
-  - Spec evidence: AlphaEvolve Figure 3 is a supervised-learning pipeline
-    example with linked source, prompt, and LLM-output subfigures: a
-    user-provided JAX/Jaxline file and `evaluate` function, an assembled prompt
-    with prior/current program score values, and explanatory SEARCH/REPLACE
-    edits.
-  - Current evidence: roadmap/README/paper-index status can cite evolve-block
-    parsing, prompt rendering, SEARCH/REPLACE mutation support, strict
-    preamble handling, and prompt-example-copy gaps.
-    `papers/figure3_supervised_exhibit_boundary.json` now records a
-    manifest-checked absence boundary for Figure 3 exhibit IDs, subfigure
-    labels, exact source/prompt/output excerpt artifacts and hashes, displayed
-    metric values, ellipsis/skipped-line policy, source PDF/caption location,
-    rendered artifact paths/hashes, and links from the displayed snippets to
-    prompt-history, evaluator, candidate-history, and run artifacts. It does
-    not produce those exhibit artifacts.
-  - Required result: when Figure 3 exhibit provenance lands, update ROADMAP,
-    README, papers index, and code/paper TODOs with exhibit-level metadata and
-    validators so roadmap wording distinguishes reproduced supervised-learning
-    paper-example evidence from generic prompt, mutation, and evaluator
-    support.
-
 - [ ] Keep mutation-operator roadmap wording scoped until operator-family
       construction evidence exists beyond the current boundary report.
   - Spec evidence: AlphaEvolve Section 2.3 uses structured edit outputs, while

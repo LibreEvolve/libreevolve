@@ -2,6 +2,21 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Figure 3 supervised-learning exhibit roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `papers/README.md`, and `docs/status.md` already distinguish generic
+    embedded-evaluator, prompt-history, candidate-history, SEARCH/REPLACE,
+    preamble, prompt-packing, and prompt-example-copy support from an
+    unreproduced paper-facing Figure 3 supervised-learning exhibit.
+  - Remaining guard: exact source/evaluate/prompt/output excerpts, subfigure
+    locators, displayed score-value links, omitted-line and abbreviation
+    policies, rendered artifact hashes, source excerpt hashes, and concrete
+    prompt/candidate/evaluator/run-artifact links remain future work.
+  - Verification: `papers/figure3_supervised_exhibit_boundary.json` records
+    `claim_ready=false`, Figure 3a/3b/3c subfigure scope, 19 required evidence
+    fields, and nine missing artifact classes; focused boundary tests reject
+    premature reproduced-exhibit claims.
+
 - [x] Archive multi-edit consistency roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `papers/README.md`, and runtime manifests already scope

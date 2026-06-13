@@ -2733,6 +2733,7 @@ def test_validate_paper_manifest_rejects_paper_author_metadata_boundary_drift(
     record = paper_manifest.paper_author_metadata_boundary_record()
     record["claim_ready"] = False
     record["boundary_status"] = "title_page_affiliation_ready"
+    record["source_section_ids"] = ["Acknowledgements"]
     record["excluded_claims"]["title_page_affiliation_metadata"] = "claimed"
     sidecar = tmp_path / paper_manifest.PAPER_AUTHOR_METADATA_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
@@ -2743,6 +2744,7 @@ def test_validate_paper_manifest_rejects_paper_author_metadata_boundary_drift(
     assert report.ok is False
     assert "paper_author_metadata_boundary_claim_ready_underclaim" in codes
     assert "paper_author_metadata_boundary_invalid_boundary_status" in codes
+    assert "paper_author_metadata_boundary_invalid_source_section_ids" in codes
     assert (
         "paper_author_metadata_boundary_invalid_excluded_claim_title_page_affiliation_metadata"
         in codes

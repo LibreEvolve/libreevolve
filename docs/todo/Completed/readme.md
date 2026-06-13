@@ -12971,6 +12971,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: prompt-context policy coverage tests validate forged
     readiness overclaims.
 
+- [x] Keep README meta-prompt context-policy wording scoped to validated
+  current fields.
+  - Status: README now names `runtime.prompt_context_policy_coverage` and
+    meta-prompt capability-summary hashes as the evidence boundary for current
+    `libreevolve.prompt_context_policy.v1` mutation, while keeping retrieval/
+    summarization policy, learned or semantic source selection,
+    non-`PromptSampler` role policy, DeepEvolve-style debug/refinement context
+    control, and full AlphaEvolve-grade prompt evolution out of scope.
+  - Verification: meta-prompt capability-summary and prompt-context coverage
+    tests reject forged count/hash/section and readiness overclaims.
+
 - [x] Document unresolved provider-token packing readiness guards.
   - Spec evidence: README prompt-fitting wording needed to separate mutation
     section packing from all-role/provider-family prompt fitting.

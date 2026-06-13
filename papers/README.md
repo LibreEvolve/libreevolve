@@ -1066,6 +1066,9 @@ not learned semantic context selection or retrieval/summarization policy
 control. Runtime prompt-context policy coverage keeps those unsupported policy
 readiness surfaces false for retrieval/summarization, semantic source
 selection, non-`PromptSampler` roles, and DeepEvolve debug/refinement control.
+That coverage is manifest evidence and capability-summary validation, not a
+claim that prompt programs own learned retrieval/summarization, semantic source
+ranking, arbitrary role prompts, or DeepEvolve-style debug/refinement loops.
 
 AlphaEvolve MAP-Elites descriptor note: archive snapshots persist descriptor
 policy and `descriptor_model` records with axes, bounds, current diversity

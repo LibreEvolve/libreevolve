@@ -510,6 +510,12 @@ Important limits:
   counters, registry/custom role section packing, retrieval/context/plugin/
   failure-memory packing, or full validator-metadata prompt policy; that
   boundary is tracked by `papers/prompt_section_packing_boundary.json`.
+- Meta-prompt context-policy mutation is validated only for the current
+  `libreevolve.prompt_context_policy.v1` fields exposed in
+  `runtime.prompt_context_policy_coverage` and meta-prompt capability-summary
+  hashes, not retrieval/summarization policy, learned or semantic source
+  selection, non-`PromptSampler` role policy, DeepEvolve-style debug/
+  refinement context control, or full AlphaEvolve-grade prompt evolution.
 - Explicit-context source-role reports classify configured problem-local
   `context.yaml` sources as human instructions, equations, code snippets,
   literature PDFs, or background references with topic, source-location,

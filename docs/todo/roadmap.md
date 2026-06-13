@@ -1356,36 +1356,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `papers/artifact_index_boundary.json`, keeping durable full-content or
     semantic artifact search open.
 
-- [ ] Keep meta-prompt context-policy roadmap wording scoped to validated
-  current fields.
-  - Spec evidence: AlphaEvolve-style meta-prompt evolution should improve both
-    prompt instructions and prompt context policy, not only mutate whole prompt
-    template strings or a fixed subset of locally known rendering controls.
-  - Current evidence: `ROADMAP.md` currently documents prompt-program
-    selection, scoring, lineage, optional interval-based LLM template mutation,
-    prompt-template validation, bounded prompt/context retention surfaces, and
-    the need for richer context-policy ownership. Code, README, and paper TODO
-    evidence now also show that prompt programs persist validated
-    `libreevolve.prompt_context_policy.v1` state, meta-prompt evidence exposes
-    a checked `libreevolve.meta_prompt_context_policy_capabilities.v1`
-    capability map, meta-prompt mutation metadata records a compact capability
-    summary with tunable field and section hashes plus embedded validation,
-    manifest coverage keeps unsupported policy readiness flags false for
-    retrieval/summarization, semantic source selection, non-`PromptSampler`
-    roles, and DeepEvolve debug/refinement control, and the current tunable
-    fields include optional channel controls, section priorities,
-    mutation-instruction variants, parent metric selection/caps, parent-code
-    selection/filtering/order/limits/caps/truncation, proposal metadata
-    enablement, feedback subsection controls, and inspiration sampling
-    controls.
-  - Required result: when prompt-program policy can control retrieval or
-    summarization behavior, learned/semantic context selection, arbitrary
-    instruction channels, broader per-role retention, or other prompt surfaces
-    beyond the currently validated field set, update `ROADMAP.md`, README,
-    papers index, and code/paper TODO entries together so roadmap wording
-    neither underclaims current structured policy mutation nor overclaims full
-    AlphaEvolve-grade prompt evolution.
-
 - [ ] Keep prompt-template compatibility roadmap wording scoped to current
   mutation-template validation and duplicate-arm audit.
   - Spec evidence: AlphaEvolve-style prompt evolution needs compatibility

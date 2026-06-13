@@ -10597,6 +10597,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: paper-manifest validation requires the committed sidecar and
     focused LLM role-scheduler tests reject calibrated scheduler overclaims.
 
+- [x] Keep meta-prompt context-policy roadmap wording scoped to validated
+  current fields.
+  - Status: ROADMAP now points to `runtime.prompt_context_policy_coverage` as
+    the manifest evidence that keeps retrieval/summarization, semantic source
+    selection, non-`PromptSampler` role policy, and DeepEvolve debug/refinement
+    policy-readiness flags false while documenting current validated
+    capability-summary hashes.
+  - Remaining roadmap gap: prompt-program ownership of retrieval/
+    summarization, learned/semantic context selection, broader per-role policy,
+    and additional prompt surfaces remains tracked in active code and paper
+    TODOs.
+
 - [x] Keep roadmap fast/strong model-mix boundary tied to sidecar.
   - Status: ROADMAP now links current focused `throughput_depth` metadata
     traces to `papers/fast_strong_model_mix_boundary.json` while keeping

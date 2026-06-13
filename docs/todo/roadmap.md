@@ -912,22 +912,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     roadmap neither underclaims current bounded retrieval provenance nor
     overclaims DeepEvolve-grade source integrity.
 
-- [ ] Keep explicit-context roadmap wording scoped until context-source roles
-      exist.
+- [ ] Keep explicit-context roadmap wording scoped beyond source-role reports.
   - Spec evidence: AlphaEvolve Section 2.2 names explicit prompt context
     categories: fixed human-written instructions, equations, code snippets,
     and relevant literature such as PDF files.
-  - Current evidence: ROADMAP, README, and papers-index wording can cite local
-    context ingestion, manifests, hashes, PDF extraction, prompt rendering,
-    deterministic selection/ranking/filtering, and truncation. They do not yet
-    require typed source-role metadata that proves whether a selected source is
-    an instruction, equation/formula, code snippet, literature/PDF source, or
-    other explicit problem-context artifact rather than generic local context,
-    retrieval output, or plugin-supplied text.
-  - Required result: when context-source role metadata and validators land,
-    update ROADMAP, README, papers index, and code/paper TODO entries together
-    so roadmap wording distinguishes file-ingestion mechanics from
-    AlphaEvolve-style intentionally typed explicit-context evidence.
+  - Current evidence: ROADMAP now lists
+    `runtime.history.explicit_context_source_role_report`, backed by validated
+    `context.yaml` `source_roles` metadata for human instructions, equations,
+    code snippets, literature PDFs, and background references. README Important
+    limits now also scopes those reports as classification and reporting
+    evidence, not semantic role-correctness proof, expert-reviewed
+    formulation, live/external context-source classification, or full
+    AlphaEvolve context-selection/evolution parity.
+  - Required result: when role-label correctness checks, expert/formulation
+    signoff, external/live context-source role classification, or broader
+    context-selection/evolution evidence lands, update ROADMAP, README, papers
+    index, and code/paper TODO entries together so roadmap wording keeps typed
+    local context metadata separate from full AlphaEvolve explicit-context
+    parity.
 
 - [ ] Keep paper-inspired roadmap labels scoped to implemented behavior.
   - Spec evidence: roadmap references to paper-inspired systems should remain

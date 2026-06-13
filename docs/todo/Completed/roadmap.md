@@ -2,6 +2,18 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Keep explicit-context roadmap wording current with source-role reports.
+  - Status: ROADMAP now lists
+    `runtime.history.explicit_context_source_role_report`, backed by validated
+    `context.yaml` `source_roles` metadata for human instructions, equations,
+    code snippets, literature PDFs, and background references. The active
+    roadmap TODO now tracks remaining semantic role-correctness,
+    expert/formulation, external-source classification, and context-evolution
+    gaps instead of saying source roles do not exist.
+  - Verification: focused loader and runtime loop tests validate source-role
+    parsing, invalid-role rejection, runtime report schema, and unsupported
+    role rejection.
+
 - [x] Keep roadmap current-state framing tied to ongoing evidence rather than
       stale snapshot dates.
   - Status: `ROADMAP.md` no longer claims to reflect only the codebase as of

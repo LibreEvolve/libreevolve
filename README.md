@@ -236,6 +236,13 @@ Important limits:
   counters, registry/custom role section packing, retrieval/context/plugin/
   failure-memory packing, or full validator-metadata prompt policy; that
   boundary is tracked by `papers/prompt_section_packing_boundary.json`.
+- Explicit-context source-role reports classify configured problem-local
+  `context.yaml` sources as human instructions, equations, code snippets,
+  literature PDFs, or background references with topic, source-location,
+  prompt-inclusion, hash, and redaction metadata, not semantic proof that those
+  roles are correct, expert-reviewed problem-formulation evidence, live or
+  external context-source classification, or full AlphaEvolve context-selection
+  and context-evolution parity.
 - Systems-result validation is a report, artifact-inventory, and
   evidence-bundle contract with domain-specific readiness gates, not proof
   that real compiler, hardware, kernel, or scheduling fixtures have emitted

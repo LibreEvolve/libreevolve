@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document explicit-context source-role README boundary.
+  - Status: README Important limits now states that explicit-context
+    source-role reports classify configured problem-local `context.yaml`
+    sources as human instructions, equations, code snippets, literature PDFs,
+    or background references with topic, source-location, prompt-inclusion,
+    hash, and redaction metadata, not semantic proof that those roles are
+    correct, expert-reviewed problem-formulation evidence, live or external
+    context-source classification, or full AlphaEvolve context-selection and
+    context-evolution parity.
+  - Verification: focused loader and runtime loop tests validate source-role
+    parsing, invalid-role rejection, runtime report schema, and unsupported
+    role rejection.
+
 - [x] Document run-inspection README boundary.
   - Status: README Important limits now states that `libreevolve show` and
     whole-run source/workspace integrity reports provide streamed-row

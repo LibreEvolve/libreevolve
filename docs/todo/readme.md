@@ -657,21 +657,26 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README neither underclaims automatic OpenAI counter discovery nor
     overclaims full AlphaEvolve-grade context-window fitting.
 
-- [ ] Keep README explicit-context wording scoped until context-source roles
-      exist.
+- [ ] Keep README explicit-context wording scoped beyond source-role reports.
   - Spec evidence: AlphaEvolve Section 2.2 says explicit context can include
     fixed human-written instructions, equations, code snippets, and relevant
     literature such as PDF files.
-  - Current evidence: README can describe local context manifests, source
-    hashes, extraction spans, PDF rendering, deterministic ordering/filtering,
-    truncation, and prompt diagnostics. It does not yet document typed
-    source-role metadata proving that a selected context source is intended as
-    an instruction, equation, code snippet, literature/PDF source, or other
-    AlphaEvolve-style explicit problem context.
-  - Required result: when context-source role metadata lands, update README,
-    ROADMAP, papers index, and code/paper TODO entries together so README
-    separates generic local file ingestion and retrieval/plugin context from
-    paper-facing explicit problem-context evidence.
+  - Current evidence: README can now describe validated problem-local
+    `context.yaml` `source_roles` metadata and the runtime
+    `runtime.history.explicit_context_source_role_report` for human
+    instructions, equations, code snippets, literature PDFs, and background
+    references, including task/topic linkage, source location,
+    prompt-inclusion/omission decisions, hashes, and redaction policy. README
+    Important limits now also states that this is classification/reporting
+    evidence, not semantic proof that the role labels are correct,
+    expert-reviewed problem-formulation evidence, live or external
+    context-source classification, or full AlphaEvolve context-selection and
+    context-evolution parity.
+  - Required result: when role-label correctness checks, expert/formulation
+    signoff, external/live context-source role classification, or broader
+    context-selection/evolution evidence lands, update README, ROADMAP, papers
+    index, and code/paper TODO entries together so README separates typed local
+    context metadata from full AlphaEvolve explicit-context parity.
 
 - [ ] Keep README ablation-report wording aligned with current LLM budget
   stops.

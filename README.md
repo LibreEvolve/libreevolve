@@ -886,7 +886,11 @@ folders, and the current JSONL streams:
 - `prompt_prior_score_table.jsonl`
 
 See [docs/run-artifacts.md](docs/run-artifacts.md) for schemas, invalid-record
-quarantine streams, restore behavior, and inspection details. Whole-run
+quarantine streams, restore behavior, and inspection details. Archive restore
+is split between cursor/counter resume via
+`--restore-archive-cursor-from-manifest` and checked full archive cell/elite
+snapshot restore via `--restore-archive-from-manifest`; neither path replays
+`archive_events.jsonl` as an ordered MAP-Elites migration engine. Whole-run
 source/workspace integrity is bounded by
 `papers/whole_run_source_workspace_integrity_boundary.json`.
 

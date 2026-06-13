@@ -91,23 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README archive restore claims scoped to current archive-content
-  restore.
-  - Spec evidence: AlphaEvolve-style long-running evolutionary search needs
-    reproducible population state and clear boundaries for migration-order
-    replay versus snapshot restore.
-  - Current evidence: README now says full archive cell/island contents can be
-    restored from manifest snapshots plus checked accepted-history rows, while
-    ordered migration-event replay remains audit-only rather than a MAP-Elites
-    restore engine. Both the early runtime-provenance section and the archive
-    section now distinguish cursor-only restore from
-    `--restore-archive-from-manifest` full archive bundle restore. README now
-    ties that boundary to `papers/archive_event_replay_boundary.json`.
-  - Required result: when ordered migration-event replay or async
-    controller/pending-work resume lands, update README archive sections,
-    roadmap, papers index, and code/paper TODO entries together so they do not
-    underclaim archive-content restore or overclaim migration replay.
-
 - [ ] Keep README 2026 AlphaEvolve impact wording source-scoped until local
       claim evidence exists.
   - Spec evidence: the May 7, 2026 Google DeepMind impact article says

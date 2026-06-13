@@ -14480,3 +14480,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     authentication resolution, remote package artifact hashes, live provider
     service/default capture, accelerator budget accounting, and environment
     restore/check readiness remain active in code and paper TODOs.
+
+- [x] Keep README archive restore claims scoped to current archive-content
+      restore.
+  - Spec evidence: AlphaEvolve-style long-running evolutionary search needs
+    reproducible population state and clear boundaries for migration-order
+    replay versus snapshot restore.
+  - Status: README now states that archive restore uses manifest archive-state
+    snapshots plus accepted-history rows for current cursor/cell/elite
+    contents, and that `archive_events.jsonl` replay is audit-only rather than
+    an ordered MAP-Elites restore engine. The run-artifacts section now points
+    to cursor/counter resume through `--restore-archive-cursor-from-manifest`
+    and checked full archive cell/elite snapshot restore through
+    `--restore-archive-from-manifest`, while keeping ordered migration replay
+    out of both paths.
+  - Remaining README gap: ordered migration-event replay, mid-generation
+    controller queues, async pending-work restore, and full resumed-trace proof
+    remain active in code and paper TODOs.

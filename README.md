@@ -498,6 +498,14 @@ Important limits:
   accelerator/worker leases, async queue budgets, or equal-budget execution
   reports; that boundary is tracked by
   `papers/expensive_evaluation_budget_boundary.json`.
+- Live run stops cover generations, evaluations, evaluator seconds,
+  wall-clock runtime, logical LLM calls, provider attempts,
+  provider-reported tokens, configured estimated cost, and retained LLM
+  latency. `controller_budget_events.jsonl` and full-runtime restore can
+  replay those synchronous counters into resumed runs, but this is not
+  provider-output/raw-payload replay, pending-work or async-worker resume,
+  cross-run provider-failure policy proof, or a mutation-chain-depth policy
+  for slow evaluator feedback.
 - Parallel-evaluation readiness is limited to configured local
   `eval_stages[].sample_workers` fan-out, observed sample wall-clock
   compression, and topology linkage. It is not AlphaEvolve-style

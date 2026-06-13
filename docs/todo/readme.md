@@ -91,44 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README LLM budget/replay claims scoped to current synchronous
-  restore boundaries.
-  - Spec evidence: AlphaEvolve-scale reproduction needs compute-budgeted model
-    scheduling, replayable run accounting, and enough provider evidence to
-    distinguish resumed controller state from replayed provider outputs. It
-    also needs a clear boundary between sequential sibling proposal batches and
-    any future consecutive-mutation-depth policy used to keep search deep when
-    evaluator feedback is slow.
-  - Current evidence: README now documents live synchronous
-    provider-attempt/token/configured-cost/latency stops, restorable runtime
-    budget snapshots, `controller_budget_events.jsonl` replay, and
-    full-runtime restore validation. It also documents strict call-ledger
-    provider-failure summaries, configured-pricing aggregate/reason
-    consistency checks in provider diagnostics, raw provider-payload replay
-    overclaim checks at summary/totals/backend scopes, remote provider-default
-    overclaim checks, explicit pricing-readiness false flags, backend-default
-    count consistency, `papers/provider_pricing_boundary.json` for the
-    configured-cost-estimate versus live-pricing boundary, and restorable
-    scheduler failure-policy state with
-    role-specific remaining-gap summaries.
-    It correctly states that
-    `proposals_per_generation`
-    is sequential batch sampling/accounting rather than parallel LLM/evaluator
-    execution. README now points to
-    `papers/provider_diagnostics_replay_boundary.json` for bounded provider
-    diagnostics versus raw provider replay. It still marks live provider
-    pricing/default-rate capture beyond
-    configured estimates, provider-output/raw-payload replay, cross-run
-    provider-failure policy proof, async/pending-work budget composition, and
-    mutation-chain-depth policy for slow evaluator feedback as open.
-  - Required result: once provider-output replay, async/pending-work budget
-    composition, live pricing/default-rate capture beyond configured
-    estimates, cross-run provider-failure quarantine/resume proof, or
-    consecutive-mutation-depth control lands, update the README and matching
-    code/paper TODO entries together so the README neither underclaims current
-    synchronous budget replay and provider failure-policy evidence nor
-    overclaims full AlphaEvolve-style replay.
-
 - [ ] Keep README lineage replay wording scoped to loop-owned deterministic
   ids and provider-output non-replay boundaries.
   - Spec evidence: AlphaEvolve-scale ablations and repeated-seed comparisons

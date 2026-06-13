@@ -14405,3 +14405,21 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     scoring, reviewer-pool ablations, stronger per-reviewer provider
     isolation, and external reviewer-specific timeout/failure artifacts remain
     active in code and paper TODOs.
+
+- [x] Keep README LLM budget/replay claims scoped to current synchronous
+      restore boundaries.
+  - Spec evidence: AlphaEvolve-scale reproduction needs compute-budgeted model
+    scheduling, replayable run accounting, and enough provider evidence to
+    distinguish resumed controller state from replayed provider outputs.
+  - Status: README now lists live stop/accounting surfaces for generations,
+    evaluations, evaluator seconds, wall-clock runtime, logical LLM calls,
+    provider attempts, provider-reported tokens, configured estimated cost,
+    and retained LLM latency. It also states that
+    `controller_budget_events.jsonl` and full-runtime restore can replay those
+    synchronous counters into resumed runs, while provider-output/raw-payload
+    replay, pending-work or async-worker resume, cross-run provider-failure
+    policy proof, and mutation-chain-depth policy remain absent.
+  - Remaining README gap: provider-output replay, async/pending-work budget
+    composition, live pricing/default-rate capture beyond configured
+    estimates, cross-run provider-failure quarantine/resume proof, and
+    consecutive-mutation-depth control remain active in code and paper TODOs.

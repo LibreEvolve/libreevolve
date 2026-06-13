@@ -10962,3 +10962,20 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     scoring, reviewer-pool ablation reports, stronger per-reviewer provider
     isolation, and external reviewer-specific timeout/failure artifacts remain
     active in code and paper TODOs.
+
+- [x] Keep roadmap current-state budget bullets aligned with implemented LLM
+      budget surfaces.
+  - Spec evidence: AlphaEvolve-style fixed-budget comparisons require docs to
+    distinguish current stop/accounting surfaces from still-open accelerator,
+    async-queue, and pending-work budget gaps.
+  - Status: ROADMAP lists current run-budget stops for generations,
+    evaluations, evaluator-seconds, wall-clock runtime, logical LLM calls,
+    provider attempts, provider-reported tokens, configured estimated cost,
+    and retained LLM latency. Its evaluation-cascade follow-up scopes
+    remaining budget work to accelerator and async queue budgets while naming
+    provider-attempt, provider-token, configured-cost, and retained LLM latency
+    live/resumed-run stop checks as implemented.
+  - Remaining roadmap gap: AlphaEvolve-grade accelerator budgets, async queue
+    budgets, compute-hour accounting, pending-work/provider-output restore
+    composition, and equal-budget execution reports remain active in code and
+    paper TODOs.

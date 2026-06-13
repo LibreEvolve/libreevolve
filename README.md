@@ -44,6 +44,12 @@ Important limits:
   hashes, marker-only setup diffs, evaluator-call continuity, portable
   source-root identity, or setup-change counts; that boundary is tracked by
   `papers/existing_codebase_integration_boundary.json`.
+- Workspace topology and materialization diagnostics cover local file-workspace
+  path/case-folding/source-copy preflights, topology-command validation, and
+  prompt-visible `materialization_error` summaries, not arbitrary-language or
+  build-runner artifacts, dependency-graph validation, bulk directory or
+  external-path operations, remote/container workspaces, or codebase-scale
+  workspace parity.
 - Archive restore uses manifest archive-state snapshots plus accepted-history
   rows for current cursor/cell/elite contents; `archive_events.jsonl` replay is
   audit-only and not an ordered MAP-Elites restore engine. That boundary is

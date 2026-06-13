@@ -4,6 +4,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document workspace-topology README boundary.
+  - Status: README Important limits now states that workspace topology and
+    materialization diagnostics cover local file-workspace
+    path/case-folding/source-copy preflights, topology-command validation, and
+    prompt-visible `materialization_error` summaries, not arbitrary-language
+    or build-runner artifacts, dependency-graph validation, bulk directory or
+    external-path operations, remote/container workspaces, or codebase-scale
+    workspace parity.
+  - Verification: focused candidate, evaluator, and prompt tests validate the
+    materialization, topology-command, collision, and prompt-visible
+    diagnostic surfaces that README now scopes.
+
 - [x] Document collaborator-feedback README boundary.
   - Status: README Important limits now states that collaborator-feedback
     provenance is optional metadata and runtime reporting for cohorts, events,

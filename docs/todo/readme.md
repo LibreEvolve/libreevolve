@@ -426,7 +426,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     also documents prompt controls for selecting and capping
     materialization-error fields. These are current local-workspace
     diagnostics, not proof of arbitrary-language, build-runner,
-    dependency-graph, or remote/container workspace parity.
+    dependency-graph, or remote/container workspace parity. README Important
+    limits now scopes workspace topology and materialization diagnostics to
+    local file-workspace path/case-folding/source-copy preflights,
+    topology-command validation, and prompt-visible `materialization_error`
+    summaries.
   - Required result: when future topology surfaces such as bulk directory
     operations, language/build-runner generated artifacts, external
     materialization paths, or richer artifact runners land, update README,

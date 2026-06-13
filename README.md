@@ -385,6 +385,13 @@ Important limits:
   not real before/after Verilog files, exact diff or AST artifacts,
   removed-bit inventories, component review files, or per-bit functional and
   PPA evidence for the TPU arithmetic-circuit rewrite.
+- Hardware contribution records validate Gemini/AlphaEvolve model-family
+  relationship, run/backend identity, TPU generation and arithmetic-circuit
+  identity, novelty basis, first-direct-contribution scope, integration
+  milestone, hardware review scope, synthesis-rediscovery caveat, confirmation
+  flags, and artifact refs, not real model/run/backend records, reviewed
+  TPU/circuit identifiers, firstness evidence, integration records, hardware
+  signoff files, or synthesis-rediscovery audit artifacts.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

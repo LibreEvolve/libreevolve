@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Gemini-to-TPU contribution README boundary.
+  - Status: README Important limits now states that hardware contribution
+    records validate Gemini/AlphaEvolve model-family relationship, run/backend
+    identity, TPU generation and arithmetic-circuit identity, novelty basis,
+    first-direct-contribution scope, integration milestone, hardware review
+    scope, synthesis-rediscovery caveat, confirmation flags, and artifact refs,
+    not real model/run/backend records, reviewed TPU/circuit identifiers,
+    firstness evidence, integration records, hardware signoff files, or
+    synthesis-rediscovery audit artifacts.
+  - Verification: systems-result tests validate required hardware contribution
+    records for ready hardware reports and malformed attribution metadata; code
+    and papers TODOs still track the missing real attribution artifacts.
+
 - [x] Document hardware rewrite README boundary.
   - Status: README Important limits now states that hardware rewrite records
     validate before/after Verilog hashes, rewrite diff hashes, changed spans,

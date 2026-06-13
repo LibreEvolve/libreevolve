@@ -681,6 +681,14 @@ Important limits:
   coding-mode traces, 12-hour medal-rate/valid-submission report,
   mathematical-algorithm baseline comparison, linked-code audit, or
   independent reproduction output.
+- ArXiv `2605.09764` is cost-aware search-architecture context only; the
+  README mentions this cached paper as a curated subset while
+  `papers/README.md` remains the complete implementation-status index.
+  LibreEvolve has no LEVI-style diversity-preserving solution-database report,
+  large/small model mutation-router policy, role-assignment trace,
+  rank-preserving proxy benchmark, rollout/provider-cost accounting report,
+  systems-research benchmark fixture, prompt-optimization budget comparison,
+  linked-code audit, or independent reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

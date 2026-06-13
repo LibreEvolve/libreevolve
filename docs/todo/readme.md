@@ -91,32 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README LEVI cost-aware search-architecture claims source-scoped
-      until benchmark evidence exists.
-  - Spec evidence: arXiv `2605.09764`, `LEVI: Stronger Search Architectures
-    Can Substitute for Larger LLMs in Evolutionary Search`, says
-    AlphaEvolve-style evolutionary methods are effective but expensive because
-    search allocation often fails to preserve diversity, spends frontier-model
-    budget on local edits, and evaluates redundant examples. LEVI proposes a
-    diversity-preserving solution database, large/small LLM mutation routing,
-    and rank-preserving proxy benchmarks, reporting lower-budget systems and
-    prompt-optimization results.
-  - Current evidence: README now lists `2605.09764`, `LEVI`, as cost-aware
-    search-architecture context only and says no local large/small model
-    mutation router, proxy benchmark, or cost-comparison report exists. It
-    still does not expose LEVI-style model routing, preserve diversity/cost
-    evidence, calibrate proxy benchmarks, record rank-preservation checks, or
-    report systems/prompt optimization budget comparisons.
-  - Required result: if README mentions LEVI, cheaper-than-frontier
-    evolutionary search, large/small model routing, diversity-preserving
-    archives, proxy benchmarks, 3.3x-6.7x lower budgets, 35x lower-cost
-    matches, or reduced GEPA rollout budgets, keep the wording source-scoped
-    until local artifacts can show database diversity metrics, routing traces,
-    proxy calibration, rank-correlation evidence, budget/cost accounting,
-    benchmark baselines, and report outcomes. Avoid implying LibreEvolve
-    supports LEVI-style cost-aware search architecture without those
-    implementation and benchmark artifacts.
-
 - [ ] Keep README PACEvolve long-horizon consistency claims source-scoped
       until benchmark evidence exists.
   - Spec evidence: arXiv `2601.10657`, `PACEvolve: Enabling Long-Horizon

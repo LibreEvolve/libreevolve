@@ -14646,3 +14646,27 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     mode traces, baseline identities, budget accounting, report outcomes, and
     MLEvolve-style long-horizon MLE support remain active in code and paper
     TODOs.
+
+- [x] Keep README LEVI cost-aware search-architecture claims source-scoped
+      until benchmark evidence exists.
+  - Spec evidence: arXiv `2605.09764`, `LEVI: Stronger Search Architectures
+    Can Substitute for Larger LLMs in Evolutionary Search`, says
+    AlphaEvolve-style evolutionary methods are effective but expensive because
+    search allocation often fails to preserve diversity, spends frontier-model
+    budget on local edits, and evaluates redundant examples. LEVI proposes a
+    diversity-preserving solution database, large/small LLM mutation routing,
+    and rank-preserving proxy benchmarks, reporting lower-budget systems and
+    prompt-optimization results.
+  - Status: README now lists arXiv `2605.09764` as cost-aware
+    search-architecture context only and marks the mention as a curated
+    cached-paper subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no LEVI-style
+    diversity-preserving solution-database report, large/small model
+    mutation-router policy, role-assignment trace, rank-preserving proxy
+    benchmark, rollout/provider-cost accounting report, systems-research
+    benchmark fixture, prompt-optimization budget comparison, linked-code
+    audit, or independent reproduction output.
+  - Remaining README gap: database diversity metrics, routing traces, proxy
+    calibration, rank-correlation evidence, budget/cost accounting, benchmark
+    baselines, report outcomes, and LEVI-style cost-aware search architecture
+    remain active in code and paper TODOs.

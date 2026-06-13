@@ -404,6 +404,12 @@ Important limits:
   category, and artifact refs, not real Transformer/inference configuration
   records, Pallas source snapshots, JAX wrapper artifacts, XLA stage outputs,
   hardware-target records, lowered-IR files, or decision-evidence artifacts.
+- Compiler adoption records validate adoption-path classification, target
+  compiler/version/pass identity, bounded use-case scope, optimization artifact
+  identity/hash, integration owner, reviewer scope, adoption state,
+  rollout/revert state, workflow-handoff boundary, and artifact refs, not real
+  compiler patch/pass artifacts, use-case integration records, reviewer signoff
+  files, deployment or rollback logs, or AlphaEvolve-in-compiler-loop evidence.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

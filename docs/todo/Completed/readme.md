@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document compiler-adoption README boundary.
+  - Status: README Important limits now states that compiler adoption records
+    validate adoption-path classification, target compiler/version/pass
+    identity, bounded use-case scope, optimization artifact identity/hash,
+    integration owner, reviewer scope, adoption state, rollout/revert state,
+    workflow-handoff boundary, and artifact refs, not real compiler patch/pass
+    artifacts, use-case integration records, reviewer signoff files, deployment
+    or rollback logs, or AlphaEvolve-in-compiler-loop evidence.
+  - Verification: systems-result tests validate required compiler adoption
+    records for ready compiler reports and malformed integration-path metadata;
+    code and papers TODOs still track the missing real compiler adoption
+    artifacts.
+
 - [x] Document compiler-stack README boundary.
   - Status: README Important limits now states that compiler stack records
     validate workload/model configuration, FlashAttention/Pallas kernel

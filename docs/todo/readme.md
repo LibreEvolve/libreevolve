@@ -941,25 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README compiler-adoption wording scoped until compiler integration
-      path evidence exists.
-  - Spec evidence: AlphaEvolve Section 3.3.4 separates two compiler adoption
-    possibilities after the FlashAttention result: incorporating discovered
-    optimizations into existing compilers for specific use cases, or, longer
-    term, incorporating AlphaEvolve into the compiler workflow itself.
-  - Current evidence: README documents generic systems reports plus compiler-IR
-    reference-check, stack-context, adoption-path metadata, and speedup gaps.
-    It now describes the evidence needed before claiming a discovered
-    optimization was incorporated into an existing compiler versus the stronger
-    future claim that AlphaEvolve is part of the compiler workflow: target
-    compiler/pass, bounded use case, optimization artifact, integration
-    reviewer, rollout or revert state, and workflow handoff.
-  - Required result: once compiler fixtures emit real compiler patch/pass
-    artifacts, use-case integration records, reviewer signoff files,
-    rollout/revert logs, and workflow handoff evidence, update README, ROADMAP,
-    papers index, and matching TODOs so README separates concrete compiler
-    adoption from longer-term AlphaEvolve workflow integration.
-
 - [ ] Keep README self-improvement wording scoped until infrastructure and
       distillation evidence exists.
   - Spec evidence: AlphaEvolve's Discussion says practical discoveries can

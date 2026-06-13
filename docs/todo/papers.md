@@ -2885,6 +2885,31 @@ directory and using the AlphaEvolve paper as the primary specification.
     verifying declared hardening files once a report names them, or preventing
     declared hardening evidence from overriding the smoke-only scope registry.
 
+- [ ] Add paper-facing sorting-network rediscovery evidence as a realistic
+      benchmark target.
+  - Paper evidence: AlphaEvolve's core claim is not limited to its named
+    matrix and constructive-math tasks; it is an evolutionary coding agent
+    that improves algorithmic programs under automated verification and scalar
+    scoring. Sorting networks are a feasible calibration target for that
+    claim because correctness can be verified exhaustively through the
+    zero-one principle, and known optimal-size results give clear 8- and
+    9-input targets.
+  - Current evidence: `libreevolve/problems/examples/sorting` is deliberately
+    scoped as a solved smoke/plateau fixture and is listed in the example-scope
+    registry as not AlphaEvolve-comparable. The paper ledger has no
+    sorting-network benchmark row, no zero-one verification artifact, no
+    comparator-count/depth target table, no repeated-run evidence, no
+    negative fixtures for invalid comparators or lookup shortcuts, and no
+    certification row proving that a run rediscovered a known 8- or 9-input
+    target under fixed evaluator/model/seed conditions.
+  - Required result: add a paper-visible benchmark record for
+    `sorting_network_8` and `sorting_network_9`, including source citations
+    for the zero-one verifier and known comparator targets, fixture scope,
+    evaluator artifact hashes, seed-network provenance, repeated-run result
+    tables, comparator-count/depth metrics, negative-fixture hardening
+    evidence, and certification that any claimed rediscovery is calibrated
+    against known targets rather than presented as a novel SOTA result.
+
 - [ ] Track Figure 5 construction-exhibit provenance as paper evidence.
   - Paper evidence: AlphaEvolve Figure 5 presents selected SOTA-breaking
     mathematical construction examples with branch labels, problem labels,

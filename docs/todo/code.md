@@ -581,6 +581,29 @@ sidecars, tests, and active TODOs.
     AlphaEvolve Table 1 code-scale parity. The remaining gap is benchmark
     evidence, not run-local workspace scale telemetry.
 
+- [ ] Add a rigorous sorting-network rediscovery benchmark fixture.
+  - Spec evidence: AlphaEvolve-style tasks need automated objective
+    evaluators where code proposals can be verified and scored. Sorting
+    networks are a compact algorithm-discovery target: the zero-one principle
+    lets a comparator network be verified on all `2^n` Boolean inputs, and
+    published optimal-size results give clear targets such as 19 comparators
+    for 8 inputs and 25 comparators for 9 inputs.
+  - Current evidence: LibreEvolve ships `libreevolve/problems/examples/sorting`,
+    but that fixture asks for a general `sort_list()` function and its seed is
+    already fully correct. The example-scope registry intentionally labels it
+    as a neutral plateau/diversity smoke fixture, not a benchmark. There is no
+    fixture whose candidate API returns comparator pairs/layers, no exhaustive
+    zero-one verifier, no comparator-count/depth metrics, no known-target
+    calibration for 8- or 9-channel sorting networks, and no run artifact
+    proving rediscovery or compression from a bloated valid seed.
+  - Required result: add `sorting_network_8` and then `sorting_network_9`
+    benchmark fixtures with complete initial comparator networks, exhaustive
+    Boolean-input validation, invalid-comparator diagnostics, metrics for
+    sorted-input coverage, comparator count, and depth, known-target thresholds
+    (`<=19` for 8 inputs, `<=25` for 9 inputs), repeated-seed run reports,
+    and hardening/negative fixtures before treating sorting as a realistic
+    AlphaEvolve-style benchmark rather than a solved smoke example.
+
 - [ ] Keep Table 1 capability-comparison exhibit provenance scoped to row
       evidence instead of capability parity.
   - Spec evidence: AlphaEvolve Table 1 is a compact comparison of FunSearch

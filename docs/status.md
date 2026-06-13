@@ -87,6 +87,11 @@ Important limits:
   implementation status, not validated parity for the individual code-scale,
   language, evaluator, sample-count, model-scale, prompt-context, or
   multi-metric capability rows.
+- The shipped `sorting` example is a solved smoke/plateau fixture, not the
+  proposed realistic sorting-network rediscovery benchmark. LibreEvolve still
+  lacks `sorting_network_8`/`sorting_network_9` fixtures with exhaustive
+  zero-one verification, comparator-count/depth metrics, known-target
+  thresholds, repeated-run evidence, and hardening negatives.
 - Sample-efficiency reports under `runtime.history.sample_efficiency_report`
   are single-run counts for generated proposals, evaluated/valid/admitted
   candidates, retained elites, sampling-eligible candidates, logical LLM

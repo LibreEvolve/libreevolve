@@ -1103,6 +1103,12 @@ resumed-trace proof are still open.
   matrix-multiplication variants, kissing/circle packing extensions,
   constructive math, and one safe compiler/hardware/systems/kernel/scheduling
   microbenchmark.
+- Add a bounded sorting-network rediscovery fixture before heavier benchmark
+  families: `sorting_network_8` should exhaustively verify `2^8` Boolean
+  inputs and target 19 comparators, then `sorting_network_9` should verify
+  `2^9` inputs and target 25 comparators. This is the current lowest-risk
+  realistic benchmark candidate because it has cheap objective verification,
+  known targets, and no external solver or accelerator dependency.
 - Separate smoke examples from benchmark fixtures, with anti-gaming validators,
   fixture-emitted artifacts, SOTA/target baselines, and repeated-seed runs.
   Current example seed-score classes are documented: `hello_world`,

@@ -103,6 +103,15 @@ Important limits:
   `evaluate(eval_inputs)` problem loading, stronger build/runtime isolation, or
   non-static/external-validator score linkage; that boundary is tracked by
   `papers/embedded_evaluator_boundary.json`.
+- Validator execution policy records are local-subprocess audit evidence:
+  `policies.validator_execution`, `evaluation.metadata.validator_boundary`,
+  `filesystem_capabilities`, and `resource_limit_policy` declare the current
+  temporary subprocess boundary, candidate-root/declared-file filesystem
+  scope, optional Python-socket denial metadata, wall-clock timeout cleanup,
+  unsupported security sandbox/container status, and unsupported CPU, memory,
+  GPU, disk, and process-count quotas. They are not OS/container sandboxing,
+  OS-enforced filesystem capabilities, kernel/container network isolation, or
+  AlphaEvolve-scale resource-limit enforcement.
 - Execution-grounding and incorrect-suggestion reports are local run telemetry
   over accepted, rejected, execution-filtered, invalid-evaluation, parse-error,
   archive-rejected, and accepted-invalid candidates, not independent rejudge

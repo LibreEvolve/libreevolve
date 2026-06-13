@@ -4,6 +4,26 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README validator sandbox/resource-limit wording scoped to local
+      subprocess audit evidence versus OS/container enforcement.
+  - Status: README Important limits now states that validator execution policy
+    records are local-subprocess audit evidence: `policies.validator_execution`,
+    `evaluation.metadata.validator_boundary`, `filesystem_capabilities`, and
+    `resource_limit_policy` declare the current temporary subprocess boundary,
+    candidate-root/declared-file filesystem scope, optional Python-socket
+    denial metadata, wall-clock timeout cleanup, unsupported security
+    sandbox/container status, and unsupported CPU, memory, GPU, disk, and
+    process-count quotas. It does not claim OS/container sandboxing,
+    OS-enforced filesystem capabilities, kernel/container network isolation, or
+    AlphaEvolve-scale resource-limit enforcement.
+  - Verification: `docs/run-artifacts.md` documents the same
+    `libreevolve.validator_execution_policy.v1` and
+    `validate_validator_boundary_consistency.v1` surfaces; code and paper TODOs
+    still track the missing configurable sandbox/container enforcement,
+    OS/container-grade network egress isolation, OS-enforced filesystem
+    capability policy, CPU/memory/GPU/disk/process quotas, and distributed
+    evaluator worker state.
+
 - [x] Keep README multi-evaluator wording scoped until independent
       evaluator-oracle evidence exists.
   - Status: README Important limits now states that evaluator/oracle reports

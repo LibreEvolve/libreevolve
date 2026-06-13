@@ -416,6 +416,11 @@ Important limits:
   improvements in LibreEvolve's own execution path, record deployment/adoption
   or rollback/safety evidence, or provide distillation datasets, training runs,
   or model-evaluation artifacts derived from evolved programs.
+- Feedback-loop cadence and environment-ROI claims remain absent: README does
+  not yet record loop IDs, next-version targets, elapsed-month cadence,
+  moderate-gain calibration, setup or maintenance costs for robust evaluator
+  environments, expected versus realized discovery value, gating assumptions,
+  or readiness evidence for expanding AlphaEvolve-style evaluator environments.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

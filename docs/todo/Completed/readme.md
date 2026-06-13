@@ -4,6 +4,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document feedback-loop cadence and environment-ROI README boundary.
+  - Status: README Important limits now states that feedback-loop cadence and
+    environment-ROI claims remain absent: README does not yet record loop IDs,
+    next-version targets, elapsed-month cadence, moderate-gain calibration,
+    setup or maintenance costs for robust evaluator environments, expected
+    versus realized discovery value, gating assumptions, or readiness evidence
+    for expanding AlphaEvolve-style evaluator environments.
+  - Verification: code, roadmap, and papers TODOs still track the missing
+    cadence, gain-calibration, next-version dependency, and robust-evaluator
+    environment economics evidence, while paper-manifest validation keeps the
+    README and papers-index boundary covered.
+
 - [x] Document self-improvement/distillation README boundary.
   - Status: README Important limits now states that self-improvement and
     distillation claims remain absent: README does not yet identify LibreEvolve

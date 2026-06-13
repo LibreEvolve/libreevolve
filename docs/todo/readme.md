@@ -941,23 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README feedback-loop cadence wording scoped until environment ROI
-      evidence exists.
-  - Spec evidence: AlphaEvolve's Discussion says current self-improvement gains
-    are moderate, feedback loops for improving the next AlphaEvolve version
-    are on the order of months, and those improvements should make setting up
-    more robust-evaluator environments more valuable.
-  - Current evidence: README can describe provider budgets, systems reports,
-    benchmark contracts, self-improvement boundaries, and distillation gaps. It
-    does not document measured improvement-loop duration, next-version
-    dependency, moderate-gain calibration, or environment setup cost/value
-    evidence for creating more robust evaluator environments.
-  - Required result: when feedback-loop cadence and environment ROI metadata
-    lands, update README, ROADMAP, papers index, and code/paper TODOs together
-    so README distinguishes ordinary self-improvement evidence from
-    AlphaEvolve-style months-scale infrastructure/model feedback loops and the
-    economic case for adding new robust-evaluator problem environments.
-
 - [ ] Keep README benchmark-hardening wording scoped to smoke evidence versus
   benchmark-grade anti-gaming fixtures.
   - Spec evidence: AlphaEvolve-comparable benchmark claims require robust target

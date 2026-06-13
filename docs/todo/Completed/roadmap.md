@@ -4641,8 +4641,10 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     solution hashes, sampled supporting inspiration roles, instruction
     policy/hash, required task/parent-code/instruction channel presence,
     mutation-mode constraints, telemetry call joins when present, and the
-    current serialized-single-prompt provider placement boundary instead of
-    role-separated provider message parity.
+    primary-prompt provider-placement report boundary. Later backend work added
+    configured `llm_prompt_roles` payload support and hash-only
+    `prompt_role_policy` telemetry; the remaining roadmap gap is joining that
+    telemetry into the primary-prompt report.
   - Verification: `py -3.12 -m pytest
     tests/core/test_loop.py::test_runtime_history_reports_primary_prompt_instruction_provenance
     -q` passed.

@@ -2062,6 +2062,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     consistency-failure taxonomy, and optional acceptance policy before
     presenting multi-edit consistency as complete.
 
+- [ ] Join provider prompt-role telemetry into primary-prompt paper evidence.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.
+  - Requirement: the primary prompt includes system instructions and sampled
+    prior solutions, so paper evidence should connect generated prompt
+    ingredients to the provider-message role placement used for the LLM call.
+  - Partial status: LibreEvolve supports configured `llm_prompt_roles` for
+    built-in backend calls and retains hash-only `prompt_role_policy` telemetry
+    in LLM call records. The primary-prompt instruction report separately
+    records generated prompt ids/hashes, target solution hashes, sampled
+    inspiration roles, instruction hashes, required channels, and telemetry
+    call joins.
+  - Current gap: the primary-prompt report does not yet join each generated
+    prompt to its retained `prompt_role_policy` telemetry, so paper-facing
+    AlphaEvolve prompt-role placement evidence remains incomplete even though
+    backend prompt-role payload support exists.
+  - Required result: add paper-visible records and validators that link
+    generated prompt ids/call ids to role-policy metadata, distinguish
+    single-user-message versus configured structured-message provider payloads,
+    keep raw instruction text out of artifacts, and update the AlphaEvolve
+    paper-status row after validation proves the join.
+
 - [ ] Track Figure 3 supervised-learning example exhibit provenance as paper
       evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 3 presents a

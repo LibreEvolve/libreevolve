@@ -4,6 +4,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## Papers Todo: Reference and Specification Gaps
 
+- [x] Scope prompt-role support gap to primary-prompt paper evidence joins.
+  - Status: paper-facing docs now separate backend structured-message support
+    from the missing paper evidence join. `papers/README.md` and related docs
+    say configured `llm_prompt_roles` can send structured provider
+    instructions and retain hash-only `prompt_role_policy` telemetry, while
+    the primary-prompt instruction report still needs a validated join.
+  - Remaining guard: active paper TODOs now require prompt/call-to-role-policy
+    records, validators, single-user versus configured structured-message
+    distinction, and raw-instruction-text exclusion before updating the
+    AlphaEvolve status row.
+  - Verification: focused documentation tests and paper-manifest validation
+    cover the updated ledgers and paper index.
+
 - [x] Track follow-on problem-repository coverage-state evidence.
   - Paper/source evidence: the
     `google-deepmind/alphaevolve_repository_of_problems` README describes a
@@ -839,15 +852,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Status: `runtime.history.primary_prompt_instruction_report` now records
     paper-facing prompt ingredient evidence: target program/workspace hash,
     sampled solution roles, instruction policy/hash/redaction boundary,
-    provider message-role placement as serialized single prompt, edit-scope
-    constraints, required-channel diagnostics, and prompt/call linkage when
-    telemetry is available.
+    primary-prompt provider-placement report boundary, edit-scope constraints,
+    required-channel diagnostics, and prompt/call linkage when telemetry is
+    available.
   - Verification: `py -3.12 -m pytest
     tests/core/test_loop.py::test_runtime_history_reports_primary_prompt_instruction_provenance
     -q` passed.
-  - Remaining gap: role-separated provider system/developer/user messages
-    remain unsupported; stochastic prompt-format distribution provenance is a
-    separate open prompt TODO.
+  - Superseded boundary note: later backend work added configured
+    `llm_prompt_roles` payload support and hash-only `prompt_role_policy`
+    telemetry. The remaining paper gap is now joining that telemetry into the
+    primary-prompt report; stochastic prompt-format distribution provenance is
+    a separate prompt surface.
 
 - [x] Track stale source-specific absence wording in active TODO bodies.
   - Paper evidence: the paper index uses implementation-status and TODO

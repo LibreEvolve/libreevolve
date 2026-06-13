@@ -1811,9 +1811,10 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     prompt-core record tying target solution id/workspace hash, sampled
     supporting solution roles, mutation-instruction policy/hash, required
     channel presence, mutation-mode constraints, and prompt/call ids to each
-    generated mutation prompt. It also states that LibreEvolve currently sends
-    a serialized single prompt string through the mutation scheduler role, not
-    role-separated provider system/developer/user messages.
+    generated mutation prompt. This README boundary was later narrowed after
+    backend `llm_prompt_roles` added structured provider-instruction payloads
+    and hash-only role-policy telemetry; the remaining gap is joining that
+    telemetry into the primary-prompt report.
   - Verification: `py -3.12 -m pytest
     tests/core/test_loop.py::test_runtime_history_reports_primary_prompt_instruction_provenance
     -q` passed.

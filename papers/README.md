@@ -925,10 +925,11 @@ Completed manifests also include
 target solution hashes, sampled supporting inspiration roles, mutation
 instruction policy/hash, required task/current-program/instruction channel
 presence, mutation-mode constraints, prompt/call ids when telemetry joins are
-available, and the current serialized-single-prompt provider placement. This is
-paper-facing primary-prompt ingredient evidence; role-separated
-system/developer/user provider messages remain unsupported and are not claimed
-as AlphaEvolve parity.
+available, and the current primary-prompt provider-placement report boundary.
+This is paper-facing primary-prompt ingredient evidence. Configured backend
+`llm_prompt_roles` can now send structured provider instructions and retain
+hash-only `prompt_role_policy` telemetry, but that telemetry is not yet joined
+into this report as AlphaEvolve primary-prompt parity evidence.
 Completed manifests also include
 `runtime.history.stochastic_prompt_format_distribution_report` with schema
 `libreevolve.stochastic_prompt_format_distribution_report.v1`. It links
@@ -1438,8 +1439,9 @@ absent. The committed `papers/provider_diagnostics_replay_boundary.json`
 sidecar preserves the bounded provider-diagnostics boundary while keeping raw
 provider-payload sidecars, provider-output replay, complete provider-call
 replay, and account/model default capture absent. Structured
-system/developer/user prompt roles are serialized as hash-only
-`prompt_role_policy` metadata, not raw instruction text. Endpoint/client context now has an
+system/developer/user prompt roles, when configured, are retained as hash-only
+`prompt_role_policy` metadata rather than raw instruction text, and are not
+yet joined into the primary-prompt instruction report. Endpoint/client context now has an
 explicit validated built-in backend surface for OpenAI `base_url`,
 `organization`, and `project`, Anthropic `base_url`, and Ollama `host`, and
 accepted values are recorded in manifests plus call `client_context`

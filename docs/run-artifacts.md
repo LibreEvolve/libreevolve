@@ -2106,9 +2106,11 @@ supporting inspiration ids and roles, mutation-instruction policy id and
 section hash, required task/parent-code/mutation-instruction channel presence,
 mutation-mode edit-scope constraints, prompt/call ids where LLM telemetry
 joins are available, and the provider-placement boundary. The current provider
-payload is a serialized single prompt string sent through the mutation
-scheduler role; role-separated system/developer/user provider messages remain
-unsupported.
+placement report still describes the rendered mutation prompt as the payload
+sent through the mutation scheduler role. Configured backend `llm_prompt_roles`
+can send structured provider instructions and retain hash-only
+`prompt_role_policy` telemetry, but that telemetry is not yet joined into this
+primary-prompt report.
 Completed manifests also include
 `runtime.history.stochastic_prompt_format_distribution_report` with schema
 `libreevolve.stochastic_prompt_format_distribution_report.v1`. This report

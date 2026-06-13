@@ -285,8 +285,10 @@ LibreEvolve has:
   prompt target solution hashes, sampled supporting inspiration roles,
   mutation-instruction policy/hash, required task/parent-code/instruction
   channel presence, mutation-mode constraints, telemetry call joins when
-  present, and the current serialized-single-prompt provider placement
-  boundary instead of role-separated provider message parity
+  present, and the current primary-prompt provider-placement report boundary.
+  Configured backend `llm_prompt_roles` can now send structured provider
+  instructions and retain hash-only `prompt_role_policy` telemetry, but that
+  telemetry is not yet joined into this primary-prompt evidence report
 - runtime stochastic-formatting distribution provenance under
   `runtime.history.stochastic_prompt_format_distribution_report`, linking
   generated prompt ids to `[[prompt:name]]` option sets, normalized

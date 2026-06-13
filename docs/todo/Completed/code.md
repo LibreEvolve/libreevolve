@@ -4,6 +4,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Scope prompt-role support gap to primary-prompt report joins.
+  - Status: docs now distinguish implemented backend `llm_prompt_roles`
+    support from the still-open primary-prompt evidence join. ROADMAP,
+    `docs/status.md`, `docs/run-artifacts.md`, `papers/README.md`, and
+    completed TODO archives no longer describe role-separated provider
+    instructions as absent across all backends.
+  - Remaining guard: active code TODOs now track the narrower missing work:
+    joining hash-only `prompt_role_policy` telemetry back into
+    `runtime.history.primary_prompt_instruction_report` records before
+    claiming AlphaEvolve primary-prompt role-placement parity.
+  - Verification: focused documentation tests and paper-manifest validation
+    cover the updated ledgers and paper index.
+
 - [x] Add follow-on problem-repository coverage-state provenance.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
     README describes the repository as live, with problem pages for all `67`
@@ -932,13 +945,15 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     supporting inspiration ids and roles, mutation-instruction policy and
     section hash, required task/parent-code/instruction channel presence,
     mutation-mode constraints, prompt/call ids where telemetry joins exist,
-    and the current serialized-single-prompt provider placement boundary.
+    and the current primary-prompt provider-placement report boundary.
   - Verification: `py -3.12 -m pytest
     tests/core/test_loop.py::test_runtime_history_reports_primary_prompt_instruction_provenance
     -q` passed.
-  - Remaining gap: role-separated provider system/developer/user message
-    payloads remain unsupported and are not claimed as full AlphaEvolve
-    prompt parity.
+  - Superseded boundary note: later backend work added configured
+    `llm_prompt_roles` payload support and hash-only `prompt_role_policy`
+    telemetry. The remaining gap is now the unimplemented join from that
+    telemetry back into `primary_prompt_instruction_report`, not globally absent
+    provider-role payload support.
 
 - [x] Detect stale source-specific absence wording inside active TODO bodies.
   - Spec evidence: active TODO ledgers are the audit surface for AlphaEvolve

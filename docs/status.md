@@ -599,6 +599,12 @@ Important limits:
   deterministic ids and shared `template_sha256`, not deduplicated into one
   prompt policy; role-specific compatibility for critique, feedback, and
   meta-prompt call surfaces remains open.
+- Configured `llm_prompt_roles` can send bounded system/developer instruction
+  text through built-in backend provider payloads and records hash-only
+  `prompt_role_policy` call telemetry. The primary-prompt instruction report
+  still does not join that telemetry back to generated prompt records, so
+  AlphaEvolve primary-prompt role-placement parity remains an evidence gap
+  rather than a globally absent backend feature.
 - Meta-prompt scoring currently means local `PromptDatabase` accounting over
   configured `absolute` or `improvement` child-score rewards, normalized to
   configured finite bounds and selected with a UCB-style prompt-arm heuristic.

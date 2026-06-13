@@ -428,6 +428,13 @@ Important limits:
   exhaustive anti-gaming evidence, executable construction/certificate
   validators, target/SOTA baselines, Colab-equivalent Appendix B construction
   data, or verifier-code artifacts.
+- Follow-on problem-repository coverage records validate a pinned snapshot's
+  problem-page, status-bucket, link, hash, notebook-link, absence-reason,
+  notebook-hash, scoped artifact-flag, Appendix B crosswalk, and
+  artifact-rights-template evidence, not live repository completeness, full
+  notebook cell inventories, normalized result rows, construction payloads,
+  verifier artifacts, recomputed values, or copied/adapted generated
+  artifacts.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

@@ -941,44 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] State follow-on problem-repository coverage as snapshot-scoped.
-  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
-    README says the repository is live and expected to expand/improve over
-    time, with problem pages for all 67 mathematical problems and Colab
-    notebooks for many, but not all, problems. It says notebooks can include
-    prompts, verification code, initial programs, final evolved programs, and
-    visualization/analysis code where appropriate. It gives a hosted
-    `problems/{n}.html` URL pattern on `google-deepmind.github.io`, says no
-    installation is required, says notebooks open in Google Colab and webpages
-    open in any browser, and points the distribution graphic to root-level
-    `status_grid.png`. Current `status.json` has buckets `world_record`,
-    `former_record`, `worse_than_record`, and `matched_optimal`, listing 43
-    problem ids total.
-  - Current evidence: README now documents
-    `libreevolve.alphaevolve_follow_on_problem_coverage.v1`, which validates
-    the pinned repository URL/commit/date, live-update policy, declared
-    67-problem id range, browser-page and many-but-not-all Colab access modes,
-    root-level status artifact paths/hashes for `status.json`,
-    `status_grid.png`, and `result_distribution.png`, parsed status buckets,
-    43 listed ids, 24 `not_listed_in_status_json` ids, and the declared-67
-    versus observed-68 numbered HTML page boundary. README now also names the
-    linked runtime-absence notebook inventory with `28` pinned notebook paths
-    and validated notebook-link/absence-reason mapping. README now points to
-    page-68 classification, all-page raw HTML hashes, and emitted per-page
-    source rows with scoped prompt/verifier/initial/final/visualization flags,
-    while keeping full notebook cell inventories outside the claim. README now
-    also names the Appendix B crosswalk from `19` original result ids across
-    `13` families to follow-on problem pages and notebook-link statuses without
-    treating it as normalized result rows, construction payloads, verifier
-    artifacts, or recomputed values. README now also names the follow-on
-    artifact-rights templates for local generated outputs, adapted verification
-    code, and copied problem statements while preserving the zero-current
-    copied/adapted generated-artifact boundary.
-  - Required result: keep README wording explicit that completed follow-on
-    evidence covers problem-page, status-bucket, link, hash, notebook-link,
-    absence-reason, notebook-hash, scoped artifact-flag, and row evidence, not
-    full notebook cell inventories.
-
 - [ ] Keep README follow-on problem-count wording scoped until page inventory
       is reconciled.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`

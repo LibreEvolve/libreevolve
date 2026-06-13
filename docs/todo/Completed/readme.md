@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document follow-on problem-repository coverage README boundary.
+  - Status: README Important limits now states that follow-on
+    problem-repository coverage records validate pinned snapshot problem-page,
+    status-bucket, link, hash, notebook-link, absence-reason, notebook-hash,
+    scoped artifact-flag, Appendix B crosswalk, and artifact-rights-template
+    evidence, not live repository completeness, full notebook cell
+    inventories, normalized result rows, construction payloads, verifier
+    artifacts, recomputed values, or copied/adapted generated artifacts.
+  - Verification: follow-on coverage, source, and paper-manifest tests cover
+    the snapshot, notebook-link, page-68, Appendix B crosswalk, and
+    artifact-rights boundaries; the problem-count reconciliation and full
+    notebook-inventory limits remain separate active TODOs.
+
 - [x] Document benchmark-hardening README boundary.
   - Status: README Important limits now states that benchmark hardening records
     and shipped-example scope validate smoke-scope anti-gaming metadata,

@@ -10,28 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep plugin configuration-schema roadmap wording scoped to built-in and
-      entry-point constructor validation.
-  - Spec evidence: AlphaEvolve-style extension hooks need explicit,
-    reproducible configuration contracts before plugin behavior can be treated
-    as part of a comparable evolutionary system.
-  - Current evidence: `ROADMAP.md` asks to broaden plugin configuration schemas
-    beyond built-in scalar/path options and entry-point declared constructor
-    schemas to cover direct custom constructor policy. README and code evidence
-    show that configured built-in plugin specs are validated against declared
-    option schemas, entry-point specs can validate manifest-safe
-    `constructor_options` against a plugin-provided
-    `libreevolve_constructor_option_schema`, and config validation calls the
-    registry before destructive run setup. Direct custom plugin instances still
-    record constructor signature shape only and explicitly exclude constructor
-    values and arbitrary instance state.
-  - Required result: when direct custom plugin constructor schemas, safe
-    constructor-value declarations, richer option types, or versioned plugin
-    registry policies land, update the roadmap, README, papers index, and
-    code/paper TODO entries together so roadmap wording neither underclaims
-    current built-in/entry-point validation nor overclaims complete
-    AlphaEvolve-grade plugin configuration contracts.
-
 - [ ] Keep plugin artifact-provenance roadmap wording scoped to manifest-safe
       summaries versus lifecycle evidence.
   - Spec evidence: AlphaEvolve-style extensibility needs plugin-generated

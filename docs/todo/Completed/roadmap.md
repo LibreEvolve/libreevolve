@@ -2,6 +2,22 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive plugin configuration-schema roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `papers/README.md`, and `docs/status.md` already scope plugin
+    configuration contracts to built-in scalar/path option validation and
+    configured entry-point constructor options, including plugin-declared
+    `libreevolve_constructor_option_schema` checks when an entry-point target
+    provides one.
+  - Remaining guard: direct custom plugin constructor schemas, safe direct
+    constructor-value declarations, richer option types, versioned custom
+    registry policies, and complete AlphaEvolve-grade extension contracts
+    remain future work.
+  - Verification: config, CLI, registry, and runtime plugin-state tests cover
+    manifest-safe plugin spec mappings, malformed constructor-option rejection,
+    entry-point schema validation and violation handling, manifest policy
+    recording, and the direct custom signature-only boundary.
+
 - [x] Archive plugin paper-inspiration/package-version roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `docs/status.md`, and `papers/README.md` already scope

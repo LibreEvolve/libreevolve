@@ -710,8 +710,11 @@ validated current synchronous topology boundary in
 `runtime.history.distributed_pipeline_topology_report` and records a
 validated current inline evaluator-pool parallelism boundary. It remains
 `claim_ready: false` because exact source-diagram layout reproduction,
-AlphaEvolve-style async controller/sampler/evaluator implementation, and
-independent evaluator-pool implementation remain open.
+source figure image/crop hashes, visual node coordinates, source edge
+geometry/routing, Figure 2 line-level pseudocode alignment, visual
+diff/fidelity checks against the source figures, AlphaEvolve-style async
+controller/sampler/evaluator implementation, and independent evaluator-pool
+implementation remain open.
 The committed `papers/process_exhibit_boundary.json` sidecar emits the
 `process_mapping_with_source_text_boundary_without_full_parity` boundary, and
 `validate_paper_manifest()` requires it at the real repo root.

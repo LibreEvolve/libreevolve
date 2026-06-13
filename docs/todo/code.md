@@ -246,13 +246,19 @@ sidecars, tests, and active TODOs.
     links for the remaining process gaps. The report still carries
     `claim_ready: false` readiness gaps. The committed
     `papers/process_exhibit_boundary.json` sidecar now records that
-    paper-manifest-validated process-exhibit parity boundary.
-  - Required result: add exact source-diagram layout reproduction, implement
+    paper-manifest-validated process-exhibit parity boundary, including missing
+    source figure image/crop hashes, visual node coordinates, source edge
+    geometry/routing, Figure 2 line-level pseudocode alignment, and visual
+    diff/fidelity checks against the source figures.
+  - Required result: add exact source-diagram layout reproduction, source
+    figure image/crop artifacts and hashes, visual coordinate and edge-routing
+    maps, Figure 2 line-level pseudocode alignment, visual fidelity checks,
     AlphaEvolve-style async controller/sampler/evaluator topology,
-    independent evaluator-pool parallelism, and docs checks so local workflow diagrams, generated Mermaid
-    artifacts, artifact-link records, row summaries, and semantic candidate
-    traces/source-text/topology/evaluator-pool boundaries are not mistaken for
-    full reproduced AlphaEvolve process-diagram evidence.
+    independent evaluator-pool parallelism, and docs checks so local workflow
+    diagrams, generated Mermaid artifacts, artifact-link records, row
+    summaries, semantic candidate traces, source-text extracts, and
+    topology/evaluator-pool boundaries are not mistaken for full reproduced
+    AlphaEvolve process-diagram evidence.
 
 - [ ] Extend unified AlphaEvolve task-specification reports into full
       artifact-level parity.
@@ -674,13 +680,15 @@ sidecars, tests, and active TODOs.
     cross-links, generated Mermaid/text artifacts and hashes, per-step
     artifact-stream validation records, strict JSONL row summaries,
     generated candidate semantic traces with durable LLM and archive-admission
-    stream rows, component-to-TODO links, and explicit
+    stream rows, hashed source-PDF page text extracts, current topology and
+    evaluator-pool boundary records, component-to-TODO links, and explicit
     `claim_ready: false` gaps.
-  - Required result: add exact diagram/pseudocode text or accessibility
-    reproduction, async topology evidence, independent evaluator-pool
-    evidence, and docs checks that prevent README, ROADMAP, or papers-index wording from treating
-    component-level support as full reproduction of the AlphaEvolve process
-    diagrams.
+  - Required result: add exact source-diagram layout reproduction, source
+    image/crop hashes, visual coordinate and edge-routing maps, line-level
+    pseudocode alignment, async topology evidence, independent evaluator-pool
+    evidence, and docs checks that prevent README, ROADMAP, or papers-index
+    wording from treating component-level support as full reproduction of the
+    AlphaEvolve process diagrams.
 
 - [ ] Add self-improvement and distillation evidence boundaries for
       infrastructure-facing claims.

@@ -24,6 +24,11 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "rendered_diagram_artifact_hash",
     "exact_diagram_text_export",
     "accessibility_export",
+    "source_figure_image_or_crop_hash",
+    "source_figure_visual_coordinate_map",
+    "source_edge_geometry_routing_map",
+    "figure2_line_level_pseudocode_alignment",
+    "visual_diff_against_source_figure",
     "source_diagram_text_record",
     "async_topology_record",
     "evaluator_pool_parallelism_record",
@@ -33,6 +38,11 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 )
 EXPECTED_MISSING_EVIDENCE = {
     "exact_source_diagram_layout_reproduction": "not_recorded_locally",
+    "source_figure_image_or_crop_hash": "not_recorded_locally",
+    "source_figure_visual_coordinate_map": "not_recorded_locally",
+    "source_edge_geometry_routing_map": "not_recorded_locally",
+    "figure2_line_level_pseudocode_alignment": "not_recorded_locally",
+    "visual_diff_against_source_figure": "not_recorded_locally",
     "alphaevolve_async_pipeline_topology_implementation": "not_implemented_locally",
     "independent_evaluator_pool_parallelism_implementation": "not_implemented_locally",
 }
@@ -85,9 +95,12 @@ def process_exhibit_boundary_record() -> dict[str, Any]:
             "linked to the distributed-pipeline topology report, a validated "
             "current inline evaluator-pool parallelism boundary, and "
             "component-to-TODO links. It does not claim exact source-diagram "
-            "layout reproduction, AlphaEvolve async controller/sampler/"
-            "evaluator implementation, independent evaluator-pool "
-            "implementation, or full AlphaEvolve process parity."
+            "layout reproduction, source figure image/crop hashes, visual node "
+            "coordinates, source edge geometry/routing, Figure 2 line-level "
+            "pseudocode alignment, visual diff/fidelity checks against the "
+            "source figures, AlphaEvolve async controller/sampler/evaluator "
+            "implementation, independent evaluator-pool implementation, or "
+            "full AlphaEvolve process parity."
         ),
     }
 
@@ -124,7 +137,15 @@ def validate_process_exhibit_boundary(
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
-    if not isinstance(boundary_text, str) or "does not claim" not in boundary_text:
+    if (
+        not isinstance(boundary_text, str)
+        or "does not claim" not in boundary_text
+        or "source figure image/crop hashes" not in boundary_text
+        or "visual node coordinates" not in boundary_text
+        or "source edge geometry/routing" not in boundary_text
+        or "Figure 2 line-level pseudocode alignment" not in boundary_text
+        or "visual diff/fidelity checks" not in boundary_text
+    ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim rendered process-diagram parity"))
     return ProcessExhibitBoundaryValidation(
         ok=not issues,

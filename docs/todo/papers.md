@@ -366,18 +366,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     validated current inline evaluator-pool parallelism boundary, and records
     component-to-TODO links for the remaining process gaps.
   - Current gap: paper-facing evidence still lacks exact source-diagram
-    layout reproduction, AlphaEvolve-style async controller/sampler/evaluator
-    implementation with Python `asyncio` runtime identity, and independent
-    evaluator-pool implementation strong enough to treat the local mapping as
-    full reproduced AlphaEvolve architecture evidence.
-  - Required result: add exact source diagram layout reproduction, async
-    topology implementation evidence including Python `asyncio` runtime
-    identity, independent evaluator-pool
-    implementation evidence, and README/ROADMAP wording that separates local
-    workflow diagrams, generated Mermaid artifacts, artifact-link records, row
-    summaries, semantic candidate traces, source-text evidence, and
-    current-topology/evaluator-pool boundaries from full reproduced
+    layout reproduction, source figure image/crop hashes, visual node
+    coordinates, source edge geometry/routing, Figure 2 line-level pseudocode
+    alignment, visual diff/fidelity checks against the source figures,
+    AlphaEvolve-style async controller/sampler/evaluator implementation with
+    Python `asyncio` runtime identity, and independent evaluator-pool
+    implementation strong enough to treat the local mapping as full reproduced
     AlphaEvolve architecture evidence.
+  - Required result: add exact source diagram layout reproduction, source
+    figure image/crop artifacts and hashes, visual coordinate and edge-routing
+    maps, Figure 2 line-level pseudocode alignment, visual fidelity checks,
+    async topology implementation evidence including Python `asyncio` runtime
+    identity, independent evaluator-pool implementation evidence, and
+    README/ROADMAP wording that separates local workflow diagrams, generated
+    Mermaid artifacts, artifact-link records, row summaries, semantic
+    candidate traces, source-text evidence, and current-topology/evaluator-pool
+    boundaries from full reproduced AlphaEvolve architecture evidence.
 
 - [ ] Extend unified task-specification provenance beyond field-level artifact
       resolution.

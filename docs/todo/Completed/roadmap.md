@@ -2,6 +2,22 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Table 1 capability-exhibit roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
+    `papers/README.md` already describe
+    `runtime.history.alphaevolve_table1_capability_exhibit_report` as source
+    table/row provenance with stable ids, source page/caption location,
+    FunSearch/AlphaEvolve cell text, row-to-TODO/report mappings, rendered
+    artifact hashes, and explicit false readiness for individual Table 1
+    capability-row parity.
+  - Remaining guard: benchmark-backed evidence for code scale, arbitrary
+    language/build runners, evaluator workload/accelerators, sample
+    efficiency, model scale, rich context/feedback effectiveness, and
+    multi-metric outcomes remains active in `docs/todo/code.md` and
+    `docs/todo/papers.md`.
+  - Verification: Table 1 capability-exhibit validation and paper-manifest
+    tests continue to reject source-table provenance as full Table 1 parity.
+
 - [x] Archive parallel-evaluation roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
     `papers/README.md` already distinguish sequential sibling batches and

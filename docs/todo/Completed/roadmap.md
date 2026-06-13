@@ -2,6 +2,35 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive qualitative-feedback roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `docs/status.md`, `docs/run-artifacts.md`, `papers/README.md`,
+    `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/qualitative_feedback_boundary.json` already scope qualitative
+    feedback evidence to declared criterion policy and prompt-history audit
+    records, not executed calibration/task-suite proof.
+  - Current evidence: LLM feedback graders can declare `criterion`,
+    `criterion_description`, `evaluator_gap_rationale`, `rubric`,
+    `feedback_intent`, and `calibration_report_id`; feedback records retain
+    bounded `qualitative_policy` metadata; completed manifests emit
+    `runtime.history.qualitative_feedback_policy_report` with configured and
+    observed criterion counts, rubric/prompt hashes, metric linkage,
+    score-versus-discard intent, and overclaim validation. Runtime manifests
+    also emit `runtime.history.qualitative_feedback_prompt_history_audit_report`
+    with bounded candidate-to-prompt-history add/score row joins and
+    `claim_ready: false` until calibration/task-suite and criterion-quality
+    evidence exists.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    AlphaEvolve-grade qualitative-feedback evidence: executed calibration/task-
+    suite linkage, hard-to-code property fixtures such as simplicity,
+    criterion-quality ablations, independent feedback-quality validation, and
+    examples proving the declared criterion improves search or filtering
+    quality.
+  - Verification: focused qualitative-feedback runtime, boundary, config, and
+    paper-manifest tests validate declared policy and prompt-history audit
+    reports while rejecting paper-readiness, calibration/task-suite, and
+    AlphaEvolve qualitative-feedback overclaims.
+
 - [x] Archive feedback-calibration roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `docs/status.md`, `docs/run-artifacts.md`, `papers/README.md`,

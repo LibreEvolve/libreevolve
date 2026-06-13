@@ -10,28 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep qualitative-feedback roadmap wording scoped until calibration and
-      prompt-history audits exist.
-  - Spec evidence: AlphaEvolve Section 2.4 says LLM-generated feedback can
-    grade desirable characteristics that are difficult to capture precisely in
-    the evaluator, such as simplicity, and can use those grades as scores or
-    discard gates.
-  - Current evidence: ROADMAP and README can cite configured LLM feedback
-    graders, qualitative criterion declarations, evaluator-gap rationales,
-    rubric/prompt hashes, score-versus-discard intent, feedback records, and
-    `runtime.history.qualitative_feedback_policy_report`. Runtime manifests
-    now also emit
-    `runtime.history.qualitative_feedback_prompt_history_audit_report`, which
-    joins candidates with LLM-feedback records to prompt-history add/score row
-    line numbers when prompt-program history exists. They still do not prove
-    calibration/task-suite linkage or criterion-quality ablations. ROADMAP now
-    ties that declared-policy boundary to
-    `papers/qualitative_feedback_boundary.json`.
-  - Required result: when calibration/task-suite and ablation evidence lands,
-    update ROADMAP, README, papers index, and code/paper TODOs together so
-    roadmap wording distinguishes audited declared qualitative criteria from
-    validated AlphaEvolve-style qualitative feedback.
-
 - [ ] Keep benchmark-hardening roadmap wording scoped to smoke evidence versus
   benchmark-grade fixtures.
   - Spec evidence: AlphaEvolve-style benchmark claims need repeated,

@@ -1,0 +1,44 @@
+{
+  "schema": "libreevolve.alphaevolve_self_improvement_cadence_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "Discussion"
+  ],
+  "local_pdf_page": 21,
+  "source_claim": "AlphaEvolve's Discussion says self-improvement gains can be moderate, next-version feedback loops can take months, and those improvements can make robust-evaluator environments more valuable",
+  "boundary_status": "cadence_environment_roi_not_recorded",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "self_improvement_loop_id",
+    "source_optimization_identity",
+    "affected_next_version_component",
+    "start_end_dates_or_elapsed_months",
+    "moderate_gain_calibration",
+    "compounding_improvement_timeline",
+    "environment_setup_cost",
+    "environment_maintenance_cost",
+    "robust_evaluator_environment_identity",
+    "expected_discovery_value",
+    "realized_discovery_value",
+    "environment_expansion_decision_record",
+    "gating_assumptions",
+    "claim_to_artifact_certification_row"
+  ],
+  "missing_evidence": {
+    "self_improvement_loop_id": "not_recorded_locally",
+    "source_optimization_identity": "not_recorded_locally",
+    "affected_next_version_component": "not_recorded_locally",
+    "start_end_dates_or_elapsed_months": "not_recorded_locally",
+    "moderate_gain_calibration": "not_recorded_locally",
+    "compounding_improvement_timeline": "not_recorded_locally",
+    "environment_setup_cost": "not_recorded_locally",
+    "environment_maintenance_cost": "not_recorded_locally",
+    "robust_evaluator_environment_identity": "not_recorded_locally",
+    "expected_discovery_value": "not_recorded_locally",
+    "realized_discovery_value": "not_recorded_locally",
+    "environment_expansion_decision_record": "not_recorded_locally",
+    "gating_assumptions": "not_recorded_locally",
+    "claim_to_artifact_certification_row": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve does not claim AlphaEvolve-style months-scale self-improvement loop cadence, moderate-gain calibration, compounding next-version improvement timelines, robust-evaluator environment setup or maintenance cost models, expected-versus-realized discovery value, environment expansion decisions, gating assumptions, or paper-facing certification rows for feedback-loop economics."
+}

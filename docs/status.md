@@ -1159,6 +1159,8 @@ Important limits:
   moderate-gain calibration, setup or maintenance costs for robust evaluator
   environments, expected versus realized discovery value, gating assumptions,
   or readiness evidence for expanding AlphaEvolve-style evaluator environments.
+  The `papers/self_improvement_cadence_boundary.json` sidecar keeps that
+  months-scale/environment-economics boundary manifest-validated.
 - Benchmark hardening records and shipped-example scope validate smoke-scope
   anti-gaming metadata, negative-fixture files, detector logs, artifact hashes,
   and `alphaevolve_comparable: false` boundaries for shipped examples, not

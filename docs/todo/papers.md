@@ -4483,14 +4483,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     and distillation artifacts. They do not preserve cadence or return-on-
     environment evidence: which improvement loop affected a next version, how
     long that loop took, how moderate the gain was, or how the gain changed
-    the expected value of creating more robust evaluation environments.
+    the expected value of creating more robust evaluation environments. The
+    committed `papers/self_improvement_cadence_boundary.json` sidecar
+    preserves this absence boundary for paper-manifest validation.
   - Required result: add paper/report evidence for self-improvement loop
     cadence and environment expansion with loop ids, optimized component,
     next-version target, start/end dates or elapsed months, measured gain,
     environment setup/maintenance cost, expected and realized discovery value,
-    robust-evaluator readiness, and README/ROADMAP wording that separates
-    months-scale feedback-loop economics from generic self-improvement or
-    distillation capability.
+    robust-evaluator environment identity, environment-expansion decision
+    records, robust-evaluator readiness, and README/ROADMAP wording that
+    separates months-scale feedback-loop economics from generic
+    self-improvement or distillation capability.
 
 - [ ] Populate Borg scheduling problem-formulation evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.1 frames Google

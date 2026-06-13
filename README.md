@@ -82,6 +82,11 @@ Important limits:
   rollback/safety review, and distillation dataset/training/evaluation
   artifacts; `papers/self_improvement_distillation_boundary.json` records
   that this evidence is not implemented.
+- Feedback-loop cadence and environment-ROI claims require loop IDs,
+  elapsed-month timelines, moderate-gain calibration, evaluator-environment
+  setup/maintenance costs, expected-versus-realized discovery value, and
+  expansion decision evidence; `papers/self_improvement_cadence_boundary.json`
+  records that this evidence is not implemented.
 - Workspace materialization diagnostics are local file-workspace evidence, not
   proof for bulk directory operations, language/build-runner artifacts,
   dependency graphs, portable static-asset source identity, or remote/container

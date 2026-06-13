@@ -342,6 +342,12 @@ from libreevolve.problems.benchmarks.self_improvement_distillation_boundary impo
     self_improvement_distillation_boundary_record,
     validate_self_improvement_distillation_boundary,
 )
+from libreevolve.problems.benchmarks.self_improvement_cadence_boundary import (
+    SELF_IMPROVEMENT_CADENCE_BOUNDARY_SCHEMA,
+    render_self_improvement_cadence_boundary_summary,
+    self_improvement_cadence_boundary_record,
+    validate_self_improvement_cadence_boundary,
+)
 from libreevolve.problems.benchmarks.codeevolve_boundary import (
     CODEEVOLVE_BOUNDARY_SCHEMA,
     codeevolve_boundary_record,
@@ -896,6 +902,7 @@ __all__ = [
     "SORTING_NETWORK_REDISCOVERY_BOUNDARY_SCHEMA",
     "TABLE1_CAPABILITY_EXHIBIT_BOUNDARY_SCHEMA",
     "SELF_IMPROVEMENT_DISTILLATION_BOUNDARY_SCHEMA",
+    "SELF_IMPROVEMENT_CADENCE_BOUNDARY_SCHEMA",
     "COMBINATORICS_BERCZY_BOUNDARY_SCHEMA",
     "CONTROLLER_BACKTRACKING_BOUNDARY_SCHEMA",
     "DEEPEVOLVE_BOUNDARY_SCHEMA",
@@ -1051,6 +1058,7 @@ __all__ = [
     "sorting_network_rediscovery_boundary_record",
     "table1_capability_exhibit_boundary_record",
     "self_improvement_distillation_boundary_record",
+    "self_improvement_cadence_boundary_record",
     "collaborator_feedback_provenance_boundary_record",
     "combinatorics_berczy_boundary_record",
     "controller_backtracking_boundary_record",
@@ -1188,6 +1196,7 @@ __all__ = [
     "render_sorting_network_rediscovery_boundary_summary",
     "render_table1_capability_exhibit_boundary_summary",
     "render_self_improvement_distillation_boundary_summary",
+    "render_self_improvement_cadence_boundary_summary",
     "render_collaborator_feedback_provenance_boundary_summary",
     "render_combinatorics_berczy_boundary_summary",
     "render_controller_backtracking_boundary_summary",
@@ -1339,6 +1348,7 @@ __all__ = [
     "validate_sorting_network_rediscovery_boundary",
     "validate_table1_capability_exhibit_boundary",
     "validate_self_improvement_distillation_boundary",
+    "validate_self_improvement_cadence_boundary",
     "validate_collaborator_feedback_provenance_boundary",
     "validate_combinatorics_berczy_boundary",
     "validate_controller_backtracking_boundary",

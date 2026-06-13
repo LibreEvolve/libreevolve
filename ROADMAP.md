@@ -2192,7 +2192,9 @@ resumed-trace proof are still open.
   tying the candidate to LibreEvolve's own execution path, and any
   distillation dataset/training/evaluation artifacts. The committed
   `papers/self_improvement_distillation_boundary.json` sidecar keeps those
-  Discussion claims scoped as context only.
+  Discussion claims scoped as context only, while
+  `papers/self_improvement_cadence_boundary.json` separately guards
+  months-scale feedback-loop cadence and environment-ROI claims.
 - For scheduling fixtures, populate mission-critical deployment-readiness
   evidence beyond generic systems gates: interpretable heuristic structure,
   debuggability and operator review, predictable behavior checks, rollout-risk

@@ -2642,3 +2642,7 @@ Planned or background-only:
   model-evaluation artifact derived from evolved programs. The committed
   `papers/self_improvement_distillation_boundary.json` sidecar keeps these
   Discussion claims scoped as absent local evidence.
+  `papers/self_improvement_cadence_boundary.json` separately records that
+  elapsed-month loop cadence, moderate-gain calibration, robust-evaluator
+  environment setup/maintenance costs, expected-versus-realized discovery
+  value, and environment-expansion decisions are not recorded locally.

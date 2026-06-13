@@ -778,14 +778,17 @@ sidecars, tests, and active TODOs.
     for feedback-loop cadence, compounding improvement timelines, environment
     setup cost/value, or which new robust-evaluator environments became worth
     creating because prior AlphaEvolve-style improvements changed the
-    economics.
+    economics. The committed
+    `papers/self_improvement_cadence_boundary.json` sidecar records those
+    cadence and environment-ROI gaps as not recorded locally.
   - Required result: add report metadata for self-improvement loop cadence and
     environment expansion: loop id, source optimization, affected next-version
     component, start/end dates or elapsed months, measured gain magnitude,
     setup and maintenance cost for new evaluator environments, expected and
-    realized discovery value, gating assumptions, and docs checks that keep
-    moderate/months-scale feedback-loop claims separate from generic
-    self-improvement or distillation readiness.
+    realized discovery value, robust-evaluator environment identity,
+    environment-expansion decision records, gating assumptions, and docs
+    checks that keep moderate/months-scale feedback-loop claims separate from
+    generic self-improvement or distillation readiness.
 
 ## Prompt Sampling and Context
 

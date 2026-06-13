@@ -5,6 +5,9 @@
   "stage_evidence_summary_schema": "libreevolve.evaluation_cascade_stage_evidence_summary.v1",
   "source_paper_id": "2506.13131",
   "source_section_id": "2.4",
+  "source_section_ids": [
+    "2.4"
+  ],
   "source_claim": "evaluation cascades use increasingly difficult test ensembles to promote promising candidates and prune less promising candidates before larger budgets are spent",
   "boundary_status": "runtime_attrition_without_benchmark_efficiency_evidence",
   "runtime_report_status": "evaluation_cascade_report_available_when_stages_run",

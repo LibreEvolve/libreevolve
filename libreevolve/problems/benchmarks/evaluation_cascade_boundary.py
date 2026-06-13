@@ -14,6 +14,7 @@ EVALUATION_CASCADE_STAGE_EVIDENCE_SUMMARY_SCHEMA = (
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_ID = "2.4"
+EXPECTED_SOURCE_SECTION_IDS = ("2.4",)
 EXPECTED_BOUNDARY_STATUS = "runtime_attrition_without_benchmark_efficiency_evidence"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "stage_id",
@@ -74,6 +75,7 @@ def evaluation_cascade_boundary_record() -> dict[str, Any]:
         "stage_evidence_summary_schema": EVALUATION_CASCADE_STAGE_EVIDENCE_SUMMARY_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_section_id": EXPECTED_SOURCE_SECTION_ID,
+        "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_claim": (
             "evaluation cascades use increasingly difficult test ensembles to "
             "promote promising candidates and prune less promising candidates "
@@ -118,6 +120,8 @@ def validate_evaluation_cascade_boundary(
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     if data.get("source_section_id") != EXPECTED_SOURCE_SECTION_ID:
         issues.append(_issue("invalid_source_section_id", "source_section_id must be 2.4"))
+    if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be ['2.4']"))
     if not isinstance(data.get("source_claim"), str) or "increasingly difficult" not in data["source_claim"]:
         issues.append(_issue("invalid_source_claim", "source_claim must identify increasingly difficult cascade stages"))
     status = data.get("boundary_status")

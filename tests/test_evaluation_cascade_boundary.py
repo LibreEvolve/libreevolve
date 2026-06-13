@@ -19,6 +19,7 @@ def test_evaluation_cascade_boundary_accepts_absence_record():
     )
     assert validation.missing_evidence_count == 7
     assert boundary["schema"] == EVALUATION_CASCADE_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["2.4"]
     assert "does not claim AlphaEvolve-style cascade-efficiency evidence" in (
         boundary["claim_boundary"]
     )
@@ -28,6 +29,7 @@ def test_evaluation_cascade_boundary_rejects_premature_efficiency_claim():
     boundary = evaluation_cascade_boundary_record()
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "benchmark_efficiency_evidence_recorded"
+    boundary["source_section_ids"] = ["2.3"]
     boundary["missing_evidence"]["wall_clock_cost_savings"] = "recorded"
     boundary["required_evidence_fields"] = ["stage_id"]
 
@@ -37,6 +39,7 @@ def test_evaluation_cascade_boundary_rejects_premature_efficiency_claim():
     assert validation.ok is False
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert "invalid_missing_evidence_wall_clock_cost_savings" in codes
     assert "missing_required_evidence_field" in codes
 

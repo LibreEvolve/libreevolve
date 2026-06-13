@@ -213,6 +213,12 @@ Important limits:
   selected result-row links, branch/problem label mappings, before/after metric
   values, previous-best sources, rendered visual artifact paths or hashes,
   rendering parameters, source Colab cells/artifacts, or verifier links.
+- Figure 5 versus Appendix B.12 sum-of-radii precision remains unreconciled:
+  the registry preserves Figure 5's `2.6340 -> 2.6358` display separately from
+  the Appendix B.12/Figure 14 `2.634 -> 2.635` strings, not source-specific
+  locators, Figure 5 panel artifacts, value-extraction certificates,
+  normalized values, rounding or canonicalization policy, value-reconciliation
+  certificate, recomputed sum, or companion Colab link.
 - Matrix-publication evidence is one checked `mm_2x2x2` Strassen baseline
   bundle plus Appendix A registry/status metadata, not full-suite local target
   tensors, discovered decompositions, coefficient data, exactness certificates,

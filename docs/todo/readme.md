@@ -941,23 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README Figure 5 sum-of-radii value wording scoped until
-      source-specific precision provenance exists.
-  - Spec evidence: AlphaEvolve Figure 5 displays a sum-of-radii improvement
-    `2.6340 -> 2.6358`, while Appendix B.12 and Figure 14 state the `n = 26`
-    unit-square circle-packing result as `2.634` to `2.635`.
-  - Current evidence: README now names `figure5_b12_precision_boundary`, which
-    preserves Figure 5's `2.6340 -> 2.6358` display separately from the
-    Appendix B.12/Figure 14 `2.634` to `2.635` strings.
-  - Remaining gap: README still cannot cite source-specific locators, Figure 5
-    panel artifacts, value-extraction certificates, normalized values, a
-    rounding/canonicalization policy, value-reconciliation certificate,
-    recomputed sum, or companion Colab link.
-  - Required result: when that source-specific precision provenance lands,
-    update README, ROADMAP, papers index, and code/paper TODOs with panel
-    artifacts, extraction/reconciliation certificates, and policy artifacts,
-    and avoid treating `2.6358` and `2.635` as interchangeable evidence.
-
 - [ ] Keep README Appendix B figure wording scoped until Figures 10-14
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B includes construction figures beyond

@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Figure 5/B.12 sum-of-radii precision README boundary.
+  - Status: README Important limits now states that Figure 5 versus Appendix
+    B.12 sum-of-radii precision remains unreconciled: the registry preserves
+    Figure 5's `2.6340 -> 2.6358` display separately from the Appendix
+    B.12/Figure 14 `2.634 -> 2.635` strings, not source-specific locators,
+    Figure 5 panel artifacts, value-extraction certificates, normalized
+    values, rounding or canonicalization policy, value-reconciliation
+    certificate, recomputed sum, or companion Colab link.
+  - Verification: Appendix B registry tests cover the
+    `figure5_b12_precision_boundary` source strings and reject premature
+    reconciliation; code and paper TODOs still track the missing source
+    locators, panel artifacts, extraction certificates, and policy artifacts.
+
 - [x] Document Figure 5 constructive-math exhibit README boundary.
   - Status: README Important limits now states that Figure 5
     constructive-math exhibit provenance remains absent: README describes

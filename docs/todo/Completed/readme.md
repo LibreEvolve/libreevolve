@@ -4,6 +4,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document Pallas autotuning/manual-workflow README boundary.
+  - Status: README Important limits now states that Pallas workflow
+    documentation does not yet prove AlphaEvolve-style automation of
+    search-based autotuning or manual tiling-heuristic work: baseline workflow
+    class, autotuning search/retuning policy, manual authoring/review effort,
+    input-shape-change sensitivity, hardware-expertise assumptions, and
+    model-developer ergonomics comparisons remain active code and paper TODOs.
+  - Verification: code and papers TODOs still track the missing workflow-class,
+    retuning-burden, manual-effort, hardware-expertise, and ergonomics evidence,
+    while paper-manifest validation keeps README and papers-index references
+    covered.
+
 - [x] Document Pallas kernel shape-split/runtime README boundary.
   - Status: README Important limits now states that kernel systems-result
     reports currently cover generic domain gates and claim-calibration

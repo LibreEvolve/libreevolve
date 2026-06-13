@@ -360,6 +360,12 @@ Important limits:
   expert-baseline tiling heuristic identity, tiling-only candidate boundaries,
   unchanged-operation correctness-by-construction evidence, engineering-effort
   calibration, or production/workflow adoption.
+- Pallas workflow documentation does not yet prove AlphaEvolve-style
+  automation of search-based autotuning or manual tiling-heuristic work:
+  baseline workflow class, autotuning search/retuning policy, manual
+  authoring/review effort, input-shape-change sensitivity, hardware-expertise
+  assumptions, and model-developer ergonomics comparisons remain active code
+  and paper TODOs.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

@@ -800,6 +800,16 @@ Important limits:
   reflection/review artifact stream, supervision-frequency/cadence trace,
   preservation-of-objective-performance report, coding/math/safety benchmark
   report, linked-code audit, or independent reproduction output.
+- ArXiv `2605.27276` is harness-plus-weight self-improvement context only; the
+  README mentions this cached paper as a curated subset while
+  `papers/README.md` remains the complete implementation-status index.
+  LibreEvolve has no Feedback-Agent that chooses between harness and weight
+  updates, editable task-agent harness inventory, harness patch provenance,
+  online RL/fine-tuning loop, adapter/checkpoint lifecycle,
+  trajectory-to-training-data promotion policy, rollback/resume policy,
+  harness-only versus weight-only versus combined ablation report,
+  LawBench/kernel/scRNA benchmark report, linked-code audit, or independent
+  reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

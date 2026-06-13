@@ -14958,3 +14958,30 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     reports, cadence experiments, benchmark baselines, report outcomes, and
     ANCHOR-style healthy-evolution oversight remain active in code and paper
     TODOs.
+
+- [x] Keep README SIA harness-plus-weight self-improvement claims
+      source-scoped until runtime evidence exists.
+  - Spec evidence: arXiv `2605.27276`, `SIA: Self Improving AI with Harness
+    & Weight Updates`, proposes a self-improving loop where a Feedback-Agent
+    updates both the harness/scaffold and the weights of a task-specific
+    agent. Its abstract contrasts harness-only meta-agent updates with
+    test-time training under a fixed harness, then reports that combining
+    both levers outperforms scaffold iteration alone across Chinese legal
+    charge classification, low-level GPU kernel optimization, and single-cell
+    RNA denoising.
+  - Status: README now lists arXiv `2605.27276` as harness-plus-weight
+    self-improvement context only and marks the mention as a curated
+    cached-paper subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no
+    Feedback-Agent that chooses between harness and weight updates, editable
+    task-agent harness inventory, harness patch provenance, online
+    RL/fine-tuning loop, adapter/checkpoint lifecycle,
+    trajectory-to-training-data promotion policy, rollback/resume policy,
+    harness-only versus weight-only versus combined ablation report,
+    LawBench/kernel/scRNA benchmark report, linked-code audit, or independent
+    reproduction output.
+  - Remaining README gap: role schemas, harness patch provenance,
+    weight-update records, training-data lineage, checkpoint/adaptor
+    lifecycle, verifier/reward evidence, ablation baselines, compute/cost
+    accounting, report outcomes, and SIA-style harness-plus-weight
+    self-improvement remain active in code and paper TODOs.

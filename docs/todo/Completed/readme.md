@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document follow-on problem-count README boundary.
+  - Status: README Important limits now states that follow-on problem-count
+    wording remains snapshot-scoped: the source README/paper declares `67`
+    mathematical problems, pinned diagnostics observe `68` numbered HTML pages,
+    and page 68 is classified as an extra duplicate-title `Logic puzzles` page
+    outside the declared navigation range with a generic Colab landing URL and
+    placeholder paper link.
+  - Verification: follow-on coverage, source, and paper-manifest tests cover
+    the declared-67 versus observed-68 boundary, page-68 classification,
+    duplicate-title diagnostics, and link-status rows; README now avoids
+    treating every numbered page as a complete notebook-backed or paper-linked
+    source artifact.
+
 - [x] Document follow-on problem-repository coverage README boundary.
   - Status: README Important limits now states that follow-on
     problem-repository coverage records validate pinned snapshot problem-page,

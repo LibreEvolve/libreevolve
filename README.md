@@ -435,6 +435,13 @@ Important limits:
   notebook cell inventories, normalized result rows, construction payloads,
   verifier artifacts, recomputed values, or copied/adapted generated
   artifacts.
+- Follow-on problem-count wording remains snapshot-scoped: the source
+  README/paper declares 67 mathematical problems, while pinned diagnostics
+  observe 68 numbered HTML pages and classify page 68 as an extra
+  duplicate-title `Logic puzzles` page outside the declared navigation range
+  with a generic Colab landing URL and placeholder paper link. That evidence is
+  not a claim that every numbered page is a complete notebook-backed or
+  paper-linked source artifact.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

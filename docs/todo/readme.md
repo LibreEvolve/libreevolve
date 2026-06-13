@@ -941,27 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README follow-on problem-count wording scoped until page inventory
-      is reconciled.
-  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
-    README says there are 67 mathematical problem descriptions, while the
-    current live `problems/` directory exposes 68 numbered HTML files.
-    `problems/67.html` and `problems/68.html` are both titled `Logic puzzles`;
-    one page has an under-construction Colab placeholder and the other has a
-    generic Colab URL plus a placeholder paper link.
-  - Current evidence: README now documents the follow-on coverage boundary
-    that reconciles the README/paper declared `67` problem count with `68`
-    observed numbered HTML pages, and the follow-on source manifest now links
-    that evidence. README now also documents page 68 as an extra numbered
-    duplicate-title `Logic puzzles` page outside the declared 67-page
-    navigation range, plus all-page resource-link diagnostics and scoped
-    artifact flags for linked pinned notebooks.
-  - Required result: keep README follow-on source claims distinguishing
-    paper/README problem count from full live repository HTML-page inventory,
-    list duplicate or placeholder pages as snapshot diagnostics, and avoid
-    treating every numbered page as a complete notebook/paper-linked source
-    artifact.
-
 - [ ] Keep README figure/notebook provenance wording scoped until paper
       artifact-role records are bound to artifacts.
   - Spec evidence: AlphaEvolve's Contributions section attributes paper figure

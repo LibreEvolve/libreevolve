@@ -941,26 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README scheduling wording scoped until
-      interpretability/deployment-readiness evidence is populated.
-  - Spec evidence: AlphaEvolve Section 3.3.1 says the Borg scheduling
-    heuristic was chosen over deep reinforcement learning because the code
-    solution offered interpretability, debuggability, predictability, and ease
-    of deployment, which were essential for a mission-critical system.
-  - Current evidence: README now documents `scheduling_deployment_readiness`
-    records required for `alphaevolve_ready` scheduling reports, including
-    human-readable heuristic structure, operator/debug review, predictability
-    checks, deployment-risk controls, deployment ergonomics, artifact refs, and
-    comparison against less interpretable learned policies. Existing scheduling
-    fixtures do not yet carry real populated deployment-readiness records.
-  - Required result: once scheduling fixtures and certification examples
-    populate interpretability/debuggability review, predictability checks,
-    deployment ergonomics, rollout-risk evidence, and baseline comparison
-    against black-box approaches, update README, ROADMAP, papers index, and
-    matching TODOs so README can describe those records without implying the
-    schema alone proves AlphaEvolve-style mission-critical deployment
-    suitability.
-
 - [ ] Keep README Figure 6 scheduling wording scoped until heuristic-exhibit
       provenance exists.
   - Spec evidence: AlphaEvolve Figure 6 shows the exact Borg scheduling

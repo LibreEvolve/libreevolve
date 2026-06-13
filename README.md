@@ -337,6 +337,12 @@ Important limits:
   and artifact refs, not proof of populated Borg-style workload fixtures,
   simulator runs, or AlphaEvolve scheduling problem setup; that boundary is
   tracked by `papers/systems_result_readiness_boundary.json`.
+- Scheduling deployment-readiness records validate interpretable heuristic
+  structure, operator/debug review, predictability checks, deployment-risk
+  controls, ergonomics, learned-policy comparison, review flags, and artifact
+  refs, not proof of real mission-critical rollout, operator acceptance,
+  deployment measurements, or AlphaEvolve-comparable Borg scheduling readiness;
+  that boundary is tracked by `papers/systems_result_readiness_boundary.json`.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

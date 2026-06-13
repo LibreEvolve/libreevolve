@@ -4,6 +4,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document scheduling deployment-readiness README boundary.
+  - Status: README Important limits now states that scheduling
+    deployment-readiness records validate interpretable heuristic structure,
+    operator/debug review, predictability checks, deployment-risk controls,
+    ergonomics, learned-policy comparison, review flags, and artifact refs, not
+    proof of real mission-critical rollout, operator acceptance, deployment
+    measurements, or AlphaEvolve-comparable Borg scheduling readiness. It ties
+    that limit to `papers/systems_result_readiness_boundary.json`.
+  - Verification: focused systems-result and systems-readiness tests validate
+    required scheduling deployment-readiness records for ready scheduling
+    reports, review/control flags, predictability checks, artifact refs,
+    non-ready omission rules, non-scheduling rejection, and readiness-boundary
+    overclaim guards; paper-manifest tests validate the sidecar.
+
 - [x] Document scheduling vector-bin-packing README boundary.
   - Status: README Important limits now states that scheduling formulation
     records validate online vector-bin-packing schema, CPU/memory bin and item

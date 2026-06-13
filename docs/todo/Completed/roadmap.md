@@ -2,6 +2,23 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive collaborator-feedback roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
+    `papers/README.md` already describe optional
+    `collaborator_feedback.yaml` /
+    `Problem.collaborator_feedback_metadata`,
+    `runtime.history.collaborator_feedback_provenance_report`, and
+    `papers/collaborator_feedback_provenance_boundary.json` while keeping
+    AlphaEvolve robustness/versatility shaped-by-feedback parity false.
+  - Remaining guard: populated representative feedback records, multi-cohort
+    reviewed evidence, workflow/artifact change links, reviewed validation
+    outcomes, paper-facing certification rows, and robustness/versatility
+    claim linkage remain active in `docs/todo/code.md` and
+    `docs/todo/papers.md`.
+  - Verification: collaborator-feedback provenance and paper-manifest
+    validation continue to reject metadata-only records as AlphaEvolve
+    collaborator-feedback parity evidence.
+
 - [x] Archive problem-formulation roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and
     `papers/README.md` already describe optional `formulation.yaml` /

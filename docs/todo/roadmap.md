@@ -6,34 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Keep robustness and versatility roadmap wording scoped until populated
-      collaborator-feedback evidence exists.
-  - Spec evidence: AlphaEvolve's Acknowledgements say early users and
-    collaborators supplied diverse use cases and insightful feedback that
-    shaped AlphaEvolve into a more robust and versatile tool. This is a
-    product/process feedback claim, not the same as evaluator output,
-    archive-feedback context, or LLM-grader feedback inside the search loop.
-  - Current evidence: ROADMAP and README/code evidence track implemented
-    surfaces, benchmark examples, expert formulation gaps, systems
-    owner/reviewer gaps, optional `collaborator_feedback.yaml` /
-    `Problem.collaborator_feedback_metadata`, normalized
-    `problem.collaborator_feedback_metadata`, and
-    `runtime.history.collaborator_feedback_provenance_report` for cohorts,
-    feedback events, workflow areas, change links, validation outcomes,
-    privacy/redaction policy, and review/signoff readiness. Current roadmap
-    and code surfaces also cover candidate feedback, feedback-sourced
-    objective metrics, and LLM feedback calibration artifacts as separate
-    in-run mechanisms. Existing fixtures do not yet carry real broad
-    collaborator-feedback evidence.
-    `papers/collaborator_feedback_provenance_boundary.json` preserves the
-    roadmap-visible metadata-contract-only boundary for this runtime surface.
-  - Required result: when representative fixtures carry reviewed
-    collaborator-feedback metadata and paper-facing evidence, update roadmap,
-    README, papers index, and code/paper TODO entries together so roadmap
-    wording neither underclaims the new metadata/report surface nor overclaims
-    AlphaEvolve-style robustness or versatility shaped by broad collaborator
-    feedback.
-
 - [ ] Keep workspace-topology roadmap scope aligned with current
       materialization diagnostics.
   - Spec evidence: AlphaEvolve-style codebase evolution should turn invalid

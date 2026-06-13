@@ -2,6 +2,24 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive scientific-discovery automated-evaluator roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `docs/status.md`, and `papers/README.md` already scope scientific
+    discovery claims to machine-gradeable evaluator workflows through
+    `runtime.history.automated_evaluator_scope_report` and
+    `papers/automated_evaluator_scope_boundary.json`, while keeping manual
+    experimentation, LLM-only idea-feedback workflows, and robust
+    evaluator-environment readiness out of current AlphaEvolve coverage.
+  - Remaining guard: robust evaluator-environment fixtures, automatable-domain
+    boundaries, setup/cost and expected discovery-value evidence,
+    manual-to-code transition policies, environment-scaling evidence, and
+    AI-Co-Scientist-style idea-stage contracts remain future work.
+  - Verification: runtime scope tests assert automated evaluator records,
+    deterministic evaluator ownership of validity, post-evaluator LLM feedback,
+    manual-experiment exclusion, required transition to executable code, and
+    `claim_ready=false`; the automated-evaluator boundary sidecar rejects
+    robust-environment overclaims through paper-manifest validation.
+
 - [x] Archive backtracking roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `docs/status.md`, and `papers/README.md` already scope backtracking

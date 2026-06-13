@@ -12,9 +12,9 @@ def test_ci_workflow_coverage_boundary_accepts_path_scoped_boundary():
     validation = validate_ci_workflow_coverage_boundary(boundary)
 
     assert validation.ok is True
-    assert validation.boundary_status == "path_scoped_ubuntu_workflow_only"
+    assert validation.boundary_status == "path_scoped_cross_platform_unit_workflow_only"
     assert validation.required_evidence_field_count == 14
-    assert validation.missing_evidence_count == 4
+    assert validation.missing_evidence_count == 3
     assert boundary["schema"] == CI_WORKFLOW_COVERAGE_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
     assert "committed-manifest paper/docs job" in boundary["claim_boundary"]
@@ -23,6 +23,9 @@ def test_ci_workflow_coverage_boundary_accepts_path_scoped_boundary():
     )
     assert boundary["partial_evidence"]["docs_semantic_claim_verifier"] == (
         "paper_docs_job_runs_manifest_source_and_boundary_verifier_tests"
+    )
+    assert boundary["partial_evidence"]["cross_platform_ci_matrix"] == (
+        "python_311_312_unit_matrix_on_ubuntu_windows_macos"
     )
     assert (
         boundary["missing_evidence"]["paper_manifest_ci_job"]
@@ -34,7 +37,7 @@ def test_ci_workflow_coverage_boundary_rejects_full_ci_overclaim():
     boundary = ci_workflow_coverage_boundary_record()
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "full_alphaevolve_ci_ready"
-    boundary["missing_evidence"]["cross_platform_ci_matrix"] = "recorded"
+    boundary["partial_evidence"]["cross_platform_ci_matrix"] = "full_cross_platform_ci_ready"
     boundary["required_evidence_fields"] = ["workflow_dispatch_trigger"]
 
     validation = validate_ci_workflow_coverage_boundary(boundary)
@@ -43,7 +46,7 @@ def test_ci_workflow_coverage_boundary_rejects_full_ci_overclaim():
     assert validation.ok is False
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
-    assert "invalid_missing_evidence_cross_platform_ci_matrix" in codes
+    assert "invalid_partial_evidence_cross_platform_ci_matrix" in codes
     assert "missing_required_evidence_field" in codes
 
 
@@ -54,6 +57,6 @@ def test_render_ci_workflow_coverage_boundary_summary_reports_shape():
 
     assert "CI workflow coverage boundary" in summary
     assert "| schema_status | ok |" in summary
-    assert "| boundary_status | path_scoped_ubuntu_workflow_only |" in summary
+    assert "| boundary_status | path_scoped_cross_platform_unit_workflow_only |" in summary
     assert "| required_evidence_field_count | 14 |" in summary
-    assert "| missing_evidence_count | 4 |" in summary
+    assert "| missing_evidence_count | 3 |" in summary

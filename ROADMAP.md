@@ -2222,12 +2222,13 @@ resumed-trace proof are still open.
   signed release provenance, maintainer-approved release evidence, and index
   verification.
 - Extend the current path-scoped GitHub Actions workflow beyond secret scan,
-  Python 3.11/3.12 non-integration tests, optional integration tests, and
-  the committed-manifest paper/docs verifier suite and release-artifact smoke
-  CI jobs with local-PDF paper-manifest checks where appropriate, fully
-  semantic docs-claim verification, signed release provenance, more
-  interpreter/platform coverage, and notification-safe trigger and branch
-  policy. The current paper-facing CI boundary is tracked by
+  Python 3.11/3.12 cross-platform non-integration tests, optional integration
+  tests, and the committed-manifest paper/docs verifier suite and
+  release-artifact smoke CI jobs with local-PDF paper-manifest checks where
+  appropriate, fully semantic docs-claim verification, signed release
+  provenance, cross-platform paper/docs, release, and integration coverage, and
+  notification-safe trigger and branch policy. The current paper-facing CI
+  boundary is tracked by
   `papers/ci_workflow_coverage_boundary.json`.
 
 ## Non-Goals For Now

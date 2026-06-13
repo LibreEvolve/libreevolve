@@ -18384,9 +18384,10 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 - [x] Add CI workflow coverage sidecar validation.
   - Status: `libreevolve/problems/benchmarks/ci_workflow_coverage_boundary.py`
-    now emits and validates the path-scoped Ubuntu workflow boundary for
+    now emits and validates the path-scoped cross-platform unit workflow boundary for
     manual dispatch, push/pull_request path filters, secret scan,
-    Python 3.11/3.12 unit jobs, optional integration tests, and
+    Python 3.11/3.12 unit jobs on Ubuntu/Windows/macOS, optional integration
+    tests, paper/docs verifier tests, release-artifact smoke tests, and
     workflow-shape tests; paper-manifest validation requires the committed
     sidecar at the repo root.
   - Verification: focused boundary tests and paper-manifest tests reject full

@@ -716,8 +716,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     supported runtime environments used to produce results.
   - Partial status: `.github/workflows/tests.yml` provides manual dispatch,
     path-scoped `push` and `pull_request` triggers, secret scanning, Python
-    3.11/3.12 Ubuntu non-integration tests, and an optional
-    credential-gated integration job. It now also has a dedicated paper/docs
+    3.11/3.12 non-integration tests on Ubuntu, Windows, and macOS, and an
+    optional credential-gated Ubuntu integration job. It now also has a dedicated paper/docs
     job that runs `python -m libreevolve.tools.paper_manifest --root .` and
     paper-source, manifest, docs, and boundary verifier tests without requiring
     ignored local PDFs, plus a
@@ -728,17 +728,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     `tests/test_agents_docs.py` verifies the path filters, job names, and
     paper/docs/release commands. The committed
     `papers/ci_workflow_coverage_boundary.json` sidecar preserves this
-    path-scoped Ubuntu workflow boundary for paper-manifest validation.
+    path-scoped cross-platform unit workflow boundary for paper-manifest
+    validation.
   - Current gap: CI still does not run paper-manifest local-PDF checks, does
     not perform fully semantic documentation-claim verification beyond the
     committed verifier suite, does not certify signed release provenance, does
-    not cover non-Ubuntu platforms, and does not encode richer branch or
-    notification policy.
+    not cover paper/docs, release, or integration jobs across non-Ubuntu
+    platforms, and does not encode richer branch or notification policy.
   - Required result: add local-PDF manifest validation where appropriate,
     fully semantic docs-claim verification, release-artifact signed provenance,
-    interpreter/platform matrices, branch policy, and notification-safe trigger
-    policy before treating the workflow as full AlphaEvolve-grade validation
-    coverage.
+    cross-platform paper/docs, release, and integration coverage, branch policy,
+    and notification-safe trigger policy before treating the workflow as full
+    AlphaEvolve-grade validation coverage.
 
 - [ ] Stable behavior descriptor models and archive rebin semantics.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.3 and 2.4.

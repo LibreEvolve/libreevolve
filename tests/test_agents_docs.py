@@ -108,6 +108,16 @@ def test_tests_workflow_covers_docs_papers_and_todo_changes():
     assert "release_artifact" in workflow["jobs"]
     assert "integration" in workflow["jobs"]
 
+    unit = workflow["jobs"]["unit"]
+    assert unit["name"] == "Unit Tests (${{ matrix.os }}, Python ${{ matrix.python-version }})"
+    assert unit["runs-on"] == "${{ matrix.os }}"
+    assert set(unit["strategy"]["matrix"]["os"]) == {
+        "ubuntu-latest",
+        "windows-latest",
+        "macos-latest",
+    }
+    assert set(unit["strategy"]["matrix"]["python-version"]) == {"3.11", "3.12"}
+
     paper_docs = workflow["jobs"]["paper_docs"]
     assert paper_docs["name"] == "Paper and Docs Checks"
     paper_doc_commands = "\n".join(

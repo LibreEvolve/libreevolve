@@ -3131,7 +3131,7 @@ def test_validate_paper_manifest_rejects_ci_workflow_coverage_boundary_drift(
     record = paper_manifest.ci_workflow_coverage_boundary_record()
     record["claim_ready"] = True
     record["boundary_status"] = "full_alphaevolve_ci_ready"
-    record["missing_evidence"]["cross_platform_ci_matrix"] = "recorded"
+    record["partial_evidence"]["cross_platform_ci_matrix"] = "full_cross_platform_ci_ready"
     sidecar = tmp_path / paper_manifest.CI_WORKFLOW_COVERAGE_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -3142,7 +3142,7 @@ def test_validate_paper_manifest_rejects_ci_workflow_coverage_boundary_drift(
     assert "ci_workflow_coverage_boundary_claim_ready_overclaim" in codes
     assert "ci_workflow_coverage_boundary_invalid_boundary_status" in codes
     assert (
-        "ci_workflow_coverage_boundary_invalid_missing_evidence_cross_platform_ci_matrix"
+        "ci_workflow_coverage_boundary_invalid_partial_evidence_cross_platform_ci_matrix"
         in codes
     )
 

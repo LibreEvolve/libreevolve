@@ -2,7 +2,7 @@
   "schema": "libreevolve.ci_workflow_coverage_boundary.v1",
   "source_paper_id": "2506.13131",
   "source_claim": "AlphaEvolve-scale engineering evidence should be backed by repeatable validation over code, documentation, paper evidence, packaging, and supported runtime environments",
-  "boundary_status": "path_scoped_ubuntu_workflow_only",
+  "boundary_status": "path_scoped_cross_platform_unit_workflow_only",
   "runtime_report_status": "github_actions_workflow_shape_tests_available",
   "claim_ready": false,
   "required_evidence_fields": [
@@ -23,13 +23,13 @@
   ],
   "partial_evidence": {
     "docs_semantic_claim_verifier": "paper_docs_job_runs_manifest_source_and_boundary_verifier_tests",
-    "wheel_sdist_ci_smoke": "release_artifact_job_with_package_tree_inventory_hash_provenance_and_artifact_upload"
+    "wheel_sdist_ci_smoke": "release_artifact_job_with_package_tree_inventory_hash_provenance_and_artifact_upload",
+    "cross_platform_ci_matrix": "python_311_312_unit_matrix_on_ubuntu_windows_macos"
   },
   "missing_evidence": {
     "paper_manifest_ci_job": "committed_manifest_only_no_local_pdf_cache",
-    "cross_platform_ci_matrix": "not_recorded_locally",
     "branch_policy": "not_recorded_locally",
     "notification_policy": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has a path-scoped GitHub Actions workflow with manual dispatch, push/pull_request path filters, a secret scan job, Python 3.11/3.12 Ubuntu unit jobs, an optional credential-gated integration job, a committed-manifest paper/docs job that does not require the ignored local PDF cache, runs paper source, manifest, docs, and boundary verifier tests, a release-artifact smoke job that builds a wheel and sdist and installs the wheel for CLI smoke checks with libreevolve package-tree wheel and sdist inventory inspection plus release artifact hash provenance and GitHub Actions artifact upload, and unit tests that check the workflow shape. It does not claim CI local-PDF paper-manifest checks, fully semantic documentation-claim verification beyond the committed verifier suite, signed release provenance, cross-platform CI coverage, branch policy, or notification policy."
+  "claim_boundary": "This boundary records that LibreEvolve has a path-scoped GitHub Actions workflow with manual dispatch, push/pull_request path filters, a secret scan job, Python 3.11/3.12 unit jobs on Ubuntu, Windows, and macOS, an optional credential-gated integration job, a committed-manifest paper/docs job that does not require the ignored local PDF cache, runs paper source, manifest, docs, and boundary verifier tests, a release-artifact smoke job that builds a wheel and sdist and installs the wheel for CLI smoke checks with libreevolve package-tree wheel and sdist inventory inspection plus release artifact hash provenance and GitHub Actions artifact upload, and unit tests that check the workflow shape. It does not claim CI local-PDF paper-manifest checks, fully semantic documentation-claim verification beyond the committed verifier suite, signed release provenance, cross-platform paper/docs, release, or integration coverage, branch policy, or notification policy."
 }

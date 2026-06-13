@@ -4773,14 +4773,14 @@ Primary evidence:
     verification without overclaiming full release reproducibility from the
     current CI smoke.
 
-- [ ] Expand GitHub Actions workflow coverage beyond path-scoped Ubuntu jobs.
+- [ ] Expand GitHub Actions workflow coverage beyond path-scoped cross-platform unit jobs.
   - Spec evidence: AlphaEvolve-scale engineering claims should be supported by
     repeatable validation over source code, docs, paper evidence, packaging,
     and supported runtime environments.
   - Current evidence: `.github/workflows/tests.yml` has manual dispatch,
     path-scoped `push` and `pull_request` triggers, a secret-scan job, Python
-    3.11/3.12 Ubuntu non-integration tests, and an optional
-    credential-gated integration job. It now also has a dedicated paper/docs
+    3.11/3.12 non-integration tests on Ubuntu, Windows, and macOS, and an
+    optional credential-gated Ubuntu integration job. It now also has a dedicated paper/docs
     job that validates the committed paper manifest and paper-source,
     manifest, docs, and boundary verifier tests without requiring ignored local
     PDFs, plus a release-artifact smoke
@@ -4790,12 +4790,12 @@ Primary evidence:
     `tests/test_agents_docs.py` verifies required path filters, job names, and
     paper/docs/release commands. The committed
     `papers/ci_workflow_coverage_boundary.json` sidecar now preserves this
-    path-scoped Ubuntu workflow boundary.
+    path-scoped cross-platform unit workflow boundary.
   - Required result: add local-PDF paper manifest validation where appropriate,
     fully semantic docs-claim verification beyond the committed verifier suite,
-    signed release provenance, interpreter/platform matrices, branch policy,
-    and notification-safe trigger policy before treating CI as
-    AlphaEvolve-grade validation coverage.
+    signed release provenance, cross-platform paper/docs, release, and
+    integration coverage, branch policy, and notification-safe trigger policy
+    before treating CI as AlphaEvolve-grade validation coverage.
 
 - [ ] Add replayable external build, package-source, and accelerator environment evidence.
   - Spec evidence: AlphaEvolve-scale experiments should be reproducible across

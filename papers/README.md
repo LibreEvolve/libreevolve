@@ -1326,13 +1326,13 @@ published-index verification, and maintainer-approved release readiness remain
 absent.
 The committed `papers/ci_workflow_coverage_boundary.json` sidecar preserves
 the current path-scoped GitHub Actions boundary: manual dispatch,
-push/pull_request path filters, secret scan, Python 3.11/3.12 Ubuntu unit jobs,
-optional integration tests, and a committed-manifest paper/docs job exist,
+push/pull_request path filters, secret scan, Python 3.11/3.12 unit jobs on
+Ubuntu, Windows, and macOS, optional integration tests, and a committed-manifest paper/docs job exist,
 with paper-source, manifest, docs, and boundary verifier tests, plus a
 release-artifact smoke job exists, while CI local-PDF paper-manifest checks,
 fully semantic docs-claim verification beyond the committed verifier suite,
-signed release provenance, cross-platform matrices, branch policy, and
-notification policy remain absent.
+signed release provenance, cross-platform paper/docs, release, and integration
+coverage, branch policy, and notification policy remain absent.
 The committed `papers/documentation_truthfulness_boundary.json` sidecar
 preserves the current cross-document documentation guard boundary: README,
 ROADMAP, papers-index, TODO-ledger, path-filter, paper-manifest consistency,

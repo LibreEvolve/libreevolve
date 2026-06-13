@@ -3644,17 +3644,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README,
     `papers/README.md`, `.github/workflows/tests.yml`, and
     `papers/ci_workflow_coverage_boundary.json` already describe the current
-    path-scoped Ubuntu workflow boundary: manual dispatch,
+    path-scoped cross-platform unit workflow boundary: manual dispatch,
     `push`/`pull_request` path filters, secret scan, Python 3.11/3.12
-    non-integration tests, optional credential-gated integration tests, and
-    workflow-shape tests.
-  - Remaining guard: CI paper-manifest jobs, semantic documentation-claim
-    verification, wheel/sdist CI smoke tests, cross-platform CI matrices,
-    branch policy, and notification policy remain active in
+    non-integration tests on Ubuntu/Windows/macOS, optional credential-gated
+    integration tests, paper/docs verifier tests, release-artifact smoke tests,
+    and workflow-shape tests.
+  - Remaining guard: CI local-PDF paper-manifest jobs, fully semantic
+    documentation-claim verification, cross-platform paper/docs/release/
+    integration jobs, branch policy, and notification policy remain active in
     `docs/todo/code.md` and `docs/todo/papers.md`.
   - Verification: CI workflow boundary, workflow-shape, and paper-manifest
-    validation continue to reject the current path-scoped Ubuntu workflow as
-    full AlphaEvolve-grade CI coverage.
+    validation continue to reject the current path-scoped workflow as full
+    AlphaEvolve-grade CI coverage.
 
 - [x] Archive release-packaging roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README, and

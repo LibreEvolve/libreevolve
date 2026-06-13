@@ -54,11 +54,15 @@ jobs:
         run: python -m pre_commit run detect-secrets --all-files --show-diff-on-failure
 
   unit:
-    name: Unit Tests (Python ${{ matrix.python-version }})
-    runs-on: ubuntu-latest
+    name: Unit Tests (${{ matrix.os }}, Python ${{ matrix.python-version }})
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
         python-version:
           - "3.11"
           - "3.12"

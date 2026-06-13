@@ -10,7 +10,7 @@ CI_WORKFLOW_COVERAGE_BOUNDARY_SCHEMA = (
     "libreevolve.ci_workflow_coverage_boundary.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
-EXPECTED_BOUNDARY_STATUS = "path_scoped_ubuntu_workflow_only"
+EXPECTED_BOUNDARY_STATUS = "path_scoped_cross_platform_unit_workflow_only"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "workflow_dispatch_trigger",
     "push_pull_request_path_filters",
@@ -29,13 +29,13 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 )
 EXPECTED_MISSING_EVIDENCE = {
     "paper_manifest_ci_job": "committed_manifest_only_no_local_pdf_cache",
-    "cross_platform_ci_matrix": "not_recorded_locally",
     "branch_policy": "not_recorded_locally",
     "notification_policy": "not_recorded_locally",
 }
 EXPECTED_PARTIAL_EVIDENCE = {
     "docs_semantic_claim_verifier": "paper_docs_job_runs_manifest_source_and_boundary_verifier_tests",
     "wheel_sdist_ci_smoke": "release_artifact_job_with_package_tree_inventory_hash_provenance_and_artifact_upload",
+    "cross_platform_ci_matrix": "python_311_312_unit_matrix_on_ubuntu_windows_macos",
 }
 
 
@@ -74,8 +74,9 @@ def ci_workflow_coverage_boundary_record() -> dict[str, Any]:
         "claim_boundary": (
             "This boundary records that LibreEvolve has a path-scoped GitHub "
             "Actions workflow with manual dispatch, push/pull_request path "
-            "filters, a secret scan job, Python 3.11/3.12 Ubuntu unit jobs, an "
-            "optional credential-gated integration job, a committed-manifest "
+            "filters, a secret scan job, Python 3.11/3.12 unit jobs on "
+            "Ubuntu, Windows, and macOS, an optional credential-gated "
+            "integration job, a committed-manifest "
             "paper/docs job that does not require the ignored local PDF cache, "
             "runs paper source, manifest, docs, and boundary verifier tests, "
             "a release-artifact smoke job that builds a wheel and sdist and "
@@ -86,8 +87,8 @@ def ci_workflow_coverage_boundary_record() -> dict[str, Any]:
             "not claim CI local-PDF paper-manifest checks, "
             "fully semantic documentation-claim verification beyond the "
             "committed verifier suite, signed release provenance, "
-            "cross-platform CI coverage, branch policy, or "
-            "notification policy."
+            "cross-platform paper/docs, release, or integration coverage, "
+            "branch policy, or notification policy."
         ),
     }
 
@@ -123,13 +124,14 @@ def validate_ci_workflow_coverage_boundary(
     if (
         not isinstance(boundary_text, str)
         or "committed-manifest paper/docs job" not in boundary_text
+        or "Python 3.11/3.12 unit jobs on Ubuntu, Windows, and macOS" not in boundary_text
         or "runs paper source, manifest, docs, and boundary verifier tests" not in boundary_text
         or "release-artifact smoke job" not in boundary_text
         or "libreevolve package-tree wheel and sdist inventory inspection" not in boundary_text
         or "release artifact hash provenance" not in boundary_text
         or "GitHub Actions artifact upload" not in boundary_text
         or "does not claim CI local-PDF paper-manifest checks" not in boundary_text
-        or "cross-platform CI coverage" not in boundary_text
+        or "cross-platform paper/docs, release, or integration coverage" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must keep current path-scoped CI separate from full validation coverage"))
     return CiWorkflowCoverageBoundaryValidation(

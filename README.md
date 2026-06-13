@@ -94,6 +94,11 @@ Important limits:
   loss, Adam optimizer metadata, mutable scopes, fixed hashes, generation-0
   metrics, mutation lineage, and matrix-result links, not local matrix-runner
   output that emits the initializer/loss/optimizer provenance during search.
+- Matrix scalar-field records validate complex/finite-field metadata,
+  characteristic and applicability claims, exact coefficient representation,
+  algorithm and certificate refs, and matrix-result links, not local matrix
+  runners that emit exact complex decomposition/certificate artifacts for
+  AlphaEvolve Section 3.1 scalar-field claims.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

@@ -2,6 +2,32 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive matrix scalar-field roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish scalar-field schema validation from emitted AlphaEvolve-style
+    complex-valued and characteristic-specific matrix-result provenance.
+  - Current evidence: `libreevolve.matrix_scalar_field_evidence.v1` validates
+    declared real, complex, finite-field, and any-field applicability, field
+    characteristic, exact coefficient representation, complex component
+    domains, finite-field characteristic/order, paper complex-target markers,
+    finite-field caveats, and certificate scope.
+  - Runtime boundary: `libreevolve.matrix_scalar_field_runtime_boundary.v1`,
+    `papers/matrix_scalar_field_runtime_boundary.json`, and
+    `matrix_scalar_field_runtime_boundary_from_evidence()` preserve the current
+    `not_emitted_by_local_runner` boundary and future emitted fields for
+    run/target/candidate ids, seeds, scalar field, characteristic,
+    applicability, coefficient representation, algorithm refs, certificate
+    refs, matrix-result refs, artifact paths, and artifact hashes.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: local matrix runners do not emit exact complex coefficient data,
+    scalar-field/domain declarations, characteristic/applicability claims, or
+    certificate verification artifacts tied to the target tensor.
+  - Verification: focused matrix scalar-field evidence/runtime-boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive matrix baseline-component roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

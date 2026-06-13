@@ -258,6 +258,20 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     libreevolve\tools\paper_manifest.py` passed.
   - Remaining gap: real independent evaluator-oracle evidence remains open.
 
+- [x] Archive stale active roadmap multi-evaluator wording TODO.
+  - Status: the active roadmap TODO for scoping multi-evaluator wording was
+    stale. `ROADMAP.md` and README already describe
+    `runtime.history.evaluator_oracle_registry` as local validator/cascade/LLM
+    feedback-grader arbitration metadata, and `papers/README.md` plus
+    `papers/evaluator_oracle_boundary.json` keep the independent
+    reference/statistical-oracle, benchmark-sufficiency, independent
+    disagreement-outcome, and cross-run oracle-table gaps explicit.
+  - Verification: `tests/test_evaluator_oracle_boundary.py` and
+    `tests/test_paper_manifest.py` validate the sidecar and reject premature
+    independent-oracle claims. The remaining implementation gap is still
+    represented by the AlphaEvolve paper active evidence rather than by this
+    stale roadmap wording task.
+
 - [x] Emit controller backtracking boundary sidecar for roadmap evidence.
   - Status: `papers/controller_backtracking_boundary.json` now lets roadmap
     wording point to a committed absence boundary for controller-owned

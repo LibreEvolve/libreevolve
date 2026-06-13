@@ -6,27 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Keep multi-evaluator roadmap wording scoped until independent
-      evaluator-oracle evidence exists.
-  - Spec evidence: AlphaEvolve's abstract describes feedback from one or more
-    evaluators, and Section 2.4 distinguishes the core evaluation function
-    from optional cascades and LLM-generated feedback.
-  - Current evidence: ROADMAP now cites
-    `runtime.history.evaluator_oracle_registry`, which registers the default
-    validator or configured cascade stages plus LLM feedback graders with
-    metric ownership, merge policy, failure policy, prompt-feedback linkage,
-    `arbitration_policy` authority metadata, benchmark-sufficiency labels,
-    conflict roles, failure effects, bounded local `disagreement_outcomes` for
-    validator-versus-feedback cases, and an explicit limitation for independent
-    multi-oracle arbitration. ROADMAP now also names
-    `papers/evaluator_oracle_boundary.json` as the committed paper-manifest-
-    validated independent-oracle absence boundary.
-  - Required result: when independent reference/statistical oracles,
-    per-benchmark sufficiency evidence, and independent disagreement outcome
-    records land, update ROADMAP, README, papers index, and code/paper TODOs
-    together so roadmap wording separates local staged validation and post-hoc
-    graders from AlphaEvolve-style multi-evaluator feedback.
-
 - [ ] Keep execution-grounding roadmap wording scoped until independent
       incorrect-suggestion audit evidence exists.
   - Spec evidence: AlphaEvolve's introduction says LLM-directed evolution is

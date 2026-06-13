@@ -2,6 +2,23 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive plugin artifact-provenance roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md` already scopes
+    current plugin provenance to prompt-context/configuration/artifact records
+    and manifest-safe emitted artifact summaries, while keeping stronger
+    lifecycle hashes, versioned custom registry entries, richer strategy
+    choices, replay/restore policy, and produced-file contracts open.
+  - Remaining guard: AlphaEvolve-grade plugin artifact lifecycle events,
+    per-plugin produced-file manifests, strategy-choice provenance, versioned
+    custom registry entries, and plugin artifact replay/restore semantics
+    remain future work in the implementation/paper TODO ledgers.
+  - Verification: runtime manifest code wraps `run_artifacts_metadata()`
+    summaries with runtime-derived plugin identity, validates bounded
+    JSON-safe metadata, records `runtime.plugin_artifacts[]`, preserves valid
+    summaries during aborted runs, records `runtime.plugin_artifact_failures[]`
+    for summary hook/schema failures, and hashes the `plugin_artifacts/`
+    artifact tree when present.
+
 - [x] Archive plugin configuration-schema roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `papers/README.md`, and `docs/status.md` already scope plugin

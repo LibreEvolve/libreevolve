@@ -2,6 +2,28 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive UCB scheduler roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `README.md`, `ROADMAP.md`,
+    `papers/README.md`, and `docs/status.md` already describe
+    `LLMEnsemble` as heuristic UCB-style backend routing, not canonical
+    finite-time-regret UCB1 or a paper-faithful AlphaEvolve scheduler.
+  - Current evidence: runtime scheduler policy records cover global or
+    role-scoped backend bandit scope, reward-accounted roles, finite clipped
+    rewards, pull-once initialization, and `throughput_depth` metadata with
+    per-selection min/max normalization plus fast-breadth/strong-depth lane
+    evidence marked `claim_ready=false`.
+  - Remaining guard: bounded reward-distribution and stationarity audits,
+    canonical confidence-index equivalence, selected-index trace rows, regret
+    reports, UCB-family variant support, calibrated role reward/quota policy,
+    experiment-level selection traces, candidate throughput/quality outcomes,
+    and equal-budget scheduler comparisons remain future work.
+  - Verification: focused ensemble tests cover high-reward preference,
+    superior-arm convergence, metadata-weighted `throughput_depth` selection,
+    metadata normalization, pull-once initialization, and scheduler telemetry;
+    `papers/ucb1_boundary.json` and
+    `papers/fast_strong_model_mix_boundary.json` reject premature regret or
+    experiment-level scheduler claims.
+
 - [x] Archive database-query-index roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `papers/README.md`, and runtime manifests already distinguish bounded

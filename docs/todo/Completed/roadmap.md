@@ -2,6 +2,26 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Appendix B.6 finite-set witness roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish the B.6 theorem/admissibility statement from the two missing
+    finite-set witness payloads and their set-algebra certificates.
+  - Current evidence: `finite_set_witness_boundary` records `U1` and `U2`,
+    set sizes `2003` and `54265`, reported lower bounds `1.1479 <= C6` and
+    `1.1584 <= C6`, theorem linkage, required future finite-set payload and
+    certificate fields, and explicit `not_recorded_locally` statuses for each
+    missing witness.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: sorted integer payload hashes, contains-zero and non-negativity
+    certificates, `|U - U| <= 2 max(U) + 1` admissibility certificates,
+    `|U-U|`/`|U+U|` cardinality certificates, max-element certificates,
+    formula-substitution certificates, and recomputed lower-bound rows.
+  - Verification: Appendix B registry B.6 theorem-condition and
+    finite-set-witness tests, paper-manifest validation, and checked-in
+    paper-index TODO coverage still pass.
+
 - [x] Archive Appendix B.5 minimum-overlap roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

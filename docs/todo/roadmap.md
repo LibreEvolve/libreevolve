@@ -10,32 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Appendix B.6 roadmap wording scoped until finite-set witness
-      provenance exists.
-  - Spec evidence: AlphaEvolve Appendix B.6 improves the
-    sums-and-differences lower bound using two finite sets: `U1` has size
-    `2003` and yields `1.1479 <= C6`, while `U2` has size `54265` and yields
-    `1.1584 <= C6`. The claim is tied to the Gyarmati et al. inequality and
-    requires set-level checks for zero membership, `|U - U| <= 2 max(U) + 1`,
-    `|U-U|`, `|U+U|`, and the denominator `2 max(U) + 1`.
-  - Current evidence: roadmap/README/paper-index wording now cites the B.6
-    `finite_set_witness_boundary`, including `U1`/`U2`, sizes `2003` and
-    `54265`, reported lower bounds `1.1479 <= C6` and `1.1584 <= C6`,
-    theorem linkage, and required future finite-set payload and certificate
-    fields. It now separates contains-zero, non-negative, sumset-cardinality,
-    difference-set-cardinality, max-element, and lower-bound formula-
-    substitution certificate hashes/statuses from the broader admissibility
-    certificate. It still does not claim integer-set payload hashes,
-    feasibility certificates, set-algebra certificates, formula-substitution
-    certificates, recomputed arithmetic counts, or derived lower-bound
-    recomputation.
-  - Required result: when the actual Appendix B.6 witness payloads and
-    certificates land, update ROADMAP, README, papers index, and code/paper
-    TODOs so roadmap claims distinguish `U1` and `U2`, their sizes,
-    feasibility evidence, set-algebra certificates, formula-substitution
-    certificates, derived lower-bound values, payload hashes, and source links
-    from aggregate Appendix B coverage.
-
 - [ ] Keep Appendix B.7 roadmap wording scoped until regular-hexagon packing
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.7 reports two regular-hexagon

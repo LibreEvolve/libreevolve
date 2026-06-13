@@ -14048,3 +14048,13 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     open.
   - Verification: focused cascade report, boundary, and paper-manifest tests
     cover valid and overclaim cases.
+- [x] Clarify the paper-index status table proof boundary.
+  - Paper evidence: `papers/README.md` is a structured paper-facing claim
+    surface, but current validation is structural and link-oriented rather than
+    a full semantic proof of every long status sentence.
+  - Status: the implementation-status section now tells readers that the table
+    is a maintained index, not a proof ledger for every status-cell sentence,
+    and explains that manifest validation checks IDs, roles, status-class
+    boundaries, referenced local paths, and TODO links.
+  - Remaining paper gap: a per-paper status-claim inventory and semantic
+    verifier remain active in `docs/todo/papers.md`.

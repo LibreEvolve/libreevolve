@@ -2,6 +2,35 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive EvoRubric self-evolving reward-rubric roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2605.29847` source-scoped as background self-evolving
+    reward-rubric context rather than implemented LibreEvolve EvoRubric-style
+    runtime support.
+  - Current evidence: the cached paper and `papers/README.md` record
+    EvoRubric's single-policy Reasoner/Rubric-Generator alternation,
+    generated-rubric validation, meta-verifier, zero-variance pruning,
+    Leave-One-Out peer consensus, criteria memory pool, dense
+    multi-objective rewards, medical/writing/science domains, and
+    reward-hacking framing, while marking local role schemas,
+    generated-rubric provenance, verifier artifacts, pruning records,
+    consensus traces, memory-pool metadata, dense reward-vector definitions,
+    reward-hacking diagnostics, benchmark reports, linked-code audits, and
+    independent reproduction output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source/license metadata, project/demo and linked-code status,
+    relation to LibreEvolve evaluator assumptions, Reasoner/Rubric-Generator
+    role schema, generated-rubric provenance, meta-verifier artifacts,
+    zero-variance pruning records, Leave-One-Out peer-consensus traces,
+    criteria memory-pool metadata, dense reward-vector definitions,
+    reward-hacking diagnostics, expert-prior initialization status,
+    medical/writing/science benchmark taxonomy, baseline identities,
+    reproducibility status, and independent verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive GenEvolve multimodal trajectory-distillation roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

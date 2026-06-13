@@ -195,6 +195,13 @@ Important limits:
   target, dense token-level supervision record, multimodal policy-update
   loop, GenEvolve-Data metadata, GenEvolve-Bench task/report, baseline
   comparison, linked-code audit, or independent reproduction output.
+- EvoRubric self-evolving reward-rubric coverage is background paper context
+  only: LibreEvolve has no single-policy Reasoner/Rubric-Generator
+  co-evolution loop, generated-rubric provenance, meta-verifier records,
+  zero-variance pruning records, Leave-One-Out peer-consensus traces, criteria
+  memory pool, dense multi-objective reward vectors, expert-prior rubric
+  expansion, medical/writing/science benchmark report, reward-hacking audit,
+  linked-code audit, or independent reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

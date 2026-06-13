@@ -10,39 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement EvoRubric self-evolving reward-rubric gates beyond paper
-      cache coverage.
-  - Spec evidence: arXiv `2605.29847`, submitted May 28, 2026, introduces
-    EvoRubric for rubric-driven RL in open-ended generation. The abstract says
-    static human rubrics cause policy lag and external dynamic rubric
-    generators are expensive; EvoRubric instead alternates a single policy
-    between Reasoner and Rubric Generator roles, validates criteria with a
-    meta-verifier, zero-variance pruning, and Leave-One-Out peer consensus,
-    archives validated criteria into memory, and produces dense
-    multi-objective rewards.
-  - Current evidence: ROADMAP, `papers/download_manifest.*`,
-    `papers/row_identity.json`, `papers/README.md`, README, and TODO coverage
-    now include `2605.29847`, cached locally as
-    `papers/2605.29847__EvoRubric.pdf` with byte count `1089746` and
-    SHA-256
-    `3579085619610d97a03019d495a584c6dfce76f4ea951dda3103f02395bec1d5`.
-    ROADMAP tracks the paper as background self-evolving reward-rubric
-    context only. It still has no Reasoner/Rubric-Generator role schema,
-    generated-rubric provenance, meta-verifier or peer-consensus records,
-    zero-variance pruning outcomes, criteria memory-pool artifacts, dense
-    reward-vector definitions, reward-hacking diagnostics, expert-prior
-    initialization records, medical/writing/science benchmark metadata, or
-    baseline identities.
-  - Required result: implement roadmap gates beyond paper-cache evidence:
-    source-license metadata, linked-code or project URL status, Reasoner/
-    Rubric-Generator role schema, generated-rubric provenance, meta-verifier
-    and peer-consensus records, zero-variance pruning outcomes, criteria
-    memory-pool artifacts, dense reward-vector definitions, reward-hacking
-    diagnostics, expert-prior initialization records, medical/writing/science
-    benchmark metadata, baseline identities, and a background-only or
-    benchmark-fixture status rule so roadmap claims do not outpace local
-    EvoRubric-style reward-rubric support.
-
 - [ ] Implement LLM-ALSO adaptive learning-signal gates beyond paper cache
       coverage.
   - Spec evidence: arXiv `2605.29293`, submitted May 28, 2026, introduces

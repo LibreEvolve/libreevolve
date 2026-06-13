@@ -15146,3 +15146,29 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     pass-rate/final-bias metrics, retry and guidance sweeps, partial-harness
     baselines, report outcomes, and inference-time trajectory-alignment
     evidence remain active in code and paper TODOs.
+
+- [x] Keep README Adaptive Auto-Harness deployment claims source-scoped until
+      open-ended task-stream runtime evidence exists.
+  - Spec evidence: arXiv `2606.01770`, `Adaptive Auto-Harness: Sustained
+    Self-Improvement for Agentic System Deployment on Open-Ended Task
+    Streams`, says fixed offline harness benchmarks do not capture open-ended
+    deployments where histories grow, tasks differ, and distributions shift.
+    Its abstract warns that a single densely updated harness can become
+    brittle, then proposes evolution-loss/adaptation-loss accounting, a
+    stateful multi-agent evolver, a harness tree with solve-time routing, and
+    human-steering hooks.
+  - Status: README now lists arXiv `2606.01770` as adaptive auto-harness
+    deployment context only and marks the mention as a curated cached-paper
+    subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no
+    chronological open-ended task-stream schema, history-growth record,
+    task-heterogeneity report, distribution-shift detector, evolution-loss/
+    adaptation-loss decomposition, stateful multi-agent evolver, harness tree,
+    solve-time routing policy, human-steering hook,
+    overfitting/accuracy-peak-decline report, prediction-market/security-
+    competition/event-forecasting benchmark reproduction, five-baseline
+    comparison, linked-code audit, or independent reproduction output.
+  - Remaining README gap: stream schemas, distribution-shift records,
+    harness-tree artifacts, routing traces, steering logs, sustained-
+    performance curves, benchmark baselines, report outcomes, and adaptive
+    auto-harness deployment evidence remain active in code and paper TODOs.

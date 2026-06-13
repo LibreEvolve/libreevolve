@@ -869,6 +869,16 @@ Important limits:
   report, partial-harnessing stopping rule, controlled synthetic experiment,
   terminal-agent benchmark reproduction, linked-code audit, or independent
   reproduction output.
+- ArXiv `2606.01770` is adaptive auto-harness deployment context only; the
+  README mentions this cached paper as a curated subset while
+  `papers/README.md` remains the complete implementation-status index.
+  LibreEvolve has no chronological open-ended task-stream schema,
+  history-growth record, task-heterogeneity report, distribution-shift
+  detector, evolution-loss/adaptation-loss decomposition, stateful multi-agent
+  evolver, harness tree, solve-time routing policy, human-steering hook,
+  overfitting/accuracy-peak-decline report, prediction-market/security-
+  competition/event-forecasting benchmark reproduction, five-baseline
+  comparison, linked-code audit, or independent reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

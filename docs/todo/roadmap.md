@@ -6,25 +6,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
-- [ ] Keep binary/static roadmap scope aligned with implemented static-member
-      support.
-  - Spec evidence: AlphaEvolve can operate over broader codebase and artifact
-    surfaces, while LibreEvolve's current boundary is a Python-primary text
-    workspace plus typed static metadata.
-  - Current evidence: `ROADMAP.md` now distinguishes implemented bounded
-    encoded static members, verified copy-only static assets, and raw
-    direct-workspace byte normalization from the still-open richer binary
-    mutation/replay policy. The code path normalizes raw direct workspace bytes
-    into immutable static members and verifies `source_copy_path` materialization
-    by link policy, byte count, and SHA-256. That verification is still tied to
-    the configured local copy path; it does not yet define a portable
-    source-root, release-artifact, or cross-machine replay identity for copied
-    static assets.
-  - Required result: when arbitrary binary mutation, non-encoded generated
-    binary deltas, binary replay, portable static-source roots, or broader
-    artifact runners land, update the roadmap, README, papers index, and
-    code/paper TODO entries together.
-
 - [ ] Extend evolve-block integration roadmap wording beyond runtime
       minimal-marker evidence.
   - Spec evidence: AlphaEvolve Section 2.1 says special comment markers let the

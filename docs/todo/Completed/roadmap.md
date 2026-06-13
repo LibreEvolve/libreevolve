@@ -268,6 +268,22 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     sandbox/resource enforcement remain active in code and paper TODO evidence
     rather than this stale roadmap wording task.
 
+- [x] Archive stale active roadmap binary/static scope wording TODO.
+  - Status: the active roadmap TODO for aligning binary/static wording with
+    implemented static-member support was stale. `ROADMAP.md`, README, and
+    `papers/README.md` already distinguish bounded encoded static members,
+    verified copy-only static assets, raw direct-workspace byte normalization,
+    and local `source_copy_path` byte/SHA-256 checks from richer binary
+    mutation/replay policy, portable static-source roots, release-artifact
+    identity, cross-machine replay, and broader artifact runners.
+  - Verification: focused candidate/static-member tests validate typed static
+    metadata, encoded static materialization, source-copy materialization, hash
+    mismatch failure, raw binary workspace normalization, and immutable static
+    member mutation rejection. Remaining arbitrary binary mutation, non-encoded
+    generated binary deltas, binary replay, portable static-source roots, and
+    artifact-runner gaps remain active in code and paper TODO evidence rather
+    than this stale roadmap wording task.
+
 - [x] Emit embedded evaluator Figure 3 boundary sidecar for roadmap evidence.
   - Status: `papers/embedded_evaluator_boundary.json` now lets roadmap wording
     point to a committed absence boundary for skeleton invocation traces,

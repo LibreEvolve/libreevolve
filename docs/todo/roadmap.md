@@ -10,22 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep feedback-calibration roadmap wording scoped to report contracts
-  versus executed calibration fixtures.
-  - Spec evidence: AlphaEvolve-style feedback graders need calibration evidence
-    from real reviewer/task suites, not only validators for declared reports.
-  - Current evidence: `libreevolve.llm_feedback_calibration.v1` and its
-    artifact-inventory contract validate declared multi-task calibration
-    evidence and safe artifact references once a report exists. The roadmap
-    now scopes the follow-up to emitting real reports and grader ablation
-    fixtures. The committed `papers/feedback_calibration_boundary.json`
-    sidecar now preserves this report-contract boundary for paper-manifest
-    validation.
-  - Required result: when a runtime fixture or benchmark script emits real
-    feedback-calibration reports, update the roadmap, README, papers index, and
-    code/paper TODO entries together so they neither underclaim the report
-    contract nor overclaim executed calibration evidence.
-
 - [ ] Keep qualitative-feedback roadmap wording scoped until calibration and
       prompt-history audits exist.
   - Spec evidence: AlphaEvolve Section 2.4 says LLM-generated feedback can

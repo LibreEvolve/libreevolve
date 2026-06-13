@@ -2,6 +2,32 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive feedback-calibration roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `docs/status.md`, `docs/run-artifacts.md`, `papers/README.md`,
+    `docs/todo/code.md`, `docs/todo/papers.md`, and
+    `papers/feedback_calibration_boundary.json` already scope feedback
+    calibration evidence to report contracts and artifact inventories, not
+    executed runtime calibration fixtures.
+  - Current evidence: `libreevolve.llm_feedback_calibration.v1` validates
+    declared feedback-grader calibration reports with grader declarations,
+    multiple task records for readiness, per-grader/task scored records,
+    normalized expected/observed scores, exact absolute-error consistency, and
+    declared artifact references. The companion
+    `libreevolve.llm_feedback_calibration_artifact_inventory.v1` verifies
+    calibration report, raw-record, grader-config, and plot files under a safe
+    artifact root. The feedback-calibration boundary sidecar keeps
+    `claim_ready: false` for runtime calibration runners, executed task-suite
+    results, grader ablations, and independent feedback-quality validation.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    AlphaEvolve-grade feedback-calibration evidence: runnable calibration
+    fixtures, real reviewer/task-suite reports, grader ablation results,
+    independent feedback-quality validation, and integration with benchmark
+    scripts that emit actual report artifacts.
+  - Verification: focused feedback-calibration report, artifact-inventory,
+    paper-boundary, and paper-manifest tests validate declared report shape and
+    reject executed-calibration readiness overclaims.
+
 - [x] Archive provider-pricing roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `docs/status.md`, `docs/run-artifacts.md`, `docs/architecture.md`,

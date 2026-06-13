@@ -50,6 +50,7 @@ def test_alphaevolve_math_outcome_boundary_preserves_section_3_2_claim():
     assert validation.minimum_problem_instances == 51
     assert validation.minimum_branch_count == 6
     assert boundary["schema"] == MATH_OUTCOME_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["3.2"]
     for field, expected_value in EXPECTED_SOURCE_SUMMARY.items():
         assert boundary[field] == expected_value
     assert boundary["required_instance_fields"] == list(EXPECTED_REQUIRED_INSTANCE_FIELDS)
@@ -65,6 +66,7 @@ def test_alphaevolve_math_starting_construction_boundary_preserves_section_3_2_c
     assert validation.ok is True
     assert validation.status == "not_recorded_locally"
     assert boundary["schema"] == MATH_STARTING_CONSTRUCTION_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["3.2"]
     for field, expected_value in EXPECTED_STARTING_CONSTRUCTION_SUMMARY.items():
         assert boundary[field] == expected_value
     assert boundary["allowed_claimed_starting_classes"] == ["simple", "random"]
@@ -80,6 +82,7 @@ def test_alphaevolve_math_heuristic_handoff_boundary_preserves_section_3_2_claim
     assert validation.ok is True
     assert validation.status == "not_recorded_locally"
     assert boundary["schema"] == MATH_HEURISTIC_HANDOFF_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["3.2"]
     for field, expected_value in EXPECTED_HEURISTIC_HANDOFF_SUMMARY.items():
         assert boundary[field] == expected_value
     assert boundary["required_handoff_fields"] == list(EXPECTED_REQUIRED_HEURISTIC_HANDOFF_FIELDS)
@@ -94,6 +97,7 @@ def test_alphaevolve_math_heuristic_stage_sequence_boundary_preserves_section_3_
     assert validation.ok is True
     assert validation.status == "not_recorded_locally"
     assert boundary["schema"] == MATH_HEURISTIC_STAGE_SEQUENCE_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["3.2"]
     for field, expected_value in EXPECTED_HEURISTIC_STAGE_SEQUENCE_SUMMARY.items():
         assert boundary[field] == expected_value
     assert boundary["minimum_stage_roles"] == [
@@ -108,6 +112,7 @@ def test_alphaevolve_math_heuristic_stage_sequence_boundary_preserves_section_3_
 def test_math_outcome_boundary_rejects_premature_aggregate_claims():
     boundary = alphaevolve_math_outcome_boundary()
     boundary["status"] = "recorded"
+    boundary["source_section_ids"] = ["3.1"]
     boundary["minimum_problem_instances"] = 50
     boundary["minimum_branch_count"] = 5
     boundary["rediscovered_best_known_percent_approx"] = 90.0
@@ -122,6 +127,7 @@ def test_math_outcome_boundary_rejects_premature_aggregate_claims():
 
     assert validation.ok is False
     assert "invalid_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert "invalid_minimum_problem_instances" in codes
     assert "invalid_minimum_branch_count" in codes
     assert "invalid_rediscovered_best_known_percent_approx" in codes
@@ -135,6 +141,7 @@ def test_math_outcome_boundary_rejects_premature_aggregate_claims():
 def test_math_starting_construction_boundary_rejects_premature_seed_claims():
     boundary = alphaevolve_math_starting_construction_boundary()
     boundary["status"] = "recorded"
+    boundary["source_section_ids"] = ["3.1"]
     boundary["allowed_claimed_starting_classes"] = ["simple", "random", "human_seeded"]
     boundary["unsupported_without_explicit_label"] = ["human_seeded"]
     boundary["required_starting_construction_fields"] = ["instance_id"]
@@ -146,6 +153,7 @@ def test_math_starting_construction_boundary_rejects_premature_seed_claims():
 
     assert validation.ok is False
     assert "invalid_starting_status" in codes
+    assert "invalid_starting_source_section_ids" in codes
     assert "invalid_starting_allowed_claimed_starting_classes" in codes
     assert "invalid_allowed_starting_classes" in codes
     assert "invalid_unsupported_starting_classes" in codes
@@ -157,6 +165,7 @@ def test_math_starting_construction_boundary_rejects_premature_seed_claims():
 def test_math_heuristic_handoff_boundary_rejects_premature_handoff_claims():
     boundary = alphaevolve_math_heuristic_handoff_boundary()
     boundary["status"] = "recorded"
+    boundary["source_section_ids"] = ["3.1"]
     boundary["example_budget_seconds"] = 0
     boundary["required_handoff_fields"] = ["instance_id"]
     boundary["missing_evidence"]["produced_construction_artifacts"] = "recorded"
@@ -167,6 +176,7 @@ def test_math_heuristic_handoff_boundary_rejects_premature_handoff_claims():
 
     assert validation.ok is False
     assert "invalid_handoff_status" in codes
+    assert "invalid_handoff_source_section_ids" in codes
     assert "invalid_handoff_example_budget_seconds" in codes
     assert "invalid_required_handoff_fields" in codes
     assert "invalid_handoff_missing_produced_construction_artifacts" in codes
@@ -176,6 +186,7 @@ def test_math_heuristic_handoff_boundary_rejects_premature_handoff_claims():
 def test_math_heuristic_stage_sequence_boundary_rejects_premature_stage_claims():
     boundary = alphaevolve_math_heuristic_stage_sequence_boundary()
     boundary["status"] = "recorded"
+    boundary["source_section_ids"] = ["3.1"]
     boundary["minimum_stage_roles"] = ["early_large_gains_from_random_or_simple_initial_states"]
     boundary["required_stage_fields"] = ["stage_index"]
     boundary["missing_evidence"]["improvement_delta_records"] = "recorded"
@@ -186,6 +197,7 @@ def test_math_heuristic_stage_sequence_boundary_rejects_premature_stage_claims()
 
     assert validation.ok is False
     assert "invalid_stage_sequence_status" in codes
+    assert "invalid_stage_sequence_source_section_ids" in codes
     assert "invalid_stage_sequence_minimum_stage_roles" in codes
     assert "invalid_stage_sequence_roles" in codes
     assert "invalid_required_stage_fields" in codes

@@ -8,6 +8,7 @@ MATH_OUTCOME_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_math_outcome_boundary.v1
 MATH_STARTING_CONSTRUCTION_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_math_starting_construction_boundary.v1"
 MATH_HEURISTIC_HANDOFF_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_math_heuristic_handoff_boundary.v1"
 MATH_HEURISTIC_STAGE_SEQUENCE_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_math_heuristic_stage_sequence_boundary.v1"
+EXPECTED_SOURCE_SECTION_IDS = ("3.2",)
 EXPECTED_REQUIRED_INSTANCE_FIELDS = (
     "instance_id",
     "problem_family_id",
@@ -84,6 +85,7 @@ EXPECTED_REQUIRED_HEURISTIC_STAGE_FIELDS = (
 EXPECTED_SOURCE_SUMMARY = {
     "source_paper_id": "2506.13131",
     "source_section_id": "3.2",
+    "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
     "source_claim": "curated constructive-math problem set breadth and outcome rates",
     "minimum_problem_instances": 51,
     "problem_instance_text": "over 50 mathematical problems",
@@ -96,6 +98,7 @@ EXPECTED_SOURCE_SUMMARY = {
 EXPECTED_STARTING_CONSTRUCTION_SUMMARY = {
     "source_paper_id": "2506.13131",
     "source_section_id": "3.2",
+    "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
     "source_claim": "constructive-math runs started from simple or random constructions",
     "starting_point_text": "the initial starting point was a simple or a random construction",
     "allowed_claimed_starting_classes": ["simple", "random"],
@@ -104,6 +107,7 @@ EXPECTED_STARTING_CONSTRUCTION_SUMMARY = {
 EXPECTED_HEURISTIC_HANDOFF_SUMMARY = {
     "source_paper_id": "2506.13131",
     "source_section_id": "3.2",
+    "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
     "source_claim": "constructive-math programs are search heuristics that produce constructions",
     "methodology_text": "evolve heuristic search algorithms rather than directly evolving the constructions themselves",
     "program_role": "program representing a search heuristic",
@@ -116,6 +120,7 @@ EXPECTED_HEURISTIC_HANDOFF_SUMMARY = {
 EXPECTED_HEURISTIC_STAGE_SEQUENCE_SUMMARY = {
     "source_paper_id": "2506.13131",
     "source_section_id": "3.2",
+    "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
     "source_claim": "final constructions often result from a sequence of specialized heuristics",
     "sequence_text": "The final constructions were often the result of a sequence of different, specialized heuristics discovered by AlphaEvolve",
     "early_stage_role": "early_large_gains_from_random_or_simple_initial_states",

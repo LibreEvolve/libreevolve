@@ -2,6 +2,9 @@
   "schema": "libreevolve.alphaevolve_math_heuristic_handoff_boundary.v1",
   "source_paper_id": "2506.13131",
   "source_section_id": "3.2",
+  "source_section_ids": [
+    "3.2"
+  ],
   "source_claim": "constructive-math programs are search heuristics that produce constructions",
   "methodology_text": "evolve heuristic search algorithms rather than directly evolving the constructions themselves",
   "program_role": "program representing a search heuristic",

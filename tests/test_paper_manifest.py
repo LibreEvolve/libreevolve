@@ -5435,6 +5435,7 @@ def test_validate_paper_manifest_rejects_math_outcome_boundary_sidecar_drift(tmp
     starting_path = tmp_path / paper_manifest.MATH_STARTING_CONSTRUCTION_BOUNDARY_FILE
     starting = json.loads(starting_path.read_text(encoding="utf-8"))
     starting["status"] = "recorded"
+    starting["source_section_ids"] = ["3.1"]
     starting["missing_evidence"]["baseline_metric_values"] = "recorded"
     starting_path.write_text(json.dumps(starting, indent=2), encoding="utf-8")
 
@@ -5443,6 +5444,7 @@ def test_validate_paper_manifest_rejects_math_outcome_boundary_sidecar_drift(tmp
     codes = {issue.code for issue in report.issues}
     assert report.ok is False
     assert "math_starting_construction_invalid_starting_status" in codes
+    assert "math_starting_construction_invalid_starting_source_section_ids" in codes
     assert "math_starting_construction_invalid_starting_missing_baseline_metric_values" in codes
 
 

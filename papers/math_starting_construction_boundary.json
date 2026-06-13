@@ -2,6 +2,9 @@
   "schema": "libreevolve.alphaevolve_math_starting_construction_boundary.v1",
   "source_paper_id": "2506.13131",
   "source_section_id": "3.2",
+  "source_section_ids": [
+    "3.2"
+  ],
   "source_claim": "constructive-math runs started from simple or random constructions",
   "starting_point_text": "the initial starting point was a simple or a random construction",
   "allowed_claimed_starting_classes": [

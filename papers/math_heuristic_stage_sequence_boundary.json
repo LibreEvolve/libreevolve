@@ -2,6 +2,9 @@
   "schema": "libreevolve.alphaevolve_math_heuristic_stage_sequence_boundary.v1",
   "source_paper_id": "2506.13131",
   "source_section_id": "3.2",
+  "source_section_ids": [
+    "3.2"
+  ],
   "source_claim": "final constructions often result from a sequence of specialized heuristics",
   "sequence_text": "The final constructions were often the result of a sequence of different, specialized heuristics discovered by AlphaEvolve",
   "early_stage_role": "early_large_gains_from_random_or_simple_initial_states",

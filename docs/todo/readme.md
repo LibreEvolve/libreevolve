@@ -9,49 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Extend README Figure 1/Figure 2 architecture wording from process
-      mappings to full diagram parity.
-  - Spec evidence: AlphaEvolve Figure 1 shows the high-level "Human defines
-    What? / AlphaEvolve figures out How?" overview with LLM ensemble, prompt
-    sampler, evaluator pool, and program database on local PDF page 3. Figure
-    2 on page 4 expands the
-    controller loop from database sampling through prompt construction, LLM
-    generation, diff application, evaluator execution, and database admission.
-  - Current evidence: README has its own Mermaid workflow and architecture
-    sections describing seed programs, LLM mutation, cascade evaluation,
-    MAP-Elites, island migration, and backend reward. Current implementation
-    has evidence for a serial local loop through parent sampling, inspiration
-    sampling, prompt building, LLM generation, workspace mutation, evaluator
-    execution, admission, history logging, and terminal controller-state
-    summaries, with artifacts such as `prompt_history.jsonl`,
-    `llm_calls.jsonl`, evaluator metadata, `history.jsonl`,
-    `archive_events.jsonl`, `controller_budget_events.jsonl`, and
-    `manifest.json`. README now documents
-    `runtime.history.alphaevolve_process_exhibit_report`, which records Figure
-    1/Figure 2 exhibit IDs, node/edge-to-component mappings, implemented/
-    divergent node status, Figure 2 pseudocode-step mappings, source
-    PDF/caption locations, and links from displayed steps to prompt-history,
-    LLM-call, evaluator, candidate-history, database, and controller-state
-    artifacts. README now also documents generated Mermaid/text accessibility
-    artifacts and hashes under `paper_artifacts/process_exhibit/`, per-step
-    artifact-stream validation records, strict JSONL row summaries,
-    generated candidate semantic traces with durable LLM and archive-admission
-    stream rows, hashed source-PDF page text extracts for Figure 1/Figure 2,
-    a validated current synchronous topology boundary linked to
-    `runtime.history.distributed_pipeline_topology_report`,
-    a validated current inline evaluator-pool parallelism boundary,
-    component-to-TODO links, and README Important limits names
-    `papers/process_exhibit_boundary.json` as the committed sidecar for the
-    paper-manifest-validated absence boundary.
-  - Required result: when exact source-diagram layout reproduction,
-    AlphaEvolve-style async controller topology implementation and independent
-    evaluator-pool parallelism land, update README,
-    ROADMAP, papers index, and matching TODOs
-    so README distinguishes local workflow explanation, generated Mermaid
-    artifacts, artifact-link records, row summaries, and semantic candidate
-    traces/source-text/current-topology/evaluator-pool boundaries from full
-    reproduced AlphaEvolve architecture/process exhibit evidence.
-
 - [ ] Keep README evaluator-workload wording scoped until inner-search and
       ML-training execution contracts exist.
   - Spec evidence: AlphaEvolve Section 2.1 says an evaluator may perform a

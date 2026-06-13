@@ -2,6 +2,33 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive environment-provenance roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `docs/development.md`, `docs/status.md`, `docs/architecture.md`,
+    `docs/run-artifacts.md`, `papers/README.md`, and the runtime policy already
+    scope environment provenance to bounded audit evidence, not replayable
+    AlphaEvolve-grade build/package/accelerator state.
+  - Current evidence: `runtime_environment_provenance()` emits
+    `libreevolve.environment_reproducibility_policy.v1` with status
+    `audit_only_not_complete_replay_environment`, hashing project metadata,
+    known lockfiles, installed-distribution metadata, bounded/redacted
+    `pip freeze` and `pip config` evidence, NumPy config evidence, built-in
+    provider SDK versions, package-source policy evidence, and bounded
+    accelerator environment/driver probes.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    replay work: external build commands/options/environment, non-project build
+    metadata, complete install-source interpretation, private package-source
+    identity/authentication policy, remote package artifact verification, live
+    provider service/API/default/cost capture, accelerator lease/budget
+    accounting, and restore/check validation for reproducible evaluator
+    environments.
+  - Verification: focused provenance tests validate package-source policy,
+    environment reproducibility policy status, unsupported provider/cost and
+    accelerator-budget surfaces, hash changes from lockfile evidence,
+    bounded/redacted `pip freeze` / `pip config`, provider SDK versions, and
+    accelerator probe records. The release-artifact boundary tests reject
+    verified-release overclaims.
+
 - [x] Archive workspace-resume roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `README.md`, `ROADMAP.md`,
     `docs/run-artifacts.md`, `docs/status.md`, `papers/README.md`, and runtime

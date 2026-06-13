@@ -10,41 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep Figure 4 matrix-exhibit roadmap wording scoped until rendered
-      artifacts and mutation lineage exist.
-  - Spec evidence: AlphaEvolve Figure 4 presents the main-text matrix
-    multiplication discovery exhibit, showing an evolved 4x4
-    tensor-decomposition search-program diff and tying the displayed example
-    to Section 3.1/Table 2 matrix rank-improvement evidence. The caption also
-    states that the discovery required 15 mutations and included non-trivial
-    changes to optimizer, weight initialization, loss function, and
-    hyperparameter sweep code.
-  - Current evidence: roadmap/README/paper-index status can point to Appendix A
-    target identities, matrix result-report validation, checked Strassen
-    bundle evidence, and separate TODOs for near-integrality, scalar-field,
-    baseline, companion Colab, Figure 9 sweep-space provenance, and
-    `libreevolve.alphaevolve_figure4_matrix_discovery_exhibit.v1`. The Figure
-    4 schema validates exhibit ids, paper page 11, caption values, exact source
-    diff excerpt artifacts/hashes, selected target/result-row mappings,
-    visual/text artifact paths/hashes, rendering/source parameters, the
-    15-mutation caption count, component-change labels, and links from the
-    displayed figure to Figure 9, decomposition reports, exactness
-    certificates, notebooks, and paper-source evidence. It now also points to
-    `libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1`,
-    which validates the current `not_emitted_by_local_report_export` boundary
-    and emitted Figure 4 artifact/lineage fields.
-    `papers/figure4_matrix_discovery_artifacts.json` now emits that
-    absence/readiness boundary as a committed sidecar.
-    `figure4_matrix_discovery_artifact_boundary_from_exhibit()` builds emitted
-    artifacts from validated Figure 4 exhibit metadata plus supplied accepted
-    mutation lineage and checks nested exhibit linkage, but it does not emit or
-    check in the rendered/source artifacts or accepted 15-mutation lineage.
-  - Required result: when Figure 4 rendered/source artifacts and accepted
-    mutation-lineage records land, update ROADMAP, README, papers index, and
-    code/paper TODOs so roadmap wording distinguishes reproduced main-text
-    matrix figure evidence, mutation-sequence evidence, general matrix
-    benchmark coverage, and Appendix A Figure 9 sweep evidence.
-
 - [ ] Keep matrix roadmap wording scoped to result-report validation versus
       search-time near-integrality evidence.
   - Spec evidence: AlphaEvolve Section 3.1 describes prompting for

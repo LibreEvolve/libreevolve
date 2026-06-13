@@ -63,6 +63,12 @@ Important limits:
   traces, but local matrix runners do not yet emit AlphaEvolve Section
   3.1-style repeated-seed cascade traces, pruning decisions, or early-stop
   provenance.
+- Figure 4 matrix-discovery records validate main-text exhibit metadata,
+  caption linkage, the 15-mutation caption count, `mm_4x4x4` rank-48 target
+  mapping, highlighted component categories, source/diff artifact metadata,
+  and links to Figure 9, matrix-result, certificate, and notebook evidence, not
+  local report/export output that emits rendered Figure 4 artifacts or accepted
+  15-mutation lineage.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

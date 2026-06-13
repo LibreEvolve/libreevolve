@@ -2,6 +2,30 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive Figure 4 matrix-discovery roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish Figure 4 exhibit metadata validation from reproduced rendered
+    artifacts and accepted mutation-lineage evidence.
+  - Current evidence: `libreevolve.alphaevolve_figure4_matrix_discovery_exhibit.v1`
+    validates the main-text Figure 4 metadata, page/caption linkage,
+    15-mutation caption count, `mm_4x4x4` rank-48 mapping, highlighted
+    component categories, source/diff artifact metadata, and links to Figure 9,
+    matrix-result, certificate, notebook, and paper-source evidence.
+    `libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1`
+    and `papers/figure4_matrix_discovery_artifacts.json` validate the current
+    `not_emitted_by_local_report_export` boundary and required future
+    rendered/source artifact plus accepted-lineage fields.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    Figure 4 rendered/text/source-diff artifacts, accepted 15-mutation lineage,
+    component labels, Table 2/Appendix A row mappings, rank/baseline/outcome
+    values, decomposition-report links, exactness certificates, companion
+    notebook/source evidence, and artifact hashes.
+  - Verification: Figure 4 matrix-discovery exhibit/artifact-boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive matrix per-seed cascade-run roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

@@ -4,7 +4,9 @@
   "runtime_report_schema": "libreevolve.task_spec_artifact_resolution_report.v1",
   "source_paper_id": "2506.13131",
   "source_section_ids": [
-    "2.1",
+    "2.1"
+  ],
+  "source_figure_ids": [
     "Figure 2"
   ],
   "source_claim": "AlphaEvolve Section 2.1 and Figure 2 frame the task specification as user-provided initial program components, evaluation code, prompt template and configuration, LLM choices, and optional background knowledge before the evolutionary loop",

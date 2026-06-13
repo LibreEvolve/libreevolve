@@ -16,7 +16,8 @@ def test_task_specification_boundary_accepts_artifact_resolution_record():
     assert validation.required_evidence_field_count == 16
     assert validation.missing_evidence_count == 4
     assert boundary["schema"] == TASK_SPECIFICATION_BOUNDARY_SCHEMA
-    assert boundary["source_section_ids"] == ["2.1", "Figure 2"]
+    assert boundary["source_section_ids"] == ["2.1"]
+    assert boundary["source_figure_ids"] == ["Figure 2"]
     assert boundary["claim_ready"] is False
     assert "does not claim external-validator score causality" in (
         boundary["claim_boundary"]
@@ -27,7 +28,8 @@ def test_task_specification_boundary_rejects_full_parity_overclaim():
     boundary = task_specification_boundary_record()
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "full_task_spec_parity_ready"
-    boundary["source_section_ids"] = ["2.1"]
+    boundary["source_section_ids"] = ["2.2"]
+    boundary["source_figure_ids"] = ["Figure 1"]
     boundary["missing_evidence"]["full_alphaevolve_task_spec_parity"] = "recorded"
     boundary["required_evidence_fields"] = ["startup_task_spec_bundle_recorded"]
 
@@ -38,6 +40,7 @@ def test_task_specification_boundary_rejects_full_parity_overclaim():
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
     assert "invalid_source_section_ids" in codes
+    assert "invalid_source_figure_ids" in codes
     assert "invalid_missing_evidence_full_alphaevolve_task_spec_parity" in codes
     assert "missing_required_evidence_field" in codes
 

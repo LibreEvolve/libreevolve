@@ -4,6 +4,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document systems application-provenance README boundary.
+  - Status: README Important limits now states that systems-result validation
+    includes application-provenance contracts but does not prove real
+    application-owner or domain-review signoff, reviewer/deployment evidence,
+    or domain-owner validated production claims. It ties that limit to
+    `papers/systems_result_readiness_boundary.json`.
+  - Verification: focused systems-result and systems-readiness tests validate
+    required `application_provenance` records for `alphaevolve_ready` reports,
+    owner/advisor, reviewer, validation/data, and approval role coverage,
+    artifact links, summary counts, and readiness-boundary overclaim guards;
+    paper-manifest tests validate the sidecar.
+
 - [x] Document systems metric calibration README boundary.
   - Status: README Important limits now states that paper-result
     certification and systems-result validation include claim-calibration

@@ -941,26 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README systems-result wording scoped until application-owner and
-      domain-review provenance is populated.
-  - Spec evidence: AlphaEvolve Section 3.3 frames the Borg scheduling,
-    Gemini/Pallas kernel, TPU RTL, and XLA/FlashAttention IR results as
-    production-facing practical applications, and the Acknowledgements and
-    Contributions sections identify the co-leads, advisors, reviewers,
-    validation owners, TPU designers, and XLA reviewers involved in those
-    domains.
-  - Current evidence: README now documents `application_provenance` records
-    required for `alphaevolve_ready` systems reports: responsible application
-    role, review/signoff scope, validation/source data owner, production
-    approval state, claim links, artifact refs, and a local-benchmark versus
-    production-claim boundary. Existing fixtures do not yet carry real
-    reviewed owner/reviewer records.
-  - Required result: when practical systems fixtures and certification examples
-    are populated with reviewed application-owner and domain-review provenance,
-    update README, ROADMAP, papers index, and matching TODOs so README can
-    describe those records without implying the schema alone proves
-    domain-owner validated production or deployment claims.
-
 - [ ] Keep README scheduling wording scoped until ranking-only safety
       provenance is populated.
   - Spec evidence: AlphaEvolve Section 3.3.1 says the Borg scheduling

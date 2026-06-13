@@ -143,6 +143,22 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     sums-and-differences improvement, the wording must remain source-scoped
     until the active code, paper, and roadmap TODO evidence exists.
 
+- [x] Scope README UCB-style scheduler wording to heuristic routing.
+  - Status: the root README now says backend selection is a local heuristic
+    inspired by UCB-style routing, not a finite-time-regret UCB1 reproduction.
+    It does not claim canonical reward-support assumptions,
+    conditional-mean/stationarity assumptions, selected-index traces, regret
+    reports, or UCB1 variant parity.
+  - Remaining guard: `papers/README.md` keeps
+    `auer-cesa-bianchi-fischer-2002` as a foundational source row, and the
+    open code, paper, and roadmap TODOs still track the missing canonical
+    UCB1 theorem-scope fields, reward normalization evidence, stable arm
+    identity, selected-arm/index traces, regret-baseline reports, UCB variant
+    status, and `throughput_depth` non-proof metadata.
+  - Verification: if the root README later expands UCB1, backend-bandit, or
+    scheduler-regret claims, the wording must stay source-scoped until the
+    active code, paper, and roadmap TODO evidence exists.
+
 - [x] Keep README validator sandbox/resource-limit wording scoped to local
       subprocess audit evidence versus OS/container enforcement.
   - Status: README Important limits now states that validator execution policy

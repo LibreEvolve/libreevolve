@@ -2,6 +2,37 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive AHE observability-driven harness-evolution roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2604.25850` source-scoped as background agentic harness
+    observability context rather than implemented LibreEvolve AHE-style
+    harness evolution support.
+  - Current evidence: the cached paper and `papers/README.md` record
+    component observability, experience observability, decision
+    observability, seven editable file-level component types, layered
+    drill-down trajectory evidence, edit predictions checked against later
+    task outcomes, per-file revertibility, ten Terminal-Bench 2 iterations,
+    SWE-bench-verified frozen-harness transfer, cross-family transfer, and
+    tools/middleware/long-term-memory ablations, while marking local
+    component graphs, observability schemas, evidence corpora, provenance
+    records, prediction contracts, falsification records, rollback manifests,
+    benchmark reports, public-code snapshot audits, and independent
+    reproduction output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source/license metadata, linked-code URL/status, relation to
+    AlphaEvolve and LibreEvolve harness assumptions, editable component
+    taxonomy, file-level component manifests, component edit/revert records,
+    trajectory-evidence corpus schema, drill-down evidence links,
+    edit-prediction records, task-outcome verification records, falsifiable
+    edit-contract status, iteration traces, component-attribution reports,
+    frozen-harness transfer results, Terminal-Bench 2 and SWE-bench Verified
+    benchmark metadata, baseline identities, token/cost accounting, code and
+    artifact reproducibility status, and independent verification outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive harness-updating versus harness-benefit roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

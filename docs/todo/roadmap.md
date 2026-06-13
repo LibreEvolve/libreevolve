@@ -10,38 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement AHE observability-driven harness evolution gates beyond paper
-      cache coverage.
-  - Spec evidence: arXiv `2604.25850`, submitted April 28, 2026, introduces
-    `Agentic Harness Engineering: Observability-Driven Automatic Evolution of
-    Coding-Agent Harnesses`. The abstract describes a closed loop with
-    component observability, experience observability, and decision
-    observability: editable harness components are file-level and revertible,
-    raw trajectories are distilled into layered evidence, and each edit is
-    paired with a prediction verified against later task outcomes.
-  - Current evidence: ROADMAP, `papers/download_manifest.*`,
-    `papers/row_identity.json`, `papers/README.md`, README, and TODO coverage
-    now include `2604.25850`, cached locally as
-    `papers/2604.25850__AHE.pdf` with byte count `1432986` and SHA-256
-    `299f2633b4c13db7bed52434b4db7c48ea621993581014d30e7bcd036d3464df`.
-    ROADMAP tracks the paper as background agentic harness observability
-    context only. It still has no AHE readiness gates, file-level harness
-    component inventories, layered trajectory evidence corpora, edit
-    prediction records, next-round outcome verification, component-class gain
-    attribution, or frozen-harness transfer reports before promoting
-    autonomous harness evolution claims.
-  - Required result: implement roadmap gates beyond paper-cache evidence:
-    source-license and linked-code status, editable component taxonomy, file-
-    level harness component manifests, revertible edit records, experience-
-    evidence distillation schema, drill-down trajectory corpus links,
-    decision-observability records, edit-prediction and outcome-verification
-    telemetry, falsifiable contract status, iteration traces,
-    tool/middleware/memory attribution reports, frozen-harness transfer
-    benchmark records, Terminal-Bench 2 and SWE-bench Verified metadata,
-    baseline identities, token/cost accounting, and a background-only or
-    benchmark-fixture status rule so roadmap claims do not outpace local AHE-
-    style observability-driven harness evolution.
-
 - [ ] Implement AI Harness Engineering runtime-substrate gates beyond paper
       cache coverage.
   - Spec evidence: arXiv `2605.13357`, submitted May 13, 2026, introduces

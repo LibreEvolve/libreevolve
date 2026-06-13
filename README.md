@@ -256,6 +256,14 @@ Important limits:
   report, activation-failure audit, adherence-failure audit,
   capability-budget recommendation report, public-code snapshot audit, or
   independent reproduction output.
+- AHE observability-driven harness-evolution coverage is background paper
+  context only: LibreEvolve has no file-level editable harness component
+  graph, component-observability schema, layered drill-down trajectory
+  evidence corpus, raw-trace-to-digest provenance, decision-observability
+  prediction contract, next-round falsification record, per-edit rollback
+  manifest, ten-iteration Terminal-Bench 2 report, SWE-bench-verified
+  transfer report, cross-family transfer report, tools/middleware/memory
+  ablation, public-code snapshot audit, or independent reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

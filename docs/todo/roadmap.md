@@ -10,33 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep `show`/source-integrity roadmap wording scoped to compact
-      selected-row display plus streamed-row validation.
-  - Spec evidence: AlphaEvolve-scale generated-program databases need
-    whole-run source/workspace integrity summaries and durable query/report
-    surfaces, not only a best-candidate terminal display.
-  - Current evidence: `ROADMAP.md` asks to improve `show` beyond the current
-    validity/archive-aware selected-row view with runtime status,
-    lineage/prompt/evaluation/feedback/failure summaries, bounded
-    objective-vector metrics, and workspace-file display toward whole-run
-    source integrity reports, richer archive/prompt/failure drill-downs, and
-    durable query views. README and code evidence show that current `show`
-    validates streamed current and legacy source/workspace payloads for every
-    row and prints selected-row workspace files. Completed manifests now emit
-    `runtime.history.whole_run_source_workspace_integrity_report` with
-    retained-program workspace hashes, primary-file coherence, source-payload
-    shape, static-file reference counts, startup provenance presence, and
-    selected runtime artifact hashes.
-    `papers/whole_run_source_workspace_integrity_boundary.json` now preserves
-    the same bounded retained-program integrity absence boundary for manifest
-    validation.
-  - Required result: when durable query/report views, richer
-    archive/prompt/failure drill-downs, full source-payload replay, or
-    cross-run source/workspace indexes land, update the roadmap, README,
-    papers index, and code/paper TODO entries together so roadmap wording
-    neither underclaims current selected-row/streamed-row validation and
-    bounded manifest reports nor overclaims AlphaEvolve-grade run inspection.
-
 - [ ] Keep artifact-content/provider-token roadmap wording scoped to bounded
   artifact rendering plus mutation/final-prompt caps.
   - Spec evidence: AlphaEvolve-style prompt construction can use execution

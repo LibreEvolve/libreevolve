@@ -17,6 +17,24 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     validation continue to distinguish bounded manifest summaries from
     AlphaEvolve-grade archive drill-down/query surfaces.
 
+- [x] Archive `show`/source-integrity roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md` already says run
+    inspection is currently bounded to the validity/archive-aware selected-row
+    `show` view, streamed history source/workspace validation, bounded runtime
+    summaries, and manifest-level
+    `runtime.history.whole_run_source_workspace_integrity_report` evidence,
+    while durable query views, full source-payload replay, and cross-run
+    source/workspace indexes remain future work.
+  - Remaining guard: AlphaEvolve-grade generated-program database inspection,
+    richer archive/prompt/failure drill-downs, full raw source replay,
+    static-file content replay, cross-run workspace deduplication, and
+    selected/unselected source-diff views remain active in `docs/todo/code.md`
+    and `docs/todo/papers.md`.
+  - Verification: whole-run source/workspace integrity boundary tests,
+    runtime-report tests, and paper-manifest validation continue to distinguish
+    bounded retained-program integrity reports from durable whole-run query
+    surfaces.
+
 - [x] Archive metric-diverse prompt-context roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README,
     `papers/README.md`, runtime

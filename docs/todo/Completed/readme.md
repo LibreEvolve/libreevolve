@@ -15226,3 +15226,34 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     structural-complexity metrics, random normal-form validation, limitation
     records, generalization reports, and AlphaEvolve-style MARL
     algorithm-discovery evidence remain active in code and paper TODOs.
+
+- [x] Keep README AlphaEvolve Ramsey-number claims absent or source-scoped
+      until graph-witness benchmark evidence exists.
+  - Spec evidence: arXiv `2603.09172`, `Reinforced Generation of
+    Combinatorial Structures: Ramsey Numbers`, reports AlphaEvolve-improved
+    lower bounds for nine classical Ramsey numbers, recovery of all exact
+    known Ramsey lower bounds, many matched best-known lower bounds, and one
+    meta-algorithm yielding search algorithms for those results. The paper
+    defines a lower-bound witness as an `n`-vertex graph with no `r`-clique
+    and no `s`-independent set, proving `R(r,s) >= n+1`; its Algorithm 1
+    scores evolved programs that return both a valid primary graph `G1` and a
+    larger prospect graph `G2` with violation-count guidance; and its PDF links
+    Google Research artifacts for the nine improved graph constructions and
+    generated search code.
+  - Status: README now lists arXiv `2603.09172` as AlphaEvolve constructive
+    Ramsey-number context only and marks the mention as a curated cached-paper
+    subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no Ramsey
+    graph candidate schema, `run()` primary/prospect graph contract, graph
+    witness artifact schema, clique/independent-set verifier, Ramsey parameter
+    row, new lower-bound row, matched-best-known row, exact-known-bound
+    recovery row, graph vertex-count record, implied lower-bound record,
+    Google Research construction/code snapshot hash, initialization-family
+    record, search budget or seed record, algorithm-summary audit record, or
+    independent checker output; `papers/ramsey_numbers_boundary.json` records
+    that absence boundary.
+  - Remaining README gap: candidate and witness schemas, verifier outputs,
+    parameter/result rows, prior/current value provenance, witness graph
+    hashes, search-algorithm provenance, independent checker evidence,
+    benchmark reports, and AlphaEvolve-style Ramsey-number discovery evidence
+    remain active in code and paper TODOs.

@@ -91,45 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README AlphaEvolve Ramsey-number claims absent or source-scoped
-      until graph-witness benchmark evidence exists.
-  - Spec evidence: arXiv `2603.09172`, `Reinforced Generation of
-    Combinatorial Structures: Ramsey Numbers`, reports AlphaEvolve-improved
-    lower bounds for nine classical Ramsey numbers, recovery of all exact
-    known Ramsey lower bounds, many matched best-known lower bounds, and one
-    meta-algorithm yielding search algorithms for those results. The paper
-    defines a lower-bound witness as an `n`-vertex graph with no `r`-clique
-    and no `s`-independent set, proving `R(r,s) >= n+1`; its Algorithm 1
-    scores evolved programs that return both a valid primary graph `G1` and a
-    larger prospect graph `G2` with violation-count guidance; and its PDF links
-    Google Research artifacts for the nine improved graph constructions and
-    generated search code.
-  - Current evidence: README now lists Ramsey Numbers only as a constructive
-    math benchmark candidate and points to `papers/ramsey_numbers_boundary.json`
-    for the missing graph candidate schemas, graph-witness verifier artifacts,
-    new/matched/exact lower-bound rows, Google Research artifact snapshots,
-    initialization-family rows, graph-size/lower-bound semantics, and
-    independent checker outputs. It still does not define Ramsey graph
-    witnesses, provide a verifier for `R(s,t)` lower-bound certificates, list
-    the nine Ramsey prior/current values, show exact-bound recovery results,
-    compare matched best-known bounds, or store generated search algorithms
-    and witness graph artifacts.
-  - Required result: if README mentions Ramsey numbers, reinforced
-    combinatorial-structure generation, AlphaEvolve-discovered Ramsey lower
-    bounds, exact-bound recovery, matched best-known Ramsey bounds, one
-    meta-algorithm for Ramsey search, graph witnesses, or `R(s,t)`
-    certificates, keep the wording source-scoped until local artifacts can
-    show the paper in the manifest, candidate and witness schemas, verifier
-    outputs, parameter/result rows, prior/current value provenance, witness
-    graph hashes, search-algorithm provenance, independent checker evidence,
-    and benchmark reports. Avoid implying LibreEvolve supports
-    AlphaEvolve-style Ramsey-number discovery without those artifacts. README
-    wording should distinguish `n`-vertex witness graphs from implied
-    `R(r,s) >= n+1` lower bounds, state whether Google Research construction
-    and code artifacts were imported or only cited, and keep Table 1/Table 2
-    and appendix-algorithm references source-scoped until LibreEvolve has
-    executable certifiers and reproducible Ramsey benchmark reports.
-
 - [ ] Keep README AlphaEvolve local-correction combinatorics claims absent or
       source-scoped until certificate benchmark evidence exists.
   - Spec evidence: arXiv `2603.06692`, `Evolving Local Corrections for Global

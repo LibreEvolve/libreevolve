@@ -901,6 +901,17 @@ Important limits:
   baseline solver ledger, generated solver artifact hash, or reproducible
   CFR/PSRO runtime evidence; `papers/multiagent_learning_boundary.json`
   records that absence boundary.
+- ArXiv `2603.09172` is AlphaEvolve constructive Ramsey-number context only;
+  the README mentions this cached paper as a curated subset while
+  `papers/README.md` remains the complete implementation-status index.
+  LibreEvolve has no Ramsey graph candidate schema, `run()` primary/prospect
+  graph contract, graph witness artifact schema, clique/independent-set
+  verifier, Ramsey parameter row, new lower-bound row, matched-best-known row,
+  exact-known-bound recovery row, graph vertex-count record, implied
+  lower-bound record, Google Research construction/code snapshot hash,
+  initialization-family record, search budget or seed record, algorithm-summary
+  audit record, or independent checker output; `papers/ramsey_numbers_boundary.json`
+  records that absence boundary.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

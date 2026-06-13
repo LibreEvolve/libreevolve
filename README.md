@@ -99,6 +99,11 @@ Important limits:
   algorithm and certificate refs, and matrix-result links, not local matrix
   runners that emit exact complex decomposition/certificate artifacts for
   AlphaEvolve Section 3.1 scalar-field claims.
+- Matrix tensor-rank records validate tensor-decomposition versus non-tensor
+  algorithm claims, rank, recursive applicability, certificate scope,
+  tensor-identity status, target-tensor refs, exactness-certificate refs, and
+  matrix-result links, not local matrix runners that emit AlphaEvolve Section
+  3.1 target-tensor/certificate artifacts during search.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

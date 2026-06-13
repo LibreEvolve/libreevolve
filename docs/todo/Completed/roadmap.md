@@ -2,6 +2,34 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive matrix tensor-rank roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish tensor-rank evidence validation from emitted AlphaEvolve-style
+    target-tensor/certificate artifacts and recursive-use caveat provenance.
+  - Current evidence: `libreevolve.matrix_tensor_rank_evidence.v1` validates
+    algorithm-kind metadata, tensor-decomposition certificate scope, recursive
+    applicability, target-tensor links, exactness-certificate links, and
+    source-note provenance for non-tensor multiplication algorithms that are
+    not comparable to recursive tensor-rank claims.
+  - Runtime boundary: `libreevolve.matrix_tensor_rank_runtime_boundary.v1`,
+    `papers/matrix_tensor_rank_runtime_boundary.json`, and
+    `matrix_tensor_rank_runtime_boundary_from_evidence()` preserve the current
+    `not_emitted_by_local_runner` boundary and future emitted fields for
+    run/target/candidate ids, seeds, algorithm kind, rank, recursive
+    applicability, certificate scope, tensor-identity status, target-tensor
+    refs, exactness-certificate refs, matrix-result refs, artifact paths, and
+    artifact hashes.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: local matrix runners do not emit target-tensor identity evidence,
+    exactness-certificate artifacts, recursive-applicability records,
+    algorithm-kind/source-note caveats, or footnote-level non-tensor caveat
+    records.
+  - Verification: focused matrix tensor-rank evidence/runtime-boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive matrix scalar-field roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

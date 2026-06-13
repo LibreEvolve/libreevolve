@@ -10,37 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep matrix roadmap wording scoped until tensor-rank artifacts exist.
-  - Spec evidence: AlphaEvolve Section 3.1 reports matrix multiplication
-    improvements as low-rank tensor decompositions, and footnote 3 says some
-    fewer-than-49 multiplication algorithms do not correspond to decompositions
-    of the matrix multiplication tensor and cannot be applied recursively to
-    larger matrix multiplication.
-  - Current evidence: roadmap/README/paper-index status points to the Appendix
-    A target registry, matrix result reports, coefficient-domain/exactness
-    fields, scalar-field follow-ups, checked Strassen artifacts, and
-    `libreevolve.matrix_tensor_rank_evidence.v1`. The tensor-rank schema
-    validates algorithm-kind metadata, tensor-decomposition certificate scope,
-    recursive applicability, target-tensor/certificate links, and
-    footnote/source-note provenance for rank comparisons against non-tensor or
-    non-recursive algorithms. `libreevolve.matrix_tensor_rank_runtime_boundary.v1`
-    now validates the current `not_emitted_by_local_runner` boundary and
-    emitted records for run/target/candidate ids, seeds, algorithm kind, rank,
-    recursive applicability, certificate scope, tensor-identity status,
-    target-tensor refs, exactness-certificate refs, matrix-result refs,
-    artifact paths, and artifact hashes.
-    `papers/matrix_tensor_rank_runtime_boundary.json` now emits that
-    absence/readiness boundary as a committed sidecar.
-    `matrix_tensor_rank_runtime_boundary_from_evidence()` builds a runtime row
-    from validated tensor-rank evidence and validation checks linkage to nested
-    target, rank claim, recursive-applicability, tensor-identity, target-tensor,
-    and certificate evidence. It does not emit those artifacts.
-  - Required result: when matrix reports or companion artifacts capture
-    tensor-rank applicability and recursive-use caveats, update ROADMAP,
-    README, papers index, and code/paper TODO entries together so roadmap text
-    distinguishes tensor-decomposition rank evidence from broader
-    multiplication-count claims that are not AlphaEvolve-comparable baselines.
-
 - [ ] Keep the non-toy benchmark follow-up scoped to an executed fixture with
       expected artifacts.
   - Spec evidence: AlphaEvolve-style benchmark evidence needs repeatable

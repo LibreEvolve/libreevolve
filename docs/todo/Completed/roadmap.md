@@ -2,6 +2,22 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive config-validation roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README,
+    `papers/README.md`, local `Config` validation, and
+    `papers/config_validation_boundary.json` already describe the current
+    local-effective-config boundary: CLI override precedence, local
+    backend/plugin spec checks, manifest config records, mutable runtime
+    config revalidation, and credential/client-construction preflight.
+  - Remaining guard: live provider/model API compatibility, provider
+    model-registry validation, service/API-version capture, account
+    model-availability proof, provider default discovery, and complete
+    plugin-specific schema contracts remain active in `docs/todo/code.md` and
+    `docs/todo/papers.md`.
+  - Verification: config-validation boundary and paper-manifest validation
+    continue to reject local effective-config validation as live
+    provider/API compatibility.
+
 - [x] Archive GitHub Actions roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README,
     `papers/README.md`, `.github/workflows/tests.yml`, and

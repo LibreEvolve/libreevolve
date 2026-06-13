@@ -2,6 +2,30 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive constructive-math heuristic-stage roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
+    distinguish one-step incumbent handoff support from AlphaEvolve-style
+    multi-stage adaptive constructive-math search.
+  - Current evidence: `libreevolve.alphaevolve_math_heuristic_stage_sequence_boundary.v1`
+    preserves the Section 3.2 claim that final constructions often came from a
+    sequence of specialized heuristics, including early broad-gain stages from
+    random/simple starts and later fine-tuning near optimal configurations.
+  - Boundary artifact: `papers/math_heuristic_stage_sequence_boundary.json`
+    records the current `not_recorded_locally` state and the required future
+    stage fields for instance id, stage index, heuristic program id, stage
+    role, input/output construction artifact hashes, fixed budget seconds,
+    before/after metrics, improvement delta, and verifier artifacts.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: per-stage rows, stage ordering, heuristic program artifacts,
+    input/output construction payloads, stage-role evidence, improvement
+    deltas, budget rows, and verifier artifacts for a constructive-math
+    benchmark family.
+  - Verification: focused math heuristic-stage sequence boundary tests,
+    paper-manifest validation, and checked-in paper-index TODO coverage still
+    pass.
+
 - [x] Archive heuristic-search handoff roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

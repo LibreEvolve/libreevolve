@@ -115,6 +115,12 @@ Important limits:
   heuristic-program artifacts, incumbent or produced construction payloads,
   fixed-budget execution records, before/after metric rows, scores, or
   verifier evidence.
+- Constructive-math stage-sequence records preserve the Section 3.2 claim that
+  final constructions often came from multiple specialized heuristics,
+  including early broad-gain stages from random/simple starts and later
+  fine-tuning near optimal configurations, not local per-stage heuristic
+  artifacts, ordered construction transitions, stage-role rows, improvement
+  deltas, budget rows, or verifier evidence.
 - Follow-on problem-repository coverage records validate pinned snapshot
   problem-page, status-bucket, link, hash, notebook-link, absence-reason,
   notebook-hash, scoped artifact-flag, Appendix B crosswalk, and

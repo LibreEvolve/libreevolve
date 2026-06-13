@@ -10,29 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep constructive-math roadmap wording scoped until heuristic-stage
-      sequence provenance exists.
-  - Spec evidence: AlphaEvolve Section 3.2 says constructive-math heuristics
-    used fixed time budgets, for example `1000 seconds`, and final
-    constructions often came from a sequence of specialized heuristics: early
-    broad-gain heuristics from random/simple states and later fine-tuning
-    heuristics near optimal configurations.
-  - Current evidence: roadmap/README/paper-index wording now cites the Section
-    3.2 stage-sequence absence boundary in
-    `libreevolve.problems.benchmarks.math_outcomes`. It validates early
-    broad-gain and later fine-tuning roles plus required future stage fields,
-    while per-stage ordering, budget seconds, incumbent lineage, heuristic
-    artifact identity, output construction, improvement delta, and
-    stage-role evidence remain absent. The committed
-    `papers/math_heuristic_stage_sequence_boundary.json` sidecar now emits
-    this boundary for paper-manifest validation alongside the related Section
-    3.2 outcome, starting-construction, and heuristic-handoff boundary
-    sidecars.
-  - Required result: when heuristic-stage sequence reports land, update
-    ROADMAP, README, papers index, and code/paper TODOs together so roadmap
-    wording distinguishes one-step incumbent handoff support from
-    AlphaEvolve-style multi-stage adaptive constructive-math search.
-
 - [ ] Keep constructive-math coverage roadmap wording scoped to family
       registries until aggregate outcome reports exist.
   - Spec evidence: AlphaEvolve Section 3.2 claims breadth over a curated set

@@ -442,6 +442,13 @@ Important limits:
   with a generic Colab landing URL and placeholder paper link. That evidence is
   not a claim that every numbered page is a complete notebook-backed or
   paper-linked source artifact.
+- Paper artifact-role records validate AlphaEvolve PDF page 23 figure-creator
+  and companion-Google-Colab assembler attribution with stable artifact ids,
+  exact contributor initials, source section/page metadata, and source
+  phrases, not linked rendered figure files, caption/source maps, figure-region
+  artifacts, companion notebook URLs or digests, retrieved notebook exports,
+  cell maps, or source-to-artifact maps; the current linkage sidecar marks
+  both artifacts as `not_yet_linked`.
 - Documentation alignment checks are path, manifest, TODO-coverage, and
   sidecar-registry guards, not semantic proof that every README, ROADMAP,
   papers-index, and TODO statement is current; that boundary is tracked by

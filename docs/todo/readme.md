@@ -941,29 +941,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README figure/notebook provenance wording scoped until paper
-      artifact-role records are bound to artifacts.
-  - Spec evidence: AlphaEvolve's Contributions section attributes paper figure
-    creation to specific authors and separately identifies the people who
-    assembled the accompanying Google Colab.
-  - Current evidence: README can describe PDF manifest validation, future
-    companion Colab tracking, exhibit provenance gaps, rendered artifact
-    hashes, and `libreevolve.alphaevolve_paper_artifact_roles.v1`. The role
-    contract validates figure-creator and companion-Colab assembler records
-    with stable artifact ids, exact initials, source section/page metadata, and
-    source phrases. README now also documents
-    `libreevolve.alphaevolve_paper_artifact_linkage.v1`, which validates the
-    current `not_yet_linked` availability boundary and required digest/link/
-    source-map fields. The companion Colab source mapping for constructive
-    math now preserves the Appendix B `result_row_boundary` inventory of `19`
-    expected result ids, but README still does not document concrete rendered
-    figure files, companion notebook URLs/digests, or source-to-artifact maps.
-  - Required result: when role records are linked to concrete rendered or
-    companion-notebook artifacts, update README, ROADMAP, papers index, and
-    code/paper TODOs together so README distinguishes artifact availability,
-    rendered/source hashes, and paper-attributed figure/notebook creator or
-    assembler provenance.
-
 - [ ] Keep README constructive-math wording scoped to static context/artifacts
       versus AlphaEvolve-style incumbent handoff.
   - Spec evidence: AlphaEvolve Section 3.2 evolved heuristic search programs

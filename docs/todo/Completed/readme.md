@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document paper artifact-role README boundary.
+  - Status: README Important limits now states that paper artifact-role
+    records validate AlphaEvolve PDF page 23 figure-creator and companion
+    Google Colab assembler attribution with stable artifact ids, exact
+    contributor initials, source section/page metadata, and source phrases,
+    not linked rendered figure files, caption/source maps, figure-region
+    artifacts, companion notebook URLs or digests, retrieved notebook exports,
+    cell maps, or source-to-artifact maps.
+  - Verification: paper-artifact role/linkage sidecars and paper-manifest
+    tests cover the `not_yet_linked` availability boundary for the figure set
+    and companion notebook while keeping artifact availability claims separate
+    from paper-attributed creator/assembler provenance.
+
 - [x] Document follow-on problem-count README boundary.
   - Status: README Important limits now states that follow-on problem-count
     wording remains snapshot-scoped: the source README/paper declares `67`

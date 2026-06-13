@@ -2,6 +2,9 @@
   "schema": "libreevolve.qualitative_feedback_boundary.v1",
   "source_paper_id": "2506.13131",
   "source_section_id": "2.4",
+  "source_section_ids": [
+    "2.4"
+  ],
   "source_claim": "AlphaEvolve can use LLM-generated feedback to grade properties that are difficult to capture precisely in the evaluator, such as simplicity, and can use those grades as scores or discard gates",
   "boundary_status": "declared_qualitative_policy_without_executed_calibration",
   "policy_report_schema": "libreevolve.qualitative_feedback_policy_report.v1",

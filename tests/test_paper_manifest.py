@@ -1033,6 +1033,7 @@ def test_validate_paper_manifest_rejects_qualitative_feedback_boundary_drift(
     record = paper_manifest.qualitative_feedback_boundary_record()
     record["claim_ready"] = True
     record["boundary_status"] = "executed_qualitative_feedback_calibration_ready"
+    record["source_section_ids"] = ["2.3"]
     record["missing_evidence"]["executed_calibration_task_suite"] = "recorded"
     sidecar = tmp_path / paper_manifest.QUALITATIVE_FEEDBACK_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
@@ -1043,6 +1044,7 @@ def test_validate_paper_manifest_rejects_qualitative_feedback_boundary_drift(
     assert report.ok is False
     assert "qualitative_feedback_boundary_claim_ready_overclaim" in codes
     assert "qualitative_feedback_boundary_invalid_boundary_status" in codes
+    assert "qualitative_feedback_boundary_invalid_source_section_ids" in codes
     assert (
         "qualitative_feedback_boundary_invalid_missing_evidence_executed_calibration_task_suite"
         in codes

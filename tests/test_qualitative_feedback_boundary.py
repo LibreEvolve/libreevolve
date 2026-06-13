@@ -19,6 +19,7 @@ def test_qualitative_feedback_boundary_accepts_declared_policy_boundary():
     assert validation.required_evidence_field_count == 15
     assert validation.missing_evidence_count == 4
     assert boundary["schema"] == QUALITATIVE_FEEDBACK_BOUNDARY_SCHEMA
+    assert boundary["source_section_ids"] == ["2.4"]
     assert boundary["claim_ready"] is False
     assert "does not claim executed calibration task suites" in boundary["claim_boundary"]
 
@@ -27,6 +28,7 @@ def test_qualitative_feedback_boundary_rejects_calibration_overclaim():
     boundary = qualitative_feedback_boundary_record()
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "executed_qualitative_feedback_calibration_ready"
+    boundary["source_section_ids"] = ["2.3"]
     boundary["missing_evidence"]["executed_calibration_task_suite"] = "recorded"
     boundary["required_evidence_fields"] = ["qualitative_criterion_metadata"]
 
@@ -36,6 +38,7 @@ def test_qualitative_feedback_boundary_rejects_calibration_overclaim():
     assert validation.ok is False
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert "invalid_missing_evidence_executed_calibration_task_suite" in codes
     assert "missing_required_evidence_field" in codes
 

@@ -2,6 +2,33 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive provider-cancellation roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
+    `docs/status.md`, `docs/run-artifacts.md`, `docs/backends.md`,
+    `docs/configuration.md`, `papers/README.md`, and the provider-cancellation
+    boundary sidecar already scope cancellation evidence to timeout policy and
+    audit records, not live provider SDK hard cancellation.
+  - Current evidence: runtime manifests emit validated
+    `runtime.provider_cancellation_policy` records with
+    `libreevolve.provider_cancellation_policy.v1`, role-scoped provider request
+    timeout and ensemble wait-deadline rules for mutation, critique,
+    `feedback:*`, and `meta_prompt`, runtime-deadline rules, artifact-kind
+    requirements, `hard_cancel_ready: false`, false
+    `libreevolve.provider_cancellation_runtime_readiness.v1` fields,
+    scheduler-derived `libreevolve.provider_cancellation_observations.v1`, and
+    strict `libreevolve.provider_cancellation_record.v1` ledger replay for
+    ensemble deadline timeouts.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    AlphaEvolve-grade provider cancellation work: live in-flight provider SDK
+    cancellation handles, timeout-driven stop enforcement, cross-run provider
+    quarantine resume proof, richer role-specific timeout/cancellation
+    artifacts, provider-output/raw-payload replay, and async/accelerator budget
+    integration.
+  - Verification: focused cancellation-policy, loop, ensemble-ledger, paper
+    boundary, and paper-manifest tests reject live hard-cancellation readiness
+    overclaims while preserving timeout-policy, quarantine-observation, and
+    audit-only cancellation evidence.
+
 - [x] Archive provider-diagnostics roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`,
     `docs/status.md`, `docs/run-artifacts.md`, `papers/README.md`, the runtime

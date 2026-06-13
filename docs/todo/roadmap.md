@@ -10,30 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Keep the provider cancellation roadmap item aligned with current timeout
-  policy coverage.
-  - Spec evidence: AlphaEvolve-scale provider orchestration needs bounded model
-    calls, stop/quarantine behavior, and audit evidence for timeout and
-    cancellation outcomes across model roles.
-  - Current evidence: the roadmap now recognizes the implemented
-    `libreevolve.provider_cancellation_policy.v1` policy contract,
-    runtime scheduler observations, configured in-run role/backend quarantine
-    evidence, strict provider-failure ledger summaries, restorable scheduler
-    failure-policy state, role-specific failure-policy remaining-gap summaries,
-    explicit false runtime-readiness fields, and mutation timeout
-    failure-history rows before naming the open live SDK hard-cancellation,
-    timeout-stop, raw provider output replay, and cross-run quarantine/resume
-    gaps. The roadmap now points to
-    `papers/provider_cancellation_boundary.json`, which preserves the
-    policy/audit-only cancellation boundary for manifest validation.
-  - Required result: when live provider SDK cancellation, runtime
-    timeout-driven stop policy, cross-run provider-failure quarantine/resume
-    behavior beyond restorable scheduler failure-policy state, raw provider
-    output replay, or richer role-specific timeout artifacts land, update the
-    roadmap, README, papers index, and code/paper TODO entries together so they
-    neither underclaim current timeout policy evidence nor overclaim provider
-    hard-cancel enforcement.
-
 - [ ] Keep provider-pricing roadmap wording scoped to configured estimates
   versus live/default-rate capture.
   - Spec evidence: AlphaEvolve-scale provider accounting needs cost evidence

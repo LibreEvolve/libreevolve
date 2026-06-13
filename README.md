@@ -180,8 +180,10 @@ Important limits:
   boundary is tracked by `papers/mutation_operator_boundary.json`.
 - Mutation mode is a configured run-wide `diff` or `full` prompt/parser
   contract, not adaptive per-candidate diff-versus-full selection based on
-  code size, workspace shape, task shape, or failure history; that boundary is
-  tracked by `papers/adaptive_mutation_mode_boundary.json`.
+  code size, workspace shape, task shape, failure history, parser/critique
+  fallback policy, selection-reason telemetry, mixed-mode run history, or
+  AlphaEvolve-style selection tests; that boundary is tracked by
+  `papers/adaptive_mutation_mode_boundary.json`.
 - Initial-pool divergence reports are syntactic and shared-metric telemetry,
   not task-specific functional-distance proof or "substantially different"
   benchmark evidence; that boundary is tracked by

@@ -69,24 +69,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
     passes.
 
-- [ ] Keep README mutation-mode wording scoped to configured `diff`/`full`
-      support versus adaptive prompting.
-  - Spec evidence: AlphaEvolve Section 2.3 requests diff blocks for larger
-    codebases and direct full-code output when code is very short or a rewrite
-    is more suitable.
-  - Current evidence: README correctly says LLM mutations use SEARCH/REPLACE
-    diffs by default and full-block/full-code replacements when
-    `mutation_mode: full` is configured. README now also points to
-    `papers/adaptive_mutation_mode_boundary.json`, which preserves the
-    manifest-checked boundary that LibreEvolve does not currently choose that
-    output contract per candidate size, workspace shape, task shape, or prior
-    failure mode.
-  - Required result: when adaptive mutation-mode selection lands, update
-    README, ROADMAP, papers index, and code/paper TODOs with the selection
-    policy, per-candidate telemetry, and examples that prove diff prompts and
-    full-rewrite prompts are selected under documented AlphaEvolve-style
-    conditions.
-
 - [ ] Keep README mutation-operator wording scoped until operator-family
       construction evidence exists beyond the current boundary report.
   - Spec evidence: AlphaEvolve Section 2.3 uses structured edit payloads, but

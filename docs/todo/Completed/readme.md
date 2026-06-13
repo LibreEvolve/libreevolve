@@ -14030,6 +14030,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     until the policy, telemetry, and examples exist.
   - Verification: focused boundary and paper-manifest tests cover the sidecar
     and its overclaim rejection.
+
+- [x] Keep README mutation-mode wording scoped to configured `diff`/`full`
+      support versus adaptive prompting.
+  - Status: README now scopes mutation mode as a configured run-wide `diff` or
+    `full` prompt/parser contract, not adaptive per-candidate selection based
+    on code size, workspace shape, task shape, failure history, parser/critique
+    fallback policy, selection-reason telemetry, mixed-mode run history, or
+    AlphaEvolve-style selection tests.
+  - Verification: paper-manifest validation requires
+    `papers/adaptive_mutation_mode_boundary.json`, and focused adaptive
+    mutation-mode tests reject premature adaptive-selection claims.
 - [x] Add README boundary for mutation-operator evidence.
   - Spec evidence: AlphaEvolve's Related Work contrasts LLM-guided mutation
     with fixed handwritten mutation/crossover operators.

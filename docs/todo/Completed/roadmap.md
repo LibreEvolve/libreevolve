@@ -125,6 +125,25 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     `explicit_context_source_role_report` shape, allowlisted roles,
     prompt-inclusion decisions, hash/redaction policy, and overclaim rejection.
 
+- [x] Archive paper-inspired roadmap label wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md` already says to
+    keep CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve, TTT Discover,
+    Bruhat Intervals, GigaEvo, CodeEvolve, MadEvolve, Magellan, ArchAgent,
+    Multiagent Learning, Bilateral Trade, Fault2Flow, Global NLP Optimization,
+    Autoconvolution, Sums and Differences, Sums and Differences II, Ramsey
+    Numbers, and Berczy local-correction combinatorics features labeled as
+    inspiration, candidate benchmark, or application context unless paper
+    behavior is actually implemented.
+  - Remaining guard: faithful paper-specific runtime behavior, benchmark
+    reproduction rows, paper-sidecar claim readiness, and cross-document
+    promotion from inspiration/background status remain active in
+    `docs/todo/code.md`, `docs/todo/papers.md`, and source-specific roadmap
+    TODOs.
+  - Verification: source-boundary tests and paper-manifest validation require
+    sidecars and status rows to keep token-pattern causal guidance, clipped
+    JSONL export, static modular prompting, retrieval context, and generic
+    prompt-program mutation separate from the cited papers' full systems.
+
 - [x] Archive metric-diverse prompt-context roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README,
     `papers/README.md`, runtime

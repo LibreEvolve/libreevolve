@@ -91,40 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README HarnessFix trace-grounded harness repair claims source-
-      scoped until runtime evidence exists.
-  - Spec evidence: arXiv `2606.06324`, `From Failed Trajectories to Reliable
-    LLM Agents: Diagnosing and Repairing Harness Flaws`, introduces
-    HarnessFix, which compiles raw execution traces and harness code into a
-    Harness-aware Trace Intermediate Representation (HTIR), attributes
-    failures to trajectory steps and harness layers, consolidates recurring
-    flaw records, maps them to scoped repair operators, and validates harness
-    patches under flaw-specific repair specs to avoid unacceptable
-    regressions. The abstract reports 15.2% to 50.0% held-out improvements
-    across SWE-Bench Verified, Terminal-Bench 2.0 Verified, GAIA, and
-    AppWorld.
-  - Current evidence: README now lists `2606.06324`, HarnessFix, as trace-
-    grounded harness repair context only and says no local HTIR trace
-    normalization, harness-layer failure attribution, recurring flaw record
-    consolidation, scoped repair operator schema, or regression-bounded patch
-    validation exists. README also documents LibreEvolve's current run
-    artifacts, prompt history, evaluator failures, quarantine streams,
-    validators, and benchmark boundaries; it does not claim trace
-    normalization, failure-to-harness-code/layer links, recurring harness flaw
-    consolidation, scoped harness repair generation, or regression-bounded
-    held-out validation for harness patches.
-  - Required result: if README mentions HarnessFix, trace-grounded harness
-    repair, HTIR, harness-layer failure attribution, scoped repair operators,
-    recurring harness flaws, regression-bounded patch validation, SWE-Bench
-    Verified harness improvements, Terminal-Bench 2.0 Verified, GAIA,
-    AppWorld, or autonomous agent reliability repair, keep the wording
-    source-scoped until local artifacts can show trace IR records, harness-
-    code links, attribution reports, flaw
-    records, repair patches, validation specs, regression thresholds, held-out
-    benchmark baselines, and report outcomes. Avoid implying LibreEvolve
-    supports HarnessFix-style trace-grounded harness repair without those
-    artifacts.
-
 - [ ] Keep README RHO retrospective harness-optimization claims source-scoped
       until runtime evidence exists.
   - Spec evidence: arXiv `2606.05922`, `Retrospective Harness Optimization:

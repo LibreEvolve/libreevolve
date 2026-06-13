@@ -810,6 +810,17 @@ Important limits:
   harness-only versus weight-only versus combined ablation report,
   LawBench/kernel/scRNA benchmark report, linked-code audit, or independent
   reproduction output.
+- ArXiv `2606.06324` is trace-grounded harness repair context only; the README
+  mentions this cached paper as a curated subset while `papers/README.md`
+  remains the complete implementation-status index. LibreEvolve has no HTIR
+  trace-normalization schema, raw-trace normalization record, harness-code
+  linkage, step-level provenance, execution/tool/context/lifecycle/
+  observability/verification/governance harness-layer attribution taxonomy,
+  recurring flaw consolidation, scoped repair operator schema, generated
+  harness patch artifact, flaw-specific validation specification,
+  unacceptable-regression threshold record, held-out SWE-Bench Verified/
+  Terminal-Bench 2.0 Verified/GAIA/AppWorld benchmark report, linked-code
+  audit, or independent reproduction output.
 - Scheduling safety records validate feasible candidate-set provenance,
   ranking-only scope, simulator/admission/placement boundaries, resource
   invariants, and artifact refs, not proof of Borg-style scheduling safety,

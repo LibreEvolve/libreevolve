@@ -14985,3 +14985,33 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     lifecycle, verifier/reward evidence, ablation baselines, compute/cost
     accounting, report outcomes, and SIA-style harness-plus-weight
     self-improvement remain active in code and paper TODOs.
+
+- [x] Keep README HarnessFix trace-grounded harness repair claims source-
+      scoped until runtime evidence exists.
+  - Spec evidence: arXiv `2606.06324`, `From Failed Trajectories to Reliable
+    LLM Agents: Diagnosing and Repairing Harness Flaws`, introduces
+    HarnessFix, which compiles raw execution traces and harness code into a
+    Harness-aware Trace Intermediate Representation (HTIR), attributes
+    failures to trajectory steps and harness layers, consolidates recurring
+    flaw records, maps them to scoped repair operators, and validates harness
+    patches under flaw-specific repair specs to avoid unacceptable
+    regressions. The abstract reports 15.2% to 50.0% held-out improvements
+    across SWE-Bench Verified, Terminal-Bench 2.0 Verified, GAIA, and
+    AppWorld.
+  - Status: README now lists arXiv `2606.06324` as trace-grounded harness
+    repair context only and marks the mention as a curated cached-paper
+    subset while `papers/README.md` remains the complete
+    implementation-status index. It states that LibreEvolve has no HTIR
+    trace-normalization schema, raw-trace normalization record, harness-code
+    linkage, step-level provenance, execution/tool/context/lifecycle/
+    observability/verification/governance harness-layer attribution taxonomy,
+    recurring flaw consolidation, scoped repair operator schema, generated
+    harness patch artifact, flaw-specific validation specification,
+    unacceptable-regression threshold record, held-out SWE-Bench Verified/
+    Terminal-Bench 2.0 Verified/GAIA/AppWorld benchmark report, linked-code
+    audit, or independent reproduction output.
+  - Remaining README gap: trace IR records, harness-code links, attribution
+    reports, flaw records, repair patches, validation specs, regression
+    thresholds, held-out benchmark baselines, report outcomes, and
+    HarnessFix-style trace-grounded harness repair remain active in code and
+    paper TODOs.

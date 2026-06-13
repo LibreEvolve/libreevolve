@@ -1019,6 +1019,13 @@ metadata, and LLM grader feedback, and can override configured stochastic
 prompt-format alternative weights for safe configured markers. It can also
 select and order already-loaded local context sources by safe problem-relative
 path.
+Prompt-template validation covers known placeholders, dry-run formatting,
+configured mutation-channel checks, parent-placeholder retention for evolved
+children, and explicit duplicate-arm audit identity: duplicate configured or
+evolved template text remains separate prompt programs with independent ids and
+shared `template_sha256` rather than being deduplicated. Role-specific
+compatibility for critique, feedback grading, and meta-prompt call surfaces
+remains open.
 Broader prompt-context evolution remains open for live/external context-source
 selection, retrieval/summarization, inspiration selection, and finer-grained
 evaluator/LLM-feedback field policy. Prompt-database parity with the solution

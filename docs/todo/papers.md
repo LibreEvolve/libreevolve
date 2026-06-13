@@ -2599,6 +2599,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     manifest-visible validation of the current meta-prompt-tunable context
     policy surface.
 
+- [ ] Extend prompt-template compatibility evidence beyond mutation-template
+      validation and duplicate-arm audit.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2 and Section 2.6.
+  - Requirement: AlphaEvolve-style prompt evolution should make prompt
+    templates compatible with each model-call role and context channel that
+    consumes them, while preserving clear prompt-program lineage semantics.
+  - Partial status: LibreEvolve validates known placeholders, dry-run
+    formatting, configured mutation-channel requirements, prompt-format option
+    markers, and parent-placeholder retention for evolved prompt children.
+    Duplicate configured or evolved template text is intentionally retained as
+    separate prompt arms with deterministic ids and shared `template_sha256`
+    audit identity.
+  - Current gap: paper-facing evidence still lacks role-specific compatibility
+    policy for critique, feedback grading, and meta-prompt surfaces, plus
+    benchmark evidence that the current explicit no-dedup prompt-arm policy is
+    preferable to prompt-program text deduplication.
+  - Required result: add role-specific prompt-template compatibility checks and
+    paper-visible prompt-arm lineage/no-dedup or deduplication policy evidence
+    before treating prompt-template validation as AlphaEvolve-grade prompt
+    policy management.
+
 - [ ] Calibrate meta-prompt rewards and add prompt-lineage ablation evidence.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2, 2.6, and 4.
   - Requirement: prompt-improvement claims should be backed by reward signals

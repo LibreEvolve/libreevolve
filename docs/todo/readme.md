@@ -91,27 +91,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     query tables, schema-aware output retrieval, or semantic output search
     land.
 
-- [ ] Keep README prompt-template compatibility and duplicate-arm wording
-  scoped to current mutation-template validation.
-  - Spec evidence: AlphaEvolve-style prompt evolution should distinguish
-    prompt-template compatibility for each model-call role from generic
-    mutation-template rendering checks, and should make duplicate prompt-arm
-    semantics explicit.
-  - Current evidence: README documents prompt-program selection, scoring,
-    lineage, history replay, invalid-mutation diagnostics, configured
-    `prompt_variant_semantic_policy`, stochastic `prompt_format_options`, and
-    duplicate configured/evolved prompt templates retained as separate prompt
-    arms with deterministic ids and `template_sha256` audit identity. Code
-    validates known placeholders, dry-run formatting, AlphaEvolve-style
-    configured mutation channels, and parent-placeholder retention for evolved
-    children, but does not implement role-specific compatibility policy or
-    prompt-program text deduplication.
-  - Required result: when role-specific prompt-template compatibility,
-    prompt-program deduplication, or an explicit validated no-dedup policy
-    lands, update README, ROADMAP, papers index, and code/paper TODO entries
-    together so README neither underclaims current template validation nor
-    overclaims AlphaEvolve-grade prompt-policy management.
-
 - [ ] Keep README meta-prompt scoring wording scoped to absolute/improvement
   reward modes and UCB-style prompt-arm selection.
   - Spec evidence: AlphaEvolve-style prompt evolution needs calibrated reward

@@ -7883,6 +7883,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     task-only templates, explicit compatibility mode, prompt-database seeding,
     and loop/runtime manifest behavior.
 
+- [x] Keep prompt-template compatibility roadmap wording scoped to current
+  mutation-template validation and duplicate-arm audit.
+  - Status: ROADMAP now distinguishes current schema/dry-run/configured
+    mutation-channel checks, explicit duplicate-arm/no-dedup audit, and
+    parent-placeholder retention from still-open role-specific compatibility
+    policies for mutation, critique, feedback, and meta-prompt call surfaces.
+  - Remaining roadmap gap: role-specific prompt-template compatibility remains
+    tracked in active code and paper TODOs.
+
 - [x] Add LLM prompt-role policy to backend roadmap.
   - Evidence: AlphaEvolve's prompt template/configuration and LLM choice are
     experiment inputs, so provider message boundaries need to be explicit

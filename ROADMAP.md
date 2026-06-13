@@ -630,8 +630,9 @@ is not yet an AlphaEvolve reproduction.
 ### 4. Prompt and context work
 
 - Extend prompt-template validation beyond the current schema, dry-run format
-  checks, and parent-placeholder retention into role-specific compatibility
-  policies and prompt-program deduplication.
+  checks, configured mutation-channel checks, explicit duplicate-arm/no-dedup
+  audit, and parent-placeholder retention into role-specific compatibility
+  policies for mutation, critique, feedback, and meta-prompt call surfaces.
 - Replace first-N-character context truncation with deterministic
   summarization/ranking for local PDFs and extracted text.
 - Extend current prompt caps, mutation-path provider-token section packing,

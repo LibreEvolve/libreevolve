@@ -510,6 +510,13 @@ Important limits:
   counters, registry/custom role section packing, retrieval/context/plugin/
   failure-memory packing, or full validator-metadata prompt policy; that
   boundary is tracked by `papers/prompt_section_packing_boundary.json`.
+- Prompt-template validation covers known placeholders, dry-run formatting,
+  configured AlphaEvolve-style mutation-channel requirements, and parent
+  placeholder retention for evolved prompt children. Duplicate configured or
+  evolved prompt text is intentionally retained as independent prompt arms with
+  deterministic ids and shared `template_sha256`, not deduplicated into one
+  prompt policy; role-specific compatibility for critique, feedback, and
+  meta-prompt call surfaces remains open.
 - Meta-prompt context-policy mutation is validated only for the current
   `libreevolve.prompt_context_policy.v1` fields exposed in
   `runtime.prompt_context_policy_coverage` and meta-prompt capability-summary

@@ -11065,6 +11065,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     and duplicate mutated templates sharing the same template hash while
     retaining separate prompt ids and reward state.
 
+- [x] Keep README prompt-template compatibility and duplicate-arm wording
+  scoped to current mutation-template validation.
+  - Status: README now states that prompt-template validation covers known
+    placeholders, dry-run formatting, configured AlphaEvolve-style mutation
+    channels, and parent-placeholder retention, while duplicate configured or
+    evolved prompt text is intentionally retained as independent prompt arms
+    with deterministic ids and shared `template_sha256`.
+  - Remaining README gap: role-specific compatibility for critique, feedback,
+    and meta-prompt call surfaces remains open.
+  - Verification: focused prompt-template and prompt-database tests cover
+    semantic-policy validation, prompt-format options, and duplicate
+    configured/evolved templates as independent arms.
+
 - [x] Document the former limited scope for non-archive `show` fields.
   - Status: documented. README, run-artifact docs, architecture docs, and the
     paper index now state that `libreevolve show` validates ids, metrics,

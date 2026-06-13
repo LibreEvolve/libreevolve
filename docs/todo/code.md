@@ -722,10 +722,9 @@ Primary evidence:
     duplicate configured or evolved templates are retained as separate prompt
     arms with deterministic ids plus `template_sha256` audit identity.
   - Required result: add explicit role-specific compatibility policy for
-    mutation, critique, feedback grading, and meta-prompt surfaces; decide and
-    test a prompt-program text deduplication or explicit no-dedup policy; and
-    update README, ROADMAP, and paper TODO wording so duplicate template text is
-    not mistaken for implemented prompt-program deduplication.
+    mutation, critique, feedback grading, and meta-prompt surfaces, while
+    preserving the explicit tested no-dedup/independent-arm policy unless a
+    future prompt-program text deduplication design intentionally replaces it.
 
 - [ ] Calibrate meta-prompt scoring beyond absolute/improvement child rewards.
   - Spec evidence: AlphaEvolve-style prompt evolution should justify prompt

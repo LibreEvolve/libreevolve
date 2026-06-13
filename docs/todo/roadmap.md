@@ -1356,25 +1356,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `papers/artifact_index_boundary.json`, keeping durable full-content or
     semantic artifact search open.
 
-- [ ] Keep prompt-template compatibility roadmap wording scoped to current
-  mutation-template validation and duplicate-arm audit.
-  - Spec evidence: AlphaEvolve-style prompt evolution needs compatibility
-    policy for the concrete model-call roles that consume prompt text, plus a
-    clear duplicate-template policy for experiments and prompt-program lineage.
-  - Current evidence: `ROADMAP.md` says prompt templates are currently
-    validated for known placeholders, compatible format specs, and
-    parent-placeholder retention, then names role-specific compatibility and
-    prompt-program deduplication as future work. README and code evidence show
-    configured AlphaEvolve-style mutation-channel validation and stochastic
-    `prompt_format_options`, while duplicate configured/evolved template text
-    is intentionally retained as separate prompt arms with deterministic ids and
-    `template_sha256` audit identity, not deduplicated.
-  - Required result: when role-specific prompt-template compatibility,
-    prompt-program text deduplication, or an explicit validated no-dedup policy
-    lands, update the roadmap, README, papers index, and code/paper TODO entries
-    together so they neither underclaim current validation nor imply
-    implemented prompt-program deduplication.
-
 - [ ] Keep meta-prompt scoring roadmap wording scoped to current child-score
   rewards and prompt-arm UCB selection.
   - Spec evidence: AlphaEvolve-style meta-prompt evolution should have

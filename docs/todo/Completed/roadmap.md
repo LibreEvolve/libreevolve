@@ -67,6 +67,24 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     quarantine diagnostics, and malformed-record handling; paper-manifest
     validation continues to cover duplicate-key-free paper-index JSON rows.
 
+- [x] Archive paper-manifest diagnostics roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale. `ROADMAP.md` already says
+    paper-manifest validation diagnostics should use repository-relative labels
+    and secret-redacted exception text in text and JSON output, and separately
+    states that the validator proves manifest/readability/count checks,
+    registry shape, status-table structure, TODO coverage, and ledger evidence,
+    not arbitrary natural-language semantics for every status phrase,
+    benchmark qualifier, or paper claim.
+  - Remaining guard: semantic paper-claim verification, full
+    implementation-status proof, stronger citation extraction, mandatory local
+    PDF proof in CI, and broader docs/paper-specific CI remain active in
+    `docs/todo/code.md` and `docs/todo/papers.md`.
+  - Verification: paper-manifest tests cover text and JSON diagnostics,
+    repository-relative labels, redacted exception/download/read diagnostics,
+    duplicate-key-free JSON rows, optional `--require-local-pdfs`, and the
+    current paper-index/TODO coverage gates without treating them as semantic
+    implementation proof.
+
 - [x] Archive metric-diverse prompt-context roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale. `ROADMAP.md`, README,
     `papers/README.md`, runtime

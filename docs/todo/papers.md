@@ -541,6 +541,29 @@ directory and using the AlphaEvolve paper as the primary specification.
     to evolutionary comparator runs before claiming AlphaEvolve-style
     test-time-compute uplift over repeated sampling.
 
+- [ ] Preserve AlphaEvolve arXiv abstract-page metadata beyond cached-PDF
+      source-version evidence.
+  - Paper/source evidence: the current arXiv page for `2506.13131` reports
+    the submitted date, full author list, abstract, subject classes
+    `cs.AI`, `cs.LG`, and `cs.NE`, DOI `10.48550/arXiv.2506.13131`,
+    submission-history timestamp, TeX source link, and CC BY-NC-ND 4.0
+    license link. These are source-bibliography facts adjacent to, but not
+    identical with, the cached PDF first-page header.
+  - Current gap: `papers/source_versions.json` now extends the AlphaEvolve
+    source-version row with DOI, subject classes, submitted timestamp, author
+    count, TeX source URL, arXiv license URL, and an explicit
+    `manual_current_as_of_2026-06-13_without_html_snapshot` status. It also
+    marks missing live-evidence gates for arXiv abstract HTML snapshots,
+    DataCite DOI resolution snapshots, TeX source caching, license-page
+    caching, and submission-history refresh checks. This is still a manually
+    recorded source-version boundary, not a cached arXiv abstract-page
+    artifact or live refresh verifier.
+  - Required result: before using arXiv abstract-page metadata as
+    publication-grade evidence, add an HTML/source snapshot with byte count and
+    digest, DOI/DataCite resolution evidence, TeX-source and license-page
+    retrieval records, author-list normalization, subject-class verification,
+    and a refresh gate that detects arXiv version or metadata drift.
+
 - [ ] Track Google/Gemini provider parity separately from generic backend
       configurability.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3/2.4, "Models used".

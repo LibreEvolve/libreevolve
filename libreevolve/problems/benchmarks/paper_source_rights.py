@@ -81,6 +81,8 @@ def alphaevolve_source_pdf_rights_record() -> dict[str, Any]:
             "source_location": "page_1_title_page_rights_line",
             "license_identifier": "all_rights_reserved_statement",
             "open_license_declared_in_cached_pdf": False,
+            "arxiv_license_url_recorded_in_source_versions": True,
+            "arxiv_license_page_cached": False,
             "arxiv_license_terms_recorded": False,
             "reuse_policy": "third_party_paper_source_rights_require_separate_review_before_reproduction",
         },
@@ -434,6 +436,8 @@ def _validate_rights(value: object, issues: list[AlphaEvolveSourcePdfRightsIssue
         "source_location": "page_1_title_page_rights_line",
         "license_identifier": "all_rights_reserved_statement",
         "open_license_declared_in_cached_pdf": False,
+        "arxiv_license_url_recorded_in_source_versions": True,
+        "arxiv_license_page_cached": False,
         "arxiv_license_terms_recorded": False,
     }
     for field, expected_value in expected.items():

@@ -24,6 +24,12 @@ def test_validate_alphaevolve_source_pdf_version_accepts_builtin_record():
     assert validation.source_count == 1
     assert validation.header_checked is True
     assert validation.issues == []
+    assert recordset["arxiv_source"]["subjects"] == ["cs.AI", "cs.LG", "cs.NE"]
+    assert recordset["arxiv_source"]["doi"] == "10.48550/arXiv.2506.13131"
+    assert recordset["arxiv_source"]["author_count"] == 18
+    assert recordset["arxiv_source"]["license_url"] == (
+        "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+    )
 
 
 def test_validate_alphaevolve_source_pdf_version_manifest_accepts_builtin_record():
@@ -91,7 +97,14 @@ def test_validate_alphaevolve_source_pdf_version_rejects_arxiv_version_drift():
     recordset["arxiv_source"]["version"] = 2
     recordset["arxiv_source"]["versioned_id"] = "2506.13131v2"
     recordset["arxiv_source"]["category"] = "cs.SE"
+    recordset["arxiv_source"]["subjects"] = ["cs.SE"]
     recordset["arxiv_source"]["posted_date"] = "2025-06-17"
+    recordset["arxiv_source"]["submitted_timestamp_utc"] = "2025-06-17T00:00:00Z"
+    recordset["arxiv_source"]["doi"] = "10.48550/arXiv.2506.99999"
+    recordset["arxiv_source"]["author_count"] = 1
+    recordset["arxiv_source"]["tex_source_url"] = "https://example.test/source"
+    recordset["arxiv_source"]["license_url"] = "https://example.test/license"
+    recordset["arxiv_source"]["abstract_page_metadata_status"] = "snapshotted"
     recordset["arxiv_source"]["expected_header_phrase"] = "arXiv:2506.13131v2 [cs.SE] 17 Jun 2025"
 
     validation = validate_alphaevolve_source_pdf_version(recordset)
@@ -101,7 +114,14 @@ def test_validate_alphaevolve_source_pdf_version_rejects_arxiv_version_drift():
     assert "invalid_arxiv_version" in codes
     assert "invalid_arxiv_versioned_id" in codes
     assert "invalid_arxiv_category" in codes
+    assert "invalid_arxiv_subjects" in codes
     assert "invalid_arxiv_posted_date" in codes
+    assert "invalid_arxiv_submitted_timestamp_utc" in codes
+    assert "invalid_arxiv_doi" in codes
+    assert "invalid_arxiv_author_count" in codes
+    assert "invalid_arxiv_tex_source_url" in codes
+    assert "invalid_arxiv_license_url" in codes
+    assert "invalid_arxiv_abstract_page_metadata_status" in codes
     assert "invalid_arxiv_expected_header_phrase" in codes
 
 
@@ -124,6 +144,11 @@ def test_validate_alphaevolve_source_pdf_version_rejects_audit_policy_drift():
     recordset["audit_policy"]["manifest_url_requires_header_version_check"] = False
     recordset["audit_policy"]["claim_audits_must_name_source_version"] = False
     recordset["audit_policy"]["floating_url_refresh_is_not_silent_version_change"] = False
+    recordset["audit_policy"]["arxiv_abs_html_snapshot_required_for_live_metadata_claims"] = False
+    recordset["audit_policy"]["datacite_doi_resolution_not_snapshotted"] = False
+    recordset["audit_policy"]["tex_source_not_cached"] = False
+    recordset["audit_policy"]["arxiv_license_page_not_cached"] = False
+    recordset["audit_policy"]["submission_history_refresh_gate_not_implemented"] = False
     recordset["audit_policy"]["scope"] = "result-version provenance"
 
     validation = validate_alphaevolve_source_pdf_version(recordset)
@@ -133,6 +158,17 @@ def test_validate_alphaevolve_source_pdf_version_rejects_audit_policy_drift():
     assert "invalid_audit_policy_manifest_url_requires_header_version_check" in codes
     assert "invalid_audit_policy_claim_audits_must_name_source_version" in codes
     assert "invalid_audit_policy_floating_url_refresh_is_not_silent_version_change" in codes
+    assert (
+        "invalid_audit_policy_arxiv_abs_html_snapshot_required_for_live_metadata_claims"
+        in codes
+    )
+    assert "invalid_audit_policy_datacite_doi_resolution_not_snapshotted" in codes
+    assert "invalid_audit_policy_tex_source_not_cached" in codes
+    assert "invalid_audit_policy_arxiv_license_page_not_cached" in codes
+    assert (
+        "invalid_audit_policy_submission_history_refresh_gate_not_implemented"
+        in codes
+    )
     assert "invalid_audit_policy_scope" in codes
 
 

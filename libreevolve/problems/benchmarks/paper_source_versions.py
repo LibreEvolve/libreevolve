@@ -21,7 +21,13 @@ EXPECTED_VERSIONED_PDF_URL = "https://arxiv.org/pdf/2506.13131v1"
 EXPECTED_ARXIV_VERSION = 1
 EXPECTED_ARXIV_VERSIONED_ID = "2506.13131v1"
 EXPECTED_ARXIV_CATEGORY = "cs.AI"
+EXPECTED_ARXIV_SUBJECTS = ("cs.AI", "cs.LG", "cs.NE")
 EXPECTED_POSTED_DATE = "2025-06-16"
+EXPECTED_SUBMITTED_TIMESTAMP_UTC = "2025-06-16T06:37:18Z"
+EXPECTED_ARXIV_DOI = "10.48550/arXiv.2506.13131"
+EXPECTED_AUTHOR_COUNT = 18
+EXPECTED_TEX_SOURCE_URL = "https://arxiv.org/e-print/2506.13131"
+EXPECTED_ARXIV_LICENSE_URL = "https://creativecommons.org/licenses/by-nc-nd/4.0/"
 EXPECTED_HEADER_PAGE = 1
 EXPECTED_HEADER_PHRASE = "arXiv:2506.13131v1 [cs.AI] 16 Jun 2025"
 EXPECTED_BYTES = 3525764
@@ -82,10 +88,17 @@ def alphaevolve_source_pdf_version_record() -> dict[str, Any]:
             "version": EXPECTED_ARXIV_VERSION,
             "versioned_id": EXPECTED_ARXIV_VERSIONED_ID,
             "category": EXPECTED_ARXIV_CATEGORY,
+            "subjects": list(EXPECTED_ARXIV_SUBJECTS),
             "posted_date": EXPECTED_POSTED_DATE,
+            "submitted_timestamp_utc": EXPECTED_SUBMITTED_TIMESTAMP_UTC,
+            "doi": EXPECTED_ARXIV_DOI,
+            "author_count": EXPECTED_AUTHOR_COUNT,
             "floating_pdf_url": EXPECTED_FLOATING_PDF_URL,
             "versioned_abs_url": EXPECTED_VERSIONED_ABS_URL,
             "versioned_pdf_url": EXPECTED_VERSIONED_PDF_URL,
+            "tex_source_url": EXPECTED_TEX_SOURCE_URL,
+            "license_url": EXPECTED_ARXIV_LICENSE_URL,
+            "abstract_page_metadata_status": "manual_current_as_of_2026-06-13_without_html_snapshot",
             "expected_header_page": EXPECTED_HEADER_PAGE,
             "expected_header_phrase": EXPECTED_HEADER_PHRASE,
         },
@@ -93,6 +106,11 @@ def alphaevolve_source_pdf_version_record() -> dict[str, Any]:
             "manifest_url_requires_header_version_check": True,
             "claim_audits_must_name_source_version": True,
             "floating_url_refresh_is_not_silent_version_change": True,
+            "arxiv_abs_html_snapshot_required_for_live_metadata_claims": True,
+            "datacite_doi_resolution_not_snapshotted": True,
+            "tex_source_not_cached": True,
+            "arxiv_license_page_not_cached": True,
+            "submission_history_refresh_gate_not_implemented": True,
             "scope": "AlphaEvolve source PDF identity, not result-version provenance",
         },
     }
@@ -373,10 +391,17 @@ def _validate_arxiv_source(value: object, issues: list[AlphaEvolveSourcePdfVersi
         "version": EXPECTED_ARXIV_VERSION,
         "versioned_id": EXPECTED_ARXIV_VERSIONED_ID,
         "category": EXPECTED_ARXIV_CATEGORY,
+        "subjects": list(EXPECTED_ARXIV_SUBJECTS),
         "posted_date": EXPECTED_POSTED_DATE,
+        "submitted_timestamp_utc": EXPECTED_SUBMITTED_TIMESTAMP_UTC,
+        "doi": EXPECTED_ARXIV_DOI,
+        "author_count": EXPECTED_AUTHOR_COUNT,
         "floating_pdf_url": EXPECTED_FLOATING_PDF_URL,
         "versioned_abs_url": EXPECTED_VERSIONED_ABS_URL,
         "versioned_pdf_url": EXPECTED_VERSIONED_PDF_URL,
+        "tex_source_url": EXPECTED_TEX_SOURCE_URL,
+        "license_url": EXPECTED_ARXIV_LICENSE_URL,
+        "abstract_page_metadata_status": "manual_current_as_of_2026-06-13_without_html_snapshot",
         "expected_header_page": EXPECTED_HEADER_PAGE,
         "expected_header_phrase": EXPECTED_HEADER_PHRASE,
     }
@@ -393,6 +418,11 @@ def _validate_audit_policy(value: object, issues: list[AlphaEvolveSourcePdfVersi
         "manifest_url_requires_header_version_check",
         "claim_audits_must_name_source_version",
         "floating_url_refresh_is_not_silent_version_change",
+        "arxiv_abs_html_snapshot_required_for_live_metadata_claims",
+        "datacite_doi_resolution_not_snapshotted",
+        "tex_source_not_cached",
+        "arxiv_license_page_not_cached",
+        "submission_history_refresh_gate_not_implemented",
     )
     for field in required_true:
         if value.get(field) is not True:

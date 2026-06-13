@@ -287,6 +287,28 @@ sidecars, tests, and active TODOs.
     language/build runner task specs, and full user-authored task-spec parity
     remain open.
 
+- [ ] Add an arXiv abstract-page snapshot and refresh gate for the primary
+      AlphaEvolve source.
+  - Spec evidence: the authoritative arXiv record for `2506.13131` includes
+    bibliographic metadata that does not live in the cached PDF header alone:
+    submitted date and timestamp, author list, subject classes, DOI,
+    versioned citation line, TeX source link, and source license link.
+  - Current evidence: `libreevolve.alphaevolve_source_pdf_version.v1` now
+    records the current abstract-page-adjacent metadata in the source-version
+    row: subject classes `cs.AI`/`cs.LG`/`cs.NE`, submitted timestamp
+    `2025-06-16T06:37:18Z`, DOI `10.48550/arXiv.2506.13131`, author count
+    `18`, TeX source URL, CC BY-NC-ND 4.0 license URL, and an explicit
+    `manual_current_as_of_2026-06-13_without_html_snapshot` status. Its audit
+    policy now marks HTML snapshotting, DOI/DataCite resolution, TeX-source
+    caching, license-page caching, and submission-history refresh gates as
+    still missing.
+  - Required result: implement a source-metadata verifier that retrieves or
+    pins the arXiv abstract HTML/source metadata with bytes and SHA-256 digest,
+    normalizes authors and subject classes, resolves DOI/DataCite evidence,
+    records TeX and license artifacts, and fails paper/source validation if the
+    live arXiv page or version metadata drifts from the committed source
+    boundary.
+
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.
   - Spec evidence: AlphaEvolve Section 2.1 and Discussion say the same problem

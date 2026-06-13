@@ -1647,7 +1647,7 @@ report, artifact, or evidence work from missing source-specific TODO coverage.
 
 | ID | Active gap evidence | Completed evidence |
 |---|---|---|
-| 2506.13131 | `docs/todo/papers.md` | `docs/todo/Completed/code.md`; `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/roadmap.md` |
+| 2506.13131 | `docs/todo/code.md`; `docs/todo/papers.md` | `docs/todo/Completed/code.md`; `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/roadmap.md` |
 | 2511.02864 | `docs/todo/papers.md` | `docs/todo/Completed/code.md`; `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/roadmap.md` |
 | 1504.04909 | `docs/todo/code.md`; `docs/todo/papers.md` | `docs/todo/Completed/code.md`; `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/roadmap.md` |
 | auer-cesa-bianchi-fischer-2002 | `docs/todo/code.md`; `docs/todo/papers.md` | `docs/todo/Completed/code.md`; `docs/todo/Completed/papers.md`; `docs/todo/Completed/roadmap.md`; `docs/todo/Completed/readme.md` |
@@ -2165,17 +2165,22 @@ Implemented:
 - `libreevolve/problems/benchmarks/paper_source_versions.py`: AlphaEvolve
   source-PDF version contract. It validates the cached `2506.13131` source row
   against the audited first-page header `arXiv:2506.13131v1 [cs.AI] 16 Jun
-  2025`, including arXiv id, version, category, posted date, floating and
-  versioned URLs, expected header page/text, byte count, SHA-256 digest, and
-  the policy that paper-claim audits must identify the source version.
+  2025`, including arXiv id, version, category, posted date, subject classes,
+  submitted timestamp, DOI, author count, TeX source URL, arXiv license URL,
+  floating and versioned URLs, expected header page/text, byte count,
+  SHA-256 digest, and the policy that paper-claim audits must identify the
+  source version.
   `papers/source_versions.json` emits that `2506.13131v1` row as a committed
   companion source-version manifest with docs/TODO claim-surface links, and
   the paper-manifest command validates both the companion file and the cached
   PDF header. The download manifests remain legacy PDF cache ledgers rather
   than widened source-version row schemas; row-identity and source-rights
   layers are emitted by `papers/row_identity.json` and `papers/source_rights.json`.
-  It remains source-version evidence, not full bibliography normalization or
-  source-use rights review.
+  It remains source-version evidence, not full bibliography normalization,
+  source-use rights review, or full arXiv abstract-page evidence. Abstract HTML
+  snapshots, DataCite DOI resolution artifacts, TeX-source caching,
+  license-page caching, normalized author-list records, and submission-history
+  refresh checks remain open.
 - `libreevolve/problems/benchmarks/paper_source_identity.py`: paper-cache row
   identity evidence. It validates `papers/row_identity.json`, whose 24 source
   records emit manifest row id, URL source id where available, local filename
@@ -2187,9 +2192,11 @@ Implemented:
   PDF rights contract. It validates the cached PDF page 1 rights line
   `© 2025 Google DeepMind. All rights reserved`, rights holder/year, source
   page/location, manifest row hash/bytes, lack of an open-license declaration
-  in the cached PDF, and boundaries separating third-party paper-source rights
-  from LibreEvolve's MIT license and the companion repository's Apache/CC
-  licensing. `papers/source_rights.json` emits that source-rights row with
+  in the cached PDF, the fact that the arXiv license URL is recorded in
+  `papers/source_versions.json` while the license page/terms are not cached,
+  and boundaries separating third-party paper-source rights from LibreEvolve's
+  MIT license and the companion repository's Apache/CC licensing.
+  `papers/source_rights.json` emits that source-rights row with
   reproduction-policy requirements for excerpts, tables, figures, quotes, and
   appendix claims, and the paper-manifest command validates the companion file
   against the current cached PDF text.

@@ -24,10 +24,21 @@
           "version": 1,
           "versioned_id": "2506.13131v1",
           "category": "cs.AI",
+          "subjects": [
+            "cs.AI",
+            "cs.LG",
+            "cs.NE"
+          ],
           "posted_date": "2025-06-16",
+          "submitted_timestamp_utc": "2025-06-16T06:37:18Z",
+          "doi": "10.48550/arXiv.2506.13131",
+          "author_count": 18,
           "floating_pdf_url": "https://arxiv.org/pdf/2506.13131.pdf",
           "versioned_abs_url": "https://arxiv.org/abs/2506.13131v1",
           "versioned_pdf_url": "https://arxiv.org/pdf/2506.13131v1",
+          "tex_source_url": "https://arxiv.org/e-print/2506.13131",
+          "license_url": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+          "abstract_page_metadata_status": "manual_current_as_of_2026-06-13_without_html_snapshot",
           "expected_header_page": 1,
           "expected_header_phrase": "arXiv:2506.13131v1 [cs.AI] 16 Jun 2025"
         },
@@ -35,6 +46,11 @@
           "manifest_url_requires_header_version_check": true,
           "claim_audits_must_name_source_version": true,
           "floating_url_refresh_is_not_silent_version_change": true,
+          "arxiv_abs_html_snapshot_required_for_live_metadata_claims": true,
+          "datacite_doi_resolution_not_snapshotted": true,
+          "tex_source_not_cached": true,
+          "arxiv_license_page_not_cached": true,
+          "submission_history_refresh_gate_not_implemented": true,
           "scope": "AlphaEvolve source PDF identity, not result-version provenance"
         }
       },

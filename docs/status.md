@@ -45,6 +45,13 @@ Important limits:
   `runtime.history.gemini_provider_parity_report`, and
   `papers/gemini_provider_parity_boundary.json` preserves the same boundary
   for paper-manifest validation.
+- AlphaEvolve source-version evidence now records arXiv abstract-page-adjacent
+  metadata for `2506.13131v1` in `papers/source_versions.json`, including DOI,
+  subject classes, submitted timestamp, author count, TeX source URL, and
+  source license URL. It remains boundary evidence only: no arXiv abstract HTML
+  byte/hash snapshot, DOI/DataCite resolution artifact, TeX-source cache,
+  license-page cache, normalized author list, or submission-history refresh gate
+  exists yet.
 - Figure 1/Figure 2 process-exhibit reports map AlphaEvolve diagram nodes,
   edges, and pseudocode steps to local artifacts, not exact source-diagram
   reproduction, async controller/sampler/evaluator topology, independent

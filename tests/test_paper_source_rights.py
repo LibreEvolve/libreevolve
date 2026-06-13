@@ -24,6 +24,8 @@ def test_validate_alphaevolve_source_pdf_rights_accepts_builtin_record():
     assert validation.rights_count == 1
     assert validation.rights_text_checked is True
     assert validation.issues == []
+    assert recordset["rights"]["arxiv_license_url_recorded_in_source_versions"] is True
+    assert recordset["rights"]["arxiv_license_page_cached"] is False
 
 
 def test_validate_alphaevolve_source_pdf_rights_manifest_accepts_builtin_record():
@@ -98,6 +100,8 @@ def test_validate_alphaevolve_source_pdf_rights_rejects_rights_drift():
     recordset["rights"]["source_page"] = 2
     recordset["rights"]["license_identifier"] = "MIT"
     recordset["rights"]["open_license_declared_in_cached_pdf"] = True
+    recordset["rights"]["arxiv_license_url_recorded_in_source_versions"] = False
+    recordset["rights"]["arxiv_license_page_cached"] = True
     recordset["rights"]["arxiv_license_terms_recorded"] = True
     recordset["rights"]["reuse_policy"] = "free_reuse"
 
@@ -111,6 +115,8 @@ def test_validate_alphaevolve_source_pdf_rights_rejects_rights_drift():
     assert "invalid_rights_source_page" in codes
     assert "invalid_rights_license_identifier" in codes
     assert "invalid_rights_open_license_declared_in_cached_pdf" in codes
+    assert "invalid_rights_arxiv_license_url_recorded_in_source_versions" in codes
+    assert "invalid_rights_arxiv_license_page_cached" in codes
     assert "invalid_rights_arxiv_license_terms_recorded" in codes
     assert "invalid_reuse_policy" in codes
 

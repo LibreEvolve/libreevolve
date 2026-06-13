@@ -1,6 +1,12 @@
 {
   "schema": "libreevolve.automated_evaluator_scope_boundary.v1",
   "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "front_matter_overview",
+    "2.1",
+    "2.4",
+    "Discussion"
+  ],
   "source_claim": "AlphaEvolve is optimized for problems where automated evaluators can provide machine feedback; tasks requiring manual experimentation are out of scope, and LLM-only idea feedback is a possible bridge rather than the primary setting",
   "boundary_status": "machine_gradeable_scope_without_robust_environment_fixtures",
   "runtime_report_schema": "libreevolve.automated_evaluator_scope_report.v1",

@@ -20,6 +20,12 @@ def test_automated_evaluator_scope_boundary_accepts_machine_gradeable_scope():
     assert validation.missing_evidence_count == 7
     assert boundary["schema"] == AUTOMATED_EVALUATOR_SCOPE_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
+    assert boundary["source_section_ids"] == [
+        "front_matter_overview",
+        "2.1",
+        "2.4",
+        "Discussion",
+    ]
     assert (
         "does not claim robust evaluator-environment fixtures"
         in boundary["claim_boundary"]
@@ -30,6 +36,7 @@ def test_automated_evaluator_scope_boundary_rejects_environment_overclaim():
     boundary = automated_evaluator_scope_boundary_record()
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "robust_evaluator_environment_ready"
+    boundary["source_section_ids"] = ["2.1"]
     boundary["missing_evidence"]["robust_evaluator_environment_fixture"] = "recorded"
     boundary["required_evidence_fields"] = ["automated_evaluator_available"]
 
@@ -39,6 +46,7 @@ def test_automated_evaluator_scope_boundary_rejects_environment_overclaim():
     assert validation.ok is False
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
+    assert "invalid_source_section_ids" in codes
     assert (
         "invalid_missing_evidence_robust_evaluator_environment_fixture"
         in codes

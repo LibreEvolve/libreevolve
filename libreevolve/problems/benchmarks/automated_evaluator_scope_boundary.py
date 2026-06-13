@@ -10,6 +10,7 @@ AUTOMATED_EVALUATOR_SCOPE_BOUNDARY_SCHEMA = (
     "libreevolve.automated_evaluator_scope_boundary.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
+EXPECTED_SOURCE_SECTION_IDS = ("front_matter_overview", "2.1", "2.4", "Discussion")
 EXPECTED_RUNTIME_REPORT_SCHEMA = "libreevolve.automated_evaluator_scope_report.v1"
 EXPECTED_BOUNDARY_STATUS = (
     "machine_gradeable_scope_without_robust_environment_fixtures"
@@ -64,6 +65,7 @@ def automated_evaluator_scope_boundary_record() -> dict[str, Any]:
     return {
         "schema": AUTOMATED_EVALUATOR_SCOPE_BOUNDARY_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_claim": (
             "AlphaEvolve is optimized for problems where automated evaluators "
             "can provide machine feedback; tasks requiring manual "
@@ -106,6 +108,8 @@ def validate_automated_evaluator_scope_boundary(
         issues.append(_issue("invalid_schema", "unsupported automated-evaluator scope boundary schema"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("source_section_ids") != list(EXPECTED_SOURCE_SECTION_IDS):
+        issues.append(_issue("invalid_source_section_ids", "source_section_ids must be front_matter_overview, 2.1, 2.4, and Discussion"))
     source_claim = data.get("source_claim")
     if (
         not isinstance(source_claim, str)

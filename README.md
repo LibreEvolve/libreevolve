@@ -231,6 +231,15 @@ Important limits:
   harness-only versus weight-only versus combined ablation report,
   LawBench/kernel/scRNA benchmark report, linked-code audit, or independent
   reproduction output.
+- HarnessFix trace-grounded harness-repair coverage is background paper
+  context only: LibreEvolve has no HTIR trace-normalization schema, raw-trace
+  normalization record, harness-code linkage, step-level provenance,
+  execution/tool/context/lifecycle/observability/verification/governance
+  harness-layer attribution taxonomy, recurring flaw consolidation, scoped
+  repair operator schema, generated harness patch artifact, flaw-specific
+  validation specification, unacceptable-regression threshold record,
+  held-out SWE-Bench Verified/Terminal-Bench 2.0 Verified/GAIA/AppWorld
+  benchmark report, linked-code audit, or independent reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

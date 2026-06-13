@@ -10,39 +10,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
-- [ ] Implement HarnessFix trace-grounded harness repair gates beyond paper
-      cache coverage.
-  - Spec evidence: arXiv `2606.06324`, submitted June 4, 2026, introduces
-    HarnessFix in `From Failed Trajectories to Reliable LLM Agents:
-    Diagnosing and Repairing Harness Flaws`. The abstract frames harnesses as
-    the substrate for execution environments, tool interfaces, context,
-    lifecycle orchestration, observability, verification, and governance, then
-    argues that final-outcome-only self-improvement can make broad or poorly
-    scoped harness changes. HarnessFix normalizes failed trajectories and
-    harness code into HTIR, attributes failures to responsible steps and
-    harness layers, consolidates flaw records, maps them to scoped repair
-    operators, and validates patches with regression constraints.
-  - Current evidence: ROADMAP, `papers/download_manifest.*`,
-    `papers/row_identity.json`, `papers/README.md`, README, and TODO
-    coverage now include `2606.06324`, cached locally as
-    `papers/2606.06324__HarnessFix.pdf` with byte count `2363715` and
-    SHA-256
-    `00a4236ba8ab24925e3b0409b4c003bd22c57d76faabc888f20734fba5e4cafd`.
-    ROADMAP tracks the paper as background trace-grounded harness repair
-    context only. It still has no trace-grounded harness repair gate, HTIR-
-    like trace normalization, failure-to-harness-layer attribution, recurring
-    flaw records, scoped harness repairs, or validation of harness patches
-    against target-flaw reduction and unacceptable-regression bounds.
-  - Required result: implement roadmap gates beyond paper-cache evidence:
-    source-license metadata, linked-code or project URL status, HTIR schema,
-    raw-trace normalization, harness-code linkage, step-level provenance,
-    harness-layer attribution taxonomy, recurring flaw records, repair
-    operator definitions, harness patch/version artifacts, flaw-specific
-    validation specs, regression-bound telemetry, held-out benchmark records,
-    SWE-Bench/Terminal-Bench/GAIA/AppWorld metadata, baseline identities, and
-    a background-only or benchmark-fixture status rule so roadmap claims do
-    not outpace local HarnessFix-style trace-grounded harness repair support.
-
 - [ ] Implement RHO retrospective self-preference harness optimization gates
       beyond paper cache coverage.
   - Spec evidence: arXiv `2606.05922`, submitted June 4, 2026, introduces

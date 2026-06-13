@@ -2,6 +2,37 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive HarnessFix trace-grounded harness-repair roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2606.06324` source-scoped as background trace-grounded
+    harness-repair context rather than implemented LibreEvolve
+    HarnessFix-style runtime support.
+  - Current evidence: the cached paper and `papers/README.md` record
+    HarnessFix's HTIR trace-normalization framing, raw trace plus harness-code
+    compilation, step-level provenance, harness-layer attribution, recurring
+    flaw records, scoped repair operators, harness patch validation,
+    unacceptable-regression constraints, 15.2%-50.0% held-out improvement
+    claim, and SWE-Bench Verified, Terminal-Bench 2.0 Verified, GAIA, and
+    AppWorld evaluation scope, while marking local HTIR schemas,
+    trace-to-harness-code links, attribution records, flaw consolidation,
+    repair operators, patch artifacts, validation specs, regression thresholds,
+    benchmark reports, linked-code audits, and independent reproduction output
+    as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source/license metadata, project/demo and linked-code status,
+    relation to LibreEvolve harness/failure assumptions, HTIR schema,
+    trace-to-harness-code linkage, step-level provenance, harness-layer
+    taxonomy, failure-attribution records, recurring flaw consolidation,
+    repair-operator definitions, harness patch artifacts, flaw-specific
+    validation specifications, unacceptable-regression thresholds, held-out
+    benchmark results, SWE-Bench/Terminal-Bench/GAIA/AppWorld metadata,
+    baseline identities, reproducibility status, and independent verification
+    outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive SIA harness-plus-weight roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored and unsupported result-magnitude wording in the active SIA

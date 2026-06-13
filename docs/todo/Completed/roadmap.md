@@ -2,6 +2,37 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Archive G-Zero verifier-free co-evolution roadmap wording TODO.
+  - Status: the roadmap-specific TODO was stale once the live README boundary
+    was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,
+    `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now keep
+    arXiv `2605.09959` source-scoped as background verifier-free
+    co-evolution context rather than implemented LibreEvolve G-Zero-style
+    runtime support.
+  - Current evidence: the cached paper and `papers/README.md` record G-Zero's
+    verifier-free co-evolution framing, Hint-delta intrinsic reward,
+    unassisted versus hint-conditioned Generator responses, Proposer and
+    Generator roles, self-generated query and hint artifacts, GRPO proposer
+    training, DPO generator training, best-iterate suboptimality claim,
+    exploration-coverage condition, pseudo-label score-noise condition, and
+    linked-code availability, while marking local Hint-delta records,
+    Generator/Proposer schemas, query/hint datasets, GRPO/DPO traces,
+    co-evolution loops, reward calibration, noise filters, reward-hacking
+    diagnostics, unverifiable-domain benchmarks, and independent reproduction
+    output as missing.
+  - Remaining guard: active code and paper TODOs still track the real missing
+    work: source/license metadata, relation to LibreEvolve evaluator
+    assumptions, Generator and Proposer role schemas, Hint-delta reward
+    definitions and records, unassisted versus hint-conditioned response
+    artifacts, self-generated query/hint records, GRPO/DPO training metadata,
+    intrinsic-reward calibration, exploration-coverage evidence,
+    pseudo-label score-noise filters, reward-hacking diagnostics, open-ended
+    task taxonomy, theoretical guarantee assumptions, baseline identities,
+    code/artifact reproducibility status, and independent verification
+    outputs.
+  - Verification: cached PDF spot-check, paper-manifest validation, and
+    checked-in paper-index TODO coverage still pass.
+
 - [x] Archive AEvo harnessed meta-editing roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

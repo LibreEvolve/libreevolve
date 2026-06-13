@@ -179,6 +179,14 @@ Important limits:
   agentic/reasoning benchmark report, 26% relative-improvement reproduction,
   three-task open-ended optimization report, linked-code audit, or independent
   reproduction output.
+- G-Zero verifier-free co-evolution coverage is background paper context only:
+  LibreEvolve has no Hint-delta intrinsic-reward computation from unassisted
+  versus hint-conditioned Generator responses, Proposer model, Generator
+  model, self-generated query/hint dataset, GRPO proposer trainer, DPO
+  generator trainer, co-evolution training loop, pseudo-label noise filter,
+  exploration-coverage report, best-iterate suboptimality fixture,
+  unverifiable-domain benchmark, external-judge reward-hacking comparison,
+  linked-code audit, or independent reproduction output.
 - Matrix near-integrality records validate declared prompt instructions,
   integer/half-integer rounding policy, raw-versus-rounded coefficient
   diagnostics, and exactness-certificate links, not a local matrix runner that

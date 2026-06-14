@@ -202,3 +202,30 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     credential-gated integration behavior, and a drift check that updates
     README/TODO evidence whenever the documented commands or marker policy
     change.
+
+## Contributing
+
+- [ ] Add README contributor-gate and secret-scan evidence mapping.
+  - Spec evidence: the README's contributing guidance is a workflow contract
+    for changes that affect AlphaEvolve-facing source boundaries. It should be
+    tied to the actual local hooks, CI jobs, source-boundary validators, and
+    secret-baseline regeneration policy rather than relying on prose alone.
+  - Current evidence: the README tells contributors to run focused tests, run
+    the paper-manifest check when source-boundary files change, use
+    `.secrets.baseline` for secret scanning, mark intentional synthetic
+    provider/API failure examples with `# pragma: allowlist secret`, and stage
+    regenerated baselines with the code that needs them. Existing tests check
+    development docs, pre-commit config, and GitHub workflow references for
+    `.secrets.baseline` and the allowlist pragma, while broader CI coverage is
+    tracked separately by `papers/ci_workflow_coverage_boundary.json`.
+  - Current gap: no README-owned contributor-gate inventory or validator maps
+    each README contributing instruction to the specific hook, workflow, test,
+    paper-manifest command, or source-boundary file it depends on. There is no
+    drift check proving that README guidance changes when pre-commit hooks,
+    CI path filters, detect-secrets baseline policy, or source-boundary
+    validation commands change.
+  - Required result: add a README contributing-policy evidence map or test
+    that links each contributing sentence to concrete hook/workflow/validator
+    artifacts, checks secret-scan allowlist and baseline regeneration guidance
+    against current configuration, and updates README/TODO evidence whenever
+    contributor gates or source-boundary validation policy changes.

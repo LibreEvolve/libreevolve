@@ -5913,6 +5913,41 @@ directory and using the AlphaEvolve paper as the primary specification.
     multi-task program discovery as missing shared-evolution evidence rather
     than implemented LibreEvolve support.
 
+- [ ] Reproduce RankEvolve retrieval-algorithm discovery evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2602.16932`, submitted February 18, 2026, is
+    titled `RankEvolve: Automating the Discovery of Retrieval Algorithms via
+    LLM-Driven Evolution`. Its abstract says BM25 and query likelihood with
+    Dirichlet smoothing remain strong lexical first-stage rankers, but
+    improvements often rely on parameter tuning and human intuition.
+    RankEvolve is described as a program-evolution setup based on AlphaEvolve
+    where candidate ranking algorithms are executable code that is mutated,
+    recombined, and selected by retrieval performance across 12 IR datasets
+    from BEIR and BRIGHT. It starts from BM25 and query-likelihood seed
+    programs and reports novel algorithms with transfer to the full BEIR and
+    BRIGHT benchmarks plus TREC DL 2019 and 2020.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2602.16932`. Existing LibreEvolve DeepResearch retrieval,
+    proposal retrieval, archive ranking, systems-result ranking-only safety,
+    benchmark-hardening, and AlphaEvolve paper TODOs do not reproduce
+    executable lexical retrieval algorithm candidates, first-stage ranker
+    evaluator contracts, BM25/query-likelihood seed programs, BEIR/BRIGHT
+    training and transfer splits, TREC DL transfer checks, IR metric suites,
+    per-query ranking traces, or retrieval-specific recombination and
+    selection evidence.
+  - Required result: add reproduction-grade evidence for `2602.16932`:
+    title/authors/arXiv version/date, source license, code/artifact
+    availability, relation to AlphaEvolve, FunSearch, OpenEvolve, and
+    LibreEvolve, executable ranker interface, BM25 and query-likelihood seed
+    program records, evaluator integration for lexical retrieval, BEIR and
+    BRIGHT dataset identities/splits, TREC DL 2019/2020 transfer metadata,
+    ranking metric definitions, per-candidate validation and performance
+    traces, mutation/recombination prompt records, train-versus-transfer
+    result tables, baseline comparison identities, independent verification
+    outputs, and README/ROADMAP wording that treats RankEvolve-style retrieval
+    algorithm discovery as missing IR benchmark evidence rather than
+    implemented LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

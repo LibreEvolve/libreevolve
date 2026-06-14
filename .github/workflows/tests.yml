@@ -141,7 +141,15 @@ jobs:
         run: python -m pip install -e ".[dev]"
 
       - name: Compare live AlphaEvolve source responses to committed boundaries
-        run: python -m libreevolve.tools.alphaevolve_source_refresh_gate --live --pretty
+        run: |
+          set -o pipefail
+          python -m libreevolve.tools.alphaevolve_source_refresh_gate --live --pretty | tee alphaevolve_source_refresh_report.json
+
+      - name: Upload source refresh report
+        uses: actions/upload-artifact@v4
+        with:
+          name: alphaevolve-source-refresh-report
+          path: alphaevolve_source_refresh_report.json
 
   release_artifact:
     name: Release Artifact Smoke

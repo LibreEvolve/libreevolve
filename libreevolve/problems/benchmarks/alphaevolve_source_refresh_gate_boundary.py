@@ -25,9 +25,13 @@ EXPECTED_WORKFLOW_MARKERS = {
     "manual_input": "run_source_refresh_gate",
     "weekly_schedule": 'cron: "17 6 * * 1"',
     "job_id": "source_refresh_gate:",
+    "pipefail": "set -o pipefail",
+    "report_file": "alphaevolve_source_refresh_report.json",
     "live_gate_command": (
-        "python -m libreevolve.tools.alphaevolve_source_refresh_gate --live --pretty"
+        "python -m libreevolve.tools.alphaevolve_source_refresh_gate --live --pretty | tee alphaevolve_source_refresh_report.json"
     ),
+    "artifact_upload": "uses: actions/upload-artifact@v4",
+    "artifact_name": "alphaevolve-source-refresh-report",
 }
 EXPECTED_ARCHIVED_OUTCOME_PATH = "papers/alphaevolve_source_refresh_run_2026-06-14.json"
 EXPECTED_ARCHIVED_OUTCOME_SCHEMA = "libreevolve.alphaevolve_source_refresh_run_boundary.v1"
@@ -90,6 +94,8 @@ def alphaevolve_source_refresh_gate_boundary_record() -> dict[str, Any]:
             "schedule_cron": "17 6 * * 1",
             "manual_dispatch_input": "run_source_refresh_gate",
             "live_gate_command": EXPECTED_WORKFLOW_MARKERS["live_gate_command"],
+            "report_artifact_name": "alphaevolve-source-refresh-report",
+            "report_artifact_path": "alphaevolve_source_refresh_report.json",
         },
         "archived_outcome_artifact": {
             "path": EXPECTED_ARCHIVED_OUTCOME_PATH,
@@ -103,7 +109,8 @@ def alphaevolve_source_refresh_gate_boundary_record() -> dict[str, Any]:
         "claim_boundary": (
             "This boundary records a deterministic AlphaEvolve source refresh "
             "gate script plus scheduled and manual GitHub Actions live-network "
-            "execution wiring and a committed manual live-run outcome sidecar. "
+            "execution wiring, report artifact upload wiring, and a committed "
+            "manual live-run outcome sidecar. "
             "It does not claim that scheduled CI refresh-run history has been "
             "archived or that the older per-source sidecars themselves are "
             "individually promoted to refresh-ready evidence."
@@ -150,6 +157,7 @@ def validate_alphaevolve_source_refresh_gate_boundary(
     if (
         not isinstance(boundary_text, str)
         or "scheduled and manual GitHub Actions live-network execution" not in boundary_text
+        or "report artifact upload wiring" not in boundary_text
         or "committed manual live-run outcome sidecar" not in boundary_text
         or "does not claim that scheduled CI refresh-run history has been archived" not in boundary_text
         or "per-source sidecars" not in boundary_text
@@ -233,6 +241,8 @@ def _validate_workflow_artifact(
         "schedule_cron": "17 6 * * 1",
         "manual_dispatch_input": "run_source_refresh_gate",
         "live_gate_command": EXPECTED_WORKFLOW_MARKERS["live_gate_command"],
+        "report_artifact_name": "alphaevolve-source-refresh-report",
+        "report_artifact_path": "alphaevolve_source_refresh_report.json",
     }
     for field, expected_value in expected.items():
         if value.get(field) != expected_value:

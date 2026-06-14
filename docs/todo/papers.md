@@ -712,6 +712,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/alphaevolve_source_refresh_run_2026-06-14.json` now archives one
     successful manual live-network refresh run with six matched source
     responses and a canonical run-report hash.
+    The scheduled/manual GitHub Actions job now writes
+    `alphaevolve_source_refresh_report.json` and uploads it as the
+    `alphaevolve-source-refresh-report` artifact.
   - Required result: before using arXiv abstract-page metadata as
     publication-grade freshness evidence, retain scheduled CI refresh-run
     history and decide whether older per-source sidecars should be promoted

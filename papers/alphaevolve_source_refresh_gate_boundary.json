@@ -18,7 +18,9 @@
     "job_id": "source_refresh_gate",
     "schedule_cron": "17 6 * * 1",
     "manual_dispatch_input": "run_source_refresh_gate",
-    "live_gate_command": "python -m libreevolve.tools.alphaevolve_source_refresh_gate --live --pretty"
+    "live_gate_command": "python -m libreevolve.tools.alphaevolve_source_refresh_gate --live --pretty | tee alphaevolve_source_refresh_report.json",
+    "report_artifact_name": "alphaevolve-source-refresh-report",
+    "report_artifact_path": "alphaevolve_source_refresh_report.json"
   },
   "archived_outcome_artifact": {
     "path": "papers/alphaevolve_source_refresh_run_2026-06-14.json",
@@ -39,5 +41,5 @@
     "scheduled_ci_refresh_run_history": "not_recorded_locally",
     "per_source_refresh_ready_promotion": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records a deterministic AlphaEvolve source refresh gate script plus scheduled and manual GitHub Actions live-network execution wiring and a committed manual live-run outcome sidecar. It does not claim that scheduled CI refresh-run history has been archived or that the older per-source sidecars themselves are individually promoted to refresh-ready evidence."
+  "claim_boundary": "This boundary records a deterministic AlphaEvolve source refresh gate script plus scheduled and manual GitHub Actions live-network execution wiring, report artifact upload wiring, and a committed manual live-run outcome sidecar. It does not claim that scheduled CI refresh-run history has been archived or that the older per-source sidecars themselves are individually promoted to refresh-ready evidence."
 }

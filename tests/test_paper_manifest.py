@@ -587,6 +587,7 @@ def test_validate_paper_manifest_rejects_alphaevolve_source_refresh_gate_boundar
     record["boundary_status"] = "source_refresh_gate_publication_ready"
     record["script_artifact"]["sha256"] = "0" * 64
     record["workflow_artifact"]["schedule_cron"] = "0 0 * * *"
+    record["workflow_artifact"]["report_artifact_name"] = "wrong-report"
     record["archived_outcome_artifact"]["run_mode"] = "provided_snapshots"
     record["missing_evidence"]["scheduled_ci_refresh_run_history"] = "recorded"
     sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_SOURCE_REFRESH_GATE_BOUNDARY_FILE
@@ -600,6 +601,7 @@ def test_validate_paper_manifest_rejects_alphaevolve_source_refresh_gate_boundar
     assert "alphaevolve_source_refresh_gate_boundary_invalid_boundary_status" in codes
     assert "alphaevolve_source_refresh_gate_boundary_invalid_script_artifact_sha256" in codes
     assert "alphaevolve_source_refresh_gate_boundary_invalid_workflow_artifact_schedule_cron" in codes
+    assert "alphaevolve_source_refresh_gate_boundary_invalid_workflow_artifact_report_artifact_name" in codes
     assert "alphaevolve_source_refresh_gate_boundary_invalid_archived_outcome_artifact_run_mode" in codes
     assert (
         "alphaevolve_source_refresh_gate_boundary_invalid_missing_evidence_scheduled_ci_refresh_run_history"

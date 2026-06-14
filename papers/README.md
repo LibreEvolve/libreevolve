@@ -2332,8 +2332,10 @@ Implemented:
   arXiv/DataCite/e-print/license responses against committed source
   boundaries. `papers/alphaevolve_source_refresh_run_2026-06-14.json` now
   archives one successful manual live-network refresh run with six matched
-  source responses and a canonical run-report hash. Scheduled CI refresh-run
-  history and per-source refresh-ready promotion remain open.
+  source responses and a canonical run-report hash. The scheduled/manual
+  workflow now writes `alphaevolve_source_refresh_report.json` and uploads it
+  as the `alphaevolve-source-refresh-report` artifact. Scheduled CI
+  refresh-run history and per-source refresh-ready promotion remain open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping
@@ -2884,7 +2886,9 @@ Implemented:
 - `papers/alphaevolve_source_refresh_gate_boundary.json`: AlphaEvolve source
   refresh-gate sidecar with the pinned deterministic/live refresh script, six
   expected source ids, scheduled/manual GitHub Actions wiring, and linkage to
-  the archived manual live-run outcome. It is not proof that scheduled CI
+  the archived manual live-run outcome. The workflow writes
+  `alphaevolve_source_refresh_report.json` and uploads it as
+  `alphaevolve-source-refresh-report`. It is not proof that scheduled CI
   refresh-run history has been archived.
 - `papers/alphaevolve_source_refresh_run_2026-06-14.json`: AlphaEvolve source
   refresh-run sidecar with one archived manual live-network run, six matched

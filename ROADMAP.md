@@ -1492,8 +1492,10 @@ by `papers/lineage_replay_boundary.json`.
   arXiv/DataCite/e-print/license responses against committed source
   boundaries. `papers/alphaevolve_source_refresh_run_2026-06-14.json` now
   archives one successful manual live-network refresh run with six matched
-  source responses and a canonical run-report hash. Scheduled CI refresh-run
-  history and per-source refresh-ready promotion remain open.
+  source responses and a canonical run-report hash. The scheduled/manual
+  workflow now writes `alphaevolve_source_refresh_report.json` and uploads it
+  as the `alphaevolve-source-refresh-report` artifact. Scheduled CI
+  refresh-run history and per-source refresh-ready promotion remain open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping

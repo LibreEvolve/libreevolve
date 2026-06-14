@@ -5728,6 +5728,32 @@ sidecars, tests, and active TODOs.
     docs so clean-checkout CI smoke and local dirty-worktree smoke have distinct
     evidence semantics.
 
+- [ ] Add bounded Git subprocess diagnostics for release and paper provenance helpers.
+  - Spec evidence: AlphaEvolve-style release, paper, and experiment-evidence
+    ledgers should be reproducible support artifacts, not unbounded helper
+    processes that can hang or silently erase the reason provenance could not
+    be collected.
+  - Current evidence: core runtime provenance already bounds subprocess probes:
+    `libreevolve/core/provenance.py` uses explicit timeouts for `pip freeze`,
+    `pip config`, accelerator probes, and its internal `_git(..., timeout=5.0)`
+    helper. In contrast, `libreevolve/tools/release_artifact_provenance.py`
+    calls `subprocess.run(["git", ...])` in `_git_output()` without a timeout
+    and collapses `OSError`/`CalledProcessError` to `None`; `paper_manifest.py`
+    similarly runs `git -C <root> ls-files -- papers/*.pdf` in
+    `_git_tracked_files()` without a timeout and returns `None` on failure.
+  - Current gap: release-artifact source fields and paper-PDF tracked-status
+    evidence can block indefinitely on a stuck Git command, or lose the
+    difference between no repository, missing Git, timeout, nonzero exit, and
+    other collection failures. That weakens paper/release evidence separately
+    from the already covered evaluator subprocess timeout policy and bounded
+    runtime-environment provenance.
+  - Required result: add a shared or consistently shaped bounded Git helper for
+    release-artifact provenance and paper-manifest tracked-file collection,
+    persist timeout/error status with redacted/hash-backed diagnostics where
+    the schema needs to explain missing evidence, and cover timeout,
+    missing-executable, non-repository, and successful Git collection paths in
+    focused tests.
+
 - [ ] Expand GitHub Actions workflow coverage beyond path-scoped cross-platform unit jobs.
   - Spec evidence: AlphaEvolve-scale engineering claims should be supported by
     repeatable validation over source code, docs, paper evidence, packaging,

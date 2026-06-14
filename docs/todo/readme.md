@@ -5,6 +5,29 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## AlphaEvolve Comparison Table
 
+## Requirements
+
+- [ ] Add durable README install and requirements smoke evidence.
+  - Spec evidence: the README is the onboarding contract for the supported
+    local runtime. Its Python-version and editable-install requirements should
+    be protected by committed smoke evidence, because AlphaEvolve-alignment
+    work depends on reproducible local setup before any benchmark claims can be
+    trusted.
+  - Current evidence: `pyproject.toml` declares `requires-python = ">=3.11"`
+    and dependency ranges, the README tells this Windows machine to use
+    `py -3.12`, and CI/release checks cover package metadata, wheel/sdist
+    smoke, and environment provenance at broader runtime/release boundaries.
+  - Current gap: no committed README-specific install transcript, CI
+    assertion, or sidecar proves the exact
+    `py -3.12 -m pip install -e ".[dev]"` onboarding command succeeds with the
+    documented Python version, that dev dependencies are available after
+    install, or that failures are reported distinctly from later
+    quick-start/provider smoke failures.
+  - Required result: add a README install smoke proof or CI job that runs the
+    documented editable-install command in a clean environment, records
+    Python/pip/package versions and expected command success, and updates
+    README/TODO evidence whenever the requirements or install command change.
+
 ## Research References and Bundled Papers
 
 - [ ] Add README paper-cache topical classification evidence.

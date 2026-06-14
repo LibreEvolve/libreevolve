@@ -6261,6 +6261,43 @@ directory and using the AlphaEvolve paper as the primary specification.
     TurboEvolve-style adaptive multi-offspring island search as missing
     robustness evidence rather than implemented LibreEvolve support.
 
+- [ ] Reproduce DBPlanBench physical-query-plan optimization evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2602.10387`, submitted February 11, 2026 and
+    last revised June 2, 2026, is titled `Test-Time Optimization of Physical
+    Query Plans with LLMs`. Its abstract says cost-based query optimizers
+    estimate runtime, memory, and I/O with heuristics and statistical models
+    that can miss semantic correlations in queries and schemas. The paper
+    introduces DBPlanBench, a DataFusion harness that serializes physical plans
+    compactly and applies LLM-proposed edits as JSON patches. It instantiates a
+    test-time optimization workflow where an LLM proposes localized physical
+    plan edits and evolutionary search refines candidates across iterations,
+    focusing on OLAP join reordering and join-side selection. It reports median
+    speedups of 1.10x-1.12x on TPC-H and 1.05x-1.07x on TPC-DS, with some
+    plans reaching 4.78x, and shows small-scale optimizations transferring to
+    larger scale factors. The arXiv page links code on GitHub.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2602.10387`. Existing LibreEvolve database, process-exhibit,
+    systems-result, optimizer, sample-efficiency, AlphaEvolve, LEVI,
+    TurboEvolve, and benchmark-hardening TODOs do not reproduce physical
+    query-plan candidates, DataFusion plan serialization, JSON-patch edit
+    contracts, plan validity checks, OLAP execution harnesses, join reordering
+    and join-side selection operators, TPC-H/TPC-DS fixtures, small-to-large
+    transfer experiments, or database-cost-model comparison evidence.
+  - Required result: add reproduction-grade evidence for `2602.10387`:
+    title/authors/arXiv version/date, source license, linked-code URL/status
+    and license, relation to AlphaEvolve, LEVI, TurboEvolve, and LibreEvolve,
+    DataFusion version and patching surface, physical-plan serialization
+    schema, JSON-patch candidate interface, plan validity and rollback policy,
+    OLAP query fixture metadata, TPC-H and TPC-DS scale factors, join reorder
+    and join-side selection operator taxonomy, execution-cost measurement
+    protocol, runtime/memory/I/O metric records, evolutionary search settings,
+    small-to-large transfer records, industrial optimizer baseline identities,
+    speedup tables including medians and outliers, independent verification
+    outputs, and README/ROADMAP wording that treats DBPlanBench-style physical
+    query-plan evolution as missing database-systems benchmark evidence rather
+    than implemented LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

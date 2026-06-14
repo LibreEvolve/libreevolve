@@ -281,3 +281,39 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     benchmark evidence, and overclaim status, and validate README, ROADMAP,
     papers, runtime metadata, and prompt docs against implying complete
     AlphaEvolve prompt/context readiness before the matrix is satisfied.
+
+- [ ] Add ROADMAP evaluation-cascade readiness criteria.
+  - Spec evidence: the `3. Expand evaluation cascades` section defines the
+    validation layer that decides which candidate programs are trusted,
+    promoted, rejected, or benchmark-worthy. To match AlphaEvolve-style
+    evaluation, ROADMAP should define when cascades have sufficient artifact
+    evidence, budget accounting, feedback calibration, statistical promotion
+    policy, oracle independence, workload contracts, sandboxing, and
+    environment reproducibility.
+  - Current evidence: ROADMAP records candidate-workspace artifact copy-out,
+    cooperative generation/evaluation/provider budget stops, LLM budget
+    snapshots, feedback calibration report contracts, qualitative-feedback
+    policy reports, lower-confidence/Wilson statistical gates, evaluator
+    arbitration matrices, workload-provenance boundaries, automated evaluator
+    scope reports, executable-code versus natural-language proposal boundaries,
+    validator subprocess controls, dependency policy, package/version
+    snapshots, release-smoke boundaries, and reproducibility sidecars. Active
+    code and paper TODOs already track cascade promotion/attrition evidence,
+    statistical hypothesis-test semantics, qualitative feedback provenance,
+    async/accelerator budgets, evaluator environment replay, validator
+    sandbox/resource policy, release artifacts, matrix cascade runs, and
+    workload-specific provenance.
+  - Current gap: there is no section-level cascade-readiness rubric,
+    evaluator/oracle capability matrix, artifact-and-budget sufficiency
+    checklist, or stale-readiness detector tying those pieces together, so a
+    green local evaluator, one statistical gate, or one report contract could
+    be mistaken for a robust AlphaEvolve-style cascade.
+  - Required result: add ROADMAP evaluation-cascade criteria that classify each
+    stage by validator authority, artifact schema and hash coverage, budget
+    ownership, feedback-calibration evidence, statistical promotion policy,
+    oracle independence, workload-specific execution contract, sandbox and
+    dependency boundary, environment/release reproducibility, benchmark
+    sufficiency, and overclaim status; map the criteria to code/tests/runtime
+    artifacts/sidecars/TODOs; and validate README, ROADMAP, papers, evaluator
+    docs, and runtime metadata against implying full cascade readiness before
+    the checklist is satisfied.

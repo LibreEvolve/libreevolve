@@ -4699,6 +4699,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     RTL-stage versus synthesis workflow placement, standard-language adoption
     evidence, integration target, time-to-market impact, hashes,
     confirmation flags, and artifact refs.
+    `papers/hardware_rtl_eda_evidence_boundary.json` now keeps this as a
+    paper-facing metadata-versus-real-artifact boundary.
   - Required result: add real hardware-domain paper/report artifacts for
     Verilog/RTL source, synthesis/PPA outputs, functional equivalence or
     formal verification logs, timing/power/area constraints, designer or

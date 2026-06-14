@@ -2633,6 +2633,13 @@ Implemented:
   training-efficiency deltas, research or engineering velocity evidence,
   causal linkage to Gemini's training pipeline, rollback/safety status, or
   owner confirmation.
+- `papers/hardware_rtl_eda_evidence_boundary.json`: hardware RTL/EDA evidence
+  sidecar for AlphaEvolve Section 3.3.3. It records that hardware-domain
+  report metadata is not evidence of exact RTL/circuit identity, source and
+  modified Verilog/RTL artifacts, synthesis/PPA outputs, timing/power/area
+  constraints, equivalence and formal-verification logs, designer signoff,
+  downstream synthesis confirmation, RTL-stage timing, adoption rationale,
+  integration target, deployment/time-to-market evidence, or artifact refs.
 - `papers/documentation_truthfulness_boundary.json`: documentation
   truthfulness sidecar for the AlphaEvolve-alignment docs process. It records
   README, ROADMAP, papers-index, active/completed TODO-ledger, docs/README

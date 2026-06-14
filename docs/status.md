@@ -1121,7 +1121,9 @@ Important limits:
   placement, adoption rationale, integration targets, deployment impact, hashes,
   flags, and artifact refs, not real Verilog/RTL source, synthesis/PPA runs,
   verification logs, designer signoff, downstream-synthesis artifacts,
-  upcoming-chip integration, or deployment/time-to-market evidence.
+  upcoming-chip integration, or deployment/time-to-market evidence; that
+  metadata-versus-artifact boundary is tracked by
+  `papers/hardware_rtl_eda_evidence_boundary.json`.
 - Hardware rewrite records validate before/after Verilog hashes, rewrite diff
   hashes, changed spans, removed-bit or signal metadata, component and
   matrix-unit context, rewrite category/rationale, and PPA/verification refs,

@@ -4341,6 +4341,8 @@ sidecars, tests, and active TODOs.
     confirmation, RTL-stage contribution timing, standard-language
     trust/adoption rationale, integration target, deployment/time-to-market
     impact, hashes, confirmation flags, and artifact refs.
+    `papers/hardware_rtl_eda_evidence_boundary.json` now keeps the metadata
+    contract separate from real RTL/EDA artifacts.
   - Required result: connect hardware fixtures to real Verilog/RTL source,
     synthesis/PPA, equivalence/formal verification, timing/power/area,
     designer-signoff, downstream synthesis, integration-target, and

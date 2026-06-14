@@ -456,6 +456,12 @@ from libreevolve.problems.benchmarks.gemini_self_training_loop_boundary import (
     render_gemini_self_training_loop_boundary_summary,
     validate_gemini_self_training_loop_boundary,
 )
+from libreevolve.problems.benchmarks.hardware_rtl_eda_evidence_boundary import (
+    HARDWARE_RTL_EDA_EVIDENCE_BOUNDARY_SCHEMA,
+    hardware_rtl_eda_evidence_boundary_record,
+    render_hardware_rtl_eda_evidence_boundary_summary,
+    validate_hardware_rtl_eda_evidence_boundary,
+)
 from libreevolve.problems.benchmarks.gemini_provider_parity_boundary import (
     GEMINI_PROVIDER_PARITY_BOUNDARY_SCHEMA,
     gemini_provider_parity_boundary_record,
@@ -967,6 +973,7 @@ __all__ = [
     "GEMINI_PROVIDER_PARITY_BOUNDARY_SCHEMA",
     "GEMINI_SELF_TRAINING_LOOP_BOUNDARY_SCHEMA",
     "GIGAEVO_FRAMEWORK_BOUNDARY_SCHEMA",
+    "HARDWARE_RTL_EDA_EVIDENCE_BOUNDARY_SCHEMA",
     "IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_SCHEMA",
     "INCORRECT_SUGGESTION_AUDIT_BOUNDARY_SCHEMA",
     "KERNEL_TILING_SHAPE_CORPUS_BOUNDARY_SCHEMA",
@@ -1090,6 +1097,7 @@ __all__ = [
     "gemini_provider_parity_boundary_record",
     "gemini_self_training_loop_boundary_record",
     "global_nlp_optimization_boundary_record",
+    "hardware_rtl_eda_evidence_boundary_record",
     "candidate_abstraction_boundary_record",
     "candidate_abstraction_bias_matrix_record",
     "candidate_language_runner_boundary_record",
@@ -1277,6 +1285,7 @@ __all__ = [
     "render_gemini_provider_parity_boundary_summary",
     "render_gemini_self_training_loop_boundary_summary",
     "render_gigaevo_framework_boundary_summary",
+    "render_hardware_rtl_eda_evidence_boundary_summary",
     "render_kernel_tiling_shape_corpus_boundary_summary",
     "render_implementation_evidence_map_boundary_summary",
     "render_incorrect_suggestion_audit_boundary_summary",
@@ -1391,6 +1400,7 @@ __all__ = [
     "validate_bruhat_intervals_boundary",
     "validate_fault2flow_boundary",
     "validate_global_nlp_optimization_boundary",
+    "validate_hardware_rtl_eda_evidence_boundary",
     "validate_candidate_abstraction_boundary",
     "validate_candidate_abstraction_bias_matrix",
     "validate_candidate_language_runner_boundary",

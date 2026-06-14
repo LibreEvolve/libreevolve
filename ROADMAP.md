@@ -2219,6 +2219,11 @@ resumed-trace proof are still open.
   designer-signoff, downstream-synthesis, upcoming-chip integration, Gemini/
   AlphaEvolve attribution review, firstness/novelty evidence, and
   time-to-market artifacts in addition to report metadata.
+  `papers/hardware_rtl_eda_evidence_boundary.json` now preserves the
+  metadata-versus-real-artifact boundary for RTL/EDA evidence, so validated
+  hardware report fields cannot stand in for emitted Verilog, PPA,
+  verification, signoff, synthesis, integration, or deployment-impact
+  artifacts.
 - Add self-improvement evidence boundaries before claiming AlphaEvolve-style
   infrastructure or base-model uplift: component identity, before/after
   measurements, deployment/adoption status, rollback/safety review, provenance

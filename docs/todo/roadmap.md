@@ -36,3 +36,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 ## Missing Roadmap Items
 
 ## Existing Items That Need Tightening
+
+- [ ] Add ROADMAP non-goal contradiction checks.
+  - Spec evidence: ROADMAP non-goals are overclaim guardrails. If the project
+    says it is not requiring a service database, not claiming arbitrary-
+    language/codebase support before runners and validators exist, and not
+    advertising paper-inspired plugins as faithful implementations, those
+    claims should be protected against drift across README, papers, plugin
+    docs, and implementation metadata.
+  - Current evidence: `ROADMAP.md` lists the three current non-goals, README
+    limits already scope arbitrary-language runners, Google/Gemini parity,
+    smoke examples, and paper-inspired claims, and active code/paper TODOs keep
+    plugin behavior scoped to approximation/background metadata. The
+    documentation claim inventory records the `Non-Goals For Now` heading but
+    marks it as having no claim record.
+  - Current gap: there is no machine-readable non-goal inventory, no
+    cross-document contradiction detector, and no CI or sidecar check proving
+    README, papers rows, plugin docstrings, runtime metadata, and future
+    ROADMAP edits do not accidentally promote a non-goal into a supported
+    AlphaEvolve-parity claim.
+  - Required result: add stable ROADMAP non-goal claim ids and a verifier that
+    maps each non-goal to the code/docs/paper surfaces it constrains, rejects
+    contradictory support claims, and updates ROADMAP/TODO evidence whenever a
+    non-goal is completed, removed, or intentionally promoted into active
+    implementation work.

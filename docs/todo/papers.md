@@ -5575,6 +5575,47 @@ directory and using the AlphaEvolve paper as the primary specification.
     contraction-order optimization as missing application benchmark evidence
     rather than implemented LibreEvolve support.
 
+- [ ] Reproduce UH-NAS physical-neural-network co-design evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2606.10294`, submitted June 9, 2026, is
+    titled `LLM-Guided Neural Architecture Search for Robust Co-Design of
+    Physical Neural Networks`. The arXiv HTML lists an arXiv.org perpetual
+    non-exclusive license. Its abstract says unconventional hardware deployment
+    requires neural architectures that co-optimize task accuracy with
+    platform-specific energy cost, physical non-idealities, and numerical
+    precision. UH-NAS is presented as a hardware-agnostic, LLM-guided neural
+    architecture search framework that uses language models as evolutionary
+    operators to co-optimize accuracy and inference energy. It exposes hardware
+    as a swappable backend with per-platform energy models, physical
+    constraints, and non-ideality simulators, enabling system-level comparison
+    across hardware backends without changing the search algorithm. The paper
+    tests optical MZI hardware, reports more diverse and robust architectures
+    than conventional baselines, compares against existing LLM-to-NAS
+    approaches, and includes ablations on robustness under non-idealities and
+    system-prompt effects.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2606.10294`. Existing LibreEvolve FHE-on-TPU, TPU/compiler,
+    systems, matrix/tensor, MAP-Elites, and hardware-aware application TODOs
+    do not reproduce neural-architecture candidate schemas, hardware-backend
+    abstraction, per-platform energy models, optical MZI constraints,
+    non-ideality simulators, numerical-precision policies, inference-energy
+    objective records, NAS baseline comparisons, architecture-diversity and
+    robustness metrics, or system-prompt ablations for architecture-hardware
+    co-design.
+  - Required result: add reproduction-grade evidence for `2606.10294`:
+    title/authors/arXiv version/date, source license, code/artifact
+    availability, relation to AlphaEvolve, FunSearch, MAP-Elites, and
+    LibreEvolve, neural architecture candidate schema, LLM evolutionary
+    operator prompt/mutation contract, hardware-backend interface, energy-model
+    definitions, optical MZI simulator and physical-constraint metadata,
+    numerical precision and non-ideality policies, accuracy/energy objective
+    normalization, archive/diversity metrics, baseline NAS and LLM-to-NAS
+    identities, robustness-ablation records, system-prompt ablation records,
+    hardware-generalization comparison records, independent verification
+    outputs, and README/ROADMAP wording that treats UH-NAS physical-neural-
+    network co-design as missing application benchmark evidence rather than
+    implemented LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

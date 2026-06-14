@@ -467,6 +467,36 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     a drift check that updates README/TODO evidence whenever run writers,
     artifact schemas, restore behavior, or common-output wording changes.
 
+- [ ] Add run-artifacts guide schema and restore drift evidence.
+  - Spec evidence: `docs/run-artifacts.md` is the detailed operator contract
+    for `runs/` outputs, strict JSON/JSONL behavior, quarantine streams,
+    manifest runtime fields, task-spec reports, prompt and LLM ledgers,
+    failure history, archive restore, best exports, overwrite policy, and
+    `libreevolve show` inspection semantics. AlphaEvolve-alignment work depends
+    on those artifacts being truthful about what can be replayed, restored,
+    certified, or treated only as absence-boundary evidence.
+  - Current evidence: the root README points to `docs/run-artifacts.md` for
+    schemas, quarantine streams, restore behavior, and inspection details. The
+    guide contains many implementation-specific claims tied to
+    `libreevolve/core/jsonl.py`, `libreevolve/core/loop.py`,
+    `libreevolve/core/best_artifacts.py`, `libreevolve/cli.py`,
+    artifact-schema metadata, `tests/core/test_loop.py`, and paper sidecars.
+    The active README run-artifact TODO covers only the short README output
+    list and smoke presence, not the full run-artifacts guide.
+  - Current gap: there is no committed run-artifacts guide claim inventory or
+    drift validator that maps each documented artifact, schema field, invalid
+    stream, restore command, overwrite rule, show behavior, and
+    AlphaEvolve-facing limitation to writer/reader code, tests, manifest
+    sidecars, and active TODO owners. New runtime reports, artifact streams,
+    restore semantics, quarantine policies, or inspection behavior can drift
+    without a page-specific validation failure.
+  - Required result: add a run-artifacts evidence map and validation gate that
+    inventories documented artifact files and runtime report claims, verifies
+    code/test/schema anchors and optional-versus-required status, separates
+    replayable restore support from audit-only evidence, and requires
+    README/docs/TODO updates whenever run artifact writers, readers, restore
+    behavior, or inspection semantics change.
+
 ## Testing
 
 - [ ] Add README testing-command marker and environment evidence.

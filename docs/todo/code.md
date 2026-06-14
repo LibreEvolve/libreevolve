@@ -2252,6 +2252,38 @@ sidecars, tests, and active TODOs.
     checks across restore, and reports that distinguish task behavior
     descriptors from local TF-IDF novelty heuristics.
 
+- [ ] Persist MAP-Elites descriptor values inside archive snapshots.
+  - Spec evidence: AlphaEvolve/MAP-Elites-style archive inspection needs a
+    replayable link between each retained candidate, its behavior descriptor
+    values, and the cell coordinates used for archive placement. Without the
+    descriptor values, a later audit can see where a program was placed but
+    cannot verify the numeric behavior coordinates that justified that
+    placement under the recorded descriptor model.
+  - Current evidence: `MAPElites.add()` computes `cell, descriptors` and emits
+    the descriptor values in per-candidate `metadata.archive_admission`.
+    `MAPElites.state_snapshot()` persists `descriptor_policy`,
+    `descriptor_model`, occupied `cells` with `cell`, `program_id`, and
+    `selection_score`, plus metric-cell overlays with `metric_value`, but the
+    archive snapshot does not persist the per-cell descriptor-value mapping.
+    Tests currently assert that `snapshot["cells"]` contains only those three
+    fields.
+  - Current gap: final run manifests can restore the program-to-cell mapping,
+    but they cannot independently audit or replay the exact insertion-time
+    descriptor vector for each occupied cell, elite-only retained program,
+    Pareto-only program, or metric-cell overlay without joining back to
+    accepted history rows. If history is pruned, summarized, quarantined, or
+    compared against a snapshot, descriptor-cell fidelity becomes weaker than
+    the archive-state evidence implied by AlphaEvolve-style quality-diversity
+    reporting.
+  - Required result: extend archive snapshot schemas and restore validation to
+    include bounded finite/null descriptor-value records keyed by descriptor
+    axis for occupied cells and retained overlay entries; validate the values
+    against the recorded axes, binning, and insertion-time/no-rebin policy;
+    add drift diagnostics when history admission descriptors disagree with
+    snapshot descriptors; and update tests/docs so archive snapshots are
+    self-auditing for descriptor values instead of relying on separate
+    per-candidate history joins.
+
 - [ ] Promote multi-objective overlays to primary archive optimization.
   - Spec evidence: AlphaEvolve can optimize multiple user-provided scores and
     use diverse high-performing programs under different definitions of "good"

@@ -5948,6 +5948,47 @@ directory and using the AlphaEvolve paper as the primary specification.
     algorithm discovery as missing IR benchmark evidence rather than
     implemented LibreEvolve support.
 
+- [ ] Reproduce AdaEvolve adaptive scheduler evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2602.20133`, submitted February 23, 2026, is
+    titled `AdaEvolve: Adaptive LLM Driven Zeroth-Order Optimization`. Its
+    abstract says automated program generation is shifting from one-shot
+    generation to inference-time search where LLMs act as semantic mutation
+    operators inside evolutionary loops, but current systems rely on static
+    schedules that miss non-stationary search dynamics and waste compute on
+    stagnating populations. AdaEvolve reformulates LLM-driven evolution as a
+    hierarchical adaptive optimization problem using an accumulated
+    improvement signal across Local Adaptation, Global Adaptation, and
+    Meta-Guidance. The source says Local Adaptation changes exploration
+    intensity within a candidate population, Global Adaptation routes global
+    budget through bandit-based scheduling across populations, and
+    Meta-Guidance generates new tactics when progress stalls. It reports
+    outperforming open-source baselines across 185 open-ended optimization
+    problems spanning combinatorial, systems-optimization, and algorithm-design
+    tasks.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2602.20133`. Existing LibreEvolve UCB-style LLM ensemble,
+    parent sampling, island migration, archive restore, LEVI cost-routing,
+    SeaEvo strategy-space, PACEvolve consistency, EvoX meta-evolution, and
+    runtime budget TODOs do not reproduce accumulated-improvement signals,
+    dynamic exploration-intensity control within populations, bandit-routed
+    global compute allocation across solution populations, stalled-progress
+    tactic generation, identical-hyperparameter cross-task claims, or the
+    185-problem benchmark matrix.
+  - Required result: add reproduction-grade evidence for `2602.20133`:
+    title/authors/arXiv version/date, source license, code/artifact
+    availability, relation to AlphaEvolve, OpenEvolve, EvoX, LEVI, SeaEvo,
+    PACEvolve, and LibreEvolve, accumulated-improvement signal definition,
+    per-population progress telemetry, Local Adaptation exploration-intensity
+    policy, Global Adaptation bandit scheduler, Meta-Guidance tactic-generation
+    prompts and outputs, stagnation detectors, global budget-routing traces,
+    same-hyperparameter configuration records, 185-task benchmark metadata,
+    combinatorial/systems/algorithm-design task-family results, baseline
+    identities, ablation outputs for each adaptation level, independent
+    verification outputs, and README/ROADMAP wording that treats AdaEvolve-
+    style adaptive scheduling as missing controller evidence rather than
+    implemented LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

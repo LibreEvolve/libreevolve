@@ -127,3 +127,32 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and policy evidence; map each criterion to code/tests/sidecars/TODOs; and
     reject claims that the project is operationally mature until the full
     checklist is satisfied.
+
+- [ ] Add ROADMAP representative-benchmark portfolio readiness criteria.
+  - Spec evidence: the `9. Representative benchmarks` section is more than a
+    feature list; it defines the benchmark portfolio needed before
+    LibreEvolve can claim meaningful AlphaEvolve-alignment progress. It should
+    specify what mix of domains, validation strength, baseline evidence,
+    repeated-run evidence, anti-gaming checks, and certification artifacts make
+    the portfolio representative rather than just a set of smoke examples.
+  - Current evidence: ROADMAP names stronger AlphaEvolve-style fixtures,
+    bounded sorting-network candidates, smoke-versus-benchmark separation,
+    anti-gaming validators, fixture-emitted artifacts, SOTA/target baselines,
+    repeated-seed runs, benchmark-hardening reports, and constructive-math
+    verifier exports. Active code/paper TODOs already track many
+    implementation gaps for sorting networks, matrix results, circle/geometry,
+    constructive math, and systems/kernel candidates, and
+    `papers/example_benchmark_scope.json` plus
+    `runtime.history.benchmark_fixture_readiness_report` preserve the current
+    smoke-boundary evidence.
+  - Current gap: there is no portfolio-level readiness rubric,
+    domain-coverage matrix, benchmark admission checklist, or stale-coverage
+    detector proving the representative-benchmark list is balanced, feasible,
+    non-duplicative, and strong enough to support AlphaEvolve-style claims once
+    individual fixtures improve.
+  - Required result: add a ROADMAP benchmark-portfolio evidence map that
+    classifies candidate benchmark families by domain, validator strength,
+    baseline/SOTA target, repeated-run/certification needs, anti-gaming
+    evidence, artifact outputs, and current readiness, and validate that
+    README/papers/ROADMAP wording cannot promote smoke fixtures or one narrow
+    benchmark family as representative coverage.

@@ -83,6 +83,10 @@ from libreevolve.problems.benchmarks.llm_role_scheduler_boundary import (
     llm_role_scheduler_boundary_record,
     validate_llm_role_scheduler_boundary,
 )
+from libreevolve.problems.benchmarks.llm_stochastic_reproducibility_boundary import (
+    llm_stochastic_reproducibility_boundary_record,
+    validate_llm_stochastic_reproducibility_boundary,
+)
 from libreevolve.problems.benchmarks.fast_strong_model_mix_boundary import (
     fast_strong_model_mix_boundary_record,
     validate_fast_strong_model_mix_boundary,
@@ -616,6 +620,7 @@ PROGRAMMATIC_REPRESENTATION_BOUNDARY_FILE = "papers/programmatic_representation_
 QUALITATIVE_FEEDBACK_BOUNDARY_FILE = "papers/qualitative_feedback_boundary.json"
 FEEDBACK_CALIBRATION_BOUNDARY_FILE = "papers/feedback_calibration_boundary.json"
 LLM_ROLE_SCHEDULER_BOUNDARY_FILE = "papers/llm_role_scheduler_boundary.json"
+LLM_STOCHASTIC_REPRODUCIBILITY_BOUNDARY_FILE = "papers/llm_stochastic_reproducibility_boundary.json"
 FAST_STRONG_MODEL_MIX_BOUNDARY_FILE = "papers/fast_strong_model_mix_boundary.json"
 PROVIDER_CANCELLATION_BOUNDARY_FILE = "papers/provider_cancellation_boundary.json"
 PROVIDER_PRICING_BOUNDARY_FILE = "papers/provider_pricing_boundary.json"
@@ -1151,6 +1156,7 @@ def validate_paper_manifest(
     issues.extend(_validate_qualitative_feedback_boundary(root_path))
     issues.extend(_validate_feedback_calibration_boundary(root_path))
     issues.extend(_validate_llm_role_scheduler_boundary(root_path))
+    issues.extend(_validate_llm_stochastic_reproducibility_boundary(root_path))
     issues.extend(_validate_fast_strong_model_mix_boundary(root_path))
     issues.extend(_validate_provider_cancellation_boundary(root_path))
     issues.extend(_validate_provider_pricing_boundary(root_path))
@@ -2402,6 +2408,38 @@ def _validate_llm_role_scheduler_boundary(root_path: Path) -> list[PaperManifest
             f"llm_role_scheduler_boundary_{issue.code}",
             issue.message,
             "llm_role_scheduler",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_llm_stochastic_reproducibility_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / LLM_STOCHASTIC_REPRODUCIBILITY_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = llm_stochastic_reproducibility_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "llm_stochastic_reproducibility_boundary_manifest_missing",
+                    (
+                        f"{LLM_STOCHASTIC_REPRODUCIBILITY_BOUNDARY_FILE} must emit "
+                        "request-parameter telemetry versus deterministic replay scope"
+                    ),
+                    "llm_stochastic_reproducibility",
+                )
+            ]
+    report = validate_llm_stochastic_reproducibility_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"llm_stochastic_reproducibility_boundary_{issue.code}",
+            issue.message,
+            "llm_stochastic_reproducibility",
         )
         for issue in report.issues
     ]

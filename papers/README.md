@@ -1500,7 +1500,11 @@ capture, account/model-specific pricing, and raw provider-payload replay
 absent. The committed `papers/provider_diagnostics_replay_boundary.json`
 sidecar preserves the bounded provider-diagnostics boundary while keeping raw
 provider-payload sidecars, provider-output replay, complete provider-call
-replay, and account/model default capture absent. Structured
+replay, and account/model default capture absent. The committed
+`papers/llm_stochastic_reproducibility_boundary.json` sidecar preserves the
+request-telemetry boundary while keeping backend/API-mode seed semantics,
+provider revision stability, repeated-call fixtures, output-match reports, and
+deterministic provider-output replay absent. Structured
 system/developer/user prompt roles, when configured, are retained as hash-only
 `prompt_role_policy` metadata rather than raw instruction text, and are not
 yet joined into the primary-prompt instruction report. Endpoint/client context now has an
@@ -2523,6 +2527,15 @@ Implemented:
   backend-default count checks. It is not evidence of raw provider-payload
   sidecars, provider-output replay, complete provider-call replay, or
   account/model default capture.
+- `papers/llm_stochastic_reproducibility_boundary.json`: stochastic
+  LLM-generation reproducibility sidecar for AlphaEvolve Sections 2.2, 2.3,
+  2.4, and 4. It records normalized request parameters, prompt/output hashes,
+  backend/model/API-mode telemetry, supported sampling-control telemetry,
+  provider-diagnostics boundaries, and provider-output replay boundaries. It
+  is not evidence of a backend/API-mode seed-support matrix, provider model or
+  system-fingerprint stability records, repeated identical-call fixtures,
+  deterministic output replay, same-prompt same-parameter output-match reports,
+  or cross-provider seed-semantics reports.
 - `papers/feedback_calibration_boundary.json`: feedback-calibration sidecar
   for AlphaEvolve Section 2.4. It records the feedback calibration report
   schema, artifact-inventory schema, grader declarations, task-suite

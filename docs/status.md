@@ -651,7 +651,8 @@ Important limits:
   including temperature, top-p, stop sequences, and supported seed fields, but
   this is best-effort sampling-control telemetry rather than a cross-provider
   deterministic generation contract or proof that identical prompts reproduce
-  identical provider outputs.
+  identical provider outputs; that request-telemetry boundary is tracked by
+  `papers/llm_stochastic_reproducibility_boundary.json`.
 - OpenAI API-mode routing is local adapter policy, not live provider
   capability discovery: omitted or `api_mode: auto` without
   `reasoning_effort` uses Chat Completions, `api_mode: responses` forces the

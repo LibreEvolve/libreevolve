@@ -1099,6 +1099,10 @@ resumed-trace proof are still open.
   bounded scalar diagnostics boundary while keeping raw provider-payload
   sidecars, provider-output replay, complete provider-call replay, and
   account/model default capture open.
+  `papers/llm_stochastic_reproducibility_boundary.json` separately preserves
+  the request-parameter telemetry boundary while keeping backend/API-mode seed
+  semantics, provider model-revision stability, repeated identical-call
+  fixtures, and deterministic provider-output replay open.
 - Extend the current configurable role/backend consecutive-failure quarantine
   and zero-reward scheduler penalty beyond ensemble-local retry/fallback
   handling, restorable scheduler failure-policy state, and strict ledger

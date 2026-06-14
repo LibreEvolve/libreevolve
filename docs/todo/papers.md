@@ -939,6 +939,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     backend/API mode, record provider model-revision stability requirements,
     validate repeated identical prompt/parameter calls, or prove that logged
     sampling controls reproduce the same proposal stream.
+    `papers/llm_stochastic_reproducibility_boundary.json` now keeps this as a
+    paper-facing request-telemetry versus deterministic-replay boundary.
   - Required result: add stochastic-generation reproducibility reports and
     paper-facing boundaries that distinguish best-effort provider request
     controls from deterministic provider-output replay before using logged

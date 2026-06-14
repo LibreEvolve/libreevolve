@@ -4490,6 +4490,9 @@ sidecars, tests, and active TODOs.
     system-fingerprint or model-revision stability as a replay precondition,
     verifies repeated identical prompt/parameter calls, or distinguishes
     deterministic local replay from best-effort provider sampling controls.
+    `papers/llm_stochastic_reproducibility_boundary.json` now keeps request
+    parameter telemetry separate from deterministic provider-output replay
+    evidence.
   - Required result: add per-backend stochastic-generation reproducibility
     metadata, repeated-call fixtures or explicit non-determinism evidence,
     provider/model revision requirements, and report validation that prevents

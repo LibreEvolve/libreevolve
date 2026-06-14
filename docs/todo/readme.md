@@ -229,3 +229,27 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     artifacts, checks secret-scan allowlist and baseline regeneration guidance
     against current configuration, and updates README/TODO evidence whenever
     contributor gates or source-boundary validation policy changes.
+
+## License
+
+- [ ] Add README license and third-party rights boundary evidence.
+  - Spec evidence: the README's license statement is a distribution and reuse
+    claim. Because this project also caches and cites third-party AlphaEvolve
+    papers, companion sources, and generated evidence artifacts, the README
+    license surface should be tied to project package metadata while keeping
+    third-party paper/source rights explicitly separate.
+  - Current evidence: README says `MIT. See [LICENSE](LICENSE).`,
+    `LICENSE` contains the MIT License text, and `pyproject.toml` declares
+    `license = "MIT"`. Paper/source rights are tracked separately by records
+    such as `papers/source_rights.json`, which distinguish cached
+    AlphaEvolve source-PDF rights from LibreEvolve repository licensing.
+  - Current gap: no README-owned validator or sidecar proves that the README
+    license sentence, `LICENSE` file, package metadata, and third-party
+    paper/source-rights boundaries remain consistent. There is also no drift
+    check proving README license wording changes when project metadata,
+    packaged license files, or paper-derived rights policies change.
+  - Required result: add a README license consistency check or evidence map
+    that validates the README link, license identifier, package metadata,
+    included license file, and explicit separation from third-party paper and
+    companion-source rights, then update README/TODO evidence whenever license
+    or source-rights policy changes.

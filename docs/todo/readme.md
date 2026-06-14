@@ -380,6 +380,35 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     problem-loading, evaluator, context, metrics, config, or example layout
     semantics change.
 
+- [ ] Add problem-format guide loader-contract drift evidence.
+  - Spec evidence: `docs/problem-format.md` is the full problem-authoring
+    contract that readers are sent to after the root README. It specifies the
+    required layout, context manifest semantics, codebase-integration metadata,
+    task and metrics files, validator signatures, configured evaluator stages,
+    language/build-runner declarations, seed workspaces, seed policies, and
+    unsupported AlphaEvolve-facing surfaces.
+  - Current evidence: `docs/problem-format.md` documents many loader and
+    evaluator details that are implemented across
+    `libreevolve/problems/loader.py`, `libreevolve/core/config.py`,
+    `libreevolve/core/evaluator.py`, and tests such as
+    `tests/core/test_loader.py`. The active README problem-layout TODO covers
+    the short root README list and its link to the problem-format page, but it
+    does not validate the problem-format guide's own long-form contract.
+  - Current gap: there is no committed problem-format claim inventory or drift
+    validator that maps each documented file, manifest key, signature,
+    optional metadata block, validation rule, unsupported runner declaration,
+    and example snippet to loader/config/evaluator code plus tests and
+    AlphaEvolve-boundary TODOs. Changes to `context.yaml`, `seed_policy.yaml`,
+    embedded evaluator stages, metrics semantics, or candidate-language/build
+    declarations can therefore leave the full problem-authoring guide stale
+    without a page-specific failure.
+  - Required result: add a problem-format evidence map and validation gate
+    that parses the guide's contract sections, links each claim to
+    source/tests/examples/runtime metadata, distinguishes executable support
+    from declared-unsupported AlphaEvolve surfaces, and requires
+    README/docs/TODO updates when problem-loading or evaluator semantics
+    change.
+
 ## Example Scope
 
 - [ ] Add README example-scope drift and benchmark-claim evidence.

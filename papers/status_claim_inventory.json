@@ -70,7 +70,7 @@
   },
   "missing_evidence": {
     "status_cell_semantic_verifier": "not_recorded_locally",
-    "implemented_benchmark_bullet_coverage_map": "not_recorded_locally",
+    "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
     "absence_sentence_freshness_matrix": "not_recorded_locally"
   },
   "rows": [

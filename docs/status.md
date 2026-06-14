@@ -1245,10 +1245,12 @@ Important limits:
   database behavior, async/distributed topology, and published benchmark
   evidence. The checked `papers/status_claim_inventory.json` sidecar now
   records row-level paper status inventory plus status-cell phrase hashes,
-  source offsets, and candidate evidence-link lists. This is not an exhaustive
+  source offsets, and candidate evidence-link lists. The checked
+  `papers/benchmark_coverage_inventory.json` sidecar now records structural
+  implemented-benchmark coverage bullet evidence. This is not an exhaustive
   source-span coverage matrix, per-phrase evidence-link sufficiency proof,
-  status-cell semantic verifier,
-  implemented-benchmark bullet coverage map, absence-sentence freshness
+  status-cell semantic verifier, implemented-benchmark bullet semantic
+  verifier, absence-sentence freshness
   matrix, or generated code-audit report; that boundary is tracked by
   `papers/implementation_evidence_map_boundary.json`.
 - AlphaEvolve arXiv abstract-page metadata now has a pinned HTML byte count,
@@ -1268,10 +1270,11 @@ Important limits:
   coverage. This is not an automated CI refresh gate.
 - Paper-index benchmark coverage validation currently catches structural
   coverage issues and one narrow `Implemented`-but-`not implemented`
-  contradiction. It is not semantic proof that every implemented benchmark
-  bullet has source-span, code/test, sidecar, TODO, limitation, and freshness
-  evidence; that remains part of the paper-index semantic evidence-mapping
-  TODO.
+  contradiction, and the committed benchmark coverage inventory records source
+  spans, hashes, local artifacts, limitation flags, and contradiction flags for
+  each implemented bullet. It is not semantic proof that every implemented
+  benchmark bullet is fresh, sufficient, or benchmark-comparable; that remains
+  part of the paper-index semantic evidence-mapping TODO.
 - Database sampling reports are local strategy/count telemetry, not calibrated
   AlphaEvolve-style exploration/exploitation balance, fallback source-pool
   provenance, selected-program repetition tables, island/cell/metric/lineage/

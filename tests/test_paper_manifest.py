@@ -11747,6 +11747,63 @@ def test_validate_paper_manifest_allows_scoped_not_yet_benchmark_under_implement
     assert report.ok is True
 
 
+def test_validate_paper_manifest_accepts_matching_benchmark_coverage_inventory(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    readme_path = tmp_path / "papers" / "README.md"
+    readme_path.write_text(
+        readme_path.read_text(encoding="utf-8")
+        + "\n\n## Benchmark coverage decisions\n\n"
+        + "Implemented:\n\n"
+        + "- `libreevolve/problems/benchmarks/matrix_results.py`: implemented locally, but not yet a full benchmark.\n\n"
+        + "Planned or background-only:\n\n"
+        + "- Self-improvement evidence is not implemented.\n",
+        encoding="utf-8",
+    )
+    inventory = paper_manifest.paper_benchmark_coverage_inventory_record(tmp_path)
+    assert inventory["implemented_bullet_count"] == 1
+    assert inventory["implemented_bullets"][0]["has_local_artifact"] is True
+    assert inventory["implemented_bullets"][0]["has_limitation_boundary"] is True
+    (tmp_path / paper_manifest.BENCHMARK_COVERAGE_INVENTORY_FILE).write_text(
+        json.dumps(inventory, indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+
+
+def test_validate_paper_manifest_rejects_benchmark_coverage_inventory_drift(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    readme_path = tmp_path / "papers" / "README.md"
+    readme_path.write_text(
+        readme_path.read_text(encoding="utf-8")
+        + "\n\n## Benchmark coverage decisions\n\n"
+        + "Implemented:\n\n"
+        + "- `libreevolve/problems/benchmarks/matrix_results.py`: implemented locally, but not yet a full benchmark.\n\n"
+        + "Planned or background-only:\n\n"
+        + "- Self-improvement evidence is not implemented.\n",
+        encoding="utf-8",
+    )
+    inventory = paper_manifest.paper_benchmark_coverage_inventory_record(tmp_path)
+    inventory["implemented_bullets"][0]["body_sha256"] = "0" * 64
+    (tmp_path / paper_manifest.BENCHMARK_COVERAGE_INVENTORY_FILE).write_text(
+        json.dumps(inventory, indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is False
+    assert "benchmark_coverage_inventory_implemented_bullets_mismatch" in {
+        issue.code for issue in report.issues
+    }
+
+
 def test_checked_in_paper_index_maps_each_manifest_id_to_todo_coverage():
     manifest_rows = json.loads(Path("papers/download_manifest.json").read_text(encoding="utf-8"))
     readme = Path("papers/README.md").read_text(encoding="utf-8")

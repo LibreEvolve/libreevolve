@@ -30,7 +30,7 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
         == "not_recorded_locally"
     )
     assert (
-        boundary["missing_evidence"]["implemented_benchmark_bullet_coverage_map"]
+        boundary["missing_evidence"]["implemented_benchmark_bullet_semantic_verifier"]
         == "not_recorded_locally"
     )
     assert "does not claim an exhaustive requirement inventory" in boundary["claim_boundary"]

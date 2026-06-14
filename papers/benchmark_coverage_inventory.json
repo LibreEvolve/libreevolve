@@ -1,0 +1,1816 @@
+{
+  "schema": "libreevolve.paper_index_benchmark_coverage_inventory.v1",
+  "inventory_status": "implemented_bullet_inventory_without_semantic_verifier",
+  "source_path": "papers/README.md#benchmark-coverage-decisions",
+  "implemented_bullet_count": 83,
+  "implemented_bullet_ids": [
+    "implemented_benchmark_001",
+    "implemented_benchmark_002",
+    "implemented_benchmark_003",
+    "implemented_benchmark_004",
+    "implemented_benchmark_005",
+    "implemented_benchmark_006",
+    "implemented_benchmark_007",
+    "implemented_benchmark_008",
+    "implemented_benchmark_009",
+    "implemented_benchmark_010",
+    "implemented_benchmark_011",
+    "implemented_benchmark_012",
+    "implemented_benchmark_013",
+    "implemented_benchmark_014",
+    "implemented_benchmark_015",
+    "implemented_benchmark_016",
+    "implemented_benchmark_017",
+    "implemented_benchmark_018",
+    "implemented_benchmark_019",
+    "implemented_benchmark_020",
+    "implemented_benchmark_021",
+    "implemented_benchmark_022",
+    "implemented_benchmark_023",
+    "implemented_benchmark_024",
+    "implemented_benchmark_025",
+    "implemented_benchmark_026",
+    "implemented_benchmark_027",
+    "implemented_benchmark_028",
+    "implemented_benchmark_029",
+    "implemented_benchmark_030",
+    "implemented_benchmark_031",
+    "implemented_benchmark_032",
+    "implemented_benchmark_033",
+    "implemented_benchmark_034",
+    "implemented_benchmark_035",
+    "implemented_benchmark_036",
+    "implemented_benchmark_037",
+    "implemented_benchmark_038",
+    "implemented_benchmark_039",
+    "implemented_benchmark_040",
+    "implemented_benchmark_041",
+    "implemented_benchmark_042",
+    "implemented_benchmark_043",
+    "implemented_benchmark_044",
+    "implemented_benchmark_045",
+    "implemented_benchmark_046",
+    "implemented_benchmark_047",
+    "implemented_benchmark_048",
+    "implemented_benchmark_049",
+    "implemented_benchmark_050",
+    "implemented_benchmark_051",
+    "implemented_benchmark_052",
+    "implemented_benchmark_053",
+    "implemented_benchmark_054",
+    "implemented_benchmark_055",
+    "implemented_benchmark_056",
+    "implemented_benchmark_057",
+    "implemented_benchmark_058",
+    "implemented_benchmark_059",
+    "implemented_benchmark_060",
+    "implemented_benchmark_061",
+    "implemented_benchmark_062",
+    "implemented_benchmark_063",
+    "implemented_benchmark_064",
+    "implemented_benchmark_065",
+    "implemented_benchmark_066",
+    "implemented_benchmark_067",
+    "implemented_benchmark_068",
+    "implemented_benchmark_069",
+    "implemented_benchmark_070",
+    "implemented_benchmark_071",
+    "implemented_benchmark_072",
+    "implemented_benchmark_073",
+    "implemented_benchmark_074",
+    "implemented_benchmark_075",
+    "implemented_benchmark_076",
+    "implemented_benchmark_077",
+    "implemented_benchmark_078",
+    "implemented_benchmark_079",
+    "implemented_benchmark_080",
+    "implemented_benchmark_081",
+    "implemented_benchmark_082",
+    "implemented_benchmark_083"
+  ],
+  "missing_evidence": {
+    "benchmark_bullet_semantic_verifier": "not_recorded_locally",
+    "benchmark_bullet_freshness_matrix": "not_recorded_locally",
+    "benchmark_result_reproduction_links": "not_recorded_locally"
+  },
+  "implemented_bullets": [
+    {
+      "coverage_id": "implemented_benchmark_001",
+      "bullet_ordinal": 1,
+      "summary_sha256": "bd66ad7ef3b0842ea05936c95c5fc32712ddbb71bead766f3a2c5e0d488ad129",
+      "body_sha256": "ba611d835e8aa1565d62fd2ccef183f69d6082f593741cf78dcfc5346dc10f09",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 1826,
+        "line_end": 1830
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/examples/circle_packing"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_002",
+      "bullet_ordinal": 2,
+      "summary_sha256": "8887174776dd5812032411cc6f40600927dfee1bd2412e811a57d66d83582863",
+      "body_sha256": "5286b1e3464bc6ad4ccf8111f3323097cc185406d98515dea551f0e575465e13",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 1830,
+        "line_end": 1837
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/examples/matrix_multiplication"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_003",
+      "bullet_ordinal": 3,
+      "summary_sha256": "6dd84ca6dbdb68cfba41df2ba2cbc1423eb0931783e422798cb8200e1d62fa1c",
+      "body_sha256": "a39ff620834a08625ea0b74bf624dc118e5fab9b6f68fca52404573fb6a0e319",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 1837,
+        "line_end": 1841
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/examples/workspace_math"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_004",
+      "bullet_ordinal": 4,
+      "summary_sha256": "eb0b8c81c4db35e2adf945deb1a1123f712948d17573d2d86b3599d08a942c88",
+      "body_sha256": "eeec2d49f673930ef417ae8172460437712fa63dabbfdc02af6523ad4604f2b6",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 1841,
+        "line_end": 1846
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/benchmarks/example_scope.py",
+        "papers/example_benchmark_scope.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_005",
+      "bullet_ordinal": 5,
+      "summary_sha256": "1d9b6ddf9c610935508221fe55776305f15813fa8ed6b473702e930c63e0f995",
+      "body_sha256": "89e443b61c1e9219860ae0e8ee12a7c538c79c158c0dbe35031ed2d81004b453",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 1846,
+        "line_end": 2087
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/benchmarks/artifacts/strassen_2x2_publication_bundle/",
+        "libreevolve/problems/benchmarks/matrix_results.py",
+        "papers/appendix_a_matrix_baseline_citations.json",
+        "papers/appendix_a_matrix_curation.json",
+        "papers/appendix_a_matrix_excluded_target_curation.json",
+        "papers/appendix_a_matrix_local_resource_frontier.json",
+        "papers/appendix_a_matrix_resource_frontier.json",
+        "papers/appendix_a_matrix_row_note_artifacts.json",
+        "papers/appendix_a_matrix_subset_scope_artifacts.json",
+        "papers/matrix_baseline_component_runtime_boundary.json",
+        "papers/matrix_cascade_run_runtime_boundary.json",
+        "papers/matrix_headline_historicity_artifacts.json",
+        "papers/matrix_near_integrality_runtime_boundary.json",
+        "papers/matrix_rank_table_artifacts.json",
+        "papers/matrix_scalar_field_runtime_boundary.json",
+        "papers/matrix_suite_publication_artifacts.json",
+        "papers/matrix_sweep_space_runtime_boundary.json",
+        "papers/matrix_tensor_rank_runtime_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_006",
+      "bullet_ordinal": 6,
+      "summary_sha256": "6c21bc87ac9b39f05c3cc3a984bd721818b8beacce07b677834b44befb109eec",
+      "body_sha256": "255cb597d23b7e16c9938b7216cbb581a2ccb37fc2fdbfb03786bfb193c41912",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2087,
+        "line_end": 2093
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/benchmarks/result_certification.py"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_007",
+      "bullet_ordinal": 7,
+      "summary_sha256": "30b5c547ac79b834d20dc69f2193b67fbc9a6dfbf4836d7361e634e13744a32b",
+      "body_sha256": "d5b83a1ee3da7ec9d5e3b14e56a553233516a54ecfa7a4ea57024eeec44b474f",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2093,
+        "line_end": 2178
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/benchmarks/systems_results.py",
+        "papers/systems_result_readiness_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_008",
+      "bullet_ordinal": 8,
+      "summary_sha256": "c032263fb5f6159fb4acac9764e6e06ee5ab4c9ec7c6fd56aea0711591dc1b9e",
+      "body_sha256": "139f1b3078ad63e84f6334235e894f1932e7ae169b70a0a660a99bdcea79a4d0",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2178,
+        "line_end": 2184
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/benchmarks/benchmark_hardening.py"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_009",
+      "bullet_ordinal": 9,
+      "summary_sha256": "c16184fc364a571f871bb9c27e5a3fe643faebf3fceb63453e9670e063436803",
+      "body_sha256": "1c65ae4f5b967cdbd017911bd0147b36990e8b2e656b1be947720c3c5bd14b70",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2184,
+        "line_end": 2197
+      },
+      "local_artifact_paths": [
+        "libreevolve/core/evaluator.py"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_010",
+      "bullet_ordinal": 10,
+      "summary_sha256": "72f1743ecb91080d8c223a183f248bd52a205b0b96bab900810e596f22639a27",
+      "body_sha256": "b17a73ff8064b7d5be9a33a068111d55d8c3b4e04255aa604165e3c1c09351f5",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2197,
+        "line_end": 2219
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/benchmarks/ablation_results.py"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_011",
+      "bullet_ordinal": 11,
+      "summary_sha256": "499e3b923506805db38c7bc01e786661e88ecaf82198c5dd532d35d267bb582d",
+      "body_sha256": "a07a49381e85101fa1eaa94551a5c19191b0fa093fd657892f769740f8504388",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2219,
+        "line_end": 2231
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/benchmarks/ablation_exhibits.py",
+        "papers/figure8_ablation_artifacts.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_012",
+      "bullet_ordinal": 12,
+      "summary_sha256": "d4b24740232cebb8419f8c2b2a0f6faadb41eac09f2e54c665d73763b530e9c9",
+      "body_sha256": "9afcfdb500bed7785a0e9ab05ec2c8f40ef4925ca10fca59d823406076b4f254",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2231,
+        "line_end": 2253
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/benchmarks/matrix_exhibits.py",
+        "papers/figure4_matrix_discovery_artifacts.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_013",
+      "bullet_ordinal": 13,
+      "summary_sha256": "0e2fb4600d9802985dc6a7a42be254d14acc5087463380865f424d2d25ecc3a1",
+      "body_sha256": "746da592f9356ed0feeb091e096520066ae292121a1740d333e1e83f011ca5a8",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2253,
+        "line_end": 2272
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/benchmarks/matrix_exhibits.py",
+        "papers/figure9_matrix_diff_artifacts.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_014",
+      "bullet_ordinal": 14,
+      "summary_sha256": "b16d4aa360e7fdf06c6cce569768ce8c594df3dbed1f1268fd860b9cf2441fd7",
+      "body_sha256": "a066dbf2858f8445533124b3ca771860cfd4bbc197a7d877d895155aafb9c1e0",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2272,
+        "line_end": 2286
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/benchmarks/paper_artifact_roles.py",
+        "papers/paper_artifact_linkage.json",
+        "papers/paper_artifact_roles.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_015",
+      "bullet_ordinal": 15,
+      "summary_sha256": "045c214162e311f2aff226d13cdf424b4de74702b3e12a11bb35b42b62bb86d4",
+      "body_sha256": "c40d3db8a3394421641078ea360455540542fd151362794e4c20e9135c9f791f",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2286,
+        "line_end": 2355
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/benchmarks/paper_source_versions.py",
+        "papers/alphaevolve_cached_pdf_header_consistency_boundary.json",
+        "papers/alphaevolve_current_version_boundary.json",
+        "papers/alphaevolve_datacite_doi_boundary.json",
+        "papers/alphaevolve_datacite_full_response_boundary.json",
+        "papers/alphaevolve_doi_landing_resolution_boundary.json",
+        "papers/alphaevolve_license_page_boundary.json",
+        "papers/alphaevolve_license_page_html_retention_boundary.json",
+        "papers/alphaevolve_metadata_extraction_script_boundary.json",
+        "papers/alphaevolve_raw_http_headers_boundary.json",
+        "papers/alphaevolve_source_refresh_gate_boundary.json",
+        "papers/alphaevolve_source_refresh_promotion_boundary.json",
+        "papers/alphaevolve_source_refresh_run_2026-06-14.json",
+        "papers/alphaevolve_tex_archive_retention_boundary.json",
+        "papers/alphaevolve_tex_source_boundary.json",
+        "papers/arxiv_abstract_snapshot.json",
+        "papers/row_identity.json",
+        "papers/source_rights.json",
+        "papers/source_versions.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_016",
+      "bullet_ordinal": 16,
+      "summary_sha256": "1b1cf9b291587ef4b55732f0d73cd365a1f0684bd4ce4910cda5c9fb970534f4",
+      "body_sha256": "b9c90ef23f0174a5a562d5063d419853fa9a35e8846dce1912daf48015b1386f",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2355,
+        "line_end": 2362
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/benchmarks/paper_source_identity.py",
+        "papers/row_identity.json",
+        "papers/source_versions.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_017",
+      "bullet_ordinal": 17,
+      "summary_sha256": "7dabc82f9502272fa8f154e706cd9d44f4dc11c174a87525338c2535dc250c08",
+      "body_sha256": "e8aa00c40eeed2b0adc13b061c6b4c421ce676d03eda8c97d00e50a1a60aa32f",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2362,
+        "line_end": 2378
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/benchmarks/paper_source_rights.py",
+        "papers/alphaevolve_license_page_boundary.json",
+        "papers/alphaevolve_license_page_html_retention_boundary.json",
+        "papers/source_rights.json",
+        "papers/source_versions.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_018",
+      "bullet_ordinal": 18,
+      "summary_sha256": "ca5018c73b77a893ef0669802f1bb31dab71c552bd3581fe843c2be613327f24",
+      "body_sha256": "e1146e72f19264ad212f53489d4e2dcdf757925fe389dc9f0ac540fd1484564e",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2378,
+        "line_end": 2386
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/benchmarks/paper_bibliography.py",
+        "papers/references.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_019",
+      "bullet_ordinal": 19,
+      "summary_sha256": "e9d933f85020f7e599decdffb065ea854f9d6f0473a855460d8ee1b55b1d72ef",
+      "body_sha256": "58a043ccde2c97890c34073ff3d3c8fbe1950529d00f58ce855e6ee9201b8833",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2386,
+        "line_end": 2407
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/benchmarks/companion_sources.py",
+        "papers/companion_sources.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_020",
+      "bullet_ordinal": 20,
+      "summary_sha256": "4401eef9d9451c5e2826f51f608aeab1d502e1c7d4a699500873ce63ffd3053a",
+      "body_sha256": "3175a77684bd24ee7dc0eb981dadc3b8fee878ed2f64ce939078e8511a9ecde3",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2407,
+        "line_end": 2427
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/benchmarks/follow_on_sources.py",
+        "papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf",
+        "papers/follow_on_sources.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_021",
+      "bullet_ordinal": 21,
+      "summary_sha256": "eff251cfbe7787b84f2d6ae0456abcc837f2a6fdca86281799ded53e54cd2f45",
+      "body_sha256": "44e96d891c1dc420ce44de247e881ec43c9939385538fa49eeaeb21c14c08570",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2427,
+        "line_end": 2439
+      },
+      "local_artifact_paths": [
+        "papers/follow_on_repository_rights.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_022",
+      "bullet_ordinal": 22,
+      "summary_sha256": "b9e4475b75574777a047144c4b2ee05e7dcb2eff9ef222f7466579dfd296e132",
+      "body_sha256": "0a4a992941a1bafdf76ad7284c6e30dfb045865b74aabed520d3ae7b10726e94",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2439,
+        "line_end": 2448
+      },
+      "local_artifact_paths": [
+        "papers/follow_on_runtime_absence.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_023",
+      "bullet_ordinal": 23,
+      "summary_sha256": "49f984333f15aaedf6caa666d4c3d95a55458dbb1b768ab80f75574178518fd3",
+      "body_sha256": "ac2579180cb30837b4899720174271f8cbebf3b7c23dd959f3d993aaed525f1f",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2448,
+        "line_end": 2455
+      },
+      "local_artifact_paths": [
+        "papers/follow_on_tao_blog.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_024",
+      "bullet_ordinal": 24,
+      "summary_sha256": "8fed84330f5f1d5615e0f89a7d6368f878755b89c870f6eb0df512ab78e56a91",
+      "body_sha256": "4612e4b98eaf0c53022daec7446da36f9d7cfe75a38f00f079388fa538a24494",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2455,
+        "line_end": 2465
+      },
+      "local_artifact_paths": [
+        "papers/theoretical_cs_sources.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_025",
+      "bullet_ordinal": 25,
+      "summary_sha256": "dff28c9546b2d62601cc185cb44dc0271fb45f8a5fba01b16fdcf25af2f2a228",
+      "body_sha256": "174d4986aa1f7f1a45230ff74c7c8de457658bb995a522442dcd91bb119b53cf",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2465,
+        "line_end": 2471
+      },
+      "local_artifact_paths": [
+        "papers/official_deepmind_blog.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_026",
+      "bullet_ordinal": 26,
+      "summary_sha256": "0d1334cf88f15d194e2cc175c8d6462dbba6a16a4c7a663939dce495f9aa7840",
+      "body_sha256": "906408fc21d9bfa17295695e3c5699638707706ee3b0bce950a5357f7b75413d",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2471,
+        "line_end": 2488
+      },
+      "local_artifact_paths": [
+        "papers/alphaevolve_2026_impact_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_027",
+      "bullet_ordinal": 27,
+      "summary_sha256": "71577f825e368c8065affa0603bed24d31d1a6c307e5ab3523f2803e229a8bae",
+      "body_sha256": "6c1aad2b211acfc33097062048c174c29513532de5beda6f18504c313f0f49fa",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2488,
+        "line_end": 2507
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/benchmarks/follow_on_coverage.py"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_028",
+      "bullet_ordinal": 28,
+      "summary_sha256": "5e7cc89faacfbe30e41ebe1f8dea3f6e84732fe37a1add0f57f5836f519c304c",
+      "body_sha256": "981d6873207b9a04da1266ac4a0d993da62c6e58ba53a0b746423c2f5fe37264",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2507,
+        "line_end": 2520
+      },
+      "local_artifact_paths": [
+        "libreevolve/llm/budget_report.py",
+        "papers/llm_budget_policy_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_029",
+      "bullet_ordinal": 29,
+      "summary_sha256": "5f4a4e2b9716d0bce89d264fb69f92bcc205e43bec25ae2b47e5805c2fa2e626",
+      "body_sha256": "3969b3ed592ad269cec84f03d3e63ca6ae4552ab8ec23614b4342929d207b422",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2520,
+        "line_end": 2531
+      },
+      "local_artifact_paths": [
+        "papers/llm_budget_policy_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_030",
+      "bullet_ordinal": 30,
+      "summary_sha256": "58034a6a62944d1074fd56f2061720bcd2cdc8371e15f1c2834f5f472f02e60b",
+      "body_sha256": "d134aed6913760c7af9bed4be44a99fe3b304d7ff2a68a39640da6df0a23df4a",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2531,
+        "line_end": 2541
+      },
+      "local_artifact_paths": [
+        "papers/controller_pending_work_resume_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_031",
+      "bullet_ordinal": 31,
+      "summary_sha256": "89efa4b65d98aa0e6896b66cfcc13aab5adfa24ff63d446f74acea0d431e8a30",
+      "body_sha256": "fd61f845cec48a22b1bbe66092e7a111e9024806000fe30e54c93bba84f5cac3",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2541,
+        "line_end": 2552
+      },
+      "local_artifact_paths": [
+        "papers/lineage_replay_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_032",
+      "bullet_ordinal": 32,
+      "summary_sha256": "dd6672081068a46175e0936b726ae9e8cd1bd5692ed76ae9db1d5dc5f9d69494",
+      "body_sha256": "9fdc35179a32e00b3e5280e124a3cf8d1e8f90a31dc2c6115618d418f0c1d150",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2552,
+        "line_end": 2563
+      },
+      "local_artifact_paths": [
+        "papers/runtime_rng_replay_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_033",
+      "bullet_ordinal": 33,
+      "summary_sha256": "ccf469451fdabd9f72f3493b835b28be8823dd22f3e978594dff35259b92ee99",
+      "body_sha256": "fd84b8050b0b95865483f9a0c916bc8c5073defa71007bb1bcb538b72893ea96",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2563,
+        "line_end": 2575
+      },
+      "local_artifact_paths": [
+        "papers/validator_execution_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_034",
+      "bullet_ordinal": 34,
+      "summary_sha256": "8699e3ef5c54a29010cdd9c77a0fa551ff79cd7da56c5f085255c41f20f50be9",
+      "body_sha256": "76aa09e36451389c19090005acc822c4edb4657a120ac9129e274cb1f38284fb",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2575,
+        "line_end": 2583
+      },
+      "local_artifact_paths": [
+        "papers/validator_artifact_promotion_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_035",
+      "bullet_ordinal": 35,
+      "summary_sha256": "e1d6891b772a121d9b83656cc41ec954d82992d6c403e2c4840bd77a86fa7f79",
+      "body_sha256": "067548957f1d0dddb995e44e23935e5c2833aceebd306a808ea9abacc9c007f5",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2583,
+        "line_end": 2595
+      },
+      "local_artifact_paths": [
+        "papers/llm_role_scheduler_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_036",
+      "bullet_ordinal": 36,
+      "summary_sha256": "436324c87a1d21f29c6354dc1e1569d1955b1780fcd86b85437bbf2b10b23542",
+      "body_sha256": "ec5b186a7bf47814ec3ef02989cc7f0e268eae6071ab691c1f9b8e673dd89fb2",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2595,
+        "line_end": 2609
+      },
+      "local_artifact_paths": [
+        "papers/fast_strong_model_mix_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_037",
+      "bullet_ordinal": 37,
+      "summary_sha256": "e20bf3af3a9f3442bb500f0c16abaf0855fb1e26061d605af3c8ca544bc76685",
+      "body_sha256": "ab044208db81671405817c87dcab106a682e26bfa900a6f01251ddea8888ce52",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2609,
+        "line_end": 2615
+      },
+      "local_artifact_paths": [
+        "papers/adaptive_mutation_mode_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_038",
+      "bullet_ordinal": 38,
+      "summary_sha256": "51abcbe5ed8cc91ec4c3f397703dc64ebdf511f28267953edc20842f76f30d23",
+      "body_sha256": "864b9f11357a03454a9b2e5550e0e1d54442b4cb78ebe9a3767d52d8ef7b783b",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2615,
+        "line_end": 2623
+      },
+      "local_artifact_paths": [
+        "papers/mutation_operator_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_039",
+      "bullet_ordinal": 39,
+      "summary_sha256": "4392c49381454d619bcb8a0f611d3c449762964b4c4f2004a7f460d88308aaaa",
+      "body_sha256": "f2a553356bf76b64333d18f43867525333957ffc01c63f19afe91141211fd4d1",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2623,
+        "line_end": 2631
+      },
+      "local_artifact_paths": [
+        "libreevolve/llm/cancellation_policy.py"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_040",
+      "bullet_ordinal": 40,
+      "summary_sha256": "69fa41a400054418a0dbbeb2dc040257bd50c75e1cd2cd7ad9bd67a7a67e96af",
+      "body_sha256": "bf6b98584035c5ee930f722822447b1aa3aee2c8d6f34bf8c43df4ed181133cb",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2631,
+        "line_end": 2643
+      },
+      "local_artifact_paths": [
+        "papers/provider_cancellation_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_041",
+      "bullet_ordinal": 41,
+      "summary_sha256": "3cc86cbe98f774eec1abdd1187542b10dc0ef626479c7bbbbc5da41661fd8eea",
+      "body_sha256": "df44955a8dbf5577942cb1b9b412095328d29c552832b531446353b710a5c83e",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2643,
+        "line_end": 2655
+      },
+      "local_artifact_paths": [
+        "papers/provider_pricing_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_042",
+      "bullet_ordinal": 42,
+      "summary_sha256": "eb3f93a8addc1bb0af1125ec1623cd8eff5563a1d533cbf92196f0ea0c9d0380",
+      "body_sha256": "52d9ae8b73cc417435b177f36136e06d19ea73a6a822c9caa861f652e24e4f7b",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2655,
+        "line_end": 2666
+      },
+      "local_artifact_paths": [
+        "papers/provider_diagnostics_replay_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_043",
+      "bullet_ordinal": 43,
+      "summary_sha256": "1abe3e762e0aa14bfa747d7041c13480a37f8d88f66d878c2acacfc388b181ad",
+      "body_sha256": "a3163a3f567bf9f6b0b597d2ef162fc009380c9dc9e2824104d2912f0d56eee7",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2666,
+        "line_end": 2675
+      },
+      "local_artifact_paths": [
+        "papers/llm_stochastic_reproducibility_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_044",
+      "bullet_ordinal": 44,
+      "summary_sha256": "6bdab5aa76b8e1983e8c347c7884a8cf603c4d5963cd82f0827bb9d4b9ac66cb",
+      "body_sha256": "6a3ba8b844f84a97a018d45e89a5e4665ef4cc022ad46acf7d847e484d067e8f",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2675,
+        "line_end": 2682
+      },
+      "local_artifact_paths": [
+        "papers/feedback_calibration_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_045",
+      "bullet_ordinal": 45,
+      "summary_sha256": "ae4aefd4c0133b0e3ab4c3d5b5d90537a6276292a7ba22be90ba40236d55a9be",
+      "body_sha256": "63dca73ef2951d1d37bbf73e2edaa93fd5270757f6f9d80be5ab2ea026a3d9ff",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2682,
+        "line_end": 2697
+      },
+      "local_artifact_paths": [
+        "papers/critique_reviewer_pool_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_046",
+      "bullet_ordinal": 46,
+      "summary_sha256": "dc65b43f06cc9114b094c07cf83ac3625921bb1c6d7039a3855178b582a76e0f",
+      "body_sha256": "5eb993b2b22ce743d0714c27f0b37c9cef5cc75a9cb4295fdb3c67d94b9227c4",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2697,
+        "line_end": 2707
+      },
+      "local_artifact_paths": [
+        "papers/gemini_provider_parity_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_047",
+      "bullet_ordinal": 47,
+      "summary_sha256": "98c2e9a5ac8797b7e239125ce499621d05fcb63835b4b9c6310866c992971ac9",
+      "body_sha256": "2321f0d177a0670e0bb7dad9e4f52b434cfeae905b8c4ef73575025c2327c448",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2707,
+        "line_end": 2721
+      },
+      "local_artifact_paths": [
+        "papers/prompt_section_packing_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_048",
+      "bullet_ordinal": 48,
+      "summary_sha256": "519382f2e565d27e7423c8834ad1ee38e055f829f0f9d1e4f2677799ffd3c9cd",
+      "body_sha256": "5bc3f8a017311b13a4abff00ba589a01a7b4b3d4777ceae772631b253aa469a6",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2721,
+        "line_end": 2730
+      },
+      "local_artifact_paths": [
+        "papers/stochastic_prompt_format_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_049",
+      "bullet_ordinal": 49,
+      "summary_sha256": "169f798c025b1f32022f5aae29431afe0888aaf125636a5c87ae73e20b538717",
+      "body_sha256": "63605f5a7cababe44c92b4b103a875426f4cd70438f31a6690318b6bc5a4815e",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2730,
+        "line_end": 2738
+      },
+      "local_artifact_paths": [
+        "papers/systems_result_readiness_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_050",
+      "bullet_ordinal": 50,
+      "summary_sha256": "cc4ea3807320600e88bfd348a8e1f0e1e057ba7a9174849480f53400f88803f3",
+      "body_sha256": "292fdd14c851acd6d999a4462770c49247f8defcf5a780f69f7e87b7ba2f6a62",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2738,
+        "line_end": 2747
+      },
+      "local_artifact_paths": [
+        "papers/figure6_scheduling_exhibit_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_051",
+      "bullet_ordinal": 51,
+      "summary_sha256": "c34f548fe9d053ea86e1f023ce3caea2ee57439bab54fff44d7dbbdf87b04b6b",
+      "body_sha256": "a56c25478486d5ba2d4cb21ee5ccb66ecc73411dad19f67ec4ad06d1d0e06104",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2747,
+        "line_end": 2757
+      },
+      "local_artifact_paths": [
+        "papers/figure7_pallas_tiling_exhibit_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_052",
+      "bullet_ordinal": 52,
+      "summary_sha256": "fcf39e84f9bb81515681b965fb79295b8c9344968ed8a90b916b41683cf6e424",
+      "body_sha256": "62d85fd59264500ea06f234b69edbe10db0e79f995977c349d823eebebc2ca57",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2757,
+        "line_end": 2767
+      },
+      "local_artifact_paths": [
+        "papers/kernel_tiling_shape_corpus_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_053",
+      "bullet_ordinal": 53,
+      "summary_sha256": "b4f87d068267dff7d66c7a3fabbad9fc22fcc464cad9e07dd1c1fe6698d5bd6d",
+      "body_sha256": "c977e35c8f682752c07e68dcb51d7cd8606153f5dd3832d0164de523421e065c",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2767,
+        "line_end": 2776
+      },
+      "local_artifact_paths": [
+        "papers/pallas_workflow_baseline_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_054",
+      "bullet_ordinal": 54,
+      "summary_sha256": "080a47d60904bc7e723d3d86580734a5c10d8359e71c83e7507c03212f9200c1",
+      "body_sha256": "6c44993610479ab3251783ebae2a7bfcacfe0c0048097c714b612a794649594a",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2776,
+        "line_end": 2785
+      },
+      "local_artifact_paths": [
+        "papers/gemini_self_training_loop_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_055",
+      "bullet_ordinal": 55,
+      "summary_sha256": "256bed447bccaf506f8d956bc50432685af6bb027e784a5f8b3a894b8ac92e0b",
+      "body_sha256": "0907dab8e5f5a92985adc8275bb6b14453f2d8e55440676fc1b36c1524e8e334",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2785,
+        "line_end": 2792
+      },
+      "local_artifact_paths": [
+        "papers/hardware_rtl_eda_evidence_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_056",
+      "bullet_ordinal": 56,
+      "summary_sha256": "b55e2e67ff1fd6ee6d6c6c554bb2709028350fe112cf9fd184d7f8e0cb1efc95",
+      "body_sha256": "d5b4eb4684e26234fb30cc9a7a12cbe3d09019f056f07f25060f41b311bb395f",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2792,
+        "line_end": 2799
+      },
+      "local_artifact_paths": [
+        "papers/hardware_rewrite_artifact_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_057",
+      "bullet_ordinal": 57,
+      "summary_sha256": "4516bef0cd452e052ac471cbb8d0f218c986e41fb80e6279fec1409ffd9a0cd2",
+      "body_sha256": "154e8b51fa24f22a02b8b21fa9a777425bc90801958709b6d44292d2c367e572",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2799,
+        "line_end": 2807
+      },
+      "local_artifact_paths": [
+        "papers/hardware_contribution_attribution_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_058",
+      "bullet_ordinal": 58,
+      "summary_sha256": "0e4f1d70cb34220a2a22011a99c704b1dab8f7c2bcfc6dcab718b9abbe08e30b",
+      "body_sha256": "9c11db304e404d8c43b33a4a6cc00cf780c751d1df2be3ab82005c61d3137558",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2807,
+        "line_end": 2814
+      },
+      "local_artifact_paths": [
+        "papers/compiler_ir_reference_check_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_059",
+      "bullet_ordinal": 59,
+      "summary_sha256": "41e64b60ccff240d7debb019d48603e6e8b687e9e09c591d55fdad044c45e90e",
+      "body_sha256": "4825ae76179cb403181bbd279f6aa43019891c7dc2907bad5ec6e38a50102984",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2814,
+        "line_end": 2822
+      },
+      "local_artifact_paths": [
+        "papers/compiler_adoption_path_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_060",
+      "bullet_ordinal": 60,
+      "summary_sha256": "4014030025db847c843b2393300a97839453bb9d8f9aa25333433ee658ca8156",
+      "body_sha256": "e8afd2f6b9e4646507cb5a4ea5a3221759b4c6c760df7f17a6e3217da61159bd",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2822,
+        "line_end": 2829
+      },
+      "local_artifact_paths": [
+        "papers/compiler_stack_context_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_061",
+      "bullet_ordinal": 61,
+      "summary_sha256": "83448002b139e38ff524f6f977fb255017945ea678479ea463c984542e309512",
+      "body_sha256": "bc0179cdfd17bbf016ee4cfc0474ebc3282d12e08bec8766f751ca25275b6351",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2829,
+        "line_end": 2839
+      },
+      "local_artifact_paths": [
+        "papers/documentation_truthfulness_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_062",
+      "bullet_ordinal": 62,
+      "summary_sha256": "c00396f1e351d3d9558c1c8f74dec1fe6a6d4b4e9031cf511b1459df99cad3ce",
+      "body_sha256": "11bf7b3de7f9018984cb6612fc1e7a653ab1cb661ddf4e8b976055919393cfd3",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2839,
+        "line_end": 2843
+      },
+      "local_artifact_paths": [
+        "papers/documentation_claim_inventory.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_063",
+      "bullet_ordinal": 63,
+      "summary_sha256": "5ae5453e03862663232767a223bcdbc71140d408d20870ca6300565f32d3da4c",
+      "body_sha256": "21524d5598a8391089e91e3ee27e6e93341edd043ea8c9685263594feaafb6e7",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2843,
+        "line_end": 2849
+      },
+      "local_artifact_paths": [
+        "papers/implementation_evidence_map_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_064",
+      "bullet_ordinal": 64,
+      "summary_sha256": "3c0a1f6dc68d1f11144988c920beb6bc6c61be8833d03553aa37da6f54919055",
+      "body_sha256": "40d0964372fe6d1374ea9122376898d8b44813eced60dd20655c0a5f4cda3ebe",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2849,
+        "line_end": 2854
+      },
+      "local_artifact_paths": [
+        "papers/README.md",
+        "papers/benchmark_coverage_inventory.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_065",
+      "bullet_ordinal": 65,
+      "summary_sha256": "c67107e9db74d93b2e27d1bfd392474b20a3abf407d91030140a16bf7f873def",
+      "body_sha256": "31653d8ca29e1a8798533bfab4eff94c6e8171417a670075b2cacdb77eda1da9",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2854,
+        "line_end": 2861
+      },
+      "local_artifact_paths": [
+        "papers/status_claim_inventory.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_066",
+      "bullet_ordinal": 66,
+      "summary_sha256": "da51d502bb283992b103569e9bb6b184f94dea1695993d04113274343dfe9b35",
+      "body_sha256": "1860825e03a49b25b865486497cf6175efde4a496a639fcbaca8c1d0e0005537",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2861,
+        "line_end": 2866
+      },
+      "local_artifact_paths": [
+        "papers/arxiv_abstract_snapshot.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_067",
+      "bullet_ordinal": 67,
+      "summary_sha256": "28acb7f2da45c12bbedf7dbd885b87aa66861e9a112d36fa22c575ac31d70371",
+      "body_sha256": "feaf6f921b3130aff7bedc56b50715c59d646501f6a87185e3df999e50b85a13",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2866,
+        "line_end": 2871
+      },
+      "local_artifact_paths": [
+        "papers/alphaevolve_datacite_doi_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_068",
+      "bullet_ordinal": 68,
+      "summary_sha256": "c776ecaf92a8d16b06461ecb0a61ee6986a6a05af3f1d87e51a2061e91d6b349",
+      "body_sha256": "61b45ee042b8f05f4146d54340a1430391a037209a5bbfb684105fcfc9f7003c",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2871,
+        "line_end": 2876
+      },
+      "local_artifact_paths": [
+        "papers/alphaevolve_datacite_full_response_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_069",
+      "bullet_ordinal": 69,
+      "summary_sha256": "898df045bcd8407cfb1993cc0a93f9a8df002c41324d24ed3d9cf7e59994ed23",
+      "body_sha256": "c2a2e4bc6071a5fb9fc423ba84eb6ef94f6b60482329c89401a00146e763d15d",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2876,
+        "line_end": 2882
+      },
+      "local_artifact_paths": [
+        "papers/alphaevolve_doi_landing_resolution_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_070",
+      "bullet_ordinal": 70,
+      "summary_sha256": "0e34e418b8797b1074f8432aaabb3ebcbb38dd645dd3c48c3032b45fb09c8448",
+      "body_sha256": "2a0a605c33ea37b2b23693677fefaa39b2c3d3b8386c6dccaba5b6bfed17a663",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2882,
+        "line_end": 2887
+      },
+      "local_artifact_paths": [
+        "papers/alphaevolve_tex_source_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_071",
+      "bullet_ordinal": 71,
+      "summary_sha256": "a835965aca205a9611ff723c555b2d5cee37eead1ab74d96b317178becff6971",
+      "body_sha256": "a06bb051c4878ce5e55c57896fca33364e467a768d44060cf3afdb9dfbc6314d",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2887,
+        "line_end": 2893
+      },
+      "local_artifact_paths": [
+        "papers/alphaevolve_tex_archive_retention_boundary.json",
+        "papers/alphaevolve_tex_source_archive.tar.gz"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_072",
+      "bullet_ordinal": 72,
+      "summary_sha256": "f5cec3f6a6d4232052185c499c81d565e11391d1c169076895a7a8cfed84a602",
+      "body_sha256": "01e9e2f74238ceaaed706ad3d38b50a02b7541b5fcf71eba8f251e233d3aed73",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2893,
+        "line_end": 2900
+      },
+      "local_artifact_paths": [
+        "papers/alphaevolve_current_version_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_073",
+      "bullet_ordinal": 73,
+      "summary_sha256": "0195f3ef8b9fb03c6058c920bfecdb2c55a8101421b111fd313b99b43ee06a71",
+      "body_sha256": "7b2d99247183346646b2a41468a7b29584cb7cbf602b4457aa115b98d24a2249",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2900,
+        "line_end": 2905
+      },
+      "local_artifact_paths": [
+        "papers/alphaevolve_cached_pdf_header_consistency_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_074",
+      "bullet_ordinal": 74,
+      "summary_sha256": "d577c1fa1bb50da77b7fc1c2c55502be823bb5850dcaf0cf0b142db0fefa2e3c",
+      "body_sha256": "1eaef42973bfe7d851cf64bb45772b094596fab558b1e93806f5b64efef31010",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2905,
+        "line_end": 2910
+      },
+      "local_artifact_paths": [
+        "papers/alphaevolve_metadata_extraction_script_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_075",
+      "bullet_ordinal": 75,
+      "summary_sha256": "58c0318a573112e7d5ac3ab2eaf9f7d8eb79dd0de1adc8e2b603e448de671e33",
+      "body_sha256": "b0cef48ebc9b369b379a2dfd237ba50326d114eb1debade6cbb98ec64fbbea11",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2910,
+        "line_end": 2917
+      },
+      "local_artifact_paths": [
+        "papers/alphaevolve_source_refresh_gate_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_076",
+      "bullet_ordinal": 76,
+      "summary_sha256": "f333f5fae430207fc314a8f02b7517c05c92fe051716da892dbce4bad2ef044c",
+      "body_sha256": "de4aecbe0a88d2bf2b3a152710c5c9ed81c2f6f2e7ab4699869d4c46b5dc1ed5",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2917,
+        "line_end": 2921
+      },
+      "local_artifact_paths": [
+        "papers/alphaevolve_source_refresh_run_2026-06-14.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_077",
+      "bullet_ordinal": 77,
+      "summary_sha256": "f4765db9a43ad132d12cdcdb03f095b506763eabf3d4bc6faeeafb9a86fe0323",
+      "body_sha256": "5c474c9ce767bc6ca0a3e0897096fa49ae6eecdb675031776a596e5bd138d9bb",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2921,
+        "line_end": 2926
+      },
+      "local_artifact_paths": [
+        "papers/alphaevolve_source_refresh_promotion_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_078",
+      "bullet_ordinal": 78,
+      "summary_sha256": "6cf5157eccfe933c0e625983c74159871d99d92667137f6ada92fa3259766238",
+      "body_sha256": "1cffaea9281237064900c58e238a3277ef8cd6705fdb9e057ac229bc2e01e090",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2926,
+        "line_end": 2932
+      },
+      "local_artifact_paths": [
+        "papers/alphaevolve_raw_http_headers_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_079",
+      "bullet_ordinal": 79,
+      "summary_sha256": "1ee4872ed0caa9ee8e39864e8859c9db1630b07c1062a97d660921eea25519f7",
+      "body_sha256": "6991c8074a2774af8b129e467508ea05b13049f6b7519d1260528cc8891b97f9",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2932,
+        "line_end": 2938
+      },
+      "local_artifact_paths": [
+        "papers/alphaevolve_license_page_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_080",
+      "bullet_ordinal": 80,
+      "summary_sha256": "f8ee844f4680196a0e355ad6ed66796a29e16e78365cf08770af6e0740e4dfd5",
+      "body_sha256": "92a8f349c7ffe4c0f382cdab24b66ecfc0eca055bcbac1a8e3de2ecff4d57a25",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2938,
+        "line_end": 2942
+      },
+      "local_artifact_paths": [
+        "papers/alphaevolve_license_page_html_retention_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_081",
+      "bullet_ordinal": 81,
+      "summary_sha256": "d33fba2cc33a14a0b8c6c35fa20cc0af87c7c0f79eaedacf7390222f6077b12e",
+      "body_sha256": "b2554aa1a1048eb9b16c2a64250b795fb7fa236400ca9e8b58b5aef423c09a4b",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2942,
+        "line_end": 2946
+      },
+      "local_artifact_paths": [
+        "papers/candidate_abstraction_bias_matrix.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_082",
+      "bullet_ordinal": 82,
+      "summary_sha256": "75f3e50e5323a70e2298f7e76fb243a0a2b921ff8ca7bd63ebe5f548b066c0a1",
+      "body_sha256": "3d04fcbf55c7cbedaf5a4fa6154506c7d739bf64008640da9ede633b50b75ca4",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2946,
+        "line_end": 2950
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/examples/sorting"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    },
+    {
+      "coverage_id": "implemented_benchmark_083",
+      "bullet_ordinal": 83,
+      "summary_sha256": "68f454cca79922e91e2c78aa04603f26069622a9cc7bf0d919ac9d7208235998",
+      "body_sha256": "7bad87df186fa93c570d0d24dcee91faa2ebd564f52428c9fbab690d88ffa2e9",
+      "source_span": {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": 2950,
+        "line_end": 2960
+      },
+      "local_artifact_paths": [
+        "libreevolve/problems/examples/sorting_network_8",
+        "libreevolve/problems/examples/sorting_network_9",
+        "papers/sorting_network_rediscovery_boundary.json"
+      ],
+      "has_local_artifact": true,
+      "has_limitation_boundary": true,
+      "has_not_implemented_contradiction": false,
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "semantic_status": "not_verified"
+    }
+  ],
+  "claim_boundary": "This inventory records one structured entry for each papers/README.md Implemented benchmark coverage bullet, including source lines, summary/body hashes, local artifact mentions, limitation-boundary flags, and contradiction flags. It does not claim semantic verification, benchmark freshness, reproduced result linkage, or proof that the benchmark coverage prose is complete."
+}

@@ -17,7 +17,7 @@ EXPECTED_MISSING_EVIDENCE = {
     "exhaustive_requirement_inventory": "not_recorded_locally",
     "source_span_coverage_matrix": "not_recorded_locally",
     "status_cell_semantic_verifier": "not_recorded_locally",
-    "implemented_benchmark_bullet_coverage_map": "not_recorded_locally",
+    "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
     "absence_sentence_freshness_matrix": "not_recorded_locally",
     "module_coverage_detector": "not_recorded_locally",
     "test_and_runtime_artifact_coverage_detector": "not_recorded_locally",
@@ -229,7 +229,7 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
             "exhaustive requirement inventory, source-span coverage matrix, "
             "paper-index phrase evidence-link sufficiency, status-cell "
             "semantic verifier, implemented benchmark "
-            "bullet coverage map, absence-sentence freshness matrix, module "
+            "bullet semantic verifier, absence-sentence freshness matrix, module "
             "coverage detector, test/runtime-artifact coverage detector, "
             "generated code-audit report, CI exhaustiveness gate, or proof "
             "that every AlphaEvolve-facing implementation claim has been "
@@ -271,7 +271,7 @@ def validate_implementation_evidence_map_boundary(
         not isinstance(boundary_text, str)
         or "does not claim an exhaustive requirement inventory" not in boundary_text
         or "paper-index phrase evidence-link sufficiency" not in boundary_text
-        or "implemented benchmark bullet coverage map" not in boundary_text
+        or "implemented benchmark bullet semantic verifier" not in boundary_text
         or "absence-sentence freshness matrix" not in boundary_text
         or "generated code-audit report" not in boundary_text
         or "every AlphaEvolve-facing implementation claim" not in boundary_text

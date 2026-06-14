@@ -726,6 +726,7 @@ STOCHASTIC_PROMPT_FORMAT_BOUNDARY_FILE = "papers/stochastic_prompt_format_bounda
 DOCUMENTATION_TRUTHFULNESS_BOUNDARY_FILE = "papers/documentation_truthfulness_boundary.json"
 DOCUMENTATION_CLAIM_INVENTORY_FILE = "papers/documentation_claim_inventory.json"
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_FILE = "papers/implementation_evidence_map_boundary.json"
+BENCHMARK_COVERAGE_INVENTORY_FILE = "papers/benchmark_coverage_inventory.json"
 STATUS_CLAIM_INVENTORY_FILE = "papers/status_claim_inventory.json"
 RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_FILE = "papers/release_artifact_reproducibility_boundary.json"
 RELATED_WORK_TAXONOMY_BOUNDARY_FILE = "papers/related_work_taxonomy_boundary.json"
@@ -1055,8 +1056,15 @@ STATUS_CLAIM_INVENTORY_SCHEMA = "libreevolve.paper_index_status_claim_inventory.
 STATUS_CLAIM_INVENTORY_STATUS = "phrase_evidence_link_inventory_without_semantic_verifier"
 STATUS_CLAIM_INVENTORY_MISSING_EVIDENCE = {
     "status_cell_semantic_verifier": "not_recorded_locally",
-    "implemented_benchmark_bullet_coverage_map": "not_recorded_locally",
+    "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
     "absence_sentence_freshness_matrix": "not_recorded_locally",
+}
+BENCHMARK_COVERAGE_INVENTORY_SCHEMA = "libreevolve.paper_index_benchmark_coverage_inventory.v1"
+BENCHMARK_COVERAGE_INVENTORY_STATUS = "implemented_bullet_inventory_without_semantic_verifier"
+BENCHMARK_COVERAGE_MISSING_EVIDENCE = {
+    "benchmark_bullet_semantic_verifier": "not_recorded_locally",
+    "benchmark_bullet_freshness_matrix": "not_recorded_locally",
+    "benchmark_result_reproduction_links": "not_recorded_locally",
 }
 
 
@@ -1447,6 +1455,7 @@ def validate_paper_manifest(
     issues.extend(_validate_todo_coverage_table(root_path, seen_ids, manifest_rows_by_id))
     issues.extend(_validate_status_claim_inventory(root_path))
     issues.extend(_validate_todo_absence_wording(root_path, seen_ids))
+    issues.extend(_validate_benchmark_coverage_inventory(root_path))
     issues.extend(_validate_benchmark_coverage_decisions(root_path))
 
     return PaperManifestReport(
@@ -1544,6 +1553,56 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             "verification, evidence-link sufficiency, "
             "implemented-benchmark bullet coverage, absence-sentence "
             "freshness, or proof that status-cell prose is semantically "
+            "complete."
+        ),
+    }
+
+
+def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[str, Any]:
+    """Return the paper-index implemented benchmark coverage inventory."""
+
+    root_path = Path(root)
+    bullets, _issues = _read_implemented_benchmark_bullet_records(root_path)
+    rows: list[dict[str, Any]] = []
+    for ordinal, bullet in enumerate(bullets, start=1):
+        text = bullet["text"]
+        summary = text.splitlines()[0].strip()
+        local_artifacts = sorted(_status_local_artifact_paths(text))
+        rows.append(
+            {
+                "coverage_id": f"implemented_benchmark_{ordinal:03d}",
+                "bullet_ordinal": ordinal,
+                "summary_sha256": hashlib.sha256(summary.encode("utf-8")).hexdigest(),
+                "body_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+                "source_span": {
+                    "path": "papers/README.md",
+                    "section": "Benchmark coverage decisions",
+                    "line_start": bullet["line_start"],
+                    "line_end": bullet["line_end"],
+                },
+                "local_artifact_paths": local_artifacts,
+                "has_local_artifact": bool(local_artifacts),
+                "has_limitation_boundary": bool(BENCHMARK_IMPLEMENTED_LIMITATION_BOUNDARY_RE.search(text)),
+                "has_not_implemented_contradiction": bool(BENCHMARK_IMPLEMENTED_NOT_IMPLEMENTED_RE.search(text)),
+                "coverage_status": "implemented_bullet_structurally_inventoried",
+                "semantic_status": "not_verified",
+            }
+        )
+    return {
+        "schema": BENCHMARK_COVERAGE_INVENTORY_SCHEMA,
+        "inventory_status": BENCHMARK_COVERAGE_INVENTORY_STATUS,
+        "source_path": "papers/README.md#benchmark-coverage-decisions",
+        "implemented_bullet_count": len(rows),
+        "implemented_bullet_ids": [row["coverage_id"] for row in rows],
+        "missing_evidence": dict(BENCHMARK_COVERAGE_MISSING_EVIDENCE),
+        "implemented_bullets": rows,
+        "claim_boundary": (
+            "This inventory records one structured entry for each "
+            "papers/README.md Implemented benchmark coverage bullet, including "
+            "source lines, summary/body hashes, local artifact mentions, "
+            "limitation-boundary flags, and contradiction flags. It does not "
+            "claim semantic verification, benchmark freshness, reproduced "
+            "result linkage, or proof that the benchmark coverage prose is "
             "complete."
         ),
     }
@@ -3531,6 +3590,68 @@ def _validate_status_claim_inventory(root_path: Path) -> list[PaperManifestIssue
                     f"status_claim_inventory_{key}_mismatch",
                     message,
                     "status_claim_inventory",
+                )
+            )
+    return issues
+
+
+def _validate_benchmark_coverage_inventory(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / BENCHMARK_COVERAGE_INVENTORY_FILE
+    if not sidecar_path.exists():
+        if not is_repo_root:
+            return []
+        return [
+            PaperManifestIssue(
+                "benchmark_coverage_inventory_missing",
+                (
+                    f"{BENCHMARK_COVERAGE_INVENTORY_FILE} must record "
+                    "papers/README.md Implemented benchmark coverage bullets"
+                ),
+                "benchmark_coverage_inventory",
+            )
+        ]
+    try:
+        data = json.loads(sidecar_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        return [
+            PaperManifestIssue(
+                "benchmark_coverage_inventory_unreadable",
+                _manifest_diagnostic(sidecar_path, root_path, exc),
+                "benchmark_coverage_inventory",
+            )
+        ]
+    if not isinstance(data, dict):
+        return [
+            PaperManifestIssue(
+                "benchmark_coverage_inventory_schema",
+                "benchmark coverage inventory must be a JSON object",
+                "benchmark_coverage_inventory",
+            )
+        ]
+
+    expected = paper_benchmark_coverage_inventory_record(root_path)
+    issues: list[PaperManifestIssue] = []
+    checks = (
+        ("schema", "benchmark coverage inventory schema changed"),
+        ("inventory_status", "benchmark coverage inventory status changed"),
+        ("source_path", "benchmark coverage inventory source path changed"),
+        ("implemented_bullet_count", "benchmark coverage implemented-bullet count drifted"),
+        ("implemented_bullet_ids", "benchmark coverage implemented-bullet ids drifted"),
+        ("missing_evidence", "benchmark coverage missing-evidence boundary drifted"),
+        ("claim_boundary", "benchmark coverage claim boundary drifted"),
+        ("implemented_bullets", "benchmark coverage implemented bullets drifted from papers/README.md"),
+    )
+    for key, message in checks:
+        if data.get(key) != expected[key]:
+            issues.append(
+                PaperManifestIssue(
+                    f"benchmark_coverage_inventory_{key}_mismatch",
+                    message,
+                    "benchmark_coverage_inventory",
                 )
             )
     return issues
@@ -8252,24 +8373,12 @@ def _validate_todo_absence_wording(root: Path, manifest_ids: set[str]) -> list[P
 
 
 def _validate_benchmark_coverage_decisions(root: Path) -> list[PaperManifestIssue]:
-    path = root / "papers" / "README.md"
-    if not path.exists():
-        return []
-    try:
-        text = path.read_text(encoding="utf-8")
-    except (OSError, UnicodeDecodeError) as exc:
-        return [
-            PaperManifestIssue(
-                "benchmark_coverage_unreadable",
-                _manifest_diagnostic(path, root, exc),
-            )
-        ]
-    section = _markdown_section(text, "## Benchmark coverage decisions")
-    if section is None or "Implemented:" not in section:
-        return []
-    implemented_text = section.split("Implemented:", 1)[1].split("\nPlanned or background-only:", 1)[0]
+    bullets, read_issues = _read_implemented_benchmark_bullet_records(root)
+    if read_issues:
+        return read_issues
     issues: list[PaperManifestIssue] = []
-    for block in _markdown_bullet_blocks(implemented_text):
+    for bullet in bullets:
+        block = bullet["text"]
         summary = block.splitlines()[0].strip()
         if not BENCHMARK_IMPLEMENTED_LOCAL_ARTIFACT_RE.search(block):
             issues.append(
@@ -8306,6 +8415,50 @@ def _markdown_bullet_blocks(text: str) -> list[str]:
     starts = [match.start() for match in re.finditer(r"(?m)^- ", text)]
     starts.append(len(text))
     return [text[start:end] for start, end in zip(starts, starts[1:])]
+
+
+def _read_implemented_benchmark_bullet_records(root: Path) -> tuple[list[dict[str, Any]], list[PaperManifestIssue]]:
+    path = root / "papers" / "README.md"
+    if not path.exists():
+        return [], []
+    try:
+        text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as exc:
+        return [], [
+            PaperManifestIssue(
+                "benchmark_coverage_unreadable",
+                _manifest_diagnostic(path, root, exc),
+            )
+        ]
+    section = _markdown_section(text, "## Benchmark coverage decisions")
+    if section is None or "Implemented:" not in section:
+        return [], []
+    section_start = text.find(section)
+    if section_start < 0:
+        return [], []
+    implemented_start = section.find("Implemented:")
+    implemented_end = section.find("\nPlanned or background-only:", implemented_start)
+    if implemented_end < 0:
+        implemented_end = len(section)
+    implemented_text = section[implemented_start + len("Implemented:") : implemented_end]
+    implemented_absolute_start = section_start + implemented_start + len("Implemented:")
+    starts = [match.start() for match in re.finditer(r"(?m)^- ", implemented_text)]
+    starts.append(len(implemented_text))
+    records: list[dict[str, Any]] = []
+    for start, end in zip(starts, starts[1:]):
+        block = implemented_text[start:end].rstrip()
+        if not block:
+            continue
+        absolute_start = implemented_absolute_start + start
+        absolute_end = implemented_absolute_start + end
+        records.append(
+            {
+                "text": block,
+                "line_start": text.count("\n", 0, absolute_start) + 1,
+                "line_end": text.count("\n", 0, absolute_end) + 1,
+            }
+        )
+    return records, []
 
 
 def _open_todo_blocks_contain(text: str, needle: str) -> bool:

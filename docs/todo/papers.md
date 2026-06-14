@@ -23,10 +23,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     text hashes, row source lines, manifest-file links, local artifact mentions,
     active/completed TODO evidence paths, and 143 status-cell phrase hashes
     with source-line and character offsets plus candidate evidence-link lists.
+    `papers/benchmark_coverage_inventory.json` now records 83 implemented
+    benchmark coverage bullets with source lines, summary/body hashes, local
+    artifact mentions, limitation-boundary flags, and contradiction flags.
     The committed
     `papers/implementation_evidence_map_boundary.json` now explicitly preserves
     missing evidence for status-cell semantic verifier, implemented-benchmark
-    bullet coverage map, and absence-sentence freshness matrix.
+    bullet semantic verifier, and absence-sentence freshness matrix.
     `papers/documentation_claim_inventory.json` now adds top-level papers-index
     claim anchors for the local paper-cache manifest scope and the
     implementation-status table scope, while explicitly keeping row-level
@@ -34,13 +37,13 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current gap: each status phrase now has a stable hash and source offset,
     and candidate links to phrase-local artifacts plus row-level TODO and
     completed evidence, but there is no proof that those links are sufficient
-    for each implemented or missing clause, no per-benchmark coverage-claim
-    inventory for `Implemented` bullets, no absence-sentence freshness matrix,
-    and no semantic verifier that checks benchmark qualifiers,
+    for each implemented or missing clause, no semantic verifier for
+    `Implemented` benchmark coverage bullets, no absence-sentence freshness
+    matrix, and no semantic verifier that checks benchmark qualifiers,
     implemented-bullet scope/limitation wording, or absence sentences against
     the current code and paper evidence.
   - Required result: extend the phrase-level inventory with evidence-sufficiency
-    checks, freshness checks, and benchmark-coverage bullet mappings, then add
+    checks, freshness checks, and benchmark-coverage semantic checks, then add
     CI validation before treating `papers/README.md` as semantically complete
     implementation-status or benchmark-coverage proof.
 
